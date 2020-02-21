@@ -8,8 +8,12 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import BaseButton from '../../components/base_ui/buttons/BaseButton';
-import BaseLink from '../../components/base_ui/links/BaseLink';
+import {
+  BaseButton,
+  BaseCheckbox,
+  BaseInput,
+  BaseLink,
+} from '../../components/base_ui';
 import Footer from '../../components/Footer';
 
 export default function HomePage() {
@@ -19,6 +23,8 @@ export default function HomePage() {
       <BaseLink label="hello" path="/" />
       <FormattedMessage {...messages.header} />
       <Footer />
+      <BaseInput label="hello" />
+      <BaseCheckbox label="hello" />
     </h1>
   );
 }
