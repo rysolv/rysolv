@@ -1,19 +1,18 @@
-import React, { Fragment } from 'react';
-import T from 'prop-types';
+import React, { Fragment, useState } from 'react';
 import { typeDictionary } from './constants';
 
-export const Admin = ({ handleNav, type = 'Companies' }) => {
-  const Component = typeDictionary[type];
+import AdminTab from './AdminTab';
+
+export const Admin = () => {
+  const [adminTab, setAdminTab] = useState('Companies');
+  const Component = typeDictionary[adminTab];
+
   return (
     <Fragment>
-      <Component handleNav={handleNav} type={type} />
+      <AdminTab setAdminTab={setAdminTab} />
+      <Component />
     </Fragment>
   );
-};
-
-Admin.propTypes = {
-  handleNav: T.func.isRequired,
-  type: T.oneOf(['Companies', 'Issues', 'Users']).isRequired,
 };
 
 export default Admin;
