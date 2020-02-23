@@ -8,23 +8,26 @@ import { createStructuredSelector } from 'reselect';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import reducer from './reducer';
-import saga from './saga';
-
 import AsyncRender from '../../components/AsyncRender';
-import Routes from './routes';
+import Footer from '../../components/Footer';
+import reducer from './reducer';
+import routes from './routes';
+import saga from './saga';
+import { AppBody } from './styledComponents';
 
-export const Main = ({ data, error, loading }) => {
-  console.log('data');
-  return (
-    <AsyncRender
-      asyncData={data}
-      component={Routes}
-      error={error}
-      loading={loading}
-    />
-  );
-};
+export const Main = ({ data, error, loading }) => (
+  <div>
+    <AppBody>
+      <AsyncRender
+        asyncData={data}
+        component={routes}
+        error={error}
+        loading={loading}
+      />
+    </AppBody>
+    <Footer />
+  </div>
+);
 
 Main.propTypes = {
   data: T.object,
