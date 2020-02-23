@@ -8,21 +8,19 @@
  */
 
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
+import Main from 'containers/Main/Loadable';
 
-import HomePage from 'containers/HomePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import GlobalStyles from '../../global-styles';
 
-import GlobalStyle from '../../global-styles';
-
-export default function App() {
+export function App() {
   return (
     <div>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-      <GlobalStyle />
+      <Main />
+      <GlobalStyles />
     </div>
   );
 }
+
+export default DragDropContext(HTML5Backend)(App);
