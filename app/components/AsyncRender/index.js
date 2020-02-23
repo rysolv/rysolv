@@ -16,6 +16,7 @@ const AsyncRender = ({
   if (error) {
     return <div>Error loading, please refresh the page.</div>;
   }
+  // Should be false but, at the moment, true due to lack of data
   if (isEmpty(asyncData)) {
     const ComponentToRender = component;
     return <ComponentToRender data={asyncData} {...propsToPassDown} />;
