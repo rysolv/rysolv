@@ -1,18 +1,19 @@
 import React, { Fragment, useState } from 'react';
+import T from 'prop-types';
+import AdminHeader from '../../components/Admin/AdminHeader';
 import { typeDictionary } from './constants';
 
-import AdminTab from './AdminTab';
-
-export const Admin = () => {
-  const [adminTab, setAdminTab] = useState('Companies');
-  const Component = typeDictionary[adminTab];
-
+export const Admin = ({ handleNav }) => {
+  const [type, setType] = useState('Companies');
+  const Component = typeDictionary[type];
   return (
-    <Fragment>
-      <AdminTab setAdminTab={setAdminTab} />
-      <Component />
+    <Fragment key={type}>
+      <AdminHeader activePage={type} setType={setType} />
+      <Component type={type} />
     </Fragment>
   );
 };
+
+Admin.propTypes = { handleNav: T.func };
 
 export default Admin;
