@@ -17,7 +17,7 @@ import routes from './routes';
 import saga from './saga';
 import { AppBody } from './styledComponents';
 
-export const Main = ({ data, deviceView, error, loading }) => (
+export const Main = ({ data = { test: true }, deviceView, error, loading }) => (
   <div>
     <Header view={deviceView} />
     <AppBody>
