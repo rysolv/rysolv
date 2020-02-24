@@ -10,4 +10,5 @@ export const RoutesWrapper = styled.section`
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
+  padding: 1rem;
 `;

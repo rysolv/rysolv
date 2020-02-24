@@ -6,12 +6,13 @@ export const HeaderTab = styled(({ isActive, ...restProps }) => {
   const borderColor = isActive ? 'blue' : 'grey';
   return <div color={borderColor} width="100%" {...restProps} />;
 })`
-  background-color: ${({ isActive }) => (isActive ? 'none' : 'grey')};
-  border-bottom: 'grey';
+  border-bottom: ${({ isActive }) =>
+    isActive ? '0.5rem solid blue' : '0.5rem solid grey'};
   display: flex;
   flex-direction: row;
+  width: 15rem;
   &:hover {
-    border-top: 0.5rem solid 'blue;
+    border-bottom: 0.5rem solid blue;
   }
   &.card {
     padding: 1rem;
@@ -34,6 +35,6 @@ export const HeaderTitle = styled(({ isActive, ...restProps }) => (
 export const AdminHeaderWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  height: 7rem;
+  height: 3rem;
   width: 100%;
 `;
