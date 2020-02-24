@@ -1,46 +1,20 @@
 import React from 'react';
 import T from 'prop-types';
+import { HeaderWrap } from '../base_ui';
+import { AboutUs, ButtonsWrapper, Login, SignUp } from './styledComponent';
 
-const DesktopHeader = () => {
-
-  return (
-    <HeaderWrap>
-      <ContainerMinimizer>
-        <ButtonsWrapper>
-          <Settings
-            Icon={ProfileIcon}
-            label="Settings & Notifications"
-            path="/settings"
-          />
-          <Logout
-            disableFocusRipple
-            disableRipple
-            Icon={LogoutIcon}
-            label="Logout"
-            onClick={handleLogout}
-        />
-        </ButtonsWrapper>
-      </ContainerMinimizer>
-    </HeaderWrap>
-  );
-};
+const DesktopHeader = ({ isMobile }) => (
+  <HeaderWrap isMobile={isMobile}>
+    <ButtonsWrapper>
+      <AboutUs label="About Us" path="/about" />
+      <Login label="Log In" path="/login" />
+      <SignUp label="Sign Up" path="/signup" />
+    </ButtonsWrapper>
+  </HeaderWrap>
+);
 
 DesktopHeader.propTypes = {
-  askMia: T.shape({
-    isMiaAvailable: T.bool.isRequired,
-    miaClickHandler: T.func.isRequired,
-  }).isRequired,
-  chatBeacon: T.shape({
-    cbClickHandler: T.func.isRequired,
-    shouldRenderChat: T.bool.isRequired,
-  }).isRequired,
-  handleLogout: T.func.isRequired,
-  hasUnreadMessages: T.bool.isRequired,
-  isMobile: T.bool.isRequired,
-  mortgageLogo: T.shape({
-    image: T.string,
-    type: T.string,
-  }),
+  isMobile: T.bool,
 };
 
 export default DesktopHeader;

@@ -1,4 +1,4 @@
-import { CHANGE_RESPONSIVE_VIEW } from 'constants';
+import { CHANGE_RESPONSIVE_VIEW } from './constants';
 
 export function changeResponsiveView(newView) {
   return {
