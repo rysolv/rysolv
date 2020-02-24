@@ -6,7 +6,6 @@ export const AdminHeaderTabs = ({ activePage, setType }) => {
   const handleClick = type => {
     setType(type);
   };
-  console.log('activePage', activePage)
   return (
     <AdminHeaderWrapper>
       <HeaderTab isActive={activePage === 'Companies'}>

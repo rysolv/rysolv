@@ -10,16 +10,36 @@
 import React from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
+
+// MUI Theme Imports
+import { create } from 'jss';
+import {
+  createGenerateClassName,
+  jssPreset,
+  StylesProvider,
+} from '@material-ui/styles';
+
 import Main from 'containers/Main/Loadable';
+import ViewSize from 'containers/ViewSize';
 
 import GlobalStyles from '../../global-styles';
 
+const generateClassName = createGenerateClassName();
+const jss = create({
+  ...jssPreset(),
+  insertionPoint: document.getElementById('jss-insertion-point'),
+});
+
 export function App() {
   return (
-    <div>
-      <Main />
-      <GlobalStyles />
-    </div>
+    <StylesProvider generateClassName={generateClassName} jss={jss}>
+      <div>
+        <ViewSize>
+          <Main />
+          <GlobalStyles />
+        </ViewSize>
+      </div>
+    </StylesProvider>
   );
 }
 
