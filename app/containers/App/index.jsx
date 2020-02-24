@@ -12,6 +12,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
 // MUI Theme Imports
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { create } from 'jss';
 import {
   createGenerateClassName,
@@ -30,15 +31,25 @@ const jss = create({
   insertionPoint: document.getElementById('jss-insertion-point'),
 });
 
+// MUI Theme
+const muiTheme = createMuiTheme({
+  palette: {
+    accent3Color: 'green',
+    primary1Color: 'green',
+  },
+});
+
 export function App() {
   return (
     <StylesProvider generateClassName={generateClassName} jss={jss}>
-      <div>
-        <ViewSize>
-          <Main />
-          <GlobalStyles />
-        </ViewSize>
-      </div>
+      <MuiThemeProvider theme={muiTheme}>
+        <div>
+          <ViewSize>
+            <Main />
+            <GlobalStyles />
+          </ViewSize>
+        </div>
+      </MuiThemeProvider>
     </StylesProvider>
   );
 }
