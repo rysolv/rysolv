@@ -1,9 +1,8 @@
 import React, { Fragment, useState } from 'react';
-import T from 'prop-types';
 import AdminHeader from '../../components/Admin/AdminHeader';
 import { typeDictionary } from './constants';
 
-export const Admin = ({ handleNav }) => {
+export const Admin = () => {
   const [type, setType] = useState('Companies');
   const Component = typeDictionary[type];
   return (
@@ -13,7 +12,5 @@ export const Admin = ({ handleNav }) => {
     </Fragment>
   );
 };
-
-Admin.propTypes = { handleNav: T.func };
 
 export default Admin;
