@@ -1,5 +1,13 @@
-import BaseButton from './BaseButton';
-import PrimaryButton from './PrimaryButton';
-import SecondaryButton from './SecondaryButton';
+import {
+  PrimaryAsyncButton,
+  PrimaryButton,
+  SecondaryAsyncButton,
+  SecondaryButton,
+} from './styledComponents';
 
-export { BaseButton, PrimaryButton, SecondaryButton };
+export {
+  PrimaryAsyncButton,
+  PrimaryButton,
+  SecondaryAsyncButton,
+  SecondaryButton,
+};

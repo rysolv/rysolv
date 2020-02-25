@@ -1,15 +1,21 @@
 import React from 'react';
 import T from 'prop-types';
-import StyledButton from './styledComponents';
+import Button from '@material-ui/core/Button';
 
-const BaseButton = ({ label, onClick, ...restProps }) => (
-  <StyledButton classes={{ label: 'label' }} onClick={onClick} {...restProps}>
+const BaseButton = ({ Icon, label, onClick, ...restProps }) => (
+  <Button
+    classes={{ label: 'label', root: 'root' }}
+    onClick={onClick}
+    variant="contained"
+    {...restProps}
+  >
     {label}
-  </StyledButton>
+  </Button>
 );
 
 BaseButton.propTypes = {
-  label: T.string,
+  Icon: T.oneOfType([T.object, T.func]),
+  label: T.oneOfType([T.string, T.element]),
   onClick: T.func,
 };
 

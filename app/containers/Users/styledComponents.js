@@ -12,7 +12,7 @@ export const StyledListItem = styled.li`
   display: flex;
   flex-direction: row;
   list-style-type: none;
-  padding: 2rem 0;
+  padding: 1rem 0;
 `;
 
 export const StyledImage = styled.img`
@@ -27,6 +27,7 @@ export const ImageContainer = styled.div`
 `;
 
 export const InfoContainer = styled.div`
+  align-self: center;
   display: flex;
   flex-direction: column;
 `;

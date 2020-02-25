@@ -1,7 +1,8 @@
-import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
+import styled, { css } from 'styled-components';
+import BaseButton from './BaseButton';
+import BaseAsyncButton from './BaseAsyncButton';
 
-const StyledButton = styled(Button)`
+const baseButtonStyle = css`
   &:active {
     box-shadow: none;
   }
@@ -11,4 +12,54 @@ const StyledButton = styled(Button)`
   margin: 1rem;
 `;
 
-export default StyledButton;
+export const PrimaryButton = styled(BaseButton)`
+  ${baseButtonStyle},
+
+  &:hover {
+    background-color: green;
+  }
+
+  background-color: blue;
+  color: white;
+`;
+
+export const SecondaryButton = styled(PrimaryButton)`
+  &:hover {
+    background-color: pink;
+  }
+
+  background-color: purple;
+  color: white;
+`;
+
+export const PrimaryAsyncButton = styled(BaseAsyncButton)`
+  ${baseButtonStyle},
+
+  &:hover {
+    background-color: green;
+  }
+
+  background-color: blue;
+  color: white;
+
+  &.disabled {
+    background-color: grey;
+  }
+
+  & .progressWheel {
+    color: inherit;
+  }
+`;
+
+export const SecondaryAsyncButton = styled(PrimaryAsyncButton)`
+  &:hover {
+    background-color: pink;
+  }
+
+  background-color: purple;
+  color: white;
+
+  &.disabled {
+    background-color: grey;
+  }
+`;

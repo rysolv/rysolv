@@ -33,6 +33,7 @@ const CompanyCard = ({ data }) => {
             </InfoContainer>
             <ButtonContainer>
               <PrimaryButton label="Edit" />
+              <PrimaryButton label="Delete" />
             </ButtonContainer>
           </StyledListItem>
           <Divider isLastItem={data.length === index + 1} />
