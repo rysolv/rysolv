@@ -1,3 +1,4 @@
+const deleteCompany = require('./deleteCompany');
 const getCompanies = require('./getCompanies');
 
-module.exports = { getCompanies };
+module.exports = { deleteCompany, getCompanies };
