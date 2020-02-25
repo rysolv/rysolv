@@ -1,6 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 import Button from '@material-ui/core/Button';
+import ConditionalRender from '../ConditionalRender';
 
 const BaseButton = ({ Icon, label, onClick, ...restProps }) => (
   <Button
@@ -9,6 +10,7 @@ const BaseButton = ({ Icon, label, onClick, ...restProps }) => (
     variant="contained"
     {...restProps}
   >
+    <ConditionalRender Component={Icon} shouldRender={!!Icon} />
     {label}
   </Button>
 );

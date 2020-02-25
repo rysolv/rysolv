@@ -1,5 +1,6 @@
 const companies = [
   {
+    id: '2434543',
     name: 'OBS Studio',
     description:
       'OBS Studio is software designed for capturing, compositing, encoding, recording, and streaming video content, efficiently.',
@@ -9,6 +10,7 @@ const companies = [
     pullRequests: 43,
   },
   {
+    id: '56545324',
     name: 'Flutter',
     description:
       "Flutter is Google's SDK for crafting beautiful, fast user experiences for mobile, web and desktop from a single codebase.",
@@ -19,4 +21,6 @@ const companies = [
   },
 ];
 
-module.exports = { companies };
+const deleteMessage = ' has been successfully deleted.';
+
+module.exports = { deleteMessage, companies };

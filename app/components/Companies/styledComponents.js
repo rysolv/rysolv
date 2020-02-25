@@ -12,11 +12,12 @@ export const StyledListItem = styled.li`
   display: flex;
   flex-direction: row;
   list-style-type: none;
-  padding: 2rem 0;
+  padding: 1rem 0;
 `;
 
 export const StyledImage = styled.img`
   height: 5rem;
+  margin: 1rem;
   width: 5rem;
 `;
 
@@ -27,6 +28,7 @@ export const ImageContainer = styled.div`
 `;
 
 export const InfoContainer = styled.div`
+  align-self: center;
   display: flex;
   flex-direction: column;
 `;
@@ -53,4 +55,9 @@ export const Divider = styled(({ isLastItem, ...restProps }) => (
   display: flex;
   margin: auto;
   width: 90%;
+`;
+
+export const BannerWrapper = styled.div`
+  font-size: 1.2rem;
+  margin: 1rem 0;
 `;

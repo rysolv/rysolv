@@ -2,8 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
-const { getCompanies } = require('./handlers');
+const { deleteCompany, getCompanies } = require('./handlers');
 const { responseData } = require('../helper');
+
+router.delete('/:companyId', deleteCompany, responseData);
 
 router.get('/', getCompanies, responseData);
 

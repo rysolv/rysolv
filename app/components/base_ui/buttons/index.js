@@ -1,4 +1,5 @@
 import {
+  FlatIconButton,
   PrimaryAsyncButton,
   PrimaryButton,
   SecondaryAsyncButton,
@@ -6,6 +7,7 @@ import {
 } from './styledComponents';
 
 export {
+  FlatIconButton,
   PrimaryAsyncButton,
   PrimaryButton,
   SecondaryAsyncButton,

@@ -1,3 +1,4 @@
+import React from 'react';
 import styled, { css } from 'styled-components';
 import BaseButton from './BaseButton';
 import BaseAsyncButton from './BaseAsyncButton';
@@ -10,6 +11,7 @@ const baseButtonStyle = css`
   font-size: 1rem;
   font-weight: 400;
   margin: 1rem;
+  width: 6.5rem;
 `;
 
 export const PrimaryButton = styled(BaseButton)`
@@ -62,4 +64,21 @@ export const SecondaryAsyncButton = styled(PrimaryAsyncButton)`
   &.disabled {
     background-color: grey;
   }
+`;
+
+export const FlatIconButton = styled(({ disabled, ...restProps }) => (
+  <BaseButton disabled={disabled} {...restProps} />
+))`
+  &:hover {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  &:active {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  background-color: transparent;
+  box-shadow: none;
 `;
