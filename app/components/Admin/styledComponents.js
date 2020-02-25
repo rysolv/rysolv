@@ -36,5 +36,6 @@ export const AdminHeaderWrapper = styled.div`
   display: flex;
   flex-direction: row;
   height: 3rem;
+  margin-top: 2rem;
   width: 100%;
 `;

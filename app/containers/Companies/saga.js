@@ -5,7 +5,7 @@ import { fetchCompaniesFailure, fetchCompaniesSuccess } from './actions';
 
 export function* fetchCompaniesSaga() {
   try {
-    const { companies } = yield call(get, `/companies`);
+    const { companies } = yield call(get, `/api/companies`);
     yield put(fetchCompaniesSuccess({ companies }));
   } catch (error) {
     yield put(fetchCompaniesFailure({ error }));

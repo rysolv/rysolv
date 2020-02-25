@@ -6,7 +6,7 @@ import { AboutUs, ButtonsWrapper, Login, SignUp } from './styledComponent';
 const DesktopHeader = ({ isMobile }) => (
   <HeaderWrap isMobile={isMobile}>
     <ButtonsWrapper>
-      <AboutUs label="About Us" path="/about" />
+      <AboutUs label="Admin [temp]" path="/admin" />
       <Login label="Log In" path="/login" />
       <SignUp label="Sign Up" path="/signup" />
     </ButtonsWrapper>

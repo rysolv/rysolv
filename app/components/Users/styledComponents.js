@@ -12,6 +12,7 @@ export const StyledListItem = styled.li`
   display: flex;
   flex-direction: row;
   list-style-type: none;
+  justify-content: space-between;
   padding: 2rem 0;
 `;
 
@@ -28,6 +29,7 @@ export const ImageContainer = styled.div`
 
 export const InfoContainer = styled.div`
   display: flex;
+  flex-grow: 8;
   flex-direction: column;
 `;
 
@@ -41,7 +43,9 @@ export const DescriptionWrapper = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  align-self: center;
+  align-self: right;
+  /* display: flex; */
+  /* flex: end; */
   padding: 1rem;
 `;
 

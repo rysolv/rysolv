@@ -1,4 +1,6 @@
 import React, { Fragment, useState } from 'react';
+import { BaseContainer } from 'components/base_ui';
+
 import AdminHeader from '../../components/Admin/AdminHeader';
 import { typeDictionary } from './constants';
 
@@ -7,8 +9,10 @@ export const Admin = () => {
   const Component = typeDictionary[type];
   return (
     <Fragment key={type}>
-      <AdminHeader activePage={type} setType={setType} />
-      <Component type={type} />
+      <BaseContainer>
+        <AdminHeader activePage={type} setType={setType} />
+        <Component type={type} />
+      </BaseContainer>
     </Fragment>
   );
 };

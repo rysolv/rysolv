@@ -8,12 +8,12 @@ export const Container = styled.section`
 `;
 
 export const HeaderSection = styled.section`
-  padding-bottom: 6.5rem;
+  padding-bottom: 4rem;
 `;
 
 export const LogoWrapper = styled.div`
   align-self: center;
-  display: flex:
+  display: flex;
   flex-direction: row;
   padding: 1rem;
 `;

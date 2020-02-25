@@ -5,3 +5,4 @@ export * from './Checkbox';
 export * from './Inputs';
 export * from './Links';
 export * from './LoadingIndicator';
+export { default as BaseContainer } from './Containers';
