@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { PrimaryAsyncButton } from 'components/base_ui';
 
 export const StyledCompanyCard = styled.div`
   border-radius: 0 0.5rem 0.5rem;
@@ -60,4 +61,12 @@ export const Divider = styled(({ isLastItem, ...restProps }) => (
 export const BannerWrapper = styled.div`
   font-size: 1.2rem;
   margin: 1rem 0;
+`;
+
+export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
+  &:hover {
+    background-color: red;
+  }
+
+  background-color: red;
 `;

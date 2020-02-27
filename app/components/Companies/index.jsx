@@ -1,9 +1,9 @@
 import React from 'react';
 import T from 'prop-types';
+import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import {
   ConditionalRender,
   ErrorSuccessBanner,
-  PrimaryAsyncButton,
   PrimaryButton,
 } from 'components/base_ui';
 import {
@@ -17,6 +17,7 @@ import {
   StyledCompanyCard,
   StyledImage,
   StyledListItem,
+  StyledPrimaryAsyncButton,
 } from './styledComponents';
 
 const CompanyCard = ({
@@ -31,6 +32,7 @@ const CompanyCard = ({
   const CompanyCardComponent = (
     <div>
       <BannerWrapper>
+        <AdminSubHeader />
         <ErrorSuccessBanner
           error={error}
           onClose={clearAlerts}
@@ -57,7 +59,7 @@ const CompanyCard = ({
                     label="Edit"
                     onClick={() => handleNav(`/admin/company/${id}`)}
                   />
-                  <PrimaryAsyncButton
+                  <StyledPrimaryAsyncButton
                     label="Delete"
                     onClick={() => handleDelete({ companyId: id })}
                   />

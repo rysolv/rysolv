@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
+import Search from '@material-ui/icons/Search';
 import Warning from '@material-ui/icons/Warning';
 import SiteLogo from './svg/SiteLogo';
 import CloseMenu from './svg/CloseMenu';
@@ -8,6 +9,7 @@ import CloseMenu from './svg/CloseMenu';
 export default (name, options) => {
   const icons = {
     closeMenu: CloseMenu,
+    search: Search,
     siteLogo: SiteLogo,
     successOutline: CheckCircleOutline,
     warning: Warning,

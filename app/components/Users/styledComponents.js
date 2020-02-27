@@ -1,24 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const StyledCompanyCard = styled.div`
-  border-radius: 0 0.5rem 0.5rem;
-  border: 0.1rem solid grey;
-  color: rgba(0, 0, 0, 0.7);
-  width: 100%;
+export const ButtonContainer = styled.div`
+  align-self: right;
+  padding: 1rem;
 `;
 
-export const StyledListItem = styled.li`
+export const DescriptionWrapper = styled.div`
+  padding: 1rem 0;
+  font-size: 1rem;
+`;
+
+export const Divider = styled(({ isLastItem, ...restProps }) => (
+  <div {...restProps} />
+))`
+  border-bottom: ${({ isLastItem }) =>
+    isLastItem ? 'none' : '0.1rem solid grey'};
   display: flex;
-  flex-direction: row;
-  list-style-type: none;
-  justify-content: space-between;
-  padding: 2rem 0;
-`;
-
-export const StyledImage = styled.img`
-  height: 5rem;
-  width: 5rem;
+  margin: auto;
+  width: 90%;
 `;
 
 export const ImageContainer = styled.div`
@@ -37,24 +37,22 @@ export const NameWrapper = styled.div`
   font-size: 1.2rem;
 `;
 
-export const DescriptionWrapper = styled.div`
-  padding: 1rem 0;
-  font-size: 1rem;
+export const StyledImage = styled.img`
+  height: 5rem;
+  width: 5rem;
 `;
 
-export const ButtonContainer = styled.div`
-  align-self: right;
-  /* display: flex; */
-  /* flex: end; */
-  padding: 1rem;
+export const StyledCompanyCard = styled.div`
+  border-radius: 0 0.5rem 0.5rem;
+  border: 0.1rem solid grey;
+  color: rgba(0, 0, 0, 0.7);
+  width: 100%;
 `;
 
-export const Divider = styled(({ isLastItem, ...restProps }) => (
-  <div {...restProps} />
-))`
-  border-bottom: ${({ isLastItem }) =>
-    isLastItem ? 'none' : '0.1rem solid grey'};
+export const StyledListItem = styled.li`
   display: flex;
-  margin: auto;
-  width: 90%;
+  flex-direction: row;
+  list-style-type: none;
+  justify-content: space-between;
+  padding: 2rem 0;
 `;

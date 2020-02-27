@@ -2,6 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import { BaseLink } from '../base_ui';
 
+export const AdminHeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 3rem;
+  margin-top: 2rem;
+  width: 100%;
+`;
+
+export const AdminSubHeaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const BaseInputContainer = styled.div`
+  align-self: center;
+`;
+
 export const HeaderTab = styled(({ isActive, ...restProps }) => {
   const borderColor = isActive ? 'blue' : 'grey';
   return <div color={borderColor} width="100%" {...restProps} />;
@@ -29,13 +48,5 @@ export const HeaderTitle = styled(({ isActive, ...restProps }) => (
   margin: 0;
   text-align: center;
   text-decoration: none;
-  width: 100%;
-`;
-
-export const AdminHeaderWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 3rem;
-  margin-top: 2rem;
   width: 100%;
 `;
