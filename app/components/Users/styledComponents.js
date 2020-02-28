@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const StyledCompanyCard = styled.div`
+export const StyledUserCard = styled.div`
   border-radius: 0 0.5rem 0.5rem;
   border: 0.1rem solid grey;
   color: rgba(0, 0, 0, 0.7);
-  width: 100%;
+  width: 80%;
+  margin: 0 0 0 10%;
 `;
 
 export const StyledListItem = styled.li`
@@ -17,8 +18,9 @@ export const StyledListItem = styled.li`
 `;
 
 export const StyledImage = styled.img`
-  height: 5rem;
-  width: 5rem;
+  height: 6rem;
+  width: 6rem;
+  border-radius: 3rem;
 `;
 
 export const ImageContainer = styled.div`
@@ -57,4 +59,9 @@ export const Divider = styled(({ isLastItem, ...restProps }) => (
   display: flex;
   margin: auto;
   width: 90%;
+`;
+
+export const BannerWrapper = styled.div`
+  font-size: 1.2rem;
+  margin: 1rem 0;
 `;
