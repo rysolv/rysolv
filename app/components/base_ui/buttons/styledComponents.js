@@ -7,7 +7,9 @@ const baseButtonStyle = css`
   &:active {
     box-shadow: none;
   }
+  background-color: green;
   box-shadow: none;
+  color: white;
   font-size: 1rem;
   font-weight: 400;
   margin: 1rem;
@@ -15,14 +17,11 @@ const baseButtonStyle = css`
 `;
 
 export const PrimaryButton = styled(BaseButton)`
-  ${baseButtonStyle},
+  ${baseButtonStyle};
 
   &:hover {
     background-color: green;
   }
-
-  background-color: blue;
-  color: white;
 `;
 
 export const SecondaryButton = styled(PrimaryButton)`
@@ -35,14 +34,11 @@ export const SecondaryButton = styled(PrimaryButton)`
 `;
 
 export const PrimaryAsyncButton = styled(BaseAsyncButton)`
-  ${baseButtonStyle},
+  ${baseButtonStyle};
 
   &:hover {
     background-color: green;
   }
-
-  background-color: blue;
-  color: white;
 
   &.disabled {
     background-color: grey;

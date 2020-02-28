@@ -7,7 +7,6 @@ import {
 } from 'components/base_ui';
 import {
   ButtonContainer,
-  BannerWrapper,
   Divider,
   ImageContainer,
   InfoContainer,
@@ -28,13 +27,6 @@ const UserCard = ({
 
   const UserCardComponent = (
     <div>
-      <BannerWrapper>
-        {/* <ErrorSuccessBanner
-        error={error}
-        onClose={clearAlerts}
-        success={success}
-        /> */}
-      </BannerWrapper>
       <StyledUserCard>
         {data.map(({ name, image, joinDate }, index) => (
           <div key={name}>

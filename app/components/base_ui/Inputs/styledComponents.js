@@ -5,7 +5,7 @@ const StyledBaseInput = styled(OutlinedInput)`
   background: white;
   border-radius: 0.5rem;
   font-size: 1rem;
-  height: 4rem;
+  height: 3rem;
   width: 100%;
 `;
 
