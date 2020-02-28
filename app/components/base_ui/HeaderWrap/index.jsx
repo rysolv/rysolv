@@ -10,7 +10,6 @@ const HeaderWrap = ({ children, isMobile }) => (
       <Container>
         <LogoWrapper>
           <Logo isMobile={isMobile} />
-          <div>Rysolv</div>
         </LogoWrapper>
         {children}
       </Container>
