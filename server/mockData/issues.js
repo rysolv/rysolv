@@ -27,7 +27,7 @@ const issues = [
     language: 'C',
     languageLogo:
       'https://i7.pngguru.com/preview/465/779/778/the-c-programming-language-computer-programming-computer-icons-programmer.jpg',
-    solved: false,
+    solved: true,
     bids: 7,
     setPrice: 25,
   },

@@ -7,7 +7,7 @@ import {
   BaseInputContainer,
 } from './styledComponents';
 
-const SearchIcon = iconDictionary('search', 'small');
+const SearchIcon = iconDictionary('search');
 
 const AdminSubHeader = ({ handleChange, handleClick, handleNav }) => (
   <AdminSubHeaderContainer>

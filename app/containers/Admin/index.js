@@ -5,7 +5,7 @@ import AdminHeader from '../../components/Admin/AdminHeader';
 import { typeDictionary } from './constants';
 
 export const Admin = () => {
-  const [type, setType] = useState('Companies');
+  const [type, setType] = useState('Issues');
   const Component = typeDictionary[type];
   return (
     <Fragment key={type}>

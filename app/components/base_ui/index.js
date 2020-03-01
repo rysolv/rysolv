@@ -7,3 +7,5 @@ export * from './Checkbox';
 export * from './Inputs';
 export * from './Links';
 export * from './LoadingIndicator';
+export * from './Icons';
+// export * from './Tooltip';

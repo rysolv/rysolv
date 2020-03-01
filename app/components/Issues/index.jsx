@@ -4,34 +4,38 @@ import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import {
   ConditionalRender,
   ErrorSuccessBanner,
-  PrimaryButton,
+  Settings,
+  IconToolTip,
+  Upvote,
+  Comments,
+  Verified,
 } from 'components/base_ui';
 import {
   BannerWrapper,
-  ButtonContainer,
-  DescriptionWrapper,
-  Divider,
-  ImageContainer,
-  InfoContainer,
-  NameWrapper,
   StyledIssueCard,
-  StyledImage,
-  IssueResolved,
+  NameWrapper,
+  DollarWrapper,
   StyledListItem,
-  StyledLanguage,
-  StyledPrimaryAsyncButton,
+  StyledIssueHeader,
+  IssueLanguage,
+  IssueOverview,
+  StyledIssueContent,
+  StyledIssueText,
+  StyledIssueFooter,
+  OrganizationNameWrapper,
+  UpvotePanel,
 } from './styledComponents';
 
-const CompanyCard = ({
+const IssueCard = ({
   alerts: { error, success },
   clearAlerts,
   data,
-  handleDelete,
-  handleNav,
+  // handleDelete,
+  // handleNav,
 }) => {
   const hasCompanies = data.length > 0;
 
-  const CompanyCardComponent = (
+  const IssueCardComponent = (
     <div>
       <BannerWrapper>
         <AdminSubHeader />
@@ -42,57 +46,68 @@ const CompanyCard = ({
         />
       </BannerWrapper>
       <StyledIssueCard>
-        {data.map(
-          ({ id, name, overview, language, languageLogo, solved }, index) => (
-            <div key={name}>
-              <StyledListItem>
-                <ImageContainer>
-                  <StyledImage alt={language} src={languageLogo} />
-                  <StyledLanguage>{language}</StyledLanguage>
-                  <IssueResolved>
-                    {solved ? 'Resolved' : 'Not Resolved'}
-                  </IssueResolved>
-                </ImageContainer>
-                <InfoContainer>
+        {data.map(({ id, name, overview, language, solved }) => (
+          <div key={id}>
+            <StyledListItem>
+              <UpvotePanel>
+                <Upvote />
+                <div>1</div>
+                <div>5</div>
+                <div>10</div>
+                <div>?</div>
+              </UpvotePanel>
+              <StyledIssueContent>
+                <StyledIssueHeader>
+                  <OrganizationNameWrapper>
+                    Flutter{'  '}
+                    <IconToolTip toolTipText="Verified Contributor">
+                      <div>
+                        <Verified />
+                      </div>
+                    </IconToolTip>
+                  </OrganizationNameWrapper>
+
+                  <IssueLanguage>{language}</IssueLanguage>
+
+                  <Settings />
+                </StyledIssueHeader>
+                <StyledIssueText>
                   <NameWrapper>{name}</NameWrapper>
-                  <DescriptionWrapper>{overview}</DescriptionWrapper>
-                </InfoContainer>
-                <ButtonContainer>
-                  <PrimaryButton
-                    label="Edit"
-                    onClick={() => handleNav(`/admin/issue/${id}`)}
-                  />
-                  <StyledPrimaryAsyncButton
-                    label="Delete"
-                    onClick={() => handleDelete({ issueId: id })}
-                  />
-                </ButtonContainer>
-              </StyledListItem>
-              <Divider isLastItem={data.length === index + 1} />
-            </div>
-          ),
-        )}
+                  <IssueOverview>{overview}</IssueOverview>
+                </StyledIssueText>
+                <StyledIssueFooter>
+                  <div>
+                    <Comments /> 3 comments
+                  </div>
+                  <div>{solved ? 'Resolved' : '2 Attempts'}</div>
+                  <div>22 Watch</div>
+                  <DollarWrapper>$35.00</DollarWrapper>
+                </StyledIssueFooter>
+              </StyledIssueContent>
+            </StyledListItem>
+          </div>
+        ))}
       </StyledIssueCard>
     </div>
   );
   return (
     <ConditionalRender
-      Component={CompanyCardComponent}
+      Component={IssueCardComponent}
       FallbackComponent={<div>Hello</div>}
       shouldRender={hasCompanies}
     />
   );
 };
 
-CompanyCard.propTypes = {
+IssueCard.propTypes = {
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
   clearAlerts: T.func,
   data: T.array,
-  handleDelete: T.func,
-  handleNav: T.func,
+  // handleDelete: T.func,
+  // handleNav: T.func,
 };
 
-export default CompanyCard;
+export default IssueCard;
