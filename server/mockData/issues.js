@@ -1,5 +1,6 @@
 const issues = [
   {
+    id: '234235235',
     name:
       'Translation updates do not work when I try to change the translations in the message.js file',
     library: 'React-boilerplate',
@@ -15,6 +16,7 @@ const issues = [
     setPrice: 60,
   },
   {
+    id: '98765567',
     name:
       'Decklink output only works "properly" on NV12/i420 with 601. All other have artefacts or 90%+ encoding lag',
     library: 'OBS Studio',
@@ -30,6 +32,7 @@ const issues = [
     setPrice: 25,
   },
   {
+    id: '5683822',
     name:
       'Decklink output only works "properly" on NV12/i420 with 601. All other have artefacts or 90%+ encoding lag',
     library: 'OBS Studio',
@@ -46,4 +49,6 @@ const issues = [
   },
 ];
 
-module.exports = { issues };
+const deleteMessage = ' has been successfully deleted.';
+
+module.exports = { issues, deleteMessage };
