@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import produce from 'immer';
 import {
   CLEAR_ALERTS,
@@ -7,9 +8,19 @@ import {
   FETCH_COMPANIES_FAILURE,
   FETCH_COMPANIES_SUCCESS,
   FETCH_COMPANIES,
+  INPUT_CHANGE,
+  INPUT_ERROR,
 } from './constants';
 
 export const initialState = {
+  add: {
+    forms: {
+      importUrl: {
+        errors: { url: '' },
+        values: { url: '' },
+      },
+    },
+  },
   alerts: { error: false, success: false },
   companies: [],
   loading: {
@@ -58,6 +69,19 @@ const companiesReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_COMPANIES: {
       draft.loading.companies = true;
+      break;
+    }
+    case INPUT_CHANGE: {
+      const { category, field, value, view } = payload;
+      draft[view].forms[category].values[field] = value;
+      break;
+    }
+    case INPUT_ERROR: {
+      const { category, errors, view } = payload;
+      const fields = Object.keys(errors);
+      fields.forEach(field => {
+        draft[view].forms[category].errors[field] = errors[field] || '';
+      });
       break;
     }
   }

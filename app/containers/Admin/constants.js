@@ -3,7 +3,7 @@ import Issues from '../Issues';
 import Users from '../Users';
 
 export const typeDictionary = {
-  Companies,
-  Issues,
-  Users,
+  companies: Companies,
+  issues: Issues,
+  users: Users,
 };

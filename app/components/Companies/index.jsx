@@ -1,24 +1,9 @@
 import React from 'react';
 import T from 'prop-types';
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
-import {
-  ConditionalRender,
-  ErrorSuccessBanner,
-  PrimaryButton,
-} from 'components/base_ui';
-import {
-  BannerWrapper,
-  ButtonContainer,
-  DescriptionWrapper,
-  Divider,
-  ImageContainer,
-  InfoContainer,
-  NameWrapper,
-  StyledCompanyCard,
-  StyledImage,
-  StyledListItem,
-  StyledPrimaryAsyncButton,
-} from './styledComponents';
+import { ConditionalRender, ErrorSuccessBanner } from 'components/base_ui';
+import ViewCompanies from 'components/Companies/ViewCompanies';
+import { BannerWrapper } from './styledComponents';
 
 const CompanyCard = ({
   alerts: { error, success },
@@ -28,48 +13,18 @@ const CompanyCard = ({
   handleNav,
 }) => {
   const hasCompanies = data.length > 0;
-
+  const propsToPassDown = { data, handleDelete, handleNav };
   const CompanyCardComponent = (
     <div>
       <BannerWrapper>
-        <AdminSubHeader />
+        <AdminSubHeader handleNav={handleNav} />
         <ErrorSuccessBanner
           error={error}
           onClose={clearAlerts}
           success={success}
         />
       </BannerWrapper>
-      <StyledCompanyCard>
-        {data.map(
-          ({ description, id, image, issues, name, pullRequests }, index) => (
-            <div key={name}>
-              <StyledListItem>
-                <ImageContainer>
-                  <StyledImage alt="Company Image" src={image} />
-                </ImageContainer>
-                <InfoContainer>
-                  <NameWrapper>{name}</NameWrapper>
-                  <DescriptionWrapper>{description}</DescriptionWrapper>
-                  <div>
-                    {issues} Issues • {pullRequests} Pull Requests
-                  </div>
-                </InfoContainer>
-                <ButtonContainer>
-                  <PrimaryButton
-                    label="Edit"
-                    onClick={() => handleNav(`/admin/company/${id}`)}
-                  />
-                  <StyledPrimaryAsyncButton
-                    label="Delete"
-                    onClick={() => handleDelete({ companyId: id })}
-                  />
-                </ButtonContainer>
-              </StyledListItem>
-              <Divider isLastItem={data.length === index + 1} />
-            </div>
-          ),
-        )}
-      </StyledCompanyCard>
+      <ViewCompanies {...propsToPassDown} />
     </div>
   );
   return (

@@ -4,9 +4,9 @@ import iconDictionary from 'utils/iconDictionary';
 import { BannerWrapper, CloseButton, IconWrapper } from './styledComponents';
 import MessageSection from './bannerMessage';
 
-const CloseIcon = iconDictionary('closeMenu', 'small');
-const SuccessIcon = iconDictionary('successOutline', 'mediumSmall');
-const WarningIcon = iconDictionary('warning', 'mediumSmall');
+const CloseIcon = iconDictionary('closeMenu');
+const SuccessIcon = iconDictionary('successOutline');
+const WarningIcon = iconDictionary('warning');
 
 const ErrorSuccessBanner = ({ error, onClose, success, ...restProps }) => {
   const errorSuccessMessages = success || error;

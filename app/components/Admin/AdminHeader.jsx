@@ -2,45 +2,45 @@ import React from 'react';
 import T from 'prop-types';
 import { AdminHeaderWrapper, HeaderTab, HeaderTitle } from './styledComponents';
 
-export const AdminHeaderTabs = ({ activePage, setType }) => {
-  const handleClick = type => {
-    setType(type);
+export const AdminHeaderTabs = ({ activePage, handleNav }) => {
+  const handleClick = view => {
+    handleNav(view);
   };
   return (
     <AdminHeaderWrapper>
-      <HeaderTab isActive={activePage === 'Companies'}>
+      <HeaderTab isActive={activePage === 'companies'}>
         <HeaderTitle
-          isActive={activePage === 'Companies'}
+          isActive={activePage === 'companies'}
           label="Companies"
-          onClick={() => handleClick('Companies')}
-          path="/admin"
+          onClick={() => handleClick({ subroute: 'companies' })}
+          path="/admin/companies"
         />
       </HeaderTab>
-      <HeaderTab isActive={activePage === 'Issues'}>
+      <HeaderTab isActive={activePage === 'issues'}>
         <HeaderTitle
-          isActive={activePage === 'Issues'}
+          isActive={activePage === 'issues'}
           label="Issues"
-          onClick={() => handleClick('Issues')}
-          path="/admin"
+          onClick={() => handleClick({ subroute: 'issues' })}
+          path="/admin/issues"
         />
       </HeaderTab>
-      <HeaderTab isActive={activePage === 'Users'}>
+      <HeaderTab isActive={activePage === 'users'}>
         <HeaderTitle
-          isActive={activePage === 'Users'}
+          isActive={activePage === 'users'}
           label="Users"
-          onClick={() => handleClick('Users')}
-          path="/admin"
+          onClick={() => handleClick({ subroute: 'users' })}
+          path="/admin/users"
         />
       </HeaderTab>
     </AdminHeaderWrapper>
   );
 };
 
-AdminHeaderTabs.defaultProps = { activePage: 'Companies' };
+AdminHeaderTabs.defaultProps = { activePage: 'companies' };
 
 AdminHeaderTabs.propTypes = {
   activePage: T.string,
-  setType: T.func,
+  handleNav: T.func,
 };
 
 export default AdminHeaderTabs;

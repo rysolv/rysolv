@@ -1,6 +1,6 @@
 import React from 'react';
 import T from 'prop-types';
-import StyledBaseInput from './styledComponents';
+import { StyledBaseInput } from './styledComponents';
 
 const BaseInput = ({
   disabled,

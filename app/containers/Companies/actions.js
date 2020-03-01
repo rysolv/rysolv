@@ -6,6 +6,8 @@ import {
   FETCH_COMPANIES_FAILURE,
   FETCH_COMPANIES_SUCCESS,
   FETCH_COMPANIES,
+  INPUT_CHANGE,
+  INPUT_ERROR,
 } from './constants';
 
 export function clearAlerts() {
@@ -52,5 +54,19 @@ export function fetchCompaniesSuccess(payload) {
 export function fetchCompanies() {
   return {
     type: FETCH_COMPANIES,
+  };
+}
+
+export function inputChange(payload) {
+  return {
+    payload,
+    type: INPUT_CHANGE,
+  };
+}
+
+export function inputError(payload) {
+  return {
+    payload,
+    type: INPUT_ERROR,
   };
 }

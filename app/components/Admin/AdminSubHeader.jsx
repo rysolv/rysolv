@@ -7,9 +7,9 @@ import {
   BaseInputContainer,
 } from './styledComponents';
 
-const SearchIcon = iconDictionary('search', 'small');
+const SearchIcon = iconDictionary('search');
 
-const AdminSubHeader = ({ handleChange, handleClick, handleNav }) => (
+const AdminSubHeader = ({ handleNav }) => (
   <AdminSubHeaderContainer>
     <BaseInputContainer>
       <BaseInputWithAdornment
@@ -20,14 +20,12 @@ const AdminSubHeader = ({ handleChange, handleClick, handleNav }) => (
     </BaseInputContainer>
     <PrimaryButton
       label="Add"
-      onClick={() => handleNav(`/admin/add/company/`)}
+      onClick={() => handleNav(`/admin/companies/add`)}
     />
   </AdminSubHeaderContainer>
 );
 
 AdminSubHeader.propTypes = {
-  handleChange: T.func,
-  handleClick: T.func,
   handleNav: T.func,
 };
 

@@ -10,7 +10,9 @@ const Routes = () => (
     <section>
       <Switch>
         <Route exact path="/" component={Main} />
-        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/admin/companies/:view?" component={Admin} />
+        <Route exact path="/admin/issues/:view?" component={Admin} />
+        <Route exact path="/admin/users/:view?" component={Admin} />
         <Route component={NotFoundPage} />
       </Switch>
     </section>

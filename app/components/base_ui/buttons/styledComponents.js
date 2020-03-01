@@ -68,6 +68,7 @@ export const FlatIconButton = styled(({ disabled, ...restProps }) => (
   &:hover {
     background-color: transparent;
     box-shadow: none;
+    cursor: pointer;
   }
 
   &:active {
