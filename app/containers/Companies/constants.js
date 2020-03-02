@@ -8,6 +8,8 @@ export const FETCH_COMPANIES = 'app/Companies/FETCH_COMPANIES';
 export const FETCH_COMPANIES_FAILURE = 'app/Companies/FETCH_COMPANIES_FAILURE';
 export const FETCH_COMPANIES_SUCCESS = 'app/Companies/FETCH_COMPANIES_SUCCESS';
 
+export const INCREMENT_STEP = 'app/Companies/INCREMENT_STEP';
+
 export const INPUT_CHANGE = 'app/Companies/INPUT_CHANGE';
 
 export const INPUT_ERROR = 'app/Companies/INPUT_ERROR';

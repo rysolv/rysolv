@@ -8,6 +8,7 @@ import {
   FETCH_COMPANIES_FAILURE,
   FETCH_COMPANIES_SUCCESS,
   FETCH_COMPANIES,
+  INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
 } from './constants';
@@ -30,7 +31,7 @@ export const initialState = {
   error: {
     companies: false,
   },
-  manual: false,
+  step: 1,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -70,6 +71,11 @@ const companiesReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_COMPANIES: {
       draft.loading.companies = true;
+      break;
+    }
+    case INCREMENT_STEP: {
+      const { step } = payload;
+      draft.step = step;
       break;
     }
     case INPUT_CHANGE: {

@@ -6,12 +6,13 @@ import { FlatIconButton } from '../Buttons';
 const BaseTextInputWithAdornment = ({
   adornmentComponent,
   InputProps,
+  onClick,
   position,
   ...restProps
 }) => {
   const adornment = {
     [`${position}Adornment`]: (
-      <FlatIconButton Icon={adornmentComponent}>
+      <FlatIconButton Icon={adornmentComponent} onClick={onClick}>
         {adornmentComponent}
       </FlatIconButton>
     ),
@@ -29,6 +30,7 @@ BaseTextInputWithAdornment.defaultProps = { position: 'start' };
 BaseTextInputWithAdornment.propTypes = {
   adornmentComponent: T.node.isRequired,
   InputProps: T.object,
+  onClick: T.func,
   position: T.oneOf(['end', 'start']),
 };
 

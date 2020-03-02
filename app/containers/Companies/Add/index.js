@@ -2,9 +2,8 @@ import React from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import isEmpty from 'lodash/isEmpty';
 import AddCompanyView from 'components/Companies/AddCompanyView';
-import { inputChange, inputError } from '../actions';
+import { incrementStep, inputChange, inputError } from '../actions';
 import { validateInputs } from './helpers';
 import { makeCompanyErrors, makeCompanyInputs } from '../selectors';
 
@@ -14,6 +13,7 @@ export class AddCompany extends React.PureComponent {
     const {
       dispatchInputError,
       errors,
+      handleIncrementStep,
       handleInputChange,
       inputs,
     } = this.props;
@@ -24,16 +24,17 @@ export class AddCompany extends React.PureComponent {
         errors: validationErrors,
         view: 'add',
       });
-      if (isEmpty(validationErrors)) {
-        console.log('Done');
+      if (Object.keys(validationErrors).every(err => !validationErrors[err])) {
+        handleIncrementStep({ step: 3 });
       }
     };
     return (
       <AddCompanyView
         errors={errors}
         handleInputChange={handleInputChange}
-        inputs={inputs}
+        handleIncrementStep={handleIncrementStep}
         handleSubmit={handleSubmit}
+        inputs={inputs}
       />
     );
   }
@@ -42,6 +43,7 @@ export class AddCompany extends React.PureComponent {
 AddCompany.propTypes = {
   dispatchInputError: T.func,
   errors: T.object,
+  handleIncrementStep: T.func,
   handleInputChange: T.func,
   inputs: T.object,
 };
@@ -60,6 +62,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Companies
      */
     dispatchInputError: payload => dispatch(inputError(payload)),
+    handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }

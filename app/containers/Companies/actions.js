@@ -6,6 +6,7 @@ import {
   FETCH_COMPANIES_FAILURE,
   FETCH_COMPANIES_SUCCESS,
   FETCH_COMPANIES,
+  INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
 } from './constants';
@@ -54,6 +55,13 @@ export function fetchCompaniesSuccess(payload) {
 export function fetchCompanies() {
   return {
     type: FETCH_COMPANIES,
+  };
+}
+
+export function incrementStep(payload) {
+  return {
+    payload,
+    type: INCREMENT_STEP,
   };
 }
 

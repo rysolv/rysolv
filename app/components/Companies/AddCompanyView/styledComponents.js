@@ -14,3 +14,12 @@ export const AddCompanyContainer = styled.div`
   text-align: center;
   width: 50%;
 `;
+
+export const StyledLabel = styled.div`
+  color: blue;
+
+  :hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
