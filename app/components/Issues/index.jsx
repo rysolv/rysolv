@@ -1,6 +1,8 @@
 import React from 'react';
 import T from 'prop-types';
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import {
   ConditionalRender,
   ErrorSuccessBanner,
@@ -34,6 +36,15 @@ const IssueCard = ({
   // handleNav,
 }) => {
   const hasCompanies = data.length > 0;
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const IssueCardComponent = (
     <div>
@@ -46,47 +57,85 @@ const IssueCard = ({
         />
       </BannerWrapper>
       <StyledIssueCard>
-        {data.map(({ id, name, overview, language, solved }) => (
-          <div key={id}>
-            <StyledListItem>
-              <UpvotePanel>
-                <Upvote />
-                <div>1</div>
-                <div>5</div>
-                <div>10</div>
-                <div>?</div>
-              </UpvotePanel>
-              <StyledIssueContent>
-                <StyledIssueHeader>
-                  <OrganizationNameWrapper>
-                    Flutter{'  '}
-                    <IconToolTip toolTipText="Verified Contributor">
-                      <div>
-                        <Verified />
-                      </div>
-                    </IconToolTip>
-                  </OrganizationNameWrapper>
+        {data.map(
+          ({
+            attempts,
+            comments,
+            id,
+            language,
+            name,
+            organization,
+            organizationVerified,
+            overview,
+            rep,
+            setPrice,
+            solved,
+            watched,
+          }) => (
+            <div key={id}>
+              <StyledListItem>
+                <UpvotePanel>
+                  <Upvote />
+                  {rep}
+                </UpvotePanel>
+                <StyledIssueContent>
+                  <StyledIssueHeader>
+                    <OrganizationNameWrapper>
+                      {organization}
 
-                  <IssueLanguage>{language}</IssueLanguage>
+                      {organizationVerified ? (
+                        <IconToolTip toolTipText="Verified Contributor">
+                          <div>
+                            <Verified />
+                          </div>
+                        </IconToolTip>
+                      ) : (
+                        ''
+                      )}
+                    </OrganizationNameWrapper>
 
-                  <Settings />
-                </StyledIssueHeader>
-                <StyledIssueText>
-                  <NameWrapper>{name}</NameWrapper>
-                  <IssueOverview>{overview}</IssueOverview>
-                </StyledIssueText>
-                <StyledIssueFooter>
-                  <div>
-                    <Comments /> 3 comments
-                  </div>
-                  <div>{solved ? 'Resolved' : '2 Attempts'}</div>
-                  <div>22 Watch</div>
-                  <DollarWrapper>$35.00</DollarWrapper>
-                </StyledIssueFooter>
-              </StyledIssueContent>
-            </StyledListItem>
-          </div>
-        ))}
+                    <IssueLanguage>{language}</IssueLanguage>
+                    <div
+                      aria-controls="settingsMenu"
+                      aria-haspopup="true"
+                      tabIndex={-1}
+                      role="button"
+                      onClick={handleClick}
+                      onKeyDown={handleClick}
+                    >
+                      <Settings />
+                    </div>
+
+                    <Menu
+                      id="settingsMenu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                      <MenuItem onClick={handleClose}>Edit</MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <span style={{ color: 'red' }}>Delete</span>
+                      </MenuItem>
+                    </Menu>
+                  </StyledIssueHeader>
+                  <StyledIssueText>
+                    <NameWrapper>{name}</NameWrapper>
+                    <IssueOverview>{overview}</IssueOverview>
+                  </StyledIssueText>
+                  <StyledIssueFooter>
+                    <div>
+                      <Comments /> {comments} comments
+                    </div>
+                    <div>{solved ? 'Resolved' : `${attempts} attempts`}</div>
+                    <div>{watched} Watch</div>
+                    <DollarWrapper>${setPrice}</DollarWrapper>
+                  </StyledIssueFooter>
+                </StyledIssueContent>
+              </StyledListItem>
+            </div>
+          ),
+        )}
       </StyledIssueCard>
     </div>
   );
