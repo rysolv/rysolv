@@ -1,49 +1,72 @@
 const issues = [
   {
+    id: '234235235',
+    organization: 'React-boilerplate',
+    organizationVerified: true,
     name:
       'Translation updates do not work when I try to change the translations in the message.js file',
-    library: 'React-boilerplate',
+    repo: 'React-boilerplate',
     link: 'https://github.com/react-boilerplate/react-boilerplate/issues/2699',
-    posted: '2/11/19',
+    posted: '1/14/20',
     overview:
       'Translation updates do not work when I try to change the translations in the message.js file.',
     language: 'Javascript',
-    languageLogo:
-      'https://img.favpng.com/3/7/21/javascript-node-js-computer-icons-logo-application-software-png-favpng-ebFcx9xnNQyPYnT2RTy7PWBdV.jpg',
     solved: false,
+    comments: 4,
+    attempts: 8,
+    activeAttempts: 3,
+    rep: 44,
+    watched: 22,
     bids: 2,
-    setPrice: 60,
+    setPrice: 60.0,
+    lastActive: '2/1/20',
   },
   {
+    id: '434927342',
+    organization: 'OBS',
+    organizationVerified: false,
     name:
-      'Decklink output only works "properly" on NV12/i420 with 601. All other have artefacts or 90%+ encoding lag',
-    library: 'OBS Studio',
-    link: 'https://github.com/obsproject/obs-studio/issues/2398',
-    posted: '2/11/19',
+      'Translation updates do not work when I try to change the translations in the message.js file',
+    repo: 'React-boilerplate',
+    link: 'https://github.com/react-boilerplate/react-boilerplate/issues/2699',
+    posted: '2/11/20',
     overview:
-      "When using anything else than NV12 or i420 with 601 colour space, there are artefacts in the output. There's something like a pixel shift happening on the right part of the image. It makes text very blurry.   If you select NV12/i420/i444 with 709 or RGB in general. About 90% of the encoded frames are dropped. My CPU nor GPU is significantly going up in usage.",
-    language: 'C',
-    languageLogo:
-      'https://i7.pngguru.com/preview/465/779/778/the-c-programming-language-computer-programming-computer-icons-programmer.jpg',
+      'Translation updates do not work when I try to change the translations in the message.js file.',
+    language: 'Javascript',
     solved: false,
-    bids: 7,
-    setPrice: 25,
+    comments: 2,
+    attempts: 5,
+    activeAttempts: 2,
+    rep: 25,
+    watched: 3,
+    bids: 1,
+    setPrice: 22.0,
+    lastActive: '2/28/20',
   },
   {
+    id: '12312380',
+    organization: 'Flutter',
+    organizationVerified: true,
     name:
-      'Decklink output only works "properly" on NV12/i420 with 601. All other have artefacts or 90%+ encoding lag',
-    library: 'OBS Studio',
-    link: 'https://github.com/obsproject/obs-studio/issues/2398',
-    posted: '2/11/19',
+      'Translation updates do not work when I try to change the translations in the message.js file',
+    repo: 'React-boilerplate',
+    link: 'https://github.com/react-boilerplate/react-boilerplate/issues/2699',
+    posted: '12/11/19',
     overview:
-      "When using anything else than NV12 or i420 with 601 colour space, there are artefacts in the output. There's something like a pixel shift happening on the right part of the image. It makes text very blurry.   If you select NV12/i420/i444 with 709 or RGB in general. About 90% of the encoded frames are dropped. My CPU nor GPU is significantly going up in usage.",
-    language: 'C',
-    languageLogo:
-      'https://i7.pngguru.com/preview/465/779/778/the-c-programming-language-computer-programming-computer-icons-programmer.jpg',
+      'Translation updates do not work when I try to change the translations in the message.js file.',
+    language: 'Javascript',
     solved: false,
-    bids: 7,
-    setPrice: 25,
+    comments: 3,
+    attempts: 1,
+    activeAttempts: 1,
+    rep: 76,
+    watched: 32,
+    bids: 4,
+    setPrice: 42.0,
+    lastActive: '2/4/20',
   },
 ];
 
-module.exports = { issues };
+const deleteMessage = ' has been successfully deleted.';
+
+module.exports = { issues, deleteMessage };

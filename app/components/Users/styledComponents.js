@@ -42,7 +42,7 @@ export const StyledImage = styled.img`
   width: 5rem;
 `;
 
-export const StyledCompanyCard = styled.div`
+export const StyledUserCard = styled.div`
   border-radius: 0 0.5rem 0.5rem;
   border: 0.1rem solid grey;
   color: rgba(0, 0, 0, 0.7);
@@ -55,4 +55,9 @@ export const StyledListItem = styled.li`
   list-style-type: none;
   justify-content: space-between;
   padding: 2rem 0;
+`;
+
+export const BannerWrapper = styled.div`
+  font-size: 1.2rem;
+  margin: 1rem 0;
 `;

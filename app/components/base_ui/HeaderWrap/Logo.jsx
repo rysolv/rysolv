@@ -6,7 +6,7 @@ const defaultSiteLogo = iconDictionary('siteLogo');
 
 export const Logo = () => (
   <Link aria-label="Home Page" to="/">
-    {defaultSiteLogo}
+    {defaultSiteLogo} RYSOLV
   </Link>
 );
 

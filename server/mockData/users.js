@@ -19,4 +19,6 @@ const users = [
   },
 ];
 
-module.exports = { users };
+const deleteMessage = ' has been successfully deleted.';
+
+module.exports = { deleteMessage, users };

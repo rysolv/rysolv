@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+// import splash from '../../images/todo_splash.jfif';
 
 export const SplashImage = styled.div`
   height: 22rem;
   margin: 0;
-  background-color: grey;
-  padding: 1rem;
+  background-color: rgb(50, 168, 82);
+  padding: 2rem;
 `;
 
 export const Logo = styled.h1`

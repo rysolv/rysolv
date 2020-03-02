@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BaseLink } from 'components/base_ui';
 
-export const AboutUs = styled(BaseLink)`
+export const Admin = styled(BaseLink)`
   &:hover {
     text-decoration: underline;
   }
@@ -9,7 +9,7 @@ export const AboutUs = styled(BaseLink)`
     transform: translateY(-0.15rem);
   }
   color: 'pink';
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 500;
   margin-right: 4rem;
   text-decoration: none;
@@ -29,7 +29,7 @@ export const Login = styled(BaseLink)`
     transform: translateY(-0.15rem);
   }
   color: 'pink';
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 500;
   margin-right: 4rem;
   text-decoration: none;
@@ -43,7 +43,7 @@ export const SignUp = styled(BaseLink)`
     transform: translateY(-0.15rem);
   }
   color: 'pink';
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: 500;
   margin-right: 4rem;
   text-decoration: none;
