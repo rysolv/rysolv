@@ -29,7 +29,7 @@ const AddCompany = ({ errors, handleInputChange, handleSubmit, inputs }) => {
         position="end"
         value={inputs.url}
       />
-      or <BaseLink label="Manual" path="/admin/company/add/manual" />
+      or <BaseLink label="Manual" path="/admin/companies/add/manual" />
     </AddCompanyContainer>
   );
 };

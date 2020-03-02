@@ -16,7 +16,22 @@ const isEmptyString = str => {
 
 const validateUrl = value => {
   const organization = value.split('/')[1];
-  console.log(organization);
+  const url = value.split('/')[0].split('.');
+  const subDomain = url[0];
+  const domain = url[1];
+  const topLevelDomain = url[2];
+  if (
+    subDomain !== 'www' ||
+    domain !== 'github' ||
+    topLevelDomain !== 'com' ||
+    typeof organization !== 'string' ||
+    organization.length === 0
+  ) {
+    return {
+      error: 'invalidImport',
+      message: 'Invalid GitHub URL',
+    };
+  }
   return false;
 };
 

@@ -30,6 +30,7 @@ export const initialState = {
   error: {
     companies: false,
   },
+  manual: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
