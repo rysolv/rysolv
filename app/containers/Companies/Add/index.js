@@ -5,55 +5,47 @@ import { connect } from 'react-redux';
 import AddCompanyView from 'components/Companies/AddCompanyView';
 import { incrementStep, inputChange, inputError } from '../actions';
 import { validateInputs } from './helpers';
-import { makeCompanyErrors, makeCompanyInputs } from '../selectors';
+import { makeSelectCompanies } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class AddCompany extends React.PureComponent {
   render() {
     const {
+      data,
       dispatchInputError,
-      errors,
       handleIncrementStep,
       handleInputChange,
-      inputs,
     } = this.props;
     const handleSubmit = () => {
-      const validationErrors = validateInputs({ inputs });
-      dispatchInputError({
-        category: 'importUrl',
-        errors: validationErrors,
-        view: 'add',
-      });
+      const validationErrors = validateInputs({ data });
+      dispatchInputError({ errors: validationErrors });
       if (Object.keys(validationErrors).every(err => !validationErrors[err])) {
         handleIncrementStep({ step: 3 });
       }
     };
     return (
       <AddCompanyView
-        errors={errors}
+        data={data}
         handleInputChange={handleInputChange}
         handleIncrementStep={handleIncrementStep}
         handleSubmit={handleSubmit}
-        inputs={inputs}
       />
     );
   }
 }
 
 AddCompany.propTypes = {
+  data: T.object,
   dispatchInputError: T.func,
-  errors: T.object,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
-  inputs: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Companies
    */
-  errors: makeCompanyErrors('importUrl'),
-  inputs: makeCompanyInputs('importUrl'),
+  data: makeSelectCompanies('data'),
 });
 
 function mapDispatchToProps(dispatch) {

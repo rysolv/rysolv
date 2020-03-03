@@ -1,14 +1,14 @@
 import { validate } from 'utils/validate';
 
 const errorDictionary = {
-  url: 'urlInput',
+  importUrl: 'urlInput',
 };
 
-export const validateInputs = ({ inputs }) => {
-  const fields = Object.keys(inputs);
+export const validateInputs = ({ data }) => {
+  const fields = Object.keys(data);
   return fields.reduce((acc, field) => {
     const validationType = errorDictionary[field];
-    const value = inputs[field];
+    const { value } = data[field];
     if (validationType) {
       const validationResult = validate({
         required: true,

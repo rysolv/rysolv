@@ -33,6 +33,11 @@ const jss = create({
 
 // MUI Theme
 const muiTheme = createMuiTheme({
+  overrides: {
+    MuiInput: {
+      underline: { '&:hover:not($disabled):before': { borderBottom: 'none' } },
+    },
+  },
   palette: {
     accent3Color: 'green',
     primary1Color: 'green',

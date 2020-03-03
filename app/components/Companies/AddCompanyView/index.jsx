@@ -7,19 +7,14 @@ import { AddCompanyContainer, StyledLabel } from './styledComponents';
 const SearchIcon = iconDictionary('search');
 
 const AddCompany = ({
-  errors,
+  data,
   handleIncrementStep,
   handleInputChange,
   handleSubmit,
-  inputs,
 }) => {
+  const { importUrl } = data;
   const onChangeHandler = e => {
-    handleInputChange({
-      category: 'importUrl',
-      field: e.target.name,
-      value: e.target.value,
-      view: 'add',
-    });
+    handleInputChange({ field: 'importUrl', value: e.target.value });
   };
 
   return (
@@ -27,13 +22,13 @@ const AddCompany = ({
       Import GitHub&nbsp;
       <BaseTextInputWithAdornment
         adornmentComponent={SearchIcon}
-        error={!!errors.url}
-        helperText={errors.url || ''}
+        error={!!importUrl.error}
+        helperText={importUrl.error || ''}
         name="url"
         onClick={handleSubmit}
         onChange={onChangeHandler}
         position="end"
-        value={inputs.url}
+        value={importUrl.value}
       />
       or
       <StyledLabel onClick={() => handleIncrementStep({ step: 2 })}>
@@ -44,11 +39,10 @@ const AddCompany = ({
 };
 
 AddCompany.propTypes = {
-  errors: T.object,
+  data: T.object,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   handleSubmit: T.func,
-  inputs: T.object,
 };
 
 export default AddCompany;
