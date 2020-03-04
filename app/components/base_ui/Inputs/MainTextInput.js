@@ -15,7 +15,6 @@ const MainTextInput = ({
   ...restProps
 }) => (
   <StyledFormControl>
-    {label}
     <BaseTextInput
       classes={{ root: 'formControl' }}
       error={error}
@@ -33,6 +32,7 @@ const MainTextInput = ({
         },
         required: false,
       }}
+      label={label}
       onChange={onChange}
       required={required}
       value={value}

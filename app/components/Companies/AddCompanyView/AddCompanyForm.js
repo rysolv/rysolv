@@ -1,23 +1,29 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { MainTextInput } from 'components/base_ui';
+import { MainTextInput, PrimaryButton } from 'components/base_ui';
 
-import { manualAddForm } from './constants';
+import { companyDataDictionary } from 'containers/Companies/constants';
 
 // eslint-disable-next-line arrow-body-style
-const AddCompanyForm = ({ data, handleInputChange }) => {
+const AddCompanyForm = ({
+  data,
+  handleIncrementStep,
+  handleInputChange,
+  isDisabled,
+}) => {
   // eslint-disable-next-line no-param-reassign
   const tempData = { ...data };
   delete tempData.importUrl;
   return (
     <Fragment>
+      <div>Add Company</div>
       {Object.keys(tempData).map(input => (
         <MainTextInput
           key={`textField-${input}`}
           error={!!input.error}
           helperText={input.error}
-          label={manualAddForm[input]}
+          label={companyDataDictionary[input]}
           onChange={e =>
             handleInputChange({ field: input, value: e.target.value })
           }
@@ -25,13 +31,20 @@ const AddCompanyForm = ({ data, handleInputChange }) => {
           value={input.value}
         />
       ))}
+      <PrimaryButton
+        disabled={isDisabled}
+        label="Next"
+        onClick={() => handleIncrementStep({ step: 3 })}
+      />
     </Fragment>
   );
 };
 
 AddCompanyForm.propTypes = {
   data: T.object.isRequired,
+  handleIncrementStep: T.func.isRequired,
   handleInputChange: T.func.isRequired,
+  isDisabled: T.bool.isRequired,
 };
 
 export default AddCompanyForm;

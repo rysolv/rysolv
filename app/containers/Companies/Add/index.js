@@ -2,10 +2,12 @@ import React from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+
 import AddCompanyView from 'components/Companies/AddCompanyView';
+
 import { incrementStep, inputChange, inputError } from '../actions';
 import { validateInputs } from './helpers';
-import { makeSelectCompanies } from '../selectors';
+import { makeSelectCompanies, makeSelectCompaniesDisabled } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class AddCompany extends React.PureComponent {
@@ -15,6 +17,7 @@ export class AddCompany extends React.PureComponent {
       dispatchInputError,
       handleIncrementStep,
       handleInputChange,
+      isDisabled,
     } = this.props;
     const handleSubmit = () => {
       const validationErrors = validateInputs({ data });
@@ -29,6 +32,7 @@ export class AddCompany extends React.PureComponent {
         handleInputChange={handleInputChange}
         handleIncrementStep={handleIncrementStep}
         handleSubmit={handleSubmit}
+        isDisabled={isDisabled}
       />
     );
   }
@@ -39,6 +43,7 @@ AddCompany.propTypes = {
   dispatchInputError: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
+  isDisabled: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -46,6 +51,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Companies
    */
   data: makeSelectCompanies('data'),
+  isDisabled: makeSelectCompaniesDisabled(),
 });
 
 function mapDispatchToProps(dispatch) {

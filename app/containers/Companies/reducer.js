@@ -14,14 +14,6 @@ import {
 } from './constants';
 
 export const initialState = {
-  add: {
-    forms: {
-      importUrl: {
-        errors: { url: '' },
-        values: { url: '' },
-      },
-    },
-  },
   alerts: { error: false, success: false },
   companies: [],
   data: {
