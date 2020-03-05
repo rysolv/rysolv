@@ -120,7 +120,9 @@ const IssueCard = ({
                     </Menu>
                   </StyledIssueHeader>
                   <StyledIssueText>
-                    <NameWrapper>{name}</NameWrapper>
+                    <NameWrapper>
+                      <a href={`./issues/${id}`}>{name}</a>
+                    </NameWrapper>
                     <IssueOverview>{overview}</IssueOverview>
                   </StyledIssueText>
                   <StyledIssueFooter>

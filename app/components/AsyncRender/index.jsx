@@ -21,7 +21,7 @@ const AsyncRender = ({
     const ComponentToRender = component;
     return <ComponentToRender data={asyncData} {...propsToPassDown} />;
   }
-  return <div>Please contact customer support for further assistance.</div>;
+  return <div>Please contact customer support at (860) 491-7218</div>;
 };
 
 AsyncRender.defaultProps = { propsToPassDown: {} };
