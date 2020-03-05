@@ -7,7 +7,8 @@ import { push } from 'connected-react-router';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { incrementStep } from './actions';
+
+import { incrementStep, inputChange } from './actions';
 import { companyTypeDictionary } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
@@ -16,11 +17,22 @@ import { makeSelectCompanies } from './selectors';
 // eslint-disable-next-line react/prefer-stateless-function
 export class Companies extends React.PureComponent {
   render() {
-    const { handleIncrementStep, step, view } = this.props;
-    const Component = companyTypeDictionary[view][step];
+    const {
+      data,
+      handleIncrementStep,
+      handleInputChange,
+      handleNav,
+      view,
+    } = this.props;
+    const Component = companyTypeDictionary[view];
     return (
       <Fragment>
-        <Component handleIncrementStep={handleIncrementStep} />
+        <Component
+          data={data}
+          handleIncrementStep={handleIncrementStep}
+          handleInputChange={handleInputChange}
+          handleNav={handleNav}
+        />
       </Fragment>
     );
   }
@@ -29,8 +41,10 @@ export class Companies extends React.PureComponent {
 Companies.defaultProps = { view: 'overview' };
 
 Companies.propTypes = {
+  data: T.object,
   handleIncrementStep: T.func,
-  step: T.number,
+  handleInputChange: T.func,
+  handleNav: T.func,
   view: T.string,
 };
 
@@ -38,7 +52,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Companies
    */
-  step: makeSelectCompanies('step'),
+  data: makeSelectCompanies('data'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -47,12 +61,13 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Companies
      */
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
+    handleInputChange: payload => dispatch(inputChange(payload)),
     /**
      * Reducer : Router
      */
     handleNav: ({ subroute, view }) => {
       const viewUrl = view ? `/${view}` : '';
-      dispatch(push(`/${subroute}${viewUrl}`));
+      dispatch(push(`/admin/${subroute}${viewUrl}`));
     },
   };
 }

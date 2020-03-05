@@ -13,3 +13,11 @@ export const INCREMENT_STEP = 'app/Companies/INCREMENT_STEP';
 export const INPUT_CHANGE = 'app/Companies/INPUT_CHANGE';
 
 export const INPUT_ERROR = 'app/Companies/INPUT_ERROR';
+
+export const companyDataDictionary = {
+  companyUrl: 'Company URL',
+  description: 'Company Description',
+  githubUrl: 'GitHub URL',
+  icon: 'Icon',
+  name: 'Company Name',
+};

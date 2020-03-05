@@ -14,24 +14,27 @@ import {
 } from './constants';
 
 export const initialState = {
-  add: {
-    forms: {
-      importUrl: {
-        errors: { url: '' },
-        values: { url: '' },
-      },
-    },
-  },
   alerts: { error: false, success: false },
   companies: [],
+  data: {
+    companyUrl: { error: '', value: '' },
+    description: { error: '', value: '' },
+    githubUrl: { error: '', value: '' },
+    icon: { error: '', value: '' },
+    importUrl: { error: '', value: '' },
+    name: { error: '', value: '' },
+  },
   loading: {
+    addCompany: false,
     companies: false,
     deleteCompany: false,
   },
   error: {
     companies: false,
   },
-  step: 1,
+  step: {
+    addCompany: 1,
+  },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -74,20 +77,20 @@ const companiesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case INCREMENT_STEP: {
-      const { step } = payload;
-      draft.step = step;
+      const { step, view } = payload;
+      draft.step[view] = step;
       break;
     }
     case INPUT_CHANGE: {
-      const { category, field, value, view } = payload;
-      draft[view].forms[category].values[field] = value;
+      const { field, value } = payload;
+      draft.data[field].value = value;
       break;
     }
     case INPUT_ERROR: {
-      const { category, errors, view } = payload;
+      const { errors } = payload;
       const fields = Object.keys(errors);
       fields.forEach(field => {
-        draft[view].forms[category].errors[field] = errors[field] || '';
+        draft.data[field].error = errors[field] || '';
       });
       break;
     }

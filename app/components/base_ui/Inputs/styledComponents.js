@@ -1,7 +1,17 @@
 import styled from 'styled-components';
+import FormControl from '@material-ui/core/FormControl';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import TextField from '@material-ui/core/TextField';
-import { inputErrorRed } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  errorBorder,
+  inputBorder,
+  textColor,
+} from 'defaultStyleHelper';
+
+export const Spacer = styled.div`
+  height: 1.5rem;
+`;
 
 export const StyledBaseInput = styled(OutlinedInput)`
   background: white;
@@ -14,28 +24,35 @@ export const StyledBaseInput = styled(OutlinedInput)`
 export const StyledBaseTextInput = styled(TextField)`
   margin: 0rem 1rem;
   min-width: 20rem;
-
-  .label {
-    font-size: 1.4rem;
-    margin-left: 0.5rem;
-  }
-
-  .helper {
-    color: ${inputErrorRed};
-    font-size: 1.2rem;
-    margin-top: 0.5rem;
-  }
+  font-size: ${defaultFontSize};
 
   .base-input {
-    background: white;
-    border-radius: 0.5rem;
-    font-size: 1.4rem;
-    height: 4rem;
-    width: 100%;
+    font-size: ${defaultFontSize};
+  }
 
-    input::-ms-clear,
-    input::-ms-reveal {
-      display: none;
+  .label {
+    color: ${textColor};
+    font-size: ${defaultFontSize};
+
+    &.focused {
+      color: ${textColor};
     }
   }
+
+  .underline {
+    border-bottom: ${({ error }) => (error ? errorBorder : inputBorder)};
+
+    &:before {
+      border-bottom: none;
+    }
+
+    &:after {
+      border-bottom: none;
+    }
+  }
+`;
+
+export const StyledFormControl = styled(FormControl)`
+  margin-bottom: 0.7rem;
+  width: 100%;
 `;

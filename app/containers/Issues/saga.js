@@ -22,7 +22,6 @@ export function* deleteIssueSaga({ payload }) {
 export function* fetchIssuesSaga() {
   try {
     const { issues } = yield call(get, `/api/issues`);
-    console.log(issues);
     yield put(fetchIssuesSuccess({ issues }));
   } catch (error) {
     yield put(fetchIssuesFailure({ error }));

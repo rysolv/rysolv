@@ -1,68 +1,51 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
+
 import { StyledBaseTextInput } from './styledComponents';
 
 const BaseTextInput = ({
   disabled,
   error,
-  FormHelperTextProps,
   helperText,
-  name,
-  onBlur,
+  InputProps,
   onChange,
   required,
-  type,
   value,
   ...restProps
 }) => (
-  <Fragment>
-    <StyledBaseTextInput
-      classes={{ root: 'formControl' }}
-      disabled={disabled}
-      error={error}
-      FormHelperTextProps={{
-        classes: { root: 'helper' },
-        ...FormHelperTextProps,
-      }}
-      helperText={helperText}
-      InputProps={{
-        classes: {
-          focused: 'focused',
-          input: 'input',
-          root: 'base-input',
-        },
-      }}
-      margin="normal"
-      name={name}
-      onBlur={onBlur}
-      onChange={onChange}
-      required={required}
-      type={type}
-      value={value}
-      {...restProps}
-    />
-  </Fragment>
+  <StyledBaseTextInput
+    classes={{ root: 'formControl' }}
+    disabled={disabled}
+    error={error}
+    helperText={helperText}
+    onChange={onChange}
+    required={required}
+    value={value}
+    InputProps={{
+      classes: {
+        root: 'base-input',
+        underline: 'underline',
+      },
+      ...InputProps,
+    }}
+    InputLabelProps={{
+      classes: {
+        focused: 'focused',
+        root: 'label',
+      },
+      required: false,
+    }}
+    {...restProps}
+  />
 );
-
-BaseTextInput.defaultProps = {
-  disabled: false,
-  error: null,
-  helperText: null,
-  required: false,
-  type: 'text',
-  value: null,
-};
 
 BaseTextInput.propTypes = {
   disabled: T.bool,
-  error: T.oneOfType([T.string, T.oneOf([null]), T.bool]),
-  FormHelperTextProps: T.object,
-  helperText: T.oneOfType([T.string, T.oneOf([null])]),
-  name: T.string,
-  onBlur: T.func,
+  error: T.bool,
+  helperText: T.string,
+  InputProps: T.object,
   onChange: T.func.isRequired,
   required: T.bool,
-  type: T.string,
   value: T.oneOfType([T.number, T.string]),
 };
 
