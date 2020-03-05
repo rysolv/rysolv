@@ -25,13 +25,16 @@ export const initialState = {
     name: { error: '', value: '' },
   },
   loading: {
+    addCompany: false,
     companies: false,
     deleteCompany: false,
   },
   error: {
     companies: false,
   },
-  step: 1,
+  step: {
+    addCompany: 1,
+  },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -74,8 +77,8 @@ const companiesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case INCREMENT_STEP: {
-      const { step } = payload;
-      draft.step = step;
+      const { step, view } = payload;
+      draft.step[view] = step;
       break;
     }
     case INPUT_CHANGE: {

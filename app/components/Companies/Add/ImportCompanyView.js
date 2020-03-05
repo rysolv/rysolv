@@ -31,7 +31,9 @@ const AddCompany = ({
         value={importUrl.value}
       />
       or
-      <StyledLabel onClick={() => handleIncrementStep({ step: 2 })}>
+      <StyledLabel
+        onClick={() => handleIncrementStep({ step: 2, view: 'addCompany' })}
+      >
         Manual
       </StyledLabel>
     </AddCompanyContainer>

@@ -3,21 +3,16 @@ import T from 'prop-types';
 
 import { PrimaryButton, PrimaryAsyncButton } from 'components/base_ui';
 
-import { companyDataDictionary } from '../constants';
+import { companyDataDictionary } from '../../../containers/Companies/constants';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class VerifyAdd extends React.PureComponent {
-  componentWillUnmount() {
-    const { handleIncrementStep } = this.props;
-    handleIncrementStep({ step: 1 });
-  }
-
   render() {
     const { data, handleNav, handleIncrementStep } = this.props;
     return (
       <div>
         {Object.keys(data).map(item => (
-          <div>
+          <div key={`verify-${item}`}>
             {companyDataDictionary[item]}:<div>{data[item].value}</div>
           </div>
         ))}

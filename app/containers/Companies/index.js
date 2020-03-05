@@ -7,7 +7,8 @@ import { push } from 'connected-react-router';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { incrementStep } from './actions';
+
+import { incrementStep, inputChange } from './actions';
 import { companyTypeDictionary } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
@@ -16,14 +17,21 @@ import { makeSelectCompanies } from './selectors';
 // eslint-disable-next-line react/prefer-stateless-function
 export class Companies extends React.PureComponent {
   render() {
-    const { data, handleNav, handleIncrementStep, step, view } = this.props;
-    const Component = companyTypeDictionary[view][step];
+    const {
+      data,
+      handleIncrementStep,
+      handleInputChange,
+      handleNav,
+      view,
+    } = this.props;
+    const Component = companyTypeDictionary[view];
     return (
       <Fragment>
         <Component
           data={data}
-          handleNav={handleNav}
           handleIncrementStep={handleIncrementStep}
+          handleInputChange={handleInputChange}
+          handleNav={handleNav}
         />
       </Fragment>
     );
@@ -35,8 +43,8 @@ Companies.defaultProps = { view: 'overview' };
 Companies.propTypes = {
   data: T.object,
   handleIncrementStep: T.func,
+  handleInputChange: T.func,
   handleNav: T.func,
-  step: T.number,
   view: T.string,
 };
 
@@ -45,7 +53,6 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Companies
    */
   data: makeSelectCompanies('data'),
-  step: makeSelectCompanies('step'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -54,6 +61,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Companies
      */
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
+    handleInputChange: payload => dispatch(inputChange(payload)),
     /**
      * Reducer : Router
      */

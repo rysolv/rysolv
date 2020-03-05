@@ -9,6 +9,12 @@ const makeSelectCompanies = prop =>
     substate => substate[prop],
   );
 
+const makeSelectCompaniesDisabled = () =>
+  createSelector(
+    makeSelectCompanies('data'),
+    data => Object.keys(data).every(item => data[item].value === ''),
+  );
+
 const makeSelectCompaniesError = prop =>
   createSelector(
     makeSelectCompanies('error'),
@@ -21,10 +27,10 @@ const makeSelectCompaniesLoading = prop =>
     loading => loading[prop],
   );
 
-const makeSelectCompaniesDisabled = () =>
+const makeSelectCompaniesStep = prop =>
   createSelector(
-    makeSelectCompanies('data'),
-    data => Object.keys(data).every(item => data[item].value === ''),
+    makeSelectCompanies('step'),
+    step => step[prop],
   );
 
 export default selectCompaniesDomain;
@@ -33,4 +39,5 @@ export {
   makeSelectCompaniesDisabled,
   makeSelectCompaniesError,
   makeSelectCompaniesLoading,
+  makeSelectCompaniesStep,
 };
