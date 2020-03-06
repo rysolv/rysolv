@@ -1,13 +1,19 @@
 import styled from 'styled-components';
+import {
+  issueBorder,
+  headerOutlineColor,
+  commentHeaderColor,
+  textColor,
+} from 'defaultStyleHelper';
 
 export const IssueDetailWrapper = styled.div`
   background-color: white;
   min-height: 40vh;
-  max-width: 70rem;
+  max-width: 75rem;
   margin: 2rem 0 0 0;
   padding: 0 3rem 3rem 0;
   display: flex;
-  border: 1px solid #e0e0e0;
+  border: ${issueBorder};
   border-radius: 2px;
 `;
 
@@ -52,7 +58,8 @@ export const IssueLanguage = styled.div`
 
 export const IssueDetailColumn = styled.div`
   padding: 1rem 3rem 3rem 3rem;
-  /* flex-direction: column; */
+  display: flex;
+  flex-direction: row;
 `;
 
 export const NameWrapper = styled.div`
@@ -70,9 +77,9 @@ export const IssueDetailOverview = styled.div`
 `;
 
 export const IssueDetailHeader = styled.div`
-  background-color: #f6f8fa;
+  background-color: ${commentHeaderColor};
   padding: 0.5rem;
-  border: 1px solid grey;
+  border: 1px solid ${headerOutlineColor};
   border-top-right-radius: 2px;
   border-top-left-radius: 2px;
 
@@ -80,9 +87,9 @@ export const IssueDetailHeader = styled.div`
 `;
 
 export const IssueDetailBody = styled.div`
-  border-bottom: 1px solid grey;
-  border-left: 1px solid grey;
-  border-right: 1px solid grey;
+  border-bottom: 1px solid ${headerOutlineColor};
+  border-left: 1px solid ${headerOutlineColor};
+  border-right: 1px solid ${headerOutlineColor};
 
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 2px;
@@ -96,11 +103,34 @@ export const StyledImage = styled.div`
   background-color: #b39ddb;
   border-radius: 2rem;
   text-align: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const OverviewActivityContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding: 0 8rem 0 0;
+`;
+
+export const CommentHeader = styled.div`
+  color: ${textColor};
+  font-size: 1.2rem;
+  font-weight: 300;
+`;
+
+export const IssueSideBar = styled.div`
+  background-color: white;
+  min-width: 10rem;
+  height: 20rem;
+`;
+
+export const DollarWrapper = styled.div`
+  color: white;
+  background-color: #00c853;
+  padding: 0.25rem 1rem 0.25rem 1rem;
+  border-radius: 1rem;
+  text-align: center;
 `;
