@@ -2,6 +2,7 @@
 import produce from 'immer';
 import {
   CLEAR_ALERTS,
+  CLEAR_FORM,
   DELETE_COMPANY_FAILURE,
   DELETE_COMPANY_SUCCESS,
   DELETE_COMPANY,
@@ -11,6 +12,10 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  SAVE_INFO_FAILURE,
+  SAVE_INFO_SUCCESS,
+  SAVE_INFO,
+  VERIFY_INFO,
 } from './constants';
 
 export const initialState = {
@@ -28,10 +33,12 @@ export const initialState = {
     addCompany: false,
     companies: false,
     deleteCompany: false,
+    saveCompany: false,
   },
   error: {
     companies: false,
   },
+  isVerified: false,
   step: {
     addCompany: 1,
   },
@@ -42,6 +49,11 @@ const companiesReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
+      break;
+    }
+    case CLEAR_FORM: {
+      draft.data = initialState.data;
+      draft.isVerified = initialState.isVerified;
       break;
     }
     case DELETE_COMPANY_FAILURE: {
@@ -92,6 +104,26 @@ const companiesReducer = produce((draft, { payload, type }) => {
       fields.forEach(field => {
         draft.data[field].error = errors[field] || '';
       });
+      break;
+    }
+    case SAVE_INFO_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.addCompany = false;
+      break;
+    }
+    case SAVE_INFO_SUCCESS: {
+      const { message } = payload;
+      draft.alerts.success = { message };
+      draft.loading.addCompany = false;
+      break;
+    }
+    case SAVE_INFO: {
+      draft.loading.addCompany = true;
+      break;
+    }
+    case VERIFY_INFO: {
+      draft.isVerified = !draft.isVerified;
       break;
     }
   }

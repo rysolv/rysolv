@@ -48,20 +48,12 @@ export const PrimaryAsyncButton = styled(BaseAsyncButton)`
     background-color: ${primaryButtonHoverColor};
   }
 
-  &.disabled {
-    background-color: grey;
-  }
-
   & .progressWheel {
     color: inherit;
   }
 `;
 
 export const SecondaryAsyncButton = styled(PrimaryAsyncButton)`
-  &.disabled {
-    background-color: grey;
-  }
-
   &:hover {
     background-color: ${secondaryButtonHoverColor};
   }

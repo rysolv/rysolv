@@ -23,4 +23,6 @@ const companies = [
 
 const deleteMessage = ' has been successfully deleted.';
 
-module.exports = { deleteMessage, companies };
+const postMessage = 'Company has been added.';
+
+module.exports = { deleteMessage, companies, postMessage };
