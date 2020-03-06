@@ -8,10 +8,10 @@ import ManualForm from 'components/Companies/Add/ManualForm';
 
 import { incrementStep, inputChange } from '../actions';
 import { makeSelectCompanies, makeSelectCompaniesDisabled } from '../selectors';
-import { ButtonGroup } from './styledComponents';
+import { ButtonGroup, StyledH3 } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class ManualAdd extends React.PureComponent {
+export class ManualCompany extends React.PureComponent {
   render() {
     const {
       data,
@@ -21,6 +21,7 @@ export class ManualAdd extends React.PureComponent {
     } = this.props;
     return (
       <Fragment>
+        <StyledH3>Add Company</StyledH3>
         <ManualForm data={data} handleInputChange={handleInputChange} />
         <ButtonGroup>
           <SecondaryButton
@@ -38,7 +39,7 @@ export class ManualAdd extends React.PureComponent {
   }
 }
 
-ManualAdd.propTypes = {
+ManualCompany.propTypes = {
   data: T.object,
   handleIncrementStep: T.func,
   isDisabled: T.bool,
@@ -66,4 +67,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ManualAdd);
+)(ManualCompany);

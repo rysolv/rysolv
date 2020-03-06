@@ -1,11 +1,13 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { del, get } from 'utils/request';
-import { DELETE_COMPANY, FETCH_COMPANIES } from './constants';
+import { del, get, post } from 'utils/request';
+import { DELETE_COMPANY, FETCH_COMPANIES, SAVE_INFO } from './constants';
 import {
   deleteCompanyFailure,
   deleteCompanySuccess,
   fetchCompaniesFailure,
   fetchCompaniesSuccess,
+  saveInfoFailure,
+  saveInfoSuccess,
 } from './actions';
 
 export function* deleteCompanySaga({ payload }) {
@@ -28,7 +30,18 @@ export function* fetchCompaniesSaga() {
   }
 }
 
+export function* saveInfoSaga() {
+  try {
+    const { message } = yield call(post, `/api/companies`);
+    console.log('1message', message);
+    yield put(saveInfoSuccess({ message }));
+  } catch (error) {
+    yield put(saveInfoFailure({ error }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(DELETE_COMPANY, deleteCompanySaga);
   yield takeLatest(FETCH_COMPANIES, fetchCompaniesSaga);
+  yield takeLatest(SAVE_INFO, saveInfoSaga);
 }
