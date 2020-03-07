@@ -24,6 +24,7 @@ export class Companies extends React.PureComponent {
       handleNav,
       view,
     } = this.props;
+    console.log('view', view);
     const Component = companyTypeDictionary[view];
     return (
       <Fragment>

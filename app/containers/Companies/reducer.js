@@ -9,6 +9,9 @@ import {
   FETCH_COMPANIES_FAILURE,
   FETCH_COMPANIES_SUCCESS,
   FETCH_COMPANIES,
+  FETCH_INFO_FAILURE,
+  FETCH_INFO_SUCCESS,
+  FETCH_INFO,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
@@ -33,14 +36,17 @@ export const initialState = {
     addCompany: false,
     companies: false,
     deleteCompany: false,
+    editCompany: false,
     saveCompany: false,
   },
   error: {
     companies: false,
+    editCompany: false,
   },
   isVerified: false,
   step: {
     addCompany: 1,
+    editCompany: 1,
   },
 };
 
@@ -86,6 +92,24 @@ const companiesReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_COMPANIES: {
       draft.loading.companies = true;
+      break;
+    }
+    case FETCH_INFO_FAILURE: {
+      const { error } = payload;
+      draft.error.editCompany = error;
+      draft.loading.editCompany = false;
+      break;
+    }
+    case FETCH_INFO_SUCCESS: {
+      const { company } = payload;
+      company.forEach(detail => {
+        draft.data[detail].value = company[detail];
+      });
+      draft.loading.editCompany = false;
+      break;
+    }
+    case FETCH_INFO: {
+      draft.loading.editCompany = true;
       break;
     }
     case INCREMENT_STEP: {

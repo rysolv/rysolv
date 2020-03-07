@@ -1,7 +1,17 @@
 import styled from 'styled-components';
 import { defaultFontSize, hyperlinkColor, textColor } from 'defaultStyleHelper';
 
-export const AddCompanyContainer = styled.section`
+export const DataWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const HorizontalWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const ImportFormContainer = styled.section`
   color: ${textColor};
   display: flex;
   flex-direction: column;
@@ -13,16 +23,6 @@ export const AddCompanyContainer = styled.section`
   padding: 5rem 0;
   text-align: center;
   width: 50%;
-`;
-
-export const DataWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-export const HorizontalWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
 `;
 
 export const InputFormWrapper = styled.div`

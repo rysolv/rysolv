@@ -12,7 +12,11 @@ const makeSelectCompanies = prop =>
 const makeSelectCompaniesDisabled = () =>
   createSelector(
     makeSelectCompanies('data'),
-    data => Object.keys(data).every(item => data[item].value === ''),
+    data => {
+      const tempData = { ...data };
+      delete tempData.importUrl;
+      return Object.keys(tempData).every(item => tempData[item].value !== '');
+    },
   );
 
 const makeSelectCompaniesError = prop =>

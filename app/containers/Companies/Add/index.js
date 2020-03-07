@@ -16,7 +16,7 @@ import { AddWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class AddCompany extends React.PureComponent {
-    componentDidMount() {
+  componentDidMount() {
     const { handleIncrementStep } = this.props;
     handleIncrementStep({ step: 1, view: 'addCompany' });
   }
@@ -39,7 +39,7 @@ export class AddCompany extends React.PureComponent {
 
 AddCompany.propTypes = {
   data: T.object,
-  incrementStep: T.func,
+  handleIncrementStep: T.func,
   loading: T.bool.isRequired,
   step: T.number.isRequired,
 };

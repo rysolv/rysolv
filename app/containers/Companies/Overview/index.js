@@ -6,7 +6,12 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import CompanyCard from 'components/Companies';
-import { clearAlerts, deleteCompany, fetchCompanies } from '../actions';
+import {
+  clearAlerts,
+  deleteCompany,
+  fetchCompanies,
+  fetchInfo,
+} from '../actions';
 import {
   makeSelectCompanies,
   makeSelectCompaniesError,
@@ -28,10 +33,11 @@ export class CompaniesOverview extends React.PureComponent {
   render() {
     const {
       alerts,
-      handleClearAlerts,
       companies,
       dispatchDeleteCompany,
+      dispatchFetchInfo,
       error,
+      handleClearAlerts,
       handleNav,
       loading,
     } = this.props;
@@ -46,6 +52,7 @@ export class CompaniesOverview extends React.PureComponent {
           alerts,
           handleClearAlerts,
           handleDelete: dispatchDeleteCompany,
+          handleFetchInfo: dispatchFetchInfo,
           handleNav,
         }}
       />
@@ -61,6 +68,7 @@ CompaniesOverview.propTypes = {
   companies: T.array,
   dispatchDeleteCompany: T.func,
   dispatchFetchCompanies: T.func,
+  dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
   handleNav: T.func,
@@ -84,6 +92,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchDeleteCompany: payload => dispatch(deleteCompany(payload)),
     dispatchFetchCompanies: () => dispatch(fetchCompanies()),
+    dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     /**
      * Reducer : Router

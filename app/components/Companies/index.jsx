@@ -10,10 +10,11 @@ const CompanyCard = ({
   clearAlerts,
   data,
   handleDelete,
+  handleFetchInfo,
   handleNav,
 }) => {
   const hasCompanies = data.length > 0;
-  const propsToPassDown = { data, handleDelete, handleNav };
+  const propsToPassDown = { data, handleDelete, handleFetchInfo, handleNav };
   const CompanyCardComponent = (
     <div>
       <BannerWrapper>
@@ -44,6 +45,7 @@ CompanyCard.propTypes = {
   clearAlerts: T.func,
   data: T.array,
   handleDelete: T.func,
+  handleFetchInfo: T.func,
   handleNav: T.func,
 };
 

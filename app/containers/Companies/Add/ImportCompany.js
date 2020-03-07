@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import ImportCompanyView from 'components/Companies/Add/ImportCompanyView';
+import ImportForm from 'components/Companies/Add/ImportForm';
 
 import { incrementStep, inputChange, inputError } from '../actions';
 import { validateInputs } from './helpers';
@@ -22,16 +22,18 @@ export class ImportCompany extends React.PureComponent {
       const validationErrors = validateInputs({ data });
       dispatchInputError({ errors: validationErrors });
       if (Object.keys(validationErrors).every(err => !validationErrors[err])) {
-        handleIncrementStep({ step: 3, view: 'addCompany' })
+        handleIncrementStep({ step: 3, view: 'addCompany' });
       }
     };
     return (
-      <ImportCompanyView
-        data={data}
-        handleInputChange={handleInputChange}
-        handleIncrementStep={handleIncrementStep}
-        handleSubmit={handleSubmit}
-      />
+      <Fragment>
+        <ImportForm
+          data={data}
+          handleInputChange={handleInputChange}
+          handleIncrementStep={handleIncrementStep}
+          handleSubmit={handleSubmit}
+        />
+      </Fragment>
     );
   }
 }

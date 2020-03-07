@@ -7,6 +7,9 @@ import {
   FETCH_COMPANIES_FAILURE,
   FETCH_COMPANIES_SUCCESS,
   FETCH_COMPANIES,
+  FETCH_INFO_FAILURE,
+  FETCH_INFO_SUCCESS,
+  FETCH_INFO,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
@@ -66,6 +69,26 @@ export function fetchCompaniesSuccess(payload) {
 export function fetchCompanies() {
   return {
     type: FETCH_COMPANIES,
+  };
+}
+
+export function fetchInfoFailure(payload) {
+  return {
+    payload,
+    type: FETCH_INFO_FAILURE,
+  };
+}
+
+export function fetchInfoSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_INFO_SUCCESS,
+  };
+}
+
+export function fetchInfo() {
+  return {
+    type: FETCH_INFO,
   };
 }
 

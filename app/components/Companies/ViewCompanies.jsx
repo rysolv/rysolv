@@ -14,8 +14,13 @@ import {
   StyledPrimaryAsyncButton,
 } from './styledComponents';
 
-const CompanyCard = ({ data, handleDelete, handleNav }) => {
+const CompanyCard = ({ data, handleDelete, handleFetchInfo, handleNav }) => {
   const hasCompanies = data.length > 0;
+
+  const handleEdit = ({ companyId }) => {
+    handleFetchInfo({ companyId });
+    handleNav(`/admin/companies/edit`);
+  };
 
   const CompanyCardComponent = (
     <div>
@@ -37,7 +42,7 @@ const CompanyCard = ({ data, handleDelete, handleNav }) => {
                 <ButtonContainer>
                   <PrimaryButton
                     label="Edit"
-                    onClick={() => handleNav(`/admin/companies/edit/${id}`)}
+                    onClick={() => handleEdit({ companyId: id })}
                   />
                   <StyledPrimaryAsyncButton
                     label="Delete"
@@ -68,6 +73,7 @@ CompanyCard.propTypes = {
   }),
   data: T.array,
   handleDelete: T.func,
+  handleFetchInfo: T.func,
   handleNav: T.func,
 };
 
