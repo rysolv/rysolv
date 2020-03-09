@@ -18,12 +18,28 @@ import {
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
+  SEARCH_COMPANIES_FAILURE,
+  SEARCH_COMPANIES_SUCCESS,
+  SEARCH_COMPANIES,
+  UPDATE_INFO_FAILURE,
+  UPDATE_INFO_SUCCESS,
+  UPDATE_INFO,
   VERIFY_INFO,
 } from './constants';
 
 export const initialState = {
   alerts: { error: false, success: false },
   companies: [],
+  companyInfo: {
+    companyUrl: { error: '', value: '' },
+    description: { error: '', value: '' },
+    githubUrl: { error: '', value: '' },
+    icon: { error: '', value: '' },
+    id: { error: '', value: '' },
+    issues: { error: '', value: '' },
+    name: { error: '', value: '' },
+    pullRequests: { error: '', value: '' },
+  },
   data: {
     companyUrl: { error: '', value: '' },
     description: { error: '', value: '' },
@@ -38,12 +54,18 @@ export const initialState = {
     deleteCompany: false,
     editCompany: false,
     saveCompany: false,
+    searchCompanies: false,
+    updateCompany: false,
   },
   error: {
     companies: false,
     editCompany: false,
+    searchCompanies: false,
   },
   isVerified: false,
+  search: {
+    name: { error: '', value: '' },
+  },
   step: {
     addCompany: 1,
     editCompany: 1,
@@ -102,8 +124,8 @@ const companiesReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_INFO_SUCCESS: {
       const { company } = payload;
-      company.forEach(detail => {
-        draft.data[detail].value = company[detail];
+      Object.keys(company).forEach(detail => {
+        draft.companyInfo[detail].value = company[detail];
       });
       draft.loading.editCompany = false;
       break;
@@ -118,8 +140,8 @@ const companiesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case INPUT_CHANGE: {
-      const { field, value } = payload;
-      draft.data[field].value = value;
+      const { field, form, value } = payload;
+      draft[form][field].value = value;
       break;
     }
     case INPUT_ERROR: {
@@ -144,6 +166,38 @@ const companiesReducer = produce((draft, { payload, type }) => {
     }
     case SAVE_INFO: {
       draft.loading.addCompany = true;
+      break;
+    }
+    case SEARCH_COMPANIES_FAILURE: {
+      const { error } = payload;
+      draft.error.searchCompanies = error;
+      draft.loading.searchCompanies = false;
+      break;
+    }
+    case SEARCH_COMPANIES_SUCCESS: {
+      const { companies } = payload;
+      draft.companies = companies || null;
+      draft.loading.searchCompanies = false;
+      break;
+    }
+    case SEARCH_COMPANIES: {
+      draft.loading.searchCompanies = true;
+      break;
+    }
+    case UPDATE_INFO_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.updateCompany = false;
+      break;
+    }
+    case UPDATE_INFO_SUCCESS: {
+      const { message } = payload;
+      draft.alerts.success = { message };
+      draft.loading.updateCompany = false;
+      break;
+    }
+    case UPDATE_INFO: {
+      draft.loading.updateCompany = true;
       break;
     }
     case VERIFY_INFO: {

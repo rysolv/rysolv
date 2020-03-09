@@ -10,31 +10,16 @@ const MainTextInput = ({
   helperText,
   label,
   onChange,
-  required,
   value,
   ...restProps
 }) => (
   <StyledFormControl>
     <BaseTextInput
-      classes={{ root: 'formControl' }}
+      disabled={disabled}
       error={error}
       helperText={helperText}
-      InputProps={{
-        classes: {
-          root: 'base-input',
-          underline: 'underline',
-        },
-      }}
-      InputLabelProps={{
-        classes: {
-          focused: 'focused',
-          root: 'label',
-        },
-        required: false,
-      }}
       label={label}
       onChange={onChange}
-      required={required}
       value={value}
       {...restProps}
     />
@@ -42,13 +27,14 @@ const MainTextInput = ({
   </StyledFormControl>
 );
 
+MainTextInput.defaultProps = { disabled: false };
+
 MainTextInput.propTypes = {
   disabled: T.bool,
   error: T.bool,
   helperText: T.string,
   label: T.string,
   onChange: T.func.isRequired,
-  required: T.bool,
   value: T.oneOfType([T.number, T.string]),
 };
 

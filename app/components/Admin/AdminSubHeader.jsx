@@ -9,24 +9,43 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const AdminSubHeader = ({ handleNav }) => (
-  <AdminSubHeaderContainer>
-    <BaseInputContainer>
-      <BaseInputWithAdornment
-        adornmentComponent={SearchIcon}
-        placeholder="Search..."
-        position="end"
+const AdminSubHeader = ({
+  handleInputChange,
+  handleNav,
+  handleSearchCompanies,
+  search,
+}) => {
+  const { name } = { ...search };
+  return (
+    <AdminSubHeaderContainer>
+      <BaseInputContainer>
+        <BaseInputWithAdornment
+          adornmentComponent={SearchIcon}
+          onChange={e =>
+            handleInputChange({
+              field: 'name',
+              form: 'search',
+              value: e.target.value,
+            })
+          }
+          onClick={() => handleSearchCompanies({ name: name.value })}
+          placeholder="Search..."
+          position="end"
+        />
+      </BaseInputContainer>
+      <PrimaryButton
+        label="Add"
+        onClick={() => handleNav(`/admin/companies/add`)}
       />
-    </BaseInputContainer>
-    <PrimaryButton
-      label="Add"
-      onClick={() => handleNav(`/admin/companies/add`)}
-    />
-  </AdminSubHeaderContainer>
-);
+    </AdminSubHeaderContainer>
+  );
+};
 
 AdminSubHeader.propTypes = {
+  handleInputChange: T.func,
   handleNav: T.func,
+  handleSearchCompanies: T.func,
+  search: T.object,
 };
 
 export default AdminSubHeader;

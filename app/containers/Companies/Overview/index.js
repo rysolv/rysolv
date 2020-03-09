@@ -5,12 +5,13 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-import CompanyCard from 'components/Companies';
+import Companies from 'components/Companies';
 import {
   clearAlerts,
-  deleteCompany,
   fetchCompanies,
   fetchInfo,
+  inputChange,
+  searchCompanies,
 } from '../actions';
 import {
   makeSelectCompanies,
@@ -34,26 +35,30 @@ export class CompaniesOverview extends React.PureComponent {
     const {
       alerts,
       companies,
-      dispatchDeleteCompany,
       dispatchFetchInfo,
       error,
       handleClearAlerts,
+      handleInputChange,
       handleNav,
+      handleSearchCompanies,
       loading,
+      search,
     } = this.props;
 
     return (
       <AsyncRender
         asyncData={companies}
-        component={CompanyCard}
+        component={Companies}
         error={error}
         loading={loading}
         propsToPassDown={{
           alerts,
           handleClearAlerts,
-          handleDelete: dispatchDeleteCompany,
           handleFetchInfo: dispatchFetchInfo,
+          handleInputChange,
           handleNav,
+          handleSearchCompanies,
+          search,
         }}
       />
     );
@@ -66,13 +71,15 @@ CompaniesOverview.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   companies: T.array,
-  dispatchDeleteCompany: T.func,
   dispatchFetchCompanies: T.func,
   dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
+  handleInputChange: T.func,
   handleNav: T.func,
+  handleSearchCompanies: T.func,
   loading: T.bool,
+  search: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -83,6 +90,7 @@ const mapStateToProps = createStructuredSelector({
   companies: makeSelectCompanies('companies'),
   error: makeSelectCompaniesError('companies'),
   loading: makeSelectCompaniesLoading('companies'),
+  search: makeSelectCompanies('search'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -90,10 +98,11 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Companies
      */
-    dispatchDeleteCompany: payload => dispatch(deleteCompany(payload)),
     dispatchFetchCompanies: () => dispatch(fetchCompanies()),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
+    handleInputChange: payload => dispatch(inputChange(payload)),
+    handleSearchCompanies: payload => dispatch(searchCompanies(payload)),
     /**
      * Reducer : Router
      */

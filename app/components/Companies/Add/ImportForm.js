@@ -14,7 +14,11 @@ const ImportForm = ({
 }) => {
   const { importUrl } = data;
   const onChangeHandler = e => {
-    handleInputChange({ field: 'importUrl', value: e.target.value });
+    handleInputChange({
+      field: 'importUrl',
+      form: 'data',
+      value: e.target.value,
+    });
   };
 
   return (

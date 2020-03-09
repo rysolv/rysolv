@@ -5,6 +5,8 @@ import {
   FETCH_COMPANIES,
   FETCH_INFO,
   SAVE_INFO,
+  SEARCH_COMPANIES,
+  UPDATE_INFO,
 } from './constants';
 import {
   deleteCompanyFailure,
@@ -15,6 +17,10 @@ import {
   fetchInfoSuccess,
   saveInfoFailure,
   saveInfoSuccess,
+  searchCompaniesFailure,
+  searchCompaniesSuccess,
+  updateInfoFailure,
+  updateInfoSuccess,
 } from './actions';
 
 export function* deleteCompanySaga({ payload }) {
@@ -37,7 +43,7 @@ export function* fetchCompaniesSaga() {
   }
 }
 
-export function* fetchInfoSaga(payload) {
+export function* fetchInfoSaga({ payload }) {
   const { companyId } = payload;
   try {
     const { company } = yield call(get, `/api/companies/${companyId}`);
@@ -56,9 +62,38 @@ export function* saveInfoSaga() {
   }
 }
 
+export function* searchCompaniesSaga({ payload }) {
+  const { name } = payload;
+  try {
+    const { companies } = yield call(
+      get,
+      `/api/companies/search?company=${name}`,
+    );
+    yield put(searchCompaniesSuccess({ companies }));
+  } catch (error) {
+    yield put(searchCompaniesFailure({ error }));
+  }
+}
+
+export function* updateInfoSaga({ payload }) {
+  const { companyId, companyInfo } = payload;
+  try {
+    const { message } = yield call(
+      post,
+      `/api/companies/${companyId}`,
+      companyInfo,
+    );
+    yield put(updateInfoSuccess({ message }));
+  } catch (error) {
+    yield put(updateInfoFailure({ error }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(DELETE_COMPANY, deleteCompanySaga);
   yield takeLatest(FETCH_COMPANIES, fetchCompaniesSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(SAVE_INFO, saveInfoSaga);
+  yield takeLatest(SEARCH_COMPANIES, searchCompaniesSaga);
+  yield takeLatest(UPDATE_INFO, updateInfoSaga);
 }

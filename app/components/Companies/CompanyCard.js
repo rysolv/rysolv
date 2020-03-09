@@ -1,6 +1,8 @@
 import React from 'react';
 import T from 'prop-types';
-import { ConditionalRender, PrimaryButton } from 'components/base_ui';
+
+import { PrimaryButton } from 'components/base_ui';
+
 import {
   ButtonContainer,
   DescriptionWrapper,
@@ -11,26 +13,23 @@ import {
   StyledCompanyCard,
   StyledImage,
   StyledListItem,
-  StyledPrimaryAsyncButton,
 } from './styledComponents';
 
-const CompanyCard = ({ data, handleDelete, handleFetchInfo, handleNav }) => {
-  const hasCompanies = data.length > 0;
-
+const CompanyCard = ({ data, handleFetchInfo, handleNav }) => {
   const handleEdit = ({ companyId }) => {
     handleFetchInfo({ companyId });
     handleNav(`/admin/companies/edit`);
   };
 
-  const CompanyCardComponent = (
+  return (
     <div>
       <StyledCompanyCard>
         {data.map(
-          ({ description, id, image, issues, name, pullRequests }, index) => (
+          ({ description, id, icon, issues, name, pullRequests }, index) => (
             <div key={name}>
               <StyledListItem>
                 <ImageContainer>
-                  <StyledImage alt="Company Image" src={image} />
+                  <StyledImage alt="Company Image" src={icon} />
                 </ImageContainer>
                 <InfoContainer>
                   <NameWrapper>{name}</NameWrapper>
@@ -44,10 +43,6 @@ const CompanyCard = ({ data, handleDelete, handleFetchInfo, handleNav }) => {
                     label="Edit"
                     onClick={() => handleEdit({ companyId: id })}
                   />
-                  <StyledPrimaryAsyncButton
-                    label="Delete"
-                    onClick={() => handleDelete({ companyId: id })}
-                  />
                 </ButtonContainer>
               </StyledListItem>
               <Divider isLastItem={data.length === index + 1} />
@@ -57,22 +52,10 @@ const CompanyCard = ({ data, handleDelete, handleFetchInfo, handleNav }) => {
       </StyledCompanyCard>
     </div>
   );
-  return (
-    <ConditionalRender
-      Component={CompanyCardComponent}
-      FallbackComponent={<div>Hello</div>}
-      shouldRender={hasCompanies}
-    />
-  );
 };
 
 CompanyCard.propTypes = {
-  alerts: T.shape({
-    error: T.oneOfType([T.bool, T.object]),
-    success: T.oneOfType([T.bool, T.object]),
-  }),
   data: T.array,
-  handleDelete: T.func,
   handleFetchInfo: T.func,
   handleNav: T.func,
 };

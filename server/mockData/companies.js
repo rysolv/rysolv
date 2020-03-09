@@ -4,7 +4,7 @@ const companies = [
     name: 'OBS Studio',
     description:
       'OBS Studio is software designed for capturing, compositing, encoding, recording, and streaming video content, efficiently.',
-    image:
+    icon:
       'https://dl1.cbsistatic.com/i/2017/09/13/64334dd2-2705-4533-896c-37d1330eec79/d80e113983f6c20342e00cbac2a3259d/imgingest-5782482541192744064.png',
     issues: 33,
     pullRequests: 43,
@@ -25,4 +25,6 @@ const deleteMessage = ' has been successfully deleted.';
 
 const postMessage = 'Company has been added.';
 
-module.exports = { deleteMessage, companies, postMessage };
+const updateMessage = 'Company information has been updated.';
+
+module.exports = { deleteMessage, companies, postMessage, updateMessage };

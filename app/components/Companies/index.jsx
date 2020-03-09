@@ -2,51 +2,79 @@ import React from 'react';
 import T from 'prop-types';
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import { ConditionalRender, ErrorSuccessBanner } from 'components/base_ui';
-import ViewCompanies from 'components/Companies/ViewCompanies';
+import EmptyCard from './EmptyCard';
+import CompanyCard from './CompanyCard';
 import { BannerWrapper } from './styledComponents';
 
-const CompanyCard = ({
+const Companies = ({
   alerts: { error, success },
   clearAlerts,
   data,
-  handleDelete,
   handleFetchInfo,
+  handleInputChange,
   handleNav,
+  handleSearchCompanies,
+  search,
 }) => {
-  const hasCompanies = data.length > 0;
-  const propsToPassDown = { data, handleDelete, handleFetchInfo, handleNav };
-  const CompanyCardComponent = (
+  const hasCompanies = data.length > 0 && !data.includes(null);
+  const propsToPassDown = { data, handleFetchInfo, handleNav };
+  const CompanyComponent = (
     <div>
       <BannerWrapper>
-        <AdminSubHeader handleNav={handleNav} />
+        <AdminSubHeader
+          handleInputChange={handleInputChange}
+          handleNav={handleNav}
+          handleSearchCompanies={handleSearchCompanies}
+          search={search}
+        />
         <ErrorSuccessBanner
           error={error}
           onClose={clearAlerts}
           success={success}
         />
       </BannerWrapper>
-      <ViewCompanies {...propsToPassDown} />
+      <CompanyCard {...propsToPassDown} />
+    </div>
+  );
+  const EmptyComponent = (
+    <div>
+      <BannerWrapper>
+        <AdminSubHeader
+          handleInputChange={handleInputChange}
+          handleNav={handleNav}
+          handleSearchCompanies={handleSearchCompanies}
+          search={search}
+        />
+        <ErrorSuccessBanner
+          error={error}
+          onClose={clearAlerts}
+          success={success}
+        />
+      </BannerWrapper>
+      <EmptyCard />
     </div>
   );
   return (
     <ConditionalRender
-      Component={CompanyCardComponent}
-      FallbackComponent={<div>Hello</div>}
+      Component={CompanyComponent}
+      FallbackComponent={EmptyComponent}
       shouldRender={hasCompanies}
     />
   );
 };
 
-CompanyCard.propTypes = {
+Companies.propTypes = {
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
   clearAlerts: T.func,
   data: T.array,
-  handleDelete: T.func,
   handleFetchInfo: T.func,
+  handleInputChange: T.func,
   handleNav: T.func,
+  handleSearchCompanies: T.func,
+  search: T.object,
 };
 
-export default CompanyCard;
+export default Companies;

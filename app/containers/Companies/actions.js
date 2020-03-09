@@ -16,6 +16,12 @@ import {
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
+  SEARCH_COMPANIES_FAILURE,
+  SEARCH_COMPANIES_SUCCESS,
+  SEARCH_COMPANIES,
+  UPDATE_INFO_FAILURE,
+  UPDATE_INFO_SUCCESS,
+  UPDATE_INFO,
   VERIFY_INFO,
 } from './constants';
 
@@ -86,8 +92,9 @@ export function fetchInfoSuccess(payload) {
   };
 }
 
-export function fetchInfo() {
+export function fetchInfo(payload) {
   return {
+    payload,
     type: FETCH_INFO,
   };
 }
@@ -131,6 +138,48 @@ export function saveInfo(payload) {
   return {
     payload,
     type: SAVE_INFO,
+  };
+}
+
+export function searchCompaniesFailure(payload) {
+  return {
+    payload,
+    type: SEARCH_COMPANIES_FAILURE,
+  };
+}
+
+export function searchCompaniesSuccess(payload) {
+  return {
+    payload,
+    type: SEARCH_COMPANIES_SUCCESS,
+  };
+}
+
+export function searchCompanies(payload) {
+  return {
+    payload,
+    type: SEARCH_COMPANIES,
+  };
+}
+
+export function updateInfoFailure(payload) {
+  return {
+    payload,
+    type: UPDATE_INFO_FAILURE,
+  };
+}
+
+export function updateInfoSuccess(payload) {
+  return {
+    payload,
+    type: UPDATE_INFO_SUCCESS,
+  };
+}
+
+export function updateInfo(payload) {
+  return {
+    payload,
+    type: UPDATE_INFO,
   };
 }
 

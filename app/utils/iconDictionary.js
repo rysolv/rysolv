@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import Comments from '@material-ui/icons/Forum';
+import Delete from '@material-ui/icons/Delete';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
 import Upvote from '@material-ui/icons/ArrowUpward';
@@ -14,6 +15,7 @@ export default (name, options) => {
   const icons = {
     closeMenu: CloseMenu,
     comments: Comments,
+    delete: Delete,
     search: Search,
     settings: Settings,
     siteLogo: SiteLogo,

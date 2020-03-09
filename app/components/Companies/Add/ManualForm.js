@@ -17,9 +17,12 @@ const ManualForm = ({ data, handleInputChange }) => {
         helperText={name.error}
         label={companyDataDictionary.name}
         onChange={e =>
-          handleInputChange({ field: 'name', value: e.target.value })
+          handleInputChange({
+            field: 'name',
+            form: 'data',
+            value: e.target.value,
+          })
         }
-        required
         value={name.value}
       />
       <MainTextInput
@@ -27,9 +30,12 @@ const ManualForm = ({ data, handleInputChange }) => {
         helperText={description.error}
         label={companyDataDictionary.description}
         onChange={e =>
-          handleInputChange({ field: 'description', value: e.target.value })
+          handleInputChange({
+            field: 'description',
+            form: 'data',
+            value: e.target.value,
+          })
         }
-        required
         value={description.value}
       />
       <MainTextInput
@@ -37,9 +43,12 @@ const ManualForm = ({ data, handleInputChange }) => {
         helperText={icon.error}
         label={companyDataDictionary.icon}
         onChange={e =>
-          handleInputChange({ field: 'icon', value: e.target.value })
+          handleInputChange({
+            field: 'icon',
+            form: 'data',
+            value: e.target.value,
+          })
         }
-        required
         value={icon.value}
       />
       <HorizontalWrapper>
@@ -48,9 +57,12 @@ const ManualForm = ({ data, handleInputChange }) => {
           helperText={companyUrl.error}
           label={companyDataDictionary.companyUrl}
           onChange={e =>
-            handleInputChange({ field: 'companyUrl', value: e.target.value })
+            handleInputChange({
+              field: 'companyUrl',
+              form: 'data',
+              value: e.target.value,
+            })
           }
-          required
           value={companyUrl.value}
         />
         <MainTextInput
@@ -58,9 +70,12 @@ const ManualForm = ({ data, handleInputChange }) => {
           helperText={githubUrl.error}
           label={companyDataDictionary.githubUrl}
           onChange={e =>
-            handleInputChange({ field: 'githubUrl', value: e.target.value })
+            handleInputChange({
+              field: 'githubUrl',
+              form: 'data',
+              value: e.target.value,
+            })
           }
-          required
           value={githubUrl.value}
         />
       </HorizontalWrapper>

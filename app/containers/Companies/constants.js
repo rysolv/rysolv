@@ -24,6 +24,16 @@ export const SAVE_INFO = 'app/Companies/SAVE_INFO';
 export const SAVE_INFO_FAILURE = 'app/Companies/SAVE_INFO_FAILURE';
 export const SAVE_INFO_SUCCESS = 'app/Companies/SAVE_INFO_SUCCESS';
 
+export const SEARCH_COMPANIES = 'app/Companies/SEARCH_COMPANIES';
+export const SEARCH_COMPANIES_FAILURE =
+  'app/Companies/SEARCH_COMPANIES_FAILURE';
+export const SEARCH_COMPANIES_SUCCESS =
+  'app/Companies/SEARCH_COMPANIES_SUCCESS';
+
+export const UPDATE_INFO = 'app/Companies/UPDATE_INFO';
+export const UPDATE_INFO_FAILURE = 'app/Companies/UPDATE_INFO_FAILURE';
+export const UPDATE_INFO_SUCCESS = 'app/Companies/UPDATE_INFO_SUCCESS';
+
 export const VERIFY_INFO = 'app/Companies/VERIFY_INFO';
 
 export const companyDataDictionary = {
@@ -31,7 +41,12 @@ export const companyDataDictionary = {
   description: 'Company Description',
   githubUrl: 'GitHub URL',
   icon: 'Icon',
+  issues: 'Issues',
   name: 'Company Name',
+  pullRequests: 'Pull Requests',
 };
+
+export const emptyCardMessage =
+  'There are no companies matching the search terms.';
 
 export const verifyMessage = 'I agree that this information is correct.';
