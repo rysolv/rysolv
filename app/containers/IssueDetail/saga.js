@@ -4,11 +4,10 @@ import { FETCH_ISSUE_DETAIL } from './constants';
 import { fetchIssueDetailFailure, fetchIssueDetailSuccess } from './actions';
 
 export function* fetchIssueDetailSaga({ payload }) {
-  console.log('Gets to SAGA');
   const { id } = payload;
   console.log(id);
   try {
-    const { issueDetail } = yield call(get, `/api/issues/helloo`);
+    const { issueDetail } = yield call(get, `/api/issues/${id}`);
     console.log(issueDetail);
     yield put(fetchIssueDetailSuccess({ issueDetail }));
   } catch (error) {

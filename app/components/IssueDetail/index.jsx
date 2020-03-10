@@ -1,24 +1,28 @@
 import React from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import iconDictionary from 'utils/iconDictionary';
 import {
   ConditionalRender,
   BaseContainer,
   Upvote,
+  CommentIcon,
   Verified,
   IconToolTip,
 } from 'components/base_ui';
 import {
-  CommentHeader,
+  DollarWrapper,
   IssueDetailBody,
   IssueDetailColumn,
   IssueDetailHeader,
-  IssueSideBar,
-  DollarWrapper,
   IssueDetailOverview,
   IssueDetailTopBar,
   IssueDetailWrapper,
   IssueLanguage,
+  IssueResolved,
+  IssueSideBar,
+  IssueSubHeader,
+  IssueSubItem,
   LeftPanel,
   NameWrapper,
   OrganizationNameWrapper,
@@ -28,6 +32,10 @@ import {
   UpvotePanel,
 } from './styledComponents';
 
+import Comments from '../Coments';
+
+const GlassesIcon = iconDictionary('glasses');
+
 const IssueDetail = ({ data }) => {
   const hasDetails = isEmpty(data.issueDetail);
 
@@ -35,7 +43,7 @@ const IssueDetail = ({ data }) => {
 
   const {
     // attempts,
-    // comments,
+    comments,
     // id,
     language,
     datePosted,
@@ -45,22 +53,9 @@ const IssueDetail = ({ data }) => {
     // overview,
     rep,
     setPrice,
-    // solved,
-    // watched,
+    solved,
+    watched,
   } = data.issueDetail;
-
-  // const CommentCard = (
-  //   <IssueDetailOverview>
-  //     <IssueDetailHeader>Paul House</IssueDetailHeader>
-  //     <IssueDetailBody>
-  //       Please report the NvidiaBlackmagic driver version (Desktop Video) you
-  //       used and also the Ubuntu, kernel and OBS-Studio version. Did OBS-studio
-  //       in Ubuntu linux show you the options to set color space for Decklink
-  //       output, since OBS-Studio 24.03 only shows Mode as in resolution and
-  //       framerate for me (BMD Desktop video 11.4 Ubuntu 19.04/kernel 5.0.0-37)?
-  //     </IssueDetailBody>
-  //   </IssueDetailOverview>
-  // );
 
   const IssueDetailComponent = (
     <BaseContainer>
@@ -91,6 +86,18 @@ const IssueDetail = ({ data }) => {
               <IssueLanguage>{language}</IssueLanguage>
             </StyledIssueHeader>
             <NameWrapper>{name}</NameWrapper>
+            <IssueSubHeader>
+              <IssueResolved solved={solved}>
+                {solved ? 'Closed' : 'Open Issue'}
+              </IssueResolved>
+
+              <IssueSubItem>Posted {datePosted}</IssueSubItem>
+              <IssueSubItem>0 Open PR</IssueSubItem>
+              <IssueSubItem>
+                <CommentIcon /> {comments} comments
+              </IssueSubItem>
+              <IssueSubItem>{watched} Watch</IssueSubItem>
+            </IssueSubHeader>
           </IssueDetailTopBar>
 
           <IssueDetailColumn>
@@ -131,9 +138,7 @@ const IssueDetail = ({ data }) => {
                 </IssueDetailOverview>
               </OverviewActivityContainer>
               <br />
-              <CommentHeader>Comments</CommentHeader>
-              All Comments / RYSOLV / Github
-              <br />
+
               <OverviewActivityContainer>
                 <StyledImage>PH</StyledImage>
 
@@ -169,6 +174,7 @@ const IssueDetail = ({ data }) => {
                   </IssueDetailBody>
                 </IssueDetailOverview>
               </OverviewActivityContainer>
+              <Comments comments={['hello', 'goodbye']} />
             </div>
             <IssueSideBar>
               <IssueDetailHeader>Labels</IssueDetailHeader>
@@ -179,6 +185,19 @@ const IssueDetail = ({ data }) => {
               <IssueDetailBody>
                 {' '}
                 <DollarWrapper>${setPrice}</DollarWrapper>
+              </IssueDetailBody>
+              <IssueDetailHeader>Watching</IssueDetailHeader>
+              <IssueDetailBody>
+                <button
+                  style={{
+                    width: '6rem',
+                    height: '2rem',
+                  }}
+                  type="button"
+                  aria-label="Watch"
+                >
+                  {watched} {GlassesIcon}
+                </button>
               </IssueDetailBody>
             </IssueSideBar>
           </IssueDetailColumn>

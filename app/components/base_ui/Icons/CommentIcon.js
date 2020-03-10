@@ -4,6 +4,6 @@ import { StyledComment } from './styledComponents';
 
 const defaultComment = iconDictionary('comments');
 
-const Comment = () => <StyledComment>{defaultComment}</StyledComment>;
+const CommentIcon = () => <StyledComment>{defaultComment}</StyledComment>;
 
-export default Comment;
+export default CommentIcon;

@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+
 import {
   issueBorder,
   headerOutlineColor,
   commentHeaderColor,
   textColor,
+  darkTextColor,
+  moneyGreen,
 } from 'defaultStyleHelper';
 
 export const IssueDetailWrapper = styled.div`
@@ -44,7 +47,7 @@ export const StyledIssueHeader = styled.div`
 
 export const OrganizationNameWrapper = styled.div`
   display: flex;
-  color: #37474f;
+  color: ${textColor};
   display: inline-block;
   font-weight: bold;
 `;
@@ -63,10 +66,21 @@ export const IssueDetailColumn = styled.div`
 `;
 
 export const NameWrapper = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   max-height: 3rem;
-  margin: 1rem 0 0 0;
+  margin: 1rem 0 1rem 0;
   font-weight: bold;
+  color: ${darkTextColor};
+`;
+
+export const IssueResolved = styled.div`
+  color: white;
+  font-weight: bold;
+  background-color: ${({ solved }) => (solved ? 'gray' : moneyGreen)};
+  border: ${issueBorder};
+  display: inline-block;
+  padding: 0.5rem;
+  border-radius: 5rem;
 `;
 
 export const IssueDetailOverview = styled.div`
@@ -115,12 +129,6 @@ export const OverviewActivityContainer = styled.div`
   justify-content: flex-end;
 `;
 
-export const CommentHeader = styled.div`
-  color: ${textColor};
-  font-size: 1.2rem;
-  font-weight: 300;
-`;
-
 export const IssueSideBar = styled.div`
   background-color: white;
   min-width: 10rem;
@@ -129,8 +137,20 @@ export const IssueSideBar = styled.div`
 
 export const DollarWrapper = styled.div`
   color: white;
-  background-color: #00c853;
+  background-color: ${moneyGreen};
   padding: 0.25rem 1rem 0.25rem 1rem;
   border-radius: 1rem;
   text-align: center;
+`;
+
+export const IssueSubHeader = styled.div`
+  display: flex;
+  align-items: center;
+
+  justify-content: flex-start;
+`;
+
+export const IssueSubItem = styled.div`
+  margin: 0 1rem 0 1rem;
+  color: ${textColor};
 `;
