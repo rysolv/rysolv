@@ -3,9 +3,14 @@
 const express = require('express');
 const logger = require('./logger');
 
+// const { buildSchema } = require('graphql');
+const graphQlHttp = require('express-graphql');
+const graphQlSchema = require('./graphql/schema');
+const graphQlResolvers = require('./graphql/resolvers');
+
 const argv = require('./argv');
 const port = require('./port');
-const router = require('./routes');
+// const router = require('./routes');
 const setup = require('./middlewares/frontendMiddleware');
 const isDev = process.env.NODE_ENV !== 'production';
 const ngrok =
@@ -15,8 +20,15 @@ const ngrok =
 const { resolve } = require('path');
 const app = express();
 
-// If you need a backend, e.g. an API, add your custom backend-specific middleware here
-app.use(router);
+// route requests through GraphQL
+app.use(
+  '/graphql',
+  graphQlHttp({
+    schema: graphQlSchema,
+    rootValue: graphQlResolvers,
+    graphiql: true,
+  }),
+);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
