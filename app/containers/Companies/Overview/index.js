@@ -15,6 +15,7 @@ import {
 } from '../actions';
 import {
   makeSelectCompanies,
+  makeSelectCompaniesSearchDisabled,
   makeSelectCompaniesError,
   makeSelectCompaniesLoading,
 } from '../selectors';
@@ -35,6 +36,7 @@ export class CompaniesOverview extends React.PureComponent {
     const {
       alerts,
       companies,
+      disabled,
       dispatchFetchInfo,
       error,
       handleClearAlerts,
@@ -53,6 +55,7 @@ export class CompaniesOverview extends React.PureComponent {
         loading={loading}
         propsToPassDown={{
           alerts,
+          disabled,
           handleClearAlerts,
           handleFetchInfo: dispatchFetchInfo,
           handleInputChange,
@@ -71,6 +74,7 @@ CompaniesOverview.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   companies: T.array,
+  disabled: T.bool.isRequired,
   dispatchFetchCompanies: T.func,
   dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]),
@@ -88,6 +92,7 @@ const mapStateToProps = createStructuredSelector({
    */
   alerts: makeSelectCompanies('alerts'),
   companies: makeSelectCompanies('companies'),
+  disabled: makeSelectCompaniesSearchDisabled(),
   error: makeSelectCompaniesError('companies'),
   loading: makeSelectCompaniesLoading('companies'),
   search: makeSelectCompanies('search'),

@@ -76,6 +76,10 @@ export const FlatIconButton = styled(({ disabled, ...restProps }) => (
     box-shadow: none;
   }
 
+  &:disabled {
+    background-color: transparent;
+  }
+
   background-color: transparent;
   box-shadow: none;
 `;

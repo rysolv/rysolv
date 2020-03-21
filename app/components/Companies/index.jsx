@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
-import { ConditionalRender, ErrorSuccessBanner } from 'components/base_ui';
+import { ErrorSuccessBanner } from 'components/base_ui';
 import EmptyCard from './EmptyCard';
 import CompanyCard from './CompanyCard';
 import { BannerWrapper } from './styledComponents';
@@ -10,6 +10,7 @@ const Companies = ({
   alerts: { error, success },
   clearAlerts,
   data,
+  disabled,
   handleFetchInfo,
   handleInputChange,
   handleNav,
@@ -18,48 +19,29 @@ const Companies = ({
 }) => {
   const hasCompanies = data.length > 0 && !data.includes(null);
   const propsToPassDown = { data, handleFetchInfo, handleNav };
-  const CompanyComponent = (
-    <div>
-      <BannerWrapper>
-        <AdminSubHeader
-          handleInputChange={handleInputChange}
-          handleNav={handleNav}
-          handleSearchCompanies={handleSearchCompanies}
-          search={search}
-        />
-        <ErrorSuccessBanner
-          error={error}
-          onClose={clearAlerts}
-          success={success}
-        />
-      </BannerWrapper>
-      <CompanyCard {...propsToPassDown} />
-    </div>
-  );
-  const EmptyComponent = (
-    <div>
-      <BannerWrapper>
-        <AdminSubHeader
-          handleInputChange={handleInputChange}
-          handleNav={handleNav}
-          handleSearchCompanies={handleSearchCompanies}
-          search={search}
-        />
-        <ErrorSuccessBanner
-          error={error}
-          onClose={clearAlerts}
-          success={success}
-        />
-      </BannerWrapper>
-      <EmptyCard />
-    </div>
+  const viewToRender = hasCompanies ? (
+    <CompanyCard {...propsToPassDown} />
+  ) : (
+    <EmptyCard />
   );
   return (
-    <ConditionalRender
-      Component={CompanyComponent}
-      FallbackComponent={EmptyComponent}
-      shouldRender={hasCompanies}
-    />
+    <div>
+      <BannerWrapper>
+        <AdminSubHeader
+          disabled={disabled}
+          handleInputChange={handleInputChange}
+          handleNav={handleNav}
+          handleSearchCompanies={handleSearchCompanies}
+          search={search}
+        />
+        <ErrorSuccessBanner
+          error={error}
+          onClose={clearAlerts}
+          success={success}
+        />
+      </BannerWrapper>
+      {viewToRender}
+    </div>
   );
 };
 
@@ -70,6 +52,7 @@ Companies.propTypes = {
   }),
   clearAlerts: T.func,
   data: T.array,
+  disabled: T.bool.isRequired,
   handleFetchInfo: T.func,
   handleInputChange: T.func,
   handleNav: T.func,

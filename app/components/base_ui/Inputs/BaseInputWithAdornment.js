@@ -6,13 +6,18 @@ import { StyledFlatIconButton } from './styledComponents';
 
 const BaseInputWithAdornment = ({
   adornmentComponent,
+  disabled,
   onClick,
   position,
   ...restProps
 }) => {
   const adornment = {
     [`${position}Adornment`]: (
-      <StyledFlatIconButton Icon={adornmentComponent} onClick={onClick}>
+      <StyledFlatIconButton
+        disabled={disabled}
+        Icon={adornmentComponent}
+        onClick={onClick}
+      >
         {adornmentComponent}
       </StyledFlatIconButton>
     ),
@@ -24,6 +29,7 @@ BaseInputWithAdornment.defaultProps = { position: 'start' };
 
 BaseInputWithAdornment.propTypes = {
   adornmentComponent: T.node.isRequired,
+  disabled: T.bool.isRequired,
   onClick: T.func,
   position: T.oneOf(['end', 'start']),
 };

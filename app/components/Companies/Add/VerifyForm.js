@@ -4,6 +4,7 @@ import T from 'prop-types';
 import { companyDataDictionary } from '../../../containers/Companies/constants';
 import {
   DataWrapper,
+  KeyAndValueContainer,
   KeyGroupWrapper,
   KeyWrapper,
   ValueWrapper,
@@ -19,18 +20,16 @@ export class VerifyForm extends React.PureComponent {
       <DataWrapper>
         <KeyGroupWrapper>
           {Object.keys(tempData).map(key => (
-            <KeyWrapper key={`verify-${key}`}>
-              {companyDataDictionary[key]}:
-            </KeyWrapper>
+            <KeyAndValueContainer>
+              <KeyWrapper key={`verify-${key}`}>
+                {companyDataDictionary[key]}:
+              </KeyWrapper>
+              <ValueWrapper key={`verify-${key}`}>
+                {tempData[key].value}
+              </ValueWrapper>
+            </KeyAndValueContainer>
           ))}
         </KeyGroupWrapper>
-        <div>
-          {Object.keys(tempData).map(key => (
-            <ValueWrapper key={`verify-${key}`}>
-              {tempData[key].value}
-            </ValueWrapper>
-          ))}
-        </div>
       </DataWrapper>
     );
   }

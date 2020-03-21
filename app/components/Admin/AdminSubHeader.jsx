@@ -10,6 +10,7 @@ import {
 const SearchIcon = iconDictionary('search');
 
 const AdminSubHeader = ({
+  disabled,
   handleInputChange,
   handleNav,
   handleSearchCompanies,
@@ -20,6 +21,7 @@ const AdminSubHeader = ({
     <AdminSubHeaderContainer>
       <BaseInputContainer>
         <BaseInputWithAdornment
+          disabled={disabled}
           adornmentComponent={SearchIcon}
           onChange={e =>
             handleInputChange({
@@ -42,6 +44,7 @@ const AdminSubHeader = ({
 };
 
 AdminSubHeader.propTypes = {
+  disabled: T.bool.isRequired,
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearchCompanies: T.func,

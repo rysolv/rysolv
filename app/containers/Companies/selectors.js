@@ -31,6 +31,12 @@ const makeSelectCompaniesLoading = prop =>
     loading => loading[prop],
   );
 
+const makeSelectCompaniesSearchDisabled = () =>
+  createSelector(
+    makeSelectCompanies('search'),
+    ({ name }) => name.value === '',
+  );
+
 const makeSelectCompaniesStep = prop =>
   createSelector(
     makeSelectCompanies('step'),
@@ -43,5 +49,6 @@ export {
   makeSelectCompaniesDisabled,
   makeSelectCompaniesError,
   makeSelectCompaniesLoading,
+  makeSelectCompaniesSearchDisabled,
   makeSelectCompaniesStep,
 };
