@@ -1,25 +1,32 @@
 const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
+  scalar Object
+
   type Issue {
     id: ID!
-    title: String!
-    description: String!
-    createDate: String!
+    created_date: Object
+    modified_date: Object
+    name: String!
+    body: String!
+    repo: String!
   }
 
-  type IssueInput {
-    title: String!
-    description: String!
-    createDate: String!
+  input IssueInput {
+    name: String!
+    body: String!
+    repo: String!
   }
 
   type RootQuery {
     issues: [Issue!]!
+    oneIssue(id: ID!): [Issue!]!
   }
 
   type RootMutation {
-    createIssue(issueInput: String): Issue
+    createIssue(issueInput: IssueInput): [Issue!]!
+    deleteIssue(id: ID!): [Issue!]!
+    transformIssue(id: ID!): [Issue!]!
   }
 
   schema {

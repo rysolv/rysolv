@@ -1,8 +1,8 @@
 const organizations = `CREATE TABLE IF NOT EXISTS
 organizations(
   id UUID PRIMARY KEY,
-  createdDate TIMESTAMP,
-  modifiedDate TIMESTAMP,
+  created_date TIMESTAMP,
+  modified_date TIMESTAMP,
   name VARCHAR(128) NOT NULL,
   description VARCHAR(128) NOT NULL,
   repo VARCHAR(128) NOT NULL

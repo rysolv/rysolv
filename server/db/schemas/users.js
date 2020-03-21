@@ -1,14 +1,14 @@
 const users = `CREATE TABLE IF NOT EXISTS
 users(
   id UUID PRIMARY KEY,
-  createdDate TIMESTAMP,
-  modifiedDate TIMESTAMP,
-  firstName VARCHAR(128) NOT NULL,
-  lastName VARCHAR(128) NOT NULL,
+  created_date TIMESTAMP,
+  modified_date TIMESTAMP,
+  first_name VARCHAR(128) NOT NULL,
+  last_name VARCHAR(128) NOT NULL,
   email VARCHAR(128) NOT NULL,
-  lastOnline TIMESTAMP,
-  watchingNumber SMALLINT,
-  watchingList TEXT []
+  last_online TIMESTAMP,
+  watching_number SMALLINT,
+  watching_list TEXT []
 )`;
 
 module.exports = users;

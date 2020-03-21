@@ -1,55 +1,64 @@
-const { pool, createIssue, getIssues } = require('../../db');
-
-console.log('create issue function');
-console.log(createIssue, pool, getIssues);
+const { v4: uuidv4 } = require('uuid');
+const {
+  createIssue,
+  getIssues,
+  getOneIssue,
+  deleteIssue,
+  transformIssue,
+} = require('../../db');
 
 module.exports = {
   issues: async () => {
     try {
-      const issue = [
-        {
-          id: Math.random().toString(),
-          title: 'title',
-          description: 'description',
-          createDate: new Date().toISOString(),
-        },
-        {
-          id: Math.random().toString(),
-          title: 'Another issue',
-          description: 'more different description',
-          createDate: new Date().toISOString(),
-        },
-      ];
-      console.log('Some list of issues');
-      return issue;
+      const issues = await getIssues('issues');
+      return issues;
+    } catch (err) {
+      throw err;
+    }
+  },
+  oneIssue: async args => {
+    const { id } = args;
+    try {
+      const issues = await getOneIssue('issues', id);
+      return issues;
     } catch (err) {
       throw err;
     }
   },
   createIssue: async args => {
+    const issue = [
+      [
+        uuidv4(),
+        new Date(),
+        new Date(),
+        args.issueInput.name,
+        args.issueInput.body,
+        args.issueInput.repo,
+      ],
+    ];
     try {
-      const issue = {
-        id: Math.random().toString(),
-        title: 'title',
-        description: 'description',
-        createDate: new Date().toISOString(),
-      };
-      console.log(args);
-      return issue;
+      const result = await createIssue(issue);
+      return result;
     } catch (err) {
       throw err;
     }
   },
-  updateIssue: async args => {
+  transformIssue: async args => {
+    const { id } = args;
     try {
-      const newIssue = {
-        id: Math.random().toString(),
-        title: 'title',
-        description: 'description',
-        createDate: new Date().toISOString(),
-      };
       console.log(args);
-      return newIssue;
+      const issues = await transformIssue('issues', id);
+      console.log(issues);
+      return issues;
+    } catch (err) {
+      throw err;
+    }
+  },
+  deleteIssue: async args => {
+    const { id } = args;
+    try {
+      const issues = await deleteIssue('issues', id);
+      return issues;
     } catch (err) {
       throw err;
     }

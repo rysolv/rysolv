@@ -1,7 +1,8 @@
 // single query (no data)
 const singleQuery = async (pool, queryText) => {
   try {
-    await pool.query(queryText);
+    const result = await pool.query(queryText);
+    return result;
   } catch (error) {
     pool.end();
     throw error;
@@ -23,15 +24,18 @@ const mapQuery = async (pool, array) => {
 
 // map array of values to a query
 const mapValues = async (pool, queryText, array) => {
+  const results = [];
   const queryDB = async value => {
     try {
-      await pool.query(queryText, value);
+      const { rows } = await pool.query(queryText, value);
+      results.push(rows[0]);
     } catch (error) {
       pool.end();
       throw error;
     }
   };
   await Promise.all(array.map(value => queryDB(value)));
+  return results;
 };
 
 // map queries and print
