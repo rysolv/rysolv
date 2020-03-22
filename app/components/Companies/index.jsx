@@ -11,6 +11,7 @@ const Companies = ({
   clearAlerts,
   data,
   disabled,
+  handleDeleteCompany,
   handleFetchInfo,
   handleInputChange,
   handleNav,
@@ -18,7 +19,12 @@ const Companies = ({
   search,
 }) => {
   const hasCompanies = data.length > 0 && !data.includes(null);
-  const propsToPassDown = { data, handleFetchInfo, handleNav };
+  const propsToPassDown = {
+    data,
+    handleDeleteCompany,
+    handleFetchInfo,
+    handleNav,
+  };
   const viewToRender = hasCompanies ? (
     <CompanyCard {...propsToPassDown} />
   ) : (
@@ -53,6 +59,7 @@ Companies.propTypes = {
   clearAlerts: T.func,
   data: T.array,
   disabled: T.bool.isRequired,
+  handleDeleteCompany: T.func,
   handleFetchInfo: T.func,
   handleInputChange: T.func,
   handleNav: T.func,

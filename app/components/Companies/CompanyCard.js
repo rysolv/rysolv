@@ -1,28 +1,51 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
-import { PrimaryButton } from 'components/base_ui';
+import SettingsMenu from 'components/SettingsMenu';
 
 import {
-  ButtonContainer,
   ContentContainer,
   DateWrapper,
   DescriptionWrapper,
   ImageContainer,
   NameWrapper,
+  SettingsContainer,
   StatsWrapper,
   StyledCompanyCard,
   StyledImage,
   StyledListItem,
+  StyledSettingWrapper,
   TextContainer,
   TitleContainer,
 } from './styledComponents';
 
-const CompanyCard = ({ data, handleFetchInfo, handleNav }) => {
+const CompanyCard = ({
+  data,
+  handleDeleteCompany,
+  handleFetchInfo,
+  handleNav,
+}) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDelete = ({ companyId }) => {
+    handleDeleteCompany({ companyId });
+    handleNav(`/admin/companies`);
+    setAnchorEl(null);
+  };
+
   const handleEdit = ({ companyId }) => {
     handleFetchInfo({ companyId });
     handleNav(`/admin/companies/edit`);
+    setAnchorEl(null);
   };
 
   return (
@@ -42,9 +65,20 @@ const CompanyCard = ({ data, handleFetchInfo, handleNav }) => {
               <div>
                 <TitleContainer>
                   <NameWrapper>{name}</NameWrapper>
-                  <DateWrapper>
-                    Last post {moment(lastPostDate, 'MM/DD/YYYY').fromNow()}
-                  </DateWrapper>
+                  <SettingsContainer>
+                    <DateWrapper>
+                      Last post {moment(lastPostDate, 'MM/DD/YYYY').fromNow()}
+                    </DateWrapper>
+                    <StyledSettingWrapper>
+                      <SettingsMenu
+                        anchorEl={anchorEl}
+                        handleClick={handleClick}
+                        handleClose={() => handleClose()}
+                        handleDelete={() => handleDelete({ companyId: id })}
+                        handleEdit={() => handleEdit({ companyId: id })}
+                      />
+                    </StyledSettingWrapper>
+                  </SettingsContainer>
                 </TitleContainer>
                 <ContentContainer>
                   <ImageContainer>
@@ -56,12 +90,6 @@ const CompanyCard = ({ data, handleFetchInfo, handleNav }) => {
                       {issues} Issues • {pullRequests} Pull Requests
                     </StatsWrapper>
                   </TextContainer>
-                  <ButtonContainer>
-                    <PrimaryButton
-                      label="Edit"
-                      onClick={() => handleEdit({ companyId: id })}
-                    />
-                  </ButtonContainer>
                 </ContentContainer>
               </div>
             </StyledListItem>
@@ -74,6 +102,7 @@ const CompanyCard = ({ data, handleFetchInfo, handleNav }) => {
 
 CompanyCard.propTypes = {
   data: T.array,
+  handleDeleteCompany: T.func,
   handleFetchInfo: T.func,
   handleNav: T.func,
 };

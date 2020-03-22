@@ -1,5 +1,6 @@
 import React from 'react';
 import T from 'prop-types';
+import omit from 'lodash/omit';
 
 import { companyDataDictionary } from '../../../containers/Companies/constants';
 import {
@@ -14,8 +15,7 @@ import {
 export class VerifyExistingForm extends React.PureComponent {
   render() {
     const { companyInfo } = this.props;
-    const tempCompanyInfo = { ...companyInfo };
-    delete tempCompanyInfo.id;
+    const tempCompanyInfo = omit(companyInfo, ['id', 'lastPostDate']);
     return (
       <DataWrapper>
         <KeyGroupWrapper>

@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
+import { hyperlinkColor } from 'defaultStyleHelper';
+
 export const StyledSettings = styled.div`
   color: #424242;
   display: inline-block;
   text-align: center;
   &:hover {
     cursor: pointer;
-    color: purple;
+    color: ${hyperlinkColor};
   }
 `;
 

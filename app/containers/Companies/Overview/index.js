@@ -8,6 +8,7 @@ import AsyncRender from 'components/AsyncRender';
 import Companies from 'components/Companies';
 import {
   clearAlerts,
+  deleteCompany,
   fetchCompanies,
   fetchInfo,
   inputChange,
@@ -40,6 +41,7 @@ export class CompaniesOverview extends React.PureComponent {
       dispatchFetchInfo,
       error,
       handleClearAlerts,
+      handleDeleteCompany,
       handleInputChange,
       handleNav,
       handleSearchCompanies,
@@ -57,6 +59,7 @@ export class CompaniesOverview extends React.PureComponent {
           alerts,
           disabled,
           handleClearAlerts,
+          handleDeleteCompany,
           handleFetchInfo: dispatchFetchInfo,
           handleInputChange,
           handleNav,
@@ -79,6 +82,7 @@ CompaniesOverview.propTypes = {
   dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
+  handleDeleteCompany: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearchCompanies: T.func,
@@ -106,6 +110,7 @@ function mapDispatchToProps(dispatch) {
     dispatchFetchCompanies: () => dispatch(fetchCompanies()),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
+    handleDeleteCompany: payload => dispatch(deleteCompany(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchCompanies: payload => dispatch(searchCompanies(payload)),
     /**

@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
+
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import {
   ConditionalRender,
   ErrorSuccessBanner,
-  Settings,
   IconToolTip,
   Upvote,
   Comments,
   Verified,
 } from 'components/base_ui';
+import SettingsMenu from 'components/SettingsMenu';
+
 import {
   BannerWrapper,
   StyledIssueCard,
@@ -36,7 +36,7 @@ const IssueCard = ({
   // handleNav,
 }) => {
   const hasCompanies = data.length > 0;
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -95,29 +95,11 @@ const IssueCard = ({
                     </OrganizationNameWrapper>
 
                     <IssueLanguage>{language}</IssueLanguage>
-                    <div
-                      aria-controls="settingsMenu"
-                      aria-haspopup="true"
-                      tabIndex={-1}
-                      role="button"
-                      onClick={handleClick}
-                      onKeyDown={handleClick}
-                    >
-                      <Settings />
-                    </div>
-
-                    <Menu
-                      id="settingsMenu"
+                    <SettingsMenu
                       anchorEl={anchorEl}
-                      keepMounted
-                      open={Boolean(anchorEl)}
-                      onClose={handleClose}
-                    >
-                      <MenuItem onClick={handleClose}>Edit</MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <span style={{ color: 'red' }}>Delete</span>
-                      </MenuItem>
-                    </Menu>
+                      handleClick={handleClick}
+                      handleClose={handleClose}
+                    />
                   </StyledIssueHeader>
                   <StyledIssueText>
                     <NameWrapper>{name}</NameWrapper>

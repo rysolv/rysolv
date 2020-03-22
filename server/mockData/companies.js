@@ -15,7 +15,7 @@ const companies = [
     name: 'Flutter',
     description:
       "Flutter is Google's SDK for crafting beautiful, fast user experiences for mobile, web and desktop from a single codebase.",
-    image:
+    icon:
       'https://secure.meetupstatic.com/photos/event/c/7/f/7/highres_478491191.jpeg',
     issues: 5000,
     lastPostDate: '02/21/2019',

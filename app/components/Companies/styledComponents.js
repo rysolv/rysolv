@@ -8,13 +8,9 @@ export const BannerWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-export const ButtonContainer = styled.div`
-  padding: 1rem;
-`;
-
 export const ContentContainer = styled.div`
   display: flex;
-  height: 80%;
+  height: 70%;
 `;
 
 export const DateWrapper = styled.div`
@@ -29,6 +25,7 @@ export const DescriptionWrapper = styled.div`
 `;
 
 export const ImageContainer = styled.div`
+  text-align: center;
   width: 30%;
 `;
 
@@ -47,8 +44,12 @@ export const MessageWrapper = styled.div`
 export const NameWrapper = styled.div`
   font-size: 1.2rem;
   font-weight: 500;
-  height: 20%;
+  height: 30%;
   padding: 1rem;
+`;
+
+export const SettingsContainer = styled.div`
+  display: flex;
 `;
 
 export const StatsWrapper = styled.div`
@@ -84,6 +85,10 @@ export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   }
 
   background-color: red;
+`;
+
+export const StyledSettingWrapper = styled.div`
+  padding: 1rem;
 `;
 
 export const TitleContainer = styled.div`
