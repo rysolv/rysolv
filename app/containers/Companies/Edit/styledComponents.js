@@ -29,6 +29,11 @@ export const StyledIconButton = styled(FlatIconButton)`
   position: absolute;
   right: 0;
   top: 0;
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+  }
 `;
 
 export const Wrapper = styled.div`

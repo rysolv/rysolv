@@ -21,12 +21,8 @@ export class VerifyExistingForm extends React.PureComponent {
         <KeyGroupWrapper>
           {Object.keys(tempCompanyInfo).map(key => (
             <KeyAndValueContainer>
-              <KeyWrapper key={`verify-${key}`}>
-                {companyDataDictionary[key]}:
-              </KeyWrapper>
-              <ValueWrapper key={`verify-${key}`}>
-                {tempCompanyInfo[key].value}
-              </ValueWrapper>
+              <KeyWrapper>{companyDataDictionary[key]}:</KeyWrapper>
+              <ValueWrapper>{tempCompanyInfo[key].value}</ValueWrapper>
             </KeyAndValueContainer>
           ))}
         </KeyGroupWrapper>

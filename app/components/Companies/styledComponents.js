@@ -9,25 +9,27 @@ export const BannerWrapper = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
+  padding: 1rem;
+`;
+
+export const ContentContainer = styled.div`
+  display: flex;
+  height: 80%;
+`;
+
+export const DateWrapper = styled.div`
   align-self: center;
   padding: 1rem;
 `;
 
 export const DescriptionWrapper = styled.div`
+  font-size: 1.2rem;
+  line-height: 1.5rem;
   padding: 1rem 0;
-  font-size: 1rem;
 `;
 
 export const ImageContainer = styled.div`
-  align-self: center;
-  text-align: center;
-  width: 20%;
-`;
-
-export const InfoContainer = styled.div`
-  align-self: center;
-  display: flex;
-  flex-direction: column;
+  width: 30%;
 `;
 
 export const MessageWrapper = styled.div`
@@ -44,12 +46,19 @@ export const MessageWrapper = styled.div`
 
 export const NameWrapper = styled.div`
   font-size: 1.2rem;
+  font-weight: 500;
+  height: 20%;
+  padding: 1rem;
+`;
+
+export const StatsWrapper = styled.div`
+  padding: 1rem 0;
 `;
 
 export const StyledCompanyCard = styled.div`
   color: rgba(0, 0, 0, 0.7);
-  width: 80%;
   margin: 0 0 0 10%;
+  width: 80%;
 `;
 
 export const StyledImage = styled.img`
@@ -60,13 +69,13 @@ export const StyledImage = styled.img`
 
 export const StyledListItem = styled.li`
   background-color: white;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
   border: 0.1rem solid ${borderColor};
   display: flex;
   flex-direction: row;
+  height: 13.35rem;
   list-style-type: none;
   margin: 1rem;
-  padding: 1rem 0;
 `;
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
@@ -75,4 +84,15 @@ export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   }
 
   background-color: red;
+`;
+
+export const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;

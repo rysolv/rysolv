@@ -37,6 +37,7 @@ export const initialState = {
     icon: { error: '', value: '' },
     id: { error: '', value: '' },
     issues: { error: '', value: '' },
+    lastPostDate: { error: '', value: '' },
     name: { error: '', value: '' },
     pullRequests: { error: '', value: '' },
   },

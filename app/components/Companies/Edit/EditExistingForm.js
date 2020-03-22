@@ -1,5 +1,6 @@
 import React from 'react';
 import T from 'prop-types';
+import omit from 'lodash/omit';
 
 import { MainTextInput } from 'components/base_ui';
 import { companyDataDictionary } from 'containers/Companies/constants';
@@ -7,8 +8,7 @@ import { companyDataDictionary } from 'containers/Companies/constants';
 import { InputFormWrapper } from './styledComponents';
 
 const EditExistingForm = ({ companyInfo, handleInputChange }) => {
-  const tempCompanyInfo = { ...companyInfo };
-  delete tempCompanyInfo.id;
+  const tempCompanyInfo = omit(companyInfo, ['id', 'lastPostDate']);
   return (
     <InputFormWrapper>
       {Object.keys(tempCompanyInfo).map(info => {
