@@ -20,7 +20,7 @@ export class VerifyExistingForm extends React.PureComponent {
       <DataWrapper>
         <KeyGroupWrapper>
           {Object.keys(tempCompanyInfo).map(key => (
-            <KeyAndValueContainer>
+            <KeyAndValueContainer key={`container-${key}`}>
               <KeyWrapper>{companyDataDictionary[key]}:</KeyWrapper>
               <ValueWrapper>{tempCompanyInfo[key].value}</ValueWrapper>
             </KeyAndValueContainer>

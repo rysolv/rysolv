@@ -21,7 +21,7 @@ export const DateWrapper = styled.div`
 export const DescriptionWrapper = styled.div`
   font-size: 1.2rem;
   line-height: 1.5rem;
-  padding: 1rem 0;
+  padding: 1rem 1rem 1rem 0;
 `;
 
 export const ImageContainer = styled.div`
