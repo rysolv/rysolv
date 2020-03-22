@@ -7,12 +7,14 @@ module.exports = buildSchema(`
     id: ID!
     created_date: Object
     modified_date: Object
+    organization: String!
     name: String!
     body: String!
     repo: String!
   }
 
   input IssueInput {
+    organization: String!
     name: String!
     body: String!
     repo: String!

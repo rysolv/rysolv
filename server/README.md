@@ -3,9 +3,14 @@
 ### Configuring the DB
 RYSOLV uses a postgreSQL database and node pg to connect
 
-`Add connection string to /db/connect.js`
+Create a `.env` with the following inputs (matching your local db). Will be pulled in by `/db/connect.js`
+* `DB_USER=user`
+* `DB_PASSWORD=password`
+* `DB_PORT=5432`
+* `DB_HOST=localhost`
+* `DB_NAME=rysolv`
 
-`npm run seed`
+To seed data - run `npm run seed`
 
 #### Running with /graphql dev GUI
 Set `graphiql: true,` in `/index.js` // will make .env for this later
@@ -25,6 +30,7 @@ Set `graphiql: true,` in `/index.js` // will make .env for this later
 * `"pg": "^7.18.2"` // Manages node postgres connection
 * `"uuid": "^7.0.2"` // generate unique IDs - use V4
 * `"minimist": "1.2.0"` // idk what this does
+* `"dotenv": "^8.2.0"` // load env variables from .env
 
 ### Dev Dependencies
 * "make-runnable": "^1.3.6" // may be removable

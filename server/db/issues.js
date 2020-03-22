@@ -17,8 +17,8 @@ const getOneIssue = async (table, id) => {
 // Create new Issue
 const createIssue = async data => {
   const queryText = `INSERT INTO
-    issues(id, created_date, modified_date, name, body, repo)
-    VALUES($1, $2, $3, $4, $5, $6)
+    issues(id, created_date, modified_date, organization, name, body, repo)
+    VALUES($1, $2, $3, $4, $5, $6, $7)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -26,7 +26,7 @@ const createIssue = async data => {
 
 // GET single issue
 const transformIssue = async (table, id, data) => {
-  const queryText = `UPDATE ${table} SET (modified_date, name, body, repo) = ($1, $2, $3, $4) WHERE (id = '${id}') RETURNING *`;
+  const queryText = `UPDATE ${table} SET (modified_date, organization, name, body, repo) = ($1, $2, $3, $4, $5) WHERE (id = '${id}') RETURNING *`;
   const result = await mapValues(queryText, data);
   return result;
 };

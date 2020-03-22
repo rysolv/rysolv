@@ -32,6 +32,7 @@ module.exports = {
         uuidv4(),
         new Date(),
         new Date(),
+        issueInput.organization,
         issueInput.name,
         issueInput.body,
         issueInput.repo,
@@ -48,7 +49,13 @@ module.exports = {
     const { id, issueInput } = args;
     try {
       const data = [
-        [new Date(), issueInput.name, issueInput.body, issueInput.repo],
+        [
+          new Date(), // update date
+          issueInput.organization,
+          issueInput.name,
+          issueInput.body,
+          issueInput.repo,
+        ],
       ];
       const issues = await transformIssue('issues', id, data);
       return issues;
