@@ -1,4 +1,3 @@
-const pool = require('../db/connect');
 const { mapQuery, mapQueryPrint } = require('../db/query');
 
 // Import schemas
@@ -19,7 +18,7 @@ const createTables = async () => {
     organizationSchema,
     pullRequestSchema,
   ];
-  await mapQuery(pool, schema);
+  await mapQuery(schema);
 };
 
 // Drop all tables
@@ -31,7 +30,7 @@ const dropAllTables = async () => {
     'DROP TABLE IF EXISTS organizations',
     'DROP TABLE IF EXISTS pullRequests',
   ];
-  await mapQuery(pool, queryArray);
+  await mapQuery(queryArray);
 };
 
 // Print all rows in all tables
@@ -43,7 +42,7 @@ const printTables = async () => {
     'SELECT * FROM pullRequests',
     'SELECT * FROM comments',
   ];
-  await mapQueryPrint(pool, queryArray);
+  await mapQueryPrint(queryArray);
 };
 
 module.exports = {

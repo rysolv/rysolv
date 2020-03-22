@@ -26,14 +26,15 @@ module.exports = {
     }
   },
   createIssue: async args => {
+    const { issueInput } = args;
     const issue = [
       [
         uuidv4(),
         new Date(),
         new Date(),
-        args.issueInput.name,
-        args.issueInput.body,
-        args.issueInput.repo,
+        issueInput.name,
+        issueInput.body,
+        issueInput.repo,
       ],
     ];
     try {
@@ -44,11 +45,12 @@ module.exports = {
     }
   },
   transformIssue: async args => {
-    const { id } = args;
+    const { id, issueInput } = args;
     try {
-      console.log(args);
-      const issues = await transformIssue('issues', id);
-      console.log(issues);
+      const data = [
+        [new Date(), issueInput.name, issueInput.body, issueInput.repo],
+      ];
+      const issues = await transformIssue('issues', id, data);
       return issues;
     } catch (err) {
       throw err;

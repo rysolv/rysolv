@@ -4,6 +4,7 @@ const {
   getIssues,
   getOneIssue,
   deleteIssue,
+  transformIssue,
 } = require('./issues');
 const { createUser } = require('./users');
 const { createComment } = require('./comments');
@@ -24,4 +25,5 @@ module.exports = {
   getIssues,
   getOneIssue,
   printTables,
+  transformIssue,
 };

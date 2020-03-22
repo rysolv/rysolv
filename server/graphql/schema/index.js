@@ -26,7 +26,7 @@ module.exports = buildSchema(`
   type RootMutation {
     createIssue(issueInput: IssueInput): [Issue!]!
     deleteIssue(id: ID!): [Issue!]!
-    transformIssue(id: ID!): [Issue!]!
+    transformIssue(id: ID!, issueInput: IssueInput): [Issue!]!
   }
 
   schema {
