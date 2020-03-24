@@ -6,7 +6,12 @@ issues(
   organization VARCHAR(128) NOT NULL,
   name VARCHAR(128) NOT NULL,
   body VARCHAR(128) NOT NULL,
-  repo VARCHAR(128) NOT NULL
+  repo VARCHAR(128) NOT NULL,
+  language VARCHAR(128),
+  comments text[],
+  attempts SMALLINT DEFAULT 0,
+  active_attempts SMALLINT DEFAULT 0,
+  contributor UUID []
 )`;
 
 module.exports = issues;

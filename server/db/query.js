@@ -13,6 +13,12 @@ const singleQuery = async queryText => {
   }
 };
 
+const singleItem = async (table, id) => {
+  const queryText = `SELECT * FROM ${table} WHERE (id='${id}')`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
 // Map array of queries (no data)
 const mapQuery = async array => {
   const client = await pool.connect();
@@ -26,6 +32,11 @@ const mapQuery = async array => {
   };
   await Promise.all(array.map(queryText => queryDB(queryText)));
   client.release();
+};
+
+// Sequential query for table creations
+const sequentialQuery = async () => {
+  // TODO: use this for DeleteTable and CreateTable
 };
 
 // map array of values to a query
@@ -65,4 +76,11 @@ const mapQueryPrint = async array => {
   client.release();
 };
 
-module.exports = { mapQuery, mapQueryPrint, mapValues, singleQuery };
+module.exports = {
+  mapQuery,
+  mapQueryPrint,
+  mapValues,
+  singleQuery,
+  singleItem,
+  sequentialQuery,
+};

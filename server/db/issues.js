@@ -1,4 +1,4 @@
-const { mapValues, singleQuery } = require('./query');
+const { mapValues, singleQuery, singleItem } = require('./query');
 
 // GET all issues
 const getIssues = async table => {
@@ -9,33 +9,47 @@ const getIssues = async table => {
 
 // GET single issue
 const getOneIssue = async (table, id) => {
-  const queryText = `SELECT * FROM ${table} WHERE (id='${id}')`;
-  const { rows } = await singleQuery(queryText);
-  return rows;
+  const rows = await singleItem(table, id);
+  if (rows.length > 0) {
+    return rows;
+  }
+  throw new Error(`ID not found in ${table}`);
 };
 
 // Create new Issue
 const createIssue = async data => {
   const queryText = `INSERT INTO
-    issues(id, created_date, modified_date, organization, name, body, repo)
-    VALUES($1, $2, $3, $4, $5, $6, $7)
+    issues(id, created_date, modified_date, organization, name, body, repo, language, comments, attempts, active_attempts, contributor)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
 };
 
-// GET single issue
+// TRANSFORM single issue
 const transformIssue = async (table, id, data) => {
-  const queryText = `UPDATE ${table} SET (modified_date, organization, name, body, repo) = ($1, $2, $3, $4, $5) WHERE (id = '${id}') RETURNING *`;
-  const result = await mapValues(queryText, data);
-  return result;
+  const rows = await singleItem(table, id);
+  if (rows.length > 0) {
+    const queryText = `UPDATE ${table}
+      SET (modified_date, organization, name, body, repo, language, comments, attempts, active_attempts, contributor)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      WHERE (id = '${id}')
+      RETURNING *`;
+    const result = await mapValues(queryText, data);
+    return result;
+  }
+  throw new Error(`Failed to update. ID not found in ${table}`);
 };
 
 // DELETE single issue
 const deleteIssue = async (table, id) => {
-  const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
-  const { rows } = await singleQuery(queryText);
-  return rows;
+  const rows = await singleItem(table, id);
+  if (rows.length > 0) {
+    const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
+    await singleQuery(queryText);
+    return `ID ${id} successfully deleted from table ${table}`;
+  }
+  throw new Error(`Failed to delete issue. ID not found in ${table}`);
 };
 
 module.exports = {

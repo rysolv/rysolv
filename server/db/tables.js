@@ -1,4 +1,4 @@
-const { mapQuery, mapQueryPrint } = require('../db/query');
+const { mapQueryPrint, singleQuery } = require('../db/query');
 
 // Import schemas
 const {
@@ -11,26 +11,38 @@ const {
 
 // Create empty tables from schema
 const createTables = async () => {
-  const schema = [
-    userSchema,
-    issueSchema,
-    commentSchema,
-    organizationSchema,
-    pullRequestSchema,
-  ];
-  await mapQuery(schema);
+  // const schema = [
+  //   userSchema,
+  //   issueSchema,
+  //   commentSchema,
+  //   organizationSchema,
+  //   pullRequestSchema,
+  // ];
+
+  // TODO: figure out a way to map through this
+  await singleQuery(userSchema);
+  await singleQuery(issueSchema);
+  await singleQuery(commentSchema);
+  await singleQuery(organizationSchema);
+  await singleQuery(pullRequestSchema);
 };
 
 // Drop all tables
 const dropAllTables = async () => {
-  const queryArray = [
-    'DROP TABLE IF EXISTS issues',
-    'DROP TABLE IF EXISTS users',
-    'DROP TABLE IF EXISTS comments',
-    'DROP TABLE IF EXISTS organizations',
-    'DROP TABLE IF EXISTS pullRequests',
-  ];
-  await mapQuery(queryArray);
+  // const queryArray = [
+  //   'DROP TABLE IF EXISTS issues cascade',
+  //   'DROP TABLE IF EXISTS users cascade',
+  //   'DROP TABLE IF EXISTS comments cascade',
+  //   'DROP TABLE IF EXISTS organizations cascade',
+  //   'DROP TABLE IF EXISTS pullRequests cascade',
+  // ];
+
+  // TODO: figure out a way to map through this
+  await singleQuery('DROP TABLE IF EXISTS issues cascade');
+  await singleQuery('DROP TABLE IF EXISTS users cascade');
+  await singleQuery('DROP TABLE IF EXISTS comments cascade');
+  await singleQuery('DROP TABLE IF EXISTS organizations cascade');
+  await singleQuery('DROP TABLE IF EXISTS pullRequests cascade');
 };
 
 // Print all rows in all tables

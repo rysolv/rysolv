@@ -6,9 +6,8 @@ users(
   first_name VARCHAR(128) NOT NULL,
   last_name VARCHAR(128) NOT NULL,
   email VARCHAR(128) NOT NULL,
-  last_online TIMESTAMP,
-  watching_number SMALLINT,
-  watching_list TEXT []
+  watching_list UUID [],
+  rep SMALLINT NOT NULL DEFAULT 0
 )`;
 
 module.exports = users;

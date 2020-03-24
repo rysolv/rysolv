@@ -8,7 +8,7 @@ const {
 } = require('../../db');
 
 module.exports = {
-  issues: async () => {
+  getIssues: async () => {
     try {
       const issues = await getIssues('issues');
       return issues;
@@ -36,6 +36,11 @@ module.exports = {
         issueInput.name,
         issueInput.body,
         issueInput.repo,
+        issueInput.language,
+        issueInput.comments || [],
+        issueInput.attempts || 0,
+        issueInput.active_attempts || 0,
+        issueInput.contributor,
       ],
     ];
     try {
@@ -50,11 +55,16 @@ module.exports = {
     try {
       const data = [
         [
-          new Date(), // update date
+          new Date(), // update modified date
           issueInput.organization,
           issueInput.name,
           issueInput.body,
           issueInput.repo,
+          issueInput.language,
+          issueInput.comments || [],
+          issueInput.attempts || 0,
+          issueInput.active_attempts || 0,
+          issueInput.contributor,
         ],
       ];
       const issues = await transformIssue('issues', id, data);

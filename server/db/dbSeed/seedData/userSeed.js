@@ -1,51 +1,45 @@
-const { v4: uuidv4 } = require('uuid');
-
-// users(id, createdDate, modifiedDate, firstName, lastName, email, lastOnline, watchingNumber, watchingList)
+// const { v4: uuidv4 } = require('uuid');
 
 const userSeed = [
   [
-    uuidv4(),
-    new Date(),
-    new Date(),
-    'tyler',
-    'maran',
-    'tyler.maran@gmail.com',
-    new Date(),
-    2,
-    ['issue 1', 'issue 2'],
+    '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d', // id
+    new Date(), // created_date
+    new Date(), // modified_date
+    'tyler', // first_name
+    'maran', // last_name
+    'tyler.maran@gmail.com', // email
+    ['f665d73f-6ae4-4699-bb53-c55d62489a29'], // watching_list
+    2, // rep
   ],
   [
-    uuidv4(),
+    'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
     new Date(),
     new Date(),
     'Anna',
-    'pojawis',
+    'Pojawis',
     'anna.pojawis@gmail.com',
-    new Date(),
-    2,
-    ['issue 1', 'issue 2'],
+    ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
+    25,
   ],
   [
-    uuidv4(),
+    'c2209ded-9219-4ee3-9c29-f863889053c0',
     new Date(),
     new Date(),
     'paul',
     'house',
     'paul@myfooddata.com',
-    new Date(),
-    3,
-    ['1', '2', '3'],
+    ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
+    25,
   ],
   [
-    uuidv4(),
+    'cdd583cf-4711-4f33-a202-c937081afd7e',
     new Date(),
     new Date(),
     'Jay',
     'querie',
     'jay@querie.cc',
-    new Date(),
-    5,
-    ['1', '2', '3', '4', '5'],
+    ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
+    25,
   ],
 ];
 

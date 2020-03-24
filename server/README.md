@@ -33,4 +33,4 @@ Set `graphiql: true,` in `/index.js` // will make .env for this later
 * `"dotenv": "^8.2.0"` // load env variables from .env
 
 ### Dev Dependencies
-* "make-runnable": "^1.3.6" // may be removable
+* `"make-runnable": "^1.3.6"` // just for exporting the db seed function - may be removable
