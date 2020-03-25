@@ -15,7 +15,13 @@ const {
 } = require('./users');
 const { createComment } = require('./comments');
 const { createPullRequest } = require('./pullRequests');
-const { createOrganization } = require('./organizations');
+const {
+  createOrganization,
+  getOrganizations,
+  transformOrganization,
+  deleteOrganization,
+  getOneOrganization,
+} = require('./organizations');
 const { createTables, dropAllTables, printTables } = require('./tables');
 
 module.exports = {
@@ -27,13 +33,17 @@ module.exports = {
   createTables,
   createUser,
   deleteIssue,
+  deleteOrganization,
   deleteUser,
   dropAllTables,
+  getOneOrganization,
   getIssues,
   getOneIssue,
   getOneUser,
+  getOrganizations,
   getUsers,
   printTables,
   transformIssue,
   transformUser,
+  transformOrganization,
 };

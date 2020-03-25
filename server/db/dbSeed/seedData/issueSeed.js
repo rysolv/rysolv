@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 // issues(id, createdDate, modifiedDate, name, body, repo)
 const issueSeed = [
   [
-    uuidv4(), // id
+    '20619026-0f61-4772-9bb8-36ed643d4dcd', // id
     new Date(), // created date
     new Date(), // modified date
     'flutter', // organization

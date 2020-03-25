@@ -49,20 +49,51 @@ module.exports = buildSchema(`
     rep: Int
   }
 
+  type Organization {
+    id: ID!
+    created_date: Object
+    modified_date: Object
+    name: String!
+    description: String!
+    repo_url: String!
+    website: String
+    issues: [String]
+    logo: String
+    verified: Boolean
+  }
+
+  input OrganizationInput {
+    name: String!
+    description: String!
+    repo_url: String!
+    website: String
+    issues: [String]
+    logo: String
+    verified: Boolean
+  }
+
   type RootQuery {
     getIssues: [Issue!]!
+    getUsers: [User!]!
+    getOrganizations: [Organization!]!
+
     oneIssue(id: ID!): [Issue!]!
     oneUser(id: ID!): [User!]!
-    getUsers: [User!]!
+    oneOrganization(id: ID!): [Organization!]!
   }
 
   type RootMutation {
     createIssue(issueInput: IssueInput): [Issue!]!
     createUser(userInput: UserInput): [User!]!
+    createOrganization(organizationInput: OrganizationInput): [Organization!]!
+
     deleteIssue(id: ID!): String!
     deleteUser(id:ID!): String!
+    deleteOrganization(id:ID!): String!
+
     transformIssue(id: ID!, issueInput: IssueInput): [Issue!]!
     transformUser(id: ID!, userInput: UserInput): [User!]!
+    transformOrganization(id: ID!, organizationInput: OrganizationInput): [Organization!]!
   }
 
   schema {

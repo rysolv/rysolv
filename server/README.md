@@ -22,6 +22,30 @@ Set `graphiql: true,` in `/index.js` // will make .env for this later
 * `/db` - exports all db functions, schemas, connection pool, and seed data
 * `/graphql` - holds `/resolvers` and `/schema`. Resolvers handles all logic
 
+### GraphQl Functions:
+* Queries
+  * `getIssues` - returns all issues
+  * `getUsers` - returns all users
+  * `getOrganizations` - returns all organizations
+  * `oneIssue` - requires `id: <UUID>` - returns one issue
+  * `oneUser` - requires `id: <UUID>` - returns one user
+  * `oneOrganization` - requires `id: <UUID>` - returns one organization
+
+* Mutations
+  * `createIssue` - requires `issueInput: <type IssueInput>` - returns created issue 
+  * `createUser` - requires `userInput: <type UserInput>`- returns created user
+  * `createOrganization` - requires `organizationInput: <type OrganizationInput>`- returns created organization
+  * `transformIssue` - requires `id: <type ID>, issueInput: <type IssueInput>`- returns transformed issue
+  * `transformUser` - requires `id: <type ID>, userInput: <type UserInput>`- returns transformed issue
+  * `transformOrganization` - requires `id: <type ID>, organizationInput: <type OrganizationInput>`- returns transformed organization
+  * `deleteIssue` - required `id: <type ID>` - returns success or failure string
+  * `deleteUser` - required `id: <type ID>` - returns success or failure string
+  * `deleteOrganization` - required `id: <type ID>` - returns success or failure string
+
+### GraphQL Types
+
+[coming soon]
+
 ### Dependencies
 * `"chalk": "^2.4.2"` // idk some logging thing
 * `"express": "4.16.4"` // handles routing / listening
