@@ -37,6 +37,7 @@ module.exports = {
         userInput.email,
         userInput.watching_list || [],
         userInput.rep || 0,
+        userInput.profile_pic,
       ],
     ];
     try {
@@ -57,6 +58,7 @@ module.exports = {
           userInput.email,
           userInput.watching_list || [],
           userInput.rep || 0,
+          userInput.profile_pic,
         ],
       ];
       const issues = await transformUser('users', id, data);

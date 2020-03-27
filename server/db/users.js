@@ -19,8 +19,8 @@ const getOneUser = async (table, id) => {
 // Create new User
 const createUser = async data => {
   const queryText = `INSERT INTO
-    users(id, created_date, modified_date, first_name, last_name, email, watching_list, rep)
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+    users(id, created_date, modified_date, first_name, last_name, email, watching_list, rep, profile_pic)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -31,8 +31,8 @@ const transformUser = async (table, id, data) => {
   const rows = await singleItem(table, id);
   if (rows.length > 0) {
     const queryText = `UPDATE ${table}
-      SET (modified_date, first_name, last_name, email, watching_list, rep)
-      = ($1, $2, $3, $4, $5, $6)
+      SET (modified_date, first_name, last_name, email, watching_list, rep, profile_pic)
+      = ($1, $2, $3, $4, $5, $6, $7)
       WHERE (id = '${id}')
       RETURNING *`;
     const result = await mapValues(queryText, data);

@@ -7,7 +7,8 @@ users(
   last_name VARCHAR(128) NOT NULL,
   email VARCHAR(128) NOT NULL,
   watching_list UUID [],
-  rep SMALLINT NOT NULL DEFAULT 0
+  rep SMALLINT NOT NULL DEFAULT 0,
+  profile_pic VARCHAR(128)
 )`;
 
 module.exports = users;

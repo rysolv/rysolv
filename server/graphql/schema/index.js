@@ -39,6 +39,7 @@ module.exports = buildSchema(`
     email: String!
     watching_list: [String]
     rep: Int
+    profile_pic: String
   }
 
   input UserInput {
@@ -47,6 +48,7 @@ module.exports = buildSchema(`
     email: String!
     watching_list: [String]
     rep: Int
+    profile_pic: String
   }
 
   type Organization {

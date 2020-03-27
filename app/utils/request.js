@@ -104,7 +104,7 @@ export function post(url, payload, type) {
   return request(
     url,
     {
-      body: JSON.stringify(payload),
+      body: payload,
       headers,
       method: 'POST',
     },

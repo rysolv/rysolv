@@ -25,8 +25,8 @@ const usersReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_USERS_SUCCESS: {
-      const { users } = payload;
-      draft.users = users;
+      const { getUsers } = payload;
+      draft.users = getUsers;
       draft.loading.users = false;
       break;
     }

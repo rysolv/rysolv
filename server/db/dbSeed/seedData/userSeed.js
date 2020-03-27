@@ -10,6 +10,7 @@ const userSeed = [
     'tyler.maran@gmail.com', // email
     ['f665d73f-6ae4-4699-bb53-c55d62489a29'], // watching_list
     2, // rep
+    'https://rysolv.s3.us-east-2.amazonaws.com/tylerprofile.png', // profile_pic
   ],
   [
     'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
@@ -20,6 +21,7 @@ const userSeed = [
     'anna.pojawis@gmail.com',
     ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
     25,
+    'https://rysolv.s3.us-east-2.amazonaws.com/annaprofile.png',
   ],
   [
     'c2209ded-9219-4ee3-9c29-f863889053c0',
@@ -30,6 +32,7 @@ const userSeed = [
     'paul@myfooddata.com',
     ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
     25,
+    'https://rysolv.s3.us-east-2.amazonaws.com/paulprofile.png',
   ],
   [
     'cdd583cf-4711-4f33-a202-c937081afd7e',
@@ -40,6 +43,7 @@ const userSeed = [
     'jay@querie.cc',
     ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
     25,
+    'https://rysolv.s3.us-east-2.amazonaws.com/jay.png',
   ],
 ];
 
