@@ -1,3 +1,5 @@
 export const FETCH_USERS = 'app/Main/FETCH_USERS';
 export const FETCH_USERS_FAILURE = 'app/Main/FETCH_USERS_FAILURE';
 export const FETCH_USERS_SUCCESS = 'app/Main/FETCH_USERS_SUCCESS';
+
+export const emptyCardMessage = 'There are no user matching the search terms.';

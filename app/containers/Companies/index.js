@@ -49,7 +49,9 @@ const withConnect = connect(
   null,
   mapDispatchToProps,
 );
+
 const withReducer = injectReducer({ key: 'companies', reducer });
+
 const withSaga = injectSaga({ key: 'companies', saga });
 
 export default compose(

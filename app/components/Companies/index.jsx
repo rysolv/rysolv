@@ -1,7 +1,9 @@
 import React from 'react';
 import T from 'prop-types';
+
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import { ErrorSuccessBanner } from 'components/base_ui';
+
 import EmptyCard from './EmptyCard';
 import CompanyCard from './CompanyCard';
 import { BannerWrapper } from './styledComponents';
@@ -37,7 +39,7 @@ const Companies = ({
           disabled={disabled}
           handleInputChange={handleInputChange}
           handleNav={handleNav}
-          handleSearchCompanies={handleSearchCompanies}
+          handleSearch={handleSearchCompanies}
           search={search}
         />
         <ErrorSuccessBanner

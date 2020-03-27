@@ -1,70 +1,72 @@
 import React from 'react';
 import T from 'prop-types';
-import {
-  PrimaryButton,
-  ConditionalRender,
-  // ErrorSuccessBanner,
-} from 'components/base_ui';
-import {
-  ButtonContainer,
-  Divider,
-  ImageContainer,
-  InfoContainer,
-  NameWrapper,
-  StyledUserCard,
-  StyledImage,
-  StyledListItem,
-} from './styledComponents';
 
-const UserCard = ({
-  // alerts: { error, success },
-  // clearAlerts,
+import AdminSubHeader from 'components/Admin/AdminSubHeader';
+import { ErrorSuccessBanner } from 'components/base_ui';
+
+import EmptyCard from './EmptyCard';
+import UserCard from './UserCard';
+import { BannerWrapper } from './styledComponents';
+
+const Users = ({
+  alerts: { error, success },
+  clearAlerts,
   data,
-  // handleDelete,
-  // handleNav,
+  disabled,
+  handleDeleteUser,
+  handleFetchInfo,
+  handleInputChange,
+  handleNav,
+  handleSearchUsers,
+  search,
 }) => {
-  const hasUsers = data.length > 0;
-
-  const UserCardComponent = (
-    <div>
-      <StyledUserCard>
-        {data.map(({ name, image, joinDate }, index) => (
-          <div key={name}>
-            <StyledListItem>
-              <ImageContainer>
-                <StyledImage alt="Profile Image" src={image} />
-              </ImageContainer>
-              <InfoContainer>
-                <NameWrapper>{name}</NameWrapper>
-                Member since {joinDate}
-              </InfoContainer>
-              <ButtonContainer>
-                <PrimaryButton label="Edit" />
-              </ButtonContainer>
-            </StyledListItem>
-            <Divider isLastItem={data.length === index + 1} />
-          </div>
-        ))}
-      </StyledUserCard>
-    </div>
+  const hasCompanies = data.length > 0 && !data.includes(null);
+  const propsToPassDown = {
+    data,
+    handleDeleteUser,
+    handleFetchInfo,
+    handleNav,
+  };
+  const viewToRender = hasCompanies ? (
+    <UserCard {...propsToPassDown} />
+  ) : (
+    <EmptyCard />
   );
   return (
-    <ConditionalRender
-      Component={UserCardComponent}
-      FallbackComponent={<div>Hello</div>}
-      shouldRender={hasUsers}
-    />
+    <div>
+      <BannerWrapper>
+        <AdminSubHeader
+          disabled={disabled}
+          handleInputChange={handleInputChange}
+          handleNav={handleNav}
+          handleSearch={handleSearchUsers}
+          search={search}
+        />
+        <ErrorSuccessBanner
+          error={error}
+          onClose={clearAlerts}
+          success={success}
+        />
+      </BannerWrapper>
+      {viewToRender}
+    </div>
   );
 };
-UserCard.propTypes = {
-  // alerts: T.shape({
-  //   error: T.oneOfType([T.bool, T.object]),
-  //   success: T.oneOfType([T.bool, T.object]),
-  // }),
-  // clearAlerts: T.func,
+
+Users.propTypes = {
+  alerts: T.shape({
+    error: T.oneOfType([T.bool, T.object]),
+    success: T.oneOfType([T.bool, T.object]),
+  }),
+  clearAlerts: T.func,
   data: T.array,
-  // handleDelete: T.func,
-  // handleNav: T.func,
+  disabled: T.bool.isRequired,
+  handleDeleteUser: T.func,
+  handleFetchInfo: T.func,
+  handleInputChange: T.func,
+  handleNav: T.func,
+  handleSearchUsers: T.func,
+  search: T.object,
 };
 
-export default UserCard;
+export default Users;

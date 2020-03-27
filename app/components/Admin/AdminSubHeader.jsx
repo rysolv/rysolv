@@ -13,7 +13,7 @@ const AdminSubHeader = ({
   disabled,
   handleInputChange,
   handleNav,
-  handleSearchCompanies,
+  handleSearch,
   search,
 }) => {
   const { name } = { ...search };
@@ -30,7 +30,7 @@ const AdminSubHeader = ({
               value: e.target.value,
             })
           }
-          onClick={() => handleSearchCompanies({ name: name.value })}
+          onClick={() => handleSearch({ name: name.value })}
           placeholder="Search..."
           position="end"
         />
@@ -47,7 +47,7 @@ AdminSubHeader.propTypes = {
   disabled: T.bool.isRequired,
   handleInputChange: T.func,
   handleNav: T.func,
-  handleSearchCompanies: T.func,
+  handleSearch: T.func,
   search: T.object,
 };
 

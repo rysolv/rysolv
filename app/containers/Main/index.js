@@ -5,16 +5,12 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
+import AsyncRender from 'components/AsyncRender';
+import Header from 'components/Header';
+import Footer from 'components/Footer';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 
-import AsyncRender from '../../components/AsyncRender';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import makeSelectViewSize from '../ViewSize/selectors';
-import reducer from './reducer';
 import routes from './routes';
-import saga from './saga';
 import { AppBody } from './styledComponents';
 
 export const Main = ({ data = { test: true }, deviceView, error, loading }) => (
@@ -45,19 +41,10 @@ const mapStateToProps = createStructuredSelector({
    */
   deviceView: makeSelectViewSize('deviceView'),
 });
-const mapDispatchToProps = () => ({});
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  null,
 );
-const withReducer = injectReducer({ key: 'main', reducer });
-const withSaga = injectSaga({ key: 'main', saga });
 
-export default withRouter(
-  compose(
-    withReducer,
-    withSaga,
-    withConnect,
-  )(Main),
-);
+export default withRouter(compose(withConnect)(Main));

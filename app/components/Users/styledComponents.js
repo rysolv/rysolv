@@ -1,24 +1,15 @@
-import React from 'react';
 import styled from 'styled-components';
 
-export const ButtonContainer = styled.div`
-  align-self: right;
-  padding: 1rem;
+import { textColor } from 'defaultStyleHelper';
+
+export const BannerWrapper = styled.div`
+  font-size: 1.2rem;
+  margin: 1rem 0;
 `;
 
 export const DescriptionWrapper = styled.div`
   padding: 1rem 0;
   font-size: 1rem;
-`;
-
-export const Divider = styled(({ isLastItem, ...restProps }) => (
-  <div {...restProps} />
-))`
-  border-bottom: ${({ isLastItem }) =>
-    isLastItem ? 'none' : '0.1rem solid grey'};
-  display: flex;
-  margin: auto;
-  width: 90%;
 `;
 
 export const ImageContainer = styled.div`
@@ -31,6 +22,18 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-grow: 8;
   flex-direction: column;
+`;
+
+export const MessageWrapper = styled.div`
+  align-items: center;
+  background-color: white;
+  border-radius: 0.5rem;
+  color: ${textColor};
+  display: flex;
+  font-size: 1.6rem;
+  height: 55rem;
+  justify-content: center;
+  text-align: center;
 `;
 
 export const NameWrapper = styled.div`
@@ -57,7 +60,6 @@ export const StyledListItem = styled.li`
   padding: 2rem 0;
 `;
 
-export const BannerWrapper = styled.div`
-  font-size: 1.2rem;
-  margin: 1rem 0;
+export const StyledSettingWrapper = styled.div`
+  padding: 1rem;
 `;
