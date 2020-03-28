@@ -8,7 +8,7 @@ import {
   inputBorder,
   textColor,
 } from 'defaultStyleHelper';
-import { FlatIconButton } from '../buttons';
+import { FlatIconButton } from '../Buttons';
 
 export const Spacer = styled.div`
   height: 1.5rem;
