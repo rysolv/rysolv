@@ -18,29 +18,29 @@ const DeleteIcon = iconDictionary('delete');
 export class EditExisting extends React.PureComponent {
   render() {
     const {
-      companyInfo,
+      editInfo,
       handleDeleteCompany,
       handleIncrementStep,
       handleInputChange,
       handleNav,
     } = this.props;
-    const { id } = companyInfo;
+    const { id } = editInfo;
     const handleDelete = () => {
       handleDeleteCompany({ companyId: id.value });
-      handleNav({ subroute: 'companies' });
-    }
+      handleNav('/admin/companies');
+    };
     return (
       <Fragment>
         <StyledH3>Edit Company Info</StyledH3>
-        <StyledIconButton Icon={DeleteIcon} onClick={handleDelete}/>
+        <StyledIconButton Icon={DeleteIcon} onClick={handleDelete} />
         <EditExistingForm
-          companyInfo={companyInfo}
+          editInfo={editInfo}
           handleInputChange={handleInputChange}
         />
         <ButtonGroup>
           <SecondaryButton
             label="Back"
-            onClick={() => handleNav({ subroute: 'companies' })}
+            onClick={() => handleNav('/admin/companies')}
           />
           <PrimaryButton
             label="Next"
@@ -55,7 +55,7 @@ export class EditExisting extends React.PureComponent {
 }
 
 EditExisting.propTypes = {
-  companyInfo: T.object,
+  editInfo: T.object,
   handleDeleteCompany: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
@@ -66,7 +66,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Companies
    */
-  companyInfo: makeSelectCompanies('companyInfo'),
+  editInfo: makeSelectCompanies('editInfo'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -80,9 +80,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Router
      */
-    handleNav: ({ subroute }) => {
-      dispatch(push(`/admin/${subroute}`));
-    },
+    handleNav: route => dispatch(push(route)),
   };
 }
 

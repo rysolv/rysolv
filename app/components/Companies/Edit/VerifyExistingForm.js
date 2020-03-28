@@ -15,15 +15,15 @@ import {
 // eslint-disable-next-line react/prefer-stateless-function
 export class VerifyExistingForm extends React.PureComponent {
   render() {
-    const { companyInfo } = this.props;
-    const tempCompanyInfo = omit(companyInfo, ['id', 'lastPostDate']);
+    const { editInfo } = this.props;
+    const tempEditInfo = omit(editInfo, ['id', 'lastPostDate']);
     return (
       <DataWrapper>
         <KeyGroupWrapper>
-          {Object.keys(tempCompanyInfo).map(key => (
+          {Object.keys(tempEditInfo).map(key => (
             <KeyAndValueContainer key={`container-${key}`}>
               <KeyWrapper>{companyDataDictionary[key]}:</KeyWrapper>
-              <ValueWrapper>{tempCompanyInfo[key].value}</ValueWrapper>
+              <ValueWrapper>{tempEditInfo[key].value}</ValueWrapper>
             </KeyAndValueContainer>
           ))}
         </KeyGroupWrapper>
@@ -32,6 +32,6 @@ export class VerifyExistingForm extends React.PureComponent {
   }
 }
 
-VerifyExistingForm.propTypes = { companyInfo: T.object };
+VerifyExistingForm.propTypes = { editInfo: T.object };
 
 export default VerifyExistingForm;

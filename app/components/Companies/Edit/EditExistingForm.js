@@ -7,18 +7,18 @@ import { companyDataDictionary } from 'containers/Companies/constants';
 
 import { InputFormWrapper } from './styledComponents';
 
-const EditExistingForm = ({ companyInfo, handleInputChange }) => {
-  const tempCompanyInfo = omit(companyInfo, ['id', 'lastPostDate']);
+const EditExistingForm = ({ editInfo, handleInputChange }) => {
+  const tempEditInfo = omit(editInfo, ['id', 'lastPostDate']);
   return (
     <InputFormWrapper>
-      {Object.keys(tempCompanyInfo).map(info => {
+      {Object.keys(tempEditInfo).map(info => {
         const isDisabled = info === 'issues' || info === 'pullRequests';
         return (
           <MainTextInput
             key={`input-${info}`}
             disabled={isDisabled}
-            error={!!tempCompanyInfo[info].error}
-            helperText={tempCompanyInfo[info].error}
+            error={!!tempEditInfo[info].error}
+            helperText={tempEditInfo[info].error}
             label={companyDataDictionary[info]}
             onChange={e =>
               handleInputChange({
@@ -27,7 +27,7 @@ const EditExistingForm = ({ companyInfo, handleInputChange }) => {
                 value: e.target.value,
               })
             }
-            value={tempCompanyInfo[info].value}
+            value={tempEditInfo[info].value}
           />
         );
       })}
@@ -36,7 +36,7 @@ const EditExistingForm = ({ companyInfo, handleInputChange }) => {
 };
 
 EditExistingForm.propTypes = {
-  companyInfo: T.object.isRequired,
+  editInfo: T.object.isRequired,
   handleInputChange: T.func.isRequired,
 };
 

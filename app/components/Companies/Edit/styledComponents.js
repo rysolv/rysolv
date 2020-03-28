@@ -26,7 +26,7 @@ export const KeyWrapper = styled.div`
   font-size: ${defaultFontSize};
   padding: 2rem 0;
   text-decoration: underline;
-  width: 15rem;
+  min-width: 15rem;
 `;
 
 export const ValueWrapper = styled.div`
