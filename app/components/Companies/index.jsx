@@ -27,6 +27,7 @@ const Companies = ({
     handleFetchInfo,
     handleNav,
   };
+  const route = '/admin/companies/add';
   const viewToRender = hasCompanies ? (
     <CompanyCard {...propsToPassDown} />
   ) : (
@@ -40,6 +41,7 @@ const Companies = ({
           handleInputChange={handleInputChange}
           handleNav={handleNav}
           handleSearch={handleSearchCompanies}
+          route={route}
           search={search}
         />
         <ErrorSuccessBanner

@@ -14,6 +14,7 @@ const AdminSubHeader = ({
   handleInputChange,
   handleNav,
   handleSearch,
+  route,
   search,
 }) => {
   const { name } = { ...search };
@@ -35,10 +36,7 @@ const AdminSubHeader = ({
           position="end"
         />
       </BaseInputContainer>
-      <PrimaryButton
-        label="Add"
-        onClick={() => handleNav(`/admin/companies/add`)}
-      />
+      <PrimaryButton label="Add" onClick={() => handleNav(route)} />
     </AdminSubHeaderContainer>
   );
 };
@@ -48,6 +46,7 @@ AdminSubHeader.propTypes = {
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearch: T.func,
+  route: T.string,
   search: T.object,
 };
 

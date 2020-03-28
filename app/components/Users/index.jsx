@@ -21,6 +21,7 @@ const Users = ({
   search,
 }) => {
   const hasCompanies = data.length > 0 && !data.includes(null);
+  const route = '/admin/users/add';
   const propsToPassDown = {
     data,
     handleDeleteUser,
@@ -40,6 +41,7 @@ const Users = ({
           handleInputChange={handleInputChange}
           handleNav={handleNav}
           handleSearch={handleSearchUsers}
+          route={route}
           search={search}
         />
         <ErrorSuccessBanner

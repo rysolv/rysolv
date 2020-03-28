@@ -21,5 +21,16 @@ const makeSelectUsersLoading = prop =>
     loading => loading[prop],
   );
 
+const makeSelectUsersSearchDisabled = () =>
+  createSelector(
+    makeSelectUsers('search'),
+    ({ name }) => name.value === '',
+  );
+
 export default selectUsersDomain;
-export { makeSelectUsers, makeSelectUsersError, makeSelectUsersLoading };
+export {
+  makeSelectUsers,
+  makeSelectUsersError,
+  makeSelectUsersLoading,
+  makeSelectUsersSearchDisabled,
+};

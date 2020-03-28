@@ -1,5 +1,7 @@
 import React from 'react';
+
 import iconDictionary from 'utils/iconDictionary';
+
 import { StyledVerified } from './styledComponents';
 
 const defaultVerified = iconDictionary('verified');

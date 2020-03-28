@@ -8,8 +8,10 @@ async function searchCompanies(req, res, next) {
       query: { company },
     } = req;
     req.data = req.data || {};
-    const companyList = companies.find(obj => obj.name === capitalize(company));
-    req.data.companies = [companyList];
+    const companyList = companies.filter(
+      obj => obj.name === capitalize(company),
+    );
+    req.data.companies = companyList;
     next();
   } catch (error) {
     next(error);

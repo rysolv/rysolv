@@ -2,9 +2,19 @@ import styled from 'styled-components';
 
 import { textColor } from 'defaultStyleHelper';
 
+export const ActiveContainer = styled.div`
+  color: #388e3c;
+  font-weight: 500;
+`;
+
 export const BannerWrapper = styled.div`
   font-size: 1.2rem;
   margin: 1rem 0;
+`;
+
+export const ContentWrapper = styled.div`
+  align-self: center;
+  display: flex;
 `;
 
 export const DescriptionWrapper = styled.div`
@@ -12,16 +22,33 @@ export const DescriptionWrapper = styled.div`
   font-size: 1rem;
 `;
 
+export const IconWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
 export const ImageContainer = styled.div`
   align-self: center;
   text-align: center;
-  width: 20%;
 `;
 
-export const InfoContainer = styled.div`
+export const IssuesContainer = styled.div`
+  font-weight: 500;
+`;
+
+export const IssuesWrapper = styled.div`
   display: flex;
-  flex-grow: 8;
-  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 1rem;
+`;
+
+export const MemberInfoContainer = styled.div`
+  line-height: 1.5rem;
+`;
+
+export const MemberWrapper = styled.div`
+  align-self: center;
 `;
 
 export const MessageWrapper = styled.div`
@@ -37,29 +64,47 @@ export const MessageWrapper = styled.div`
 `;
 
 export const NameWrapper = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+`;
+
+export const NumberContainer = styled.div`
+  align-self: center;
+  padding-left: 0.5rem;
+  font-weight: 500;
 `;
 
 export const StyledImage = styled.img`
-  height: 5rem;
-  width: 5rem;
+  border-radius: 50%;
+  height: 7.5rem;
+  margin: 0.5rem;
+  width: 7.5rem;
 `;
 
 export const StyledUserCard = styled.div`
-  border-radius: 0 0.5rem 0.5rem;
-  border: 0.1rem solid grey;
   color: rgba(0, 0, 0, 0.7);
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 0 10%;
+  width: 80%;
 `;
 
-export const StyledListItem = styled.li`
-  display: flex;
-  flex-direction: row;
-  list-style-type: none;
-  justify-content: space-between;
-  padding: 2rem 0;
+export const StyledListSquare = styled.div`
+  background-color: white;
+  border-radius: 0.2rem;
+  border: 0.1rem solid #e0e0e0;
+  margin: 1rem;
+  padding: 1rem;
+  width: 29.5%;
 `;
 
 export const StyledSettingWrapper = styled.div`
-  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const StyledSquare = styled.div`
+  display: flex;
+  height: 0;
+  padding-bottom: 100%;
+  flex-direction: column;
 `;

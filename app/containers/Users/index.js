@@ -51,7 +51,6 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'users', reducer });
-
 const withSaga = injectSaga({ key: 'users', saga });
 
 export default compose(
