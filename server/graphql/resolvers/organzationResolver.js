@@ -19,7 +19,7 @@ module.exports = {
   oneOrganization: async args => {
     const { id } = args;
     try {
-      const result = await getOneOrganization('organizations', id);
+      const [result] = await getOneOrganization('organizations', id);
       return result;
     } catch (err) {
       throw err;

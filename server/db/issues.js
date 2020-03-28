@@ -19,8 +19,25 @@ const getOneIssue = async (table, id) => {
 // Create new Issue
 const createIssue = async data => {
   const queryText = `INSERT INTO
-    issues(id, created_date, modified_date, organization, name, body, repo, language, comments, attempts, active_attempts, contributor)
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+    issues(
+      id,
+      created_date,
+      modified_date,
+      organization,
+      organization_id,
+      name,
+      body,
+      repo,
+      language,
+      comments,
+      attempts,
+      active_attempts,
+      contributor,
+      rep,
+      watch_list,
+      value
+    )
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -31,8 +48,23 @@ const transformIssue = async (table, id, data) => {
   const rows = await singleItem(table, id);
   if (rows.length > 0) {
     const queryText = `UPDATE ${table}
-      SET (modified_date, organization, name, body, repo, language, comments, attempts, active_attempts, contributor)
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      SET (
+        modified_date,
+        organization,
+        organization_id,
+        name,
+        body,
+        repo,
+        language,
+        comments,
+        attempts,
+        active_attempts,
+        contributor,
+        rep,
+        watch_list,
+        value
+      )
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
       WHERE (id = '${id}')
       RETURNING *`;
     const result = await mapValues(queryText, data);

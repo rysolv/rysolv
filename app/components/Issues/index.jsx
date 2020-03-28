@@ -9,7 +9,7 @@ import {
   Settings,
   IconToolTip,
   Upvote,
-  Comments,
+  CommentIcon,
   Verified,
 } from 'components/base_ui';
 import {
@@ -59,18 +59,17 @@ const IssueCard = ({
       <StyledIssueCard>
         {data.map(
           ({
-            attempts,
-            comments,
             id,
-            language,
             name,
             organization,
             organizationVerified,
-            overview,
+            language,
+            body,
+            attempts,
             rep,
-            setPrice,
-            solved,
-            watched,
+            watch_list,
+            comments,
+            value,
           }) => (
             <div key={id}>
               <StyledListItem>
@@ -123,15 +122,16 @@ const IssueCard = ({
                     <NameWrapper>
                       <a href={`./issues/${id}`}>{name}</a>
                     </NameWrapper>
-                    <IssueOverview>{overview}</IssueOverview>
+                    <IssueOverview>{body}</IssueOverview>
                   </StyledIssueText>
                   <StyledIssueFooter>
                     <div>
-                      <Comments /> {comments} comments
+                      {' '}
+                      <CommentIcon /> {comments.length} comments
                     </div>
-                    <div>{solved ? 'Resolved' : `${attempts} attempts`}</div>
-                    <div>{watched} Watch</div>
-                    <DollarWrapper>${setPrice}</DollarWrapper>
+                    <div>{false ? 'Resolved' : `${attempts} attempting`}</div>
+                    <div>{watch_list.length} Watch</div>
+                    <DollarWrapper>${value}</DollarWrapper>
                   </StyledIssueFooter>
                 </StyledIssueContent>
               </StyledListItem>

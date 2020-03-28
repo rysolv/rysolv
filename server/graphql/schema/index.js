@@ -8,18 +8,23 @@ module.exports = buildSchema(`
     created_date: Object
     modified_date: Object
     organization: String!
+    organization_id: String!
     name: String!
     body: String!
     repo: String!
-    language: String
-    comments: [ID]
-    attempts: Int
-    active_attempts: Int
-    contributor: [String]
+    language: String!
+    comments: [ID]!
+    attempts: Int!
+    active_attempts: Int!
+    contributor: [String]!
+    rep: Int!
+    watch_list: [String]!
+    value: Int!
   }
 
   input IssueInput {
     organization: String!
+    organization_id: String!
     name: String!
     body: String!
     repo: String!
@@ -28,6 +33,9 @@ module.exports = buildSchema(`
     attempts: Int
     active_attempts: Int
     contributor: [String]
+    rep: Int
+    watch_list: [String]
+    value: Int!
   }
 
   type User {
@@ -79,9 +87,9 @@ module.exports = buildSchema(`
     getUsers: [User!]!
     getOrganizations: [Organization!]!
 
-    oneIssue(id: ID!): [Issue!]!
-    oneUser(id: ID!): [User!]!
-    oneOrganization(id: ID!): [Organization!]!
+    oneIssue(id: ID!): Issue!
+    oneUser(id: ID!): User!
+    oneOrganization(id: ID!): Organization!
   }
 
   type RootMutation {

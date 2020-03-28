@@ -1,8 +1,8 @@
-const { v4: uuidv4 } = require('uuid');
+// const { v4: uuidv4 } = require('uuid');
 
 const OrganizationSeed = [
   [
-    uuidv4(), // id
+    'ddb0ed71-01e8-4a14-a3fd-8d6ee40f131a', // id
     new Date(), // create date
     new Date(), // last modified date
     'Flutter', // name
@@ -14,7 +14,7 @@ const OrganizationSeed = [
     false, // verified
   ],
   [
-    uuidv4(),
+    '1a64925c-858f-42b4-a09c-39d5699375f4',
     new Date(),
     new Date(),
     'OBS',
@@ -26,10 +26,10 @@ const OrganizationSeed = [
     true,
   ],
   [
-    uuidv4(),
+    '79a3ef7b-bf7d-4e4c-abb8-08cd521d5506',
     new Date(),
     new Date(),
-    'ThreeJS',
+    'SuperTuxKart',
     'three dimentional modeling with JS',
     'https://github.com/annapo23/code_fix/',
     'https://www.rysolv.com',

@@ -19,8 +19,8 @@ module.exports = {
   oneIssue: async args => {
     const { id } = args;
     try {
-      const issues = await getOneIssue('issues', id);
-      return issues;
+      const [result] = await getOneIssue('issues', id);
+      return result;
     } catch (err) {
       throw err;
     }

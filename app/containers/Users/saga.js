@@ -26,7 +26,6 @@ export function* fetchUsersSaga() {
       variables: {},
     });
     const { data } = yield call(post, '/graphql', graphql);
-    console.log(data);
     yield put(fetchUsersSuccess(data));
   } catch (error) {
     yield put(fetchUsersFailure({ error }));

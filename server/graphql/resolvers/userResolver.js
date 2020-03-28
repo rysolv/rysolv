@@ -19,7 +19,7 @@ module.exports = {
   oneUser: async args => {
     const { id } = args;
     try {
-      const result = await getOneUser('users', id);
+      const [result] = await getOneUser('users', id);
       return result;
     } catch (err) {
       throw err;
