@@ -2,8 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
-const { getUsers, postUser, searchUsers } = require('./handlers');
+const { deleteUser, getUsers, postUser, searchUsers } = require('./handlers');
 const { responseData } = require('../helper');
+
+router.delete('/:userId', deleteUser, responseData);
 
 router.get('/', getUsers, responseData);
 
