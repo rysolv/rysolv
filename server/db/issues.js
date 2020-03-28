@@ -23,7 +23,6 @@ const createIssue = async data => {
       id,
       created_date,
       modified_date,
-      organization,
       organization_id,
       name,
       body,
@@ -37,7 +36,7 @@ const createIssue = async data => {
       watch_list,
       value
     )
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -50,7 +49,6 @@ const transformIssue = async (table, id, data) => {
     const queryText = `UPDATE ${table}
       SET (
         modified_date,
-        organization,
         organization_id,
         name,
         body,
@@ -64,7 +62,7 @@ const transformIssue = async (table, id, data) => {
         watch_list,
         value
       )
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       WHERE (id = '${id}')
       RETURNING *`;
     const result = await mapValues(queryText, data);

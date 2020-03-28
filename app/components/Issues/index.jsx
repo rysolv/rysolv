@@ -61,7 +61,7 @@ const IssueCard = ({
           ({
             id,
             name,
-            organization,
+            organizationName,
             organizationVerified,
             language,
             body,
@@ -80,7 +80,7 @@ const IssueCard = ({
                 <StyledIssueContent>
                   <StyledIssueHeader>
                     <OrganizationNameWrapper>
-                      {organization}
+                      {organizationName}
 
                       {organizationVerified ? (
                         <IconToolTip toolTipText="Verified Contributor">

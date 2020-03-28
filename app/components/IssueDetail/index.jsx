@@ -32,14 +32,14 @@ import {
   UpvotePanel,
 } from './styledComponents';
 
-import Comments from '../Coments';
+// import Comments from '../Coments';
 
 const GlassesIcon = iconDictionary('glasses');
 
 const IssueDetail = ({ data }) => {
   const hasDetails = isEmpty(data.issueDetail);
 
-  console.log(data.IssueDetail);
+  console.log(data);
 
   const {
     // attempts,
@@ -174,7 +174,7 @@ const IssueDetail = ({ data }) => {
                   </IssueDetailBody>
                 </IssueDetailOverview>
               </OverviewActivityContainer>
-              <Comments comments={['hello', 'goodbye']} />
+              {/* <Comments comments={['hello', 'goodbye']} /> */}
             </div>
             <IssueSideBar>
               <IssueDetailHeader>Labels</IssueDetailHeader>

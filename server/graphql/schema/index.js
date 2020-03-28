@@ -7,7 +7,6 @@ module.exports = buildSchema(`
     id: ID!
     created_date: Object
     modified_date: Object
-    organization: String!
     organization_id: String!
     name: String!
     body: String!
@@ -23,7 +22,6 @@ module.exports = buildSchema(`
   }
 
   input IssueInput {
-    organization: String!
     organization_id: String!
     name: String!
     body: String!

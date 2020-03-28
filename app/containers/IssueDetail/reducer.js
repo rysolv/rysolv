@@ -31,8 +31,8 @@ const issueDetailReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ISSUE_DETAIL_SUCCESS: {
-      const { issueDetail } = payload;
-      draft.issueDetail = issueDetail;
+      const { oneIssue } = payload;
+      draft.issueDetail = oneIssue;
       draft.loading.issueDetail = false;
       break;
     }

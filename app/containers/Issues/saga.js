@@ -28,7 +28,6 @@ export function* fetchIssuesSaga() {
       modified_date,
       name,
       repo,
-      organization,
       organization_id,
       language,
       body,
@@ -45,6 +44,7 @@ export function* fetchIssuesSaga() {
     query {
       oneOrganization(id: "${id}") {
         verified
+        name
       }
     }
    `;
@@ -80,12 +80,13 @@ export function* fetchIssuesSaga() {
         acc,
         {
           data: {
-            oneOrganization: { verified },
+            oneOrganization: { verified, name },
           },
         },
         index,
       ) => {
         acc[index].organizationVerified = verified;
+        acc[index].organizationName = name;
         return acc;
       },
       getIssues,
