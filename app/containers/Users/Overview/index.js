@@ -28,7 +28,7 @@ import reducer from '../reducer';
 import saga from '../saga';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class Users extends React.PureComponent {
+export class UsersOverview extends React.PureComponent {
   componentDidMount() {
     const { dispatchFetchUsers } = this.props;
     dispatchFetchUsers();
@@ -71,7 +71,7 @@ export class Users extends React.PureComponent {
   }
 }
 
-Users.propTypes = {
+UsersOverview.propTypes = {
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
@@ -131,4 +131,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(Users);
+)(UsersOverview);

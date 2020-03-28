@@ -1,5 +1,6 @@
 import {
   CLEAR_ALERTS,
+  CLEAR_FORM,
   DELETE_USER_FAILURE,
   DELETE_USER_SUCCESS,
   DELETE_USER,
@@ -9,35 +10,26 @@ import {
   FETCH_USERS_FAILURE,
   FETCH_USERS_SUCCESS,
   FETCH_USERS,
+  INCREMENT_STEP,
   INPUT_CHANGE,
+  SAVE_INFO_FAILURE,
+  SAVE_INFO_SUCCESS,
+  SAVE_INFO,
   SEARCH_USERS_FAILURE,
   SEARCH_USERS_SUCCESS,
   SEARCH_USERS,
+  VERIFY_INFO,
 } from './constants';
-
-export function fetchUsersFailure(payload) {
-  return {
-    payload,
-    type: FETCH_USERS_FAILURE,
-  };
-}
-
-export function fetchUsersSuccess(payload) {
-  return {
-    payload,
-    type: FETCH_USERS_SUCCESS,
-  };
-}
-
-export function fetchUsers() {
-  return {
-    type: FETCH_USERS,
-  };
-}
 
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
+  };
+}
+
+export function clearForm() {
+  return {
+    type: CLEAR_FORM,
   };
 }
 
@@ -83,10 +75,58 @@ export function fetchInfo(payload) {
   };
 }
 
+export function fetchUsersFailure(payload) {
+  return {
+    payload,
+    type: FETCH_USERS_FAILURE,
+  };
+}
+
+export function fetchUsersSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_USERS_SUCCESS,
+  };
+}
+
+export function fetchUsers() {
+  return {
+    type: FETCH_USERS,
+  };
+}
+
+export function incrementStep(payload) {
+  return {
+    payload,
+    type: INCREMENT_STEP,
+  };
+}
+
 export function inputChange(payload) {
   return {
     payload,
     type: INPUT_CHANGE,
+  };
+}
+
+export function saveInfoFailure(payload) {
+  return {
+    payload,
+    type: SAVE_INFO_FAILURE,
+  };
+}
+
+export function saveInfoSuccess(payload) {
+  return {
+    payload,
+    type: SAVE_INFO_SUCCESS,
+  };
+}
+
+export function saveInfo(payload) {
+  return {
+    payload,
+    type: SAVE_INFO,
   };
 }
 
@@ -107,5 +147,11 @@ export function searchUsers(payload) {
   return {
     payload,
     type: SEARCH_USERS,
+  };
+}
+
+export function verifyInfo() {
+  return {
+    type: VERIFY_INFO,
   };
 }

@@ -9,6 +9,16 @@ const makeSelectUsers = prop =>
     substate => substate[prop],
   );
 
+const makeSelectUsersDisabled = () =>
+  createSelector(
+    makeSelectUsers('data'),
+    data => {
+      const tempData = { ...data };
+      delete tempData.importUrl;
+      return Object.keys(tempData).every(item => tempData[item].value !== '');
+    },
+  );
+
 const makeSelectUsersError = prop =>
   createSelector(
     makeSelectUsers('error'),
@@ -27,10 +37,18 @@ const makeSelectUsersSearchDisabled = () =>
     ({ name }) => name.value === '',
   );
 
+const makeSelectUsersStep = prop =>
+  createSelector(
+    makeSelectUsers('step'),
+    step => step[prop],
+  );
+
 export default selectUsersDomain;
 export {
   makeSelectUsers,
+  makeSelectUsersDisabled,
   makeSelectUsersError,
   makeSelectUsersLoading,
   makeSelectUsersSearchDisabled,
+  makeSelectUsersStep,
 };

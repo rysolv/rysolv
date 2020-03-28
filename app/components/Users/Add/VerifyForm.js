@@ -2,7 +2,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { companyDataDictionary } from 'containers/Companies/constants';
+import { userDataDictionary } from 'containers/Users/constants';
 
 import {
   DataWrapper,
@@ -16,19 +16,13 @@ import {
 export class VerifyForm extends React.PureComponent {
   render() {
     const { data } = this.props;
-    const tempData = { ...data };
-    delete tempData.importUrl;
     return (
       <DataWrapper>
         <KeyGroupWrapper>
-          {Object.keys(tempData).map((key, index) => (
-            <KeyAndValueContainer>
-              <KeyWrapper key={`verify-key-${key}-${index}`}>
-                {companyDataDictionary[key]}:
-              </KeyWrapper>
-              <ValueWrapper key={`verify-value-${key}-${index}`}>
-                {tempData[key].value}
-              </ValueWrapper>
+          {Object.keys(data).map((key, index) => (
+            <KeyAndValueContainer key={`verify-key-${key}-${index}`}>
+              <KeyWrapper>{userDataDictionary[key]}:</KeyWrapper>
+              <ValueWrapper>{data[key].value}</ValueWrapper>
             </KeyAndValueContainer>
           ))}
         </KeyGroupWrapper>

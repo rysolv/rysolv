@@ -1,6 +1,7 @@
 import produce from 'immer';
 import {
   CLEAR_ALERTS,
+  CLEAR_FORM,
   DELETE_USER_FAILURE,
   DELETE_USER_SUCCESS,
   DELETE_USER,
@@ -10,20 +11,38 @@ import {
   FETCH_USERS_FAILURE,
   FETCH_USERS_SUCCESS,
   FETCH_USERS,
+  INCREMENT_STEP,
   INPUT_CHANGE,
+  SAVE_INFO_FAILURE,
+  SAVE_INFO_SUCCESS,
+  SAVE_INFO,
   SEARCH_USERS_FAILURE,
   SEARCH_USERS_SUCCESS,
   SEARCH_USERS,
+  VERIFY_INFO,
 } from './constants';
 
 export const initialState = {
   alerts: { error: false, success: false },
+  data: {
+    email: { error: '', value: '' },
+    firstName: { error: '', value: '' },
+    githubLink: { error: '', value: '' },
+    image: { error: '', value: '' },
+    lastName: { error: '', value: '' },
+    personalLink: { error: '', value: '' },
+    preferredLanguages: { error: '', value: '' },
+    stackoverflowLink: { error: '', value: '' },
+    userName: { error: '', value: '' },
+  },
   error: {
     editUser: false,
     searchUsers: false,
     users: false,
   },
+  isVerified: false,
   loading: {
+    addUser: false,
     deleteUser: false,
     editUser: false,
     searchUsers: false,
@@ -31,6 +50,9 @@ export const initialState = {
   },
   search: {
     name: { error: '', value: '' },
+  },
+  step: {
+    addUser: 1,
   },
   userInfo: {},
   users: [],
@@ -41,6 +63,11 @@ const usersReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
+      break;
+    }
+    case CLEAR_FORM: {
+      draft.data = initialState.data;
+      draft.isVerified = initialState.isVerified;
       break;
     }
     case DELETE_USER_FAILURE: {
@@ -93,9 +120,30 @@ const usersReducer = produce((draft, { payload, type }) => {
       draft.loading.users = true;
       break;
     }
+    case INCREMENT_STEP: {
+      const { step, view } = payload;
+      draft.step[view] = step;
+      break;
+    }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
       draft[form][field].value = value;
+      break;
+    }
+    case SAVE_INFO_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.addUser = false;
+      break;
+    }
+    case SAVE_INFO_SUCCESS: {
+      const { message } = payload;
+      draft.alerts.success = { message };
+      draft.loading.addUser = false;
+      break;
+    }
+    case SAVE_INFO: {
+      draft.loading.addUser = true;
       break;
     }
     case SEARCH_USERS_FAILURE: {
@@ -112,6 +160,10 @@ const usersReducer = produce((draft, { payload, type }) => {
     }
     case SEARCH_USERS: {
       draft.loading.searchUsers = true;
+      break;
+    }
+    case VERIFY_INFO: {
+      draft.isVerified = !draft.isVerified;
       break;
     }
   }
