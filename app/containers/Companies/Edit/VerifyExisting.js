@@ -26,7 +26,7 @@ export class VerifyExisting extends React.PureComponent {
 
   render() {
     const {
-      companyInfo,
+      editInfo,
       dispatchIncrementStep,
       dispatchUpdateInfo,
       dispatchVerifyInfo,
@@ -34,15 +34,15 @@ export class VerifyExisting extends React.PureComponent {
       isVerified,
     } = this.props;
     const handleUpdateInfo = () => {
-      const { id } = companyInfo;
-      dispatchUpdateInfo({ companyId: id.value, companyInfo });
-      handleNav({ subroute: 'companies' });
+      const { id } = editInfo;
+      dispatchUpdateInfo({ companyId: id.value, editInfo });
+      handleNav('/admin/companies');
     };
     return (
       <Fragment>
         <StyledH3>Verify Company Information</StyledH3>
         <Wrapper>
-          <VerifyExistingForm companyInfo={companyInfo} />
+          <VerifyExistingForm editInfo={editInfo} />
           <StyledCheckboxWithLabel
             checked={isVerified}
             label={verifyMessage}
@@ -68,7 +68,7 @@ export class VerifyExisting extends React.PureComponent {
 }
 
 VerifyExisting.propTypes = {
-  companyInfo: T.object,
+  editInfo: T.object,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchUpdateInfo: T.func,
@@ -81,7 +81,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Companies
    */
-  companyInfo: makeSelectCompanies('companyInfo'),
+  editInfo: makeSelectCompanies('editInfo'),
   isVerified: makeSelectCompanies('isVerified'),
 });
 
@@ -97,9 +97,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Router
      */
-    handleNav: ({ subroute }) => {
-      dispatch(push(`/admin/${subroute}`));
-    },
+    handleNav: route => dispatch(push(route)),
   };
 }
 

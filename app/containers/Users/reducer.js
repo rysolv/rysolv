@@ -19,6 +19,9 @@ import {
   SEARCH_USERS_FAILURE,
   SEARCH_USERS_SUCCESS,
   SEARCH_USERS,
+  UPDATE_INFO_FAILURE,
+  UPDATE_INFO_SUCCESS,
+  UPDATE_INFO,
   VERIFY_INFO,
 } from './constants';
 
@@ -35,6 +38,16 @@ export const initialState = {
     stackoverflowLink: { error: '', value: '' },
     userName: { error: '', value: '' },
   },
+  editInfo: {
+    activeNumber: { error: '', value: '' },
+    id: { error: '', value: '' },
+    image: { error: '', value: '' },
+    issuesNumber: { error: '', value: '' },
+    joinDate: { error: '', value: '' },
+    name: { error: '', value: '' },
+    pointsNumber: { error: '', value: '' },
+    userName: { error: '', value: '' },
+  },
   error: {
     editUser: false,
     searchUsers: false,
@@ -46,6 +59,7 @@ export const initialState = {
     deleteUser: false,
     editUser: false,
     searchUsers: false,
+    updateUser: false,
     users: false,
   },
   search: {
@@ -53,8 +67,8 @@ export const initialState = {
   },
   step: {
     addUser: 1,
+    editUser: 1,
   },
-  userInfo: {},
   users: [],
 };
 
@@ -95,7 +109,7 @@ const usersReducer = produce((draft, { payload, type }) => {
     case FETCH_INFO_SUCCESS: {
       const { user } = payload;
       Object.keys(user).forEach(detail => {
-        draft.userInfo[detail].value = user[detail];
+        draft.editInfo[detail].value = user[detail];
       });
       draft.loading.editUser = false;
       break;
@@ -160,6 +174,22 @@ const usersReducer = produce((draft, { payload, type }) => {
     }
     case SEARCH_USERS: {
       draft.loading.searchUsers = true;
+      break;
+    }
+    case UPDATE_INFO_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.updateUser = false;
+      break;
+    }
+    case UPDATE_INFO_SUCCESS: {
+      const { message } = payload;
+      draft.alerts.success = { message };
+      draft.loading.updateUser = false;
+      break;
+    }
+    case UPDATE_INFO: {
+      draft.loading.updateUser = true;
       break;
     }
     case VERIFY_INFO: {

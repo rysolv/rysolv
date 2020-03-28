@@ -30,7 +30,15 @@ import {
 export const initialState = {
   alerts: { error: false, success: false },
   companies: [],
-  companyInfo: {
+  data: {
+    companyUrl: { error: '', value: '' },
+    description: { error: '', value: '' },
+    githubUrl: { error: '', value: '' },
+    icon: { error: '', value: '' },
+    importUrl: { error: '', value: '' },
+    name: { error: '', value: '' },
+  },
+  editInfo: {
     companyUrl: { error: '', value: '' },
     description: { error: '', value: '' },
     githubUrl: { error: '', value: '' },
@@ -40,14 +48,6 @@ export const initialState = {
     lastPostDate: { error: '', value: '' },
     name: { error: '', value: '' },
     pullRequests: { error: '', value: '' },
-  },
-  data: {
-    companyUrl: { error: '', value: '' },
-    description: { error: '', value: '' },
-    githubUrl: { error: '', value: '' },
-    icon: { error: '', value: '' },
-    importUrl: { error: '', value: '' },
-    name: { error: '', value: '' },
   },
   loading: {
     addCompany: false,
@@ -126,7 +126,7 @@ const companiesReducer = produce((draft, { payload, type }) => {
     case FETCH_INFO_SUCCESS: {
       const { company } = payload;
       Object.keys(company).forEach(detail => {
-        draft.companyInfo[detail].value = company[detail];
+        draft.editInfo[detail].value = company[detail];
       });
       draft.loading.editCompany = false;
       break;

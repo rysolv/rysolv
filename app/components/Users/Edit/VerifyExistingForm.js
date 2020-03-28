@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 import omit from 'lodash/omit';
 
-import { companyDataDictionary } from 'containers/Companies/constants';
+import { userDataDictionary } from 'containers/Users/constants';
 
 import {
   DataWrapper,
@@ -16,13 +16,13 @@ import {
 export class VerifyExistingForm extends React.PureComponent {
   render() {
     const { editInfo } = this.props;
-    const tempEditInfo = omit(editInfo, ['id', 'lastPostDate']);
+    const tempEditInfo = omit(editInfo, ['id', 'joinDate']);
     return (
       <DataWrapper>
         <KeyGroupWrapper>
           {Object.keys(tempEditInfo).map(key => (
             <KeyAndValueContainer key={`container-${key}`}>
-              <KeyWrapper>{companyDataDictionary[key]}:</KeyWrapper>
+              <KeyWrapper>{userDataDictionary[key]}:</KeyWrapper>
               <ValueWrapper>{tempEditInfo[key].value}</ValueWrapper>
             </KeyAndValueContainer>
           ))}

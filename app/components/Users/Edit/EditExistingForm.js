@@ -3,27 +3,30 @@ import T from 'prop-types';
 import omit from 'lodash/omit';
 
 import { MainTextInput } from 'components/base_ui';
-import { companyDataDictionary } from 'containers/Companies/constants';
+import { userDataDictionary } from 'containers/Users/constants';
 
 import { InputFormWrapper } from './styledComponents';
 
 const EditExistingForm = ({ editInfo, handleInputChange }) => {
-  const tempEditInfo = omit(editInfo, ['id', 'lastPostDate']);
+  const tempEditInfo = omit(editInfo, ['id', 'joinDate']);
   return (
     <InputFormWrapper>
       {Object.keys(tempEditInfo).map(info => {
-        const isDisabled = info === 'issues' || info === 'pullRequests';
+        const isDisabled =
+          info === 'activeNumber' ||
+          info === 'issuesNumber' ||
+          info === 'pointsNumber';
         return (
           <MainTextInput
             key={`input-${info}`}
             disabled={isDisabled}
             error={!!tempEditInfo[info].error}
             helperText={tempEditInfo[info].error}
-            label={companyDataDictionary[info]}
+            label={userDataDictionary[info]}
             onChange={e =>
               handleInputChange({
                 field: info,
-                form: 'companyInfo',
+                form: 'editInfo',
                 value: e.target.value,
               })
             }

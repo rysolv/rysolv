@@ -18,6 +18,9 @@ import {
   SEARCH_USERS_FAILURE,
   SEARCH_USERS_SUCCESS,
   SEARCH_USERS,
+  UPDATE_INFO_FAILURE,
+  UPDATE_INFO_SUCCESS,
+  UPDATE_INFO,
   VERIFY_INFO,
 } from './constants';
 
@@ -147,6 +150,27 @@ export function searchUsers(payload) {
   return {
     payload,
     type: SEARCH_USERS,
+  };
+}
+
+export function updateInfoFailure(payload) {
+  return {
+    payload,
+    type: UPDATE_INFO_FAILURE,
+  };
+}
+
+export function updateInfoSuccess(payload) {
+  return {
+    payload,
+    type: UPDATE_INFO_SUCCESS,
+  };
+}
+
+export function updateInfo(payload) {
+  return {
+    payload,
+    type: UPDATE_INFO,
   };
 }
 
