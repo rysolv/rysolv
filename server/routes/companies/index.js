@@ -20,8 +20,8 @@ router.get('/:companyId', getCompanyInfo, responseData);
 
 router.get('/', getCompanies, responseData);
 
-router.post('/:companyId', updateCompany, responseData);
-
 router.post('/', postCompany, responseData);
+
+router.post('/:companyId', updateCompany, responseData);
 
 module.exports = router;

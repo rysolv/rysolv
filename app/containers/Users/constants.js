@@ -26,6 +26,10 @@ export const SEARCH_USERS = 'app/Users/SEARCH_USERS';
 export const SEARCH_USERS_FAILURE = 'app/Users/SEARCH_USERS_FAILURE';
 export const SEARCH_USERS_SUCCESS = 'app/Users/SEARCH_USERS_SUCCESS';
 
+export const UPDATE_INFO = 'app/Users/UPDATE_INFO';
+export const UPDATE_INFO_FAILURE = 'app/Users/UPDATE_INFO_FAILURE';
+export const UPDATE_INFO_SUCCESS = 'app/Users/UPDATE_INFO_SUCCESS';
+
 export const VERIFY_INFO = 'app/Users/VERIFY_INFO';
 
 export const emptyCardMessage = 'There are no users matching the search terms.';
@@ -40,6 +44,10 @@ export const userDataDictionary = {
   preferredLanguages: 'Preferred Languages',
   stackoverflowLink: 'StackOverflow Link',
   userName: 'Username',
+  activeNumber: 'Number of Active Issues',
+  issuesNumber: 'Number of Issues',
+  name: 'Full Name',
+  pointsNumber: 'Number of Points',
 };
 
 export const verifyMessage = 'I agree that this information is correct.';

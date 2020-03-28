@@ -55,4 +55,6 @@ const deleteMessage = ' has been successfully deleted.';
 
 const postMessage = 'User has been added.';
 
-module.exports = { deleteMessage, postMessage, users };
+const updateMessage = 'User information has been updated.';
+
+module.exports = { deleteMessage, postMessage, updateMessage, users };

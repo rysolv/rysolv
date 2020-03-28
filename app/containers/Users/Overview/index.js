@@ -34,6 +34,11 @@ export class UsersOverview extends React.PureComponent {
     dispatchFetchUsers();
   }
 
+  componentWillUnmount() {
+    const { handleClearAlerts } = this.props;
+    handleClearAlerts();
+  }
+
   render() {
     const {
       alerts,
