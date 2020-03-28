@@ -94,7 +94,7 @@ export const StyledListSquare = styled.div`
   border: 0.1rem solid #e0e0e0;
   margin: 1rem;
   padding: 1rem;
-  width: 29.5%;
+  width: 17.7rem;
 `;
 
 export const StyledSettingWrapper = styled.div`
