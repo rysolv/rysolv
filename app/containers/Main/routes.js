@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+
 import Admin from '../Admin/Loadable';
 import IssueDetail from '../IssueDetail';
 import Main from '../HomePage';

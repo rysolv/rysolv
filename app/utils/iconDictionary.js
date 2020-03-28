@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import Comments from '@material-ui/icons/Forum';
+import Delete from '@material-ui/icons/Delete';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
+import Star from '@material-ui/icons/Star';
 import Upvote from '@material-ui/icons/ArrowUpward';
 import Verified from '@material-ui/icons/VerifiedUser';
 import Warning from '@material-ui/icons/Warning';
@@ -16,9 +18,11 @@ export default (name, options) => {
     closeMenu: CloseMenu,
     glasses: Glasses,
     comments: Comments,
+    delete: Delete,
     search: Search,
     settings: Settings,
     siteLogo: SiteLogo,
+    star: Star,
     successOutline: CheckCircleOutline,
     upvote: Upvote,
     verified: Verified,

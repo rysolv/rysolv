@@ -5,10 +5,18 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-import CompanyCard from 'components/Companies';
-import { clearAlerts, deleteCompany, fetchCompanies } from '../actions';
+import Companies from 'components/Companies';
+import {
+  clearAlerts,
+  deleteCompany,
+  fetchCompanies,
+  fetchInfo,
+  inputChange,
+  searchCompanies,
+} from '../actions';
 import {
   makeSelectCompanies,
+  makeSelectCompaniesSearchDisabled,
   makeSelectCompaniesError,
   makeSelectCompaniesLoading,
 } from '../selectors';
@@ -28,25 +36,35 @@ export class CompaniesOverview extends React.PureComponent {
   render() {
     const {
       alerts,
-      handleClearAlerts,
       companies,
-      dispatchDeleteCompany,
+      disabled,
+      dispatchFetchInfo,
       error,
+      handleClearAlerts,
+      handleDeleteCompany,
+      handleInputChange,
       handleNav,
+      handleSearchCompanies,
       loading,
+      search,
     } = this.props;
 
     return (
       <AsyncRender
         asyncData={companies}
-        component={CompanyCard}
+        component={Companies}
         error={error}
         loading={loading}
         propsToPassDown={{
           alerts,
+          disabled,
           handleClearAlerts,
-          handleDelete: dispatchDeleteCompany,
+          handleDeleteCompany,
+          handleFetchInfo: dispatchFetchInfo,
+          handleInputChange,
           handleNav,
+          handleSearchCompanies,
+          search,
         }}
       />
     );
@@ -59,12 +77,17 @@ CompaniesOverview.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   companies: T.array,
-  dispatchDeleteCompany: T.func,
+  disabled: T.bool.isRequired,
   dispatchFetchCompanies: T.func,
+  dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
+  handleDeleteCompany: T.func,
+  handleInputChange: T.func,
   handleNav: T.func,
+  handleSearchCompanies: T.func,
   loading: T.bool,
+  search: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -73,8 +96,10 @@ const mapStateToProps = createStructuredSelector({
    */
   alerts: makeSelectCompanies('alerts'),
   companies: makeSelectCompanies('companies'),
+  disabled: makeSelectCompaniesSearchDisabled(),
   error: makeSelectCompaniesError('companies'),
   loading: makeSelectCompaniesLoading('companies'),
+  search: makeSelectCompanies('search'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -82,9 +107,12 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Companies
      */
-    dispatchDeleteCompany: payload => dispatch(deleteCompany(payload)),
     dispatchFetchCompanies: () => dispatch(fetchCompanies()),
+    dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
+    handleDeleteCompany: payload => dispatch(deleteCompany(payload)),
+    handleInputChange: payload => dispatch(inputChange(payload)),
+    handleSearchCompanies: payload => dispatch(searchCompanies(payload)),
     /**
      * Reducer : Router
      */

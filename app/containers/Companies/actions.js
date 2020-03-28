@@ -7,12 +7,21 @@ import {
   FETCH_COMPANIES_FAILURE,
   FETCH_COMPANIES_SUCCESS,
   FETCH_COMPANIES,
+  FETCH_INFO_FAILURE,
+  FETCH_INFO_SUCCESS,
+  FETCH_INFO,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
+  SEARCH_COMPANIES_FAILURE,
+  SEARCH_COMPANIES_SUCCESS,
+  SEARCH_COMPANIES,
+  UPDATE_INFO_FAILURE,
+  UPDATE_INFO_SUCCESS,
+  UPDATE_INFO,
   VERIFY_INFO,
 } from './constants';
 
@@ -69,6 +78,27 @@ export function fetchCompanies() {
   };
 }
 
+export function fetchInfoFailure(payload) {
+  return {
+    payload,
+    type: FETCH_INFO_FAILURE,
+  };
+}
+
+export function fetchInfoSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_INFO_SUCCESS,
+  };
+}
+
+export function fetchInfo(payload) {
+  return {
+    payload,
+    type: FETCH_INFO,
+  };
+}
+
 export function incrementStep(payload) {
   return {
     payload,
@@ -108,6 +138,48 @@ export function saveInfo(payload) {
   return {
     payload,
     type: SAVE_INFO,
+  };
+}
+
+export function searchCompaniesFailure(payload) {
+  return {
+    payload,
+    type: SEARCH_COMPANIES_FAILURE,
+  };
+}
+
+export function searchCompaniesSuccess(payload) {
+  return {
+    payload,
+    type: SEARCH_COMPANIES_SUCCESS,
+  };
+}
+
+export function searchCompanies(payload) {
+  return {
+    payload,
+    type: SEARCH_COMPANIES,
+  };
+}
+
+export function updateInfoFailure(payload) {
+  return {
+    payload,
+    type: UPDATE_INFO_FAILURE,
+  };
+}
+
+export function updateInfoSuccess(payload) {
+  return {
+    payload,
+    type: UPDATE_INFO_SUCCESS,
+  };
+}
+
+export function updateInfo(payload) {
+  return {
+    payload,
+    type: UPDATE_INFO,
   };
 }
 

@@ -1,71 +1,55 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { push } from 'connected-react-router';
 
-import AsyncRender from 'components/AsyncRender';
-import userCard from 'components/Users';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { fetchUsers } from './actions';
-import {
-  makeSelectUsers,
-  makeSelectUsersError,
-  makeSelectUsersLoading,
-} from './selectors';
+
+import { userTypeDictionary } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class Users extends React.PureComponent {
   componentDidMount() {
-    const { dispatchFetchUsers } = this.props;
-    dispatchFetchUsers();
+    const { handleNav } = this.props;
+    handleNav('/admin/users');
   }
 
   render() {
-    const { users, error, loading } = this.props;
+    const { view } = this.props;
+    const Component = userTypeDictionary[view];
     return (
-      <AsyncRender
-        asyncData={users}
-        component={userCard}
-        error={error}
-        loading={loading}
-      />
+      <Fragment>
+        <Component />
+      </Fragment>
     );
   }
 }
 
-Users.propTypes = {
-  users: T.array,
-  dispatchFetchUsers: T.func,
-  error: T.oneOfType([T.object, T.bool]),
-  loading: T.bool,
-};
+Users.defaultProps = { view: 'overview' };
 
-const mapStateToProps = createStructuredSelector({
-  /**
-   * Reducer : Users
-   */
-  users: makeSelectUsers('users'),
-  error: makeSelectUsersError('users'),
-  loading: makeSelectUsersLoading('users'),
-});
+Users.propTypes = {
+  handleNav: T.func,
+  view: T.string,
+};
 
 function mapDispatchToProps(dispatch) {
   return {
     /**
-     * Reducer : Users
+     * Reducer : Router
      */
-    dispatchFetchUsers: () => dispatch(fetchUsers()),
+    handleNav: route => dispatch(push(route)),
   };
 }
 
 const withConnect = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 );
+
 const withReducer = injectReducer({ key: 'users', reducer });
 const withSaga = injectSaga({ key: 'users', saga });
 

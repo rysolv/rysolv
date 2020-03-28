@@ -8,6 +8,7 @@ import {
   inputBorder,
   textColor,
 } from 'defaultStyleHelper';
+import { FlatIconButton } from '../buttons';
 
 export const Spacer = styled.div`
   height: 1.5rem;
@@ -55,4 +56,9 @@ export const StyledBaseTextInput = styled(TextField)`
 export const StyledFormControl = styled(FormControl)`
   margin-bottom: 0.7rem;
   width: 100%;
+`;
+
+export const StyledFlatIconButton = styled(FlatIconButton)`
+  justify-content: flex-end;
+  padding: 0;
 `;

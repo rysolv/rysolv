@@ -3,49 +3,40 @@ import T from 'prop-types';
 
 import { StyledBaseTextInput } from './styledComponents';
 
-const BaseTextInput = ({
-  disabled,
-  error,
-  helperText,
-  InputProps,
-  onChange,
-  required,
-  value,
-  ...restProps
-}) => (
+const BaseTextInput = ({ disabled, onChange, type, value, ...restProps }) => (
   <StyledBaseTextInput
     classes={{ root: 'formControl' }}
     disabled={disabled}
-    error={error}
-    helperText={helperText}
-    onChange={onChange}
-    required={required}
-    value={value}
+    FormHelperTextProps={{ classes: { root: 'helperText' } }}
     InputProps={{
       classes: {
         root: 'base-input',
         underline: 'underline',
       },
-      ...InputProps,
     }}
     InputLabelProps={{
       classes: {
         focused: 'focused',
         root: 'label',
+        shrink: 'shrink',
       },
-      required: false,
     }}
+    onChange={onChange}
+    type={type}
+    value={value}
     {...restProps}
   />
 );
 
+BaseTextInput.defaultProps = {
+  disabled: false,
+  type: 'text',
+};
+
 BaseTextInput.propTypes = {
   disabled: T.bool,
-  error: T.bool,
-  helperText: T.string,
-  InputProps: T.object,
   onChange: T.func.isRequired,
-  required: T.bool,
+  type: T.string,
   value: T.oneOfType([T.number, T.string]),
 };
 

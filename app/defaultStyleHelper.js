@@ -1,20 +1,19 @@
 // Colors
-export const inputErrorRed = 'red';
-export const menuColor = '#1e88e5';
-export const textColor = '#616161';
+export const borderColor = '#e0e0e0';
+export const commentHeaderColor = '#f6f8fa';
 export const darkTextColor = '#263238';
-export const inputFieldColor = '#cfd8dc';
+export const headerOutlineColor = '#cfd8dc';
 export const hyperlinkColor = '#1e88e5';
-export const subHeaderColor = '#0d47a1';
+export const inputErrorRed = 'red';
+export const inputFieldColor = '#cfd8dc';
+export const menuColor = '#1e88e5';
+export const moneyGreen = '#00c853';
 export const primaryButtonColor = '#1e88e5';
 export const primaryButtonHoverColor = '#1976d2';
 export const secondaryButtonColor = '#5e35b1';
 export const secondaryButtonHoverColor = '#512da8';
-export const backgroundColor = '#f6f8fa';
-export const containerOutlineColor = '#e0e0e0';
-export const headerOutlineColor = '#cfd8dc';
-export const commentHeaderColor = '#f6f8fa';
-export const moneyGreen = '#66bb6a';
+export const subHeaderColor = '#0d47a1';
+export const textColor = '#616161';
 
 // Font Sizes
 export const defaultFontSize = '1.4rem';
@@ -22,4 +21,4 @@ export const defaultFontSize = '1.4rem';
 // Borders
 export const errorBorder = `0.1rem solid ${inputErrorRed}`;
 export const inputBorder = `0.1rem solid ${inputFieldColor}`;
-export const issueBorder = `0.1rem solid ${containerOutlineColor}`;
+export const issueBorder = `0.1rem solid ${borderColor}`;

@@ -1,9 +1,12 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import T from 'prop-types';
 
-import { companyDataDictionary } from '../../../containers/Companies/constants';
+import { companyDataDictionary } from 'containers/Companies/constants';
+
 import {
   DataWrapper,
+  KeyAndValueContainer,
   KeyGroupWrapper,
   KeyWrapper,
   ValueWrapper,
@@ -18,19 +21,17 @@ export class VerifyForm extends React.PureComponent {
     return (
       <DataWrapper>
         <KeyGroupWrapper>
-          {Object.keys(tempData).map(key => (
-            <KeyWrapper key={`verify-${key}`}>
-              {companyDataDictionary[key]}:
-            </KeyWrapper>
+          {Object.keys(tempData).map((key, index) => (
+            <KeyAndValueContainer>
+              <KeyWrapper key={`verify-key-${key}-${index}`}>
+                {companyDataDictionary[key]}:
+              </KeyWrapper>
+              <ValueWrapper key={`verify-value-${key}-${index}`}>
+                {tempData[key].value}
+              </ValueWrapper>
+            </KeyAndValueContainer>
           ))}
         </KeyGroupWrapper>
-        <div>
-          {Object.keys(tempData).map(key => (
-            <ValueWrapper key={`verify-${key}`}>
-              {tempData[key].value}
-            </ValueWrapper>
-          ))}
-        </div>
       </DataWrapper>
     );
   }

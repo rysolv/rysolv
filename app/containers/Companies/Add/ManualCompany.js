@@ -29,7 +29,7 @@ export class ManualCompany extends React.PureComponent {
             onClick={() => handleIncrementStep({ step: 1, view: 'addCompany' })}
           />
           <PrimaryButton
-            disabled={isDisabled}
+            disabled={!isDisabled}
             label="Next"
             onClick={() => handleIncrementStep({ step: 3, view: 'addCompany' })}
           />

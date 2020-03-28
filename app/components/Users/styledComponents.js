@@ -1,9 +1,20 @@
-import React from 'react';
 import styled from 'styled-components';
 
-export const ButtonContainer = styled.div`
-  align-self: right;
-  padding: 1rem;
+import { textColor } from 'defaultStyleHelper';
+
+export const ActiveContainer = styled.div`
+  color: #388e3c;
+  font-weight: 500;
+`;
+
+export const BannerWrapper = styled.div`
+  font-size: 1.2rem;
+  margin: 1rem 0;
+`;
+
+export const ContentWrapper = styled.div`
+  align-self: center;
+  display: flex;
 `;
 
 export const DescriptionWrapper = styled.div`
@@ -11,53 +22,89 @@ export const DescriptionWrapper = styled.div`
   font-size: 1rem;
 `;
 
-export const Divider = styled(({ isLastItem, ...restProps }) => (
-  <div {...restProps} />
-))`
-  border-bottom: ${({ isLastItem }) =>
-    isLastItem ? 'none' : '0.1rem solid grey'};
+export const IconWrapper = styled.div`
   display: flex;
-  margin: auto;
-  width: 90%;
+  flex-direction: row;
+  justify-content: center;
 `;
 
 export const ImageContainer = styled.div`
   align-self: center;
   text-align: center;
-  width: 20%;
 `;
 
-export const InfoContainer = styled.div`
+export const IssuesContainer = styled.div`
+  font-weight: 500;
+`;
+
+export const IssuesWrapper = styled.div`
   display: flex;
-  flex-grow: 8;
-  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 1rem;
+`;
+
+export const MemberInfoContainer = styled.div`
+  line-height: 1.5rem;
+`;
+
+export const MemberWrapper = styled.div`
+  align-self: center;
+`;
+
+export const MessageWrapper = styled.div`
+  align-items: center;
+  background-color: white;
+  border-radius: 0.5rem;
+  color: ${textColor};
+  display: flex;
+  font-size: 1.6rem;
+  height: 55rem;
+  justify-content: center;
+  text-align: center;
 `;
 
 export const NameWrapper = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+`;
+
+export const NumberContainer = styled.div`
+  align-self: center;
+  padding-left: 0.5rem;
+  font-weight: 500;
 `;
 
 export const StyledImage = styled.img`
-  height: 5rem;
-  width: 5rem;
+  border-radius: 50%;
+  height: 7.5rem;
+  margin: 0.5rem;
+  width: 7.5rem;
 `;
 
 export const StyledUserCard = styled.div`
-  border-radius: 0 0.5rem 0.5rem;
-  border: 0.1rem solid grey;
   color: rgba(0, 0, 0, 0.7);
-  width: 100%;
-`;
-
-export const StyledListItem = styled.li`
   display: flex;
-  flex-direction: row;
-  list-style-type: none;
-  justify-content: space-between;
-  padding: 2rem 0;
+  flex-wrap: wrap;
+  margin: 0 0 0 10%;
+  width: 80%;
 `;
 
-export const BannerWrapper = styled.div`
-  font-size: 1.2rem;
-  margin: 1rem 0;
+export const StyledListSquare = styled.div`
+  background-color: white;
+  border-radius: 0.2rem;
+  border: 0.1rem solid #e0e0e0;
+  margin: 1rem;
+  padding: 1rem;
+  width: 17.7rem;
+`;
+
+export const StyledSettingWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const StyledSquare = styled.div`
+  display: flex;
+  height: 0;
+  padding-bottom: 100%;
+  flex-direction: column;
 `;

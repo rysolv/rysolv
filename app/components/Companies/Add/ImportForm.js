@@ -2,11 +2,11 @@ import React from 'react';
 import T from 'prop-types';
 import iconDictionary from 'utils/iconDictionary';
 import { BaseTextInputWithAdornment } from 'components/base_ui';
-import { AddCompanyContainer, StyledLabel } from './styledComponents';
+import { ImportFormContainer, StyledLabel } from './styledComponents';
 
 const SearchIcon = iconDictionary('search');
 
-const AddCompany = ({
+const ImportForm = ({
   data,
   handleIncrementStep,
   handleInputChange,
@@ -14,11 +14,15 @@ const AddCompany = ({
 }) => {
   const { importUrl } = data;
   const onChangeHandler = e => {
-    handleInputChange({ field: 'importUrl', value: e.target.value });
+    handleInputChange({
+      field: 'importUrl',
+      form: 'data',
+      value: e.target.value,
+    });
   };
 
   return (
-    <AddCompanyContainer>
+    <ImportFormContainer>
       Import GitHub&nbsp;
       <BaseTextInputWithAdornment
         adornmentComponent={SearchIcon}
@@ -36,15 +40,15 @@ const AddCompany = ({
       >
         Manual
       </StyledLabel>
-    </AddCompanyContainer>
+    </ImportFormContainer>
   );
 };
 
-AddCompany.propTypes = {
+ImportForm.propTypes = {
   data: T.object,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   handleSubmit: T.func,
 };
 
-export default AddCompany;
+export default ImportForm;
