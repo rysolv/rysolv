@@ -38,6 +38,9 @@ module.exports = {
         userInput.watching_list || [],
         userInput.rep || 0,
         userInput.profile_pic,
+        userInput.active_number,
+        userInput.issues_number,
+        userInput.username,
       ],
     ];
     try {
@@ -59,10 +62,13 @@ module.exports = {
           userInput.watching_list || [],
           userInput.rep || 0,
           userInput.profile_pic,
+          userInput.active_number,
+          userInput.issues_number,
+          userInput.username,
         ],
       ];
-      const issues = await transformUser('users', id, data);
-      return issues;
+      const result = await transformUser('users', id, data);
+      return result;
     } catch (err) {
       throw err;
     }
@@ -70,8 +76,8 @@ module.exports = {
   deleteUser: async args => {
     const { id } = args;
     try {
-      const issues = await deleteUser('users', id);
-      return issues;
+      const result = await deleteUser('users', id);
+      return result;
     } catch (err) {
       throw err;
     }

@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { del, get, post } from 'utils/request';
+import { get, post } from 'utils/request';
 
 import {
   DELETE_USER,
@@ -27,9 +27,18 @@ import {
 export function* deleteUserSaga({ payload }) {
   const { userId } = payload;
   try {
-    const endpoint = `/api/users/${userId}`;
-    const { message } = yield call(del, endpoint);
-    yield put(deleteUserSuccess({ message }));
+    const query = `
+    mutation{
+      deleteUser(id: "${userId}")
+    }`;
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { deleteUser },
+    } = yield call(post, '/graphql', graphql);
+    yield put(deleteUserSuccess({ message: deleteUser, userId }));
   } catch (error) {
     yield put(deleteUserFailure({ error }));
   }
@@ -50,14 +59,14 @@ export function* fetchUsersSaga() {
     query {
       getUsers {
         id,
-        created_date,
-        modified_date,
-        first_name,
-        last_name,
+        createdDate,
+        firstName,
+        lastName,
         email,
-        watching_list,
         rep,
-        profile_pic
+        profilePic,
+        activeNumber,
+        issuesNumber,
       }
     }
   `;
@@ -67,8 +76,10 @@ export function* fetchUsersSaga() {
       query,
       variables: {},
     });
-    const { data } = yield call(post, '/graphql', graphql);
-    yield put(fetchUsersSuccess(data));
+    const {
+      data: { getUsers },
+    } = yield call(post, '/graphql', graphql);
+    yield put(fetchUsersSuccess({ getUsers }));
   } catch (error) {
     yield put(fetchUsersFailure({ error }));
   }

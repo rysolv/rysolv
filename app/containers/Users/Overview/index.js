@@ -21,6 +21,7 @@ import {
 import {
   makeSelectUsers,
   makeSelectUsersError,
+  makeSelectUsersFormatted,
   makeSelectUsersLoading,
   makeSelectUsersSearchDisabled,
 } from '../selectors';
@@ -104,7 +105,7 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectUsersError('users'),
   loading: makeSelectUsersLoading('users'),
   search: makeSelectUsers('search'),
-  users: makeSelectUsers('users'),
+  users: makeSelectUsersFormatted('users'),
 });
 
 function mapDispatchToProps(dispatch) {
