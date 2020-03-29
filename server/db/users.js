@@ -1,8 +1,12 @@
+/* eslint-disable camelcase */
 const { mapValues, singleItem, singleQuery } = require('../db/query');
 
 // GET all users
 const getUsers = async table => {
-  const queryText = `SELECT * FROM ${table};`;
+  const queryText = `SELECT id, created_date AS "createdDate", modified_date AS "modifiedDate", first_name AS "firstName",
+  last_name AS "lastName", email, watching_list AS "watchingList", rep, profile_pic AS "profilePic",
+  active_number AS "activeNumber", issues_number AS "issuesNumber", username
+  FROM ${table};`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
@@ -19,8 +23,8 @@ const getOneUser = async (table, id) => {
 // Create new User
 const createUser = async data => {
   const queryText = `INSERT INTO
-    users(id, created_date, modified_date, first_name, last_name, email, watching_list, rep, profile_pic)
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    users(id, created_date, modified_date, first_name, last_name, email, watching_list, rep, profile_pic, active_number, issues_number, username)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -31,8 +35,8 @@ const transformUser = async (table, id, data) => {
   const rows = await singleItem(table, id);
   if (rows.length > 0) {
     const queryText = `UPDATE ${table}
-      SET (modified_date, first_name, last_name, email, watching_list, rep, profile_pic)
-      = ($1, $2, $3, $4, $5, $6, $7)
+      SET (modified_date, first_name, last_name, email, watching_list, rep, profile_pic, active_number, issues_number, username)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       WHERE (id = '${id}')
       RETURNING *`;
     const result = await mapValues(queryText, data);
@@ -46,8 +50,11 @@ const deleteUser = async (table, id) => {
   const rows = await singleItem(table, id);
   if (rows.length > 0) {
     const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
-    await singleQuery(queryText);
-    return `ID ${id} successfully deleted from table ${table}`;
+    const {
+      rows: [resultRow],
+    } = await singleQuery(queryText);
+    const { first_name, last_name } = resultRow;
+    return `${first_name} ${last_name} was successfully deleted from ${table}.`;
   }
   throw new Error(`Failed to delete user. ID not found in ${table}`);
 };

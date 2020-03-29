@@ -1,4 +1,6 @@
 import { createSelector } from 'reselect';
+import moment from 'moment';
+
 import { initialState } from './reducer';
 
 const selectUsersDomain = state => state.users || initialState;
@@ -25,6 +27,32 @@ const makeSelectUsersError = prop =>
     error => error[prop],
   );
 
+const makeSelectUsersFormatted = () =>
+  createSelector(
+    makeSelectUsers('users'),
+    users =>
+      users.map(
+        ({
+          activeNumber,
+          createdDate,
+          firstName,
+          id,
+          issuesNumber,
+          lastName,
+          profilePic,
+          rep,
+        }) => ({
+          activeNumber,
+          id,
+          image: profilePic,
+          issuesNumber,
+          joinDate: moment(createdDate).format('M/D/YYYY'),
+          name: `${firstName} ${lastName}`,
+          pointsNumber: rep,
+        }),
+      ),
+  );
+
 const makeSelectUsersLoading = prop =>
   createSelector(
     makeSelectUsers('loading'),
@@ -48,6 +76,7 @@ export {
   makeSelectUsers,
   makeSelectUsersDisabled,
   makeSelectUsersError,
+  makeSelectUsersFormatted,
   makeSelectUsersLoading,
   makeSelectUsersSearchDisabled,
   makeSelectUsersStep,

@@ -38,14 +38,17 @@ module.exports = buildSchema(`
 
   type User {
     id: ID!
-    created_date: Object
-    modified_date: Object
-    first_name: String!
-    last_name: String!
+    createdDate: Object
+    modifiedDate: Object
+    firstName: String!
+    lastName: String!
     email: String!
-    watching_list: [String]
+    watchingList: [String]
     rep: Int
-    profile_pic: String
+    profilePic: String
+    activeNumber: Int
+    issuesNumber: Int
+    username: String
   }
 
   input UserInput {

@@ -1,4 +1,6 @@
 import produce from 'immer';
+import remove from 'lodash/remove';
+
 import {
   CLEAR_ALERTS,
   CLEAR_FORM,
@@ -91,9 +93,10 @@ const usersReducer = produce((draft, { payload, type }) => {
       break;
     }
     case DELETE_USER_SUCCESS: {
-      const { message } = payload;
+      const { message, userId } = payload;
       draft.alerts.success = { message };
       draft.loading.deleteUser = false;
+      remove(draft.users, ({ id }) => id === userId);
       break;
     }
     case DELETE_USER: {
