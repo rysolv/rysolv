@@ -7,7 +7,7 @@ import {
   ErrorSuccessBanner,
   IconToolTip,
   Upvote,
-  Comments,
+  CommentIcon,
   Verified,
 } from 'components/base_ui';
 import SettingsMenu from 'components/SettingsMenu';
@@ -59,18 +59,17 @@ const IssueCard = ({
       <StyledIssueCard>
         {data.map(
           ({
-            attempts,
-            comments,
             id,
-            language,
             name,
-            organization,
+            organizationName,
             organizationVerified,
-            overview,
+            language,
+            body,
+            attempts,
             rep,
-            setPrice,
-            solved,
-            watched,
+            watch_list,
+            comments,
+            value,
           }) => (
             <div key={id}>
               <StyledListItem>
@@ -81,7 +80,7 @@ const IssueCard = ({
                 <StyledIssueContent>
                   <StyledIssueHeader>
                     <OrganizationNameWrapper>
-                      {organization}
+                      {organizationName}
 
                       {organizationVerified ? (
                         <IconToolTip toolTipText="Verified Contributor">
@@ -102,16 +101,19 @@ const IssueCard = ({
                     />
                   </StyledIssueHeader>
                   <StyledIssueText>
-                    <NameWrapper>{name}</NameWrapper>
-                    <IssueOverview>{overview}</IssueOverview>
+                    <NameWrapper>
+                      <a href={`./issues/${id}`}>{name}</a>
+                    </NameWrapper>
+                    <IssueOverview>{body}</IssueOverview>
                   </StyledIssueText>
                   <StyledIssueFooter>
                     <div>
-                      <Comments /> {comments} comments
+                      {' '}
+                      <CommentIcon /> {comments.length} comments
                     </div>
-                    <div>{solved ? 'Resolved' : `${attempts} attempts`}</div>
-                    <div>{watched} Watch</div>
-                    <DollarWrapper>${setPrice}</DollarWrapper>
+                    <div>{false ? 'Resolved' : `${attempts} attempting`}</div>
+                    <div>{watch_list.length} Watch</div>
+                    <DollarWrapper>${value}</DollarWrapper>
                   </StyledIssueFooter>
                 </StyledIssueContent>
               </StyledListItem>

@@ -2,7 +2,7 @@ import React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
 const SiteLogo = props => (
-  <SvgIcon viewBox="0 0 512.000000 512.000000" {...props}>
+  <SvgIcon viewBox="0 0 500 500" {...props}>
     <g
       transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
       fill="#000000"

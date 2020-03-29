@@ -46,9 +46,29 @@ export function* fetchInfoSaga({ payload }) {
 }
 
 export function* fetchUsersSaga() {
+  const query = `
+    query {
+      getUsers {
+        id,
+        created_date,
+        modified_date,
+        first_name,
+        last_name,
+        email,
+        watching_list,
+        rep,
+        profile_pic
+      }
+    }
+  `;
+
   try {
-    const { users } = yield call(get, `/api/users`);
-    yield put(fetchUsersSuccess({ users }));
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const { data } = yield call(post, '/graphql', graphql);
+    yield put(fetchUsersSuccess(data));
   } catch (error) {
     yield put(fetchUsersFailure({ error }));
   }

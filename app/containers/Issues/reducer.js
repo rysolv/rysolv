@@ -51,8 +51,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ISSUES_SUCCESS: {
-      const { issues } = payload;
-      draft.issues = issues;
+      draft.issues = payload;
       draft.loading.issues = false;
       break;
     }

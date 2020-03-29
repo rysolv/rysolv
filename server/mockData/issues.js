@@ -7,7 +7,7 @@ const issues = [
       'Translation updates do not work when I try to change the translations in the message.js file',
     repo: 'React-boilerplate',
     link: 'https://github.com/react-boilerplate/react-boilerplate/issues/2699',
-    posted: '1/14/20',
+    datePosted: '1/14/20',
     overview:
       'Translation updates do not work when I try to change the translations in the message.js file.',
     language: 'Javascript',

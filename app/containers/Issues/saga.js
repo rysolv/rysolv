@@ -1,5 +1,5 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { del, get } from 'utils/request';
+import { call, put, takeLatest, all } from 'redux-saga/effects';
+import { del, post } from 'utils/request';
 import { DELETE_ISSUE, FETCH_ISSUES } from './constants';
 import {
   deleteIssueFailure,
@@ -20,9 +20,78 @@ export function* deleteIssueSaga({ payload }) {
 }
 
 export function* fetchIssuesSaga() {
+  const issues = `
+  query {
+    getIssues {
+      id,
+      created_date,
+      modified_date,
+      name,
+      repo,
+      organization_id,
+      language,
+      body,
+      attempts,
+      rep,
+      watch_list,
+      comments,
+      value
+    }
+  }
+`;
+  const generateQuery = id => {
+    const orgQuery = `
+    query {
+      oneOrganization(id: "${id}") {
+        verified
+        name
+      }
+    }
+   `;
+    return [
+      JSON.stringify({
+        query: orgQuery,
+        variables: {},
+      }),
+    ];
+  };
+
   try {
-    const { issues } = yield call(get, `/api/issues`);
-    yield put(fetchIssuesSuccess({ issues }));
+    const issueQuery = JSON.stringify({
+      query: issues,
+      variables: {},
+    });
+    const {
+      data: { getIssues },
+    } = yield call(post, '/graphql', issueQuery);
+
+    const organizationQuery = getIssues.map(issue =>
+      generateQuery(issue.organization_id),
+    );
+
+    const results = yield all(
+      organizationQuery.map(organizationId =>
+        call(post, '/graphql', organizationId),
+      ),
+    );
+
+    const formattedGetIssues = results.reduce(
+      (
+        acc,
+        {
+          data: {
+            oneOrganization: { verified, name },
+          },
+        },
+        index,
+      ) => {
+        acc[index].organizationVerified = verified;
+        acc[index].organizationName = name;
+        return acc;
+      },
+      getIssues,
+    );
+    yield put(fetchIssuesSuccess(formattedGetIssues));
   } catch (error) {
     yield put(fetchIssuesFailure({ error }));
   }

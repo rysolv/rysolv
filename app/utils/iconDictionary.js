@@ -11,10 +11,12 @@ import Verified from '@material-ui/icons/VerifiedUser';
 import Warning from '@material-ui/icons/Warning';
 import SiteLogo from './svg/SiteLogo';
 import CloseMenu from './svg/CloseMenu';
+import Glasses from './svg/Glasses';
 
 export default (name, options) => {
   const icons = {
     closeMenu: CloseMenu,
+    glasses: Glasses,
     comments: Comments,
     delete: Delete,
     search: Search,

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { moneyGreen } from 'defaultStyleHelper';
 
 export const StyledIssueCard = styled.div`
   border-radius: 0 0.5rem 0.5rem;
@@ -94,7 +95,7 @@ export const StyledIssueFooter = styled.div`
 
 export const DollarWrapper = styled.div`
   color: white;
-  background-color: #00c853;
+  background-color: ${moneyGreen};
   padding: 0.25rem 1rem 0.25rem 1rem;
   font-weight: bold;
   border-radius: 1rem;
