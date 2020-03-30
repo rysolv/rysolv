@@ -13,12 +13,12 @@ const ManualForm = ({ data, handleInputChange }) => {
     email,
     firstName,
     githubLink,
-    image,
     lastName,
     personalLink,
     preferredLanguages,
+    profilePic,
     stackoverflowLink,
-    userName,
+    username,
   } = data;
   return (
     <InputFormWrapper>
@@ -51,30 +51,30 @@ const ManualForm = ({ data, handleInputChange }) => {
         />
       </HorizontalWrapper>
       <MainTextInput
-        error={!!userName.error}
-        helperText={userName.error}
-        label={userDataDictionary.userName}
+        error={!!username.error}
+        helperText={username.error}
+        label={userDataDictionary.username}
         onChange={e =>
           handleInputChange({
-            field: 'userName',
+            field: 'username',
             form: 'data',
             value: e.target.value,
           })
         }
-        value={userName.value}
+        value={username.value}
       />
       <MainTextInput
-        error={!!image.error}
-        helperText={image.error}
-        label={userDataDictionary.image}
+        error={!!profilePic.error}
+        helperText={profilePic.error}
+        label={userDataDictionary.profilePic}
         onChange={e =>
           handleInputChange({
-            field: 'image',
+            field: 'profilePic',
             form: 'data',
             value: e.target.value,
           })
         }
-        value={image.value}
+        value={profilePic.value}
       />
       <MainTextInput
         error={!!preferredLanguages.error}

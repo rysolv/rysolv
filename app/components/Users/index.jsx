@@ -21,7 +21,7 @@ const Users = ({
   handleSearchUsers,
   search,
 }) => {
-  const hasCompanies = data.length > 0 && !data.includes(null);
+  const hasUsers = data.length > 0 && !data.includes(null);
   const route = '/admin/users/add';
   const propsToPassDown = {
     data,
@@ -29,7 +29,7 @@ const Users = ({
     handleFetchInfo,
     handleNav,
   };
-  const viewToRender = hasCompanies ? (
+  const viewToRender = hasUsers ? (
     <UserCard {...propsToPassDown} />
   ) : (
     <EmptyCard />

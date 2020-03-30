@@ -65,7 +65,7 @@ export const initialState = {
   },
   isVerified: false,
   search: {
-    name: { error: '', value: '' },
+    searchInput: { error: '', value: '' },
   },
   step: {
     addCompany: 1,

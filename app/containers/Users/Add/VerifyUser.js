@@ -9,7 +9,7 @@ import VerifyForm from 'components/Users/Add/VerifyForm';
 
 import { clearForm, incrementStep, saveInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';
-import { makeSelectUsers } from '../selectors';
+import { makeSelectUsers, makeSelectUsersCreateRequest } from '../selectors';
 import {
   ButtonGroup,
   StyledCheckboxWithLabel,
@@ -26,6 +26,7 @@ export class VerifyUser extends React.PureComponent {
 
   render() {
     const {
+      createRequest,
       data,
       dispatchIncrementStep,
       dispatchSaveInfo,
@@ -34,8 +35,8 @@ export class VerifyUser extends React.PureComponent {
       isVerified,
     } = this.props;
     const handleSaveInfo = () => {
-      dispatchSaveInfo();
-      handleNav({ subroute: 'users' });
+      dispatchSaveInfo({ createRequest });
+      handleNav('/admin/users');
     };
     return (
       <Fragment>
@@ -65,6 +66,7 @@ export class VerifyUser extends React.PureComponent {
 }
 
 VerifyUser.propTypes = {
+  createRequest: T.object,
   data: T.object,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
@@ -78,6 +80,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Users
    */
+  createRequest: makeSelectUsersCreateRequest(),
   data: makeSelectUsers('data'),
   isVerified: makeSelectUsers('isVerified'),
 });
@@ -94,9 +97,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Router
      */
-    handleNav: ({ subroute }) => {
-      dispatch(push(`/admin/${subroute}`));
-    },
+    handleNav: route => dispatch(push(route)),
   };
 }
 

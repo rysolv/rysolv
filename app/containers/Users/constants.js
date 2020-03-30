@@ -38,16 +38,16 @@ export const userDataDictionary = {
   email: 'E-mail',
   firstName: 'First Name',
   githubLink: 'GitHub Link',
-  image: 'Profile Picture',
+  profilePic: 'Profile Picture',
   lastName: 'Last Name',
   personalLink: 'Personal Link',
   preferredLanguages: 'Preferred Languages',
   stackoverflowLink: 'StackOverflow Link',
-  userName: 'Username',
+  username: 'Username',
   activeNumber: 'Number of Active Issues',
   issuesNumber: 'Number of Issues',
   name: 'Full Name',
-  pointsNumber: 'Number of Points',
+  rep: 'Number of Points',
 };
 
 export const verifyMessage = 'I agree that this information is correct.';

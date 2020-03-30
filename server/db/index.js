@@ -1,17 +1,18 @@
 // const pool = require('./connect');
 const {
   createIssue,
+  deleteIssue,
   getIssues,
   getOneIssue,
-  deleteIssue,
   transformIssue,
 } = require('./issues');
 const {
   createUser,
-  getUsers,
-  getOneUser,
-  transformUser,
   deleteUser,
+  getOneUser,
+  getUsers,
+  searchUsers,
+  transformUser,
 } = require('./users');
 const { createComment } = require('./comments');
 const { createPullRequest } = require('./pullRequests');
@@ -25,7 +26,6 @@ const {
 const { createTables, dropAllTables, printTables } = require('./tables');
 
 module.exports = {
-  // pool,
   createComment,
   createIssue,
   createOrganization,
@@ -36,14 +36,15 @@ module.exports = {
   deleteOrganization,
   deleteUser,
   dropAllTables,
-  getOneOrganization,
   getIssues,
   getOneIssue,
+  getOneOrganization,
   getOneUser,
   getOrganizations,
   getUsers,
   printTables,
+  searchUsers,
   transformIssue,
-  transformUser,
   transformOrganization,
+  transformUser,
 };

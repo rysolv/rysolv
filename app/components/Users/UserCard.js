@@ -52,12 +52,12 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
           (
             {
               activeNumber,
+              createdDate,
               id,
-              image,
               issuesNumber,
-              joinDate,
               name,
               pointsNumber,
+              profilePic,
             },
             index,
           ) => (
@@ -67,7 +67,7 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                   <MemberWrapper>
                     <NameWrapper>{name}</NameWrapper>
                     <MemberInfoContainer>
-                      Member since {joinDate}
+                      Member since {createdDate}
                     </MemberInfoContainer>
                   </MemberWrapper>
                   <SettingsMenu
@@ -80,7 +80,7 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                 </StyledSettingWrapper>
                 <ContentWrapper>
                   <ImageContainer>
-                    <StyledImage alt="Profile Image" src={image} />
+                    <StyledImage alt="Profile Image" src={profilePic} />
                     <IconWrapper>
                       <div>
                         <Star />

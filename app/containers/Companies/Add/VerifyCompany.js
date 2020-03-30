@@ -35,7 +35,7 @@ export class VerifyCompany extends React.PureComponent {
     } = this.props;
     const handleSaveInfo = () => {
       dispatchSaveInfo();
-      handleNav({ subroute: 'companies' });
+      handleNav('/admin/companies');
     };
     return (
       <Fragment>
@@ -96,9 +96,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Router
      */
-    handleNav: ({ subroute }) => {
-      dispatch(push(`/admin/${subroute}`));
-    },
+    handleNav: route => dispatch(push(route)),
   };
 }
 

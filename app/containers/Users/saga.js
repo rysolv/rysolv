@@ -1,5 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { get, post } from 'utils/request';
+
+import { successCreateUserMessage } from 'responseMessage';
+import { post } from 'utils/request';
 
 import {
   DELETE_USER,
@@ -46,9 +48,30 @@ export function* deleteUserSaga({ payload }) {
 
 export function* fetchInfoSaga({ payload }) {
   const { userId } = payload;
+  const query = `
+  query {
+    oneUser(id: "${userId}") {
+      id,
+      createdDate,
+      firstName,
+      lastName,
+      rep,
+      profilePic,
+      activeNumber,
+      issuesNumber,
+      username,
+    }
+  }
+`;
   try {
-    const { user } = yield call(get, `/api/users/${userId}`);
-    yield put(fetchInfoSuccess({ user }));
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { oneUser },
+    } = yield call(post, '/graphql', graphql);
+    yield put(fetchInfoSuccess({ oneUser }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
   }
@@ -62,7 +85,6 @@ export function* fetchUsersSaga() {
         createdDate,
         firstName,
         lastName,
-        email,
         rep,
         profilePic,
         activeNumber,
@@ -70,7 +92,6 @@ export function* fetchUsersSaga() {
       }
     }
   `;
-
   try {
     const graphql = JSON.stringify({
       query,
@@ -85,20 +106,49 @@ export function* fetchUsersSaga() {
   }
 }
 
-export function* saveInfoSaga() {
+export function* saveInfoSaga({ payload }) {
+  const { createRequest } = payload;
   try {
-    const { message } = yield call(post, `/api/users`);
-    yield put(saveInfoSuccess({ message }));
+    const query = `
+    mutation{
+      createUser(userInput: ${createRequest}){ id }
+    }`;
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    yield call(post, '/graphql', graphql);
+    yield put(saveInfoSuccess({ message: successCreateUserMessage }));
   } catch (error) {
     yield put(saveInfoFailure({ error }));
   }
 }
 
 export function* searchUsersSaga({ payload }) {
-  const { name } = payload;
+  const { value } = payload;
+  const query = `
+  query {
+    searchUsers(value: "${value}") {
+      id,
+      createdDate,
+      firstName,
+      lastName,
+      rep,
+      profilePic,
+      activeNumber,
+      issuesNumber,
+    }
+  }
+`;
   try {
-    const { users } = yield call(get, `/api/users/search?user=${name}`);
-    yield put(searchUsersSuccess({ users }));
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { searchUsers },
+    } = yield call(post, '/graphql', graphql);
+    yield put(searchUsersSuccess({ searchUsers }));
   } catch (error) {
     yield put(searchUsersFailure({ error }));
   }

@@ -8,14 +8,12 @@ import { userDataDictionary } from 'containers/Users/constants';
 import { InputFormWrapper } from './styledComponents';
 
 const EditExistingForm = ({ editInfo, handleInputChange }) => {
-  const tempEditInfo = omit(editInfo, ['id', 'joinDate']);
+  const tempEditInfo = omit(editInfo, ['id', 'createdDate']);
   return (
     <InputFormWrapper>
       {Object.keys(tempEditInfo).map(info => {
         const isDisabled =
-          info === 'activeNumber' ||
-          info === 'issuesNumber' ||
-          info === 'pointsNumber';
+          info === 'activeNumber' || info === 'issuesNumber' || info === 'rep';
         return (
           <MainTextInput
             key={`input-${info}`}

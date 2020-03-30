@@ -39,8 +39,6 @@ const GlassesIcon = iconDictionary('glasses');
 const IssueDetail = ({ data }) => {
   const hasDetails = isEmpty(data.issueDetail);
 
-  console.log(data);
-
   const {
     // attempts,
     comments,

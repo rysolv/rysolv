@@ -16,7 +16,7 @@ import {
 export class VerifyExistingForm extends React.PureComponent {
   render() {
     const { editInfo } = this.props;
-    const tempEditInfo = omit(editInfo, ['id', 'joinDate']);
+    const tempEditInfo = omit(editInfo, ['id', 'createdDate']);
     return (
       <DataWrapper>
         <KeyGroupWrapper>

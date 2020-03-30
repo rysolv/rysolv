@@ -34,7 +34,7 @@ const makeSelectCompaniesLoading = prop =>
 const makeSelectCompaniesSearchDisabled = () =>
   createSelector(
     makeSelectCompanies('search'),
-    ({ name }) => name.value === '',
+    ({ searchInput }) => searchInput.value === '',
   );
 
 const makeSelectCompaniesStep = prop =>

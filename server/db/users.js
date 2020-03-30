@@ -1,5 +1,10 @@
 /* eslint-disable camelcase */
-const { mapValues, singleItem, singleQuery } = require('../db/query');
+const {
+  mapValues,
+  singleItem,
+  singleQuery,
+  singleSearch,
+} = require('../db/query');
 
 // GET all users
 const getUsers = async table => {
@@ -13,7 +18,10 @@ const getUsers = async table => {
 
 // GET single user
 const getOneUser = async (table, id) => {
-  const rows = await singleItem(table, id);
+  const values = `id, created_date AS "createdDate", modified_date AS "modifiedDate", first_name AS "firstName",
+  last_name AS "lastName", email, watching_list AS "watchingList", rep, profile_pic AS "profilePic",
+  active_number AS "activeNumber", issues_number AS "issuesNumber", username`;
+  const rows = await singleItem(table, id, values);
   if (rows.length > 0) {
     return rows;
   }
@@ -23,11 +31,20 @@ const getOneUser = async (table, id) => {
 // Create new User
 const createUser = async data => {
   const queryText = `INSERT INTO
-    users(id, created_date, modified_date, first_name, last_name, email, watching_list, rep, profile_pic, active_number, issues_number, username)
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+    users(id, created_date, modified_date, first_name, last_name, email, watching_list, rep, profile_pic, active_number, issues_number, username, github_link, personal_link, preferred_languages, stackoverflow_link)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
+};
+
+// SEARCH users
+const searchUsers = async (table, value) => {
+  const values = `id, created_date AS "createdDate", modified_date AS "modifiedDate", first_name AS "firstName",
+  last_name AS "lastName", email, watching_list AS "watchingList", rep, profile_pic AS "profilePic",
+  active_number AS "activeNumber", issues_number AS "issuesNumber", username`;
+  const rows = await singleSearch(table, value, values);
+  return rows;
 };
 
 // PATCH single user
@@ -45,9 +62,10 @@ const transformUser = async (table, id, data) => {
   throw new Error(`Failed to update users. ID not found in ${table}`);
 };
 
-// DELETE single issue
+// DELETE single user
 const deleteUser = async (table, id) => {
-  const rows = await singleItem(table, id);
+  const values = '*';
+  const rows = await singleItem(table, id, values);
   if (rows.length > 0) {
     const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
     const {
@@ -64,5 +82,7 @@ module.exports = {
   deleteUser,
   getOneUser,
   getUsers,
+  searchUsers,
+  singleSearch,
   transformUser,
 };

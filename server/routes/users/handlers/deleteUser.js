@@ -6,8 +6,8 @@ async function deleteUser(req, res, next) {
       params: { userId },
     } = req;
     req.data = req.data || {};
-    const { userName } = users.find(obj => obj.id === userId);
-    req.data.message = userName.concat(deleteMessage);
+    const { username } = users.find(obj => obj.id === userId);
+    req.data.message = username.concat(deleteMessage);
     next();
   } catch (error) {
     next(error);

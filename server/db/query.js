@@ -13,8 +13,16 @@ const singleQuery = async queryText => {
   }
 };
 
-const singleItem = async (table, id) => {
-  const queryText = `SELECT * FROM ${table} WHERE (id='${id}')`;
+const singleItem = async (table, id, values) => {
+  const queryText = `SELECT ${values} FROM ${table} WHERE (id='${id}')`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
+const singleSearch = async (table, value, values) => {
+  const queryText = `SELECT ${values} FROM ${table} WHERE LOWER(first_name) LIKE '%${value}%'
+  OR LOWER(last_name) LIKE LOWER('%${value}%')
+  OR LOWER(username) LIKE LOWER('%${value}%')`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
@@ -80,7 +88,8 @@ module.exports = {
   mapQuery,
   mapQueryPrint,
   mapValues,
-  singleQuery,
-  singleItem,
   sequentialQuery,
+  singleItem,
+  singleQuery,
+  singleSearch,
 };

@@ -52,12 +52,17 @@ module.exports = buildSchema(`
   }
 
   input UserInput {
-    first_name: String!
-    last_name: String!
+    firstName: String!
+    lastName: String!
     email: String!
-    watching_list: [String]
+    watchingList: [String]
     rep: Int
-    profile_pic: String
+    profilePic: String
+    githubLink: String
+    personalLink: String
+    preferredLanguages: String
+    stackoverflowLink: String
+    username: String
   }
 
   type Organization {
@@ -91,6 +96,8 @@ module.exports = buildSchema(`
     oneIssue(id: ID!): Issue!
     oneUser(id: ID!): User!
     oneOrganization(id: ID!): Organization!
+
+    searchUsers(value: String!): [User!]!
   }
 
   type RootMutation {

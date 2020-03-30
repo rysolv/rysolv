@@ -11,6 +11,16 @@ const makeSelectUsers = prop =>
     substate => substate[prop],
   );
 
+const makeSelectUsersCreateRequest = () =>
+  createSelector(
+    makeSelectUsers('data'),
+    data =>
+      Object.keys(data).reduce((acc, field) => {
+        acc[field] = data[field].value;
+        return acc;
+      }, {}),
+  );
+
 const makeSelectUsersDisabled = () =>
   createSelector(
     makeSelectUsers('data'),
@@ -30,27 +40,31 @@ const makeSelectUsersError = prop =>
 const makeSelectUsersFormatted = () =>
   createSelector(
     makeSelectUsers('users'),
-    users =>
-      users.map(
-        ({
-          activeNumber,
-          createdDate,
-          firstName,
-          id,
-          issuesNumber,
-          lastName,
-          profilePic,
-          rep,
-        }) => ({
-          activeNumber,
-          id,
-          image: profilePic,
-          issuesNumber,
-          joinDate: moment(createdDate).format('M/D/YYYY'),
-          name: `${firstName} ${lastName}`,
-          pointsNumber: rep,
-        }),
-      ),
+    users => {
+      if (users.length > 0) {
+        return users.map(
+          ({
+            activeNumber,
+            createdDate,
+            firstName,
+            id,
+            issuesNumber,
+            lastName,
+            profilePic,
+            rep,
+          }) => ({
+            activeNumber,
+            createdDate: moment(createdDate).format('M/D/YYYY'),
+            id,
+            issuesNumber,
+            name: `${firstName} ${lastName}`,
+            pointsNumber: rep,
+            profilePic,
+          }),
+        );
+      }
+      return [];
+    },
   );
 
 const makeSelectUsersLoading = prop =>
@@ -62,7 +76,7 @@ const makeSelectUsersLoading = prop =>
 const makeSelectUsersSearchDisabled = () =>
   createSelector(
     makeSelectUsers('search'),
-    ({ name }) => name.value === '',
+    ({ searchInput }) => searchInput.value === '',
   );
 
 const makeSelectUsersStep = prop =>
@@ -74,6 +88,7 @@ const makeSelectUsersStep = prop =>
 export default selectUsersDomain;
 export {
   makeSelectUsers,
+  makeSelectUsersCreateRequest,
   makeSelectUsersDisabled,
   makeSelectUsersError,
   makeSelectUsersFormatted,

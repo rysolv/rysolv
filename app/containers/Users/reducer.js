@@ -33,22 +33,23 @@ export const initialState = {
     email: { error: '', value: '' },
     firstName: { error: '', value: '' },
     githubLink: { error: '', value: '' },
-    image: { error: '', value: '' },
+    profilePic: { error: '', value: '' },
     lastName: { error: '', value: '' },
     personalLink: { error: '', value: '' },
     preferredLanguages: { error: '', value: '' },
     stackoverflowLink: { error: '', value: '' },
-    userName: { error: '', value: '' },
+    username: { error: '', value: '' },
   },
   editInfo: {
     activeNumber: { error: '', value: '' },
+    createdDate: { error: '', value: '' },
+    firstName: { error: '', value: '' },
     id: { error: '', value: '' },
-    image: { error: '', value: '' },
     issuesNumber: { error: '', value: '' },
-    joinDate: { error: '', value: '' },
-    name: { error: '', value: '' },
-    pointsNumber: { error: '', value: '' },
-    userName: { error: '', value: '' },
+    lastName: { error: '', value: '' },
+    profilePic: { error: '', value: '' },
+    rep: { error: '', value: '' },
+    username: { error: '', value: '' },
   },
   error: {
     editUser: false,
@@ -65,7 +66,7 @@ export const initialState = {
     users: false,
   },
   search: {
-    name: { error: '', value: '' },
+    searchInput: { error: '', value: '' },
   },
   step: {
     addUser: 1,
@@ -110,9 +111,9 @@ const usersReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_INFO_SUCCESS: {
-      const { user } = payload;
-      Object.keys(user).forEach(detail => {
-        draft.editInfo[detail].value = user[detail];
+      const { oneUser } = payload;
+      Object.keys(oneUser).forEach(detail => {
+        draft.editInfo[detail].value = oneUser[detail];
       });
       draft.loading.editUser = false;
       break;
@@ -170,8 +171,8 @@ const usersReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_USERS_SUCCESS: {
-      const { users } = payload;
-      draft.users = users || null;
+      const { searchUsers } = payload;
+      draft.users = searchUsers;
       draft.loading.searchUsers = false;
       break;
     }
