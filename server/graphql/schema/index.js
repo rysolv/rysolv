@@ -52,9 +52,9 @@ module.exports = buildSchema(`
   }
 
   input UserInput {
-    firstName: String!
-    lastName: String!
-    email: String!
+    firstName: String
+    lastName: String
+    email: String
     watchingList: [String]
     rep: Int
     profilePic: String
@@ -112,7 +112,7 @@ module.exports = buildSchema(`
     deleteOrganization(id:ID!): String!
 
     transformIssue(id: ID!, issueInput: IssueInput): [Issue!]!
-    transformUser(id: ID!, userInput: UserInput): [User!]!
+    transformUser(id: ID!, userInput: UserInput): User!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): [Organization!]!
   }
 

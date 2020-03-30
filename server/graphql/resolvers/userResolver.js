@@ -88,7 +88,21 @@ module.exports = {
         issues_number: userInput.issuesNumber,
         username: userInput.username,
       };
-      const result = await transformUser('users', id, data);
+      const queryResult = await transformUser('users', id, data);
+      console.log('queryResult', queryResult);
+      const result = {
+        modifiedDate: queryResult.modified_date,
+        firstName: queryResult.first_name,
+        lastName: queryResult.last_name,
+        email: queryResult.email,
+        watchingList: queryResult.watching_list,
+        rep: queryResult.rep,
+        profilePic: queryResult.profile_pic,
+        activeNumber: queryResult.active_number,
+        issuesNumber: queryResult.issues_number,
+        username: queryResult.username,
+      };
+      console.log('formatted', result);
       return result;
     } catch (err) {
       throw err;
