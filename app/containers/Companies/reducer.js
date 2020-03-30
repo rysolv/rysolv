@@ -108,8 +108,8 @@ const companiesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_COMPANIES_SUCCESS: {
-      const { companies } = payload;
-      draft.companies = companies;
+      const { getOrganizations } = payload;
+      draft.companies = getOrganizations;
       draft.loading.companies = false;
       break;
     }

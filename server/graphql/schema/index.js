@@ -5,34 +5,34 @@ module.exports = buildSchema(`
 
   type Issue {
     id: ID!
-    created_date: Object
-    modified_date: Object
-    organization_id: String!
+    createdDate: Object
+    modifiedDate: Object
+    organizationId: String!
     name: String!
     body: String!
     repo: String!
     language: String!
     comments: [ID]!
     attempts: Int!
-    active_attempts: Int!
+    activeAttempts: Int!
     contributor: [String]!
     rep: Int!
-    watch_list: [String]!
+    watchList: [String]!
     value: Int!
   }
 
   input IssueInput {
-    organization_id: String!
+    organizationId: String!
     name: String!
     body: String!
     repo: String!
     language: String
     comments: [ID]
     attempts: Int
-    active_attempts: Int
+    activeAttempts: Int
     contributor: [String]
     rep: Int
-    watch_list: [String]
+    watchList: [String]
     value: Int!
   }
 
@@ -57,21 +57,23 @@ module.exports = buildSchema(`
     email: String!
     watchingList: [String]
     rep: Int
-    profilePic: String!
+    profilePic: String
+    activeNumber: Int
+    issuesNumber: Int
+    username: String
     githubLink: String
     personalLink: String
     preferredLanguages: String
     stackoverflowLink: String
-    username: String!
   }
 
   type Organization {
     id: ID!
-    created_date: Object
-    modified_date: Object
+    createdDate: Object
+    modifiedDate: Object
     name: String!
     description: String!
-    repo_url: String!
+    repoUrl: String!
     website: String
     issues: [String]
     logo: String

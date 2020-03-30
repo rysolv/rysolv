@@ -76,20 +76,18 @@ module.exports = {
   transformUser: async args => {
     const { id, userInput } = args;
     try {
-      const data = [
-        [
-          new Date(), // update modified date
-          userInput.first_name,
-          userInput.last_name,
-          userInput.email,
-          userInput.watching_list || [],
-          userInput.rep || 0,
-          userInput.profile_pic,
-          userInput.active_number,
-          userInput.issues_number,
-          userInput.username,
-        ],
-      ];
+      const data = {
+        modified_date: new Date(), // update modified date
+        first_name: userInput.firstName,
+        last_name: userInput.lastName,
+        email: userInput.email,
+        watching_list: userInput.watchingList,
+        rep: userInput.rep,
+        profile_pic: userInput.profilePic,
+        active_number: userInput.activeNumber,
+        issues_number: userInput.issuesNumber,
+        username: userInput.username,
+      };
       const result = await transformUser('users', id, data);
       return result;
     } catch (err) {

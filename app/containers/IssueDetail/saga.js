@@ -7,20 +7,21 @@ export function* fetchIssueDetailSaga({ payload }) {
   const {
     id: { view },
   } = payload;
+  console.log(view);
   const query = `
   query {
     oneIssue(id: "${view}") {
       id,
-      created_date,
-      modified_date,
+      createdDate,
+      modifiedDate,
       name,
       repo,
-      organization_id,
+      organizationId,
       language,
       body,
       attempts,
       rep,
-      watch_list,
+      watchList,
       comments,
       value
     }
@@ -35,8 +36,6 @@ export function* fetchIssueDetailSaga({ payload }) {
     const { data: oneIssue } = yield call(post, '/graphql', issueQuery);
     console.log(oneIssue);
 
-    // const { issueDetail } = yield call(get, `/api/issues/${id}`);
-    // console.log(issueDetail);
     yield put(fetchIssueDetailSuccess(oneIssue));
   } catch (error) {
     yield put(fetchIssueDetailFailure({ error }));

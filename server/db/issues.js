@@ -2,14 +2,46 @@ const { mapValues, singleQuery, singleItem } = require('./query');
 
 // GET all issues
 const getIssues = async table => {
-  const queryText = `SELECT * FROM ${table};`;
+  const queryText = `SELECT
+    id,
+    created_date AS "createdDate",
+    modified_date AS "modifiedDate",
+    organization_id AS "organizationId",
+    name,
+    body,
+    repo,
+    language,
+    comments,
+    attempts,
+    active_attempts AS "activeAttempts",
+    contributor,
+    rep,
+    watch_list AS "watchList",
+    value
+  FROM ${table};`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
 
 // GET single issue
 const getOneIssue = async (table, id) => {
-  const rows = await singleItem(table, id);
+  const values = `
+    id,
+    created_date AS "createdDate",
+    modified_date AS "modifiedDate",
+    organization_id AS "organizationId",
+    name,
+    body,
+    repo,
+    language,
+    comments,
+    attempts,
+    active_attempts AS "activeAttempts",
+    contributor,
+    rep,
+    watch_list AS "watchList",
+    value`;
+  const rows = await singleItem(table, id, values);
   if (rows.length > 0) {
     return rows;
   }
@@ -73,7 +105,8 @@ const transformIssue = async (table, id, data) => {
 
 // DELETE single issue
 const deleteIssue = async (table, id) => {
-  const rows = await singleItem(table, id);
+  const values = '*';
+  const rows = await singleItem(table, id, values);
   if (rows.length > 0) {
     const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
     await singleQuery(queryText);

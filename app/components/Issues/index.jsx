@@ -67,7 +67,7 @@ const IssueCard = ({
             body,
             attempts,
             rep,
-            watch_list,
+            watchList,
             comments,
             value,
           }) => (
@@ -112,7 +112,7 @@ const IssueCard = ({
                       <CommentIcon /> {comments.length} comments
                     </div>
                     <div>{false ? 'Resolved' : `${attempts} attempting`}</div>
-                    <div>{watch_list.length} Watch</div>
+                    <div>{watchList.length} Watch</div>
                     <DollarWrapper>${value}</DollarWrapper>
                   </StyledIssueFooter>
                 </StyledIssueContent>
