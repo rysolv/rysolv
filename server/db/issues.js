@@ -105,7 +105,8 @@ const transformIssue = async (table, id, data) => {
 
 // DELETE single issue
 const deleteIssue = async (table, id) => {
-  const rows = await singleItem(table, id);
+  const values = '*';
+  const rows = await singleItem(table, id, values);
   if (rows.length > 0) {
     const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
     await singleQuery(queryText);

@@ -52,12 +52,15 @@ module.exports = buildSchema(`
   }
 
   input UserInput {
-    first_name: String!
-    last_name: String!
+    firstName: String!
+    lastName: String!
     email: String!
-    watching_list: [String]
+    watchingList: [String]
     rep: Int
-    profile_pic: String
+    profilePic: String
+    activeNumber: Int
+    issuesNumber: Int
+    username: String
   }
 
   type Organization {

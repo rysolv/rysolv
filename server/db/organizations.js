@@ -63,7 +63,16 @@ const transformOrganization = async (table, id, data) => {
   const rows = await singleItem(table, id);
   if (rows.length > 0) {
     const queryText = `UPDATE ${table}
-      SET (modified_date, name, description, repo_url, website, issues, logo, verified)
+      SET (
+        modified_date,
+        name,
+        description,
+        repo_url,
+        website,
+        issues,
+        logo,
+        verified
+      )
       = ($1, $2, $3, $4, $5, $6, $7, $8)
       WHERE (id = '${id}')
       RETURNING *`;
