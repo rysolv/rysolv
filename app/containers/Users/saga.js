@@ -107,11 +107,37 @@ export function* fetchUsersSaga() {
 }
 
 export function* saveInfoSaga({ payload }) {
-  const { createRequest } = payload;
+  const {
+    createRequest: {
+      firstName,
+      lastName,
+      email,
+      profilePic,
+      githubLink,
+      personalLink,
+      preferredLanguages,
+      stackoverflowLink,
+      username,
+    },
+  } = payload;
   try {
     const query = `
     mutation{
-      createUser(userInput: ${createRequest}){ id }
+      createUser(userInput: {
+        firstName: "${firstName}",
+        lastName: "${lastName}",
+        email: "${email}",
+        profilePic: "${profilePic}",
+        githubLink: "${githubLink}",
+        personalLink: "${personalLink}",
+        preferredLanguages: "${preferredLanguages}",
+        stackoverflowLink: "${stackoverflowLink}",
+        username: "${username}",
+      })
+      { 
+        id,
+        lastName
+      }
     }`;
     const graphql = JSON.stringify({
       query,

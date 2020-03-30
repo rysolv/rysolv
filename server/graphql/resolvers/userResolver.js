@@ -11,7 +11,6 @@ const {
 module.exports = {
   createUser: async args => {
     const { userInput } = args;
-    console.log('userInput', userInput);
     const issue = [
       [
         uuidv4(),
@@ -28,7 +27,7 @@ module.exports = {
         userInput.username,
         userInput.githubLink || '',
         userInput.personalLink || '',
-        userInput.preferredLanguages,
+        userInput.preferredLanguages || '',
         userInput.stackoverflowLink || '',
       ],
     ];

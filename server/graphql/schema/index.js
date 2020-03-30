@@ -57,12 +57,12 @@ module.exports = buildSchema(`
     email: String!
     watchingList: [String]
     rep: Int
-    profilePic: String
+    profilePic: String!
     githubLink: String
     personalLink: String
     preferredLanguages: String
     stackoverflowLink: String
-    username: String
+    username: String!
   }
 
   type Organization {

@@ -8,7 +8,7 @@ users(
   email VARCHAR(128) NOT NULL,
   watching_list UUID [],
   rep SMALLINT NOT NULL DEFAULT 0,
-  profile_pic VARCHAR(128),
+  profile_pic VARCHAR(255),
   active_number SMALLINT NOT NULL DEFAULT 0,
   issues_number SMALLINT NOT NULL DEFAULT 0,
   username VARCHAR(40),
