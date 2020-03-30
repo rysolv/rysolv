@@ -3,10 +3,20 @@ const { mapValues, singleItem, singleQuery } = require('../db/query');
 
 // GET all users
 const getUsers = async table => {
-  const queryText = `SELECT id, created_date AS "createdDate", modified_date AS "modifiedDate", first_name AS "firstName",
-  last_name AS "lastName", email, watching_list AS "watchingList", rep, profile_pic AS "profilePic",
-  active_number AS "activeNumber", issues_number AS "issuesNumber", username
-  FROM ${table};`;
+  const queryText = `SELECT
+      id,
+      created_date AS "createdDate",
+      modified_date AS "modifiedDate",
+      first_name AS "firstName",
+      last_name AS "lastName",
+      email,
+      watching_list AS "watchingList",
+      rep,
+      profile_pic AS "profilePic",
+      active_number AS "activeNumber",
+      issues_number AS "issuesNumber",
+      username
+    FROM ${table};`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };

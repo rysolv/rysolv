@@ -24,16 +24,16 @@ export function* fetchIssuesSaga() {
   query {
     getIssues {
       id,
-      created_date,
-      modified_date,
+      createdDate,
+      modifiedDate,
       name,
       repo,
-      organization_id,
+      organizationId,
       language,
       body,
       attempts,
       rep,
-      watch_list,
+      watchList,
       comments,
       value
     }
@@ -66,7 +66,7 @@ export function* fetchIssuesSaga() {
     } = yield call(post, '/graphql', issueQuery);
 
     const organizationQuery = getIssues.map(issue =>
-      generateQuery(issue.organization_id),
+      generateQuery(issue.organizationId),
     );
 
     const results = yield all(

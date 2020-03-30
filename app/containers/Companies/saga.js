@@ -35,9 +35,36 @@ export function* deleteCompanySaga({ payload }) {
 }
 
 export function* fetchCompaniesSaga() {
+  const query = `
+  query {
+    getOrganizations {
+      id,
+      createdDate,
+      modifiedDate,
+      name,
+      description,
+      repoUrl,
+      website,
+      issues,
+      logo,
+      verified
+    }
+  }
+`;
+
   try {
-    const { companies } = yield call(get, `/api/companies`);
-    yield put(fetchCompaniesSuccess({ companies }));
+    const organizationsQuery = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const { data: getOrganizations } = yield call(
+      post,
+      '/graphql',
+      organizationsQuery,
+    );
+    console.log(getOrganizations);
+
+    yield put(fetchCompaniesSuccess(getOrganizations));
   } catch (error) {
     yield put(fetchCompaniesFailure({ error }));
   }

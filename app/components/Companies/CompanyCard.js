@@ -54,10 +54,10 @@ const CompanyCard = ({
         {data.map(
           ({
             description,
-            icon,
+            logo,
             id,
             issues,
-            lastPostDate,
+            modifiedDate,
             name,
             pullRequests,
           }) => (
@@ -67,7 +67,7 @@ const CompanyCard = ({
                   <NameWrapper>{name}</NameWrapper>
                   <SettingsContainer>
                     <DateWrapper>
-                      Last post {moment(lastPostDate, 'MM/DD/YYYY').fromNow()}
+                      Last post {moment(modifiedDate).format('M/D/YYYY')}
                     </DateWrapper>
                     <StyledSettingWrapper>
                       <SettingsMenu
@@ -82,12 +82,12 @@ const CompanyCard = ({
                 </TitleContainer>
                 <ContentContainer>
                   <ImageContainer>
-                    <StyledImage alt="Company Image" src={icon} />
+                    <StyledImage alt="Company Image" src={logo} />
                   </ImageContainer>
                   <TextContainer>
                     <DescriptionWrapper>{description}</DescriptionWrapper>
                     <StatsWrapper>
-                      {issues} Issues • {pullRequests} Pull Requests
+                      {issues.length} Issues • {pullRequests} Pull Requests
                     </StatsWrapper>
                   </TextContainer>
                 </ContentContainer>
