@@ -49,6 +49,10 @@ module.exports = buildSchema(`
     activeNumber: Int
     issuesNumber: Int
     username: String
+    githubLink: String
+    personalLink: String
+    preferredLanguages: String
+    stackoverflowLink: String
   }
 
   input UserInput {

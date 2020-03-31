@@ -87,9 +87,12 @@ module.exports = {
         active_number: userInput.activeNumber,
         issues_number: userInput.issuesNumber,
         username: userInput.username,
+        github_link: userInput.githubLink,
+        personal_link: userInput.personalLink,
+        preferred_languages: userInput.preferredLanguages,
+        stackoverflow_link: userInput.stackoverflowLink,
       };
       const queryResult = await transformUser('users', id, data);
-      console.log('queryResult', queryResult);
       const result = {
         modifiedDate: queryResult.modified_date,
         firstName: queryResult.first_name,
@@ -101,8 +104,11 @@ module.exports = {
         activeNumber: queryResult.active_number,
         issuesNumber: queryResult.issues_number,
         username: queryResult.username,
+        githubLink: userInput.github_link,
+        personalLink: userInput.personal_link,
+        preferredLanguages: userInput.preferred_languages,
+        stackoverflowLink: userInput.stackoverflow_link,
       };
-      console.log('formatted', result);
       return result;
     } catch (err) {
       throw err;

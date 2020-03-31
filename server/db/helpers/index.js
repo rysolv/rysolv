@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-// compare two objects and return a new object
+// compare two objects and return a new combined object
 const diff = (obj1, obj2) => {
   const newObject = { ...obj1 };
   const newObjectArray = [];
@@ -9,11 +9,7 @@ const diff = (obj1, obj2) => {
     }
     newObjectArray.push(newObject[key]);
   };
-
   Object.keys(obj1).map(key => compare(obj1[key], obj2[key], key));
-
-  // console.log(newObject);
-  // console.log(newObjectArray);
   return { newObject, newObjectArray };
 };
 
@@ -24,7 +20,6 @@ const testDiff = () => {
     email: 'tyler.maran@gmail.com',
     username: 'themanmaran',
   };
-
   const test2 = {
     first_name: 'Tyler',
     last_name: 'Maran',
