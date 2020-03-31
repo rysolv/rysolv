@@ -5,8 +5,6 @@ import T from 'prop-types';
 import { CommentHeader } from './styledComponents';
 
 const Comments = ({ comments }) => {
-  console.log(comments);
-
   const hasComments = comments && comments.length > 0;
 
   const commentContainer = (

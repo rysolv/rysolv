@@ -7,7 +7,6 @@ export function* fetchIssueDetailSaga({ payload }) {
   const {
     id: { view },
   } = payload;
-  console.log(view);
   const query = `
   query {
     oneIssue(id: "${view}") {
@@ -27,15 +26,12 @@ export function* fetchIssueDetailSaga({ payload }) {
     }
   }
 `;
-
   try {
     const issueQuery = JSON.stringify({
       query,
       variables: {},
     });
     const { data: oneIssue } = yield call(post, '/graphql', issueQuery);
-    console.log(oneIssue);
-
     yield put(fetchIssueDetailSuccess(oneIssue));
   } catch (error) {
     yield put(fetchIssueDetailFailure({ error }));

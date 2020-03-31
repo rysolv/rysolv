@@ -51,7 +51,6 @@ export function* fetchCompaniesSaga() {
     }
   }
 `;
-
   try {
     const organizationsQuery = JSON.stringify({
       query,
@@ -62,8 +61,6 @@ export function* fetchCompaniesSaga() {
       '/graphql',
       organizationsQuery,
     );
-    console.log(getOrganizations);
-
     yield put(fetchCompaniesSuccess(getOrganizations));
   } catch (error) {
     yield put(fetchCompaniesFailure({ error }));

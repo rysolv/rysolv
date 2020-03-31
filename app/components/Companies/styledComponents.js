@@ -26,7 +26,7 @@ export const DescriptionWrapper = styled.div`
 
 export const ImageContainer = styled.div`
   text-align: center;
-  width: 30%;
+  min-width: 20%;
 `;
 
 export const MessageWrapper = styled.div`
