@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -6,45 +6,71 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { Settings } from 'components/base_ui';
 
 const SettingsMenu = ({
-  anchorEl,
-  handleClick,
-  handleClose,
+  deleteRoute,
+  editRoute,
   handleDelete,
-  handleEdit,
-}) => (
-  <Fragment>
-    <div
-      aria-controls="settingsMenu"
-      aria-haspopup="true"
-      tabIndex={-1}
-      role="button"
-      onClick={handleClick}
-      onKeyDown={handleClick}
-    >
-      <Settings />
-    </div>
+  handleFetchInfo,
+  handleNav,
+  id,
+}) => {
+  const [anchorEl, setAnchorEl] = useState(null);
 
-    <Menu
-      id="settingsMenu"
-      anchorEl={anchorEl}
-      keepMounted
-      open={Boolean(anchorEl)}
-      onClose={handleClose}
-    >
-      <MenuItem onClick={handleEdit}>EDIT</MenuItem>
-      <MenuItem onClick={handleDelete}>
-        <span style={{ color: 'red' }}>DELETE</span>
-      </MenuItem>
-    </Menu>
-  </Fragment>
-);
+  const clickHandler = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const closeHandler = () => {
+    setAnchorEl(null);
+  };
+
+  const deleteHandler = ({ itemId }) => {
+    handleDelete({ itemId });
+    handleNav(deleteRoute);
+    setAnchorEl(null);
+  };
+
+  const editHandler = ({ itemId }) => {
+    handleFetchInfo({ itemId });
+    handleNav(editRoute);
+    setAnchorEl(null);
+  };
+
+  return (
+    <Fragment>
+      <div
+        aria-controls="settingsMenu"
+        aria-haspopup="true"
+        tabIndex={-1}
+        role="button"
+        onClick={clickHandler}
+        onKeyDown={clickHandler}
+      >
+        <Settings />
+      </div>
+
+      <Menu
+        id="settingsMenu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={closeHandler}
+      >
+        <MenuItem onClick={() => editHandler({ itemId: id })}>EDIT</MenuItem>
+        <MenuItem onClick={() => deleteHandler({ itemId: id })}>
+          <span style={{ color: 'red' }}>DELETE</span>
+        </MenuItem>
+      </Menu>
+    </Fragment>
+  );
+};
 
 SettingsMenu.propTypes = {
-  anchorEl: T.object,
-  handleClick: T.func.isRequired,
-  handleClose: T.func.isRequired,
+  deleteRoute: T.string.isRequired,
+  editRoute: T.string.isRequired,
   handleDelete: T.func.isRequired,
-  handleEdit: T.func.isRequired,
+  handleFetchInfo: T.func.isRequired,
+  handleNav: T.func.isRequired,
+  id: T.string.isRequired,
 };
 
 export default SettingsMenu;

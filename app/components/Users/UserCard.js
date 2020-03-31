@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import { Star } from 'components/base_ui';
@@ -24,26 +24,8 @@ import {
 } from './styledComponents';
 
 const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleDelete = ({ userId }) => {
-    handleDeleteUser({ userId });
-    handleNav(`/admin/users`);
-    setAnchorEl(null);
-  };
-
-  const handleEdit = ({ userId }) => {
-    handleFetchInfo({ userId });
-    handleNav(`/admin/users/edit`);
-    setAnchorEl(null);
-  };
+  const deleteRoute = `/admin/users`;
+  const editRoute = `/admin/users/edit`;
 
   return (
     <Fragment>
@@ -71,11 +53,12 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                     </MemberInfoContainer>
                   </MemberWrapper>
                   <SettingsMenu
-                    anchorEl={anchorEl}
-                    handleClick={handleClick}
-                    handleClose={() => handleClose()}
-                    handleDelete={() => handleDelete({ userId: id })}
-                    handleEdit={() => handleEdit({ userId: id })}
+                    deleteRoute={deleteRoute}
+                    editRoute={editRoute}
+                    handleDelete={handleDeleteUser}
+                    handleFetchInfo={handleFetchInfo}
+                    handleNav={handleNav}
+                    id={id}
                   />
                 </StyledSettingWrapper>
                 <ContentWrapper>

@@ -27,11 +27,11 @@ import {
 } from './actions';
 
 export function* deleteUserSaga({ payload }) {
-  const { userId } = payload;
+  const { itemId } = payload;
   try {
     const query = `
     mutation{
-      deleteUser(id: "${userId}")
+      deleteUser(id: "${itemId}")
     }`;
     const graphql = JSON.stringify({
       query,
@@ -40,17 +40,17 @@ export function* deleteUserSaga({ payload }) {
     const {
       data: { deleteUser },
     } = yield call(post, '/graphql', graphql);
-    yield put(deleteUserSuccess({ message: deleteUser, userId }));
+    yield put(deleteUserSuccess({ itemId, message: deleteUser }));
   } catch (error) {
     yield put(deleteUserFailure({ error }));
   }
 }
 
 export function* fetchInfoSaga({ payload }) {
-  const { userId } = payload;
+  const { itemId } = payload;
   const query = `
   query {
-    oneUser(id: "${userId}") {
+    oneUser(id: "${itemId}") {
       id,
       createdDate,
       firstName,
@@ -181,9 +181,9 @@ export function* searchUsersSaga({ payload }) {
 }
 
 export function* updateInfoSaga({ payload }) {
-  const { userId, editInfo } = payload;
+  const { editInfo, itemId } = payload;
   try {
-    const { message } = yield call(post, `/api/users/${userId}`, editInfo);
+    const { message } = yield call(post, `/api/users/${itemId}`, editInfo);
     yield put(updateInfoSuccess({ message }));
   } catch (error) {
     yield put(updateInfoFailure({ error }));

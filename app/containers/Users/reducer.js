@@ -94,10 +94,10 @@ const usersReducer = produce((draft, { payload, type }) => {
       break;
     }
     case DELETE_USER_SUCCESS: {
-      const { message, userId } = payload;
+      const { itemId, message } = payload;
       draft.alerts.success = { message };
       draft.loading.deleteUser = false;
-      remove(draft.users, ({ id }) => id === userId);
+      remove(draft.users, ({ id }) => id === itemId);
       break;
     }
     case DELETE_USER: {

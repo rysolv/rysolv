@@ -26,7 +26,7 @@ export class EditExisting extends React.PureComponent {
     } = this.props;
     const { id } = editInfo;
     const handleDelete = () => {
-      handleDeleteUser({ userId: id.value });
+      handleDeleteUser({ itemId: id.value });
       handleNav('/admin/users');
     };
     return (

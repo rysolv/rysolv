@@ -24,9 +24,9 @@ import {
 } from './actions';
 
 export function* deleteCompanySaga({ payload }) {
-  const { companyId } = payload;
+  const { itemId } = payload;
   try {
-    const endpoint = `/api/companies/${companyId}`;
+    const endpoint = `/api/companies/${itemId}`;
     const { message } = yield call(del, endpoint);
     yield put(deleteCompanySuccess({ message }));
   } catch (error) {
@@ -68,9 +68,9 @@ export function* fetchCompaniesSaga() {
 }
 
 export function* fetchInfoSaga({ payload }) {
-  const { companyId } = payload;
+  const { itemId } = payload;
   try {
-    const { company } = yield call(get, `/api/companies/${companyId}`);
+    const { company } = yield call(get, `/api/companies/${itemId}`);
     yield put(fetchInfoSuccess({ company }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
@@ -100,11 +100,11 @@ export function* searchCompaniesSaga({ payload }) {
 }
 
 export function* updateInfoSaga({ payload }) {
-  const { companyId, companyInfo } = payload;
+  const { companyInfo, itemId } = payload;
   try {
     const { message } = yield call(
       post,
-      `/api/companies/${companyId}`,
+      `/api/companies/${itemId}`,
       companyInfo,
     );
     yield put(updateInfoSuccess({ message }));

@@ -35,7 +35,7 @@ export class VerifyExisting extends React.PureComponent {
     } = this.props;
     const handleUpdateInfo = () => {
       const { id } = editInfo;
-      dispatchUpdateInfo({ companyId: id.value, editInfo });
+      dispatchUpdateInfo({ editInfo, itemId: id.value });
       handleNav('/admin/companies');
     };
     return (

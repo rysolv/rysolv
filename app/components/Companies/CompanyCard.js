@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
@@ -26,28 +26,8 @@ const CompanyCard = ({
   handleFetchInfo,
   handleNav,
 }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleDelete = ({ companyId }) => {
-    handleDeleteCompany({ companyId });
-    handleNav(`/admin/companies`);
-    setAnchorEl(null);
-  };
-
-  const handleEdit = ({ companyId }) => {
-    handleFetchInfo({ companyId });
-    handleNav(`/admin/companies/edit`);
-    setAnchorEl(null);
-  };
-
+  const deleteRoute = `/admin/companies`;
+  const editRoute = `/admin/companies/edit`;
   return (
     <Fragment>
       <StyledCompanyCard>
@@ -71,11 +51,12 @@ const CompanyCard = ({
                     </DateWrapper>
                     <StyledSettingWrapper>
                       <SettingsMenu
-                        anchorEl={anchorEl}
-                        handleClick={handleClick}
-                        handleClose={() => handleClose()}
-                        handleDelete={() => handleDelete({ companyId: id })}
-                        handleEdit={() => handleEdit({ companyId: id })}
+                        deleteRoute={deleteRoute}
+                        editRoute={editRoute}
+                        handleDelete={handleDeleteCompany}
+                        handleFetchInfo={handleFetchInfo}
+                        handleNav={handleNav}
+                        id={id}
                       />
                     </StyledSettingWrapper>
                   </SettingsContainer>

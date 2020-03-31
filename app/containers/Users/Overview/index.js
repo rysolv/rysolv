@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-import userCard from 'components/Users';
+import UserCard from 'components/Users';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -58,7 +58,7 @@ export class UsersOverview extends React.PureComponent {
     return (
       <AsyncRender
         asyncData={users}
-        component={userCard}
+        component={UserCard}
         error={error}
         loading={loading}
         propsToPassDown={{
