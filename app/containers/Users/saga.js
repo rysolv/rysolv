@@ -134,7 +134,7 @@ export function* saveInfoSaga({ payload }) {
         stackoverflowLink: "${stackoverflowLink}",
         username: "${username}",
       })
-      { 
+      {
         id,
         lastName
       }
@@ -181,10 +181,48 @@ export function* searchUsersSaga({ payload }) {
 }
 
 export function* updateInfoSaga({ payload }) {
-  const { editInfo, itemId } = payload;
+  const { editRequest, itemId } = payload;
+  const {
+    activeNumber,
+    firstName,
+    issuesNumber,
+    lastName,
+    profilePic,
+    rep,
+    username,
+  } = editRequest;
+  console.log(payload);
+  console.log(editRequest);
+  const query = `
+    mutation {
+      transformUser(id: "${itemId}", userInput: {
+        activeNumber: ${parseInt(activeNumber, 10)},
+        firstName: "${firstName}",
+        issuesNumber: ${parseInt(issuesNumber, 10)},
+        lastName: "${lastName}",
+        profilePic: "${profilePic}",
+        rep: ${parseInt(rep, 10)},
+        username: "${username}",
+      }) {
+        id,
+        createdDate,
+        firstName,
+        lastName,
+        rep,
+        profilePic,
+        activeNumber,
+        issuesNumber,
+      }
+    }
+  `;
   try {
-    const { message } = yield call(post, `/api/users/${itemId}`, editInfo);
-    yield put(updateInfoSuccess({ message }));
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const data = yield call(post, '/graphql', graphql);
+    console.log(data);
+    yield put(updateInfoSuccess({ data }));
   } catch (error) {
     yield put(updateInfoFailure({ error }));
   }

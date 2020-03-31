@@ -9,7 +9,7 @@ import VerifyExistingForm from 'components/Users/Edit/VerifyExistingForm';
 
 import { clearForm, incrementStep, updateInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';
-import { makeSelectUsers } from '../selectors';
+import { makeSelectUsers, makeSelectUsersEditRequest } from '../selectors';
 import {
   ButtonGroup,
   StyledCheckboxWithLabel,
@@ -26,16 +26,17 @@ export class VerifyExisting extends React.PureComponent {
 
   render() {
     const {
-      editInfo,
       dispatchIncrementStep,
       dispatchUpdateInfo,
       dispatchVerifyInfo,
+      editInfo,
+      editRequest,
       handleNav,
       isVerified,
     } = this.props;
     const handleUpdateInfo = () => {
       const { id } = editInfo;
-      dispatchUpdateInfo({ editInfo, itemId: id.value });
+      dispatchUpdateInfo({ editRequest, itemId: id.value });
       handleNav('/admin/users');
     };
     return (
@@ -66,11 +67,12 @@ export class VerifyExisting extends React.PureComponent {
 }
 
 VerifyExisting.propTypes = {
-  editInfo: T.object,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchUpdateInfo: T.func,
   dispatchVerifyInfo: T.func,
+  editInfo: T.object,
+  editRequest: T.object,
   handleNav: T.func,
   isVerified: T.bool,
 };
@@ -80,6 +82,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Users
    */
   editInfo: makeSelectUsers('editInfo'),
+  editRequest: makeSelectUsersEditRequest(),
   isVerified: makeSelectUsers('isVerified'),
 });
 
