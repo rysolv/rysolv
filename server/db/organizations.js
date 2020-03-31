@@ -1,4 +1,4 @@
-const { mapValues, singleItem, singleQuery } = require('./query');
+const { mapValues, singleItem, singleQuery, singleSearch } = require('./query');
 
 // GET all organizations
 const getOrganizations = async table => {
@@ -82,22 +82,32 @@ const transformOrganization = async (table, id, data) => {
   throw new Error(`Failed to update. ID not found in ${table}`);
 };
 
+// SEARCH organizations
+const searchOrganizations = async (table, value) => {
+  const fields = ['name'];
+  const rows = await singleSearch(fields, table, value);
+  return rows;
+};
+
 // DELETE single organization
 const deleteOrganization = async (table, id) => {
-  const values = '*';
-  const rows = await singleItem(table, id, values);
+  const rows = await singleItem(table, id);
   if (rows.length > 0) {
     const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
-    await singleQuery(queryText);
-    return `ID ${id} successfully deleted from table ${table}`;
+    const {
+      rows: [resultRow],
+    } = await singleQuery(queryText);
+    const { name } = resultRow;
+    return `${name} was successfully deleted from ${table}.`;
   }
   throw new Error(`Failed to delete organization. ID not found in ${table}`);
 };
 
 module.exports = {
   createOrganization,
-  getOrganizations,
-  transformOrganization,
   deleteOrganization,
   getOneOrganization,
+  getOrganizations,
+  searchOrganizations,
+  transformOrganization,
 };

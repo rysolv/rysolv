@@ -20,10 +20,17 @@ const singleItem = async (table, id, values) => {
   return rows;
 };
 
-const singleSearch = async (table, value, values) => {
-  const queryText = `SELECT ${values} FROM ${table} WHERE LOWER(first_name) LIKE '%${value}%'
-  OR LOWER(last_name) LIKE LOWER('%${value}%')
-  OR LOWER(username) LIKE LOWER('%${value}%')`;
+const singleSearch = async (fields, table, value, values) => {
+  console.log('fields', fields);
+  const searchString = fields.reduce((acc, field) => {
+    acc.push(`LOWER(${field}) LIKE LOWER('%${value}%')`);
+    return acc;
+  }, []);
+  console.log('searchString', searchString);
+
+  searchString.join(' OR ');
+  const queryText = `SELECT ${values} FROM ${table} WHERE ${searchString}`;
+  console.log('queryText', queryText);
   const { rows } = await singleQuery(queryText);
   return rows;
 };

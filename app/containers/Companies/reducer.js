@@ -1,5 +1,7 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
+import remove from 'lodash/remove';
+
 import {
   CLEAR_ALERTS,
   CLEAR_FORM,
@@ -92,9 +94,10 @@ const companiesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case DELETE_COMPANY_SUCCESS: {
-      const { message } = payload;
+      const { itemId, message } = payload;
       draft.alerts.success = { message };
       draft.loading.deleteCompany = false;
+      remove(draft.companies, ({ id }) => id === itemId);
       break;
     }
     case DELETE_COMPANY: {

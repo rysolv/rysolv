@@ -71,7 +71,8 @@ const createUser = async data => {
 
 // SEARCH users
 const searchUsers = async (table, value) => {
-  const rows = await singleSearch(table, value, userReturnValues);
+  const fields = ['first_name', 'last_name', 'username'];
+  const rows = await singleSearch(fields, table, value, userReturnValues);
   return rows;
 };
 

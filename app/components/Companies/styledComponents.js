@@ -75,6 +75,7 @@ export const StyledListItem = styled.li`
   display: flex;
   flex-direction: row;
   height: 13.35rem;
+  height: auto;
   list-style-type: none;
   margin: 1rem;
 `;

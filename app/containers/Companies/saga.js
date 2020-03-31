@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { del, get, post } from 'utils/request';
+import { get, post } from 'utils/request';
 import {
   DELETE_COMPANY,
   FETCH_COMPANIES,
@@ -26,9 +26,18 @@ import {
 export function* deleteCompanySaga({ payload }) {
   const { itemId } = payload;
   try {
-    const endpoint = `/api/companies/${itemId}`;
-    const { message } = yield call(del, endpoint);
-    yield put(deleteCompanySuccess({ message }));
+    const query = `
+    mutation{
+      deleteOrganization(id: "${itemId}")
+    }`;
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { deleteOrganization },
+    } = yield call(post, '/graphql', graphql);
+    yield put(deleteCompanySuccess({ itemId, message: deleteOrganization }));
   } catch (error) {
     yield put(deleteCompanyFailure({ error }));
   }
@@ -87,13 +96,30 @@ export function* saveInfoSaga() {
 }
 
 export function* searchCompaniesSaga({ payload }) {
-  const { name } = payload;
+  const { value } = payload;
+  const query = `
+  query {
+    searchOrganizations(value: "${value}") {
+      id,
+      createdDate,
+      firstName,
+      lastName,
+      rep,
+      profilePic,
+      activeNumber,
+      issuesNumber,
+    }
+  }
+`;
   try {
-    const { companies } = yield call(
-      get,
-      `/api/companies/search?company=${name}`,
-    );
-    yield put(searchCompaniesSuccess({ companies }));
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { searchOrganizations },
+    } = yield call(post, '/graphql', graphql);
+    yield put(searchCompaniesSuccess({ companies: searchOrganizations }));
   } catch (error) {
     yield put(searchCompaniesFailure({ error }));
   }
