@@ -1,9 +1,10 @@
 const { v4: uuidv4 } = require('uuid');
 const {
   createOrganization,
-  getOrganizations,
-  getOneOrganization,
   deleteOrganization,
+  getOneOrganization,
+  getOrganizations,
+  searchOrganizations,
   transformOrganization,
 } = require('../../db');
 
@@ -25,6 +26,15 @@ module.exports = {
       throw err;
     }
   },
+  searchOrganizations: async args => {
+    const { value } = args;
+    try {
+      const result = await searchOrganizations('organizations', value);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  },
   createOrganization: async args => {
     const { organizationInput } = args;
     const organization = [
@@ -35,10 +45,10 @@ module.exports = {
         organizationInput.name,
         organizationInput.description,
         organizationInput.repo_url,
-        organizationInput.website,
-        organizationInput.issues,
-        organizationInput.logo,
-        organizationInput.verified,
+        organizationInput.website || '',
+        organizationInput.issues || [],
+        organizationInput.logo || '',
+        organizationInput.verified || false,
       ],
     ];
     try {
@@ -51,19 +61,32 @@ module.exports = {
   transformOrganization: async args => {
     const { id, organizationInput } = args;
     try {
-      const data = [
-        [
-          new Date(), // update modified date
-          organizationInput.name,
-          organizationInput.description,
-          organizationInput.repo_url,
-          organizationInput.website,
-          organizationInput.issues,
-          organizationInput.logo,
-          organizationInput.verified,
-        ],
-      ];
-      const result = await transformOrganization('organizations', id, data);
+      const data = {
+        modified_date: new Date(), // update modified date
+        name: organizationInput.name,
+        description: organizationInput.description,
+        repo_url: organizationInput.repoUrl,
+        website: organizationInput.website,
+        issues: organizationInput.issues,
+        logo: organizationInput.logo,
+        verified: organizationInput.verified,
+      };
+      const queryResult = await transformOrganization(
+        'organizations',
+        id,
+        data,
+      );
+      const result = {
+        modifiedDate: queryResult.modified_date,
+        name: queryResult.name,
+        description: queryResult.description,
+        repoUrl: queryResult.repo_url,
+        website: queryResult.website,
+        issues: queryResult.issues,
+        logo: queryResult.logo,
+        verified: queryResult.verified,
+      };
+      console.log(result);
       return result;
     } catch (err) {
       throw err;
