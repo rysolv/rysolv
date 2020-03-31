@@ -85,9 +85,9 @@ module.exports = buildSchema(`
   }
 
   input OrganizationInput {
-    name: String!
-    description: String!
-    repo_url: String!
+    name: String
+    description: String
+    repoUrl: String
     website: String
     issues: [String]
     logo: String
@@ -117,7 +117,7 @@ module.exports = buildSchema(`
 
     transformIssue(id: ID!, issueInput: IssueInput): [Issue!]!
     transformUser(id: ID!, userInput: UserInput): User!
-    transformOrganization(id: ID!, organizationInput: OrganizationInput): [Organization!]!
+    transformOrganization(id: ID!, organizationInput: OrganizationInput): Organization!
   }
 
   schema {
