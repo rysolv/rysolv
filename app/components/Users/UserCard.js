@@ -73,8 +73,12 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                   </ImageContainer>
                 </ContentWrapper>
                 <IssuesWrapper>
-                  <IssuesContainer>{issuesNumber} Issues</IssuesContainer>
-                  <ActiveContainer>{activeNumber} Active</ActiveContainer>
+                  <IssuesContainer>
+                    {issuesNumber.length} Issues
+                  </IssuesContainer>
+                  <ActiveContainer>
+                    {activeNumber.length} Active
+                  </ActiveContainer>
                 </IssuesWrapper>
               </StyledSquare>
             </StyledListSquare>

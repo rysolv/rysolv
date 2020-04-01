@@ -11,8 +11,8 @@ const userSeed = [
     ['f665d73f-6ae4-4699-bb53-c55d62489a29'], // watching_list
     2, // rep
     'https://rysolv.s3.us-east-2.amazonaws.com/tylerprofile.png', // profile_pic
-    5, // active_number
-    10, // issues_number
+    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // active_number
+    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues_number
     'norris23', // username
     'https://github.com/tylermaran', // github_link
     'https://www.tylermaran.com/', // personal_link
@@ -29,8 +29,8 @@ const userSeed = [
     ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
     25,
     'https://rysolv.s3.us-east-2.amazonaws.com/annaprofile.png',
-    1, // active_number
-    20, // issues_number
+    ['d7985d02-382f-424b-9507-78efcb993d88'], // active_number
+    ['d7985d02-382f-424b-9507-78efcb993d88'], // issues_number
     'annapo', // username
     'https://github.com/annapo23', // github_link
     'https://www.annapojawis.com/', // personal_link
@@ -47,8 +47,8 @@ const userSeed = [
     ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
     25,
     'https://rysolv.s3.us-east-2.amazonaws.com/paulprofile.png',
-    1, // active_number
-    4, // issues_number
+    ['04790329-9fa7-438c-8627-4d400822f673'], // active_number
+    ['04790329-9fa7-438c-8627-4d400822f673'], // issues_number
     'paulhouse45', // username
     'https://github.com/paulhouse', // github_link
     'https://www.paulhouz.com/', // personal_link
@@ -65,8 +65,11 @@ const userSeed = [
     ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
     25,
     'https://rysolv.s3.us-east-2.amazonaws.com/jay.png',
-    1, // active_number
-    1, // issues_number
+    ['04790329-9fa7-438c-8627-4d400822f673'], // active_number
+    [
+      '04790329-9fa7-438c-8627-4d400822f673',
+      '04790329-9fa7-438c-8627-4d400822f673',
+    ], // issues_number
     'jquerie', // username
     'https://github.com/jquerie', // github_link
     'https://www.jquerie.com/', // personal_link
