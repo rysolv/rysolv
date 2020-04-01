@@ -9,7 +9,10 @@ import VerifyForm from 'components/Companies/Add/VerifyForm';
 
 import { clearForm, incrementStep, saveInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';
-import { makeSelectCompanies } from '../selectors';
+import {
+  makeSelectCompanies,
+  makeSelectCompaniesRequestBody,
+} from '../selectors';
 import {
   ButtonGroup,
   StyledCheckboxWithLabel,
@@ -32,9 +35,10 @@ export class VerifyCompany extends React.PureComponent {
       dispatchVerifyInfo,
       handleNav,
       isVerified,
+      requestBody,
     } = this.props;
     const handleSaveInfo = () => {
-      dispatchSaveInfo();
+      dispatchSaveInfo({ requestBody });
       handleNav('/admin/companies');
     };
     return (
@@ -74,6 +78,7 @@ VerifyCompany.propTypes = {
   dispatchVerifyInfo: T.func,
   handleNav: T.func,
   isVerified: T.bool,
+  requestBody: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -82,6 +87,7 @@ const mapStateToProps = createStructuredSelector({
    */
   data: makeSelectCompanies('data'),
   isVerified: makeSelectCompanies('isVerified'),
+  requestBody: makeSelectCompaniesRequestBody(),
 });
 
 function mapDispatchToProps(dispatch) {

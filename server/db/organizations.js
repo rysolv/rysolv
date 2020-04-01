@@ -6,7 +6,7 @@ const organizationValues = `
   name,
   description,
   repo_url,
-  website,
+  company_url,
   issues,
   logo,
   verified
@@ -19,7 +19,7 @@ const organizationReturnValues = `
   name,
   description,
   repo_url AS "repoUrl",
-  website,
+  company_url AS "companyUrl",
   issues,
   logo,
   verified

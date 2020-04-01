@@ -11,16 +11,6 @@ const makeSelectUsers = prop =>
     substate => substate[prop],
   );
 
-const makeSelectUsersCreateRequest = () =>
-  createSelector(
-    makeSelectUsers('data'),
-    data =>
-      Object.keys(data).reduce((acc, field) => {
-        acc[field] = data[field].value;
-        return acc;
-      }, {}),
-  );
-
 const makeSelectUsersDisabled = () =>
   createSelector(
     makeSelectUsers('data'),
@@ -83,6 +73,16 @@ const makeSelectUsersLoading = prop =>
     loading => loading[prop],
   );
 
+const makeSelectUsersRequestBody = () =>
+  createSelector(
+    makeSelectUsers('data'),
+    data =>
+      Object.keys(data).reduce((acc, field) => {
+        acc[field] = data[field].value;
+        return acc;
+      }, {}),
+  );
+
 const makeSelectUsersSearchDisabled = () =>
   createSelector(
     makeSelectUsers('search'),
@@ -98,12 +98,12 @@ const makeSelectUsersStep = prop =>
 export default selectUsersDomain;
 export {
   makeSelectUsers,
-  makeSelectUsersCreateRequest,
   makeSelectUsersDisabled,
   makeSelectUsersEditRequest,
   makeSelectUsersError,
   makeSelectUsersFormatted,
   makeSelectUsersLoading,
+  makeSelectUsersRequestBody,
   makeSelectUsersSearchDisabled,
   makeSelectUsersStep,
 };

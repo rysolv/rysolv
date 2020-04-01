@@ -6,7 +6,7 @@ organizations(
   name VARCHAR(128) NOT NULL,
   description VARCHAR(255) NOT NULL,
   repo_url VARCHAR(128) NOT NULL,
-  website VARCHAR(128),
+  company_url VARCHAR(128),
   issues UUID [],
   logo VARCHAR(255),
   verified BOOLEAN DEFAULT false

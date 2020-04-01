@@ -19,6 +19,16 @@ const makeSelectCompaniesDisabled = () =>
     },
   );
 
+const makeSelectCompaniesEditRequest = () =>
+  createSelector(
+    makeSelectCompanies('editInfo'),
+    editInfo =>
+      Object.keys(editInfo).reduce((acc, field) => {
+        acc[field] = editInfo[field].value;
+        return acc;
+      }, {}),
+  );
+
 const makeSelectCompaniesError = prop =>
   createSelector(
     makeSelectCompanies('error'),
@@ -29,6 +39,16 @@ const makeSelectCompaniesLoading = prop =>
   createSelector(
     makeSelectCompanies('loading'),
     loading => loading[prop],
+  );
+
+const makeSelectCompaniesRequestBody = () =>
+  createSelector(
+    makeSelectCompanies('data'),
+    data =>
+      Object.keys(data).reduce((acc, field) => {
+        acc[field] = data[field].value;
+        return acc;
+      }, {}),
   );
 
 const makeSelectCompaniesSearchDisabled = () =>
@@ -47,8 +67,10 @@ export default selectCompaniesDomain;
 export {
   makeSelectCompanies,
   makeSelectCompaniesDisabled,
+  makeSelectCompaniesEditRequest,
   makeSelectCompaniesError,
   makeSelectCompaniesLoading,
+  makeSelectCompaniesRequestBody,
   makeSelectCompaniesSearchDisabled,
   makeSelectCompaniesStep,
 };

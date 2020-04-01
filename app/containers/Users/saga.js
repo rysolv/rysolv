@@ -1,6 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { successCreateUserMessage } from 'responseMessage';
+import {
+  successCreateUserMessage,
+  successEditUserMessage,
+} from 'responseMessage';
 import { post } from 'utils/request';
 
 import {
@@ -28,11 +31,11 @@ import {
 
 export function* deleteUserSaga({ payload }) {
   const { itemId } = payload;
+  const query = `
+  mutation{
+    deleteUser(id: "${itemId}")
+  }`;
   try {
-    const query = `
-    mutation{
-      deleteUser(id: "${itemId}")
-    }`;
     const graphql = JSON.stringify({
       query,
       variables: {},
@@ -108,7 +111,7 @@ export function* fetchUsersSaga() {
 
 export function* saveInfoSaga({ payload }) {
   const {
-    createRequest: {
+    requestBody: {
       firstName,
       lastName,
       email,
@@ -120,25 +123,22 @@ export function* saveInfoSaga({ payload }) {
       username,
     },
   } = payload;
+  const query = `
+  mutation{
+    createUser(userInput: {
+      firstName: "${firstName}",
+      lastName: "${lastName}",
+      email: "${email}",
+      profilePic: "${profilePic}",
+      githubLink: "${githubLink}",
+      personalLink: "${personalLink}",
+      preferredLanguages: "${preferredLanguages}",
+      stackoverflowLink: "${stackoverflowLink}",
+      username: "${username}",
+    })
+    { id }
+  }`;
   try {
-    const query = `
-    mutation{
-      createUser(userInput: {
-        firstName: "${firstName}",
-        lastName: "${lastName}",
-        email: "${email}",
-        profilePic: "${profilePic}",
-        githubLink: "${githubLink}",
-        personalLink: "${personalLink}",
-        preferredLanguages: "${preferredLanguages}",
-        stackoverflowLink: "${stackoverflowLink}",
-        username: "${username}",
-      })
-      {
-        id,
-        lastName
-      }
-    }`;
     const graphql = JSON.stringify({
       query,
       variables: {},
@@ -218,8 +218,8 @@ export function* updateInfoSaga({ payload }) {
       query,
       variables: {},
     });
-    const data = yield call(post, '/graphql', graphql);
-    yield put(updateInfoSuccess({ data }));
+    yield call(post, '/graphql', graphql);
+    yield put(updateInfoSuccess({ message: successEditUserMessage }));
   } catch (error) {
     yield put(updateInfoFailure({ error }));
   }

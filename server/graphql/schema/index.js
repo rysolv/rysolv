@@ -78,7 +78,7 @@ module.exports = buildSchema(`
     name: String!
     description: String!
     repoUrl: String!
-    website: String
+    companyUrl: String
     issues: [String]
     logo: String
     verified: Boolean
@@ -94,7 +94,7 @@ module.exports = buildSchema(`
     name: String
     description: String
     repoUrl: String
-    website: String
+    companyUrl: String
     issues: [String]
     logo: String
     verified: Boolean
