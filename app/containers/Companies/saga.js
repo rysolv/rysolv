@@ -1,6 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { successCreateOrganizationMessage } from 'responseMessage';
+import {
+  successCreateOrganizationMessage,
+  successEditOrganizationMessage,
+} from 'responseMessage';
 import { post } from 'utils/request';
 
 import {
@@ -84,6 +87,7 @@ export function* fetchInfoSaga({ payload }) {
   const query = `
   query {
     oneOrganization(id: "${itemId}") {
+      id,
       createdDate,
       modifiedDate,
       name,
@@ -114,19 +118,19 @@ export function* saveInfoSaga({ payload }) {
   const {
     requestBody: { companyUrl, description, logo, name, repoUrl, verified },
   } = payload;
+  const query = `
+  mutation{
+    createOrganization(organizationInput: {
+      name: "${name}",
+      description: "${description}",
+      repoUrl: "${repoUrl}",
+      companyUrl: "${companyUrl}",
+      logo: "${logo}",
+      verified: ${verified},
+    })
+    { id }
+  }`;
   try {
-    const query = `
-    mutation{
-      createOrganization(organizationInput: {
-        name: "${name}",
-        description: "${description}",
-        repoUrl: "${repoUrl}",
-        companyUrl: "${companyUrl}",
-        logo: "${logo}",
-        verified: ${verified},
-      })
-      { id }
-    }`;
     const graphql = JSON.stringify({
       query,
       variables: {},
@@ -171,14 +175,47 @@ export function* searchCompaniesSaga({ payload }) {
 }
 
 export function* updateInfoSaga({ payload }) {
-  const { companyInfo, itemId } = payload;
+  const { editRequest, itemId } = payload;
+  const {
+    companyUrl,
+    description,
+    issues,
+    logo,
+    name,
+    repoUrl,
+    verified,
+  } = editRequest;
+  const query = `
+    mutation {
+      transformOrganization(id: "${itemId}", organizationInput: {
+        name: "${name}",
+        description: "${description}",
+        repoUrl: "${repoUrl}",
+        companyUrl: "${companyUrl}",
+        issues: ["${issues}"]
+        logo: "${logo}",
+        verified: ${verified},
+      }) {
+        id,
+        createdDate,
+        modifiedDate,
+        name,
+        description,
+        repoUrl,
+        companyUrl,
+        issues,
+        logo,
+        verified,
+      }
+    }
+  `;
   try {
-    const { message } = yield call(
-      post,
-      `/api/companies/${itemId}`,
-      companyInfo,
-    );
-    yield put(updateInfoSuccess({ message }));
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    yield call(post, '/graphql', graphql);
+    yield put(updateInfoSuccess({ message: successEditOrganizationMessage }));
   } catch (error) {
     yield put(updateInfoFailure({ error }));
   }

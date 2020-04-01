@@ -42,6 +42,7 @@ export const initialState = {
     verified: { error: '', value: false },
   },
   editInfo: {
+    id: { error: '', value: '' },
     createdDate: { error: '', value: '' },
     description: { error: '', value: '' },
     issues: { error: '', value: '' },

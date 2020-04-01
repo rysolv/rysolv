@@ -22,13 +22,9 @@ export class VerifyForm extends React.PureComponent {
       <DataWrapper>
         <KeyGroupWrapper>
           {Object.keys(tempData).map((key, index) => (
-            <KeyAndValueContainer>
-              <KeyWrapper key={`verify-key-${key}-${index}`}>
-                {companyDataDictionary[key]}:
-              </KeyWrapper>
-              <ValueWrapper key={`verify-value-${key}-${index}`}>
-                {tempData[key].value}
-              </ValueWrapper>
+            <KeyAndValueContainer key={`verify-key-${key}-${index}`}>
+              <KeyWrapper>{companyDataDictionary[key]}:</KeyWrapper>
+              <ValueWrapper>{tempData[key].value}</ValueWrapper>
             </KeyAndValueContainer>
           ))}
         </KeyGroupWrapper>

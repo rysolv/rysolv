@@ -19,6 +19,16 @@ const makeSelectCompaniesDisabled = () =>
     },
   );
 
+const makeSelectCompaniesEditRequest = () =>
+  createSelector(
+    makeSelectCompanies('editInfo'),
+    editInfo =>
+      Object.keys(editInfo).reduce((acc, field) => {
+        acc[field] = editInfo[field].value;
+        return acc;
+      }, {}),
+  );
+
 const makeSelectCompaniesError = prop =>
   createSelector(
     makeSelectCompanies('error'),
@@ -57,6 +67,7 @@ export default selectCompaniesDomain;
 export {
   makeSelectCompanies,
   makeSelectCompaniesDisabled,
+  makeSelectCompaniesEditRequest,
   makeSelectCompaniesError,
   makeSelectCompaniesLoading,
   makeSelectCompaniesRequestBody,
