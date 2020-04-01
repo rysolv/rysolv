@@ -41,11 +41,11 @@ export const initialState = {
     username: { error: '', value: '' },
   },
   editInfo: {
-    activeNumber: { error: '', value: '' },
+    activeNumber: { error: '', value: [] },
     createdDate: { error: '', value: '' },
     firstName: { error: '', value: '' },
     id: { error: '', value: '' },
-    issuesNumber: { error: '', value: '' },
+    issuesNumber: { error: '', value: [] },
     lastName: { error: '', value: '' },
     profilePic: { error: '', value: '' },
     rep: { error: '', value: '' },

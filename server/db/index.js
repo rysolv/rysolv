@@ -4,6 +4,7 @@ const {
   deleteIssue,
   getIssues,
   getOneIssue,
+  searchIssues,
   transformIssue,
 } = require('./issues');
 const {
@@ -44,6 +45,7 @@ module.exports = {
   getOrganizations,
   getUsers,
   printTables,
+  searchIssues,
   searchOrganizations,
   searchUsers,
   transformIssue,

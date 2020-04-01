@@ -9,11 +9,19 @@ import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { clearAlerts, deleteIssue, fetchIssues } from './actions';
+
+import {
+  clearAlerts,
+  deleteIssue,
+  fetchIssues,
+  inputChange,
+  searchIssues,
+} from './actions';
 import {
   makeSelectIssues,
   makeSelectIssuesError,
   makeSelectIssuesLoading,
+  makeSelectIssuesSearchDisabled,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -36,9 +44,12 @@ export class Issues extends React.PureComponent {
       handleClearAlerts,
       issues,
       handleDeleteIssue,
+      disabled,
       error,
       handleNav,
+      handleSearchIssues,
       loading,
+      search,
     } = this.props;
 
     return (
@@ -49,9 +60,12 @@ export class Issues extends React.PureComponent {
         loading={loading}
         propsToPassDown={{
           alerts,
+          disabled,
           handleClearAlerts,
           handleDeleteIssue,
           handleNav,
+          handleSearchIssues,
+          search,
         }}
       />
     );
@@ -65,11 +79,14 @@ Issues.propTypes = {
   }),
   issues: T.array,
   handleDeleteIssue: T.func,
+  disabled: T.bool,
   dispatchFetchIssues: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
   handleNav: T.func,
+  handleSearchIssues: T.func,
   loading: T.bool,
+  search: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -77,9 +94,11 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   alerts: makeSelectIssues('alerts'),
-  issues: makeSelectIssues('issues'),
+  disabled: makeSelectIssuesSearchDisabled(),
   error: makeSelectIssuesError('issues'),
+  issues: makeSelectIssues('issues'),
   loading: makeSelectIssuesLoading('issues'),
+  search: makeSelectIssues('search'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -90,6 +109,8 @@ function mapDispatchToProps(dispatch) {
     handleDeleteIssue: payload => dispatch(deleteIssue(payload)),
     dispatchFetchIssues: () => dispatch(fetchIssues()),
     handleClearAlerts: () => dispatch(clearAlerts()),
+    handleInputChange: payload => dispatch(inputChange(payload)),
+    handleSearchIssues: payload => dispatch(searchIssues(payload)),
     /**
      * Reducer : Router
      */

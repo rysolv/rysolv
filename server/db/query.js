@@ -25,8 +25,8 @@ const singleSearch = async (fields, table, value, values) => {
     acc.push(`LOWER(${field}) LIKE LOWER('%${value}%')`);
     return acc;
   }, []);
-  searchString.join(' OR ');
-  const queryText = `SELECT ${values} FROM ${table} WHERE ${searchString}`;
+  const formattedSearchString = searchString.join(' OR ');
+  const queryText = `SELECT ${values} FROM ${table} WHERE ${formattedSearchString}`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };

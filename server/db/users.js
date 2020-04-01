@@ -43,11 +43,28 @@ const userReturnValues = `
   stackoverflow_link AS "stackoverflowLink"
 `;
 
-// GET all users
-const getUsers = async table => {
-  const queryText = `SELECT ${userReturnValues} FROM ${table};`;
-  const { rows } = await singleQuery(queryText);
-  return rows;
+// Create new User
+const createUser = async data => {
+  const queryText = `INSERT INTO
+    users( id, created_date, ${userValues} )
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+    returning *`;
+  const result = await mapValues(queryText, data);
+  return result;
+};
+
+// DELETE single user
+const deleteUser = async (table, id) => {
+  const rows = await singleItem(table, id);
+  if (rows) {
+    const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
+    const {
+      rows: [resultRow],
+    } = await singleQuery(queryText);
+    const { first_name, last_name } = resultRow;
+    return `${first_name} ${last_name} was successfully deleted from ${table}.`;
+  }
+  throw new Error(`Failed to delete user. ID not found in ${table}`);
 };
 
 // GET single user
@@ -59,14 +76,11 @@ const getOneUser = async (table, id) => {
   throw new Error(`ID not found in ${table}`);
 };
 
-// Create new User
-const createUser = async data => {
-  const queryText = `INSERT INTO
-    users( id, created_date, ${userValues} )
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-    returning *`;
-  const result = await mapValues(queryText, data);
-  return result;
+// GET all users
+const getUsers = async table => {
+  const queryText = `SELECT ${userReturnValues} FROM ${table};`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
 };
 
 // SEARCH users
@@ -87,24 +101,9 @@ const transformUser = async (table, id, data) => {
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);
-    console.log(result);
     return result;
   }
   throw new Error(`Failed to update users. ID not found in ${table}`);
-};
-
-// DELETE single user
-const deleteUser = async (table, id) => {
-  const rows = await singleItem(table, id);
-  if (rows) {
-    const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
-    const {
-      rows: [resultRow],
-    } = await singleQuery(queryText);
-    const { first_name, last_name } = resultRow;
-    return `${first_name} ${last_name} was successfully deleted from ${table}.`;
-  }
-  throw new Error(`Failed to delete user. ID not found in ${table}`);
 };
 
 module.exports = {

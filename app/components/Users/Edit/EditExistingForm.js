@@ -28,7 +28,11 @@ const EditExistingForm = ({ editInfo, handleInputChange }) => {
                 value: e.target.value,
               })
             }
-            value={tempEditInfo[info].value}
+            value={
+              Array.isArray(tempEditInfo[info].value)
+                ? tempEditInfo[info].value.length
+                : tempEditInfo[info].value
+            }
           />
         );
       })}

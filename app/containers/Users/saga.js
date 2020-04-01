@@ -194,9 +194,9 @@ export function* updateInfoSaga({ payload }) {
   const query = `
     mutation {
       transformUser(id: "${itemId}", userInput: {
-        activeNumber: ${parseInt(activeNumber, 10)},
+        activeNumber: ${JSON.stringify(activeNumber)},
         firstName: "${firstName}",
-        issuesNumber: ${parseInt(issuesNumber, 10)},
+        issuesNumber: ${JSON.stringify(issuesNumber)},
         lastName: "${lastName}",
         profilePic: "${profilePic}",
         rep: ${parseInt(rep, 10)},

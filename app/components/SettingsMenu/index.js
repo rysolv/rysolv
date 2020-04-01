@@ -24,6 +24,8 @@ const SettingsMenu = ({
   };
 
   const deleteHandler = ({ itemId }) => {
+    console.log('delete route', deleteRoute);
+
     handleDelete({ itemId });
     handleNav(deleteRoute);
     setAnchorEl(null);

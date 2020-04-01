@@ -9,38 +9,6 @@ const {
 } = require('../../db');
 
 module.exports = {
-  getOrganizations: async () => {
-    try {
-      const result = await getOrganizations('organizations');
-      return result;
-    } catch (err) {
-      throw err;
-    }
-  },
-  oneOrganization: async args => {
-    const { id } = args;
-    try {
-      const result = await getOneOrganization('organizations', id);
-      return {
-        __typename: 'Organization',
-        ...result,
-      };
-    } catch (err) {
-      return {
-        __typename: 'Error',
-        message: err.message,
-      };
-    }
-  },
-  searchOrganizations: async args => {
-    const { value } = args;
-    try {
-      const result = await searchOrganizations('organizations', value);
-      return result;
-    } catch (err) {
-      throw err;
-    }
-  },
   createOrganization: async args => {
     const { organizationInput } = args;
     const organization = [
@@ -59,6 +27,47 @@ module.exports = {
     ];
     try {
       const result = await createOrganization(organization);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  },
+  deleteOrganization: async args => {
+    const { id } = args;
+    try {
+      const result = await deleteOrganization('organizations', id);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  },
+  getOrganizations: async () => {
+    try {
+      const result = await getOrganizations('organizations');
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  },
+  oneOrganization: async args => {
+    const { id } = args;
+    try {
+      const [result] = await getOneOrganization('organizations', id);
+      return {
+        __typename: 'Organization',
+        ...result,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
+    }
+  },
+  searchOrganizations: async args => {
+    const { value } = args;
+    try {
+      const result = await searchOrganizations('organizations', value);
       return result;
     } catch (err) {
       throw err;
@@ -94,15 +103,6 @@ module.exports = {
         logo: queryResult.logo,
         verified: queryResult.verified,
       };
-      return result;
-    } catch (err) {
-      throw err;
-    }
-  },
-  deleteOrganization: async args => {
-    const { id } = args;
-    try {
-      const result = await deleteOrganization('organizations', id);
       return result;
     } catch (err) {
       throw err;

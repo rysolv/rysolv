@@ -9,17 +9,26 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  INPUT_CHANGE,
+  SEARCH_ISSUES_FAILURE,
+  SEARCH_ISSUES_SUCCESS,
+  SEARCH_ISSUES,
 } from './constants';
 
 export const initialState = {
   alerts: { error: false, success: false },
-  issues: [],
-  loading: {
-    issues: false,
-    deleteIssue: false,
-  },
   error: {
     issues: false,
+    searchIssues: false,
+  },
+  issues: [],
+  loading: {
+    deleteIssue: false,
+    issues: false,
+    searchIssues: false,
+  },
+  search: {
+    searchInput: { error: '', value: '' },
   },
 };
 
@@ -60,6 +69,27 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_ISSUES: {
       draft.loading.issues = true;
+      break;
+    }
+    case INPUT_CHANGE: {
+      const { field, form, value } = payload;
+      draft[form][field].value = value;
+      break;
+    }
+    case SEARCH_ISSUES_FAILURE: {
+      const { error } = payload;
+      draft.error.searchIssues = error;
+      draft.loading.searchIssues = false;
+      break;
+    }
+    case SEARCH_ISSUES_SUCCESS: {
+      const { issues } = payload;
+      draft.issues = issues || null;
+      draft.loading.searchIssues = false;
+      break;
+    }
+    case SEARCH_ISSUES: {
+      draft.loading.searchIssues = true;
       break;
     }
   }

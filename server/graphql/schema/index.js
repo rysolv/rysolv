@@ -46,8 +46,8 @@ module.exports = buildSchema(`
     watchingList: [String]
     rep: Int
     profilePic: String
-    activeNumber: Int
-    issuesNumber: Int
+    activeNumber: [String]
+    issuesNumber: [String]
     username: String
     githubLink: String
     personalLink: String
@@ -62,8 +62,8 @@ module.exports = buildSchema(`
     watchingList: [String]
     rep: Int
     profilePic: String
-    activeNumber: Int
-    issuesNumber: Int
+    activeNumber: [String]
+    issuesNumber: [String]
     username: String
     githubLink: String
     personalLink: String
@@ -109,6 +109,7 @@ module.exports = buildSchema(`
     oneUser(id: ID!): User!
     oneOrganization(id: ID!): OrganizationResult
 
+    searchIssues(value: String!): [Issue!]!
     searchOrganizations(value: String!): [Organization!]!
     searchUsers(value: String!): [User!]!
   }
