@@ -20,10 +20,16 @@ module.exports = {
   oneOrganization: async args => {
     const { id } = args;
     try {
-      const [result] = await getOneOrganization('organizations', id);
-      return result;
+      const result = await getOneOrganization('organizations', id);
+      return {
+        __typename: 'Organization',
+        ...result,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   searchOrganizations: async args => {
@@ -88,7 +94,6 @@ module.exports = {
         logo: queryResult.logo,
         verified: queryResult.verified,
       };
-      console.log(result);
       return result;
     } catch (err) {
       throw err;

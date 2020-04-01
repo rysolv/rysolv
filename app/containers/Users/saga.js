@@ -191,8 +191,6 @@ export function* updateInfoSaga({ payload }) {
     rep,
     username,
   } = editRequest;
-  console.log(payload);
-  console.log(editRequest);
   const query = `
     mutation {
       transformUser(id: "${itemId}", userInput: {
@@ -221,7 +219,6 @@ export function* updateInfoSaga({ payload }) {
       variables: {},
     });
     const data = yield call(post, '/graphql', graphql);
-    console.log(data);
     yield put(updateInfoSuccess({ data }));
   } catch (error) {
     yield put(updateInfoFailure({ error }));

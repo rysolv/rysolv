@@ -84,6 +84,12 @@ module.exports = buildSchema(`
     verified: Boolean
   }
 
+  type Error {
+    message: String
+  }
+
+  union OrganizationResult = Organization | Error
+
   input OrganizationInput {
     name: String
     description: String
@@ -101,7 +107,7 @@ module.exports = buildSchema(`
 
     oneIssue(id: ID!): Issue!
     oneUser(id: ID!): User!
-    oneOrganization(id: ID!): Organization!
+    oneOrganization(id: ID!): OrganizationResult
 
     searchOrganizations(value: String!): [Organization!]!
     searchUsers(value: String!): [User!]!

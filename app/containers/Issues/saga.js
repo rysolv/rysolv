@@ -43,8 +43,14 @@ export function* fetchIssuesSaga() {
     const orgQuery = `
     query {
       oneOrganization(id: "${id}") {
-        verified
-        name
+        __typename
+        ... on Organization {
+          verified
+          name
+        }
+        ... on Error {
+          message
+        }
       }
     }
    `;
@@ -85,8 +91,8 @@ export function* fetchIssuesSaga() {
         },
         index,
       ) => {
-        acc[index].organizationVerified = verified;
-        acc[index].organizationName = name;
+        acc[index].organizationVerified = verified || false;
+        acc[index].organizationName = name || '[Organization deleted]';
         return acc;
       },
       getIssues,

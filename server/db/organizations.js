@@ -32,16 +32,16 @@ const getOrganizations = async table => {
   return rows;
 };
 
-// GET single issue
+// GET single organization
 const getOneOrganization = async (table, id) => {
-  const rows = await singleItem(table, id, organizationReturnValues);
+  const [rows] = await singleItem(table, id, organizationReturnValues);
   if (rows) {
     return rows;
   }
   throw new Error(`ID not found in ${table}`);
 };
 
-// Create new Issue
+// Create new organization
 const createOrganization = async data => {
   const queryText = `INSERT INTO
     organizations(id,created_date,${organizationValues})
