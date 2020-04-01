@@ -9,11 +9,19 @@ import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { clearAlerts, deleteIssue, fetchIssues } from './actions';
+
+import {
+  clearAlerts,
+  deleteIssue,
+  fetchIssues,
+  inputChange,
+  searchIssues,
+} from './actions';
 import {
   makeSelectIssues,
   makeSelectIssuesError,
   makeSelectIssuesLoading,
+  makeSelectIssuesSearchDisabled,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -33,12 +41,16 @@ export class Issues extends React.PureComponent {
   render() {
     const {
       alerts,
-      handleClearAlerts,
-      issues,
+      disabled,
       dispatchDeleteIssues,
       error,
+      handleClearAlerts,
+      handleInputChange,
       handleNav,
+      handleSearchIssues,
+      issues,
       loading,
+      search,
     } = this.props;
 
     return (
@@ -49,9 +61,13 @@ export class Issues extends React.PureComponent {
         loading={loading}
         propsToPassDown={{
           alerts,
+          disabled,
           handleClearAlerts,
           handleDelete: dispatchDeleteIssues,
+          handleInputChange,
           handleNav,
+          handleSearchIssues,
+          search,
         }}
       />
     );
@@ -63,13 +79,17 @@ Issues.propTypes = {
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
-  issues: T.array,
+  disabled: T.bool,
   dispatchDeleteIssues: T.func,
   dispatchFetchIssues: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
+  handleInputChange: T.func,
   handleNav: T.func,
+  handleSearchIssues: T.func,
+  issues: T.array,
   loading: T.bool,
+  search: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -77,9 +97,11 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   alerts: makeSelectIssues('alerts'),
-  issues: makeSelectIssues('issues'),
+  disabled: makeSelectIssuesSearchDisabled(),
   error: makeSelectIssuesError('issues'),
+  issues: makeSelectIssues('issues'),
   loading: makeSelectIssuesLoading('issues'),
+  search: makeSelectIssues('search'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -90,6 +112,8 @@ function mapDispatchToProps(dispatch) {
     dispatchDeleteIssues: payload => dispatch(deleteIssue(payload)),
     dispatchFetchIssues: () => dispatch(fetchIssues()),
     handleClearAlerts: () => dispatch(clearAlerts()),
+    handleInputChange: payload => dispatch(inputChange(payload)),
+    handleSearchIssues: payload => dispatch(searchIssues(payload)),
     /**
      * Reducer : Router
      */

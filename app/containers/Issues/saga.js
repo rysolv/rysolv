@@ -1,11 +1,13 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { del, post } from 'utils/request';
-import { DELETE_ISSUE, FETCH_ISSUES } from './constants';
+import { DELETE_ISSUE, FETCH_ISSUES, SEARCH_ISSUES } from './constants';
 import {
   deleteIssueFailure,
   deleteIssueSuccess,
   fetchIssuesFailure,
   fetchIssuesSuccess,
+  searchIssuesFailure,
+  searchIssuesSuccess,
 } from './actions';
 
 export function* deleteIssueSaga({ payload }) {
@@ -97,7 +99,46 @@ export function* fetchIssuesSaga() {
   }
 }
 
+export function* searchIssuesSaga({ payload }) {
+  const { value } = payload;
+  const query = `
+  query {
+    searchIssues(value: "${value}") {
+      id,
+      createdDate,
+      modifiedDate,
+      name,
+      repo,
+      organizationId,
+      language,
+      body,
+      attempts,
+      rep,
+      watchList,
+      comments,
+      value
+    }
+  }
+`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    console.log(query)
+
+    const {
+      data: { searchIssues },
+    } = yield call(post, '/graphql', graphql);
+    console.log(searchIssues)
+    yield put(searchIssuesSuccess({ issues: searchIssues }));
+  } catch (error) {
+    yield put(searchIssuesFailure({ error }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(DELETE_ISSUE, deleteIssueSaga);
   yield takeLatest(FETCH_ISSUES, fetchIssuesSaga);
+  yield takeLatest(SEARCH_ISSUES, searchIssuesSaga);
 }

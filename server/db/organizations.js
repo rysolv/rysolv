@@ -25,11 +25,28 @@ const organizationReturnValues = `
   verified
 `;
 
-// GET all organizations
-const getOrganizations = async table => {
-  const queryText = `SELECT ${organizationReturnValues} FROM ${table};`;
-  const { rows } = await singleQuery(queryText);
-  return rows;
+// Create new Issue
+const createOrganization = async data => {
+  const queryText = `INSERT INTO
+    organizations(id,created_date,${organizationValues})
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    returning *`;
+  const result = await mapValues(queryText, data);
+  return result;
+};
+
+// DELETE single organization
+const deleteOrganization = async (table, id) => {
+  const rows = await singleItem(table, id);
+  if (rows) {
+    const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
+    const {
+      rows: [resultRow],
+    } = await singleQuery(queryText);
+    const { name } = resultRow;
+    return `${name} was successfully deleted from ${table}.`;
+  }
+  throw new Error(`Failed to delete organization. ID not found in ${table}`);
 };
 
 // GET single issue
@@ -41,14 +58,23 @@ const getOneOrganization = async (table, id) => {
   throw new Error(`ID not found in ${table}`);
 };
 
-// Create new Issue
-const createOrganization = async data => {
-  const queryText = `INSERT INTO
-    organizations(id,created_date,${organizationValues})
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-    returning *`;
-  const result = await mapValues(queryText, data);
-  return result;
+// GET all organizations
+const getOrganizations = async table => {
+  const queryText = `SELECT ${organizationReturnValues} FROM ${table};`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
+// SEARCH organizations
+const searchOrganizations = async (table, value) => {
+  const fields = ['name'];
+  const rows = await singleSearch(
+    fields,
+    table,
+    value,
+    organizationReturnValues,
+  );
+  return rows;
 };
 
 // TRANSFORM single Organization
@@ -66,32 +92,6 @@ const transformOrganization = async (table, id, data) => {
     return result;
   }
   throw new Error(`Failed to update. ID not found in ${table}`);
-};
-
-// SEARCH organizations
-const searchOrganizations = async (table, value) => {
-  const fields = ['name'];
-  const rows = await singleSearch(
-    fields,
-    table,
-    value,
-    organizationReturnValues,
-  );
-  return rows;
-};
-
-// DELETE single organization
-const deleteOrganization = async (table, id) => {
-  const rows = await singleItem(table, id);
-  if (rows) {
-    const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
-    const {
-      rows: [resultRow],
-    } = await singleQuery(queryText);
-    const { name } = resultRow;
-    return `${name} was successfully deleted from ${table}.`;
-  }
-  throw new Error(`Failed to delete organization. ID not found in ${table}`);
 };
 
 module.exports = {

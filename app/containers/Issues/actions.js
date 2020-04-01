@@ -6,6 +6,10 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  INPUT_CHANGE,
+  SEARCH_ISSUES_FAILURE,
+  SEARCH_ISSUES_SUCCESS,
+  SEARCH_ISSUES,
 } from './constants';
 
 export function clearAlerts() {
@@ -52,5 +56,33 @@ export function fetchIssuesSuccess(payload) {
 export function fetchIssues() {
   return {
     type: FETCH_ISSUES,
+  };
+}
+
+export function inputChange(payload) {
+  return {
+    payload,
+    type: INPUT_CHANGE,
+  };
+}
+
+export function searchIssuesFailure(payload) {
+  return {
+    payload,
+    type: SEARCH_ISSUES_FAILURE,
+  };
+}
+
+export function searchIssuesSuccess(payload) {
+  return {
+    payload,
+    type: SEARCH_ISSUES_SUCCESS,
+  };
+}
+
+export function searchIssues(payload) {
+  return {
+    payload,
+    type: SEARCH_ISSUES,
   };
 }

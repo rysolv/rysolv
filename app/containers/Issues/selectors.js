@@ -21,5 +21,16 @@ const makeSelectIssuesLoading = prop =>
     loading => loading[prop],
   );
 
+const makeSelectIssuesSearchDisabled = () =>
+  createSelector(
+    makeSelectIssues('search'),
+    ({ searchInput }) => searchInput.value === '',
+  );
+
 export default selectIssuesDomain;
-export { makeSelectIssues, makeSelectIssuesError, makeSelectIssuesLoading };
+export {
+  makeSelectIssues,
+  makeSelectIssuesError,
+  makeSelectIssuesLoading,
+  makeSelectIssuesSearchDisabled,
+};

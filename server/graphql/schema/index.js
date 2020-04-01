@@ -103,6 +103,7 @@ module.exports = buildSchema(`
     oneUser(id: ID!): User!
     oneOrganization(id: ID!): Organization!
 
+    searchIssues(value: String!): [Issue!]!
     searchOrganizations(value: String!): [Organization!]!
     searchUsers(value: String!): [User!]!
   }

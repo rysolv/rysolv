@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
@@ -32,24 +32,21 @@ const IssueCard = ({
   alerts: { error, success },
   clearAlerts,
   data,
-  // handleDelete,
-  // handleNav,
+  disabled,
+  handleInputChange,
+  handleSearchIssues,
+  search,
 }) => {
   const hasCompanies = data.length > 0;
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const IssueCardComponent = (
     <div>
       <BannerWrapper>
-        <AdminSubHeader />
+        <AdminSubHeader
+          disabled={disabled}
+          handleInputChange={handleInputChange}
+          handleSearch={handleSearchIssues}
+          search={search}
+        />
         <ErrorSuccessBanner
           error={error}
           onClose={clearAlerts}
@@ -95,9 +92,12 @@ const IssueCard = ({
 
                     <IssueLanguage>{language}</IssueLanguage>
                     <SettingsMenu
-                      anchorEl={anchorEl}
-                      handleClick={handleClick}
-                      handleClose={handleClose}
+                      deleteRoute=""
+                      editRoute=""
+                      handleDelete={() => {}}
+                      handleFetchInfo={() => {}}
+                      handleNav={() => {}}
+                      id={id}
                     />
                   </StyledIssueHeader>
                   <StyledIssueText>
@@ -139,8 +139,10 @@ IssueCard.propTypes = {
   }),
   clearAlerts: T.func,
   data: T.array,
-  // handleDelete: T.func,
-  // handleNav: T.func,
+  disabled: T.bool,
+  handleInputChange: T.func,
+  handleSearchIssues: T.func,
+  search: T.object,
 };
 
 export default IssueCard;

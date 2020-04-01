@@ -9,6 +9,38 @@ const {
 } = require('../../db');
 
 module.exports = {
+  createOrganization: async args => {
+    const { organizationInput } = args;
+    const organization = [
+      [
+        uuidv4(),
+        new Date(),
+        new Date(),
+        organizationInput.name,
+        organizationInput.description,
+        organizationInput.repoUrl,
+        organizationInput.companyUrl || '',
+        organizationInput.issues || [],
+        organizationInput.logo || '',
+        organizationInput.verified || false,
+      ],
+    ];
+    try {
+      const result = await createOrganization(organization);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  },
+  deleteOrganization: async args => {
+    const { id } = args;
+    try {
+      const result = await deleteOrganization('organizations', id);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  },
   getOrganizations: async () => {
     try {
       const result = await getOrganizations('organizations');
@@ -30,29 +62,6 @@ module.exports = {
     const { value } = args;
     try {
       const result = await searchOrganizations('organizations', value);
-      return result;
-    } catch (err) {
-      throw err;
-    }
-  },
-  createOrganization: async args => {
-    const { organizationInput } = args;
-    const organization = [
-      [
-        uuidv4(),
-        new Date(),
-        new Date(),
-        organizationInput.name,
-        organizationInput.description,
-        organizationInput.repoUrl,
-        organizationInput.companyUrl || '',
-        organizationInput.issues || [],
-        organizationInput.logo || '',
-        organizationInput.verified || false,
-      ],
-    ];
-    try {
-      const result = await createOrganization(organization);
       return result;
     } catch (err) {
       throw err;
@@ -88,15 +97,6 @@ module.exports = {
         logo: queryResult.logo,
         verified: queryResult.verified,
       };
-      return result;
-    } catch (err) {
-      throw err;
-    }
-  },
-  deleteOrganization: async args => {
-    const { id } = args;
-    try {
-      const result = await deleteOrganization('organizations', id);
       return result;
     } catch (err) {
       throw err;
