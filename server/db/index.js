@@ -18,10 +18,11 @@ const { createComment } = require('./comments');
 const { createPullRequest } = require('./pullRequests');
 const {
   createOrganization,
-  getOrganizations,
-  transformOrganization,
   deleteOrganization,
   getOneOrganization,
+  getOrganizations,
+  searchOrganizations,
+  transformOrganization,
 } = require('./organizations');
 const { createTables, dropAllTables, printTables } = require('./tables');
 
@@ -43,6 +44,7 @@ module.exports = {
   getOrganizations,
   getUsers,
   printTables,
+  searchOrganizations,
   searchUsers,
   transformIssue,
   transformOrganization,

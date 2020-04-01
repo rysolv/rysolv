@@ -44,8 +44,8 @@ module.exports = {
         new Date(),
         organizationInput.name,
         organizationInput.description,
-        organizationInput.repo_url,
-        organizationInput.website || '',
+        organizationInput.repoUrl,
+        organizationInput.companyUrl || '',
         organizationInput.issues || [],
         organizationInput.logo || '',
         organizationInput.verified || false,
@@ -66,7 +66,7 @@ module.exports = {
         name: organizationInput.name,
         description: organizationInput.description,
         repo_url: organizationInput.repoUrl,
-        website: organizationInput.website,
+        companyUrl: organizationInput.companyUrl,
         issues: organizationInput.issues,
         logo: organizationInput.logo,
         verified: organizationInput.verified,
@@ -81,12 +81,11 @@ module.exports = {
         name: queryResult.name,
         description: queryResult.description,
         repoUrl: queryResult.repo_url,
-        website: queryResult.website,
+        companyUrl: queryResult.companyUrl,
         issues: queryResult.issues,
         logo: queryResult.logo,
         verified: queryResult.verified,
       };
-      console.log(result);
       return result;
     } catch (err) {
       throw err;

@@ -39,11 +39,10 @@ export const VERIFY_INFO = 'app/Companies/VERIFY_INFO';
 export const companyDataDictionary = {
   companyUrl: 'Company URL',
   description: 'Company Description',
-  githubUrl: 'GitHub URL',
-  icon: 'Icon',
+  repoUrl: 'GitHub URL',
+  logo: 'Logo',
   issues: 'Issues',
   name: 'Company Name',
-  pullRequests: 'Pull Requests',
 };
 
 export const emptyCardMessage =

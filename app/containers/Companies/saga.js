@@ -1,5 +1,8 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { get, post } from 'utils/request';
+
+import { successCreateOrganizationMessage } from 'responseMessage';
+import { post } from 'utils/request';
+
 import {
   DELETE_COMPANY,
   FETCH_COMPANIES,
@@ -53,7 +56,7 @@ export function* fetchCompaniesSaga() {
       name,
       description,
       repoUrl,
-      website,
+      companyUrl,
       issues,
       logo,
       verified
@@ -78,18 +81,58 @@ export function* fetchCompaniesSaga() {
 
 export function* fetchInfoSaga({ payload }) {
   const { itemId } = payload;
+  const query = `
+  query {
+    oneOrganization(id: "${itemId}") {
+      createdDate,
+      modifiedDate,
+      name,
+      description,
+      repoUrl,
+      companyUrl,
+      issues,
+      logo,
+      verified,
+    }
+  }
+`;
   try {
-    const { company } = yield call(get, `/api/companies/${itemId}`);
-    yield put(fetchInfoSuccess({ company }));
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { oneOrganization },
+    } = yield call(post, '/graphql', graphql);
+    yield put(fetchInfoSuccess({ company: oneOrganization }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
   }
 }
 
-export function* saveInfoSaga() {
+export function* saveInfoSaga({ payload }) {
+  const {
+    requestBody: { companyUrl, description, logo, name, repoUrl, verified },
+  } = payload;
   try {
-    const { message } = yield call(post, `/api/companies`);
-    yield put(saveInfoSuccess({ message }));
+    const query = `
+    mutation{
+      createOrganization(organizationInput: {
+        name: "${name}",
+        description: "${description}",
+        repoUrl: "${repoUrl}",
+        companyUrl: "${companyUrl}",
+        logo: "${logo}",
+        verified: ${verified},
+      })
+      { id }
+    }`;
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    yield call(post, '/graphql', graphql);
+    yield put(saveInfoSuccess({ message: successCreateOrganizationMessage }));
   } catch (error) {
     yield put(saveInfoFailure({ error }));
   }
@@ -102,12 +145,14 @@ export function* searchCompaniesSaga({ payload }) {
     searchOrganizations(value: "${value}") {
       id,
       createdDate,
-      firstName,
-      lastName,
-      rep,
-      profilePic,
-      activeNumber,
-      issuesNumber,
+      modifiedDate,
+      name,
+      description,
+      repoUrl,
+      companyUrl,
+      issues,
+      logo,
+      verified,
     }
   }
 `;

@@ -108,7 +108,7 @@ export function* fetchUsersSaga() {
 
 export function* saveInfoSaga({ payload }) {
   const {
-    createRequest: {
+    requestBody: {
       firstName,
       lastName,
       email,
@@ -134,10 +134,7 @@ export function* saveInfoSaga({ payload }) {
         stackoverflowLink: "${stackoverflowLink}",
         username: "${username}",
       })
-      { 
-        id,
-        lastName
-      }
+      { id }
     }`;
     const graphql = JSON.stringify({
       query,

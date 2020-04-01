@@ -31,6 +31,16 @@ const makeSelectCompaniesLoading = prop =>
     loading => loading[prop],
   );
 
+const makeSelectCompaniesRequestBody = () =>
+  createSelector(
+    makeSelectCompanies('data'),
+    data =>
+      Object.keys(data).reduce((acc, field) => {
+        acc[field] = data[field].value;
+        return acc;
+      }, {}),
+  );
+
 const makeSelectCompaniesSearchDisabled = () =>
   createSelector(
     makeSelectCompanies('search'),
@@ -49,6 +59,7 @@ export {
   makeSelectCompaniesDisabled,
   makeSelectCompaniesError,
   makeSelectCompaniesLoading,
+  makeSelectCompaniesRequestBody,
   makeSelectCompaniesSearchDisabled,
   makeSelectCompaniesStep,
 };

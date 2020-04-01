@@ -16,14 +16,23 @@ import {
 export class VerifyExistingForm extends React.PureComponent {
   render() {
     const { editInfo } = this.props;
-    const tempEditInfo = omit(editInfo, ['id', 'lastPostDate']);
+    const tempEditInfo = omit(editInfo, [
+      'id',
+      'createdDate',
+      'modifiedDate',
+      'verified',
+    ]);
     return (
       <DataWrapper>
         <KeyGroupWrapper>
           {Object.keys(tempEditInfo).map(key => (
             <KeyAndValueContainer key={`container-${key}`}>
               <KeyWrapper>{companyDataDictionary[key]}:</KeyWrapper>
-              <ValueWrapper>{tempEditInfo[key].value}</ValueWrapper>
+              <ValueWrapper>
+                {Array.isArray(tempEditInfo[key].value)
+                  ? tempEditInfo[key].value.length
+                  : tempEditInfo[key].value}
+              </ValueWrapper>
             </KeyAndValueContainer>
           ))}
         </KeyGroupWrapper>

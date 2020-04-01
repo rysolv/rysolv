@@ -9,7 +9,7 @@ import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 // eslint-disable-next-line arrow-body-style
 const ManualForm = ({ data, handleInputChange }) => {
   // eslint-disable-next-line no-param-reassign
-  const { companyUrl, description, githubUrl, icon, name } = data;
+  const { companyUrl, description, logo, name, repoUrl } = data;
   return (
     <InputFormWrapper>
       <MainTextInput
@@ -39,17 +39,17 @@ const ManualForm = ({ data, handleInputChange }) => {
         value={description.value}
       />
       <MainTextInput
-        error={!!icon.error}
-        helperText={icon.error}
-        label={companyDataDictionary.icon}
+        error={!!logo.error}
+        helperText={logo.error}
+        label={companyDataDictionary.logo}
         onChange={e =>
           handleInputChange({
-            field: 'icon',
+            field: 'logo',
             form: 'data',
             value: e.target.value,
           })
         }
-        value={icon.value}
+        value={logo.value}
       />
       <HorizontalWrapper>
         <MainTextInput
@@ -66,17 +66,17 @@ const ManualForm = ({ data, handleInputChange }) => {
           value={companyUrl.value}
         />
         <MainTextInput
-          error={!!githubUrl.error}
-          helperText={githubUrl.error}
-          label={companyDataDictionary.githubUrl}
+          error={!!repoUrl.error}
+          helperText={repoUrl.error}
+          label={companyDataDictionary.repoUrl}
           onChange={e =>
             handleInputChange({
-              field: 'githubUrl',
+              field: 'repoUrl',
               form: 'data',
               value: e.target.value,
             })
           }
-          value={githubUrl.value}
+          value={repoUrl.value}
         />
       </HorizontalWrapper>
     </InputFormWrapper>

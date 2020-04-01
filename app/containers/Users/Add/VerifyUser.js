@@ -9,7 +9,7 @@ import VerifyForm from 'components/Users/Add/VerifyForm';
 
 import { clearForm, incrementStep, saveInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';
-import { makeSelectUsers, makeSelectUsersCreateRequest } from '../selectors';
+import { makeSelectUsers, makeSelectUsersRequestBody } from '../selectors';
 import {
   ButtonGroup,
   StyledCheckboxWithLabel,
@@ -26,7 +26,7 @@ export class VerifyUser extends React.PureComponent {
 
   render() {
     const {
-      createRequest,
+      requestBody,
       data,
       dispatchIncrementStep,
       dispatchSaveInfo,
@@ -35,7 +35,7 @@ export class VerifyUser extends React.PureComponent {
       isVerified,
     } = this.props;
     const handleSaveInfo = () => {
-      dispatchSaveInfo({ createRequest });
+      dispatchSaveInfo({ requestBody });
       handleNav('/admin/users');
     };
     return (
@@ -66,7 +66,6 @@ export class VerifyUser extends React.PureComponent {
 }
 
 VerifyUser.propTypes = {
-  createRequest: T.object,
   data: T.object,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
@@ -74,15 +73,16 @@ VerifyUser.propTypes = {
   dispatchVerifyInfo: T.func,
   handleNav: T.func,
   isVerified: T.bool,
+  requestBody: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Users
    */
-  createRequest: makeSelectUsersCreateRequest(),
   data: makeSelectUsers('data'),
   isVerified: makeSelectUsers('isVerified'),
+  requestBody: makeSelectUsersRequestBody(),
 });
 
 function mapDispatchToProps(dispatch) {
