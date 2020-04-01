@@ -1,4 +1,6 @@
 import produce from 'immer';
+import remove from 'lodash/remove';
+
 import {
   CLEAR_ALERTS,
   DELETE_ISSUE_FAILURE,
@@ -35,9 +37,10 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case DELETE_ISSUE_SUCCESS: {
-      const { message } = payload;
+      const { itemId, message } = payload;
       draft.alerts.success = { message };
       draft.loading.deleteIssue = false;
+      remove(draft.issues, ({ id }) => id === itemId);
       break;
     }
     case DELETE_ISSUE: {

@@ -32,8 +32,8 @@ const IssueCard = ({
   alerts: { error, success },
   clearAlerts,
   data,
-  // handleDelete,
-  // handleNav,
+  handleDeleteIssue,
+  handleNav,
 }) => {
   const hasCompanies = data.length > 0;
   const [anchorEl, setAnchorEl] = useState(null);
@@ -96,8 +96,11 @@ const IssueCard = ({
                     <IssueLanguage>{language}</IssueLanguage>
                     <SettingsMenu
                       anchorEl={anchorEl}
+                      handleDelete={handleDeleteIssue}
+                      handleNav={handleNav}
                       handleClick={handleClick}
                       handleClose={handleClose}
+                      id={id}
                     />
                   </StyledIssueHeader>
                   <StyledIssueText>
@@ -139,8 +142,8 @@ IssueCard.propTypes = {
   }),
   clearAlerts: T.func,
   data: T.array,
-  // handleDelete: T.func,
-  // handleNav: T.func,
+  handleDeleteIssue: T.func,
+  handleNav: T.func,
 };
 
 export default IssueCard;

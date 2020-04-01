@@ -35,7 +35,7 @@ export class Issues extends React.PureComponent {
       alerts,
       handleClearAlerts,
       issues,
-      dispatchDeleteIssues,
+      handleDeleteIssue,
       error,
       handleNav,
       loading,
@@ -50,7 +50,7 @@ export class Issues extends React.PureComponent {
         propsToPassDown={{
           alerts,
           handleClearAlerts,
-          handleDelete: dispatchDeleteIssues,
+          handleDeleteIssue,
           handleNav,
         }}
       />
@@ -64,7 +64,7 @@ Issues.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   issues: T.array,
-  dispatchDeleteIssues: T.func,
+  handleDeleteIssue: T.func,
   dispatchFetchIssues: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
@@ -87,7 +87,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
-    dispatchDeleteIssues: payload => dispatch(deleteIssue(payload)),
+    handleDeleteIssue: payload => dispatch(deleteIssue(payload)),
     dispatchFetchIssues: () => dispatch(fetchIssues()),
     handleClearAlerts: () => dispatch(clearAlerts()),
     /**

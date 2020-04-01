@@ -1,5 +1,5 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
-import { del, post } from 'utils/request';
+import { post } from 'utils/request';
 import { DELETE_ISSUE, FETCH_ISSUES } from './constants';
 import {
   deleteIssueFailure,
@@ -9,11 +9,20 @@ import {
 } from './actions';
 
 export function* deleteIssueSaga({ payload }) {
-  const { issueId } = payload;
+  const { itemId } = payload;
+  const query = `
+  mutation{
+    deleteIssue(id: "${itemId}")
+  }`;
   try {
-    const endpoint = `/api/companies/${issueId}`;
-    const { message } = yield call(del, endpoint);
-    yield put(deleteIssueSuccess({ message }));
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { deleteIssue },
+    } = yield call(post, '/graphql', graphql);
+    yield put(deleteIssueSuccess({ itemId, message: deleteIssue }));
   } catch (error) {
     yield put(deleteIssueFailure({ error }));
   }
