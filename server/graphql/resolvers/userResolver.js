@@ -94,6 +94,8 @@ module.exports = {
       };
       const queryResult = await transformUser('users', id, data);
       const result = {
+        id: queryResult.id,
+        createdDate: queryResult.created_date,
         modifiedDate: queryResult.modified_date,
         firstName: queryResult.first_name,
         lastName: queryResult.last_name,

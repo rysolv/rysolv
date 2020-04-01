@@ -21,6 +21,16 @@ const makeSelectUsersDisabled = () =>
     },
   );
 
+const makeSelectUsersEditRequest = () =>
+  createSelector(
+    makeSelectUsers('editInfo'),
+    editInfo =>
+      Object.keys(editInfo).reduce((acc, field) => {
+        acc[field] = editInfo[field].value;
+        return acc;
+      }, {}),
+  );
+
 const makeSelectUsersError = prop =>
   createSelector(
     makeSelectUsers('error'),
@@ -89,6 +99,7 @@ export default selectUsersDomain;
 export {
   makeSelectUsers,
   makeSelectUsersDisabled,
+  makeSelectUsersEditRequest,
   makeSelectUsersError,
   makeSelectUsersFormatted,
   makeSelectUsersLoading,

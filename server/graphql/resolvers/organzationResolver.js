@@ -77,6 +77,8 @@ module.exports = {
         data,
       );
       const result = {
+        id: queryResult.id,
+        createdDate: queryResult.created_date,
         modifiedDate: queryResult.modified_date,
         name: queryResult.name,
         description: queryResult.description,
