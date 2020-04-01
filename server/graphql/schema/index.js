@@ -46,8 +46,8 @@ module.exports = buildSchema(`
     watchingList: [String]
     rep: Int
     profilePic: String
-    activeNumber: [ID]!
-    issuesNumber: [ID]!
+    activeNumber: [String]
+    issuesNumber: [String]
     username: String
     githubLink: String
     personalLink: String
@@ -62,8 +62,8 @@ module.exports = buildSchema(`
     watchingList: [String]
     rep: Int
     profilePic: String
-    activeNumber: [ID]!
-    issuesNumber: [ID]!
+    activeNumber: [String]
+    issuesNumber: [String]
     username: String
     githubLink: String
     personalLink: String
