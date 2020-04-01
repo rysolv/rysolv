@@ -125,12 +125,9 @@ export function* searchIssuesSaga({ payload }) {
       query,
       variables: {},
     });
-    console.log(query)
-
     const {
       data: { searchIssues },
     } = yield call(post, '/graphql', graphql);
-    console.log(searchIssues)
     yield put(searchIssuesSuccess({ issues: searchIssues }));
   } catch (error) {
     yield put(searchIssuesFailure({ error }));
