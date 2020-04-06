@@ -9,7 +9,7 @@ import AsyncRender from 'components/AsyncRender';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import IssueDetail from '../../components/IssueDetail';
+import IssueDetail from 'components/IssueDetail';
 import { clearAlerts, fetchIssueDetail } from './actions';
 import {
   makeSelectIssueDetail,

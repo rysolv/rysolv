@@ -93,17 +93,12 @@ export function* fetchIssuesSaga() {
     );
 
     const formattedGetIssues = results.reduce(
-      (
-        acc,
-        {
-          data: {
-            oneOrganization: { verified, name },
-          },
-        },
-        index,
-      ) => {
+      (acc, { data: { oneOrganization } }, index) => {
+        const { name, verified } = oneOrganization || {};
+
         acc[index].organizationVerified = verified || false;
         acc[index].organizationName = name || '[Organization deleted]';
+
         return acc;
       },
       getIssues,

@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Admin from '../Admin/Loadable';
-import IssueDetail from '../IssueDetail';
+import IssueDetail from '../Issues/Detail';
 import Main from '../HomePage';
 import NotFoundPage from '../NotFoundPage/Loadable';
 import { RoutesWrapper } from './styledComponents';
