@@ -21,7 +21,7 @@ import {
 
 const IssueCard = ({ data, handleDeleteIssue, handleNav }) => {
   const deleteRoute = `/admin/issues`;
-  // const editRoute = `/admin/issues/edit`;
+  const editRoute = `/admin/issues/edit`;
 
   return (
     <StyledIssueCard>
@@ -66,7 +66,7 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav }) => {
                     handleDelete={handleDeleteIssue}
                     handleNav={handleNav}
                     deleteRoute={deleteRoute}
-                    editRoute="/admin/issues"
+                    editRoute={editRoute}
                     handleFetchInfo={() => {}}
                     id={id}
                   />

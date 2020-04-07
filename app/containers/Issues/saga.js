@@ -10,6 +10,29 @@ import {
   searchIssuesSuccess,
 } from './actions';
 
+const generateOrganizationQuery = id => {
+  const orgQuery = `
+  query {
+    oneOrganization(id: "${id}") {
+      __typename
+      ... on Organization {
+        verified
+        name
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+ `;
+  return [
+    JSON.stringify({
+      query: orgQuery,
+      variables: {},
+    }),
+  ];
+};
+
 export function* deleteIssueSaga({ payload }) {
   const { itemId } = payload;
   const query = `
@@ -31,7 +54,6 @@ export function* deleteIssueSaga({ payload }) {
 }
 
 export function* fetchIssuesSaga() {
-  console.log('gets to fetchissuesage');
   const issues = `
   query {
     getIssues {
@@ -51,28 +73,6 @@ export function* fetchIssuesSaga() {
     }
   }
 `;
-  const generateQuery = id => {
-    const orgQuery = `
-    query {
-      oneOrganization(id: "${id}") {
-        __typename
-        ... on Organization {
-          verified
-          name
-        }
-        ... on Error {
-          message
-        }
-      }
-    }
-   `;
-    return [
-      JSON.stringify({
-        query: orgQuery,
-        variables: {},
-      }),
-    ];
-  };
 
   try {
     const issueQuery = JSON.stringify({
@@ -84,7 +84,7 @@ export function* fetchIssuesSaga() {
     } = yield call(post, '/graphql', issueQuery);
 
     const organizationQuery = getIssues.map(issue =>
-      generateQuery(issue.organizationId),
+      generateOrganizationQuery(issue.organizationId),
     );
 
     const results = yield all(
@@ -139,7 +139,30 @@ export function* searchIssuesSaga({ payload }) {
     const {
       data: { searchIssues },
     } = yield call(post, '/graphql', graphql);
-    yield put(searchIssuesSuccess({ issues: searchIssues }));
+
+    const organizationQuery = searchIssues.map(issue =>
+      generateOrganizationQuery(issue.organizationId),
+    );
+
+    const results = yield all(
+      organizationQuery.map(organizationId =>
+        call(post, '/graphql', organizationId),
+      ),
+    );
+
+    const formattedsearchIssues = results.reduce(
+      (acc, { data: { oneOrganization } }, index) => {
+        const { name, verified } = oneOrganization || {};
+
+        acc[index].organizationVerified = verified || false;
+        acc[index].organizationName = name || '[Organization deleted]';
+
+        return acc;
+      },
+      searchIssues,
+    );
+
+    yield put(searchIssuesSuccess({ issues: formattedsearchIssues }));
   } catch (error) {
     yield put(searchIssuesFailure({ error }));
   }

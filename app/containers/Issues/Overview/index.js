@@ -29,7 +29,6 @@ import saga from '../saga';
 // eslint-disable-next-line react/prefer-stateless-function
 export class IssuesOverview extends React.PureComponent {
   componentDidMount() {
-    console.log('Issues overview');
     const { dispatchFetchIssues } = this.props;
     dispatchFetchIssues();
   }
