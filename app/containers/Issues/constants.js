@@ -13,3 +13,6 @@ export const INPUT_CHANGE = 'app/Issues/INPUT_CHANGE';
 export const SEARCH_ISSUES = 'app/Issues/SEARCH_ISSUES';
 export const SEARCH_ISSUES_FAILURE = 'app/Issues/SEARCH_ISSUES_FAILURE';
 export const SEARCH_ISSUES_SUCCESS = 'app/Issues/SEARCH_ISSUES_SUCCESS';
+
+export const emptyCardMessage =
+  'There are no issues matching the search terms.';

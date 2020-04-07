@@ -2,52 +2,46 @@ import React from 'react';
 import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
-import {
-  ConditionalRender,
-  ErrorSuccessBanner,
-  IconToolTip,
-  Upvote,
-  CommentIcon,
-  Verified,
-} from 'components/base_ui';
-import SettingsMenu from 'components/SettingsMenu';
+import { ErrorSuccessBanner } from 'components/base_ui';
 
-import {
-  BannerWrapper,
-  StyledIssueCard,
-  NameWrapper,
-  DollarWrapper,
-  StyledListItem,
-  StyledIssueHeader,
-  IssueLanguage,
-  IssueOverview,
-  StyledIssueContent,
-  StyledIssueText,
-  StyledIssueFooter,
-  OrganizationNameWrapper,
-  UpvotePanel,
-} from './styledComponents';
+import EmptyCard from './EmptyCard';
+import IssueCard from './IssueCard';
+import { BannerWrapper } from './styledComponents';
 
-const IssueCard = ({
+const Issues = ({
   alerts: { error, success },
   clearAlerts,
   data,
-  handleDeleteIssue,
-  handleNav,
   disabled,
+  handleDeleteIssue,
+  // handleFetchInfo,
   handleInputChange,
+  handleNav,
   handleSearchIssues,
   search,
 }) => {
-  const deleteRoute = `/admin/issues`;
-  const hasCompanies = data.length > 0;
-  const IssueCardComponent = (
+  const hasData = data.length > 0 && !data.includes(null);
+  const propsToPassDown = {
+    data,
+    handleDeleteIssue,
+    // handleFetchInfo,
+    handleNav,
+  };
+  const route = '/admin/issues/add';
+  const viewToRender = hasData ? (
+    <IssueCard {...propsToPassDown} />
+  ) : (
+    <EmptyCard />
+  );
+  return (
     <div>
       <BannerWrapper>
         <AdminSubHeader
           disabled={disabled}
           handleInputChange={handleInputChange}
+          handleNav={handleNav}
           handleSearch={handleSearchIssues}
+          route={route}
           search={search}
         />
         <ErrorSuccessBanner
@@ -56,98 +50,25 @@ const IssueCard = ({
           success={success}
         />
       </BannerWrapper>
-      <StyledIssueCard>
-        {data.map(
-          ({
-            id,
-            name,
-            organizationName,
-            organizationVerified,
-            language,
-            body,
-            attempts,
-            rep,
-            watchList,
-            comments,
-            value,
-          }) => (
-            <div key={id}>
-              <StyledListItem>
-                <UpvotePanel>
-                  <Upvote />
-                  {rep}
-                </UpvotePanel>
-                <StyledIssueContent>
-                  <StyledIssueHeader>
-                    <OrganizationNameWrapper>
-                      {organizationName}
-
-                      {organizationVerified ? (
-                        <IconToolTip toolTipText="Verified Contributor">
-                          <div>
-                            <Verified />
-                          </div>
-                        </IconToolTip>
-                      ) : (
-                        ''
-                      )}
-                    </OrganizationNameWrapper>
-
-                    <IssueLanguage>{language}</IssueLanguage>
-                    <SettingsMenu
-                      handleDelete={handleDeleteIssue}
-                      handleNav={handleNav}
-                      deleteRoute={deleteRoute}
-                      editRoute="/admin/issues"
-                      handleFetchInfo={() => {}}
-                      id={id}
-                    />
-                  </StyledIssueHeader>
-                  <StyledIssueText>
-                    <NameWrapper>
-                      <a href={`./issues/${id}`}>{name}</a>
-                    </NameWrapper>
-                    <IssueOverview>{body}</IssueOverview>
-                  </StyledIssueText>
-                  <StyledIssueFooter>
-                    <div>
-                      {' '}
-                      <CommentIcon /> {comments.length} comments
-                    </div>
-                    <div>{false ? 'Resolved' : `${attempts} attempting`}</div>
-                    <div>{watchList.length} Watch</div>
-                    <DollarWrapper>${value}</DollarWrapper>
-                  </StyledIssueFooter>
-                </StyledIssueContent>
-              </StyledListItem>
-            </div>
-          ),
-        )}
-      </StyledIssueCard>
+      {viewToRender}
     </div>
-  );
-  return (
-    <ConditionalRender
-      Component={IssueCardComponent}
-      FallbackComponent={<div>Hello</div>}
-      shouldRender={hasCompanies}
-    />
   );
 };
 
-IssueCard.propTypes = {
+Issues.propTypes = {
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
   clearAlerts: T.func,
   data: T.array,
+  disabled: T.bool.isRequired,
   handleDeleteIssue: T.func,
-  handleNav: T.func,
-  disabled: T.bool,
+  // handleFetchInfo: T.func,
   handleInputChange: T.func,
+  handleNav: T.func,
   handleSearchIssues: T.func,
   search: T.object,
 };
 
-export default IssueCard;
+export default Issues;

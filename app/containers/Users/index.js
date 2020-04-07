@@ -14,6 +14,7 @@ import saga from './saga';
 // eslint-disable-next-line react/prefer-stateless-function
 export class Users extends React.PureComponent {
   componentDidMount() {
+    document.title = 'Admin: Users';
     const { handleNav } = this.props;
     handleNav('/admin/users');
   }

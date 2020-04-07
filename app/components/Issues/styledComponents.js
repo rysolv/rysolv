@@ -1,10 +1,22 @@
 import styled from 'styled-components';
-import { moneyGreen } from 'defaultStyleHelper';
+import { moneyGreen, textColor } from 'defaultStyleHelper';
 
 export const StyledIssueCard = styled.div`
   border-radius: 0 0.5rem 0.5rem;
   width: 80%;
   margin: 0 0 0 10%;
+`;
+
+export const MessageWrapper = styled.div`
+  align-items: center;
+  background-color: white;
+  border-radius: 0.5rem;
+  color: ${textColor};
+  display: flex;
+  font-size: 1.6rem;
+  height: 55rem;
+  justify-content: center;
+  text-align: center;
 `;
 
 export const StyledListItem = styled.li`

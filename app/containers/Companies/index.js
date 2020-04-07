@@ -15,6 +15,7 @@ import saga from './saga';
 export class Companies extends React.PureComponent {
   componentDidMount() {
     const { handleNav } = this.props;
+    document.title = 'Admin: Companies';
     handleNav('/admin/companies');
   }
 

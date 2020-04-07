@@ -1,117 +1,45 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
 
-import AsyncRender from 'components/AsyncRender';
-import IssueCard from 'components/Issues';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import {
-  clearAlerts,
-  deleteIssue,
-  fetchIssues,
-  inputChange,
-  searchIssues,
-} from './actions';
-import {
-  makeSelectIssues,
-  makeSelectIssuesError,
-  makeSelectIssuesLoading,
-  makeSelectIssuesSearchDisabled,
-} from './selectors';
+import { issueTypeDictionary } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class Issues extends React.PureComponent {
   componentDidMount() {
-    const { dispatchFetchIssues } = this.props;
-    dispatchFetchIssues();
-  }
-
-  componentWillUnmount() {
-    const { handleClearAlerts } = this.props;
-    handleClearAlerts();
+    document.title = 'Admin: Issues';
+    const { handleNav } = this.props;
+    handleNav('/admin/issues');
   }
 
   render() {
-    const {
-      alerts,
-      handleClearAlerts,
-      issues,
-      handleDeleteIssue,
-      disabled,
-      error,
-      handleNav,
-      handleSearchIssues,
-      loading,
-      search,
-    } = this.props;
-
+    const { view } = this.props;
+    const Component = issueTypeDictionary[view];
     return (
-      <AsyncRender
-        asyncData={issues}
-        component={IssueCard}
-        error={error}
-        loading={loading}
-        propsToPassDown={{
-          alerts,
-          disabled,
-          handleClearAlerts,
-          handleDeleteIssue,
-          handleNav,
-          handleSearchIssues,
-          search,
-        }}
-      />
+      <Fragment>
+        <Component />
+      </Fragment>
     );
   }
 }
 
-Issues.propTypes = {
-  alerts: T.shape({
-    error: T.oneOfType([T.bool, T.object]),
-    success: T.oneOfType([T.bool, T.object]),
-  }),
-  issues: T.array,
-  handleDeleteIssue: T.func,
-  disabled: T.bool,
-  dispatchFetchIssues: T.func,
-  error: T.oneOfType([T.object, T.bool]),
-  handleClearAlerts: T.func,
-  handleNav: T.func,
-  handleSearchIssues: T.func,
-  loading: T.bool,
-  search: T.object,
-};
+Issues.defaultProps = { view: 'overview' };
 
-const mapStateToProps = createStructuredSelector({
-  /**
-   * Reducer : Issues
-   */
-  alerts: makeSelectIssues('alerts'),
-  disabled: makeSelectIssuesSearchDisabled(),
-  error: makeSelectIssuesError('issues'),
-  issues: makeSelectIssues('issues'),
-  loading: makeSelectIssuesLoading('issues'),
-  search: makeSelectIssues('search'),
-});
+Issues.propTypes = {
+  handleNav: T.func,
+  view: T.string,
+};
 
 function mapDispatchToProps(dispatch) {
   return {
-    /**
-     * Reducer : Issues
-     */
-    handleDeleteIssue: payload => dispatch(deleteIssue(payload)),
-    dispatchFetchIssues: () => dispatch(fetchIssues()),
-    handleClearAlerts: () => dispatch(clearAlerts()),
-    handleInputChange: payload => dispatch(inputChange(payload)),
-    handleSearchIssues: payload => dispatch(searchIssues(payload)),
-    /**
+    /*
      * Reducer : Router
      */
     handleNav: route => dispatch(push(route)),
@@ -119,15 +47,13 @@ function mapDispatchToProps(dispatch) {
 }
 
 const withConnect = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 );
 
-// magic
 const withReducer = injectReducer({ key: 'issues', reducer });
 const withSaga = injectSaga({ key: 'issues', saga });
 
-// Adds store to issues
 export default compose(
   withReducer,
   withSaga,

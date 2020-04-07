@@ -31,6 +31,7 @@ export function* deleteIssueSaga({ payload }) {
 }
 
 export function* fetchIssuesSaga() {
+  console.log('gets to fetchissuesage');
   const issues = `
   query {
     getIssues {
