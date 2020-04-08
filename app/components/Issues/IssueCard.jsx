@@ -22,6 +22,7 @@ import {
 const IssueCard = ({ data, handleDeleteIssue, handleNav }) => {
   const deleteRoute = `/admin/issues`;
   const editRoute = `/admin/issues/edit`;
+  const detailRoute = `/admin/issues/detail`;
 
   return (
     <StyledIssueCard>
@@ -72,8 +73,10 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav }) => {
                   />
                 </StyledIssueHeader>
                 <StyledIssueText>
-                  <NameWrapper>
-                    <a href={`./issues/${id}`}>{name}</a>
+                  <NameWrapper
+                    onClick={() => handleNav(`${detailRoute}/${id}`)}
+                  >
+                    {name}
                   </NameWrapper>
                   <IssueOverview>{body}</IssueOverview>
                 </StyledIssueText>

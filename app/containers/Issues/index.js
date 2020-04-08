@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
-import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { push } from 'connected-react-router';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -15,16 +13,14 @@ import saga from './saga';
 export class Issues extends React.PureComponent {
   componentDidMount() {
     document.title = 'Admin: Issues';
-    const { handleNav } = this.props;
-    handleNav('/admin/issues');
   }
 
   render() {
-    const { view } = this.props;
+    const { view, match } = this.props;
     const Component = issueTypeDictionary[view];
     return (
       <Fragment>
-        <Component />
+        <Component match={match} />
       </Fragment>
     );
   }
@@ -33,23 +29,9 @@ export class Issues extends React.PureComponent {
 Issues.defaultProps = { view: 'overview' };
 
 Issues.propTypes = {
-  handleNav: T.func,
+  match: T.object,
   view: T.string,
 };
-
-function mapDispatchToProps(dispatch) {
-  return {
-    /*
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
-  };
-}
-
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
 
 const withReducer = injectReducer({ key: 'issues', reducer });
 const withSaga = injectSaga({ key: 'issues', saga });
@@ -57,5 +39,4 @@ const withSaga = injectSaga({ key: 'issues', saga });
 export default compose(
   withReducer,
   withSaga,
-  withConnect,
 )(Issues);

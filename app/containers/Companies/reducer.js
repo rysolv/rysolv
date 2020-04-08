@@ -131,7 +131,9 @@ const companiesReducer = produce((draft, { payload, type }) => {
     case FETCH_INFO_SUCCESS: {
       const { company } = payload;
       Object.keys(company).forEach(detail => {
-        draft.editInfo[detail].value = company[detail];
+        if (draft.editInfo[detail]) {
+          draft.editInfo[detail].value = company[detail];
+        }
       });
       draft.loading.editCompany = false;
       break;

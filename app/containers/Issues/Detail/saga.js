@@ -4,12 +4,10 @@ import { FETCH_ISSUE_DETAIL } from './constants';
 import { fetchIssueDetailFailure, fetchIssueDetailSuccess } from './actions';
 
 export function* fetchIssueDetailSaga({ payload }) {
-  const {
-    id: { view },
-  } = payload;
+  const { id } = payload;
   const query = `
   query {
-    oneIssue(id: "${view}") {
+    oneIssue(id: "${id}") {
       id,
       createdDate,
       modifiedDate,

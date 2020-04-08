@@ -87,16 +87,22 @@ export function* fetchInfoSaga({ payload }) {
   const query = `
   query {
     oneOrganization(id: "${itemId}") {
-      id,
-      createdDate,
-      modifiedDate,
-      name,
-      description,
-      repoUrl,
-      companyUrl,
-      issues,
-      logo,
-      verified,
+      __typename
+      ... on Organization {
+        id,
+        createdDate,
+        modifiedDate,
+        name,
+        description,
+        repoUrl,
+        companyUrl,
+        issues,
+        logo,
+        verified,
+      }
+      ... on Error {
+        message
+      }
     }
   }
 `;

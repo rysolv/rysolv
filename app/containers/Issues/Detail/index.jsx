@@ -21,8 +21,12 @@ import saga from './saga';
 
 export class IssueDetailContainer extends React.PureComponent {
   componentDidMount() {
-    const { dispatchFetchIssueDetail } = this.props;
-    const id = this.props.match.params;
+    const {
+      dispatchFetchIssueDetail,
+      match: {
+        params: { id },
+      },
+    } = this.props;
     dispatchFetchIssueDetail({ id });
   }
 
@@ -53,11 +57,7 @@ export class IssueDetailContainer extends React.PureComponent {
 
 IssueDetailContainer.propTypes = {
   issueDetail: T.object,
-  match: T.shape({
-    params: T.shape({
-      field1: T.number,
-    }),
-  }),
+  match: T.object,
   error: T.bool,
   loading: T.bool,
   handleClearAlerts: T.func,

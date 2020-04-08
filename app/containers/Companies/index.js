@@ -39,7 +39,7 @@ Companies.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    /**
+    /*
      * Reducer : Router
      */
     handleNav: route => dispatch(push(route)),

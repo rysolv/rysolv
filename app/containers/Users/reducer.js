@@ -113,7 +113,9 @@ const usersReducer = produce((draft, { payload, type }) => {
     case FETCH_INFO_SUCCESS: {
       const { oneUser } = payload;
       Object.keys(oneUser).forEach(detail => {
-        draft.editInfo[detail].value = oneUser[detail];
+        if (draft.editInfo[detail]) {
+          draft.editInfo[detail].value = oneUser[detail];
+        }
       });
       draft.loading.editUser = false;
       break;

@@ -21,6 +21,7 @@ export class Users extends React.PureComponent {
 
   render() {
     const { view } = this.props;
+    console.log(view);
     const Component = userTypeDictionary[view];
     return (
       <Fragment>
