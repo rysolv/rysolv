@@ -27,10 +27,17 @@ const makeSelectIssuesSearchDisabled = () =>
     ({ searchInput }) => searchInput.value === '',
   );
 
+const makeSelectIssuesStep = prop =>
+  createSelector(
+    makeSelectIssues('step'),
+    step => step[prop],
+  );
+
 export default selectIssuesDomain;
 export {
   makeSelectIssues,
   makeSelectIssuesError,
   makeSelectIssuesLoading,
   makeSelectIssuesSearchDisabled,
+  makeSelectIssuesStep,
 };

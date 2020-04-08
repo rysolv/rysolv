@@ -9,7 +9,9 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  INCREMENT_STEP,
   INPUT_CHANGE,
+  INPUT_ERROR,
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
@@ -22,13 +24,27 @@ export const initialState = {
     searchIssues: false,
   },
   issues: [],
+  data: {
+    companyUrl: { error: '', value: '' },
+    description: { error: '', value: '' },
+    repoUrl: { error: '', value: '' },
+    logo: { error: '', value: '' },
+    importUrl: { error: '', value: '' },
+    name: { error: '', value: '' },
+    verified: { error: '', value: false },
+  },
   loading: {
+    addIssue: false,
     deleteIssue: false,
     issues: false,
     searchIssues: false,
   },
   search: {
     searchInput: { error: '', value: '' },
+  },
+  step: {
+    addIssue: 1,
+    editIssue: 1,
   },
 };
 
@@ -71,9 +87,22 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.issues = true;
       break;
     }
+    case INCREMENT_STEP: {
+      const { step, view } = payload;
+      draft.step[view] = step;
+      break;
+    }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
       draft[form][field].value = value;
+      break;
+    }
+    case INPUT_ERROR: {
+      const { errors } = payload;
+      const fields = Object.keys(errors);
+      fields.forEach(field => {
+        draft.data[field].error = errors[field] || '';
+      });
       break;
     }
     case SEARCH_ISSUES_FAILURE: {

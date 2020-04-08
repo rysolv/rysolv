@@ -6,7 +6,9 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  INCREMENT_STEP,
   INPUT_CHANGE,
+  INPUT_ERROR,
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
@@ -59,10 +61,24 @@ export function fetchIssues() {
   };
 }
 
+export function incrementStep(payload) {
+  return {
+    payload,
+    type: INCREMENT_STEP,
+  };
+}
+
 export function inputChange(payload) {
   return {
     payload,
     type: INPUT_CHANGE,
+  };
+}
+
+export function inputError(payload) {
+  return {
+    payload,
+    type: INPUT_ERROR,
   };
 }
 

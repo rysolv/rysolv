@@ -23,7 +23,7 @@ const ImportForm = ({
 
   return (
     <ImportFormContainer>
-      Import GitHub Organization
+      Import GitHub Issue
       <BaseTextInputWithAdornment
         adornmentComponent={SearchIcon}
         error={!!importUrl.error}
@@ -36,7 +36,7 @@ const ImportForm = ({
       />
       or
       <StyledLabel
-        onClick={() => handleIncrementStep({ step: 2, view: 'addCompany' })}
+        onClick={() => handleIncrementStep({ step: 2, view: 'addIssue' })}
       >
         Manual
       </StyledLabel>
