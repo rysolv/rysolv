@@ -48,7 +48,6 @@ module.exports = {
   },
   getIssues: async () => {
     try {
-      console.log('helloo');
       const issues = await getIssues('issues');
       return issues;
     } catch (err) {
@@ -59,9 +58,15 @@ module.exports = {
     const { id } = args;
     try {
       const [result] = await getOneIssue('issues', id);
-      return result;
+      return {
+        __typename: 'Issue',
+        ...result,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   searchIssues: async args => {

@@ -15,6 +15,9 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
+  UPVOTE_ISSUE,
+  UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE_FAILURE,
 } from './constants';
 
 export const initialState = {
@@ -38,6 +41,7 @@ export const initialState = {
     deleteIssue: false,
     issues: false,
     searchIssues: false,
+    upvoteIssue: false,
   },
   search: {
     searchInput: { error: '', value: '' },
@@ -119,6 +123,21 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case SEARCH_ISSUES: {
       draft.loading.searchIssues = true;
+      break;
+    }
+    case UPVOTE_ISSUE: {
+      draft.loading.upvoteIssue = true;
+      break;
+    }
+    case UPVOTE_ISSUE_SUCCESS: {
+      console.log(payload);
+      draft.loading.upvoteIssue = false;
+      break;
+    }
+    case UPVOTE_ISSUE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.upvoteIssue = false;
       break;
     }
   }

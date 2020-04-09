@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { moneyGreen, textColor } from 'defaultStyleHelper';
+import { FlatIconButton } from '../base_ui';
 
 export const StyledIssueCard = styled.div`
   border-radius: 0 0.5rem 0.5rem;
@@ -111,4 +112,9 @@ export const DollarWrapper = styled.div`
   padding: 0.25rem 1rem 0.25rem 1rem;
   font-weight: bold;
   border-radius: 1rem;
+`;
+
+export const StyledFlatIconButton = styled(FlatIconButton)`
+  padding: 0;
+  min-width: 0;
 `;

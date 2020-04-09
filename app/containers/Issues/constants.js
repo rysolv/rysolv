@@ -17,5 +17,9 @@ export const SEARCH_ISSUES = 'app/Issues/SEARCH_ISSUES';
 export const SEARCH_ISSUES_FAILURE = 'app/Issues/SEARCH_ISSUES_FAILURE';
 export const SEARCH_ISSUES_SUCCESS = 'app/Issues/SEARCH_ISSUES_SUCCESS';
 
+export const UPVOTE_ISSUE = 'app/Issues/UPVOTE_ISSUE';
+export const UPVOTE_ISSUE_FAILURE = 'app/Issues/UPVOTE_ISSUE_FAILURE';
+export const UPVOTE_ISSUE_SUCCESS = 'app/Issues/UPVOTE_ISSUE_SUCCESS';
+
 export const emptyCardMessage =
   'There are no issues matching the search terms.';

@@ -58,7 +58,7 @@ export class IssueDetailContainer extends React.PureComponent {
 IssueDetailContainer.propTypes = {
   issueDetail: T.object,
   match: T.object,
-  error: T.bool,
+  error: T.oneOfType([T.bool, T.object]),
   loading: T.bool,
   handleClearAlerts: T.func,
   dispatchFetchIssueDetail: T.func,

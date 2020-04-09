@@ -22,10 +22,10 @@ module.exports = buildSchema(`
   }
 
   input IssueInput {
-    organizationId: String!
-    name: String!
-    body: String!
-    repo: String!
+    organizationId: String
+    name: String
+    body: String
+    repo: String
     language: String
     comments: [ID]
     attempts: Int
@@ -33,7 +33,7 @@ module.exports = buildSchema(`
     contributor: [String]
     rep: Int
     watchList: [String]
-    value: Int!
+    value: Int
   }
 
   type User {
@@ -89,6 +89,7 @@ module.exports = buildSchema(`
   }
 
   union OrganizationResult = Organization | Error
+  union IssueResult = Issue | Error
 
   input OrganizationInput {
     name: String
@@ -105,7 +106,7 @@ module.exports = buildSchema(`
     getUsers: [User!]!
     getOrganizations: [Organization!]!
 
-    oneIssue(id: ID!): Issue!
+    oneIssue(id: ID!): IssueResult
     oneUser(id: ID!): User!
     oneOrganization(id: ID!): OrganizationResult
 

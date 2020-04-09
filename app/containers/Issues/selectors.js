@@ -21,6 +21,16 @@ const makeSelectIssuesLoading = prop =>
     loading => loading[prop],
   );
 
+const makeSelectIssuesDisabled = () =>
+  createSelector(
+    makeSelectIssues('data'),
+    data => {
+      const tempData = { ...data };
+      delete tempData.importUrl;
+      return Object.keys(tempData).every(item => tempData[item].value !== '');
+    },
+  );
+
 const makeSelectIssuesSearchDisabled = () =>
   createSelector(
     makeSelectIssues('search'),
@@ -36,6 +46,7 @@ const makeSelectIssuesStep = prop =>
 export default selectIssuesDomain;
 export {
   makeSelectIssues,
+  makeSelectIssuesDisabled,
   makeSelectIssuesError,
   makeSelectIssuesLoading,
   makeSelectIssuesSearchDisabled,

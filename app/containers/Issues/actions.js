@@ -12,6 +12,9 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
+  UPVOTE_ISSUE,
+  UPVOTE_ISSUE_FAILURE,
+  UPVOTE_ISSUE_SUCCESS,
 } from './constants';
 
 export function clearAlerts() {
@@ -100,5 +103,26 @@ export function searchIssues(payload) {
   return {
     payload,
     type: SEARCH_ISSUES,
+  };
+}
+
+export function upvoteIssue(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE,
+  };
+}
+
+export function upvoteIssueFailure(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE_FAILURE,
+  };
+}
+
+export function upvoteIssueSuccess(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE_SUCCESS,
   };
 }

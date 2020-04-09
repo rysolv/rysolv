@@ -76,7 +76,6 @@ const getIssues = async table => {
     value
   FROM ${table};`;
   const { rows } = await singleQuery(queryText);
-  console.log(rows);
   return rows;
 };
 
@@ -107,7 +106,6 @@ const getOneIssue = async (table, id) => {
 
 // SEARCH issues
 const searchIssues = async (table, value) => {
-  console.log('table', table, value);
   const fields = ['body', 'name'];
   const rows = await singleSearch(fields, table, value, issueReturnValues);
   return rows;

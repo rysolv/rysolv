@@ -1,6 +1,11 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { post } from 'utils/request';
-import { DELETE_ISSUE, FETCH_ISSUES, SEARCH_ISSUES } from './constants';
+import {
+  DELETE_ISSUE,
+  FETCH_ISSUES,
+  SEARCH_ISSUES,
+  UPVOTE_ISSUE,
+} from './constants';
 import {
   deleteIssueFailure,
   deleteIssueSuccess,
@@ -8,6 +13,8 @@ import {
   fetchIssuesSuccess,
   searchIssuesFailure,
   searchIssuesSuccess,
+  upvoteIssueSuccess,
+  upvoteIssueFailure,
 } from './actions';
 
 const generateOrganizationQuery = id => {
@@ -167,9 +174,60 @@ export function* searchIssuesSaga({ payload }) {
     yield put(searchIssuesFailure({ error }));
   }
 }
+export function* upvoteIssuesSaga({ payload }) {
+  const { itemId } = payload;
+
+  const getIssueQuery = `
+  query {
+    oneIssue(id: "${itemId}") {
+      __typename
+      ... on Issue {
+        rep
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+  `;
+
+  try {
+    const getIssue = JSON.stringify({
+      query: getIssueQuery,
+      variables: {},
+    });
+    const {
+      data: {
+        oneIssue: { rep },
+      },
+    } = yield call(post, '/graphql', getIssue);
+
+    const updateIssueQuery = `
+      mutation {
+        transformIssue(id: "${itemId}", issueInput:{rep:${rep + 1} }) {
+          rep
+        }
+      }
+    `;
+
+    const updateIssue = JSON.stringify({
+      query: updateIssueQuery,
+      variables: {},
+    });
+    console.log(updateIssue);
+
+    const data = yield call(post, '/graphql', updateIssue);
+    console.log(data);
+
+    yield put(upvoteIssueSuccess({ rep }));
+  } catch (error) {
+    yield put(upvoteIssueFailure({ error }));
+  }
+}
 
 export default function* watcherSaga() {
   yield takeLatest(DELETE_ISSUE, deleteIssueSaga);
   yield takeLatest(FETCH_ISSUES, fetchIssuesSaga);
   yield takeLatest(SEARCH_ISSUES, searchIssuesSaga);
+  yield takeLatest(UPVOTE_ISSUE, upvoteIssuesSaga);
 }

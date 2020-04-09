@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { IconToolTip, Upvote, CommentIcon, Verified } from 'components/base_ui';
+import { CommentIcon, IconToolTip, Upvote, Verified } from 'components/base_ui';
 import SettingsMenu from 'components/SettingsMenu';
 
 import {
@@ -17,9 +17,10 @@ import {
   StyledIssueFooter,
   OrganizationNameWrapper,
   UpvotePanel,
+  StyledFlatIconButton,
 } from './styledComponents';
 
-const IssueCard = ({ data, handleDeleteIssue, handleNav }) => {
+const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
   const deleteRoute = `/admin/issues`;
   const editRoute = `/admin/issues/edit`;
   const detailRoute = `/admin/issues/detail`;
@@ -43,7 +44,11 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav }) => {
           <div key={id}>
             <StyledListItem>
               <UpvotePanel>
-                <Upvote />
+                <StyledFlatIconButton
+                  Icon={<Upvote />}
+                  onClick={() => handleUpvote({ itemId: id })}
+                />
+
                 {rep}
               </UpvotePanel>
               <StyledIssueContent>
@@ -101,6 +106,7 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav }) => {
 IssueCard.propTypes = {
   data: T.array.isRequired,
   handleDeleteIssue: T.func.isRequired,
+  handleUpvote: T.func.isRequired,
   // handleFetchInfo: T.func.isRequired,
   handleNav: T.func.isRequired,
 };

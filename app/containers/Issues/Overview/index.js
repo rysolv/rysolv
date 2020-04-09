@@ -16,6 +16,7 @@ import {
   fetchIssues,
   inputChange,
   searchIssues,
+  upvoteIssue,
 } from '../actions';
 import {
   makeSelectIssues,
@@ -49,6 +50,7 @@ export class IssuesOverview extends React.PureComponent {
       handleInputChange,
       handleNav,
       handleSearchIssues,
+      handleUpvote,
       loading,
       search,
       issues,
@@ -69,6 +71,7 @@ export class IssuesOverview extends React.PureComponent {
           handleNav,
           handleSearchIssues,
           search,
+          handleUpvote,
         }}
       />
     );
@@ -92,6 +95,7 @@ IssuesOverview.propTypes = {
   loading: T.bool,
   search: T.object,
   issues: T.array,
+  handleUpvote: T.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -117,6 +121,7 @@ function mapDispatchToProps(dispatch) {
     handleDeleteIssue: payload => dispatch(deleteIssue(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
+    handleUpvote: payload => dispatch(upvoteIssue(payload)),
     /*
      * Reducer : Router
      */

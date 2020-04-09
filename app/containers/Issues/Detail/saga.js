@@ -3,26 +3,46 @@ import { post } from 'utils/request';
 import { FETCH_ISSUE_DETAIL } from './constants';
 import { fetchIssueDetailFailure, fetchIssueDetailSuccess } from './actions';
 
+// const orgQuery = `
+//   query {
+//     oneOrganization(id: "${id}") {
+//       __typename
+//       ... on Organization {
+//         verified
+//         name
+//       }
+//       ... on Error {
+//         message
+//       }
+//     }
+//   }
+//  `;
 export function* fetchIssueDetailSaga({ payload }) {
   const { id } = payload;
   const query = `
   query {
     oneIssue(id: "${id}") {
-      id,
-      createdDate,
-      modifiedDate,
-      name,
-      repo,
-      organizationId,
-      language,
-      body,
-      attempts,
-      rep,
-      watchList,
-      comments,
-      value
+      __typename
+      ... on Issue {
+        id,
+        createdDate,
+        modifiedDate,
+        name,
+        repo,
+        organizationId,
+        language,
+        body,
+        attempts,
+        rep,
+        watchList,
+        comments,
+        value
+      }
+    ... on Error {
+      message
     }
   }
+}
 `;
   try {
     const issueQuery = JSON.stringify({

@@ -18,12 +18,14 @@ const Issues = ({
   handleInputChange,
   handleNav,
   handleSearchIssues,
+  handleUpvote,
   search,
 }) => {
   const hasData = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
     data,
     handleDeleteIssue,
+    handleUpvote,
     // handleFetchInfo,
     handleNav,
   };
@@ -64,6 +66,7 @@ Issues.propTypes = {
   data: T.array,
   disabled: T.bool.isRequired,
   handleDeleteIssue: T.func,
+  handleUpvote: T.func,
   // handleFetchInfo: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
