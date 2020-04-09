@@ -31,6 +31,16 @@ const makeSelectIssuesDisabled = () =>
     },
   );
 
+const makeSelectIssuesRequestBody = () =>
+  createSelector(
+    makeSelectIssues('data'),
+    data =>
+      Object.keys(data).reduce((acc, field) => {
+        acc[field] = data[field].value;
+        return acc;
+      }, {}),
+  );
+
 const makeSelectIssuesSearchDisabled = () =>
   createSelector(
     makeSelectIssues('search'),
@@ -49,6 +59,7 @@ export {
   makeSelectIssuesDisabled,
   makeSelectIssuesError,
   makeSelectIssuesLoading,
+  makeSelectIssuesRequestBody,
   makeSelectIssuesSearchDisabled,
   makeSelectIssuesStep,
 };

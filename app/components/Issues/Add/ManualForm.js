@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import { MainTextInput } from 'components/base_ui';
-import { companyDataDictionary } from 'containers/Companies/constants';
+import { issueDataDictionary } from 'containers/Issues/constants';
 
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 
@@ -15,7 +15,7 @@ const ManualForm = ({ data, handleInputChange }) => {
       <MainTextInput
         error={!!name.error}
         helperText={name.error}
-        label={companyDataDictionary.name}
+        label={issueDataDictionary.name}
         onChange={e =>
           handleInputChange({
             field: 'name',
@@ -28,7 +28,7 @@ const ManualForm = ({ data, handleInputChange }) => {
       <MainTextInput
         error={!!description.error}
         helperText={description.error}
-        label={companyDataDictionary.description}
+        label={issueDataDictionary.description}
         onChange={e =>
           handleInputChange({
             field: 'description',
@@ -41,7 +41,7 @@ const ManualForm = ({ data, handleInputChange }) => {
       <MainTextInput
         error={!!logo.error}
         helperText={logo.error}
-        label={companyDataDictionary.logo}
+        label={issueDataDictionary.logo}
         onChange={e =>
           handleInputChange({
             field: 'logo',
@@ -55,7 +55,7 @@ const ManualForm = ({ data, handleInputChange }) => {
         <MainTextInput
           error={!!companyUrl.error}
           helperText={companyUrl.error}
-          label={companyDataDictionary.companyUrl}
+          label={issueDataDictionary.companyUrl}
           onChange={e =>
             handleInputChange({
               field: 'companyUrl',
@@ -68,7 +68,7 @@ const ManualForm = ({ data, handleInputChange }) => {
         <MainTextInput
           error={!!repoUrl.error}
           helperText={repoUrl.error}
-          label={companyDataDictionary.repoUrl}
+          label={issueDataDictionary.repoUrl}
           onChange={e =>
             handleInputChange({
               field: 'repoUrl',

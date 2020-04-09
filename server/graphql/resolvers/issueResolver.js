@@ -81,25 +81,40 @@ module.exports = {
   transformIssue: async args => {
     const { id, issueInput } = args;
     try {
-      const data = [
-        [
-          new Date(), // update modified date
-          issueInput.organization,
-          issueInput.name,
-          issueInput.body,
-          issueInput.repo,
-          issueInput.language,
-          issueInput.comments || [],
-          issueInput.attempts || 0,
-          issueInput.active_attempts || 0,
-          issueInput.contributor,
-          issueInput.rep,
-          issueInput.watch_list,
-          issueInput.value,
-        ],
-      ];
-      const issues = await transformIssue('issues', id, data);
-      return issues;
+      const data = {
+        modified_date: new Date(), // update modified date
+        organization_id: issueInput.organizationId,
+        name: issueInput.name,
+        body: issueInput.body,
+        repo: issueInput.repo,
+        language: issueInput.language,
+        comments: issueInput.comments,
+        attempts: issueInput.attempts,
+        active_attempts: issueInput.activeAttempts,
+        contributor: issueInput.contributor,
+        rep: issueInput.rep,
+        watch_list: issueInput.watchList,
+        value: issueInput.value,
+      };
+      const queryResult = await transformIssue('issues', id, data);
+
+      const result = {
+        id: queryResult.id,
+        createdDate: queryResult.created_date,
+        modifiedDate: queryResult.modified_date,
+        name: queryResult.name,
+        body: queryResult.body,
+        repo: queryResult.repo,
+        language: queryResult.language,
+        comments: queryResult.comments,
+        attempts: queryResult.attempts,
+        activeAttempts: queryResult.active_attempts,
+        contributor: queryResult.contributor,
+        rep: queryResult.rep,
+        watchList: queryResult.watchList,
+        value: queryResult.value,
+      };
+      return result;
     } catch (err) {
       throw err;
     }

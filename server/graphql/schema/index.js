@@ -124,7 +124,7 @@ module.exports = buildSchema(`
     deleteUser(id:ID!): String!
     deleteOrganization(id:ID!): String!
 
-    transformIssue(id: ID!, issueInput: IssueInput): [Issue!]!
+    transformIssue(id: ID!, issueInput: IssueInput): Issue!
     transformUser(id: ID!, userInput: UserInput): User!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): Organization!
   }

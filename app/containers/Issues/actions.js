@@ -1,5 +1,6 @@
 import {
   CLEAR_ALERTS,
+  CLEAR_FORM,
   DELETE_ISSUE_FAILURE,
   DELETE_ISSUE_SUCCESS,
   DELETE_ISSUE,
@@ -9,17 +10,27 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  SAVE_INFO_FAILURE,
+  SAVE_INFO_SUCCESS,
+  SAVE_INFO,
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
   UPVOTE_ISSUE,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
+  VERIFY_INFO,
 } from './constants';
 
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
+  };
+}
+
+export function clearForm() {
+  return {
+    type: CLEAR_FORM,
   };
 }
 
@@ -85,6 +96,26 @@ export function inputError(payload) {
   };
 }
 
+export function saveInfoFailure(payload) {
+  return {
+    payload,
+    type: SAVE_INFO_FAILURE,
+  };
+}
+
+export function saveInfoSuccess(payload) {
+  return {
+    payload,
+    type: SAVE_INFO_SUCCESS,
+  };
+}
+
+export function saveInfo(payload) {
+  return {
+    payload,
+    type: SAVE_INFO,
+  };
+}
 export function searchIssuesFailure(payload) {
   return {
     payload,
@@ -125,4 +156,8 @@ export function upvoteIssueSuccess(payload) {
     payload,
     type: UPVOTE_ISSUE_SUCCESS,
   };
+}
+
+export function verifyInfo() {
+  return { type: VERIFY_INFO };
 }

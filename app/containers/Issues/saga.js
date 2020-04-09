@@ -205,6 +205,7 @@ export function* upvoteIssuesSaga({ payload }) {
     const updateIssueQuery = `
       mutation {
         transformIssue(id: "${itemId}", issueInput:{rep:${rep + 1} }) {
+          id,
           rep
         }
       }
@@ -214,12 +215,12 @@ export function* upvoteIssuesSaga({ payload }) {
       query: updateIssueQuery,
       variables: {},
     });
-    console.log(updateIssue);
 
-    const data = yield call(post, '/graphql', updateIssue);
-    console.log(data);
+    const {
+      data: { transformIssue },
+    } = yield call(post, '/graphql', updateIssue);
 
-    yield put(upvoteIssueSuccess({ rep }));
+    yield put(upvoteIssueSuccess(transformIssue));
   } catch (error) {
     yield put(upvoteIssueFailure({ error }));
   }
