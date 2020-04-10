@@ -1,9 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import {
-  successCreateOrganizationMessage,
-  successEditOrganizationMessage,
-} from 'responseMessage';
 import { post } from 'utils/request';
 
 import {
@@ -12,6 +8,8 @@ import {
   FETCH_INFO,
   SAVE_INFO,
   SEARCH_COMPANIES,
+  successCreateOrganizationMessage,
+  successEditOrganizationMessage,
   UPDATE_INFO,
 } from './constants';
 import {

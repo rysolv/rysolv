@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
-import VerifyForm from 'components/Companies/Add/VerifyForm';
+import VerifyForm from 'components/Issues/Add/VerifyForm';
 
 import { clearForm, incrementStep, saveInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';

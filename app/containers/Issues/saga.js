@@ -3,7 +3,9 @@ import { post } from 'utils/request';
 import {
   DELETE_ISSUE,
   FETCH_ISSUES,
+  SAVE_INFO,
   SEARCH_ISSUES,
+  successCreateIssueMessage,
   UPVOTE_ISSUE,
 } from './constants';
 import {
@@ -11,10 +13,12 @@ import {
   deleteIssueSuccess,
   fetchIssuesFailure,
   fetchIssuesSuccess,
+  saveInfoFailure,
+  saveInfoSuccess,
   searchIssuesFailure,
   searchIssuesSuccess,
-  upvoteIssueSuccess,
   upvoteIssueFailure,
+  upvoteIssueSuccess,
 } from './actions';
 
 const generateOrganizationQuery = id => {
@@ -174,6 +178,37 @@ export function* searchIssuesSaga({ payload }) {
     yield put(searchIssuesFailure({ error }));
   }
 }
+
+export function* saveInfoSaga({ payload }) {
+  console.log(payload);
+  const {
+    requestBody: { name, value, body, repo, language },
+  } = payload;
+  const query = `
+  mutation{
+    createIssue(
+      issueInput: {
+        value: ${value},
+        name: "${name}",
+        body: "${body}",
+        repo: "${repo}",
+        language: "${language}",
+      }
+    )
+    { id }
+  }`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    yield call(post, '/graphql', graphql);
+    yield put(saveInfoSuccess({ message: successCreateIssueMessage }));
+  } catch (error) {
+    yield put(saveInfoFailure({ error }));
+  }
+}
+
 export function* upvoteIssuesSaga({ payload }) {
   const { itemId } = payload;
 
@@ -229,6 +264,7 @@ export function* upvoteIssuesSaga({ payload }) {
 export default function* watcherSaga() {
   yield takeLatest(DELETE_ISSUE, deleteIssueSaga);
   yield takeLatest(FETCH_ISSUES, fetchIssuesSaga);
+  yield takeLatest(SAVE_INFO, saveInfoSaga);
   yield takeLatest(SEARCH_ISSUES, searchIssuesSaga);
   yield takeLatest(UPVOTE_ISSUE, upvoteIssuesSaga);
 }

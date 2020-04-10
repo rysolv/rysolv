@@ -32,7 +32,7 @@ const CompanyCard = ({
     <Fragment>
       <StyledCompanyCard>
         {data.map(({ description, logo, id, issues, modifiedDate, name }) => (
-          <StyledListItem key={name}>
+          <StyledListItem key={id}>
             <div>
               <TitleContainer>
                 <NameWrapper>{name}</NameWrapper>

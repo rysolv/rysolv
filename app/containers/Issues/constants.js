@@ -30,15 +30,16 @@ export const UPVOTE_ISSUE_SUCCESS = 'app/Issues/UPVOTE_ISSUE_SUCCESS';
 export const VERIFY_INFO = 'app/Companies/VERIFY_INFO';
 
 export const issueDataDictionary = {
-  companyUrl: 'Issue URL',
-  description: 'Description of Issue',
-  repoUrl: 'GitHub URL',
-  logo: 'Logo',
-  issues: 'Issues',
+  repo: 'Issue URL',
+  body: 'Description of Issue',
+  language: 'Language',
+  value: 'Dollar Value',
   name: 'Issue Title',
 };
 
 export const emptyCardMessage =
   'There are no issues matching the search terms.';
+
+export const successCreateIssueMessage = 'Successfuly created issue.';
 
 export const verifyMessage = 'I agree that this information is correct.';

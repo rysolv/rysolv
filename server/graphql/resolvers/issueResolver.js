@@ -25,9 +25,9 @@ module.exports = {
         issueInput.attempts || 0,
         issueInput.active_attempts || 0,
         issueInput.contributor,
-        issueInput.rep,
-        issueInput.watch_list,
-        issueInput.value,
+        issueInput.rep || 25,
+        issueInput.watch_list || [],
+        issueInput.value || 0,
       ],
     ];
     try {

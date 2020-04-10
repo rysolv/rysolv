@@ -7,18 +7,18 @@ module.exports = buildSchema(`
     id: ID!
     createdDate: Object
     modifiedDate: Object
-    organizationId: String!
-    name: String!
-    body: String!
-    repo: String!
-    language: String!
-    comments: [ID]!
-    attempts: Int!
-    activeAttempts: Int!
-    contributor: [String]!
-    rep: Int!
-    watchList: [String]!
-    value: Int!
+    organizationId: String
+    name: String
+    body: String
+    repo: String
+    language: String
+    comments: [ID]
+    attempts: Int
+    activeAttempts: Int
+    contributor: [String]
+    rep: Int
+    watchList: [String]
+    value: Int
   }
 
   input IssueInput {

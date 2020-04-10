@@ -34,13 +34,12 @@ export const initialState = {
   },
   issues: [],
   data: {
-    companyUrl: { error: '', value: '' },
-    description: { error: '', value: '' },
-    repoUrl: { error: '', value: '' },
-    logo: { error: '', value: '' },
-    importUrl: { error: '', value: '' },
+    value: { error: '', value: 0 },
     name: { error: '', value: '' },
-    verified: { error: '', value: false },
+    body: { error: '', value: '' },
+    repo: { error: '', value: '' },
+    language: { error: '', value: '' },
+    importUrl: { error: '', value: '' },
   },
   loading: {
     addIssue: false,

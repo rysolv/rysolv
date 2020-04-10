@@ -3,7 +3,7 @@ issues(
   id UUID PRIMARY KEY,
   created_date TIMESTAMP,
   modified_date TIMESTAMP,
-  organization_id UUID NOT NULL,
+  organization_id UUID,
   name VARCHAR(255) NOT NULL,
   body TEXT NOT NULL,
   repo VARCHAR(128) NOT NULL,
