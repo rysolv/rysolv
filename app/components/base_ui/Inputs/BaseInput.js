@@ -11,17 +11,19 @@ const BaseInput = ({
   value,
   ...restProp
 }) => (
-  <div>
-    <StyledBaseInput
-      classes={{ focused: 'focused', root: 'input' }}
-      disabled={disabled}
-      onChange={onChange}
-      required={required}
-      type={type}
-      value={value}
-      {...restProp}
-    />
-  </div>
+  <StyledBaseInput
+    classes={{
+      adornedStart: 'adornedStart',
+      focused: 'focused',
+      input: 'input',
+    }}
+    disabled={disabled}
+    onChange={onChange}
+    required={required}
+    type={type}
+    value={value}
+    {...restProp}
+  />
 );
 
 BaseInput.propTypes = {

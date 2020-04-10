@@ -2,9 +2,9 @@
 export const borderColor = '#e0e0e0';
 export const commentHeaderColor = '#f6f8fa';
 export const darkTextColor = '#263238';
+export const errorRed = '#f44336';
 export const headerOutlineColor = '#cfd8dc';
 export const hyperlinkColor = '#1e88e5';
-export const inputErrorRed = 'red';
 export const inputFieldColor = '#cfd8dc';
 export const menuColor = '#1e88e5';
 export const moneyGreen = '#00c853';
@@ -19,6 +19,7 @@ export const textColor = '#616161';
 export const defaultFontSize = '1.4rem';
 
 // Borders
-export const errorBorder = `0.1rem solid ${inputErrorRed}`;
+export const dividerBorder = `0.2rem solid #d5d5d5`;
+export const errorBorder = `0.1rem solid ${errorRed}`;
 export const inputBorder = `0.1rem solid ${inputFieldColor}`;
 export const issueBorder = `0.1rem solid ${borderColor}`;

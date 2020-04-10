@@ -2,24 +2,21 @@ import React from 'react';
 import T from 'prop-types';
 
 import BaseInput from './BaseInput';
-import { StyledFlatIconButton } from './styledComponents';
+import { StyledModalIcon } from './styledComponents';
 
 const BaseInputWithAdornment = ({
   adornmentComponent,
   disabled,
+  fontSize,
   onClick,
   position,
   ...restProps
 }) => {
   const adornment = {
     [`${position}Adornment`]: (
-      <StyledFlatIconButton
-        disabled={disabled}
-        Icon={adornmentComponent}
-        onClick={onClick}
-      >
+      <StyledModalIcon fontSize={fontSize} Icon={adornmentComponent}>
         {adornmentComponent}
-      </StyledFlatIconButton>
+      </StyledModalIcon>
     ),
   };
   return <BaseInput {...adornment} {...restProps} />;
@@ -30,6 +27,7 @@ BaseInputWithAdornment.defaultProps = { position: 'start' };
 BaseInputWithAdornment.propTypes = {
   adornmentComponent: T.node,
   disabled: T.bool,
+  fontSize: T.string,
   onClick: T.func,
   position: T.oneOf(['end', 'start']),
 };

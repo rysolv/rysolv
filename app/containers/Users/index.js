@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
 
+import PaymentPortal from 'components/Payments';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -24,6 +25,23 @@ export class Users extends React.PureComponent {
     return (
       <Fragment>
         <Component />
+        <PaymentPortal
+          amountFunded="50"
+          form={{
+            name: { error: '', value: '' },
+            email: { error: '', value: '' },
+          }}
+          isFunded
+          handleInputChange={() => {}}
+          users={[
+            {
+              amount: 50,
+              image:
+                'https://rysolv.s3.us-east-2.amazonaws.com/annaprofile.png',
+              name: 'Anna Pojawis',
+            },
+          ]}
+        />
       </Fragment>
     );
   }
