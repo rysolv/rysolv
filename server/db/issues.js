@@ -83,9 +83,7 @@ const searchIssues = async (table, value) => {
 const transformIssue = async (table, id, data) => {
   const [rows] = await singleItem(table, id, issueValues);
   if (rows) {
-    console.log(data);
     const { newObjectArray } = diff(rows, data);
-    console.log(newObjectArray);
     const queryText = `UPDATE ${table}
       SET (${issueValues})
       = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)

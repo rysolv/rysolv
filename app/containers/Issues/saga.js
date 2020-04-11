@@ -180,7 +180,6 @@ export function* searchIssuesSaga({ payload }) {
 }
 
 export function* saveInfoSaga({ payload }) {
-  console.log(payload);
   const {
     requestBody: { name, value, body, repo, language },
   } = payload;
