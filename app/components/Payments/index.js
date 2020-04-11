@@ -27,7 +27,7 @@ const CreditCardIcon = iconDictionary('creditCard');
 const PaypalIcon = iconDictionary('paypal');
 
 const PaymentPortal = ({ amountFunded, handleNav, isFunded, users }) => {
-  const [fundAmount, setFundAmount] = useState(2);
+  const [fundAmount, setFundAmount] = useState('2');
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [creditCardNumber, setCreditCardNumber] = useState('');

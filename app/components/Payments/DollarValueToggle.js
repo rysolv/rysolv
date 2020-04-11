@@ -23,7 +23,7 @@ const DollarValueToggle = ({ fundAmount, handleChange }) => (
 );
 
 DollarValueToggle.propTypes = {
-  fundAmount: T.number,
+  fundAmount: T.string,
   handleChange: T.func,
 };
 

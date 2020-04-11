@@ -3,8 +3,7 @@ import T from 'prop-types';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import { ConditionalRender } from 'components/base_ui';
-
+import ConditionalRender from '../ConditionalRender';
 import {
   IconWrapper,
   StyledExpansionPanel,

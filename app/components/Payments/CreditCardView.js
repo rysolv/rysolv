@@ -53,7 +53,7 @@ const CreditCardView = ({
           />
         </HorizontalInputWrapper>
       </InputWrapper>
-      <StyledPrimaryAsyncButton label="Confirm" />
+      <StyledPrimaryAsyncButton label="Confirm" onClick={() => {}} />
     </CreditCardViewContainer>
   </Fragment>
 );
