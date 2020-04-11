@@ -20,6 +20,18 @@ export const IssueDetailWrapper = styled.div`
   border-radius: 2px;
 `;
 
+export const MessageWrapper = styled.div`
+  align-items: center;
+  background-color: white;
+  border-radius: 0.5rem;
+  color: ${textColor};
+  display: flex;
+  font-size: 1.6rem;
+  height: 55rem;
+  justify-content: center;
+  text-align: center;
+`;
+
 export const LeftPanel = styled.div`
   width: 3rem;
 `;

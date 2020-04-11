@@ -31,29 +31,27 @@ import {
   StyledIssueHeader,
   UpvotePanel,
 } from './styledComponents';
-
-// import Comments from '../Coments';
+import EmptyIssue from './EmptyIssue';
 
 const GlassesIcon = iconDictionary('glasses');
 
-const IssueDetail = ({ data }) => {
-  const hasDetails = isEmpty(data.issueDetail);
+const IssueDetail = ({ data: { issueDetail } }) => {
+  const hasDetails = isEmpty(issueDetail.id);
 
   const {
     // attempts,
     comments,
-    // id,
     language,
     datePosted,
     name,
     organization,
     organizationVerified,
-    // overview,
+    body,
     rep,
     setPrice,
     solved,
     watched,
-  } = data.issueDetail;
+  } = issueDetail;
 
   const IssueDetailComponent = (
     <BaseContainer>
@@ -105,23 +103,7 @@ const IssueDetail = ({ data }) => {
 
                 <IssueDetailOverview>
                   <IssueDetailHeader>Posted {datePosted}</IssueDetailHeader>
-                  <IssueDetailBody>
-                    When using anything else than NV12 or i420 with 601 colour
-                    space, there are artefacts in the output. Theres something
-                    like a pixel shift happening on the right part of the image.
-                    It makes text very blurry. If you select NV12/i420/i444 with
-                    709 or RGB in general. About 90% of the encoded frames are
-                    dropped. My CPU nor GPU is significantly going up in usage.
-                    To confirm OBS ignores the 709 part, I selected i444 with
-                    709 and the other PC confirmed that its somehow a 709 matrix
-                    over a 601 source. My Decklink card doesnt support keying,
-                    only 1 SDI output, but I was recommended by der_rod on
-                    Twitter to force keyer to 3 in the appdata config. This gave
-                    me a very clean 4:4:4 output on 709, but it dropped so many
-                    frames that its not usable. I wouldnt be able to use it
-                    anyway since my Decklink card in the stream PC doesnt
-                    support 4:4:4 above 1080p30.
-                  </IssueDetailBody>
+                  <IssueDetailBody>{body}</IssueDetailBody>
                 </IssueDetailOverview>
               </OverviewActivityContainer>
               <OverviewActivityContainer>
@@ -207,7 +189,7 @@ const IssueDetail = ({ data }) => {
   return (
     <ConditionalRender
       Component={IssueDetailComponent}
-      FallbackComponent={<div>Failed to load Issue Detail</div>}
+      FallbackComponent={EmptyIssue}
       shouldRender={!hasDetails}
     />
   );

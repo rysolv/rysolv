@@ -28,7 +28,7 @@ const organizationReturnValues = `
 // Create new Issue
 const createOrganization = async data => {
   const queryText = `INSERT INTO
-    organizations(id,created_date,${organizationValues})
+    organizations(id, created_date, ${organizationValues})
     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     returning *`;
   const result = await mapValues(queryText, data);
@@ -49,7 +49,7 @@ const deleteOrganization = async (table, id) => {
   throw new Error(`Failed to delete organization. ID not found in ${table}`);
 };
 
-// GET single issue
+// GET single organization
 const getOneOrganization = async (table, id) => {
   const rows = await singleItem(table, id, organizationReturnValues);
   if (rows) {
@@ -89,6 +89,7 @@ const transformOrganization = async (table, id, data) => {
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);
+    console.log(result);
     return result;
   }
   throw new Error(`Failed to update. ID not found in ${table}`);

@@ -1,48 +1,66 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
-import { BaseContainer } from 'components/base_ui';
+import { BaseContainer, ConditionalRender } from 'components/base_ui';
 import AdminHeader from 'components/Admin/AdminHeader';
 import { typeDictionary } from './constants';
-import { getAdminType, getMatchParams } from './selectors';
+import NotFoundPage from '../NotFoundPage/Loadable';
+import { subrouteDictionary, viewDictionary } from './routeDictionary';
 
-export const Admin = ({ handleNav, subroute, view }) => {
+export const Admin = ({
+  handleNav,
+  match,
+  match: {
+    params: { subroute, view, id },
+  },
+}) => {
+  let routesMatch = false;
   const Component = typeDictionary[subroute];
-  return (
+
+  if (subroute && !view && subrouteDictionary.includes(subroute)) {
+    routesMatch = true;
+  }
+  if (
+    subroute &&
+    subrouteDictionary.includes(subroute) &&
+    view &&
+    viewDictionary.includes(view)
+  ) {
+    routesMatch = true;
+  }
+
+  const ComponentToRender = (
     <Fragment key={subroute}>
       <BaseContainer>
         <AdminHeader activePage={subroute} handleNav={handleNav} />
-        <Component subroute={subroute} view={view} />
+        <Component subroute={subroute} view={view} id={id} match={match} />
       </BaseContainer>
     </Fragment>
+  );
+  return (
+    <ConditionalRender
+      Component={ComponentToRender}
+      FallbackComponent={NotFoundPage}
+      shouldRender={routesMatch}
+    />
   );
 };
 
 Admin.propTypes = {
   handleNav: T.func,
-  subroute: T.string,
-  view: T.string,
+  match: T.object,
 };
-
-const mapStateToProps = createStructuredSelector({
-  /**
-   * Reducer: Admin
-   */
-  subroute: getAdminType(),
-  view: getMatchParams('view'),
-});
 
 const mapDispatchToProps = dispatch => ({
   handleNav: ({ subroute }) => {
-    dispatch(push(`/${subroute}`));
+    dispatch(push(`/admin/${subroute}`));
   },
 });
 
 const withConnect = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 );
 

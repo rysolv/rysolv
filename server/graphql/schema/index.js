@@ -7,25 +7,10 @@ module.exports = buildSchema(`
     id: ID!
     createdDate: Object
     modifiedDate: Object
-    organizationId: String!
-    name: String!
-    body: String!
-    repo: String!
-    language: String!
-    comments: [ID]!
-    attempts: Int!
-    activeAttempts: Int!
-    contributor: [String]!
-    rep: Int!
-    watchList: [String]!
-    value: Int!
-  }
-
-  input IssueInput {
-    organizationId: String!
-    name: String!
-    body: String!
-    repo: String!
+    organizationId: String
+    name: String
+    body: String
+    repo: String
     language: String
     comments: [ID]
     attempts: Int
@@ -33,7 +18,22 @@ module.exports = buildSchema(`
     contributor: [String]
     rep: Int
     watchList: [String]
-    value: Int!
+    value: Int
+  }
+
+  input IssueInput {
+    organizationId: String
+    name: String
+    body: String
+    repo: String
+    language: String
+    comments: [ID]
+    attempts: Int
+    activeAttempts: Int
+    contributor: [String]
+    rep: Int
+    watchList: [String]
+    value: Int
   }
 
   type User {
@@ -84,6 +84,13 @@ module.exports = buildSchema(`
     verified: Boolean
   }
 
+  type Error {
+    message: String
+  }
+
+  union OrganizationResult = Organization | Error
+  union IssueResult = Issue | Error
+
   input OrganizationInput {
     name: String
     description: String
@@ -99,9 +106,9 @@ module.exports = buildSchema(`
     getUsers: [User!]!
     getOrganizations: [Organization!]!
 
-    oneIssue(id: ID!): Issue!
+    oneIssue(id: ID!): IssueResult
     oneUser(id: ID!): User!
-    oneOrganization(id: ID!): Organization!
+    oneOrganization(id: ID!): OrganizationResult
 
     searchIssues(value: String!): [Issue!]!
     searchOrganizations(value: String!): [Organization!]!
@@ -117,7 +124,7 @@ module.exports = buildSchema(`
     deleteUser(id:ID!): String!
     deleteOrganization(id:ID!): String!
 
-    transformIssue(id: ID!, issueInput: IssueInput): [Issue!]!
+    transformIssue(id: ID!, issueInput: IssueInput): Issue!
     transformUser(id: ID!, userInput: UserInput): User!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): Organization!
   }

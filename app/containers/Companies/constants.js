@@ -48,4 +48,10 @@ export const companyDataDictionary = {
 export const emptyCardMessage =
   'There are no companies matching the search terms.';
 
+export const successCreateOrganizationMessage =
+  'Company was successfully added.';
+
+export const successEditOrganizationMessage =
+  'Company was successfully edited.';
+
 export const verifyMessage = 'I agree that this information is correct.';

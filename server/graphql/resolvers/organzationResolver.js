@@ -53,9 +53,15 @@ module.exports = {
     const { id } = args;
     try {
       const [result] = await getOneOrganization('organizations', id);
-      return result;
+      return {
+        __typename: 'Organization',
+        ...result,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   searchOrganizations: async args => {

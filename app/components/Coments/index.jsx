@@ -11,14 +11,6 @@ const Comments = ({ comments }) => {
     <Fragment>
       <CommentHeader>Comments</CommentHeader>
       All Comments / RYSOLV / Github
-      {/* <IssueDetailOverview>
-        <IssueDetailHeader>Paul House</IssueDetailHeader>
-        <IssueDetailBody>
-          Please report the NvidiaBlackmagic driver version (Desktop only shows
-          Mode as in resolution and framerate for me (BMD Desktop video 11.4
-          Ubuntu 19.04/kernel 5.0.0-37)?
-        </IssueDetailBody>
-      </IssueDetailOverview> */}
     </Fragment>
   );
 
