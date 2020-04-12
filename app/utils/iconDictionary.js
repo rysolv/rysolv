@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import CodeIcon from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
+import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
@@ -13,14 +14,17 @@ import Warning from '@material-ui/icons/Warning';
 import SiteLogo from './svg/SiteLogo';
 import CloseMenu from './svg/CloseMenu';
 import Glasses from './svg/Glasses';
+import Paypal from './svg/Paypal';
 
 export default (name, options) => {
   const icons = {
     closeMenu: CloseMenu,
     code: CodeIcon,
     comments: Comments,
+    creditCard: CreditCard,
     delete: Delete,
     glasses: Glasses,
+    paypal: Paypal,
     search: Search,
     settings: Settings,
     siteLogo: SiteLogo,

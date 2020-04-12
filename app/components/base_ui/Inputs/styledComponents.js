@@ -17,9 +17,19 @@ export const Spacer = styled.div`
 export const StyledBaseInput = styled(OutlinedInput)`
   background: white;
   border-radius: 0.5rem;
+  color: rgba(0, 0, 0, 0.7);
   font-size: 1rem;
   height: 3rem;
+  overflow: hidden;
   width: 100%;
+
+  &.adornedStart {
+    padding: 0;
+  }
+
+  .input {
+    padding: 0 2rem;
+  }
 `;
 
 export const StyledBaseTextInput = styled(TextField)`
@@ -59,6 +69,16 @@ export const StyledFormControl = styled(FormControl)`
 `;
 
 export const StyledFlatIconButton = styled(FlatIconButton)`
+  font-size: 1.4rem;
   justify-content: flex-end;
   padding: 0;
+`;
+
+export const StyledModalIcon = styled.div`
+  background-color: rgba(0, 0, 0, 0.12);
+  border-radius: 0;
+  font-size: ${({ fontSize }) => fontSize || '1.4rem'};
+  padding: 2rem 0;
+  text-align: center;
+  width: 10rem;
 `;

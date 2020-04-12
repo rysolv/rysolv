@@ -89,7 +89,6 @@ const transformOrganization = async (table, id, data) => {
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);
-    console.log(result);
     return result;
   }
   throw new Error(`Failed to update. ID not found in ${table}`);
