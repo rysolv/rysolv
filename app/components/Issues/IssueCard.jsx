@@ -11,7 +11,6 @@ import {
   StyledListItem,
   StyledIssueHeader,
   IssueLanguage,
-  IssueOverview,
   StyledIssueContent,
   StyledIssueText,
   StyledIssueFooter,
@@ -34,7 +33,7 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
           organizationName,
           organizationVerified,
           language,
-          body,
+          // body,
           attempts,
           rep,
           watchList,
@@ -83,7 +82,6 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                   >
                     {name}
                   </NameWrapper>
-                  <IssueOverview>{body}</IssueOverview>
                 </StyledIssueText>
                 <StyledIssueFooter>
                   <div>

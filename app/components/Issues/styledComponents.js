@@ -28,7 +28,7 @@ export const StyledListItem = styled.li`
   margin: 1rem;
   flex-direction: row;
   list-style-type: none;
-  min-height: 12rem;
+  /* min-height: 4rem; */
 `;
 
 export const StyledIssueContent = styled.div`
@@ -67,7 +67,8 @@ export const UpvotePanel = styled.div`
 
 export const StyledIssueText = styled.div`
   padding: 0 1rem 0 0;
-  height: 8rem;
+  height: auto;
+  min-height: 4rem;
 `;
 
 export const NameWrapper = styled.div`
@@ -80,13 +81,6 @@ export const NameWrapper = styled.div`
     cursor: pointer;
     color: #1a237e;
   }
-`;
-
-export const IssueOverview = styled.div`
-  width: 100%;
-  max-height: 5rem;
-  overflow: hidden;
-  padding: 0.5rem;
 `;
 
 export const BannerWrapper = styled.div`

@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 import { hyperlinkColor } from 'defaultStyleHelper';
 
+export const StyledCode = styled.div`
+  color: white;
+`;
+
 export const StyledComment = styled.div`
   color: gray;
   display: inline-block;

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
+import CodeIcon from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
 import Delete from '@material-ui/icons/Delete';
 import Search from '@material-ui/icons/Search';
@@ -16,9 +17,10 @@ import Glasses from './svg/Glasses';
 export default (name, options) => {
   const icons = {
     closeMenu: CloseMenu,
-    glasses: Glasses,
+    code: CodeIcon,
     comments: Comments,
     delete: Delete,
+    glasses: Glasses,
     search: Search,
     settings: Settings,
     siteLogo: SiteLogo,
