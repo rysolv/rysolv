@@ -11,6 +11,9 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  FETCH_ISSUE_DETAIL_FAILURE,
+  FETCH_ISSUE_DETAIL_SUCCESS,
+  FETCH_ISSUE_DETAIL,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
@@ -31,8 +34,10 @@ export const initialState = {
   error: {
     issues: false,
     searchIssues: false,
+    issueDetail: false,
   },
   issues: [],
+  issueDetail: {},
   data: {
     value: { error: '', value: 0 },
     name: { error: '', value: '' },
@@ -47,6 +52,7 @@ export const initialState = {
     issues: false,
     searchIssues: false,
     upvoteIssue: false,
+    issueDetail: false,
   },
   isVerified: false,
   search: {
@@ -100,6 +106,22 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_ISSUES: {
       draft.loading.issues = true;
+      break;
+    }
+    case FETCH_ISSUE_DETAIL_FAILURE: {
+      const { error } = payload;
+      draft.error.issueDetail = error;
+      draft.loading.issueDetail = false;
+      break;
+    }
+    case FETCH_ISSUE_DETAIL_SUCCESS: {
+      const { oneIssue } = payload;
+      draft.issueDetail = oneIssue;
+      draft.loading.issueDetail = false;
+      break;
+    }
+    case FETCH_ISSUE_DETAIL: {
+      draft.loading.issueDetail = true;
       break;
     }
     case INCREMENT_STEP: {

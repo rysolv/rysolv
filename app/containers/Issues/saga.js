@@ -2,6 +2,7 @@ import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { post } from 'utils/request';
 import {
   DELETE_ISSUE,
+  FETCH_ISSUE_DETAIL,
   FETCH_ISSUES,
   SAVE_INFO,
   SEARCH_ISSUES,
@@ -11,6 +12,8 @@ import {
 import {
   deleteIssueFailure,
   deleteIssueSuccess,
+  fetchIssueDetailFailure,
+  fetchIssueDetailSuccess,
   fetchIssuesFailure,
   fetchIssuesSuccess,
   saveInfoFailure,
@@ -71,16 +74,16 @@ export function* fetchIssuesSaga() {
       id,
       createdDate,
       modifiedDate,
-      name,
-      repo,
-      organizationId,
-      language,
-      body,
       attempts,
-      rep,
-      watchList,
+      body,
       comments,
-      value
+      language,
+      name,
+      organizationId,
+      rep,
+      repo,
+      value,
+      watchList,
     }
   }
 `;
@@ -121,6 +124,46 @@ export function* fetchIssuesSaga() {
   }
 }
 
+export function* fetchIssueDetailSaga({ payload }) {
+  const { id } = payload;
+  const query = `
+  query {
+    oneIssue(id: "${id}") {
+      __typename
+      ... on Issue {
+        id,
+        createdDate,
+        modifiedDate,
+        attempts,
+        body,
+        comments,
+        contributor,
+        language,
+        name,
+        organizationId,
+        rep,
+        repo,
+        value,
+        watchList,
+      }
+    ... on Error {
+      message
+    }
+  }
+}
+`;
+  try {
+    const issueQuery = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const { data: oneIssue } = yield call(post, '/graphql', issueQuery);
+    yield put(fetchIssueDetailSuccess(oneIssue));
+  } catch (error) {
+    yield put(fetchIssueDetailFailure({ error }));
+  }
+}
+
 export function* searchIssuesSaga({ payload }) {
   const { value } = payload;
   const query = `
@@ -129,16 +172,16 @@ export function* searchIssuesSaga({ payload }) {
       id,
       createdDate,
       modifiedDate,
-      name,
-      repo,
-      organizationId,
-      language,
-      body,
       attempts,
-      rep,
-      watchList,
+      body,
       comments,
-      value
+      language,
+      name,
+      organizationId,
+      rep,
+      repo,
+      value,
+      watchList,
     }
   }
 `;
@@ -187,11 +230,11 @@ export function* saveInfoSaga({ payload }) {
   mutation{
     createIssue(
       issueInput: {
-        value: ${value},
-        name: "${name}",
         body: ${JSON.stringify(body)},
-        repo: "${repo}",
         language: "${language}",
+        name: "${name}",
+        repo: "${repo}",
+        value: ${value},
       }
     )
     { id }
@@ -266,4 +309,5 @@ export default function* watcherSaga() {
   yield takeLatest(SAVE_INFO, saveInfoSaga);
   yield takeLatest(SEARCH_ISSUES, searchIssuesSaga);
   yield takeLatest(UPVOTE_ISSUE, upvoteIssuesSaga);
+  yield takeLatest(FETCH_ISSUE_DETAIL, fetchIssueDetailSaga);
 }

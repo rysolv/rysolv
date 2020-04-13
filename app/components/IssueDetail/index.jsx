@@ -43,7 +43,7 @@ const IssueDetail = ({ data: { issueDetail } }) => {
     // attempts,
     comments,
     language,
-    datePosted,
+    createdDate,
     name,
     organization,
     organizationVerified,
@@ -88,7 +88,7 @@ const IssueDetail = ({ data: { issueDetail } }) => {
                 {solved ? 'Closed' : 'Open Issue'}
               </IssueResolved>
 
-              <IssueSubItem>Posted {datePosted}</IssueSubItem>
+              <IssueSubItem>Posted {createdDate}</IssueSubItem>
               <IssueSubItem>0 Open PR</IssueSubItem>
               <IssueSubItem>
                 <CommentIcon /> {comments} comments
@@ -103,7 +103,7 @@ const IssueDetail = ({ data: { issueDetail } }) => {
                 <StyledImage>AP</StyledImage>
 
                 <IssueDetailOverview>
-                  <IssueDetailHeader>Posted {datePosted}</IssueDetailHeader>
+                  <IssueDetailHeader>Posted {createdDate}</IssueDetailHeader>
                   <IssueDetailBody>
                     <Markdown body={body} />
                   </IssueDetailBody>
@@ -159,7 +159,7 @@ const IssueDetail = ({ data: { issueDetail } }) => {
               </OverviewActivityContainer>
               {/* <Comments comments={['hello', 'goodbye']} /> */}
             </div>
-            <IssueSideBar>
+            {/* <IssueSideBar>
               <IssueDetailHeader>Labels</IssueDetailHeader>
               <IssueDetailBody>Good first issue</IssueDetailBody>
               <IssueDetailHeader>Linked pull request</IssueDetailHeader>
@@ -182,7 +182,7 @@ const IssueDetail = ({ data: { issueDetail } }) => {
                   {watched} {GlassesIcon}
                 </button>
               </IssueDetailBody>
-            </IssueSideBar>
+            </IssueSideBar> */}
           </IssueDetailColumn>
         </div>
       </IssueDetailWrapper>

@@ -2,22 +2,17 @@ import React from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 
 import IssueDetail from 'components/IssueDetail';
-import { clearAlerts, fetchIssueDetail } from './actions';
+import { clearAlerts, fetchIssueDetail } from '../actions';
 import {
   makeSelectIssueDetail,
   makeSelectIssueDetailError,
   makeSelectIssueDetailLoading,
-} from './selectors';
-import reducer from './reducer';
-import saga from './saga';
+} from '../selectors';
 
 export class IssueDetailContainer extends React.PureComponent {
   componentDidMount() {
@@ -36,13 +31,7 @@ export class IssueDetailContainer extends React.PureComponent {
   }
 
   render() {
-    const {
-      // alerts,
-      // handleClearAlerts,
-      issueDetail,
-      error,
-      loading,
-    } = this.props;
+    const { issueDetail, error, loading } = this.props;
 
     return (
       <AsyncRender
@@ -88,18 +77,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
+// Adds store to issueDetail
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-);
-
-// magic
-const withReducer = injectReducer({ key: 'issueDetail', reducer });
-const withSaga = injectSaga({ key: 'issueDetail', saga });
-
-// Adds store to issueDetail
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
 )(IssueDetailContainer);
