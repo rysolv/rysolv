@@ -120,7 +120,7 @@ export const IssueDetailBody = styled.div`
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 2px;
 
-  padding: 1rem;
+  padding: 0 1rem;
 `;
 
 export const StyledImage = styled.div`

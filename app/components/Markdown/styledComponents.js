@@ -11,18 +11,18 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
 `;
 
 export const HTMLContainer = styled.div`
-  border: 1px solid gray;
-  padding: 1rem;
+  padding: 0;
   background-color: white;
-  margin: 2rem 0 0 0;
-  display: ${props => (props.view ? 'block' : 'none')};
+  display: ${props => (props.view ? 'none' : 'block')};
   * {
+    font-family: inherit;
+    color: inherit;
     width: 100%;
   }
 `;
 
 export const EditContainer = styled.div`
-  display: ${props => (!props.view ? 'block' : 'none')};
+  display: ${props => (props.view ? 'block' : 'none')};
   * {
     width: auto;
   }

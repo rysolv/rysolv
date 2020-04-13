@@ -33,7 +33,6 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
           organizationName,
           organizationVerified,
           language,
-          // body,
           attempts,
           rep,
           watchList,

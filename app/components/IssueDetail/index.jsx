@@ -10,6 +10,7 @@ import {
   Verified,
   IconToolTip,
 } from 'components/base_ui';
+import Markdown from 'components/Markdown';
 import {
   DollarWrapper,
   IssueDetailBody,
@@ -103,7 +104,9 @@ const IssueDetail = ({ data: { issueDetail } }) => {
 
                 <IssueDetailOverview>
                   <IssueDetailHeader>Posted {datePosted}</IssueDetailHeader>
-                  <IssueDetailBody>{body}</IssueDetailBody>
+                  <IssueDetailBody>
+                    <Markdown body={body} />
+                  </IssueDetailBody>
                 </IssueDetailOverview>
               </OverviewActivityContainer>
               <OverviewActivityContainer>

@@ -46,7 +46,7 @@ export const StyledIssueHeader = styled.div`
 
 export const OrganizationNameWrapper = styled.div`
   display: flex;
-  color: #37474f;
+  color: ${textColor};
   display: inline-block;
   font-weight: bold;
 `;
@@ -76,6 +76,7 @@ export const NameWrapper = styled.div`
   max-height: 3rem;
   overflow: hidden;
   font-weight: bold;
+  color: ${textColor};
 
   &:hover {
     cursor: pointer;

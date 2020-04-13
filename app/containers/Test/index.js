@@ -2,7 +2,7 @@
 /* eslint-disable arrow-body-style */
 import React, { useState } from 'react';
 
-import MarkDown from 'components/Markdown';
+import Markdown from 'components/Markdown';
 
 const Test = () => {
   const [body, setBody] = useState('');
@@ -24,14 +24,13 @@ const Test = () => {
       .catch(error => console.log('error', error));
   }
 
-  const handleSave = data => {
-    console.log(data);
+  const handleMarkdownInput = data => {
     setBody(data);
   };
 
   return (
     <div style={{ width: '50rem' }}>
-      <MarkDown body={body} handleSave={handleSave} />
+      <Markdown edit body={body} handleInput={handleMarkdownInput} />
     </div>
   );
 };

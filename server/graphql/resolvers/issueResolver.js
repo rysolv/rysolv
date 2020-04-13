@@ -11,6 +11,8 @@ const {
 module.exports = {
   createIssue: async args => {
     const { issueInput } = args;
+    console.log('Issue body');
+    console.log(issueInput.body);
     const issue = [
       [
         uuidv4(),

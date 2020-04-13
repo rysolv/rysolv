@@ -109,7 +109,7 @@ export function* fetchIssuesSaga() {
         const { name, verified } = oneOrganization || {};
 
         acc[index].organizationVerified = verified || false;
-        acc[index].organizationName = name || '[Organization deleted]';
+        acc[index].organizationName = name || '[No Organization]';
 
         return acc;
       },
@@ -166,7 +166,7 @@ export function* searchIssuesSaga({ payload }) {
         const { name, verified } = oneOrganization || {};
 
         acc[index].organizationVerified = verified || false;
-        acc[index].organizationName = name || '[Organization deleted]';
+        acc[index].organizationName = name || '[No Organization]';
 
         return acc;
       },
@@ -189,7 +189,7 @@ export function* saveInfoSaga({ payload }) {
       issueInput: {
         value: ${value},
         name: "${name}",
-        body: "${body}",
+        body: ${JSON.stringify(body)},
         repo: "${repo}",
         language: "${language}",
       }

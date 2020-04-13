@@ -4,21 +4,18 @@ import T from 'prop-types';
 
 import 'simplemde/dist/simplemde.min.css';
 
-import { CodeIcon, PrimaryButton } from 'components/base_ui';
-
 import {
   MarkdownContainer,
   HTMLContainer,
   EditContainer,
-  StyledSecondaryButton,
 } from './styledComponents';
 
-class MarkDown extends React.PureComponent {
+class Markdown extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       html: '',
-      preview: false,
+      edit: props.edit || false,
     };
   }
 
@@ -30,20 +27,28 @@ class MarkDown extends React.PureComponent {
       element: textArea,
       initialValue: this.props.body,
       status: false,
+      placeholder: 'Type here...',
+      hideIcons: ['side-by-side', 'fullscreen'],
     });
+
+    this.markdown.codemirror.on('blur', () => {
+      this.props.handleInput(this.markdown.value());
+    });
+    this.updateHtml(this.props.body);
   }
 
   componentDidUpdate() {
     this.markdown.value(this.props.body);
     this.updateHtml(this.markdown.value());
+    this.markdown.codemirror.execCommand('goDocEnd');
   }
 
   handleClick = () => {
-    this.props.handleSave(this.markdown.value());
-    if (this.state.preview) {
-      this.setState({ preview: false });
+    this.props.handleInput(this.markdown.value());
+    if (this.state.edit) {
+      this.setState({ edit: false });
     } else {
-      this.setState({ preview: true });
+      this.setState({ edit: true });
       this.updateHtml(this.markdown.value());
     }
   };
@@ -55,33 +60,21 @@ class MarkDown extends React.PureComponent {
   };
 
   render() {
-    const { handleSave } = this.props;
-
     return (
       <MarkdownContainer>
-        <EditContainer view={this.state.preview} id="editorContainer">
+        <EditContainer view={this.state.edit} id="editorContainer">
           <textarea id="editor" />
         </EditContainer>
-        <HTMLContainer view={this.state.preview} id="htmlContainer" />
-
-        <StyledSecondaryButton
-          Icon={CodeIcon}
-          label={this.state.preview ? 'Markdown' : 'HTML'}
-          onClick={() => this.handleClick()}
-        />
-        <PrimaryButton
-          label="Save"
-          onClick={() => handleSave(this.markdown.value())}
-        />
+        <HTMLContainer view={this.state.edit} id="htmlContainer" />
       </MarkdownContainer>
     );
   }
 }
 
-MarkDown.propTypes = {
+Markdown.propTypes = {
   body: T.string,
-  handleSave: T.func,
-  // edit: T.bool,
+  handleInput: T.func,
+  edit: T.bool,
 };
 
-export default MarkDown;
+export default Markdown;
