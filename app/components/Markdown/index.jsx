@@ -31,6 +31,9 @@ class Markdown extends React.PureComponent {
       hideIcons: ['side-by-side', 'fullscreen'],
     });
 
+    this.markdown.codemirror.options.extraKeys.Tab = false;
+    this.markdown.codemirror.options.extraKeys['Shift-Tab'] = false;
+
     this.markdown.codemirror.on('blur', () => {
       this.props.handleInput(this.markdown.value());
     });

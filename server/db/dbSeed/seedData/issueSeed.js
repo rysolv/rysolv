@@ -18,6 +18,7 @@ const issueSeed = [
     42, // rep
     ['517fa5c9-1d6e-4925-8bcc-25c24cd0b95d'], // Watchlist: Reference to user ID
     20, // value
+    true, // open
   ],
   [
     uuidv4(),
@@ -35,6 +36,7 @@ const issueSeed = [
     25,
     ['517fa5c9-1d6e-4925-8bcc-25c24cd0b95d'],
     0,
+    false,
   ],
   [
     uuidv4(),
@@ -55,6 +57,7 @@ const issueSeed = [
       'c2209ded-9219-4ee3-9c29-f863889053c0',
     ],
     45,
+    true,
   ],
 ];
 

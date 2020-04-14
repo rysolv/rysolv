@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 
 import IssueDetail from 'components/IssueDetail';
-import { clearAlerts, fetchIssueDetail } from '../actions';
+import { clearAlerts, fetchIssueDetail, upvoteIssue } from '../actions';
 import {
   makeSelectIssueDetail,
   makeSelectIssueDetailError,
@@ -31,7 +31,7 @@ export class IssueDetailContainer extends React.PureComponent {
   }
 
   render() {
-    const { issueDetail, error, loading } = this.props;
+    const { issueDetail, error, loading, handleUpvote } = this.props;
 
     return (
       <AsyncRender
@@ -39,18 +39,22 @@ export class IssueDetailContainer extends React.PureComponent {
         component={IssueDetail}
         error={error}
         loading={loading}
+        propsToPassDown={{
+          handleUpvote,
+        }}
       />
     );
   }
 }
 
 IssueDetailContainer.propTypes = {
-  issueDetail: T.object,
-  match: T.object,
-  error: T.oneOfType([T.bool, T.object]),
-  loading: T.bool,
-  handleClearAlerts: T.func,
   dispatchFetchIssueDetail: T.func,
+  error: T.oneOfType([T.bool, T.object]),
+  handleClearAlerts: T.func,
+  handleUpvote: T.func,
+  issueDetail: T.object,
+  loading: T.bool,
+  match: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -70,6 +74,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
+    handleUpvote: payload => dispatch(upvoteIssue(payload)),
     /**
      * Reducer : Router
      */

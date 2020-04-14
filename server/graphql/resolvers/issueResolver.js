@@ -11,8 +11,6 @@ const {
 module.exports = {
   createIssue: async args => {
     const { issueInput } = args;
-    console.log('Issue body');
-    console.log(issueInput.body);
     const issue = [
       [
         uuidv4(),
@@ -30,6 +28,7 @@ module.exports = {
         issueInput.rep || 25,
         issueInput.watch_list || [],
         issueInput.value || 0,
+        issueInput.open || true,
       ],
     ];
     try {
@@ -97,6 +96,7 @@ module.exports = {
         rep: issueInput.rep,
         watch_list: issueInput.watchList,
         value: issueInput.value,
+        open: issueInput.open,
       };
       const queryResult = await transformIssue('issues', id, data);
 
@@ -115,6 +115,7 @@ module.exports = {
         rep: queryResult.rep,
         watchList: queryResult.watchList,
         value: queryResult.value,
+        open: queryResult.open,
       };
       return result;
     } catch (err) {

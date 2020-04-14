@@ -16,10 +16,27 @@ import {
 // eslint-disable-next-line react/prefer-stateless-function
 export class VerifyForm extends React.PureComponent {
   render() {
-    const { data } = this.props;
+    const {
+      data,
+      data: { repo, body, language, value, name },
+    } = this.props;
     const tempData = omit(data, ['importUrl', 'verified']);
     return (
       <DataWrapper>
+        {issueDataDictionary.name}
+        {name.value}
+
+        {issueDataDictionary.repo}
+        {repo.value}
+
+        {issueDataDictionary.body}
+        {body.value}
+
+        {issueDataDictionary.language}
+        {language.value}
+
+        {issueDataDictionary.value}
+        {value.value}
         <KeyGroupWrapper>
           {Object.keys(tempData).map((key, index) => (
             <KeyAndValueContainer key={`verify-key-${key}-${index}`}>

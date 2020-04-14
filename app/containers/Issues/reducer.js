@@ -185,6 +185,9 @@ const issuesReducer = produce((draft, { payload, type }) => {
           draft.issues[index].rep = rep;
         }
       });
+      if (draft.issueDetail) {
+        draft.issueDetail.rep = rep;
+      }
       draft.loading.upvoteIssue = false;
       break;
     }

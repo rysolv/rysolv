@@ -14,7 +14,8 @@ const issueValues = `
   contributor,
   rep,
   watch_list,
-  value
+  value,
+  open
 `; // Excludes ID & created_date
 
 const issueReturnValues = `
@@ -32,14 +33,15 @@ const issueReturnValues = `
   contributor,
   rep,
   watch_list AS "watchList",
-  value
+  value,
+  open
 `;
 
 // Create new Issue
 const createIssue = async data => {
   const queryText = `INSERT INTO
     issues(id, created_date, ${issueValues})
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -86,7 +88,7 @@ const transformIssue = async (table, id, data) => {
     const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE ${table}
       SET (${issueValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);

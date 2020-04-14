@@ -8,7 +8,7 @@ const commentSeed = [
     new Date(), // last modified date
     'issueID', // target id
     'Comment comment comment', // body
-    'UserID', // user id
+    'c2209ded-9219-4ee3-9c29-f863889053c0', // user id
   ],
   [
     uuidv4(),
@@ -16,7 +16,7 @@ const commentSeed = [
     new Date(),
     'issueID',
     'Comment comment comment comment',
-    'UserID',
+    'c2209ded-9219-4ee3-9c29-f863889053c0',
   ],
   [
     uuidv4(),
@@ -24,7 +24,7 @@ const commentSeed = [
     new Date(),
     'issueID',
     'Comment comment comment comment comment',
-    'UserID',
+    'c2209ded-9219-4ee3-9c29-f863889053c0',
   ],
 ];
 

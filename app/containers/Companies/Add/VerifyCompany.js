@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
 import VerifyForm from 'components/Companies/Add/VerifyForm';
 
-import { clearForm, incrementStep, saveInfo, verifyInfo } from '../actions';
+import { incrementStep, saveInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';
 import {
   makeSelectCompanies,
@@ -22,11 +22,6 @@ import {
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class VerifyCompany extends React.PureComponent {
-  componentWillUnmount() {
-    const { dispatchClearForm } = this.props;
-    dispatchClearForm();
-  }
-
   render() {
     const {
       data,
@@ -72,7 +67,6 @@ export class VerifyCompany extends React.PureComponent {
 
 VerifyCompany.propTypes = {
   data: T.object,
-  dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
   dispatchVerifyInfo: T.func,
@@ -95,7 +89,6 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Companies
      */
-    dispatchClearForm: () => dispatch(clearForm()),
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
     dispatchVerifyInfo: () => dispatch(verifyInfo()),

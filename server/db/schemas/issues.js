@@ -14,7 +14,8 @@ issues(
   contributor UUID [],
   rep SMALLINT DEFAULT 25,
   watch_list UUID [],
-  value SMALLINT DEFAULT 0
+  value SMALLINT DEFAULT 0,
+  open BOOLEAN DEFAULT true
 )`;
 
 module.exports = issues;

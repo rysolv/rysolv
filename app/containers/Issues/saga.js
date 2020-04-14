@@ -84,6 +84,7 @@ export function* fetchIssuesSaga() {
       repo,
       value,
       watchList,
+      open,
     }
   }
 `;
@@ -145,6 +146,7 @@ export function* fetchIssueDetailSaga({ payload }) {
         repo,
         value,
         watchList,
+        open,
       }
     ... on Error {
       message
@@ -182,6 +184,7 @@ export function* searchIssuesSaga({ payload }) {
       repo,
       value,
       watchList,
+      open,
     }
   }
 `;

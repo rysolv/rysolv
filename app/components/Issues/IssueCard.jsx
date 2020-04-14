@@ -87,7 +87,7 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                     {' '}
                     <CommentIcon /> {comments.length} comments
                   </div>
-                  <div>{false ? 'Resolved' : `${attempts} attempting`}</div>
+                  <div>{false ? 'Closed' : `${attempts} attempting`}</div>
                   <div>{watchList.length} Watch</div>
                   <DollarWrapper>${value}</DollarWrapper>
                 </StyledIssueFooter>

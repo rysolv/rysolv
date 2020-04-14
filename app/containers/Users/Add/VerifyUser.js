@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
 import VerifyForm from 'components/Users/Add/VerifyForm';
 
-import { clearForm, incrementStep, saveInfo, verifyInfo } from '../actions';
+import { incrementStep, saveInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';
 import { makeSelectUsers, makeSelectUsersRequestBody } from '../selectors';
 import {
@@ -19,20 +19,15 @@ import {
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class VerifyUser extends React.PureComponent {
-  componentWillUnmount() {
-    const { dispatchClearForm } = this.props;
-    dispatchClearForm();
-  }
-
   render() {
     const {
-      requestBody,
       data,
       dispatchIncrementStep,
       dispatchSaveInfo,
       dispatchVerifyInfo,
       handleNav,
       isVerified,
+      requestBody,
     } = this.props;
     const handleSaveInfo = () => {
       dispatchSaveInfo({ requestBody });
@@ -67,7 +62,6 @@ export class VerifyUser extends React.PureComponent {
 
 VerifyUser.propTypes = {
   data: T.object,
-  dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
   dispatchVerifyInfo: T.func,
@@ -90,7 +84,6 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Users
      */
-    dispatchClearForm: () => dispatch(clearForm()),
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
     dispatchVerifyInfo: () => dispatch(verifyInfo()),
