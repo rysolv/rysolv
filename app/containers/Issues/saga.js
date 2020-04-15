@@ -128,39 +128,65 @@ export function* fetchIssuesSaga() {
 export function* fetchIssueDetailSaga({ payload }) {
   const { id } = payload;
   const query = `
-  query {
-    oneIssue(id: "${id}") {
-      __typename
-      ... on Issue {
-        id,
-        createdDate,
-        modifiedDate,
-        attempts,
-        body,
-        comments,
-        contributor,
-        language,
-        name,
-        organizationId,
-        rep,
-        repo,
-        value,
-        watchList,
-        open,
+    query {
+      oneIssue(id: "${id}") {
+        __typename
+        ... on Issue {
+          id,
+          createdDate,
+          modifiedDate,
+          attempts,
+          body,
+          comments,
+          contributor,
+          language,
+          name,
+          organizationId,
+          rep,
+          repo,
+          value,
+          watchList,
+          open,
+        }
+        ... on Error {
+          message
+        }
       }
-    ... on Error {
-      message
     }
-  }
-}
-`;
+  `;
   try {
     const issueQuery = JSON.stringify({
       query,
       variables: {},
     });
-    const { data: oneIssue } = yield call(post, '/graphql', issueQuery);
-    yield put(fetchIssueDetailSuccess(oneIssue));
+    const {
+      data: { oneIssue },
+    } = yield call(post, '/graphql', issueQuery);
+    const userQuery = `
+    query {
+      oneUser(id:"${oneIssue.contributor[0]}") {
+        username,
+        profilePic
+      }
+    }
+    `;
+
+    const userDetail = JSON.stringify({
+      query: userQuery,
+      variables: {},
+    });
+
+    const {
+      data: {
+        oneUser: { username, profilePic },
+      },
+    } = yield call(post, '/graphql', userDetail);
+
+    oneIssue.user = {
+      username,
+      profilePic,
+    };
+    yield put(fetchIssueDetailSuccess({ oneIssue }));
   } catch (error) {
     yield put(fetchIssueDetailFailure({ error }));
   }

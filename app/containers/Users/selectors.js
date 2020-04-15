@@ -52,6 +52,7 @@ const makeSelectUsersFormatted = () =>
             lastName,
             profilePic,
             rep,
+            username,
           }) => ({
             activeNumber,
             createdDate: moment(createdDate).format('M/D/YYYY'),
@@ -60,6 +61,7 @@ const makeSelectUsersFormatted = () =>
             name: `${firstName} ${lastName}`,
             pointsNumber: rep,
             profilePic,
+            username,
           }),
         );
       }

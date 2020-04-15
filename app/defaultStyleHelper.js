@@ -1,6 +1,6 @@
 // Colors
-export const borderColor = '#e0e0e0';
-export const commentHeaderColor = '#f6f8fa';
+export const borderColor = '#cfd8dc';
+export const commentHeaderColor = '#cfd8dc';
 export const darkTextColor = '#263238';
 export const errorRed = '#f44336';
 export const headerOutlineColor = '#cfd8dc';

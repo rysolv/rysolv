@@ -73,13 +73,6 @@ export const NumberContainer = styled.div`
   font-weight: 500;
 `;
 
-export const StyledImage = styled.img`
-  border-radius: 50%;
-  height: 7.5rem;
-  margin: 0.5rem;
-  width: 7.5rem;
-`;
-
 export const StyledUserCard = styled.div`
   color: rgba(0, 0, 0, 0.7);
   display: flex;

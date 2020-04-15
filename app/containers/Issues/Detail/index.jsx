@@ -35,10 +35,11 @@ export class IssueDetailContainer extends React.PureComponent {
 
     return (
       <AsyncRender
-        asyncData={{ issueDetail }}
+        asyncData={issueDetail}
         component={IssueDetail}
         error={error}
         loading={loading}
+        isRequiredData
         propsToPassDown={{
           handleUpvote,
         }}
@@ -61,7 +62,6 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : IssueDetail
    */
-  alerts: makeSelectIssueDetail('alerts'),
   issueDetail: makeSelectIssueDetail('issueDetail'),
   error: makeSelectIssueDetailError('issueDetail'),
   loading: makeSelectIssueDetailLoading('issueDetail'),

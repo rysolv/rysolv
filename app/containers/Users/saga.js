@@ -92,6 +92,7 @@ export function* fetchUsersSaga() {
         profilePic,
         activeNumber,
         issuesNumber,
+        username,
       }
     }
   `;
