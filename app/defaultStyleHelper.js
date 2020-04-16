@@ -4,6 +4,7 @@ export const commentHeaderColor = '#f6f8fa';
 export const darkTextColor = '#263238';
 export const errorRed = '#f44336';
 export const headerOutlineColor = '#cfd8dc';
+export const hoverLinkColor = '#1a237e';
 export const hyperlinkColor = '#1e88e5';
 export const inputFieldColor = '#cfd8dc';
 export const menuColor = '#1e88e5';

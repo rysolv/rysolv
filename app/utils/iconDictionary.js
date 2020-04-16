@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
+import Circle from '@material-ui/icons/FiberManualRecord';
 import Comments from '@material-ui/icons/Forum';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
+import Link from '@material-ui/icons/Link';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
 import Star from '@material-ui/icons/Star';
@@ -17,11 +19,13 @@ import Paypal from './svg/Paypal';
 
 export default (name, options) => {
   const icons = {
+    circle: Circle,
     closeMenu: CloseMenu,
     comments: Comments,
     creditCard: CreditCard,
     delete: Delete,
     glasses: Glasses,
+    link: Link,
     paypal: Paypal,
     search: Search,
     settings: Settings,

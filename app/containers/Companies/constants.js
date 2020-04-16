@@ -30,6 +30,10 @@ export const SEARCH_COMPANIES_FAILURE =
 export const SEARCH_COMPANIES_SUCCESS =
   'app/Companies/SEARCH_COMPANIES_SUCCESS';
 
+export const SEARCH_CONTRIBUTORS = 'app/Companies/SEARCH_CONTRIBUTORS';
+
+export const SEARCH_ISSUES = 'app/Companies/SEARCH_ISSUES';
+
 export const UPDATE_INFO = 'app/Companies/UPDATE_INFO';
 export const UPDATE_INFO_FAILURE = 'app/Companies/UPDATE_INFO_FAILURE';
 export const UPDATE_INFO_SUCCESS = 'app/Companies/UPDATE_INFO_SUCCESS';

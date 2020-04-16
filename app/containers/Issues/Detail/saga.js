@@ -3,20 +3,6 @@ import { post } from 'utils/request';
 import { FETCH_ISSUE_DETAIL } from './constants';
 import { fetchIssueDetailFailure, fetchIssueDetailSuccess } from './actions';
 
-// const orgQuery = `
-//   query {
-//     oneOrganization(id: "${id}") {
-//       __typename
-//       ... on Organization {
-//         verified
-//         name
-//       }
-//       ... on Error {
-//         message
-//       }
-//     }
-//   }
-//  `;
 export function* fetchIssueDetailSaga({ payload }) {
   const { id } = payload;
   const query = `

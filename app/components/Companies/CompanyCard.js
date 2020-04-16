@@ -35,7 +35,11 @@ const CompanyCard = ({
           <StyledListItem key={id}>
             <div>
               <TitleContainer>
-                <NameWrapper>{name}</NameWrapper>
+                <NameWrapper
+                  onClick={() => handleNav(`/admin/companies/detail/${id}`)}
+                >
+                  {name}
+                </NameWrapper>
                 <SettingsContainer>
                   <DateWrapper>
                     Last post {moment(modifiedDate).format('M/D/YYYY')}

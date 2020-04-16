@@ -31,7 +31,7 @@ export const StyledStar = styled.div`
 `;
 
 export const StyledVerified = styled.div`
-  color: #0288d1;
+  color: rgb(8, 178, 110);
   display: inline-block;
   text-align: center;
 `;

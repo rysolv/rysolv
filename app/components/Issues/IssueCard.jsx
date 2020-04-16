@@ -23,7 +23,6 @@ import {
 const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
   const deleteRoute = `/admin/issues`;
   const editRoute = `/admin/issues/edit`;
-  const detailRoute = `/admin/issues/detail`;
 
   return (
     <StyledIssueCard>
@@ -79,7 +78,7 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                 </StyledIssueHeader>
                 <StyledIssueText>
                   <NameWrapper
-                    onClick={() => handleNav(`${detailRoute}/${id}`)}
+                    onClick={() => handleNav(`/admin/issues/detail/${id}`)}
                   >
                     {name}
                   </NameWrapper>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { PrimaryAsyncButton } from 'components/base_ui';
-import { borderColor, textColor } from 'defaultStyleHelper';
+import { borderColor, hoverLinkColor, textColor } from 'defaultStyleHelper';
 
 export const BannerWrapper = styled.div`
   font-size: 1.2rem;
@@ -46,6 +46,11 @@ export const NameWrapper = styled.div`
   font-weight: 500;
   height: 30%;
   padding: 1rem;
+
+  &:hover {
+    cursor: pointer;
+    color: ${hoverLinkColor};
+  }
 `;
 
 export const SettingsContainer = styled.div`

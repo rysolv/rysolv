@@ -23,6 +23,8 @@ import {
   SEARCH_COMPANIES_FAILURE,
   SEARCH_COMPANIES_SUCCESS,
   SEARCH_COMPANIES,
+  SEARCH_CONTRIBUTORS,
+  SEARCH_ISSUES,
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
@@ -32,6 +34,7 @@ import {
 export const initialState = {
   alerts: { error: false, success: false },
   companies: [],
+  company: {},
   data: {
     companyUrl: { error: '', value: '' },
     description: { error: '', value: '' },
@@ -57,19 +60,23 @@ export const initialState = {
     addCompany: false,
     companies: false,
     deleteCompany: false,
-    editCompany: false,
+    fetchCompany: false,
     saveCompany: false,
     searchCompanies: false,
+    searchContributors: false,
+    searchIssues: false,
     updateCompany: false,
   },
   error: {
     companies: false,
-    editCompany: false,
+    fetchCompany: false,
     searchCompanies: false,
   },
   isVerified: false,
   search: {
-    searchInput: { error: '', value: '' },
+    companyInput: { error: '', value: '' },
+    contributorInput: { error: '', value: '' },
+    issueInput: { error: '', value: '' },
   },
   step: {
     addCompany: 1,
@@ -124,8 +131,8 @@ const companiesReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_INFO_FAILURE: {
       const { error } = payload;
-      draft.error.editCompany = error;
-      draft.loading.editCompany = false;
+      draft.error.fetchCompany = error;
+      draft.loading.fetchCompany = false;
       break;
     }
     case FETCH_INFO_SUCCESS: {
@@ -135,11 +142,12 @@ const companiesReducer = produce((draft, { payload, type }) => {
           draft.editInfo[detail].value = company[detail];
         }
       });
-      draft.loading.editCompany = false;
+      draft.company = company;
+      draft.loading.fetchCompany = false;
       break;
     }
     case FETCH_INFO: {
-      draft.loading.editCompany = true;
+      draft.loading.fetchCompany = true;
       break;
     }
     case INCREMENT_STEP: {
@@ -190,6 +198,14 @@ const companiesReducer = produce((draft, { payload, type }) => {
     }
     case SEARCH_COMPANIES: {
       draft.loading.searchCompanies = true;
+      break;
+    }
+    case SEARCH_CONTRIBUTORS: {
+      draft.loading.searchIssues = true;
+      break;
+    }
+    case SEARCH_ISSUES: {
+      draft.loading.searchIssues = true;
       break;
     }
     case UPDATE_INFO_FAILURE: {

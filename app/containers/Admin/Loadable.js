@@ -1,5 +1,5 @@
 /**
- * Asynchronously loads the component for Admin
+ * Asynchronously loads the container for Admin
  */
 
 import loadable from 'react-loadable';

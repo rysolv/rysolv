@@ -6,6 +6,6 @@ import { StyledVerified } from './styledComponents';
 
 const defaultVerified = iconDictionary('verified');
 
-const Settings = () => <StyledVerified>{defaultVerified}</StyledVerified>;
+const Verified = () => <StyledVerified>{defaultVerified}</StyledVerified>;
 
-export default Settings;
+export default Verified;

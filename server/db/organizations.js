@@ -9,7 +9,9 @@ const organizationValues = `
   company_url,
   issues,
   logo,
-  verified
+  verified,
+  contributors,
+  owner_id
 `; // Excludes ID & created_date
 
 const organizationReturnValues = `
@@ -22,14 +24,16 @@ const organizationReturnValues = `
   company_url AS "companyUrl",
   issues,
   logo,
-  verified
+  verified,
+  contributors,
+  owner_id AS "ownerId"
 `;
 
 // Create new Issue
 const createOrganization = async data => {
   const queryText = `INSERT INTO
     organizations(id, created_date, ${organizationValues})
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;

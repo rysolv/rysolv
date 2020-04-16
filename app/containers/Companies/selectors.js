@@ -51,10 +51,10 @@ const makeSelectCompaniesRequestBody = () =>
       }, {}),
   );
 
-const makeSelectCompaniesSearchDisabled = () =>
+const makeSelectCompaniesSearchDisabled = prop =>
   createSelector(
     makeSelectCompanies('search'),
-    ({ searchInput }) => searchInput.value === '',
+    search => search[prop].value === '',
   );
 
 const makeSelectCompaniesStep = prop =>

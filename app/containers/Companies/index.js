@@ -7,6 +7,7 @@ import { push } from 'connected-react-router';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
+import { clearForm } from './actions';
 import { companyTypeDictionary } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
@@ -14,17 +15,17 @@ import saga from './saga';
 // eslint-disable-next-line react/prefer-stateless-function
 export class Companies extends React.PureComponent {
   componentDidMount() {
-    const { handleNav } = this.props;
+    const { dispatchClearForm } = this.props;
     document.title = 'Admin: Companies';
-    handleNav('/admin/companies');
+    dispatchClearForm();
   }
 
   render() {
-    const { view } = this.props;
+    const { match, view } = this.props;
     const Component = companyTypeDictionary[view];
     return (
       <Fragment>
-        <Component />
+        <Component match={match} />
       </Fragment>
     );
   }
@@ -33,12 +34,18 @@ export class Companies extends React.PureComponent {
 Companies.defaultProps = { view: 'overview' };
 
 Companies.propTypes = {
+  dispatchClearForm: T.func,
   handleNav: T.func,
+  match: T.object,
   view: T.string,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
+    /*
+     * Reducer : Companies
+     */
+    dispatchClearForm: () => dispatch(clearForm()),
     /*
      * Reducer : Router
      */

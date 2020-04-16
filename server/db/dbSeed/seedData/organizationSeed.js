@@ -12,6 +12,11 @@ const OrganizationSeed = [
     ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues
     'https://cdn.worldvectorlogo.com/logos/flutter-logo.svg', // logo
     false, // verified
+    [
+      '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
+      'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
+    ], // contributors
+    '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d', // owner_id
   ],
   [
     '1a64925c-858f-42b4-a09c-39d5699375f4',
@@ -24,6 +29,11 @@ const OrganizationSeed = [
     ['20619026-0f61-4772-9bb8-36ed643d4dcd'],
     'https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/OBS.svg/1200px-OBS.svg.png',
     true,
+    [
+      '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
+      'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
+    ],
+    '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
   ],
   [
     '79a3ef7b-bf7d-4e4c-abb8-08cd521d5506',
@@ -36,6 +46,11 @@ const OrganizationSeed = [
     ['20619026-0f61-4772-9bb8-36ed643d4dcd'],
     'https://upload.wikimedia.org/wikipedia/commons/3/37/Logo_de_SuperTuxKart.png',
     true,
+    [
+      '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
+      'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
+    ],
+    '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
   ],
 ];
 

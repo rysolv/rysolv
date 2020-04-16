@@ -9,7 +9,9 @@ organizations(
   company_url VARCHAR(128),
   issues UUID [],
   logo VARCHAR(255),
-  verified BOOLEAN DEFAULT false
+  verified BOOLEAN DEFAULT false,
+  contributors UUID [],
+  owner_id UUID
 )`;
 
 module.exports = organizations;

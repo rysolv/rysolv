@@ -1,9 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Admin from '../Admin/Loadable';
-import Main from '../HomePage';
-import NotFoundPage from '../NotFoundPage/Loadable';
+import Admin from 'containers/Admin/Loadable';
+import Main from 'containers/HomePage/Loadable';
+import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import { RoutesWrapper } from './styledComponents';
 
 const Routes = () => (

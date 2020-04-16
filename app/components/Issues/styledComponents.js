@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { moneyGreen, textColor } from 'defaultStyleHelper';
+import { hoverLinkColor, moneyGreen, textColor } from 'defaultStyleHelper';
 import { FlatIconButton } from '../base_ui';
 
 export const StyledIssueCard = styled.div`
@@ -78,7 +78,7 @@ export const NameWrapper = styled.div`
 
   &:hover {
     cursor: pointer;
-    color: #1a237e;
+    color: ${hoverLinkColor};
   }
 `;
 

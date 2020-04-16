@@ -17,7 +17,7 @@ const AdminSubHeader = ({
   route,
   search,
 }) => {
-  const { searchInput } = { ...search };
+  const { companyInput } = { ...search };
   return (
     <AdminSubHeaderContainer>
       <BaseInputContainer>
@@ -26,12 +26,12 @@ const AdminSubHeader = ({
           adornmentComponent={SearchIcon}
           onChange={e =>
             handleInputChange({
-              field: 'searchInput',
+              field: 'companyInput',
               form: 'search',
               value: e.target.value,
             })
           }
-          onClick={() => handleSearch({ value: searchInput.value })}
+          onClick={() => handleSearch({ value: companyInput.value })}
           placeholder="Search..."
           position="end"
         />
