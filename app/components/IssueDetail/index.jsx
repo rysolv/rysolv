@@ -30,7 +30,7 @@ import {
 
 const MonocleIcon = iconDictionary('monocle');
 
-const IssueDetail = ({ data, handleUpvote }) => {
+const IssueDetail = ({ data, handleUpvote, handleNav }) => {
   const {
     // attempts,
     id,
@@ -55,8 +55,6 @@ const IssueDetail = ({ data, handleUpvote }) => {
     username,
     profilePic,
   };
-
-  console.log(MonocleIcon);
 
   return (
     <BaseContainer>
@@ -91,7 +89,7 @@ const IssueDetail = ({ data, handleUpvote }) => {
             </StyledIssueHeader>
             <NameWrapper>{name}</NameWrapper>
             <IssueSubHeader>
-              <IssueResolved solved={open}>
+              <IssueResolved open={open}>
                 {open ? 'Open Issue' : 'Closed'}
               </IssueResolved>
 
@@ -115,6 +113,7 @@ const IssueDetail = ({ data, handleUpvote }) => {
               body={body}
               date={createdDate}
               userProfile={userProfile}
+              handleNav={handleNav}
             />
 
             <CommentCard
@@ -136,7 +135,7 @@ IssueDetail.propTypes = {
   }),
   handleUpvote: T.func,
   data: T.object,
-  // handleNav: T.func,
+  handleNav: T.func,
 };
 
 export default IssueDetail;

@@ -1,33 +1,39 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 import { ProfileImage } from 'components/base_ui';
 import marked from 'marked';
 
 import {
-  ProfileContainer,
-  CommentContainer,
-  ProfileLine,
-  CommentHeader,
   CommentBody,
+  CommentContainer,
+  CommentHeader,
+  ProfileContainer,
+  ProfileLine,
 } from './styledComponents';
 
-const CommentCard = ({ body, createdDate, userProfile }) => {
-  const { small, detailRoute, alt, profilePic, username } = userProfile;
+const CommentCard = ({ body, createdDate, handleNav, userProfile }) => {
+  const { alt, detailRoute, profilePic, small, username } = userProfile;
   const html = marked(body);
 
-  return (
-    <div style={{ display: 'flex', margin: '1rem 0' }}>
+  const profileView = (
+    <Fragment>
       <ProfileContainer>
         <ProfileImage
-          small={small}
-          detailRoute={detailRoute}
-          // handleNav={handleNav}
           alt={alt}
+          detailRoute={detailRoute}
+          handleNav={handleNav}
           profilePic={profilePic}
+          small={small}
         />
       </ProfileContainer>
       <ProfileLine />
+    </Fragment>
+  );
+
+  return (
+    <div style={{ display: 'flex', margin: '1rem 0' }}>
+      {profileView}
       <CommentContainer>
         <CommentHeader>
           Posted by <b>{username}</b> on{' '}
@@ -42,6 +48,7 @@ const CommentCard = ({ body, createdDate, userProfile }) => {
 CommentCard.propTypes = {
   body: T.string,
   createdDate: T.string,
+  handleNav: T.func,
   userProfile: T.object,
 };
 

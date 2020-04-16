@@ -31,7 +31,7 @@ export class IssueDetailContainer extends React.PureComponent {
   }
 
   render() {
-    const { issueDetail, error, loading, handleUpvote } = this.props;
+    const { error, handleNav, handleUpvote, issueDetail, loading } = this.props;
 
     return (
       <AsyncRender
@@ -41,6 +41,7 @@ export class IssueDetailContainer extends React.PureComponent {
         loading={loading}
         isRequiredData
         propsToPassDown={{
+          handleNav,
           handleUpvote,
         }}
       />
@@ -52,6 +53,7 @@ IssueDetailContainer.propTypes = {
   dispatchFetchIssueDetail: T.func,
   error: T.oneOfType([T.bool, T.object]),
   handleClearAlerts: T.func,
+  handleNav: T.func,
   handleUpvote: T.func,
   issueDetail: T.object,
   loading: T.bool,

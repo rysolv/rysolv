@@ -26,7 +26,6 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
   const deleteRoute = `/admin/users`;
   const editRoute = `/admin/users/edit`;
 
-  console.log(data);
   return (
     <Fragment>
       <StyledUserCard>

@@ -75,8 +75,9 @@ export const NameWrapper = styled.div`
 export const IssueResolved = styled.div`
   color: white;
   font-weight: bold;
-  background-color: ${({ solved }) => (solved ? moneyGreen : 'gray')};
-  border: 2px solid #b9f6ca;
+  border: 2px solid;
+  background-color: ${props => (props.open ? moneyGreen : 'grey')};
+  border-color: ${props => (props.open ? '#b9f6ca' : 'grey')};
   display: inline-block;
   padding: 0.5rem;
   border-radius: 5rem;
