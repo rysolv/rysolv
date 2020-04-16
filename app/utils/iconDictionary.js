@@ -15,7 +15,7 @@ import Verified from '@material-ui/icons/VerifiedUser';
 import Warning from '@material-ui/icons/Warning';
 import SiteLogo from './svg/SiteLogo';
 import CloseMenu from './svg/CloseMenu';
-import Glasses from './svg/Glasses';
+import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
 
 export default (name, options) => {
@@ -26,8 +26,8 @@ export default (name, options) => {
     comments: Comments,
     creditCard: CreditCard,
     delete: Delete,
-    glasses: Glasses,
     link: Link,
+    monocle: Monocle,
     paypal: Paypal,
     search: Search,
     settings: Settings,

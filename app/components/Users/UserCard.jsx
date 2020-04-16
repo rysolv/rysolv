@@ -2,7 +2,7 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { Star } from 'components/base_ui';
+import { Star, ProfileImage } from 'components/base_ui';
 import SettingsMenu from 'components/SettingsMenu';
 
 import {
@@ -16,7 +16,6 @@ import {
   MemberWrapper,
   NameWrapper,
   NumberContainer,
-  StyledImage,
   StyledListSquare,
   StyledSettingWrapper,
   StyledSquare,
@@ -40,6 +39,7 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
               name,
               pointsNumber,
               profilePic,
+              username,
             },
             index,
           ) => (
@@ -63,7 +63,13 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                 </StyledSettingWrapper>
                 <ContentWrapper>
                   <ImageContainer>
-                    <StyledImage alt="Profile Image" src={profilePic} />
+                    <ProfileImage
+                      size="med"
+                      detailRoute={`/admin/users/detail/${username}`}
+                      handleNav={handleNav}
+                      alt="Profile Image"
+                      profilePic={profilePic}
+                    />
                     <IconWrapper>
                       <div>
                         <Star />

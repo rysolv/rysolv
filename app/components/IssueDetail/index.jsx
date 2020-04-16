@@ -1,45 +1,36 @@
 import React from 'react';
 import T from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
-// import iconDictionary from 'utils/iconDictionary';
+import moment from 'moment';
+import iconDictionary from 'utils/iconDictionary';
+
 import {
-  ConditionalRender,
   BaseContainer,
-  Upvote,
   CommentIcon,
-  Verified,
   IconToolTip,
+  Upvote,
+  Verified,
 } from 'components/base_ui';
-import Markdown from 'components/Markdown';
+import CommentCard from 'components/CommentCard';
 import {
   // DollarWrapper,
-  IssueDetailBody,
   IssueDetailColumn,
-  IssueDetailHeader,
-  IssueDetailOverview,
   IssueDetailTopBar,
   IssueDetailWrapper,
   IssueLanguage,
   IssueResolved,
-  // IssueSideBar,
   IssueSubHeader,
   IssueSubItem,
   LeftPanel,
   NameWrapper,
   OrganizationNameWrapper,
-  OverviewActivityContainer,
-  StyledImage,
+  StyledFlatIconButton,
   StyledIssueHeader,
   UpvotePanel,
-  StyledFlatIconButton,
 } from './styledComponents';
-import EmptyIssue from './EmptyIssue';
 
-// const GlassesIcon = iconDictionary('glasses');
+const MonocleIcon = iconDictionary('monocle');
 
-const IssueDetail = ({ data: { issueDetail }, handleUpvote }) => {
-  const hasDetails = isEmpty(issueDetail.id);
-
+const IssueDetail = ({ data, handleUpvote, handleNav }) => {
   const {
     // attempts,
     id,
@@ -54,9 +45,18 @@ const IssueDetail = ({ data: { issueDetail }, handleUpvote }) => {
     // setPrice,
     open,
     watched,
-  } = issueDetail;
+    user: { username, profilePic },
+  } = data;
 
-  const IssueDetailComponent = (
+  const userProfile = {
+    small: true,
+    detailRoute: `/admin/users/detail/${username}`,
+    alt: username,
+    username,
+    profilePic,
+  };
+
+  return (
     <BaseContainer>
       <IssueDetailWrapper>
         <LeftPanel>
@@ -89,117 +89,42 @@ const IssueDetail = ({ data: { issueDetail }, handleUpvote }) => {
             </StyledIssueHeader>
             <NameWrapper>{name}</NameWrapper>
             <IssueSubHeader>
-              <IssueResolved solved={open}>
+              <IssueResolved open={open}>
                 {open ? 'Open Issue' : 'Closed'}
               </IssueResolved>
 
-              <IssueSubItem>Posted {createdDate}</IssueSubItem>
+              <IssueSubItem>
+                Issue opened {moment(createdDate).format('M/D/YYYY')}
+              </IssueSubItem>
               <IssueSubItem>0 Open PR</IssueSubItem>
               <IssueSubItem>
-                <CommentIcon /> {comments} comments
+                <CommentIcon /> {comments.length}{' '}
+                {comments.length > 1 ? 'comments' : 'comment'}
               </IssueSubItem>
-              <IssueSubItem>{watched} Watch</IssueSubItem>
+              <IssueSubItem>
+                <StyledFlatIconButton Icon={MonocleIcon} />
+                {watched} Watch
+              </IssueSubItem>
             </IssueSubHeader>
           </IssueDetailTopBar>
 
           <IssueDetailColumn>
-            <div>
-              <OverviewActivityContainer>
-                <StyledImage>AP</StyledImage>
+            <CommentCard
+              body={body}
+              date={createdDate}
+              userProfile={userProfile}
+              handleNav={handleNav}
+            />
 
-                <IssueDetailOverview>
-                  <IssueDetailHeader>Posted {createdDate}</IssueDetailHeader>
-                  <IssueDetailBody>
-                    <Markdown body={body} />
-                  </IssueDetailBody>
-                </IssueDetailOverview>
-              </OverviewActivityContainer>
-              <OverviewActivityContainer>
-                <IssueDetailOverview>
-                  <IssueDetailHeader>Recent Activity</IssueDetailHeader>
-                  <IssueDetailBody>
-                    <li>Issue accepted by Anna Pojawis</li>
-                    <li>Issue accepted by Tyler Maran</li>
-                    <li>Issue timed out by Anna Pojawis</li>
-                    <li>PR Submitted by Tyler Maran</li>
-                  </IssueDetailBody>
-                </IssueDetailOverview>
-              </OverviewActivityContainer>
-              <br />
-
-              <OverviewActivityContainer>
-                <StyledImage>PH</StyledImage>
-
-                <IssueDetailOverview>
-                  <IssueDetailHeader>Paul House</IssueDetailHeader>
-                  <IssueDetailBody>
-                    Please report the NvidiaBlackmagic driver version (Desktop
-                    Video) you used and also the Ubuntu, kernel and OBS-Studio
-                    version. Did OBS-studio in Ubuntu linux show you the options
-                    to set color space for Decklink output, since OBS-Studio
-                    24.03 only shows Mode as in resolution and framerate for me
-                    (BMD Desktop video 11.4 Ubuntu 19.04/kernel 5.0.0-37)?
-                  </IssueDetailBody>
-                </IssueDetailOverview>
-              </OverviewActivityContainer>
-              <OverviewActivityContainer>
-                <StyledImage>PH</StyledImage>
-
-                <IssueDetailOverview>
-                  <IssueDetailHeader>Paul House</IssueDetailHeader>
-                  <IssueDetailBody>Please report the</IssueDetailBody>
-                </IssueDetailOverview>
-              </OverviewActivityContainer>
-              <OverviewActivityContainer>
-                <StyledImage>PH</StyledImage>
-
-                <IssueDetailOverview>
-                  <IssueDetailHeader>Paul House</IssueDetailHeader>
-                  <IssueDetailBody>
-                    Please report the NvidiaBlackmagic driver version (Desktop
-                    only shows Mode as in resolution and framerate for me (BMD
-                    Desktop video 11.4 Ubuntu 19.04/kernel 5.0.0-37)?
-                  </IssueDetailBody>
-                </IssueDetailOverview>
-              </OverviewActivityContainer>
-              {/* <Comments comments={['hello', 'goodbye']} /> */}
-            </div>
-            {/* <IssueSideBar>
-              <IssueDetailHeader>Labels</IssueDetailHeader>
-              <IssueDetailBody>Good first issue</IssueDetailBody>
-              <IssueDetailHeader>Linked pull request</IssueDetailHeader>
-              <IssueDetailBody>None</IssueDetailBody>
-              <IssueDetailHeader>Payment</IssueDetailHeader>
-              <IssueDetailBody>
-                {' '}
-                <DollarWrapper>${setPrice}</DollarWrapper>
-              </IssueDetailBody>
-              <IssueDetailHeader>Watching</IssueDetailHeader>
-              <IssueDetailBody>
-                <button
-                  style={{
-                    width: '6rem',
-                    height: '2rem',
-                  }}
-                  type="button"
-                  aria-label="Watch"
-                >
-                  {watched} {GlassesIcon}
-                </button>
-              </IssueDetailBody>
-            </IssueSideBar> */}
+            <CommentCard
+              body="Coment comment comment on whatever"
+              date={createdDate}
+              userProfile={userProfile}
+            />
           </IssueDetailColumn>
         </div>
       </IssueDetailWrapper>
     </BaseContainer>
-  );
-
-  return (
-    <ConditionalRender
-      Component={IssueDetailComponent}
-      FallbackComponent={EmptyIssue}
-      shouldRender={!hasDetails}
-    />
   );
 };
 
@@ -209,10 +134,8 @@ IssueDetail.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   handleUpvote: T.func,
-  // clearAlerts: T.func,
   data: T.object,
-  // handleDelete: T.func,
-  // handleNav: T.func,
+  handleNav: T.func,
 };
 
 export default IssueDetail;

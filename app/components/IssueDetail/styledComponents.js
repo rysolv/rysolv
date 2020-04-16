@@ -2,8 +2,6 @@ import styled from 'styled-components';
 
 import {
   issueBorder,
-  headerOutlineColor,
-  commentHeaderColor,
   textColor,
   darkTextColor,
   moneyGreen,
@@ -19,18 +17,6 @@ export const IssueDetailWrapper = styled.div`
   display: flex;
   border: ${issueBorder};
   border-radius: 2px;
-`;
-
-export const MessageWrapper = styled.div`
-  align-items: center;
-  background-color: white;
-  border-radius: 0.5rem;
-  color: ${textColor};
-  display: flex;
-  font-size: 1.6rem;
-  height: 55rem;
-  justify-content: center;
-  text-align: center;
 `;
 
 export const LeftPanel = styled.div`
@@ -75,7 +61,7 @@ export const IssueLanguage = styled.div`
 export const IssueDetailColumn = styled.div`
   padding: 1rem 3rem 3rem 3rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `;
 
 export const NameWrapper = styled.div`
@@ -89,63 +75,12 @@ export const NameWrapper = styled.div`
 export const IssueResolved = styled.div`
   color: white;
   font-weight: bold;
-  background-color: ${({ solved }) => (solved ? moneyGreen : 'gray')};
-  border: ${issueBorder};
+  border: 2px solid;
+  background-color: ${props => (props.open ? moneyGreen : 'grey')};
+  border-color: ${props => (props.open ? '#b9f6ca' : 'grey')};
   display: inline-block;
   padding: 0.5rem;
   border-radius: 5rem;
-`;
-
-export const IssueDetailOverview = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 1rem 1rem 1rem;
-  width: 80%;
-`;
-
-export const IssueDetailHeader = styled.div`
-  background-color: ${commentHeaderColor};
-  padding: 0.5rem;
-  border: 1px solid ${headerOutlineColor};
-  border-top-right-radius: 2px;
-  border-top-left-radius: 2px;
-
-  font-size: 0.8rem;
-`;
-
-export const IssueDetailBody = styled.div`
-  border-bottom: 1px solid ${headerOutlineColor};
-  border-left: 1px solid ${headerOutlineColor};
-  border-right: 1px solid ${headerOutlineColor};
-
-  border-bottom-right-radius: 2px;
-  border-bottom-left-radius: 2px;
-
-  padding: 0 1rem;
-`;
-
-export const StyledImage = styled.div`
-  width: 4rem;
-  height: 4rem;
-  background-color: #b39ddb;
-  border-radius: 2rem;
-  text-align: center;
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-export const OverviewActivityContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-`;
-
-export const IssueSideBar = styled.div`
-  background-color: white;
-  min-width: 10rem;
-  height: 20rem;
 `;
 
 export const DollarWrapper = styled.div`

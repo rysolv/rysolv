@@ -8,7 +8,7 @@ export const BaseInputWrapper = styled.div`
   width: 45%;
 `;
 
-export const CompanyUrl = styled.div`
+export const CompanyUrl = styled.a`
   align-items: center;
   display: flex;
   margin-right: 2rem;
@@ -173,7 +173,7 @@ export const RecentActivityContainer = styled.div`
   padding: 1.6rem;
 `;
 
-export const RepoUrl = styled.div`
+export const RepoUrl = styled.a`
   align-items: center;
   display: flex;
   margin-right: 2rem;

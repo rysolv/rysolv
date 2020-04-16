@@ -5,6 +5,7 @@ export { default as ConditionalRender } from './ConditionalRender';
 export { default as ErrorSuccessBanner } from './Banner';
 export { default as HeaderWrap } from './HeaderWrap';
 export { default as ModalDialog } from './ModalDialog';
+export { default as ProfileImage } from './ProfileImage';
 export * from './Buttons';
 export * from './Icons';
 export * from './Inputs';

@@ -31,15 +31,17 @@ export class IssueDetailContainer extends React.PureComponent {
   }
 
   render() {
-    const { issueDetail, error, loading, handleUpvote } = this.props;
+    const { error, handleNav, handleUpvote, issueDetail, loading } = this.props;
 
     return (
       <AsyncRender
-        asyncData={{ issueDetail }}
+        asyncData={issueDetail}
         component={IssueDetail}
         error={error}
         loading={loading}
+        isRequiredData
         propsToPassDown={{
+          handleNav,
           handleUpvote,
         }}
       />
@@ -51,6 +53,7 @@ IssueDetailContainer.propTypes = {
   dispatchFetchIssueDetail: T.func,
   error: T.oneOfType([T.bool, T.object]),
   handleClearAlerts: T.func,
+  handleNav: T.func,
   handleUpvote: T.func,
   issueDetail: T.object,
   loading: T.bool,
@@ -61,7 +64,6 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : IssueDetail
    */
-  alerts: makeSelectIssueDetail('alerts'),
   issueDetail: makeSelectIssueDetail('issueDetail'),
   error: makeSelectIssueDetailError('issueDetail'),
   loading: makeSelectIssueDetailLoading('issueDetail'),
