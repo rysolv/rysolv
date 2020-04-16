@@ -3,13 +3,26 @@ import T from 'prop-types';
 
 import { MainTextInput } from 'components/base_ui';
 import { issueDataDictionary } from 'containers/Issues/constants';
-
-import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
+import Markdown from 'components/Markdown';
+import {
+  HorizontalWrapper,
+  InputFormWrapper,
+  StyledMarkdownWrapper,
+} from './styledComponents';
 
 // eslint-disable-next-line arrow-body-style
 const ManualForm = ({ data, handleInputChange }) => {
   // eslint-disable-next-line no-param-reassign
   const { repo, body, language, value, name } = data;
+
+  const handleMarkdownInput = markdown => {
+    handleInputChange({
+      field: 'body',
+      form: 'data',
+      value: markdown,
+    });
+  };
+
   return (
     <InputFormWrapper>
       <MainTextInput
@@ -25,19 +38,11 @@ const ManualForm = ({ data, handleInputChange }) => {
         }
         value={name.value}
       />
-      <MainTextInput
-        error={!!body.error}
-        helperText={body.error}
-        label={issueDataDictionary.body}
-        onChange={e =>
-          handleInputChange({
-            field: 'body',
-            form: 'data',
-            value: e.target.value,
-          })
-        }
-        value={body.value}
-      />
+      <StyledMarkdownWrapper>
+        {issueDataDictionary.body}
+        <Markdown edit body={body.value} handleInput={handleMarkdownInput} />
+      </StyledMarkdownWrapper>
+
       <MainTextInput
         error={!!language.error}
         helperText={language.error}

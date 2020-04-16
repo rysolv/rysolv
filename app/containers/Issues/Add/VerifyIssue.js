@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
 import VerifyForm from 'components/Issues/Add/VerifyForm';
 
-import { clearForm, incrementStep, saveInfo, verifyInfo } from '../actions';
+import { incrementStep, saveInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';
 import { makeSelectIssues, makeSelectIssuesRequestBody } from '../selectors';
 import {
@@ -19,11 +19,6 @@ import {
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class VerifyIssue extends React.PureComponent {
-  componentWillUnmount() {
-    const { dispatchClearForm } = this.props;
-    dispatchClearForm();
-  }
-
   render() {
     const {
       data,
@@ -40,7 +35,7 @@ export class VerifyIssue extends React.PureComponent {
     };
     return (
       <Fragment>
-        <StyledH3>Verify Company Information</StyledH3>
+        <StyledH3>Verify Issue Information</StyledH3>
         <Wrapper>
           <VerifyForm data={data} />
           <StyledCheckboxWithLabel
@@ -67,7 +62,6 @@ export class VerifyIssue extends React.PureComponent {
 
 VerifyIssue.propTypes = {
   data: T.object,
-  dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
   dispatchVerifyInfo: T.func,
@@ -78,7 +72,7 @@ VerifyIssue.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   /**
-   * Reducer : Companies
+   * Reducer : Issues
    */
   data: makeSelectIssues('data'),
   isVerified: makeSelectIssues('isVerified'),
@@ -88,9 +82,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     /**
-     * Reducer : Companies
+     * Reducer : Issues
      */
-    dispatchClearForm: () => dispatch(clearForm()),
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
     dispatchVerifyInfo: () => dispatch(verifyInfo()),

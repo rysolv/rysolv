@@ -48,6 +48,11 @@ export const KeyWrapper = styled.div`
   min-width: 15rem;
 `;
 
+export const StyledMarkdownWrapper = styled.div`
+  padding: 1rem;
+  color: ${textColor};
+`;
+
 export const StyledLabel = styled.div`
   color: ${hyperlinkColor};
 

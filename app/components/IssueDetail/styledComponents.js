@@ -8,6 +8,7 @@ import {
   darkTextColor,
   moneyGreen,
 } from 'defaultStyleHelper';
+import { FlatIconButton } from '../base_ui';
 
 export const IssueDetailWrapper = styled.div`
   background-color: white;
@@ -88,7 +89,7 @@ export const NameWrapper = styled.div`
 export const IssueResolved = styled.div`
   color: white;
   font-weight: bold;
-  background-color: ${({ solved }) => (solved ? 'gray' : moneyGreen)};
+  background-color: ${({ solved }) => (solved ? moneyGreen : 'gray')};
   border: ${issueBorder};
   display: inline-block;
   padding: 0.5rem;
@@ -120,7 +121,7 @@ export const IssueDetailBody = styled.div`
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 2px;
 
-  padding: 1rem;
+  padding: 0 1rem;
 `;
 
 export const StyledImage = styled.div`
@@ -165,4 +166,9 @@ export const IssueSubHeader = styled.div`
 export const IssueSubItem = styled.div`
   margin: 0 1rem 0 1rem;
   color: ${textColor};
+`;
+
+export const StyledFlatIconButton = styled(FlatIconButton)`
+  padding: 0;
+  min-width: 0;
 `;

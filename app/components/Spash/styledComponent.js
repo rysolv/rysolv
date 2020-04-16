@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import splash from '../../images/todo_splash.jfif';
 
 export const SplashImage = styled.div`
   height: 22rem;

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import Circle from '@material-ui/icons/FiberManualRecord';
+import CodeIcon from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
@@ -21,6 +22,7 @@ export default (name, options) => {
   const icons = {
     circle: Circle,
     closeMenu: CloseMenu,
+    code: CodeIcon,
     comments: Comments,
     creditCard: CreditCard,
     delete: Delete,

@@ -2,13 +2,10 @@ import React from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 
 import {
   clearAlerts,
@@ -24,8 +21,6 @@ import {
   makeSelectIssuesLoading,
   makeSelectIssuesSearchDisabled,
 } from '../selectors';
-import reducer from '../reducer';
-import saga from '../saga';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class IssuesOverview extends React.PureComponent {
@@ -129,15 +124,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
+// Adds store to issueDetail
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-);
-const withReducer = injectReducer({ key: 'issues', reducer });
-const withSaga = injectSaga({ key: 'issues', saga });
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
 )(IssuesOverview);

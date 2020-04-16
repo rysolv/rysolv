@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import AsyncRender from 'components/AsyncRender';
 
-import { incrementStep } from '../actions';
+import { incrementStep, clearForm } from '../actions';
 import {
   makeSelectIssues,
   makeSelectIssuesLoading,
@@ -19,6 +19,11 @@ export class AddIssue extends React.PureComponent {
   componentDidMount() {
     const { handleIncrementStep } = this.props;
     handleIncrementStep({ step: 1, view: 'addIssue' });
+  }
+
+  componentWillUnmount() {
+    const { dispatchClearForm } = this.props;
+    dispatchClearForm();
   }
 
   render() {
@@ -39,6 +44,7 @@ export class AddIssue extends React.PureComponent {
 
 AddIssue.propTypes = {
   data: T.object,
+  dispatchClearForm: T.func,
   handleIncrementStep: T.func,
   loading: T.bool.isRequired,
   step: T.number.isRequired,
@@ -58,6 +64,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    dispatchClearForm: () => dispatch(clearForm()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
   };
 }

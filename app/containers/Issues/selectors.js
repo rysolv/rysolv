@@ -31,6 +31,24 @@ const makeSelectIssuesDisabled = () =>
     },
   );
 
+const makeSelectIssueDetail = prop =>
+  createSelector(
+    selectIssuesDomain,
+    substate => substate[prop],
+  );
+
+const makeSelectIssueDetailError = prop =>
+  createSelector(
+    makeSelectIssueDetail('error'),
+    error => error[prop],
+  );
+
+const makeSelectIssueDetailLoading = prop =>
+  createSelector(
+    makeSelectIssueDetail('loading'),
+    loading => loading[prop],
+  );
+
 const makeSelectIssuesRequestBody = () =>
   createSelector(
     makeSelectIssues('data'),
@@ -55,6 +73,9 @@ const makeSelectIssuesStep = prop =>
 
 export default selectIssuesDomain;
 export {
+  makeSelectIssueDetail,
+  makeSelectIssueDetailError,
+  makeSelectIssueDetailLoading,
   makeSelectIssues,
   makeSelectIssuesDisabled,
   makeSelectIssuesError,

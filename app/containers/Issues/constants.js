@@ -10,8 +10,12 @@ export const FETCH_ISSUES = 'app/Issues/FETCH_ISSUES';
 export const FETCH_ISSUES_FAILURE = 'app/Issues/FETCH_ISSUES_FAILURE';
 export const FETCH_ISSUES_SUCCESS = 'app/Issues/FETCH_ISSUES_SUCCESS';
 
-export const INCREMENT_STEP = 'app/Companies/INCREMENT_STEP';
+export const FETCH_ISSUE_DETAIL = 'app/Issues/FETCH_ISSUE_DETAIL';
+export const FETCH_ISSUE_DETAIL_FAILURE =
+  'app/Issues/FETCH_ISSUE_DETAIL_FAILURE';
+export const FETCH_ISSUE_DETAIL_SUCCESS = 'app/Issues/TCH_ISSUE_DETAIL_SUCCESS';
 
+export const INCREMENT_STEP = 'app/Issues/INCREMENT_STEP';
 export const INPUT_CHANGE = 'app/Issues/INPUT_CHANGE';
 export const INPUT_ERROR = 'app/Issues/INPUT_ERROR';
 

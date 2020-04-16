@@ -48,3 +48,10 @@ export const SignUp = styled(BaseLink)`
   margin-right: 4rem;
   text-decoration: none;
 `;
+
+export const Test = styled(BaseLink)`
+  margin: 0 2rem 0 0;
+  &:hover {
+    text-decoration: underline;
+  }
+`;

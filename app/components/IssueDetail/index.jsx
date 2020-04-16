@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import iconDictionary from 'utils/iconDictionary';
+// import iconDictionary from 'utils/iconDictionary';
 import {
   ConditionalRender,
   BaseContainer,
@@ -10,8 +10,9 @@ import {
   Verified,
   IconToolTip,
 } from 'components/base_ui';
+import Markdown from 'components/Markdown';
 import {
-  DollarWrapper,
+  // DollarWrapper,
   IssueDetailBody,
   IssueDetailColumn,
   IssueDetailHeader,
@@ -20,7 +21,7 @@ import {
   IssueDetailWrapper,
   IssueLanguage,
   IssueResolved,
-  IssueSideBar,
+  // IssueSideBar,
   IssueSubHeader,
   IssueSubItem,
   LeftPanel,
@@ -30,26 +31,28 @@ import {
   StyledImage,
   StyledIssueHeader,
   UpvotePanel,
+  StyledFlatIconButton,
 } from './styledComponents';
 import EmptyIssue from './EmptyIssue';
 
-const GlassesIcon = iconDictionary('glasses');
+// const GlassesIcon = iconDictionary('glasses');
 
-const IssueDetail = ({ data: { issueDetail } }) => {
+const IssueDetail = ({ data: { issueDetail }, handleUpvote }) => {
   const hasDetails = isEmpty(issueDetail.id);
 
   const {
     // attempts,
+    id,
     comments,
     language,
-    datePosted,
+    createdDate,
     name,
     organization,
     organizationVerified,
     body,
     rep,
-    setPrice,
-    solved,
+    // setPrice,
+    open,
     watched,
   } = issueDetail;
 
@@ -58,7 +61,10 @@ const IssueDetail = ({ data: { issueDetail } }) => {
       <IssueDetailWrapper>
         <LeftPanel>
           <UpvotePanel>
-            <Upvote />
+            <StyledFlatIconButton
+              Icon={<Upvote />}
+              onClick={() => handleUpvote({ itemId: id })}
+            />
             {rep}
           </UpvotePanel>
         </LeftPanel>
@@ -83,11 +89,11 @@ const IssueDetail = ({ data: { issueDetail } }) => {
             </StyledIssueHeader>
             <NameWrapper>{name}</NameWrapper>
             <IssueSubHeader>
-              <IssueResolved solved={solved}>
-                {solved ? 'Closed' : 'Open Issue'}
+              <IssueResolved solved={open}>
+                {open ? 'Open Issue' : 'Closed'}
               </IssueResolved>
 
-              <IssueSubItem>Posted {datePosted}</IssueSubItem>
+              <IssueSubItem>Posted {createdDate}</IssueSubItem>
               <IssueSubItem>0 Open PR</IssueSubItem>
               <IssueSubItem>
                 <CommentIcon /> {comments} comments
@@ -102,8 +108,10 @@ const IssueDetail = ({ data: { issueDetail } }) => {
                 <StyledImage>AP</StyledImage>
 
                 <IssueDetailOverview>
-                  <IssueDetailHeader>Posted {datePosted}</IssueDetailHeader>
-                  <IssueDetailBody>{body}</IssueDetailBody>
+                  <IssueDetailHeader>Posted {createdDate}</IssueDetailHeader>
+                  <IssueDetailBody>
+                    <Markdown body={body} />
+                  </IssueDetailBody>
                 </IssueDetailOverview>
               </OverviewActivityContainer>
               <OverviewActivityContainer>
@@ -156,7 +164,7 @@ const IssueDetail = ({ data: { issueDetail } }) => {
               </OverviewActivityContainer>
               {/* <Comments comments={['hello', 'goodbye']} /> */}
             </div>
-            <IssueSideBar>
+            {/* <IssueSideBar>
               <IssueDetailHeader>Labels</IssueDetailHeader>
               <IssueDetailBody>Good first issue</IssueDetailBody>
               <IssueDetailHeader>Linked pull request</IssueDetailHeader>
@@ -179,7 +187,7 @@ const IssueDetail = ({ data: { issueDetail } }) => {
                   {watched} {GlassesIcon}
                 </button>
               </IssueDetailBody>
-            </IssueSideBar>
+            </IssueSideBar> */}
           </IssueDetailColumn>
         </div>
       </IssueDetailWrapper>
@@ -200,6 +208,7 @@ IssueDetail.propTypes = {
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
+  handleUpvote: T.func,
   // clearAlerts: T.func,
   data: T.object,
   // handleDelete: T.func,

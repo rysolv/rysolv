@@ -19,6 +19,7 @@ module.exports = buildSchema(`
     rep: Int
     watchList: [String]
     value: Int
+    open: Boolean
   }
 
   input IssueInput {

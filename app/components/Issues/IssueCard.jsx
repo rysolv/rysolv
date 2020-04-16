@@ -11,7 +11,6 @@ import {
   StyledListItem,
   StyledIssueHeader,
   IssueLanguage,
-  IssueOverview,
   StyledIssueContent,
   StyledIssueText,
   StyledIssueFooter,
@@ -33,7 +32,6 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
           organizationName,
           organizationVerified,
           language,
-          body,
           attempts,
           rep,
           watchList,
@@ -82,14 +80,13 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                   >
                     {name}
                   </NameWrapper>
-                  <IssueOverview>{body}</IssueOverview>
                 </StyledIssueText>
                 <StyledIssueFooter>
                   <div>
                     {' '}
                     <CommentIcon /> {comments.length} comments
                   </div>
-                  <div>{false ? 'Resolved' : `${attempts} attempting`}</div>
+                  <div>{false ? 'Closed' : `${attempts} attempting`}</div>
                   <div>{watchList.length} Watch</div>
                   <DollarWrapper>${value}</DollarWrapper>
                 </StyledIssueFooter>

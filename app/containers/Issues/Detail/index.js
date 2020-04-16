@@ -2,22 +2,17 @@ import React from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 
 import IssueDetail from 'components/IssueDetail';
-import { clearAlerts, fetchIssueDetail } from './actions';
+import { clearAlerts, fetchIssueDetail, upvoteIssue } from '../actions';
 import {
   makeSelectIssueDetail,
   makeSelectIssueDetailError,
   makeSelectIssueDetailLoading,
-} from './selectors';
-import reducer from './reducer';
-import saga from './saga';
+} from '../selectors';
 
 export class IssueDetailContainer extends React.PureComponent {
   componentDidMount() {
@@ -36,13 +31,7 @@ export class IssueDetailContainer extends React.PureComponent {
   }
 
   render() {
-    const {
-      // alerts,
-      // handleClearAlerts,
-      issueDetail,
-      error,
-      loading,
-    } = this.props;
+    const { issueDetail, error, loading, handleUpvote } = this.props;
 
     return (
       <AsyncRender
@@ -50,18 +39,22 @@ export class IssueDetailContainer extends React.PureComponent {
         component={IssueDetail}
         error={error}
         loading={loading}
+        propsToPassDown={{
+          handleUpvote,
+        }}
       />
     );
   }
 }
 
 IssueDetailContainer.propTypes = {
-  issueDetail: T.object,
-  match: T.object,
-  error: T.oneOfType([T.bool, T.object]),
-  loading: T.bool,
-  handleClearAlerts: T.func,
   dispatchFetchIssueDetail: T.func,
+  error: T.oneOfType([T.bool, T.object]),
+  handleClearAlerts: T.func,
+  handleUpvote: T.func,
+  issueDetail: T.object,
+  loading: T.bool,
+  match: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -81,6 +74,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
+    handleUpvote: payload => dispatch(upvoteIssue(payload)),
     /**
      * Reducer : Router
      */
@@ -88,18 +82,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
+// Adds store to issueDetail
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-);
-
-// magic
-const withReducer = injectReducer({ key: 'issueDetail', reducer });
-const withSaga = injectSaga({ key: 'issueDetail', saga });
-
-// Adds store to issueDetail
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
 )(IssueDetailContainer);

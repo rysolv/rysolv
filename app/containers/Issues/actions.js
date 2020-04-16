@@ -7,6 +7,9 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  FETCH_ISSUE_DETAIL_FAILURE,
+  FETCH_ISSUE_DETAIL_SUCCESS,
+  FETCH_ISSUE_DETAIL,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
@@ -72,6 +75,27 @@ export function fetchIssuesSuccess(payload) {
 export function fetchIssues() {
   return {
     type: FETCH_ISSUES,
+  };
+}
+
+export function fetchIssueDetailFailure(payload) {
+  return {
+    payload,
+    type: FETCH_ISSUE_DETAIL_FAILURE,
+  };
+}
+
+export function fetchIssueDetailSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_ISSUE_DETAIL_SUCCESS,
+  };
+}
+
+export function fetchIssueDetail(payload) {
+  return {
+    payload,
+    type: FETCH_ISSUE_DETAIL,
   };
 }
 

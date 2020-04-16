@@ -8,7 +8,7 @@ const issueSeed = [
     new Date(), // modified date
     'ddb0ed71-01e8-4a14-a3fd-8d6ee40f131a', // organization id
     'Date Picker text field shows errors when switching back from Calendar mode ', // name
-    'It shouldnt show the error again until an invalid date was typed', // body
+    '\r\n<!-- READ THIS FIRST -->\r\n<!-- The OBS Studio GitHub issue tracker is **ONLY** to be -->\r\n<!-- used for reporting Bugs that have replication steps. -->\r\n\r\n<!-- You can post Feature Requests here: https://ideas.obsproject.com/ -->\r\n<!-- Get help for Support Issues here: https://obsproject.com/help -->\r\n\r\n<!--- Provide a general summary of the issue in the Title above -->\r\n\r\n## Platform\r\n<!-- Please fill out the following information about your bug report. -->\r\n<!-- If you are on Linux and installed using a package, please list the package type. -->\r\nOperating system and version: FreeBSD 13-CURRENT\r\nOBS Studio version: 921a74296613084b301e89459f0769f62fdb5517 + FreeBSD build fix PRs applied\r\n\r\n## Expected Behavior\r\nWindow Capture (Xcomposite) faithfully reproduces colours from the source window\r\n<!--- Tell us what should happen -->\r\n\r\n## Current Behavior\r\nRed and blue are swapped. In the image below the Firefox window on the right is the source captured with Window Capture.\r\n![colour](https://user-images.githubusercontent.com/1034582/78734129-6987c100-7915-11ea-86d0-2c5a483a87f5.png)\r\n\r\n\r\n## Steps to Reproduce\r\n1. Create a scene with 1 Window Capture (Xcomposite)\r\n2. Use a Firefox window as the source with content \r\n3. Observe R and B swapped\r\n\r\n## Additional information\r\nScreen Capture (XSHM) does not show this issue', // body
     'https://github.com/flutter/flutter', // repo
     'Javascript', // language
     ['commentID'], // comments
@@ -18,6 +18,7 @@ const issueSeed = [
     42, // rep
     ['517fa5c9-1d6e-4925-8bcc-25c24cd0b95d'], // Watchlist: Reference to user ID
     20, // value
+    true, // open
   ],
   [
     uuidv4(),
@@ -35,6 +36,7 @@ const issueSeed = [
     25,
     ['517fa5c9-1d6e-4925-8bcc-25c24cd0b95d'],
     0,
+    false,
   ],
   [
     uuidv4(),
@@ -55,6 +57,7 @@ const issueSeed = [
       'c2209ded-9219-4ee3-9c29-f863889053c0',
     ],
     45,
+    true,
   ],
 ];
 
