@@ -23,8 +23,6 @@ import {
   SEARCH_COMPANIES_FAILURE,
   SEARCH_COMPANIES_SUCCESS,
   SEARCH_COMPANIES,
-  SEARCH_CONTRIBUTORS,
-  SEARCH_ISSUES,
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
@@ -63,8 +61,6 @@ export const initialState = {
     fetchCompany: false,
     saveCompany: false,
     searchCompanies: false,
-    searchContributors: false,
-    searchIssues: false,
     updateCompany: false,
   },
   error: {
@@ -197,15 +193,7 @@ const companiesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_COMPANIES: {
-      draft.loading.searchCompanies = true;
-      break;
-    }
-    case SEARCH_CONTRIBUTORS: {
-      draft.loading.searchIssues = true;
-      break;
-    }
-    case SEARCH_ISSUES: {
-      draft.loading.searchIssues = true;
+      draft.shouldSearch = true;
       break;
     }
     case UPDATE_INFO_FAILURE: {

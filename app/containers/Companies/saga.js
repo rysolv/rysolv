@@ -97,6 +97,8 @@ export function* fetchInfoSaga({ payload }) {
         issues,
         logo,
         verified,
+        contributors,
+        ownerId
       }
       ... on Error {
         message

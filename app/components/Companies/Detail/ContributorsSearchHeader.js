@@ -11,42 +11,28 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const ContributorsSearchHeader = ({
-  disabled,
-  handleInputChange,
-  handleSearch,
-  search,
-}) => {
-  const { contributorInput } = { ...search };
-  return (
-    <ContributorsSearchHeaderContainer>
-      <BaseInputWrapper>
-        <BaseInputWithAdornment
-          disabled={disabled}
-          adornmentComponent={SearchIcon}
-          onChange={e =>
-            handleInputChange({
-              field: 'contributorInput',
-              form: 'search',
-              value: e.target.value,
-            })
-          }
-          onClick={() => handleSearch({ value: contributorInput.value })}
-          placeholder="Find a contributor..."
-          position="end"
-        />
-      </BaseInputWrapper>
-    </ContributorsSearchHeaderContainer>
-  );
-};
-
-ContributorsSearchHeader.defaultProps = { disabled: false };
+const ContributorsSearchHeader = ({ handleInputChange }) => (
+  <ContributorsSearchHeaderContainer>
+    <BaseInputWrapper>
+      <BaseInputWithAdornment
+        adornmentComponent={SearchIcon}
+        onChange={e =>
+          handleInputChange({
+            field: 'contributorInput',
+            form: 'search',
+            value: e.target.value,
+          })
+        }
+        placeholder="Find a contributor..."
+        position="end"
+        renderIcon
+      />
+    </BaseInputWrapper>
+  </ContributorsSearchHeaderContainer>
+);
 
 ContributorsSearchHeader.propTypes = {
-  disabled: T.bool,
   handleInputChange: T.func,
-  handleSearch: T.func,
-  search: T.object,
 };
 
 export default ContributorsSearchHeader;

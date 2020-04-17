@@ -19,8 +19,6 @@ import {
   SEARCH_COMPANIES_FAILURE,
   SEARCH_COMPANIES_SUCCESS,
   SEARCH_COMPANIES,
-  SEARCH_CONTRIBUTORS,
-  SEARCH_ISSUES,
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
@@ -161,20 +159,6 @@ export function searchCompanies(payload) {
   return {
     payload,
     type: SEARCH_COMPANIES,
-  };
-}
-
-export function searchContributors(payload) {
-  return {
-    payload,
-    type: SEARCH_CONTRIBUTORS,
-  };
-}
-
-export function searchIssues(payload) {
-  return {
-    payload,
-    type: SEARCH_ISSUES,
   };
 }
 

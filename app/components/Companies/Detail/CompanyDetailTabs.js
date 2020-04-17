@@ -13,14 +13,9 @@ import { StyledPaper } from './styledComponents';
 
 const CompanyDetailTabs = ({
   contributors,
-  disabledContributors,
-  disabledIssues,
   handleInputChange,
   handleNav,
-  handleSearchContributors,
-  handleSearchIssues,
   issues,
-  search,
 }) => {
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -39,20 +34,10 @@ const CompanyDetailTabs = ({
       </Tabs>
       <ConditionalRender
         Component={
-          <ContributorsSearchHeader
-            disabled={disabledContributors}
-            handleInputChange={handleInputChange}
-            handleSearch={handleSearchContributors}
-            search={search}
-          />
+          <ContributorsSearchHeader handleInputChange={handleInputChange} />
         }
         FallbackComponent={
-          <IssuesSearchHeader
-            disabled={disabledIssues}
-            handleInputChange={handleInputChange}
-            handleSearch={handleSearchIssues}
-            search={search}
-          />
+          <IssuesSearchHeader handleInputChange={handleInputChange} />
         }
         shouldRender={!!value}
       />
@@ -72,14 +57,9 @@ const CompanyDetailTabs = ({
 
 CompanyDetailTabs.propTypes = {
   contributors: T.array,
-  disabledContributors: T.bool,
-  disabledIssues: T.bool,
   handleInputChange: T.func,
   handleNav: T.func,
-  handleSearchContributors: T.func,
-  handleSearchIssues: T.func,
   issues: T.array,
-  search: T.object,
 };
 
 export default CompanyDetailTabs;

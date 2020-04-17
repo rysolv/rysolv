@@ -83,6 +83,8 @@ module.exports = buildSchema(`
     issues: [String]
     logo: String
     verified: Boolean
+    contributors: [Object]
+    ownerId: ID
   }
 
   type Error {

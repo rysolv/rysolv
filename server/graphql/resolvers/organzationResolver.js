@@ -54,7 +54,7 @@ module.exports = {
     const { id } = args;
     try {
       const [result] = await getOneOrganization('organizations', id);
-      const { contributors, ownerId } = result;
+      const { contributors } = result;
       const contributorsResult = await Promise.all(
         contributors.map(async contributorId => {
           const [userResult] = await getOneUser('users', contributorId);
@@ -62,8 +62,6 @@ module.exports = {
         }),
       );
       result.contributors = contributorsResult;
-      const ownerResult = await getOneUser('users', ownerId);
-      result.owner = ownerResult;
       return {
         __typename: 'Organization',
         ...result,

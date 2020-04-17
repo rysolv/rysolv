@@ -34,25 +34,25 @@ const VerifiedComponent = (
   </VerifiedWrapper>
 );
 
-const contributors = [
-  {
-    firstName: 'Aart',
-    id: '2432523',
-    isOwner: true,
-    lastName: 'Bik',
-    user: 'aartbik',
-    userImage:
-      'https://avatars3.githubusercontent.com/u/39774503?s=400&u=a8b7f84c5afb16198b76cc6d9e046e16c6739988&v=4',
-  },
-  {
-    firstName: 'Chris',
-    id: '3432434',
-    isOwner: false,
-    lastName: 'Bracken',
-    user: 'cbracken',
-    userImage: 'https://avatars1.githubusercontent.com/u/351029?s=400&v=4',
-  },
-];
+// const contributors = [
+//   {
+//     firstName: 'Aart',
+//     id: '2432523',
+//     isOwner: true,
+//     lastName: 'Bik',
+//     user: 'aartbik',
+//     userImage:
+//       'https://avatars3.githubusercontent.com/u/39774503?s=400&u=a8b7f84c5afb16198b76cc6d9e046e16c6739988&v=4',
+//   },
+//   {
+//     firstName: 'Chris',
+//     id: '3432434',
+//     isOwner: false,
+//     lastName: 'Bracken',
+//     user: 'cbracken',
+//     userImage: 'https://avatars1.githubusercontent.com/u/351029?s=400&v=4',
+//   },
+// ];
 
 const issues = [{}];
 
@@ -84,14 +84,10 @@ export class CompanyDetailView extends React.PureComponent {
         logo,
         name,
         verified,
+        contributors,
       },
-      disabledContributors,
-      disabledIssues,
       handleInputChange,
       handleNav,
-      handleSearchContributors,
-      handleSearchIssues,
-      search,
     } = this.props;
     return (
       <Fragment>
@@ -122,14 +118,9 @@ export class CompanyDetailView extends React.PureComponent {
           <MainTabs>
             <CompanyDetailTabs
               contributors={contributors}
-              disabledContributors={disabledContributors}
-              disabledIssues={disabledIssues}
               handleInputChange={handleInputChange}
               handleNav={handleNav}
-              handleSearchContributors={handleSearchContributors}
-              handleSearchIssues={handleSearchIssues}
               issues={issues}
-              search={search}
             />
           </MainTabs>
           <SidebarTabs>
@@ -145,13 +136,8 @@ export class CompanyDetailView extends React.PureComponent {
 
 CompanyDetailView.propTypes = {
   data: T.object,
-  disabledContributors: T.bool,
-  disabledIssues: T.bool,
   handleInputChange: T.func,
   handleNav: T.func,
-  handleSearchContributors: T.func,
-  handleSearchIssues: T.func,
-  search: T.object,
 };
 
 export default CompanyDetailView;
