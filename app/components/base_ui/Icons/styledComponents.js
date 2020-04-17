@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 import { hyperlinkColor } from 'defaultStyleHelper';
 
+export const StyledBack = styled.div`
+  color: inherit;
+`;
+
 export const StyledCode = styled.div`
   color: white;
 `;

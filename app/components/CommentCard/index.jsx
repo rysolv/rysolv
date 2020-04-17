@@ -12,7 +12,13 @@ import {
   ProfileLine,
 } from './styledComponents';
 
-const CommentCard = ({ body, createdDate, handleNav, userProfile }) => {
+const CommentCard = ({
+  primary,
+  body,
+  createdDate,
+  handleNav,
+  userProfile,
+}) => {
   const { alt, detailRoute, profilePic, small, username } = userProfile;
   const html = marked(body);
 
@@ -33,10 +39,10 @@ const CommentCard = ({ body, createdDate, handleNav, userProfile }) => {
 
   return (
     <div style={{ display: 'flex', margin: '1rem 0' }}>
-      {profileView}
-      <CommentContainer>
-        <CommentHeader>
-          Posted by <b>{username}</b> on{' '}
+      {primary ? null : profileView}
+      <CommentContainer primary={primary}>
+        <CommentHeader primary={primary}>
+          {primary ? 'Opened by' : 'Posted by'} <b>{username}</b> on{' '}
           {moment(createdDate).format('M/D/YYYY')}
         </CommentHeader>
         <CommentBody dangerouslySetInnerHTML={{ __html: html }} />
@@ -47,6 +53,7 @@ const CommentCard = ({ body, createdDate, handleNav, userProfile }) => {
 
 CommentCard.propTypes = {
   body: T.string,
+  primary: T.bool,
   createdDate: T.string,
   handleNav: T.func,
   userProfile: T.object,

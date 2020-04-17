@@ -8,10 +8,11 @@ export const ProfileContainer = styled.div`
 `;
 
 export const CommentContainer = styled.div`
+  background-color: white;
   vertical-align: top;
   display: inline-block;
-  width: 90%;
-  border: 1px solid ${borderColor};
+  width: 100%;
+  border: ${props => (props.primary ? `none` : `1px solid ${borderColor}`)};
   border-radius: 0.25rem;
   overflow: hidden;
 `;
@@ -19,7 +20,7 @@ export const CommentContainer = styled.div`
 export const CommentHeader = styled.div`
   width: 100%;
   padding: 0.4rem;
-  background-color: ${commentHeaderColor};
+  background-color: ${props => (props.primary ? `none` : commentHeaderColor)};
   border-bottom: 1px solid ${borderColor};
   font-size: 0.8rem;
 `;
@@ -27,7 +28,7 @@ export const CommentHeader = styled.div`
 export const CommentBody = styled.div`
   width: 100%;
   padding: 0 1rem;
-  min-height: 8rem;
+  min-height: 4rem;
   * {
     color: ${textColor};
     background-color: white;
@@ -40,7 +41,6 @@ export const ProfileLine = styled.div`
   display: inline-block;
   width: 1.5rem;
   height: 0.2rem;
-  background-color: ${borderColor};
   vertical-align: top;
   margin: 2.5rem 0 0 0;
 `;

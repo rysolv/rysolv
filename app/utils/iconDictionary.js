@@ -12,6 +12,7 @@ import Settings from '@material-ui/icons/Settings';
 import Star from '@material-ui/icons/Star';
 import Upvote from '@material-ui/icons/ArrowUpward';
 import Verified from '@material-ui/icons/VerifiedUser';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Warning from '@material-ui/icons/Warning';
 import SiteLogo from './svg/SiteLogo';
 import CloseMenu from './svg/CloseMenu';
@@ -20,6 +21,7 @@ import Paypal from './svg/Paypal';
 
 export default (name, options) => {
   const icons = {
+    backArrow: ArrowBackIcon,
     circle: Circle,
     closeMenu: CloseMenu,
     code: CodeIcon,

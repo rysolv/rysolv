@@ -1,22 +1,22 @@
 import styled from 'styled-components';
 
 import {
-  issueBorder,
-  textColor,
+  borderColor,
   darkTextColor,
   moneyGreen,
+  textColor,
 } from 'defaultStyleHelper';
 import { FlatIconButton } from '../base_ui';
 
 export const IssueDetailWrapper = styled.div`
   background-color: white;
-  min-height: 40vh;
-  max-width: 75rem;
-  margin: 2rem 0 0 0;
-  padding: 0 3rem 3rem 0;
+  border-radius: 0.25rem;
   display: flex;
-  border: ${issueBorder};
-  border-radius: 2px;
+  margin: 0;
+  max-width: 75rem;
+  min-height: 40vh;
+  overflow: hidden;
+  padding: 0 3rem 3rem 0;
 `;
 
 export const LeftPanel = styled.div`
@@ -25,85 +25,93 @@ export const LeftPanel = styled.div`
 
 export const UpvotePanel = styled.div`
   background-color: #e0e0e0;
-  width: 100%;
-  padding: 0.5rem;
   height: 15rem;
+  padding: 0.5rem;
   text-align: center;
+  width: 100%;
 `;
 
 export const IssueDetailTopBar = styled.div`
-  width: 100%;
-  flex: 100%;
-  padding: 1rem 3rem 0 3rem;
+  background-color: white;
+  border-radius: 0.25rem;
+  margin: 0 0 0 0;
+  padding: 0.5rem 0;
 `;
 
 export const StyledIssueHeader = styled.div`
-  width: 100%;
-  padding: 0.25rem;
   display: flex;
   justify-content: space-between;
+  padding: 0.25rem;
+  width: 100%;
 `;
 
 export const OrganizationNameWrapper = styled.div`
-  display: flex;
   color: ${textColor};
+  display: flex;
   display: inline-block;
   font-weight: bold;
 `;
 
 export const IssueLanguage = styled.div`
-  display: flex;
   color: #90a4ae;
-  font-weight: bold;
+  display: flex;
   display: inline-block;
+  font-weight: bold;
 `;
 
 export const IssueDetailColumn = styled.div`
-  padding: 1rem 3rem 3rem 3rem;
   display: flex;
   flex-direction: column;
+  padding: 1rem 3rem 3rem 3rem;
 `;
 
 export const NameWrapper = styled.div`
-  font-size: 1.4rem;
-  max-height: 3rem;
-  margin: 1rem 0 1rem 0;
-  font-weight: bold;
   color: ${darkTextColor};
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0.5rem;
+  max-height: 3rem;
 `;
 
 export const IssueResolved = styled.div`
-  color: white;
-  font-weight: bold;
-  border: 2px solid;
   background-color: ${props => (props.open ? moneyGreen : 'grey')};
   border-color: ${props => (props.open ? '#b9f6ca' : 'grey')};
-  display: inline-block;
-  padding: 0.5rem;
   border-radius: 5rem;
+  border: 2px solid;
+  color: white;
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.5rem;
 `;
 
 export const DollarWrapper = styled.div`
-  color: white;
   background-color: ${moneyGreen};
-  padding: 0.25rem 1rem 0.25rem 1rem;
   border-radius: 1rem;
+  color: white;
+  padding: 0.25rem 1rem 0.25rem 1rem;
   text-align: center;
 `;
 
 export const IssueSubHeader = styled.div`
-  display: flex;
   align-items: center;
-
-  justify-content: flex-start;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const IssueSubItem = styled.div`
-  margin: 0 1rem 0 1rem;
   color: ${textColor};
+  margin: 0 1rem 0 1rem;
 `;
 
 export const StyledFlatIconButton = styled(FlatIconButton)`
-  padding: 0;
   min-width: 0;
+  padding: 0;
+`;
+
+export const Divider = styled.div`
+  border-bottom: 1px solid ${borderColor};
+  color: ${textColor};
+  font-family: inherit;
+  margin: '1rem 0';
+  width: 100%;
 `;
