@@ -68,6 +68,12 @@ export const StyledFormControl = styled(FormControl)`
   width: 100%;
 `;
 
+export const StyledFlatIcon = styled.div`
+  font-size: 1.4rem;
+  justify-content: flex-end;
+  padding: 0;
+`;
+
 export const StyledFlatIconButton = styled(FlatIconButton)`
   font-size: 1.4rem;
   justify-content: flex-end;

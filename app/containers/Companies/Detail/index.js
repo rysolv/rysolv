@@ -7,17 +7,11 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import CompanyDetailView from 'components/Companies/Detail/CompanyDetailView';
 
+import { fetchInfo, inputChange } from '../actions';
 import {
-  fetchInfo,
-  inputChange,
-  searchContributors,
-  searchIssues,
-} from '../actions';
-import {
-  makeSelectCompanies,
   makeSelectCompaniesError,
+  makeSelectCompaniesFormattedData,
   makeSelectCompaniesLoading,
-  makeSelectCompaniesSearchDisabled,
 } from '../selectors';
 import { DetailWrapper } from './styledComponents';
 
@@ -34,18 +28,7 @@ export class DetailCompany extends React.PureComponent {
   }
 
   render() {
-    const {
-      data,
-      disabledContributors,
-      disabledIssues,
-      error,
-      handleInputChange,
-      handleNav,
-      handleSearchContributors,
-      handleSearchIssues,
-      loading,
-      search,
-    } = this.props;
+    const { data, error, handleInputChange, handleNav, loading } = this.props;
 
     return (
       <DetailWrapper>
@@ -55,13 +38,8 @@ export class DetailCompany extends React.PureComponent {
           error={error}
           loading={loading}
           propsToPassDown={{
-            disabledContributors,
-            disabledIssues,
             handleInputChange,
             handleNav,
-            handleSearchContributors,
-            handleSearchIssues,
-            search,
           }}
         />
       </DetailWrapper>
@@ -71,29 +49,21 @@ export class DetailCompany extends React.PureComponent {
 
 DetailCompany.propTypes = {
   data: T.object,
-  disabledContributors: T.bool,
-  disabledIssues: T.bool,
   dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
-  handleSearchContributors: T.func,
-  handleSearchIssues: T.func,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
-  search: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Companies
    */
-  data: makeSelectCompanies('company'),
-  disabledContributors: makeSelectCompaniesSearchDisabled('contributorInput'),
-  disabledIssues: makeSelectCompaniesSearchDisabled('issueInput'),
+  data: makeSelectCompaniesFormattedData(),
   error: makeSelectCompaniesError('fetchCompany'),
   loading: makeSelectCompaniesLoading('fetchCompany'),
-  search: makeSelectCompanies('search'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -103,8 +73,6 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
-    handleSearchContributors: payload => dispatch(searchContributors(payload)),
-    handleSearchIssues: payload => dispatch(searchIssues(payload)),
     /**
      * Reducer : Router
      */

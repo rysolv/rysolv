@@ -13,10 +13,10 @@ import {
 const CompanyContributorsTab = ({ contributors, handleNav }) => (
   <ContributorsList>
     {contributors.map(
-      ({ firstName, id, isOwner, lastName, user, userImage }) => (
+      ({ firstName, id, isOwner, lastName, username, profilePic }) => (
         <ContributorListItem>
           <ContributorContent>
-            <ContributorImage src={userImage} />
+            <ContributorImage src={profilePic} />
             <ContributorDetails>
               <span>
                 <ContributorName
@@ -26,7 +26,7 @@ const CompanyContributorsTab = ({ contributors, handleNav }) => (
                 </ContributorName>{' '}
                 {isOwner ? '– Owner' : ''}
               </span>
-              {user}
+              {username}
             </ContributorDetails>
           </ContributorContent>
         </ContributorListItem>

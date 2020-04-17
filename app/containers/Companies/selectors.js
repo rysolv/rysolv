@@ -1,4 +1,7 @@
 import { createSelector } from 'reselect';
+
+import { filterContributors } from 'utils/filterHelpers';
+
 import { initialState } from './reducer';
 
 const selectCompaniesDomain = state => state.companies || initialState;
@@ -35,6 +38,30 @@ const makeSelectCompaniesError = prop =>
     error => error[prop],
   );
 
+const makeSelectCompaniesFormattedData = () =>
+  createSelector(
+    makeSelectCompanies('company'),
+    makeSelectCompanies('search'),
+    makeSelectCompanies('shouldSearch'),
+    (company, { contributorInput }) => {
+      const { contributors, ownerId, ...restProps } = company;
+      if (contributors) {
+        const filteredContributors = filterContributors(
+          contributors,
+          contributorInput,
+        );
+        const formattedContributors = filteredContributors.map(contributor => {
+          const { id } = contributor;
+          // eslint-disable-next-line no-param-reassign
+          contributor.isOwner = id === ownerId;
+          return contributor;
+        });
+        return { contributors: formattedContributors, ...restProps };
+      }
+      return {};
+    },
+  );
+
 const makeSelectCompaniesLoading = prop =>
   createSelector(
     makeSelectCompanies('loading'),
@@ -69,6 +96,7 @@ export {
   makeSelectCompaniesDisabled,
   makeSelectCompaniesEditRequest,
   makeSelectCompaniesError,
+  makeSelectCompaniesFormattedData,
   makeSelectCompaniesLoading,
   makeSelectCompaniesRequestBody,
   makeSelectCompaniesSearchDisabled,
