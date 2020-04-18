@@ -26,7 +26,14 @@ import {
 const CreditCardIcon = iconDictionary('creditCard');
 const PaypalIcon = iconDictionary('paypal');
 
-const PaymentPortal = ({ amountFunded, handleNav, isFunded, users }) => {
+const PaymentPortal = ({
+  amountFunded,
+  dispatchVerifyRecaptcha,
+  dispatchVerifyRecaptchaFailure,
+  handleNav,
+  isFunded,
+  users,
+}) => {
   const [fundAmount, setFundAmount] = useState('2');
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
@@ -89,6 +96,8 @@ const PaymentPortal = ({ amountFunded, handleNav, isFunded, users }) => {
     creditCardNumber,
     cvcValue,
     dateValue,
+    dispatchVerifyRecaptcha,
+    dispatchVerifyRecaptchaFailure,
     handleCreditCardNumberChange,
     handleCvcChange,
     handleDateChange,
@@ -157,6 +166,8 @@ const PaymentPortal = ({ amountFunded, handleNav, isFunded, users }) => {
 
 PaymentPortal.propTypes = {
   amountFunded: T.string,
+  dispatchVerifyRecaptcha: T.func,
+  dispatchVerifyRecaptchaFailure: T.func,
   handleNav: T.func,
   isFunded: T.bool,
   users: T.array,

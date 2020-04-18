@@ -1,7 +1,6 @@
 import React from 'react';
 import T from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 
 import { ConditionalRender } from 'components/base_ui';
 
@@ -9,7 +8,7 @@ import CompanyContributorsTab from './Contributors/CompanyContributorsTab';
 import CompanyIssuesTab from './Issues/CompanyIssuesTab';
 import ContributorsSearchHeader from './Contributors/ContributorsSearchHeader';
 import IssuesSearchHeader from './Issues/IssuesSearchHeader';
-import { StyledPaper } from './styledComponents';
+import { StyledPaper, StyledTab } from './styledComponents';
 
 const CompanyDetailTabs = ({
   contributors,
@@ -31,8 +30,8 @@ const CompanyDetailTabs = ({
         indicatorColor="primary"
         textColor="primary"
       >
-        <Tab label="Issues" />
-        <Tab label="Contributors" />
+        <StyledTab label="Issues" />
+        <StyledTab label="Contributors" />
       </Tabs>
       <ConditionalRender
         Component={

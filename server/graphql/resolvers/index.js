@@ -1,6 +1,6 @@
 const issueResolver = require('./issueResolver');
-const userResolver = require('./userResolver');
 const organizationResolver = require('./organzationResolver');
+const userResolver = require('./userResolver');
 const { objectScalerType } = require('./scalers');
 
 const rootResolver = {

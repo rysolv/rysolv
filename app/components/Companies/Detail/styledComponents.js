@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
+import Tab from '@material-ui/core/Tab';
 
 import { BaseDropDownMenu } from 'components/base_ui';
 import { UpvotePanel } from 'components/Issues/styledComponents';
@@ -74,7 +75,7 @@ export const ContributorName = styled.span`
 export const ContributorsList = styled.ul``;
 
 export const ContributorsSearchHeaderContainer = styled.div`
-  margin: 2.4rem 0;
+  margin: 3em 0;
   width: 100%;
 `;
 
@@ -232,7 +233,7 @@ export const IssueOpenWrapper = styled.div`
 export const IssuesSearchHeaderContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
-  margin: 2.4rem 0;
+  margin: 3rem 0;
   width: 100%;
 `;
 
@@ -306,6 +307,10 @@ export const StyledIcon = styled.div`
 export const StyledPaper = styled(Paper)`
   box-shadow: none;
   width: 100%;
+`;
+
+export const StyledTab = styled(Tab)`
+  font-size: ${defaultFontSize};
 `;
 
 export const StyledTitled = styled.div`
