@@ -8,7 +8,7 @@ import {
   ContributorListItem,
   ContributorName,
   ContributorsList,
-} from './styledComponents';
+} from '../styledComponents';
 
 const CompanyContributorsTab = ({ contributors, handleNav }) => (
   <ContributorsList>

@@ -9,7 +9,11 @@ const OrganizationSeed = [
     'Flutter is Google’s UI toolkit for building beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.', // description
     'https://github.com/flutter', // repo_url
     'https://flutter.dev/', // company_url
-    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues
+    [
+      '34b0c547-5558-4c47-8278-7ef113a1dee0',
+      '0ce2d9ae-ba16-4013-af33-0cbb8cbc37a2',
+      '20619026-0f61-4772-9bb8-36ed643d4dcd',
+    ], // issues
     'https://cdn.worldvectorlogo.com/logos/flutter-logo.svg', // logo
     false, // verified
     [

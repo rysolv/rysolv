@@ -34,28 +34,6 @@ const VerifiedComponent = (
   </VerifiedWrapper>
 );
 
-// const contributors = [
-//   {
-//     firstName: 'Aart',
-//     id: '2432523',
-//     isOwner: true,
-//     lastName: 'Bik',
-//     user: 'aartbik',
-//     userImage:
-//       'https://avatars3.githubusercontent.com/u/39774503?s=400&u=a8b7f84c5afb16198b76cc6d9e046e16c6739988&v=4',
-//   },
-//   {
-//     firstName: 'Chris',
-//     id: '3432434',
-//     isOwner: false,
-//     lastName: 'Bracken',
-//     user: 'cbracken',
-//     userImage: 'https://avatars1.githubusercontent.com/u/351029?s=400&v=4',
-//   },
-// ];
-
-const issues = [{}];
-
 const fundData = [
   {
     fundAmount: '10',
@@ -78,14 +56,16 @@ export class CompanyDetailView extends React.PureComponent {
     const {
       data: {
         companyUrl,
-        repoUrl,
+        contributors,
         description,
+        issues,
         languages,
         logo,
         name,
+        repoUrl,
         verified,
-        contributors,
       },
+      filterValues,
       handleInputChange,
       handleNav,
     } = this.props;
@@ -118,6 +98,7 @@ export class CompanyDetailView extends React.PureComponent {
           <MainTabs>
             <CompanyDetailTabs
               contributors={contributors}
+              filterValues={filterValues}
               handleInputChange={handleInputChange}
               handleNav={handleNav}
               issues={issues}
@@ -136,6 +117,7 @@ export class CompanyDetailView extends React.PureComponent {
 
 CompanyDetailView.propTypes = {
   data: T.object,
+  filterValues: T.object.isRequired,
   handleInputChange: T.func,
   handleNav: T.func,
 };

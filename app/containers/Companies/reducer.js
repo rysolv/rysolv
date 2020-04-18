@@ -54,6 +54,9 @@ export const initialState = {
     verified: { error: '', value: '' },
     companyUrl: { error: '', value: '' },
   },
+  filter: {
+    issues: 'Newest',
+  },
   loading: {
     addCompany: false,
     companies: false,
@@ -153,7 +156,11 @@ const companiesReducer = produce((draft, { payload, type }) => {
     }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
-      draft[form][field].value = value;
+      if (form === 'filter') {
+        draft[form][field] = value;
+      } else {
+        draft[form][field].value = value;
+      }
       break;
     }
     case INPUT_ERROR: {
