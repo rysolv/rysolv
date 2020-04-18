@@ -3,6 +3,17 @@ const { buildSchema } = require('graphql');
 module.exports = buildSchema(`
   scalar Object
 
+  type Comment {
+    commentId: ID
+    createdDate: Object
+    modifiedDate: Object
+    target: String
+    body: String
+    userId: ID
+    username: String
+    profilePic: String
+  }
+
   type Issue {
     id: ID!
     createdDate: Object
@@ -108,6 +119,9 @@ module.exports = buildSchema(`
     getIssues: [Issue!]!
     getUsers: [User!]!
     getOrganizations: [Organization!]!
+    getComments: [Comment]
+
+    issueComments(id: ID!): [Comment]
 
     oneIssue(id: ID!): IssueResult
     oneUser(id: ID!): User!

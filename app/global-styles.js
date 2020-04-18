@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { bodyColor } from './defaultStyleHelper';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -29,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #app {
-    background-color: #f6f8fa;
+    background-color: ${bodyColor};
     min-height: 100%;
     min-width: 100%;
   }

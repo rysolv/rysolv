@@ -6,7 +6,7 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 
-import IssueDetail from 'components/IssueDetail';
+import IssueDetail from 'components/Issues/Detail';
 import { clearAlerts, fetchIssueDetail, upvoteIssue } from '../actions';
 import {
   makeSelectIssueDetail,

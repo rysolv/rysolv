@@ -5,6 +5,8 @@ export const Container = styled.section`
   flex-direction: row;
   justify-content: space-between;
   height: 4rem;
+  background-color: #37474f;
+  color: white;
 `;
 
 export const HeaderSection = styled.section`

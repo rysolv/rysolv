@@ -1,4 +1,5 @@
 // Colors
+export const bodyColor = '#fafafa';
 export const borderColor = '#cfd8dc';
 export const commentHeaderColor = '#eceff1';
 export const darkTextColor = '#263238';

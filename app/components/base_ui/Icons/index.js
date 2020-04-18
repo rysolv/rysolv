@@ -2,6 +2,7 @@ import BackIcon from './BackIcon';
 import CodeIcon from './CodeIcon';
 import CommentIcon from './CommentIcon';
 import IconToolTip from './IconTooltip';
+import MonocleIcon from './Monocle';
 import Settings from './Settings';
 import Star from './Star';
 import Upvote from './Upvote';
@@ -12,6 +13,7 @@ export {
   CodeIcon,
   CommentIcon,
   IconToolTip,
+  MonocleIcon,
   Settings,
   Star,
   Upvote,

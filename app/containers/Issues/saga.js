@@ -67,6 +67,23 @@ const generateOrganizationQuery = id => {
   ];
 };
 
+const generateUserQuery = id => {
+  // Query User
+  const userQuery = `
+  query {
+    oneUser(id:"${id}") {
+      username,
+      profilePic
+    }
+  }
+  `;
+
+  return JSON.stringify({
+    query: userQuery,
+    variables: {},
+  });
+};
+
 export function* fetchIssueDetailSaga({ payload }) {
   const { id } = payload;
   const query = `
@@ -94,36 +111,36 @@ export function* fetchIssueDetailSaga({ payload }) {
           message
         }
       }
+      issueComments(id: "${id}") {
+        body
+        username
+        createdDate
+        profilePic
+      }
     }
   `;
   try {
+    // Query Issue Detail
     const issueQuery = JSON.stringify({
       query,
       variables: {},
     });
     const {
-      data: { oneIssue },
+      data: { oneIssue, issueComments },
     } = yield call(post, '/graphql', issueQuery);
-    const userQuery = `
-    query {
-      oneUser(id:"${oneIssue.contributor[0]}") {
-        username,
-        profilePic
-      }
-    }
-    `;
 
-    const userDetail = JSON.stringify({
-      query: userQuery,
-      variables: {},
-    });
+    oneIssue.comments = issueComments;
 
+    const userQuery = generateUserQuery(oneIssue.contributor[0]);
+
+    // Query Users
     const {
       data: {
         oneUser: { username, profilePic },
       },
-    } = yield call(post, '/graphql', userDetail);
+    } = yield call(post, '/graphql', userQuery);
 
+    // Add data to IssueDetail
     oneIssue.user = {
       username,
       profilePic,

@@ -9,38 +9,39 @@ export const ProfileContainer = styled.div`
 
 export const CommentContainer = styled.div`
   background-color: white;
-  vertical-align: top;
-  display: inline-block;
-  width: 100%;
-  border: ${props => (props.primary ? `none` : `1px solid ${borderColor}`)};
   border-radius: 0.25rem;
+  border: ${props => (props.primary ? `none` : `1px solid ${borderColor}`)};
+  display: inline-block;
   overflow: hidden;
+  vertical-align: top;
+  width: 100%;
 `;
 
 export const CommentHeader = styled.div`
-  width: 100%;
-  padding: 0.4rem;
   background-color: ${props => (props.primary ? `none` : commentHeaderColor)};
   border-bottom: 1px solid ${borderColor};
   font-size: 0.8rem;
+  padding: 0.4rem;
+  width: 100%;
 `;
 
 export const CommentBody = styled.div`
-  width: 100%;
-  padding: 0 1rem;
   min-height: 4rem;
+  padding: 0 1rem;
+  width: 100%;
   * {
-    color: ${textColor};
     background-color: white;
-    width: 100%;
+    color: ${textColor};
     font-style: inherit;
+    width: 100%;
   }
 `;
 
 export const ProfileLine = styled.div`
+  background-color: ${borderColor};
   display: inline-block;
-  width: 1.5rem;
   height: 0.2rem;
-  vertical-align: top;
   margin: 2.5rem 0 0 0;
+  vertical-align: top;
+  width: 1.5rem;
 `;

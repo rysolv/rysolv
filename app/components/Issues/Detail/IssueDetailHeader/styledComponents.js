@@ -1,35 +1,6 @@
 import styled from 'styled-components';
 
-import {
-  borderColor,
-  darkTextColor,
-  moneyGreen,
-  textColor,
-} from 'defaultStyleHelper';
-import { FlatIconButton } from '../base_ui';
-
-export const IssueDetailWrapper = styled.div`
-  background-color: white;
-  border-radius: 0.25rem;
-  display: flex;
-  margin: 0;
-  max-width: 75rem;
-  min-height: 40vh;
-  overflow: hidden;
-  padding: 0 3rem 3rem 0;
-`;
-
-export const LeftPanel = styled.div`
-  width: 3rem;
-`;
-
-export const UpvotePanel = styled.div`
-  background-color: #e0e0e0;
-  height: 15rem;
-  padding: 0.5rem;
-  text-align: center;
-  width: 100%;
-`;
+import { darkTextColor, moneyGreen, textColor } from 'defaultStyleHelper';
 
 export const IssueDetailTopBar = styled.div`
   background-color: white;
@@ -57,12 +28,6 @@ export const IssueLanguage = styled.div`
   display: flex;
   display: inline-block;
   font-weight: bold;
-`;
-
-export const IssueDetailColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1rem 3rem 3rem 3rem;
 `;
 
 export const NameWrapper = styled.div`
@@ -101,17 +66,4 @@ export const IssueSubHeader = styled.div`
 export const IssueSubItem = styled.div`
   color: ${textColor};
   margin: 0 1rem 0 1rem;
-`;
-
-export const StyledFlatIconButton = styled(FlatIconButton)`
-  min-width: 0;
-  padding: 0;
-`;
-
-export const Divider = styled.div`
-  border-bottom: 1px solid ${borderColor};
-  color: ${textColor};
-  font-family: inherit;
-  margin: '1rem 0';
-  width: 100%;
 `;

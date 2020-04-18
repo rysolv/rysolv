@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SplashImage = styled.div`
   height: 22rem;
   margin: 0;
-  background-color: rgb(50, 168, 82);
+  background-color: #90a4ae;
   padding: 2rem;
 `;
 

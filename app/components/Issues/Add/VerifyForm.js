@@ -3,7 +3,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import { issueDataDictionary } from 'containers/Issues/constants';
-import CommentCard from 'components/CommentCard';
+import { CommentCard } from 'components/Comments';
 
 import { DataWrapper } from './styledComponents';
 

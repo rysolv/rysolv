@@ -4,6 +4,8 @@ import { hyperlinkColor } from 'defaultStyleHelper';
 
 export const StyledBack = styled.div`
   color: inherit;
+  display: inline-block;
+  text-align: center;
 `;
 
 export const StyledCode = styled.div`
@@ -45,7 +47,7 @@ export const StyledVerified = styled.div`
 `;
 
 export const StyledUpvote = styled.div`
-  color: gray;
+  color: #37474f;
   display: inline-block;
   text-align: center;
 
