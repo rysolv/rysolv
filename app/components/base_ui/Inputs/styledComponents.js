@@ -18,7 +18,7 @@ export const StyledBaseInput = styled(OutlinedInput)`
   background: white;
   border-radius: 0.5rem;
   color: rgba(0, 0, 0, 0.7);
-  font-size: 1rem;
+  font-size: 1.4rem;
   height: 3rem;
   overflow: hidden;
   width: 100%;

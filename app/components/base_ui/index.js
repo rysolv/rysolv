@@ -1,4 +1,5 @@
 export { default as BaseContainer } from './Containers';
+export { default as BaseDropDownMenu } from './DropDownMenu';
 export { default as BaseExpansionPanel } from './ExpansionPanel';
 export { default as CheckboxWithLabel } from './Checkbox';
 export { default as ConditionalRender } from './ConditionalRender';

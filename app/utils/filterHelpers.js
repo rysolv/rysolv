@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary, prettier/prettier */
 export const filterContributors = (array, { value }) => {
   const filteredArray = array.filter(({ firstName, lastName, username }) => {
     if (
@@ -10,5 +11,31 @@ export const filterContributors = (array, { value }) => {
     return false;
   });
 
+  return filteredArray;
+};
+
+export const filterIssues = (array, { issues }, { value }) => {
+  // eslint-disable-next-line array-callback-return, consistent-return
+  const sortedArray = array.sort((a, b) => {
+    if (issues === 'Newest') {
+      if (a.modifiedDate < b.modifiedDate) {
+        return 1
+      } 
+      return -1;
+    }
+    if (issues === 'Most Funded') {
+      if (a.value < b.value) {
+        return 1
+      }
+      return -1;
+    }
+  }
+  );
+  const filteredArray = sortedArray.filter(({ name }) => {
+    if (name.toLowerCase().includes(value.toLowerCase())) {
+      return true;
+    }
+    return false;
+  });
   return filteredArray;
 };

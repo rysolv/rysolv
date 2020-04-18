@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ReCAPTCHA from 'react-google-recaptcha';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import {
@@ -117,6 +118,14 @@ export const StyledLabel = styled.div`
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   height: 3rem;
   width: auto;
+`;
+
+export const StyledReCAPTCHA = styled(ReCAPTCHA)`
+  align-tems: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  transform: scale(0.8);
 `;
 
 export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`

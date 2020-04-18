@@ -1,6 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { createSelector } from 'reselect';
+import extend from 'lodash/extend';
 
-import { filterContributors } from 'utils/filterHelpers';
+import { filterContributors, filterIssues } from 'utils/filterHelpers';
 
 import { initialState } from './reducer';
 
@@ -41,10 +43,13 @@ const makeSelectCompaniesError = prop =>
 const makeSelectCompaniesFormattedData = () =>
   createSelector(
     makeSelectCompanies('company'),
+    makeSelectCompanies('filter'),
     makeSelectCompanies('search'),
     makeSelectCompanies('shouldSearch'),
-    (company, { contributorInput }) => {
-      const { contributors, ownerId, ...restProps } = company;
+    (company, filter, { contributorInput, issueInput }) => {
+      const { contributors, issues, ownerId, ...restProps } = company;
+      const newIssues = extend([], issues);
+      let returnObj = {};
       if (contributors) {
         const filteredContributors = filterContributors(
           contributors,
@@ -56,9 +61,13 @@ const makeSelectCompaniesFormattedData = () =>
           contributor.isOwner = id === ownerId;
           return contributor;
         });
-        return { contributors: formattedContributors, ...restProps };
+        returnObj = { contributors: formattedContributors, ...restProps };
       }
-      return {};
+      if (issues) {
+        const filteredIssues = filterIssues(newIssues, filter, issueInput);
+        returnObj = { issues: filteredIssues, ...returnObj };
+      }
+      return returnObj;
     },
   );
 

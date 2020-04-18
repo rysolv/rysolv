@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+// const { v4: uuidv4 } = require('uuid');
 
 // issues(id, createdDate, modifiedDate, name, body, repo)
 const issueSeed = [
@@ -21,7 +21,7 @@ const issueSeed = [
     true, // open
   ],
   [
-    uuidv4(),
+    '34b0c547-5558-4c47-8278-7ef113a1dee0',
     new Date(),
     new Date(),
     '1a64925c-858f-42b4-a09c-39d5699375f4',
@@ -39,7 +39,7 @@ const issueSeed = [
     false,
   ],
   [
-    uuidv4(),
+    '0ce2d9ae-ba16-4013-af33-0cbb8cbc37a2',
     new Date(),
     new Date(),
     '79a3ef7b-bf7d-4e4c-abb8-08cd521d5506',

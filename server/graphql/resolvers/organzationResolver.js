@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const {
   createOrganization,
   deleteOrganization,
+  getOneIssue,
   getOneOrganization,
   getOneUser,
   getOrganizations,
@@ -54,7 +55,7 @@ module.exports = {
     const { id } = args;
     try {
       const [result] = await getOneOrganization('organizations', id);
-      const { contributors } = result;
+      const { contributors, issues } = result;
       const contributorsResult = await Promise.all(
         contributors.map(async contributorId => {
           const [userResult] = await getOneUser('users', contributorId);
@@ -62,6 +63,13 @@ module.exports = {
         }),
       );
       result.contributors = contributorsResult;
+      const issuesResult = await Promise.all(
+        issues.map(async issueId => {
+          const [issueResult] = await getOneIssue('issues', issueId);
+          return issueResult;
+        }),
+      );
+      result.issues = issuesResult;
       return {
         __typename: 'Organization',
         ...result,

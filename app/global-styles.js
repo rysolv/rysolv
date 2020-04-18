@@ -3,7 +3,7 @@ import { bodyColor } from './defaultStyleHelper';
 
 const GlobalStyle = createGlobalStyle`
   html {
-    font-size: 90%;
+    font-size: 85%;
   }
 
   html,

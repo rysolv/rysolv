@@ -1,18 +1,18 @@
 import React from 'react';
 import T from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 
 import { ConditionalRender } from 'components/base_ui';
 
-import CompanyContributorsTab from './CompanyContributorsTab';
-import CompanyIssuesTab from './CompanyIssuesTab';
-import ContributorsSearchHeader from './ContributorsSearchHeader';
-import IssuesSearchHeader from './IssuesSearchHeader';
-import { StyledPaper } from './styledComponents';
+import CompanyContributorsTab from './Contributors/CompanyContributorsTab';
+import CompanyIssuesTab from './Issues/CompanyIssuesTab';
+import ContributorsSearchHeader from './Contributors/ContributorsSearchHeader';
+import IssuesSearchHeader from './Issues/IssuesSearchHeader';
+import { StyledPaper, StyledTab } from './styledComponents';
 
 const CompanyDetailTabs = ({
   contributors,
+  filterValues,
   handleInputChange,
   handleNav,
   issues,
@@ -21,6 +21,7 @@ const CompanyDetailTabs = ({
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const { issues: issuesFilter } = filterValues;
   return (
     <StyledPaper>
       <Tabs
@@ -29,15 +30,18 @@ const CompanyDetailTabs = ({
         indicatorColor="primary"
         textColor="primary"
       >
-        <Tab label="Issues" />
-        <Tab label="Contributors" />
+        <StyledTab label="Issues" />
+        <StyledTab label="Contributors" />
       </Tabs>
       <ConditionalRender
         Component={
           <ContributorsSearchHeader handleInputChange={handleInputChange} />
         }
         FallbackComponent={
-          <IssuesSearchHeader handleInputChange={handleInputChange} />
+          <IssuesSearchHeader
+            handleInputChange={handleInputChange}
+            issuesFilter={issuesFilter}
+          />
         }
         shouldRender={!!value}
       />
@@ -57,6 +61,7 @@ const CompanyDetailTabs = ({
 
 CompanyDetailTabs.propTypes = {
   contributors: T.array,
+  filterValues: T.object.isRequired,
   handleInputChange: T.func,
   handleNav: T.func,
   issues: T.array,

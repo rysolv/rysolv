@@ -7,13 +7,13 @@ import iconDictionary from 'utils/iconDictionary';
 import {
   BaseInputWrapper,
   ContributorsSearchHeaderContainer,
-} from './styledComponents';
+} from '../styledComponents';
 
 const SearchIcon = iconDictionary('search');
 
 const ContributorsSearchHeader = ({ handleInputChange }) => (
   <ContributorsSearchHeaderContainer>
-    <BaseInputWrapper>
+    <BaseInputWrapper hasMargin>
       <BaseInputWithAdornment
         adornmentComponent={SearchIcon}
         onChange={e =>

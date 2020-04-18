@@ -91,7 +91,7 @@ module.exports = buildSchema(`
     description: String!
     repoUrl: String!
     companyUrl: String
-    issues: [String]
+    issues: [Object]
     logo: String
     verified: Boolean
     contributors: [Object]

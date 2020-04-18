@@ -9,6 +9,7 @@ import CompanyDetailView from 'components/Companies/Detail/CompanyDetailView';
 
 import { fetchInfo, inputChange } from '../actions';
 import {
+  makeSelectCompanies,
   makeSelectCompaniesError,
   makeSelectCompaniesFormattedData,
   makeSelectCompaniesLoading,
@@ -28,7 +29,14 @@ export class DetailCompany extends React.PureComponent {
   }
 
   render() {
-    const { data, error, handleInputChange, handleNav, loading } = this.props;
+    const {
+      data,
+      error,
+      filterValues,
+      handleInputChange,
+      handleNav,
+      loading,
+    } = this.props;
 
     return (
       <DetailWrapper>
@@ -36,8 +44,10 @@ export class DetailCompany extends React.PureComponent {
           asyncData={data}
           component={CompanyDetailView}
           error={error}
+          isRequiredData
           loading={loading}
           propsToPassDown={{
+            filterValues,
             handleInputChange,
             handleNav,
           }}
@@ -51,6 +61,7 @@ DetailCompany.propTypes = {
   data: T.object,
   dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]).isRequired,
+  filterValues: T.object.isRequired,
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
   loading: T.bool.isRequired,
@@ -63,6 +74,7 @@ const mapStateToProps = createStructuredSelector({
    */
   data: makeSelectCompaniesFormattedData(),
   error: makeSelectCompaniesError('fetchCompany'),
+  filterValues: makeSelectCompanies('filter'),
   loading: makeSelectCompaniesLoading('fetchCompany'),
 });
 
