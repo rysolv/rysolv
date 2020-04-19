@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import { BaseContainer, Upvote, BackNav } from 'components/base_ui';
-import { CommentCard, NoComment } from 'components/Comments';
+import { CommentCard, NoComment, NewComment } from 'components/Comments';
 import IssueDetailHeader from './IssueDetailHeader';
 
 import {
@@ -59,7 +59,7 @@ const IssueDetail = ({ data, handleUpvote, handleNav }) => {
   return (
     <BaseContainer>
       <BackNav
-        label="Back to browse"
+        label="Back to Issues"
         handleNav={handleNav}
         path="/admin/issues"
       />
@@ -76,16 +76,21 @@ const IssueDetail = ({ data, handleUpvote, handleNav }) => {
         <IssueDetailColumn>
           <IssueDetailHeader data={data} />
 
-          <CommentCard
-            primary
-            body={body}
-            date={createdDate}
-            userProfile={primaryUser}
-            handleNav={handleNav}
-          />
+          <div style={{ minHeight: '30rem' }}>
+            <CommentCard
+              primary
+              body={body}
+              date={createdDate}
+              userProfile={primaryUser}
+              handleNav={handleNav}
+            />
+          </div>
 
           <Divider>Comments</Divider>
           {commentsDiv}
+
+          <Divider>Leave a Comment</Divider>
+          <NewComment />
         </IssueDetailColumn>
       </IssueDetailWrapper>
     </BaseContainer>

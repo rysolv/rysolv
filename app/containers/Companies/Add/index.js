@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
+import { BackNav } from 'components/base_ui';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 
@@ -27,17 +29,24 @@ export class AddCompany extends React.PureComponent {
   }
 
   render() {
-    const { data, loading, step } = this.props;
+    const { data, loading, step, handleNav } = this.props;
 
     const StepToRender = addCompanyDictionary[step];
     return (
-      <AddWrapper>
-        <AsyncRender
-          asyncData={{ data }}
-          component={StepToRender}
-          loading={loading}
+      <Fragment>
+        <BackNav
+          label="Back to Organizations"
+          handleNav={handleNav}
+          path="/admin/companies"
         />
-      </AddWrapper>
+        <AddWrapper>
+          <AsyncRender
+            asyncData={{ data }}
+            component={StepToRender}
+            loading={loading}
+          />
+        </AddWrapper>
+      </Fragment>
     );
   }
 }
@@ -46,6 +55,7 @@ AddCompany.propTypes = {
   data: T.object,
   dispatchClearForm: T.func,
   handleIncrementStep: T.func,
+  handleNav: T.func,
   loading: T.bool.isRequired,
   step: T.number.isRequired,
 };
@@ -66,6 +76,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchClearForm: () => dispatch(clearForm()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
+    handleNav: route => dispatch(push(route)),
   };
 }
 

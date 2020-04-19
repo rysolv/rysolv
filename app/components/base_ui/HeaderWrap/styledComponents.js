@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import { headerColor } from 'defaultStyleHelper';
 
 export const Container = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   height: 4rem;
-  background-color: #37474f;
+  background-color: ${headerColor};
   color: white;
 `;
 

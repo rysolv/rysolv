@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { borderColor, commentHeaderColor, textColor } from 'defaultStyleHelper';
+import { PrimaryButton } from 'components/base_ui';
 
 export const ProfileContainer = styled.div`
   display: inline-block;
@@ -44,4 +45,16 @@ export const ProfileLine = styled.div`
   margin: 2.5rem 0 0 0;
   vertical-align: top;
   width: 1.5rem;
+`;
+
+export const StyledNoComments = styled.div`
+  color: ${textColor};
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 2rem 0;
+`;
+
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  width: 8rem;
+  align-self: flex-end;
 `;

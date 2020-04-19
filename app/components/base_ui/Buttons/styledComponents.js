@@ -21,7 +21,8 @@ const baseButtonStyle = css`
   font-size: 1rem;
   font-weight: 400;
   margin: 1rem;
-  width: 6.5rem;
+  min-width: 6.5rem;
+  width: auto;
 `;
 
 export const PrimaryButton = styled(BaseButton)`

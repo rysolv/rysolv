@@ -1,14 +1,38 @@
 import styled from 'styled-components';
+import { markdownHeader } from 'defaultStyleHelper';
 import { SecondaryButton } from '../base_ui';
 
 export const MarkdownContainer = styled.div`
   width: 100%;
   margin: 0;
-  & .CodeMirror-wrap:focus-within {
-    border-color: #78909c;
-    -webkit-box-shadow: 0px 0px 5px 0px #78909c;
-    -moz-box-shadow: 0px 0px 5px 0px #78909c;
-    box-shadow: 0px 0px 5px 0px #78909c;
+
+  .editor-toolbar,
+  a:before,
+  a:active,
+  .fa,
+  .fa:hover {
+    background-color: ${markdownHeader} !important;
+    color: white;
+    * {
+      background-color: ${markdownHeader};
+    }
+  }
+
+  .editor-toolbar {
+    opacity: 1 !important;
+  }
+
+  .CodeMirror,
+  .CodeMirror-scroll {
+    transition: min-height 0.2s;
+    min-height: ${props => (props.comment ? '5rem' : '20rem')}};
+  }
+
+  &:focus-within {
+    .CodeMirror,
+    .CodeMirror-scroll {
+      min-height: ${props => (props.comment ? '5.5rem' : '20rem')}};
+    }
   }
 `;
 
@@ -28,6 +52,13 @@ export const HTMLContainer = styled.div`
 `;
 
 export const EditContainer = styled.div`
+  & :focus-within {
+    .CodeMirror-wrap,
+    .editor-toolbar {
+      border-color: #78909c;
+    }
+  }
+
   display: ${props => (props.view ? 'block' : 'none')};
   * {
     width: auto;

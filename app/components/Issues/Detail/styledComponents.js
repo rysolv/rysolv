@@ -23,6 +23,7 @@ export const UpvotePanel = styled.div`
   height: 15rem;
   padding: 0.5rem;
   text-align: center;
+  border-radius: 0.25rem;
   width: 100%;
 `;
 
@@ -49,6 +50,7 @@ export const Divider = styled.div`
   border-bottom: 1px solid ${borderColor};
   color: ${textColor};
   font-family: inherit;
-  margin: 4rem 0 1rem 0;
+  margin: 1rem 0;
+  font-size: 1.4rem;
   width: 100%;
 `;

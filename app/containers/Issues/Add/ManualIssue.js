@@ -30,7 +30,7 @@ export class ManualIssue extends React.PureComponent {
           />
           <PrimaryButton
             disabled={!isDisabled}
-            label="Next"
+            label="Preview"
             onClick={() => handleIncrementStep({ step: 3, view: 'addIssue' })}
           />
         </ButtonGroup>

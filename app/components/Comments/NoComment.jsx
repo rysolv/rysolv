@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { StyledNoComments } from './styledComponents';
 
-const NoComment = () => <Fragment>No comments</Fragment>;
+const NoComment = () => <StyledNoComments>No comments</StyledNoComments>;
 
 export default NoComment;

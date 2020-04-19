@@ -50,6 +50,7 @@ export const KeyWrapper = styled.div`
 
 export const StyledMarkdownWrapper = styled.div`
   padding: 1rem;
+  font-size: 1.2rem;
   color: ${textColor};
 `;
 

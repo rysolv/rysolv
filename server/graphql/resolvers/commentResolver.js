@@ -55,7 +55,6 @@ module.exports = {
     const { id } = args;
     try {
       const result = await issueComments('comments', id);
-      console.log(result);
       return result;
     } catch (err) {
       return {
