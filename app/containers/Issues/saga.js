@@ -115,18 +115,22 @@ export function* fetchIssueDetailSaga({ payload }) {
 
     // Query Users
     const userQuery = `
-    query {
-      oneUser(column: "id", query:"${oneIssue.contributor[0]}") {
-        username,
-        profilePic
+      query {
+        oneUser(column: "id", query: "${oneIssue.contributor[0]}") {
+          username,
+          profilePic,
+        }
       }
-    }
     `;
+    const userGraphql = JSON.stringify({
+      query: userQuery,
+      variables: {},
+    });
     const {
       data: {
         oneUser: { username, profilePic },
       },
-    } = yield call(post, '/graphql', userQuery);
+    } = yield call(post, '/graphql', userGraphql);
 
     // Add data to IssueDetail
     oneIssue.user = {
