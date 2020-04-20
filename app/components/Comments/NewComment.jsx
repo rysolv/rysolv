@@ -30,9 +30,15 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
         />
       </ProfileContainer>
       <NewCommentContainer>
-        <Markdown comment edit body={body} handleInput={setBody} />
+        <Markdown
+          comment
+          edit
+          body={body}
+          handleInput={setBody}
+          handleEnter={handleClick}
+        />
         <StyledPrimaryButton
-          disabled={false}
+          disabled={!(body.length !== 0)}
           label="Comment"
           onClick={() => handleClick()}
         />

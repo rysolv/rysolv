@@ -13,9 +13,9 @@ const singleQuery = async queryText => {
   }
 };
 
-const singleItem = async (table, id, values) => {
+const singleItem = async (table, id, values, column = 'id') => {
   const queryValues = values || '*';
-  const queryText = `SELECT ${queryValues} FROM ${table} WHERE (id='${id}')`;
+  const queryText = `SELECT ${queryValues} FROM ${table} WHERE (${column}='${id}')`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };

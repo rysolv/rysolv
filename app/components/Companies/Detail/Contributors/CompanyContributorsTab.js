@@ -13,14 +13,14 @@ import {
 const CompanyContributorsTab = ({ contributors, handleNav }) => (
   <ContributorsList>
     {contributors.map(
-      ({ firstName, id, isOwner, lastName, username, profilePic }) => (
+      ({ firstName, isOwner, lastName, username, profilePic }) => (
         <ContributorListItem>
           <ContributorContent>
             <ContributorImage src={profilePic} />
             <ContributorDetails>
               <span>
                 <ContributorName
-                  onClick={() => handleNav(`/admin/users/detail/${id}`)}
+                  onClick={() => handleNav(`/admin/users/detail/${username}`)}
                 >
                   {firstName} {lastName}
                 </ContributorName>{' '}

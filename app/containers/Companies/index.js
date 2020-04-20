@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { push } from 'connected-react-router';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -45,10 +44,6 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Companies
      */
     dispatchClearForm: () => dispatch(clearForm()),
-    /*
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 

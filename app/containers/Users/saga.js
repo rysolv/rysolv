@@ -50,21 +50,27 @@ export function* deleteUserSaga({ payload }) {
 }
 
 export function* fetchInfoSaga({ payload }) {
-  const { itemId } = payload;
+  const { itemId, username } = payload;
+  const column = itemId ? 'id' : 'username';
+  const value = itemId || username;
   const query = `
-  query {
-    oneUser(id: "${itemId}") {
-      id,
-      createdDate,
-      firstName,
-      lastName,
-      rep,
-      profilePic,
-      activeNumber,
-      issuesNumber,
-      username,
+    query {
+      oneUser(column: "${column}", query: "${value}") {
+        id,
+        createdDate,
+        firstName,
+        lastName,
+        rep,
+        profilePic,
+        activeNumber,
+        issuesNumber,
+        username,
+        githubLink,
+        personalLink,
+        preferredLanguages,
+        stackoverflowLink,
+      }
     }
-  }
 `;
   try {
     const graphql = JSON.stringify({

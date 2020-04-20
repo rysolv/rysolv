@@ -56,9 +56,9 @@ module.exports = {
     }
   },
   oneUser: async args => {
-    const { id } = args;
+    const { column, query } = args;
     try {
-      const [result] = await getOneUser('users', id);
+      const [result] = await getOneUser('users', query, column);
       return result;
     } catch (err) {
       throw err;

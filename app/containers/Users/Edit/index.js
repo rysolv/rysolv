@@ -49,7 +49,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Users
    */
   data: makeSelectUsers('data'),
-  loading: makeSelectUsersLoading('editUser'),
+  loading: makeSelectUsersLoading('fetchUser'),
   step: makeSelectUsersStep('editUser'),
 });
 

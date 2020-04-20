@@ -24,7 +24,7 @@ class Markdown extends React.PureComponent {
     this.markdown = new SimpleMDE({
       autosave: true,
       element: textArea,
-      initialValue: this.props.body || '',
+      initialValue: this.props.body,
       status: false,
       placeholder: 'Type here. Use Markdown or HTML to format.',
       hideIcons: ['side-by-side', 'fullscreen'],
@@ -33,18 +33,18 @@ class Markdown extends React.PureComponent {
     this.markdown.codemirror.options.extraKeys.Tab = false;
     this.markdown.codemirror.options.extraKeys['Shift-Tab'] = false;
 
-    this.markdown.codemirror.on(
-      'blur',
-      () => {
-        this.props.handleInput(this.markdown.value());
-      },
-      { passive: true },
-    );
+    this.markdown.codemirror.on('keydown', (a, b) => {
+      this.props.handleInput(this.markdown.value());
+      if (b.key === 'Enter' && b.ctrlKey === true) {
+        this.props.handleEnter();
+      }
+    });
+
     this.updateHtml(this.props.body || '');
   }
 
   componentDidUpdate() {
-    this.markdown.value(this.props.body || '');
+    this.markdown.value(this.props.body);
     this.updateHtml(this.markdown.value());
     this.markdown.codemirror.execCommand('goDocEnd');
   }
@@ -80,6 +80,7 @@ class Markdown extends React.PureComponent {
 Markdown.propTypes = {
   body: T.string,
   handleInput: T.func,
+  handleEnter: T.func,
   edit: T.bool,
   comment: T.bool,
 };

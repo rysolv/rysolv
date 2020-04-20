@@ -6,6 +6,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
+import GitHub from '@material-ui/icons/GitHub';
 import Link from '@material-ui/icons/Link';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
@@ -16,8 +17,10 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Warning from '@material-ui/icons/Warning';
 import SiteLogo from './svg/SiteLogo';
 import CloseMenu from './svg/CloseMenu';
+import Gitlab from './svg/Gitlab';
 import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
+import Stackoverflow from './svg/Stackoverflow';
 
 export default (name, options) => {
   const icons = {
@@ -28,12 +31,15 @@ export default (name, options) => {
     comments: Comments,
     creditCard: CreditCard,
     delete: Delete,
+    github: GitHub,
+    gitlab: Gitlab,
     link: Link,
     monocle: Monocle,
     paypal: Paypal,
     search: Search,
     settings: Settings,
     siteLogo: SiteLogo,
+    stackoverflow: Stackoverflow,
     star: Star,
     successOutline: CheckCircleOutline,
     upvote: Upvote,

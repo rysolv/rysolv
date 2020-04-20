@@ -68,8 +68,8 @@ const deleteUser = async (table, id) => {
 };
 
 // GET single user
-const getOneUser = async (table, id) => {
-  const rows = await singleItem(table, id, userReturnValues);
+const getOneUser = async (table, query, column) => {
+  const rows = await singleItem(table, query, userReturnValues, column);
   if (rows) {
     return rows;
   }
