@@ -41,17 +41,6 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
   width: auto;
 `;
 
-export const HTMLContainer = styled.div`
-  padding: 0;
-  background-color: white;
-  display: ${props => (props.view ? 'none' : 'block')};
-  * {
-    font-family: inherit;
-    color: inherit;
-    width: 100%;
-  }
-`;
-
 export const EditContainer = styled.div`
   & :focus-within {
     .CodeMirror-wrap,
@@ -60,7 +49,6 @@ export const EditContainer = styled.div`
     }
   }
 
-  display: ${props => (props.view ? 'block' : 'none')};
   * {
     width: auto;
   }

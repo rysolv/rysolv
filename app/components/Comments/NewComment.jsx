@@ -32,7 +32,6 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
       <NewCommentContainer>
         <Markdown
           comment
-          edit
           body={body}
           handleInput={setBody}
           handleEnter={handleClick}
