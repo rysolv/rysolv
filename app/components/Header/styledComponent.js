@@ -8,7 +8,7 @@ export const Admin = styled(BaseLink)`
   svg {
     transform: translateY(-0.15rem);
   }
-  color: 'pink';
+  color: white;
   font-size: 1rem;
   font-weight: 500;
   margin-right: 4rem;
@@ -28,7 +28,7 @@ export const Login = styled(BaseLink)`
   svg {
     transform: translateY(-0.15rem);
   }
-  color: 'pink';
+  color: white;
   font-size: 1rem;
   font-weight: 500;
   margin-right: 4rem;
@@ -42,7 +42,7 @@ export const SignUp = styled(BaseLink)`
   svg {
     transform: translateY(-0.15rem);
   }
-  color: 'pink';
+  color: white;
   font-size: 1rem;
   font-weight: 500;
   margin-right: 4rem;
@@ -51,6 +51,7 @@ export const SignUp = styled(BaseLink)`
 
 export const Test = styled(BaseLink)`
   margin: 0 2rem 0 0;
+  color: white;
   &:hover {
     text-decoration: underline;
   }

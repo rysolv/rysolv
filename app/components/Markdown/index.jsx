@@ -24,9 +24,9 @@ class Markdown extends React.PureComponent {
     this.markdown = new SimpleMDE({
       autosave: true,
       element: textArea,
-      initialValue: this.props.body,
+      initialValue: this.props.body || '',
       status: false,
-      placeholder: 'Type here...',
+      placeholder: 'Type here. Use Markdown or HTML to format.',
       hideIcons: ['side-by-side', 'fullscreen'],
     });
 
@@ -36,11 +36,11 @@ class Markdown extends React.PureComponent {
     this.markdown.codemirror.on('blur', () => {
       this.props.handleInput(this.markdown.value());
     });
-    this.updateHtml(this.props.body);
+    this.updateHtml(this.props.body || '');
   }
 
   componentDidUpdate() {
-    this.markdown.value(this.props.body);
+    this.markdown.value(this.props.body || '');
     this.updateHtml(this.markdown.value());
     this.markdown.codemirror.execCommand('goDocEnd');
   }
@@ -63,7 +63,7 @@ class Markdown extends React.PureComponent {
 
   render() {
     return (
-      <MarkdownContainer>
+      <MarkdownContainer comment={this.props.comment}>
         <EditContainer view={this.state.edit} id="editorContainer">
           <textarea id="editor" />
         </EditContainer>
@@ -77,6 +77,7 @@ Markdown.propTypes = {
   body: T.string,
   handleInput: T.func,
   edit: T.bool,
+  comment: T.bool,
 };
 
 export default Markdown;
