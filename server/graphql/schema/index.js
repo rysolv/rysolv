@@ -110,7 +110,7 @@ module.exports = buildSchema(`
     getOrganizations: [Organization!]!
 
     oneIssue(id: ID!): IssueResult
-    oneUser(id: ID!): User!
+    oneUser(column: String!, query: String!): User!
     oneOrganization(id: ID!): OrganizationResult
 
     searchIssues(value: String!): [Issue!]!

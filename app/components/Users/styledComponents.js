@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { textColor } from 'defaultStyleHelper';
+import { hoverLinkColor, textColor } from 'defaultStyleHelper';
 
 export const ActiveContainer = styled.div`
   color: #388e3c;
@@ -63,8 +63,13 @@ export const MessageWrapper = styled.div`
   text-align: center;
 `;
 
-export const NameWrapper = styled.div`
+export const NameWrapper = styled.a`
   font-size: 1.4rem;
+
+  &:hover {
+    color: ${hoverLinkColor};
+    cursor: pointer;
+  }
 `;
 
 export const NumberContainer = styled.div`

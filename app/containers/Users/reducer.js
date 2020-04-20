@@ -52,7 +52,7 @@ export const initialState = {
     username: { error: '', value: '' },
   },
   error: {
-    editUser: false,
+    fetchUser: false,
     searchUsers: false,
     users: false,
   },
@@ -60,7 +60,7 @@ export const initialState = {
   loading: {
     addUser: false,
     deleteUser: false,
-    editUser: false,
+    fetchUser: false,
     searchUsers: false,
     updateUser: false,
     users: false,
@@ -73,6 +73,7 @@ export const initialState = {
     editUser: 1,
   },
   users: [],
+  user: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -106,8 +107,8 @@ const usersReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_INFO_FAILURE: {
       const { error } = payload;
-      draft.error.editUser = error;
-      draft.loading.editUser = false;
+      draft.error.fetchUser = error;
+      draft.loading.fetchUser = false;
       break;
     }
     case FETCH_INFO_SUCCESS: {
@@ -117,11 +118,12 @@ const usersReducer = produce((draft, { payload, type }) => {
           draft.editInfo[detail].value = oneUser[detail];
         }
       });
-      draft.loading.editUser = false;
+      draft.loading.fetchUser = false;
+      draft.user = oneUser;
       break;
     }
     case FETCH_INFO: {
-      draft.loading.editUser = true;
+      draft.loading.fetchUser = true;
       break;
     }
     case FETCH_USERS_FAILURE: {

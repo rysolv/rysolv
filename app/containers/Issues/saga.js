@@ -106,7 +106,7 @@ export function* fetchIssueDetailSaga({ payload }) {
     } = yield call(post, '/graphql', issueQuery);
     const userQuery = `
     query {
-      oneUser(id:"${oneIssue.contributor[0]}") {
+      oneUser(column: "id", query:"${oneIssue.contributor[0]}") {
         username,
         profilePic
       }

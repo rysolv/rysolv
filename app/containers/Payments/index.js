@@ -11,8 +11,22 @@ const PaymentsContainer = ({
   dispatchVerifyRecaptchFailure,
 }) => (
   <PaymentPortal
+    amountFunded="50"
+    form={{
+      name: { error: '', value: '' },
+      email: { error: '', value: '' },
+    }}
     dispatchVerifyRecaptcha={dispatchVerifyRecaptcha}
     dispatchVerifyRecaptchFailure={dispatchVerifyRecaptchFailure}
+    isFunded
+    handleInputChange={() => {}}
+    users={[
+      {
+        amount: 50,
+        image: 'https://rysolv.s3.us-east-2.amazonaws.com/annaprofile.png',
+        name: 'Anna Pojawis',
+      },
+    ]}
   />
 );
 

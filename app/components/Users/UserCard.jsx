@@ -47,7 +47,14 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
               <StyledSquare>
                 <StyledSettingWrapper>
                   <MemberWrapper>
-                    <NameWrapper>{name}</NameWrapper>
+                    <NameWrapper
+                      handleNav={() =>
+                        handleNav(`/admin/users/detail/${username}`)
+                      }
+                      href={`/admin/users/detail/${username}`}
+                    >
+                      {name}
+                    </NameWrapper>
                     <MemberInfoContainer>
                       Member since {createdDate}
                     </MemberInfoContainer>
