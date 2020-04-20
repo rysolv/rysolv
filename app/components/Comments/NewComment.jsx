@@ -1,22 +1,51 @@
-import React, { Fragment } from 'react';
-import { StyledPrimaryButton } from './styledComponents';
+import React, { useState } from 'react';
+import T from 'prop-types';
+import { ProfileImage } from 'components/base_ui';
 import Markdown from '../Markdown';
+import {
+  StyledPrimaryButton,
+  ProfileContainer,
+  NewCommentContainer,
+  FlexContainer,
+} from './styledComponents';
 
-const NewComment = () => (
-  <Fragment>
-    <Markdown
-      comment
-      edit
-      handleInput={() => {
-        console.log('yo');
-      }}
-    />
-    <StyledPrimaryButton
-      disabled={false}
-      label="Comment"
-      // onClick={() => handleIncrementStep({ step: 3, view: 'addIssue' })}
-    />
-  </Fragment>
-);
+const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
+  const { username, profilePic } = activeUser;
+  const [body, setBody] = useState('');
+
+  const handleClick = () => {
+    handleComment({ activeUser, body, issueId });
+    setBody('');
+  };
+
+  return (
+    <FlexContainer>
+      <ProfileContainer style={{ marginRight: '1rem' }}>
+        <ProfileImage
+          alt={username}
+          detailRoute={`/admin/users/${username}`}
+          handleNav={handleNav}
+          profilePic={profilePic}
+          small
+        />
+      </ProfileContainer>
+      <NewCommentContainer>
+        <Markdown comment edit body={body} handleInput={setBody} />
+        <StyledPrimaryButton
+          disabled={false}
+          label="Comment"
+          onClick={() => handleClick()}
+        />
+      </NewCommentContainer>
+    </FlexContainer>
+  );
+};
+
+NewComment.propTypes = {
+  activeUser: T.object,
+  handleComment: T.func,
+  handleNav: T.func,
+  issueId: T.string,
+};
 
 export default NewComment;

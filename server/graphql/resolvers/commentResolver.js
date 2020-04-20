@@ -1,11 +1,14 @@
-// const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const {
   // createOrganization,
   // deleteOrganization,
   // getOneOrganization,
   // getOneUser,
   getComments,
-  issueComments,
+  getIssueComments,
+  createComment,
+  updateIssueCommentArray,
+  updateUserCommentArray,
   // searchOrganizations,
   // transformOrganization,
 } = require('../../db');
@@ -43,6 +46,38 @@ module.exports = {
   //     throw err;
   //   }
   // },
+  createComment: async args => {
+    const { commentInput } = args;
+    const comment = [
+      [
+        uuidv4(),
+        new Date(),
+        new Date(),
+        commentInput.target,
+        commentInput.body || '',
+        commentInput.user,
+      ],
+    ];
+    const [result] = await createComment(comment);
+
+    const [user] = await updateUserCommentArray(
+      'users',
+      commentInput.user,
+      result.id,
+    );
+    await updateIssueCommentArray('issues', commentInput.target, result.id);
+
+    return {
+      commentId: result.id,
+      createdDate: result.created_date,
+      modifiedDate: result.modified_date,
+      target: result.target,
+      body: result.body,
+      userId: result.user_id,
+      username: user.username,
+      profilePic: user.profile_pic,
+    };
+  },
   getComments: async () => {
     try {
       const result = await getComments('comments');
@@ -51,10 +86,10 @@ module.exports = {
       throw err;
     }
   },
-  issueComments: async args => {
+  getIssueComments: async args => {
     const { id } = args;
     try {
-      const result = await issueComments('comments', id);
+      const result = await getIssueComments('comments', id);
       return result;
     } catch (err) {
       return {

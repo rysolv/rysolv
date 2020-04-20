@@ -7,7 +7,13 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 
 import IssueDetail from 'components/Issues/Detail';
-import { clearAlerts, fetchIssueDetail, upvoteIssue } from '../actions';
+import { makeSelectAdmin } from 'containers/Admin/selectors';
+import {
+  addComment,
+  clearAlerts,
+  fetchIssueDetail,
+  upvoteIssue,
+} from '../actions';
 import {
   makeSelectIssueDetail,
   makeSelectIssueDetailError,
@@ -31,7 +37,15 @@ export class IssueDetailContainer extends React.PureComponent {
   }
 
   render() {
-    const { error, handleNav, handleUpvote, issueDetail, loading } = this.props;
+    const {
+      activeUser,
+      error,
+      handleComment,
+      handleNav,
+      handleUpvote,
+      issueDetail,
+      loading,
+    } = this.props;
 
     return (
       <AsyncRender
@@ -43,6 +57,8 @@ export class IssueDetailContainer extends React.PureComponent {
         propsToPassDown={{
           handleNav,
           handleUpvote,
+          activeUser,
+          handleComment,
         }}
       />
     );
@@ -50,9 +66,11 @@ export class IssueDetailContainer extends React.PureComponent {
 }
 
 IssueDetailContainer.propTypes = {
+  activeUser: T.object,
   dispatchFetchIssueDetail: T.func,
   error: T.oneOfType([T.bool, T.object]),
   handleClearAlerts: T.func,
+  handleComment: T.func,
   handleNav: T.func,
   handleUpvote: T.func,
   issueDetail: T.object,
@@ -64,6 +82,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : IssueDetail
    */
+  activeUser: makeSelectAdmin('admin'),
   issueDetail: makeSelectIssueDetail('issueDetail'),
   error: makeSelectIssueDetailError('issueDetail'),
   loading: makeSelectIssueDetailLoading('issueDetail'),
@@ -77,6 +96,7 @@ function mapDispatchToProps(dispatch) {
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleUpvote: payload => dispatch(upvoteIssue(payload)),
+    handleComment: payload => dispatch(addComment(payload)),
     /**
      * Reducer : Router
      */

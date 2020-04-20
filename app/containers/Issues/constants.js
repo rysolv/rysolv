@@ -1,5 +1,8 @@
-export const CLEAR_ALERTS = 'app/Issues/CLEAR_ALERTS';
+export const ADD_COMMENT = 'app/Issues/ADD_COMMENT';
+export const ADD_COMMENT_FAILURE = 'app/Issues/ADD_COMMENT_FAILURE';
+export const ADD_COMMENT_SUCCESS = 'app/Issues/ADD_COMMENT_SUCCESS';
 
+export const CLEAR_ALERTS = 'app/Issues/CLEAR_ALERTS';
 export const CLEAR_FORM = 'app/Companies/CLEAR_FORM';
 
 export const DELETE_ISSUE = 'app/Issues/DELETE_ISSUE';

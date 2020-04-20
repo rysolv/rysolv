@@ -5,9 +5,11 @@ import { compose } from 'redux';
 import { push } from 'connected-react-router';
 import { BaseContainer, ConditionalRender } from 'components/base_ui';
 import AdminHeader from 'components/Admin/AdminHeader';
-import { typeDictionary } from './constants';
+import injectReducer from 'utils/injectReducer';
+import { typeDictionary } from './helpers';
 import NotFoundPage from '../NotFoundPage/Loadable';
 import { subrouteDictionary, viewDictionary } from './routeDictionary';
+import reducer from './reducer';
 
 export const Admin = ({
   handleNav,
@@ -64,4 +66,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(Admin);
+const withReducer = injectReducer({ key: 'admin', reducer });
+
+export default compose(
+  withReducer,
+  withConnect,
+)(Admin);

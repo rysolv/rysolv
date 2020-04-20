@@ -33,9 +33,13 @@ class Markdown extends React.PureComponent {
     this.markdown.codemirror.options.extraKeys.Tab = false;
     this.markdown.codemirror.options.extraKeys['Shift-Tab'] = false;
 
-    this.markdown.codemirror.on('blur', () => {
-      this.props.handleInput(this.markdown.value());
-    });
+    this.markdown.codemirror.on(
+      'blur',
+      () => {
+        this.props.handleInput(this.markdown.value());
+      },
+      { passive: true },
+    );
     this.updateHtml(this.props.body || '');
   }
 

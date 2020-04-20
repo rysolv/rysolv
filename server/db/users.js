@@ -106,6 +106,15 @@ const transformUser = async (table, id, data) => {
   throw new Error(`Failed to update users. ID not found in ${table}`);
 };
 
+const updateUserCommentArray = async (table, id, data) => {
+  const queryText = `UPDATE ${table}
+    SET issues_number = array_append(issues_number, '${data}')
+    WHERE (id = '${id}')
+    RETURNING *`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
 module.exports = {
   createUser,
   deleteUser,
@@ -114,4 +123,5 @@ module.exports = {
   searchUsers,
   singleSearch,
   transformUser,
+  updateUserCommentArray,
 };

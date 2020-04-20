@@ -1,6 +1,5 @@
 import React from 'react';
 import T from 'prop-types';
-
 import { BaseContainer, Upvote, BackNav } from 'components/base_ui';
 import { CommentCard, NoComment, NewComment } from 'components/Comments';
 import IssueDetailHeader from './IssueDetailHeader';
@@ -15,7 +14,13 @@ import {
   UpvotePanel,
 } from './styledComponents';
 
-const IssueDetail = ({ data, handleUpvote, handleNav }) => {
+const IssueDetail = ({
+  activeUser,
+  data,
+  handleComment,
+  handleNav,
+  handleUpvote,
+}) => {
   const {
     // attempts,
     id,
@@ -90,7 +95,12 @@ const IssueDetail = ({ data, handleUpvote, handleNav }) => {
           {commentsDiv}
 
           <Divider>Leave a Comment</Divider>
-          <NewComment />
+          <NewComment
+            issueId={id}
+            activeUser={activeUser}
+            handleComment={handleComment}
+            handleNav={handleNav}
+          />
         </IssueDetailColumn>
       </IssueDetailWrapper>
     </BaseContainer>
@@ -98,10 +108,12 @@ const IssueDetail = ({ data, handleUpvote, handleNav }) => {
 };
 
 IssueDetail.propTypes = {
+  activeUser: T.object,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
+  handleComment: T.func,
   handleUpvote: T.func,
   data: T.object,
   handleNav: T.func,

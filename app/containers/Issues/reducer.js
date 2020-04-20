@@ -3,6 +3,9 @@ import produce from 'immer';
 import remove from 'lodash/remove';
 
 import {
+  ADD_COMMENT_FAILURE,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ISSUE_FAILURE,
@@ -48,11 +51,12 @@ export const initialState = {
   },
   loading: {
     addIssue: false,
+    addComment: false,
     deleteIssue: false,
+    issueDetail: false,
     issues: false,
     searchIssues: false,
     upvoteIssue: false,
-    issueDetail: false,
   },
   isVerified: false,
   search: {
@@ -67,6 +71,22 @@ export const initialState = {
 /* eslint-disable default-case, no-param-reassign */
 const issuesReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case ADD_COMMENT_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.addComment = false;
+      break;
+    }
+    case ADD_COMMENT_SUCCESS: {
+      const { createComment } = payload;
+      draft.issueDetail.comments.push(createComment);
+      draft.loading.addComment = false;
+      break;
+    }
+    case ADD_COMMENT: {
+      draft.loading.addComment = true;
+      break;
+    }
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       break;

@@ -14,6 +14,12 @@ module.exports = buildSchema(`
     profilePic: String
   }
 
+  input CommentInput {
+    body: String!
+    target: ID!
+    user: ID!
+  }
+
   type Issue {
     id: ID!
     createdDate: Object
@@ -121,7 +127,7 @@ module.exports = buildSchema(`
     getOrganizations: [Organization!]!
     getComments: [Comment]
 
-    issueComments(id: ID!): [Comment]
+    getIssueComments(id: ID!): [Comment]
 
     oneIssue(id: ID!): IssueResult
     oneUser(id: ID!): User!
@@ -136,6 +142,7 @@ module.exports = buildSchema(`
     createIssue(issueInput: IssueInput): [Issue!]!
     createUser(userInput: UserInput): [User!]!
     createOrganization(organizationInput: OrganizationInput): [Organization!]!
+    createComment(commentInput: CommentInput): Comment
 
     deleteIssue(id: ID!): String!
     deleteUser(id:ID!): String!

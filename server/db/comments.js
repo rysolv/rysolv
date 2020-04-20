@@ -17,7 +17,8 @@ const createComment = async data => {
     comments(id, created_date, modified_date, target, body, user_id)
     VALUES($1, $2, $3, $4, $5, $6)
     returning *`;
-  await mapValues(queryText, data);
+  const result = await mapValues(queryText, data);
+  return result;
 };
 
 // GET all issues
@@ -28,10 +29,10 @@ const getComments = async table => {
 };
 
 // GET all issues
-const issueComments = async (table, id) => {
+const getIssueComments = async (table, id) => {
   const queryText = `SELECT ${commentReturnValues} FROM ${table} JOIN users ON (comments.user_id = users.id) WHERE comments.target='${id}'`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
 
-module.exports = { createComment, getComments, issueComments };
+module.exports = { createComment, getComments, getIssueComments };

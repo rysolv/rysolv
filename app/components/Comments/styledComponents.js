@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import { borderColor, commentHeaderColor, textColor } from 'defaultStyleHelper';
 import { PrimaryButton } from 'components/base_ui';
 
+export const FlexContainer = styled.div`
+  display: flex;
+  margin: 1rem 0;
+`;
+
 export const ProfileContainer = styled.div`
   display: inline-block;
   vertical-align: top;
@@ -42,9 +47,14 @@ export const ProfileLine = styled.div`
   background-color: ${borderColor};
   display: inline-block;
   height: 0.2rem;
-  margin: 2.5rem 0 0 0;
+  margin: 2rem 0 0 0;
   vertical-align: top;
   width: 1.5rem;
+`;
+
+export const NewCommentContainer = styled.div`
+  width: 100%;
+  text-align: right;
 `;
 
 export const StyledNoComments = styled.div`
@@ -56,5 +66,6 @@ export const StyledNoComments = styled.div`
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
   width: 8rem;
-  align-self: flex-end;
+  margin: 1rem 0 0 0;
+  display: inline-block;
 `;

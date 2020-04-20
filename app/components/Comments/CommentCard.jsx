@@ -9,6 +9,7 @@ import {
   CommentContainer,
   CommentHeader,
   ProfileContainer,
+  FlexContainer,
   ProfileLine,
 } from './styledComponents';
 
@@ -38,7 +39,7 @@ const CommentCard = ({
   );
 
   return (
-    <div style={{ display: 'flex', margin: '1rem 0' }}>
+    <FlexContainer>
       {primary ? null : profileView}
       <CommentContainer primary={primary}>
         <CommentHeader primary={primary}>
@@ -47,7 +48,7 @@ const CommentCard = ({
         </CommentHeader>
         <CommentBody dangerouslySetInnerHTML={{ __html: html }} />
       </CommentContainer>
-    </div>
+    </FlexContainer>
   );
 };
 

@@ -76,6 +76,24 @@ const userSeed = [
     'Rust', // preferred_languages
     'https://stackoverflow.com/users/22656/jay-querie', // stackoverflow_link
   ],
+  [
+    '3f6e3ddf-ab68-4ee3-bb79-abfe21c8d014', // id
+    new Date(), // created_date
+    new Date(), // modified_date
+    'AD', // first_name
+    'MIN', // last_name
+    'admin@rysolv.com', // email
+    ['f665d73f-6ae4-4699-bb53-c55d62489a29'], // watching_list
+    2, // rep
+    'https://cdn0.iconfinder.com/data/icons/web-service-and-development/512/key_protection_lock_security_access_forbidden_safe_secure_private_red_alert_password_protect_admin_safety_unlock_system_flat_design_icon-512.png', // profile_pic
+    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // active_number
+    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues_number
+    'ADMIN', // username
+    'https://github.com/tylermaran', // github_link
+    'https://www.tylermaran.com/', // personal_link
+    'FORTRAN', // preferred_languages
+    'https://stackoverflow.com/users/22656/tyler-maran', // stackoverflow_link
+  ],
 ];
 
 module.exports = userSeed;

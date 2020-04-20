@@ -5,6 +5,7 @@ import { SecondaryButton } from '../base_ui';
 export const MarkdownContainer = styled.div`
   width: 100%;
   margin: 0;
+  text-align: left;
 
   .editor-toolbar,
   a:before,
@@ -25,13 +26,13 @@ export const MarkdownContainer = styled.div`
   .CodeMirror,
   .CodeMirror-scroll {
     transition: min-height 0.2s;
-    min-height: ${props => (props.comment ? '5rem' : '20rem')}};
+    min-height: ${props => (props.comment ? '5rem' : '20rem')};
   }
 
   &:focus-within {
     .CodeMirror,
     .CodeMirror-scroll {
-      min-height: ${props => (props.comment ? '5.5rem' : '20rem')}};
+      min-height: ${props => (props.comment ? '5.5rem' : '20rem')};
     }
   }
 `;

@@ -97,6 +97,15 @@ const transformIssue = async (table, id, data) => {
   throw new Error(`Failed to update. ID not found in ${table}`);
 };
 
+const updateIssueCommentArray = async (table, id, data) => {
+  const queryText = `UPDATE ${table}
+    SET comments = array_append(comments, '${data}')
+    WHERE (id = '${id}')
+    RETURNING *`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
 module.exports = {
   createIssue,
   deleteIssue,
@@ -104,4 +113,5 @@ module.exports = {
   getOneIssue,
   searchIssues,
   transformIssue,
+  updateIssueCommentArray,
 };

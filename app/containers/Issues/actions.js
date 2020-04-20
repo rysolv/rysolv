@@ -1,15 +1,18 @@
 import {
+  ADD_COMMENT,
+  ADD_COMMENT_FAILURE,
+  ADD_COMMENT_SUCCESS,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ISSUE_FAILURE,
   DELETE_ISSUE_SUCCESS,
   DELETE_ISSUE,
-  FETCH_ISSUES_FAILURE,
-  FETCH_ISSUES_SUCCESS,
-  FETCH_ISSUES,
   FETCH_ISSUE_DETAIL_FAILURE,
   FETCH_ISSUE_DETAIL_SUCCESS,
   FETCH_ISSUE_DETAIL,
+  FETCH_ISSUES_FAILURE,
+  FETCH_ISSUES_SUCCESS,
+  FETCH_ISSUES,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
@@ -19,11 +22,32 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
-  UPVOTE_ISSUE,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE,
   VERIFY_INFO,
 } from './constants';
+
+export function addComment(payload) {
+  return {
+    payload,
+    type: ADD_COMMENT,
+  };
+}
+
+export function addCommentFailure(payload) {
+  return {
+    payload,
+    type: ADD_COMMENT_FAILURE,
+  };
+}
+
+export function addCommentSuccess(payload) {
+  return {
+    payload,
+    type: ADD_COMMENT_SUCCESS,
+  };
+}
 
 export function clearAlerts() {
   return {

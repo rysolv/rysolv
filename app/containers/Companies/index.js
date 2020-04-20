@@ -35,7 +35,6 @@ Companies.defaultProps = { view: 'overview' };
 
 Companies.propTypes = {
   dispatchClearForm: T.func,
-  handleNav: T.func,
   match: T.object,
   view: T.string,
 };
