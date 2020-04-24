@@ -45,6 +45,8 @@ const IssueDetail = ({
     profilePic,
   };
 
+  console.log(activeUser);
+
   const generateComments = () =>
     comments.map(comment => {
       const user = {

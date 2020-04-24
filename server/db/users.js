@@ -113,9 +113,7 @@ const updateUserArray = async (table, column, id, data) => {
     SET ${column} = array_append(${column}, '${data}')
     WHERE (id = '${id}')
     RETURNING *`;
-  console.log(queryText);
   const { rows } = await singleQuery(queryText);
-  console.log(rows);
   return rows;
 };
 
