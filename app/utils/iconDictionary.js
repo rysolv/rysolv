@@ -1,19 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Cancel from '@material-ui/icons/Cancel';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import Circle from '@material-ui/icons/FiberManualRecord';
 import CodeIcon from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
+import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
 import Link from '@material-ui/icons/Link';
+import MonetizationOn from '@material-ui/icons/MonetizationOn';
+import PullRequest from '@material-ui/icons/AccountTree';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
 import Star from '@material-ui/icons/Star';
 import Upvote from '@material-ui/icons/ArrowUpward';
 import Verified from '@material-ui/icons/VerifiedUser';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Warning from '@material-ui/icons/Warning';
 import SiteLogo from './svg/SiteLogo';
 import CloseMenu from './svg/CloseMenu';
@@ -25,17 +29,21 @@ import Stackoverflow from './svg/Stackoverflow';
 export default (name, options) => {
   const icons = {
     backArrow: ArrowBackIcon,
+    cancel: Cancel,
     circle: Circle,
     closeMenu: CloseMenu,
     code: CodeIcon,
     comments: Comments,
     creditCard: CreditCard,
     delete: Delete,
+    funded: MonetizationOn,
+    gift: Gift,
     github: GitHub,
     gitlab: Gitlab,
     link: Link,
     monocle: Monocle,
     paypal: Paypal,
+    pullRequest: PullRequest,
     search: Search,
     settings: Settings,
     siteLogo: SiteLogo,

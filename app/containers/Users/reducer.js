@@ -56,6 +56,9 @@ export const initialState = {
     searchUsers: false,
     users: false,
   },
+  filter: {
+    users: 'All',
+  },
   isVerified: false,
   loading: {
     addUser: false,
@@ -149,7 +152,11 @@ const usersReducer = produce((draft, { payload, type }) => {
     }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
-      draft[form][field].value = value;
+      if (form === 'filter') {
+        draft[form][field] = value;
+      } else {
+        draft[form][field].value = value;
+      }
       break;
     }
     case SAVE_INFO_FAILURE: {

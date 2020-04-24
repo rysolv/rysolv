@@ -52,7 +52,7 @@ const OnlineComponent = (
   </OnlineWrapper>
 );
 
-const UserMetricsBar = ({ createdDate }) => {
+const UserMetricsView = ({ createdDate }) => {
   const [detailView, setDetailView] = useState(false);
   const hasNoDecimals = true;
   return (
@@ -109,8 +109,8 @@ const UserMetricsBar = ({ createdDate }) => {
   );
 };
 
-UserMetricsBar.propTypes = {
+UserMetricsView.propTypes = {
   createdDate: T.string,
 };
 
-export default UserMetricsBar;
+export default UserMetricsView;

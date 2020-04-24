@@ -2,56 +2,12 @@ import styled from 'styled-components';
 
 import { defaultFontSize } from 'defaultStyleHelper';
 
-export const ActivityContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const DetailListItem = styled.div`
-  display: flex;
-  flex-flow: wrap;
-  font-size: ${defaultFontSize};
-  padding: 0.5rem 0;
-`;
-
 export const DetailViewContainer = styled.div`
   color: rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: row;
   padding: 1.6rem 0;
   width: 100%;
-`;
-
-export const DetailsPanel = styled.div`
-  color: #6a737d;
-  align-self: flex-end;
-  font-size: 1.2rem;
-
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`;
-
-export const DetailsPanelWrapper = styled.div`
-  padding: 0.5rem 1rem;
-`;
-
-export const Divider = styled.div`
-  background: #00eb93;
-  border-radius: 0.6rem;
-  display: block;
-  height: 0.4rem;
-  width: 100%;
-`;
-
-export const Language = styled.div`
-  background-color: #e8f0fa;
-  border-radius: 0.25rem;
-  color: #6487ae;
-  font-size: 1.1rem;
-  margin: 0 1rem 1rem 0;
-  padding: 0.5rem;
 `;
 
 export const LinkIcon = styled.div`
@@ -83,26 +39,10 @@ export const OneLinkWrapper = styled.div`
   padding: 0.5rem 0;
 `;
 
-export const OnlineIcon = styled.div`
-  align-items: center;
-  color: #0fce7c;
-  display: flex;
-  margin-right: 0.25rem;
-`;
-
-export const OnlineWrapper = styled.div`
-  display: flex;
-`;
-
 export const StyledA = styled.a`
   &:hover {
     text-decoration: underline;
   }
-`;
-
-export const RankingContainer = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 export const Rep = styled.div`
@@ -112,14 +52,52 @@ export const Rep = styled.div`
   margin: 0.5rem 0 0.5rem 0.5rem;
 `;
 
-export const StyledUserBarTitle = styled.div`
-  font-size: 1.8rem;
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
-  width: 20rem;
+export const StyledCancelIcon = styled.div`
+  align-items: center;
+  background-color: #ffcdd2;
+  border-radius: 50%;
+  color: #c62828;
+  display: flex;
+  height: 2.4rem;
+  place-content: center;
+  width: 2.4rem;
+  position: absolute;
 `;
 
-export const UserDetails = styled.div`
-  padding: 0.5rem;
+export const StyledFundedIcon = styled.div`
+  align-items: center;
+  background-color: #c4efe0;
+  border-radius: 50%;
+  color: #31b589;
+  display: flex;
+  height: 2.4rem;
+  place-content: center;
+  width: 2.4rem;
+  position: absolute;
+`;
+
+export const StyledGiftIcon = styled.div`
+  align-items: center;
+  background-color: rgb(236, 234, 252);
+  border-radius: 50%;
+  color: rgb(105, 8, 201);
+  display: flex;
+  height: 2.4rem;
+  place-content: center;
+  width: 2.4rem;
+  position: absolute;
+`;
+
+export const StyledPullRequestIcon = styled.div`
+  align-items: center;
+  background-color: #fcdbc6;
+  border-radius: 50%;
+  color: #f47e34;
+  display: flex;
+  height: 2.4rem;
+  place-content: center;
+  width: 2.4rem;
+  position: absolute;
 `;
 
 export const UserCardWrapper = styled.div`
@@ -143,9 +121,4 @@ export const UserImage = styled.img`
   margin: 0.5rem;
   max-height: 25rem;
   max-width: 25rem;
-`;
-
-export const UserMetricsContainer = styled.div`
-  display: flex;
-  justify-content: space-evenly;
 `;

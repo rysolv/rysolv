@@ -5,7 +5,8 @@ import { Star } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 import { formatUrlLinks } from 'utils/globalHelpers';
 
-import UserMetricsBar from './UserMetricsBar';
+import UserMetricsView from './Metrics';
+import UserTimelineView from './Timeline';
 import {
   DetailViewContainer,
   OneLinkWrapper,
@@ -36,8 +37,8 @@ export class UserDetailView extends React.PureComponent {
         profilePic,
         rep,
         stackoverflowLink,
-        username,
       },
+      filterValues,
       handleInputChange,
       handleNav,
     } = this.props;
@@ -81,9 +82,14 @@ export class UserDetailView extends React.PureComponent {
             </Rep>
           </UserCardWrapper>
           <UserContentsWrapper>
-            <UserMetricsBar
+            <UserMetricsView
               createdDate={createdDate}
               preferredLanguages={preferredLanguages}
+            />
+            <UserTimelineView
+              filterValues={filterValues}
+              handleInputChange={handleInputChange}
+              handleNav={handleNav}
             />
           </UserContentsWrapper>
         </DetailViewContainer>
@@ -93,9 +99,10 @@ export class UserDetailView extends React.PureComponent {
 }
 
 UserDetailView.propTypes = {
-  data: T.object,
-  handleInputChange: T.func,
-  handleNav: T.func,
+  data: T.object.isRequired,
+  filterValues: T.object.isRequired,
+  handleInputChange: T.func.isRequired,
+  handleNav: T.func.isRequired,
 };
 
 export default UserDetailView;

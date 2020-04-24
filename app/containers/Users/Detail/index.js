@@ -28,7 +28,14 @@ export class DetailUser extends React.PureComponent {
   }
 
   render() {
-    const { data, error, handleInputChange, handleNav, loading } = this.props;
+    const {
+      data,
+      error,
+      filterValues,
+      handleInputChange,
+      handleNav,
+      loading,
+    } = this.props;
 
     return (
       <DetailWrapper>
@@ -39,6 +46,7 @@ export class DetailUser extends React.PureComponent {
           isRequiredData
           loading={loading}
           propsToPassDown={{
+            filterValues,
             handleInputChange,
             handleNav,
           }}
@@ -52,6 +60,7 @@ DetailUser.propTypes = {
   data: T.object,
   dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]).isRequired,
+  filterValues: T.object.isRequired,
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
   loading: T.bool.isRequired,
@@ -64,6 +73,7 @@ const mapStateToProps = createStructuredSelector({
    */
   data: makeSelectUsers('user'),
   error: makeSelectUsersError('fetchUser'),
+  filterValues: makeSelectUsers('filter'),
   loading: makeSelectUsersLoading('fetchUser'),
 });
 
