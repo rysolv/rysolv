@@ -23,7 +23,7 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
       <ProfileContainer style={{ marginRight: '1rem' }}>
         <ProfileImage
           alt={username}
-          detailRoute={`/admin/users/${username}`}
+          detailRoute={`/admin/users/detail/${username}`}
           handleNav={handleNav}
           profilePic={profilePic}
           small

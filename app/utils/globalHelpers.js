@@ -22,3 +22,10 @@ export const formatUrlLinks = value => {
   }
   return value;
 };
+
+export const navHelper = (e, handleNav, route) => {
+  if (!e.ctrlKey) {
+    e.preventDefault();
+    handleNav(route);
+  }
+};

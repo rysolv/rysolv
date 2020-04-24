@@ -30,12 +30,13 @@ module.exports = buildSchema(`
     repo: String
     language: String
     comments: [ID]
+    attempting: [ID]
     attempts: Int
     activeAttempts: Int
     contributor: [String]
     rep: Int
     watchList: [String]
-    value: Int
+    value: Float
     open: Boolean
   }
 
@@ -46,6 +47,7 @@ module.exports = buildSchema(`
     repo: String
     language: String
     comments: [ID]
+    attempting: [ID]
     attempts: Int
     activeAttempts: Int
     contributor: [String]
@@ -64,7 +66,8 @@ module.exports = buildSchema(`
     watchingList: [String]
     rep: Int
     profilePic: String
-    activeNumber: [String]
+    comments: [String]
+    attempting: [ID]
     issuesNumber: [String]
     username: String
     githubLink: String
@@ -80,7 +83,8 @@ module.exports = buildSchema(`
     watchingList: [String]
     rep: Int
     profilePic: String
-    activeNumber: [String]
+    comments: [String]
+    attempting: [ID]
     issuesNumber: [String]
     username: String
     githubLink: String
@@ -151,6 +155,9 @@ module.exports = buildSchema(`
     transformIssue(id: ID!, issueInput: IssueInput): Issue!
     transformUser(id: ID!, userInput: UserInput): User!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): Organization!
+
+    updateIssueArray(id: ID, column: String, data: String): Issue!
+    updateUserArray(id: ID, column: String, data: String): User!
   }
 
   schema {

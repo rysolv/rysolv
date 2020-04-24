@@ -7,8 +7,8 @@ const {
   getComments,
   getIssueComments,
   createComment,
-  updateIssueCommentArray,
-  updateUserCommentArray,
+  updateIssueArray,
+  updateUserArray,
   // searchOrganizations,
   // transformOrganization,
 } = require('../../db');
@@ -60,12 +60,18 @@ module.exports = {
     ];
     const [result] = await createComment(comment);
 
-    const [user] = await updateUserCommentArray(
+    const [user] = await updateUserArray(
       'users',
+      'comments',
       commentInput.user,
       result.id,
     );
-    await updateIssueCommentArray('issues', commentInput.target, result.id);
+    await updateIssueArray(
+      'issues',
+      'comments',
+      commentInput.target,
+      result.id,
+    );
 
     return {
       commentId: result.id,

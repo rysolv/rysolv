@@ -6,6 +6,7 @@ const {
   getUsers,
   searchUsers,
   transformUser,
+  updateUserArray,
 } = require('../../db');
 
 module.exports = {
@@ -22,7 +23,8 @@ module.exports = {
         userInput.watchingList || [],
         userInput.rep || 0,
         userInput.profilePic,
-        userInput.activeNumber || [],
+        userInput.comments || [],
+        userInput.attempting || [],
         userInput.issuesNumber || [],
         userInput.username,
         userInput.githubLink || '',
@@ -84,7 +86,8 @@ module.exports = {
         watching_list: userInput.watchingList,
         rep: userInput.rep,
         profile_pic: userInput.profilePic,
-        active_number: userInput.activeNumber,
+        comments: userInput.comments,
+        attempting: userInput.attempting,
         issues_number: userInput.issuesNumber,
         username: userInput.username,
         github_link: userInput.githubLink,
@@ -103,7 +106,8 @@ module.exports = {
         watchingList: queryResult.watching_list,
         rep: queryResult.rep,
         profilePic: queryResult.profile_pic,
-        activeNumber: queryResult.active_number,
+        comments: queryResult.comments,
+        attempting: queryResult.attempting,
         issuesNumber: queryResult.issues_number,
         username: queryResult.username,
         githubLink: userInput.github_link,
@@ -115,5 +119,10 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+  updateUserArray: async args => {
+    const { id, column, data } = args;
+    const [result] = await updateUserArray('users', column, id, data);
+    return result;
   },
 };

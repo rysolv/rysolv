@@ -38,7 +38,7 @@ export const CommentBody = styled.div`
   * {
     background-color: white;
     color: ${textColor};
-    font-style: inherit;
+    font-family: inherit;
     width: 100%;
   }
 `;

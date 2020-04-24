@@ -32,7 +32,7 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
         {data.map(
           (
             {
-              activeNumber,
+              attempting,
               createdDate,
               id,
               issuesNumber,
@@ -89,9 +89,7 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                   <IssuesContainer>
                     {issuesNumber.length} Issues
                   </IssuesContainer>
-                  <ActiveContainer>
-                    {activeNumber.length} Active
-                  </ActiveContainer>
+                  <ActiveContainer>{attempting.length} Active</ActiveContainer>
                 </IssuesWrapper>
               </StyledSquare>
             </StyledListSquare>

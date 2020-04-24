@@ -22,16 +22,16 @@ export const BaseInputContainer = styled.div`
 `;
 
 export const HeaderTab = styled(({ isActive, ...restProps }) => {
-  const borderColor = isActive ? 'blue' : 'grey';
+  const borderColor = isActive ? '#01579b' : 'grey';
   return <div color={borderColor} width="100%" {...restProps} />;
 })`
   border-bottom: ${({ isActive }) =>
-    isActive ? '0.5rem solid blue' : '0.5rem solid grey'};
+    isActive ? '0.5rem solid #01579b' : '0.5rem solid grey'};
   display: flex;
   flex-direction: row;
   width: 15rem;
   &:hover {
-    border-bottom: 0.5rem solid blue;
+    border-bottom: 0.5rem solid #01579b;
   }
   &.card {
     padding: 1rem;
@@ -41,7 +41,7 @@ export const HeaderTab = styled(({ isActive, ...restProps }) => {
 export const HeaderTitle = styled(({ isActive, ...restProps }) => (
   <BaseLink {...restProps} />
 ))`
-  color: ${({ isActive }) => (isActive ? 'blue' : 'grey')};
+  color: ${({ isActive }) => (isActive ? '#01579b' : 'grey')};
   font-size: 2.2rem;
   font-weight: 400;
   line-height: 26px;

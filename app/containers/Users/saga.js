@@ -62,7 +62,7 @@ export function* fetchInfoSaga({ payload }) {
         lastName,
         rep,
         profilePic,
-        activeNumber,
+        attempting,
         issuesNumber,
         username,
         githubLink,
@@ -96,7 +96,7 @@ export function* fetchUsersSaga() {
         lastName,
         rep,
         profilePic,
-        activeNumber,
+        attempting,
         issuesNumber,
         username,
       }
@@ -168,7 +168,7 @@ export function* searchUsersSaga({ payload }) {
       lastName,
       rep,
       profilePic,
-      activeNumber,
+      attempting,
       issuesNumber,
     }
   }
@@ -190,7 +190,7 @@ export function* searchUsersSaga({ payload }) {
 export function* updateInfoSaga({ payload }) {
   const { editRequest, itemId } = payload;
   const {
-    activeNumber,
+    attempting,
     firstName,
     issuesNumber,
     lastName,
@@ -201,7 +201,7 @@ export function* updateInfoSaga({ payload }) {
   const query = `
     mutation {
       transformUser(id: "${itemId}", userInput: {
-        activeNumber: ${JSON.stringify(activeNumber)},
+        attempting: ${JSON.stringify(attempting)},
         firstName: "${firstName}",
         issuesNumber: ${JSON.stringify(issuesNumber)},
         lastName: "${lastName}",
@@ -215,7 +215,7 @@ export function* updateInfoSaga({ payload }) {
         lastName,
         rep,
         profilePic,
-        activeNumber,
+        attempting,
         issuesNumber,
       }
     }

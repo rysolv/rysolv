@@ -3,6 +3,9 @@ import produce from 'immer';
 import remove from 'lodash/remove';
 
 import {
+  ADD_ATTEMPT_FAILURE,
+  ADD_ATTEMPT_SUCCESS,
+  ADD_ATTEMPT,
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT,
@@ -11,24 +14,24 @@ import {
   DELETE_ISSUE_FAILURE,
   DELETE_ISSUE_SUCCESS,
   DELETE_ISSUE,
-  FETCH_ISSUES_FAILURE,
-  FETCH_ISSUES_SUCCESS,
-  FETCH_ISSUES,
   FETCH_ISSUE_DETAIL_FAILURE,
   FETCH_ISSUE_DETAIL_SUCCESS,
   FETCH_ISSUE_DETAIL,
+  FETCH_ISSUES_FAILURE,
+  FETCH_ISSUES_SUCCESS,
+  FETCH_ISSUES,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
-  SAVE_INFO,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
+  SAVE_INFO,
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
-  UPVOTE_ISSUE,
-  UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_FAILURE,
+  UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE,
   VERIFY_INFO,
 } from './constants';
 
@@ -50,8 +53,9 @@ export const initialState = {
     importUrl: { error: '', value: '' },
   },
   loading: {
-    addIssue: false,
+    addAttempt: false,
     addComment: false,
+    addIssue: false,
     deleteIssue: false,
     issueDetail: false,
     issues: false,
@@ -71,6 +75,26 @@ export const initialState = {
 /* eslint-disable default-case, no-param-reassign */
 const issuesReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case ADD_ATTEMPT_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.addAttempt = false;
+      break;
+    }
+    case ADD_ATTEMPT_SUCCESS: {
+      const {
+        data: {
+          updateIssueArray: { attempting },
+        },
+      } = payload;
+      draft.issueDetail.attempting = attempting;
+      draft.loading.addAttempt = false;
+      break;
+    }
+    case ADD_ATTEMPT: {
+      draft.loading.addAttempt = true;
+      break;
+    }
     case ADD_COMMENT_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;

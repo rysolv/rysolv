@@ -15,7 +15,8 @@ const userValues = `
   watching_list,
   rep,
   profile_pic,
-  active_number,
+  comments,
+  attempting,
   issues_number,
   username,
   github_link,
@@ -34,7 +35,8 @@ const userReturnValues = `
   watching_list AS "watchingList",
   rep,
   profile_pic AS "profilePic",
-  active_number AS "activeNumber",
+  comments,
+  attempting,
   issues_number AS "issuesNumber",
   username,
   github_link AS "githubLink",
@@ -47,7 +49,7 @@ const userReturnValues = `
 const createUser = async data => {
   const queryText = `INSERT INTO
     users( id, created_date, ${userValues} )
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -106,12 +108,14 @@ const transformUser = async (table, id, data) => {
   throw new Error(`Failed to update users. ID not found in ${table}`);
 };
 
-const updateUserCommentArray = async (table, id, data) => {
+const updateUserArray = async (table, column, id, data) => {
   const queryText = `UPDATE ${table}
-    SET issues_number = array_append(issues_number, '${data}')
+    SET ${column} = array_append(${column}, '${data}')
     WHERE (id = '${id}')
     RETURNING *`;
+  console.log(queryText);
   const { rows } = await singleQuery(queryText);
+  console.log(rows);
   return rows;
 };
 
@@ -123,5 +127,5 @@ module.exports = {
   searchUsers,
   singleSearch,
   transformUser,
-  updateUserCommentArray,
+  updateUserArray,
 };

@@ -41,7 +41,7 @@ export const initialState = {
     username: { error: '', value: '' },
   },
   editInfo: {
-    activeNumber: { error: '', value: [] },
+    attempting: { error: '', value: [] },
     createdDate: { error: '', value: '' },
     firstName: { error: '', value: '' },
     id: { error: '', value: '' },

@@ -7,8 +7,8 @@ const commentSeed = [
     new Date(), // create date
     new Date(), // last modified date
     '20619026-0f61-4772-9bb8-36ed643d4dcd', // target id
-    'Comment comment comment', // body
-    'c2209ded-9219-4ee3-9c29-f863889053c0', // user id
+    'Misunderstood: this is a feature, not a bug.', // body
+    'cdd583cf-4711-4f33-a202-c937081afd7e', // user id
   ],
   [
     uuidv4(),
@@ -24,7 +24,7 @@ const commentSeed = [
     new Date(),
     '20619026-0f61-4772-9bb8-36ed643d4dcd',
     'Comment comment comment comment comment',
-    'c2209ded-9219-4ee3-9c29-f863889053c0',
+    'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
   ],
 ];
 

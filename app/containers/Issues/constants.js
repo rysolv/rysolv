@@ -2,6 +2,10 @@ export const ADD_COMMENT = 'app/Issues/ADD_COMMENT';
 export const ADD_COMMENT_FAILURE = 'app/Issues/ADD_COMMENT_FAILURE';
 export const ADD_COMMENT_SUCCESS = 'app/Issues/ADD_COMMENT_SUCCESS';
 
+export const ADD_ATTEMPT = 'app/Issues/ADD_ATTEMPT';
+export const ADD_ATTEMPT_FAILURE = 'app/Issues/ADD_ATTEMPT_FAILURE';
+export const ADD_ATTEMPT_SUCCESS = 'app/Issues/ADD_ATTEMPT_SUCCESS';
+
 export const CLEAR_ALERTS = 'app/Issues/CLEAR_ALERTS';
 export const CLEAR_FORM = 'app/Companies/CLEAR_FORM';
 

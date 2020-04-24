@@ -22,7 +22,7 @@ class Markdown extends React.PureComponent {
     this.markdown.codemirror.options.extraKeys['Shift-Tab'] = false;
 
     // Handle CTRL+Enter submit
-    this.markdown.codemirror.on('keydown', (a, b) => {
+    this.markdown.codemirror.on('keyup', (a, b) => {
       this.props.handleInput(this.markdown.value());
       if (b.key === 'Enter' && b.ctrlKey === true) {
         this.props.handleEnter();
@@ -39,7 +39,7 @@ class Markdown extends React.PureComponent {
   render() {
     return (
       <MarkdownContainer comment={this.props.comment}>
-        <EditContainer id="editorContainer">
+        <EditContainer>
           <textarea id="editor" />
         </EditContainer>
       </MarkdownContainer>

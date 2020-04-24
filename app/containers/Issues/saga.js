@@ -1,6 +1,7 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { post } from 'utils/request';
 import {
+  ADD_ATTEMPT,
   ADD_COMMENT,
   DELETE_ISSUE,
   FETCH_ISSUE_DETAIL,
@@ -11,6 +12,8 @@ import {
   UPVOTE_ISSUE,
 } from './constants';
 import {
+  addAttemptFailure,
+  addAttemptSuccess,
   addCommentFailure,
   addCommentSuccess,
   deleteIssueFailure,
@@ -26,6 +29,32 @@ import {
   upvoteIssueFailure,
   upvoteIssueSuccess,
 } from './actions';
+
+export function* addAttemptSaga({ payload }) {
+  const {
+    id: issueId,
+    activeUser: { id: userId },
+  } = payload;
+  const query = `
+  mutation {
+    updateIssueArray(id: "${issueId}", column: "attempting", data: "${userId}") {
+      attempting
+    }
+    updateUserArray(id: "${userId}", column: "attempting", data: "${issueId}") {
+      attempting
+    }
+  }`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const data = yield call(post, '/graphql', graphql);
+    yield put(addAttemptSuccess(data));
+  } catch (error) {
+    yield put(addAttemptFailure({ error }));
+  }
+}
 
 export function* addCommentSaga({ payload }) {
   const { activeUser, body, issueId } = payload;
@@ -112,6 +141,7 @@ export function* fetchIssueDetailSaga({ payload }) {
           attempts,
           body,
           comments,
+          attempting,
           contributor,
           language,
           name,
@@ -183,7 +213,7 @@ export function* fetchIssuesSaga() {
       id,
       createdDate,
       modifiedDate,
-      attempts,
+      attempting,
       body,
       comments,
       language,
@@ -205,6 +235,7 @@ export function* fetchIssuesSaga() {
     const {
       data: { getIssues },
     } = yield call(post, '/graphql', issueQuery);
+
     const organizationQuery = getIssues.map(issue =>
       generateOrganizationQuery(issue.organizationId),
     );
@@ -361,6 +392,7 @@ export function* upvoteIssuesSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(ADD_ATTEMPT, addAttemptSaga);
   yield takeLatest(ADD_COMMENT, addCommentSaga);
   yield takeLatest(DELETE_ISSUE, deleteIssueSaga);
   yield takeLatest(FETCH_ISSUE_DETAIL, fetchIssueDetailSaga);

@@ -9,8 +9,7 @@ const issueValues = `
   repo,
   language,
   comments,
-  attempts,
-  active_attempts,
+  attempting,
   contributor,
   rep,
   watch_list,
@@ -28,8 +27,7 @@ const issueReturnValues = `
   repo,
   language,
   comments,
-  attempts,
-  active_attempts AS "activeAttempts",
+  attempting,
   contributor,
   rep,
   watch_list AS "watchList",
@@ -41,7 +39,7 @@ const issueReturnValues = `
 const createIssue = async data => {
   const queryText = `INSERT INTO
     issues(id, created_date, ${issueValues})
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -88,7 +86,7 @@ const transformIssue = async (table, id, data) => {
     const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE ${table}
       SET (${issueValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);
@@ -97,9 +95,9 @@ const transformIssue = async (table, id, data) => {
   throw new Error(`Failed to update. ID not found in ${table}`);
 };
 
-const updateIssueCommentArray = async (table, id, data) => {
+const updateIssueArray = async (table, column, id, data) => {
   const queryText = `UPDATE ${table}
-    SET comments = array_append(comments, '${data}')
+    SET ${column} = array_append(${column}, '${data}')
     WHERE (id = '${id}')
     RETURNING *`;
   const { rows } = await singleQuery(queryText);
@@ -113,5 +111,5 @@ module.exports = {
   getOneIssue,
   searchIssues,
   transformIssue,
-  updateIssueCommentArray,
+  updateIssueArray,
 };

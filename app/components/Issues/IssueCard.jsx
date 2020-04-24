@@ -2,6 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import { CommentIcon, IconToolTip, Upvote, Verified } from 'components/base_ui';
+import { formatDollarAmount, navHelper } from 'utils/globalHelpers';
 import SettingsMenu from 'components/SettingsMenu';
 
 import {
@@ -30,9 +31,11 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
           id,
           name,
           organizationName,
+          organizationId,
           organizationVerified,
           language,
-          attempts,
+          open,
+          attempting,
           rep,
           watchList,
           comments,
@@ -50,7 +53,16 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
               </UpvotePanel>
               <StyledIssueContent>
                 <StyledIssueHeader>
-                  <OrganizationNameWrapper>
+                  <OrganizationNameWrapper
+                    href={`/admin/companies/detail/${organizationId}`}
+                    onClick={e =>
+                      navHelper(
+                        e,
+                        handleNav,
+                        `/admin/companies/detail/${organizationId}`,
+                      )
+                    }
+                  >
                     {organizationName}
 
                     {organizationVerified ? (
@@ -76,7 +88,10 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                 </StyledIssueHeader>
                 <StyledIssueText>
                   <NameWrapper
-                    onClick={() => handleNav(`/admin/issues/detail/${id}`)}
+                    href={`/admin/issues/detail/${id}`}
+                    onClick={e =>
+                      navHelper(e, handleNav, `/admin/issues/detail/${id}`)
+                    }
                   >
                     {name}
                   </NameWrapper>
@@ -86,9 +101,11 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                     {' '}
                     <CommentIcon /> {comments.length} comments
                   </div>
-                  <div>{false ? 'Closed' : `${attempts} attempting`}</div>
+                  <div>
+                    {!open ? 'Closed' : `${attempting.length} attempting`}
+                  </div>
                   <div>{watchList.length} Watch</div>
-                  <DollarWrapper>${value}</DollarWrapper>
+                  <DollarWrapper>{formatDollarAmount(value)}</DollarWrapper>
                 </StyledIssueFooter>
               </StyledIssueContent>
             </StyledListItem>

@@ -1,14 +1,12 @@
 import React from 'react';
 import T from 'prop-types';
+import { navHelper } from 'utils/globalHelpers';
 import { StyledImage } from './styledComponents';
 
 const ProfileImage = ({ small, alt, detailRoute, handleNav, profilePic }) => (
-  <StyledImage
-    small={small}
-    alt={alt}
-    src={profilePic}
-    onClick={() => handleNav(detailRoute)}
-  />
+  <a href={detailRoute} onClick={e => navHelper(e, handleNav, detailRoute)}>
+    <StyledImage small={small} alt={alt} src={profilePic} />
+  </a>
 );
 
 ProfileImage.propTypes = {

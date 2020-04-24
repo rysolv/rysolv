@@ -1,4 +1,7 @@
 import {
+  ADD_ATTEMPT,
+  ADD_ATTEMPT_FAILURE,
+  ADD_ATTEMPT_SUCCESS,
   ADD_COMMENT,
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
@@ -27,6 +30,27 @@ import {
   UPVOTE_ISSUE,
   VERIFY_INFO,
 } from './constants';
+
+export function addAttempt(payload) {
+  return {
+    payload,
+    type: ADD_ATTEMPT,
+  };
+}
+
+export function addAttemptFailure(payload) {
+  return {
+    payload,
+    type: ADD_ATTEMPT_FAILURE,
+  };
+}
+
+export function addAttemptSuccess(payload) {
+  return {
+    payload,
+    type: ADD_ATTEMPT_SUCCESS,
+  };
+}
 
 export function addComment(payload) {
   return {

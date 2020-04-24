@@ -12,6 +12,10 @@ import {
   LeftPanel,
   StyledFlatIconButton,
   UpvotePanel,
+  StatusBar,
+  StatusItem,
+  StatusTitle,
+  StyledSecondaryButton,
 } from './styledComponents';
 
 const IssueDetail = ({
@@ -20,14 +24,16 @@ const IssueDetail = ({
   handleComment,
   handleNav,
   handleUpvote,
+  handleAttempt,
 }) => {
   const {
-    // attempts,
+    attempting,
     id,
     createdDate,
     body,
     rep,
     comments,
+    open,
     user: { username, profilePic },
   } = data;
 
@@ -54,13 +60,13 @@ const IssueDetail = ({
           key={`${comment.username}-${comment.createdDate}`}
           body={comment.body}
           date={comment.createdDate}
+          handleNav={handleNav}
           userProfile={user}
         />
       );
     });
   const commentsDiv = comments.length > 0 ? generateComments() : <NoComment />;
 
-  // console.log(comments);
   return (
     <BaseContainer>
       <BackNav
@@ -90,6 +96,26 @@ const IssueDetail = ({
               handleNav={handleNav}
             />
           </div>
+          <Divider>Status: {open ? 'Open' : 'Issue Closed'}</Divider>
+
+          <StatusBar>
+            <StatusItem>
+              <StatusTitle>{attempting.length} Attempting</StatusTitle>
+              <StyledSecondaryButton
+                disabled={!open}
+                label="attempt"
+                onClick={() => handleAttempt({ activeUser, id })}
+              />
+            </StatusItem>
+            <StatusItem>
+              <StatusTitle>0 Pull Requests</StatusTitle>
+              <StyledSecondaryButton disabled={!open} label="Submit PR" />
+            </StatusItem>
+            <StatusItem>
+              <StatusTitle>Funded</StatusTitle>
+              <StyledSecondaryButton disabled={!open} label="$ Fund Issue" />
+            </StatusItem>
+          </StatusBar>
 
           <Divider>Comments</Divider>
           {commentsDiv}
@@ -117,6 +143,7 @@ IssueDetail.propTypes = {
   handleUpvote: T.func,
   data: T.object,
   handleNav: T.func,
+  handleAttempt: T.func,
 };
 
 export default IssueDetail;

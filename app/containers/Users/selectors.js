@@ -44,7 +44,7 @@ const makeSelectUsersFormatted = () =>
       if (users.length > 0) {
         return users.map(
           ({
-            activeNumber,
+            attempting,
             createdDate,
             firstName,
             id,
@@ -54,7 +54,7 @@ const makeSelectUsersFormatted = () =>
             rep,
             username,
           }) => ({
-            activeNumber,
+            attempting,
             createdDate: moment(createdDate).format('M/D/YYYY'),
             id,
             issuesNumber,

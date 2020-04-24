@@ -6,7 +6,7 @@ const {
   getOneIssue,
   searchIssues,
   transformIssue,
-  updateIssueCommentArray,
+  updateIssueArray,
 } = require('./issues');
 const {
   createUser,
@@ -15,7 +15,7 @@ const {
   getUsers,
   searchUsers,
   transformUser,
-  updateUserCommentArray,
+  updateUserArray,
 } = require('./users');
 const { createComment, getComments, getIssueComments } = require('./comments');
 const { createPullRequest } = require('./pullRequests');
@@ -55,6 +55,6 @@ module.exports = {
   transformIssue,
   transformOrganization,
   transformUser,
-  updateIssueCommentArray,
-  updateUserCommentArray,
+  updateIssueArray,
+  updateUserArray,
 };

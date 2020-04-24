@@ -6,6 +6,7 @@ const {
   getOneIssue,
   searchIssues,
   transformIssue,
+  updateIssueArray,
 } = require('../../db');
 
 module.exports = {
@@ -22,8 +23,7 @@ module.exports = {
         issueInput.repo,
         issueInput.language,
         issueInput.comments || [],
-        issueInput.attempts || 0,
-        issueInput.active_attempts || 0,
+        issueInput.attempting || [],
         issueInput.contributor,
         issueInput.rep || 25,
         issueInput.watch_list || [],
@@ -90,8 +90,7 @@ module.exports = {
         repo: issueInput.repo,
         language: issueInput.language,
         comments: issueInput.comments,
-        attempts: issueInput.attempts,
-        active_attempts: issueInput.activeAttempts,
+        attempting: issueInput.attempting,
         contributor: issueInput.contributor,
         rep: issueInput.rep,
         watch_list: issueInput.watchList,
@@ -109,8 +108,7 @@ module.exports = {
         repo: queryResult.repo,
         language: queryResult.language,
         comments: queryResult.comments,
-        attempts: queryResult.attempts,
-        activeAttempts: queryResult.active_attempts,
+        attempting: queryResult.attempting,
         contributor: queryResult.contributor,
         rep: queryResult.rep,
         watchList: queryResult.watchList,
@@ -121,5 +119,10 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+  updateIssueArray: async args => {
+    const { id, column, data } = args;
+    const [result] = await updateIssueArray('issues', column, id, data);
+    return result;
   },
 };

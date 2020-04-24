@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { hoverLinkColor, moneyGreen, textColor } from 'defaultStyleHelper';
+import { hoverLinkColor, textColor } from 'defaultStyleHelper';
 import { FlatIconButton } from '../base_ui';
 
 export const StyledIssueCard = styled.div`
@@ -28,7 +28,6 @@ export const StyledListItem = styled.li`
   margin: 1rem;
   flex-direction: row;
   list-style-type: none;
-  /* min-height: 4rem; */
 `;
 
 export const StyledIssueContent = styled.div`
@@ -44,7 +43,7 @@ export const StyledIssueHeader = styled.div`
   justify-content: space-between;
 `;
 
-export const OrganizationNameWrapper = styled.div`
+export const OrganizationNameWrapper = styled.a`
   display: flex;
   color: ${textColor};
   display: inline-block;
@@ -71,7 +70,7 @@ export const StyledIssueText = styled.div`
   min-height: 4rem;
 `;
 
-export const NameWrapper = styled.div`
+export const NameWrapper = styled.a`
   font-size: 1.2rem;
   max-height: 3rem;
   overflow: hidden;
@@ -101,15 +100,22 @@ export const StyledIssueFooter = styled.div`
   width: 100%;
 `;
 
-export const DollarWrapper = styled.div`
-  color: white;
-  background-color: ${moneyGreen};
-  padding: 0.25rem 1rem 0.25rem 1rem;
-  font-weight: bold;
-  border-radius: 1rem;
-`;
-
 export const StyledFlatIconButton = styled(FlatIconButton)`
   padding: 0;
   min-width: 0;
+`;
+
+export const DollarWrapper = styled.div`
+  background-color: rgb(229, 251, 242);
+  border-radius: 0.25rem;
+  color: rgb(8, 178, 110);
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.5;
+  min-width: 5rem;
+  padding: 0.25rem 0.4rem;
+  text-align: center;
+  white-space: nowrap;
+  width: auto;
 `;

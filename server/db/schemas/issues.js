@@ -8,13 +8,12 @@ issues(
   body TEXT NOT NULL,
   repo VARCHAR(128) NOT NULL,
   language VARCHAR(128),
-  comments TEXT [],
-  attempts SMALLINT DEFAULT 0,
-  active_attempts SMALLINT DEFAULT 0,
+  comments UUID [],
+  attempting UUID [],
   contributor UUID [],
   rep SMALLINT DEFAULT 25,
   watch_list UUID [],
-  value SMALLINT DEFAULT 0,
+  value FLOAT DEFAULT 0,
   open BOOLEAN DEFAULT true
 )`;
 

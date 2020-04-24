@@ -12,6 +12,7 @@ import {
   addComment,
   clearAlerts,
   fetchIssueDetail,
+  addAttempt,
   upvoteIssue,
 } from '../actions';
 import {
@@ -45,6 +46,7 @@ export class IssueDetailContainer extends React.PureComponent {
       handleUpvote,
       issueDetail,
       loading,
+      handleAttempt,
     } = this.props;
 
     return (
@@ -59,6 +61,7 @@ export class IssueDetailContainer extends React.PureComponent {
           handleUpvote,
           activeUser,
           handleComment,
+          handleAttempt,
         }}
       />
     );
@@ -75,6 +78,7 @@ IssueDetailContainer.propTypes = {
   handleUpvote: T.func,
   issueDetail: T.object,
   loading: T.bool,
+  handleAttempt: T.func,
   match: T.object,
 };
 
@@ -97,6 +101,7 @@ function mapDispatchToProps(dispatch) {
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleUpvote: payload => dispatch(upvoteIssue(payload)),
     handleComment: payload => dispatch(addComment(payload)),
+    handleAttempt: payload => dispatch(addAttempt(payload)),
     /**
      * Reducer : Router
      */
