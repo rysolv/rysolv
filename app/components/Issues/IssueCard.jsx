@@ -37,7 +37,7 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
           open,
           attempting,
           rep,
-          watchList,
+          watching,
           comments,
           value,
         }) => (
@@ -104,7 +104,7 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                   <div>
                     {!open ? 'Closed' : `${attempting.length} attempting`}
                   </div>
-                  <div>{watchList.length} Watch</div>
+                  <div>{watching.length} Watch</div>
                   <DollarWrapper>{formatDollarAmount(value)}</DollarWrapper>
                 </StyledIssueFooter>
               </StyledIssueContent>

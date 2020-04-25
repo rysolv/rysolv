@@ -1,9 +1,13 @@
+/* eslint-disable no-restricted-globals */
 import { createGlobalStyle } from 'styled-components';
 import { bodyColor } from './defaultStyleHelper';
 
+const maxWidth = screen.width;
+
 const GlobalStyle = createGlobalStyle`
   html {
-    font-size: 85%;
+    font-size: ${maxWidth > 1800 ? '85%' : '62.5%'}
+;
   }
 
   html,

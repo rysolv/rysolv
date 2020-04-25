@@ -18,6 +18,7 @@ import { DetailWrapper } from './styledComponents';
 // eslint-disable-next-line react/prefer-stateless-function
 export class DetailUser extends React.PureComponent {
   componentDidMount() {
+    window.scrollTo(0, 0);
     const {
       dispatchFetchInfo,
       match: {

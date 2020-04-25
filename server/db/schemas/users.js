@@ -6,7 +6,7 @@ users(
   first_name VARCHAR(128),
   last_name VARCHAR(128),
   email VARCHAR(128) NOT NULL,
-  watching_list UUID [],
+  watching UUID [],
   rep SMALLINT NOT NULL DEFAULT 0,
   profile_pic VARCHAR(255),
   comments UUID [],

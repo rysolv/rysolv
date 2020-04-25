@@ -35,7 +35,7 @@ module.exports = buildSchema(`
     activeAttempts: Int
     contributor: [String]
     rep: Int
-    watchList: [String]
+    watching: [String]
     value: Float
     open: Boolean
   }
@@ -52,7 +52,7 @@ module.exports = buildSchema(`
     activeAttempts: Int
     contributor: [String]
     rep: Int
-    watchList: [String]
+    watching: [String]
     value: Int
   }
 
@@ -63,7 +63,7 @@ module.exports = buildSchema(`
     firstName: String!
     lastName: String!
     email: String!
-    watchingList: [String]
+    watching: [String]
     rep: Int
     profilePic: String
     comments: [String]
@@ -80,7 +80,7 @@ module.exports = buildSchema(`
     firstName: String
     lastName: String
     email: String
-    watchingList: [String]
+    watching: [String]
     rep: Int
     profilePic: String
     comments: [String]

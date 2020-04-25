@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import { Star, ProfileImage } from 'components/base_ui';
+import { navHelper } from 'utils/globalHelpers';
 import SettingsMenu from 'components/SettingsMenu';
 
 import {
@@ -48,8 +49,12 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                 <StyledSettingWrapper>
                   <MemberWrapper>
                     <NameWrapper
-                      handleNav={() =>
-                        handleNav(`/admin/users/detail/${username}`)
+                      onClick={e =>
+                        navHelper(
+                          e,
+                          handleNav,
+                          `/admin/users/detail/${username}`,
+                        )
                       }
                       href={`/admin/users/detail/${username}`}
                     >

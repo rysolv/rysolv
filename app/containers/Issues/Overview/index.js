@@ -25,6 +25,7 @@ import {
 // eslint-disable-next-line react/prefer-stateless-function
 export class IssuesOverview extends React.PureComponent {
   componentDidMount() {
+    window.scrollTo(0, 0);
     const { dispatchFetchIssues } = this.props;
     dispatchFetchIssues();
   }

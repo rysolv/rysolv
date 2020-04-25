@@ -23,6 +23,7 @@ import {
 
 export class IssueDetailContainer extends React.PureComponent {
   componentDidMount() {
+    window.scrollTo(0, 0);
     const {
       dispatchFetchIssueDetail,
       match: {
