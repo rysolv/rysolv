@@ -3,9 +3,12 @@ import T from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
-import { BaseContainer, ConditionalRender } from 'components/base_ui';
+
 import AdminHeader from 'components/Admin/AdminHeader';
+import { BaseContainer, ConditionalRender } from 'components/base_ui';
+import Sidebar from 'components/Sidebar';
 import injectReducer from 'utils/injectReducer';
+
 import { typeDictionary } from './helpers';
 import NotFoundPage from '../NotFoundPage/Loadable';
 import { subrouteDictionary, viewDictionary } from './routeDictionary';
@@ -39,6 +42,7 @@ export const Admin = ({
         <AdminHeader activePage={subroute} handleNav={handleNav} />
         <Component subroute={subroute} view={view} id={id} match={match} />
       </BaseContainer>
+      <Sidebar />
     </Fragment>
   );
   return (

@@ -85,7 +85,7 @@ const UserMetricsView = ({ createdDate }) => {
           </DetailListItem>
           <DetailListItem>
             {preferredLanguages.map(language => (
-              <Language>{language}</Language>
+              <Language key={`list-item-${language}`}>{language}</Language>
             ))}
           </DetailListItem>
         </UserDetails>

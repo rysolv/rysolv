@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-expressions */
 import React, { Fragment } from 'react';
 import T from 'prop-types';
@@ -100,7 +101,7 @@ const UserTimelineView = ({
     {activityData.map((activity, index) => {
       const { Image, title } = userTimelineDictionary[activity.type];
       const TimelineListItemComponent = (
-        <TimelineListItem>
+        <TimelineListItem key={`list-item-${index}`}>
           <TimelineDividerContainer>
             <TimelineVerticalDivider /> {Image}
           </TimelineDividerContainer>
@@ -131,7 +132,7 @@ const UserTimelineView = ({
 
       if (index === 0 || activity.date !== activityData[index - 1].date) {
         return (
-          <Fragment>
+          <Fragment key={`list-item-${index}`}>
             <TimelineHeader>
               <TimelineTitle>
                 {moment(activity.date).format('MMMM DD')}

@@ -21,7 +21,6 @@ import {
 export class RecentActivityView extends React.PureComponent {
   render() {
     const { fundData } = this.props;
-
     return (
       <Fragment>
         <RecentActivityContainer>
