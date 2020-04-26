@@ -52,7 +52,9 @@ const CompanyDetailTabs = ({
             handleNav={handleNav}
           />
         }
-        FallbackComponent={<CompanyIssuesTab issues={issues} />}
+        FallbackComponent={
+          <CompanyIssuesTab issues={issues} handleNav={handleNav} />
+        }
         shouldRender={!!value}
       />
     </StyledPaper>

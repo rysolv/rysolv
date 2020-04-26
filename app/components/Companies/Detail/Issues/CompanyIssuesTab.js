@@ -41,7 +41,11 @@ const CompanyIssuesTab = ({ handleNav, handleUpvote, issues }) => (
             </IssueModifiedDate>
             <IssueDetail>
               <IssueNameWrapper>
-                <IssueName onClick={handleNav}>{name}</IssueName>
+                <IssueName
+                  onClick={() => handleNav(`/admin/issues/detail/${id}`)}
+                >
+                  {name}
+                </IssueName>
                 <IssueOpenWrapper>
                   <IssueOpen open={open}>
                     {open ? 'Funded' : 'Unfunded'}
