@@ -299,7 +299,7 @@ export function* searchIssuesSaga({ payload }) {
       id,
       createdDate,
       modifiedDate,
-      attempts,
+      attempting,
       body,
       comments,
       language,
