@@ -21,8 +21,7 @@ export const ContributorContent = styled.li`
   display: flex;
   font-size: 1.6rem;
   list-style: none;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   position: relative;
 
   &:after {
@@ -96,6 +95,7 @@ export const StarWrapper = styled.div`
 export const StyledPrimaryButton = styled(PrimaryButton)`
   align-self: center;
   font-size: 1.4rem;
+  margin: 2rem;
 `;
 
 export const TopContributorsContainer = styled.div`

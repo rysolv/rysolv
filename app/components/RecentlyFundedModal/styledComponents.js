@@ -29,8 +29,7 @@ export const IssueAmount = styled.div`
 export const IssueContent = styled.li`
   display: flex;
   list-style: none;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   position: relative;
 
   &:after {
@@ -88,4 +87,5 @@ export const RecentlyFundedContainer = styled.div`
 export const StyledPrimaryButton = styled(PrimaryButton)`
   align-self: center;
   font-size: 1.4rem;
+  margin: 2rem;
 `;
