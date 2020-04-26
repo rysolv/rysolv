@@ -18,6 +18,11 @@ const AdminSubHeader = ({
   search,
 }) => {
   const { companyInput } = { ...search };
+  const keyPress = ({ e }) => {
+    if (e.keyCode === 13) {
+      handleSearch({ value: companyInput.value });
+    }
+  };
   return (
     <AdminSubHeaderContainer>
       <BaseInputContainer>
@@ -32,6 +37,7 @@ const AdminSubHeader = ({
             })
           }
           onClick={() => handleSearch({ value: companyInput.value })}
+          onKeyDown={e => keyPress({ e })}
           placeholder="Search..."
           position="end"
         />
