@@ -15,6 +15,7 @@ import {
 import {
   deleteCompanyFailure,
   deleteCompanySuccess,
+  fetchCompanies,
   fetchCompaniesFailure,
   fetchCompaniesSuccess,
   fetchInfoFailure,
@@ -142,6 +143,7 @@ export function* saveInfoSaga({ payload }) {
       variables: {},
     });
     yield call(post, '/graphql', graphql);
+    yield put(fetchCompanies());
     yield put(saveInfoSuccess({ message: successCreateOrganizationMessage }));
   } catch (error) {
     yield put(saveInfoFailure({ error }));
@@ -185,7 +187,6 @@ export function* updateInfoSaga({ payload }) {
   const {
     companyUrl,
     description,
-    issues,
     logo,
     name,
     repoUrl,
@@ -198,7 +199,6 @@ export function* updateInfoSaga({ payload }) {
         description: "${description}",
         repoUrl: "${repoUrl}",
         companyUrl: "${companyUrl}",
-        issues: ["${issues}"]
         logo: "${logo}",
         verified: ${verified},
       }) {
@@ -221,6 +221,7 @@ export function* updateInfoSaga({ payload }) {
       variables: {},
     });
     yield call(post, '/graphql', graphql);
+    yield put(fetchCompanies());
     yield put(updateInfoSuccess({ message: successEditOrganizationMessage }));
   } catch (error) {
     yield put(updateInfoFailure({ error }));

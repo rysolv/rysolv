@@ -25,6 +25,8 @@ module.exports = {
         organizationInput.issues || [],
         organizationInput.logo || '',
         organizationInput.verified || false,
+        organizationInput.contributors || [],
+        organizationInput.ownerId || uuidv4(),
       ],
     ];
     try {
@@ -102,6 +104,8 @@ module.exports = {
         issues: organizationInput.issues,
         logo: organizationInput.logo,
         verified: organizationInput.verified,
+        contributors: organizationInput.contributors,
+        owner_id: organizationInput.ownerId,
       };
       const queryResult = await transformOrganization(
         'organizations',
@@ -119,6 +123,8 @@ module.exports = {
         issues: queryResult.issues,
         logo: queryResult.logo,
         verified: queryResult.verified,
+        contributors: queryResult.contributors,
+        ownerId: queryResult.owner_id,
       };
       return result;
     } catch (err) {

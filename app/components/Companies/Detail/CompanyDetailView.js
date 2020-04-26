@@ -68,6 +68,7 @@ export class CompanyDetailView extends React.PureComponent {
       filterValues,
       handleInputChange,
       handleNav,
+      handleUpvote,
     } = this.props;
     return (
       <Fragment>
@@ -101,6 +102,7 @@ export class CompanyDetailView extends React.PureComponent {
               filterValues={filterValues}
               handleInputChange={handleInputChange}
               handleNav={handleNav}
+              handleUpvote={handleUpvote}
               issues={issues}
             />
           </MainTabs>
@@ -120,6 +122,7 @@ CompanyDetailView.propTypes = {
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
   handleNav: T.func,
+  handleUpvote: T.func,
 };
 
 export default CompanyDetailView;

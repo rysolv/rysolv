@@ -6,6 +6,7 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import CompanyDetailView from 'components/Companies/Detail/CompanyDetailView';
+import { upvoteIssue } from 'containers/Issues/actions';
 
 import { fetchInfo, inputChange } from '../actions';
 import {
@@ -35,6 +36,7 @@ export class DetailCompany extends React.PureComponent {
       filterValues,
       handleInputChange,
       handleNav,
+      handleUpvote,
       loading,
     } = this.props;
 
@@ -50,6 +52,7 @@ export class DetailCompany extends React.PureComponent {
             filterValues,
             handleInputChange,
             handleNav,
+            handleUpvote,
           }}
         />
       </DetailWrapper>
@@ -64,6 +67,7 @@ DetailCompany.propTypes = {
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
+  handleUpvote: T.func.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
 };
@@ -85,6 +89,10 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
+    /**
+     * Reducer : Issues
+     */
+    handleUpvote: payload => dispatch(upvoteIssue(payload)),
     /**
      * Reducer : Router
      */

@@ -15,6 +15,7 @@ const CompanyDetailTabs = ({
   filterValues,
   handleInputChange,
   handleNav,
+  handleUpvote,
   issues,
 }) => {
   const [value, setValue] = React.useState(0);
@@ -53,7 +54,11 @@ const CompanyDetailTabs = ({
           />
         }
         FallbackComponent={
-          <CompanyIssuesTab issues={issues} handleNav={handleNav} />
+          <CompanyIssuesTab
+            issues={issues}
+            handleNav={handleNav}
+            handleUpvote={handleUpvote}
+          />
         }
         shouldRender={!!value}
       />
@@ -66,6 +71,7 @@ CompanyDetailTabs.propTypes = {
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
   handleNav: T.func,
+  handleUpvote: T.func,
   issues: T.array,
 };
 
