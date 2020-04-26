@@ -48,12 +48,10 @@ export function App() {
   return (
     <StylesProvider generateClassName={generateClassName} jss={jss}>
       <MuiThemeProvider theme={muiTheme}>
-        <div>
-          <ViewSize>
-            <Main />
-            <GlobalStyles />
-          </ViewSize>
-        </div>
+        <ViewSize>
+          <Main />
+          <GlobalStyles />
+        </ViewSize>
       </MuiThemeProvider>
     </StylesProvider>
   );

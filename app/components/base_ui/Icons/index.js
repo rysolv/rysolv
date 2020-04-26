@@ -1,6 +1,7 @@
 import BackIcon from './BackIcon';
 import CodeIcon from './CodeIcon';
 import CommentIcon from './CommentIcon';
+import DownArrow from './DownArrow';
 import IconToolTip from './IconTooltip';
 import MonocleIcon from './Monocle';
 import Settings from './Settings';
@@ -12,6 +13,7 @@ export {
   BackIcon,
   CodeIcon,
   CommentIcon,
+  DownArrow,
   IconToolTip,
   MonocleIcon,
   Settings,

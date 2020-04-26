@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Cancel from '@material-ui/icons/Cancel';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import Circle from '@material-ui/icons/FiberManualRecord';
@@ -36,6 +37,7 @@ export default (name, options) => {
     comments: Comments,
     creditCard: CreditCard,
     delete: Delete,
+    dropdownArrow: ArrowDropDownIcon,
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,

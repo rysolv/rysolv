@@ -1,5 +1,5 @@
 import React from 'react';
-import { SplashImage, Logo, TagLine } from './styledComponent';
+import { SplashImage, Logo, TagLine } from './styledComponents';
 
 const DesktopSplash = () => (
   <SplashImage>

@@ -131,7 +131,6 @@ const generateOrganizationQuery = id => {
 
 export function* fetchIssueDetailSaga({ payload }) {
   const { id } = payload;
-  console.log('hellooo');
   const query = `
     query {
       oneIssue(id: "${id}") {

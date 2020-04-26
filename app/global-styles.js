@@ -1,12 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import { createGlobalStyle } from 'styled-components';
-import { mediaQueriesByDevice } from 'utils/breakpoints';
 import { bodyColor } from './defaultStyleHelper';
-
-// const { large } = mediaQueriesByDevice;
-console.log(mediaQueriesByDevice);
-
-// const maxWidth = screen.width;
 
 const GlobalStyle = createGlobalStyle`
   html {

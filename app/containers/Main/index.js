@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -9,13 +9,20 @@ import AsyncRender from 'components/AsyncRender';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
+import { makeSelectAdmin } from 'containers/Admin/selectors';
 
 import routes from './routes';
 import { AppBody } from './styledComponents';
 
-export const Main = ({ data = { test: true }, deviceView, error, loading }) => (
-  <div>
-    <Header view={deviceView} />
+export const Main = ({
+  activeUser,
+  data = { test: true },
+  deviceView,
+  error,
+  loading,
+}) => (
+  <Fragment>
+    <Header view={deviceView} activeUser={activeUser} />
     <AppBody>
       <AsyncRender
         asyncData={data}
@@ -25,10 +32,11 @@ export const Main = ({ data = { test: true }, deviceView, error, loading }) => (
       />
     </AppBody>
     <Footer />
-  </div>
+  </Fragment>
 );
 
 Main.propTypes = {
+  activeUser: T.object,
   data: T.object,
   deviceView: T.string,
   error: T.object,
@@ -36,6 +44,7 @@ Main.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  activeUser: makeSelectAdmin('admin'),
   /**
    * Reducer: ViewSizes
    */

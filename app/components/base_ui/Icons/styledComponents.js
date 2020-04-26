@@ -18,6 +18,18 @@ export const StyledComment = styled.div`
   text-align: center;
 `;
 
+export const StyledDownArrow = styled.div`
+  display: inline-block;
+
+  svg {
+    height: 3rem;
+    width: 3rem;
+  }
+  &:hover {
+    color: #b0bec5;
+  }
+`;
+
 export const StyledSettings = styled.div`
   color: #424242;
   display: inline-block;
