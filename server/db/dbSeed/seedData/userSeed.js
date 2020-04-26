@@ -17,7 +17,7 @@ const userSeed = [
     'norris23', // username
     'https://github.com/tylermaran', // github_link
     'https://www.tylermaran.com/', // personal_link
-    'Javascript', // preferred_languages
+    ['Javascript', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/tyler-maran', // stackoverflow_link
   ],
   [
@@ -36,7 +36,7 @@ const userSeed = [
     'annapo', // username
     'https://github.com/annapo23', // github_link
     'https://www.annapojawis.com/', // personal_link
-    'Javascript', // preferred_languages
+    ['Javascript', 'Rust', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/anna-pojawis', // stackoverflow_link
   ],
   [
@@ -55,7 +55,7 @@ const userSeed = [
     'paulhouse45', // username
     'https://github.com/paulhouse', // github_link
     'https://www.paulhouz.com/', // personal_link
-    'C++', // preferred_languages
+    ['C++', 'Rust', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/paul-house', // stackoverflow_link
   ],
   [
@@ -77,7 +77,7 @@ const userSeed = [
     'jquerie', // username
     'https://github.com/jquerie', // github_link
     'https://www.jquerie.com/', // personal_link
-    'Rust', // preferred_languages
+    ['Javascript', 'Rust', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/jay-querie', // stackoverflow_link
   ],
   [
@@ -96,7 +96,7 @@ const userSeed = [
     'ADMIN', // username
     'https://github.com/tylermaran', // github_link
     'https://www.tylermaran.com/', // personal_link
-    'FORTRAN', // preferred_languages
+    ['FORTRAN', 'React', 'Java', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/tyler-maran', // stackoverflow_link
   ],
 ];
