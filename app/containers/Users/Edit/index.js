@@ -17,6 +17,7 @@ import { EditWrapper } from './styledComponents';
 // eslint-disable-next-line react/prefer-stateless-function
 export class EditUser extends React.PureComponent {
   componentDidMount() {
+    window.scrollTo(0, 0);
     const { handleIncrementStep } = this.props;
     handleIncrementStep({ step: 1, view: 'editUser' });
   }

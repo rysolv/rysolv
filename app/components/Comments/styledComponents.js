@@ -69,3 +69,12 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   margin: 1rem 0 0 0;
   display: inline-block;
 `;
+
+export const UsernameLink = styled.a`
+  font-weight: bold;
+  display: inline;
+
+  &:hover {
+    color: ${textColor};
+  }
+`;

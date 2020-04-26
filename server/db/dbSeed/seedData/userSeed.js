@@ -12,7 +12,7 @@ const userSeed = [
     2, // rep
     'https://rysolv.s3.us-east-2.amazonaws.com/tylerprofile.png', // profile_pic
     [], // comments
-    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // active_number
+    [], // attempting
     ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues_number
     'norris23', // username
     'https://github.com/tylermaran', // github_link
@@ -31,7 +31,7 @@ const userSeed = [
     25,
     'https://rysolv.s3.us-east-2.amazonaws.com/annaprofile.png',
     [], // comments
-    ['d7985d02-382f-424b-9507-78efcb993d88'], // active_number
+    [], // attempting
     ['d7985d02-382f-424b-9507-78efcb993d88'], // issues_number
     'annapo', // username
     'https://github.com/annapo23', // github_link
@@ -50,7 +50,7 @@ const userSeed = [
     25,
     'https://rysolv.s3.us-east-2.amazonaws.com/paulprofile.png',
     [], // comments
-    ['04790329-9fa7-438c-8627-4d400822f673'], // active_number
+    [], // attempting
     ['04790329-9fa7-438c-8627-4d400822f673'], // issues_number
     'paulhouse45', // username
     'https://github.com/paulhouse', // github_link
@@ -69,7 +69,7 @@ const userSeed = [
     25,
     'https://rysolv.s3.us-east-2.amazonaws.com/jay.png',
     [], // comments
-    ['04790329-9fa7-438c-8627-4d400822f673'], // active_number
+    [], // attempting
     [
       '04790329-9fa7-438c-8627-4d400822f673',
       '04790329-9fa7-438c-8627-4d400822f673',
@@ -91,7 +91,7 @@ const userSeed = [
     2, // rep
     'https://cdn0.iconfinder.com/data/icons/web-service-and-development/512/key_protection_lock_security_access_forbidden_safe_secure_private_red_alert_password_protect_admin_safety_unlock_system_flat_design_icon-512.png', // profile_pic
     [], // comments
-    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // active_number
+    [], // attempting
     ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues_number
     'ADMIN', // username
     'https://github.com/tylermaran', // github_link

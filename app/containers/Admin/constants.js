@@ -1,1 +1,5 @@
-export const ADMIN = 'app/Companies/ADMIN';
+export const FETCH_ACTIVE_USER = 'app/Admin/FETCH_ACTIVE_USER';
+export const FETCH_ACTIVE_USER_SUCCESS = 'app/Admin/FETCH_ACTIVE_USER_SUCCESS';
+export const FETCH_ACTIVE_USER_FAILURE = 'app/Admin/FETCH_ACTIVE_USER_FAILURE';
+
+export const UPDATE_ACTIVE_USER = 'app/Admin/UPDATE_ACTIVE_USER';

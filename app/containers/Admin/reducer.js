@@ -1,21 +1,40 @@
 import produce from 'immer';
 
-import { ADMIN } from './constants';
+import {
+  FETCH_ACTIVE_USER,
+  FETCH_ACTIVE_USER_FAILURE,
+  FETCH_ACTIVE_USER_SUCCESS,
+  UPDATE_ACTIVE_USER,
+} from './constants';
 
 export const initialState = {
-  admin: {
-    id: '3f6e3ddf-ab68-4ee3-bb79-abfe21c8d014',
-    username: 'Admin',
-    profilePic:
-      'https://cdn0.iconfinder.com/data/icons/web-service-and-development/512/key_protection_lock_security_access_forbidden_safe_secure_private_red_alert_password_protect_admin_safety_unlock_system_flat_design_icon-512.png',
-  },
+  alerts: { error: false, success: false },
+  admin: {},
+  loading: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const companiesReducer = produce((draft, { type }) => {
+const adminReducer = produce((draft, { payload, type }) => {
   switch (type) {
-    case ADMIN: {
-      draft.admin = initialState.admin;
+    case FETCH_ACTIVE_USER: {
+      draft.loading = true;
+      break;
+    }
+    case FETCH_ACTIVE_USER_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case FETCH_ACTIVE_USER_SUCCESS: {
+      const { oneUser } = payload;
+      draft.admin = oneUser;
+      draft.loading = false;
+      break;
+    }
+    case UPDATE_ACTIVE_USER: {
+      const { attempting } = payload;
+      draft.admin.attempting = attempting;
       break;
     }
     default: {
@@ -24,4 +43,4 @@ const companiesReducer = produce((draft, { type }) => {
   }
 }, initialState);
 
-export default companiesReducer;
+export default adminReducer;

@@ -26,7 +26,7 @@ module.exports = {
         issueInput.attempting || [],
         issueInput.contributor,
         issueInput.rep || 25,
-        issueInput.watch_list || [],
+        issueInput.watching || [],
         issueInput.value || 0,
         issueInput.open || true,
       ],
@@ -93,7 +93,7 @@ module.exports = {
         attempting: issueInput.attempting,
         contributor: issueInput.contributor,
         rep: issueInput.rep,
-        watch_list: issueInput.watchList,
+        watching: issueInput.watching,
         value: issueInput.value,
         open: issueInput.open,
       };
@@ -111,7 +111,7 @@ module.exports = {
         attempting: queryResult.attempting,
         contributor: queryResult.contributor,
         rep: queryResult.rep,
-        watchList: queryResult.watchList,
+        watching: queryResult.watching,
         value: queryResult.value,
         open: queryResult.open,
       };

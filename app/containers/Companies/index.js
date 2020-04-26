@@ -14,6 +14,7 @@ import saga from './saga';
 // eslint-disable-next-line react/prefer-stateless-function
 export class Companies extends React.PureComponent {
   componentDidMount() {
+    window.scrollTo(0, 0);
     const { dispatchClearForm } = this.props;
     document.title = 'Admin: Companies';
     dispatchClearForm();

@@ -1,5 +1,6 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { post } from 'utils/request';
+import { fetchActiveUser } from 'containers/Admin/actions';
 import {
   ADD_ATTEMPT,
   ADD_COMMENT,
@@ -31,17 +32,14 @@ import {
 } from './actions';
 
 export function* addAttemptSaga({ payload }) {
-  const {
-    id: issueId,
-    activeUser: { id: userId },
-  } = payload;
+  const { id: issueId, userId, column } = payload;
   const query = `
   mutation {
-    updateIssueArray(id: "${issueId}", column: "attempting", data: "${userId}") {
-      attempting
+    updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}") {
+      ${column}
     }
-    updateUserArray(id: "${userId}", column: "attempting", data: "${issueId}") {
-      attempting
+    updateUserArray(id: "${userId}", column: "${column}", data: "${issueId}") {
+      ${column}
     }
   }`;
   try {
@@ -49,8 +47,11 @@ export function* addAttemptSaga({ payload }) {
       query,
       variables: {},
     });
-    const data = yield call(post, '/graphql', graphql);
-    yield put(addAttemptSuccess(data));
+    const {
+      data: { updateIssueArray },
+    } = yield call(post, '/graphql', graphql);
+    yield put(addAttemptSuccess(updateIssueArray));
+    yield put(fetchActiveUser({ userId }));
   } catch (error) {
     yield put(addAttemptFailure({ error }));
   }
@@ -149,7 +150,7 @@ export function* fetchIssueDetailSaga({ payload }) {
           rep,
           repo,
           value,
-          watchList,
+          watching,
           open,
         }
         ... on Error {
@@ -222,7 +223,7 @@ export function* fetchIssuesSaga() {
       rep,
       repo,
       value,
-      watchList,
+      watching,
       open,
     }
   }
@@ -307,7 +308,7 @@ export function* searchIssuesSaga({ payload }) {
       rep,
       repo,
       value,
-      watchList,
+      watching,
       open,
     }
   }

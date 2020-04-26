@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 import { ProfileImage } from 'components/base_ui';
+import { navHelper } from 'utils/globalHelpers';
 import marked from 'marked';
 
 import {
@@ -11,6 +12,7 @@ import {
   ProfileContainer,
   FlexContainer,
   ProfileLine,
+  UsernameLink,
 } from './styledComponents';
 
 const CommentCard = ({
@@ -43,8 +45,16 @@ const CommentCard = ({
       {primary ? null : profileView}
       <CommentContainer primary={primary}>
         <CommentHeader primary={primary}>
-          {primary ? 'Opened by' : 'Posted by'} <b>{username}</b> on{' '}
-          {moment(createdDate).format('M/D/YYYY')}
+          {primary ? 'Opened by' : 'Posted by'}{' '}
+          <UsernameLink
+            onClick={e =>
+              navHelper(e, handleNav, `/admin/users/detail/${username}`)
+            }
+            href={`/admin/users/detail/${username}`}
+          >
+            {username}
+          </UsernameLink>{' '}
+          on {moment(createdDate).format('M/D/YYYY')}
         </CommentHeader>
         <CommentBody dangerouslySetInnerHTML={{ __html: html }} />
       </CommentContainer>

@@ -3,6 +3,7 @@ import T from 'prop-types';
 import { BaseContainer, Upvote, BackNav } from 'components/base_ui';
 import { CommentCard, NoComment, NewComment } from 'components/Comments';
 import IssueDetailHeader from './IssueDetailHeader';
+import IssueStatusBar from './IssueStatusBar';
 
 import {
   // DollarWrapper,
@@ -12,10 +13,6 @@ import {
   LeftPanel,
   StyledFlatIconButton,
   UpvotePanel,
-  StatusBar,
-  StatusItem,
-  StatusTitle,
-  StyledSecondaryButton,
 } from './styledComponents';
 
 const IssueDetail = ({
@@ -24,10 +21,9 @@ const IssueDetail = ({
   handleComment,
   handleNav,
   handleUpvote,
-  handleAttempt,
+  handleIncrement,
 }) => {
   const {
-    attempting,
     id,
     createdDate,
     body,
@@ -44,8 +40,6 @@ const IssueDetail = ({
     username,
     profilePic,
   };
-
-  console.log(activeUser);
 
   const generateComments = () =>
     comments.map(comment => {
@@ -98,26 +92,14 @@ const IssueDetail = ({
               handleNav={handleNav}
             />
           </div>
+
           <Divider>Status: {open ? 'Open' : 'Issue Closed'}</Divider>
 
-          <StatusBar>
-            <StatusItem>
-              <StatusTitle>{attempting.length} Attempting</StatusTitle>
-              <StyledSecondaryButton
-                disabled={!open}
-                label="attempt"
-                onClick={() => handleAttempt({ activeUser, id })}
-              />
-            </StatusItem>
-            <StatusItem>
-              <StatusTitle>0 Pull Requests</StatusTitle>
-              <StyledSecondaryButton disabled={!open} label="Submit PR" />
-            </StatusItem>
-            <StatusItem>
-              <StatusTitle>Funded</StatusTitle>
-              <StyledSecondaryButton disabled={!open} label="$ Fund Issue" />
-            </StatusItem>
-          </StatusBar>
+          <IssueStatusBar
+            activeUser={activeUser}
+            data={data}
+            handleIncrement={handleIncrement}
+          />
 
           <Divider>Comments</Divider>
           {commentsDiv}
@@ -145,7 +127,7 @@ IssueDetail.propTypes = {
   handleUpvote: T.func,
   data: T.object,
   handleNav: T.func,
-  handleAttempt: T.func,
+  handleIncrement: T.func,
 };
 
 export default IssueDetail;

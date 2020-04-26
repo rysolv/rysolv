@@ -12,7 +12,7 @@ issues(
   attempting UUID [],
   contributor UUID [],
   rep SMALLINT DEFAULT 25,
-  watch_list UUID [],
+  watching UUID [],
   value FLOAT DEFAULT 0,
   open BOOLEAN DEFAULT true
 )`;

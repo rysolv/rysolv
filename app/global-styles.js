@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import { createGlobalStyle } from 'styled-components';
 import { bodyColor } from './defaultStyleHelper';
 

@@ -12,6 +12,7 @@ import saga from './saga';
 // eslint-disable-next-line react/prefer-stateless-function
 export class Issues extends React.PureComponent {
   componentDidMount() {
+    window.scrollTo(0, 0);
     document.title = 'Admin: Issues';
   }
 

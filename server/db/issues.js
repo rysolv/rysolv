@@ -12,7 +12,7 @@ const issueValues = `
   attempting,
   contributor,
   rep,
-  watch_list,
+  watching,
   value,
   open
 `; // Excludes ID & created_date
@@ -30,7 +30,7 @@ const issueReturnValues = `
   attempting,
   contributor,
   rep,
-  watch_list AS "watchList",
+  watching,
   value,
   open
 `;

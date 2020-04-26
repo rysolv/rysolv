@@ -82,11 +82,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case ADD_ATTEMPT_SUCCESS: {
-      const {
-        data: {
-          updateIssueArray: { attempting },
-        },
-      } = payload;
+      const { attempting } = payload;
       draft.issueDetail.attempting = attempting;
       draft.loading.addAttempt = false;
       break;
