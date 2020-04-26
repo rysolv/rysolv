@@ -3,8 +3,8 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import { Star, ProfileImage } from 'components/base_ui';
-import { navHelper } from 'utils/globalHelpers';
 import SettingsMenu from 'components/SettingsMenu';
+import { navHelper } from 'utils/globalHelpers';
 
 import {
   ActiveContainer,
@@ -76,11 +76,11 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                 <ContentWrapper>
                   <ImageContainer>
                     <ProfileImage
-                      size="med"
+                      alt="Profile Image"
                       detailRoute={`/admin/users/detail/${username}`}
                       handleNav={handleNav}
-                      alt="Profile Image"
                       profilePic={profilePic}
+                      size="7.5rem"
                     />
                     <IconWrapper>
                       <div>

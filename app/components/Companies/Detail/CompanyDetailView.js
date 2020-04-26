@@ -107,7 +107,7 @@ export class CompanyDetailView extends React.PureComponent {
           <SidebarTabs>
             <TopLanguagesView languages={languages} />
             <Divider />
-            <RecentActivityView fundData={fundData} />
+            <RecentActivityView fundData={fundData} handleNav={handleNav} />
           </SidebarTabs>
         </TabsContainer>
       </Fragment>

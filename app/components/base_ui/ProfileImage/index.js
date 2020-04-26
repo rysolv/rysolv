@@ -3,9 +3,9 @@ import T from 'prop-types';
 import { navHelper } from 'utils/globalHelpers';
 import { StyledImage } from './styledComponents';
 
-const ProfileImage = ({ small, alt, detailRoute, handleNav, profilePic }) => (
+const ProfileImage = ({ alt, detailRoute, handleNav, profilePic, size }) => (
   <a href={detailRoute} onClick={e => navHelper(e, handleNav, detailRoute)}>
-    <StyledImage small={small} alt={alt} src={profilePic} />
+    <StyledImage alt={alt} size={size} src={profilePic} />
   </a>
 );
 
@@ -14,7 +14,7 @@ ProfileImage.propTypes = {
   detailRoute: T.string,
   handleNav: T.func,
   profilePic: T.string,
-  small: T.bool,
+  size: T.string,
 };
 
 export default ProfileImage;

@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
+import { ProfileImage } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
@@ -11,16 +12,16 @@ import {
   FundsContainer,
   FundSentence,
   FundWrapper,
+  ProfileImageWrapper,
   RecentActivityContainer,
   StyledTitled,
   StyledWord,
   StyledWordLink,
-  UserImage,
 } from './styledComponents';
 
 export class RecentActivityView extends React.PureComponent {
   render() {
-    const { fundData } = this.props;
+    const { fundData, handleNav } = this.props;
     return (
       <Fragment>
         <RecentActivityContainer>
@@ -29,7 +30,15 @@ export class RecentActivityView extends React.PureComponent {
             {fundData.map(
               ({ fundAmount, fundDate, issueName, user, userImage }, index) => (
                 <FundWrapper key={`list-item-${index}`}>
-                  <UserImage src={userImage} />
+                  <ProfileImageWrapper>
+                    <ProfileImage
+                      alt={user}
+                      detailRoute={`/admin/users/detail/${user}`}
+                      handleNav={handleNav}
+                      profilePic={userImage}
+                      size="4rem"
+                    />
+                  </ProfileImageWrapper>
                   <FundContent>
                     <FundSentence>
                       <StyledWordLink>{user}</StyledWordLink>
@@ -55,6 +64,7 @@ export class RecentActivityView extends React.PureComponent {
 
 RecentActivityView.propTypes = {
   fundData: T.array,
+  handleNav: T.func.isRequired,
 };
 
 export default RecentActivityView;

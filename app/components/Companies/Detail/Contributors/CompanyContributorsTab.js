@@ -1,10 +1,12 @@
 import React from 'react';
 import T from 'prop-types';
 
+import { ProfileImage } from 'components/base_ui';
+
 import {
   ContributorContent,
   ContributorDetails,
-  ContributorImage,
+  ContributorImageWrapper,
   ContributorListItem,
   ContributorName,
   ContributorsList,
@@ -16,7 +18,15 @@ const CompanyContributorsTab = ({ contributors, handleNav }) => (
       ({ firstName, isOwner, lastName, username, profilePic }) => (
         <ContributorListItem>
           <ContributorContent>
-            <ContributorImage src={profilePic} />
+            <ContributorImageWrapper>
+              <ProfileImage
+                alt={username}
+                detailRoute={`/admin/users/detail/${username}`}
+                handleNav={handleNav}
+                profilePic={profilePic}
+                size="4.8rem"
+              />
+            </ContributorImageWrapper>
             <ContributorDetails>
               <span>
                 <ContributorName

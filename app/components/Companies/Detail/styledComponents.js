@@ -45,11 +45,10 @@ export const ContributorDetails = styled.div`
   margin: 1.6rem 1rem;
 `;
 
-export const ContributorImage = styled.img`
-  border-radius: 50%;
-  height: 4.8rem;
+export const ContributorImageWrapper = styled.div`
+  align-items: center;
+  display: flex;
   margin: 1.6rem 0 1.6rem 1rem;
-  width: 4.8rem;
 `;
 
 export const ContributorListItem = styled.li`
@@ -268,6 +267,11 @@ export const NameWrapper = styled.div`
   margin-bottom: 1rem;
 `;
 
+export const ProfileImageWrapper = styled.div`
+  align-items: center;
+  display: flex;
+`;
+
 export const RecentActivityContainer = styled.div`
   color: rgba(0, 0, 0, 0.7);
   padding: 1.6rem;
@@ -365,11 +369,4 @@ export const UrlWrapper = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 1.2rem;
-`;
-
-export const UserImage = styled.img`
-  align-self: center;
-  border-radius: 50%;
-  height: 4rem;
-  width: 4rem;
 `;

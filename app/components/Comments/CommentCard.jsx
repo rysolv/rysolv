@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
+import marked from 'marked';
 import moment from 'moment';
+
 import { ProfileImage } from 'components/base_ui';
 import { navHelper } from 'utils/globalHelpers';
-import marked from 'marked';
 
 import {
   CommentBody,
@@ -22,7 +23,7 @@ const CommentCard = ({
   handleNav,
   userProfile,
 }) => {
-  const { alt, detailRoute, profilePic, small, username } = userProfile;
+  const { alt, detailRoute, profilePic, username } = userProfile;
   const html = marked(body);
 
   const profileView = (
@@ -33,7 +34,7 @@ const CommentCard = ({
           detailRoute={detailRoute}
           handleNav={handleNav}
           profilePic={profilePic}
-          small={small}
+          size="4rem"
         />
       </ProfileContainer>
       <ProfileLine />
