@@ -73,9 +73,9 @@ export const initialState = {
   },
   isVerified: false,
   search: {
-    companyInput: { error: '', value: '' },
     contributorInput: { error: '', value: '' },
     issueInput: { error: '', value: '' },
+    searchInput: { error: '', value: '' },
   },
   step: {
     addCompany: 1,

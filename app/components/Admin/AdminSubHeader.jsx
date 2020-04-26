@@ -17,10 +17,10 @@ const AdminSubHeader = ({
   route,
   search,
 }) => {
-  const { companyInput } = { ...search };
+  const { searchInput } = { ...search };
   const keyPress = ({ e }) => {
     if (e.keyCode === 13) {
-      handleSearch({ value: companyInput.value });
+      handleSearch({ value: searchInput.value });
     }
   };
   return (
@@ -31,12 +31,12 @@ const AdminSubHeader = ({
           adornmentComponent={SearchIcon}
           onChange={e =>
             handleInputChange({
-              field: 'companyInput',
+              field: 'searchInput',
               form: 'search',
               value: e.target.value,
             })
           }
-          onClick={() => handleSearch({ value: companyInput.value })}
+          onClick={() => handleSearch({ value: searchInput.value })}
           onKeyDown={e => keyPress({ e })}
           placeholder="Search..."
           position="end"
