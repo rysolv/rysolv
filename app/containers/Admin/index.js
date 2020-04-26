@@ -6,7 +6,6 @@ import { push } from 'connected-react-router';
 
 import AdminHeader from 'components/Admin/AdminHeader';
 import { BaseContainer, ConditionalRender } from 'components/base_ui';
-import Sidebar from 'components/Sidebar';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -59,7 +58,6 @@ export const Admin = ({
         <AdminHeader activePage={subroute} handleNav={handleNav} />
         <Component subroute={subroute} view={view} id={id} match={match} />
       </BaseContainer>
-      <Sidebar />
     </Fragment>
   );
   return (

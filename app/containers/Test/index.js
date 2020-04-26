@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 
 import Markdown from 'components/Markdown';
+import Sidebar from 'components/Sidebar';
 
 const Test = () => {
   const [body, setBody] = useState('');
@@ -29,8 +30,9 @@ const Test = () => {
   };
 
   return (
-    <div style={{ width: '50rem' }}>
+    <div>
       <Markdown edit body={body} handleInput={handleMarkdownInput} />
+      <Sidebar />
     </div>
   );
 };
