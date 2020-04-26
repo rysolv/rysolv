@@ -85,7 +85,7 @@ IssueDetailContainer.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   /**
-   * Reducer : IssueDetail
+   * Reducer : Issues
    */
   activeUser: makeSelectAdmin('admin'),
   issueDetail: makeSelectIssueDetail('issueDetail'),
@@ -96,7 +96,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     /**
-     * Reducer : IssueDetail
+     * Reducer : Issues
      */
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),

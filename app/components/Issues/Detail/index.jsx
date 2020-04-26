@@ -44,11 +44,11 @@ const IssueDetail = ({
   const generateComments = () =>
     comments.map(comment => {
       const user = {
-        small: true,
-        detailRoute: `/admin/users/detail/${comment.username}`,
         alt: comment.username,
-        username: comment.username,
+        detailRoute: `/admin/users/detail/${comment.username}`,
         profilePic: comment.profilePic,
+        size: '4rem',
+        username: comment.username,
       };
 
       return (

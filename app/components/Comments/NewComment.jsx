@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
+
 import { ProfileImage } from 'components/base_ui';
-import Markdown from '../Markdown';
+import Markdown from 'components/Markdown';
+
 import {
   StyledPrimaryButton,
   ProfileContainer,
@@ -26,7 +28,7 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
           detailRoute={`/admin/users/detail/${username}`}
           handleNav={handleNav}
           profilePic={profilePic}
-          small
+          size="4rem"
         />
       </ProfileContainer>
       <NewCommentContainer>

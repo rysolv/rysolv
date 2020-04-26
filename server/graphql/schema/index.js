@@ -120,7 +120,6 @@ module.exports = buildSchema(`
     description: String
     repoUrl: String
     companyUrl: String
-    issues: [String]
     logo: String
     verified: Boolean
   }

@@ -3,17 +3,18 @@ import T from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
-import { BaseContainer, ConditionalRender } from 'components/base_ui';
+
 import AdminHeader from 'components/Admin/AdminHeader';
+import { BaseContainer, ConditionalRender } from 'components/base_ui';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { typeDictionary } from './helpers';
-import NotFoundPage from '../NotFoundPage/Loadable';
-import { subrouteDictionary, viewDictionary } from './routeDictionary';
-import reducer from './reducer';
-import saga from './saga';
 
 import { fetchActiveUser } from './actions';
+import { typeDictionary } from './helpers';
+import NotFoundPage from '../NotFoundPage/Loadable';
+import saga from './saga';
+import reducer from './reducer';
+import { subrouteDictionary, viewDictionary } from './routeDictionary';
 
 export const Admin = ({
   handleNav,

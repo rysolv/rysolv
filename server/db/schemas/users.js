@@ -15,8 +15,12 @@ users(
   username VARCHAR(40),
   github_link VARCHAR(128),
   personal_link VARCHAR(128),
-  preferred_languages VARCHAR(128),
-  stackoverflow_link VARCHAR(128)
+  preferred_languages VARCHAR(128) [],
+  stackoverflow_link VARCHAR(128),
+  activePullRequests VARCHAR(128) [],
+  completedPullRequests VARCHAR(128) [],
+  rejectedPullRequests VARCHAR(128) [],
+  dollarsEarned FLOAT DEFAULT 0
 )`;
 
 module.exports = users;

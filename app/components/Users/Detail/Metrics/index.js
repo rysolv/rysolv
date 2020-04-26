@@ -31,30 +31,30 @@ const rejectedPullRequests = 5;
 
 const CircleIcon = iconDictionary('circle');
 
-const DetailPullRequestsComponent = (
-  <DetailsPanelWrapper>
-    <DetailListItem>
-      –&nbsp;<b>{activePullRequests}</b>&nbsp;Active
-    </DetailListItem>
-    <DetailListItem>
-      –&nbsp;<b>{completedPullRequests}</b>&nbsp;Completed
-    </DetailListItem>
-    <DetailListItem>
-      –&nbsp;<b>{rejectedPullRequests}</b>&nbsp;Rejected
-    </DetailListItem>
-  </DetailsPanelWrapper>
-);
-
-const OnlineComponent = (
-  <OnlineWrapper>
-    <OnlineIcon>{CircleIcon}</OnlineIcon>
-    <b>Online Now</b>
-  </OnlineWrapper>
-);
-
 const UserMetricsView = ({ createdDate }) => {
   const [detailView, setDetailView] = useState(false);
   const hasNoDecimals = true;
+
+  const DetailPullRequestsComponent = (
+    <DetailsPanelWrapper>
+      <DetailListItem>
+        –&nbsp;<b>{activePullRequests}</b>&nbsp;Active
+      </DetailListItem>
+      <DetailListItem>
+        –&nbsp;<b>{completedPullRequests}</b>&nbsp;Completed
+      </DetailListItem>
+      <DetailListItem>
+        –&nbsp;<b>{rejectedPullRequests}</b>&nbsp;Rejected
+      </DetailListItem>
+    </DetailsPanelWrapper>
+  );
+
+  const OnlineComponent = (
+    <OnlineWrapper>
+      <OnlineIcon>{CircleIcon}</OnlineIcon>
+      <b>Online Now</b>
+    </OnlineWrapper>
+  );
   return (
     <UserMetricsContainer>
       <RankingContainer>
@@ -85,7 +85,7 @@ const UserMetricsView = ({ createdDate }) => {
           </DetailListItem>
           <DetailListItem>
             {preferredLanguages.map(language => (
-              <Language>{language}</Language>
+              <Language key={`list-item-${language}`}>{language}</Language>
             ))}
           </DetailListItem>
         </UserDetails>
