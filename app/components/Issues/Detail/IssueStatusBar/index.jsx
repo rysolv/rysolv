@@ -12,7 +12,7 @@ const IssueStatusBar = ({
   activeUser,
   activeUser: { id: userId },
   data,
-  handleAttempt,
+  handleIncrement,
 }) => {
   const { attempting, open, id } = data;
   const activeAttempt = activeUser.attempting.includes(id);
@@ -26,13 +26,17 @@ const IssueStatusBar = ({
           <StyledSecondaryButton
             disabled={!open}
             label="un-attempt"
-            onClick={() => handleAttempt({ userId, id, column: 'attempting' })}
+            onClick={() =>
+              handleIncrement({ userId, id, column: 'attempting' })
+            }
           />
         ) : (
           <StyledSecondaryButton
             disabled={!open}
             label="attempt"
-            onClick={() => handleAttempt({ userId, id, column: 'attempting' })}
+            onClick={() =>
+              handleIncrement({ userId, id, column: 'attempting' })
+            }
           />
         )}
       </StatusItem>
@@ -50,7 +54,7 @@ const IssueStatusBar = ({
 
 IssueStatusBar.propTypes = {
   data: T.object,
-  handleAttempt: T.func,
+  handleIncrement: T.func,
   activeUser: T.object,
 };
 

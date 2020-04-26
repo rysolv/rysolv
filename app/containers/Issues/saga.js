@@ -1,6 +1,6 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
 import { post } from 'utils/request';
-import { updateActiveUser } from 'containers/Admin/actions';
+import { fetchActiveUser } from 'containers/Admin/actions';
 import {
   ADD_ATTEMPT,
   ADD_COMMENT,
@@ -48,10 +48,10 @@ export function* addAttemptSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { updateIssueArray, updateUserArray },
+      data: { updateIssueArray },
     } = yield call(post, '/graphql', graphql);
     yield put(addAttemptSuccess(updateIssueArray));
-    yield put(updateActiveUser(updateUserArray));
+    yield put(fetchActiveUser({ userId }));
   } catch (error) {
     yield put(addAttemptFailure({ error }));
   }
@@ -131,6 +131,7 @@ const generateOrganizationQuery = id => {
 
 export function* fetchIssueDetailSaga({ payload }) {
   const { id } = payload;
+  console.log('hellooo');
   const query = `
     query {
       oneIssue(id: "${id}") {

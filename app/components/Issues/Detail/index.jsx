@@ -21,7 +21,7 @@ const IssueDetail = ({
   handleComment,
   handleNav,
   handleUpvote,
-  handleAttempt,
+  handleIncrement,
 }) => {
   const {
     id,
@@ -98,7 +98,7 @@ const IssueDetail = ({
           <IssueStatusBar
             activeUser={activeUser}
             data={data}
-            handleAttempt={handleAttempt}
+            handleIncrement={handleIncrement}
           />
 
           <Divider>Comments</Divider>
@@ -127,7 +127,7 @@ IssueDetail.propTypes = {
   handleUpvote: T.func,
   data: T.object,
   handleNav: T.func,
-  handleAttempt: T.func,
+  handleIncrement: T.func,
 };
 
 export default IssueDetail;

@@ -1,13 +1,16 @@
 /* eslint-disable no-restricted-globals */
 import { createGlobalStyle } from 'styled-components';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
 import { bodyColor } from './defaultStyleHelper';
 
-const maxWidth = screen.width;
+// const { large } = mediaQueriesByDevice;
+console.log(mediaQueriesByDevice);
+
+// const maxWidth = screen.width;
 
 const GlobalStyle = createGlobalStyle`
   html {
-    font-size: ${maxWidth > 1800 ? '85%' : '62.5%'}
-;
+    font-size: 62.5%;
   }
 
   html,
