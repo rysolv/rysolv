@@ -1,10 +1,9 @@
 /* eslint-disable no-use-before-define */
 import React from 'react';
 import T from 'prop-types';
-import Chip from '@material-ui/core/Chip';
 
 import { MainTextInput } from '../Inputs';
-import { StyledAutocomplete } from './styledComponents';
+import { StyledAutocomplete, StyledChip } from './styledComponents';
 
 const BaseAutocomplete = ({ error, helperText, label, onChange, options }) => (
   <StyledAutocomplete
@@ -24,14 +23,9 @@ const BaseAutocomplete = ({ error, helperText, label, onChange, options }) => (
     )}
     renderTags={(item, getTagProps) =>
       item.map((option, index) => (
-        <Chip
-          label={option.value}
-          {...getTagProps({ index })}
-          disabled={index === 0}
-        />
+        <StyledChip label={option.value} {...getTagProps({ index })} />
       ))
     }
-    style={{ width: 500 }}
   />
 );
 
