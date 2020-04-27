@@ -35,7 +35,7 @@ BaseTextInput.defaultProps = {
 
 BaseTextInput.propTypes = {
   disabled: T.bool,
-  onChange: T.func.isRequired,
+  onChange: T.func,
   type: T.string,
   value: T.oneOfType([T.number, T.string]),
 };

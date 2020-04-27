@@ -89,7 +89,7 @@ module.exports = buildSchema(`
     username: String
     githubLink: String
     personalLink: String
-    preferredLanguages: String
+    preferredLanguages: [String]
     stackoverflowLink: String
   }
 

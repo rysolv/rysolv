@@ -29,7 +29,7 @@ module.exports = {
         userInput.username,
         userInput.githubLink || '',
         userInput.personalLink || '',
-        userInput.preferredLanguages || '',
+        userInput.preferredLanguages || [],
         userInput.stackoverflowLink || '',
       ],
     ];

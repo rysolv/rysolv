@@ -1,3 +1,4 @@
+export { default as BaseAutocomplete } from './Autocomplete';
 export { default as BaseContainer } from './Containers';
 export { default as BaseDropDownMenu } from './DropDownMenu';
 export { default as BaseExpansionPanel } from './ExpansionPanel';

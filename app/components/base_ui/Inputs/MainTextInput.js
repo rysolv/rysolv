@@ -34,7 +34,7 @@ MainTextInput.propTypes = {
   error: T.bool,
   helperText: T.string,
   label: T.string,
-  onChange: T.func.isRequired,
+  onChange: T.func,
   value: T.oneOfType([T.number, T.string]),
 };
 
