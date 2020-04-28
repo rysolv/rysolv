@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { SecondaryButton } from 'components/base_ui';
 
-import { borderColor, textColor } from 'defaultStyleHelper';
+import { borderColor, textColor, defaultFontSize } from 'defaultStyleHelper';
 
 export const StatusBar = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ export const StatusItem = styled.div`
 `;
 
 export const StatusTitle = styled.div`
-  font-size: 1.3rem;
+  font-size: ${defaultFontSize};
   color: ${textColor};
   padding: 0 0 0.5rem 0;
   border-bottom: 1px solid ${borderColor};

@@ -12,7 +12,8 @@ export const Container = styled.section`
 `;
 
 export const HeaderSection = styled.section`
-  padding-bottom: 4rem;
+  padding-bottom: 6rem;
+  opacity: 0.975;
 `;
 
 export const LogoWrapper = styled.div`

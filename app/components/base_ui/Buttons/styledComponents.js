@@ -6,6 +6,7 @@ import {
   primaryButtonHoverColor,
   secondaryButtonColor,
   secondaryButtonHoverColor,
+  detailFontSize,
 } from 'defaultStyleHelper';
 
 import BaseButton from './BaseButton';
@@ -18,7 +19,8 @@ const baseButtonStyle = css`
   background-color: ${primaryButtonColor};
   box-shadow: none;
   color: white;
-  font-size: 1rem;
+  font-size: ${detailFontSize};
+  white-space: nowrap;
   font-weight: 400;
   margin: 1rem;
   min-width: 6.5rem;

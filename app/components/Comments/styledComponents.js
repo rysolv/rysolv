@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 
-import { borderColor, commentHeaderColor, textColor } from 'defaultStyleHelper';
+import {
+  borderColor,
+  commentHeaderColor,
+  textColor,
+  defaultFontSize,
+  subheaderFontSize,
+  detailFontSize,
+} from 'defaultStyleHelper';
 import { PrimaryButton } from 'components/base_ui';
 
 export const FlexContainer = styled.div`
@@ -26,7 +33,7 @@ export const CommentContainer = styled.div`
 export const CommentHeader = styled.div`
   background-color: ${props => (props.primary ? `none` : commentHeaderColor)};
   border-bottom: 1px solid ${borderColor};
-  font-size: 0.8rem;
+  font-size: ${detailFontSize};
   padding: 0.4rem;
   width: 100%;
 `;
@@ -34,6 +41,7 @@ export const CommentHeader = styled.div`
 export const CommentBody = styled.div`
   min-height: 4rem;
   padding: 0 1rem;
+  font-size: ${defaultFontSize};
   width: 100%;
   * {
     background-color: white;
@@ -59,7 +67,7 @@ export const NewCommentContainer = styled.div`
 
 export const StyledNoComments = styled.div`
   color: ${textColor};
-  font-size: 1.5rem;
+  font-size: ${subheaderFontSize};
   text-align: center;
   margin: 2rem 0;
 `;

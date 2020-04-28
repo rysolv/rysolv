@@ -12,6 +12,7 @@ const BaseDropDownMenu = ({
   <StyledDropDownMenu
     classes={{ select: 'select' }}
     disableUnderline
+    disableScrollLock
     onChange={e => handleChange(e.target.value)}
     value={selectedValue}
     {...props}

@@ -4,7 +4,6 @@ import { HeaderWrap, UserNavBar } from '../base_ui';
 import { Admin, ButtonsWrapper, Login, SignUp, Test } from './styledComponents';
 
 const DesktopHeader = ({ isMobile, activeUser }) => {
-  const { username, profilePic, rep } = activeUser;
   return (
     <HeaderWrap isMobile={isMobile}>
       <ButtonsWrapper>
@@ -12,7 +11,7 @@ const DesktopHeader = ({ isMobile, activeUser }) => {
         <Login label="Log In" path="/login" />
         <SignUp label="Sign Up" path="/signup" />
         <Test label="Test" path="/test" />
-        <UserNavBar username={username} rep={rep} profilePic={profilePic} />
+        <UserNavBar activeUser={activeUser} />
       </ButtonsWrapper>
     </HeaderWrap>
   );

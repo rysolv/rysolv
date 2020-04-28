@@ -6,7 +6,12 @@ import { ErrorSuccessBanner } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
 import IssueCard from './IssueCard';
-import { BannerWrapper } from './styledComponents';
+import IssueFilter from './IssueFilter';
+import {
+  BannerWrapper,
+  IssueCardWrapper,
+  IssuesWrapper,
+} from './styledComponents';
 
 const Issues = ({
   alerts: { error, success },
@@ -31,7 +36,12 @@ const Issues = ({
   };
   const route = '/admin/issues/add';
   const viewToRender = hasData ? (
-    <IssueCard {...propsToPassDown} />
+    <IssuesWrapper>
+      <IssueFilter />
+      <IssueCardWrapper>
+        <IssueCard {...propsToPassDown} />
+      </IssueCardWrapper>
+    </IssuesWrapper>
   ) : (
     <EmptyCard />
   );

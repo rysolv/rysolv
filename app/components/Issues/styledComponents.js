@@ -1,11 +1,26 @@
 import styled from 'styled-components';
-import { hoverLinkColor, textColor } from 'defaultStyleHelper';
+import {
+  hoverLinkColor,
+  textColor,
+  defaultFontSize,
+  subheaderFontSize,
+  detailFontSize,
+} from 'defaultStyleHelper';
 import { FlatIconButton } from '../base_ui';
+
+export const IssueCardWrapper = styled.div`
+  width: 70%;
+`;
+
+export const IssuesWrapper = styled.div`
+  display: flex;
+  width: 90%;
+  padding: 0 5%;
+`;
 
 export const StyledIssueCard = styled.div`
   border-radius: 0 0.5rem 0.5rem;
-  width: 80%;
-  margin: 0 0 0 10%;
+  width: 100%;
 `;
 
 export const MessageWrapper = styled.div`
@@ -14,7 +29,7 @@ export const MessageWrapper = styled.div`
   border-radius: 0.5rem;
   color: ${textColor};
   display: flex;
-  font-size: 1.6rem;
+  font-size: ${defaultFontSize};
   height: 55rem;
   justify-content: center;
   text-align: center;
@@ -38,6 +53,8 @@ export const StyledIssueContent = styled.div`
 
 export const StyledIssueHeader = styled.div`
   width: 100%;
+  font-size: ${detailFontSize};
+
   padding: 0.25rem;
   display: flex;
   justify-content: space-between;
@@ -60,6 +77,7 @@ export const IssueLanguage = styled.div`
 export const UpvotePanel = styled.div`
   background-color: #e0e0e0;
   width: 3rem;
+  font-size: ${defaultFontSize};
   padding: 0.5rem;
   text-align: center;
 `;
@@ -71,7 +89,7 @@ export const StyledIssueText = styled.div`
 `;
 
 export const NameWrapper = styled.a`
-  font-size: 1.2rem;
+  font-size: ${subheaderFontSize};
   max-height: 3rem;
   overflow: hidden;
   font-weight: bold;
@@ -84,7 +102,7 @@ export const NameWrapper = styled.a`
 `;
 
 export const BannerWrapper = styled.div`
-  font-size: 1.2rem;
+  font-size: ${defaultFontSize};
   margin: 1rem 0;
 `;
 
@@ -95,6 +113,7 @@ export const IssueResolved = styled.div`
 export const StyledIssueFooter = styled.div`
   display: flex;
   justify-content: space-between;
+  font-size: ${detailFontSize};
   align-items: center;
   padding: 0.5rem 3rem 0.25rem 0;
   width: 100%;
@@ -110,7 +129,7 @@ export const DollarWrapper = styled.div`
   border-radius: 0.25rem;
   color: rgb(8, 178, 110);
   display: inline-block;
-  font-size: 1.2rem;
+  font-size: ${defaultFontSize};
   font-weight: 700;
   line-height: 1.5;
   min-width: 5rem;

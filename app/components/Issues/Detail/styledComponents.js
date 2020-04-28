@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { borderColor, moneyGreen, textColor } from 'defaultStyleHelper';
+import {
+  borderColor,
+  moneyGreen,
+  textColor,
+  headerFontSize,
+} from 'defaultStyleHelper';
 import { FlatIconButton } from 'components/base_ui';
 
 export const IssueDetailWrapper = styled.div`
@@ -8,7 +13,7 @@ export const IssueDetailWrapper = styled.div`
   border-radius: 0.25rem;
   display: flex;
   margin: 0;
-  max-width: 75rem;
+  width: 100%;
   min-height: 40vh;
   overflow: hidden;
   padding: 0 3rem 3rem 0;
@@ -51,6 +56,6 @@ export const Divider = styled.div`
   color: ${textColor};
   font-family: inherit;
   margin: 1rem 0;
-  font-size: 1.4rem;
+  font-size: ${headerFontSize};
   width: 100%;
 `;
