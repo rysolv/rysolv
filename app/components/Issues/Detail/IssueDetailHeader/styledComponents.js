@@ -40,8 +40,7 @@ export const IssueLanguage = styled.div`
 export const NameWrapper = styled.div`
   color: ${darkTextColor};
   font-size: ${headerFontSize};
-  font-weight: bold;
-  margin: 0 0 0.5rem 0.5rem;
+  margin: 1rem 0;
 `;
 
 export const IssueResolved = styled.div`

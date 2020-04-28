@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import Tooltip from '@material-ui/core/Tooltip';
 
-import { hyperlinkColor } from 'defaultStyleHelper';
+import { defaultFontSize, hyperlinkColor } from 'defaultStyleHelper';
 
 export const StyledBack = styled.div`
   color: inherit;
@@ -67,4 +68,11 @@ export const StyledUpvote = styled.div`
     color: #ff5722;
     cursor: pointer;
   }
+`;
+
+export const StyledIconTooltip = styled(Tooltip)`
+  .MuiTooltip-popper {
+    font-size: ${defaultFontSize};
+  }
+  display: inline-block;
 `;

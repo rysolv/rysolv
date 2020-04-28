@@ -88,7 +88,7 @@ const userSeed = [
     'MIN', // last_name
     'admin@rysolv.com', // email
     ['f665d73f-6ae4-4699-bb53-c55d62489a29'], // watching_list
-    2, // rep
+    99, // rep
     'https://cdn0.iconfinder.com/data/icons/web-service-and-development/512/key_protection_lock_security_access_forbidden_safe_secure_private_red_alert_password_protect_admin_safety_unlock_system_flat_design_icon-512.png', // profile_pic
     [], // comments
     [], // attempting

@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import {
   CommentIcon,
+  FundingWrapper,
   IconToolTip,
   MonocleIcon,
   Verified,
@@ -12,7 +13,6 @@ import {
 import {
   IssueDetailTopBar,
   IssueLanguage,
-  IssueResolved,
   IssueSubHeader,
   IssueSubItem,
   NameWrapper,
@@ -52,9 +52,7 @@ const IssueDetailHeader = ({ data }) => {
       </StyledIssueHeader>
       <NameWrapper>{name}</NameWrapper>
       <IssueSubHeader>
-        <IssueResolved open={open}>
-          {open ? 'Open Issue' : 'Closed'}
-        </IssueResolved>
+        <FundingWrapper open={open} value={open ? 'Open Issue' : 'Closed'} />
 
         <IssueSubItem>
           {' '}

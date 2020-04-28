@@ -18,11 +18,6 @@ export const IssuesWrapper = styled.div`
   padding: 0 5%;
 `;
 
-export const StyledIssueCard = styled.div`
-  border-radius: 0 0.5rem 0.5rem;
-  width: 100%;
-`;
-
 export const MessageWrapper = styled.div`
   align-items: center;
   background-color: white;
@@ -37,7 +32,6 @@ export const MessageWrapper = styled.div`
 
 export const StyledListItem = styled.li`
   display: flex;
-  border: 1px solid #e0e0e0;
   border-radius: 2px;
   overflow: hidden;
   margin: 1rem;
@@ -48,7 +42,9 @@ export const StyledListItem = styled.li`
 export const StyledIssueContent = styled.div`
   width: 100%;
   padding: 0.5rem;
+  border: 1px solid #e0e0e0;
   background-color: white;
+  border-radius: 0.2rem;
 `;
 
 export const StyledIssueHeader = styled.div`
@@ -80,19 +76,19 @@ export const UpvotePanel = styled.div`
   font-size: ${defaultFontSize};
   padding: 0.5rem;
   text-align: center;
+  border-radius: 0.2rem;
 `;
 
 export const StyledIssueText = styled.div`
   padding: 0 1rem 0 0;
   height: auto;
-  min-height: 4rem;
+  min-height: 6rem;
 `;
 
 export const NameWrapper = styled.a`
   font-size: ${subheaderFontSize};
   max-height: 3rem;
   overflow: hidden;
-  font-weight: bold;
   color: ${textColor};
 
   &:hover {

@@ -112,7 +112,7 @@ const UserDropDownMenu = ({ anchorEl, handleClose, activeUser }) => {
 
 UserDropDownMenu.propTypes = {
   activeUser: T.object,
-  anchorEl: T.string,
+  anchorEl: T.object,
   handleClose: T.func,
 };
 export default UserDropDownMenu;

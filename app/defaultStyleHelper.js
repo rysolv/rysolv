@@ -22,8 +22,8 @@ export const textColor = '#616161';
 // Font Sizes
 export const defaultFontSize = '1.4rem';
 export const detailFontSize = '1.2rem';
-export const headerFontSize = '2rem';
-export const subheaderFontSize = '1.6rem';
+export const headerFontSize = '2.4rem';
+export const subheaderFontSize = '1.8rem';
 
 // Borders
 export const dividerBorder = `0.2rem solid #d5d5d5`;

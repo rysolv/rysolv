@@ -15,3 +15,4 @@ export * from './Inputs';
 export * from './Links';
 export * from './LoadingIndicator';
 export * from './Navigation';
+export * from './StyledWrappers';

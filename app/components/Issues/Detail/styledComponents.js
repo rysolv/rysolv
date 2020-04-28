@@ -4,7 +4,7 @@ import {
   borderColor,
   moneyGreen,
   textColor,
-  headerFontSize,
+  subheaderFontSize,
 } from 'defaultStyleHelper';
 import { FlatIconButton } from 'components/base_ui';
 
@@ -56,6 +56,6 @@ export const Divider = styled.div`
   color: ${textColor};
   font-family: inherit;
   margin: 1rem 0;
-  font-size: ${headerFontSize};
+  font-size: ${subheaderFontSize};
   width: 100%;
 `;
