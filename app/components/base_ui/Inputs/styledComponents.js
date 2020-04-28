@@ -33,9 +33,9 @@ export const StyledBaseInput = styled(OutlinedInput)`
 `;
 
 export const StyledBaseTextInput = styled(TextField)`
+  font-size: ${defaultFontSize};
   margin: 0rem 1rem;
   min-width: 20rem;
-  font-size: ${defaultFontSize};
 
   .base-input {
     font-size: ${defaultFontSize};

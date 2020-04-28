@@ -2,6 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import { MainTextInput } from 'components/base_ui';
+import LanguageAutocomplete from 'components/LanguageAutocomplete';
 import { userDataDictionary } from 'containers/Users/constants';
 
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
@@ -76,15 +77,15 @@ const ManualForm = ({ data, handleInputChange }) => {
         }
         value={profilePic.value}
       />
-      <MainTextInput
+      <LanguageAutocomplete
         error={!!preferredLanguages.error}
         helperText={preferredLanguages.error}
         label={userDataDictionary.preferredLanguages}
-        onChange={e =>
+        onChange={(e, value) =>
           handleInputChange({
             field: 'preferredLanguages',
             form: 'data',
-            value: e.target.value,
+            value,
           })
         }
         value={preferredLanguages.value}

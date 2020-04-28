@@ -99,7 +99,7 @@ const transformUser = async (table, id, data) => {
     const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE ${table}
       SET (${userValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);

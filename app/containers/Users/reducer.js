@@ -36,7 +36,7 @@ export const initialState = {
     profilePic: { error: '', value: '' },
     lastName: { error: '', value: '' },
     personalLink: { error: '', value: '' },
-    preferredLanguages: { error: '', value: '' },
+    preferredLanguages: { error: '', value: [] },
     stackoverflowLink: { error: '', value: '' },
     username: { error: '', value: '' },
   },
@@ -154,6 +154,9 @@ const usersReducer = produce((draft, { payload, type }) => {
       const { field, form, value } = payload;
       if (form === 'filter') {
         draft[form][field] = value;
+      } else if (field === 'preferredLanguages') {
+        draft[form][field].value = [];
+        value.map(language => draft[form][field].value.push(language.value));
       } else {
         draft[form][field].value = value;
       }

@@ -96,7 +96,7 @@ const mapStateToProps = createStructuredSelector({
    */
   alerts: makeSelectCompanies('alerts'),
   companies: makeSelectCompanies('companies'),
-  disabled: makeSelectCompaniesSearchDisabled('companyInput'),
+  disabled: makeSelectCompaniesSearchDisabled('searchInput'),
   error: makeSelectCompaniesError('companies'),
   loading: makeSelectCompaniesLoading('companies'),
   search: makeSelectCompanies('search'),

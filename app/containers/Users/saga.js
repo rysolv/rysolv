@@ -19,6 +19,7 @@ import {
   deleteUserSuccess,
   fetchInfoFailure,
   fetchInfoSuccess,
+  fetchUsers,
   fetchUsersFailure,
   fetchUsersSuccess,
   saveInfoFailure,
@@ -151,6 +152,7 @@ export function* saveInfoSaga({ payload }) {
       variables: {},
     });
     yield call(post, '/graphql', graphql);
+    yield put(fetchUsers());
     yield put(saveInfoSuccess({ message: successCreateUserMessage }));
   } catch (error) {
     yield put(saveInfoFailure({ error }));
@@ -226,6 +228,7 @@ export function* updateInfoSaga({ payload }) {
       variables: {},
     });
     yield call(post, '/graphql', graphql);
+    yield put(fetchUsers());
     yield put(updateInfoSuccess({ message: successEditUserMessage }));
   } catch (error) {
     yield put(updateInfoFailure({ error }));
