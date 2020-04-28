@@ -1,12 +1,14 @@
 import React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import { textColor } from 'defaultStyleHelper';
 
 const Monocle = props => (
-  <SvgIcon viewBox="0 0 256 302" {...props}>
+  <SvgIcon viewBox="0 0 450 375" {...props}>
     <g
-      transform="translate(0.000000,480.000000) scale(0.100000,-0.100000)"
-      fill="#000000"
-      stroke="none"
+      transform="translate(0.000000,480.000000) scale(0.110000,-0.110000)"
+      fill={textColor}
+      stroke={textColor}
+      strokeWidth="75"
     >
       <path
         d="M1846 4304 c-250 -45 -484 -170 -672 -358 -191 -191 -314 -425 -359
@@ -30,14 +32,6 @@ const Monocle = props => (
       />
       <path
         d="M3752 1740 c-48 -30 -72 -75 -72 -140 0 -100 60 -160 160 -160 100 0
-160 60 160 160 0 65 -24 110 -72 140 -45 27 -131 27 -176 0z"
-      />
-      <path
-        d="M3752 1260 c-48 -30 -72 -75 -72 -140 0 -100 60 -160 160 -160 100 0
-160 60 160 160 0 65 -24 110 -72 140 -45 27 -131 27 -176 0z"
-      />
-      <path
-        d="M3752 780 c-48 -30 -72 -75 -72 -140 0 -100 60 -160 160 -160 100 0
 160 60 160 160 0 65 -24 110 -72 140 -45 27 -131 27 -176 0z"
       />
     </g>

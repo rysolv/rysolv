@@ -30,13 +30,6 @@ export const OrganizationNameWrapper = styled.div`
   font-weight: bold;
 `;
 
-export const IssueLanguage = styled.div`
-  color: #90a4ae;
-  display: flex;
-  display: inline-block;
-  font-weight: bold;
-`;
-
 export const NameWrapper = styled.div`
   color: ${darkTextColor};
   font-size: ${headerFontSize};
@@ -52,14 +45,6 @@ export const IssueResolved = styled.div`
   display: inline-block;
   font-weight: bold;
   padding: 0.5rem;
-`;
-
-export const DollarWrapper = styled.div`
-  background-color: ${moneyGreen};
-  border-radius: 1rem;
-  color: white;
-  padding: 0.25rem 1rem 0.25rem 1rem;
-  text-align: center;
 `;
 
 export const IssueSubHeader = styled.div`

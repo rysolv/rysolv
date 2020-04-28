@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
-import { ConditionalRender } from 'components/base_ui';
+import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -12,7 +12,6 @@ import {
   DetailsPanel,
   DetailsPanelWrapper,
   Divider,
-  Language,
   OnlineIcon,
   OnlineWrapper,
   RankingContainer,
@@ -85,7 +84,10 @@ const UserMetricsView = ({ createdDate }) => {
           </DetailListItem>
           <DetailListItem>
             {preferredLanguages.map(language => (
-              <Language key={`list-item-${language}`}>{language}</Language>
+              <LanguageWrapper
+                key={`list-item-${language}`}
+                language={language}
+              />
             ))}
           </DetailListItem>
         </UserDetails>

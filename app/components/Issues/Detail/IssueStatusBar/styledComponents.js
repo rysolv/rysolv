@@ -6,6 +6,7 @@ import { borderColor, textColor, defaultFontSize } from 'defaultStyleHelper';
 export const StatusBar = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: flex-end;
 `;
 
 export const StatusItem = styled.div`

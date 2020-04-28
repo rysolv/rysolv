@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import Attempt from '@material-ui/icons/ListAlt';
 import Cancel from '@material-ui/icons/Cancel';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import Circle from '@material-ui/icons/FiberManualRecord';
@@ -9,6 +11,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
+import Exit from '@material-ui/icons/ExitToApp';
 import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
 import Link from '@material-ui/icons/Link';
@@ -20,15 +23,17 @@ import Star from '@material-ui/icons/Star';
 import Upvote from '@material-ui/icons/ArrowUpward';
 import Verified from '@material-ui/icons/VerifiedUser';
 import Warning from '@material-ui/icons/Warning';
+
 import SiteLogo from './svg/SiteLogo';
-import CloseMenu from './svg/CloseMenu';
-import Gitlab from './svg/Gitlab';
-import Monocle from './svg/Monocle';
-import Paypal from './svg/Paypal';
 import Stackoverflow from './svg/Stackoverflow';
+import Paypal from './svg/Paypal';
+import Monocle from './svg/Monocle';
+import Gitlab from './svg/Gitlab';
+import CloseMenu from './svg/CloseMenu';
 
 export default (name, options) => {
   const icons = {
+    attempt: Attempt,
     backArrow: ArrowBackIcon,
     cancel: Cancel,
     circle: Circle,
@@ -38,6 +43,7 @@ export default (name, options) => {
     creditCard: CreditCard,
     delete: Delete,
     dropdownArrow: ArrowDropDownIcon,
+    exit: Exit,
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,

@@ -14,7 +14,7 @@ export const StyledCode = styled.div`
 `;
 
 export const StyledComment = styled.div`
-  color: gray;
+  color: inherit;
   display: inline-block;
   text-align: center;
 `;
@@ -75,4 +75,14 @@ export const StyledIconTooltip = styled(Tooltip)`
     font-size: ${defaultFontSize};
   }
   display: inline-block;
+`;
+
+export const StyledMonocleIcon = styled.div`
+  color: inherit;
+  display: inline-block;
+  text-align: center;
+  * {
+    stroke: inherit;
+    fill: inherit;
+  }
 `;

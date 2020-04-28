@@ -8,11 +8,11 @@ import {
   IconToolTip,
   MonocleIcon,
   Verified,
+  LanguageWrapper,
 } from 'components/base_ui';
 
 import {
   IssueDetailTopBar,
-  IssueLanguage,
   IssueSubHeader,
   IssueSubItem,
   NameWrapper,
@@ -56,7 +56,8 @@ const IssueDetailHeader = ({ data }) => {
 
         <IssueSubItem>
           {' '}
-          <IssueLanguage>{language}</IssueLanguage>
+          <LanguageWrapper language={language} />
+          {/* <IssueLanguage></IssueLanguage> */}
         </IssueSubItem>
         <IssueSubItem>0 Open PR</IssueSubItem>
         <IssueSubItem>

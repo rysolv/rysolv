@@ -1,11 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import T from 'prop-types';
-import SettingsIcon from '@material-ui/icons/Settings';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import ListAltIcon from '@material-ui/icons/ListAlt';
-import AccountTreeIcon from '@material-ui/icons/AccountTree';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import iconDictionary from 'utils/iconDictionary';
+
 import {
   StyledAvatar,
   StyledMenu,
@@ -16,6 +13,14 @@ import {
   MenuItemLabel,
   MenuItemValue,
 } from './styledComponents';
+
+import { FundingWrapper } from '../StyledWrappers';
+
+const SettingsIcon = iconDictionary('settings');
+const ExitIcon = iconDictionary('exit');
+const AttemptIcon = iconDictionary('attempt');
+const FundedIcon = iconDictionary('funded');
+const PullRequestIcon = iconDictionary('pullRequest');
 
 const MenuComponent = props => (
   <StyledMenu
@@ -55,12 +60,12 @@ const UserDropDownMenu = ({ anchorEl, handleClose, activeUser }) => {
       <StyledMenuContainer>
         <StyledMenuItem>
           <MenuItemLabel>
-            <IconWrapper>
-              <MonetizationOnIcon />
-            </IconWrapper>
+            <IconWrapper>{FundedIcon}</IconWrapper>
             Balance:
           </MenuItemLabel>
-          <MenuItemValue>$0</MenuItemValue>
+          <MenuItemValue>
+            <FundingWrapper open value="$0.00" />
+          </MenuItemValue>
         </StyledMenuItem>
 
         <StyledMenuItem>
@@ -70,9 +75,7 @@ const UserDropDownMenu = ({ anchorEl, handleClose, activeUser }) => {
 
         <StyledMenuItem>
           <MenuItemLabel>
-            <IconWrapper>
-              <ListAltIcon />
-            </IconWrapper>
+            <IconWrapper>{AttemptIcon}</IconWrapper>
             Attempting
           </MenuItemLabel>
           <MenuItemValue>0</MenuItemValue>
@@ -80,9 +83,7 @@ const UserDropDownMenu = ({ anchorEl, handleClose, activeUser }) => {
 
         <StyledMenuItem>
           <MenuItemLabel>
-            <IconWrapper>
-              <AccountTreeIcon />
-            </IconWrapper>
+            <IconWrapper>{PullRequestIcon}</IconWrapper>
             Pull Requests
           </MenuItemLabel>
           <MenuItemValue>0</MenuItemValue>
@@ -91,18 +92,14 @@ const UserDropDownMenu = ({ anchorEl, handleClose, activeUser }) => {
 
       <StyledMenuItem>
         <MenuItemLabel>
-          <IconWrapper>
-            <SettingsIcon />
-          </IconWrapper>
+          <IconWrapper>{SettingsIcon}</IconWrapper>
           Settings
         </MenuItemLabel>
       </StyledMenuItem>
 
       <StyledMenuItem>
         <MenuItemLabel>
-          <IconWrapper>
-            <ExitToAppIcon />
-          </IconWrapper>
+          <IconWrapper>{ExitIcon}</IconWrapper>
           Sign out
         </MenuItemLabel>
       </StyledMenuItem>

@@ -6,7 +6,11 @@ import {
   subheaderFontSize,
   detailFontSize,
 } from 'defaultStyleHelper';
-import { FlatIconButton } from '../base_ui';
+import { FlatIconButton, FundingWrapper } from '../base_ui';
+
+export const StyledFundingWrapper = styled(FundingWrapper)`
+  font-size: ${subheaderFontSize};
+`;
 
 export const IssueCardWrapper = styled.div`
   width: 70%;
@@ -14,8 +18,6 @@ export const IssueCardWrapper = styled.div`
 
 export const IssuesWrapper = styled.div`
   display: flex;
-  width: 90%;
-  padding: 0 5%;
 `;
 
 export const MessageWrapper = styled.div`
@@ -63,13 +65,6 @@ export const OrganizationNameWrapper = styled.a`
   font-weight: bold;
 `;
 
-export const IssueLanguage = styled.div`
-  display: flex;
-  color: #90a4ae;
-  font-weight: bold;
-  display: inline-block;
-`;
-
 export const UpvotePanel = styled.div`
   background-color: #e0e0e0;
   width: 3rem;
@@ -108,11 +103,10 @@ export const IssueResolved = styled.div`
 
 export const StyledIssueFooter = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${props => (props.open ? 'space-between' : 'flex-end')};
   font-size: ${detailFontSize};
-  align-items: center;
+  color: ${textColor};
   padding: 0.5rem 3rem 0.25rem 0;
-  width: 100%;
 `;
 
 export const StyledFlatIconButton = styled(FlatIconButton)`
@@ -120,17 +114,16 @@ export const StyledFlatIconButton = styled(FlatIconButton)`
   min-width: 0;
 `;
 
-export const DollarWrapper = styled.div`
-  background-color: rgb(229, 251, 242);
-  border-radius: 0.25rem;
-  color: rgb(8, 178, 110);
-  display: inline-block;
-  font-size: ${defaultFontSize};
-  font-weight: 700;
-  line-height: 1.5;
-  min-width: 5rem;
-  padding: 0.25rem 0.4rem;
-  text-align: center;
-  white-space: nowrap;
-  width: auto;
+export const IssueCardItem = styled.div`
+  display: inline-flex;
+  align-items: center;
+`;
+
+export const IssueCardIconWrapper = styled.div`
+  display: inline-flex;
+  margin: 0 0.5rem;
+`;
+
+export const IssueCardLabelWrapper = styled.div`
+  display: inline-flex;
 `;

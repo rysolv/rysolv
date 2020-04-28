@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
-import { BaseContainer, Upvote, BackNav } from 'components/base_ui';
+import { Upvote, BackNav } from 'components/base_ui';
 import { CommentCard, NoComment, NewComment } from 'components/Comments';
 import IssueDetailHeader from './IssueDetailHeader';
 import IssueStatusBar from './IssueStatusBar';
@@ -64,7 +64,7 @@ const IssueDetail = ({
   const commentsDiv = comments.length > 0 ? generateComments() : <NoComment />;
 
   return (
-    <BaseContainer>
+    <Fragment>
       <BackNav
         label="Back to Issues"
         handleNav={handleNav}
@@ -113,7 +113,7 @@ const IssueDetail = ({
           />
         </IssueDetailColumn>
       </IssueDetailWrapper>
-    </BaseContainer>
+    </Fragment>
   );
 };
 

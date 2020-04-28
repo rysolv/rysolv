@@ -37,15 +37,6 @@ export const Divider = styled.div`
   width: 100%;
 `;
 
-export const Language = styled.div`
-  background-color: #e8f0fa;
-  border-radius: 0.25rem;
-  color: #6487ae;
-  font-size: 1.1rem;
-  margin: 0 1rem 1rem 0;
-  padding: 0.5rem;
-`;
-
 export const OnlineIcon = styled.div`
   align-items: center;
   color: #0fce7c;

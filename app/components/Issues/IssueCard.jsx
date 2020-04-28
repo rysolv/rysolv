@@ -1,29 +1,35 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import {
   CommentIcon,
-  FundingWrapper,
+  MonocleIcon,
   IconToolTip,
   Upvote,
   Verified,
+  LanguageWrapper,
 } from 'components/base_ui';
 import { formatDollarAmount, navHelper } from 'utils/globalHelpers';
 import SettingsMenu from 'components/SettingsMenu';
-import ListAltIcon from '@material-ui/icons/ListAlt';
+import IconDictionary from 'utils/iconDictionary';
 
 import {
+  IssueCardIconWrapper,
+  IssueCardItem,
+  IssueCardLabelWrapper,
   NameWrapper,
-  StyledListItem,
-  StyledIssueHeader,
-  IssueLanguage,
-  StyledIssueContent,
-  StyledIssueText,
-  StyledIssueFooter,
   OrganizationNameWrapper,
-  UpvotePanel,
   StyledFlatIconButton,
+  StyledFundingWrapper,
+  StyledIssueContent,
+  StyledIssueFooter,
+  StyledIssueHeader,
+  StyledIssueText,
+  StyledListItem,
+  UpvotePanel,
 } from './styledComponents';
+
+const AttemptingIcon = IconDictionary('attempt');
 
 const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
   const deleteRoute = `/admin/issues`;
@@ -44,14 +50,13 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
       comments,
       value,
     }) => (
-      <div key={id}>
+      <Fragment key={id}>
         <StyledListItem>
           <UpvotePanel>
             <StyledFlatIconButton
               Icon={<Upvote />}
               onClick={() => handleUpvote({ itemId: id })}
             />
-
             {rep}
           </UpvotePanel>
           <StyledIssueContent>
@@ -78,8 +83,8 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                   ''
                 )}
               </OrganizationNameWrapper>
+              <LanguageWrapper language={language} />
 
-              <IssueLanguage>{language}</IssueLanguage>
               <SettingsMenu
                 handleDelete={handleDeleteIssue}
                 handleNav={handleNav}
@@ -99,32 +104,46 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                 {name}
               </NameWrapper>
             </StyledIssueText>
-            <StyledIssueFooter>
-              <div>
-                {open ? (
-                  <div>
-                    <CommentIcon /> {comments.length} comments
-                  </div>
-                ) : null}
-              </div>
-              <div>
-                {open ? (
-                  <div>
-                    <ListAltIcon />
-                    {attempting.length} attempting
-                  </div>
-                ) : null}
-              </div>
-              <div>{open ? <div>{watching.length} Watch</div> : null}</div>
+            <StyledIssueFooter open={open}>
+              {open ? (
+                <IssueCardItem>
+                  <IssueCardIconWrapper>
+                    <CommentIcon />
+                  </IssueCardIconWrapper>
+                  <IssueCardLabelWrapper>
+                    {comments.length} comments
+                  </IssueCardLabelWrapper>
+                </IssueCardItem>
+              ) : null}
 
-              <FundingWrapper
+              {open ? (
+                <IssueCardItem>
+                  <IssueCardIconWrapper>{AttemptingIcon}</IssueCardIconWrapper>
+                  <IssueCardLabelWrapper>
+                    {attempting.length} attempting
+                  </IssueCardLabelWrapper>
+                </IssueCardItem>
+              ) : null}
+
+              {open ? (
+                <IssueCardItem>
+                  <IssueCardIconWrapper>
+                    <MonocleIcon />
+                  </IssueCardIconWrapper>
+                  <IssueCardLabelWrapper>
+                    {watching.length} Watch
+                  </IssueCardLabelWrapper>
+                </IssueCardItem>
+              ) : null}
+
+              <StyledFundingWrapper
                 open={open}
-                value={open ? formatDollarAmount(value) : 'Closed'}
+                value={open ? formatDollarAmount(value) : 'Issue Closed'}
               />
             </StyledIssueFooter>
           </StyledIssueContent>
         </StyledListItem>
-      </div>
+      </Fragment>
     ),
   );
 };

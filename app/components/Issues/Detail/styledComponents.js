@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 import {
   borderColor,
+  defaultFontSize,
   moneyGreen,
-  textColor,
   subheaderFontSize,
+  textColor,
 } from 'defaultStyleHelper';
 import { FlatIconButton } from 'components/base_ui';
 
@@ -20,7 +21,7 @@ export const IssueDetailWrapper = styled.div`
 `;
 
 export const LeftPanel = styled.div`
-  width: 3rem;
+  width: 3.5rem;
 `;
 
 export const UpvotePanel = styled.div`
@@ -28,6 +29,7 @@ export const UpvotePanel = styled.div`
   height: 15rem;
   padding: 0.5rem;
   text-align: center;
+  font-size: ${defaultFontSize};
   border-radius: 0.25rem;
   width: 100%;
 `;

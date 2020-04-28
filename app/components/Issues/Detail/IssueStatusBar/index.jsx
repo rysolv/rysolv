@@ -1,5 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
+import { FundingWrapper } from 'components/base_ui';
+import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
   StatusBar,
@@ -14,7 +16,7 @@ const IssueStatusBar = ({
   data,
   handleIncrement,
 }) => {
-  const { attempting, open, id } = data;
+  const { attempting, open, id, value } = data;
   const activeAttempt = activeUser.attempting.includes(id);
 
   return (
@@ -45,7 +47,10 @@ const IssueStatusBar = ({
         <StyledSecondaryButton disabled={!open} label="Submit PR" />
       </StatusItem>
       <StatusItem>
-        <StatusTitle>Funded</StatusTitle>
+        <StatusTitle>
+          Funded:{' '}
+          <FundingWrapper open={open} value={formatDollarAmount(value)} />
+        </StatusTitle>
         <StyledSecondaryButton disabled={!open} label="$ Fund Issue" />
       </StatusItem>
     </StatusBar>

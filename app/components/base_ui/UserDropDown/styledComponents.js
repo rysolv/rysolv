@@ -11,6 +11,7 @@ export const IconWrapper = styled.div`
 
 export const MenuItemLabel = styled.div`
   display: inline-flex;
+  align-items: center;
 `;
 export const MenuItemValue = styled.div`
   display: inline-flex;
