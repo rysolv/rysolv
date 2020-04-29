@@ -106,14 +106,8 @@ module.exports = buildSchema(`
     verified: Boolean
     contributors: [Object]
     ownerId: ID
+    totalFunded: Float
   }
-
-  type Error {
-    message: String
-  }
-
-  union OrganizationResult = Organization | Error
-  union IssueResult = Issue | Error
 
   input OrganizationInput {
     name: String
@@ -123,6 +117,13 @@ module.exports = buildSchema(`
     logo: String
     verified: Boolean
   }
+
+  type Error {
+    message: String
+  }
+
+  union OrganizationResult = Organization | Error
+  union IssueResult = Issue | Error
 
   type RootQuery {
     getIssues: [Issue!]!

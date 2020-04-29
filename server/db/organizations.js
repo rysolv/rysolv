@@ -11,7 +11,8 @@ const organizationValues = `
   logo,
   verified,
   contributors,
-  owner_id
+  owner_id,
+  total_funded
 `; // Excludes ID & created_date
 
 const organizationReturnValues = `
@@ -26,14 +27,15 @@ const organizationReturnValues = `
   logo,
   verified,
   contributors,
-  owner_id AS "ownerId"
+  owner_id AS "ownerId",
+  total_funded AS "totalFunded"
 `;
 
 // Create new Issue
 const createOrganization = async data => {
   const queryText = `INSERT INTO
     organizations(id, created_date, ${organizationValues})
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -89,7 +91,7 @@ const transformOrganization = async (table, id, data) => {
 
     const queryText = `UPDATE ${table}
       SET (${organizationValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);

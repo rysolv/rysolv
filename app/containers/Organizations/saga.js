@@ -61,7 +61,8 @@ export function* fetchCompaniesSaga() {
       companyUrl,
       issues,
       logo,
-      verified
+      verified,
+      totalFunded
     }
   }
 `;
@@ -99,7 +100,8 @@ export function* fetchInfoSaga({ payload }) {
         logo,
         verified,
         contributors,
-        ownerId
+        ownerId,
+        totalFunded
       }
       ... on Error {
         message
@@ -165,6 +167,7 @@ export function* searchCompaniesSaga({ payload }) {
       issues,
       logo,
       verified,
+      totalFunded,
     }
   }
 `;

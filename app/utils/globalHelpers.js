@@ -1,6 +1,13 @@
 export const formatDollarAmount = (value, noDecimals = false) => {
   const numOfDecimals = noDecimals ? 0 : 2;
   const valueWithDecimals = parseFloat(value).toFixed(numOfDecimals);
+
+  if (valueWithDecimals > 5) {
+    return `$${valueWithDecimals
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+  }
+
   return `$${valueWithDecimals}`;
 };
 

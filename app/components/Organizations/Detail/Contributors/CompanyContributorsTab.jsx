@@ -16,7 +16,7 @@ const CompanyContributorsTab = ({ contributors, handleNav }) => (
   <ContributorsList>
     {contributors.map(
       ({ firstName, isOwner, lastName, username, profilePic }) => (
-        <ContributorListItem>
+        <ContributorListItem key={username}>
           <ContributorContent>
             <ContributorImageWrapper>
               <ProfileImage

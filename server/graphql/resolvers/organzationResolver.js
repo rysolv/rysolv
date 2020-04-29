@@ -27,6 +27,7 @@ module.exports = {
         organizationInput.verified || false,
         organizationInput.contributors || [],
         organizationInput.ownerId || uuidv4(),
+        organizationInput.totalFunded || 0,
       ],
     ];
     try {
@@ -106,6 +107,7 @@ module.exports = {
         verified: organizationInput.verified,
         contributors: organizationInput.contributors,
         owner_id: organizationInput.ownerId,
+        total_funded: organizationInput.totalFunded,
       };
       const queryResult = await transformOrganization(
         'organizations',
@@ -125,6 +127,7 @@ module.exports = {
         verified: queryResult.verified,
         contributors: queryResult.contributors,
         ownerId: queryResult.owner_id,
+        totalFunded: queryResult.total_funded,
       };
       return result;
     } catch (err) {

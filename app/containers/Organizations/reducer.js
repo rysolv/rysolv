@@ -41,6 +41,7 @@ export const initialState = {
     importUrl: { error: '', value: '' },
     name: { error: '', value: '' },
     verified: { error: '', value: false },
+    totalFunded: { error: '', value: '' },
   },
   editInfo: {
     id: { error: '', value: '' },
