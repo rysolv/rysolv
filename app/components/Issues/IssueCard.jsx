@@ -62,12 +62,12 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
           <StyledIssueContent>
             <StyledIssueHeader>
               <OrganizationNameWrapper
-                href={`/admin/companies/detail/${organizationId}`}
+                href={`/admin/organizations/detail/${organizationId}`}
                 onClick={e =>
                   navHelper(
                     e,
                     handleNav,
-                    `/admin/companies/detail/${organizationId}`,
+                    `/admin/organizations/detail/${organizationId}`,
                   )
                 }
               >

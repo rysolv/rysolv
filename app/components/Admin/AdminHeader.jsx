@@ -8,12 +8,12 @@ export const AdminHeaderTabs = ({ activePage, handleNav }) => {
   };
   return (
     <AdminHeaderWrapper>
-      <HeaderTab isActive={activePage === 'companies'}>
+      <HeaderTab isActive={activePage === 'organizations'}>
         <HeaderTitle
-          isActive={activePage === 'companies'}
-          label="Companies"
-          onClick={() => handleClick({ subroute: 'companies' })}
-          path="/admin/companies"
+          isActive={activePage === 'organizations'}
+          label="Organizations"
+          onClick={() => handleClick({ subroute: 'organizations' })}
+          path="/admin/organizations"
         />
       </HeaderTab>
       <HeaderTab isActive={activePage === 'issues'}>
@@ -36,7 +36,7 @@ export const AdminHeaderTabs = ({ activePage, handleNav }) => {
   );
 };
 
-AdminHeaderTabs.defaultProps = { activePage: 'companies' };
+AdminHeaderTabs.defaultProps = { activePage: 'organizations' };
 
 AdminHeaderTabs.propTypes = {
   activePage: T.string,

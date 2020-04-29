@@ -1,8 +1,8 @@
 export const successCreateOrganizationMessage =
-  'Company was successfully added.';
+  'Organization was successfully added.';
 
 export const successEditOrganizationMessage =
-  'Company was successfully edited.';
+  'Organization was successfully edited.';
 
 export const successCreateUserMessage = 'User was successfully added.';
 
