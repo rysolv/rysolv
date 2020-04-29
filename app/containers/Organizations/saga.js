@@ -3,32 +3,32 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { post } from 'utils/request';
 
 import {
-  DELETE_COMPANY,
-  FETCH_COMPANIES,
+  DELETE_ORGANIZATION,
+  FETCH_ORGANIZATIONS,
   FETCH_INFO,
   SAVE_INFO,
-  SEARCH_COMPANIES,
+  SEARCH_ORGANIZATIONS,
   successCreateOrganizationMessage,
   successEditOrganizationMessage,
   UPDATE_INFO,
 } from './constants';
 import {
-  deleteCompanyFailure,
-  deleteCompanySuccess,
-  fetchCompanies,
-  fetchCompaniesFailure,
-  fetchCompaniesSuccess,
+  deleteOrganizationFailure,
+  deleteOrganizationSuccess,
+  fetchOrganizations,
+  fetchOrganizationsFailure,
+  fetchOrganizationsSuccess,
   fetchInfoFailure,
   fetchInfoSuccess,
   saveInfoFailure,
   saveInfoSuccess,
-  searchCompaniesFailure,
-  searchCompaniesSuccess,
+  searchOrganizationsFailure,
+  searchOrganizationsSuccess,
   updateInfoFailure,
   updateInfoSuccess,
 } from './actions';
 
-export function* deleteCompanySaga({ payload }) {
+export function* deleteOrganizationSaga({ payload }) {
   const { itemId } = payload;
   try {
     const query = `
@@ -42,13 +42,15 @@ export function* deleteCompanySaga({ payload }) {
     const {
       data: { deleteOrganization },
     } = yield call(post, '/graphql', graphql);
-    yield put(deleteCompanySuccess({ itemId, message: deleteOrganization }));
+    yield put(
+      deleteOrganizationSuccess({ itemId, message: deleteOrganization }),
+    );
   } catch (error) {
-    yield put(deleteCompanyFailure({ error }));
+    yield put(deleteOrganizationFailure({ error }));
   }
 }
 
-export function* fetchCompaniesSaga() {
+export function* fetchOrganizationsSaga() {
   const query = `
   query {
     getOrganizations {
@@ -58,7 +60,7 @@ export function* fetchCompaniesSaga() {
       name,
       description,
       repoUrl,
-      companyUrl,
+      organizationUrl,
       issues,
       logo,
       verified
@@ -75,9 +77,9 @@ export function* fetchCompaniesSaga() {
       '/graphql',
       organizationsQuery,
     );
-    yield put(fetchCompaniesSuccess(getOrganizations));
+    yield put(fetchOrganizationsSuccess(getOrganizations));
   } catch (error) {
-    yield put(fetchCompaniesFailure({ error }));
+    yield put(fetchOrganizationsFailure({ error }));
   }
 }
 
@@ -94,7 +96,7 @@ export function* fetchInfoSaga({ payload }) {
         name,
         description,
         repoUrl,
-        companyUrl,
+        organizationUrl,
         issues,
         logo,
         verified,
@@ -115,7 +117,7 @@ export function* fetchInfoSaga({ payload }) {
     const {
       data: { oneOrganization },
     } = yield call(post, '/graphql', graphql);
-    yield put(fetchInfoSuccess({ company: oneOrganization }));
+    yield put(fetchInfoSuccess({ organization: oneOrganization }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
   }
@@ -123,7 +125,14 @@ export function* fetchInfoSaga({ payload }) {
 
 export function* saveInfoSaga({ payload }) {
   const {
-    requestBody: { companyUrl, description, logo, name, repoUrl, verified },
+    requestBody: {
+      organizationUrl,
+      description,
+      logo,
+      name,
+      repoUrl,
+      verified,
+    },
   } = payload;
   const query = `
   mutation{
@@ -131,7 +140,7 @@ export function* saveInfoSaga({ payload }) {
       name: "${name}",
       description: "${description}",
       repoUrl: "${repoUrl}",
-      companyUrl: "${companyUrl}",
+      organizationUrl: "${organizationUrl}",
       logo: "${logo}",
       verified: ${verified},
     })
@@ -143,14 +152,14 @@ export function* saveInfoSaga({ payload }) {
       variables: {},
     });
     yield call(post, '/graphql', graphql);
-    yield put(fetchCompanies());
+    yield put(fetchOrganizations());
     yield put(saveInfoSuccess({ message: successCreateOrganizationMessage }));
   } catch (error) {
     yield put(saveInfoFailure({ error }));
   }
 }
 
-export function* searchCompaniesSaga({ payload }) {
+export function* searchOrganizationsSaga({ payload }) {
   const { value } = payload;
   const query = `
   query {
@@ -161,7 +170,7 @@ export function* searchCompaniesSaga({ payload }) {
       name,
       description,
       repoUrl,
-      companyUrl,
+      organizationUrl,
       issues,
       logo,
       verified,
@@ -176,16 +185,18 @@ export function* searchCompaniesSaga({ payload }) {
     const {
       data: { searchOrganizations },
     } = yield call(post, '/graphql', graphql);
-    yield put(searchCompaniesSuccess({ organizations: searchOrganizations }));
+    yield put(
+      searchOrganizationsSuccess({ organizations: searchOrganizations }),
+    );
   } catch (error) {
-    yield put(searchCompaniesFailure({ error }));
+    yield put(searchOrganizationsFailure({ error }));
   }
 }
 
 export function* updateInfoSaga({ payload }) {
   const { editRequest, itemId } = payload;
   const {
-    companyUrl,
+    organizationUrl,
     description,
     logo,
     name,
@@ -198,7 +209,7 @@ export function* updateInfoSaga({ payload }) {
         name: "${name}",
         description: "${description}",
         repoUrl: "${repoUrl}",
-        companyUrl: "${companyUrl}",
+        organizationUrl: "${organizationUrl}",
         logo: "${logo}",
         verified: ${verified},
       }) {
@@ -208,7 +219,7 @@ export function* updateInfoSaga({ payload }) {
         name,
         description,
         repoUrl,
-        companyUrl,
+        organizationUrl,
         issues,
         logo,
         verified,
@@ -221,7 +232,7 @@ export function* updateInfoSaga({ payload }) {
       variables: {},
     });
     yield call(post, '/graphql', graphql);
-    yield put(fetchCompanies());
+    yield put(fetchOrganizations());
     yield put(updateInfoSuccess({ message: successEditOrganizationMessage }));
   } catch (error) {
     yield put(updateInfoFailure({ error }));
@@ -229,10 +240,10 @@ export function* updateInfoSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
-  yield takeLatest(DELETE_COMPANY, deleteCompanySaga);
-  yield takeLatest(FETCH_COMPANIES, fetchCompaniesSaga);
+  yield takeLatest(DELETE_ORGANIZATION, deleteOrganizationSaga);
+  yield takeLatest(FETCH_ORGANIZATIONS, fetchOrganizationsSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(SAVE_INFO, saveInfoSaga);
-  yield takeLatest(SEARCH_COMPANIES, searchCompaniesSaga);
+  yield takeLatest(SEARCH_ORGANIZATIONS, searchOrganizationsSaga);
   yield takeLatest(UPDATE_INFO, updateInfoSaga);
 }

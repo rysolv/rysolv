@@ -3,7 +3,7 @@ import T from 'prop-types';
 import omit from 'lodash/omit';
 
 import { MainTextInput } from 'components/base_ui';
-import { companyDataDictionary } from 'containers/Organizations/constants';
+import { organizationDataDictionary } from 'containers/Organizations/constants';
 
 import { InputFormWrapper } from './styledComponents';
 
@@ -25,7 +25,7 @@ const EditExistingForm = ({ editInfo, handleInputChange }) => {
             disabled={isDisabled}
             error={!!error}
             helperText={error}
-            label={companyDataDictionary[info]}
+            label={organizationDataDictionary[info]}
             onChange={e =>
               handleInputChange({
                 field: info,

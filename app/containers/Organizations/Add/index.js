@@ -9,18 +9,18 @@ import AsyncRender from 'components/AsyncRender';
 
 import { incrementStep, clearForm } from '../actions';
 import {
-  makeSelectCompanies,
-  makeSelectCompaniesLoading,
-  makeSelectCompaniesStep,
+  makeSelectOrganizations,
+  makeSelectOrganizationsLoading,
+  makeSelectOrganizationsStep,
 } from '../selectors';
-import { addCompanyDictionary } from '../stepDictionary';
+import { addOrganizationDictionary } from '../stepDictionary';
 import { AddWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class AddCompany extends React.PureComponent {
+export class AddOrganization extends React.PureComponent {
   componentDidMount() {
     const { handleIncrementStep } = this.props;
-    handleIncrementStep({ step: 1, view: 'addCompany' });
+    handleIncrementStep({ step: 1, view: 'addOrganization' });
   }
 
   componentWillUnmount() {
@@ -31,7 +31,7 @@ export class AddCompany extends React.PureComponent {
   render() {
     const { data, loading, step, handleNav } = this.props;
 
-    const StepToRender = addCompanyDictionary[step];
+    const StepToRender = addOrganizationDictionary[step];
     return (
       <Fragment>
         <BackNav
@@ -51,7 +51,7 @@ export class AddCompany extends React.PureComponent {
   }
 }
 
-AddCompany.propTypes = {
+AddOrganization.propTypes = {
   data: T.object,
   dispatchClearForm: T.func,
   handleIncrementStep: T.func,
@@ -64,9 +64,9 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  data: makeSelectCompanies('data'),
-  loading: makeSelectCompaniesLoading('addCompany'),
-  step: makeSelectCompaniesStep('addCompany'),
+  data: makeSelectOrganizations('data'),
+  loading: makeSelectOrganizationsLoading('addOrganization'),
+  step: makeSelectOrganizationsStep('addOrganization'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -83,4 +83,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddCompany);
+)(AddOrganization);

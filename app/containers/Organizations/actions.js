@@ -1,24 +1,24 @@
 import {
   CLEAR_ALERTS,
   CLEAR_FORM,
-  DELETE_COMPANY_FAILURE,
-  DELETE_COMPANY_SUCCESS,
-  DELETE_COMPANY,
-  FETCH_COMPANIES_FAILURE,
-  FETCH_COMPANIES_SUCCESS,
-  FETCH_COMPANIES,
+  DELETE_ORGANIZATION_FAILURE,
+  DELETE_ORGANIZATION_SUCCESS,
+  DELETE_ORGANIZATION,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
+  FETCH_ORGANIZATIONS_FAILURE,
+  FETCH_ORGANIZATIONS_SUCCESS,
+  FETCH_ORGANIZATIONS,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
-  SEARCH_COMPANIES_FAILURE,
-  SEARCH_COMPANIES_SUCCESS,
-  SEARCH_COMPANIES,
+  SEARCH_ORGANIZATIONS_FAILURE,
+  SEARCH_ORGANIZATIONS_SUCCESS,
+  SEARCH_ORGANIZATIONS,
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
@@ -37,44 +37,44 @@ export function clearForm() {
   };
 }
 
-export function deleteCompanyFailure(payload) {
+export function deleteOrganizationFailure(payload) {
   return {
     payload,
-    type: DELETE_COMPANY_FAILURE,
+    type: DELETE_ORGANIZATION_FAILURE,
   };
 }
 
-export function deleteCompanySuccess(payload) {
+export function deleteOrganizationSuccess(payload) {
   return {
     payload,
-    type: DELETE_COMPANY_SUCCESS,
+    type: DELETE_ORGANIZATION_SUCCESS,
   };
 }
 
-export function deleteCompany(payload) {
+export function deleteOrganization(payload) {
   return {
     payload,
-    type: DELETE_COMPANY,
+    type: DELETE_ORGANIZATION,
   };
 }
 
-export function fetchCompaniesFailure(payload) {
+export function fetchOrganizationsFailure(payload) {
   return {
     payload,
-    type: FETCH_COMPANIES_FAILURE,
+    type: FETCH_ORGANIZATIONS_FAILURE,
   };
 }
 
-export function fetchCompaniesSuccess(payload) {
+export function fetchOrganizationsSuccess(payload) {
   return {
     payload,
-    type: FETCH_COMPANIES_SUCCESS,
+    type: FETCH_ORGANIZATIONS_SUCCESS,
   };
 }
 
-export function fetchCompanies() {
+export function fetchOrganizations() {
   return {
-    type: FETCH_COMPANIES,
+    type: FETCH_ORGANIZATIONS,
   };
 }
 
@@ -141,24 +141,24 @@ export function saveInfo(payload) {
   };
 }
 
-export function searchCompaniesFailure(payload) {
+export function searchOrganizationsFailure(payload) {
   return {
     payload,
-    type: SEARCH_COMPANIES_FAILURE,
+    type: SEARCH_ORGANIZATIONS_FAILURE,
   };
 }
 
-export function searchCompaniesSuccess(payload) {
+export function searchOrganizationsSuccess(payload) {
   return {
     payload,
-    type: SEARCH_COMPANIES_SUCCESS,
+    type: SEARCH_ORGANIZATIONS_SUCCESS,
   };
 }
 
-export function searchCompanies(payload) {
+export function searchOrganizations(payload) {
   return {
     payload,
-    type: SEARCH_COMPANIES,
+    type: SEARCH_ORGANIZATIONS,
   };
 }
 

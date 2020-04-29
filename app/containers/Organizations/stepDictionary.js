@@ -1,16 +1,16 @@
-import ImportCompany from './Add/ImportCompany';
-import ManualCompany from './Add/ManualCompany';
-import VerifyCompany from './Add/VerifyCompany';
+import ImportOrganization from './Add/ImportOrganization';
+import ManualOrganization from './Add/ManualOrganization';
+import VerifyOrganization from './Add/VerifyOrganization';
 import EditExisting from './Edit/EditExisting';
 import VerifyExisting from './Edit/VerifyExisting';
 
-export const addCompanyDictionary = {
-  1: ImportCompany,
-  2: ManualCompany,
-  3: VerifyCompany,
+export const addOrganizationDictionary = {
+  1: ImportOrganization,
+  2: ManualOrganization,
+  3: VerifyOrganization,
 };
 
-export const editCompanyDictionary = {
+export const editOrganizationDictionary = {
   1: EditExisting,
   2: VerifyExisting,
 };

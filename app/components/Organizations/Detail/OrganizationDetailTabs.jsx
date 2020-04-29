@@ -4,13 +4,13 @@ import Tabs from '@material-ui/core/Tabs';
 
 import { ConditionalRender } from 'components/base_ui';
 
-import CompanyContributorsTab from './Contributors/CompanyContributorsTab';
-import CompanyIssuesTab from './Issues/CompanyIssuesTab';
+import OrganizationContributorsTab from './Contributors/OrganizationContributorsTab';
+import OrganizationIssuesTab from './Issues/OrganizationIssuesTab';
 import ContributorsSearchHeader from './Contributors/ContributorsSearchHeader';
 import IssuesSearchHeader from './Issues/IssuesSearchHeader';
 import { StyledPaper, StyledTab } from './styledComponents';
 
-const CompanyDetailTabs = ({
+const OrganizationDetailTabs = ({
   contributors,
   filterValues,
   handleInputChange,
@@ -48,13 +48,13 @@ const CompanyDetailTabs = ({
       />
       <ConditionalRender
         Component={
-          <CompanyContributorsTab
+          <OrganizationDetailTabsContributorsTab
             contributors={contributors}
             handleNav={handleNav}
           />
         }
         FallbackComponent={
-          <CompanyIssuesTab
+          <OrganizationDetailTabsIssuesTab
             issues={issues}
             handleNav={handleNav}
             handleUpvote={handleUpvote}
@@ -66,7 +66,7 @@ const CompanyDetailTabs = ({
   );
 };
 
-CompanyDetailTabs.propTypes = {
+OrganizationDetailTabs.propTypes = {
   contributors: T.array,
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
@@ -75,4 +75,4 @@ CompanyDetailTabs.propTypes = {
   issues: T.array,
 };
 
-export default CompanyDetailTabs;
+export default OrganizationDetailTabs;

@@ -5,8 +5,7 @@ import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import { ErrorSuccessBanner } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
-import IssueCard from './IssueCard';
-import IssueFilter from './IssueFilter';
+import IssueCard from './Card';
 import {
   BannerWrapper,
   IssueCardWrapper,
@@ -37,7 +36,6 @@ const Issues = ({
   const route = '/admin/issues/add';
   const viewToRender = hasData ? (
     <IssuesWrapper>
-      <IssueFilter />
       <IssueCardWrapper>
         <IssueCard {...propsToPassDown} />
       </IssueCardWrapper>

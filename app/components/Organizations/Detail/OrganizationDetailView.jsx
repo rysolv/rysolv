@@ -4,19 +4,19 @@ import T from 'prop-types';
 import { ConditionalRender, Verified } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
-import CompanyDetailTabs from './CompanyDetailTabs';
+import OrganizationDetailTabs from './OrganizationDetailTabs';
 import TopLanguagesView from './TopLanguagesView';
 import RecentActivityView from './RecentActivityView';
 import {
   ContentWrapper,
   Description,
-  Divider,
-  CompanyUrl,
   DetailViewContainer,
+  Divider,
   Image,
   MainTabs,
   Name,
   NameWrapper,
+  OrganizationUrl,
   RepoUrl,
   SidebarTabs,
   StyledIcon,
@@ -51,11 +51,11 @@ const fundData = [
   },
 ];
 
-export class CompanyDetailView extends React.PureComponent {
+export class OrganizationDetailView extends React.PureComponent {
   render() {
     const {
       data: {
-        companyUrl,
+        organizationUrl,
         contributors,
         description,
         issues,
@@ -84,10 +84,10 @@ export class CompanyDetailView extends React.PureComponent {
             </NameWrapper>
             <Description>{description}</Description>
             <UrlWrapper>
-              <CompanyUrl href={companyUrl} target="_blank">
+              <OrganizationUrl href={organizationUrl} target="_blank">
                 <StyledIcon>{LinkIcon}</StyledIcon>
-                {companyUrl}
-              </CompanyUrl>
+                {organizationUrl}
+              </OrganizationUrl>
               <RepoUrl href={repoUrl} target="_blank">
                 <StyledIcon>{LinkIcon}</StyledIcon>
                 {repoUrl}
@@ -117,7 +117,7 @@ export class CompanyDetailView extends React.PureComponent {
   }
 }
 
-CompanyDetailView.propTypes = {
+OrganizationDetailView.propTypes = {
   data: T.object,
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
@@ -125,4 +125,4 @@ CompanyDetailView.propTypes = {
   handleUpvote: T.func,
 };
 
-export default CompanyDetailView;
+export default OrganizationDetailView;

@@ -8,8 +8,8 @@ import { PrimaryButton, SecondaryButton } from 'components/base_ui';
 import EditExistingForm from 'components/Organizations/Edit/EditExistingForm';
 import iconDictionary from 'utils/iconDictionary';
 
-import { deleteCompany, incrementStep, inputChange } from '../actions';
-import { makeSelectCompanies } from '../selectors';
+import { deleteOrganization, incrementStep, inputChange } from '../actions';
+import { makeSelectOrganizations } from '../selectors';
 import { ButtonGroup, StyledH3, StyledIconButton } from './styledComponents';
 
 const DeleteIcon = iconDictionary('delete');
@@ -19,14 +19,14 @@ export class EditExisting extends React.PureComponent {
   render() {
     const {
       editInfo,
-      handleDeleteCompany,
+      handleDeleteOrganization,
       handleIncrementStep,
       handleInputChange,
       handleNav,
     } = this.props;
     const { id } = editInfo;
     const handleDelete = () => {
-      handleDeleteCompany({ itemId: id.value });
+      handleDeleteOrganization({ itemId: id.value });
       handleNav('/admin/organizations');
     };
     return (
@@ -45,7 +45,7 @@ export class EditExisting extends React.PureComponent {
           <PrimaryButton
             label="Next"
             onClick={() =>
-              handleIncrementStep({ step: 2, view: 'editCompany' })
+              handleIncrementStep({ step: 2, view: 'editOrganization' })
             }
           />
         </ButtonGroup>
@@ -56,7 +56,7 @@ export class EditExisting extends React.PureComponent {
 
 EditExisting.propTypes = {
   editInfo: T.object,
-  handleDeleteCompany: T.func,
+  handleDeleteOrganization: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
@@ -66,7 +66,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  editInfo: makeSelectCompanies('editInfo'),
+  editInfo: makeSelectOrganizations('editInfo'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -74,7 +74,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Organizations
      */
-    handleDeleteCompany: payload => dispatch(deleteCompany(payload)),
+    handleDeleteOrganization: payload => dispatch(deleteOrganization(payload)),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
     /**

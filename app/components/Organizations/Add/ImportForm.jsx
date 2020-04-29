@@ -1,7 +1,9 @@
 import React from 'react';
 import T from 'prop-types';
-import iconDictionary from 'utils/iconDictionary';
+
 import { BaseTextInputWithAdornment } from 'components/base_ui';
+import iconDictionary from 'utils/iconDictionary';
+
 import { ImportFormContainer, StyledLabel } from './styledComponents';
 
 const SearchIcon = iconDictionary('search');
@@ -36,7 +38,7 @@ const ImportForm = ({
       />
       or
       <StyledLabel
-        onClick={() => handleIncrementStep({ step: 2, view: 'addCompany' })}
+        onClick={() => handleIncrementStep({ step: 2, view: 'addOrganization' })}
       >
         Manual
       </StyledLabel>

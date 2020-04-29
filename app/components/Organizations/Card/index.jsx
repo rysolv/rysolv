@@ -24,7 +24,7 @@ import {
 
 const OrganizationCard = ({
   data,
-  handleDeleteCompany,
+  handleDeleteOrganization,
   handleFetchInfo,
   handleNav,
 }) => {
@@ -49,7 +49,7 @@ const OrganizationCard = ({
                   <SettingsMenu
                     deleteRoute={deleteRoute}
                     editRoute={editRoute}
-                    handleDelete={handleDeleteCompany}
+                    handleDelete={handleDeleteOrganization}
                     handleFetchInfo={handleFetchInfo}
                     handleNav={handleNav}
                     id={id}
@@ -82,7 +82,7 @@ const OrganizationCard = ({
 
 OrganizationCard.propTypes = {
   data: T.array,
-  handleDeleteCompany: T.func,
+  handleDeleteOrganization: T.func,
   handleFetchInfo: T.func,
   handleNav: T.func,
 };

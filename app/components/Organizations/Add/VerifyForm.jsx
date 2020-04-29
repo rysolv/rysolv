@@ -3,7 +3,7 @@ import React from 'react';
 import T from 'prop-types';
 import omit from 'lodash/omit';
 
-import { companyDataDictionary } from 'containers/Organizations/constants';
+import { organizationDataDictionary } from 'containers/Organizations/constants';
 
 import {
   DataWrapper,
@@ -23,7 +23,7 @@ export class VerifyForm extends React.PureComponent {
         <KeyGroupWrapper>
           {Object.keys(tempData).map((key, index) => (
             <KeyAndValueContainer key={`verify-key-${key}-${index}`}>
-              <KeyWrapper>{companyDataDictionary[key]}:</KeyWrapper>
+              <KeyWrapper>{organizationDataDictionary[key]}:</KeyWrapper>
               <ValueWrapper>{tempData[key].value}</ValueWrapper>
             </KeyAndValueContainer>
           ))}

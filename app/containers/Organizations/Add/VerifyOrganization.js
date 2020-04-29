@@ -10,8 +10,8 @@ import VerifyForm from 'components/Organizations/Add/VerifyForm';
 import { incrementStep, saveInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';
 import {
-  makeSelectCompanies,
-  makeSelectCompaniesRequestBody,
+  makeSelectOrganizations,
+  makeSelectOrganizationsRequestBody,
 } from '../selectors';
 import {
   ButtonGroup,
@@ -21,7 +21,7 @@ import {
 } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class VerifyCompany extends React.PureComponent {
+export class VerifyOrganization extends React.PureComponent {
   render() {
     const {
       data,
@@ -51,7 +51,7 @@ export class VerifyCompany extends React.PureComponent {
           <SecondaryButton
             label="Back"
             onClick={() =>
-              dispatchIncrementStep({ step: 2, view: 'addCompany' })
+              dispatchIncrementStep({ step: 2, view: 'addOrganization' })
             }
           />
           <PrimaryAsyncButton
@@ -65,7 +65,7 @@ export class VerifyCompany extends React.PureComponent {
   }
 }
 
-VerifyCompany.propTypes = {
+VerifyOrganization.propTypes = {
   data: T.object,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
@@ -79,9 +79,9 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  data: makeSelectCompanies('data'),
-  isVerified: makeSelectCompanies('isVerified'),
-  requestBody: makeSelectCompaniesRequestBody(),
+  data: makeSelectOrganizations('data'),
+  isVerified: makeSelectOrganizations('isVerified'),
+  requestBody: makeSelectOrganizationsRequestBody(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -102,4 +102,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(VerifyCompany);
+)(VerifyOrganization);

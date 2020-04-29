@@ -10,8 +10,8 @@ import VerifyExistingForm from 'components/Organizations/Edit/VerifyExistingForm
 import { clearForm, incrementStep, updateInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';
 import {
-  makeSelectCompanies,
-  makeSelectCompaniesEditRequest,
+  makeSelectOrganizations,
+  makeSelectOrganizationsEditRequest,
 } from '../selectors';
 import {
   ButtonGroup,
@@ -57,7 +57,7 @@ export class VerifyExisting extends React.PureComponent {
           <SecondaryButton
             label="Back"
             onClick={() =>
-              dispatchIncrementStep({ step: 1, view: 'editCompany' })
+              dispatchIncrementStep({ step: 1, view: 'editOrganization' })
             }
           />
           <PrimaryAsyncButton
@@ -86,9 +86,9 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  editInfo: makeSelectCompanies('editInfo'),
-  editRequest: makeSelectCompaniesEditRequest(),
-  isVerified: makeSelectCompanies('isVerified'),
+  editInfo: makeSelectOrganizations('editInfo'),
+  editRequest: makeSelectOrganizationsEditRequest(),
+  isVerified: makeSelectOrganizations('isVerified'),
 });
 
 function mapDispatchToProps(dispatch) {

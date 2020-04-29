@@ -7,24 +7,24 @@ import AsyncRender from 'components/AsyncRender';
 
 import { incrementStep } from '../actions';
 import {
-  makeSelectCompanies,
-  makeSelectCompaniesLoading,
-  makeSelectCompaniesStep,
+  makeSelectOrganizations,
+  makeSelectOrganizationsLoading,
+  makeSelectOrganizationsStep,
 } from '../selectors';
-import { editCompanyDictionary } from '../stepDictionary';
+import { editOrganizationDictionary } from '../stepDictionary';
 import { EditWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class EditCompany extends React.PureComponent {
+export class EditOrganization extends React.PureComponent {
   componentDidMount() {
     const { handleIncrementStep } = this.props;
-    handleIncrementStep({ step: 1, view: 'editCompany' });
+    handleIncrementStep({ step: 1, view: 'editOrganization' });
   }
 
   render() {
     const { data, loading, step } = this.props;
 
-    const StepToRender = editCompanyDictionary[step];
+    const StepToRender = editOrganizationDictionary[step];
     return (
       <EditWrapper>
         <AsyncRender
@@ -37,7 +37,7 @@ export class EditCompany extends React.PureComponent {
   }
 }
 
-EditCompany.propTypes = {
+EditOrganization.propTypes = {
   data: T.object,
   handleIncrementStep: T.func,
   loading: T.bool.isRequired,
@@ -48,9 +48,9 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  data: makeSelectCompanies('data'),
-  loading: makeSelectCompaniesLoading('fetchCompany'),
-  step: makeSelectCompaniesStep('editCompany'),
+  data: makeSelectOrganizations('data'),
+  loading: makeSelectOrganizationsLoading('fetchOrganization'),
+  step: makeSelectOrganizationsStep('editOrganization'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -65,4 +65,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EditCompany);
+)(EditOrganization);

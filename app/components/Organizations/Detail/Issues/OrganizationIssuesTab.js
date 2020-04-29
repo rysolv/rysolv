@@ -22,7 +22,7 @@ import {
   StyledUpvotePanel,
 } from '../styledComponents';
 
-const CompanyIssuesTab = ({ handleNav, handleUpvote, issues }) => (
+const OrganizationIssuesTab = ({ handleNav, handleUpvote, issues }) => (
   <IssuesList>
     {issues.map(({ id, attempting, modifiedDate, name, open, rep, value }) => (
       <IssueListItem key={`list-item-${id}`}>
@@ -32,7 +32,6 @@ const CompanyIssuesTab = ({ handleNav, handleUpvote, issues }) => (
               Icon={<Upvote />}
               onClick={() => handleUpvote({ itemId: id })}
             />
-
             {rep}
           </StyledUpvotePanel>
           <IssueContentInfo>
@@ -64,10 +63,10 @@ const CompanyIssuesTab = ({ handleNav, handleUpvote, issues }) => (
   </IssuesList>
 );
 
-CompanyIssuesTab.propTypes = {
+OrganizationIssuesTab.propTypes = {
   issues: T.array,
   handleNav: T.func,
   handleUpvote: T.func,
 };
 
-export default CompanyIssuesTab;
+export default OrganizationIssuesTab;

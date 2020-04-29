@@ -5,8 +5,7 @@ import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import { ErrorSuccessBanner } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
-import OrganizationCard from './OrganizationCard';
-import OrganizationFilter from './OrganizationFilter';
+import OrganizationCard from './Card';
 import {
   BannerWrapper,
   OrganizationWrapper,
@@ -18,25 +17,23 @@ const Organizations = ({
   clearAlerts,
   data,
   disabled,
-  handleDeleteCompany,
+  handleDeleteOrganization,
   handleFetchInfo,
   handleInputChange,
   handleNav,
-  handleSearchCompanies,
+  handleSearchOrganizations,
   search,
 }) => {
-  const hasCompanies = data.length > 0 && !data.includes(null);
+  const hasOrganizations = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
     data,
-    handleDeleteCompany,
+    handleDeleteOrganization,
     handleFetchInfo,
     handleNav,
   };
   const route = '/admin/organizations/add';
-  const viewToRender = hasCompanies ? (
+  const viewToRender = hasOrganizations ? (
     <OrganizationWrapper>
-      <OrganizationFilter />
-
       <OrganizationCardWrapper>
         <OrganizationCard {...propsToPassDown} />
       </OrganizationCardWrapper>
@@ -51,7 +48,7 @@ const Organizations = ({
           disabled={disabled}
           handleInputChange={handleInputChange}
           handleNav={handleNav}
-          handleSearch={handleSearchCompanies}
+          handleSearch={handleSearchOrganizations}
           route={route}
           search={search}
         />
@@ -74,11 +71,11 @@ Organizations.propTypes = {
   clearAlerts: T.func,
   data: T.array,
   disabled: T.bool.isRequired,
-  handleDeleteCompany: T.func,
+  handleDeleteOrganization: T.func,
   handleFetchInfo: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
-  handleSearchCompanies: T.func,
+  handleSearchOrganizations: T.func,
   search: T.object,
 };
 

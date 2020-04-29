@@ -8,24 +8,24 @@ import AsyncRender from 'components/AsyncRender';
 import Organizations from 'components/Organizations';
 import {
   clearAlerts,
-  deleteCompany,
-  fetchCompanies,
+  deleteOrganization,
+  fetchOrganizations,
   fetchInfo,
   inputChange,
-  searchCompanies,
+  searchOrganizations,
 } from '../actions';
 import {
-  makeSelectCompanies,
-  makeSelectCompaniesSearchDisabled,
-  makeSelectCompaniesError,
-  makeSelectCompaniesLoading,
+  makeSelectOrganizations,
+  makeSelectOrganizationsSearchDisabled,
+  makeSelectOrganizationsError,
+  makeSelectOrganizationsLoading,
 } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class CompaniesOverview extends React.PureComponent {
+export class OrganizationsOverview extends React.PureComponent {
   componentDidMount() {
-    const { dispatchFetchCompanies } = this.props;
-    dispatchFetchCompanies();
+    const { dispatchFetchOrganizations } = this.props;
+    dispatchFetchOrganizations();
   }
 
   componentWillUnmount() {
@@ -41,10 +41,10 @@ export class CompaniesOverview extends React.PureComponent {
       dispatchFetchInfo,
       error,
       handleClearAlerts,
-      handleDeleteCompany,
+      handleDeleteOrganization,
       handleInputChange,
       handleNav,
-      handleSearchCompanies,
+      handleSearchOrganizations,
       loading,
       search,
     } = this.props;
@@ -59,11 +59,11 @@ export class CompaniesOverview extends React.PureComponent {
           alerts,
           disabled,
           handleClearAlerts,
-          handleDeleteCompany,
+          handleDeleteOrganization,
           handleFetchInfo: dispatchFetchInfo,
           handleInputChange,
           handleNav,
-          handleSearchCompanies,
+          handleSearchOrganizations,
           search,
         }}
       />
@@ -71,21 +71,21 @@ export class CompaniesOverview extends React.PureComponent {
   }
 }
 
-CompaniesOverview.propTypes = {
+OrganizationsOverview.propTypes = {
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
   organizations: T.array,
   disabled: T.bool.isRequired,
-  dispatchFetchCompanies: T.func,
+  dispatchFetchOrganizations: T.func,
   dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
-  handleDeleteCompany: T.func,
+  handleDeleteOrganization: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
-  handleSearchCompanies: T.func,
+  handleSearchOrganizations: T.func,
   loading: T.bool,
   search: T.object,
 };
@@ -94,12 +94,12 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  alerts: makeSelectCompanies('alerts'),
-  organizations: makeSelectCompanies('organizations'),
-  disabled: makeSelectCompaniesSearchDisabled('searchInput'),
-  error: makeSelectCompaniesError('organizations'),
-  loading: makeSelectCompaniesLoading('organizations'),
-  search: makeSelectCompanies('search'),
+  alerts: makeSelectOrganizations('alerts'),
+  organizations: makeSelectOrganizations('organizations'),
+  disabled: makeSelectOrganizationsSearchDisabled('searchInput'),
+  error: makeSelectOrganizationsError('organizations'),
+  loading: makeSelectOrganizationsLoading('organizations'),
+  search: makeSelectOrganizations('search'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -107,12 +107,12 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Organizations
      */
-    dispatchFetchCompanies: () => dispatch(fetchCompanies()),
+    dispatchFetchOrganizations: () => dispatch(fetchOrganizations()),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
-    handleDeleteCompany: payload => dispatch(deleteCompany(payload)),
+    handleDeleteOrganization: payload => dispatch(deleteOrganization(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
-    handleSearchCompanies: payload => dispatch(searchCompanies(payload)),
+    handleSearchOrganizations: payload => dispatch(searchOrganizations(payload)),
     /**
      * Reducer : Router
      */
@@ -123,4 +123,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CompaniesOverview);
+)(OrganizationsOverview);

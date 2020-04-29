@@ -27,7 +27,7 @@ import {
   StyledIssueText,
   StyledListItem,
   UpvotePanel,
-} from './styledComponents';
+} from '../styledComponents';
 
 const AttemptingIcon = IconDictionary('attempt');
 

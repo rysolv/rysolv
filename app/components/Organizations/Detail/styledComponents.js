@@ -16,17 +16,6 @@ export const BaseInputWrapper = styled.div`
   width: 45%;
 `;
 
-export const CompanyUrl = styled.a`
-  align-items: center;
-  display: flex;
-  margin-right: 2rem;
-
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`;
-
 export const ContentWrapper = styled.div`
   padding-left: 2rem;
 `;
@@ -265,6 +254,17 @@ export const NameWrapper = styled.div`
   display: flex;
   display: flex;
   margin-bottom: 1rem;
+`;
+
+export const OrganizationUrl = styled.a`
+  align-items: center;
+  display: flex;
+  margin-right: 2rem;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
 
 export const ProfileImageWrapper = styled.div`

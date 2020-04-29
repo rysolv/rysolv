@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 import omit from 'lodash/omit';
 
-import { companyDataDictionary } from 'containers/Organizations/constants';
+import { organizationDataDictionary } from 'containers/Organizations/constants';
 
 import {
   DataWrapper,
@@ -27,7 +27,7 @@ export class VerifyExistingForm extends React.PureComponent {
         <KeyGroupWrapper>
           {Object.keys(tempEditInfo).map(key => (
             <KeyAndValueContainer key={`container-${key}`}>
-              <KeyWrapper>{companyDataDictionary[key]}:</KeyWrapper>
+              <KeyWrapper>{organizationDataDictionary[key]}:</KeyWrapper>
               <ValueWrapper>
                 {Array.isArray(tempEditInfo[key].value)
                   ? tempEditInfo[key].value.length

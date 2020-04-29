@@ -6,17 +6,17 @@ import { filterContributors, filterIssues } from 'utils/filterHelpers';
 
 import { initialState } from './reducer';
 
-const selectCompaniesDomain = state => state.organizations || initialState;
+const selectOrganizationsDomain = state => state.organizations || initialState;
 
-const makeSelectCompanies = prop =>
+const makeSelectOrganizations = prop =>
   createSelector(
-    selectCompaniesDomain,
+    selectOrganizationsDomain,
     substate => substate[prop],
   );
 
-const makeSelectCompaniesDisabled = () =>
+const makeSelectOrganizationsDisabled = () =>
   createSelector(
-    makeSelectCompanies('data'),
+    makeSelectOrganizations('data'),
     data => {
       const tempData = { ...data };
       delete tempData.importUrl;
@@ -24,9 +24,9 @@ const makeSelectCompaniesDisabled = () =>
     },
   );
 
-const makeSelectCompaniesEditRequest = () =>
+const makeSelectOrganizationsEditRequest = () =>
   createSelector(
-    makeSelectCompanies('editInfo'),
+    makeSelectOrganizations('editInfo'),
     editInfo =>
       Object.keys(editInfo).reduce((acc, field) => {
         acc[field] = editInfo[field].value;
@@ -34,20 +34,20 @@ const makeSelectCompaniesEditRequest = () =>
       }, {}),
   );
 
-const makeSelectCompaniesError = prop =>
+const makeSelectOrganizationsError = prop =>
   createSelector(
-    makeSelectCompanies('error'),
+    makeSelectOrganizations('error'),
     error => error[prop],
   );
 
-const makeSelectCompaniesFormattedData = () =>
+const makeSelectOrganizationsFormattedData = () =>
   createSelector(
-    makeSelectCompanies('company'),
-    makeSelectCompanies('filter'),
-    makeSelectCompanies('search'),
-    makeSelectCompanies('shouldSearch'),
-    (company, filter, { contributorInput, issueInput }) => {
-      const { contributors, issues, ownerId, ...restProps } = company;
+    makeSelectOrganizations('organization'),
+    makeSelectOrganizations('filter'),
+    makeSelectOrganizations('search'),
+    makeSelectOrganizations('shouldSearch'),
+    (organization, filter, { contributorInput, issueInput }) => {
+      const { contributors, issues, ownerId, ...restProps } = organization;
       const newIssues = extend([], issues);
       let returnObj = {};
       if (contributors) {
@@ -71,15 +71,15 @@ const makeSelectCompaniesFormattedData = () =>
     },
   );
 
-const makeSelectCompaniesLoading = prop =>
+const makeSelectOrganizationsLoading = prop =>
   createSelector(
-    makeSelectCompanies('loading'),
+    makeSelectOrganizations('loading'),
     loading => loading[prop],
   );
 
-const makeSelectCompaniesRequestBody = () =>
+const makeSelectOrganizationsRequestBody = () =>
   createSelector(
-    makeSelectCompanies('data'),
+    makeSelectOrganizations('data'),
     data =>
       Object.keys(data).reduce((acc, field) => {
         acc[field] = data[field].value;
@@ -87,27 +87,27 @@ const makeSelectCompaniesRequestBody = () =>
       }, {}),
   );
 
-const makeSelectCompaniesSearchDisabled = prop =>
+const makeSelectOrganizationsSearchDisabled = prop =>
   createSelector(
-    makeSelectCompanies('search'),
+    makeSelectOrganizations('search'),
     search => search[prop].value === '',
   );
 
-const makeSelectCompaniesStep = prop =>
+const makeSelectOrganizationsStep = prop =>
   createSelector(
-    makeSelectCompanies('step'),
+    makeSelectOrganizations('step'),
     step => step[prop],
   );
 
-export default selectCompaniesDomain;
+export default selectOrganizationsDomain;
 export {
-  makeSelectCompanies,
-  makeSelectCompaniesDisabled,
-  makeSelectCompaniesEditRequest,
-  makeSelectCompaniesError,
-  makeSelectCompaniesFormattedData,
-  makeSelectCompaniesLoading,
-  makeSelectCompaniesRequestBody,
-  makeSelectCompaniesSearchDisabled,
-  makeSelectCompaniesStep,
+  makeSelectOrganizations,
+  makeSelectOrganizationsDisabled,
+  makeSelectOrganizationsEditRequest,
+  makeSelectOrganizationsError,
+  makeSelectOrganizationsFormattedData,
+  makeSelectOrganizationsLoading,
+  makeSelectOrganizationsRequestBody,
+  makeSelectOrganizationsSearchDisabled,
+  makeSelectOrganizationsStep,
 };
