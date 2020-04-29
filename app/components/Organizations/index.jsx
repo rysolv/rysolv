@@ -34,13 +34,9 @@ const Organizations = ({
   };
   const route = '/admin/organizations/add';
   const viewToRender = hasCompanies ? (
-    <OrganizationWrapper>
-      <OrganizationFilter />
-
-      <OrganizationCardWrapper>
-        <OrganizationCard {...propsToPassDown} />
-      </OrganizationCardWrapper>
-    </OrganizationWrapper>
+    <OrganizationCardWrapper>
+      <OrganizationCard {...propsToPassDown} />
+    </OrganizationCardWrapper>
   ) : (
     <EmptyCard />
   );
@@ -61,7 +57,10 @@ const Organizations = ({
           success={success}
         />
       </BannerWrapper>
-      {viewToRender}
+      <OrganizationWrapper>
+        <OrganizationFilter />
+        {viewToRender}
+      </OrganizationWrapper>
     </div>
   );
 };

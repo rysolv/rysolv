@@ -17,6 +17,7 @@ import {
   IssueCardIconWrapper,
   IssueCardItem,
   IssueCardLabelWrapper,
+  IssueLanguageContainer,
   NameWrapper,
   OrganizationNameWrapper,
   StyledFlatIconButton,
@@ -83,8 +84,6 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                   ''
                 )}
               </OrganizationNameWrapper>
-              <LanguageWrapper language={language} />
-
               <SettingsMenu
                 handleDelete={handleDeleteIssue}
                 handleNav={handleNav}
@@ -103,7 +102,13 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
               >
                 {name}
               </NameWrapper>
+              <IssueLanguageContainer>
+                {language.map(el => (
+                  <LanguageWrapper key={`${id}-${el}`} language={el} />
+                ))}
+              </IssueLanguageContainer>
             </StyledIssueText>
+
             <StyledIssueFooter open={open}>
               {open ? (
                 <IssueCardItem>

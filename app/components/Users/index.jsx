@@ -7,7 +7,12 @@ import { ErrorSuccessBanner } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
 import UserCard from './UserCard';
-import { BannerWrapper } from './styledComponents';
+import UserFilter from './UserFilter';
+import {
+  BannerWrapper,
+  UserCardWrapper,
+  UserWrapper,
+} from './styledComponents';
 
 const Users = ({
   alerts: { error, success },
@@ -30,7 +35,9 @@ const Users = ({
     handleNav,
   };
   const viewToRender = hasUsers ? (
-    <UserCard {...propsToPassDown} />
+    <UserCardWrapper>
+      <UserCard {...propsToPassDown} />
+    </UserCardWrapper>
   ) : (
     <EmptyCard />
   );
@@ -51,7 +58,10 @@ const Users = ({
           success={success}
         />
       </BannerWrapper>
-      {viewToRender}
+      <UserWrapper>
+        <UserFilter />
+        {viewToRender}
+      </UserWrapper>
     </div>
   );
 };

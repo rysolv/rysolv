@@ -22,6 +22,7 @@ import {
 
 const IssueDetailHeader = ({ data }) => {
   const {
+    id,
     comments,
     createdDate,
     language,
@@ -59,9 +60,9 @@ const IssueDetailHeader = ({ data }) => {
         />
 
         <IssueSubItem>
-          {' '}
-          <LanguageWrapper language={language} />
-          {/* <IssueLanguage></IssueLanguage> */}
+          {language.map(el => (
+            <LanguageWrapper key={`${id}-${el}`} language={el} />
+          ))}
         </IssueSubItem>
         <IssueSubItem>0 Open PR</IssueSubItem>
         <IssueSubItem>

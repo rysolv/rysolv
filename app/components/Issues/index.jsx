@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
@@ -36,17 +36,14 @@ const Issues = ({
   };
   const route = '/admin/issues/add';
   const viewToRender = hasData ? (
-    <IssuesWrapper>
-      <IssueFilter />
-      <IssueCardWrapper>
-        <IssueCard {...propsToPassDown} />
-      </IssueCardWrapper>
-    </IssuesWrapper>
+    <IssueCardWrapper>
+      <IssueCard {...propsToPassDown} />
+    </IssueCardWrapper>
   ) : (
     <EmptyCard />
   );
   return (
-    <div>
+    <Fragment>
       <BannerWrapper>
         <AdminSubHeader
           disabled={disabled}
@@ -62,8 +59,11 @@ const Issues = ({
           success={success}
         />
       </BannerWrapper>
-      {viewToRender}
-    </div>
+      <IssuesWrapper>
+        <IssueFilter />
+        {viewToRender}
+      </IssuesWrapper>
+    </Fragment>
   );
 };
 

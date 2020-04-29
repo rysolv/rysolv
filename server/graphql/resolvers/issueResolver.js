@@ -21,7 +21,7 @@ module.exports = {
         issueInput.name,
         issueInput.body,
         issueInput.repo,
-        issueInput.language,
+        issueInput.language || [],
         issueInput.comments || [],
         issueInput.attempting || [],
         issueInput.contributor,

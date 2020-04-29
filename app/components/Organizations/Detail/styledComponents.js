@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 
 import { BaseDropDownMenu } from 'components/base_ui';
-import { UpvotePanel } from 'components/Issues/styledComponents';
+import { UpvotePanel } from 'components/Issues/IssueCard/styledComponents';
 
 import {
   defaultFontSize,

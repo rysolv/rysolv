@@ -28,7 +28,7 @@ module.exports = buildSchema(`
     name: String
     body: String
     repo: String
-    language: String
+    language: [String]
     comments: [ID]
     attempting: [ID]
     attempts: Int

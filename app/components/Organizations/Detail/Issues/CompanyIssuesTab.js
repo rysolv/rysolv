@@ -3,7 +3,7 @@ import T from 'prop-types';
 import moment from 'moment';
 
 import { Upvote } from 'components/base_ui';
-import { StyledFlatIconButton } from 'components/Issues/styledComponents';
+import { StyledFlatIconButton } from 'components/Issues/IssueCard/styledComponents';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
