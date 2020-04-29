@@ -139,6 +139,7 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
               <StyledFundingWrapper
                 open={open}
                 value={open ? formatDollarAmount(value) : 'Issue Closed'}
+                medium
               />
             </StyledIssueFooter>
           </StyledIssueContent>

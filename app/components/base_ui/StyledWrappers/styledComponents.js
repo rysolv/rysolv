@@ -13,7 +13,7 @@ export const StyledFundingWrapper = styled.div`
   border-radius: 0.25rem;
   color: ${({ open }) => (open ? fundingText : '0')};
   display: inline-flex;
-  font-size: inherit;
+  font-size: ${({ medium }) => (medium ? '1.4rem' : 'inherit')};
   font-weight: 700;
   padding: 0.5rem 1rem;
   white-space: nowrap;

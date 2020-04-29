@@ -52,7 +52,11 @@ const IssueDetailHeader = ({ data }) => {
       </StyledIssueHeader>
       <NameWrapper>{name}</NameWrapper>
       <IssueSubHeader>
-        <FundingWrapper open={open} value={open ? 'Open Issue' : 'Closed'} />
+        <FundingWrapper
+          medium
+          open={open}
+          value={open ? 'Open Issue' : 'Closed'}
+        />
 
         <IssueSubItem>
           {' '}

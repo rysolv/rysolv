@@ -15,6 +15,7 @@ import {
 } from './styledComponents';
 
 import { FundingWrapper } from '../StyledWrappers';
+import { MonocleIcon } from '../Icons';
 
 const SettingsIcon = iconDictionary('settings');
 const ExitIcon = iconDictionary('exit');
@@ -69,7 +70,12 @@ const UserDropDownMenu = ({ anchorEl, handleClose, activeUser }) => {
         </StyledMenuItem>
 
         <StyledMenuItem>
-          Watch List
+          <MenuItemLabel>
+            <IconWrapper>
+              <MonocleIcon />
+            </IconWrapper>
+            Watch List
+          </MenuItemLabel>
           <MenuItemValue> 0</MenuItemValue>
         </StyledMenuItem>
 

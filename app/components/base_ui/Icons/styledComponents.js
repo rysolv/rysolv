@@ -82,7 +82,8 @@ export const StyledMonocleIcon = styled.div`
   display: inline-block;
   text-align: center;
   * {
-    stroke: inherit;
     fill: inherit;
+    stroke: inherit;
+    stroke-width: 150;
   }
 `;

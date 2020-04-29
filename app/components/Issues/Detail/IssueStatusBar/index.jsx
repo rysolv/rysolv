@@ -49,7 +49,11 @@ const IssueStatusBar = ({
       <StatusItem>
         <StatusTitle>
           Funded:{' '}
-          <FundingWrapper open={open} value={formatDollarAmount(value)} />
+          <FundingWrapper
+            medium
+            open={open}
+            value={formatDollarAmount(value)}
+          />
         </StatusTitle>
         <StyledSecondaryButton disabled={!open} label="$ Fund Issue" />
       </StatusItem>

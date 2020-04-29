@@ -42,12 +42,19 @@ export const NameWrapper = styled.div`
   }
 `;
 
+export const OrganizationCardItem = styled.div`
+  display: inline-flex;
+  align-items: center;
+`;
+
 export const SettingsContainer = styled.div`
   display: flex;
 `;
 
 export const StatsWrapper = styled.div`
+  display: flex;
   font-size: ${detailFontSize};
+  justify-content: space-between;
   padding: 1rem 0;
 `;
 
@@ -62,8 +69,8 @@ export const StyledListItem = styled.li`
   border: 0.1rem solid ${borderColor};
   color: ${textColor};
   display: flex;
-  flex-direction: row;
-  height: auto;
+  flex-direction: column;
+  width: 100%;
   margin: 0.5rem 1rem;
 `;
 export const StyledOrganizationCard = styled.div`
@@ -77,6 +84,7 @@ export const StyledSettingWrapper = styled.div`
 
 export const TextContainer = styled.div`
   padding: 0 3rem 0 0;
+  width: 100%;
 `;
 
 export const TitleContainer = styled.div`
