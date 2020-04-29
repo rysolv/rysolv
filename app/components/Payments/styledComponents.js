@@ -11,7 +11,7 @@ import {
   borderColor,
   dividerBorder,
   errorRed,
-  moneyGreen,
+  fundingText,
 } from 'defaultStyleHelper';
 
 export const Amount = styled.div`
@@ -40,7 +40,7 @@ export const DollarValueWrapper = styled.div`
 
 export const Funded = styled.div`
   align-self: center;
-  color: ${({ isFunded }) => (isFunded ? errorRed : moneyGreen)};
+  color: ${({ isFunded }) => (isFunded ? errorRed : fundingText)};
   font-size: 1.4rem;
   font-weight: 500;
   padding: 0.5rem;

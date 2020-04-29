@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 import {
   darkTextColor,
-  moneyGreen,
   textColor,
   headerFontSize,
   detailFontSize,
@@ -34,17 +33,6 @@ export const NameWrapper = styled.div`
   color: ${darkTextColor};
   font-size: ${headerFontSize};
   margin: 1rem 0;
-`;
-
-export const IssueResolved = styled.div`
-  background-color: ${props => (props.open ? moneyGreen : 'grey')};
-  border-color: ${props => (props.open ? '#b9f6ca' : 'grey')};
-  border-radius: 5rem;
-  border: 2px solid;
-  color: white;
-  display: inline-block;
-  font-weight: bold;
-  padding: 0.5rem;
 `;
 
 export const IssueSubHeader = styled.div`

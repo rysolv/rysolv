@@ -8,7 +8,7 @@ const Monocle = props => (
       transform="translate(0.000000,480.000000) scale(0.110000,-0.110000)"
       fill={textColor}
       stroke={textColor}
-      strokeWidth="75"
+      strokeWidth="100"
     >
       <path
         d="M1846 4304 c-250 -45 -484 -170 -672 -358 -191 -191 -314 -425 -359

@@ -17,6 +17,7 @@ export const StyledFundingWrapper = styled.div`
   font-weight: 700;
   padding: 0.5rem 1rem;
   white-space: nowrap;
+  opacity: 0.8;
 `;
 
 export const StyledLanguageWrapper = styled.div`

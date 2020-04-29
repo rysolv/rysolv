@@ -16,7 +16,6 @@ export const languageBackground = '#e8f0fa';
 export const languageText = '#6487ae';
 export const markdownHeader = '#546e7a';
 export const menuColor = '#1e88e5';
-export const moneyGreen = '#00c853';
 export const primaryButtonColor = '#1e88e5';
 export const primaryButtonHoverColor = '#1976d2';
 export const secondaryButtonColor = '#5e35b1';
@@ -28,7 +27,7 @@ export const textColor = '#616161';
 export const defaultFontSize = '1.4rem';
 export const detailFontSize = '1.2rem';
 export const headerFontSize = '2.4rem';
-export const subheaderFontSize = '1.8rem';
+export const subheaderFontSize = '1.6rem';
 
 // Borders
 export const dividerBorder = `0.2rem solid #d5d5d5`;

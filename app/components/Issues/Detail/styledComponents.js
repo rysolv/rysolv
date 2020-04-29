@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import {
   borderColor,
   defaultFontSize,
-  moneyGreen,
   subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
@@ -13,8 +12,7 @@ export const IssueDetailWrapper = styled.div`
   background-color: white;
   border-radius: 0.25rem;
   display: flex;
-  margin: 0;
-  width: 100%;
+  max-width: 70%;
   min-height: 40vh;
   overflow: hidden;
   padding: 0 3rem 3rem 0;
@@ -38,14 +36,6 @@ export const IssueDetailColumn = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 3rem 3rem 3rem;
-`;
-
-export const DollarWrapper = styled.div`
-  background-color: ${moneyGreen};
-  border-radius: 1rem;
-  color: white;
-  padding: 0.25rem 1rem 0.25rem 1rem;
-  text-align: center;
 `;
 
 export const StyledFlatIconButton = styled(FlatIconButton)`

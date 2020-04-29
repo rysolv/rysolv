@@ -1,9 +1,13 @@
 import styled from 'styled-components';
+import { detailFontSize } from 'defaultStyleHelper';
 
 export const FooterWrapper = styled.footer`
+  background-color: #607d8b;
+  color: white;
   display: flex;
   flex-direction: row;
-  height: 5rem;
+  font-size: ${detailFontSize};
+  height: 10rem;
   width: 100%;
 `;
 

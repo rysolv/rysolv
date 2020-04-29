@@ -4,7 +4,7 @@ import { Wrapper } from './styledComponents';
 
 const LoadingIndicator = () => (
   <Wrapper>
-    <CircularProgress size={20} />
+    <CircularProgress size={50} thickness={8} />
   </Wrapper>
 );
 

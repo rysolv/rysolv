@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledIssueFilter = styled.div`
+export const StyledOrganizationFilter = styled.div`
   background-color: white;
   border-radius: 0.5rem;
   border: 0.2rem solid lightgray;

@@ -5,8 +5,13 @@ import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import { ErrorSuccessBanner } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
-import CompanyCard from './CompanyCard';
-import { BannerWrapper } from './styledComponents';
+import OrganizationCard from './OrganizationCard';
+import OrganizationFilter from './OrganizationFilter';
+import {
+  BannerWrapper,
+  OrganizationWrapper,
+  OrganizationCardWrapper,
+} from './styledComponents';
 
 const Companies = ({
   alerts: { error, success },
@@ -29,7 +34,13 @@ const Companies = ({
   };
   const route = '/admin/companies/add';
   const viewToRender = hasCompanies ? (
-    <CompanyCard {...propsToPassDown} />
+    <OrganizationWrapper>
+      <OrganizationFilter />
+
+      <OrganizationCardWrapper>
+        <OrganizationCard {...propsToPassDown} />
+      </OrganizationCardWrapper>
+    </OrganizationWrapper>
   ) : (
     <EmptyCard />
   );

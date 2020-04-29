@@ -8,6 +8,11 @@ import {
 } from 'defaultStyleHelper';
 import { FlatIconButton, FundingWrapper } from '../base_ui';
 
+export const BannerWrapper = styled.div`
+  font-size: ${defaultFontSize};
+  margin: 1rem 0;
+`;
+
 export const StyledFundingWrapper = styled(FundingWrapper)`
   font-size: ${subheaderFontSize};
 `;
@@ -92,11 +97,6 @@ export const NameWrapper = styled.a`
   }
 `;
 
-export const BannerWrapper = styled.div`
-  font-size: ${defaultFontSize};
-  margin: 1rem 0;
-`;
-
 export const IssueResolved = styled.div`
   color: red;
 `;
@@ -117,6 +117,11 @@ export const StyledFlatIconButton = styled(FlatIconButton)`
 export const IssueCardItem = styled.div`
   display: inline-flex;
   align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    color: ${hoverLinkColor};
+  }
 `;
 
 export const IssueCardIconWrapper = styled.div`
