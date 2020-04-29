@@ -42,11 +42,12 @@ export const UPVOTE_ISSUE_SUCCESS = 'app/Issues/UPVOTE_ISSUE_SUCCESS';
 export const VERIFY_INFO = 'app/Organizations/VERIFY_INFO';
 
 export const issueDataDictionary = {
-  repo: 'Issue URL',
-  body: 'Description of Issue',
-  language: 'Language',
-  value: 'Dollar Value',
-  name: 'Issue Title',
+  repo: 'Repository',
+  external: 'External link',
+  body: 'Detailed description of Issue',
+  language: 'Languages',
+  value: 'Funded amount',
+  name: 'Title',
 };
 
 export const emptyCardMessage =
