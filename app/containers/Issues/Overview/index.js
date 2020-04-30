@@ -9,13 +9,13 @@ import IssueCard from 'components/Issues';
 
 import { makeSelectAdmin } from 'containers/Admin/selectors';
 import {
-  addAttempt,
   clearAlerts,
   deleteIssue,
   fetchIssues,
   inputChange,
   searchIssues,
   upvoteIssue,
+  updateArray,
 } from '../actions';
 import {
   makeSelectIssues,
@@ -127,7 +127,7 @@ function mapDispatchToProps(dispatch) {
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
     handleUpvote: payload => dispatch(upvoteIssue(payload)),
-    handleIncrement: payload => dispatch(addAttempt(payload)),
+    handleIncrement: payload => dispatch(updateArray(payload)),
 
     /*
      * Reducer : Router

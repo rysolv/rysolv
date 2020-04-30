@@ -5,7 +5,7 @@ export const ADD_COMMENT_SUCCESS = 'app/Issues/ADD_COMMENT_SUCCESS';
 export const ADD_WATCH_FAILURE = 'app/Issues/ADD_WATCH_FAILURE';
 export const ADD_WATCH_SUCCESS = 'app/Issues/ADD_WATCH_SUCCESS';
 
-export const ADD_ATTEMPT = 'app/Issues/ADD_ATTEMPT';
+export const UPDATE_ARRAY = 'app/Issues/UPDATE_ARRAY';
 export const ADD_ATTEMPT_FAILURE = 'app/Issues/ADD_ATTEMPT_FAILURE';
 export const ADD_ATTEMPT_SUCCESS = 'app/Issues/ADD_ATTEMPT_SUCCESS';
 

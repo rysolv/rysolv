@@ -49,7 +49,7 @@ const OrganizationSeed = [
     'https://supertuxkart.net/Main_Page',
     ['20619026-0f61-4772-9bb8-36ed643d4dcd'],
     'https://upload.wikimedia.org/wikipedia/commons/3/37/Logo_de_SuperTuxKart.png',
-    true,
+    false,
     [
       '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
       'b519b064-b5db-4472-ad1b-00e30bdbfa4c',

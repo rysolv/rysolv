@@ -58,7 +58,8 @@ const IssueCard = ({
       comments,
       value,
     }) => {
-      const userWatching = activeUser.watching.includes(id);
+      const userWatching =
+        activeUser.watching && activeUser.watching.includes(id);
       return (
         <Fragment key={id}>
           <StyledListItem>

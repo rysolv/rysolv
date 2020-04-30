@@ -10,29 +10,37 @@ const issueValues = `
   language,
   comments,
   attempting,
-  contributor,
+  contributor_id,
   rep,
   watching,
   value,
   open
 `; // Excludes ID & created_date
 
-const issueReturnValues = `
-  id,
-  created_date AS "createdDate",
-  modified_date AS "modifiedDate",
-  organization_id AS "organizationId",
-  name,
-  body,
-  repo,
-  language,
-  comments,
-  attempting,
-  contributor,
-  rep,
-  watching,
-  value,
-  open
+const issueCardValues = `
+  issues.id,
+  issues.created_date AS "createdDate",
+  issues.modified_date AS "modifiedDate",
+  issues.organization_id AS "organizationId",
+  issues.name,
+  issues.body,
+  issues.repo,
+  issues.language,
+  issues.comments,
+  issues.attempting,
+  issues.contributor_id AS "contributorId",
+  issues.rep,
+  issues.watching,
+  issues.value,
+  issues.open,
+  organizations.name AS "organizationName",
+  organizations.verified AS "organizationVerified"
+`;
+
+const issueDetailValues = `
+  ${issueCardValues},
+  users.username,
+  users.profile_pic AS "profilePic"
 `;
 
 // Create new Issue
@@ -58,14 +66,21 @@ const deleteIssue = async (table, id) => {
 
 // GET all issues
 const getIssues = async table => {
-  const queryText = `SELECT ${issueReturnValues} FROM ${table};`;
+  const queryText = `SELECT ${issueCardValues} FROM ${table} JOIN organizations ON (issues.organization_id = organizations.id)`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
 
 // GET single issue
 const getOneIssue = async (table, id) => {
-  const rows = await singleItem(table, id, issueReturnValues);
+  const queryText = `
+    SELECT ${issueDetailValues} FROM ${table}
+    JOIN organizations ON (issues.organization_id = organizations.id)
+    JOIN users ON (issues.contributor_id = users.id)
+    WHERE (issues.id='${id}')
+  `;
+  const { rows } = await singleQuery(queryText);
+  console.log(rows);
   if (rows.length > 0) {
     return rows;
   }
@@ -74,8 +89,9 @@ const getOneIssue = async (table, id) => {
 
 // SEARCH issues
 const searchIssues = async (table, value) => {
-  const fields = ['body', 'name'];
-  const rows = await singleSearch(fields, table, value, issueReturnValues);
+  const fields = ['issues.body', 'issues.name', 'organizations.name'];
+  const queryText = `SELECT ${issueCardValues} FROM ${table} JOIN organizations ON (issues.organization_id = organizations.id)`;
+  const rows = await singleSearch(queryText, fields, value);
   return rows;
 };
 

@@ -24,20 +24,24 @@ module.exports = buildSchema(`
     id: ID!
     createdDate: Object
     modifiedDate: Object
-    organizationId: String
-    name: String
-    body: String
-    repo: String
-    language: [String]
-    comments: [ID]
+    activeAttempts: Int
     attempting: [ID]
     attempts: Int
-    activeAttempts: Int
+    body: String
+    comments: [ID]
     contributor: [String]
-    rep: Int
-    watching: [String]
-    value: Float
+    language: [String]
+    name: String
     open: Boolean
+    organizationId: String
+    organizationName: String
+    organizationVerified: Boolean
+    profilePic: String
+    rep: Int
+    repo: String
+    username: String
+    value: Float
+    watching: [String]
   }
 
   input IssueInput {

@@ -12,7 +12,7 @@ import {
   addComment,
   clearAlerts,
   fetchIssueDetail,
-  addAttempt,
+  updateArray,
   upvoteIssue,
 } from '../actions';
 import {
@@ -102,7 +102,7 @@ function mapDispatchToProps(dispatch) {
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleUpvote: payload => dispatch(upvoteIssue(payload)),
     handleComment: payload => dispatch(addComment(payload)),
-    handleIncrement: payload => dispatch(addAttempt(payload)),
+    handleIncrement: payload => dispatch(updateArray(payload)),
     /**
      * Reducer : Router
      */

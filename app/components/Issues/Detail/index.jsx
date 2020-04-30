@@ -30,7 +30,8 @@ const IssueDetail = ({
     rep,
     comments,
     open,
-    user: { username, profilePic },
+    username,
+    profilePic,
   } = data;
 
   const primaryUser = {
@@ -61,7 +62,8 @@ const IssueDetail = ({
         />
       );
     });
-  const commentsDiv = comments.length > 0 ? generateComments() : <NoComment />;
+  const commentsDiv =
+    comments && comments.length > 0 ? generateComments() : <NoComment />;
 
   return (
     <Fragment>

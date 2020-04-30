@@ -17,7 +17,8 @@ const IssueStatusBar = ({
   handleIncrement,
 }) => {
   const { attempting, open, id, value } = data;
-  const activeAttempt = activeUser.attempting.includes(id);
+  const activeAttempt =
+    activeUser.attempting && activeUser.attempting.includes(id);
 
   return (
     <StatusBar>

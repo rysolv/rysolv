@@ -20,11 +20,11 @@ const createTables = async () => {
   // ];
 
   // TODO: figure out a way to map through this
-  await singleQuery(userSchema);
-  await singleQuery(issueSchema);
-  await singleQuery(commentSchema);
   await singleQuery(organizationSchema);
+  await singleQuery(userSchema);
+  await singleQuery(commentSchema);
   await singleQuery(pullRequestSchema);
+  await singleQuery(issueSchema);
 };
 
 // Drop all tables

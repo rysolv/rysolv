@@ -26,18 +26,17 @@ const IssueDetailHeader = ({ data, activeUser, handleIncrement }) => {
     language,
     name,
     open,
-    organization,
+    organizationName,
     organizationVerified,
     watching,
   } = data;
-
-  const userWatching = activeUser.watching.includes(id);
+  const userWatching = activeUser.watching && activeUser.watching.includes(id);
 
   return (
     <IssueDetailTopBar>
       <StyledIssueHeader>
         <OrganizationNameWrapper>
-          {organization}
+          {organizationName}
 
           {organizationVerified ? (
             <IconToolTip toolTipText="Verified Contributor">

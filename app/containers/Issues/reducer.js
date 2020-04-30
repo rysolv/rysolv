@@ -5,7 +5,6 @@ import remove from 'lodash/remove';
 import {
   ADD_ATTEMPT_FAILURE,
   ADD_ATTEMPT_SUCCESS,
-  ADD_ATTEMPT,
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT,
@@ -31,6 +30,7 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
+  UPDATE_ARRAY,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE,
@@ -55,7 +55,7 @@ export const initialState = {
     importUrl: { error: '', value: '' },
   },
   loading: {
-    addAttempt: false,
+    updateArray: false,
     addComment: false,
     addIssue: false,
     addWatch: false,
@@ -81,17 +81,17 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case ADD_ATTEMPT_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.addAttempt = false;
+      draft.loading.updateArray = false;
       break;
     }
     case ADD_ATTEMPT_SUCCESS: {
       const { attempting } = payload;
       draft.issueDetail.attempting = attempting;
-      draft.loading.addAttempt = false;
+      draft.loading.updateArray = false;
       break;
     }
-    case ADD_ATTEMPT: {
-      draft.loading.addAttempt = true;
+    case UPDATE_ARRAY: {
+      draft.loading.updateArray = true;
       break;
     }
     case ADD_COMMENT_FAILURE: {

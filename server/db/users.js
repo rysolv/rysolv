@@ -90,7 +90,8 @@ const getUsers = async table => {
 // SEARCH users
 const searchUsers = async (table, value) => {
   const fields = ['first_name', 'last_name', 'username'];
-  const rows = await singleSearch(fields, table, value, userReturnValues);
+  const queryText = `SELECT ${userReturnValues} FROM ${table}`;
+  const rows = await singleSearch(queryText, fields, value);
   return rows;
 };
 

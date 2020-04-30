@@ -1,5 +1,5 @@
 import {
-  ADD_ATTEMPT,
+  UPDATE_ARRAY,
   ADD_ATTEMPT_FAILURE,
   ADD_ATTEMPT_SUCCESS,
   ADD_WATCH_FAILURE,
@@ -33,10 +33,10 @@ import {
   VERIFY_INFO,
 } from './constants';
 
-export function addAttempt(payload) {
+export function updateArray(payload) {
   return {
     payload,
-    type: ADD_ATTEMPT,
+    type: UPDATE_ARRAY,
   };
 }
 

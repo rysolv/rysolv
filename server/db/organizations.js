@@ -74,12 +74,9 @@ const getOrganizations = async table => {
 // SEARCH organizations
 const searchOrganizations = async (table, value) => {
   const fields = ['name'];
-  const rows = await singleSearch(
-    fields,
-    table,
-    value,
-    organizationReturnValues,
-  );
+
+  const queryText = `SELECT ${organizationReturnValues} FROM ${table}`;
+  const rows = await singleSearch(queryText, fields, value);
   return rows;
 };
 
@@ -88,7 +85,6 @@ const transformOrganization = async (table, id, data) => {
   const [rows] = await singleItem(table, id, organizationValues);
   if (rows) {
     const { newObjectArray } = diff(rows, data);
-
     const queryText = `UPDATE ${table}
       SET (${organizationValues})
       = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
