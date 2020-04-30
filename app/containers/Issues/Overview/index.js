@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-import IssueCard from 'components/Issues/Card';
+import IssueCard from 'components/Issues';
 
 import {
   clearAlerts,
