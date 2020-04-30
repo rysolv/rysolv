@@ -11,7 +11,8 @@ organizations(
   logo VARCHAR(255),
   verified BOOLEAN DEFAULT false,
   contributors UUID [],
-  owner_id UUID
+  owner_id UUID,
+  total_funded FLOAT DEFAULT 0
 )`;
 
 module.exports = organizations;

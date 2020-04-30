@@ -29,7 +29,12 @@ const IssueStatusBar = ({
             disabled={!open}
             label="un-attempt"
             onClick={() =>
-              handleIncrement({ userId, id, column: 'attempting' })
+              handleIncrement({
+                userId,
+                id,
+                column: 'attempting',
+                remove: true,
+              })
             }
           />
         ) : (
@@ -37,7 +42,12 @@ const IssueStatusBar = ({
             disabled={!open}
             label="attempt"
             onClick={() =>
-              handleIncrement({ userId, id, column: 'attempting' })
+              handleIncrement({
+                userId,
+                id,
+                column: 'attempting',
+                remove: false,
+              })
             }
           />
         )}
@@ -62,9 +72,9 @@ const IssueStatusBar = ({
 };
 
 IssueStatusBar.propTypes = {
+  activeUser: T.object,
   data: T.object,
   handleIncrement: T.func,
-  activeUser: T.object,
 };
 
 export default IssueStatusBar;

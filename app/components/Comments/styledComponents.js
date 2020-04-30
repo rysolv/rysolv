@@ -73,7 +73,7 @@ export const StyledNoComments = styled.div`
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
-  width: 8rem;
+  width: auto;
   margin: 1rem 0 0 0;
   display: inline-block;
 `;

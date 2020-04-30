@@ -10,7 +10,7 @@ const issueSeed = [
     'Date Picker text field shows errors when switching back from Calendar mode ', // name
     '\r\n<!-- READ THIS FIRST -->\r\n<!-- The OBS Studio GitHub issue tracker is **ONLY** to be -->\r\n<!-- used for reporting Bugs that have replication steps. -->\r\n\r\n<!-- You can post Feature Requests here: https://ideas.obsproject.com/ -->\r\n<!-- Get help for Support Issues here: https://obsproject.com/help -->\r\n\r\n<!--- Provide a general summary of the issue in the Title above -->\r\n\r\n## Platform\r\n<!-- Please fill out the following information about your bug report. -->\r\n<!-- If you are on Linux and installed using a package, please list the package type. -->\r\nOperating system and version: FreeBSD 13-CURRENT\r\nOBS Studio version: 921a74296613084b301e89459f0769f62fdb5517 + FreeBSD build fix PRs applied\r\n\r\n## Expected Behavior\r\nWindow Capture (Xcomposite) faithfully reproduces colours from the source window\r\n<!--- Tell us what should happen -->\r\n\r\n## Current Behavior\r\nRed and blue are swapped. In the image below the Firefox window on the right is the source captured with Window Capture.\r\n![colour](https://user-images.githubusercontent.com/1034582/78734129-6987c100-7915-11ea-86d0-2c5a483a87f5.png)\r\n\r\n\r\n## Steps to Reproduce\r\n1. Create a scene with 1 Window Capture (Xcomposite)\r\n2. Use a Firefox window as the source with content \r\n3. Observe R and B swapped\r\n\r\n## Additional information\r\nScreen Capture (XSHM) does not show this issue', // body
     'https://github.com/flutter/flutter', // repo
-    'Javascript', // language
+    ['Javascript', 'Ruby'], // language
     [], // comments
     [], // attempting
     ['517fa5c9-1d6e-4925-8bcc-25c24cd0b95d'], // Contributor: Reference to User ID
@@ -27,7 +27,7 @@ const issueSeed = [
     '[Bug]: Scene Collections with "/" in their name cannot be imported',
     'Instead of adding the scene collection to the list, OBS just doesnt do anything. It closes the dialog, doesnt give an error message. The scene collection is not added.',
     'https://github.com/obsproject/obs-studio',
-    'C / C++',
+    ['C', 'C++'],
     [],
     [],
     ['cdd583cf-4711-4f33-a202-c937081afd7e'],
@@ -44,7 +44,7 @@ const issueSeed = [
     '[Physics problems] the kart is sticked (sliding) to wall when exiting your car parking backwards',
     'If you got stick to the wall (at left side -kart is parallel to the wall- for example), and you try to leave backwards (usefull in soccer mode) while braking (right: you still completely stuck; left: you still stuck at 45deg), the kart continue straight backward.',
     'https://github.com/supertuxkart/stk-code',
-    'C / C++',
+    ['Perl', 'Rust'],
     [],
     [],
     ['cdd583cf-4711-4f33-a202-c937081afd7e'],

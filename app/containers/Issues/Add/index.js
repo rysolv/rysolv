@@ -7,6 +7,7 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 
+import { makeSelectAdmin } from 'containers/Admin/selectors';
 import { incrementStep, clearForm } from '../actions';
 import {
   makeSelectIssues,
@@ -30,8 +31,7 @@ export class AddIssue extends React.PureComponent {
   }
 
   render() {
-    const { data, loading, step, handleNav } = this.props;
-
+    const { data, loading, step, handleNav, activeUser } = this.props;
     const StepToRender = addIssueDictionary[step];
     return (
       <Fragment>
@@ -45,6 +45,7 @@ export class AddIssue extends React.PureComponent {
             asyncData={{ data }}
             component={StepToRender}
             loading={loading}
+            propsToPassDown={{ activeUser, handleNav }}
           />
         </AddWrapper>
       </Fragment>
@@ -53,6 +54,7 @@ export class AddIssue extends React.PureComponent {
 }
 
 AddIssue.propTypes = {
+  activeUser: T.object,
   data: T.object,
   dispatchClearForm: T.func,
   handleIncrementStep: T.func,
@@ -65,6 +67,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
+  activeUser: makeSelectAdmin('admin'),
   data: makeSelectIssues('data'),
   loading: makeSelectIssuesLoading('addIssue'),
   step: makeSelectIssuesStep('addIssue'),

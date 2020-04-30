@@ -97,7 +97,7 @@ export class OrganizationDetailView extends React.PureComponent {
         </DetailViewContainer>
         <TabsContainer>
           <MainTabs>
-            <CompanyDetailTabs
+            <OrganizationDetailTabs
               contributors={contributors}
               filterValues={filterValues}
               handleInputChange={handleInputChange}

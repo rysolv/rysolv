@@ -185,17 +185,17 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.addCompany = false;
+      draft.loading.addIssue = false;
       break;
     }
     case SAVE_INFO_SUCCESS: {
       const { message } = payload;
       draft.alerts.success = { message };
-      draft.loading.addCompany = false;
+      draft.loading.addIssue = false;
       break;
     }
     case SAVE_INFO: {
-      draft.loading.addCompany = true;
+      draft.loading.addIssue = true;
       break;
     }
     case SEARCH_ISSUES_FAILURE: {

@@ -121,8 +121,8 @@ module.exports = {
     }
   },
   updateUserArray: async args => {
-    const { id, column, data } = args;
-    const [result] = await updateUserArray('users', column, id, data);
+    const { id, column, data, remove } = args;
+    const [result] = await updateUserArray('users', column, id, data, remove);
     return result;
   },
 };

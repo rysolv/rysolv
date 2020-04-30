@@ -32,13 +32,13 @@ import {
 } from './actions';
 
 export function* addAttemptSaga({ payload }) {
-  const { id: issueId, userId, column } = payload;
+  const { id: issueId, userId, column, remove } = payload;
   const query = `
   mutation {
-    updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}") {
+    updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}", remove: ${remove}) {
       ${column}
     }
-    updateUserArray(id: "${userId}", column: "${column}", data: "${issueId}") {
+    updateUserArray(id: "${userId}", column: "${column}", data: "${issueId}", remove: ${remove}) {
       ${column}
     }
   }`;

@@ -3,20 +3,21 @@ import T from 'prop-types';
 
 import {
   CommentIcon,
-  MonocleIcon,
   IconToolTip,
+  LanguageWrapper,
+  MonocleIcon,
   Upvote,
   Verified,
-  LanguageWrapper,
 } from 'components/base_ui';
-import { formatDollarAmount, navHelper } from 'utils/globalHelpers';
 import SettingsMenu from 'components/SettingsMenu';
+import { formatDollarAmount, navHelper } from 'utils/globalHelpers';
 import IconDictionary from 'utils/iconDictionary';
 
 import {
   IssueCardIconWrapper,
   IssueCardItem,
   IssueCardLabelWrapper,
+  IssueLanguageContainer,
   NameWrapper,
   OrganizationNameWrapper,
   StyledFlatIconButton,
@@ -26,8 +27,9 @@ import {
   StyledIssueHeader,
   StyledIssueText,
   StyledListItem,
+  StyledVerified,
   UpvotePanel,
-} from '../styledComponents';
+} from './styledComponents';
 
 const AttemptingIcon = IconDictionary('attempt');
 
@@ -75,16 +77,14 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
 
                 {organizationVerified ? (
                   <IconToolTip toolTipText="Verified Contributor">
-                    <div>
+                    <StyledVerified>
                       <Verified />
-                    </div>
+                    </StyledVerified>
                   </IconToolTip>
                 ) : (
                   ''
                 )}
               </OrganizationNameWrapper>
-              <LanguageWrapper language={language} />
-
               <SettingsMenu
                 handleDelete={handleDeleteIssue}
                 handleNav={handleNav}
@@ -103,7 +103,13 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
               >
                 {name}
               </NameWrapper>
+              <IssueLanguageContainer>
+                {language.map(el => (
+                  <LanguageWrapper key={`${id}-${el}`} language={el} />
+                ))}
+              </IssueLanguageContainer>
             </StyledIssueText>
+
             <StyledIssueFooter open={open}>
               {open ? (
                 <IssueCardItem>

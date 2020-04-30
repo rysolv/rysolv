@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
-import VerifyForm from 'components/Issues/Add/VerifyForm';
+import VerifyForm from 'components/Issues/Add/Verify';
 
 import { incrementStep, saveInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';
@@ -21,6 +21,7 @@ import {
 export class VerifyIssue extends React.PureComponent {
   render() {
     const {
+      activeUser,
       data,
       dispatchIncrementStep,
       dispatchSaveInfo,
@@ -37,7 +38,7 @@ export class VerifyIssue extends React.PureComponent {
       <Fragment>
         <StyledH3>Verify Issue Information</StyledH3>
         <Wrapper>
-          <VerifyForm data={data} />
+          <VerifyForm data={data} activeUser={activeUser} />
           <StyledCheckboxWithLabel
             checked={isVerified}
             label={verifyMessage}
@@ -46,12 +47,12 @@ export class VerifyIssue extends React.PureComponent {
         </Wrapper>
         <ButtonGroup>
           <SecondaryButton
-            label="Back"
+            label="Edit"
             onClick={() => dispatchIncrementStep({ step: 2, view: 'addIssue' })}
           />
           <PrimaryAsyncButton
             disabled={!isVerified}
-            label="Save"
+            label="Submit"
             onClick={handleSaveInfo}
           />
         </ButtonGroup>
@@ -61,6 +62,7 @@ export class VerifyIssue extends React.PureComponent {
 }
 
 VerifyIssue.propTypes = {
+  activeUser: T.object,
   data: T.object,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,

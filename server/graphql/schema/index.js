@@ -28,7 +28,7 @@ module.exports = buildSchema(`
     name: String
     body: String
     repo: String
-    language: String
+    language: [String]
     comments: [ID]
     attempting: [ID]
     attempts: Int
@@ -106,14 +106,8 @@ module.exports = buildSchema(`
     verified: Boolean
     contributors: [Object]
     ownerId: ID
+    totalFunded: Float
   }
-
-  type Error {
-    message: String
-  }
-
-  union OrganizationResult = Organization | Error
-  union IssueResult = Issue | Error
 
   input OrganizationInput {
     name: String
@@ -123,6 +117,13 @@ module.exports = buildSchema(`
     logo: String
     verified: Boolean
   }
+
+  type Error {
+    message: String
+  }
+
+  union OrganizationResult = Organization | Error
+  union IssueResult = Issue | Error
 
   type RootQuery {
     getIssues: [Issue!]!
@@ -155,8 +156,8 @@ module.exports = buildSchema(`
     transformUser(id: ID!, userInput: UserInput): User!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): Organization!
 
-    updateIssueArray(id: ID, column: String, data: String): Issue!
-    updateUserArray(id: ID, column: String, data: String): User!
+    updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
+    updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
   }
 
   schema {

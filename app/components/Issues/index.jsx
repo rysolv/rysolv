@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
@@ -18,7 +18,6 @@ const Issues = ({
   data,
   disabled,
   handleDeleteIssue,
-  // handleFetchInfo,
   handleInputChange,
   handleNav,
   handleSearchIssues,
@@ -30,21 +29,18 @@ const Issues = ({
     data,
     handleDeleteIssue,
     handleUpvote,
-    // handleFetchInfo,
     handleNav,
   };
   const route = '/admin/issues/add';
   const viewToRender = hasData ? (
-    <IssuesWrapper>
-      <IssueCardWrapper>
-        <IssueCard {...propsToPassDown} />
-      </IssueCardWrapper>
-    </IssuesWrapper>
+    <IssueCardWrapper>
+      <IssueCard {...propsToPassDown} />
+    </IssueCardWrapper>
   ) : (
     <EmptyCard />
   );
   return (
-    <div>
+    <Fragment>
       <BannerWrapper>
         <AdminSubHeader
           disabled={disabled}
@@ -60,8 +56,8 @@ const Issues = ({
           success={success}
         />
       </BannerWrapper>
-      {viewToRender}
-    </div>
+      <IssuesWrapper>{viewToRender}</IssuesWrapper>
+    </Fragment>
   );
 };
 
@@ -75,7 +71,6 @@ Issues.propTypes = {
   disabled: T.bool.isRequired,
   handleDeleteIssue: T.func,
   handleUpvote: T.func,
-  // handleFetchInfo: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearchIssues: T.func,

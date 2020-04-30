@@ -21,7 +21,7 @@ module.exports = {
         issueInput.name,
         issueInput.body,
         issueInput.repo,
-        issueInput.language,
+        issueInput.language || [],
         issueInput.comments || [],
         issueInput.attempting || [],
         issueInput.contributor,
@@ -121,8 +121,8 @@ module.exports = {
     }
   },
   updateIssueArray: async args => {
-    const { id, column, data } = args;
-    const [result] = await updateIssueArray('issues', column, id, data);
+    const { id, column, data, remove } = args;
+    const [result] = await updateIssueArray('issues', column, id, data, remove);
     return result;
   },
 };

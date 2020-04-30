@@ -63,7 +63,8 @@ export function* fetchOrganizationsSaga() {
       organizationUrl,
       issues,
       logo,
-      verified
+      verified,
+      totalFunded
     }
   }
 `;
@@ -101,7 +102,8 @@ export function* fetchInfoSaga({ payload }) {
         logo,
         verified,
         contributors,
-        ownerId
+        ownerId,
+        totalFunded
       }
       ... on Error {
         message
@@ -174,6 +176,7 @@ export function* searchOrganizationsSaga({ payload }) {
       issues,
       logo,
       verified,
+      totalFunded,
     }
   }
 `;

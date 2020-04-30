@@ -7,7 +7,7 @@ issues(
   name VARCHAR(255) NOT NULL,
   body TEXT NOT NULL,
   repo VARCHAR(128) NOT NULL,
-  language VARCHAR(128),
+  language VARCHAR(128) [],
   comments UUID [],
   attempting UUID [],
   contributor UUID [],

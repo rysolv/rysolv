@@ -108,9 +108,10 @@ const transformUser = async (table, id, data) => {
   throw new Error(`Failed to update users. ID not found in ${table}`);
 };
 
-const updateUserArray = async (table, column, id, data) => {
+const updateUserArray = async (table, column, id, data, remove) => {
+  const action = remove ? 'array_remove' : 'array_append';
   const queryText = `UPDATE ${table}
-    SET ${column} = array_append(${column}, '${data}')
+    SET ${column} = ${action}(${column}, '${data}')
     WHERE (id = '${id}')
     RETURNING *`;
   const { rows } = await singleQuery(queryText);

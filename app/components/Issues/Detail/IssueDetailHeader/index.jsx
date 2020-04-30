@@ -3,12 +3,11 @@ import T from 'prop-types';
 import moment from 'moment';
 
 import {
-  CommentIcon,
   FundingWrapper,
   IconToolTip,
+  LanguageWrapper,
   MonocleIcon,
   Verified,
-  LanguageWrapper,
 } from 'components/base_ui';
 
 import {
@@ -18,11 +17,12 @@ import {
   NameWrapper,
   OrganizationNameWrapper,
   StyledIssueHeader,
+  StyledVerified,
 } from './styledComponents';
 
 const IssueDetailHeader = ({ data }) => {
   const {
-    comments,
+    id,
     createdDate,
     language,
     name,
@@ -40,9 +40,9 @@ const IssueDetailHeader = ({ data }) => {
 
           {organizationVerified ? (
             <IconToolTip toolTipText="Verified Contributor">
-              <div>
+              <StyledVerified>
                 <Verified />
-              </div>
+              </StyledVerified>
             </IconToolTip>
           ) : (
             ''
@@ -55,19 +55,15 @@ const IssueDetailHeader = ({ data }) => {
         <FundingWrapper
           medium
           open={open}
-          value={open ? 'Open Issue' : 'Closed'}
+          value={open ? 'Open Issue' : 'Issue Closed'}
         />
 
         <IssueSubItem>
-          {' '}
-          <LanguageWrapper language={language} />
-          {/* <IssueLanguage></IssueLanguage> */}
+          {language.map(el => (
+            <LanguageWrapper key={`${id}-${el}`} language={el} />
+          ))}
         </IssueSubItem>
         <IssueSubItem>0 Open PR</IssueSubItem>
-        <IssueSubItem>
-          <CommentIcon /> {comments.length}{' '}
-          {comments.length > 1 ? 'comments' : 'comment'}
-        </IssueSubItem>
         <IssueSubItem>
           <MonocleIcon />
           {watched} Watch
