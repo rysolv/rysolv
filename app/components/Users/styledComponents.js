@@ -25,6 +25,7 @@ export const MessageWrapper = styled.div`
   display: flex;
   font-size: 1.6rem;
   height: 55rem;
+  width: 70%;
   justify-content: center;
   text-align: center;
 `;

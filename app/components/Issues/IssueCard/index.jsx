@@ -3,11 +3,11 @@ import T from 'prop-types';
 
 import {
   CommentIcon,
-  MonocleIcon,
   IconToolTip,
   Upvote,
   Verified,
   LanguageWrapper,
+  WatchButton,
 } from 'components/base_ui';
 import { formatDollarAmount, navHelper } from 'utils/globalHelpers';
 import SettingsMenu from 'components/SettingsMenu';
@@ -32,7 +32,14 @@ import {
 
 const AttemptingIcon = IconDictionary('attempt');
 
-const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
+const IssueCard = ({
+  activeUser,
+  data,
+  handleDeleteIssue,
+  handleIncrement,
+  handleNav,
+  handleUpvote,
+}) => {
   const deleteRoute = `/admin/issues`;
   const editRoute = `/admin/issues/edit`;
 
@@ -50,116 +57,128 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
       watching,
       comments,
       value,
-    }) => (
-      <Fragment key={id}>
-        <StyledListItem>
-          <UpvotePanel>
-            <StyledFlatIconButton
-              Icon={<Upvote />}
-              onClick={() => handleUpvote({ itemId: id })}
-            />
-            {rep}
-          </UpvotePanel>
-          <StyledIssueContent>
-            <StyledIssueHeader>
-              <OrganizationNameWrapper
-                href={`/admin/organizations/detail/${organizationId}`}
-                onClick={e =>
-                  navHelper(
-                    e,
-                    handleNav,
-                    `/admin/organizations/detail/${organizationId}`,
-                  )
-                }
-              >
-                {organizationName}
-
-                {organizationVerified ? (
-                  <IconToolTip toolTipText="Verified Contributor">
-                    <div>
-                      <Verified />
-                    </div>
-                  </IconToolTip>
-                ) : (
-                  ''
-                )}
-              </OrganizationNameWrapper>
-              <SettingsMenu
-                handleDelete={handleDeleteIssue}
-                handleNav={handleNav}
-                deleteRoute={deleteRoute}
-                editRoute={editRoute}
-                handleFetchInfo={() => {}}
-                id={id}
+    }) => {
+      const userWatching = activeUser.watching.includes(id);
+      return (
+        <Fragment key={id}>
+          <StyledListItem>
+            <UpvotePanel>
+              <StyledFlatIconButton
+                Icon={<Upvote />}
+                onClick={() => handleUpvote({ itemId: id })}
               />
-            </StyledIssueHeader>
-            <StyledIssueText>
-              <NameWrapper
-                href={`/admin/issues/detail/${id}`}
-                onClick={e =>
-                  navHelper(e, handleNav, `/admin/issues/detail/${id}`)
-                }
-              >
-                {name}
-              </NameWrapper>
-              <IssueLanguageContainer>
-                {language.map(el => (
-                  <LanguageWrapper key={`${id}-${el}`} language={el} />
-                ))}
-              </IssueLanguageContainer>
-            </StyledIssueText>
+              {rep}
+            </UpvotePanel>
+            <StyledIssueContent>
+              <StyledIssueHeader>
+                <OrganizationNameWrapper
+                  href={`/admin/organizations/detail/${organizationId}`}
+                  onClick={e =>
+                    navHelper(
+                      e,
+                      handleNav,
+                      `/admin/organizations/detail/${organizationId}`,
+                    )
+                  }
+                >
+                  {organizationName}
 
-            <StyledIssueFooter open={open}>
-              {open ? (
-                <IssueCardItem>
-                  <IssueCardIconWrapper>
-                    <CommentIcon />
-                  </IssueCardIconWrapper>
-                  <IssueCardLabelWrapper>
-                    {comments.length} comments
-                  </IssueCardLabelWrapper>
-                </IssueCardItem>
-              ) : null}
+                  {organizationVerified ? (
+                    <IconToolTip toolTipText="Verified Contributor">
+                      <div>
+                        <Verified />
+                      </div>
+                    </IconToolTip>
+                  ) : (
+                    ''
+                  )}
+                </OrganizationNameWrapper>
+                <SettingsMenu
+                  handleDelete={handleDeleteIssue}
+                  handleNav={handleNav}
+                  deleteRoute={deleteRoute}
+                  editRoute={editRoute}
+                  handleFetchInfo={() => {}}
+                  id={id}
+                />
+              </StyledIssueHeader>
+              <StyledIssueText>
+                <NameWrapper
+                  href={`/admin/issues/detail/${id}`}
+                  onClick={e =>
+                    navHelper(e, handleNav, `/admin/issues/detail/${id}`)
+                  }
+                >
+                  {name}
+                </NameWrapper>
+                <IssueLanguageContainer>
+                  {language.map(el => (
+                    <LanguageWrapper key={`${id}-${el}`} language={el} />
+                  ))}
+                </IssueLanguageContainer>
+              </StyledIssueText>
 
-              {open ? (
-                <IssueCardItem>
-                  <IssueCardIconWrapper>{AttemptingIcon}</IssueCardIconWrapper>
-                  <IssueCardLabelWrapper>
-                    {attempting.length} attempting
-                  </IssueCardLabelWrapper>
-                </IssueCardItem>
-              ) : null}
+              <StyledIssueFooter open={open}>
+                {open ? (
+                  <IssueCardItem>
+                    <IssueCardIconWrapper>
+                      <CommentIcon />
+                    </IssueCardIconWrapper>
+                    <IssueCardLabelWrapper>
+                      {comments.length} comments
+                    </IssueCardLabelWrapper>
+                  </IssueCardItem>
+                ) : null}
 
-              {open ? (
-                <IssueCardItem>
-                  <IssueCardIconWrapper>
-                    <MonocleIcon />
-                  </IssueCardIconWrapper>
-                  <IssueCardLabelWrapper>
-                    {watching.length} Watch
-                  </IssueCardLabelWrapper>
-                </IssueCardItem>
-              ) : null}
+                {open ? (
+                  <IssueCardItem>
+                    <IssueCardIconWrapper>
+                      {AttemptingIcon}
+                    </IssueCardIconWrapper>
+                    <IssueCardLabelWrapper>
+                      {attempting.length} attempting
+                    </IssueCardLabelWrapper>
+                  </IssueCardItem>
+                ) : null}
 
-              <StyledFundingWrapper
-                open={open}
-                value={open ? formatDollarAmount(value) : 'Issue Closed'}
-                medium
-              />
-            </StyledIssueFooter>
-          </StyledIssueContent>
-        </StyledListItem>
-      </Fragment>
-    ),
+                {open ? (
+                  <IssueCardItem>
+                    <WatchButton
+                      label={userWatching ? 'Watching' : 'Watch'}
+                      value={watching.length}
+                      handleWatch={() =>
+                        handleIncrement({
+                          userId: activeUser.id,
+                          id,
+                          column: 'watching',
+                          remove: userWatching,
+                        })
+                      }
+                    />
+                  </IssueCardItem>
+                ) : null}
+
+                <StyledFundingWrapper
+                  open={open}
+                  value={open ? formatDollarAmount(value) : 'Issue Closed'}
+                  medium
+                />
+              </StyledIssueFooter>
+            </StyledIssueContent>
+          </StyledListItem>
+        </Fragment>
+      );
+    },
   );
 };
 
 IssueCard.propTypes = {
+  // handleFetchInfo: T.func.isRequired,
   data: T.array.isRequired,
   handleDeleteIssue: T.func.isRequired,
-  handleUpvote: T.func.isRequired,
-  // handleFetchInfo: T.func.isRequired,
+  handleIncrement: T.func,
   handleNav: T.func.isRequired,
+  handleUpvote: T.func.isRequired,
 };
 
 export default IssueCard;

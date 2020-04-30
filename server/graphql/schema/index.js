@@ -74,6 +74,7 @@ module.exports = buildSchema(`
     personalLink: String
     preferredLanguages: String
     stackoverflowLink: String
+    pullRequests: [String]
   }
 
   input UserInput {
@@ -91,6 +92,7 @@ module.exports = buildSchema(`
     personalLink: String
     preferredLanguages: [String]
     stackoverflowLink: String
+    pullRequests: [String]
   }
 
   type Organization {

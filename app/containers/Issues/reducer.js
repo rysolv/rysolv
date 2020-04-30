@@ -9,6 +9,8 @@ import {
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT,
+  ADD_WATCH_FAILURE,
+  ADD_WATCH_SUCCESS,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ISSUE_FAILURE,
@@ -56,6 +58,7 @@ export const initialState = {
     addAttempt: false,
     addComment: false,
     addIssue: false,
+    addWatch: false,
     deleteIssue: false,
     issueDetail: false,
     issues: false,
@@ -101,6 +104,25 @@ const issuesReducer = produce((draft, { payload, type }) => {
       const { createComment } = payload;
       draft.issueDetail.comments.push(createComment);
       draft.loading.addComment = false;
+      break;
+    }
+    case ADD_WATCH_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.addWatch = false;
+      break;
+    }
+    case ADD_WATCH_SUCCESS: {
+      const { id, watching } = payload;
+      draft.issues.map((issue, index) => {
+        if (issue.id === id) {
+          draft.issues[index].watching = watching;
+        }
+      });
+      if (draft.issueDetail) {
+        draft.issueDetail.watching = watching;
+      }
+      draft.loading.addWatch = false;
       break;
     }
     case ADD_COMMENT: {

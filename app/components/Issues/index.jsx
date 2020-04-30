@@ -19,6 +19,8 @@ const Issues = ({
   data,
   disabled,
   handleDeleteIssue,
+  activeUser,
+  handleIncrement,
   // handleFetchInfo,
   handleInputChange,
   handleNav,
@@ -28,9 +30,11 @@ const Issues = ({
 }) => {
   const hasData = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
+    activeUser,
     data,
     handleDeleteIssue,
     handleUpvote,
+    handleIncrement,
     // handleFetchInfo,
     handleNav,
   };
@@ -68,6 +72,7 @@ const Issues = ({
 };
 
 Issues.propTypes = {
+  activeUser: T.object,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
@@ -75,6 +80,7 @@ Issues.propTypes = {
   clearAlerts: T.func,
   data: T.array,
   disabled: T.bool.isRequired,
+  handleIncrement: T.func,
   handleDeleteIssue: T.func,
   handleUpvote: T.func,
   // handleFetchInfo: T.func,

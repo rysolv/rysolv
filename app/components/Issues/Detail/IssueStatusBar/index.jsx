@@ -23,34 +23,18 @@ const IssueStatusBar = ({
     <StatusBar>
       <StatusItem>
         <StatusTitle>{attempting.length} Attempting</StatusTitle>
-
-        {activeAttempt ? (
-          <StyledSecondaryButton
-            disabled={!open}
-            label="un-attempt"
-            onClick={() =>
-              handleIncrement({
-                userId,
-                id,
-                column: 'attempting',
-                remove: true,
-              })
-            }
-          />
-        ) : (
-          <StyledSecondaryButton
-            disabled={!open}
-            label="attempt"
-            onClick={() =>
-              handleIncrement({
-                userId,
-                id,
-                column: 'attempting',
-                remove: false,
-              })
-            }
-          />
-        )}
+        <StyledSecondaryButton
+          disabled={!open}
+          label={activeAttempt ? 'un-attempt' : 'attempt'}
+          onClick={() =>
+            handleIncrement({
+              userId,
+              id,
+              column: 'attempting',
+              remove: activeAttempt,
+            })
+          }
+        />
       </StatusItem>
       <StatusItem>
         <StatusTitle>0 Pull Requests</StatusTitle>

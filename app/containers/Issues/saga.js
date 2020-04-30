@@ -17,6 +17,8 @@ import {
   addAttemptSuccess,
   addCommentFailure,
   addCommentSuccess,
+  addWatchFailure,
+  addWatchSuccess,
   deleteIssueFailure,
   deleteIssueSuccess,
   fetchIssueDetailFailure,
@@ -36,10 +38,13 @@ export function* addAttemptSaga({ payload }) {
   const query = `
   mutation {
     updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}", remove: ${remove}) {
-      ${column}
+      id,
+      attempting,
+      watching
     }
     updateUserArray(id: "${userId}", column: "${column}", data: "${issueId}", remove: ${remove}) {
-      ${column}
+      attempting,
+      watching
     }
   }`;
   try {
@@ -51,9 +56,11 @@ export function* addAttemptSaga({ payload }) {
       data: { updateIssueArray },
     } = yield call(post, '/graphql', graphql);
     yield put(addAttemptSuccess(updateIssueArray));
+    yield put(addWatchSuccess(updateIssueArray));
     yield put(fetchActiveUser({ userId }));
   } catch (error) {
     yield put(addAttemptFailure({ error }));
+    yield put(addWatchFailure({ error }));
   }
 }
 

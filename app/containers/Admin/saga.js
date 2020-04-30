@@ -11,11 +11,13 @@ export function* fetchActiveUserSaga({ payload }) {
     const query = `
     query{
       oneUser(column: "id", query: "${userId}") {
-        attempting
+        attempting,
         id,
         profilePic,
         rep,
         username,
+        watching,
+        pullRequests
       }
     }`;
     const graphql = JSON.stringify({

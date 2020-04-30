@@ -81,7 +81,11 @@ const IssueDetail = ({
           </UpvotePanel>
         </LeftPanel>
         <IssueDetailColumn>
-          <IssueDetailHeader data={data} />
+          <IssueDetailHeader
+            activeUser={activeUser}
+            data={data}
+            handleIncrement={handleIncrement}
+          />
 
           <div style={{ minHeight: '30rem' }}>
             <CommentCard

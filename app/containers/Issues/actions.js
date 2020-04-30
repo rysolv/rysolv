@@ -2,6 +2,8 @@ import {
   ADD_ATTEMPT,
   ADD_ATTEMPT_FAILURE,
   ADD_ATTEMPT_SUCCESS,
+  ADD_WATCH_FAILURE,
+  ADD_WATCH_SUCCESS,
   ADD_COMMENT,
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
@@ -70,6 +72,20 @@ export function addCommentSuccess(payload) {
   return {
     payload,
     type: ADD_COMMENT_SUCCESS,
+  };
+}
+
+export function addWatchFailure(payload) {
+  return {
+    payload,
+    type: ADD_WATCH_FAILURE,
+  };
+}
+
+export function addWatchSuccess(payload) {
+  return {
+    payload,
+    type: ADD_WATCH_SUCCESS,
   };
 }
 

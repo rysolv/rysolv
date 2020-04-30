@@ -5,7 +5,7 @@ import moment from 'moment';
 import {
   FundingWrapper,
   IconToolTip,
-  MonocleIcon,
+  WatchButton,
   Verified,
   LanguageWrapper,
 } from 'components/base_ui';
@@ -19,7 +19,7 @@ import {
   StyledIssueHeader,
 } from './styledComponents';
 
-const IssueDetailHeader = ({ data }) => {
+const IssueDetailHeader = ({ data, activeUser, handleIncrement }) => {
   const {
     id,
     createdDate,
@@ -28,8 +28,10 @@ const IssueDetailHeader = ({ data }) => {
     open,
     organization,
     organizationVerified,
-    watched,
+    watching,
   } = data;
+
+  const userWatching = activeUser.watching.includes(id);
 
   return (
     <IssueDetailTopBar>
@@ -64,8 +66,18 @@ const IssueDetailHeader = ({ data }) => {
         </IssueSubItem>
         <IssueSubItem>0 Open PR</IssueSubItem>
         <IssueSubItem>
-          <MonocleIcon />
-          {watched} Watch
+          <WatchButton
+            label={userWatching ? 'Watching' : 'Watch'}
+            value={watching.length}
+            handleWatch={() =>
+              handleIncrement({
+                userId: activeUser.id,
+                id,
+                column: 'watching',
+                remove: userWatching,
+              })
+            }
+          />
         </IssueSubItem>
       </IssueSubHeader>
     </IssueDetailTopBar>
@@ -73,7 +85,9 @@ const IssueDetailHeader = ({ data }) => {
 };
 
 IssueDetailHeader.propTypes = {
+  activeUser: T.object,
   data: T.object,
+  handleIncrement: T.func,
 };
 
 export default IssueDetailHeader;

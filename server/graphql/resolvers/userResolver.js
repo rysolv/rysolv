@@ -31,6 +31,7 @@ module.exports = {
         userInput.personalLink || '',
         userInput.preferredLanguages || [],
         userInput.stackoverflowLink || '',
+        userInput.pullRequests || [],
       ],
     ];
     try {
@@ -94,6 +95,7 @@ module.exports = {
         personal_link: userInput.personalLink,
         preferred_languages: userInput.preferredLanguages,
         stackoverflow_link: userInput.stackoverflowLink,
+        pull_requests: userInput.pullRequests,
       };
       const queryResult = await transformUser('users', id, data);
       const result = {
@@ -114,6 +116,7 @@ module.exports = {
         personalLink: userInput.personal_link,
         preferredLanguages: userInput.preferred_languages,
         stackoverflowLink: userInput.stackoverflow_link,
+        pullRequests: userInput.pull_requests,
       };
       return result;
     } catch (err) {

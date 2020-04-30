@@ -20,7 +20,8 @@ users(
   activePullRequests VARCHAR(128) [],
   completedPullRequests VARCHAR(128) [],
   rejectedPullRequests VARCHAR(128) [],
-  dollarsEarned FLOAT DEFAULT 0
+  dollarsEarned FLOAT DEFAULT 0,
+  pull_requests UUID []
 )`;
 
 module.exports = users;
