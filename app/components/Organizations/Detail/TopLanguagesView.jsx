@@ -17,14 +17,14 @@ const CircleIcon = iconDictionary('circle');
 
 export class TopLanguagesView extends React.PureComponent {
   render() {
-    const { languages = ['C++', 'Shell', 'Python', 'C', 'Go'] } = this.props;
+    const { preferredLanguages } = this.props;
 
     return (
       <Fragment>
         <TopLanguagesContainer>
           <StyledTitled>Top languages</StyledTitled>
           <LanguageWrapper>
-            {languages.map((language, index) => (
+            {preferredLanguages.map((language, index) => (
               <Language key={`list-item-${index}`}>
                 <Icon color={blueColorSpectrum[index]}>{CircleIcon}</Icon>
                 {language}
@@ -37,6 +37,6 @@ export class TopLanguagesView extends React.PureComponent {
   }
 }
 
-TopLanguagesView.propTypes = { languages: T.array };
+TopLanguagesView.propTypes = { preferredLanguages: T.array };
 
 export default TopLanguagesView;

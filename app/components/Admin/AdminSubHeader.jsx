@@ -1,10 +1,13 @@
 import React from 'react';
 import T from 'prop-types';
+
+import { BaseInputWithAdornment } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
-import { BaseInputWithAdornment, PrimaryButton } from 'components/base_ui';
+
 import {
   AdminSubHeaderContainer,
   BaseInputContainer,
+  StyledPrimaryButton,
 } from './styledComponents';
 
 const SearchIcon = iconDictionary('search');
@@ -42,7 +45,7 @@ const AdminSubHeader = ({
           position="end"
         />
       </BaseInputContainer>
-      <PrimaryButton label="Add" onClick={() => handleNav(route)} />
+      <StyledPrimaryButton label="Add" onClick={() => handleNav(route)} />
     </AdminSubHeaderContainer>
   );
 };

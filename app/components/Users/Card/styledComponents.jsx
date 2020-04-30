@@ -5,6 +5,7 @@ import {
   detailFontSize,
   hoverLinkColor,
   subheaderFontSize,
+  textColor,
 } from 'defaultStyleHelper';
 
 export const ActiveContainer = styled.div`
@@ -40,8 +41,9 @@ export const IssuesWrapper = styled.div`
 `;
 
 export const MemberInfoContainer = styled.div`
-  line-height: 1.5rem;
+  color: #6a737d;
   font-size: ${detailFontSize};
+  line-height: 2rem;
 `;
 
 export const MemberWrapper = styled.div`
@@ -67,6 +69,7 @@ export const StyledListSquare = styled.div`
   background-color: white;
   border-radius: 0.2rem;
   border: 0.1rem solid #e0e0e0;
+  color: ${textColor};
   margin: 1rem;
   padding: 1rem;
   width: 20rem;

@@ -55,13 +55,13 @@ export class OrganizationDetailView extends React.PureComponent {
   render() {
     const {
       data: {
-        organizationUrl,
         contributors,
         description,
         issues,
-        languages,
         logo,
         name,
+        organizationUrl,
+        preferredLanguages,
         repoUrl,
         verified,
       },
@@ -107,7 +107,7 @@ export class OrganizationDetailView extends React.PureComponent {
             />
           </MainTabs>
           <SidebarTabs>
-            <TopLanguagesView languages={languages} />
+            <TopLanguagesView preferredLanguages={preferredLanguages} />
             <Divider />
             <RecentActivityView fundData={fundData} handleNav={handleNav} />
           </SidebarTabs>

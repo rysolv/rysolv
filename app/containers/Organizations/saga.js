@@ -103,7 +103,8 @@ export function* fetchInfoSaga({ payload }) {
         verified,
         contributors,
         ownerId,
-        totalFunded
+        totalFunded,
+        preferredLanguages
       }
       ... on Error {
         message

@@ -107,6 +107,7 @@ module.exports = buildSchema(`
     contributors: [Object]
     ownerId: ID
     totalFunded: Float
+    preferredLanguages: [String]
   }
 
   input OrganizationInput {

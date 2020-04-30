@@ -6,11 +6,7 @@ import { ErrorSuccessBanner } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
 import IssueCard from './Card';
-import {
-  BannerWrapper,
-  IssueCardWrapper,
-  IssuesWrapper,
-} from './styledComponents';
+import { BannerWrapper } from './styledComponents';
 
 const Issues = ({
   alerts: { error, success },
@@ -33,9 +29,7 @@ const Issues = ({
   };
   const route = '/admin/issues/add';
   const viewToRender = hasData ? (
-    <IssueCardWrapper>
-      <IssueCard {...propsToPassDown} />
-    </IssueCardWrapper>
+    <IssueCard {...propsToPassDown} />
   ) : (
     <EmptyCard />
   );
@@ -56,7 +50,7 @@ const Issues = ({
           success={success}
         />
       </BannerWrapper>
-      <IssuesWrapper>{viewToRender}</IssuesWrapper>
+      {viewToRender}
     </Fragment>
   );
 };

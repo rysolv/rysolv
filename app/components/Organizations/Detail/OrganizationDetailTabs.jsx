@@ -48,13 +48,13 @@ const OrganizationDetailTabs = ({
       />
       <ConditionalRender
         Component={
-          <OrganizationDetailTabsContributorsTab
+          <OrganizationContributorsTab
             contributors={contributors}
             handleNav={handleNav}
           />
         }
         FallbackComponent={
-          <OrganizationDetailTabsIssuesTab
+          <OrganizationIssuesTab
             issues={issues}
             handleNav={handleNav}
             handleUpvote={handleUpvote}

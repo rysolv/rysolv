@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
@@ -6,11 +6,7 @@ import { ErrorSuccessBanner } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
 import OrganizationCard from './Card';
-import {
-  BannerWrapper,
-  OrganizationWrapper,
-  OrganizationCardWrapper,
-} from './styledComponents';
+import { BannerWrapper } from './styledComponents';
 
 const Organizations = ({
   alerts: { error, success },
@@ -33,14 +29,12 @@ const Organizations = ({
   };
   const route = '/admin/organizations/add';
   const viewToRender = hasOrganizations ? (
-    <OrganizationCardWrapper>
-      <OrganizationCard {...propsToPassDown} />
-    </OrganizationCardWrapper>
+    <OrganizationCard {...propsToPassDown} />
   ) : (
     <EmptyCard />
   );
   return (
-    <div>
+    <Fragment>
       <BannerWrapper>
         <AdminSubHeader
           disabled={disabled}
@@ -56,8 +50,8 @@ const Organizations = ({
           success={success}
         />
       </BannerWrapper>
-      <OrganizationWrapper>{viewToRender}</OrganizationWrapper>
-    </div>
+      {viewToRender}
+    </Fragment>
   );
 };
 

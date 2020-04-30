@@ -28,6 +28,7 @@ module.exports = {
         organizationInput.contributors || [],
         organizationInput.ownerId || uuidv4(),
         organizationInput.totalFunded || 0,
+        organizationInput.preferredLanguages || [],
       ],
     ];
     try {
@@ -108,6 +109,7 @@ module.exports = {
         contributors: organizationInput.contributors,
         owner_id: organizationInput.ownerId,
         total_funded: organizationInput.totalFunded,
+        preferred_languages: organizationInput.preferredLanguages,
       };
       const queryResult = await transformOrganization(
         'organizations',
@@ -128,6 +130,7 @@ module.exports = {
         contributors: queryResult.contributors,
         ownerId: queryResult.owner_id,
         totalFunded: queryResult.total_funded,
+        preferredLanguages: queryResult.preferred_languages,
       };
       return result;
     } catch (err) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import T from 'prop-types';
+
 import { AdminHeaderWrapper, HeaderTab, HeaderTitle } from './styledComponents';
 
 export const AdminHeaderTabs = ({ activePage, handleNav }) => {

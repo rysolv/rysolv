@@ -12,7 +12,8 @@ organizations(
   verified BOOLEAN DEFAULT false,
   contributors UUID [],
   owner_id UUID,
-  total_funded FLOAT DEFAULT 0
+  total_funded FLOAT DEFAULT 0,
+  preferred_languages VARCHAR(128) []
 )`;
 
 module.exports = organizations;

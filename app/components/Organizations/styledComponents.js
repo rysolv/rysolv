@@ -22,14 +22,6 @@ export const MessageWrapper = styled.div`
   text-align: center;
 `;
 
-export const OrganizationCardWrapper = styled.div`
-  width: 70%;
-`;
-
-export const OrganizationWrapper = styled.div`
-  display: flex;
-`;
-
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   &:hover {
     background-color: red;
