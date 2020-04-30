@@ -38,7 +38,9 @@ const ImportForm = ({
       />
       or
       <StyledLabel
-        onClick={() => handleIncrementStep({ step: 2, view: 'addOrganization' })}
+        onClick={() =>
+          handleIncrementStep({ step: 2, view: 'addOrganization' })
+        }
       >
         Manual
       </StyledLabel>

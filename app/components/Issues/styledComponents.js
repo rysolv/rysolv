@@ -17,5 +17,4 @@ export const MessageWrapper = styled.div`
   justify-content: center;
   margin: 0.5rem 1rem;
   text-align: center;
-  width: 70%;
 `;

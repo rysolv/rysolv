@@ -17,7 +17,7 @@ import {
 export class VerifyForm extends React.PureComponent {
   render() {
     const { data } = this.props;
-    const tempData = omit(data, ['importUrl', 'verified']);
+    const tempData = omit(data, ['importUrl', 'totalFunded', 'verified']);
     return (
       <DataWrapper>
         <KeyGroupWrapper>

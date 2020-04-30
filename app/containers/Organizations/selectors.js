@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSelector } from 'reselect';
-import extend from 'lodash/extend';
+import { extend, omit } from 'lodash';
 
 import { filterContributors, filterIssues } from 'utils/filterHelpers';
 
@@ -18,8 +18,7 @@ const makeSelectOrganizationsDisabled = () =>
   createSelector(
     makeSelectOrganizations('data'),
     data => {
-      const tempData = { ...data };
-      delete tempData.importUrl;
+      const tempData = omit(data, ['importUrl', 'totalFunded']);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );
