@@ -1,5 +1,3 @@
-// const { v4: uuidv4 } = require('uuid');
-
 const OrganizationSeed = [
   [
     'ddb0ed71-01e8-4a14-a3fd-8d6ee40f131a', // id

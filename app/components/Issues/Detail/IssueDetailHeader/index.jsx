@@ -67,6 +67,7 @@ const IssueDetailHeader = ({ data, activeUser, handleIncrement }) => {
         <IssueSubItem>0 Open PR</IssueSubItem>
         <IssueSubItem>
           <WatchButton
+            disabled={!open}
             label={userWatching ? 'Watching' : 'Watch'}
             value={watching.length}
             handleWatch={() =>

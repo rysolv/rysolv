@@ -3,7 +3,7 @@ import { borderColor, textColor } from 'defaultStyleHelper';
 
 export const StyledWatchButton = styled.button`
   align-items: center;
-  background-color: white;
+  background-color: ${({ disabled }) => (disabled ? '#f5f5f5' : 'white')};
   border-bottom-left-radius: 0.3rem;
   border-top-left-radius: 0.3rem;
   border: 0;
@@ -16,7 +16,7 @@ export const StyledWatchButton = styled.button`
 
   &:hover {
     background-color: #f5f5f5;
-    cursor: pointer;
+    cursor: ${({ disabled }) => (disabled ? 'auto' : 'pointer')};
     -webkit-box-shadow: 0px 2px 5px 0.5px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0px 2px 5px 0.5px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 2px 5px 0.5px rgba(0, 0, 0, 0.1);

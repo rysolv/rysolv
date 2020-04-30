@@ -9,9 +9,9 @@ import {
   LabelWrapper,
 } from './styledComponents';
 
-const WatchButton = ({ label, value, handleWatch }) => (
+const WatchButton = ({ label, value, handleWatch, disabled }) => (
   <WatchButtonContainer>
-    <StyledWatchButton onClick={handleWatch}>
+    <StyledWatchButton disabled={disabled} onClick={handleWatch}>
       <MonocleIcon /> <LabelWrapper>{label}</LabelWrapper>
     </StyledWatchButton>
     <ValueWrapper>{value}</ValueWrapper>
@@ -19,6 +19,7 @@ const WatchButton = ({ label, value, handleWatch }) => (
 );
 
 WatchButton.propTypes = {
+  disabled: T.bool,
   handleWatch: T.func,
   label: T.string,
   value: T.number,
