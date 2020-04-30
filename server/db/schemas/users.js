@@ -20,7 +20,7 @@ users(
   activePullRequests VARCHAR(128) [],
   completedPullRequests VARCHAR(128) [],
   rejectedPullRequests VARCHAR(128) [],
-  dollarsEarned FLOAT DEFAULT 0
+  is_deleted BOOLEAN DEFAULT false
 )`;
 
 module.exports = users;

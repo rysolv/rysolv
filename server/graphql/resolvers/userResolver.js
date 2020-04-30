@@ -31,6 +31,7 @@ module.exports = {
         userInput.personalLink || '',
         userInput.preferredLanguages || [],
         userInput.stackoverflowLink || '',
+        false,
       ],
     ];
     try {

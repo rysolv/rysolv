@@ -12,7 +12,6 @@ const BaseAutocomplete = ({ error, helperText, label, onChange, options }) => (
     multiple
     onChange={onChange}
     options={options}
-    endAdornment
     renderInput={params => (
       <MainTextInput
         error={error}

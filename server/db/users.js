@@ -22,7 +22,8 @@ const userValues = `
   github_link,
   personal_link,
   preferred_languages,
-  stackoverflow_link
+  stackoverflow_link,
+  is_deleted
 `;
 
 const userReturnValues = `
@@ -49,7 +50,7 @@ const userReturnValues = `
 const createUser = async data => {
   const queryText = `INSERT INTO
     users( id, created_date, ${userValues} )
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -59,7 +60,11 @@ const createUser = async data => {
 const deleteUser = async (table, id) => {
   const rows = await singleItem(table, id);
   if (rows) {
-    const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
+    const queryText = `UPDATE ${table}
+      SET is_deleted
+      = true
+      WHERE (id='${id}')
+      RETURNING *`;
     const {
       rows: [resultRow],
     } = await singleQuery(queryText);
@@ -80,7 +85,7 @@ const getOneUser = async (table, query, column) => {
 
 // GET all users
 const getUsers = async table => {
-  const queryText = `SELECT ${userReturnValues} FROM ${table};`;
+  const queryText = `SELECT ${userReturnValues} FROM ${table} WHERE is_deleted = false;`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
