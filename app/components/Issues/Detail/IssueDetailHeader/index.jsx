@@ -3,7 +3,6 @@ import T from 'prop-types';
 import moment from 'moment';
 
 import {
-  CommentIcon,
   FundingWrapper,
   IconToolTip,
   MonocleIcon,
@@ -23,7 +22,6 @@ import {
 const IssueDetailHeader = ({ data }) => {
   const {
     id,
-    comments,
     createdDate,
     language,
     name,
@@ -56,7 +54,7 @@ const IssueDetailHeader = ({ data }) => {
         <FundingWrapper
           medium
           open={open}
-          value={open ? 'Open Issue' : 'Closed'}
+          value={open ? 'Open Issue' : 'Issue Closed'}
         />
 
         <IssueSubItem>
@@ -65,10 +63,6 @@ const IssueDetailHeader = ({ data }) => {
           ))}
         </IssueSubItem>
         <IssueSubItem>0 Open PR</IssueSubItem>
-        <IssueSubItem>
-          <CommentIcon /> {comments.length}{' '}
-          {comments.length > 1 ? 'comments' : 'comment'}
-        </IssueSubItem>
         <IssueSubItem>
           <MonocleIcon />
           {watched} Watch

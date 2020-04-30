@@ -156,8 +156,8 @@ module.exports = buildSchema(`
     transformUser(id: ID!, userInput: UserInput): User!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): Organization!
 
-    updateIssueArray(id: ID, column: String, data: String): Issue!
-    updateUserArray(id: ID, column: String, data: String): User!
+    updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
+    updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
   }
 
   schema {

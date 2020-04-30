@@ -121,8 +121,8 @@ module.exports = {
     }
   },
   updateIssueArray: async args => {
-    const { id, column, data } = args;
-    const [result] = await updateIssueArray('issues', column, id, data);
+    const { id, column, data, remove } = args;
+    const [result] = await updateIssueArray('issues', column, id, data, remove);
     return result;
   },
 };

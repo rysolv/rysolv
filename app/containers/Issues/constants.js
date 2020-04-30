@@ -6,6 +6,8 @@ export const ADD_ATTEMPT = 'app/Issues/ADD_ATTEMPT';
 export const ADD_ATTEMPT_FAILURE = 'app/Issues/ADD_ATTEMPT_FAILURE';
 export const ADD_ATTEMPT_SUCCESS = 'app/Issues/ADD_ATTEMPT_SUCCESS';
 
+export const REMOVE_ATTEMPT = 'app/Issues/REMOVE_ATTEMPT';
+
 export const CLEAR_ALERTS = 'app/Issues/CLEAR_ALERTS';
 export const CLEAR_FORM = 'app/Organizations/CLEAR_FORM';
 

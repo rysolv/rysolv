@@ -2,7 +2,6 @@
 /* eslint-disable arrow-body-style */
 import React, { useState } from 'react';
 
-import Markdown from 'components/Markdown';
 import Sidebar from 'components/Sidebar';
 
 const Test = () => {
@@ -21,17 +20,13 @@ const Test = () => {
       .then(response => response.json())
       .then(result => {
         setBody(result.body);
+        console.log(result);
       })
       .catch(error => console.log('error', error));
   }
 
-  const handleMarkdownInput = data => {
-    setBody(data);
-  };
-
   return (
     <div>
-      <Markdown edit body={body} handleInput={handleMarkdownInput} />
       <Sidebar />
     </div>
   );

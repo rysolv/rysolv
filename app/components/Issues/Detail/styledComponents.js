@@ -19,7 +19,7 @@ export const IssueDetailWrapper = styled.div`
 `;
 
 export const LeftPanel = styled.div`
-  width: 3.5rem;
+  width: 5rem;
 `;
 
 export const UpvotePanel = styled.div`
