@@ -278,12 +278,20 @@ export function* searchIssuesSaga({ payload }) {
 }
 
 export function* upvoteIssuesSaga({ payload }) {
-  const { itemId } = payload;
+  const { issueId, userId } = payload;
   const upvoteIssueQuery = `
       mutation {
-        upvoteIssue(id: "${itemId}" }) {
+        upvoteIssue(id: "${issueId}" ) {
           id,
           rep
+        }
+        userUpvote(id: "${userId}" ) {
+          id,
+          rep
+        }
+        updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: false ) {
+          attempting,
+          watching
         }
       }
     `;
@@ -293,9 +301,13 @@ export function* upvoteIssuesSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { transformIssue },
+      data: {
+        upvoteIssue: { id, rep },
+      },
     } = yield call(post, '/graphql', upvoteIssue);
-    yield put(upvoteIssueSuccess(transformIssue));
+
+    yield put(upvoteIssueSuccess({ id, rep }));
+    yield put(fetchActiveUser({ userId }));
   } catch (error) {
     yield put(upvoteIssueFailure({ error }));
   }

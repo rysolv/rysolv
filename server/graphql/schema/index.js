@@ -79,6 +79,7 @@ module.exports = buildSchema(`
     preferredLanguages: String
     stackoverflowLink: String
     pullRequests: [String]
+    upvotes: [ID]
   }
 
   input UserInput {
@@ -97,6 +98,7 @@ module.exports = buildSchema(`
     preferredLanguages: [String]
     stackoverflowLink: String
     pullRequests: [String]
+    upvotes: [ID]
   }
 
   type Organization {
@@ -164,6 +166,9 @@ module.exports = buildSchema(`
 
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
+
+    upvoteIssue(id: ID): Issue!
+    userUpvote(id: ID): User!
   }
 
   schema {

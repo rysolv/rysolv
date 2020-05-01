@@ -51,7 +51,7 @@ const CompanyIssuesTab = ({ handleNav, handleUpvote, issues }) => (
                     {open ? 'Funded' : 'Unfunded'}
                   </IssueOpen>
                   <IssueActiveAttempts>
-                    {attempting.length} active requests
+                    {attempting.length} active attempts
                   </IssueActiveAttempts>
                 </IssueOpenWrapper>
               </IssueNameWrapper>

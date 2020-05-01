@@ -6,7 +6,7 @@ import {
   subheaderFontSize,
   detailFontSize,
 } from 'defaultStyleHelper';
-import { FlatIconButton, FundingWrapper } from 'components/base_ui';
+import { FlatIconButton } from 'components/base_ui';
 
 export const IssueCardIconWrapper = styled.div`
   display: inline-flex;
@@ -53,10 +53,6 @@ export const OrganizationNameWrapper = styled.a`
 export const StyledFlatIconButton = styled(FlatIconButton)`
   padding: 0;
   min-width: 0;
-`;
-
-export const StyledFundingWrapper = styled(FundingWrapper)`
-  font-size: ${subheaderFontSize};
 `;
 
 export const StyledIssueContent = styled.div`

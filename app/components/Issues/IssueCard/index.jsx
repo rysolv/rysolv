@@ -3,6 +3,7 @@ import T from 'prop-types';
 
 import {
   CommentIcon,
+  FundingWrapper,
   IconToolTip,
   Upvote,
   Verified,
@@ -21,7 +22,6 @@ import {
   NameWrapper,
   OrganizationNameWrapper,
   StyledFlatIconButton,
-  StyledFundingWrapper,
   StyledIssueContent,
   StyledIssueFooter,
   StyledIssueHeader,
@@ -66,7 +66,9 @@ const IssueCard = ({
             <UpvotePanel>
               <StyledFlatIconButton
                 Icon={<Upvote />}
-                onClick={() => handleUpvote({ itemId: id })}
+                onClick={() =>
+                  handleUpvote({ issueId: id, userId: activeUser.id })
+                }
               />
               {rep}
             </UpvotePanel>
@@ -159,7 +161,7 @@ const IssueCard = ({
                   </IssueCardItem>
                 ) : null}
 
-                <StyledFundingWrapper
+                <FundingWrapper
                   open={open}
                   value={open ? formatDollarAmount(value) : 'Issue Closed'}
                   medium

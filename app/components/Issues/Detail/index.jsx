@@ -87,6 +87,7 @@ const IssueDetail = ({
             activeUser={activeUser}
             data={data}
             handleIncrement={handleIncrement}
+            handleNav={handleNav}
           />
 
           <div style={{ minHeight: '30rem' }}>

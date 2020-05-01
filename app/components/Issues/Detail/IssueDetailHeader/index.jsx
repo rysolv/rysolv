@@ -2,6 +2,8 @@ import React from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
+import { navHelper } from 'utils/globalHelpers';
+
 import {
   FundingWrapper,
   IconToolTip,
@@ -19,13 +21,19 @@ import {
   StyledIssueHeader,
 } from './styledComponents';
 
-const IssueDetailHeader = ({ data, activeUser, handleIncrement }) => {
+const IssueDetailHeader = ({
+  data,
+  activeUser,
+  handleIncrement,
+  handleNav,
+}) => {
   const {
     id,
     createdDate,
     language,
     name,
     open,
+    organizationId,
     organizationName,
     organizationVerified,
     watching,
@@ -35,7 +43,16 @@ const IssueDetailHeader = ({ data, activeUser, handleIncrement }) => {
   return (
     <IssueDetailTopBar>
       <StyledIssueHeader>
-        <OrganizationNameWrapper>
+        <OrganizationNameWrapper
+          href={`/admin/organizations/detail/${organizationId}`}
+          onClick={e =>
+            navHelper(
+              e,
+              handleNav,
+              `/admin/organizations/detail/${organizationId}`,
+            )
+          }
+        >
           {organizationName}
 
           {organizationVerified ? (
@@ -88,6 +105,7 @@ IssueDetailHeader.propTypes = {
   activeUser: T.object,
   data: T.object,
   handleIncrement: T.func,
+  handleNav: T.func,
 };
 
 export default IssueDetailHeader;

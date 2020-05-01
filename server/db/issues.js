@@ -80,7 +80,6 @@ const getOneIssue = async (table, id) => {
     WHERE (issues.id='${id}')
   `;
   const { rows } = await singleQuery(queryText);
-  console.log(rows);
   if (rows.length > 0) {
     return rows;
   }
@@ -121,6 +120,16 @@ const updateIssueArray = async (table, column, id, data, remove) => {
   return rows;
 };
 
+const upvoteIssue = async (table, id) => {
+  const upvoteQuery = `
+    UPDATE ${table} SET rep = rep + 1
+    WHERE (id = '${id}')
+    RETURNING *`;
+  const { rows } = await singleQuery(upvoteQuery);
+
+  return rows;
+};
+
 module.exports = {
   createIssue,
   deleteIssue,
@@ -129,4 +138,5 @@ module.exports = {
   searchIssues,
   transformIssue,
   updateIssueArray,
+  upvoteIssue,
 };

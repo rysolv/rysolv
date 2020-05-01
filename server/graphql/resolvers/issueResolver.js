@@ -7,6 +7,7 @@ const {
   searchIssues,
   transformIssue,
   updateIssueArray,
+  upvoteIssue,
 } = require('../../db');
 
 module.exports = {
@@ -123,6 +124,11 @@ module.exports = {
   updateIssueArray: async args => {
     const { id, column, data, remove } = args;
     const [result] = await updateIssueArray('issues', column, id, data, remove);
+    return result;
+  },
+  upvoteIssue: async args => {
+    const { id } = args;
+    const [result] = await upvoteIssue('issues', id);
     return result;
   },
 };

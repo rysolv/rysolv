@@ -23,7 +23,8 @@ const userValues = `
   personal_link,
   preferred_languages,
   stackoverflow_link,
-  pull_requests
+  pull_requests,
+  upvotes
 `;
 
 const userReturnValues = `
@@ -44,14 +45,15 @@ const userReturnValues = `
   personal_link AS "personalLink",
   preferred_languages AS "preferredLanguages",
   stackoverflow_link AS "stackoverflowLink",
-  pull_requests AS "pullRequests"
+  pull_requests AS "pullRequests",
+  upvotes
 `;
 
 // Create new User
 const createUser = async data => {
   const queryText = `INSERT INTO
     users( id, created_date, ${userValues} )
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -102,7 +104,7 @@ const transformUser = async (table, id, data) => {
     const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE ${table}
       SET (${userValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);
@@ -121,6 +123,15 @@ const updateUserArray = async (table, column, id, data, remove) => {
   return rows;
 };
 
+const userUpvote = async (table, id) => {
+  const upvoteQuery = `
+    UPDATE ${table} SET rep = rep - 1
+    WHERE (id = '${id}')
+    RETURNING *`;
+  const { rows } = await singleQuery(upvoteQuery);
+  return rows;
+};
+
 module.exports = {
   createUser,
   deleteUser,
@@ -130,4 +141,5 @@ module.exports = {
   singleSearch,
   transformUser,
   updateUserArray,
+  userUpvote,
 };

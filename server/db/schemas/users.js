@@ -21,7 +21,8 @@ users(
   completedPullRequests VARCHAR(128) [],
   rejectedPullRequests VARCHAR(128) [],
   dollarsEarned FLOAT DEFAULT 0,
-  pull_requests UUID []
+  pull_requests UUID [],
+  upvotes UUID []
 )`;
 
 module.exports = users;

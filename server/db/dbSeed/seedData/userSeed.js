@@ -18,6 +18,7 @@ const userSeed = [
     ['Javascript', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/tyler-maran', // stackoverflow_link
     [], // pull_requests
+    [], // upvotes
   ],
   [
     'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
@@ -37,7 +38,8 @@ const userSeed = [
     'https://www.annapojawis.com/', // personal_link
     ['Javascript', 'Rust', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/anna-pojawis', // stackoverflow_link
-    [],
+    [], // pull_requests
+    [], // upvotes
   ],
   [
     'c2209ded-9219-4ee3-9c29-f863889053c0',
@@ -57,7 +59,8 @@ const userSeed = [
     'https://www.paulhouz.com/', // personal_link
     ['C++', 'Rust', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/paul-house', // stackoverflow_link
-    [],
+    [], // pull_requests
+    [], // upvotes
   ],
   [
     'cdd583cf-4711-4f33-a202-c937081afd7e',
@@ -80,7 +83,8 @@ const userSeed = [
     'https://www.jquerie.com/', // personal_link
     ['Javascript', 'Rust', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/jay-querie', // stackoverflow_link
-    [],
+    [], // pull_requests
+    [], // upvotes
   ],
   [
     '3f6e3ddf-ab68-4ee3-bb79-abfe21c8d014', // id
@@ -100,7 +104,8 @@ const userSeed = [
     'https://www.tylermaran.com/', // personal_link
     ['FORTRAN', 'React', 'Java', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/tyler-maran', // stackoverflow_link
-    [],
+    [], // pull_requests
+    [], // upvotes
   ],
 ];
 

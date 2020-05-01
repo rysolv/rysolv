@@ -7,6 +7,7 @@ const {
   searchUsers,
   transformUser,
   updateUserArray,
+  userUpvote,
 } = require('../../db');
 
 module.exports = {
@@ -126,6 +127,11 @@ module.exports = {
   updateUserArray: async args => {
     const { id, column, data, remove } = args;
     const [result] = await updateUserArray('users', column, id, data, remove);
+    return result;
+  },
+  userUpvote: async args => {
+    const { id } = args;
+    const [result] = await userUpvote('users', id);
     return result;
   },
 };
