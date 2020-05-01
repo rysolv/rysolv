@@ -17,7 +17,8 @@ export function* fetchActiveUserSaga({ payload }) {
         rep,
         username,
         watching,
-        pullRequests
+        pullRequests,
+        upvotes
       }
     }`;
     const graphql = JSON.stringify({

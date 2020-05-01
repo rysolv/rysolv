@@ -60,10 +60,11 @@ const IssueCard = ({
     }) => {
       const userWatching =
         activeUser.watching && activeUser.watching.includes(id);
+      const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
       return (
         <Fragment key={id}>
           <StyledListItem>
-            <UpvotePanel>
+            <UpvotePanel upvoted={upvoted}>
               <StyledFlatIconButton
                 Icon={<Upvote />}
                 onClick={() =>

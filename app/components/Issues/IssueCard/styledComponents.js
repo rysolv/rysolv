@@ -97,6 +97,9 @@ export const StyledListItem = styled.li`
 
 export const UpvotePanel = styled.div`
   background-color: #e0e0e0;
+  * {
+    color: ${({ upvoted }) => (upvoted ? '#ff5722' : textColor)};
+  }
   width: 3rem;
   font-size: ${defaultFontSize};
   padding: 0.5rem;
