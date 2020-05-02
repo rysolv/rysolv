@@ -39,7 +39,7 @@ const MenuComponent = props => (
   />
 );
 
-const UserDropDownMenu = ({ anchorEl, handleClose, activeUser }) => {
+const UserDropDownMenu = ({ activeUser, anchorEl, handleClose }) => {
   const { id, profilePic, username } = activeUser;
   return (
     <MenuComponent

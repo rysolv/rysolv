@@ -22,7 +22,7 @@ export const Main = ({
   loading,
 }) => (
   <Fragment>
-    <Header view={deviceView} activeUser={activeUser} />
+    <Header activeUser={activeUser} view={deviceView} />
     <AppBody>
       <AsyncRender
         asyncData={data}

@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+
 const {
   createUser,
   deleteUser,
@@ -47,7 +48,7 @@ module.exports = {
       const data = {
         modified_date: new Date(), // update modified date
         first_name: 'Deleted',
-        last_name: 'user',
+        last_name: 'User',
         email: '',
         watching: [],
         rep: 0,
