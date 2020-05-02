@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-
 import { post } from 'utils/request';
 
 import { FETCH_ACTIVE_USER } from './constants';

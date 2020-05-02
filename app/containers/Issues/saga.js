@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { post } from 'utils/request';
-import { fetchActiveUser } from 'containers/Admin/actions';
+import { fetchActiveUser } from 'containers/Auth/actions';
 import {
   UPDATE_ARRAY,
   ADD_COMMENT,

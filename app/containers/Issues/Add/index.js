@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 
-import { makeSelectAdmin } from 'containers/Admin/selectors';
+import { makeSelectActiveUser } from 'containers/Auth/selectors';
 import { incrementStep, clearForm } from '../actions';
 import {
   makeSelectIssues,
@@ -67,7 +67,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
-  activeUser: makeSelectAdmin('admin'),
+  activeUser: makeSelectActiveUser('activeUser'),
   data: makeSelectIssues('data'),
   loading: makeSelectIssuesLoading('addIssue'),
   step: makeSelectIssuesStep('addIssue'),

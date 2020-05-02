@@ -9,12 +9,12 @@ import {
 
 export const initialState = {
   alerts: { error: false, success: false },
-  admin: {},
+  activeUser: {},
   loading: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const adminReducer = produce((draft, { payload, type }) => {
+const authReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case FETCH_ACTIVE_USER: {
       draft.loading = true;
@@ -28,13 +28,13 @@ const adminReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_ACTIVE_USER_SUCCESS: {
       const { oneUser } = payload;
-      draft.admin = oneUser;
+      draft.activeUser = oneUser;
       draft.loading = false;
       break;
     }
     case UPDATE_ACTIVE_USER: {
       const { attempting } = payload;
-      draft.admin.attempting = attempting;
+      draft.activeUser.attempting = attempting;
       break;
     }
     default: {
@@ -43,4 +43,4 @@ const adminReducer = produce((draft, { payload, type }) => {
   }
 }, initialState);
 
-export default adminReducer;
+export default authReducer;

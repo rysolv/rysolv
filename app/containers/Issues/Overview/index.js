@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
 
-import { makeSelectAdmin } from 'containers/Admin/selectors';
+import { makeSelectActiveUser } from 'containers/Auth/selectors';
 import {
   clearAlerts,
   deleteIssue,
@@ -106,13 +106,13 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
+  activeUser: makeSelectActiveUser('activeUser'),
   alerts: makeSelectIssues('alerts'),
   disabled: makeSelectIssuesSearchDisabled(),
   error: makeSelectIssuesError('issues'),
+  issues: makeSelectIssues('issues'),
   loading: makeSelectIssuesLoading('issues'),
   search: makeSelectIssues('search'),
-  issues: makeSelectIssues('issues'),
-  activeUser: makeSelectAdmin('admin'),
 });
 
 function mapDispatchToProps(dispatch) {
