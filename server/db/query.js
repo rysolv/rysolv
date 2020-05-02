@@ -21,13 +21,14 @@ const singleItem = async (table, id, values, column = 'id') => {
   return rows;
 };
 
-const singleSearch = async (queryText, fields, value) => {
+const singleSearch = async (queryText, fields, value, param) => {
   const searchString = fields.reduce((acc, field) => {
     acc.push(`LOWER(${field}) LIKE LOWER('%${value}%')`);
     return acc;
   }, []);
   const formattedSearchString = searchString.join(' OR ');
-  const searchQuery = `${queryText} WHERE ${formattedSearchString}`;
+  const searchParam = param ? `${param} AND ` : '';
+  const searchQuery = `${queryText} WHERE ${searchParam}(${formattedSearchString})`;
   const { rows } = await singleQuery(searchQuery);
   return rows;
 };
