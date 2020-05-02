@@ -1,9 +1,9 @@
 import produce from 'immer';
 
 import {
-  FETCH_ACTIVE_USER,
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
+  FETCH_ACTIVE_USER,
   UPDATE_ACTIVE_USER,
 } from './constants';
 

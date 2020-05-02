@@ -84,7 +84,6 @@ query issues {
     language
     comments
     attempts
-    active_attempts
     contributor
   }
 }

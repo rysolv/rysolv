@@ -10,11 +10,11 @@ import iconDictionary from 'utils/iconDictionary';
 
 import {
   DataWrapper,
+  Divider,
   IconWrapper,
   LabelWrapper,
   LanguageContainer,
   NameWrapper,
-  Divider,
   RowContainer,
   StyledInlineBlock,
   StyledLink,

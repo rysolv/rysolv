@@ -5,10 +5,10 @@ import { ProfileImage } from 'components/base_ui';
 import Markdown from 'components/Markdown';
 
 import {
-  StyledPrimaryButton,
-  ProfileContainer,
-  NewCommentContainer,
   FlexContainer,
+  NewCommentContainer,
+  ProfileContainer,
+  StyledPrimaryButton,
 } from './styledComponents';
 
 const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {

@@ -32,7 +32,6 @@ module.exports = buildSchema(`
     comments: [ID]
     attempting: [ID]
     attempts: Int
-    activeAttempts: Int
     contributor: [String]
     rep: Int
     watching: [String]
@@ -49,7 +48,6 @@ module.exports = buildSchema(`
     comments: [ID]
     attempting: [ID]
     attempts: Int
-    activeAttempts: Int
     contributor: [String]
     rep: Int
     watching: [String]

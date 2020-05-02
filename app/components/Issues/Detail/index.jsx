@@ -6,7 +6,6 @@ import IssueDetailHeader from './IssueDetailHeader';
 import IssueStatusBar from './IssueStatusBar';
 
 import {
-  // DollarWrapper,
   Divider,
   IssueDetailColumn,
   IssueDetailWrapper,

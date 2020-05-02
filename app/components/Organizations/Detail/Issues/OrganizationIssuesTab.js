@@ -7,7 +7,7 @@ import { StyledFlatIconButton } from 'components/Issues/Card/styledComponents';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
-  IssueActiveAttempts,
+  IssueAttempts,
   IssueContent,
   IssueContentInfo,
   IssueDetail,
@@ -49,9 +49,7 @@ const OrganizationIssuesTab = ({ handleNav, handleUpvote, issues }) => (
                   <IssueOpen open={open}>
                     {open ? 'Funded' : 'Unfunded'}
                   </IssueOpen>
-                  <IssueActiveAttempts>
-                    {attempting.length} active requests
-                  </IssueActiveAttempts>
+                  <IssueAttempts>{attempting.length} Attempts</IssueAttempts>
                 </IssueOpenWrapper>
               </IssueNameWrapper>
               <IssueFundedAmount>{formatDollarAmount(value)}</IssueFundedAmount>

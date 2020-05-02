@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-
 import { makeSelectAdmin } from 'containers/Admin/selectors';
+
 import { incrementStep, clearForm } from '../actions';
 import {
   makeSelectIssues,
@@ -31,7 +31,7 @@ export class AddIssue extends React.PureComponent {
   }
 
   render() {
-    const { data, loading, step, handleNav, activeUser } = this.props;
+    const { activeUser, data, handleNav, loading, step } = this.props;
     const StepToRender = addIssueDictionary[step];
     return (
       <Fragment>

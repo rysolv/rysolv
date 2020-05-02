@@ -1,27 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import T from 'prop-types';
+
 import iconDictionary from 'utils/iconDictionary';
 
 import {
-  StyledAvatar,
-  StyledMenu,
-  StyledMenuItem,
-  StyledMenuContainer,
   IconWrapper,
-  StyledUserOverview,
   MenuItemLabel,
   MenuItemValue,
+  StyledAvatar,
+  StyledMenu,
+  StyledMenuContainer,
+  StyledMenuItem,
+  StyledUserOverview,
 } from './styledComponents';
 
 import { FundingWrapper } from '../StyledWrappers';
 import { MonocleIcon } from '../Icons';
 
-const SettingsIcon = iconDictionary('settings');
-const ExitIcon = iconDictionary('exit');
 const AttemptIcon = iconDictionary('attempt');
+const ExitIcon = iconDictionary('exit');
 const FundedIcon = iconDictionary('funded');
 const PullRequestIcon = iconDictionary('pullRequest');
+const SettingsIcon = iconDictionary('settings');
 
 const MenuComponent = props => (
   <StyledMenu

@@ -1,5 +1,6 @@
 import React from 'react';
 import T from 'prop-types';
+
 import { FundingWrapper } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
@@ -17,14 +18,14 @@ const IssueStatusBar = ({
   handleIncrement,
 }) => {
   const { attempting, open, id, value } = data;
-  const activeAttempt = activeUser.attempting.includes(id);
+  const hasAttempting = activeUser.attempting.includes(id);
 
   return (
     <StatusBar>
       <StatusItem>
         <StatusTitle>{attempting.length} Attempting</StatusTitle>
 
-        {activeAttempt ? (
+        {hasAttempting ? (
           <StyledSecondaryButton
             disabled={!open}
             label="un-attempt"

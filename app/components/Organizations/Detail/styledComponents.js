@@ -133,7 +133,7 @@ export const Image = styled.img`
   width: 10rem;
 `;
 
-export const IssueActiveAttempts = styled.div`
+export const IssueAttempts = styled.div`
   align-self: center;
   color: #6a737d;
   margin-left: 1rem;

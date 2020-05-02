@@ -117,7 +117,7 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                     <CommentIcon />
                   </IssueCardIconWrapper>
                   <IssueCardLabelWrapper>
-                    {comments.length} comments
+                    {comments.length} Comments
                   </IssueCardLabelWrapper>
                 </IssueCardItem>
               ) : null}
@@ -126,7 +126,7 @@ const IssueCard = ({ data, handleDeleteIssue, handleNav, handleUpvote }) => {
                 <IssueCardItem>
                   <IssueCardIconWrapper>{AttemptingIcon}</IssueCardIconWrapper>
                   <IssueCardLabelWrapper>
-                    {attempting.length} attempting
+                    {attempting.length} Attempting
                   </IssueCardLabelWrapper>
                 </IssueCardItem>
               ) : null}

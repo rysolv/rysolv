@@ -1,6 +1,8 @@
 import { call, put, takeLatest, all } from 'redux-saga/effects';
-import { post } from 'utils/request';
+
 import { fetchActiveUser } from 'containers/Admin/actions';
+import { post } from 'utils/request';
+
 import {
   ADD_ATTEMPT,
   ADD_COMMENT,

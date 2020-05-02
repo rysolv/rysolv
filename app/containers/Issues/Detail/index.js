@@ -9,10 +9,10 @@ import AsyncRender from 'components/AsyncRender';
 import IssueDetail from 'components/Issues/Detail';
 import { makeSelectAdmin } from 'containers/Admin/selectors';
 import {
+  addAttempt,
   addComment,
   clearAlerts,
   fetchIssueDetail,
-  addAttempt,
   upvoteIssue,
 } from '../actions';
 import {
