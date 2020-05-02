@@ -35,6 +35,7 @@ module.exports = {
         userInput.stackoverflowLink || '',
         false,
         userInput.pullRequests || [],
+        userInput.upvotes || [],
       ],
     ];
     try {
