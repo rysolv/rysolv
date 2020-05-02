@@ -28,7 +28,7 @@ module.exports = {
         issueInput.contributor,
         issueInput.rep || 25,
         issueInput.watching || [],
-        issueInput.value || 0,
+        issueInput.funded_amount || 0,
         issueInput.open || true,
       ],
     ];
@@ -95,7 +95,7 @@ module.exports = {
         contributor: issueInput.contributor,
         rep: issueInput.rep,
         watching: issueInput.watching,
-        value: issueInput.value,
+        funded_amount: issueInput.fundedAmount,
         open: issueInput.open,
       };
       const queryResult = await transformIssue('issues', id, data);
@@ -113,7 +113,7 @@ module.exports = {
         contributor: queryResult.contributor,
         rep: queryResult.rep,
         watching: queryResult.watching,
-        value: queryResult.value,
+        fundedAmount: queryResult.funded_amount,
         open: queryResult.open,
       };
       return result;

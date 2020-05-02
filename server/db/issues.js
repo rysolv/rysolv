@@ -13,7 +13,7 @@ const issueValues = `
   contributor_id,
   rep,
   watching,
-  value,
+  funded_amount,
   open
 `; // Excludes ID & created_date
 
@@ -31,7 +31,7 @@ const issueCardValues = `
   issues.contributor_id AS "contributorId",
   issues.rep,
   issues.watching,
-  issues.value,
+  issues.funded_amount AS "fundedAmount",
   issues.open,
   organizations.name AS "organizationName",
   organizations.verified AS "organizationVerified"

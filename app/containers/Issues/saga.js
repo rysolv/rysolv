@@ -135,7 +135,7 @@ export function* fetchIssueDetailSaga({ payload }) {
           organizationVerified,
           rep,
           repo,
-          value,
+          fundedAmount,
           watching,
           open,
           username,
@@ -188,7 +188,7 @@ export function* fetchIssuesSaga() {
       organizationVerified,
       rep,
       repo,
-      value,
+      fundedAmount,
       watching,
       open,
     }
@@ -211,17 +211,17 @@ export function* fetchIssuesSaga() {
 
 export function* saveInfoSaga({ payload }) {
   const {
-    requestBody: { name, value, body, repo, language },
+    requestBody: { name, fundedAmount, body, repo, language },
   } = payload;
   const query = `
   mutation{
     createIssue(
       issueInput: {
         body: ${JSON.stringify(body)},
-        language: "${language}",
+        language:  ${JSON.stringify(language)},
         name: "${name}",
         repo: "${repo}",
-        value: ${value},
+        fundedAmount: ${fundedAmount},
       }
     )
     { id }
@@ -256,7 +256,7 @@ export function* searchIssuesSaga({ payload }) {
       organizationVerified,
       rep,
       repo,
-      value,
+      fundedAmount,
       watching,
       open,
     }

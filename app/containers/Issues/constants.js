@@ -51,7 +51,7 @@ export const issueDataDictionary = {
   external: 'External link',
   body: 'Detailed description of Issue',
   language: 'Languages',
-  value: 'Funded amount',
+  fundedAmount: 'Funded amount',
   name: 'Title',
 };
 

@@ -16,7 +16,7 @@ const IssueStatusBar = ({
   data,
   handleIncrement,
 }) => {
-  const { attempting, open, id, value } = data;
+  const { attempting, open, id, fundedAmount } = data;
   const activeAttempt =
     activeUser.attempting && activeUser.attempting.includes(id);
 
@@ -47,7 +47,7 @@ const IssueStatusBar = ({
           <FundingWrapper
             medium
             open={open}
-            value={formatDollarAmount(value)}
+            value={formatDollarAmount(fundedAmount)}
           />
         </StatusTitle>
         <StyledSecondaryButton disabled={!open} label="$ Fund Issue" />

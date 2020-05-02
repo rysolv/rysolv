@@ -2,6 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import { MainTextInput } from 'components/base_ui';
+import LanguageAutocomplete from 'components/LanguageAutocomplete';
 import { issueDataDictionary } from 'containers/Issues/constants';
 import Markdown from 'components/Markdown';
 import {
@@ -13,7 +14,7 @@ import {
 // eslint-disable-next-line arrow-body-style
 const ManualForm = ({ data, handleInputChange }) => {
   // eslint-disable-next-line no-param-reassign
-  const { repo, body, language, value, name } = data;
+  const { repo, body, language, fundedAmount, name } = data;
 
   const handleMarkdownInput = markdown => {
     handleInputChange({
@@ -43,15 +44,16 @@ const ManualForm = ({ data, handleInputChange }) => {
         <Markdown edit body={body.value} handleInput={handleMarkdownInput} />
       </StyledMarkdownWrapper>
 
-      <MainTextInput
+      <LanguageAutocomplete
         error={!!language.error}
         helperText={language.error}
         label={issueDataDictionary.language}
-        onChange={e =>
+        // eslint-disable-next-line no-shadow
+        onChange={(e, value) =>
           handleInputChange({
             field: 'language',
             form: 'data',
-            value: e.target.value,
+            value,
           })
         }
         value={language.value}
@@ -71,17 +73,17 @@ const ManualForm = ({ data, handleInputChange }) => {
           value={repo.value}
         />
         <MainTextInput
-          error={!!value.error}
-          helperText={value.error}
-          label={issueDataDictionary.value}
+          error={!!fundedAmount.error}
+          helperText={fundedAmount.error}
+          label={issueDataDictionary.fundedAmount}
           onChange={e =>
             handleInputChange({
-              field: 'value',
+              field: 'fundedAmount',
               form: 'data',
               value: e.target.value,
             })
           }
-          value={value.value}
+          value={fundedAmount.value}
         />
       </HorizontalWrapper>
     </InputFormWrapper>

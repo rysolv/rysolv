@@ -40,7 +40,7 @@ module.exports = buildSchema(`
     rep: Int
     repo: String
     username: String
-    value: Float
+    fundedAmount: Float
     watching: [String]
   }
 
@@ -49,7 +49,7 @@ module.exports = buildSchema(`
     name: String
     body: String
     repo: String
-    language: String
+    language: [String]
     comments: [ID]
     attempting: [ID]
     attempts: Int
@@ -57,7 +57,7 @@ module.exports = buildSchema(`
     contributor: [String]
     rep: Int
     watching: [String]
-    value: Int
+    fundedAmount: Int
   }
 
   type User {

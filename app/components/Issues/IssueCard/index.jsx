@@ -56,7 +56,7 @@ const IssueCard = ({
       rep,
       watching,
       comments,
-      value,
+      fundedAmount,
     }) => {
       const userWatching =
         activeUser.watching && activeUser.watching.includes(id);
@@ -164,7 +164,9 @@ const IssueCard = ({
 
                 <FundingWrapper
                   open={open}
-                  value={open ? formatDollarAmount(value) : 'Issue Closed'}
+                  value={
+                    open ? formatDollarAmount(fundedAmount) : 'Issue Closed'
+                  }
                   medium
                 />
               </StyledIssueFooter>

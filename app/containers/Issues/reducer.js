@@ -47,11 +47,11 @@ export const initialState = {
   issues: [],
   issueDetail: {},
   data: {
-    value: { error: '', value: 0 },
+    fundedAmount: { error: '', value: 0 },
     name: { error: '', value: '' },
     body: { error: '', value: '' },
     repo: { error: '', value: '' },
-    language: { error: '', value: '' },
+    language: { error: '', value: [] },
     importUrl: { error: '', value: '' },
   },
   loading: {
@@ -193,7 +193,14 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
-      draft[form][field].value = value;
+      if (form === 'filter') {
+        draft[form][field] = value;
+      } else if (field === 'language') {
+        draft[form][field].value = [];
+        value.map(language => draft[form][field].value.push(language.value));
+      } else {
+        draft[form][field].value = value;
+      }
       break;
     }
     case INPUT_ERROR: {
