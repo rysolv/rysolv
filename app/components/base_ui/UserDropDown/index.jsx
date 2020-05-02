@@ -41,7 +41,14 @@ const MenuComponent = props => (
 );
 
 const UserDropDownMenu = ({ activeUser, anchorEl, handleClose }) => {
-  const { id, profilePic, username } = activeUser;
+  const {
+    attempting,
+    id,
+    profilePic,
+    pullRequests,
+    username,
+    watching,
+  } = activeUser;
   return (
     <MenuComponent
       anchorEl={anchorEl}
@@ -77,7 +84,7 @@ const UserDropDownMenu = ({ activeUser, anchorEl, handleClose }) => {
             </IconWrapper>
             Watch List
           </MenuItemLabel>
-          <MenuItemValue> 0</MenuItemValue>
+          <MenuItemValue> {watching ? watching.length : 0}</MenuItemValue>
         </StyledMenuItem>
 
         <StyledMenuItem>
@@ -85,7 +92,7 @@ const UserDropDownMenu = ({ activeUser, anchorEl, handleClose }) => {
             <IconWrapper>{AttemptIcon}</IconWrapper>
             Attempting
           </MenuItemLabel>
-          <MenuItemValue>0</MenuItemValue>
+          <MenuItemValue>{attempting ? attempting.length : 0}</MenuItemValue>
         </StyledMenuItem>
 
         <StyledMenuItem>
@@ -93,7 +100,9 @@ const UserDropDownMenu = ({ activeUser, anchorEl, handleClose }) => {
             <IconWrapper>{PullRequestIcon}</IconWrapper>
             Pull Requests
           </MenuItemLabel>
-          <MenuItemValue>0</MenuItemValue>
+          <MenuItemValue>
+            {pullRequests ? pullRequests.length : 0}
+          </MenuItemValue>
         </StyledMenuItem>
       </StyledMenuContainer>
 

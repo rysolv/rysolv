@@ -2,12 +2,14 @@ import React from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
+import { navHelper } from 'utils/globalHelpers';
+
 import {
   FundingWrapper,
   IconToolTip,
   LanguageWrapper,
-  MonocleIcon,
   Verified,
+  WatchButton,
 } from 'components/base_ui';
 
 import {
@@ -20,23 +22,39 @@ import {
   StyledVerified,
 } from './styledComponents';
 
-const IssueDetailHeader = ({ data }) => {
+const IssueDetailHeader = ({
+  data,
+  activeUser,
+  handleIncrement,
+  handleNav,
+}) => {
   const {
     id,
     createdDate,
     language,
     name,
     open,
-    organization,
+    organizationId,
+    organizationName,
     organizationVerified,
-    watched,
+    watching,
   } = data;
+  const userWatching = activeUser.watching && activeUser.watching.includes(id);
 
   return (
     <IssueDetailTopBar>
       <StyledIssueHeader>
-        <OrganizationNameWrapper>
-          {organization}
+        <OrganizationNameWrapper
+          href={`/admin/organizations/detail/${organizationId}`}
+          onClick={e =>
+            navHelper(
+              e,
+              handleNav,
+              `/admin/organizations/detail/${organizationId}`,
+            )
+          }
+        >
+          {organizationName}
 
           {organizationVerified ? (
             <IconToolTip toolTipText="Verified Contributor">
@@ -65,8 +83,19 @@ const IssueDetailHeader = ({ data }) => {
         </IssueSubItem>
         <IssueSubItem>0 Open PR</IssueSubItem>
         <IssueSubItem>
-          <MonocleIcon />
-          {watched} Watch
+          <WatchButton
+            disabled={!open}
+            label={userWatching ? 'Watching' : 'Watch'}
+            value={watching.length}
+            handleWatch={() =>
+              handleIncrement({
+                userId: activeUser.id,
+                id,
+                column: 'watching',
+                remove: userWatching,
+              })
+            }
+          />
         </IssueSubItem>
       </IssueSubHeader>
     </IssueDetailTopBar>
@@ -74,7 +103,10 @@ const IssueDetailHeader = ({ data }) => {
 };
 
 IssueDetailHeader.propTypes = {
+  activeUser: T.object,
   data: T.object,
+  handleIncrement: T.func,
+  handleNav: T.func,
 };
 
 export default IssueDetailHeader;

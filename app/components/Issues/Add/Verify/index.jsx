@@ -28,7 +28,7 @@ const CodeIcon = iconDictionary('code');
 export class VerifyForm extends React.PureComponent {
   render() {
     const {
-      data: { repo, body, language, value, name },
+      data: { body, fundedAmount, language, name, repo },
       activeUser: { id, profilePic, username },
       handleNav,
     } = this.props;
@@ -63,7 +63,9 @@ export class VerifyForm extends React.PureComponent {
         <LabelWrapper>{issueDataDictionary.language}</LabelWrapper>
         <ValueWrapper>
           <LanguageContainer>
-            <LanguageWrapper language={language.value} />
+            {language.value.map(el => (
+              <LanguageWrapper key={el} language={el} />
+            ))}
           </LanguageContainer>
         </ValueWrapper>
 
@@ -91,10 +93,14 @@ export class VerifyForm extends React.PureComponent {
 
         <LabelWrapper>
           <IconWrapper>$</IconWrapper>
-          {issueDataDictionary.value}
+          {issueDataDictionary.fundedAmount}
         </LabelWrapper>
         <ValueWrapper>
-          <FundingWrapper medium open value={formatDollarAmount(value.value)} />
+          <FundingWrapper
+            medium
+            open
+            value={formatDollarAmount(fundedAmount.value)}
+          />
         </ValueWrapper>
       </DataWrapper>
     );

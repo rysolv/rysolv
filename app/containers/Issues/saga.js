@@ -1,4 +1,4 @@
-import { call, put, takeLatest, all } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { fetchActiveUser } from 'containers/Admin/actions';
 import { post } from 'utils/request';
@@ -19,6 +19,8 @@ import {
   addAttemptSuccess,
   addCommentFailure,
   addCommentSuccess,
+  addWatchFailure,
+  addWatchSuccess,
   deleteIssueFailure,
   deleteIssueSuccess,
   fetchIssueDetailFailure,
@@ -38,10 +40,13 @@ export function* addAttemptSaga({ payload }) {
   const query = `
   mutation {
     updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}", remove: ${remove}) {
-      ${column}
+      id,
+      attempting,
+      watching
     }
     updateUserArray(id: "${userId}", column: "${column}", data: "${issueId}", remove: ${remove}) {
-      ${column}
+      attempting,
+      watching
     }
   }`;
   try {
@@ -53,9 +58,11 @@ export function* addAttemptSaga({ payload }) {
       data: { updateIssueArray },
     } = yield call(post, '/graphql', graphql);
     yield put(addAttemptSuccess(updateIssueArray));
+    yield put(addWatchSuccess(updateIssueArray));
     yield put(fetchActiveUser({ userId }));
   } catch (error) {
     yield put(addAttemptFailure({ error }));
+    yield put(addWatchFailure({ error }));
   }
 }
 
@@ -108,29 +115,6 @@ export function* deleteIssueSaga({ payload }) {
   }
 }
 
-const generateOrganizationQuery = id => {
-  const orgQuery = `
-  query {
-    oneOrganization(id: "${id}") {
-      __typename
-      ... on Organization {
-        verified
-        name
-      }
-      ... on Error {
-        message
-      }
-    }
-  }
- `;
-  return [
-    JSON.stringify({
-      query: orgQuery,
-      variables: {},
-    }),
-  ];
-};
-
 export function* fetchIssueDetailSaga({ payload }) {
   const { id } = payload;
   const query = `
@@ -149,11 +133,15 @@ export function* fetchIssueDetailSaga({ payload }) {
           language,
           name,
           organizationId,
+          organizationName,
+          organizationVerified,
           rep,
           repo,
-          value,
+          fundedAmount,
           watching,
           open,
+          username,
+          profilePic
         }
         ... on Error {
           message
@@ -180,31 +168,6 @@ export function* fetchIssueDetailSaga({ payload }) {
 
     oneIssue.comments = getIssueComments;
 
-    // Query Users
-    const userQuery = `
-      query {
-        oneUser(column: "id", query: "${oneIssue.contributor[0]}") {
-          id,
-          username,
-          profilePic,
-        }
-      }
-    `;
-    const userGraphql = JSON.stringify({
-      query: userQuery,
-      variables: {},
-    });
-    const {
-      data: {
-        oneUser: { username, profilePic },
-      },
-    } = yield call(post, '/graphql', userGraphql);
-
-    // Add data to IssueDetail
-    oneIssue.user = {
-      username,
-      profilePic,
-    };
     yield put(fetchIssueDetailSuccess({ oneIssue }));
   } catch (error) {
     yield put(fetchIssueDetailFailure({ error }));
@@ -224,9 +187,11 @@ export function* fetchIssuesSaga() {
       language,
       name,
       organizationId,
+      organizationName,
+      organizationVerified,
       rep,
       repo,
-      value,
+      fundedAmount,
       watching,
       open,
     }
@@ -241,26 +206,7 @@ export function* fetchIssuesSaga() {
       data: { getIssues },
     } = yield call(post, '/graphql', issueQuery);
 
-    const organizationQuery = getIssues.map(issue =>
-      generateOrganizationQuery(issue.organizationId),
-    );
-    const results = yield all(
-      organizationQuery.map(organizationId =>
-        call(post, '/graphql', organizationId),
-      ),
-    );
-    const formattedGetIssues = results.reduce(
-      (acc, { data: { oneOrganization } }, index) => {
-        const { name, verified } = oneOrganization || {};
-
-        acc[index].organizationVerified = verified || false;
-        acc[index].organizationName = name || '[No Organization]';
-
-        return acc;
-      },
-      getIssues,
-    );
-    yield put(fetchIssuesSuccess(formattedGetIssues));
+    yield put(fetchIssuesSuccess(getIssues));
   } catch (error) {
     yield put(fetchIssuesFailure({ error }));
   }
@@ -268,17 +214,17 @@ export function* fetchIssuesSaga() {
 
 export function* saveInfoSaga({ payload }) {
   const {
-    requestBody: { name, value, body, repo, language },
+    requestBody: { name, fundedAmount, body, repo, language },
   } = payload;
   const query = `
   mutation{
     createIssue(
       issueInput: {
         body: ${JSON.stringify(body)},
-        language: "${language}",
+        language:  ${JSON.stringify(language)},
         name: "${name}",
         repo: "${repo}",
-        value: ${value},
+        fundedAmount: ${fundedAmount},
       }
     )
     { id }
@@ -309,9 +255,11 @@ export function* searchIssuesSaga({ payload }) {
       language,
       name,
       organizationId,
+      organizationName,
+      organizationVerified,
       rep,
       repo,
-      value,
+      fundedAmount,
       watching,
       open,
     }
@@ -325,38 +273,28 @@ export function* searchIssuesSaga({ payload }) {
     const {
       data: { searchIssues },
     } = yield call(post, '/graphql', graphql);
-    const organizationQuery = searchIssues.map(issue =>
-      generateOrganizationQuery(issue.organizationId),
-    );
-    const results = yield all(
-      organizationQuery.map(organizationId =>
-        call(post, '/graphql', organizationId),
-      ),
-    );
-    const formattedsearchIssues = results.reduce(
-      (acc, { data: { oneOrganization } }, index) => {
-        const { name, verified } = oneOrganization || {};
 
-        acc[index].organizationVerified = verified || false;
-        acc[index].organizationName = name || '[No Organization]';
-
-        return acc;
-      },
-      searchIssues,
-    );
-    yield put(searchIssuesSuccess({ issues: formattedsearchIssues }));
+    yield put(searchIssuesSuccess({ issues: searchIssues }));
   } catch (error) {
     yield put(searchIssuesFailure({ error }));
   }
 }
 
 export function* upvoteIssuesSaga({ payload }) {
-  const { itemId } = payload;
+  const { issueId, userId } = payload;
   const upvoteIssueQuery = `
       mutation {
-        upvoteIssue(id: "${itemId}" }) {
+        upvoteIssue(id: "${issueId}" ) {
           id,
           rep
+        }
+        userUpvote(id: "${userId}" ) {
+          id,
+          rep
+        }
+        updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: false ) {
+          attempting,
+          watching
         }
       }
     `;
@@ -366,9 +304,13 @@ export function* upvoteIssuesSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { transformIssue },
+      data: {
+        upvoteIssue: { id, rep },
+      },
     } = yield call(post, '/graphql', upvoteIssue);
-    yield put(upvoteIssueSuccess(transformIssue));
+
+    yield put(upvoteIssueSuccess({ id, rep }));
+    yield put(fetchActiveUser({ userId }));
   } catch (error) {
     yield put(upvoteIssueFailure({ error }));
   }

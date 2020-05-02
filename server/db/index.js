@@ -7,6 +7,7 @@ const {
   searchIssues,
   transformIssue,
   updateIssueArray,
+  upvoteIssue,
 } = require('./issues');
 const {
   createUser,
@@ -16,6 +17,7 @@ const {
   searchUsers,
   transformUser,
   updateUserArray,
+  userUpvote,
 } = require('./users');
 const { createComment, getComments, getIssueComments } = require('./comments');
 const { createPullRequest } = require('./pullRequests');
@@ -41,13 +43,13 @@ module.exports = {
   deleteUser,
   dropAllTables,
   getComments,
+  getIssueComments,
   getIssues,
   getOneIssue,
   getOneOrganization,
   getOneUser,
   getOrganizations,
   getUsers,
-  getIssueComments,
   printTables,
   searchIssues,
   searchOrganizations,
@@ -57,4 +59,6 @@ module.exports = {
   transformUser,
   updateIssueArray,
   updateUserArray,
+  upvoteIssue,
+  userUpvote,
 };

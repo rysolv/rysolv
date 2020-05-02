@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { FlatIconButton, FundingWrapper } from 'components/base_ui';
+import { FlatIconButton } from 'components/base_ui';
 import {
   defaultFontSize,
   detailFontSize,
@@ -56,10 +56,6 @@ export const StyledFlatIconButton = styled(FlatIconButton)`
   min-width: 0;
 `;
 
-export const StyledFundingWrapper = styled(FundingWrapper)`
-  font-size: ${subheaderFontSize};
-`;
-
 export const StyledIssueContent = styled.div`
   width: 100%;
   padding: 0.5rem;
@@ -106,6 +102,9 @@ export const StyledVerified = styled.div`
 
 export const UpvotePanel = styled.div`
   background-color: #e0e0e0;
+  * {
+    color: ${({ upvoted }) => (upvoted ? '#ff5722' : textColor)};
+  }
   width: 3rem;
   font-size: ${defaultFontSize};
   padding: 0.5rem;

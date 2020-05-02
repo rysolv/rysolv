@@ -1,5 +1,3 @@
-// const { v4: uuidv4 } = require('uuid');
-
 const userSeed = [
   [
     '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d', // id
@@ -8,7 +6,7 @@ const userSeed = [
     'Tyler', // first_name
     'Maran', // last_name
     'tyler.maran@gmail.com', // email
-    ['f665d73f-6ae4-4699-bb53-c55d62489a29'], // watching_list
+    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // watching_list
     2, // rep
     'https://rysolv.s3.us-east-2.amazonaws.com/tylerprofile.png', // profile_pic
     [], // comments
@@ -20,6 +18,8 @@ const userSeed = [
     ['Javascript', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/tyler-maran', // stackoverflow_link
     true, // is_deleted
+    [], // pull_requests
+    [], // upvotes
   ],
   [
     'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
@@ -28,7 +28,7 @@ const userSeed = [
     'Anna',
     'Pojawis',
     'anna.pojawis@gmail.com',
-    ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
+    ['0ce2d9ae-ba16-4013-af33-0cbb8cbc37a2'], // watching
     25,
     'https://rysolv.s3.us-east-2.amazonaws.com/annaprofile.png',
     [], // comments
@@ -40,6 +40,8 @@ const userSeed = [
     ['Javascript', 'Rust', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/anna-pojawis', // stackoverflow_link
     false, // is_deleted
+    [], // pull_requests
+    [], // upvotes
   ],
   [
     'c2209ded-9219-4ee3-9c29-f863889053c0',
@@ -48,7 +50,7 @@ const userSeed = [
     'Paul',
     'House',
     'paul@myfooddata.com',
-    ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
+    ['0ce2d9ae-ba16-4013-af33-0cbb8cbc37a2'],
     25,
     'https://rysolv.s3.us-east-2.amazonaws.com/paulprofile.png',
     [], // comments
@@ -60,6 +62,8 @@ const userSeed = [
     ['C++', 'Rust', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/paul-house', // stackoverflow_link
     false, // is_deleted
+    [], // pull_requests
+    [], // upvotes
   ],
   [
     'cdd583cf-4711-4f33-a202-c937081afd7e',
@@ -68,7 +72,7 @@ const userSeed = [
     'Jay',
     'Querie',
     'jay@querie.cc',
-    ['f665d73f-6ae4-4699-bb53-c55d62489a29'],
+    ['0ce2d9ae-ba16-4013-af33-0cbb8cbc37a2'],
     25,
     'https://rysolv.s3.us-east-2.amazonaws.com/jay.png',
     [], // comments
@@ -83,6 +87,8 @@ const userSeed = [
     ['Javascript', 'Rust', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/jay-querie', // stackoverflow_link
     false, // is_deleted
+    [], // pull_requests
+    [], // upvotes
   ],
   [
     '3f6e3ddf-ab68-4ee3-bb79-abfe21c8d014', // id
@@ -91,7 +97,7 @@ const userSeed = [
     'AD', // first_name
     'MIN', // last_name
     'admin@rysolv.com', // email
-    ['f665d73f-6ae4-4699-bb53-c55d62489a29'], // watching_list
+    ['0ce2d9ae-ba16-4013-af33-0cbb8cbc37a2'], // watching_list
     99, // rep
     'https://cdn0.iconfinder.com/data/icons/web-service-and-development/512/key_protection_lock_security_access_forbidden_safe_secure_private_red_alert_password_protect_admin_safety_unlock_system_flat_design_icon-512.png', // profile_pic
     [], // comments
@@ -103,6 +109,8 @@ const userSeed = [
     ['FORTRAN', 'React', 'Java', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/tyler-maran', // stackoverflow_link
     false, // is_deleted
+    [], // pull_requests
+    [], // upvotes
   ],
 ];
 

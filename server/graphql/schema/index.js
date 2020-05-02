@@ -24,6 +24,27 @@ module.exports = buildSchema(`
     id: ID!
     createdDate: Object
     modifiedDate: Object
+    activeAttempts: Int
+    attempting: [ID]
+    attempts: Int
+    body: String
+    comments: [ID]
+    contributor: [String]
+    language: [String]
+    name: String
+    open: Boolean
+    organizationId: String
+    organizationName: String
+    organizationVerified: Boolean
+    profilePic: String
+    rep: Int
+    repo: String
+    username: String
+    fundedAmount: Float
+    watching: [String]
+  }
+
+  input IssueInput {
     organizationId: String
     name: String
     body: String
@@ -35,23 +56,7 @@ module.exports = buildSchema(`
     contributor: [String]
     rep: Int
     watching: [String]
-    value: Float
-    open: Boolean
-  }
-
-  input IssueInput {
-    organizationId: String
-    name: String
-    body: String
-    repo: String
-    language: String
-    comments: [ID]
-    attempting: [ID]
-    attempts: Int
-    contributor: [String]
-    rep: Int
-    watching: [String]
-    value: Int
+    fundedAmount: Int
   }
 
   type User {
@@ -72,6 +77,8 @@ module.exports = buildSchema(`
     personalLink: String
     preferredLanguages: String
     stackoverflowLink: String
+    pullRequests: [String]
+    upvotes: [ID]
   }
 
   input UserInput {
@@ -89,6 +96,8 @@ module.exports = buildSchema(`
     personalLink: String
     preferredLanguages: [String]
     stackoverflowLink: String
+    pullRequests: [String]
+    upvotes: [ID]
   }
 
   type Organization {
@@ -157,6 +166,9 @@ module.exports = buildSchema(`
 
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
+
+    upvoteIssue(id: ID): Issue!
+    userUpvote(id: ID): User!
   }
 
   schema {

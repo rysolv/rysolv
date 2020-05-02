@@ -1,9 +1,7 @@
-const { v4: uuidv4 } = require('uuid');
-
 // comments(id, createdDate, modifiedDate, target, body, user)
 const commentSeed = [
   [
-    uuidv4(), // id
+    '331127d2-50ea-4366-970d-90a14222f2dc', // id
     new Date(), // create date
     new Date(), // last modified date
     '20619026-0f61-4772-9bb8-36ed643d4dcd', // target id
@@ -11,7 +9,7 @@ const commentSeed = [
     'cdd583cf-4711-4f33-a202-c937081afd7e', // user id
   ],
   [
-    uuidv4(),
+    '3f2ac445-94d8-46eb-94b4-6730140edc4e',
     new Date(),
     new Date(),
     '20619026-0f61-4772-9bb8-36ed643d4dcd',
@@ -19,7 +17,7 @@ const commentSeed = [
     'c2209ded-9219-4ee3-9c29-f863889053c0',
   ],
   [
-    uuidv4(),
+    'f0ee8d0a-78cf-4f88-9e58-05ed51296b0a',
     new Date(),
     new Date(),
     '20619026-0f61-4772-9bb8-36ed643d4dcd',

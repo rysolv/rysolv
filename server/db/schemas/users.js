@@ -17,7 +17,9 @@ users(
   personal_link VARCHAR(128),
   preferred_languages VARCHAR(128) [],
   stackoverflow_link VARCHAR(128),
-  is_deleted BOOLEAN DEFAULT false
+  is_deleted BOOLEAN DEFAULT false,
+  pull_requests UUID [],
+  upvotes UUID []
 )`;
 
 module.exports = users;

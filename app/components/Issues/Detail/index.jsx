@@ -29,7 +29,9 @@ const IssueDetail = ({
     rep,
     comments,
     open,
-    user: { id: userId, username, profilePic },
+    userId,
+    username,
+    profilePic,
   } = data;
 
   const primaryUser = {
@@ -60,7 +62,8 @@ const IssueDetail = ({
         />
       );
     });
-  const commentsDiv = comments.length > 0 ? generateComments() : <NoComment />;
+  const commentsDiv =
+    comments && comments.length > 0 ? generateComments() : <NoComment />;
 
   return (
     <Fragment>
@@ -80,7 +83,12 @@ const IssueDetail = ({
           </UpvotePanel>
         </LeftPanel>
         <IssueDetailColumn>
-          <IssueDetailHeader data={data} />
+          <IssueDetailHeader
+            activeUser={activeUser}
+            data={data}
+            handleIncrement={handleIncrement}
+            handleNav={handleNav}
+          />
 
           <div style={{ minHeight: '30rem' }}>
             <CommentCard

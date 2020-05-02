@@ -17,41 +17,25 @@ const IssueStatusBar = ({
   data,
   handleIncrement,
 }) => {
-  const { attempting, open, id, value } = data;
-  const hasAttempting = activeUser.attempting.includes(id);
-
+  const { attempting, fundedAmount, id, open } = data;
+  const hasAttempting =
+    activeUser.attempting && activeUser.attempting.includes(id);
   return (
     <StatusBar>
       <StatusItem>
         <StatusTitle>{attempting.length} Attempting</StatusTitle>
-
-        {hasAttempting ? (
-          <StyledSecondaryButton
-            disabled={!open}
-            label="un-attempt"
-            onClick={() =>
-              handleIncrement({
-                userId,
-                id,
-                column: 'attempting',
-                remove: true,
-              })
-            }
-          />
-        ) : (
-          <StyledSecondaryButton
-            disabled={!open}
-            label="attempt"
-            onClick={() =>
-              handleIncrement({
-                userId,
-                id,
-                column: 'attempting',
-                remove: false,
-              })
-            }
-          />
-        )}
+        <StyledSecondaryButton
+          disabled={!open}
+          label={hasAttempting ? 'un-attempt' : 'attempt'}
+          onClick={() =>
+            handleIncrement({
+              userId,
+              id,
+              column: 'attempting',
+              remove: hasAttempting,
+            })
+          }
+        />
       </StatusItem>
       <StatusItem>
         <StatusTitle>0 Pull Requests</StatusTitle>
@@ -63,7 +47,7 @@ const IssueStatusBar = ({
           <FundingWrapper
             medium
             open={open}
-            value={formatDollarAmount(value)}
+            value={formatDollarAmount(fundedAmount)}
           />
         </StatusTitle>
         <StyledSecondaryButton disabled={!open} label="$ Fund Issue" />

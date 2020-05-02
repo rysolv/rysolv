@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 import {
   darkTextColor,
-  textColor,
-  headerFontSize,
+  defaultFontSize,
   detailFontSize,
+  headerFontSize,
+  textColor,
 } from 'defaultStyleHelper';
 
 export const IssueDetailTopBar = styled.div`
@@ -32,10 +33,11 @@ export const NameWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-export const OrganizationNameWrapper = styled.div`
+export const OrganizationNameWrapper = styled.a`
   align-items: center;
   color: ${textColor};
   display: flex;
+  font-size: ${defaultFontSize};
   font-weight: bold;
 `;
 

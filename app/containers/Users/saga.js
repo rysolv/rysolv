@@ -170,6 +170,7 @@ export function* searchUsersSaga({ payload }) {
       profilePic,
       attempting,
       issuesNumber,
+      username,
     }
   }
 `;

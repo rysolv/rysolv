@@ -7,7 +7,9 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
 
+import { makeSelectAdmin } from 'containers/Admin/selectors';
 import {
+  addAttempt,
   clearAlerts,
   deleteIssue,
   fetchIssues,
@@ -37,19 +39,20 @@ export class IssuesOverview extends React.PureComponent {
 
   render() {
     const {
+      activeUser,
       alerts,
       disabled,
-      // dispatchFetchInfo,
       error,
       handleClearAlerts,
       handleDeleteIssue,
+      handleIncrement,
       handleInputChange,
       handleNav,
       handleSearchIssues,
       handleUpvote,
+      issues,
       loading,
       search,
-      issues,
     } = this.props;
     return (
       <AsyncRender
@@ -58,16 +61,17 @@ export class IssuesOverview extends React.PureComponent {
         error={error}
         loading={loading}
         propsToPassDown={{
+          activeUser,
           alerts,
           disabled,
           handleClearAlerts,
           handleDeleteIssue,
-          // handleFetchInfo: dispatchFetchInfo,
+          handleIncrement,
           handleInputChange,
           handleNav,
           handleSearchIssues,
-          search,
           handleUpvote,
+          search,
         }}
       />
     );
@@ -75,23 +79,24 @@ export class IssuesOverview extends React.PureComponent {
 }
 
 IssuesOverview.propTypes = {
+  activeUser: T.object,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
   disabled: T.bool,
-  // dispatchFetchInfo: T.func,
   dispatchFetchIssues: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
   handleDeleteIssue: T.func,
+  handleIncrement: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearchIssues: T.func,
+  handleUpvote: T.func,
+  issues: T.array,
   loading: T.bool,
   search: T.object,
-  issues: T.array,
-  handleUpvote: T.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -104,6 +109,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectIssuesLoading('issues'),
   search: makeSelectIssues('search'),
   issues: makeSelectIssues('issues'),
+  activeUser: makeSelectAdmin('admin'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -118,6 +124,8 @@ function mapDispatchToProps(dispatch) {
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
     handleUpvote: payload => dispatch(upvoteIssue(payload)),
+    handleIncrement: payload => dispatch(addAttempt(payload)),
+
     /*
      * Reducer : Router
      */

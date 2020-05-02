@@ -8,6 +8,7 @@ const singleQuery = async queryText => {
     client.release();
     return result;
   } catch (error) {
+    console.log(error);
     client.release();
     throw error;
   }
@@ -20,14 +21,14 @@ const singleItem = async (table, id, values, column = 'id') => {
   return rows;
 };
 
-const singleSearch = async (fields, table, value, values) => {
+const singleSearch = async (queryText, fields, value) => {
   const searchString = fields.reduce((acc, field) => {
     acc.push(`LOWER(${field}) LIKE LOWER('%${value}%')`);
     return acc;
   }, []);
   const formattedSearchString = searchString.join(' OR ');
-  const queryText = `SELECT ${values} FROM ${table} WHERE ${formattedSearchString}`;
-  const { rows } = await singleQuery(queryText);
+  const searchQuery = `${queryText} WHERE ${formattedSearchString}`;
+  const { rows } = await singleQuery(searchQuery);
   return rows;
 };
 

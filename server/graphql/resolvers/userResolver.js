@@ -8,6 +8,7 @@ const {
   searchUsers,
   transformUser,
   updateUserArray,
+  userUpvote,
 } = require('../../db');
 
 module.exports = {
@@ -33,6 +34,7 @@ module.exports = {
         userInput.preferredLanguages || [],
         userInput.stackoverflowLink || '',
         false,
+        userInput.pullRequests || [],
       ],
     ];
     try {
@@ -115,6 +117,7 @@ module.exports = {
         personal_link: userInput.personalLink,
         preferred_languages: userInput.preferredLanguages,
         stackoverflow_link: userInput.stackoverflowLink,
+        pull_requests: userInput.pullRequests,
       };
       const queryResult = await transformUser('users', id, data);
       const result = {
@@ -135,6 +138,7 @@ module.exports = {
         personalLink: userInput.personal_link,
         preferredLanguages: userInput.preferred_languages,
         stackoverflowLink: userInput.stackoverflow_link,
+        pullRequests: userInput.pull_requests,
       };
       return result;
     } catch (err) {
@@ -144,6 +148,11 @@ module.exports = {
   updateUserArray: async args => {
     const { id, column, data, remove } = args;
     const [result] = await updateUserArray('users', column, id, data, remove);
+    return result;
+  },
+  userUpvote: async args => {
+    const { id } = args;
+    const [result] = await userUpvote('users', id);
     return result;
   },
 };

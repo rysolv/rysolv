@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const pool = require('../connect');
 
 // Import seed data
@@ -30,14 +31,13 @@ const seed = async () => {
 
   // populate data
   await createUser(userSeed);
-  await createIssue(issueSeed);
   await createOrganization(organzationSeed);
+  await createIssue(issueSeed);
   await createComment(commentSeed);
   await createPullRequest(pullRequestSeed);
 
   // Log results and end connection
   const t2 = Date.now();
-  // eslint-disable-next-line no-console
   console.log(`----Seeding complete in ${t2 - t1}ms----`);
   await printTables();
   console.log('seed ended');

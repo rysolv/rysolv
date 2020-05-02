@@ -9,6 +9,8 @@ import {
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT,
+  ADD_WATCH_FAILURE,
+  ADD_WATCH_SUCCESS,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ISSUE_FAILURE,
@@ -45,17 +47,18 @@ export const initialState = {
   issues: [],
   issueDetail: {},
   data: {
-    value: { error: '', value: 0 },
+    fundedAmount: { error: '', value: 0 },
     name: { error: '', value: '' },
     body: { error: '', value: '' },
     repo: { error: '', value: '' },
-    language: { error: '', value: '' },
+    language: { error: '', value: [] },
     importUrl: { error: '', value: '' },
   },
   loading: {
     addAttempt: false,
     addComment: false,
     addIssue: false,
+    addWatch: false,
     deleteIssue: false,
     issueDetail: false,
     issues: false,
@@ -101,6 +104,25 @@ const issuesReducer = produce((draft, { payload, type }) => {
       const { createComment } = payload;
       draft.issueDetail.comments.push(createComment);
       draft.loading.addComment = false;
+      break;
+    }
+    case ADD_WATCH_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.addWatch = false;
+      break;
+    }
+    case ADD_WATCH_SUCCESS: {
+      const { id, watching } = payload;
+      draft.issues.map((issue, index) => {
+        if (issue.id === id) {
+          draft.issues[index].watching = watching;
+        }
+      });
+      if (draft.issueDetail) {
+        draft.issueDetail.watching = watching;
+      }
+      draft.loading.addWatch = false;
       break;
     }
     case ADD_COMMENT: {
@@ -171,7 +193,14 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
-      draft[form][field].value = value;
+      if (form === 'filter') {
+        draft[form][field] = value;
+      } else if (field === 'language') {
+        draft[form][field].value = [];
+        value.map(language => draft[form][field].value.push(language.value));
+      } else {
+        draft[form][field].value = value;
+      }
       break;
     }
     case INPUT_ERROR: {

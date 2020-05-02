@@ -9,11 +9,13 @@ import IssueCard from './Card';
 import { BannerWrapper } from './styledComponents';
 
 const Issues = ({
+  activeUser,
   alerts: { error, success },
   clearAlerts,
   data,
   disabled,
   handleDeleteIssue,
+  handleIncrement,
   handleInputChange,
   handleNav,
   handleSearchIssues,
@@ -22,10 +24,12 @@ const Issues = ({
 }) => {
   const hasData = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
+    activeUser,
     data,
     handleDeleteIssue,
-    handleUpvote,
+    handleIncrement,
     handleNav,
+    handleUpvote,
   };
   const route = '/admin/issues/add';
   const viewToRender = hasData ? (
@@ -56,6 +60,7 @@ const Issues = ({
 };
 
 Issues.propTypes = {
+  activeUser: T.object,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
@@ -63,6 +68,7 @@ Issues.propTypes = {
   clearAlerts: T.func,
   data: T.array,
   disabled: T.bool.isRequired,
+  handleIncrement: T.func,
   handleDeleteIssue: T.func,
   handleUpvote: T.func,
   handleInputChange: T.func,
