@@ -28,12 +28,15 @@ export class RecentActivityView extends React.PureComponent {
           <StyledTitled>Recent activities</StyledTitled>
           <FundsContainer>
             {fundData.map(
-              ({ fundAmount, fundDate, issueName, user, userImage }, index) => (
+              (
+                { fundAmount, fundDate, id, issueName, user, userImage },
+                index,
+              ) => (
                 <FundWrapper key={`list-item-${index}`}>
                   <ProfileImageWrapper>
                     <ProfileImage
                       alt={user}
-                      detailRoute={`/admin/users/detail/${user}`}
+                      detailRoute={`/admin/users/detail/${id}`}
                       handleNav={handleNav}
                       profilePic={userImage}
                       size="4rem"

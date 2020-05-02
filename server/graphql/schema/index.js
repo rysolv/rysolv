@@ -135,7 +135,7 @@ module.exports = buildSchema(`
     getIssueComments(id: ID!): [Comment]
 
     oneIssue(id: ID!): IssueResult
-    oneUser(column: String!, query: String!): User!
+    oneUser(column: String!, query: ID!): User!
     oneOrganization(id: ID!): OrganizationResult
 
     searchIssues(value: String!): [Issue!]!

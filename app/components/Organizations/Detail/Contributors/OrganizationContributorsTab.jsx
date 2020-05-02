@@ -15,13 +15,13 @@ import {
 const OrganizationContributorsTab = ({ contributors, handleNav }) => (
   <ContributorsList>
     {contributors.map(
-      ({ firstName, isOwner, lastName, username, profilePic }) => (
+      ({ firstName, id, isOwner, lastName, profilePic, username }) => (
         <ContributorListItem key={username}>
           <ContributorContent>
             <ContributorImageWrapper>
               <ProfileImage
                 alt={username}
-                detailRoute={`/admin/users/detail/${username}`}
+                detailRoute={`/admin/users/detail/${id}`}
                 handleNav={handleNav}
                 profilePic={profilePic}
                 size="4.8rem"
@@ -30,7 +30,7 @@ const OrganizationContributorsTab = ({ contributors, handleNav }) => (
             <ContributorDetails>
               <span>
                 <ContributorName
-                  onClick={() => handleNav(`/admin/users/detail/${username}`)}
+                  onClick={() => handleNav(`/admin/users/detail/${id}`)}
                 >
                   {firstName} {lastName}
                 </ContributorName>{' '}

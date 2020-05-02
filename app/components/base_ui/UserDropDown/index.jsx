@@ -40,7 +40,7 @@ const MenuComponent = props => (
 );
 
 const UserDropDownMenu = ({ anchorEl, handleClose, activeUser }) => {
-  const { profilePic, username } = activeUser;
+  const { id, profilePic, username } = activeUser;
   return (
     <MenuComponent
       anchorEl={anchorEl}
@@ -51,7 +51,7 @@ const UserDropDownMenu = ({ anchorEl, handleClose, activeUser }) => {
       onClick={() => handleClose()}
     >
       <StyledMenuContainer>
-        <Link to={`/admin/users/detail/${username}`}>
+        <Link to={`/admin/users/detail/${id}`}>
           <StyledUserOverview>
             <StyledAvatar alt={username} src={profilePic} />
             {username}

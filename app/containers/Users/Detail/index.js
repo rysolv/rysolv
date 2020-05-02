@@ -25,7 +25,7 @@ export class DetailUser extends React.PureComponent {
         params: { id },
       },
     } = this.props;
-    dispatchFetchInfo({ username: id });
+    dispatchFetchInfo({ itemId: id });
   }
 
   render() {

@@ -51,12 +51,10 @@ export function* deleteUserSaga({ payload }) {
 }
 
 export function* fetchInfoSaga({ payload }) {
-  const { itemId, username } = payload;
-  const column = itemId ? 'id' : 'username';
-  const value = itemId || username;
+  const { itemId } = payload;
   const query = `
     query {
-      oneUser(column: "${column}", query: "${value}") {
+      oneUser(column: "id", query: "${itemId}") {
         id,
         createdDate,
         firstName,

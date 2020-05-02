@@ -38,7 +38,6 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
             name,
             pointsNumber,
             profilePic,
-            username,
           },
           index,
         ) => (
@@ -48,9 +47,9 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                 <MemberWrapper>
                   <NameWrapper
                     onClick={e =>
-                      navHelper(e, handleNav, `/admin/users/detail/${username}`)
+                      navHelper(e, handleNav, `/admin/users/detail/${id}`)
                     }
-                    href={`/admin/users/detail/${username}`}
+                    href={`/admin/users/detail/${id}`}
                   >
                     {name}
                   </NameWrapper>
@@ -71,7 +70,7 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                 <ImageContainer>
                   <ProfileImage
                     alt="Profile Image"
-                    detailRoute={`/admin/users/detail/${username}`}
+                    detailRoute={`/admin/users/detail/${id}`}
                     handleNav={handleNav}
                     profilePic={profilePic}
                     size="7.5rem"

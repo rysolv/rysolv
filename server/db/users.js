@@ -57,18 +57,17 @@ const createUser = async data => {
 };
 
 // DELETE single user
-const deleteUser = async (table, id) => {
-  const rows = await singleItem(table, id);
+const deleteUser = async (table, id, data) => {
+  const [rows] = await singleItem(table, id);
   if (rows) {
+    const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE ${table}
-      SET is_deleted
-      = true
-      WHERE (id='${id}')
+      SET ( id, created_date, ${userValues} )
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+      WHERE (id = '${id}')
       RETURNING *`;
-    const {
-      rows: [resultRow],
-    } = await singleQuery(queryText);
-    const { first_name, last_name } = resultRow;
+    await mapValues(queryText, [newObjectArray]);
+    const { first_name, last_name } = rows;
     return `${first_name} ${last_name} was successfully deleted from ${table}.`;
   }
   throw new Error(`Failed to delete user. ID not found in ${table}`);

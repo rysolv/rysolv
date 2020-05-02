@@ -30,12 +30,12 @@ const IssueDetail = ({
     rep,
     comments,
     open,
-    user: { username, profilePic },
+    user: { id: userId, username, profilePic },
   } = data;
 
   const primaryUser = {
     small: true,
-    detailRoute: `/admin/users/detail/${username}`,
+    detailRoute: `/admin/users/detail/${userId}`,
     alt: username,
     username,
     profilePic,
@@ -45,7 +45,7 @@ const IssueDetail = ({
     comments.map(comment => {
       const user = {
         alt: comment.username,
-        detailRoute: `/admin/users/detail/${comment.username}`,
+        detailRoute: `/admin/users/detail/${comment.userId}`,
         profilePic: comment.profilePic,
         size: '4rem',
         username: comment.username,

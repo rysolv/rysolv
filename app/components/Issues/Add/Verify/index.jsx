@@ -29,13 +29,13 @@ export class VerifyForm extends React.PureComponent {
   render() {
     const {
       data: { repo, body, language, value, name },
-      activeUser: { username, profilePic },
+      activeUser: { id, profilePic, username },
       handleNav,
     } = this.props;
 
     const primaryUser = {
       small: true,
-      detailRoute: `/admin/users/detail/${username}`,
+      detailRoute: `/admin/users/detail/${id}`,
       alt: username,
       username,
       profilePic,

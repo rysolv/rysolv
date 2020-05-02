@@ -159,6 +159,7 @@ export function* fetchIssueDetailSaga({ payload }) {
       }
       getIssueComments(id: "${id}") {
         body
+        userId
         username
         createdDate
         profilePic
@@ -181,6 +182,7 @@ export function* fetchIssueDetailSaga({ payload }) {
     const userQuery = `
       query {
         oneUser(column: "id", query: "${oneIssue.contributor[0]}") {
+          id,
           username,
           profilePic,
         }
