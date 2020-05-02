@@ -24,7 +24,7 @@ export const filterIssues = (array, { issues }, { value }) => {
       return -1;
     }
     if (issues === 'Most Funded') {
-      if (a.value < b.value) {
+      if (a.fundedAmount < b.fundedAmount) {
         return 1
       }
       return -1;

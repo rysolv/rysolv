@@ -128,14 +128,7 @@ export function* fetchInfoSaga({ payload }) {
 
 export function* saveInfoSaga({ payload }) {
   const {
-    requestBody: {
-      organizationUrl,
-      description,
-      logo,
-      name,
-      repoUrl,
-      verified,
-    },
+    requestBody: { organizationUrl, description, logo, name, repoUrl },
   } = payload;
   const query = `
   mutation{
@@ -145,7 +138,6 @@ export function* saveInfoSaga({ payload }) {
       repoUrl: "${repoUrl}",
       organizationUrl: "${organizationUrl}",
       logo: "${logo}",
-      verified: ${verified},
     })
     { id }
   }`;

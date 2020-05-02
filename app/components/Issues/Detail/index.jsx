@@ -77,7 +77,7 @@ const IssueDetail = ({
           <UpvotePanel>
             <StyledFlatIconButton
               Icon={<Upvote />}
-              onClick={() => handleUpvote({ itemId: id })}
+              onClick={() => handleUpvote({ issueId: id, userId })}
             />
             {rep}
           </UpvotePanel>

@@ -39,6 +39,7 @@ const issueCardValues = `
 
 const issueDetailValues = `
   ${issueCardValues},
+  users.id AS "userId",
   users.username,
   users.profile_pic AS "profilePic"
 `;

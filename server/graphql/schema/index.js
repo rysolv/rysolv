@@ -39,6 +39,7 @@ module.exports = buildSchema(`
     profilePic: String
     rep: Int
     repo: String
+    userId: ID
     username: String
     fundedAmount: Float
     watching: [String]

@@ -140,6 +140,7 @@ export function* fetchIssueDetailSaga({ payload }) {
           fundedAmount,
           watching,
           open,
+          userId,
           username,
           profilePic
         }

@@ -25,13 +25,22 @@ import {
 const OrganizationIssuesTab = ({ handleNav, handleUpvote, issues }) => (
   <IssuesList>
     {issues.map(
-      ({ id, attempting, modifiedDate, name, open, rep, fundedAmount }) => (
+      ({
+        attempting,
+        fundedAmount,
+        id,
+        modifiedDate,
+        name,
+        open,
+        rep,
+        userId,
+      }) => (
         <IssueListItem key={`list-item-${id}`}>
           <IssueContent>
             <StyledUpvotePanel>
               <StyledFlatIconButton
                 Icon={<Upvote />}
-                onClick={() => handleUpvote({ itemId: id })}
+                onClick={() => handleUpvote({ issueId: id, userId })}
               />
               {rep}
             </StyledUpvotePanel>
