@@ -1,13 +1,13 @@
 import React, { useState, Fragment } from 'react';
 import T from 'prop-types';
+
 import { Star, DownArrow } from '../Icons';
 import UserDropDownMenu from '../UserDropDown';
-
 import {
-  StyledUserNavBar,
-  StyledAvatar,
-  NumberContainer,
   IconWrapper,
+  NumberContainer,
+  StyledAvatar,
+  StyledUserNavBar,
 } from './styledComponents';
 
 const UserNavBar = ({ activeUser }) => {

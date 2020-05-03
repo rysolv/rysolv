@@ -9,13 +9,13 @@ import IssueCard from 'components/Issues';
 
 import { makeSelectActiveUser } from 'containers/Auth/selectors';
 import {
+  addAttempt,
   clearAlerts,
   deleteIssue,
   fetchIssues,
   inputChange,
   searchIssues,
   upvoteIssue,
-  updateArray,
 } from '../actions';
 import {
   makeSelectIssues,
@@ -39,7 +39,6 @@ export class IssuesOverview extends React.PureComponent {
 
   render() {
     const {
-      // dispatchFetchInfo,
       activeUser,
       alerts,
       disabled,
@@ -62,7 +61,6 @@ export class IssuesOverview extends React.PureComponent {
         error={error}
         loading={loading}
         propsToPassDown={{
-          // handleFetchInfo: dispatchFetchInfo,
           activeUser,
           alerts,
           disabled,
@@ -86,7 +84,6 @@ IssuesOverview.propTypes = {
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
-  // dispatchFetchInfo: T.func,
   disabled: T.bool,
   dispatchFetchIssues: T.func,
   error: T.oneOfType([T.object, T.bool]),
@@ -127,7 +124,7 @@ function mapDispatchToProps(dispatch) {
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
     handleUpvote: payload => dispatch(upvoteIssue(payload)),
-    handleIncrement: payload => dispatch(updateArray(payload)),
+    handleIncrement: payload => dispatch(addAttempt(payload)),
 
     /*
      * Reducer : Router

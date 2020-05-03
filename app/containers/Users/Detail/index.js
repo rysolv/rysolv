@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -15,47 +15,40 @@ import {
 } from '../selectors';
 import { DetailWrapper } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
-export class DetailUser extends React.PureComponent {
-  componentDidMount() {
+const DetailUser = ({
+  data,
+  dispatchFetchInfo,
+  error,
+  filterValues,
+  handleInputChange,
+  handleNav,
+  loading,
+  match: {
+    params: { id },
+  },
+}) => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-    const {
-      dispatchFetchInfo,
-      match: {
-        params: { id },
-      },
-    } = this.props;
-    dispatchFetchInfo({ username: id });
-  }
+    dispatchFetchInfo({ itemId: id });
+  }, [id]);
 
-  render() {
-    const {
-      data,
-      error,
-      filterValues,
-      handleInputChange,
-      handleNav,
-      loading,
-    } = this.props;
-
-    return (
-      <DetailWrapper>
-        <AsyncRender
-          asyncData={data}
-          component={UserDetailView}
-          error={error}
-          isRequiredData
-          loading={loading}
-          propsToPassDown={{
-            filterValues,
-            handleInputChange,
-            handleNav,
-          }}
-        />
-      </DetailWrapper>
-    );
-  }
-}
+  return (
+    <DetailWrapper>
+      <AsyncRender
+        asyncData={data}
+        component={UserDetailView}
+        error={error}
+        isRequiredData
+        loading={loading}
+        propsToPassDown={{
+          filterValues,
+          handleInputChange,
+          handleNav,
+        }}
+      />
+    </DetailWrapper>
+  );
+};
 
 DetailUser.propTypes = {
   data: T.object,

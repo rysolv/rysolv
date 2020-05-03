@@ -1,12 +1,14 @@
 import styled from 'styled-components';
+
 import { markdownHeader, defaultFontSize } from 'defaultStyleHelper';
+
 import { SecondaryButton } from '../base_ui';
 
 export const MarkdownContainer = styled.div`
-  width: 100%;
+  font-size: ${defaultFontSize};
   margin: 0;
   text-align: left;
-  font-size: ${defaultFontSize};
+  width: 100%;
 
   .editor-toolbar,
   a:before,

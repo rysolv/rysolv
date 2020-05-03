@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import {
-  hoverLinkColor,
-  textColor,
-  defaultFontSize,
-  subheaderFontSize,
-  detailFontSize,
-} from 'defaultStyleHelper';
+
 import { FlatIconButton } from 'components/base_ui';
+import {
+  defaultFontSize,
+  detailFontSize,
+  hoverLinkColor,
+  subheaderFontSize,
+  textColor,
+} from 'defaultStyleHelper';
 
 export const IssueCardIconWrapper = styled.div`
   display: inline-flex;
@@ -44,9 +45,9 @@ export const NameWrapper = styled.a`
 `;
 
 export const OrganizationNameWrapper = styled.a`
-  display: flex;
+  align-items: center;
   color: ${textColor};
-  display: inline-block;
+  display: flex;
   font-weight: bold;
 `;
 
@@ -93,6 +94,10 @@ export const StyledListItem = styled.li`
   margin: 1rem;
   flex-direction: row;
   list-style-type: none;
+`;
+
+export const StyledVerified = styled.div`
+  padding: 0 0.5rem;
 `;
 
 export const UpvotePanel = styled.div`

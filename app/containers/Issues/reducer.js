@@ -5,6 +5,7 @@ import remove from 'lodash/remove';
 import {
   ADD_ATTEMPT_FAILURE,
   ADD_ATTEMPT_SUCCESS,
+  ADD_ATTEMPT,
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT,
@@ -30,7 +31,6 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
-  UPDATE_ARRAY,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE,
@@ -55,7 +55,7 @@ export const initialState = {
     importUrl: { error: '', value: '' },
   },
   loading: {
-    updateArray: false,
+    addAttempt: false,
     addComment: false,
     addIssue: false,
     addWatch: false,
@@ -81,17 +81,17 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case ADD_ATTEMPT_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.updateArray = false;
+      draft.loading.addAttempt = false;
       break;
     }
     case ADD_ATTEMPT_SUCCESS: {
       const { attempting } = payload;
       draft.issueDetail.attempting = attempting;
-      draft.loading.updateArray = false;
+      draft.loading.addAttempt = false;
       break;
     }
-    case UPDATE_ARRAY: {
-      draft.loading.updateArray = true;
+    case ADD_ATTEMPT: {
+      draft.loading.addAttempt = true;
       break;
     }
     case ADD_COMMENT_FAILURE: {
@@ -214,17 +214,17 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.addCompany = false;
+      draft.loading.addIssue = false;
       break;
     }
     case SAVE_INFO_SUCCESS: {
       const { message } = payload;
       draft.alerts.success = { message };
-      draft.loading.addCompany = false;
+      draft.loading.addIssue = false;
       break;
     }
     case SAVE_INFO: {
-      draft.loading.addCompany = true;
+      draft.loading.addIssue = true;
       break;
     }
     case SEARCH_ISSUES_FAILURE: {

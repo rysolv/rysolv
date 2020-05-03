@@ -5,14 +5,14 @@ import { ProfileImage } from 'components/base_ui';
 import Markdown from 'components/Markdown';
 
 import {
-  StyledPrimaryButton,
-  ProfileContainer,
-  NewCommentContainer,
   FlexContainer,
+  NewCommentContainer,
+  ProfileContainer,
+  StyledPrimaryButton,
 } from './styledComponents';
 
 const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
-  const { username, profilePic } = activeUser;
+  const { id, profilePic, username } = activeUser;
   const [body, setBody] = useState('');
 
   const handleClick = () => {
@@ -25,7 +25,7 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
       <ProfileContainer style={{ marginRight: '1rem' }}>
         <ProfileImage
           alt={username}
-          detailRoute={`/admin/users/detail/${username}`}
+          detailRoute={`/admin/users/detail/${id}`}
           handleNav={handleNav}
           profilePic={profilePic}
           size="4rem"

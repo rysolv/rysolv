@@ -70,9 +70,9 @@ export const StyledListItem = styled.li`
   color: ${textColor};
   display: flex;
   flex-direction: column;
-  width: 100%;
   margin: 0.5rem 1rem;
 `;
+
 export const StyledOrganizationCard = styled.div`
   display: flex;
   flex-direction: column;

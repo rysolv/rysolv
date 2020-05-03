@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 
 import { BaseDropDownMenu } from 'components/base_ui';
-import { UpvotePanel } from 'components/Issues/IssueCard/styledComponents';
+import { UpvotePanel } from 'components/Issues/Card/styledComponents';
 
 import {
   defaultFontSize,
@@ -14,17 +14,6 @@ import {
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
   width: 45%;
-`;
-
-export const CompanyUrl = styled.a`
-  align-items: center;
-  display: flex;
-  margin-right: 2rem;
-
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
 `;
 
 export const ContentWrapper = styled.div`
@@ -144,7 +133,7 @@ export const Image = styled.img`
   width: 10rem;
 `;
 
-export const IssueActiveAttempts = styled.div`
+export const IssueAttempts = styled.div`
   align-self: center;
   color: #6a737d;
   margin-left: 1rem;
@@ -265,6 +254,17 @@ export const NameWrapper = styled.div`
   display: flex;
   display: flex;
   margin-bottom: 1rem;
+`;
+
+export const OrganizationUrl = styled.a`
+  align-items: center;
+  display: flex;
+  margin-right: 2rem;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
 
 export const ProfileImageWrapper = styled.div`

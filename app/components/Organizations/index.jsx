@@ -1,53 +1,46 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import { ErrorSuccessBanner } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
-import OrganizationCard from './OrganizationCard';
-import OrganizationFilter from './OrganizationFilter';
-import {
-  BannerWrapper,
-  OrganizationWrapper,
-  OrganizationCardWrapper,
-} from './styledComponents';
+import OrganizationCard from './Card';
+import { BannerWrapper } from './styledComponents';
 
 const Organizations = ({
   alerts: { error, success },
   clearAlerts,
   data,
   disabled,
-  handleDeleteCompany,
+  handleDeleteOrganization,
   handleFetchInfo,
   handleInputChange,
   handleNav,
-  handleSearchCompanies,
+  handleSearchOrganizations,
   search,
 }) => {
-  const hasCompanies = data.length > 0 && !data.includes(null);
+  const hasOrganizations = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
     data,
-    handleDeleteCompany,
+    handleDeleteOrganization,
     handleFetchInfo,
     handleNav,
   };
   const route = '/admin/organizations/add';
-  const viewToRender = hasCompanies ? (
-    <OrganizationCardWrapper>
-      <OrganizationCard {...propsToPassDown} />
-    </OrganizationCardWrapper>
+  const viewToRender = hasOrganizations ? (
+    <OrganizationCard {...propsToPassDown} />
   ) : (
     <EmptyCard />
   );
   return (
-    <div>
+    <Fragment>
       <BannerWrapper>
         <AdminSubHeader
           disabled={disabled}
           handleInputChange={handleInputChange}
           handleNav={handleNav}
-          handleSearch={handleSearchCompanies}
+          handleSearch={handleSearchOrganizations}
           route={route}
           search={search}
         />
@@ -57,11 +50,8 @@ const Organizations = ({
           success={success}
         />
       </BannerWrapper>
-      <OrganizationWrapper>
-        <OrganizationFilter />
-        {viewToRender}
-      </OrganizationWrapper>
-    </div>
+      {viewToRender}
+    </Fragment>
   );
 };
 
@@ -73,11 +63,11 @@ Organizations.propTypes = {
   clearAlerts: T.func,
   data: T.array,
   disabled: T.bool.isRequired,
-  handleDeleteCompany: T.func,
+  handleDeleteOrganization: T.func,
   handleFetchInfo: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
-  handleSearchCompanies: T.func,
+  handleSearchOrganizations: T.func,
   search: T.object,
 };
 

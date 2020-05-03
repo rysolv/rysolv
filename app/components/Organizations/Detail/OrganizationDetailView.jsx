@@ -4,19 +4,19 @@ import T from 'prop-types';
 import { ConditionalRender, Verified } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
-import CompanyDetailTabs from './CompanyDetailTabs';
+import OrganizationDetailTabs from './OrganizationDetailTabs';
 import TopLanguagesView from './TopLanguagesView';
 import RecentActivityView from './RecentActivityView';
 import {
   ContentWrapper,
   Description,
-  Divider,
-  CompanyUrl,
   DetailViewContainer,
+  Divider,
   Image,
   MainTabs,
   Name,
   NameWrapper,
+  OrganizationUrl,
   RepoUrl,
   SidebarTabs,
   StyledIcon,
@@ -38,6 +38,7 @@ const fundData = [
   {
     fundAmount: '10',
     fundDate: '10/12/2018',
+    id: 'c234823ndhfudsf',
     issueName: 'react-native-community/react-native-camera# 2786',
     user: 'ceefour',
     userImage: 'https://rysolv.s3.us-east-2.amazonaws.com/tylerprofile.png',
@@ -45,23 +46,24 @@ const fundData = [
   {
     fundAmount: '2',
     fundDate: '03/15/2017',
+    id: 'sdfb23i8budsf',
     issueName: 'react-native-community/react-native-camera# 959',
     user: 'sibelius',
     userImage: 'https://rysolv.s3.us-east-2.amazonaws.com/paulprofile.png',
   },
 ];
 
-export class CompanyDetailView extends React.PureComponent {
+export class OrganizationDetailView extends React.PureComponent {
   render() {
     const {
       data: {
-        companyUrl,
         contributors,
         description,
         issues,
-        languages,
         logo,
         name,
+        organizationUrl,
+        preferredLanguages,
         repoUrl,
         verified,
       },
@@ -84,10 +86,10 @@ export class CompanyDetailView extends React.PureComponent {
             </NameWrapper>
             <Description>{description}</Description>
             <UrlWrapper>
-              <CompanyUrl href={companyUrl} target="_blank">
+              <OrganizationUrl href={organizationUrl} target="_blank">
                 <StyledIcon>{LinkIcon}</StyledIcon>
-                {companyUrl}
-              </CompanyUrl>
+                {organizationUrl}
+              </OrganizationUrl>
               <RepoUrl href={repoUrl} target="_blank">
                 <StyledIcon>{LinkIcon}</StyledIcon>
                 {repoUrl}
@@ -97,7 +99,7 @@ export class CompanyDetailView extends React.PureComponent {
         </DetailViewContainer>
         <TabsContainer>
           <MainTabs>
-            <CompanyDetailTabs
+            <OrganizationDetailTabs
               contributors={contributors}
               filterValues={filterValues}
               handleInputChange={handleInputChange}
@@ -107,7 +109,7 @@ export class CompanyDetailView extends React.PureComponent {
             />
           </MainTabs>
           <SidebarTabs>
-            <TopLanguagesView languages={languages} />
+            <TopLanguagesView preferredLanguages={preferredLanguages} />
             <Divider />
             <RecentActivityView fundData={fundData} handleNav={handleNav} />
           </SidebarTabs>
@@ -117,7 +119,7 @@ export class CompanyDetailView extends React.PureComponent {
   }
 }
 
-CompanyDetailView.propTypes = {
+OrganizationDetailView.propTypes = {
   data: T.object,
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
@@ -125,4 +127,4 @@ CompanyDetailView.propTypes = {
   handleUpvote: T.func,
 };
 
-export default CompanyDetailView;
+export default OrganizationDetailView;

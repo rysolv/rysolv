@@ -2,20 +2,20 @@ import React from 'react';
 import T from 'prop-types';
 
 import { MainTextInput } from 'components/base_ui';
-import { companyDataDictionary } from 'containers/Organizations/constants';
+import { organizationDataDictionary } from 'containers/Organizations/constants';
 
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 
 // eslint-disable-next-line arrow-body-style
 const ManualForm = ({ data, handleInputChange }) => {
   // eslint-disable-next-line no-param-reassign
-  const { companyUrl, description, logo, name, repoUrl } = data;
+  const { organizationUrl, description, logo, name, repoUrl } = data;
   return (
     <InputFormWrapper>
       <MainTextInput
         error={!!name.error}
         helperText={name.error}
-        label={companyDataDictionary.name}
+        label={organizationDataDictionary.name}
         onChange={e =>
           handleInputChange({
             field: 'name',
@@ -28,7 +28,7 @@ const ManualForm = ({ data, handleInputChange }) => {
       <MainTextInput
         error={!!description.error}
         helperText={description.error}
-        label={companyDataDictionary.description}
+        label={organizationDataDictionary.description}
         onChange={e =>
           handleInputChange({
             field: 'description',
@@ -41,7 +41,7 @@ const ManualForm = ({ data, handleInputChange }) => {
       <MainTextInput
         error={!!logo.error}
         helperText={logo.error}
-        label={companyDataDictionary.logo}
+        label={organizationDataDictionary.logo}
         onChange={e =>
           handleInputChange({
             field: 'logo',
@@ -53,22 +53,22 @@ const ManualForm = ({ data, handleInputChange }) => {
       />
       <HorizontalWrapper>
         <MainTextInput
-          error={!!companyUrl.error}
-          helperText={companyUrl.error}
-          label={companyDataDictionary.companyUrl}
+          error={!!organizationUrl.error}
+          helperText={organizationUrl.error}
+          label={organizationDataDictionary.organizationUrl}
           onChange={e =>
             handleInputChange({
-              field: 'companyUrl',
+              field: 'organizationUrl',
               form: 'data',
               value: e.target.value,
             })
           }
-          value={companyUrl.value}
+          value={organizationUrl.value}
         />
         <MainTextInput
           error={!!repoUrl.error}
           helperText={repoUrl.error}
-          label={companyDataDictionary.repoUrl}
+          label={organizationDataDictionary.repoUrl}
           onChange={e =>
             handleInputChange({
               field: 'repoUrl',

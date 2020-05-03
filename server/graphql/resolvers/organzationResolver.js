@@ -21,13 +21,14 @@ module.exports = {
         organizationInput.name,
         organizationInput.description,
         organizationInput.repoUrl,
-        organizationInput.companyUrl || '',
+        organizationInput.organizationUrl || '',
         organizationInput.issues || [],
         organizationInput.logo || '',
         organizationInput.verified || false,
         organizationInput.contributors || [],
         organizationInput.ownerId || uuidv4(),
         organizationInput.totalFunded || 0,
+        organizationInput.preferredLanguages || [],
       ],
     ];
     try {
@@ -101,13 +102,14 @@ module.exports = {
         name: organizationInput.name,
         description: organizationInput.description,
         repo_url: organizationInput.repoUrl,
-        companyUrl: organizationInput.companyUrl,
+        organizationUrl: organizationInput.organizationUrl,
         issues: organizationInput.issues,
         logo: organizationInput.logo,
         verified: organizationInput.verified,
         contributors: organizationInput.contributors,
         owner_id: organizationInput.ownerId,
         total_funded: organizationInput.totalFunded,
+        preferred_languages: organizationInput.preferredLanguages,
       };
       const queryResult = await transformOrganization(
         'organizations',
@@ -121,13 +123,14 @@ module.exports = {
         name: queryResult.name,
         description: queryResult.description,
         repoUrl: queryResult.repo_url,
-        companyUrl: queryResult.companyUrl,
+        organizationUrl: queryResult.organizationUrl,
         issues: queryResult.issues,
         logo: queryResult.logo,
         verified: queryResult.verified,
         contributors: queryResult.contributors,
         ownerId: queryResult.owner_id,
         totalFunded: queryResult.total_funded,
+        preferredLanguages: queryResult.preferred_languages,
       };
       return result;
     } catch (err) {

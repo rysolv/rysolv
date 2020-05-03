@@ -7,9 +7,9 @@ import { navHelper } from 'utils/globalHelpers';
 import {
   FundingWrapper,
   IconToolTip,
-  WatchButton,
-  Verified,
   LanguageWrapper,
+  Verified,
+  WatchButton,
 } from 'components/base_ui';
 
 import {
@@ -19,6 +19,7 @@ import {
   NameWrapper,
   OrganizationNameWrapper,
   StyledIssueHeader,
+  StyledVerified,
 } from './styledComponents';
 
 const IssueDetailHeader = ({
@@ -57,9 +58,9 @@ const IssueDetailHeader = ({
 
           {organizationVerified ? (
             <IconToolTip toolTipText="Verified Contributor">
-              <div>
+              <StyledVerified>
                 <Verified />
-              </div>
+              </StyledVerified>
             </IconToolTip>
           ) : (
             ''

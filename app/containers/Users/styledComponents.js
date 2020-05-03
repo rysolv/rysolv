@@ -1,13 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const StyledCompanyCard = styled.div`
-  border-radius: 0 0.5rem 0.5rem;
-  border: 0.1rem solid grey;
-  color: rgba(0, 0, 0, 0.7);
-  width: 100%;
-`;
-
 export const StyledListItem = styled.li`
   display: flex;
   flex-direction: row;

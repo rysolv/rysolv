@@ -2,11 +2,11 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 import {
+  detailFontSize,
   primaryButtonColor,
   primaryButtonHoverColor,
   secondaryButtonColor,
   secondaryButtonHoverColor,
-  detailFontSize,
 } from 'defaultStyleHelper';
 
 import BaseButton from './BaseButton';
@@ -20,10 +20,10 @@ const baseButtonStyle = css`
   box-shadow: none;
   color: white;
   font-size: ${detailFontSize};
-  white-space: nowrap;
   font-weight: 400;
   margin: 1rem;
   min-width: 6.5rem;
+  white-space: nowrap;
   width: auto;
 `;
 

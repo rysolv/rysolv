@@ -39,6 +39,7 @@ module.exports = buildSchema(`
     profilePic: String
     rep: Int
     repo: String
+    userId: ID
     username: String
     fundedAmount: Float
     watching: [String]
@@ -53,7 +54,6 @@ module.exports = buildSchema(`
     comments: [ID]
     attempting: [ID]
     attempts: Int
-    activeAttempts: Int
     contributor: [String]
     rep: Int
     watching: [String]
@@ -76,10 +76,15 @@ module.exports = buildSchema(`
     username: String
     githubLink: String
     personalLink: String
-    preferredLanguages: String
+    preferredLanguages: [String]
     stackoverflowLink: String
     pullRequests: [String]
     upvotes: [ID]
+    activePullRequests: Int
+    completedPullRequests: Int
+    dollarsEarned: Int
+    isOnline: Boolean
+    rejectedPullRequests: Int
   }
 
   input UserInput {
@@ -99,6 +104,11 @@ module.exports = buildSchema(`
     stackoverflowLink: String
     pullRequests: [String]
     upvotes: [ID]
+    activePullRequests: Int
+    completedPullRequests: Int
+    dollarsEarned: Int
+    isOnline: Boolean
+    rejectedPullRequests: Int
   }
 
   type Organization {
@@ -108,20 +118,21 @@ module.exports = buildSchema(`
     name: String!
     description: String!
     repoUrl: String!
-    companyUrl: String
+    organizationUrl: String
     issues: [Object]
     logo: String
     verified: Boolean
     contributors: [Object]
     ownerId: ID
     totalFunded: Float
+    preferredLanguages: [String]
   }
 
   input OrganizationInput {
     name: String
     description: String
     repoUrl: String
-    companyUrl: String
+    organizationUrl: String
     logo: String
     verified: Boolean
   }
@@ -142,7 +153,7 @@ module.exports = buildSchema(`
     getIssueComments(id: ID!): [Comment]
 
     oneIssue(id: ID!): IssueResult
-    oneUser(column: String!, query: String!): User!
+    oneUser(column: String!, query: ID!): User!
     oneOrganization(id: ID!): OrganizationResult
 
     searchIssues(value: String!): [Issue!]!

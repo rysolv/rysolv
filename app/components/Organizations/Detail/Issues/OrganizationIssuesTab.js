@@ -3,11 +3,11 @@ import T from 'prop-types';
 import moment from 'moment';
 
 import { Upvote } from 'components/base_ui';
-import { StyledFlatIconButton } from 'components/Issues/IssueCard/styledComponents';
+import { StyledFlatIconButton } from 'components/Issues/Card/styledComponents';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
-  IssueActiveAttempts,
+  IssueAttempts,
   IssueContent,
   IssueContentInfo,
   IssueDetail,
@@ -22,18 +22,26 @@ import {
   StyledUpvotePanel,
 } from '../styledComponents';
 
-const CompanyIssuesTab = ({ handleNav, handleUpvote, issues }) => (
+const OrganizationIssuesTab = ({ handleNav, handleUpvote, issues }) => (
   <IssuesList>
     {issues.map(
-      ({ id, attempting, modifiedDate, name, open, rep, fundedAmount }) => (
+      ({
+        attempting,
+        fundedAmount,
+        id,
+        modifiedDate,
+        name,
+        open,
+        rep,
+        userId,
+      }) => (
         <IssueListItem key={`list-item-${id}`}>
           <IssueContent>
             <StyledUpvotePanel>
               <StyledFlatIconButton
                 Icon={<Upvote />}
-                onClick={() => handleUpvote({ itemId: id })}
+                onClick={() => handleUpvote({ issueId: id, userId })}
               />
-
               {rep}
             </StyledUpvotePanel>
             <IssueContentInfo>
@@ -51,9 +59,7 @@ const CompanyIssuesTab = ({ handleNav, handleUpvote, issues }) => (
                     <IssueOpen open={open}>
                       {open ? 'Funded' : 'Unfunded'}
                     </IssueOpen>
-                    <IssueActiveAttempts>
-                      {attempting.length} active attempts
-                    </IssueActiveAttempts>
+                    <IssueAttempts>{attempting.length} Attempts</IssueAttempts>
                   </IssueOpenWrapper>
                 </IssueNameWrapper>
                 <IssueFundedAmount>
@@ -68,10 +74,10 @@ const CompanyIssuesTab = ({ handleNav, handleUpvote, issues }) => (
   </IssuesList>
 );
 
-CompanyIssuesTab.propTypes = {
+OrganizationIssuesTab.propTypes = {
   issues: T.array,
   handleNav: T.func,
   handleUpvote: T.func,
 };
 
-export default CompanyIssuesTab;
+export default OrganizationIssuesTab;

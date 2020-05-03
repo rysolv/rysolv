@@ -1,27 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import T from 'prop-types';
+
 import iconDictionary from 'utils/iconDictionary';
 
 import {
-  StyledAvatar,
-  StyledMenu,
-  StyledMenuItem,
-  StyledMenuContainer,
   IconWrapper,
-  StyledUserOverview,
   MenuItemLabel,
   MenuItemValue,
+  StyledAvatar,
+  StyledMenu,
+  StyledMenuContainer,
+  StyledMenuItem,
+  StyledUserOverview,
 } from './styledComponents';
 
 import { FundingWrapper } from '../StyledWrappers';
 import { MonocleIcon } from '../Icons';
 
-const SettingsIcon = iconDictionary('settings');
-const ExitIcon = iconDictionary('exit');
 const AttemptIcon = iconDictionary('attempt');
+const ExitIcon = iconDictionary('exit');
 const FundedIcon = iconDictionary('funded');
 const PullRequestIcon = iconDictionary('pullRequest');
+const SettingsIcon = iconDictionary('settings');
 
 const MenuComponent = props => (
   <StyledMenu
@@ -39,13 +40,14 @@ const MenuComponent = props => (
   />
 );
 
-const UserDropDownMenu = ({ anchorEl, handleClose, activeUser }) => {
+const UserDropDownMenu = ({ activeUser, anchorEl, handleClose }) => {
   const {
+    attempting,
+    id,
     profilePic,
+    pullRequests,
     username,
     watching,
-    attempting,
-    pullRequests,
   } = activeUser;
   return (
     <MenuComponent
@@ -57,7 +59,7 @@ const UserDropDownMenu = ({ anchorEl, handleClose, activeUser }) => {
       onClick={() => handleClose()}
     >
       <StyledMenuContainer>
-        <Link to={`/admin/users/detail/${username}`}>
+        <Link to={`/admin/users/detail/${id}`}>
           <StyledUserOverview>
             <StyledAvatar alt={username} src={profilePic} />
             {username}

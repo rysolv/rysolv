@@ -7,7 +7,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
 import { clearForm } from './actions';
-import { companyTypeDictionary } from './helpers';
+import { organizationTypeDictionary } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -22,7 +22,7 @@ export class Organizations extends React.PureComponent {
 
   render() {
     const { match, view } = this.props;
-    const Component = companyTypeDictionary[view];
+    const Component = organizationTypeDictionary[view];
     return (
       <Fragment>
         <Component match={match} />
@@ -54,7 +54,6 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'organizations', reducer });
-
 const withSaga = injectSaga({ key: 'organizations', saga });
 
 export default compose(

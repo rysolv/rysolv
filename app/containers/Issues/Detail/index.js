@@ -9,10 +9,10 @@ import AsyncRender from 'components/AsyncRender';
 import IssueDetail from 'components/Issues/Detail';
 import { makeSelectActiveUser } from 'containers/Auth/selectors';
 import {
+  addAttempt,
   addComment,
   clearAlerts,
   fetchIssueDetail,
-  updateArray,
   upvoteIssue,
 } from '../actions';
 import {
@@ -102,7 +102,7 @@ function mapDispatchToProps(dispatch) {
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleUpvote: payload => dispatch(upvoteIssue(payload)),
     handleComment: payload => dispatch(addComment(payload)),
-    handleIncrement: payload => dispatch(updateArray(payload)),
+    handleIncrement: payload => dispatch(addAttempt(payload)),
     /**
      * Reducer : Router
      */

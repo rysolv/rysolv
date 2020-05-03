@@ -1,12 +1,12 @@
 import {
-  UPDATE_ARRAY,
   ADD_ATTEMPT_FAILURE,
   ADD_ATTEMPT_SUCCESS,
-  ADD_WATCH_FAILURE,
-  ADD_WATCH_SUCCESS,
-  ADD_COMMENT,
+  ADD_ATTEMPT,
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
+  ADD_COMMENT,
+  ADD_WATCH_FAILURE,
+  ADD_WATCH_SUCCESS,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ISSUE_FAILURE,
@@ -33,13 +33,6 @@ import {
   VERIFY_INFO,
 } from './constants';
 
-export function updateArray(payload) {
-  return {
-    payload,
-    type: UPDATE_ARRAY,
-  };
-}
-
 export function addAttemptFailure(payload) {
   return {
     payload,
@@ -51,6 +44,13 @@ export function addAttemptSuccess(payload) {
   return {
     payload,
     type: ADD_ATTEMPT_SUCCESS,
+  };
+}
+
+export function addAttempt(payload) {
+  return {
+    payload,
+    type: ADD_ATTEMPT,
   };
 }
 

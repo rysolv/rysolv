@@ -5,13 +5,13 @@ import {
   CommentIcon,
   FundingWrapper,
   IconToolTip,
+  LanguageWrapper,
   Upvote,
   Verified,
-  LanguageWrapper,
   WatchButton,
 } from 'components/base_ui';
-import { formatDollarAmount, navHelper } from 'utils/globalHelpers';
 import SettingsMenu from 'components/SettingsMenu';
+import { formatDollarAmount, navHelper } from 'utils/globalHelpers';
 import IconDictionary from 'utils/iconDictionary';
 
 import {
@@ -129,7 +129,7 @@ const IssueCard = ({
                       <CommentIcon />
                     </IssueCardIconWrapper>
                     <IssueCardLabelWrapper>
-                      {comments.length} comments
+                      {comments.length} Comments
                     </IssueCardLabelWrapper>
                   </IssueCardItem>
                 ) : null}
@@ -140,7 +140,7 @@ const IssueCard = ({
                       {AttemptingIcon}
                     </IssueCardIconWrapper>
                     <IssueCardLabelWrapper>
-                      {attempting.length} attempting
+                      {attempting.length} Attempting
                     </IssueCardLabelWrapper>
                   </IssueCardItem>
                 ) : null}

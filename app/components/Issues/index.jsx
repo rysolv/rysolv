@@ -5,23 +5,17 @@ import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import { ErrorSuccessBanner } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
-import IssueCard from './IssueCard';
-import IssueFilter from './IssueFilter';
-import {
-  BannerWrapper,
-  IssueCardWrapper,
-  IssuesWrapper,
-} from './styledComponents';
+import IssueCard from './Card';
+import { BannerWrapper } from './styledComponents';
 
 const Issues = ({
+  activeUser,
   alerts: { error, success },
   clearAlerts,
   data,
   disabled,
   handleDeleteIssue,
-  activeUser,
   handleIncrement,
-  // handleFetchInfo,
   handleInputChange,
   handleNav,
   handleSearchIssues,
@@ -33,16 +27,13 @@ const Issues = ({
     activeUser,
     data,
     handleDeleteIssue,
-    handleUpvote,
     handleIncrement,
-    // handleFetchInfo,
     handleNav,
+    handleUpvote,
   };
   const route = '/admin/issues/add';
   const viewToRender = hasData ? (
-    <IssueCardWrapper>
-      <IssueCard {...propsToPassDown} />
-    </IssueCardWrapper>
+    <IssueCard {...propsToPassDown} />
   ) : (
     <EmptyCard />
   );
@@ -63,10 +54,7 @@ const Issues = ({
           success={success}
         />
       </BannerWrapper>
-      <IssuesWrapper>
-        <IssueFilter />
-        {viewToRender}
-      </IssuesWrapper>
+      {viewToRender}
     </Fragment>
   );
 };
@@ -83,7 +71,6 @@ Issues.propTypes = {
   handleIncrement: T.func,
   handleDeleteIssue: T.func,
   handleUpvote: T.func,
-  // handleFetchInfo: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearchIssues: T.func,

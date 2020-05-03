@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BaseLink } from '../base_ui';
+
+import { BaseLink, PrimaryButton } from '../base_ui';
 
 export const AdminHeaderWrapper = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ export const AdminSubHeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
+  margin: 1rem;
 `;
 
 export const BaseInputContainer = styled.div`
@@ -49,4 +50,8 @@ export const HeaderTitle = styled(({ isActive, ...restProps }) => (
   text-align: center;
   text-decoration: none;
   width: 100%;
+`;
+
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  margin: 1rem 0;
 `;

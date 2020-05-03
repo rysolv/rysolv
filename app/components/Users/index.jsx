@@ -1,18 +1,13 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import { ErrorSuccessBanner } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
-import UserCard from './UserCard';
-import UserFilter from './UserFilter';
-import {
-  BannerWrapper,
-  UserCardWrapper,
-  UserWrapper,
-} from './styledComponents';
+import UserCard from './Card';
+import { BannerWrapper, UserWrapper } from './styledComponents';
 
 const Users = ({
   alerts: { error, success },
@@ -35,14 +30,12 @@ const Users = ({
     handleNav,
   };
   const viewToRender = hasUsers ? (
-    <UserCardWrapper>
-      <UserCard {...propsToPassDown} />
-    </UserCardWrapper>
+    <UserCard {...propsToPassDown} />
   ) : (
     <EmptyCard />
   );
   return (
-    <div>
+    <Fragment>
       <BannerWrapper>
         <AdminSubHeader
           disabled={disabled}
@@ -58,11 +51,8 @@ const Users = ({
           success={success}
         />
       </BannerWrapper>
-      <UserWrapper>
-        <UserFilter />
-        {viewToRender}
-      </UserWrapper>
-    </div>
+      <UserWrapper>{viewToRender}</UserWrapper>
+    </Fragment>
   );
 };
 

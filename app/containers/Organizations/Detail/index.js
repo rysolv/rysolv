@@ -5,20 +5,20 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-import CompanyDetailView from 'components/Organizations/Detail/CompanyDetailView';
+import OrganizationDetailView from 'components/Organizations/Detail/OrganizationDetailView';
 import { upvoteIssue } from 'containers/Issues/actions';
 
 import { fetchInfo, inputChange } from '../actions';
 import {
-  makeSelectCompanies,
-  makeSelectCompaniesError,
-  makeSelectCompaniesFormattedData,
-  makeSelectCompaniesLoading,
+  makeSelectOrganizations,
+  makeSelectOrganizationsError,
+  makeSelectOrganizationsFormattedData,
+  makeSelectOrganizationsLoading,
 } from '../selectors';
 import { DetailWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class DetailCompany extends React.PureComponent {
+export class DetailOrganization extends React.PureComponent {
   componentDidMount() {
     const {
       dispatchFetchInfo,
@@ -44,7 +44,7 @@ export class DetailCompany extends React.PureComponent {
       <DetailWrapper>
         <AsyncRender
           asyncData={data}
-          component={CompanyDetailView}
+          component={OrganizationDetailView}
           error={error}
           isRequiredData
           loading={loading}
@@ -60,7 +60,7 @@ export class DetailCompany extends React.PureComponent {
   }
 }
 
-DetailCompany.propTypes = {
+DetailOrganization.propTypes = {
   data: T.object,
   dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]).isRequired,
@@ -76,10 +76,10 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  data: makeSelectCompaniesFormattedData(),
-  error: makeSelectCompaniesError('fetchCompany'),
-  filterValues: makeSelectCompanies('filter'),
-  loading: makeSelectCompaniesLoading('fetchCompany'),
+  data: makeSelectOrganizationsFormattedData(),
+  error: makeSelectOrganizationsError('fetchOrganization'),
+  filterValues: makeSelectOrganizations('filter'),
+  loading: makeSelectOrganizationsLoading('fetchOrganization'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -103,4 +103,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(DetailCompany);
+)(DetailOrganization);

@@ -7,11 +7,11 @@ import { PrimaryButton, SecondaryButton } from 'components/base_ui';
 import ManualForm from 'components/Organizations/Add/ManualForm';
 
 import { incrementStep, inputChange } from '../actions';
-import { makeSelectCompanies, makeSelectCompaniesDisabled } from '../selectors';
+import { makeSelectOrganizations, makeSelectOrganizationsDisabled } from '../selectors';
 import { ButtonGroup, StyledH3 } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class ManualCompany extends React.PureComponent {
+export class ManualOrganization extends React.PureComponent {
   render() {
     const {
       data,
@@ -26,12 +26,12 @@ export class ManualCompany extends React.PureComponent {
         <ButtonGroup>
           <SecondaryButton
             label="Back"
-            onClick={() => handleIncrementStep({ step: 1, view: 'addCompany' })}
+            onClick={() => handleIncrementStep({ step: 1, view: 'addOrganization' })}
           />
           <PrimaryButton
             disabled={!isDisabled}
             label="Next"
-            onClick={() => handleIncrementStep({ step: 3, view: 'addCompany' })}
+            onClick={() => handleIncrementStep({ step: 3, view: 'addOrganization' })}
           />
         </ButtonGroup>
       </Fragment>
@@ -39,7 +39,7 @@ export class ManualCompany extends React.PureComponent {
   }
 }
 
-ManualCompany.propTypes = {
+ManualOrganization.propTypes = {
   data: T.object,
   handleIncrementStep: T.func,
   isDisabled: T.bool,
@@ -50,8 +50,8 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  data: makeSelectCompanies('data'),
-  isDisabled: makeSelectCompaniesDisabled(),
+  data: makeSelectOrganizations('data'),
+  isDisabled: makeSelectOrganizationsDisabled(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -67,4 +67,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ManualCompany);
+)(ManualOrganization);

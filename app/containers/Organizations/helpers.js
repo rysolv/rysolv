@@ -1,11 +1,11 @@
-import AddCompany from './Add';
-import DetailCompany from './Detail';
-import EditCompany from './Edit';
-import CompaniesOverview from './Overview';
+import AddOrganization from './Add';
+import DetailOrganization from './Detail';
+import EditOrganization from './Edit';
+import OrganizationsOverview from './Overview';
 
-export const companyTypeDictionary = {
-  add: AddCompany,
-  detail: DetailCompany,
-  edit: EditCompany,
-  overview: CompaniesOverview,
+export const organizationTypeDictionary = {
+  add: AddOrganization,
+  detail: DetailOrganization,
+  edit: EditOrganization,
+  overview: OrganizationsOverview,
 };

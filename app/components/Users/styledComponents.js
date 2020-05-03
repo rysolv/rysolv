@@ -7,14 +7,9 @@ export const BannerWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-export const UserCardWrapper = styled.div`
-  width: 70%;
-  display: flex;
-  flex-wrap: wrap;
-`;
-
 export const UserWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 export const MessageWrapper = styled.div`
@@ -27,5 +22,7 @@ export const MessageWrapper = styled.div`
   height: 55rem;
   width: 70%;
   justify-content: center;
+  margin: 0.5rem 1rem;
   text-align: center;
+  width: 100%;
 `;

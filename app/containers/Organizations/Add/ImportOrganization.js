@@ -7,10 +7,10 @@ import ImportForm from 'components/Organizations/Add/ImportForm';
 
 import { incrementStep, inputChange, inputError } from '../actions';
 import { validateInputs } from './helpers';
-import { makeSelectCompanies } from '../selectors';
+import { makeSelectOrganizations } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class ImportCompany extends React.PureComponent {
+export class ImportOrganization extends React.PureComponent {
   render() {
     const {
       data,
@@ -22,7 +22,7 @@ export class ImportCompany extends React.PureComponent {
       const validationErrors = validateInputs({ data });
       dispatchInputError({ errors: validationErrors });
       if (Object.keys(validationErrors).every(err => !validationErrors[err])) {
-        handleIncrementStep({ step: 3, view: 'addCompany' });
+        handleIncrementStep({ step: 3, view: 'addOrganization' });
       }
     };
     return (
@@ -38,7 +38,7 @@ export class ImportCompany extends React.PureComponent {
   }
 }
 
-ImportCompany.propTypes = {
+ImportOrganization.propTypes = {
   data: T.object,
   dispatchInputError: T.func,
   handleIncrementStep: T.func,
@@ -49,7 +49,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  data: makeSelectCompanies('data'),
+  data: makeSelectOrganizations('data'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -66,4 +66,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ImportCompany);
+)(ImportOrganization);

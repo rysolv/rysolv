@@ -28,13 +28,19 @@ export class UserDetailView extends React.PureComponent {
   render() {
     const {
       data: {
+        activePullRequests,
+        completedPullRequests,
         createdDate,
+        dollarsEarned,
         firstName,
         githubLink,
+        isOnline,
         lastName,
+        modifiedDate,
         personalLink,
         preferredLanguages,
         profilePic,
+        rejectedPullRequests,
         rep,
         stackoverflowLink,
       },
@@ -83,8 +89,14 @@ export class UserDetailView extends React.PureComponent {
           </UserCardWrapper>
           <UserContentsWrapper>
             <UserMetricsView
+              activePullRequests={activePullRequests}
+              completedPullRequests={completedPullRequests}
               createdDate={createdDate}
+              dollarsEarned={dollarsEarned}
+              isOnline={isOnline}
+              modifiedDate={modifiedDate}
               preferredLanguages={preferredLanguages}
+              rejectedPullRequests={rejectedPullRequests}
             />
             <UserTimelineView
               filterValues={filterValues}

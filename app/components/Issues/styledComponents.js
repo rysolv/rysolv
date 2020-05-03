@@ -6,14 +6,6 @@ export const BannerWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-export const IssueCardWrapper = styled.div`
-  width: 70%;
-`;
-
-export const IssuesWrapper = styled.div`
-  display: flex;
-`;
-
 export const MessageWrapper = styled.div`
   align-items: center;
   background-color: white;
@@ -25,5 +17,4 @@ export const MessageWrapper = styled.div`
   justify-content: center;
   margin: 0.5rem 1rem;
   text-align: center;
-  width: 70%;
 `;

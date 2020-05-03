@@ -10,11 +10,11 @@ import iconDictionary from 'utils/iconDictionary';
 
 import {
   DataWrapper,
+  Divider,
   IconWrapper,
   LabelWrapper,
   LanguageContainer,
   NameWrapper,
-  Divider,
   RowContainer,
   StyledInlineBlock,
   StyledLink,
@@ -28,14 +28,14 @@ const CodeIcon = iconDictionary('code');
 export class VerifyForm extends React.PureComponent {
   render() {
     const {
-      data: { repo, body, language, fundedAmount, name },
-      activeUser: { username, profilePic },
+      data: { body, fundedAmount, language, name, repo },
+      activeUser: { id, profilePic, username },
       handleNav,
     } = this.props;
 
     const primaryUser = {
       small: true,
-      detailRoute: `/admin/users/detail/${username}`,
+      detailRoute: `/admin/users/detail/${id}`,
       alt: username,
       username,
       profilePic,

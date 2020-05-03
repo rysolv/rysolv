@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+
 const {
   createUser,
   deleteUser,
@@ -32,7 +33,14 @@ module.exports = {
         userInput.personalLink || '',
         userInput.preferredLanguages || [],
         userInput.stackoverflowLink || '',
+        false,
         userInput.pullRequests || [],
+        userInput.upvotes || [],
+        userInput.activePullRequests || 0,
+        userInput.completedPullRequests || 0,
+        userInput.dollarsEarned || 0,
+        userInput.isOnline || true,
+        userInput.rejectedPullRequests,
       ],
     ];
     try {
@@ -45,7 +53,31 @@ module.exports = {
   deleteUser: async args => {
     const { id } = args;
     try {
-      const result = await deleteUser('users', id);
+      const data = {
+        modified_date: new Date(), // update modified date
+        first_name: 'Deleted',
+        last_name: 'User',
+        email: '',
+        watching: [],
+        rep: 0,
+        profile_pic:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTBvwAcytGFLkWO2eT-FCwE5z_mlQxBdI9uwbyeczCTVBci7Vrg&usqp=CAU',
+        comments: [],
+        attempting: [],
+        issues_number: [],
+        username: '[deleted]',
+        github_link: '',
+        personal_link: '',
+        preferred_languages: [],
+        stackoverflow_link: '',
+        is_deleted: true,
+        activePullRequests: 0,
+        completedPullRequests: 0,
+        dollarsEarned: 0,
+        isOnline: false,
+        rejectedPullRequests: 0,
+      };
+      const result = await deleteUser('users', id, data);
       return result;
     } catch (err) {
       throw err;

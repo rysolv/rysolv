@@ -24,7 +24,7 @@ export const Main = ({
 }) => (
   <Fragment>
     <Auth>
-      <Header view={deviceView} activeUser={activeUser} />
+      <Header activeUser={activeUser} view={deviceView} />
       <AppBody>
         <AsyncRender
           asyncData={data}

@@ -21,7 +21,7 @@ export const primaryButtonHoverColor = '#1976d2';
 export const secondaryButtonColor = '#5e35b1';
 export const secondaryButtonHoverColor = '#512da8';
 export const subHeaderColor = '#0d47a1';
-export const textColor = '#616161';
+export const textColor = 'rgba(0,0,0,0.7)';
 
 // Font Sizes
 export const defaultFontSize = '1.4rem';

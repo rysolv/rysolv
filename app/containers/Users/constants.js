@@ -44,7 +44,7 @@ export const userDataDictionary = {
   preferredLanguages: 'Preferred Languages',
   stackoverflowLink: 'StackOverflow Link',
   username: 'Username',
-  attempting: 'Number of Active Issues',
+  attempting: 'Number of Attempting Issues',
   issuesNumber: 'Number of Issues',
   name: 'Full Name',
   rep: 'Number of Points',

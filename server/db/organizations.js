@@ -6,13 +6,14 @@ const organizationValues = `
   name,
   description,
   repo_url,
-  company_url,
+  organization_url,
   issues,
   logo,
   verified,
   contributors,
   owner_id,
-  total_funded
+  total_funded,
+  preferred_languages
 `; // Excludes ID & created_date
 
 const organizationReturnValues = `
@@ -22,20 +23,21 @@ const organizationReturnValues = `
   name,
   description,
   repo_url AS "repoUrl",
-  company_url AS "companyUrl",
+  organization_url AS "organizationUrl",
   issues,
   logo,
   verified,
   contributors,
   owner_id AS "ownerId",
-  total_funded AS "totalFunded"
+  total_funded AS "totalFunded",
+  preferred_languages AS "preferredLanguages"
 `;
 
 // Create new Issue
 const createOrganization = async data => {
   const queryText = `INSERT INTO
     organizations(id, created_date, ${organizationValues})
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -87,7 +89,7 @@ const transformOrganization = async (table, id, data) => {
     const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE ${table}
       SET (${organizationValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);

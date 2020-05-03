@@ -1,8 +1,10 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { post } from 'utils/request';
+
 import { fetchActiveUser } from 'containers/Auth/actions';
+import { post } from 'utils/request';
+
 import {
-  UPDATE_ARRAY,
+  ADD_ATTEMPT,
   ADD_COMMENT,
   DELETE_ISSUE,
   FETCH_ISSUE_DETAIL,
@@ -33,7 +35,7 @@ import {
   upvoteIssueSuccess,
 } from './actions';
 
-export function* updateArray({ payload }) {
+export function* addAttemptSaga({ payload }) {
   const { id: issueId, userId, column, remove } = payload;
   const query = `
   mutation {
@@ -138,6 +140,7 @@ export function* fetchIssueDetailSaga({ payload }) {
           fundedAmount,
           watching,
           open,
+          userId,
           username,
           profilePic
         }
@@ -147,6 +150,7 @@ export function* fetchIssueDetailSaga({ payload }) {
       }
       getIssueComments(id: "${id}") {
         body
+        userId
         username
         createdDate
         profilePic
@@ -314,7 +318,7 @@ export function* upvoteIssuesSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
-  yield takeLatest(UPDATE_ARRAY, updateArray);
+  yield takeLatest(ADD_ATTEMPT, addAttemptSaga);
   yield takeLatest(ADD_COMMENT, addCommentSaga);
   yield takeLatest(DELETE_ISSUE, deleteIssueSaga);
   yield takeLatest(FETCH_ISSUE_DETAIL, fetchIssueDetailSaga);
