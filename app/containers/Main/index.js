@@ -8,8 +8,9 @@ import { createStructuredSelector } from 'reselect';
 import AsyncRender from 'components/AsyncRender';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import Auth from 'containers/Auth/Loadable';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
-import { makeSelectAdmin } from 'containers/Admin/selectors';
+import { makeSelectActiveUser } from 'containers/Auth/selectors';
 
 import routes from './routes';
 import { AppBody } from './styledComponents';
@@ -22,16 +23,18 @@ export const Main = ({
   loading,
 }) => (
   <Fragment>
-    <Header activeUser={activeUser} view={deviceView} />
-    <AppBody>
-      <AsyncRender
-        asyncData={data}
-        component={routes}
-        error={error}
-        loading={loading}
-      />
-    </AppBody>
-    <Footer />
+    <Auth>
+      <Header activeUser={activeUser} view={deviceView} />
+      <AppBody>
+        <AsyncRender
+          asyncData={data}
+          component={routes}
+          error={error}
+          loading={loading}
+        />
+      </AppBody>
+      <Footer />
+    </Auth>
   </Fragment>
 );
 
@@ -44,7 +47,7 @@ Main.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  activeUser: makeSelectAdmin('admin'),
+  activeUser: makeSelectActiveUser('activeUser'),
   /**
    * Reducer: ViewSizes
    */

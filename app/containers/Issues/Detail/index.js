@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 
 import IssueDetail from 'components/Issues/Detail';
-import { makeSelectAdmin } from 'containers/Admin/selectors';
+import { makeSelectActiveUser } from 'containers/Auth/selectors';
 import {
   addAttempt,
   addComment,
@@ -87,7 +87,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
-  activeUser: makeSelectAdmin('admin'),
+  activeUser: makeSelectActiveUser('activeUser'),
   issueDetail: makeSelectIssueDetail('issueDetail'),
   error: makeSelectIssueDetailError('issueDetail'),
   loading: makeSelectIssueDetailLoading('issueDetail'),
