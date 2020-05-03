@@ -26,6 +26,9 @@ import {
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
+  UPVOTE_ISSUE_FAILURE,
+  UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE,
   VERIFY_INFO,
 } from './constants';
 
@@ -58,12 +61,13 @@ export const initialState = {
   },
   loading: {
     addOrganization: false,
-    organizations: false,
     deleteOrganization: false,
     fetchOrganization: false,
+    organizations: false,
     saveOrganization: false,
     searchOrganizations: false,
     updateOrganization: false,
+    upvoteIssue: false,
   },
   error: {
     organizations: false,
@@ -216,6 +220,26 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case UPDATE_INFO: {
       draft.loading.updateOrganization = true;
+      break;
+    }
+    case UPVOTE_ISSUE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.upvoteIssue = false;
+      break;
+    }
+    case UPVOTE_ISSUE_SUCCESS: {
+      const { id, rep } = payload;
+      draft.organization.issues.map((issue, index) => {
+        if (issue.id === id) {
+          draft.organization.issues[index].rep = rep;
+        }
+      });
+      draft.loading.upvoteIssue = false;
+      break;
+    }
+    case UPVOTE_ISSUE: {
+      draft.loading.upvoteIssue = true;
       break;
     }
     case VERIFY_INFO: {

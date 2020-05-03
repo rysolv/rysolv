@@ -22,6 +22,9 @@ import {
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
+  UPVOTE_ISSUE_FAILURE,
+  UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE,
   VERIFY_INFO,
 } from './constants';
 
@@ -180,6 +183,27 @@ export function updateInfo(payload) {
   return {
     payload,
     type: UPDATE_INFO,
+  };
+}
+
+export function upvoteIssueFailure(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE_FAILURE,
+  };
+}
+
+export function upvoteIssueSuccess(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE_SUCCESS,
+  };
+}
+
+export function upvoteIssue(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE,
   };
 }
 
