@@ -6,9 +6,8 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import OrganizationDetailView from 'components/Organizations/Detail/OrganizationDetailView';
-import { upvoteIssue } from 'containers/Issues/actions';
 
-import { fetchInfo, inputChange } from '../actions';
+import { fetchInfo, inputChange, upvoteIssue } from '../actions';
 import {
   makeSelectOrganizations,
   makeSelectOrganizationsError,

@@ -1,16 +1,18 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
+import { fetchActiveUser } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
   DELETE_ORGANIZATION,
-  FETCH_ORGANIZATIONS,
   FETCH_INFO,
+  FETCH_ORGANIZATIONS,
   SAVE_INFO,
   SEARCH_ORGANIZATIONS,
   successCreateOrganizationMessage,
   successEditOrganizationMessage,
   UPDATE_INFO,
+  UPVOTE_ISSUE,
 } from './constants';
 import {
   deleteOrganizationFailure,
@@ -26,6 +28,8 @@ import {
   searchOrganizationsSuccess,
   updateInfoFailure,
   updateInfoSuccess,
+  upvoteIssueFailure,
+  upvoteIssueSuccess,
 } from './actions';
 
 export function* deleteOrganizationSaga({ payload }) {
@@ -235,11 +239,47 @@ export function* updateInfoSaga({ payload }) {
   }
 }
 
+export function* upvoteIssueSaga({ payload }) {
+  const { issueId, userId } = payload;
+  const upvoteIssueQuery = `
+      mutation {
+        upvoteIssue(id: "${issueId}" ) {
+          id,
+          rep
+        }
+        userUpvote(id: "${userId}" ) {
+          id,
+          rep
+        }
+        updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: false ) {
+          attempting,
+          watching
+        }
+      }
+    `;
+  try {
+    const upvoteIssue = JSON.stringify({
+      query: upvoteIssueQuery,
+      variables: {},
+    });
+    const {
+      data: {
+        upvoteIssue: { id, rep },
+      },
+    } = yield call(post, '/graphql', upvoteIssue);
+    yield put(upvoteIssueSuccess({ id, rep }));
+    yield put(fetchActiveUser({ userId }));
+  } catch (error) {
+    yield put(upvoteIssueFailure({ error }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(DELETE_ORGANIZATION, deleteOrganizationSaga);
-  yield takeLatest(FETCH_ORGANIZATIONS, fetchOrganizationsSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
+  yield takeLatest(FETCH_ORGANIZATIONS, fetchOrganizationsSaga);
   yield takeLatest(SAVE_INFO, saveInfoSaga);
   yield takeLatest(SEARCH_ORGANIZATIONS, searchOrganizationsSaga);
   yield takeLatest(UPDATE_INFO, updateInfoSaga);
+  yield takeLatest(UPVOTE_ISSUE, upvoteIssueSaga);
 }
