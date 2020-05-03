@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { push } from 'connected-react-router';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -24,7 +23,7 @@ export const Auth = ({ children, dispatchFetchActiveUser }) => {
     dispatchFetchActiveUser({ userId: userArray[rand] });
   }, []);
 
-  return children;
+  return <Fragment>{children}</Fragment>;
 };
 
 Auth.propTypes = {
@@ -33,9 +32,6 @@ Auth.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleNav: ({ subroute }) => {
-    dispatch(push(`/${subroute}`));
-  },
   dispatchFetchActiveUser: payload => dispatch(fetchActiveUser(payload)),
 });
 
