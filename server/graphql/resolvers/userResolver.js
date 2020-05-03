@@ -36,6 +36,11 @@ module.exports = {
         false,
         userInput.pullRequests || [],
         userInput.upvotes || [],
+        userInput.activePullRequests || 0,
+        userInput.completedPullRequests || 0,
+        userInput.dollarsEarned || 0,
+        userInput.isOnline || true,
+        userInput.rejectedPullRequests,
       ],
     ];
     try {
@@ -66,6 +71,11 @@ module.exports = {
         preferred_languages: [],
         stackoverflow_link: '',
         is_deleted: true,
+        activePullRequests: 0,
+        completedPullRequests: 0,
+        dollarsEarned: 0,
+        isOnline: false,
+        rejectedPullRequests: 0,
       };
       const result = await deleteUser('users', id, data);
       return result;

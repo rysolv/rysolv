@@ -68,6 +68,12 @@ export function* fetchInfoSaga({ payload }) {
         personalLink,
         preferredLanguages,
         stackoverflowLink,
+        activePullRequests,
+        completedPullRequests,
+        dollarsEarned,
+        isOnline,
+        modifiedDate,
+        rejectedPullRequests,
       }
     }
 `;

@@ -20,6 +20,11 @@ const userSeed = [
     true, // is_deleted
     [], // pull_requests
     [], // upvotes
+    24, // active_pull_requests
+    50, // completed_pull_requests
+    93, // dollars_earned
+    true, // is_online
+    2, // rejected_pull_requests
   ],
   [
     'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
@@ -42,6 +47,11 @@ const userSeed = [
     false, // is_deleted
     [], // pull_requests
     [], // upvotes
+    24, // active_pull_requests
+    50, // completed_pull_requests
+    93, // dollars_earned
+    true, // is_online
+    2, // rejected_pull_requests
   ],
   [
     'c2209ded-9219-4ee3-9c29-f863889053c0',
@@ -64,6 +74,11 @@ const userSeed = [
     false, // is_deleted
     [], // pull_requests
     [], // upvotes
+    24, // active_pull_requests
+    503, // completed_pull_requests
+    3984, // dollars_earned
+    true, // is_online
+    2, // rejected_pull_requests
   ],
   [
     'cdd583cf-4711-4f33-a202-c937081afd7e',
@@ -89,6 +104,11 @@ const userSeed = [
     false, // is_deleted
     [], // pull_requests
     [], // upvotes
+    33, // active_pull_requests
+    40, // completed_pull_requests
+    93, // dollars_earned
+    true, // is_online
+    2, // rejected_pull_requests
   ],
   [
     '3f6e3ddf-ab68-4ee3-bb79-abfe21c8d014', // id
@@ -111,6 +131,11 @@ const userSeed = [
     false, // is_deleted
     [], // pull_requests
     [], // upvotes
+    24, // active_pull_requests
+    50, // completed_pull_requests
+    93, // dollars_earned
+    true, // is_online
+    2, // rejected_pull_requests
   ],
 ];
 

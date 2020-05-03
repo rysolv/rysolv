@@ -19,7 +19,12 @@ users(
   stackoverflow_link VARCHAR(128),
   is_deleted BOOLEAN DEFAULT false,
   pull_requests UUID [],
-  upvotes UUID []
+  upvotes UUID [],
+  active_pull_requests SMALLINT DEFAULT 0,
+  completed_pull_requests SMALLINT DEFAULT 0,
+  dollars_earned FLOAT DEFAULT 0,
+  is_online BOOLEAN DEFAULT true,
+  rejected_pull_requests SMALLINT DEFAULT 0
 )`;
 
 module.exports = users;

@@ -76,10 +76,15 @@ module.exports = buildSchema(`
     username: String
     githubLink: String
     personalLink: String
-    preferredLanguages: String
+    preferredLanguages: [String]
     stackoverflowLink: String
     pullRequests: [String]
     upvotes: [ID]
+    activePullRequests: Int
+    completedPullRequests: Int
+    dollarsEarned: Int
+    isOnline: Boolean
+    rejectedPullRequests: Int
   }
 
   input UserInput {
@@ -99,6 +104,11 @@ module.exports = buildSchema(`
     stackoverflowLink: String
     pullRequests: [String]
     upvotes: [ID]
+    activePullRequests: Int
+    completedPullRequests: Int
+    dollarsEarned: Int
+    isOnline: Boolean
+    rejectedPullRequests: Int
   }
 
   type Organization {

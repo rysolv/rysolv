@@ -20,17 +20,18 @@ import {
   UserMetricsContainer,
 } from './styledComponents';
 
-const activePullRequests = 6;
-const completedPullRequests = 10;
-const dollarsEarned = 984;
-const isOnline = true;
-const modifiedDate = '2020-04-20T02:42:50Z';
-const preferredLanguages = ['Javascript', 'Go'];
-const rejectedPullRequests = 5;
-
 const CircleIcon = iconDictionary('circle');
 
-const UserMetricsView = ({ createdDate }) => {
+const UserMetricsView = ({
+  activePullRequests,
+  completedPullRequests,
+  createdDate,
+  dollarsEarned,
+  isOnline,
+  modifiedDate,
+  preferredLanguages,
+  rejectedPullRequests,
+}) => {
   const [detailView, setDetailView] = useState(false);
   const hasNoDecimals = true;
 
@@ -112,7 +113,14 @@ const UserMetricsView = ({ createdDate }) => {
 };
 
 UserMetricsView.propTypes = {
+  activePullRequests: T.number,
+  completedPullRequests: T.number,
   createdDate: T.string,
+  dollarsEarned: T.number,
+  isOnline: T.bool,
+  modifiedDate: T.string,
+  preferredLanguages: T.array,
+  rejectedPullRequests: T.number,
 };
 
 export default UserMetricsView;

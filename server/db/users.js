@@ -25,7 +25,12 @@ const userValues = `
   stackoverflow_link,
   is_deleted,
   pull_requests,
-  upvotes
+  upvotes,
+  active_pull_requests,
+  completed_pull_requests,
+  dollars_earned,
+  is_online,
+  rejected_pull_requests
 `;
 
 const userReturnValues = `
@@ -47,14 +52,19 @@ const userReturnValues = `
   preferred_languages AS "preferredLanguages",
   stackoverflow_link AS "stackoverflowLink",
   pull_requests AS "pullRequests",
-  upvotes
+  upvotes,
+  active_pull_requests AS "activePullRequests",
+  completed_pull_requests AS "completedPullRequests",
+  dollars_earned AS "dollarsEarned",
+  is_online AS "isOnline",
+  rejected_pull_requests AS "rejectedPullRequests"
 `;
 
 // Create new User
 const createUser = async data => {
   const queryText = `INSERT INTO
     users( id, created_date, ${userValues} )
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -67,7 +77,7 @@ const deleteUser = async (table, id, data) => {
     const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE ${table}
       SET ( id, created_date, ${userValues} )
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
       WHERE (id = '${id}')
       RETURNING *`;
     await mapValues(queryText, [newObjectArray]);
@@ -109,7 +119,7 @@ const transformUser = async (table, id, data) => {
     const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE ${table}
       SET (${userValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);
