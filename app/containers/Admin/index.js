@@ -15,7 +15,6 @@ import { subrouteDictionary, viewDictionary } from './routeDictionary';
 export const Admin = ({
   handleNav,
   match,
-  // dispatchFetchActiveUser,
   match: {
     params: { subroute, view, id },
   },
@@ -53,7 +52,6 @@ export const Admin = ({
 };
 
 Admin.propTypes = {
-  // dispatchFetchActiveUser: T.func,
   handleNav: T.func,
   match: T.object,
 };
@@ -62,7 +60,6 @@ const mapDispatchToProps = dispatch => ({
   handleNav: ({ subroute }) => {
     dispatch(push(`/admin/${subroute}`));
   },
-  // dispatchFetchActiveUser: payload => dispatch(fetchActiveUser(payload)),
 });
 
 const withConnect = connect(

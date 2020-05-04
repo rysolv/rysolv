@@ -8,9 +8,9 @@ import { createStructuredSelector } from 'reselect';
 import AsyncRender from 'components/AsyncRender';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
-import Auth from 'containers/Auth/Loadable';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectActiveUser } from 'containers/Auth/selectors';
+import { login, logout } from 'containers/Auth/actions';
 
 import routes from './routes';
 import { AppBody } from './styledComponents';
@@ -20,21 +20,26 @@ export const Main = ({
   data = { test: true },
   deviceView,
   error,
+  handleLogin,
+  handleLogout,
   loading,
 }) => (
   <Fragment>
-    <Auth>
-      <Header activeUser={activeUser} view={deviceView} />
-      <AppBody>
-        <AsyncRender
-          asyncData={data}
-          component={routes}
-          error={error}
-          loading={loading}
-        />
-      </AppBody>
-      <Footer />
-    </Auth>
+    <Header
+      activeUser={activeUser}
+      handleLogin={handleLogin}
+      handleLogout={handleLogout}
+      view={deviceView}
+    />
+    <AppBody>
+      <AsyncRender
+        asyncData={data}
+        component={routes}
+        error={error}
+        loading={loading}
+      />
+    </AppBody>
+    <Footer />
   </Fragment>
 );
 
@@ -43,6 +48,8 @@ Main.propTypes = {
   data: T.object,
   deviceView: T.string,
   error: T.object,
+  handleLogin: T.func,
+  handleLogout: T.func,
   loading: T.bool,
 };
 
@@ -54,9 +61,17 @@ const mapStateToProps = createStructuredSelector({
   deviceView: makeSelectViewSize('deviceView'),
 });
 
+const mapDispatchToProps = dispatch => ({
+  /**
+   * Auth
+   */
+  handleLogin: payload => dispatch(login(payload)),
+  handleLogout: payload => dispatch(logout(payload)),
+});
+
 const withConnect = connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 );
 
 export default withRouter(compose(withConnect)(Main));
