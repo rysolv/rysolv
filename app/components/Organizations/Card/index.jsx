@@ -29,8 +29,8 @@ const OrganizationCard = ({
   handleFetchInfo,
   handleNav,
 }) => {
-  const deleteRoute = `/admin/organizations`;
-  const editRoute = `/admin/organizations/edit`;
+  const deleteRoute = `/organizations`;
+  const editRoute = `/organizations/edit`;
   return (
     <Fragment>
       <StyledOrganizationCard>
@@ -47,7 +47,7 @@ const OrganizationCard = ({
             <StyledListItem key={id}>
               <TitleContainer>
                 <NameWrapper
-                  onClick={() => handleNav(`/admin/organizations/detail/${id}`)}
+                  onClick={() => handleNav(`/organizations/detail/${id}`)}
                 >
                   {name}
                 </NameWrapper>

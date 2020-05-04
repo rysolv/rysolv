@@ -23,8 +23,8 @@ import {
 } from './styledComponents';
 
 const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
-  const deleteRoute = `/admin/users`;
-  const editRoute = `/admin/users/edit`;
+  const deleteRoute = `/users`;
+  const editRoute = `/users/edit`;
 
   return (
     <Fragment>
@@ -47,9 +47,9 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                 <MemberWrapper>
                   <NameWrapper
                     onClick={e =>
-                      navHelper(e, handleNav, `/admin/users/detail/${id}`)
+                      navHelper(e, handleNav, `/users/detail/${id}`)
                     }
-                    href={`/admin/users/detail/${id}`}
+                    href={`/users/detail/${id}`}
                   >
                     {name}
                   </NameWrapper>
@@ -70,7 +70,7 @@ const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
                 <ImageContainer>
                   <ProfileImage
                     alt="Profile Image"
-                    detailRoute={`/admin/users/detail/${id}`}
+                    detailRoute={`/users/detail/${id}`}
                     handleNav={handleNav}
                     profilePic={profilePic}
                     size="7.5rem"

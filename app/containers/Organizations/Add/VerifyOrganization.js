@@ -34,7 +34,7 @@ export class VerifyOrganization extends React.PureComponent {
     } = this.props;
     const handleSaveInfo = () => {
       dispatchSaveInfo({ requestBody });
-      handleNav('/admin/organizations');
+      handleNav('/organizations');
     };
     return (
       <Fragment>

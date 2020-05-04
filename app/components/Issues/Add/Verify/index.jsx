@@ -35,7 +35,7 @@ export class VerifyForm extends React.PureComponent {
 
     const primaryUser = {
       small: true,
-      detailRoute: `/admin/users/detail/${id}`,
+      detailRoute: `/users/detail/${id}`,
       alt: username,
       username,
       profilePic,

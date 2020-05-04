@@ -32,7 +32,7 @@ export class VerifyIssue extends React.PureComponent {
     } = this.props;
     const handleSaveInfo = () => {
       dispatchSaveInfo({ requestBody });
-      handleNav('/admin/issues');
+      handleNav('/issues');
     };
     return (
       <Fragment>

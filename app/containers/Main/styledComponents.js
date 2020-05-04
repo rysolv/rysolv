@@ -7,9 +7,8 @@ export const AppBody = styled.div`
 
 export const RoutesWrapper = styled.section`
   display: flex;
-  flex: 1 100%;
   flex-direction: column;
-  justify-content: space-between;
+  flex: 1 100%;
   min-height: 100vh;
   padding: 0;
 `;

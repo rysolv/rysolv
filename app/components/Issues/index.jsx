@@ -31,7 +31,7 @@ const Issues = ({
     handleNav,
     handleUpvote,
   };
-  const route = '/admin/issues/add';
+  const route = '/issues/add';
   const viewToRender = hasData ? (
     <IssueCard {...propsToPassDown} />
   ) : (

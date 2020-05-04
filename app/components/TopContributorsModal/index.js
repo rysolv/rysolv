@@ -77,7 +77,7 @@ const TopContributorsModal = ({ handleNav }) => (
     })}
     <StyledPrimaryButton
       label="Browse Users"
-      onClick={() => handleNav('/admin/users')}
+      onClick={() => handleNav('/users')}
     />
   </TopContributorsContainer>
 );

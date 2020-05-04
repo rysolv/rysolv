@@ -16,7 +16,7 @@ import {
 export const initialState = {
   alerts: { error: false, success: false },
   activeUser: {},
-  isLoggedIn: false,
+  isLoggedIn: true,
   loading: false,
 };
 

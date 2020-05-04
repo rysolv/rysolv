@@ -27,7 +27,7 @@ export class EditExisting extends React.PureComponent {
     const { id } = editInfo;
     const handleDelete = () => {
       handleDeleteOrganization({ itemId: id.value });
-      handleNav('/admin/organizations');
+      handleNav('/organizations');
     };
     return (
       <Fragment>
@@ -40,7 +40,7 @@ export class EditExisting extends React.PureComponent {
         <ButtonGroup>
           <SecondaryButton
             label="Back"
-            onClick={() => handleNav('/admin/organizations')}
+            onClick={() => handleNav('/organizations')}
           />
           <PrimaryButton
             label="Next"

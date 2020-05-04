@@ -1,13 +1,18 @@
 import React from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import OrganizationDetailView from 'components/Organizations/Detail/OrganizationDetailView';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 
 import { fetchInfo, inputChange, upvoteIssue } from '../actions';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectOrganizations,
   makeSelectOrganizationsError,
@@ -17,7 +22,7 @@ import {
 import { DetailWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class DetailOrganization extends React.PureComponent {
+export class OrganizationsDetail extends React.PureComponent {
   componentDidMount() {
     const {
       dispatchFetchInfo,
@@ -59,7 +64,7 @@ export class DetailOrganization extends React.PureComponent {
   }
 }
 
-DetailOrganization.propTypes = {
+OrganizationsDetail.propTypes = {
   data: T.object,
   dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]).isRequired,
@@ -99,7 +104,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(DetailOrganization);
+);
+
+const withReducer = injectReducer({ key: 'organizations', reducer });
+const withSaga = injectSaga({ key: 'organizations', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(OrganizationsDetail);

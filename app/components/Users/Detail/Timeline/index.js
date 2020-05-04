@@ -120,9 +120,7 @@ const UserTimelineView = ({
                 shouldRender={!!activity.amount}
               />
               for&nbsp;
-              <TimelineActivity
-                onClick={() => handleNav('/admin/issues/detail')}
-              >
+              <TimelineActivity onClick={() => handleNav('/issues/detail')}>
                 {activity.issue}
               </TimelineActivity>
             </TimelineInfo>

@@ -40,8 +40,8 @@ const IssueCard = ({
   handleNav,
   handleUpvote,
 }) => {
-  const deleteRoute = `/admin/issues`;
-  const editRoute = `/admin/issues/edit`;
+  const deleteRoute = `/issues`;
+  const editRoute = `/issues/edit`;
 
   return data.map(
     ({
@@ -76,12 +76,12 @@ const IssueCard = ({
             <StyledIssueContent>
               <StyledIssueHeader>
                 <OrganizationNameWrapper
-                  href={`/admin/organizations/detail/${organizationId}`}
+                  href={`/organizations/detail/${organizationId}`}
                   onClick={e =>
                     navHelper(
                       e,
                       handleNav,
-                      `/admin/organizations/detail/${organizationId}`,
+                      `/organizations/detail/${organizationId}`,
                     )
                   }
                 >
@@ -108,10 +108,8 @@ const IssueCard = ({
               </StyledIssueHeader>
               <StyledIssueText>
                 <NameWrapper
-                  href={`/admin/issues/detail/${id}`}
-                  onClick={e =>
-                    navHelper(e, handleNav, `/admin/issues/detail/${id}`)
-                  }
+                  href={`/issues/detail/${id}`}
+                  onClick={e => navHelper(e, handleNav, `/issues/detail/${id}`)}
                 >
                   {name}
                 </NameWrapper>

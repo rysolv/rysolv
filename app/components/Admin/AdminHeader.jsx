@@ -14,7 +14,7 @@ export const AdminHeaderTabs = ({ activePage, handleNav }) => {
           isActive={activePage === 'organizations'}
           label="Organizations"
           onClick={() => handleClick({ subroute: 'organizations' })}
-          path="/admin/organizations"
+          path="/organizations"
         />
       </HeaderTab>
       <HeaderTab isActive={activePage === 'issues'}>
@@ -22,7 +22,7 @@ export const AdminHeaderTabs = ({ activePage, handleNav }) => {
           isActive={activePage === 'issues'}
           label="Issues"
           onClick={() => handleClick({ subroute: 'issues' })}
-          path="/admin/issues"
+          path="/issues"
         />
       </HeaderTab>
       <HeaderTab isActive={activePage === 'users'}>
@@ -30,7 +30,7 @@ export const AdminHeaderTabs = ({ activePage, handleNav }) => {
           isActive={activePage === 'users'}
           label="Users"
           onClick={() => handleClick({ subroute: 'users' })}
-          path="/admin/users"
+          path="/users"
         />
       </HeaderTab>
     </AdminHeaderWrapper>

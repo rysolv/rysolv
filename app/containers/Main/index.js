@@ -23,6 +23,7 @@ export const Main = ({
   handleLogin,
   handleLogout,
   loading,
+  match,
 }) => (
   <Fragment>
     <Header
@@ -37,6 +38,7 @@ export const Main = ({
         component={routes}
         error={error}
         loading={loading}
+        match={match}
       />
     </AppBody>
     <Footer />
@@ -51,6 +53,7 @@ Main.propTypes = {
   handleLogin: T.func,
   handleLogout: T.func,
   loading: T.bool,
+  match: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({

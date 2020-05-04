@@ -27,7 +27,7 @@ export class EditExisting extends React.PureComponent {
     const { id } = editInfo;
     const handleDelete = () => {
       handleDeleteUser({ itemId: id.value });
-      handleNav('/admin/users');
+      handleNav('/users');
     };
     return (
       <Fragment>
@@ -38,10 +38,7 @@ export class EditExisting extends React.PureComponent {
           handleInputChange={handleInputChange}
         />
         <ButtonGroup>
-          <SecondaryButton
-            label="Back"
-            onClick={() => handleNav('/admin/users')}
-          />
+          <SecondaryButton label="Back" onClick={() => handleNav('/users')} />
           <PrimaryButton
             label="Next"
             onClick={() => handleIncrementStep({ step: 2, view: 'editUser' })}

@@ -2,12 +2,17 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 import { BackNav } from 'components/base_ui';
 import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 
 import { incrementStep, clearForm } from '../actions';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectUsers,
   makeSelectUsersLoading,
@@ -17,9 +22,10 @@ import { addUserDictionary } from '../stepDictionary';
 import { AddWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class AddUser extends React.PureComponent {
+export class UsersAdd extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
+    document.title = 'Sign Up';
     const { handleIncrementStep } = this.props;
     handleIncrementStep({ step: 1, view: 'addUser' });
   }
@@ -35,11 +41,7 @@ export class AddUser extends React.PureComponent {
     const StepToRender = addUserDictionary[step];
     return (
       <Fragment>
-        <BackNav
-          label="Back to Users"
-          handleNav={handleNav}
-          path="/admin/users"
-        />
+        <BackNav label="Back to Users" handleNav={handleNav} path="/users" />
         <AddWrapper>
           <AsyncRender
             asyncData={{ data }}
@@ -52,7 +54,7 @@ export class AddUser extends React.PureComponent {
   }
 }
 
-AddUser.propTypes = {
+UsersAdd.propTypes = {
   data: T.object,
   dispatchClearForm: T.func,
   handleIncrementStep: T.func,
@@ -81,7 +83,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddUser);
+);
+
+const withReducer = injectReducer({ key: 'users', reducer });
+const withSaga = injectSaga({ key: 'users', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(UsersAdd);

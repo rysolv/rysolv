@@ -22,7 +22,7 @@ const Users = ({
   search,
 }) => {
   const hasUsers = data.length > 0 && !data.includes(null);
-  const route = '/admin/users/add';
+  const route = '/users/add';
   const propsToPassDown = {
     data,
     handleDeleteUser,
