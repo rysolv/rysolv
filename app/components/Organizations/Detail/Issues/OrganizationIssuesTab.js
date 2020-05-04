@@ -50,9 +50,7 @@ const OrganizationIssuesTab = ({ handleNav, handleUpvote, issues }) => (
               </IssueModifiedDate>
               <IssueDetail>
                 <IssueNameWrapper>
-                  <IssueName
-                    onClick={() => handleNav(`/admin/issues/detail/${id}`)}
-                  >
+                  <IssueName onClick={() => handleNav(`/issues/detail/${id}`)}>
                     {name}
                   </IssueName>
                   <IssueOpenWrapper>

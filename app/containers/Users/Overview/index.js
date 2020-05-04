@@ -32,6 +32,7 @@ import saga from '../saga';
 export class UsersOverview extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
+    document.title = 'Users Overview';
     const { dispatchFetchUsers } = this.props;
     dispatchFetchUsers();
   }

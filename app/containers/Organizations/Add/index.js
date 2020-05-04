@@ -1,13 +1,18 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
-import { BackNav } from 'components/base_ui';
 import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
+import { BackNav } from 'components/base_ui';
 import AsyncRender from 'components/AsyncRender';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 
 import { incrementStep, clearForm } from '../actions';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectOrganizations,
   makeSelectOrganizationsLoading,
@@ -17,7 +22,7 @@ import { addOrganizationDictionary } from '../stepDictionary';
 import { AddWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class AddOrganization extends React.PureComponent {
+export class OrganizationsAdd extends React.PureComponent {
   componentDidMount() {
     const { handleIncrementStep } = this.props;
     handleIncrementStep({ step: 1, view: 'addOrganization' });
@@ -37,7 +42,7 @@ export class AddOrganization extends React.PureComponent {
         <BackNav
           label="Back to Organizations"
           handleNav={handleNav}
-          path="/admin/organizations"
+          path="/organizations"
         />
         <AddWrapper>
           <AsyncRender
@@ -51,7 +56,7 @@ export class AddOrganization extends React.PureComponent {
   }
 }
 
-AddOrganization.propTypes = {
+OrganizationsAdd.propTypes = {
   data: T.object,
   dispatchClearForm: T.func,
   handleIncrementStep: T.func,
@@ -80,7 +85,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddOrganization);
+);
+
+const withReducer = injectReducer({ key: 'organizations', reducer });
+const withSaga = injectSaga({ key: 'organizations', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(OrganizationsAdd);

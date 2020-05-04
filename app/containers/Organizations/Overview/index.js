@@ -1,11 +1,15 @@
 import React from 'react';
 import T from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import Organizations from 'components/Organizations';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+
 import {
   clearAlerts,
   deleteOrganization,
@@ -14,6 +18,8 @@ import {
   inputChange,
   searchOrganizations,
 } from '../actions';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectOrganizations,
   makeSelectOrganizationsSearchDisabled,
@@ -112,7 +118,8 @@ function mapDispatchToProps(dispatch) {
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleDeleteOrganization: payload => dispatch(deleteOrganization(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
-    handleSearchOrganizations: payload => dispatch(searchOrganizations(payload)),
+    handleSearchOrganizations: payload =>
+      dispatch(searchOrganizations(payload)),
     /**
      * Reducer : Router
      */
@@ -120,7 +127,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'organizations', reducer });
+const withSaga = injectSaga({ key: 'organizations', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
 )(OrganizationsOverview);

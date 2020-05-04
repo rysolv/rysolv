@@ -31,7 +31,7 @@ export class VerifyUser extends React.PureComponent {
     } = this.props;
     const handleSaveInfo = () => {
       dispatchSaveInfo({ requestBody });
-      handleNav('/admin/users');
+      handleNav('/users');
     };
     return (
       <Fragment>

@@ -1,13 +1,16 @@
 import React from 'react';
 import T from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
-
 import { makeSelectActiveUser } from 'containers/Auth/selectors';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+
 import {
   addAttempt,
   clearAlerts,
@@ -17,6 +20,8 @@ import {
   searchIssues,
   upvoteIssue,
 } from '../actions';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectIssues,
   makeSelectIssuesError,
@@ -28,6 +33,7 @@ import {
 export class IssuesOverview extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
+    document.title = 'Issues Overview';
     const { dispatchFetchIssues } = this.props;
     dispatchFetchIssues();
   }
@@ -133,8 +139,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-// Adds store to issueDetail
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'issues', reducer });
+const withSaga = injectSaga({ key: 'issues', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
 )(IssuesOverview);

@@ -1,13 +1,16 @@
 import React from 'react';
 import T from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-
 import IssueDetail from 'components/Issues/Detail';
 import { makeSelectActiveUser } from 'containers/Auth/selectors';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+
 import {
   addAttempt,
   addComment,
@@ -15,15 +18,18 @@ import {
   fetchIssueDetail,
   upvoteIssue,
 } from '../actions';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectIssueDetail,
   makeSelectIssueDetailError,
   makeSelectIssueDetailLoading,
 } from '../selectors';
 
-export class IssueDetailContainer extends React.PureComponent {
+export class IssuesDetail extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
+    document.title = 'Issue Detail';
     const {
       dispatchFetchIssueDetail,
       match: {
@@ -69,7 +75,7 @@ export class IssueDetailContainer extends React.PureComponent {
   }
 }
 
-IssueDetailContainer.propTypes = {
+IssuesDetail.propTypes = {
   activeUser: T.object,
   dispatchFetchIssueDetail: T.func,
   error: T.oneOfType([T.bool, T.object]),
@@ -110,8 +116,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-// Adds store to issueDetail
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(IssueDetailContainer);
+);
+
+const withReducer = injectReducer({ key: 'issues', reducer });
+const withSaga = injectSaga({ key: 'issues', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(IssuesDetail);

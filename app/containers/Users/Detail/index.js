@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import UserDetailView from 'components/Users/Detail/UserDetailView';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 
 import { fetchInfo, inputChange } from '../actions';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectUsers,
   makeSelectUsersError,
@@ -15,7 +20,7 @@ import {
 } from '../selectors';
 import { DetailWrapper } from './styledComponents';
 
-const DetailUser = ({
+const UsersDetail = ({
   data,
   dispatchFetchInfo,
   error,
@@ -29,6 +34,7 @@ const DetailUser = ({
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'User Detail';
     dispatchFetchInfo({ itemId: id });
   }, [id]);
 
@@ -50,7 +56,7 @@ const DetailUser = ({
   );
 };
 
-DetailUser.propTypes = {
+UsersDetail.propTypes = {
   data: T.object,
   dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]).isRequired,
@@ -85,7 +91,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(DetailUser);
+);
+
+const withReducer = injectReducer({ key: 'users', reducer });
+const withSaga = injectSaga({ key: 'users', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(UsersDetail);

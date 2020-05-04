@@ -1,11 +1,16 @@
 import React from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import AsyncRender from 'components/AsyncRender';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 
 import { incrementStep } from '../actions';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectUsers,
   makeSelectUsersLoading,
@@ -15,9 +20,10 @@ import { editUserDictionary } from '../stepDictionary';
 import { EditWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class EditUser extends React.PureComponent {
+export class UsersEdit extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
+    document.title = 'Edit User';
     const { handleIncrementStep } = this.props;
     handleIncrementStep({ step: 1, view: 'editUser' });
   }
@@ -38,7 +44,7 @@ export class EditUser extends React.PureComponent {
   }
 }
 
-EditUser.propTypes = {
+UsersEdit.propTypes = {
   data: T.object,
   handleIncrementStep: T.func,
   loading: T.bool.isRequired,
@@ -63,7 +69,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EditUser);
+);
+
+const withReducer = injectReducer({ key: 'users', reducer });
+const withSaga = injectSaga({ key: 'users', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(UsersEdit);

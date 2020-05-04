@@ -45,13 +45,9 @@ const IssueDetailHeader = ({
     <IssueDetailTopBar>
       <StyledIssueHeader>
         <OrganizationNameWrapper
-          href={`/admin/organizations/detail/${organizationId}`}
+          href={`/organizations/detail/${organizationId}`}
           onClick={e =>
-            navHelper(
-              e,
-              handleNav,
-              `/admin/organizations/detail/${organizationId}`,
-            )
+            navHelper(e, handleNav, `/organizations/detail/${organizationId}`)
           }
         >
           {organizationName}

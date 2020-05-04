@@ -37,7 +37,7 @@ export class VerifyExisting extends React.PureComponent {
     const handleUpdateInfo = () => {
       const { id } = editInfo;
       dispatchUpdateInfo({ editRequest, itemId: id.value });
-      handleNav('/admin/users');
+      handleNav('/users');
     };
     return (
       <Fragment>

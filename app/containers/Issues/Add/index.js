@@ -1,14 +1,19 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
-import { BackNav } from 'components/base_ui';
 import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
+import { BackNav } from 'components/base_ui';
 import { makeSelectActiveUser } from 'containers/Auth/selectors';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 
 import { incrementStep, clearForm } from '../actions';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectIssues,
   makeSelectIssuesLoading,
@@ -18,9 +23,10 @@ import { addIssueDictionary } from '../stepDictionary';
 import { AddWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class AddIssue extends React.PureComponent {
+export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
+    document.title = 'Add Issue';
     const { handleIncrementStep } = this.props;
     handleIncrementStep({ step: 1, view: 'addIssue' });
   }
@@ -35,11 +41,7 @@ export class AddIssue extends React.PureComponent {
     const StepToRender = addIssueDictionary[step];
     return (
       <Fragment>
-        <BackNav
-          label="Back to Issues"
-          handleNav={handleNav}
-          path="/admin/issues"
-        />
+        <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
         <AddWrapper>
           <AsyncRender
             asyncData={{ data }}
@@ -53,7 +55,7 @@ export class AddIssue extends React.PureComponent {
   }
 }
 
-AddIssue.propTypes = {
+IssuesAdd.propTypes = {
   activeUser: T.object,
   data: T.object,
   dispatchClearForm: T.func,
@@ -84,7 +86,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AddIssue);
+);
+
+const withReducer = injectReducer({ key: 'issues', reducer });
+const withSaga = injectSaga({ key: 'issues', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(IssuesAdd);

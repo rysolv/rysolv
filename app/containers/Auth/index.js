@@ -8,9 +8,9 @@ import { createStructuredSelector } from 'reselect';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { makeSelectActiveUser } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { makeSelectActiveUser } from './selectors';
 
 export default function withAuth(config, Component) {
   const Auth = ({ isLoggedIn, ...restProps }) => {

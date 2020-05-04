@@ -26,10 +26,7 @@ export class ManualUser extends React.PureComponent {
         <StyledH3>Add User</StyledH3>
         <ManualForm data={data} handleInputChange={handleInputChange} />
         <ButtonGroup>
-          <SecondaryButton
-            label="Back"
-            onClick={() => handleNav('/admin/users')}
-          />
+          <SecondaryButton label="Back" onClick={() => handleNav('/users')} />
           <PrimaryButton
             disabled={!isDisabled}
             label="Next"

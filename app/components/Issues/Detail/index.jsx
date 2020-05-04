@@ -36,7 +36,7 @@ const IssueDetail = ({
 
   const primaryUser = {
     small: true,
-    detailRoute: `/admin/users/detail/${userId}`,
+    detailRoute: `/users/detail/${userId}`,
     alt: username,
     username,
     profilePic,
@@ -46,7 +46,7 @@ const IssueDetail = ({
     comments.map(comment => {
       const user = {
         alt: comment.username,
-        detailRoute: `/admin/users/detail/${comment.userId}`,
+        detailRoute: `/users/detail/${comment.userId}`,
         profilePic: comment.profilePic,
         size: '4rem',
         username: comment.username,
@@ -67,11 +67,7 @@ const IssueDetail = ({
 
   return (
     <Fragment>
-      <BackNav
-        label="Back to Issues"
-        handleNav={handleNav}
-        path="/admin/issues"
-      />
+      <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
       <IssueDetailWrapper>
         <LeftPanel>
           <UpvotePanel>

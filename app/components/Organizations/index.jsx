@@ -27,7 +27,7 @@ const Organizations = ({
     handleFetchInfo,
     handleNav,
   };
-  const route = '/admin/organizations/add';
+  const route = '/organizations/add';
   const viewToRender = hasOrganizations ? (
     <OrganizationCard {...propsToPassDown} />
   ) : (

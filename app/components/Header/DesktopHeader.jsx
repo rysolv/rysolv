@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import { HeaderWrap, UserNavBar } from '../base_ui';
-import { Admin, ButtonsWrapper, Login, SignUp, Test } from './styledComponents';
+import { ButtonsWrapper, Login, SignUp, Test } from './styledComponents';
 
 const DesktopHeader = ({
   activeUser,
@@ -18,7 +18,6 @@ const DesktopHeader = ({
   return (
     <HeaderWrap isMobile={isMobile}>
       <ButtonsWrapper>
-        <Admin label="Admin [temp]" path="/admin/organizations" />
         <SignUp label="Sign Up" path="/signup" />
         <Test label="Test" path="/test" />
 

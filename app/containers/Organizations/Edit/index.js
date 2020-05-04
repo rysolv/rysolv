@@ -1,11 +1,16 @@
 import React from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import AsyncRender from 'components/AsyncRender';
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 
 import { incrementStep } from '../actions';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectOrganizations,
   makeSelectOrganizationsLoading,
@@ -15,7 +20,7 @@ import { editOrganizationDictionary } from '../stepDictionary';
 import { EditWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class EditOrganization extends React.PureComponent {
+export class OrganizationsEdit extends React.PureComponent {
   componentDidMount() {
     const { handleIncrementStep } = this.props;
     handleIncrementStep({ step: 1, view: 'editOrganization' });
@@ -37,7 +42,7 @@ export class EditOrganization extends React.PureComponent {
   }
 }
 
-EditOrganization.propTypes = {
+OrganizationsEdit.propTypes = {
   data: T.object,
   handleIncrementStep: T.func,
   loading: T.bool.isRequired,
@@ -62,7 +67,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EditOrganization);
+);
+
+const withReducer = injectReducer({ key: 'organizations', reducer });
+const withSaga = injectSaga({ key: 'organizations', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(OrganizationsEdit);

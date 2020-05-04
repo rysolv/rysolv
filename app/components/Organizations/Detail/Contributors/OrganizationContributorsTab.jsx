@@ -21,7 +21,7 @@ const OrganizationContributorsTab = ({ contributors, handleNav }) => (
             <ContributorImageWrapper>
               <ProfileImage
                 alt={username}
-                detailRoute={`/admin/users/detail/${id}`}
+                detailRoute={`/users/detail/${id}`}
                 handleNav={handleNav}
                 profilePic={profilePic}
                 size="4.8rem"
@@ -30,7 +30,7 @@ const OrganizationContributorsTab = ({ contributors, handleNav }) => (
             <ContributorDetails>
               <span>
                 <ContributorName
-                  onClick={() => handleNav(`/admin/users/detail/${id}`)}
+                  onClick={() => handleNav(`/users/detail/${id}`)}
                 >
                   {firstName} {lastName}
                 </ContributorName>{' '}

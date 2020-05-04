@@ -11,6 +11,35 @@ import {
   logoutSuccess,
 } from './actions';
 
+export function* fetchActiveUserSaga({ payload }) {
+  const { userId } = payload;
+  try {
+    const query = `
+    query{
+      oneUser(column: "id", query: "${userId}") {
+        attempting,
+        id,
+        profilePic,
+        rep,
+        username,
+        watching,
+        pullRequests,
+        upvotes
+      }
+    }`;
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { oneUser },
+    } = yield call(post, '/graphql', graphql);
+    yield put(fetchActiveUserSuccess({ oneUser }));
+  } catch (error) {
+    yield put(fetchActiveUserFailure({ error }));
+  }
+}
+
 export function* loginSaga({ payload }) {
   const { userId } = payload;
   try {
@@ -47,35 +76,6 @@ export function* logoutSaga({ payload }) {
     yield put(logoutSuccess());
   } catch (error) {
     yield put(logoutFailure({ error }));
-  }
-}
-
-export function* fetchActiveUserSaga({ payload }) {
-  const { userId } = payload;
-  try {
-    const query = `
-    query{
-      oneUser(column: "id", query: "${userId}") {
-        attempting,
-        id,
-        profilePic,
-        rep,
-        username,
-        watching,
-        pullRequests,
-        upvotes
-      }
-    }`;
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: { oneUser },
-    } = yield call(post, '/graphql', graphql);
-    yield put(fetchActiveUserSuccess({ oneUser }));
-  } catch (error) {
-    yield put(fetchActiveUserFailure({ error }));
   }
 }
 
