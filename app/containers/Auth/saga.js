@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { post } from 'utils/request';
+import { setCookie, clearCookie } from './helpers';
 
 import { FETCH_ACTIVE_USER, LOGIN, LOGOUT } from './constants';
 import {
@@ -64,15 +65,15 @@ export function* loginSaga({ payload }) {
       data: { oneUser },
     } = yield call(post, '/graphql', graphql);
     yield put(loginSuccess({ oneUser }));
+    setCookie({ userId });
   } catch (error) {
     yield put(loginFailure({ error }));
   }
 }
 
-export function* logoutSaga({ payload }) {
-  const { userId } = payload;
+export function* logoutSaga() {
   try {
-    console.log(`Loging out - ${userId}`);
+    clearCookie('userId');
     yield put(logoutSuccess());
   } catch (error) {
     yield put(logoutFailure({ error }));

@@ -9,5 +9,6 @@ export const RoutesWrapper = styled.section`
   flex: 1 100%;
   flex-direction: column;
   min-height: 100vh;
-  padding: 0;
+  padding: 0 10rem 0 10rem;
+  clear: both;
 `;

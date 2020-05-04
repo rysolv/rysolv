@@ -1,11 +1,14 @@
-import React from 'react';
-import { SplashImage, Logo, TagLine } from './styledComponents';
+import React, { Fragment } from 'react';
+import { Divider, Logo, SplashImage, TagLine } from './styledComponents';
 
 const DesktopSplash = () => (
-  <SplashImage>
-    <Logo>RYSOLV</Logo>
-    <TagLine>Fixing the internet. One bug at a time</TagLine>
-  </SplashImage>
+  <Fragment>
+    <SplashImage>
+      <Logo>RYSOLV</Logo>
+      <TagLine>Fixing the internet. One bug at a time</TagLine>
+    </SplashImage>
+    <Divider />
+  </Fragment>
 );
 
 export default DesktopSplash;

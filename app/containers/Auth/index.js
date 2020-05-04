@@ -11,17 +11,25 @@ import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectActiveUser } from './selectors';
+import { login } from './actions';
+import { checkCookie } from './helpers';
 
 export default function withAuth(config, Component) {
-  const Auth = ({ isLoggedIn, ...restProps }) => {
+  const Auth = ({ isLoggedIn, handleLogin, ...restProps }) => {
     const { isPrivate } = config;
 
-    if (!isLoggedIn && isPrivate) return <Redirect to="/login" />;
+    if (!isLoggedIn) {
+      const { userId } = checkCookie();
+      if (userId) {
+        handleLogin({ userId });
+      } else if (!isLoggedIn && isPrivate) return <Redirect to="/signin" />;
+    }
 
     return <Component {...restProps} />;
   };
 
   Auth.propTypes = {
+    handleLogin: T.func,
     isLoggedIn: T.bool,
   };
 
@@ -32,9 +40,16 @@ export default function withAuth(config, Component) {
     isLoggedIn: makeSelectActiveUser('isLoggedIn'),
   });
 
+  const mapDispatchToProps = dispatch => ({
+    /**
+     * Auth
+     */
+    handleLogin: payload => dispatch(login(payload)),
+  });
+
   const withConnect = connect(
     mapStateToProps,
-    null,
+    mapDispatchToProps,
   );
 
   const withReducer = injectReducer({ key: 'auth', reducer });

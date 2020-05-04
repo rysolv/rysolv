@@ -8,6 +8,7 @@ import IssuesEdit from 'containers/Issues/Edit';
 import IssuesOverview from 'containers/Issues/Overview';
 import Main from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import Signin from 'containers/Signin';
 import OrganizationsAdd from 'containers/Organizations/Add';
 import OrganizationsDetail from 'containers/Organizations/Detail';
 import OrganizationsEdit from 'containers/Organizations/Edit';
@@ -16,7 +17,6 @@ import UsersAdd from 'containers/Users/Add';
 import UsersDetail from 'containers/Users/Detail';
 import UsersEdit from 'containers/Users/Edit';
 import UsersOverview from 'containers/Users/Overview';
-
 import Test from 'containers/Test';
 import { RoutesWrapper } from './styledComponents';
 
@@ -37,9 +37,11 @@ const PublicOrganizationsOverview = withAuth(
   publicConfig,
   OrganizationsOverview,
 );
+const PublicSignin = withAuth(publicConfig, Signin);
 const PublicUsersDetail = withAuth(publicConfig, UsersDetail);
 const PublicUsersOverview = withAuth(publicConfig, UsersOverview);
 
+// prettier-ignore
 const Routes = () => (
   <RoutesWrapper>
     <Switch>
@@ -48,32 +50,17 @@ const Routes = () => (
       <Route exact path="/issues/add" component={PrivateIssuesAdd} />
       <Route exact path="/issues/detail/:id?" component={PublicIssuesDetail} />
       <Route exact path="/issues/edit/:id?" component={PrivateIssuesEdit} />
-      <Route
-        exact
-        path="/organizations"
-        component={PublicOrganizationsOverview}
-      />
-      <Route
-        exact
-        path="/organizations/add"
-        component={PrivateOrganizationsAdd}
-      />
-      <Route
-        exact
-        path="/organizations/detail/:id?"
-        component={PublicOrganizationsDetail}
-      />
-      <Route
-        exact
-        path="/organizations/edit/:id?"
-        component={PrivateOrganizationsEdit}
-      />
+      <Route exact path="/organizations" component={PublicOrganizationsOverview} />
+      <Route exact path="/organizations/add" component={PrivateOrganizationsAdd} />
+      <Route exact path="/organizations/detail/:id?" component={PublicOrganizationsDetail} />
+      <Route exact path="/organizations/edit/:id?" component={PrivateOrganizationsEdit} />
+      <Route exact path="/signin" component={PublicSignin} />
+      <Route exact path="/test" component={Test} />
       <Route exact path="/users" component={PublicUsersOverview} />
       <Route exact path="/users/add" component={PrivateUsersAdd} />
       <Route exact path="/users/detail/:id?" component={PublicUsersDetail} />
       <Route exact path="/users/edit/:id?" component={PrivateUsersEdit} />
 
-      <Route exact path="/test" component={Test} />
       <Route component={NotFoundPage} />
     </Switch>
   </RoutesWrapper>
