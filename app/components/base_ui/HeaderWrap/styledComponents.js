@@ -1,13 +1,14 @@
 import styled from 'styled-components';
-import { headerColor } from 'defaultStyleHelper';
+import { defaultFontSize, headerColor } from 'defaultStyleHelper';
 
 export const Container = styled.section`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   background-color: ${headerColor};
   color: white;
-  font-size: 1.4rem;
+  display: flex;
+  flex-direction: row;
+  font-size: ${defaultFontSize};
+  height: 6rem;
+  justify-content: space-between;
   padding: 0.5rem;
 `;
 

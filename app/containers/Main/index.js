@@ -23,12 +23,14 @@ export const Main = ({
   handleLogin,
   handleLogout,
   loading,
+  isLoggedIn,
 }) => (
   <Fragment>
     <Header
       activeUser={activeUser}
       handleLogin={handleLogin}
       handleLogout={handleLogout}
+      isLoggedIn={isLoggedIn}
       view={deviceView}
     />
     <AppBody>
@@ -50,11 +52,13 @@ Main.propTypes = {
   error: T.object,
   handleLogin: T.func,
   handleLogout: T.func,
+  isLoggedIn: T.bool,
   loading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   activeUser: makeSelectActiveUser('activeUser'),
+  isLoggedIn: makeSelectActiveUser('isLoggedIn'),
   /**
    * Reducer: ViewSizes
    */

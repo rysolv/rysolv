@@ -32,7 +32,7 @@ export const Login = styled(BaseLink)`
   color: white;
   font-size: ${defaultFontSize};
   font-weight: 500;
-  margin-right: 4rem;
+  margin: 0 4rem 0 4rem;
   text-decoration: none;
 `;
 

@@ -6,7 +6,13 @@ import { ConditionalRender } from 'components/base_ui';
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
 
-const Header = ({ activeUser, handleLogin, handleLogout, view }) => {
+const Header = ({
+  activeUser,
+  handleLogin,
+  handleLogout,
+  isLoggedIn,
+  view,
+}) => {
   const isMobile = view === 'mobile';
 
   return (
@@ -17,6 +23,7 @@ const Header = ({ activeUser, handleLogin, handleLogout, view }) => {
         activeUser,
         handleLogin,
         handleLogout,
+        isLoggedIn,
         isMobile,
         view,
       }}
@@ -29,6 +36,7 @@ Header.propTypes = {
   activeUser: T.object,
   handleLogin: T.func,
   handleLogout: T.func,
+  isLoggedIn: T.bool,
   view: T.string,
 };
 
