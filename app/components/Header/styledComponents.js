@@ -9,7 +9,7 @@ export const ButtonsWrapper = styled.section`
   flex-direction: row;
 `;
 
-export const Login = styled(BaseLink)`
+export const Signin = styled(BaseLink)`
   &:hover {
     text-decoration: underline;
   }
@@ -19,7 +19,7 @@ export const Login = styled(BaseLink)`
   color: white;
   font-size: ${defaultFontSize};
   font-weight: 500;
-  margin: 0 4rem 0 4rem;
+  margin: 0 4rem 0 2rem;
   text-decoration: none;
 `;
 
@@ -33,12 +33,12 @@ export const SignUp = styled(BaseLink)`
   color: white;
   font-size: ${defaultFontSize};
   font-weight: 500;
-  margin-right: 4rem;
+  margin: 0 2rem;
   text-decoration: none;
 `;
 
-export const Test = styled(BaseLink)`
-  margin: 0 2rem 0 0;
+export const Browse = styled(BaseLink)`
+  margin: 0 2rem;
   font-size: ${defaultFontSize};
   color: white;
   &:hover {

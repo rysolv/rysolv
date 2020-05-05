@@ -11,40 +11,40 @@ import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectActiveUser } from './selectors';
-import { login } from './actions';
+import { signin } from './actions';
 import { checkCookie } from './helpers';
 
 export default function withAuth(config, Component) {
-  const Auth = ({ isLoggedIn, handleLogin, ...restProps }) => {
+  const Auth = ({ isSignedIn, handleSignin, ...restProps }) => {
     const { isPrivate } = config;
 
-    if (!isLoggedIn) {
+    if (!isSignedIn) {
       const { userId } = checkCookie();
       if (userId) {
-        handleLogin({ userId });
-      } else if (!isLoggedIn && isPrivate) return <Redirect to="/signin" />;
+        handleSignin({ userId });
+      } else if (!isSignedIn && isPrivate) return <Redirect to="/signin" />;
     }
 
     return <Component {...restProps} />;
   };
 
   Auth.propTypes = {
-    handleLogin: T.func,
-    isLoggedIn: T.bool,
+    handleSignin: T.func,
+    isSignedIn: T.bool,
   };
 
   const mapStateToProps = createStructuredSelector({
     /**
      * Reducer: Auth
      */
-    isLoggedIn: makeSelectActiveUser('isLoggedIn'),
+    isSignedIn: makeSelectActiveUser('isSignedIn'),
   });
 
   const mapDispatchToProps = dispatch => ({
     /**
      * Auth
      */
-    handleLogin: payload => dispatch(login(payload)),
+    handleSignin: payload => dispatch(signin(payload)),
   });
 
   const withConnect = connect(

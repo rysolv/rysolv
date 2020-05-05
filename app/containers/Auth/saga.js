@@ -2,14 +2,14 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { post } from 'utils/request';
 import { setCookie, clearCookie } from './helpers';
 
-import { FETCH_ACTIVE_USER, LOGIN, LOGOUT } from './constants';
+import { FETCH_ACTIVE_USER, SIGNIN, SIGNOUT } from './constants';
 import {
   fetchActiveUserFailure,
   fetchActiveUserSuccess,
-  loginFailure,
-  loginSuccess,
-  logoutFailure,
-  logoutSuccess,
+  signinFailure,
+  signinSuccess,
+  signoutFailure,
+  signoutSuccess,
 } from './actions';
 
 export function* fetchActiveUserSaga({ payload }) {
@@ -41,7 +41,7 @@ export function* fetchActiveUserSaga({ payload }) {
   }
 }
 
-export function* loginSaga({ payload }) {
+export function* signinSaga({ payload }) {
   const { userId } = payload;
   try {
     const query = `
@@ -64,24 +64,24 @@ export function* loginSaga({ payload }) {
     const {
       data: { oneUser },
     } = yield call(post, '/graphql', graphql);
-    yield put(loginSuccess({ oneUser }));
+    yield put(signinSuccess({ oneUser }));
     setCookie({ userId });
   } catch (error) {
-    yield put(loginFailure({ error }));
+    yield put(signinFailure({ error }));
   }
 }
 
-export function* logoutSaga() {
+export function* signoutSaga() {
   try {
     clearCookie('userId');
-    yield put(logoutSuccess());
+    yield put(signoutSuccess());
   } catch (error) {
-    yield put(logoutFailure({ error }));
+    yield put(signoutFailure({ error }));
   }
 }
 
 export default function* watcherSaga() {
   yield takeLatest(FETCH_ACTIVE_USER, fetchActiveUserSaga);
-  yield takeLatest(LOGIN, loginSaga);
-  yield takeLatest(LOGOUT, logoutSaga);
+  yield takeLatest(SIGNIN, signinSaga);
+  yield takeLatest(SIGNOUT, signoutSaga);
 }

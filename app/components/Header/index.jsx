@@ -8,9 +8,9 @@ import MobileHeader from './MobileHeader';
 
 const Header = ({
   activeUser,
-  handleLogin,
-  handleLogout,
-  isLoggedIn,
+  handleSignin,
+  handleSignout,
+  isSignedIn,
   view,
 }) => {
   const isMobile = view === 'mobile';
@@ -21,9 +21,9 @@ const Header = ({
       FallbackComponent={DesktopHeader}
       propsToPassDown={{
         activeUser,
-        handleLogin,
-        handleLogout,
-        isLoggedIn,
+        handleSignin,
+        handleSignout,
+        isSignedIn,
         isMobile,
         view,
       }}
@@ -34,9 +34,9 @@ const Header = ({
 
 Header.propTypes = {
   activeUser: T.object,
-  handleLogin: T.func,
-  handleLogout: T.func,
-  isLoggedIn: T.bool,
+  handleSignin: T.func,
+  handleSignout: T.func,
+  isSignedIn: T.bool,
   view: T.string,
 };
 
