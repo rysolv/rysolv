@@ -3,10 +3,12 @@ import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import { ErrorSuccessBanner } from 'components/base_ui';
+import Filter from 'components/Filter';
+import autocompleteDictionary from 'utils/autocompleteDictionary';
 
 import EmptyCard from './EmptyCard';
 import OrganizationCard from './Card';
-import { BannerWrapper } from './styledComponents';
+import { BannerWrapper, FilterContainer } from './styledComponents';
 
 const Organizations = ({
   alerts: { error, success },
@@ -31,22 +33,27 @@ const Organizations = ({
   );
   return (
     <Fragment>
-      <BannerWrapper>
-        <AdminSubHeader
-          disabled={disabled}
-          handleInputChange={handleInputChange}
-          handleNav={handleNav}
-          handleSearch={handleSearchOrganizations}
-          route={route}
-          search={search}
-        />
-        <ErrorSuccessBanner
-          error={error}
-          onClose={clearAlerts}
-          success={success}
-        />
-      </BannerWrapper>
-      {viewToRender}
+      <FilterContainer>
+        <Filter languageOptions={autocompleteDictionary.language} />
+      </FilterContainer>
+      <div>
+        <BannerWrapper>
+          <AdminSubHeader
+            disabled={disabled}
+            handleInputChange={handleInputChange}
+            handleNav={handleNav}
+            handleSearch={handleSearchOrganizations}
+            route={route}
+            search={search}
+          />
+          <ErrorSuccessBanner
+            error={error}
+            onClose={clearAlerts}
+            success={success}
+          />
+        </BannerWrapper>
+        {viewToRender}
+      </div>
     </Fragment>
   );
 };

@@ -1,13 +1,16 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+
 import Splash from 'components/Splash';
 import Landing from 'components/Landing';
+
+import { HomePageContainer } from './styledComponents';
 
 export default function HomePage() {
   document.title = 'Rysolv';
   return (
-    <Fragment>
+    <HomePageContainer>
       <Splash />
       <Landing />
-    </Fragment>
+    </HomePageContainer>
   );
 }

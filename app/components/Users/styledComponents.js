@@ -7,9 +7,9 @@ export const BannerWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-export const UserWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+export const FilterContainer = styled.div`
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
 `;
 
 export const MessageWrapper = styled.div`
@@ -25,4 +25,9 @@ export const MessageWrapper = styled.div`
   margin: 0.5rem 1rem;
   text-align: center;
   width: 100%;
+`;
+
+export const UserWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;

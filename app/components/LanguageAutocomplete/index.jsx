@@ -2,8 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import { BaseAutocomplete } from 'components/base_ui';
-
-import { options } from './constants';
+import autocompleteDictionary from 'utils/autocompleteDictionary';
 
 const LanguageAutocomplete = ({ error, helperText, label, onChange }) => (
   <BaseAutocomplete
@@ -11,7 +10,7 @@ const LanguageAutocomplete = ({ error, helperText, label, onChange }) => (
     helperText={helperText}
     label={label}
     onChange={onChange}
-    options={options}
+    options={autocompleteDictionary.language}
   />
 );
 

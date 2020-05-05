@@ -8,6 +8,11 @@ export const BannerWrapper = styled.div`
   margin: 1rem 0;
 `;
 
+export const FilterContainer = styled.div`
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+`;
+
 export const MessageWrapper = styled.div`
   align-items: center;
   background-color: white;

@@ -4,10 +4,16 @@ import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
 import { ErrorSuccessBanner } from 'components/base_ui';
+import Filter from 'components/Filter';
+import autocompleteDictionary from 'utils/autocompleteDictionary';
 
 import EmptyCard from './EmptyCard';
 import UserCard from './Card';
-import { BannerWrapper, UserWrapper } from './styledComponents';
+import {
+  BannerWrapper,
+  FilterContainer,
+  UserWrapper,
+} from './styledComponents';
 
 const Users = ({
   alerts: { error, success },
@@ -32,22 +38,27 @@ const Users = ({
   );
   return (
     <Fragment>
-      <BannerWrapper>
-        <AdminSubHeader
-          disabled={disabled}
-          handleInputChange={handleInputChange}
-          handleNav={handleNav}
-          handleSearch={handleSearchUsers}
-          route={route}
-          search={search}
-        />
-        <ErrorSuccessBanner
-          error={error}
-          onClose={clearAlerts}
-          success={success}
-        />
-      </BannerWrapper>
-      <UserWrapper>{viewToRender}</UserWrapper>
+      <FilterContainer>
+        <Filter languageOptions={autocompleteDictionary.language} />
+      </FilterContainer>
+      <div>
+        <BannerWrapper>
+          <AdminSubHeader
+            disabled={disabled}
+            handleInputChange={handleInputChange}
+            handleNav={handleNav}
+            handleSearch={handleSearchUsers}
+            route={route}
+            search={search}
+          />
+          <ErrorSuccessBanner
+            error={error}
+            onClose={clearAlerts}
+            success={success}
+          />
+        </BannerWrapper>
+        <UserWrapper>{viewToRender}</UserWrapper>
+      </div>
     </Fragment>
   );
 };

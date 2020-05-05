@@ -1,4 +1,4 @@
-export const options = [
+export const languageOptions = [
   { value: 'ActionScript' },
   { value: 'AppleScript' },
   { value: 'Asp' },
