@@ -7,7 +7,10 @@ import { PrimaryButton, SecondaryButton } from 'components/base_ui';
 import ManualForm from 'components/Organizations/Add/ManualForm';
 
 import { incrementStep, inputChange } from '../actions';
-import { makeSelectOrganizations, makeSelectOrganizationsDisabled } from '../selectors';
+import {
+  makeSelectOrganizations,
+  makeSelectOrganizationsDisabled,
+} from '../selectors';
 import { ButtonGroup, StyledH3 } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -26,12 +29,16 @@ export class ManualOrganization extends React.PureComponent {
         <ButtonGroup>
           <SecondaryButton
             label="Back"
-            onClick={() => handleIncrementStep({ step: 1, view: 'addOrganization' })}
+            onClick={() =>
+              handleIncrementStep({ step: 1, view: 'addOrganization' })
+            }
           />
           <PrimaryButton
             disabled={!isDisabled}
             label="Next"
-            onClick={() => handleIncrementStep({ step: 3, view: 'addOrganization' })}
+            onClick={() =>
+              handleIncrementStep({ step: 3, view: 'addOrganization' })
+            }
           />
         </ButtonGroup>
       </Fragment>

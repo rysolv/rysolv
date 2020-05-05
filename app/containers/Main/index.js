@@ -10,7 +10,7 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectActiveUser } from 'containers/Auth/selectors';
-import { login, logout } from 'containers/Auth/actions';
+import { signin, signout } from 'containers/Auth/actions';
 
 import routes from './routes';
 import { AppBody } from './styledComponents';
@@ -20,18 +20,18 @@ export const Main = ({
   data = { test: true },
   deviceView,
   error,
-  handleLogin,
-  handleLogout,
-  isLoggedIn,
+  handleSignin,
+  handleSignout,
+  isSignedIn,
   loading,
   match,
 }) => (
   <Fragment>
     <Header
       activeUser={activeUser}
-      handleLogin={handleLogin}
-      handleLogout={handleLogout}
-      isLoggedIn={isLoggedIn}
+      handleSignin={handleSignin}
+      handleSignout={handleSignout}
+      isSignedIn={isSignedIn}
       view={deviceView}
     />
     <AppBody>
@@ -52,16 +52,16 @@ Main.propTypes = {
   data: T.object,
   deviceView: T.string,
   error: T.object,
-  handleLogin: T.func,
-  handleLogout: T.func,
-  isLoggedIn: T.bool,
+  handleSignin: T.func,
+  handleSignout: T.func,
+  isSignedIn: T.bool,
   loading: T.bool,
   match: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   activeUser: makeSelectActiveUser('activeUser'),
-  isLoggedIn: makeSelectActiveUser('isLoggedIn'),
+  isSignedIn: makeSelectActiveUser('isSignedIn'),
   /**
    * Reducer: ViewSizes
    */
@@ -72,8 +72,8 @@ const mapDispatchToProps = dispatch => ({
   /**
    * Auth
    */
-  handleLogin: payload => dispatch(login(payload)),
-  handleLogout: payload => dispatch(logout(payload)),
+  handleSignin: payload => dispatch(signin(payload)),
+  handleSignout: payload => dispatch(signout(payload)),
 });
 
 const withConnect = connect(

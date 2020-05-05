@@ -1,41 +1,29 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import { HeaderWrap, UserNavBar } from '../base_ui';
-import { ButtonsWrapper, Login, SignUp, Test } from './styledComponents';
+import { ButtonsWrapper, Signin, SignUp, Browse } from './styledComponents';
 
-const DesktopHeader = ({
-  activeUser,
-  handleLogin,
-  handleLogout,
-  isLoggedIn,
-  isMobile,
-}) => {
-  const handleSignin = e => {
-    e.preventDefault();
-    handleLogin({ userId: 'b519b064-b5db-4472-ad1b-00e30bdbfa4c' });
-  };
-  return (
-    <HeaderWrap isMobile={isMobile}>
-      <ButtonsWrapper>
-        <SignUp label="Sign Up" path="/signup" />
-        <Test label="Test" path="/test" />
-
-        {isLoggedIn ? (
-          <UserNavBar activeUser={activeUser} handleLogout={handleLogout} />
-        ) : (
-          <Login label="Sign In" path="/login" onClick={e => handleSignin(e)} />
-        )}
-      </ButtonsWrapper>
-    </HeaderWrap>
-  );
-};
+const DesktopHeader = ({ activeUser, handleSignout, isSignedIn, isMobile }) => (
+  <HeaderWrap isMobile={isMobile}>
+    <ButtonsWrapper>
+      <Browse label="Browse" path="/issues" />
+      {isSignedIn ? (
+        <UserNavBar activeUser={activeUser} handleSignout={handleSignout} />
+      ) : (
+        <Fragment>
+          <SignUp label="Sign Up" path="/signup" />
+          <Signin label="Sign In" path="/signin" />
+        </Fragment>
+      )}
+    </ButtonsWrapper>
+  </HeaderWrap>
+);
 
 DesktopHeader.propTypes = {
   activeUser: T.object,
-  handleLogin: T.func,
-  handleLogout: T.func,
-  isLoggedIn: T.bool,
+  handleSignout: T.func,
+  isSignedIn: T.bool,
   isMobile: T.bool,
 };
 

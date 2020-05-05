@@ -2,12 +2,12 @@ import {
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
   FETCH_ACTIVE_USER,
-  LOGIN_FAILURE,
-  LOGIN_SUCCESS,
-  LOGIN,
-  LOGOUT_FAILURE,
-  LOGOUT_SUCCESS,
-  LOGOUT,
+  SIGNIN_FAILURE,
+  SIGNIN_SUCCESS,
+  SIGNIN,
+  SIGNOUT_FAILURE,
+  SIGNOUT_SUCCESS,
+  SIGNOUT,
   UPDATE_ACTIVE_USER,
 } from './constants';
 
@@ -32,45 +32,45 @@ export function fetchActiveUser(payload) {
   };
 }
 
-export function loginFailure(payload) {
+export function signinFailure(payload) {
   return {
     payload,
-    type: LOGIN_FAILURE,
+    type: SIGNIN_FAILURE,
   };
 }
 
-export function loginSuccess(payload) {
+export function signinSuccess(payload) {
   return {
     payload,
-    type: LOGIN_SUCCESS,
+    type: SIGNIN_SUCCESS,
   };
 }
 
-export function login(payload) {
+export function signin(payload) {
   return {
     payload,
-    type: LOGIN,
+    type: SIGNIN,
   };
 }
 
-export function logoutFailure(payload) {
+export function signoutFailure(payload) {
   return {
     payload,
-    type: LOGOUT_FAILURE,
+    type: SIGNOUT_FAILURE,
   };
 }
 
-export function logoutSuccess(payload) {
+export function signoutSuccess(payload) {
   return {
     payload,
-    type: LOGOUT_SUCCESS,
+    type: SIGNOUT_SUCCESS,
   };
 }
 
-export function logout(payload) {
+export function signout(payload) {
   return {
     payload,
-    type: LOGOUT,
+    type: SIGNOUT,
   };
 }
 

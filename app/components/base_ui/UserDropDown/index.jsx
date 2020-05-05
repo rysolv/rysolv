@@ -44,7 +44,7 @@ const UserDropDownMenu = ({
   activeUser,
   anchorEl,
   handleClose,
-  handleLogout,
+  handleSignout,
 }) => {
   const {
     attempting,
@@ -118,7 +118,7 @@ const UserDropDownMenu = ({
         </MenuItemLabel>
       </StyledMenuItem>
 
-      <StyledMenuItem onClick={() => handleLogout({ userId: id })}>
+      <StyledMenuItem onClick={() => handleSignout({ userId: id })}>
         <MenuItemLabel>
           <IconWrapper>{ExitIcon}</IconWrapper>
           Sign out
@@ -132,6 +132,6 @@ UserDropDownMenu.propTypes = {
   activeUser: T.object,
   anchorEl: T.object,
   handleClose: T.func,
-  handleLogout: T.func,
+  handleSignout: T.func,
 };
 export default UserDropDownMenu;
