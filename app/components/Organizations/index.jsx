@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
@@ -6,9 +6,17 @@ import { ErrorSuccessBanner } from 'components/base_ui';
 import Filter from 'components/Filter';
 import autocompleteDictionary from 'utils/autocompleteDictionary';
 
+import SubHeader from 'components/SubHeader';
 import EmptyCard from './EmptyCard';
 import OrganizationCard from './Card';
-import { BannerWrapper, FilterContainer } from './styledComponents';
+import {
+  BannerWrapper,
+  CardTitle,
+  FilterContainer,
+  OrganizationWrapper,
+  OverviewWrapper,
+  SubHeaderWrapper,
+} from './styledComponents';
 
 const Organizations = ({
   alerts: { error, success },
@@ -32,29 +40,35 @@ const Organizations = ({
     <EmptyCard />
   );
   return (
-    <Fragment>
-      <FilterContainer>
-        <Filter languageOptions={autocompleteDictionary.language} />
-      </FilterContainer>
-      <div>
-        <BannerWrapper>
-          <AdminSubHeader
-            disabled={disabled}
-            handleInputChange={handleInputChange}
-            handleNav={handleNav}
-            handleSearch={handleSearchOrganizations}
-            route={route}
-            search={search}
-          />
-          <ErrorSuccessBanner
-            error={error}
-            onClose={clearAlerts}
-            success={success}
-          />
-        </BannerWrapper>
-        {viewToRender}
-      </div>
-    </Fragment>
+    <OverviewWrapper>
+      <SubHeaderWrapper>
+        <SubHeader initialValue={1} handleNav={handleNav} />
+      </SubHeaderWrapper>
+      <CardTitle>Find Organizations</CardTitle>
+      <OrganizationWrapper>
+        <FilterContainer>
+          <Filter languageOptions={autocompleteDictionary.language} />
+        </FilterContainer>
+        <div>
+          <BannerWrapper>
+            <AdminSubHeader
+              disabled={disabled}
+              handleInputChange={handleInputChange}
+              handleNav={handleNav}
+              handleSearch={handleSearchOrganizations}
+              route={route}
+              search={search}
+            />
+            <ErrorSuccessBanner
+              error={error}
+              onClose={clearAlerts}
+              success={success}
+            />
+          </BannerWrapper>
+          {viewToRender}
+        </div>
+      </OrganizationWrapper>
+    </OverviewWrapper>
   );
 };
 

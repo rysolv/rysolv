@@ -1,8 +1,9 @@
 /* eslint-disable camelcase */
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
+import SubHeader from 'components/SubHeader';
 import { ErrorSuccessBanner } from 'components/base_ui';
 import Filter from 'components/Filter';
 import autocompleteDictionary from 'utils/autocompleteDictionary';
@@ -11,7 +12,11 @@ import EmptyCard from './EmptyCard';
 import UserCard from './Card';
 import {
   BannerWrapper,
+  CardTitle,
   FilterContainer,
+  OverviewWrapper,
+  SubHeaderWrapper,
+  UserCardWrapper,
   UserWrapper,
 } from './styledComponents';
 
@@ -37,29 +42,35 @@ const Users = ({
     <EmptyCard />
   );
   return (
-    <Fragment>
-      <FilterContainer>
-        <Filter languageOptions={autocompleteDictionary.language} />
-      </FilterContainer>
-      <div>
-        <BannerWrapper>
-          <AdminSubHeader
-            disabled={disabled}
-            handleInputChange={handleInputChange}
-            handleNav={handleNav}
-            handleSearch={handleSearchUsers}
-            route={route}
-            search={search}
-          />
-          <ErrorSuccessBanner
-            error={error}
-            onClose={clearAlerts}
-            success={success}
-          />
-        </BannerWrapper>
-        <UserWrapper>{viewToRender}</UserWrapper>
-      </div>
-    </Fragment>
+    <OverviewWrapper>
+      <SubHeaderWrapper>
+        <SubHeader initialValue={2} handleNav={handleNav} />
+      </SubHeaderWrapper>
+      <CardTitle>Find Users</CardTitle>
+      <UserWrapper>
+        <FilterContainer>
+          <Filter languageOptions={autocompleteDictionary.language} />
+        </FilterContainer>
+        <div>
+          <BannerWrapper>
+            <AdminSubHeader
+              disabled={disabled}
+              handleInputChange={handleInputChange}
+              handleNav={handleNav}
+              handleSearch={handleSearchUsers}
+              route={route}
+              search={search}
+            />
+            <ErrorSuccessBanner
+              error={error}
+              onClose={clearAlerts}
+              success={success}
+            />
+          </BannerWrapper>
+          <UserCardWrapper>{viewToRender}</UserCardWrapper>
+        </div>
+      </UserWrapper>
+    </OverviewWrapper>
   );
 };
 

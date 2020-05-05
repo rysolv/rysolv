@@ -1,11 +1,14 @@
 import styled from 'styled-components';
-
-import { PrimaryAsyncButton } from 'components/base_ui';
-import { textColor } from 'defaultStyleHelper';
+import { headerFontSize, textColor } from 'defaultStyleHelper';
 
 export const BannerWrapper = styled.div`
   font-size: 1.2rem;
   margin: 1rem 0;
+`;
+export const CardTitle = styled.div`
+  font-size: ${headerFontSize};
+  margin: 4rem 0 0 2rem;
+  color: ${textColor};
 `;
 
 export const FilterContainer = styled.div`
@@ -26,10 +29,17 @@ export const MessageWrapper = styled.div`
   text-align: center;
 `;
 
-export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
-  &:hover {
-    background-color: red;
-  }
+export const OrganizationWrapper = styled.div`
+  display: flex;
+`;
 
-  background-color: red;
+export const OverviewWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+`;
+
+export const SubHeaderWrapper = styled.div`
+  display: flex;
+  margin: 1rem 0 0 2rem;
 `;

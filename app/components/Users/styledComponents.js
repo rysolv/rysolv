@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 
-import { textColor } from 'defaultStyleHelper';
+import { textColor, headerFontSize } from 'defaultStyleHelper';
 
 export const BannerWrapper = styled.div`
   font-size: 1.2rem;
   margin: 1rem 0;
+`;
+
+export const CardTitle = styled.div`
+  font-size: ${headerFontSize};
+  margin: 4rem 0 0 2rem;
+  color: ${textColor};
 `;
 
 export const FilterContainer = styled.div`
@@ -27,7 +33,22 @@ export const MessageWrapper = styled.div`
   width: 100%;
 `;
 
-export const UserWrapper = styled.div`
+export const OverviewWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+`;
+
+export const SubHeaderWrapper = styled.div`
+  display: flex;
+  margin: 1rem 0 0 2rem;
+`;
+
+export const UserCardWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+`;
+
+export const UserWrapper = styled.div`
+  display: flex;
 `;
