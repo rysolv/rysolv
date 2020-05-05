@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
-import SettingsMenu from 'components/SettingsMenu';
 import { FundingWrapper } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
@@ -18,87 +17,65 @@ import {
   StyledImage,
   StyledListItem,
   StyledOrganizationCard,
-  StyledSettingWrapper,
   TextContainer,
   TitleContainer,
 } from './styledComponents';
 
-const OrganizationCard = ({
-  data,
-  handleDeleteOrganization,
-  handleFetchInfo,
-  handleNav,
-}) => {
-  const deleteRoute = `/organizations`;
-  const editRoute = `/organizations/edit`;
-  return (
-    <Fragment>
-      <StyledOrganizationCard>
-        {data.map(
-          ({
-            description,
-            id,
-            issues,
-            logo,
-            modifiedDate,
-            name,
-            totalFunded,
-          }) => (
-            <StyledListItem key={id}>
-              <TitleContainer>
-                <NameWrapper
-                  onClick={() => handleNav(`/organizations/detail/${id}`)}
-                >
-                  {name}
-                </NameWrapper>
-                <SettingsContainer>
-                  <DateWrapper>
-                    Last post {moment(modifiedDate).format('M/D/YYYY')}
-                  </DateWrapper>
-                  <StyledSettingWrapper>
-                    <SettingsMenu
-                      deleteRoute={deleteRoute}
-                      editRoute={editRoute}
-                      handleDelete={handleDeleteOrganization}
-                      handleFetchInfo={handleFetchInfo}
-                      handleNav={handleNav}
-                      id={id}
+const OrganizationCard = ({ data, handleNav }) => (
+  <Fragment>
+    <StyledOrganizationCard>
+      {data.map(
+        ({
+          description,
+          id,
+          issues,
+          logo,
+          modifiedDate,
+          name,
+          totalFunded,
+        }) => (
+          <StyledListItem key={id}>
+            <TitleContainer>
+              <NameWrapper
+                onClick={() => handleNav(`/organizations/detail/${id}`)}
+              >
+                {name}
+              </NameWrapper>
+              <SettingsContainer>
+                <DateWrapper>
+                  Last post {moment(modifiedDate).format('M/D/YYYY')}
+                </DateWrapper>
+              </SettingsContainer>
+            </TitleContainer>
+            <ContentContainer>
+              <ImageContainer>
+                <StyledImage alt="Organization Image" src={logo} />
+              </ImageContainer>
+              <TextContainer>
+                <DescriptionWrapper>{description}</DescriptionWrapper>
+                <StatsWrapper>
+                  <OrganizationCardItem>
+                    {issues.length} Issues
+                  </OrganizationCardItem>
+                  <OrganizationCardItem>
+                    <FundingWrapper
+                      medium
+                      open
+                      value={formatDollarAmount(totalFunded)}
                     />
-                  </StyledSettingWrapper>
-                </SettingsContainer>
-              </TitleContainer>
-              <ContentContainer>
-                <ImageContainer>
-                  <StyledImage alt="Organization Image" src={logo} />
-                </ImageContainer>
-                <TextContainer>
-                  <DescriptionWrapper>{description}</DescriptionWrapper>
-                  <StatsWrapper>
-                    <OrganizationCardItem>
-                      {issues.length} Issues
-                    </OrganizationCardItem>
-                    <OrganizationCardItem>
-                      <FundingWrapper
-                        medium
-                        open
-                        value={formatDollarAmount(totalFunded)}
-                      />
-                    </OrganizationCardItem>
-                  </StatsWrapper>
-                </TextContainer>
-              </ContentContainer>
-            </StyledListItem>
-          ),
-        )}
-      </StyledOrganizationCard>
-    </Fragment>
-  );
-};
+                  </OrganizationCardItem>
+                </StatsWrapper>
+              </TextContainer>
+            </ContentContainer>
+          </StyledListItem>
+        ),
+      )}
+    </StyledOrganizationCard>
+  </Fragment>
+);
 
 OrganizationCard.propTypes = {
   data: T.array,
-  handleDeleteOrganization: T.func,
-  handleFetchInfo: T.func,
   handleNav: T.func,
 };
 

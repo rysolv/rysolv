@@ -13,8 +13,6 @@ const Organizations = ({
   clearAlerts,
   data,
   disabled,
-  handleDeleteOrganization,
-  handleFetchInfo,
   handleInputChange,
   handleNav,
   handleSearchOrganizations,
@@ -23,8 +21,6 @@ const Organizations = ({
   const hasOrganizations = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
     data,
-    handleDeleteOrganization,
-    handleFetchInfo,
     handleNav,
   };
   const route = '/organizations/add';
@@ -63,8 +59,6 @@ Organizations.propTypes = {
   clearAlerts: T.func,
   data: T.array,
   disabled: T.bool.isRequired,
-  handleDeleteOrganization: T.func,
-  handleFetchInfo: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearchOrganizations: T.func,

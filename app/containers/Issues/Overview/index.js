@@ -14,7 +14,6 @@ import injectReducer from 'utils/injectReducer';
 import {
   addAttempt,
   clearAlerts,
-  deleteIssue,
   fetchIssues,
   inputChange,
   searchIssues,
@@ -50,7 +49,6 @@ export class IssuesOverview extends React.PureComponent {
       disabled,
       error,
       handleClearAlerts,
-      handleDeleteIssue,
       handleIncrement,
       handleInputChange,
       handleNav,
@@ -71,7 +69,6 @@ export class IssuesOverview extends React.PureComponent {
           alerts,
           disabled,
           handleClearAlerts,
-          handleDeleteIssue,
           handleIncrement,
           handleInputChange,
           handleNav,
@@ -94,7 +91,6 @@ IssuesOverview.propTypes = {
   dispatchFetchIssues: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
-  handleDeleteIssue: T.func,
   handleIncrement: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
@@ -123,10 +119,8 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Issues
      */
-    // dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     dispatchFetchIssues: () => dispatch(fetchIssues()),
     handleClearAlerts: () => dispatch(clearAlerts()),
-    handleDeleteIssue: payload => dispatch(deleteIssue(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
     handleUpvote: payload => dispatch(upvoteIssue(payload)),

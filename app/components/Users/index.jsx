@@ -14,8 +14,6 @@ const Users = ({
   clearAlerts,
   data,
   disabled,
-  handleDeleteUser,
-  handleFetchInfo,
   handleInputChange,
   handleNav,
   handleSearchUsers,
@@ -25,8 +23,6 @@ const Users = ({
   const route = '/users/add';
   const propsToPassDown = {
     data,
-    handleDeleteUser,
-    handleFetchInfo,
     handleNav,
   };
   const viewToRender = hasUsers ? (
@@ -64,8 +60,6 @@ Users.propTypes = {
   clearAlerts: T.func,
   data: T.array,
   disabled: T.bool.isRequired,
-  handleDeleteUser: T.func,
-  handleFetchInfo: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearchUsers: T.func,

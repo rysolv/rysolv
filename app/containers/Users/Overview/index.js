@@ -10,14 +10,7 @@ import UserCard from 'components/Users';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import {
-  clearAlerts,
-  deleteUser,
-  fetchInfo,
-  fetchUsers,
-  inputChange,
-  searchUsers,
-} from '../actions';
+import { clearAlerts, fetchUsers, inputChange, searchUsers } from '../actions';
 import {
   makeSelectUsers,
   makeSelectUsersError,
@@ -46,10 +39,8 @@ export class UsersOverview extends React.PureComponent {
     const {
       alerts,
       disabled,
-      dispatchFetchInfo,
       error,
       handleClearAlerts,
-      handleDeleteUser,
       handleInputChange,
       handleNav,
       handleSearchUsers,
@@ -67,8 +58,6 @@ export class UsersOverview extends React.PureComponent {
           alerts,
           disabled,
           handleClearAlerts,
-          handleDeleteUser,
-          handleFetchInfo: dispatchFetchInfo,
           handleInputChange,
           handleNav,
           handleSearchUsers,
@@ -85,11 +74,9 @@ UsersOverview.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   disabled: T.bool,
-  dispatchFetchInfo: T.func,
   dispatchFetchUsers: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
-  handleDeleteUser: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearchUsers: T.func,
@@ -115,10 +102,8 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Users
      */
-    dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     dispatchFetchUsers: () => dispatch(fetchUsers()),
     handleClearAlerts: () => dispatch(clearAlerts()),
-    handleDeleteUser: payload => dispatch(deleteUser(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchUsers: payload => dispatch(searchUsers(payload)),
     /**

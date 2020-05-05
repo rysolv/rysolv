@@ -10,7 +10,6 @@ import {
   Verified,
   WatchButton,
 } from 'components/base_ui';
-import SettingsMenu from 'components/SettingsMenu';
 import { formatDollarAmount, navHelper } from 'utils/globalHelpers';
 import IconDictionary from 'utils/iconDictionary';
 
@@ -35,15 +34,11 @@ const AttemptingIcon = IconDictionary('attempt');
 const IssueCard = ({
   activeUser,
   data,
-  handleDeleteIssue,
   handleIncrement,
   handleNav,
   handleUpvote,
-}) => {
-  const deleteRoute = `/issues`;
-  const editRoute = `/issues/edit`;
-
-  return data.map(
+}) =>
+  data.map(
     ({
       id,
       name,
@@ -97,14 +92,6 @@ const IssueCard = ({
                     ''
                   )}
                 </OrganizationNameWrapper>
-                <SettingsMenu
-                  handleDelete={handleDeleteIssue}
-                  handleNav={handleNav}
-                  deleteRoute={deleteRoute}
-                  editRoute={editRoute}
-                  handleFetchInfo={() => {}}
-                  id={id}
-                />
               </StyledIssueHeader>
               <StyledIssueText>
                 <NameWrapper
@@ -174,12 +161,9 @@ const IssueCard = ({
       );
     },
   );
-};
 
 IssueCard.propTypes = {
-  // handleFetchInfo: T.func.isRequired,
   data: T.array.isRequired,
-  handleDeleteIssue: T.func.isRequired,
   handleIncrement: T.func,
   handleNav: T.func.isRequired,
   handleUpvote: T.func.isRequired,

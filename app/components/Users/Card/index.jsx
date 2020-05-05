@@ -3,7 +3,6 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import { Star, ProfileImage } from 'components/base_ui';
-import SettingsMenu from 'components/SettingsMenu';
 import { navHelper } from 'utils/globalHelpers';
 
 import {
@@ -22,85 +21,66 @@ import {
   StyledSquare,
 } from './styledComponents';
 
-const UserCard = ({ data, handleDeleteUser, handleFetchInfo, handleNav }) => {
-  const deleteRoute = `/users`;
-  const editRoute = `/users/edit`;
-
-  return (
-    <Fragment>
-      {data.map(
-        (
-          {
-            attempting,
-            createdDate,
-            id,
-            issuesNumber,
-            name,
-            pointsNumber,
-            profilePic,
-          },
-          index,
-        ) => (
-          <StyledListSquare key={`${name}-${index}`}>
-            <StyledSquare>
-              <StyledSettingWrapper>
-                <MemberWrapper>
-                  <NameWrapper
-                    onClick={e =>
-                      navHelper(e, handleNav, `/users/detail/${id}`)
-                    }
-                    href={`/users/detail/${id}`}
-                  >
-                    {name}
-                  </NameWrapper>
-                  <MemberInfoContainer>
-                    Member since {createdDate}
-                  </MemberInfoContainer>
-                </MemberWrapper>
-                <SettingsMenu
-                  deleteRoute={deleteRoute}
-                  editRoute={editRoute}
-                  handleDelete={handleDeleteUser}
-                  handleFetchInfo={handleFetchInfo}
+const UserCard = ({ data, handleNav }) => (
+  <Fragment>
+    {data.map(
+      (
+        {
+          attempting,
+          createdDate,
+          id,
+          issuesNumber,
+          name,
+          pointsNumber,
+          profilePic,
+        },
+        index,
+      ) => (
+        <StyledListSquare key={`${name}-${index}`}>
+          <StyledSquare>
+            <StyledSettingWrapper>
+              <MemberWrapper>
+                <NameWrapper
+                  onClick={e => navHelper(e, handleNav, `/users/detail/${id}`)}
+                  href={`/users/detail/${id}`}
+                >
+                  {name}
+                </NameWrapper>
+                <MemberInfoContainer>
+                  Member since {createdDate}
+                </MemberInfoContainer>
+              </MemberWrapper>
+            </StyledSettingWrapper>
+            <ContentWrapper>
+              <ImageContainer>
+                <ProfileImage
+                  alt="Profile Image"
+                  detailRoute={`/users/detail/${id}`}
                   handleNav={handleNav}
-                  id={id}
+                  profilePic={profilePic}
+                  size="7.5rem"
                 />
-              </StyledSettingWrapper>
-              <ContentWrapper>
-                <ImageContainer>
-                  <ProfileImage
-                    alt="Profile Image"
-                    detailRoute={`/users/detail/${id}`}
-                    handleNav={handleNav}
-                    profilePic={profilePic}
-                    size="7.5rem"
-                  />
-                  <IconWrapper>
-                    <div>
-                      <Star />
-                    </div>
-                    <NumberContainer>{pointsNumber}</NumberContainer>
-                  </IconWrapper>
-                </ImageContainer>
-              </ContentWrapper>
-              <IssuesWrapper>
-                <IssuesContainer>{issuesNumber.length} Issues</IssuesContainer>
-                <ActiveContainer>
-                  {attempting.length} Attempting
-                </ActiveContainer>
-              </IssuesWrapper>
-            </StyledSquare>
-          </StyledListSquare>
-        ),
-      )}
-    </Fragment>
-  );
-};
+                <IconWrapper>
+                  <div>
+                    <Star />
+                  </div>
+                  <NumberContainer>{pointsNumber}</NumberContainer>
+                </IconWrapper>
+              </ImageContainer>
+            </ContentWrapper>
+            <IssuesWrapper>
+              <IssuesContainer>{issuesNumber.length} Issues</IssuesContainer>
+              <ActiveContainer>{attempting.length} Attempting</ActiveContainer>
+            </IssuesWrapper>
+          </StyledSquare>
+        </StyledListSquare>
+      ),
+    )}
+  </Fragment>
+);
 
 UserCard.propTypes = {
   data: T.array.isRequired,
-  handleDeleteUser: T.func.isRequired,
-  handleFetchInfo: T.func.isRequired,
   handleNav: T.func.isRequired,
 };
 

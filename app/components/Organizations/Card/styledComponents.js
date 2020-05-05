@@ -78,10 +78,6 @@ export const StyledOrganizationCard = styled.div`
   flex-direction: column;
 `;
 
-export const StyledSettingWrapper = styled.div`
-  padding: 1rem;
-`;
-
 export const TextContainer = styled.div`
   padding: 0 3rem 0 0;
   width: 100%;

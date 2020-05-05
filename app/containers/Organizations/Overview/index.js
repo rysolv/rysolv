@@ -12,9 +12,7 @@ import injectReducer from 'utils/injectReducer';
 
 import {
   clearAlerts,
-  deleteOrganization,
   fetchOrganizations,
-  fetchInfo,
   inputChange,
   searchOrganizations,
 } from '../actions';
@@ -44,10 +42,8 @@ export class OrganizationsOverview extends React.PureComponent {
       alerts,
       organizations,
       disabled,
-      dispatchFetchInfo,
       error,
       handleClearAlerts,
-      handleDeleteOrganization,
       handleInputChange,
       handleNav,
       handleSearchOrganizations,
@@ -65,8 +61,6 @@ export class OrganizationsOverview extends React.PureComponent {
           alerts,
           disabled,
           handleClearAlerts,
-          handleDeleteOrganization,
-          handleFetchInfo: dispatchFetchInfo,
           handleInputChange,
           handleNav,
           handleSearchOrganizations,
@@ -85,10 +79,8 @@ OrganizationsOverview.propTypes = {
   organizations: T.array,
   disabled: T.bool.isRequired,
   dispatchFetchOrganizations: T.func,
-  dispatchFetchInfo: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
-  handleDeleteOrganization: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearchOrganizations: T.func,
@@ -114,9 +106,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Organizations
      */
     dispatchFetchOrganizations: () => dispatch(fetchOrganizations()),
-    dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
-    handleDeleteOrganization: payload => dispatch(deleteOrganization(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchOrganizations: payload =>
       dispatch(searchOrganizations(payload)),
