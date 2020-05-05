@@ -9,6 +9,7 @@ import IssuesOverview from 'containers/Issues/Overview';
 import Main from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Signin from 'containers/Signin';
+import Signup from 'containers/Signin/Signup';
 import OrganizationsAdd from 'containers/Organizations/Add';
 import OrganizationsDetail from 'containers/Organizations/Detail';
 import OrganizationsEdit from 'containers/Organizations/Edit';
@@ -38,6 +39,7 @@ const PublicOrganizationsOverview = withAuth(
   OrganizationsOverview,
 );
 const PublicSignin = withAuth(publicConfig, Signin);
+const PublicSignup = withAuth(publicConfig, Signup);
 const PublicUsersDetail = withAuth(publicConfig, UsersDetail);
 const PublicUsersOverview = withAuth(publicConfig, UsersOverview);
 
@@ -55,6 +57,7 @@ const Routes = () => (
       <Route exact path="/organizations/detail/:id?" component={PublicOrganizationsDetail} />
       <Route exact path="/organizations/edit/:id?" component={PrivateOrganizationsEdit} />
       <Route exact path="/signin" component={PublicSignin} />
+      <Route exact path="/signup" component={PublicSignup} />
       <Route exact path="/test" component={Test} />
       <Route exact path="/users" component={PublicUsersOverview} />
       <Route exact path="/users/add" component={PrivateUsersAdd} />

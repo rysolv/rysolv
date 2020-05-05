@@ -1,24 +1,23 @@
 import React from 'react';
-import T from 'prop-types';
 import { Link } from 'react-router-dom';
+import T from 'prop-types';
 
 import { MainTextInput, PrimaryButton } from 'components/base_ui';
-
 import {
-  SigninWrapper,
   InputFormWrapper,
-  Title,
+  SigninWrapper,
   SubText,
-} from './styledComponents';
+  Title,
+} from '../styledComponents';
 
 // eslint-disable-next-line arrow-body-style
-const Signin = ({ data, handleInputChange, handleSignin }) => {
+const Signup = ({ data, handleInputChange, handleSignin }) => {
   // eslint-disable-next-line no-param-reassign
   const { email, password } = data;
   return (
     <SigninWrapper>
       <InputFormWrapper>
-        <Title>Sign in</Title>
+        <Title>Register</Title>
         <MainTextInput
           error={!!email.error}
           helperText={email.error}
@@ -45,24 +44,37 @@ const Signin = ({ data, handleInputChange, handleSignin }) => {
           }
           value={password.value}
         />
+        <MainTextInput
+          error={!!password.error}
+          helperText={password.error}
+          label="confirm password"
+          onChange={e =>
+            handleInputChange({
+              field: 'password',
+              form: 'data',
+              value: e.target.value,
+            })
+          }
+          value={password.value}
+        />
         <PrimaryButton
-          label="Sign in"
+          label="Sign Up"
           onClick={() =>
             handleSignin({ userId: 'b519b064-b5db-4472-ad1b-00e30bdbfa4c' })
           }
         />
       </InputFormWrapper>
       <SubText>
-        Don’t have an account? <Link to="/signup">Sign up</Link>
+        Already have an account? <Link to="/signin">Sign in</Link>
       </SubText>
     </SigninWrapper>
   );
 };
 
-Signin.propTypes = {
+Signup.propTypes = {
   data: T.object.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignin: T.func.isRequired,
 };
 
-export default Signin;
+export default Signup;
