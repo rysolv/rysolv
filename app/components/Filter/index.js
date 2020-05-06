@@ -9,23 +9,45 @@ import {
 
 import { FilterContainer, StyledLabel, StyledTitle } from './styledComponents';
 
-const Filter = ({ languageOptions, ownerOptions = [] }) => (
+const statusOptions = ['Closes', 'Funded', 'Unfunded'];
+const typeOptions = ['Bug', 'Feature'];
+
+const Filter = ({ handleFilterChange, languageOptions, ownerOptions = [] }) => (
   <FilterContainer>
     <StyledTitle>Filters</StyledTitle>
     <StyledLabel>Language</StyledLabel>
-    <BaseAutocomplete onChange={() => {}} options={languageOptions} />
+    <BaseAutocomplete
+      onChange={() => handleFilterChange()}
+      options={languageOptions}
+    />
     <StyledLabel>Organization</StyledLabel>
-    <BaseAutocomplete onChange={() => {}} options={ownerOptions} />
+    <BaseAutocomplete
+      onChange={() => handleFilterChange()}
+      options={ownerOptions}
+    />
     <StyledLabel>Price Range</StyledLabel>
-    <BaseSlider />
+    <BaseSlider onChange={() => handleFilterChange()} />
     <StyledLabel>Status</StyledLabel>
-    <CheckboxWithLabel />
+    {statusOptions.map(value => (
+      <CheckboxWithLabel
+        checked={value}
+        label={value}
+        onChange={() => handleFilterChange()}
+      />
+    ))}
     <StyledLabel>Type</StyledLabel>
-    <CheckboxWithLabel />
+    {typeOptions.map(value => (
+      <CheckboxWithLabel
+        checked={value}
+        label={value}
+        onChange={() => handleFilterChange()}
+      />
+    ))}
   </FilterContainer>
 );
 
 Filter.propTypes = {
+  handleFilterChange: T.func.isRequired,
   languageOptions: T.array.isRequired,
   ownerOptions: T.array.isRequired,
 };
