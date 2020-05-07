@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { defaultFontSize, subHeaderColor, textColor } from 'defaultStyleHelper';
+import { defaultFontSize, textColor } from 'defaultStyleHelper';
 
 export const CheckboxWrapper = styled.div`
   color: ${textColor};
@@ -8,7 +8,10 @@ export const CheckboxWrapper = styled.div`
   padding-right: 1.2rem;
   width: 100%;
   .checked {
-    color: ${subHeaderColor};
+    color: #1e88e5;
+  }
+  .checkbox {
+    padding: 0.6rem;
   }
   .formControl {
     margin: 0;
@@ -17,7 +20,7 @@ export const CheckboxWrapper = styled.div`
     font-size: ${defaultFontSize};
   }
   svg {
-    color: ${subHeaderColor};
+    color: #1e88e5;
     height: 2rem;
     width: 2rem;
   }
