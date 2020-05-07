@@ -2,7 +2,7 @@
 /* eslint-disable arrow-body-style */
 import React, { useState } from 'react';
 
-import Sidebar from 'components/Sidebar';
+import SideNav from 'components/SideNav';
 
 const Test = () => {
   const [body, setBody] = useState('');
@@ -27,7 +27,7 @@ const Test = () => {
 
   return (
     <div>
-      <Sidebar />
+      <SideNav />
     </div>
   );
 };

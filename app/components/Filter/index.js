@@ -26,8 +26,8 @@ const Filter = ({ languageOptions, ownerOptions = [] }) => (
 );
 
 Filter.propTypes = {
-  languageOptions: T.array.isRequired,
-  ownerOptions: T.array.isRequired,
+  languageOptions: T.array,
+  ownerOptions: T.array,
 };
 
 export default Filter;

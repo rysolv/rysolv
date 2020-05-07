@@ -2,6 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import AdminSubHeader from 'components/Admin/AdminSubHeader';
+import SideNav from 'components/SideNav';
 import { ErrorSuccessBanner } from 'components/base_ui';
 import Filter from 'components/Filter';
 import autocompleteDictionary from 'utils/autocompleteDictionary';
@@ -49,6 +50,7 @@ const Issues = ({
   );
   return (
     <OverviewWrapper>
+      <SideNav />
       <SubHeaderWrapper>
         <SubHeader initialValue={0} handleNav={handleNav} />
       </SubHeaderWrapper>
