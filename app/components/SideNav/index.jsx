@@ -1,4 +1,5 @@
 import React from 'react';
+import T from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -13,9 +14,9 @@ import ErrorIcon from '@material-ui/icons/Error';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import WebIcon from '@material-ui/icons/Web';
 
-import { StyledSideNav } from './styledComponents';
+import { StyledSideNav, StyledListWrapper } from './styledComponents';
 
-const drawerWidth = 240;
+const drawerWidth = '20%';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -64,12 +65,18 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SideNav() {
+const SideNav = ({ handleNav, initialValue }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
+  const [currentValue, setCurrentValue] = React.useState(initialValue);
 
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const handleClick = (route, tab) => {
+    handleNav(route);
+    setCurrentValue(tab);
   };
 
   return (
@@ -90,31 +97,49 @@ export default function SideNav() {
         >
           <Divider />
           <List>
-            <ListItem button key="Issues">
-              <ListItemIcon>
-                <ErrorIcon />
-              </ListItemIcon>
-              <ListItemText primary="Issues" />
-            </ListItem>
-            <ListItem button key="Organizations">
-              <ListItemIcon>
-                <WebIcon />
-              </ListItemIcon>
-              <ListItemText primary="Organizations" />
-            </ListItem>
-            <ListItem button key="Users">
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Users" />
-            </ListItem>
+            <StyledListWrapper active={currentValue === 0}>
+              <ListItem
+                button
+                key="Issues"
+                onClick={() => handleClick('/issues', 0)}
+              >
+                <ListItemIcon>
+                  <ErrorIcon />
+                </ListItemIcon>
+                <ListItemText primary="Issues" />
+              </ListItem>
+            </StyledListWrapper>
+            <StyledListWrapper active={currentValue === 1}>
+              <ListItem
+                button
+                key="Organizations"
+                onClick={() => handleClick('/organizations', 1)}
+              >
+                <ListItemIcon>
+                  <WebIcon />
+                </ListItemIcon>
+                <ListItemText primary="Organizations" />
+              </ListItem>
+            </StyledListWrapper>
+            <StyledListWrapper active={currentValue === 2}>
+              <ListItem
+                button
+                key="Users"
+                onClick={() => handleClick('/users', 2)}
+              >
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Users" />
+              </ListItem>
+            </StyledListWrapper>
           </List>
           <Divider />
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={() => toggleDrawer()}
-            edge="center"
+            edge="false"
           >
             {open ? 'Close' : 'Open'}
           </IconButton>
@@ -122,4 +147,11 @@ export default function SideNav() {
       </div>
     </StyledSideNav>
   );
-}
+};
+
+SideNav.propTypes = {
+  handleNav: T.func,
+  initialValue: T.number,
+};
+
+export default SideNav;

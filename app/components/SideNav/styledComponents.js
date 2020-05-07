@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { defaultFontSize, headerColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  headerColor,
+  hoverLinkColor,
+} from 'defaultStyleHelper';
 
 export const StyledSideNav = styled.div`
   color: red;
@@ -27,5 +31,12 @@ export const StyledSideNav = styled.div`
 
   .MuiSvgIcon-root {
     color: ${headerColor};
+  }
+`;
+
+export const StyledListWrapper = styled.div`
+  color: ${({ active }) => (active ? hoverLinkColor : 'inherit')};
+  .MuiSvgIcon-root {
+    color: ${({ active }) => (active ? hoverLinkColor : 'inherit')};
   }
 `;

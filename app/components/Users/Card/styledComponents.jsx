@@ -70,7 +70,7 @@ export const StyledListSquare = styled.div`
   border-radius: 0.2rem;
   border: 0.1rem solid #e0e0e0;
   color: ${textColor};
-  margin: 1rem;
+  margin: 0 1rem 1rem 1rem;
   padding: 1rem;
   width: 20rem;
 `;

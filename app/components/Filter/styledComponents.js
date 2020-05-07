@@ -8,7 +8,6 @@ export const FilterContainer = styled.div`
   border: 0.1rem solid #cfd8dc;
   display: flex;
   flex-direction: column;
-  margin: 2rem;
   padding: 1rem;
 `;
 

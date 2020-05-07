@@ -47,9 +47,9 @@ const Filter = ({ handleFilterChange, languageOptions, ownerOptions = [] }) => (
 );
 
 Filter.propTypes = {
-  handleFilterChange: T.func.isRequired,
-  languageOptions: T.array.isRequired,
-  ownerOptions: T.array.isRequired,
+  handleFilterChange: T.func,
+  languageOptions: T.array,
+  ownerOptions: T.array,
 };
 
 export default Filter;

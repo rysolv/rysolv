@@ -91,7 +91,7 @@ export const StyledListItem = styled.li`
   display: flex;
   border-radius: 2px;
   overflow: hidden;
-  margin: 1rem;
+  margin: 0 1rem 1rem 1rem;
   flex-direction: row;
   list-style-type: none;
 `;

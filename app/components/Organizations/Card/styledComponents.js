@@ -70,7 +70,7 @@ export const StyledListItem = styled.li`
   color: ${textColor};
   display: flex;
   flex-direction: column;
-  margin: 0.5rem 1rem;
+  margin: 0 1rem 1rem 1rem;
 `;
 
 export const StyledOrganizationCard = styled.div`

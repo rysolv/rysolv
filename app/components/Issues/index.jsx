@@ -1,37 +1,21 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import AdminSubHeader from 'components/Admin/AdminSubHeader';
-import SideNav from 'components/SideNav';
 import { ErrorSuccessBanner } from 'components/base_ui';
-import Filter from 'components/Filter';
-import autocompleteDictionary from 'utils/autocompleteDictionary';
 
-import SubHeader from 'components/SubHeader';
 import EmptyCard from './EmptyCard';
 import IssueCard from './Card';
-import {
-  BannerWrapper,
-  CardTitle,
-  FilterContainer,
-  IssueWrapper,
-  OverviewWrapper,
-  SubHeaderWrapper,
-} from './styledComponents';
+import { BannerWrapper } from './styledComponents';
 
 const Issues = ({
   activeUser,
   alerts: { error, success },
   clearAlerts,
   data,
-  disabled,
   handleDeleteIssue,
   handleIncrement,
-  handleInputChange,
   handleNav,
-  handleSearchIssues,
   handleUpvote,
-  search,
 }) => {
   const hasData = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
@@ -42,43 +26,22 @@ const Issues = ({
     handleNav,
     handleUpvote,
   };
-  const route = '/issues/add';
   const viewToRender = hasData ? (
     <IssueCard {...propsToPassDown} />
   ) : (
     <EmptyCard />
   );
   return (
-    <OverviewWrapper>
-      <SideNav />
-      <SubHeaderWrapper>
-        <SubHeader initialValue={0} handleNav={handleNav} />
-      </SubHeaderWrapper>
-      <CardTitle>Find Issues</CardTitle>
-      <IssueWrapper>
-        <FilterContainer>
-          <Filter languageOptions={autocompleteDictionary.language} />
-        </FilterContainer>
-        <div>
-          <BannerWrapper>
-            <AdminSubHeader
-              disabled={disabled}
-              handleInputChange={handleInputChange}
-              handleNav={handleNav}
-              handleSearch={handleSearchIssues}
-              route={route}
-              search={search}
-            />
-            <ErrorSuccessBanner
-              error={error}
-              onClose={clearAlerts}
-              success={success}
-            />
-          </BannerWrapper>
-          {viewToRender}
-        </div>
-      </IssueWrapper>
-    </OverviewWrapper>
+    <Fragment>
+      <BannerWrapper>
+        <ErrorSuccessBanner
+          error={error}
+          onClose={clearAlerts}
+          success={success}
+        />
+      </BannerWrapper>
+      {viewToRender}
+    </Fragment>
   );
 };
 
