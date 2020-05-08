@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -19,7 +19,7 @@ import {
   makeSelectOrganizationsStep,
 } from '../selectors';
 import { addOrganizationDictionary } from '../stepDictionary';
-import { AddWrapper } from './styledComponents';
+import { AddWrapper, AddForm } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class OrganizationsAdd extends React.PureComponent {
@@ -38,20 +38,20 @@ export class OrganizationsAdd extends React.PureComponent {
 
     const StepToRender = addOrganizationDictionary[step];
     return (
-      <Fragment>
+      <AddWrapper>
         <BackNav
           label="Back to Organizations"
           handleNav={handleNav}
           path="/organizations"
         />
-        <AddWrapper>
+        <AddForm>
           <AsyncRender
             asyncData={{ data }}
             component={StepToRender}
             loading={loading}
           />
-        </AddWrapper>
-      </Fragment>
+        </AddForm>
+      </AddWrapper>
     );
   }
 }

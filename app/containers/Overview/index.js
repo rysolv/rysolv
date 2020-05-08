@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import Filter from 'components/Filter';
 import SideNav from 'components/SideNav';
+import { PrimaryButton } from 'components/base_ui';
 import autocompleteDictionary from 'utils/autocompleteDictionary';
 import { overviewDirectory } from './helpers';
 
@@ -22,9 +23,14 @@ const Overview = props => {
     match: { path },
     handleNav,
   } = props;
-  const { Component, title, initialValue } = overviewDirectory(path);
-
-  document.title = 'Rysolv';
+  const {
+    Component,
+    title,
+    initialValue,
+    buttonName,
+    route,
+  } = overviewDirectory(path);
+  document.title = title;
   return (
     <OverviewContainer>
       <SideNav initialValue={initialValue} handleNav={handleNav} />
@@ -36,6 +42,7 @@ const Overview = props => {
 
         <FilterContainer>
           <Filter languageOptions={autocompleteDictionary.language} />
+          <PrimaryButton label={buttonName} onClick={() => handleNav(route)} />
         </FilterContainer>
       </ContentContainer>
     </OverviewContainer>

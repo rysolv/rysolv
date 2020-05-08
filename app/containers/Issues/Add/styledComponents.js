@@ -4,7 +4,14 @@ import { CheckboxWithLabel } from 'components/base_ui';
 import { subHeaderColor, textColor } from 'defaultStyleHelper';
 
 export const AddWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+`;
+
+export const AddForm = styled.div`
   background-color: white;
+  padding: 1rem;
   border-radius: 0.5rem;
 `;
 

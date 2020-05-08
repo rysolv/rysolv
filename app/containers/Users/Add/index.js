@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import { BackNav } from 'components/base_ui';
 import { createStructuredSelector } from 'reselect';
@@ -19,7 +19,7 @@ import {
   makeSelectUsersStep,
 } from '../selectors';
 import { addUserDictionary } from '../stepDictionary';
-import { AddWrapper } from './styledComponents';
+import { AddWrapper, AddForm } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class UsersAdd extends React.PureComponent {
@@ -40,16 +40,16 @@ export class UsersAdd extends React.PureComponent {
 
     const StepToRender = addUserDictionary[step];
     return (
-      <Fragment>
+      <AddWrapper>
         <BackNav label="Back to Users" handleNav={handleNav} path="/users" />
-        <AddWrapper>
+        <AddForm>
           <AsyncRender
             asyncData={{ data }}
             component={StepToRender}
             loading={loading}
           />
-        </AddWrapper>
-      </Fragment>
+        </AddForm>
+      </AddWrapper>
     );
   }
 }

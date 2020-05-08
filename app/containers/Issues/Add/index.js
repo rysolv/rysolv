@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -20,7 +20,7 @@ import {
   makeSelectIssuesStep,
 } from '../selectors';
 import { addIssueDictionary } from '../stepDictionary';
-import { AddWrapper } from './styledComponents';
+import { AddWrapper, AddForm } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class IssuesAdd extends React.PureComponent {
@@ -40,17 +40,17 @@ export class IssuesAdd extends React.PureComponent {
     const { activeUser, data, handleNav, loading, step } = this.props;
     const StepToRender = addIssueDictionary[step];
     return (
-      <Fragment>
+      <AddWrapper>
         <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
-        <AddWrapper>
+        <AddForm>
           <AsyncRender
             asyncData={{ data }}
             component={StepToRender}
             loading={loading}
             propsToPassDown={{ activeUser, handleNav }}
           />
-        </AddWrapper>
-      </Fragment>
+        </AddForm>
+      </AddWrapper>
     );
   }
 }

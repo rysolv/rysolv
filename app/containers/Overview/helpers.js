@@ -11,18 +11,24 @@ export const overviewDirectory = path => {
         Component: IssuesOverview,
         title: 'Issues',
         initialValue: 0,
+        buttonName: 'Add Issue',
+        route: '/issues/add',
       };
     case '/organizations':
       return {
         Component: OrganizationsOverview,
         title: 'Organizations',
         initialValue: 1,
+        buttonName: 'Add Organization',
+        route: '/organizations/add',
       };
     case '/users':
       return {
         Component: UsersOverview,
         title: 'Users',
         initialValue: 2,
+        buttonName: 'Add User [Temp]',
+        route: '/users/add',
       };
   }
 };
