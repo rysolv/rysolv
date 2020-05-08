@@ -3,6 +3,7 @@ import produce from 'immer';
 import remove from 'lodash/remove';
 
 import {
+  CHANGE_ORGANIZATION_FILTER,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ORGANIZATION_FAILURE,
@@ -58,6 +59,11 @@ export const initialState = {
   },
   filter: {
     issues: 'Newest',
+    langauge: '',
+    organization: '',
+    price: '0',
+    status: '',
+    type: '',
   },
   loading: {
     addOrganization: false,
@@ -89,6 +95,11 @@ export const initialState = {
 /* eslint-disable default-case, no-param-reassign */
 const organizationsReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case CHANGE_ORGANIZATION_FILTER: {
+      const { field, value } = payload;
+      draft.filter[field] = value;
+      break;
+    }
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       break;

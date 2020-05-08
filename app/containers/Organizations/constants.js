@@ -1,3 +1,6 @@
+export const CHANGE_ORGANIZATION_FILTER =
+  'app/Organizations/CHANGE_ORGANIZATION_FILTER';
+
 export const CLEAR_ALERTS = 'app/Organizations/CLEAR_ALERTS';
 
 export const CLEAR_FORM = 'app/Organizations/CLEAR_FORM';

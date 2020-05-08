@@ -8,7 +8,6 @@ const singleQuery = async queryText => {
     client.release();
     return result;
   } catch (error) {
-    console.log(error);
     client.release();
     throw error;
   }

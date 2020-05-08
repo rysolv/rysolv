@@ -1,4 +1,5 @@
 import {
+  CHANGE_USER_FILTER,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_USER_FAILURE,
@@ -23,6 +24,13 @@ import {
   UPDATE_INFO,
   VERIFY_INFO,
 } from './constants';
+
+export function changeUserFilter(payload) {
+  return {
+    payload,
+    type: CHANGE_USER_FILTER,
+  };
+}
 
 export function clearAlerts() {
   return {

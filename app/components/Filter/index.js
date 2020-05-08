@@ -9,47 +9,68 @@ import {
 
 import { FilterContainer, StyledLabel, StyledTitle } from './styledComponents';
 
-const statusOptions = ['Closes', 'Funded', 'Unfunded'];
+const statusOptions = ['Closed', 'Funded', 'Unfunded'];
 const typeOptions = ['Bug', 'Feature'];
 
-const Filter = ({ handleFilterChange, languageOptions, ownerOptions = [] }) => (
+const Filter = ({
+  filterValues: { langauge, organization, price, status, type },
+  handleChangeFilter,
+  languageOptions,
+  organizationOptions,
+}) => (
   <FilterContainer>
     <StyledTitle>Filters</StyledTitle>
     <StyledLabel>Language</StyledLabel>
     <BaseAutocomplete
-      onChange={() => handleFilterChange()}
+      label={langauge}
+      onChange={e =>
+        handleChangeFilter({ field: 'language', value: e.target.value })
+      }
       options={languageOptions}
     />
     <StyledLabel>Organization</StyledLabel>
     <BaseAutocomplete
-      onChange={() => handleFilterChange()}
-      options={ownerOptions}
+      label={organization}
+      onChange={e =>
+        handleChangeFilter({ field: 'organization', value: e.target.value })
+      }
+      options={organizationOptions}
     />
     <StyledLabel>Price Range</StyledLabel>
-    <BaseSlider onChange={() => handleFilterChange()} />
+    <BaseSlider
+      onChange={e =>
+        handleChangeFilter({ field: 'price', value: e.target.value })
+      }
+      value={price}
+    />
     <StyledLabel>Status</StyledLabel>
     {statusOptions.map(value => (
       <CheckboxWithLabel
-        checked={value}
+        checked={status[value]}
         label={value}
-        onChange={() => handleFilterChange()}
+        onChange={e =>
+          handleChangeFilter({ field: 'status', value: e.target.value })
+        }
       />
     ))}
     <StyledLabel>Type</StyledLabel>
     {typeOptions.map(value => (
       <CheckboxWithLabel
-        checked={value}
+        checked={type[value]}
         label={value}
-        onChange={() => handleFilterChange()}
+        onChange={e =>
+          handleChangeFilter({ field: 'status', value: e.target.value })
+        }
       />
     ))}
   </FilterContainer>
 );
 
 Filter.propTypes = {
-  handleFilterChange: T.func,
+  filterValues: T.object,
+  handleChangeFilter: T.func,
   languageOptions: T.array,
-  ownerOptions: T.array,
+  organizationOptions: T.array,
 };
 
 export default Filter;

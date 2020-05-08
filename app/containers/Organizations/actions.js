@@ -1,4 +1,5 @@
 import {
+  CHANGE_ORGANIZATION_FILTER,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ORGANIZATION_FAILURE,
@@ -27,6 +28,13 @@ import {
   UPVOTE_ISSUE,
   VERIFY_INFO,
 } from './constants';
+
+export function changeOrganizationFilter(payload) {
+  return {
+    payload,
+    type: CHANGE_ORGANIZATION_FILTER,
+  };
+}
 
 export function clearAlerts() {
   return {

@@ -11,6 +11,7 @@ import {
   ADD_COMMENT,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
+  CHANGE_ISSUE_FILTER,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ISSUE_FAILURE,
@@ -39,13 +40,6 @@ import {
 
 export const initialState = {
   alerts: { error: false, success: false },
-  error: {
-    issues: false,
-    searchIssues: false,
-    issueDetail: false,
-  },
-  issues: [],
-  issueDetail: {},
   data: {
     fundedAmount: { error: '', value: 0 },
     name: { error: '', value: '' },
@@ -54,6 +48,21 @@ export const initialState = {
     language: { error: '', value: [] },
     importUrl: { error: '', value: '' },
   },
+  error: {
+    issues: false,
+    searchIssues: false,
+    issueDetail: false,
+  },
+  filter: {
+    langauge: '',
+    organization: '',
+    price: '0',
+    status: '',
+    type: '',
+  },
+  issueDetail: {},
+  issues: [],
+  isVerified: false,
   loading: {
     addAttempt: false,
     addComment: false,
@@ -65,7 +74,6 @@ export const initialState = {
     searchIssues: false,
     upvoteIssue: false,
   },
-  isVerified: false,
   search: {
     searchInput: { error: '', value: '' },
   },
@@ -127,6 +135,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case ADD_COMMENT: {
       draft.loading.addComment = true;
+      break;
+    }
+    case CHANGE_ISSUE_FILTER: {
+      const { field, value } = payload;
+      draft.filter[field] = value;
       break;
     }
     case CLEAR_ALERTS: {
