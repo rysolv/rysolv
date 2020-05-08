@@ -1,5 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
+import iconDictionary from 'utils/iconDictionary';
+
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,6 +17,9 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import WebIcon from '@material-ui/icons/Web';
 
 import { StyledSideNav, StyledListWrapper } from './styledComponents';
+
+const backArrow = iconDictionary('backArrowHalf');
+const forwardArrow = iconDictionary('forwardArrowHalf');
 
 const drawerWidth = '20%';
 
@@ -139,9 +144,8 @@ const SideNav = ({ handleNav, initialValue }) => {
             color="inherit"
             aria-label="open drawer"
             onClick={() => toggleDrawer()}
-            edge="false"
           >
-            {open ? 'Close' : 'Open'}
+            {open ? backArrow : forwardArrow}
           </IconButton>
         </Drawer>
       </div>

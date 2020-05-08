@@ -73,6 +73,13 @@ export const Description = styled.div`
   margin-bottom: 2rem;
 `;
 
+export const DetailContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+`;
+
 export const DetailViewContainer = styled.div`
   color: rgba(0, 0, 0, 0.7);
   display: flex;

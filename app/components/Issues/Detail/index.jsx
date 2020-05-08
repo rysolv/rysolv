@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import { Upvote, BackNav } from 'components/base_ui';
 import { CommentCard, NoComment, NewComment } from 'components/Comments';
@@ -6,6 +6,7 @@ import IssueDetailHeader from './IssueDetailHeader';
 import IssueStatusBar from './IssueStatusBar';
 
 import {
+  DetailContainer,
   Divider,
   IssueDetailColumn,
   IssueDetailWrapper,
@@ -66,7 +67,7 @@ const IssueDetail = ({
     comments && comments.length > 0 ? generateComments() : <NoComment />;
 
   return (
-    <Fragment>
+    <DetailContainer>
       <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
       <IssueDetailWrapper>
         <LeftPanel>
@@ -116,7 +117,7 @@ const IssueDetail = ({
           />
         </IssueDetailColumn>
       </IssueDetailWrapper>
-    </Fragment>
+    </DetailContainer>
   );
 };
 

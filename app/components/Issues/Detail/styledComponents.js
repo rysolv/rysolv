@@ -8,11 +8,18 @@ import {
 } from 'defaultStyleHelper';
 import { FlatIconButton } from 'components/base_ui';
 
+export const DetailContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+`;
+
 export const IssueDetailWrapper = styled.div`
   background-color: white;
   border-radius: 0.25rem;
   display: flex;
-  max-width: 70%;
+  width: 60%;
   min-height: 40vh;
   overflow: hidden;
   padding: 0 3rem 3rem 0;

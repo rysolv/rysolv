@@ -1,13 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 
-import { Star } from 'components/base_ui';
+import { Star, BackNav } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 import { formatUrlLinks } from 'utils/globalHelpers';
 
 import UserMetricsView from './Metrics';
 import UserTimelineView from './Timeline';
 import {
+  DetailContainer,
   DetailViewContainer,
   OneLinkWrapper,
   LinkIcon,
@@ -49,7 +50,8 @@ export class UserDetailView extends React.PureComponent {
       handleNav,
     } = this.props;
     return (
-      <Fragment>
+      <DetailContainer>
+        <BackNav label="Back to Users" handleNav={handleNav} path="/users" />
         <DetailViewContainer>
           <UserCardWrapper>
             <UserImage src={profilePic} />
@@ -105,7 +107,7 @@ export class UserDetailView extends React.PureComponent {
             />
           </UserContentsWrapper>
         </DetailViewContainer>
-      </Fragment>
+      </DetailContainer>
     );
   }
 }

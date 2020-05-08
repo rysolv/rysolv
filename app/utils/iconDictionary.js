@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import Attempt from '@material-ui/icons/ListAlt';
 import Cancel from '@material-ui/icons/Cancel';
@@ -35,6 +37,7 @@ export default (name, options) => {
   const icons = {
     attempt: Attempt,
     backArrow: ArrowBackIcon,
+    backArrowHalf: ArrowBackIosIcon,
     cancel: Cancel,
     circle: Circle,
     closeMenu: CloseMenu,
@@ -44,6 +47,7 @@ export default (name, options) => {
     delete: Delete,
     dropdownArrow: ArrowDropDownIcon,
     exit: Exit,
+    forwardArrowHalf: ArrowForwardIosIcon,
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,

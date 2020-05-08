@@ -20,8 +20,13 @@ export const StyledSideNav = styled.div`
   .MuiListItem-root {
     padding-left: 3rem;
   }
+
   .MuiTypography-root {
     font-size: ${defaultFontSize};
+  }
+
+  .MuiButtonBase-root {
+    border-radius: 0;
   }
 
   .MuiSvgIcon-root {
