@@ -9,7 +9,7 @@ export const ADD_ATTEMPT = 'app/Issues/ADD_ATTEMPT';
 export const ADD_ATTEMPT_FAILURE = 'app/Issues/ADD_ATTEMPT_FAILURE';
 export const ADD_ATTEMPT_SUCCESS = 'app/Issues/ADD_ATTEMPT_SUCCESS';
 
-export const REMOVE_ATTEMPT = 'app/Issues/REMOVE_ATTEMPT';
+export const CHANGE_ISSUE_FILTER = 'app/Issues/CHANGE_ISSUE_FILTER';
 
 export const CLEAR_ALERTS = 'app/Issues/CLEAR_ALERTS';
 export const CLEAR_FORM = 'app/Organizations/CLEAR_FORM';
@@ -31,6 +31,8 @@ export const FETCH_ISSUE_DETAIL_SUCCESS =
 export const INCREMENT_STEP = 'app/Issues/INCREMENT_STEP';
 export const INPUT_CHANGE = 'app/Issues/INPUT_CHANGE';
 export const INPUT_ERROR = 'app/Issues/INPUT_ERROR';
+
+export const REMOVE_ATTEMPT = 'app/Issues/REMOVE_ATTEMPT';
 
 export const SAVE_INFO = 'app/Organizations/SAVE_INFO';
 export const SAVE_INFO_FAILURE = 'app/Organizations/SAVE_INFO_FAILURE';

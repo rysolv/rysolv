@@ -139,7 +139,6 @@ const SideNav = ({ handleNav, initialValue }) => {
             color="inherit"
             aria-label="open drawer"
             onClick={() => toggleDrawer()}
-            edge="false"
           >
             {open ? 'Close' : 'Open'}
           </IconButton>

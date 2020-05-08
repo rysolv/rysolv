@@ -5,7 +5,7 @@ import { formatDollarAmount } from 'utils/globalHelpers';
 
 import { StyledSlider } from './styledComponents';
 
-const BaseSlider = ({ handleChange, min, max, value: currValue }) => {
+const BaseSlider = ({ max, min, onChange, value: currValue }) => {
   const marks = [
     {
       value: min,
@@ -23,7 +23,7 @@ const BaseSlider = ({ handleChange, min, max, value: currValue }) => {
       marks={marks}
       max={max}
       min={min}
-      onChange={handleChange}
+      onChange={onChange}
       value={currValue}
       valueLabelDisplay="auto"
     />
@@ -33,9 +33,9 @@ const BaseSlider = ({ handleChange, min, max, value: currValue }) => {
 BaseSlider.defaultProps = { max: 1000, min: 0 };
 
 BaseSlider.propTypes = {
-  handleChange: T.func.isRequired,
   max: T.number,
   min: T.number,
+  onChange: T.func.isRequired,
   value: T.string.isRequired,
 };
 

@@ -2,6 +2,7 @@ import produce from 'immer';
 import remove from 'lodash/remove';
 
 import {
+  CHANGE_USER_FILTER,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_USER_FAILURE,
@@ -57,6 +58,11 @@ export const initialState = {
     users: false,
   },
   filter: {
+    langauge: '',
+    organization: '',
+    price: '0',
+    status: '',
+    type: '',
     users: 'All',
   },
   isVerified: false,
@@ -82,6 +88,11 @@ export const initialState = {
 /* eslint-disable default-case, no-param-reassign */
 const usersReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case CHANGE_USER_FILTER: {
+      const { field, value } = payload;
+      draft.filter[field] = value;
+      break;
+    }
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       break;

@@ -1,3 +1,5 @@
+export const CHANGE_USER_FILTER = 'app/Users/CHANGE_USER_FILTER';
+
 export const CLEAR_ALERTS = 'app/Users/CLEAR_ALERTS';
 
 export const CLEAR_FORM = 'app/Users/CLEAR_FORM';

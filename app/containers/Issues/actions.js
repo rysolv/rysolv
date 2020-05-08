@@ -7,6 +7,7 @@ import {
   ADD_COMMENT,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
+  CHANGE_ISSUE_FILTER,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ISSUE_FAILURE,
@@ -86,6 +87,13 @@ export function addWatchSuccess(payload) {
   return {
     payload,
     type: ADD_WATCH_SUCCESS,
+  };
+}
+
+export function changeIssueFilter(payload) {
+  return {
+    payload,
+    type: CHANGE_ISSUE_FILTER,
   };
 }
 
