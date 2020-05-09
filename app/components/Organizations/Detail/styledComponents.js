@@ -3,7 +3,6 @@ import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 
 import { BaseDropDownMenu } from 'components/base_ui';
-import { UpvotePanel } from 'components/Issues/Card/styledComponents';
 
 import {
   defaultFontSize,
@@ -327,16 +326,6 @@ export const StyledTab = styled(Tab)`
 export const StyledTitled = styled.div`
   font-size: 1.8rem;
   padding-bottom: 2rem;
-`;
-
-export const StyledUpvotePanel = styled(UpvotePanel)`
-  border-radius: 0.3rem;
-
-  svg {
-    &:hover {
-      color: #1e88e5;
-    }
-  }
 `;
 
 export const StyledWord = styled.span`

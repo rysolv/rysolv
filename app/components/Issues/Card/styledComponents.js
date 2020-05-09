@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-import { FlatIconButton } from 'components/base_ui';
 import {
-  defaultFontSize,
   detailFontSize,
   hoverLinkColor,
   subheaderFontSize,
@@ -51,11 +49,6 @@ export const OrganizationNameWrapper = styled.a`
   font-weight: bold;
 `;
 
-export const StyledFlatIconButton = styled(FlatIconButton)`
-  padding: 0;
-  min-width: 0;
-`;
-
 export const StyledIssueContent = styled.div`
   width: 100%;
   padding: 0.5rem;
@@ -98,16 +91,4 @@ export const StyledListItem = styled.li`
 
 export const StyledVerified = styled.div`
   padding: 0 0.5rem;
-`;
-
-export const UpvotePanel = styled.div`
-  background-color: #e0e0e0;
-  * {
-    color: ${({ upvoted }) => (upvoted ? '#ff5722' : textColor)};
-  }
-  width: 3rem;
-  font-size: ${defaultFontSize};
-  padding: 0.5rem;
-  text-align: center;
-  border-radius: 0.2rem;
 `;

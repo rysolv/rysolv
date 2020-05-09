@@ -4,10 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import SideNav from 'components/SideNav';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectActiveUser } from 'containers/Auth/selectors';
 import { signin, signout } from 'containers/Auth/actions';
@@ -20,6 +22,7 @@ export const Main = ({
   data = { test: true },
   deviceView,
   error,
+  handleNav,
   handleSignin,
   handleSignout,
   isSignedIn,
@@ -27,6 +30,8 @@ export const Main = ({
   match,
 }) => (
   <Fragment>
+    <SideNav handleNav={handleNav} />
+
     <Header
       activeUser={activeUser}
       handleSignin={handleSignin}
@@ -52,6 +57,7 @@ Main.propTypes = {
   data: T.object,
   deviceView: T.string,
   error: T.object,
+  handleNav: T.func,
   handleSignin: T.func,
   handleSignout: T.func,
   isSignedIn: T.bool,
@@ -74,6 +80,10 @@ const mapDispatchToProps = dispatch => ({
    */
   handleSignin: payload => dispatch(signin(payload)),
   handleSignout: payload => dispatch(signout(payload)),
+  /*
+   * Reducer : Router
+   */
+  handleNav: route => dispatch(push(route)),
 });
 
 const withConnect = connect(

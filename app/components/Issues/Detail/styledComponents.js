@@ -1,12 +1,6 @@
 import styled from 'styled-components';
 
-import {
-  borderColor,
-  defaultFontSize,
-  subheaderFontSize,
-  textColor,
-} from 'defaultStyleHelper';
-import { FlatIconButton } from 'components/base_ui';
+import { borderColor, subheaderFontSize, textColor } from 'defaultStyleHelper';
 
 export const DetailContainer = styled.div`
   display: flex;
@@ -29,25 +23,10 @@ export const LeftPanel = styled.div`
   width: 5rem;
 `;
 
-export const UpvotePanel = styled.div`
-  background-color: #e0e0e0;
-  height: 15rem;
-  padding: 0.5rem;
-  text-align: center;
-  font-size: ${defaultFontSize};
-  border-radius: 0.25rem;
-  width: 100%;
-`;
-
 export const IssueDetailColumn = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 3rem 3rem 3rem;
-`;
-
-export const StyledFlatIconButton = styled(FlatIconButton)`
-  min-width: 0;
-  padding: 0;
 `;
 
 export const Divider = styled.div`
