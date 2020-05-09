@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { headerFontSize, textColor } from 'defaultStyleHelper';
 
 export const ComponentContainer = styled.div`
@@ -24,9 +25,9 @@ export const OverviewContainer = styled.div`
 `;
 
 export const OverviewHeader = styled.div`
-  font-size: ${headerFontSize};
-  width: 100%;
-  display: flex;
-  margin: 5rem 0 2rem 2rem;
   color: ${textColor};
+  display: flex;
+  font-size: ${headerFontSize};
+  margin: 5rem 0 2rem 2rem;
+  width: 100%;
 `;
