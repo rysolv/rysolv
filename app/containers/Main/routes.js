@@ -56,8 +56,6 @@ const Routes = () => (
       <Route exact path="/users/add" component={PrivateUsersAdd} />
       <Route exact path="/users/detail/:id?" component={PublicUsersDetail} />
       <Route exact path="/users/edit/:id?" component={PrivateUsersEdit} />
-
-
       <Route component={NotFoundPage} />
     </Switch>
   </RoutesWrapper>
