@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -15,8 +15,14 @@ import { makeSelectIssues } from 'containers/Issues/selectors';
 import { makeSelectOrganizations } from 'containers/Organizations/selectors';
 import { makeSelectUsers } from 'containers/Users/selectors';
 import autocompleteDictionary from 'utils/autocompleteDictionary';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
 
+import { fetchOrganizationOptions } from './actions';
 import { overviewDirectory } from './helpers';
+import reducer from './reducer';
+import saga from './saga';
+import { makeSelectOrganizationOptions } from './selectors';
 import {
   ComponentContainer,
   ContentContainer,
@@ -28,6 +34,7 @@ import {
 const languageOptions = autocompleteDictionary.language;
 
 const Overview = ({
+  dispatchFetchOrganizationOptions,
   filterIssueValues,
   filterOrganizationValues,
   filterUserValues,
@@ -36,7 +43,9 @@ const Overview = ({
   handleChangeUserFilter,
   handleNav,
   match: { path },
+  organizationOptions,
 }) => {
+  useEffect(() => dispatchFetchOrganizationOptions(), []);
   const formattedPath = path.replace(/^\/+/, '');
   const {
     buttonName,
@@ -46,25 +55,24 @@ const Overview = ({
     title,
   } = overviewDirectory[formattedPath];
   document.title = title;
-
   const filterProps = {
     issues: {
       filterValues: filterIssueValues,
       handleChangeFilter: handleChangeIssueFilter,
       languageOptions,
-      organizationOptions: [],
+      organizationOptions,
     },
     organizations: {
       filterValues: filterOrganizationValues,
       handleChangeFilter: handleChangeOrganizationFilter,
       languageOptions,
-      organizationOptions: [],
+      organizationOptions,
     },
     users: {
       filterValues: filterUserValues,
       handleChangeFilter: handleChangeUserFilter,
       languageOptions,
-      organizationOptions: [],
+      organizationOptions,
     },
   };
   return (
@@ -86,6 +94,7 @@ const Overview = ({
 };
 
 Overview.propTypes = {
+  dispatchFetchOrganizationOptions: T.func,
   filterIssueValues: T.object,
   filterOrganizationValues: T.object,
   filterUserValues: T.object,
@@ -94,6 +103,7 @@ Overview.propTypes = {
   handleChangeUserFilter: T.func,
   handleNav: T.func,
   match: T.object,
+  organizationOptions: T.array,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -105,6 +115,10 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Organizations
    */
   filterOrganizationValues: makeSelectOrganizations('filter'),
+  /*
+   * Reducer : Overview
+   */
+  organizationOptions: makeSelectOrganizationOptions(),
   /**
    * Reducer : Users
    */
@@ -123,6 +137,11 @@ function mapDispatchToProps(dispatch) {
     handleChangeOrganizationFilter: payload =>
       dispatch(changeOrganizationFilter(payload)),
     /*
+     * Reducer : Overview
+     */
+    dispatchFetchOrganizationOptions: () =>
+      dispatch(fetchOrganizationOptions()),
+    /*
      * Reducer : Users
      */
     handleChangeUserFilter: payload => dispatch(changeUserFilter(payload)),
@@ -138,4 +157,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(Overview);
+const withReducer = injectReducer({ key: 'overview', reducer });
+const withSaga = injectSaga({ key: 'overview', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(Overview);
