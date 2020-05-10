@@ -6,10 +6,10 @@ import {
   FundingWrapper,
   IconToolTip,
   LanguageWrapper,
-  Upvote,
   Verified,
   WatchButton,
 } from 'components/base_ui';
+import UpvotePanel from 'components/Upvote';
 import { formatDollarAmount, navHelper } from 'utils/globalHelpers';
 import IconDictionary from 'utils/iconDictionary';
 
@@ -20,13 +20,11 @@ import {
   IssueLanguageContainer,
   NameWrapper,
   OrganizationNameWrapper,
-  StyledFlatIconButton,
   StyledIssueContent,
   StyledIssueFooter,
   StyledIssueHeader,
   StyledIssueText,
   StyledListItem,
-  UpvotePanel,
 } from './styledComponents';
 
 const AttemptingIcon = IconDictionary('attempt');
@@ -59,15 +57,13 @@ const IssueCard = ({
       return (
         <Fragment key={id}>
           <StyledListItem>
-            <UpvotePanel upvoted={upvoted}>
-              <StyledFlatIconButton
-                Icon={<Upvote />}
-                onClick={() =>
-                  handleUpvote({ issueId: id, userId: activeUser.id })
-                }
-              />
-              {rep}
-            </UpvotePanel>
+            <UpvotePanel
+              upvoted={upvoted}
+              handleUpvote={handleUpvote}
+              issueId={id}
+              userId={activeUser.id}
+              rep={rep}
+            />
             <StyledIssueContent>
               <StyledIssueHeader>
                 <OrganizationNameWrapper

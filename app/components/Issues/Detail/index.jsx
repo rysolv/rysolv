@@ -1,17 +1,17 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
-import { Upvote, BackNav } from 'components/base_ui';
+import { BackNav } from 'components/base_ui';
 import { CommentCard, NoComment, NewComment } from 'components/Comments';
+import UpvotePanel from 'components/Upvote';
 import IssueDetailHeader from './IssueDetailHeader';
 import IssueStatusBar from './IssueStatusBar';
 
 import {
+  DetailContainer,
   Divider,
   IssueDetailColumn,
   IssueDetailWrapper,
   LeftPanel,
-  StyledFlatIconButton,
-  UpvotePanel,
 } from './styledComponents';
 
 const IssueDetail = ({
@@ -64,19 +64,20 @@ const IssueDetail = ({
     });
   const commentsDiv =
     comments && comments.length > 0 ? generateComments() : <NoComment />;
+  const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
 
   return (
-    <Fragment>
+    <DetailContainer>
       <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
       <IssueDetailWrapper>
         <LeftPanel>
-          <UpvotePanel>
-            <StyledFlatIconButton
-              Icon={<Upvote />}
-              onClick={() => handleUpvote({ issueId: id, userId })}
-            />
-            {rep}
-          </UpvotePanel>
+          <UpvotePanel
+            upvoted={upvoted}
+            handleUpvote={handleUpvote}
+            issueId={id}
+            userId={activeUser.id}
+            rep={rep}
+          />
         </LeftPanel>
         <IssueDetailColumn>
           <IssueDetailHeader
@@ -116,7 +117,7 @@ const IssueDetail = ({
           />
         </IssueDetailColumn>
       </IssueDetailWrapper>
-    </Fragment>
+    </DetailContainer>
   );
 };
 

@@ -7,7 +7,6 @@ import { push } from 'connected-react-router';
 
 import { PrimaryButton } from 'components/base_ui';
 import Filter from 'components/Filter';
-import SideNav from 'components/SideNav';
 import { changeIssueFilter } from 'containers/Issues/actions';
 import { changeOrganizationFilter } from 'containers/Organizations/actions';
 import { changeUserFilter } from 'containers/Users/actions';
@@ -49,13 +48,9 @@ const Overview = ({
     dispatchFetchOrganizationOptions();
   }, []);
   const formattedPath = path.replace(/^\/+/, '');
-  const {
-    buttonName,
-    Component,
-    initialValue,
-    route,
-    title,
-  } = overviewDirectory[formattedPath];
+  const { buttonName, Component, route, title } = overviewDirectory[
+    formattedPath
+  ];
   document.title = title;
   const filterProps = {
     issues: {
@@ -79,7 +74,6 @@ const Overview = ({
   };
   return (
     <OverviewContainer>
-      <SideNav initialValue={initialValue} handleNav={handleNav} />
       <OverviewHeader>{title}</OverviewHeader>
       <ContentContainer>
         <ComponentContainer>

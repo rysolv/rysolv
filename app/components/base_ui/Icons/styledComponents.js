@@ -63,6 +63,9 @@ export const StyledUpvote = styled.div`
   color: #37474f;
   display: inline-block;
   text-align: center;
+  * {
+    font-size: large;
+  }
 
   &:hover {
     color: #ff5722;

@@ -2,8 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
-import { Upvote } from 'components/base_ui';
-import { StyledFlatIconButton } from 'components/Issues/Card/styledComponents';
+import UpvotePanel from 'components/Upvote';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
@@ -19,7 +18,6 @@ import {
   IssueOpen,
   IssueOpenWrapper,
   IssuesList,
-  StyledUpvotePanel,
 } from '../styledComponents';
 
 const OrganizationIssuesTab = ({ handleNav, handleUpvote, issues }) => (
@@ -37,13 +35,13 @@ const OrganizationIssuesTab = ({ handleNav, handleUpvote, issues }) => (
       }) => (
         <IssueListItem key={`list-item-${id}`}>
           <IssueContent>
-            <StyledUpvotePanel>
-              <StyledFlatIconButton
-                Icon={<Upvote />}
-                onClick={() => handleUpvote({ issueId: id, userId })}
-              />
-              {rep}
-            </StyledUpvotePanel>
+            <UpvotePanel
+              upvoted={false}
+              handleUpvote={handleUpvote}
+              issueId={id}
+              userId={userId} // bug
+              rep={rep}
+            />
             <IssueContentInfo>
               <IssueModifiedDate>
                 {moment.utc(modifiedDate).fromNow()}

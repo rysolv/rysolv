@@ -19,7 +19,6 @@ import {
   makeSelectOrganizationsFormattedData,
   makeSelectOrganizationsLoading,
 } from '../selectors';
-import { DetailWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class OrganizationsDetail extends React.PureComponent {
@@ -45,21 +44,19 @@ export class OrganizationsDetail extends React.PureComponent {
     } = this.props;
 
     return (
-      <DetailWrapper>
-        <AsyncRender
-          asyncData={data}
-          component={OrganizationDetailView}
-          error={error}
-          isRequiredData
-          loading={loading}
-          propsToPassDown={{
-            filterValues,
-            handleInputChange,
-            handleNav,
-            handleUpvote,
-          }}
-        />
-      </DetailWrapper>
+      <AsyncRender
+        asyncData={data}
+        component={OrganizationDetailView}
+        error={error}
+        isRequiredData
+        loading={loading}
+        propsToPassDown={{
+          filterValues,
+          handleInputChange,
+          handleNav,
+          handleUpvote,
+        }}
+      />
     );
   }
 }

@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 
-import { ConditionalRender, Verified } from 'components/base_ui';
+import { ConditionalRender, Verified, BackNav } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import OrganizationDetailTabs from './OrganizationDetailTabs';
@@ -10,6 +10,7 @@ import RecentActivityView from './RecentActivityView';
 import {
   ContentWrapper,
   Description,
+  DetailContainer,
   DetailViewContainer,
   Divider,
   Image,
@@ -73,7 +74,13 @@ export class OrganizationDetailView extends React.PureComponent {
       handleUpvote,
     } = this.props;
     return (
-      <Fragment>
+      <DetailContainer>
+        <BackNav
+          label="Back to Organizations"
+          handleNav={handleNav}
+          path="/organizations"
+        />
+
         <DetailViewContainer>
           <Image src={logo} />
           <ContentWrapper>
@@ -114,7 +121,7 @@ export class OrganizationDetailView extends React.PureComponent {
             <RecentActivityView fundData={fundData} handleNav={handleNav} />
           </SidebarTabs>
         </TabsContainer>
-      </Fragment>
+      </DetailContainer>
     );
   }
 }

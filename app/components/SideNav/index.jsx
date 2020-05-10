@@ -1,5 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
+import iconDictionary from 'utils/iconDictionary';
+import { ConditionalRender } from 'components/base_ui';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,6 +17,10 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import WebIcon from '@material-ui/icons/Web';
 
 import { StyledSideNav, StyledListWrapper } from './styledComponents';
+import { excludedPath, getInitialValue } from './helpers';
+
+const backArrow = iconDictionary('backArrowHalf');
+const forwardArrow = iconDictionary('forwardArrowHalf');
 
 const drawerWidth = '20%';
 
@@ -65,7 +71,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SideNav = ({ handleNav, initialValue }) => {
+const SideNav = ({ handleNav }) => {
+  const path = window.location.pathname;
+  const formattedPath = path.replace(/^\/+/, '');
+  const displaySideNav = excludedPath.includes(formattedPath);
+  const { initialValue } = getInitialValue[formattedPath]
+    ? getInitialValue[formattedPath]
+    : 0;
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [currentValue, setCurrentValue] = React.useState(initialValue);
@@ -79,7 +92,7 @@ const SideNav = ({ handleNav, initialValue }) => {
     setCurrentValue(tab);
   };
 
-  return (
+  const SideNavComponent = (
     <StyledSideNav>
       <div className={classes.root}>
         <Drawer
@@ -140,17 +153,23 @@ const SideNav = ({ handleNav, initialValue }) => {
             aria-label="open drawer"
             onClick={() => toggleDrawer()}
           >
-            {open ? 'Close' : 'Open'}
+            {open ? backArrow : forwardArrow}
           </IconButton>
         </Drawer>
       </div>
     </StyledSideNav>
   );
+
+  return (
+    <ConditionalRender
+      Component={SideNavComponent}
+      shouldRender={!displaySideNav}
+    />
+  );
 };
 
 SideNav.propTypes = {
   handleNav: T.func,
-  initialValue: T.number,
 };
 
 export default SideNav;
