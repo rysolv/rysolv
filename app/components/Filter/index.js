@@ -46,7 +46,7 @@ const Filter = ({
       <Fragment>
         <StyledLabel>Price Range</StyledLabel>
         <BaseSlider
-          max={10000}
+          max={5000}
           min={0}
           onChange={(e, value) => handleChangeFilter({ field: 'price', value })}
           value={price}

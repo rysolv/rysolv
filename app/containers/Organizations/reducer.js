@@ -61,7 +61,7 @@ export const initialState = {
     issues: 'Newest',
     language: [],
     organization: [],
-    price: [0, 10000],
+    price: [0, 5000],
   },
   loading: {
     addOrganization: false,
