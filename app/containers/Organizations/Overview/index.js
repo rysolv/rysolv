@@ -20,9 +20,10 @@ import reducer from '../reducer';
 import saga from '../saga';
 import {
   makeSelectOrganizations,
-  makeSelectOrganizationsSearchDisabled,
   makeSelectOrganizationsError,
+  makeSelectOrganizationsFiltered,
   makeSelectOrganizationsLoading,
+  makeSelectOrganizationsSearchDisabled,
 } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -93,7 +94,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Organizations
    */
   alerts: makeSelectOrganizations('alerts'),
-  organizations: makeSelectOrganizations('organizations'),
+  organizations: makeSelectOrganizationsFiltered(),
   disabled: makeSelectOrganizationsSearchDisabled('searchInput'),
   error: makeSelectOrganizationsError('organizations'),
   loading: makeSelectOrganizationsLoading('organizations'),

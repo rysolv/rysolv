@@ -60,6 +60,23 @@ const issueSeed = [
     45.5,
     true,
   ],
+  [
+    '34b0c547-5558-4c47-8278-7ef113a1eee0',
+    new Date(),
+    new Date(),
+    '1a64925c-858f-42b4-a09c-39d5699375f4', // organization id
+    'Improve the invalid hydration warning',
+    'Debugging hydration problems can be quite challenging because of the lack of information provided in the error message.',
+    'https://github.com/obsproject/obs-studio',
+    ['C', 'C++'],
+    [],
+    [],
+    '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
+    25,
+    [],
+    0,
+    true,
+  ],
 ];
 
 module.exports = issueSeed;

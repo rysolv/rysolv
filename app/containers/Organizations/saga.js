@@ -68,7 +68,8 @@ export function* fetchOrganizationsSaga() {
       issues,
       logo,
       verified,
-      totalFunded
+      totalFunded,
+      preferredLanguages
     }
   }
 `;

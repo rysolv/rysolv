@@ -104,6 +104,7 @@ export function* fetchUsersSaga() {
         attempting,
         issuesNumber,
         username,
+        preferredLanguages
       }
     }
   `;

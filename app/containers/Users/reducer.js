@@ -58,11 +58,7 @@ export const initialState = {
     users: false,
   },
   filter: {
-    langauge: '',
-    organization: '',
-    price: '0',
-    status: '',
-    type: '',
+    language: [],
     users: 'All',
   },
   isVerified: false,
@@ -90,7 +86,12 @@ const usersReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_USER_FILTER: {
       const { field, value } = payload;
-      draft.filter[field] = value;
+      if (field === 'language') {
+        draft.filter[field] = [];
+        value.map(language => draft.filter[field].push(language.value));
+      } else {
+        draft.filter[field] = value;
+      }
       break;
     }
     case CLEAR_ALERTS: {

@@ -59,11 +59,9 @@ export const initialState = {
   },
   filter: {
     issues: 'Newest',
-    langauge: '',
-    organization: '',
-    price: '0',
-    status: '',
-    type: '',
+    language: [],
+    organization: [],
+    price: [0, 10000],
   },
   loading: {
     addOrganization: false,
@@ -97,7 +95,12 @@ const organizationsReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_ORGANIZATION_FILTER: {
       const { field, value } = payload;
-      draft.filter[field] = value;
+      if (field === 'language' || field === 'organization') {
+        draft.filter[field] = [];
+        value.map(language => draft.filter[field].push(language.value));
+      } else {
+        draft.filter[field] = value;
+      }
       break;
     }
     case CLEAR_ALERTS: {

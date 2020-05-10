@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import {
@@ -13,56 +13,72 @@ const statusOptions = ['Closed', 'Funded', 'Unfunded'];
 const typeOptions = ['Bug', 'Feature'];
 
 const Filter = ({
-  filterValues: { langauge, organization, price, status, type },
+  filterValues: { language, organization, price, status, type },
   handleChangeFilter,
   languageOptions,
   organizationOptions,
 }) => (
   <FilterContainer>
     <StyledTitle>Filters</StyledTitle>
-    <StyledLabel>Language</StyledLabel>
-    <BaseAutocomplete
-      label={langauge}
-      onChange={e =>
-        handleChangeFilter({ field: 'language', value: e.target.value })
-      }
-      options={languageOptions}
-    />
-    <StyledLabel>Organization</StyledLabel>
-    <BaseAutocomplete
-      label={organization}
-      onChange={e =>
-        handleChangeFilter({ field: 'organization', value: e.target.value })
-      }
-      options={organizationOptions}
-    />
-    <StyledLabel>Price Range</StyledLabel>
-    <BaseSlider
-      onChange={e =>
-        handleChangeFilter({ field: 'price', value: e.target.value })
-      }
-      value={price}
-    />
-    <StyledLabel>Status</StyledLabel>
-    {statusOptions.map(value => (
-      <CheckboxWithLabel
-        checked={status[value]}
-        label={value}
-        onChange={e =>
-          handleChangeFilter({ field: 'status', value: e.target.value })
-        }
-      />
-    ))}
-    <StyledLabel>Type</StyledLabel>
-    {typeOptions.map(value => (
-      <CheckboxWithLabel
-        checked={type[value]}
-        label={value}
-        onChange={e =>
-          handleChangeFilter({ field: 'status', value: e.target.value })
-        }
-      />
-    ))}
+    {language && (
+      <Fragment>
+        <StyledLabel>Language</StyledLabel>
+        <BaseAutocomplete
+          onChange={(e, value) =>
+            handleChangeFilter({ field: 'language', value })
+          }
+          options={languageOptions}
+        />
+      </Fragment>
+    )}
+    {organization && (
+      <Fragment>
+        <StyledLabel>Organization</StyledLabel>
+        <BaseAutocomplete
+          onChange={(e, value) =>
+            handleChangeFilter({ field: 'organization', value })
+          }
+          options={organizationOptions}
+        />
+      </Fragment>
+    )}
+    {price && (
+      <Fragment>
+        <StyledLabel>Price Range</StyledLabel>
+        <BaseSlider
+          max={10000}
+          min={0}
+          onChange={(e, value) => handleChangeFilter({ field: 'price', value })}
+          value={price}
+        />
+      </Fragment>
+    )}
+    {status && (
+      <Fragment>
+        <StyledLabel>Status</StyledLabel>
+        {statusOptions.map(value => (
+          <CheckboxWithLabel
+            checked={status[value]}
+            label={value}
+            onChange={() => handleChangeFilter({ field: 'status', value })}
+          />
+        ))}
+      </Fragment>
+    )}
+    {type && (
+      <Fragment>
+        <StyledLabel>Type</StyledLabel>
+        {typeOptions.map(value => (
+          <CheckboxWithLabel
+            checked={type[value]}
+            label={value}
+            onChange={e =>
+              handleChangeFilter({ field: 'status', value: e.target.value })
+            }
+          />
+        ))}
+      </Fragment>
+    )}
   </FilterContainer>
 );
 

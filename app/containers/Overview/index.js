@@ -45,7 +45,9 @@ const Overview = ({
   match: { path },
   organizationOptions,
 }) => {
-  useEffect(() => dispatchFetchOrganizationOptions(), []);
+  useEffect(() => {
+    dispatchFetchOrganizationOptions();
+  }, []);
   const formattedPath = path.replace(/^\/+/, '');
   const {
     buttonName,

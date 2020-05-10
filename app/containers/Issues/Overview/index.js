@@ -24,6 +24,7 @@ import saga from '../saga';
 import {
   makeSelectIssues,
   makeSelectIssuesError,
+  makeSelectIssuesFiltered,
   makeSelectIssuesLoading,
   makeSelectIssuesSearchDisabled,
 } from '../selectors';
@@ -109,7 +110,7 @@ const mapStateToProps = createStructuredSelector({
   alerts: makeSelectIssues('alerts'),
   disabled: makeSelectIssuesSearchDisabled(),
   error: makeSelectIssuesError('issues'),
-  issues: makeSelectIssues('issues'),
+  issues: makeSelectIssuesFiltered(),
   loading: makeSelectIssuesLoading('issues'),
   search: makeSelectIssues('search'),
 });

@@ -54,11 +54,18 @@ export const initialState = {
     issueDetail: false,
   },
   filter: {
-    langauge: '',
-    organization: '',
-    price: '0',
-    status: '',
-    type: '',
+    language: [],
+    organization: [],
+    price: [0, 10000],
+    status: {
+      closed: false,
+      funded: false,
+      unfunded: false,
+    },
+    type: {
+      bug: false,
+      feature: false,
+    },
   },
   issueDetail: {},
   issues: [],
@@ -139,7 +146,17 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case CHANGE_ISSUE_FILTER: {
       const { field, value } = payload;
-      draft.filter[field] = value;
+      if (field === 'language' || field === 'organization') {
+        draft.filter[field] = [];
+        value.map(language => draft.filter[field].push(language.value));
+      } else if (field === 'status' || field === 'type') {
+        const formattedValue = value.toLowerCase();
+        draft.filter[field][formattedValue] = !draft.filter[field][
+          formattedValue
+        ];
+      } else {
+        draft.filter[field] = value;
+      }
       break;
     }
     case CLEAR_ALERTS: {
