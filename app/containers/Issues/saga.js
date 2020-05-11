@@ -195,6 +195,7 @@ export function* fetchIssuesSaga() {
       fundedAmount,
       watching,
       open,
+      type,
     }
   }
 `;

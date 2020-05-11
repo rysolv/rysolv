@@ -72,9 +72,7 @@ const Filter = ({
           <CheckboxWithLabel
             checked={type[value]}
             label={value}
-            onChange={e =>
-              handleChangeFilter({ field: 'status', value: e.target.value })
-            }
+            onChange={() => handleChangeFilter({ field: 'type', value })}
           />
         ))}
       </Fragment>

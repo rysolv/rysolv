@@ -30,6 +30,7 @@ module.exports = {
         issueInput.watching || [],
         issueInput.funded_amount || 0,
         issueInput.open || true,
+        issueInput.type || 'bug',
       ],
     ];
     try {
