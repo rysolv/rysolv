@@ -8,6 +8,7 @@ import {
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
   CHANGE_ISSUE_FILTER,
+  CHANGE_ISSUE_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ISSUE_FAILURE,
@@ -94,6 +95,13 @@ export function changeIssueFilter(payload) {
   return {
     payload,
     type: CHANGE_ISSUE_FILTER,
+  };
+}
+
+export function changeIssueSearch(payload) {
+  return {
+    payload,
+    type: CHANGE_ISSUE_SEARCH,
   };
 }
 

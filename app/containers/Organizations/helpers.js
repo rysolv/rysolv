@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return, consistent-return */
 import isEmtpy from 'lodash/isEmpty';
 
 export const filterOrganizations = (organizations, filterParams) =>
@@ -7,11 +8,11 @@ export const filterOrganizations = (organizations, filterParams) =>
       organization: organizationFilter,
       price: priceFilter,
     } = filterParams;
-    const formattedLanguageFilter = languageFilter.map(item =>
-      item.toLowerCase(),
+    const formattedLanguageFilter = languageFilter.map(({ value }) =>
+      value.toLowerCase(),
     );
-    const formattedOrganizationFilter = organizationFilter.map(item =>
-      item.toLowerCase(),
+    const formattedOrganizationFilter = organizationFilter.map(({ value }) =>
+      value.toLowerCase(),
     );
     if (
       !isEmtpy(formattedLanguageFilter) &&
@@ -32,3 +33,34 @@ export const filterOrganizations = (organizations, filterParams) =>
     }
     return true;
   });
+
+export const organizeOrganizations = (organizations, organizeParam) => {
+  const sortedArray = organizations.sort((a, b) => {
+    if (organizeParam === 'Newest') {
+      if (a.modifiedDate < b.modifiedDate) {
+        return 1;
+      }
+      return -1;
+    }
+    if (organizeParam === 'Most Funded') {
+      if (a.totalFunded < b.totalFunded) {
+        return 1;
+      }
+      return -1;
+    }
+  });
+  return sortedArray;
+};
+
+export const searchOrganizations = (organizations, { value }) => {
+  const filteredArray = organizations.filter(({ description, name }) => {
+    if (name.toLowerCase().includes(value.toLowerCase())) {
+      return true;
+    }
+    if (description.toLowerCase().includes(value.toLowerCase())) {
+      return true;
+    }
+    return false;
+  });
+  return filteredArray;
+};

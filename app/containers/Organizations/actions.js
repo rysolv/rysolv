@@ -1,5 +1,6 @@
 import {
   CHANGE_ORGANIZATION_FILTER,
+  CHANGE_ORGANIZATION_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ORGANIZATION_FAILURE,
@@ -33,6 +34,13 @@ export function changeOrganizationFilter(payload) {
   return {
     payload,
     type: CHANGE_ORGANIZATION_FILTER,
+  };
+}
+
+export function changeOrganizationSearch(payload) {
+  return {
+    payload,
+    type: CHANGE_ORGANIZATION_SEARCH,
   };
 }
 

@@ -3,6 +3,7 @@ import remove from 'lodash/remove';
 
 import {
   CHANGE_USER_FILTER,
+  CHANGE_USER_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_USER_FAILURE,
@@ -59,6 +60,7 @@ export const initialState = {
   },
   filter: {
     language: [],
+    overview: 'Newest',
     users: 'All',
   },
   isVerified: false,
@@ -71,6 +73,7 @@ export const initialState = {
     users: false,
   },
   search: {
+    overviewInput: { error: '', value: '' },
     searchInput: { error: '', value: '' },
   },
   step: {
@@ -88,14 +91,21 @@ const usersReducer = produce((draft, { payload, type }) => {
       const { field, value } = payload;
       if (field === 'language') {
         draft.filter[field] = [];
-        value.map(language => draft.filter[field].push(language.value));
+        value.map(language => draft.filter[field].push(language));
       } else {
         draft.filter[field] = value;
       }
       break;
     }
+    case CHANGE_USER_SEARCH: {
+      const { field, value } = payload;
+      draft.search[field].value = value;
+      break;
+    }
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
+      draft.filter = initialState.filter;
+      draft.search = initialState.search;
       break;
     }
     case CLEAR_FORM: {

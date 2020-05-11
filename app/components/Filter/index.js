@@ -28,6 +28,7 @@ const Filter = ({
             handleChangeFilter({ field: 'language', value })
           }
           options={languageOptions}
+          value={language}
         />
       </Fragment>
     )}
@@ -39,6 +40,7 @@ const Filter = ({
             handleChangeFilter({ field: 'organization', value })
           }
           options={organizationOptions}
+          value={organization}
         />
       </Fragment>
     )}

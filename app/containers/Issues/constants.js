@@ -10,6 +10,7 @@ export const ADD_ATTEMPT_FAILURE = 'app/Issues/ADD_ATTEMPT_FAILURE';
 export const ADD_ATTEMPT_SUCCESS = 'app/Issues/ADD_ATTEMPT_SUCCESS';
 
 export const CHANGE_ISSUE_FILTER = 'app/Issues/CHANGE_ISSUE_FILTER';
+export const CHANGE_ISSUE_SEARCH = 'app/Issues/CHANGE_ISSUE_SEARCH';
 
 export const CLEAR_ALERTS = 'app/Issues/CLEAR_ALERTS';
 export const CLEAR_FORM = 'app/Organizations/CLEAR_FORM';

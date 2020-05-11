@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
 
-import { filterUsers } from './helpers';
+import { filterUsers, organizeUsers, searchUsers } from './helpers';
 import { initialState } from './reducer';
 
 const selectUsersDomain = state => state.users || initialState;
@@ -42,9 +42,13 @@ const makeSelectUsersFormatted = () =>
   createSelector(
     makeSelectUsers('users'),
     makeSelectUsers('filter'),
-    (users, filter) => {
+    makeSelectUsers('search'),
+    (users, filter, { overviewInput }) => {
+      const { overview: overviewFilter } = filter;
       if (users.length > 0) {
-        const filteredUsers = filterUsers(users, filter);
+        const searchedUsers = searchUsers(users, overviewInput);
+        const organizedUsers = organizeUsers(searchedUsers, overviewFilter);
+        const filteredUsers = filterUsers(organizedUsers, filter);
         return filteredUsers.map(
           ({
             attempting,

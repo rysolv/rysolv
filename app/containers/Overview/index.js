@@ -7,9 +7,16 @@ import { push } from 'connected-react-router';
 
 import { PrimaryButton } from 'components/base_ui';
 import Filter from 'components/Filter';
-import { changeIssueFilter } from 'containers/Issues/actions';
-import { changeOrganizationFilter } from 'containers/Organizations/actions';
-import { changeUserFilter } from 'containers/Users/actions';
+import SearchHeader from 'components/SearchHeader';
+import {
+  changeIssueFilter,
+  changeIssueSearch,
+} from 'containers/Issues/actions';
+import {
+  changeOrganizationFilter,
+  changeOrganizationSearch,
+} from 'containers/Organizations/actions';
+import { changeUserFilter, changeUserSearch } from 'containers/Users/actions';
 import { makeSelectIssues } from 'containers/Issues/selectors';
 import { makeSelectOrganizations } from 'containers/Organizations/selectors';
 import { makeSelectUsers } from 'containers/Users/selectors';
@@ -38,8 +45,11 @@ const Overview = ({
   filterOrganizationValues,
   filterUserValues,
   handleChangeIssueFilter,
+  handleChangeIssueSearch,
   handleChangeOrganizationFilter,
+  handleChangeOrganizationSearch,
   handleChangeUserFilter,
+  handleChangeUserSearch,
   handleNav,
   match: { path },
   organizationOptions,
@@ -72,11 +82,35 @@ const Overview = ({
       organizationOptions,
     },
   };
+  const headerProps = {
+    issues: {
+      handleChangeFilter: handleChangeIssueFilter,
+      handleChangeSearch: handleChangeIssueSearch,
+      overviewFilter: filterIssueValues.overview,
+      placeholder: 'Find an issue...',
+      values: ['Newest', 'Most Funded'],
+    },
+    organizations: {
+      handleChangeFilter: handleChangeOrganizationFilter,
+      handleChangeSearch: handleChangeOrganizationSearch,
+      overviewFilter: filterOrganizationValues.overview,
+      placeholder: 'Find an organization...',
+      values: ['Newest', 'Most Funded'],
+    },
+    users: {
+      handleChangeFilter: handleChangeUserFilter,
+      handleChangeSearch: handleChangeUserSearch,
+      overviewFilter: filterUserValues.overview,
+      placeholder: 'Find a user...',
+      values: ['Newest', 'Most Credit'],
+    },
+  };
   return (
     <OverviewContainer>
       <OverviewHeader>{title}</OverviewHeader>
       <ContentContainer>
         <ComponentContainer>
+          <SearchHeader {...headerProps[formattedPath]} />
           <Component />
         </ComponentContainer>
 
@@ -95,8 +129,11 @@ Overview.propTypes = {
   filterOrganizationValues: T.object,
   filterUserValues: T.object,
   handleChangeIssueFilter: T.func,
+  handleChangeIssueSearch: T.func,
   handleChangeOrganizationFilter: T.func,
+  handleChangeOrganizationSearch: T.func,
   handleChangeUserFilter: T.func,
+  handleChangeUserSearch: T.func,
   handleNav: T.func,
   match: T.object,
   organizationOptions: T.array,
@@ -127,11 +164,14 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Issues
      */
     handleChangeIssueFilter: payload => dispatch(changeIssueFilter(payload)),
+    handleChangeIssueSearch: payload => dispatch(changeIssueSearch(payload)),
     /*
      * Reducer : Organizations
      */
     handleChangeOrganizationFilter: payload =>
       dispatch(changeOrganizationFilter(payload)),
+    handleChangeOrganizationSearch: payload =>
+      dispatch(changeOrganizationSearch(payload)),
     /*
      * Reducer : Overview
      */
@@ -141,6 +181,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Users
      */
     handleChangeUserFilter: payload => dispatch(changeUserFilter(payload)),
+    handleChangeUserSearch: payload => dispatch(changeUserSearch(payload)),
     /*
      * Reducer : Router
      */

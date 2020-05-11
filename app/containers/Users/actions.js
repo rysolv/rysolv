@@ -1,5 +1,6 @@
 import {
   CHANGE_USER_FILTER,
+  CHANGE_USER_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_USER_FAILURE,
@@ -29,6 +30,13 @@ export function changeUserFilter(payload) {
   return {
     payload,
     type: CHANGE_USER_FILTER,
+  };
+}
+
+export function changeUserSearch(payload) {
+  return {
+    payload,
+    type: CHANGE_USER_SEARCH,
   };
 }
 

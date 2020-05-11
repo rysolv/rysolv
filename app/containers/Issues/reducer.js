@@ -12,6 +12,7 @@ import {
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
   CHANGE_ISSUE_FILTER,
+  CHANGE_ISSUE_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ISSUE_FAILURE,
@@ -56,6 +57,7 @@ export const initialState = {
   filter: {
     language: [],
     organization: [],
+    overview: 'Newest',
     price: [0, 5000],
     status: {
       closed: false,
@@ -82,6 +84,7 @@ export const initialState = {
     upvoteIssue: false,
   },
   search: {
+    overviewInput: { error: '', value: '' },
     searchInput: { error: '', value: '' },
   },
   step: {
@@ -148,7 +151,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       const { field, value } = payload;
       if (field === 'language' || field === 'organization') {
         draft.filter[field] = [];
-        value.map(language => draft.filter[field].push(language.value));
+        value.map(language => draft.filter[field].push(language));
       } else if (field === 'status' || field === 'type') {
         const formattedValue = value.toLowerCase();
         draft.filter[field][formattedValue] = !draft.filter[field][
@@ -159,8 +162,15 @@ const issuesReducer = produce((draft, { payload, type }) => {
       }
       break;
     }
+    case CHANGE_ISSUE_SEARCH: {
+      const { field, value } = payload;
+      draft.search[field].value = value;
+      break;
+    }
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
+      draft.filter = initialState.filter;
+      draft.search = initialState.search;
       break;
     }
     case CLEAR_FORM: {
