@@ -6,6 +6,7 @@ export const ComponentContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 70%;
+  margin: 0 0 10rem 0;
 `;
 
 export const ContentContainer = styled.div`
@@ -20,7 +21,6 @@ export const FilterContainer = styled.div`
 export const OverviewContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 20%;
   width: 100%;
 `;
 

@@ -6,8 +6,6 @@ import {
 } from 'defaultStyleHelper';
 
 export const StyledSideNav = styled.div`
-  color: red;
-
   .MuiDrawer-paper {
     background: transparent;
     border: none;
@@ -36,6 +34,9 @@ export const StyledSideNav = styled.div`
 
   .MuiSvgIcon-root {
     color: ${headerColor};
+  }
+  .MuiListItemIcon-root {
+    padding: 0 1.5rem 0 0;
   }
 `;
 
