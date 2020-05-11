@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import iconDictionary from 'utils/iconDictionary';
 import { ConditionalRender } from 'components/base_ui';
@@ -22,7 +22,7 @@ import { excludedPath, getInitialValue } from './helpers';
 const backArrow = iconDictionary('backArrowHalf');
 const forwardArrow = iconDictionary('forwardArrowHalf');
 
-const drawerWidth = '20%';
+const drawerWidth = '15%';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,10 +71,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SideNav = ({ handleNav }) => {
+const SideNav = ({ handleNav, view }) => {
   const path = window.location.pathname;
   const formattedPath = path.replace(/^\/+/, '');
-  const displaySideNav = excludedPath.includes(formattedPath);
   const { initialValue } = getInitialValue[formattedPath]
     ? getInitialValue[formattedPath]
     : 0;
@@ -82,7 +81,9 @@ const SideNav = ({ handleNav }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [currentValue, setCurrentValue] = React.useState(initialValue);
-
+  const [displaySideNav, setDisplaySideNav] = React.useState(
+    !excludedPath.includes(formattedPath),
+  );
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -91,6 +92,30 @@ const SideNav = ({ handleNav }) => {
     handleNav(route);
     setCurrentValue(tab);
   };
+
+  useEffect(() => {
+    switch (view) {
+      case 'desktop':
+        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        setOpen(true);
+        break;
+      case 'laptop':
+        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        setOpen(false);
+        break;
+      case 'tablet':
+        setDisplaySideNav(false);
+        break;
+      case 'mobileL':
+        setDisplaySideNav(false);
+        break;
+      case 'mobileS':
+        setDisplaySideNav(false);
+        break;
+      default:
+        break;
+    }
+  }, []);
 
   const SideNavComponent = (
     <StyledSideNav>
@@ -163,13 +188,14 @@ const SideNav = ({ handleNav }) => {
   return (
     <ConditionalRender
       Component={SideNavComponent}
-      shouldRender={!displaySideNav}
+      shouldRender={displaySideNav}
     />
   );
 };
 
 SideNav.propTypes = {
   handleNav: T.func,
+  view: T.string,
 };
 
 export default SideNav;

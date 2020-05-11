@@ -6,8 +6,6 @@ import {
 } from 'defaultStyleHelper';
 
 export const StyledSideNav = styled.div`
-  color: red;
-
   .MuiDrawer-paper {
     background: transparent;
     border: none;

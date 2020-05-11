@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+const { tablet } = mediaQueriesByDevice;
 
 export const AppBody = styled.div`
   display: flex;
@@ -10,6 +12,9 @@ export const RoutesWrapper = styled.section`
   flex: 1 100%;
   justify-content: center;
   min-height: 100vh;
-  padding: 0 2.5rem;
+  padding: 0 2.5rem 0 15%;
   width: 100%;
+  ${tablet} {
+    padding: 0 1rem;
+  }
 `;

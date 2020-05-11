@@ -30,7 +30,7 @@ export const Main = ({
   match,
 }) => (
   <Fragment>
-    <SideNav handleNav={handleNav} />
+    <SideNav handleNav={handleNav} view={deviceView} />
 
     <Header
       activeUser={activeUser}

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
-import { BackNav } from 'components/base_ui';
+// import { BackNav } from 'components/base_ui';
 import { CommentCard, NoComment, NewComment } from 'components/Comments';
 import UpvotePanel from 'components/Upvote';
 import IssueDetailHeader from './IssueDetailHeader';
 import IssueStatusBar from './IssueStatusBar';
+import IssueSidebar from './IssueSidebar';
 
 import {
   DetailContainer,
@@ -12,6 +13,7 @@ import {
   IssueDetailColumn,
   IssueDetailWrapper,
   LeftPanel,
+  SidebarContainer,
 } from './styledComponents';
 
 const IssueDetail = ({
@@ -67,57 +69,63 @@ const IssueDetail = ({
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
 
   return (
-    <DetailContainer>
-      <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
-      <IssueDetailWrapper>
-        <LeftPanel>
-          <UpvotePanel
-            upvoted={upvoted}
-            handleUpvote={handleUpvote}
-            issueId={id}
-            userId={activeUser.id}
-            rep={rep}
-          />
-        </LeftPanel>
-        <IssueDetailColumn>
-          <IssueDetailHeader
-            activeUser={activeUser}
-            data={data}
-            handleIncrement={handleIncrement}
-            handleNav={handleNav}
-          />
+    <Fragment>
+      {/* <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" /> */}
 
-          <div style={{ minHeight: '30rem' }}>
-            <CommentCard
-              primary
-              body={body}
-              date={createdDate}
-              userProfile={primaryUser}
+      <DetailContainer>
+        <IssueDetailWrapper>
+          <LeftPanel>
+            <UpvotePanel
+              upvoted={upvoted}
+              handleUpvote={handleUpvote}
+              issueId={id}
+              userId={activeUser.id}
+              rep={rep}
+            />
+          </LeftPanel>
+          <IssueDetailColumn>
+            <IssueDetailHeader
+              activeUser={activeUser}
+              data={data}
+              handleIncrement={handleIncrement}
               handleNav={handleNav}
             />
-          </div>
 
-          <Divider>Status: {open ? 'Open' : 'Issue Closed'}</Divider>
+            <div style={{ minHeight: '30rem' }}>
+              <CommentCard
+                primary
+                body={body}
+                date={createdDate}
+                userProfile={primaryUser}
+                handleNav={handleNav}
+              />
+            </div>
 
-          <IssueStatusBar
-            activeUser={activeUser}
-            data={data}
-            handleIncrement={handleIncrement}
-          />
+            <Divider>Status: {open ? 'Open' : 'Issue Closed'}</Divider>
 
-          <Divider>Comments</Divider>
-          {commentsDiv}
+            <IssueStatusBar
+              activeUser={activeUser}
+              data={data}
+              handleIncrement={handleIncrement}
+            />
 
-          <Divider>Leave a Comment</Divider>
-          <NewComment
-            issueId={id}
-            activeUser={activeUser}
-            handleComment={handleComment}
-            handleNav={handleNav}
-          />
-        </IssueDetailColumn>
-      </IssueDetailWrapper>
-    </DetailContainer>
+            <Divider>Comments</Divider>
+            {commentsDiv}
+
+            <Divider>Leave a Comment</Divider>
+            <NewComment
+              issueId={id}
+              activeUser={activeUser}
+              handleComment={handleComment}
+              handleNav={handleNav}
+            />
+          </IssueDetailColumn>
+        </IssueDetailWrapper>
+        <SidebarContainer>
+          <IssueSidebar data={data} activeUser={activeUser} />
+        </SidebarContainer>
+      </DetailContainer>
+    </Fragment>
   );
 };
 

@@ -7,6 +7,7 @@ export const StatusBar = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
+  flex-wrap: wrap;
 `;
 
 export const StatusItem = styled.div`
@@ -22,7 +23,8 @@ export const StatusTitle = styled.div`
 `;
 
 export const StyledSecondaryButton = styled(SecondaryButton)`
-  width: 10rem;
+  min-width: 5rem;
+  width: 70%;
   background-color: #1a237e;
 
   &:hover {
