@@ -36,7 +36,7 @@ BaseSlider.propTypes = {
   max: T.number,
   min: T.number,
   onChange: T.func.isRequired,
-  value: T.string.isRequired,
+  value: T.array.isRequired,
 };
 
 export default BaseSlider;

@@ -4,6 +4,7 @@ import { extend, omit } from 'lodash';
 
 import { filterContributors, filterIssues } from 'utils/filterHelpers';
 
+import { filterOrganizations } from './helpers';
 import { initialState } from './reducer';
 
 const selectOrganizationsDomain = state => state.organizations || initialState;
@@ -37,6 +38,16 @@ const makeSelectOrganizationsError = prop =>
   createSelector(
     makeSelectOrganizations('error'),
     error => error[prop],
+  );
+
+const makeSelectOrganizationsFiltered = () =>
+  createSelector(
+    makeSelectOrganizations('organizations'),
+    makeSelectOrganizations('filter'),
+    (organizations, filter) => {
+      const filteredOrganizations = filterOrganizations(organizations, filter);
+      return filteredOrganizations;
+    },
   );
 
 const makeSelectOrganizationsFormattedData = () =>
@@ -104,6 +115,7 @@ export {
   makeSelectOrganizationsDisabled,
   makeSelectOrganizationsEditRequest,
   makeSelectOrganizationsError,
+  makeSelectOrganizationsFiltered,
   makeSelectOrganizationsFormattedData,
   makeSelectOrganizationsLoading,
   makeSelectOrganizationsRequestBody,

@@ -35,8 +35,10 @@ export const StyledSideNav = styled.div`
   .MuiSvgIcon-root {
     color: ${headerColor};
   }
-  .MuiListItemIcon-root {
-    padding: 0 1.5rem 0 0;
+
+  .MuiIconButton-label {
+    justify-content: end;
+    padding-left: 2.1rem;
   }
 `;
 

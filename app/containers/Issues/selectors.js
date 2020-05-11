@@ -1,4 +1,6 @@
 import { createSelector } from 'reselect';
+
+import { filterIssues } from './helpers';
 import { initialState } from './reducer';
 
 const selectIssuesDomain = state => state.issues || initialState;
@@ -43,6 +45,15 @@ const makeSelectIssueDetailError = prop =>
     error => error[prop],
   );
 
+const makeSelectIssuesFiltered = () =>
+  createSelector(
+    makeSelectIssues('issues'),
+    makeSelectIssues('filter'),
+    (issues, filter) => {
+      const filteredIssues = filterIssues(issues, filter);
+      return filteredIssues;
+    },
+  );
 const makeSelectIssueDetailLoading = prop =>
   createSelector(
     makeSelectIssueDetail('loading'),
@@ -79,6 +90,7 @@ export {
   makeSelectIssues,
   makeSelectIssuesDisabled,
   makeSelectIssuesError,
+  makeSelectIssuesFiltered,
   makeSelectIssuesLoading,
   makeSelectIssuesRequestBody,
   makeSelectIssuesSearchDisabled,
