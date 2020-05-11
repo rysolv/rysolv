@@ -58,7 +58,8 @@ const Filter = ({
         <StyledLabel>Status</StyledLabel>
         {statusOptions.map(value => (
           <CheckboxWithLabel
-            checked={status[value]}
+            key={`checkbox-${value}`}
+            checked={status[value.toLowerCase()]}
             label={value}
             onChange={() => handleChangeFilter({ field: 'status', value })}
           />
@@ -70,7 +71,8 @@ const Filter = ({
         <StyledLabel>Type</StyledLabel>
         {typeOptions.map(value => (
           <CheckboxWithLabel
-            checked={type[value]}
+            key={`checkbox-${value}`}
+            checked={type[value.toLowerCase()]}
             label={value}
             onChange={() => handleChangeFilter({ field: 'type', value })}
           />
