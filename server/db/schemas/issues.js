@@ -14,7 +14,8 @@ issues(
   rep SMALLINT DEFAULT 25,
   watching UUID [],
   funded_amount FLOAT DEFAULT 0,
-  open BOOLEAN DEFAULT true
+  open BOOLEAN DEFAULT true,
+  type VARCHAR(40) NOT NULL
 )`;
 
 module.exports = issues;

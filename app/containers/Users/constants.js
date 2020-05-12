@@ -1,4 +1,5 @@
 export const CHANGE_USER_FILTER = 'app/Users/CHANGE_USER_FILTER';
+export const CHANGE_USER_SEARCH = 'app/Users/CHANGE_USER/SEARCH';
 
 export const CLEAR_ALERTS = 'app/Users/CLEAR_ALERTS';
 

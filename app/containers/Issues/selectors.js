@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { omit } from 'lodash';
-import { filterIssues } from './helpers';
+
+import { filterIssues, organizeIssues, searchIssues } from './helpers';
 import { initialState } from './reducer';
 
 const selectIssuesDomain = state => state.issues || initialState;
@@ -59,8 +60,12 @@ const makeSelectIssuesFiltered = () =>
   createSelector(
     makeSelectIssues('issues'),
     makeSelectIssues('filter'),
-    (issues, filter) => {
-      const filteredIssues = filterIssues(issues, filter);
+    makeSelectIssues('search'),
+    (issues, filter, { overviewInput }) => {
+      const { overview: overviewFilter } = filter;
+      const searchedIssues = searchIssues(issues, overviewInput);
+      const organizedIssues = organizeIssues(searchedIssues, overviewFilter);
+      const filteredIssues = filterIssues(organizedIssues, filter);
       return filteredIssues;
     },
   );

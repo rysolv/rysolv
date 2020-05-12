@@ -5,7 +5,14 @@ import T from 'prop-types';
 import { MainTextInput } from '../Inputs';
 import { StyledAutocomplete, StyledChip } from './styledComponents';
 
-const BaseAutocomplete = ({ error, helperText, label, onChange, options }) => (
+const BaseAutocomplete = ({
+  error,
+  helperText,
+  label,
+  onChange,
+  options,
+  value,
+}) => (
   <StyledAutocomplete
     classes={{ focused: 'focused', inputRoot: 'inputRoot' }}
     getOptionLabel={option => option.value}
@@ -25,6 +32,7 @@ const BaseAutocomplete = ({ error, helperText, label, onChange, options }) => (
         <StyledChip label={option.value} {...getTagProps({ index })} />
       ))
     }
+    value={value}
   />
 );
 
@@ -34,6 +42,7 @@ BaseAutocomplete.propTypes = {
   label: T.string,
   onChange: T.func.isRequired,
   options: T.array,
+  value: T.array,
 };
 
 export default BaseAutocomplete;

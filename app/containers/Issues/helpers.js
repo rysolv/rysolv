@@ -1,4 +1,5 @@
-import isEmtpy from 'lodash/isEmpty';
+/* eslint-disable array-callback-return, consistent-return */
+import { intersection, isEmpty } from 'lodash';
 
 export const filterIssues = (issues, filterParams) => {
   const {
@@ -6,20 +7,24 @@ export const filterIssues = (issues, filterParams) => {
     organization: organizationFilter,
     price: priceFilter,
     status: { closed, funded, unfunded },
+    type: { bug, feature },
   } = filterParams;
+  let bugIssues = [];
   let closedIssues = [];
+  let featureIssues = [];
   let fundedIssues = [];
   let unfundedIssues = [];
+
   const filteredIssues = issues.filter(
     ({ fundedAmount, language: languages, organizationName }) => {
-      const formattedLanguageFilter = languageFilter.map(item =>
-        item.toLowerCase(),
+      const formattedLanguageFilter = languageFilter.map(({ value }) =>
+        value.toLowerCase(),
       );
-      const formattedOrganizationFilter = organizationFilter.map(item =>
-        item.toLowerCase(),
+      const formattedOrganizationFilter = organizationFilter.map(({ value }) =>
+        value.toLowerCase(),
       );
       if (
-        !isEmtpy(formattedLanguageFilter) &&
+        !isEmpty(formattedLanguageFilter) &&
         !languages.some(language =>
           formattedLanguageFilter.includes(language.toLowerCase()),
         )
@@ -27,7 +32,7 @@ export const filterIssues = (issues, filterParams) => {
         return false;
       }
       if (
-        !isEmtpy(formattedOrganizationFilter) &&
+        !isEmpty(formattedOrganizationFilter) &&
         !formattedOrganizationFilter.includes(organizationName.toLowerCase())
       ) {
         return false;
@@ -53,10 +58,48 @@ export const filterIssues = (issues, filterParams) => {
       ({ fundedAmount, open: isOpen }) => isOpen === true && fundedAmount === 0,
     );
   }
-  const newArr =
+  if (bug) {
+    bugIssues = filteredIssues.filter(({ type }) => type === 'bug');
+  }
+  if (feature) {
+    featureIssues = filteredIssues.filter(({ type }) => type === 'feature');
+  }
+  const arr1 =
     closed || funded || unfunded
       ? closedIssues.concat(fundedIssues.concat(unfundedIssues))
       : filteredIssues;
-  const set = new Set(newArr);
-  return Array.from(set);
+  const arr2 =
+    bug || feature ? bugIssues.concat(featureIssues) : filteredIssues;
+  return intersection(arr1, arr2);
+};
+
+export const organizeIssues = (issues, organizeParam) => {
+  const sortedArray = issues.sort((a, b) => {
+    if (organizeParam === 'Newest') {
+      if (a.modifiedDate < b.modifiedDate) {
+        return 1;
+      }
+      return -1;
+    }
+    if (organizeParam === 'Most Funded') {
+      if (a.fundedAmount < b.fundedAmount) {
+        return 1;
+      }
+      return -1;
+    }
+  });
+  return sortedArray;
+};
+
+export const searchIssues = (issues, { value }) => {
+  const filteredArray = issues.filter(({ body, name }) => {
+    if (name.toLowerCase().includes(value.toLowerCase())) {
+      return true;
+    }
+    if (body.toLowerCase().includes(value.toLowerCase())) {
+      return true;
+    }
+    return false;
+  });
+  return filteredArray;
 };

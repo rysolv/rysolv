@@ -1,5 +1,7 @@
 export const CHANGE_ORGANIZATION_FILTER =
   'app/Organizations/CHANGE_ORGANIZATION_FILTER';
+export const CHANGE_ORGANIZATION_SEARCH =
+  'app/Organizations/CHANGE_ORGANIZATION_SEARCH';
 
 export const CLEAR_ALERTS = 'app/Organizations/CLEAR_ALERTS';
 

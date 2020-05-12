@@ -21,4 +21,11 @@ export const LogoWrapper = styled.div`
   display: flex;
   flex-direction: row;
   padding: 1rem;
+  width: 40%;
+`;
+
+export const StyledLink = styled.div`
+  align-self: center;
+  padding-right: 2rem;
+  white-space: nowrap;
 `;

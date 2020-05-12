@@ -4,6 +4,7 @@ import remove from 'lodash/remove';
 
 import {
   CHANGE_ORGANIZATION_FILTER,
+  CHANGE_ORGANIZATION_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
   DELETE_ORGANIZATION_FAILURE,
@@ -61,6 +62,7 @@ export const initialState = {
     issues: 'Newest',
     language: [],
     organization: [],
+    overview: 'Newest',
     price: [0, 5000],
   },
   loading: {
@@ -82,6 +84,7 @@ export const initialState = {
   search: {
     contributorInput: { error: '', value: '' },
     issueInput: { error: '', value: '' },
+    overviewInput: { error: '', value: '' },
     searchInput: { error: '', value: '' },
   },
   step: {
@@ -97,14 +100,21 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       const { field, value } = payload;
       if (field === 'language' || field === 'organization') {
         draft.filter[field] = [];
-        value.map(language => draft.filter[field].push(language.value));
+        value.map(language => draft.filter[field].push(language));
       } else {
         draft.filter[field] = value;
       }
       break;
     }
+    case CHANGE_ORGANIZATION_SEARCH: {
+      const { field, value } = payload;
+      draft.search[field].value = value;
+      break;
+    }
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
+      draft.filter = initialState.filter;
+      draft.search = initialState.search;
       break;
     }
     case CLEAR_FORM: {

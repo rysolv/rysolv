@@ -43,6 +43,7 @@ module.exports = buildSchema(`
     username: String
     fundedAmount: Float
     watching: [String]
+    type: String
   }
 
   input IssueInput {

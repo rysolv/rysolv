@@ -20,6 +20,7 @@ const issueSeed = [
     ['517fa5c9-1d6e-4925-8bcc-25c24cd0b95d'], // Watching: Reference to user ID
     20.0, // value
     true, // open
+    'bug', // type
   ],
   [
     '34b0c547-5558-4c47-8278-7ef113a1dee0',
@@ -37,6 +38,7 @@ const issueSeed = [
     [],
     0.0,
     false,
+    'bug',
   ],
   [
     '0ce2d9ae-ba16-4013-af33-0cbb8cbc37a2',
@@ -59,6 +61,7 @@ const issueSeed = [
     ],
     45.5,
     true,
+    'bug',
   ],
   [
     'c44c0862-d013-4c32-b28f-9d55f934e00d',
@@ -76,6 +79,7 @@ const issueSeed = [
     [],
     0.0,
     false,
+    'bug',
   ],
   [
     '00a4055a-b257-428a-a152-237375bc0899',
@@ -98,6 +102,30 @@ const issueSeed = [
     ],
     45.5,
     true,
+    'bug',
+  ],
+  [
+    '00a4055a-b227-428a-a152-237375bc0899',
+    new Date(),
+    new Date(),
+    '79a3ef7b-bf7d-4e4c-abb8-08cd521d5506', // organization id
+    '[Physics problems] the kart is sticked (sliding) to wall when exiting your car parking backwards',
+    'If you got stick to the wall (at left side -kart is parallel to the wall- for example), and you try to leave backwards (usefull in soccer mode) while braking (right: you still completely stuck; left: you still stuck at 45deg), the kart continue straight backward.',
+    'https://github.com/supertuxkart/stk-code',
+    ['Perl', 'Rust'],
+    [],
+    [],
+    '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
+    40,
+    [
+      '3f6e3ddf-ab68-4ee3-bb79-abfe21c8d014',
+      'cdd583cf-4711-4f33-a202-c937081afd7e',
+      'c2209ded-9219-4ee3-9c29-f863889053c0',
+      'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
+    ],
+    0,
+    true,
+    'feature',
   ],
 ];
 

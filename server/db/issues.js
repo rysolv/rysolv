@@ -14,7 +14,8 @@ const issueValues = `
   rep,
   watching,
   funded_amount,
-  open
+  open,
+  type
 `; // Excludes ID & created_date
 
 const issueCardValues = `
@@ -33,6 +34,7 @@ const issueCardValues = `
   issues.watching,
   issues.funded_amount AS "fundedAmount",
   issues.open,
+  issues.type,
   organizations.name AS "organizationName",
   organizations.verified AS "organizationVerified"
 `;
@@ -48,7 +50,7 @@ const issueDetailValues = `
 const createIssue = async data => {
   const queryText = `INSERT INTO
     issues(id, created_date, ${issueValues})
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
