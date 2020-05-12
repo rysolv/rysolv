@@ -5,16 +5,12 @@ import { MainTextInput } from 'components/base_ui';
 import LanguageAutocomplete from 'components/LanguageAutocomplete';
 import { issueDataDictionary } from 'containers/Issues/constants';
 import Markdown from 'components/Markdown';
-import {
-  HorizontalWrapper,
-  InputFormWrapper,
-  StyledMarkdownWrapper,
-} from './styledComponents';
+import { InputFormWrapper, StyledMarkdownWrapper } from './styledComponents';
 
 // eslint-disable-next-line arrow-body-style
 const ManualForm = ({ data, handleInputChange }) => {
   // eslint-disable-next-line no-param-reassign
-  const { repo, body, language, fundedAmount, name } = data;
+  const { body, language, name } = data;
 
   const handleMarkdownInput = markdown => {
     handleInputChange({
@@ -58,34 +54,6 @@ const ManualForm = ({ data, handleInputChange }) => {
         }
         value={language.value}
       />
-      <HorizontalWrapper>
-        <MainTextInput
-          error={!!repo.error}
-          helperText={repo.error}
-          label={issueDataDictionary.repo}
-          onChange={e =>
-            handleInputChange({
-              field: 'repo',
-              form: 'data',
-              value: e.target.value,
-            })
-          }
-          value={repo.value}
-        />
-        <MainTextInput
-          error={!!fundedAmount.error}
-          helperText={fundedAmount.error}
-          label={issueDataDictionary.fundedAmount}
-          onChange={e =>
-            handleInputChange({
-              field: 'fundedAmount',
-              form: 'data',
-              value: e.target.value,
-            })
-          }
-          value={fundedAmount.value}
-        />
-      </HorizontalWrapper>
     </InputFormWrapper>
   );
 };

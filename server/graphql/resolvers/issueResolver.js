@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const {
   createIssue,
+  createOrganization,
   deleteIssue,
   getIssues,
   getOneIssue,
@@ -13,31 +14,72 @@ const {
 module.exports = {
   createIssue: async args => {
     const { issueInput } = args;
-    const issue = [
-      [
-        uuidv4(),
-        new Date(),
-        new Date(),
-        issueInput.organization_id,
-        issueInput.name,
-        issueInput.body,
-        issueInput.repo,
-        issueInput.language || [],
-        issueInput.comments || [],
-        issueInput.attempting || [],
-        issueInput.contributor,
-        issueInput.rep || 25,
-        issueInput.watching || [],
-        issueInput.funded_amount || 0,
-        issueInput.open || true,
-      ],
-    ];
-    try {
-      const result = await createIssue(issue);
+    const newIssueId = uuidv4();
+
+    const createNewIssue = async () => {
+      const issue = [
+        [
+          newIssueId,
+          new Date(),
+          new Date(),
+          issueInput.organizationId,
+          issueInput.name,
+          issueInput.body,
+          issueInput.repo,
+          issueInput.language || [],
+          issueInput.comments || [],
+          issueInput.attempting || [],
+          issueInput.contributor || '',
+          issueInput.rep || 25,
+          issueInput.watching || [],
+          issueInput.fundedAmount || 0,
+          issueInput.open || true,
+        ],
+      ];
+      try {
+        const result = await createIssue(issue);
+        return result;
+      } catch (err) {
+        throw err;
+      }
+    };
+
+    const createNewOrganization = async () => {
+      const organization = [
+        [
+          uuidv4(),
+          new Date(),
+          new Date(),
+          issueInput.organizationName,
+          issueInput.organizationDescription,
+          issueInput.organizationRepo,
+          issueInput.organizationUrl || '',
+          [newIssueId],
+          issueInput.logo || '',
+          issueInput.verified || false,
+          [issueInput.contributor] || [],
+          issueInput.contributor || '',
+          issueInput.totalFunded || 0,
+          issueInput.preferred_languages || [],
+        ],
+      ];
+      try {
+        const [result] = await createOrganization(organization);
+        return result;
+      } catch (err) {
+        throw err;
+      }
+    };
+
+    if (args.organizationId) {
+      const result = await createNewIssue();
+      // todo: add issue to org
       return result;
-    } catch (err) {
-      throw err;
     }
+    const organizationResult = await createNewOrganization();
+    issueInput.organizationId = organizationResult.id;
+    const issueResult = await createNewIssue();
+    return issueResult;
   },
   deleteIssue: async args => {
     const { id } = args;

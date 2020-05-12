@@ -11,6 +11,7 @@ import { makeSelectActiveUser } from 'containers/Auth/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
+import { makeSelectOrganizations } from 'containers/Organizations/selectors';
 import { incrementStep, clearForm } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
@@ -37,14 +38,21 @@ export class IssuesAdd extends React.PureComponent {
   }
 
   render() {
-    const { activeUser, data, handleNav, loading, step } = this.props;
+    const {
+      activeUser,
+      data,
+      handleNav,
+      loading,
+      organization,
+      step,
+    } = this.props;
     const StepToRender = addIssueDictionary[step];
     return (
       <AddWrapper>
         <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
         <AddForm>
           <AsyncRender
-            asyncData={{ data }}
+            asyncData={{ data, organization }}
             component={StepToRender}
             loading={loading}
             propsToPassDown={{ activeUser, handleNav }}
@@ -62,6 +70,7 @@ IssuesAdd.propTypes = {
   handleIncrementStep: T.func,
   handleNav: T.func,
   loading: T.bool.isRequired,
+  organization: T.object,
   step: T.number.isRequired,
 };
 
@@ -71,6 +80,7 @@ const mapStateToProps = createStructuredSelector({
    */
   activeUser: makeSelectActiveUser('activeUser'),
   data: makeSelectIssues('data'),
+  organization: makeSelectOrganizations('data'),
   loading: makeSelectIssuesLoading('addIssue'),
   step: makeSelectIssuesStep('addIssue'),
 });

@@ -13,6 +13,7 @@ import { PrimaryButton } from 'components/base_ui';
 export const FlexContainer = styled.div`
   display: flex;
   margin: 1rem 0;
+  width: 100%;
 `;
 
 export const ProfileContainer = styled.div`

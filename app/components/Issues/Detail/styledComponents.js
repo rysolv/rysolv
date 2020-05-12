@@ -42,6 +42,7 @@ export const LeftPanel = styled.div`
 
 export const IssueDetailColumn = styled.div`
   flex-direction: column;
+  width: 100%;
   padding: 1rem 2rem 2rem 2rem;
   ${tablet} {
     padding: 0.5rem;

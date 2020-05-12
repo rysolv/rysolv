@@ -41,10 +41,8 @@ import {
 export const initialState = {
   alerts: { error: false, success: false },
   data: {
-    fundedAmount: { error: '', value: 0 },
     name: { error: '', value: '' },
     body: { error: '', value: '' },
-    repo: { error: '', value: '' },
     language: { error: '', value: [] },
     importUrl: { error: '', value: '' },
   },
@@ -80,6 +78,14 @@ export const initialState = {
     issues: false,
     searchIssues: false,
     upvoteIssue: false,
+  },
+  organizationData: {
+    organizationId: { error: '', value: '' },
+    organizationUrl: { error: '', value: '' },
+    organizationDescription: { error: '', value: '' },
+    organizationRepo: { error: '', value: '' },
+    importUrl: { error: '', value: '' },
+    organizationName: { error: '', value: '' },
   },
   search: {
     searchInput: { error: '', value: '' },
@@ -165,6 +171,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case CLEAR_FORM: {
       draft.data = initialState.data;
+      draft.organizationData = initialState.organizationData;
       draft.isVerified = initialState.isVerified;
       break;
     }

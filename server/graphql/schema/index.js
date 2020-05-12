@@ -46,18 +46,22 @@ module.exports = buildSchema(`
   }
 
   input IssueInput {
-    organizationId: String
-    name: String
-    body: String
-    repo: String
-    language: [String]
-    comments: [ID]
     attempting: [ID]
     attempts: Int
-    contributor: [String]
-    rep: Int
-    watching: [String]
+    body: String
+    comments: [ID]
+    contributor: String
     fundedAmount: Int
+    language: [String]
+    name: String
+    organizationDescription: String
+    organizationId: String
+    organizationName: String
+    organizationRepo: String
+    organizationUrl: String
+    rep: Int
+    repo: String
+    watching: [String]
   }
 
   type User {

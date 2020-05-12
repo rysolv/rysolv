@@ -115,7 +115,7 @@ const SideNav = ({ handleNav, view }) => {
       default:
         break;
     }
-  }, []);
+  }, [view]);
 
   const SideNavComponent = (
     <StyledSideNav>

@@ -27,7 +27,7 @@ export const ImportFormContainer = styled.section`
 `;
 
 export const InputFormWrapper = styled.div`
-  padding: 0 6.5rem;
+  padding: 0 2rem;
 `;
 
 export const KeyAndValueContainer = styled.div`

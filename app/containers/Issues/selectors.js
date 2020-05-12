@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-
+import { omit } from 'lodash';
 import { filterIssues } from './helpers';
 import { initialState } from './reducer';
 
@@ -28,6 +28,16 @@ const makeSelectIssuesDisabled = () =>
     makeSelectIssues('data'),
     data => {
       const tempData = { ...data };
+      delete tempData.importUrl;
+      return Object.keys(tempData).every(item => tempData[item].value !== '');
+    },
+  );
+
+const makeSelectOrganizationsDisabled = () =>
+  createSelector(
+    makeSelectIssues('organizationData'),
+    data => {
+      const tempData = omit(data, ['organizationId']);
       delete tempData.importUrl;
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
@@ -63,11 +73,14 @@ const makeSelectIssueDetailLoading = prop =>
 const makeSelectIssuesRequestBody = () =>
   createSelector(
     makeSelectIssues('data'),
-    data =>
-      Object.keys(data).reduce((acc, field) => {
-        acc[field] = data[field].value;
+    makeSelectIssues('organizationData'),
+    (data, organizationData) => {
+      const formData = { ...data, ...organizationData };
+      return Object.keys(formData).reduce((acc, field) => {
+        acc[field] = formData[field].value;
         return acc;
-      }, {}),
+      }, {});
+    },
   );
 
 const makeSelectIssuesSearchDisabled = () =>
@@ -95,4 +108,5 @@ export {
   makeSelectIssuesRequestBody,
   makeSelectIssuesSearchDisabled,
   makeSelectIssuesStep,
+  makeSelectOrganizationsDisabled,
 };

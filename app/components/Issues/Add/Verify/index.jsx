@@ -4,19 +4,16 @@ import T from 'prop-types';
 
 import { issueDataDictionary } from 'containers/Issues/constants';
 import { CommentCard } from 'components/Comments';
-import { LanguageWrapper, FundingWrapper } from 'components/base_ui';
-import { formatDollarAmount } from 'utils/globalHelpers';
+import { LanguageWrapper } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
   DataWrapper,
   Divider,
-  IconWrapper,
+  // IconWrapper,
   LabelWrapper,
   LanguageContainer,
   NameWrapper,
-  RowContainer,
-  StyledInlineBlock,
   StyledLink,
   ValueWrapper,
 } from './styledComponents';
@@ -28,7 +25,7 @@ const CodeIcon = iconDictionary('code');
 export class VerifyForm extends React.PureComponent {
   render() {
     const {
-      data: { body, fundedAmount, language, name, repo },
+      data: { body, language, name, repo },
       activeUser: { id, profilePic, username },
       handleNav,
     } = this.props;
@@ -41,13 +38,16 @@ export class VerifyForm extends React.PureComponent {
       profilePic,
     };
 
+    const languageDiv =
+      language.value.length > 0
+        ? language.value.map(el => <LanguageWrapper key={el} language={el} />)
+        : 'None Listed';
+
     return (
       <DataWrapper>
-        <LabelWrapper>{issueDataDictionary.name}</LabelWrapper>
         <ValueWrapper>
           <NameWrapper>{name.value}</NameWrapper>
         </ValueWrapper>
-        <LabelWrapper>{issueDataDictionary.body}</LabelWrapper>
         <ValueWrapper>
           <CommentCard
             primary
@@ -62,45 +62,7 @@ export class VerifyForm extends React.PureComponent {
         </ValueWrapper>
         <LabelWrapper>{issueDataDictionary.language}</LabelWrapper>
         <ValueWrapper>
-          <LanguageContainer>
-            {language.value.map(el => (
-              <LanguageWrapper key={el} language={el} />
-            ))}
-          </LanguageContainer>
-        </ValueWrapper>
-
-        <RowContainer>
-          <StyledInlineBlock>
-            <LabelWrapper>
-              <IconWrapper>{CodeIcon}</IconWrapper>
-              {issueDataDictionary.repo}
-            </LabelWrapper>
-            <ValueWrapper>
-              <StyledLink>{repo.value}</StyledLink>
-            </ValueWrapper>
-          </StyledInlineBlock>
-
-          <StyledInlineBlock>
-            <LabelWrapper>
-              <IconWrapper>{LinkIcon}</IconWrapper>
-              <span>{issueDataDictionary.external}</span>
-            </LabelWrapper>
-            <ValueWrapper>
-              <StyledLink>{repo.value}</StyledLink>
-            </ValueWrapper>
-          </StyledInlineBlock>
-        </RowContainer>
-
-        <LabelWrapper>
-          <IconWrapper>$</IconWrapper>
-          {issueDataDictionary.fundedAmount}
-        </LabelWrapper>
-        <ValueWrapper>
-          <FundingWrapper
-            medium
-            open
-            value={formatDollarAmount(fundedAmount.value)}
-          />
+          <LanguageContainer>{languageDiv}</LanguageContainer>
         </ValueWrapper>
       </DataWrapper>
     );

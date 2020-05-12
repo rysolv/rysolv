@@ -48,9 +48,9 @@ export const UPVOTE_ISSUE_SUCCESS = 'app/Organizations/UPVOTE_ISSUE_SUCCESS';
 export const VERIFY_INFO = 'app/Organizations/VERIFY_INFO';
 
 export const organizationDataDictionary = {
-  organizationUrl: 'Organization URL',
+  organizationUrl: 'Organization URL (optional)',
   description: 'Organization Description',
-  repoUrl: 'GitHub URL',
+  repoUrl: 'Repository URL',
   logo: 'Logo',
   issues: 'Issues',
   name: 'Organization Name',

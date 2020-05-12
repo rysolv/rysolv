@@ -12,9 +12,11 @@ import { verifyMessage } from '../constants';
 import { makeSelectIssues, makeSelectIssuesRequestBody } from '../selectors';
 import {
   ButtonGroup,
+  SelectedOrganization,
   StyledCheckboxWithLabel,
   StyledH3,
-  Wrapper,
+  StyledLink,
+  VerifyWrapper,
 } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -28,27 +30,40 @@ export class VerifyIssue extends React.PureComponent {
       dispatchVerifyInfo,
       handleNav,
       isVerified,
+      organization,
       requestBody,
     } = this.props;
     const handleSaveInfo = () => {
-      dispatchSaveInfo({ requestBody });
+      dispatchSaveInfo({ requestBody, activeUser });
       handleNav('/issues');
     };
     return (
       <Fragment>
-        <StyledH3>Verify Issue Information</StyledH3>
-        <Wrapper>
-          <VerifyForm data={data} activeUser={activeUser} />
-          <StyledCheckboxWithLabel
-            checked={isVerified}
-            label={verifyMessage}
-            onChange={dispatchVerifyInfo}
-          />
-        </Wrapper>
+        <StyledH3>Organiztion</StyledH3>
+        <VerifyWrapper>
+          <SelectedOrganization>
+            {organization.organizationName.value}
+          </SelectedOrganization>
+          <StyledLink
+            href={organization.organizationRepo.value}
+            target="_blank"
+          >
+            {organization.organizationRepo.value}
+          </StyledLink>
+        </VerifyWrapper>
+        <StyledH3>Organiztion</StyledH3>
+        <VerifyWrapper>
+          <VerifyForm activeUser={activeUser} data={data} />
+        </VerifyWrapper>
+        <StyledCheckboxWithLabel
+          checked={isVerified}
+          label={verifyMessage}
+          onChange={dispatchVerifyInfo}
+        />
         <ButtonGroup>
           <SecondaryButton
-            label="Edit"
-            onClick={() => dispatchIncrementStep({ step: 2, view: 'addIssue' })}
+            label="Edit Issue"
+            onClick={() => dispatchIncrementStep({ step: 3, view: 'addIssue' })}
           />
           <PrimaryAsyncButton
             disabled={!isVerified}
@@ -69,6 +84,7 @@ VerifyIssue.propTypes = {
   dispatchVerifyInfo: T.func,
   handleNav: T.func,
   isVerified: T.bool,
+  organization: T.object,
   requestBody: T.object,
 };
 
@@ -77,6 +93,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   data: makeSelectIssues('data'),
+  organization: makeSelectIssues('organizationData'),
   isVerified: makeSelectIssues('isVerified'),
   requestBody: makeSelectIssuesRequestBody(),
 });

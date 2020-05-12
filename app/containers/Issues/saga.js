@@ -214,18 +214,34 @@ export function* fetchIssuesSaga() {
 }
 
 export function* saveInfoSaga({ payload }) {
+  console.log(payload);
   const {
-    requestBody: { name, fundedAmount, body, repo, language },
+    requestBody: {
+      body,
+      language,
+      name,
+      organizationDescription,
+      organizationId,
+      organizationName,
+      organizationRepo,
+      organizationUrl,
+    },
+    activeUser: { id: userId },
   } = payload;
   const query = `
   mutation{
     createIssue(
       issueInput: {
         body: ${JSON.stringify(body)},
+        contributor: "${userId}",
         language:  ${JSON.stringify(language)},
         name: "${name}",
-        repo: "${repo}",
-        fundedAmount: ${fundedAmount},
+        organizationDescription:  "${organizationDescription}",
+        organizationId:  "${organizationId}",
+        organizationName:  "${organizationName}",
+        organizationRepo:  "${organizationRepo}",
+        organizationUrl:  "${organizationUrl}",
+        repo: "github",
       }
     )
     { id }

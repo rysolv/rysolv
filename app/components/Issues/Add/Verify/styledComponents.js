@@ -71,5 +71,5 @@ export const Divider = styled.div`
 
 export const ValueWrapper = styled.div`
   display: flex;
-  margin: 0.5rem 1rem 4rem 1rem;
+  margin: 0.5rem 1rem 0.5rem 1rem;
 `;

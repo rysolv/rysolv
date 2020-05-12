@@ -8,7 +8,13 @@ import ManualForm from 'components/Issues/Add/ManualForm';
 
 import { incrementStep, inputChange } from '../actions';
 import { makeSelectIssues, makeSelectIssuesDisabled } from '../selectors';
-import { ButtonGroup, StyledH3 } from './styledComponents';
+import {
+  ButtonGroup,
+  StyledLink,
+  SelectedOrganization,
+  StyledH3,
+  VerifyWrapper,
+} from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class ManualIssue extends React.PureComponent {
@@ -18,20 +24,33 @@ export class ManualIssue extends React.PureComponent {
       handleIncrementStep,
       handleInputChange,
       isDisabled,
+      organization,
     } = this.props;
     return (
       <Fragment>
+        <StyledH3>Organization</StyledH3>
+        <VerifyWrapper>
+          <SelectedOrganization>
+            {organization.organizationName.value}
+          </SelectedOrganization>
+          <StyledLink
+            href={organization.organizationRepo.value}
+            target="_blank"
+          >
+            {organization.organizationRepo.value}
+          </StyledLink>
+        </VerifyWrapper>
         <StyledH3>Add Issue</StyledH3>
         <ManualForm data={data} handleInputChange={handleInputChange} />
         <ButtonGroup>
           <SecondaryButton
-            label="Back"
-            onClick={() => handleIncrementStep({ step: 1, view: 'addIssue' })}
+            label="Edit Org"
+            onClick={() => handleIncrementStep({ step: 2, view: 'addIssue' })}
           />
           <PrimaryButton
             disabled={!isDisabled}
-            label="Preview"
-            onClick={() => handleIncrementStep({ step: 3, view: 'addIssue' })}
+            label="Preview Issue"
+            onClick={() => handleIncrementStep({ step: 4, view: 'addIssue' })}
           />
         </ButtonGroup>
       </Fragment>
@@ -42,8 +61,9 @@ export class ManualIssue extends React.PureComponent {
 ManualIssue.propTypes = {
   data: T.object,
   handleIncrementStep: T.func,
-  isDisabled: T.bool,
   handleInputChange: T.func,
+  isDisabled: T.bool,
+  organization: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -51,6 +71,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   data: makeSelectIssues('data'),
+  organization: makeSelectIssues('organizationData'),
   isDisabled: makeSelectIssuesDisabled(),
 });
 
