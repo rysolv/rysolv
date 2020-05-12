@@ -215,7 +215,6 @@ export function* fetchIssuesSaga() {
 }
 
 export function* saveInfoSaga({ payload }) {
-  console.log(payload);
   const {
     requestBody: {
       body,
