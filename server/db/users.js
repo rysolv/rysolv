@@ -17,7 +17,8 @@ const userValues = `
   profile_pic,
   comments,
   attempting,
-  issues_number,
+  issues,
+  organizations,
   username,
   github_link,
   personal_link,
@@ -45,7 +46,8 @@ const userReturnValues = `
   profile_pic AS "profilePic",
   comments,
   attempting,
-  issues_number AS "issuesNumber",
+  issues,
+  organizations,
   username,
   github_link AS "githubLink",
   personal_link AS "personalLink",
@@ -64,7 +66,7 @@ const userReturnValues = `
 const createUser = async data => {
   const queryText = `INSERT INTO
     users( id, created_date, ${userValues} )
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
@@ -77,7 +79,7 @@ const deleteUser = async (table, id, data) => {
     const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE ${table}
       SET ( id, created_date, ${userValues} )
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26)
       WHERE (id = '${id}')
       RETURNING *`;
     await mapValues(queryText, [newObjectArray]);
@@ -119,7 +121,7 @@ const transformUser = async (table, id, data) => {
     const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE ${table}
       SET (${userValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24)
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);

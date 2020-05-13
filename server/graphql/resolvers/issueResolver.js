@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+
 const {
   createIssue,
   createOrganization,
@@ -6,6 +7,7 @@ const {
   getIssues,
   getOneIssue,
   searchIssues,
+  updateUserArray,
   transformIssue,
   updateIssueArray,
   upvoteIssue,
@@ -79,7 +81,22 @@ module.exports = {
     }
     const organizationResult = await createNewOrganization();
     issueInput.organizationId = organizationResult.id;
-    const issueResult = await createNewIssue();
+    const [issueResult] = await createNewIssue();
+    await updateUserArray(
+      'users',
+      'issues',
+      issueInput.contributor,
+      issueResult.id,
+      false,
+    );
+    await updateUserArray(
+      'users',
+      'organizations',
+      issueInput.contributor,
+      issueInput.organizationId,
+      false,
+    );
+
     return issueResult;
   },
   deleteIssue: async args => {

@@ -77,7 +77,7 @@ const issueSeed = [
     '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
     25,
     [],
-    0.0,
+    440.0,
     false,
     'bug',
   ],

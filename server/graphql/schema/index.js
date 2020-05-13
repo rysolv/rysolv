@@ -77,7 +77,8 @@ module.exports = buildSchema(`
     profilePic: String
     comments: [String]
     attempting: [ID]
-    issuesNumber: [String]
+    issues: [String]
+    organizations: [String]
     username: String
     githubLink: String
     personalLink: String
@@ -101,7 +102,8 @@ module.exports = buildSchema(`
     profilePic: String
     comments: [String]
     attempting: [ID]
-    issuesNumber: [String]
+    issues: [String]
+    organizations: [String]
     username: String
     githubLink: String
     personalLink: String
@@ -167,7 +169,7 @@ module.exports = buildSchema(`
   }
 
   type RootMutation {
-    createIssue(issueInput: IssueInput): [Issue!]!
+    createIssue(issueInput: IssueInput): Issue!
     createUser(userInput: UserInput): [User!]!
     createOrganization(organizationInput: OrganizationInput): [Organization!]!
     createComment(commentInput: CommentInput): Comment
