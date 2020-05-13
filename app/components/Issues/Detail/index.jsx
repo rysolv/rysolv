@@ -114,15 +114,19 @@ const IssueDetail = ({
 
             <Divider>Leave a Comment</Divider>
             <NewComment
-              issueId={id}
               activeUser={activeUser}
               handleComment={handleComment}
               handleNav={handleNav}
+              issueId={id}
             />
           </IssueDetailColumn>
         </IssueDetailWrapper>
         <SidebarContainer>
-          <IssueSidebar data={data} activeUser={activeUser} />
+          <IssueSidebar
+            activeUser={activeUser}
+            data={data}
+            handleIncrement={handleIncrement}
+          />
         </SidebarContainer>
       </DetailContainer>
     </Fragment>

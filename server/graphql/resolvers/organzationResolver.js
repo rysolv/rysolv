@@ -23,7 +23,8 @@ module.exports = {
         organizationInput.repoUrl,
         organizationInput.organizationUrl || '',
         organizationInput.issues || [],
-        organizationInput.logo || '',
+        organizationInput.logo ||
+          'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
         organizationInput.verified || false,
         organizationInput.contributors || [],
         organizationInput.ownerId || uuidv4(),

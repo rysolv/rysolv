@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 import {
   darkTextColor,
@@ -7,6 +8,8 @@ import {
   headerFontSize,
   textColor,
 } from 'defaultStyleHelper';
+
+const { tablet } = mediaQueriesByDevice;
 
 export const IssueDetailTopBar = styled.div`
   background-color: white;
@@ -17,8 +20,11 @@ export const IssueDetailTopBar = styled.div`
 
 export const IssueSubHeader = styled.div`
   align-items: center;
-  display: flex;
+  display: none;
   justify-content: space-between;
+  ${tablet} {
+    display: flex;
+  }
 `;
 
 export const IssueSubItem = styled.div`

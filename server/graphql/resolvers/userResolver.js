@@ -42,6 +42,7 @@ module.exports = {
         userInput.dollarsEarned || 0,
         userInput.isOnline || true,
         userInput.rejectedPullRequests,
+        userInput.balance || 0,
       ],
     ];
     try {
@@ -78,6 +79,7 @@ module.exports = {
         dollarsEarned: 0,
         isOnline: false,
         rejectedPullRequests: 0,
+        balance: 0,
       };
       const result = await deleteUser('users', id, data);
       return result;
@@ -132,6 +134,7 @@ module.exports = {
         preferred_languages: userInput.preferredLanguages,
         stackoverflow_link: userInput.stackoverflowLink,
         pull_requests: userInput.pullRequests,
+        balance: userInput.balance,
       };
       const queryResult = await transformUser('users', id, data);
       const result = {
@@ -154,6 +157,7 @@ module.exports = {
         preferredLanguages: userInput.preferred_languages,
         stackoverflowLink: userInput.stackoverflow_link,
         pullRequests: userInput.pull_requests,
+        balance: userInput.balance,
       };
       return result;
     } catch (err) {

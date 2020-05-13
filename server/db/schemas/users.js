@@ -25,7 +25,8 @@ users(
   completed_pull_requests SMALLINT DEFAULT 0,
   dollars_earned FLOAT DEFAULT 0,
   is_online BOOLEAN DEFAULT true,
-  rejected_pull_requests SMALLINT DEFAULT 0
+  rejected_pull_requests SMALLINT DEFAULT 0,
+  balance FLOAT DEFAULT 0
 )`;
 
 module.exports = users;

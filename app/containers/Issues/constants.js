@@ -50,7 +50,7 @@ export const UPVOTE_ISSUE_SUCCESS = 'app/Issues/UPVOTE_ISSUE_SUCCESS';
 export const VERIFY_INFO = 'app/Organizations/VERIFY_INFO';
 
 export const issueDataDictionary = {
-  repo: 'Repository',
+  issueUrl: 'Issue Url',
   external: 'External link',
   body: 'Detailed description of Issue',
   language: 'Languages',

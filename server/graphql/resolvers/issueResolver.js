@@ -58,7 +58,8 @@ module.exports = {
           issueInput.organizationRepo,
           issueInput.organizationUrl || '',
           [newIssueId],
-          issueInput.logo || '',
+          issueInput.logo ||
+            'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
           issueInput.verified || false,
           [issueInput.contributor] || [],
           issueInput.contributor || '',

@@ -44,6 +44,7 @@ export const initialState = {
   data: {
     name: { error: '', value: '' },
     body: { error: '', value: '' },
+    issueUrl: { error: '', value: '' },
     language: { error: '', value: [] },
     importUrl: { error: '', value: '' },
   },

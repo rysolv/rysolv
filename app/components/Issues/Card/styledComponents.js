@@ -62,7 +62,7 @@ export const StyledIssueFooter = styled.div`
   justify-content: ${props => (props.open ? 'space-between' : 'flex-end')};
   font-size: ${detailFontSize};
   color: ${textColor};
-  padding: 0.5rem 3rem 0.25rem 0;
+  padding: 0.5rem 1rem 0.25rem 0;
 `;
 
 export const StyledIssueHeader = styled.div`

@@ -12,15 +12,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import ErrorIcon from '@material-ui/icons/Error';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import WebIcon from '@material-ui/icons/Web';
-
 import { StyledSideNav, StyledListWrapper } from './styledComponents';
 import { excludedPath, getInitialValue } from './helpers';
 
 const backArrow = iconDictionary('backArrowHalf');
 const forwardArrow = iconDictionary('forwardArrowHalf');
+const issueIcon = iconDictionary('issue');
+const organizationIcon = iconDictionary('organization');
+const userIcon = iconDictionary('user');
 
 const drawerWidth = '15%';
 
@@ -141,9 +140,7 @@ const SideNav = ({ handleNav, view }) => {
                 key="Issues"
                 onClick={() => handleClick('/issues', 0)}
               >
-                <ListItemIcon>
-                  <ErrorIcon />
-                </ListItemIcon>
+                <ListItemIcon>{issueIcon}</ListItemIcon>
                 <ListItemText primary="Issues" />
               </ListItem>
             </StyledListWrapper>
@@ -153,9 +150,7 @@ const SideNav = ({ handleNav, view }) => {
                 key="Organizations"
                 onClick={() => handleClick('/organizations', 1)}
               >
-                <ListItemIcon>
-                  <WebIcon />
-                </ListItemIcon>
+                <ListItemIcon>{organizationIcon}</ListItemIcon>
                 <ListItemText primary="Organizations" />
               </ListItem>
             </StyledListWrapper>
@@ -165,9 +160,7 @@ const SideNav = ({ handleNav, view }) => {
                 key="Users"
                 onClick={() => handleClick('/users', 2)}
               >
-                <ListItemIcon>
-                  <AccountCircleIcon />
-                </ListItemIcon>
+                <ListItemIcon>{userIcon}</ListItemIcon>
                 <ListItemText primary="Users" />
               </ListItem>
             </StyledListWrapper>

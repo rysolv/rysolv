@@ -19,13 +19,16 @@ export function* fetchActiveUserSaga({ payload }) {
     query{
       oneUser(column: "id", query: "${userId}") {
         attempting,
+        balance,
         id,
+        issues,
+        organizations,
         profilePic,
+        pullRequests,
         rep,
+        upvotes,
         username,
         watching,
-        pullRequests,
-        upvotes
       }
     }`;
     const graphql = JSON.stringify({
@@ -48,13 +51,16 @@ export function* signinSaga({ payload }) {
     query{
       oneUser(column: "id", query: "${userId}") {
         attempting,
+        balance,
         id,
+        issues,
+        organizations,
         profilePic,
+        pullRequests,
         rep,
+        upvotes,
         username,
         watching,
-        pullRequests,
-        upvotes
       }
     }`;
     const graphql = JSON.stringify({

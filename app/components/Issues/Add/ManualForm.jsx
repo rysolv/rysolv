@@ -9,7 +9,7 @@ import { InputFormWrapper, StyledMarkdownWrapper } from './styledComponents';
 // eslint-disable-next-line arrow-body-style
 const ManualForm = ({ data, handleInputChange }) => {
   // eslint-disable-next-line no-param-reassign
-  const { body, language, name } = data;
+  const { body, issueUrl, language, name } = data;
 
   const handleMarkdownInput = markdown => {
     handleInputChange({
@@ -38,6 +38,20 @@ const ManualForm = ({ data, handleInputChange }) => {
         {issueDataDictionary.body}
         <Markdown edit body={body.value} handleInput={handleMarkdownInput} />
       </StyledMarkdownWrapper>
+
+      <MainTextInput
+        error={!!issueUrl.error}
+        helperText={issueUrl.error}
+        label={issueDataDictionary.issueUrl}
+        onChange={e =>
+          handleInputChange({
+            field: 'issueUrl',
+            form: 'data',
+            value: e.target.value,
+          })
+        }
+        value={issueUrl.value}
+      />
 
       <LanguageAutocomplete
         error={!!language.error}

@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Attempt from '@material-ui/icons/ListAlt';
 import Cancel from '@material-ui/icons/Cancel';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
@@ -13,6 +14,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
+import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
 import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
@@ -25,6 +27,7 @@ import Star from '@material-ui/icons/Star';
 import Upvote from '@material-ui/icons/ArrowUpward';
 import Verified from '@material-ui/icons/VerifiedUser';
 import Warning from '@material-ui/icons/Warning';
+import WebIcon from '@material-ui/icons/Web';
 
 import SiteLogo from './svg/SiteLogo';
 import Stackoverflow from './svg/Stackoverflow';
@@ -52,8 +55,10 @@ export default (name, options) => {
     gift: Gift,
     github: GitHub,
     gitlab: Gitlab,
+    issue: ErrorIcon,
     link: Link,
     monocle: Monocle,
+    organization: WebIcon,
     paypal: Paypal,
     pullRequest: PullRequest,
     search: Search,
@@ -63,6 +68,7 @@ export default (name, options) => {
     star: Star,
     successOutline: CheckCircleOutline,
     upvote: Upvote,
+    user: AccountCircleIcon,
     verified: Verified,
     warning: Warning,
   };
