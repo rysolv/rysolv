@@ -34,7 +34,7 @@ export class ManualIssue extends React.PureComponent {
             {organization.organizationName.value}
           </SelectedOrganization>
           <StyledLink
-            href={organization.organizationRepo.value}
+            href={`//${organization.organizationRepo.value}`}
             target="_blank"
           >
             {organization.organizationRepo.value}

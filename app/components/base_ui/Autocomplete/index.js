@@ -16,12 +16,14 @@ const BaseAutocomplete = ({
   <StyledAutocomplete
     classes={{ focused: 'focused', inputRoot: 'inputRoot' }}
     getOptionLabel={option => option.value}
+    autoComplete="none"
     multiple
     onChange={onChange}
     options={options}
     renderInput={params => (
       <MainTextInput
         error={error}
+        autoComplete={false}
         helperText={helperText}
         label={label}
         {...params}

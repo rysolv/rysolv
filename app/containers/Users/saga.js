@@ -62,7 +62,7 @@ export function* fetchInfoSaga({ payload }) {
         rep,
         profilePic,
         attempting,
-        issuesNumber,
+        issues,
         username,
         githubLink,
         personalLink,
@@ -102,7 +102,7 @@ export function* fetchUsersSaga() {
         rep,
         profilePic,
         attempting,
-        issuesNumber,
+        issues,
         username,
         preferredLanguages
       }
@@ -176,7 +176,7 @@ export function* searchUsersSaga({ payload }) {
       rep,
       profilePic,
       attempting,
-      issuesNumber,
+      issues,
       username,
     }
   }
@@ -200,7 +200,7 @@ export function* updateInfoSaga({ payload }) {
   const {
     attempting,
     firstName,
-    issuesNumber,
+    issues,
     lastName,
     profilePic,
     rep,
@@ -211,7 +211,7 @@ export function* updateInfoSaga({ payload }) {
       transformUser(id: "${itemId}", userInput: {
         attempting: ${JSON.stringify(attempting)},
         firstName: "${firstName}",
-        issuesNumber: ${JSON.stringify(issuesNumber)},
+        issues: ${JSON.stringify(issues)},
         lastName: "${lastName}",
         profilePic: "${profilePic}",
         rep: ${parseInt(rep, 10)},
@@ -224,7 +224,7 @@ export function* updateInfoSaga({ payload }) {
         rep,
         profilePic,
         attempting,
-        issuesNumber,
+        issues,
       }
     }
   `;

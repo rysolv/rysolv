@@ -69,7 +69,7 @@ export const StyledIssueHeader = styled.div`
   width: 100%;
   font-size: ${detailFontSize};
 
-  padding: 0.25rem;
+  padding: 0.25rem 1rem 0 0.25rem;
   display: flex;
   justify-content: space-between;
 `;

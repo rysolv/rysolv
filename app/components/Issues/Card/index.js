@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import moment from 'moment';
 import T from 'prop-types';
 
 import {
@@ -38,18 +39,19 @@ const IssueCard = ({
 }) =>
   data.map(
     ({
-      id,
-      name,
-      organizationName,
-      organizationId,
-      organizationVerified,
-      language,
-      open,
       attempting,
+      comments,
+      createdDate,
+      fundedAmount,
+      id,
+      language,
+      name,
+      open,
+      organizationId,
+      organizationName,
+      organizationVerified,
       rep,
       watching,
-      comments,
-      fundedAmount,
     }) => {
       const userWatching =
         activeUser.watching && activeUser.watching.includes(id);
@@ -88,6 +90,7 @@ const IssueCard = ({
                     ''
                   )}
                 </OrganizationNameWrapper>
+                {moment.utc(createdDate).fromNow()}
               </StyledIssueHeader>
               <StyledIssueText>
                 <NameWrapper

@@ -48,7 +48,7 @@ export const userDataDictionary = {
   stackoverflowLink: 'StackOverflow Link',
   username: 'Username',
   attempting: 'Number of Attempting Issues',
-  issuesNumber: 'Number of Issues',
+  issues: 'Number of Issues',
   name: 'Full Name',
   rep: 'Number of Points',
 };

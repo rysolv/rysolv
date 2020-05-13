@@ -1,6 +1,5 @@
 import React from 'react';
 import T from 'prop-types';
-
 import { MainTextInput } from 'components/base_ui';
 import LanguageAutocomplete from 'components/LanguageAutocomplete';
 import { issueDataDictionary } from 'containers/Issues/constants';
