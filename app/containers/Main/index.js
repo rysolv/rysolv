@@ -30,8 +30,6 @@ export const Main = ({
   match,
 }) => (
   <Fragment>
-    <SideNav handleNav={handleNav} view={deviceView} />
-
     <Header
       activeUser={activeUser}
       handleSignin={handleSignin}
@@ -39,6 +37,8 @@ export const Main = ({
       isSignedIn={isSignedIn}
       view={deviceView}
     />
+    <SideNav handleNav={handleNav} view={deviceView} />
+
     <AppBody>
       <AsyncRender
         asyncData={data}

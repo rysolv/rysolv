@@ -5,6 +5,11 @@ import {
   hoverLinkColor,
 } from 'defaultStyleHelper';
 
+export const BackgroundDiv = styled.div`
+  width: 15%;
+  position: relative;
+`;
+
 export const StyledSideNav = styled.div`
   .MuiDrawer-paper {
     background: transparent;
