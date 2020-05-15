@@ -7,7 +7,12 @@ import { PrimaryButton, SecondaryButton } from 'components/base_ui';
 import OrganizationForm from 'components/Issues/Add/OrganizationForm';
 import ExistingOrganizations from 'components/Issues/Add/ExistingOrganizations';
 
-import { incrementStep, inputChange } from '../actions';
+import {
+  clearOrganization,
+  incrementStep,
+  inputChange,
+  updateOrganization,
+} from '../actions';
 import {
   makeSelectIssues,
   makeSelectOrganizationsDisabled,
@@ -18,15 +23,25 @@ import { ButtonGroup, StyledH3 } from './styledComponents';
 export class ManualOrganization extends React.PureComponent {
   render() {
     const {
-      organization,
+      activeUser,
+      handleClearOrganization,
       handleIncrementStep,
       handleInputChange,
+      handleUpdateOrganization,
       isDisabled,
+      organization,
     } = this.props;
+    const idSelected = organization.organizationId.value !== '';
     return (
       <Fragment>
         <StyledH3>Select an Organization</StyledH3>
-        <ExistingOrganizations />
+        <ExistingOrganizations
+          activeUser={activeUser}
+          organization={organization}
+          handleInputChange={handleInputChange}
+          handleUpdateOrganization={handleUpdateOrganization}
+          handleClearOrganization={handleClearOrganization}
+        />
         <StyledH3>Or create a new Organization</StyledH3>
 
         <OrganizationForm
@@ -39,7 +54,7 @@ export class ManualOrganization extends React.PureComponent {
             onClick={() => handleIncrementStep({ step: 1, view: 'addIssue' })}
           />
           <PrimaryButton
-            disabled={!isDisabled}
+            disabled={!isDisabled && !idSelected}
             label="Next"
             onClick={() => handleIncrementStep({ step: 3, view: 'addIssue' })}
           />
@@ -50,10 +65,13 @@ export class ManualOrganization extends React.PureComponent {
 }
 
 ManualOrganization.propTypes = {
-  organization: T.object,
+  activeUser: T.object,
+  handleClearOrganization: T.func,
   handleIncrementStep: T.func,
-  isDisabled: T.bool,
   handleInputChange: T.func,
+  handleUpdateOrganization: T.func,
+  isDisabled: T.bool,
+  organization: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -69,8 +87,10 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    handleClearOrganization: payload => dispatch(clearOrganization(payload)),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
+    handleUpdateOrganization: payload => dispatch(updateOrganization(payload)),
   };
 }
 

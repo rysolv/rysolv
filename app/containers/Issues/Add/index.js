@@ -12,6 +12,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
 import { makeSelectOrganizations } from 'containers/Organizations/selectors';
+import { searchOrganizations } from 'containers/Auth/actions';
 import { incrementStep, clearForm } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
@@ -28,7 +29,13 @@ export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
     document.title = 'Add Issue';
-    const { handleIncrementStep } = this.props;
+    const {
+      activeUser,
+      handleIncrementStep,
+      handleSearchOrganizations,
+    } = this.props;
+    const { id } = activeUser;
+    handleSearchOrganizations({ id });
     handleIncrementStep({ step: 1, view: 'addIssue' });
   }
 
@@ -55,7 +62,10 @@ export class IssuesAdd extends React.PureComponent {
             asyncData={{ data, organization }}
             component={StepToRender}
             loading={loading}
-            propsToPassDown={{ activeUser, handleNav }}
+            propsToPassDown={{
+              activeUser,
+              handleNav,
+            }}
           />
         </AddForm>
       </AddWrapper>
@@ -69,6 +79,7 @@ IssuesAdd.propTypes = {
   dispatchClearForm: T.func,
   handleIncrementStep: T.func,
   handleNav: T.func,
+  handleSearchOrganizations: T.func,
   loading: T.bool.isRequired,
   organization: T.object,
   step: T.number.isRequired,
@@ -93,6 +104,8 @@ function mapDispatchToProps(dispatch) {
     dispatchClearForm: () => dispatch(clearForm()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleNav: route => dispatch(push(route)),
+    handleSearchOrganizations: payload =>
+      dispatch(searchOrganizations(payload)),
   };
 }
 

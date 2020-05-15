@@ -4,6 +4,7 @@ const {
   createUser,
   deleteUser,
   getOneUser,
+  getOrganizationsWhere,
   getUsers,
   searchUsers,
   transformUser,
@@ -90,6 +91,19 @@ module.exports = {
   getUsers: async () => {
     try {
       const result = await getUsers('users');
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  },
+  getUserOrganizations: async args => {
+    const { id } = args;
+    try {
+      const result = await getOrganizationsWhere(
+        'organizations',
+        'owner_id',
+        id,
+      );
       return result;
     } catch (err) {
       throw err;

@@ -26,8 +26,10 @@ const {
   deleteOrganization,
   getOneOrganization,
   getOrganizations,
+  getOrganizationsWhere,
   searchOrganizations,
   transformOrganization,
+  updateOrganizationArray,
 } = require('./organizations');
 const { createTables, dropAllTables, printTables } = require('./tables');
 
@@ -49,6 +51,7 @@ module.exports = {
   getOneOrganization,
   getOneUser,
   getOrganizations,
+  getOrganizationsWhere,
   getUsers,
   printTables,
   searchIssues,
@@ -58,6 +61,7 @@ module.exports = {
   transformOrganization,
   transformUser,
   updateIssueArray,
+  updateOrganizationArray,
   updateUserArray,
   upvoteIssue,
   userUpvote,

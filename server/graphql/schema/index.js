@@ -160,6 +160,7 @@ module.exports = buildSchema(`
     getUsers: [User!]!
 
     getIssueComments(id: ID!): [Comment]
+    getUserOrganizations(id: ID!): [Organization!]
 
     oneIssue(id: ID!): IssueResult
     oneOrganization(id: ID!): OrganizationResult

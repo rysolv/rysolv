@@ -15,6 +15,7 @@ import {
   CHANGE_ISSUE_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
+  CLEAR_ORGANIZATION,
   DELETE_ISSUE_FAILURE,
   DELETE_ISSUE_SUCCESS,
   DELETE_ISSUE,
@@ -33,6 +34,7 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
+  UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE,
@@ -186,6 +188,10 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.isVerified = initialState.isVerified;
       break;
     }
+    case CLEAR_ORGANIZATION: {
+      draft.organizationData = initialState.organizationData;
+      break;
+    }
     case DELETE_ISSUE_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
@@ -289,6 +295,10 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case SEARCH_ISSUES: {
       draft.loading.searchIssues = true;
+      break;
+    }
+    case UPDATE_ORGANIZATION: {
+      draft.organizationData = payload;
       break;
     }
     case UPVOTE_ISSUE: {

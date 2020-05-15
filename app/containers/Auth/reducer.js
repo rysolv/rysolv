@@ -4,6 +4,9 @@ import {
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
   FETCH_ACTIVE_USER,
+  SEARCH_ORGANIZATIONS_FAILURE,
+  SEARCH_ORGANIZATIONS_SUCCESS,
+  SEARCH_ORGANIZATIONS,
   SIGNIN_FAILURE,
   SIGNIN_SUCCESS,
   SIGNIN,
@@ -38,6 +41,22 @@ const authReducer = produce((draft, { payload, type }) => {
       const { oneUser } = payload;
       draft.activeUser = oneUser;
       draft.isSignedIn = true;
+      draft.loading = false;
+      break;
+    }
+    case SEARCH_ORGANIZATIONS: {
+      draft.loading = true;
+      break;
+    }
+    case SEARCH_ORGANIZATIONS_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case SEARCH_ORGANIZATIONS_SUCCESS: {
+      const { organizations } = payload;
+      draft.activeUser.organizations = organizations;
       draft.loading = false;
       break;
     }

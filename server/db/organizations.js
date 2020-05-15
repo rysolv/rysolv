@@ -73,6 +73,13 @@ const getOrganizations = async table => {
   return rows;
 };
 
+// GET all organizations
+const getOrganizationsWhere = async (table, column, value) => {
+  const queryText = `SELECT ${organizationReturnValues} FROM ${table} WHERE (${column}='${value}');`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
 // SEARCH organizations
 const searchOrganizations = async (table, value) => {
   const fields = ['name'];
@@ -98,11 +105,24 @@ const transformOrganization = async (table, id, data) => {
   throw new Error(`Failed to update. ID not found in ${table}`);
 };
 
+// ADD TO ARRAY
+const updateOrganizationArray = async (table, column, id, data, remove) => {
+  const action = remove ? 'array_remove' : 'array_append';
+  const queryText = `UPDATE ${table}
+    SET ${column} = ${action}(${column}, '${data}')
+    WHERE (id = '${id}')
+    RETURNING *`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
 module.exports = {
   createOrganization,
   deleteOrganization,
   getOneOrganization,
   getOrganizations,
+  getOrganizationsWhere,
   searchOrganizations,
   transformOrganization,
+  updateOrganizationArray,
 };

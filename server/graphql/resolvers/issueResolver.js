@@ -7,9 +7,10 @@ const {
   getIssues,
   getOneIssue,
   searchIssues,
-  updateUserArray,
   transformIssue,
   updateIssueArray,
+  updateOrganizationArray,
+  updateUserArray,
   upvoteIssue,
 } = require('../../db');
 
@@ -57,7 +58,7 @@ module.exports = {
           issueInput.organizationDescription,
           issueInput.organizationRepo,
           issueInput.organizationUrl || '',
-          [newIssueId],
+          issueInput.organizationIssues || [],
           issueInput.logo ||
             'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
           issueInput.verified || false,
@@ -75,14 +76,21 @@ module.exports = {
       }
     };
 
-    if (args.organizationId) {
-      const result = await createNewIssue();
-      // todo: add issue to org
-      return result;
+    if (!issueInput.organizationId) {
+      const organizationResult = await createNewOrganization();
+      issueInput.organizationId = organizationResult.id;
     }
-    const organizationResult = await createNewOrganization();
-    issueInput.organizationId = organizationResult.id;
+
     const [issueResult] = await createNewIssue();
+
+    await updateOrganizationArray(
+      'organizations',
+      'issues',
+      issueInput.organizationId,
+      newIssueId,
+      false,
+    );
+
     await updateUserArray(
       'users',
       'issues',
