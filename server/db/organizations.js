@@ -33,7 +33,18 @@ const organizationReturnValues = `
   preferred_languages AS "preferredLanguages"
 `;
 
-// Create new Issue
+// Check duplicate organization
+const checkDuplicateOrganization = async (table, repo) => {
+  const queryText = `
+    SELECT id FROM ${table} WHERE (repo_url='${repo}')
+  `;
+  const { rows } = await singleQuery(queryText);
+  if (rows.length > 0) {
+    throw new Error(`Error: Organization at ${repo} already exists`);
+  }
+};
+
+// Create new organization
 const createOrganization = async data => {
   const queryText = `INSERT INTO
     organizations(id, created_date, ${organizationValues})
@@ -117,6 +128,7 @@ const updateOrganizationArray = async (table, column, id, data, remove) => {
 };
 
 module.exports = {
+  checkDuplicateOrganization,
   createOrganization,
   deleteOrganization,
   getOneOrganization,

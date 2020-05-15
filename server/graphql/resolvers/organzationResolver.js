@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const {
+  checkDuplicateOrganization,
   createOrganization,
   deleteOrganization,
   getOneIssue,
@@ -13,6 +14,8 @@ const {
 module.exports = {
   createOrganization: async args => {
     const { organizationInput } = args;
+    await checkDuplicateOrganization('issues', organizationInput.repoUrl);
+
     const organization = [
       [
         uuidv4(),

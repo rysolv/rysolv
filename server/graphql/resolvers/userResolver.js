@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 
 const {
+  checkDuplicateUser,
   createUser,
   deleteUser,
   getOneUser,
@@ -15,6 +16,7 @@ const {
 module.exports = {
   createUser: async args => {
     const { userInput } = args;
+    await checkDuplicateUser('users', userInput.email);
     const issue = [
       [
         uuidv4(),

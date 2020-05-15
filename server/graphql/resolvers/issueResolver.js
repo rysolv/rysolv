@@ -1,6 +1,8 @@
 const { v4: uuidv4 } = require('uuid');
 
 const {
+  checkDuplicateIssue,
+  checkDuplicateOrganization,
   createIssue,
   createOrganization,
   deleteIssue,
@@ -18,6 +20,9 @@ module.exports = {
   createIssue: async args => {
     const { issueInput } = args;
     const newIssueId = uuidv4();
+
+    // Check for duplicate issue
+    await checkDuplicateIssue('issues', issueInput.repo);
 
     const createNewIssue = async () => {
       const issue = [
@@ -49,6 +54,11 @@ module.exports = {
     };
 
     const createNewOrganization = async () => {
+      // Check for duplicate organization
+      await checkDuplicateOrganization(
+        'organizations',
+        issueInput.organizationRepo,
+      );
       const organization = [
         [
           uuidv4(),

@@ -64,6 +64,17 @@ const userReturnValues = `
   balance
 `;
 
+// Check duplicate user
+const checkDuplicateUser = async (table, repo) => {
+  const queryText = `
+    SELECT id FROM ${table} WHERE (email='${repo}')
+  `;
+  const { rows } = await singleQuery(queryText);
+  if (rows.length > 0) {
+    throw new Error(`Error: User at ${repo} already exists`);
+  }
+};
+
 // Create new User
 const createUser = async data => {
   const queryText = `INSERT INTO
@@ -152,6 +163,7 @@ const userUpvote = async (table, id) => {
 };
 
 module.exports = {
+  checkDuplicateUser,
   createUser,
   deleteUser,
   getOneUser,
