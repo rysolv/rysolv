@@ -1,5 +1,6 @@
 // const pool = require('./connect');
 const {
+  checkDuplicateIssue,
   createIssue,
   deleteIssue,
   getIssues,
@@ -10,6 +11,7 @@ const {
   upvoteIssue,
 } = require('./issues');
 const {
+  checkDuplicateUser,
   createUser,
   deleteUser,
   getOneUser,
@@ -22,16 +24,22 @@ const {
 const { createComment, getComments, getIssueComments } = require('./comments');
 const { createPullRequest } = require('./pullRequests');
 const {
+  checkDuplicateOrganization,
   createOrganization,
   deleteOrganization,
   getOneOrganization,
   getOrganizations,
+  getOrganizationsWhere,
   searchOrganizations,
   transformOrganization,
+  updateOrganizationArray,
 } = require('./organizations');
 const { createTables, dropAllTables, printTables } = require('./tables');
 
 module.exports = {
+  checkDuplicateIssue,
+  checkDuplicateOrganization,
+  checkDuplicateUser,
   createComment,
   createIssue,
   createOrganization,
@@ -49,6 +57,7 @@ module.exports = {
   getOneOrganization,
   getOneUser,
   getOrganizations,
+  getOrganizationsWhere,
   getUsers,
   printTables,
   searchIssues,
@@ -58,6 +67,7 @@ module.exports = {
   transformOrganization,
   transformUser,
   updateIssueArray,
+  updateOrganizationArray,
   updateUserArray,
   upvoteIssue,
   userUpvote,

@@ -13,7 +13,7 @@ const EditExistingForm = ({ editInfo, handleInputChange }) => {
     <InputFormWrapper>
       {Object.keys(tempEditInfo).map(info => {
         const isDisabled =
-          info === 'attempting' || info === 'issuesNumber' || info === 'rep';
+          info === 'attempting' || info === 'issues' || info === 'rep';
         return (
           <MainTextInput
             key={`input-${info}`}

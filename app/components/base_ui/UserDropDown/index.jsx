@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import T from 'prop-types';
+import { formatDollarAmount } from 'utils/globalHelpers';
 
 import iconDictionary from 'utils/iconDictionary';
 
@@ -21,6 +22,8 @@ import { MonocleIcon } from '../Icons';
 const AttemptIcon = iconDictionary('attempt');
 const ExitIcon = iconDictionary('exit');
 const FundedIcon = iconDictionary('funded');
+const IssueIcon = iconDictionary('issue');
+const OrganizationIcon = iconDictionary('organization');
 const PullRequestIcon = iconDictionary('pullRequest');
 const SettingsIcon = iconDictionary('settings');
 
@@ -48,7 +51,10 @@ const UserDropDownMenu = ({
 }) => {
   const {
     attempting,
+    balance,
     id,
+    issues,
+    organizations,
     profilePic,
     pullRequests,
     username,
@@ -78,7 +84,7 @@ const UserDropDownMenu = ({
             Balance:
           </MenuItemLabel>
           <MenuItemValue>
-            <FundingWrapper open value="$0.00" />
+            <FundingWrapper open value={formatDollarAmount(balance)} />
           </MenuItemValue>
         </StyledMenuItem>
 
@@ -107,6 +113,24 @@ const UserDropDownMenu = ({
           </MenuItemLabel>
           <MenuItemValue>
             {pullRequests ? pullRequests.length : 0}
+          </MenuItemValue>
+        </StyledMenuItem>
+
+        <StyledMenuItem>
+          <MenuItemLabel>
+            <IconWrapper>{IssueIcon}</IconWrapper>
+            Issues
+          </MenuItemLabel>
+          <MenuItemValue>{issues ? issues.length : 0}</MenuItemValue>
+        </StyledMenuItem>
+
+        <StyledMenuItem>
+          <MenuItemLabel>
+            <IconWrapper>{OrganizationIcon}</IconWrapper>
+            Organizations
+          </MenuItemLabel>
+          <MenuItemValue>
+            {organizations ? organizations.length : 0}
           </MenuItemValue>
         </StyledMenuItem>
       </StyledMenuContainer>

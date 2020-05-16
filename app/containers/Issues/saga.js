@@ -225,6 +225,7 @@ export function* saveInfoSaga({ payload }) {
       organizationName,
       organizationRepo,
       organizationUrl,
+      issueUrl,
     },
     activeUser: { id: userId },
   } = payload;
@@ -241,7 +242,7 @@ export function* saveInfoSaga({ payload }) {
         organizationName:  "${organizationName}",
         organizationRepo:  "${organizationRepo}",
         organizationUrl:  "${organizationUrl}",
-        repo: "github",
+        repo: "${issueUrl}",
       }
     )
     { id }

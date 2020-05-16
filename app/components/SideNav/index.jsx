@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import T from 'prop-types';
 import iconDictionary from 'utils/iconDictionary';
 import { ConditionalRender } from 'components/base_ui';
@@ -12,15 +12,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import ErrorIcon from '@material-ui/icons/Error';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import WebIcon from '@material-ui/icons/Web';
-
-import { StyledSideNav, StyledListWrapper } from './styledComponents';
+import {
+  BackgroundDiv,
+  StyledSideNav,
+  StyledListWrapper,
+} from './styledComponents';
 import { excludedPath, getInitialValue } from './helpers';
 
 const backArrow = iconDictionary('backArrowHalf');
 const forwardArrow = iconDictionary('forwardArrowHalf');
+const issueIcon = iconDictionary('issue');
+const organizationIcon = iconDictionary('organization');
+const userIcon = iconDictionary('user');
 
 const drawerWidth = '15%';
 
@@ -74,13 +77,10 @@ const useStyles = makeStyles(theme => ({
 const SideNav = ({ handleNav, view }) => {
   const path = window.location.pathname;
   const formattedPath = path.replace(/^\/+/, '');
-  const { initialValue } = getInitialValue[formattedPath]
-    ? getInitialValue[formattedPath]
-    : 0;
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const [currentValue, setCurrentValue] = React.useState(initialValue);
+  const [currentValue, setCurrentValue] = React.useState(0);
   const [displaySideNav, setDisplaySideNav] = React.useState(
     !excludedPath.includes(formattedPath),
   );
@@ -94,6 +94,10 @@ const SideNav = ({ handleNav, view }) => {
   };
 
   useEffect(() => {
+    const { initialValue } = getInitialValue[formattedPath]
+      ? getInitialValue[formattedPath]
+      : 0;
+    setCurrentValue(initialValue);
     switch (view) {
       case 'desktop':
         setDisplaySideNav(!excludedPath.includes(formattedPath));
@@ -115,74 +119,71 @@ const SideNav = ({ handleNav, view }) => {
       default:
         break;
     }
-  }, [view]);
+  }, [view, path]);
 
   const SideNavComponent = (
-    <StyledSideNav>
-      <div className={classes.root}>
-        <Drawer
-          variant="permanent"
-          className={clsx(classes.drawer, {
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          })}
-          classes={{
-            paper: clsx({
+    <Fragment>
+      <BackgroundDiv />
+      <StyledSideNav>
+        <div className={classes.root}>
+          <Drawer
+            variant="permanent"
+            className={clsx(classes.drawer, {
               [classes.drawerOpen]: open,
               [classes.drawerClose]: !open,
-            }),
-          }}
-        >
-          <Divider />
-          <List>
-            <StyledListWrapper active={currentValue === 0}>
-              <ListItem
-                button
-                key="Issues"
-                onClick={() => handleClick('/issues', 0)}
-              >
-                <ListItemIcon>
-                  <ErrorIcon />
-                </ListItemIcon>
-                <ListItemText primary="Issues" />
-              </ListItem>
-            </StyledListWrapper>
-            <StyledListWrapper active={currentValue === 1}>
-              <ListItem
-                button
-                key="Organizations"
-                onClick={() => handleClick('/organizations', 1)}
-              >
-                <ListItemIcon>
-                  <WebIcon />
-                </ListItemIcon>
-                <ListItemText primary="Organizations" />
-              </ListItem>
-            </StyledListWrapper>
-            <StyledListWrapper active={currentValue === 2}>
-              <ListItem
-                button
-                key="Users"
-                onClick={() => handleClick('/users', 2)}
-              >
-                <ListItemIcon>
-                  <AccountCircleIcon />
-                </ListItemIcon>
-                <ListItemText primary="Users" />
-              </ListItem>
-            </StyledListWrapper>
-          </List>
-          <Divider />
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() => toggleDrawer()}
+            })}
+            classes={{
+              paper: clsx({
+                [classes.drawerOpen]: open,
+                [classes.drawerClose]: !open,
+              }),
+            }}
           >
-            {open ? backArrow : forwardArrow}
-          </IconButton>
-        </Drawer>
-      </div>
-    </StyledSideNav>
+            <Divider />
+            <List>
+              <StyledListWrapper active={currentValue === 0}>
+                <ListItem
+                  button
+                  key="Issues"
+                  onClick={() => handleClick('/issues', 0)}
+                >
+                  <ListItemIcon>{issueIcon}</ListItemIcon>
+                  <ListItemText primary="Issues" />
+                </ListItem>
+              </StyledListWrapper>
+              <StyledListWrapper active={currentValue === 1}>
+                <ListItem
+                  button
+                  key="Organizations"
+                  onClick={() => handleClick('/organizations', 1)}
+                >
+                  <ListItemIcon>{organizationIcon}</ListItemIcon>
+                  <ListItemText primary="Organizations" />
+                </ListItem>
+              </StyledListWrapper>
+              <StyledListWrapper active={currentValue === 2}>
+                <ListItem
+                  button
+                  key="Users"
+                  onClick={() => handleClick('/users', 2)}
+                >
+                  <ListItemIcon>{userIcon}</ListItemIcon>
+                  <ListItemText primary="Users" />
+                </ListItem>
+              </StyledListWrapper>
+            </List>
+            <Divider />
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={() => toggleDrawer()}
+            >
+              {open ? backArrow : forwardArrow}
+            </IconButton>
+          </Drawer>
+        </div>
+      </StyledSideNav>
+    </Fragment>
   );
 
   return (

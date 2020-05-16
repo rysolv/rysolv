@@ -39,19 +39,19 @@ export class VerifyIssue extends React.PureComponent {
     };
     return (
       <Fragment>
-        <StyledH3>Organiztion</StyledH3>
+        <StyledH3>Organization</StyledH3>
         <VerifyWrapper>
           <SelectedOrganization>
             {organization.organizationName.value}
           </SelectedOrganization>
           <StyledLink
-            href={organization.organizationRepo.value}
+            href={`//${organization.organizationRepo.value}`}
             target="_blank"
           >
             {organization.organizationRepo.value}
           </StyledLink>
         </VerifyWrapper>
-        <StyledH3>Organiztion</StyledH3>
+        <StyledH3>Issue</StyledH3>
         <VerifyWrapper>
           <VerifyForm activeUser={activeUser} data={data} />
         </VerifyWrapper>

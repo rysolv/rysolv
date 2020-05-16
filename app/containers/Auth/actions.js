@@ -2,6 +2,9 @@ import {
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
   FETCH_ACTIVE_USER,
+  SEARCH_ORGANIZATIONS_FAILURE,
+  SEARCH_ORGANIZATIONS_SUCCESS,
+  SEARCH_ORGANIZATIONS,
   SIGNIN_FAILURE,
   SIGNIN_SUCCESS,
   SIGNIN,
@@ -29,6 +32,27 @@ export function fetchActiveUser(payload) {
   return {
     payload,
     type: FETCH_ACTIVE_USER,
+  };
+}
+
+export function searchOrganizationsFailure(payload) {
+  return {
+    payload,
+    type: SEARCH_ORGANIZATIONS_FAILURE,
+  };
+}
+
+export function searchOrganizationsSuccess(payload) {
+  return {
+    payload,
+    type: SEARCH_ORGANIZATIONS_SUCCESS,
+  };
+}
+
+export function searchOrganizations(payload) {
+  return {
+    payload,
+    type: SEARCH_ORGANIZATIONS,
   };
 }
 

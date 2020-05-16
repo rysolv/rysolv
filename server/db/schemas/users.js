@@ -11,7 +11,8 @@ users(
   profile_pic VARCHAR(255),
   comments UUID [],
   attempting UUID [],
-  issues_number UUID [],
+  issues UUID [],
+  organizations UUID [],
   username VARCHAR(40),
   github_link VARCHAR(128),
   personal_link VARCHAR(128),
@@ -24,7 +25,8 @@ users(
   completed_pull_requests SMALLINT DEFAULT 0,
   dollars_earned FLOAT DEFAULT 0,
   is_online BOOLEAN DEFAULT true,
-  rejected_pull_requests SMALLINT DEFAULT 0
+  rejected_pull_requests SMALLINT DEFAULT 0,
+  balance FLOAT DEFAULT 0
 )`;
 
 module.exports = users;

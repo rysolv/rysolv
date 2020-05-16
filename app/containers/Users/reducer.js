@@ -47,7 +47,7 @@ export const initialState = {
     createdDate: { error: '', value: '' },
     firstName: { error: '', value: '' },
     id: { error: '', value: '' },
-    issuesNumber: { error: '', value: [] },
+    issues: { error: '', value: [] },
     lastName: { error: '', value: '' },
     profilePic: { error: '', value: '' },
     rep: { error: '', value: '' },

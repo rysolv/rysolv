@@ -11,7 +11,8 @@ const userSeed = [
     'https://rysolv.s3.us-east-2.amazonaws.com/tylerprofile.png', // profile_pic
     [], // comments
     [], // attempting
-    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues_number
+    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues
+    [], // organizations
     'norris23', // username
     'https://github.com/tylermaran', // github_link
     'https://www.tylermaran.com/', // personal_link
@@ -25,6 +26,7 @@ const userSeed = [
     93, // dollars_earned
     true, // is_online
     2, // rejected_pull_requests
+    3.5, // Balance
   ],
   [
     'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
@@ -38,7 +40,8 @@ const userSeed = [
     'https://rysolv.s3.us-east-2.amazonaws.com/annaprofile.png',
     [], // comments
     [], // attempting
-    ['d7985d02-382f-424b-9507-78efcb993d88'], // issues_number
+    ['d7985d02-382f-424b-9507-78efcb993d88'], // issues
+    [], // organizations
     'annapo', // username
     'https://github.com/annapo23', // github_link
     'https://www.annapojawis.com/', // personal_link
@@ -52,6 +55,7 @@ const userSeed = [
     93, // dollars_earned
     true, // is_online
     2, // rejected_pull_requests
+    85.0, // Balance
   ],
   [
     'c2209ded-9219-4ee3-9c29-f863889053c0',
@@ -65,7 +69,8 @@ const userSeed = [
     'https://rysolv.s3.us-east-2.amazonaws.com/paulprofile.png',
     [], // comments
     [], // attempting
-    ['04790329-9fa7-438c-8627-4d400822f673'], // issues_number
+    ['04790329-9fa7-438c-8627-4d400822f673'], // issues
+    [], // organizations
     'paulhouse45', // username
     'https://github.com/paulhouse', // github_link
     'https://www.paulhouz.com/', // personal_link
@@ -79,6 +84,7 @@ const userSeed = [
     3984, // dollars_earned
     true, // is_online
     2, // rejected_pull_requests
+    0.0, // Balance
   ],
   [
     'cdd583cf-4711-4f33-a202-c937081afd7e',
@@ -95,7 +101,8 @@ const userSeed = [
     [
       '04790329-9fa7-438c-8627-4d400822f673',
       '04790329-9fa7-438c-8627-4d400822f673',
-    ], // issues_number
+    ], // issues
+    [], // organizations
     'jquerie', // username
     'https://github.com/jquerie', // github_link
     'https://www.jquerie.com/', // personal_link
@@ -109,6 +116,7 @@ const userSeed = [
     93, // dollars_earned
     true, // is_online
     2, // rejected_pull_requests
+    1.11, // Balance
   ],
   [
     '3f6e3ddf-ab68-4ee3-bb79-abfe21c8d014', // id
@@ -122,7 +130,8 @@ const userSeed = [
     'https://cdn0.iconfinder.com/data/icons/web-service-and-development/512/key_protection_lock_security_access_forbidden_safe_secure_private_red_alert_password_protect_admin_safety_unlock_system_flat_design_icon-512.png', // profile_pic
     [], // comments
     [], // attempting
-    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues_number
+    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues
+    [], // organizations
     'ADMIN', // username
     'https://github.com/tylermaran', // github_link
     'https://www.tylermaran.com/', // personal_link
@@ -136,6 +145,7 @@ const userSeed = [
     93, // dollars_earned
     true, // is_online
     2, // rejected_pull_requests
+    5.0, // Balance
   ],
 ];
 

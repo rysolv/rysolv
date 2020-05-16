@@ -26,15 +26,7 @@ const UserCard = ({ data, handleNav }) => (
   <OverviewWrapper>
     {data.map(
       (
-        {
-          attempting,
-          createdDate,
-          id,
-          issuesNumber,
-          name,
-          pointsNumber,
-          profilePic,
-        },
+        { attempting, createdDate, id, issues, name, pointsNumber, profilePic },
         index,
       ) => (
         <StyledListSquare key={`${name}-${index}`}>
@@ -70,7 +62,7 @@ const UserCard = ({ data, handleNav }) => (
               </ImageContainer>
             </ContentWrapper>
             <IssuesWrapper>
-              <IssuesContainer>{issuesNumber.length} Issues</IssuesContainer>
+              <IssuesContainer>{issues.length} Issues</IssuesContainer>
               <ActiveContainer>{attempting.length} Attempting</ActiveContainer>
             </IssuesWrapper>
           </StyledSquare>

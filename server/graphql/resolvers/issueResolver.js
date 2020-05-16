@@ -1,5 +1,8 @@
 const { v4: uuidv4 } = require('uuid');
+
 const {
+  checkDuplicateIssue,
+  checkDuplicateOrganization,
   createIssue,
   createOrganization,
   deleteIssue,
@@ -8,6 +11,8 @@ const {
   searchIssues,
   transformIssue,
   updateIssueArray,
+  updateOrganizationArray,
+  updateUserArray,
   upvoteIssue,
 } = require('../../db');
 
@@ -15,6 +20,9 @@ module.exports = {
   createIssue: async args => {
     const { issueInput } = args;
     const newIssueId = uuidv4();
+
+    // Check for duplicate issue
+    await checkDuplicateIssue('issues', issueInput.repo);
 
     const createNewIssue = async () => {
       const issue = [
@@ -46,6 +54,11 @@ module.exports = {
     };
 
     const createNewOrganization = async () => {
+      // Check for duplicate organization
+      await checkDuplicateOrganization(
+        'organizations',
+        issueInput.organizationRepo,
+      );
       const organization = [
         [
           uuidv4(),
@@ -55,8 +68,9 @@ module.exports = {
           issueInput.organizationDescription,
           issueInput.organizationRepo,
           issueInput.organizationUrl || '',
-          [newIssueId],
-          issueInput.logo || '',
+          issueInput.organizationIssues || [],
+          issueInput.logo ||
+            'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
           issueInput.verified || false,
           [issueInput.contributor] || [],
           issueInput.contributor || '',
@@ -72,14 +86,36 @@ module.exports = {
       }
     };
 
-    if (args.organizationId) {
-      const result = await createNewIssue();
-      // todo: add issue to org
-      return result;
+    if (!issueInput.organizationId) {
+      const organizationResult = await createNewOrganization();
+      issueInput.organizationId = organizationResult.id;
     }
-    const organizationResult = await createNewOrganization();
-    issueInput.organizationId = organizationResult.id;
-    const issueResult = await createNewIssue();
+
+    const [issueResult] = await createNewIssue();
+
+    await updateOrganizationArray(
+      'organizations',
+      'issues',
+      issueInput.organizationId,
+      newIssueId,
+      false,
+    );
+
+    await updateUserArray(
+      'users',
+      'issues',
+      issueInput.contributor,
+      issueResult.id,
+      false,
+    );
+    await updateUserArray(
+      'users',
+      'organizations',
+      issueInput.contributor,
+      issueInput.organizationId,
+      false,
+    );
+
     return issueResult;
   },
   deleteIssue: async args => {

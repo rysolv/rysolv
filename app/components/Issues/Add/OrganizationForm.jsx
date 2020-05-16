@@ -7,17 +7,21 @@ import { organizationDataDictionary } from 'containers/Organizations/constants';
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 
 // eslint-disable-next-line arrow-body-style
-const OrganizationForm = ({ organization, handleInputChange }) => {
+const OrganizationForm = ({ handleInputChange, organization }) => {
   // eslint-disable-next-line no-param-reassign
   const {
-    organizationUrl,
     organizationDescription,
+    organizationId,
     organizationName,
     organizationRepo,
+    organizationUrl,
   } = organization;
+  const idSelected = organizationId.value !== '';
+
   return (
     <InputFormWrapper>
       <MainTextInput
+        disabled={idSelected}
         error={!!organizationName.error}
         helperText={organizationName.error}
         label={organizationDataDictionary.name}
@@ -31,6 +35,7 @@ const OrganizationForm = ({ organization, handleInputChange }) => {
         value={organizationName.value}
       />
       <MainTextInput
+        disabled={idSelected}
         error={!!organizationDescription.error}
         helperText={organizationDescription.error}
         label={organizationDataDictionary.description}
@@ -45,6 +50,7 @@ const OrganizationForm = ({ organization, handleInputChange }) => {
       />
       <HorizontalWrapper>
         <MainTextInput
+          disabled={idSelected}
           error={!!organizationUrl.error}
           helperText={organizationUrl.error}
           label={organizationDataDictionary.organizationUrl}
@@ -58,6 +64,7 @@ const OrganizationForm = ({ organization, handleInputChange }) => {
           value={organizationUrl.value}
         />
         <MainTextInput
+          disabled={idSelected}
           error={!!organizationRepo.error}
           helperText={organizationRepo.error}
           label={organizationDataDictionary.repoUrl}

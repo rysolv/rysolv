@@ -4,14 +4,14 @@ module.exports = buildSchema(`
   scalar Object
 
   type Comment {
+    body: String
     commentId: ID
     createdDate: Object
     modifiedDate: Object
+    profilePic: String
     target: String
-    body: String
     userId: ID
     username: String
-    profilePic: String
   }
 
   input CommentInput {
@@ -21,16 +21,17 @@ module.exports = buildSchema(`
   }
 
   type Issue {
-    id: ID!
-    createdDate: Object
-    modifiedDate: Object
     activeAttempts: Int
     attempting: [ID]
     attempts: Int
     body: String
     comments: [ID]
     contributor: [String]
+    createdDate: Object
+    fundedAmount: Float
+    id: ID!
     language: [String]
+    modifiedDate: Object
     name: String
     open: Boolean
     organizationId: String
@@ -39,11 +40,10 @@ module.exports = buildSchema(`
     profilePic: String
     rep: Int
     repo: String
+    type: String
     userId: ID
     username: String
-    fundedAmount: Float
     watching: [String]
-    type: String
   }
 
   input IssueInput {
@@ -66,79 +66,83 @@ module.exports = buildSchema(`
   }
 
   type User {
-    id: ID!
-    createdDate: Object
-    modifiedDate: Object
-    firstName: String!
-    lastName: String!
-    email: String!
-    watching: [String]
-    rep: Int
-    profilePic: String
-    comments: [String]
+    activePullRequests: Int
     attempting: [ID]
-    issuesNumber: [String]
-    username: String
+    balance: Float
+    comments: [String]
+    completedPullRequests: Int
+    createdDate: Object
+    dollarsEarned: Int
+    email: String!
+    firstName: String!
     githubLink: String
+    id: ID!
+    isOnline: Boolean
+    issues: [String]
+    lastName: String!
+    modifiedDate: Object
+    organizations: [String]
     personalLink: String
     preferredLanguages: [String]
-    stackoverflowLink: String
+    profilePic: String
     pullRequests: [String]
-    upvotes: [ID]
-    activePullRequests: Int
-    completedPullRequests: Int
-    dollarsEarned: Int
-    isOnline: Boolean
     rejectedPullRequests: Int
+    rep: Int
+    stackoverflowLink: String
+    upvotes: [ID]
+    username: String
+    watching: [String]
   }
 
   input UserInput {
-    firstName: String
-    lastName: String
-    email: String
-    watching: [String]
-    rep: Int
-    profilePic: String
-    comments: [String]
-    attempting: [ID]
-    issuesNumber: [String]
-    username: String
-    githubLink: String
-    personalLink: String
-    preferredLanguages: [String]
-    stackoverflowLink: String
-    pullRequests: [String]
-    upvotes: [ID]
     activePullRequests: Int
+    attempting: [ID]
+    balance: Float
+    comments: [String]
     completedPullRequests: Int
     dollarsEarned: Int
+    email: String
+    firstName: String
+    githubLink: String
     isOnline: Boolean
+    issues: [String]
+    lastName: String
+    organizations: [String]
+    personalLink: String
+    preferredLanguages: [String]
+    profilePic: String
+    pullRequests: [String]
     rejectedPullRequests: Int
+    rep: Int
+    stackoverflowLink: String
+    upvotes: [ID]
+    username: String
+    watching: [String]
   }
 
   type Organization {
-    id: ID!
+    contributors: [Object]
     createdDate: Object
-    modifiedDate: Object
-    name: String!
     description: String!
-    repoUrl: String!
-    organizationUrl: String
+    id: ID!
     issues: [Object]
     logo: String
-    verified: Boolean
-    contributors: [Object]
+    modifiedDate: Object
+    name: String!
+    organizationUrl: String
     ownerId: ID
-    totalFunded: Float
     preferredLanguages: [String]
+    repoUrl: String!
+    totalFunded: Float
+    verified: Boolean
   }
 
   input OrganizationInput {
-    name: String
     description: String
-    repoUrl: String
-    organizationUrl: String
     logo: String
+    name: String
+    organizationUrl: String
+    repoUrl: String
     verified: Boolean
   }
 
@@ -146,20 +150,21 @@ module.exports = buildSchema(`
     message: String
   }
 
-  union OrganizationResult = Organization | Error
   union IssueResult = Issue | Error
+  union OrganizationResult = Organization | Error
 
   type RootQuery {
-    getIssues: [Issue!]!
-    getUsers: [User!]!
-    getOrganizations: [Organization!]!
     getComments: [Comment]
+    getIssues: [Issue!]!
+    getOrganizations: [Organization!]!
+    getUsers: [User!]!
 
     getIssueComments(id: ID!): [Comment]
+    getUserOrganizations(id: ID!): [Organization!]
 
     oneIssue(id: ID!): IssueResult
-    oneUser(column: String!, query: ID!): User!
     oneOrganization(id: ID!): OrganizationResult
+    oneUser(column: String!, query: ID!): User!
 
     searchIssues(value: String!): [Issue!]!
     searchOrganizations(value: String!): [Organization!]!
@@ -167,18 +172,18 @@ module.exports = buildSchema(`
   }
 
   type RootMutation {
-    createIssue(issueInput: IssueInput): [Issue!]!
-    createUser(userInput: UserInput): [User!]!
-    createOrganization(organizationInput: OrganizationInput): [Organization!]!
     createComment(commentInput: CommentInput): Comment
+    createIssue(issueInput: IssueInput): Issue!
+    createOrganization(organizationInput: OrganizationInput): [Organization!]!
+    createUser(userInput: UserInput): [User!]!
 
     deleteIssue(id: ID!): String!
-    deleteUser(id:ID!): String!
     deleteOrganization(id:ID!): String!
+    deleteUser(id:ID!): String!
 
     transformIssue(id: ID!, issueInput: IssueInput): Issue!
-    transformUser(id: ID!, userInput: UserInput): User!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): Organization!
+    transformUser(id: ID!, userInput: UserInput): User!
 
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!

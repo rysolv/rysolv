@@ -46,6 +46,17 @@ const issueDetailValues = `
   users.profile_pic AS "profilePic"
 `;
 
+// Check duplicate issue
+const checkDuplicateIssue = async (table, repo) => {
+  const queryText = `
+    SELECT id FROM ${table} WHERE (repo='${repo}')
+  `;
+  const { rows } = await singleQuery(queryText);
+  if (rows.length > 0) {
+    throw new Error(`Error: Issue at ${repo} already exists`);
+  }
+};
+
 // Create new Issue
 const createIssue = async data => {
   const queryText = `INSERT INTO
@@ -134,6 +145,7 @@ const upvoteIssue = async (table, id) => {
 };
 
 module.exports = {
+  checkDuplicateIssue,
   createIssue,
   deleteIssue,
   getIssues,

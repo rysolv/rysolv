@@ -1,9 +1,11 @@
 const { v4: uuidv4 } = require('uuid');
 
 const {
+  checkDuplicateUser,
   createUser,
   deleteUser,
   getOneUser,
+  getOrganizationsWhere,
   getUsers,
   searchUsers,
   transformUser,
@@ -14,6 +16,7 @@ const {
 module.exports = {
   createUser: async args => {
     const { userInput } = args;
+    await checkDuplicateUser('users', userInput.email);
     const issue = [
       [
         uuidv4(),
@@ -27,7 +30,8 @@ module.exports = {
         userInput.profilePic,
         userInput.comments || [],
         userInput.attempting || [],
-        userInput.issuesNumber || [],
+        userInput.issues || [],
+        userInput.organizations || [],
         userInput.username,
         userInput.githubLink || '',
         userInput.personalLink || '',
@@ -41,6 +45,7 @@ module.exports = {
         userInput.dollarsEarned || 0,
         userInput.isOnline || true,
         userInput.rejectedPullRequests,
+        userInput.balance || 0,
       ],
     ];
     try {
@@ -64,7 +69,8 @@ module.exports = {
           'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTBvwAcytGFLkWO2eT-FCwE5z_mlQxBdI9uwbyeczCTVBci7Vrg&usqp=CAU',
         comments: [],
         attempting: [],
-        issues_number: [],
+        issues: [],
+        organizations: [],
         username: '[deleted]',
         github_link: '',
         personal_link: '',
@@ -76,6 +82,7 @@ module.exports = {
         dollarsEarned: 0,
         isOnline: false,
         rejectedPullRequests: 0,
+        balance: 0,
       };
       const result = await deleteUser('users', id, data);
       return result;
@@ -86,6 +93,19 @@ module.exports = {
   getUsers: async () => {
     try {
       const result = await getUsers('users');
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  },
+  getUserOrganizations: async args => {
+    const { id } = args;
+    try {
+      const result = await getOrganizationsWhere(
+        'organizations',
+        'owner_id',
+        id,
+      );
       return result;
     } catch (err) {
       throw err;
@@ -122,13 +142,15 @@ module.exports = {
         profile_pic: userInput.profilePic,
         comments: userInput.comments,
         attempting: userInput.attempting,
-        issues_number: userInput.issuesNumber,
+        issues: userInput.issues,
+        organizations: userInput.organizations,
         username: userInput.username,
         github_link: userInput.githubLink,
         personal_link: userInput.personalLink,
         preferred_languages: userInput.preferredLanguages,
         stackoverflow_link: userInput.stackoverflowLink,
         pull_requests: userInput.pullRequests,
+        balance: userInput.balance,
       };
       const queryResult = await transformUser('users', id, data);
       const result = {
@@ -143,13 +165,15 @@ module.exports = {
         profilePic: queryResult.profile_pic,
         comments: queryResult.comments,
         attempting: queryResult.attempting,
-        issuesNumber: queryResult.issues_number,
+        issues: queryResult.issues,
+        organizations: queryResult.organizations,
         username: queryResult.username,
         githubLink: userInput.github_link,
         personalLink: userInput.personal_link,
         preferredLanguages: userInput.preferred_languages,
         stackoverflowLink: userInput.stackoverflow_link,
         pullRequests: userInput.pull_requests,
+        balance: userInput.balance,
       };
       return result;
     } catch (err) {
