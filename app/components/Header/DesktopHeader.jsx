@@ -4,8 +4,14 @@ import T from 'prop-types';
 import { HeaderWrap, UserNavBar } from '../base_ui';
 import { ButtonsWrapper, Signin, SignUp, Browse } from './styledComponents';
 
-const DesktopHeader = ({ activeUser, handleSignout, isSignedIn, isMobile }) => (
-  <HeaderWrap isMobile={isMobile}>
+const DesktopHeader = ({
+  activeUser,
+  handleNav,
+  handleSignout,
+  isMobile,
+  isSignedIn,
+}) => (
+  <HeaderWrap handleNav={handleNav} isMobile={isMobile}>
     <ButtonsWrapper>
       <Browse label="Browse" path="/issues" />
       {isSignedIn ? (
@@ -22,9 +28,10 @@ const DesktopHeader = ({ activeUser, handleSignout, isSignedIn, isMobile }) => (
 
 DesktopHeader.propTypes = {
   activeUser: T.object,
+  handleNav: T.func,
   handleSignout: T.func,
-  isSignedIn: T.bool,
   isMobile: T.bool,
+  isSignedIn: T.bool,
 };
 
 export default DesktopHeader;

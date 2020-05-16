@@ -51,13 +51,13 @@ const Overview = ({
   handleChangeUserFilter,
   handleChangeUserSearch,
   handleNav,
-  match: { path },
+  match: { params, path },
   organizationOptions,
 }) => {
   useEffect(() => {
     dispatchFetchOrganizationOptions();
   }, []);
-  const formattedPath = path.replace(/^\/+/, '');
+  const formattedPath = path.split('/')[1];
   const { buttonName, Component, route, title } = overviewDirectory[
     formattedPath
   ];
@@ -111,7 +111,7 @@ const Overview = ({
       <ContentContainer>
         <ComponentContainer>
           <SearchHeader {...headerProps[formattedPath]} />
-          <Component />
+          <Component params={params} />
         </ComponentContainer>
 
         <FilterContainer>

@@ -65,6 +65,12 @@ export const NumberContainer = styled.div`
   font-weight: 500;
 `;
 
+export const OverviewWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+`;
+
 export const StyledListSquare = styled.div`
   background-color: white;
   border-radius: 0.2rem;

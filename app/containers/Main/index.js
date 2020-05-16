@@ -31,9 +31,9 @@ export const Main = ({
 }) => (
   <Fragment>
     <SideNav handleNav={handleNav} view={deviceView} />
-
     <Header
       activeUser={activeUser}
+      handleNav={handleNav}
       handleSignin={handleSignin}
       handleSignout={handleSignout}
       isSignedIn={isSignedIn}

@@ -1,29 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
-
 import iconDictionary from 'utils/iconDictionary';
 
-import { StyledBaseInputWithAdornment } from './styledComponents';
+import SearchDropDown from './SearchDropDown';
+import {
+  HeaderSearchBarContainer,
+  StyledBaseInputWithAdornment,
+} from './styledComponents';
 
 const SearchIcon = iconDictionary('search');
 
-const HeaderSearchBar = ({ handleChangeSearch }) => (
-  <StyledBaseInputWithAdornment
-    adornmentComponent={SearchIcon}
-    onChange={e =>
-      handleChangeSearch({
-        field: 'overviewInput',
-        value: e.target.value,
-      })
-    }
-    placeholder="Search or jump to..."
-    position="end"
-    renderIcon
-  />
-);
+const HeaderSearchBar = ({ handleNav }) => {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = useState('');
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <HeaderSearchBarContainer>
+      <StyledBaseInputWithAdornment
+        classes={{ outlined: 'outlined' }}
+        adornmentComponent={SearchIcon}
+        onChange={e => setValue(e.target.value)}
+        onFocus={handleClick}
+        placeholder="Search or jump to..."
+        position="end"
+        renderIcon
+        value={value}
+      />
+      <SearchDropDown
+        handleClose={handleClose}
+        handleNav={handleNav}
+        open={open}
+        value={value}
+      />
+    </HeaderSearchBarContainer>
+  );
+};
 
 HeaderSearchBar.propTypes = {
-  handleChangeSearch: T.func,
+  handleNav: T.func,
 };
 
 export default HeaderSearchBar;
