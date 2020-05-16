@@ -30,10 +30,6 @@ export const Main = ({
   match,
 }) => (
   <Fragment>
-<<<<<<< HEAD
-    <SideNav handleNav={handleNav} view={deviceView} />
-=======
->>>>>>> 2c58ebe5612da7ef1154e03a726d52a7c258bb18
     <Header
       activeUser={activeUser}
       handleNav={handleNav}
