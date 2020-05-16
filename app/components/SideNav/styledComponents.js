@@ -18,6 +18,7 @@ export const StyledSideNav = styled.div`
     height: auto;
     margin-top: 6rem;
     overflow: hidden;
+    z-index: 0;
   }
 
   .MuiListItem-root {

@@ -23,7 +23,6 @@ const HeaderSearchBar = ({ handleNav }) => {
   return (
     <HeaderSearchBarContainer>
       <StyledBaseInputWithAdornment
-        classes={{ outlined: 'outlined' }}
         adornmentComponent={SearchIcon}
         onChange={e => setValue(e.target.value)}
         onFocus={handleClick}
