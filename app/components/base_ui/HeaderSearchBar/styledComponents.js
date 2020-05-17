@@ -18,6 +18,7 @@ export const OptionTitle = styled.button`
   display: flex;
   font-size: 1.2rem;
   height: 2.2rem;
+  white-space: nowrap;
 
   &:hover {
     cursor: pointer;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -13,6 +13,9 @@ const SearchIcon = iconDictionary('search');
 const HeaderSearchBar = ({ handleNav }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
+  useEffect(() => {
+    setValue('');
+  }, [window.location.pathname]);
   const handleClick = () => {
     setOpen(true);
   };

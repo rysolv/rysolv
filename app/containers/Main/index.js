@@ -38,9 +38,8 @@ export const Main = ({
       isSignedIn={isSignedIn}
       view={deviceView}
     />
-    <SideNav handleNav={handleNav} view={deviceView} />
-
     <AppBody>
+      <SideNav handleNav={handleNav} view={deviceView} />
       <AsyncRender
         asyncData={data}
         component={routes}
