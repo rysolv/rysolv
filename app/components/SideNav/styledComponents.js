@@ -16,6 +16,14 @@ export const StyledIconButton = styled(IconButton)`
   width: ${({ open }) => (open ? '22.5rem' : '7.5rem')};
 `;
 
+export const StyledListWrapper = styled.div`
+  color: ${({ active }) => (active ? hoverLinkColor : 'inherit')};
+
+  .MuiSvgIcon-root {
+    color: ${({ active }) => (active ? hoverLinkColor : 'inherit')};
+  }
+`;
+
 export const StyledSideNav = styled.div`
   position: fixed;
   color: ${textColor};
@@ -56,13 +64,5 @@ export const StyledSideNav = styled.div`
   .MuiIconButton-label {
     justify-content: end;
     padding-left: 2.1rem;
-  }
-`;
-
-export const StyledListWrapper = styled.div`
-  color: ${({ active }) => (active ? hoverLinkColor : 'inherit')};
-
-  .MuiSvgIcon-root {
-    color: ${({ active }) => (active ? hoverLinkColor : 'inherit')};
   }
 `;
