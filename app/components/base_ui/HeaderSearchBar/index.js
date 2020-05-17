@@ -11,7 +11,7 @@ import {
 const SearchIcon = iconDictionary('search');
 
 const HeaderSearchBar = ({ handleNav }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const handleClick = () => {
     setOpen(true);
@@ -36,6 +36,7 @@ const HeaderSearchBar = ({ handleNav }) => {
         handleClose={handleClose}
         handleNav={handleNav}
         open={open}
+        setValue={setValue}
         value={value}
       />
     </HeaderSearchBarContainer>
