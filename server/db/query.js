@@ -74,7 +74,7 @@ const singleItem = async (table, id, values, column = 'id') => {
 
 const singleSearch = async (queryText, fields, value, param) => {
   const searchString = fields.reduce((acc, field) => {
-    acc.push(`LOWER(${field}) LIKE LOWER('#${value}%')`);
+    acc.push(`LOWER(${field}) LIKE LOWER('%${value}%')`);
     return acc;
   }, []);
   const formattedSearchString = searchString.join(' OR ');

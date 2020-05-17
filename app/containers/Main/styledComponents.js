@@ -11,7 +11,7 @@ export const RoutesWrapper = styled.section`
   flex: 1 100%;
   justify-content: center;
   min-height: 100vh;
-  padding: 0 15% 0 15%;
+  padding: 0 10% 0 10%;
   width: 100%;
   ${tablet} {
     padding: 0 1rem;

@@ -24,6 +24,7 @@ const HeaderSearchBar = ({ handleNav }) => {
     <HeaderSearchBarContainer>
       <StyledBaseInputWithAdornment
         adornmentComponent={SearchIcon}
+        onBlur={handleClose}
         onChange={e => setValue(e.target.value)}
         onFocus={handleClick}
         placeholder="Search or jump to..."

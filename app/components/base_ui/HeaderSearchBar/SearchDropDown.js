@@ -4,7 +4,9 @@ import T from 'prop-types';
 import ConditionalRender from '../ConditionalRender';
 
 import {
+  OptionTitle,
   OptionWrapper,
+  RedirectIcon,
   SearchItemContainer,
   StyledSearchDropDown,
   ValueWrapper,
@@ -29,9 +31,17 @@ const SearchDropDown = ({ handleClose, handleNav, open, value }) => {
   const SearchDropDownComponent = (
     <StyledSearchDropDown handleClose={handleClose}>
       {searchOptions.map(({ route, title }) => (
-        <SearchItemContainer onClick={() => handleNav(`${route}${value}`)}>
+        <SearchItemContainer
+          key={`search-item-${title}`}
+          onMouseDown={() => handleNav(`${route}${value}`)}
+        >
           <ValueWrapper>{value}</ValueWrapper>
-          <OptionWrapper>{title}</OptionWrapper>
+          <OptionWrapper>
+            <OptionTitle>
+              {title}
+              <RedirectIcon>↵</RedirectIcon>
+            </OptionTitle>
+          </OptionWrapper>
         </SearchItemContainer>
       ))}
     </StyledSearchDropDown>
