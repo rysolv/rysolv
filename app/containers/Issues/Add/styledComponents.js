@@ -13,8 +13,8 @@ import {
 export const AddWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 0 5%;
   width: 100%;
-  padding: 0 15%;
 `;
 
 export const AddForm = styled.div`

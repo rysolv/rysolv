@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AddCircle from '@material-ui/icons/AddCircle';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -38,6 +39,7 @@ import CloseMenu from './svg/CloseMenu';
 
 export default (name, options) => {
   const icons = {
+    addCircle: AddCircle,
     attempt: Attempt,
     backArrow: ArrowBackIcon,
     backArrowHalf: ArrowBackIosIcon,
