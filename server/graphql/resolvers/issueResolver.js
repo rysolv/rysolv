@@ -16,10 +16,13 @@ const {
   upvoteIssue,
 } = require('../../db');
 
+const { getSingleIssue } = require('../../integrations');
+
 module.exports = {
   createIssue: async args => {
     const { issueInput } = args;
     const newIssueId = uuidv4();
+    getSingleIssue(args.importIssue);
 
     // Check for duplicate issue
     await checkDuplicateIssue('issues', issueInput.repo);
