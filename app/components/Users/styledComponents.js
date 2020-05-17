@@ -14,24 +14,12 @@ export const MessageWrapper = styled.div`
   display: flex;
   font-size: 1.6rem;
   height: 55rem;
-  width: 70%;
   justify-content: center;
   margin: 0.5rem 1rem;
   text-align: center;
-  width: 100%;
-`;
-
-export const OverviewWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 90%;
 `;
 
 export const UserCardWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-`;
-
-export const UserWrapper = styled.div`
-  display: flex;
 `;

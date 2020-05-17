@@ -32,14 +32,14 @@ export const Main = ({
   <Fragment>
     <Header
       activeUser={activeUser}
+      handleNav={handleNav}
       handleSignin={handleSignin}
       handleSignout={handleSignout}
       isSignedIn={isSignedIn}
       view={deviceView}
     />
-    <SideNav handleNav={handleNav} view={deviceView} />
-
     <AppBody>
+      <SideNav handleNav={handleNav} view={deviceView} />
       <AsyncRender
         asyncData={data}
         component={routes}

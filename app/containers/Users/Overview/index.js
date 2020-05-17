@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -22,51 +22,48 @@ import reducer from '../reducer';
 import saga from '../saga';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class UsersOverview extends React.PureComponent {
-  componentDidMount() {
+const UsersOverview = ({
+  alerts,
+  disabled,
+  dispatchFetchUsers,
+  error,
+  handleClearAlerts,
+  handleInputChange,
+  handleNav,
+  handleSearchUsers,
+  loading,
+  params: { searchValue },
+  search,
+  users,
+}) => {
+  useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Users Overview';
-    const { dispatchFetchUsers } = this.props;
-    dispatchFetchUsers();
-  }
-
-  componentWillUnmount() {
-    const { handleClearAlerts } = this.props;
-    handleClearAlerts();
-  }
-
-  render() {
-    const {
-      alerts,
-      disabled,
-      error,
-      handleClearAlerts,
-      handleInputChange,
-      handleNav,
-      handleSearchUsers,
-      loading,
-      search,
-      users,
-    } = this.props;
-    return (
-      <AsyncRender
-        asyncData={users}
-        component={UserCard}
-        error={error}
-        loading={loading}
-        propsToPassDown={{
-          alerts,
-          disabled,
-          handleClearAlerts,
-          handleInputChange,
-          handleNav,
-          handleSearchUsers,
-          search,
-        }}
-      />
-    );
-  }
-}
+    if (searchValue) {
+      handleSearchUsers({ value: searchValue });
+    } else {
+      dispatchFetchUsers();
+    }
+    return handleClearAlerts;
+  }, [searchValue]);
+  return (
+    <AsyncRender
+      asyncData={users}
+      component={UserCard}
+      error={error}
+      loading={loading}
+      propsToPassDown={{
+        alerts,
+        disabled,
+        handleClearAlerts,
+        handleInputChange,
+        handleNav,
+        handleSearchUsers,
+        search,
+      }}
+    />
+  );
+};
 
 UsersOverview.propTypes = {
   alerts: T.shape({
@@ -81,6 +78,7 @@ UsersOverview.propTypes = {
   handleNav: T.func,
   handleSearchUsers: T.func,
   loading: T.bool,
+  params: T.object,
   search: T.object,
   users: T.array,
 };

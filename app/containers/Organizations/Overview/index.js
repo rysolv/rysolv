@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -27,50 +27,47 @@ import {
 } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class OrganizationsOverview extends React.PureComponent {
-  componentDidMount() {
-    const { dispatchFetchOrganizations } = this.props;
-    dispatchFetchOrganizations();
-  }
+const OrganizationsOverview = ({
+  alerts,
+  organizations,
+  disabled,
+  error,
+  handleClearAlerts,
+  dispatchFetchOrganizations,
+  handleInputChange,
+  handleNav,
+  handleSearchOrganizations,
+  loading,
+  params: { searchValue },
+  search,
+}) => {
+  useEffect(() => {
+    if (searchValue) {
+      handleSearchOrganizations({ value: searchValue });
+    } else {
+      dispatchFetchOrganizations();
+    }
+    return handleClearAlerts;
+  }, [searchValue]);
 
-  componentWillUnmount() {
-    const { handleClearAlerts } = this.props;
-    handleClearAlerts();
-  }
-
-  render() {
-    const {
-      alerts,
-      organizations,
-      disabled,
-      error,
-      handleClearAlerts,
-      handleInputChange,
-      handleNav,
-      handleSearchOrganizations,
-      loading,
-      search,
-    } = this.props;
-
-    return (
-      <AsyncRender
-        asyncData={organizations}
-        component={Organizations}
-        error={error}
-        loading={loading}
-        propsToPassDown={{
-          alerts,
-          disabled,
-          handleClearAlerts,
-          handleInputChange,
-          handleNav,
-          handleSearchOrganizations,
-          search,
-        }}
-      />
-    );
-  }
-}
+  return (
+    <AsyncRender
+      asyncData={organizations}
+      component={Organizations}
+      error={error}
+      loading={loading}
+      propsToPassDown={{
+        alerts,
+        disabled,
+        handleClearAlerts,
+        handleInputChange,
+        handleNav,
+        handleSearchOrganizations,
+        search,
+      }}
+    />
+  );
+};
 
 OrganizationsOverview.propTypes = {
   alerts: T.shape({
@@ -86,6 +83,7 @@ OrganizationsOverview.propTypes = {
   handleNav: T.func,
   handleSearchOrganizations: T.func,
   loading: T.bool,
+  params: T.object,
   search: T.object,
 };
 

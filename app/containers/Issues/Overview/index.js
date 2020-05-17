@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -30,57 +30,54 @@ import {
 } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class IssuesOverview extends React.PureComponent {
-  componentDidMount() {
+const IssuesOverview = ({
+  activeUser,
+  alerts,
+  disabled,
+  dispatchFetchIssues,
+  error,
+  handleClearAlerts,
+  handleIncrement,
+  handleInputChange,
+  handleNav,
+  handleSearchIssues,
+  handleUpvote,
+  issues,
+  loading,
+  params: { searchValue },
+  search,
+}) => {
+  useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Issues Overview';
-    const { dispatchFetchIssues } = this.props;
-    dispatchFetchIssues();
-  }
-
-  componentWillUnmount() {
-    const { handleClearAlerts } = this.props;
-    handleClearAlerts();
-  }
-
-  render() {
-    const {
-      activeUser,
-      alerts,
-      disabled,
-      error,
-      handleClearAlerts,
-      handleIncrement,
-      handleInputChange,
-      handleNav,
-      handleSearchIssues,
-      handleUpvote,
-      issues,
-      loading,
-      search,
-    } = this.props;
-    return (
-      <AsyncRender
-        asyncData={issues}
-        component={IssueCard}
-        error={error}
-        loading={loading}
-        propsToPassDown={{
-          activeUser,
-          alerts,
-          disabled,
-          handleClearAlerts,
-          handleIncrement,
-          handleInputChange,
-          handleNav,
-          handleSearchIssues,
-          handleUpvote,
-          search,
-        }}
-      />
-    );
-  }
-}
+    if (searchValue) {
+      handleSearchIssues({ value: searchValue });
+    } else {
+      dispatchFetchIssues();
+    }
+    return handleClearAlerts;
+  }, [searchValue]);
+  return (
+    <AsyncRender
+      asyncData={issues}
+      component={IssueCard}
+      error={error}
+      loading={loading}
+      propsToPassDown={{
+        activeUser,
+        alerts,
+        disabled,
+        handleClearAlerts,
+        handleIncrement,
+        handleInputChange,
+        handleNav,
+        handleSearchIssues,
+        handleUpvote,
+        search,
+      }}
+    />
+  );
+};
 
 IssuesOverview.propTypes = {
   activeUser: T.object,
@@ -99,6 +96,7 @@ IssuesOverview.propTypes = {
   handleUpvote: T.func,
   issues: T.array,
   loading: T.bool,
+  params: T.object,
   search: T.object,
 };
 

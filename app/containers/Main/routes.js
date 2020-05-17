@@ -42,10 +42,12 @@ const Routes = () => (
     <Switch>
       <Route exact path="/" component={PublicMain} />
       <Route exact path="/issues" component={PublicOverview} />
+      <Route exact path="/issues/search/:searchValue?" component={PublicOverview} />
       <Route exact path="/issues/add" component={PrivateIssuesAdd} />
       <Route exact path="/issues/detail/:id?" component={PublicIssuesDetail} />
       <Route exact path="/issues/edit/:id?" component={PrivateIssuesEdit} />
       <Route exact path="/organizations" component={PublicOverview} />
+      <Route exact path="/organizations/search/:searchValue?" component={PublicOverview} />
       <Route exact path="/organizations/add" component={PrivateOrganizationsAdd} />
       <Route exact path="/organizations/detail/:id?" component={PublicOrganizationsDetail} />
       <Route exact path="/organizations/edit/:id?" component={PrivateOrganizationsEdit} />
@@ -53,6 +55,7 @@ const Routes = () => (
       <Route exact path="/signup" component={PublicSignup} />
       <Route exact path="/test" component={Test} />
       <Route exact path="/users" component={PublicOverview} />
+      <Route exact path="/users/search/:searchValue?" component={PublicOverview} />
       <Route exact path="/users/add" component={PrivateUsersAdd} />
       <Route exact path="/users/detail/:id?" component={PublicUsersDetail} />
       <Route exact path="/users/edit/:id?" component={PrivateUsersEdit} />

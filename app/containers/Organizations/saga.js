@@ -161,6 +161,7 @@ export function* saveInfoSaga({ payload }) {
 
 export function* searchOrganizationsSaga({ payload }) {
   const { value } = payload;
+  console.log('value', value);
   const query = `
   query {
     searchOrganizations(value: "${value}") {

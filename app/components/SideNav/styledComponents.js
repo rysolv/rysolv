@@ -1,23 +1,29 @@
 import styled from 'styled-components';
+import IconButton from '@material-ui/core/IconButton';
+
 import {
   defaultFontSize,
   headerColor,
   hoverLinkColor,
+  textColor,
 } from 'defaultStyleHelper';
 
-export const BackgroundDiv = styled.div`
-  width: 15%;
-  position: relative;
+export const StyledIconButton = styled(IconButton)`
+  width: ${({ open }) => (open ? '22.5rem' : '7.5rem')};
 `;
 
 export const StyledSideNav = styled.div`
+  color: ${textColor};
+  height: auto;
+  overflow-y: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  width: ${({ open }) => (open ? '22.5rem' : '7.5rem')};
+  z-index: 1;
+
   .MuiDrawer-paper {
     background: transparent;
     border: none;
-    color: ${headerColor};
-    height: auto;
-    margin-top: 6rem;
-    overflow: hidden;
   }
 
   .MuiListItem-root {
@@ -30,6 +36,7 @@ export const StyledSideNav = styled.div`
 
   .MuiButtonBase-root {
     border-radius: 0;
+    height: 5rem;
   }
 
   .MuiSvgIcon-root {
@@ -49,6 +56,7 @@ export const StyledSideNav = styled.div`
 
 export const StyledListWrapper = styled.div`
   color: ${({ active }) => (active ? hoverLinkColor : 'inherit')};
+
   .MuiSvgIcon-root {
     color: ${({ active }) => (active ? hoverLinkColor : 'inherit')};
   }

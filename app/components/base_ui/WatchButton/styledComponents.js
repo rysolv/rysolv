@@ -11,20 +11,16 @@ export const StyledWatchButton = styled.button`
   display: inline-flex;
   outline: 0;
   overflow: hidden;
-  transition: box-shadow 0.2s;
   padding: 0.1rem 0.3rem;
+  transition: box-shadow 0.2s;
 
   &:hover {
     background-color: #f5f5f5;
-    cursor: ${({ disabled }) => (disabled ? 'auto' : 'pointer')};
-    -webkit-box-shadow: 0px 2px 5px 0.5px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0px 2px 5px 0.5px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 2px 5px 0.5px rgba(0, 0, 0, 0.1);
+    cursor: ${({ disabled }) => (disabled ? 'auto' : 'pointer')};
   }
 
   &:active {
-    -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
-    -moz-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
     box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   }
 

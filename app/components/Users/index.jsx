@@ -1,17 +1,12 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import { ErrorSuccessBanner } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
 import UserCard from './Card';
-import {
-  BannerWrapper,
-  OverviewWrapper,
-  UserCardWrapper,
-  UserWrapper,
-} from './styledComponents';
+import { BannerWrapper } from './styledComponents';
 
 const Users = ({
   alerts: { error, success },
@@ -30,20 +25,16 @@ const Users = ({
     <EmptyCard />
   );
   return (
-    <OverviewWrapper>
-      <UserWrapper>
-        <div>
-          <BannerWrapper>
-            <ErrorSuccessBanner
-              error={error}
-              onClose={clearAlerts}
-              success={success}
-            />
-          </BannerWrapper>
-          <UserCardWrapper>{viewToRender}</UserCardWrapper>
-        </div>
-      </UserWrapper>
-    </OverviewWrapper>
+    <Fragment>
+      <BannerWrapper>
+        <ErrorSuccessBanner
+          error={error}
+          onClose={clearAlerts}
+          success={success}
+        />
+      </BannerWrapper>
+      {viewToRender}
+    </Fragment>
   );
 };
 

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 
 import { Star, ProfileImage } from 'components/base_ui';
@@ -16,13 +16,14 @@ import {
   MemberWrapper,
   NameWrapper,
   NumberContainer,
+  OverviewWrapper,
   StyledListSquare,
   StyledSettingWrapper,
   StyledSquare,
 } from './styledComponents';
 
 const UserCard = ({ data, handleNav }) => (
-  <Fragment>
+  <OverviewWrapper>
     {data.map(
       (
         { attempting, createdDate, id, issues, name, pointsNumber, profilePic },
@@ -68,7 +69,7 @@ const UserCard = ({ data, handleNav }) => (
         </StyledListSquare>
       ),
     )}
-  </Fragment>
+  </OverviewWrapper>
 );
 
 UserCard.propTypes = {

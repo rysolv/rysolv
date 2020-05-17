@@ -6,13 +6,13 @@ import Logo from './Logo';
 import HeaderSearchBar from '../HeaderSearchBar';
 import { Container, HeaderSection, LogoWrapper } from './styledComponents';
 
-const HeaderWrap = ({ children, isMobile }) => (
+const HeaderWrap = ({ children, handleNav, isMobile }) => (
   <HeaderSection id="header-section" role="banner">
     <AppBar color="default">
       <Container>
         <LogoWrapper>
           <Logo isMobile={isMobile} />
-          <HeaderSearchBar />
+          <HeaderSearchBar handleNav={handleNav} />
         </LogoWrapper>
         {children}
       </Container>
@@ -22,6 +22,7 @@ const HeaderWrap = ({ children, isMobile }) => (
 
 HeaderWrap.propTypes = {
   children: T.element,
+  handleNav: T.func,
   isMobile: T.bool,
 };
 
