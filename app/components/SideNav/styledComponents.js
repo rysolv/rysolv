@@ -9,11 +9,11 @@ import {
 } from 'defaultStyleHelper';
 
 export const FixedWrapper = styled.div`
-  width: ${({ open }) => (open ? '22.5rem' : '7.5rem')};
+  width: ${({ open }) => (open ? '20rem' : '7.5rem')};
 `;
 
 export const StyledIconButton = styled(IconButton)`
-  width: ${({ open }) => (open ? '22.5rem' : '7.5rem')};
+  width: ${({ open }) => (open ? '20rem' : '7.5rem')};
 `;
 
 export const StyledListWrapper = styled.div`
@@ -31,7 +31,7 @@ export const StyledSideNav = styled.div`
   overflow-y: auto;
   overflow: hidden;
   white-space: nowrap;
-  width: ${({ open }) => (open ? '22.5rem' : '7.5rem')};
+  width: ${({ open }) => (open ? '20rem' : '7.5rem')};
   z-index: 1;
 
   .MuiDrawer-paper {
