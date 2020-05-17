@@ -6,7 +6,8 @@ import { subHeaderColor, textColor } from 'defaultStyleHelper';
 export const AddWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  padding: 0 5%;
+  width: 100%;
 `;
 
 export const AddForm = styled.div`

@@ -22,11 +22,11 @@ export const IconWrapper = styled.div`
   display: flex;
   font-size: ${defaultFontSize};
   justify-content: center;
-  margin: 0.5rem 0;
+  margin-top: 0.25rem;
 `;
 
 export const ImageContainer = styled.div`
-  margin: 1rem 0 0 0;
+  margin: 0.5rem 0 0 0;
 `;
 
 export const IssuesContainer = styled.div`
@@ -69,6 +69,8 @@ export const OverviewWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-flow: wrap;
+  justify-content: space-between;
+  margin-left: 1rem;
 `;
 
 export const StyledListSquare = styled.div`
@@ -76,9 +78,9 @@ export const StyledListSquare = styled.div`
   border-radius: 0.2rem;
   border: 0.1rem solid #e0e0e0;
   color: ${textColor};
-  margin: 0 1rem 1rem 1rem;
-  padding: 1rem;
-  width: 20rem;
+  margin: 0 1rem 1rem 0;
+  padding: 0.5rem;
+  width: 17.5rem;
 `;
 
 export const StyledSettingWrapper = styled.div`

@@ -3,9 +3,7 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { push } from 'connected-react-router';
 
-import { PrimaryButton } from 'components/base_ui';
 import Filter from 'components/Filter';
 import SearchHeader from 'components/SearchHeader';
 import {
@@ -50,7 +48,6 @@ const Overview = ({
   handleChangeOrganizationSearch,
   handleChangeUserFilter,
   handleChangeUserSearch,
-  handleNav,
   match: { params, path },
   organizationOptions,
 }) => {
@@ -58,9 +55,7 @@ const Overview = ({
     dispatchFetchOrganizationOptions();
   }, []);
   const formattedPath = path.split('/')[1];
-  const { buttonName, Component, route, title } = overviewDirectory[
-    formattedPath
-  ];
+  const { Component, title } = overviewDirectory[formattedPath];
   document.title = title;
   const filterProps = {
     issues: {
@@ -116,7 +111,6 @@ const Overview = ({
 
         <FilterContainer>
           <Filter {...filterProps[formattedPath]} />
-          <PrimaryButton label={buttonName} onClick={() => handleNav(route)} />
         </FilterContainer>
       </ContentContainer>
     </OverviewContainer>
@@ -134,7 +128,6 @@ Overview.propTypes = {
   handleChangeOrganizationSearch: T.func,
   handleChangeUserFilter: T.func,
   handleChangeUserSearch: T.func,
-  handleNav: T.func,
   match: T.object,
   organizationOptions: T.array,
 };
@@ -182,10 +175,6 @@ function mapDispatchToProps(dispatch) {
      */
     handleChangeUserFilter: payload => dispatch(changeUserFilter(payload)),
     handleChangeUserSearch: payload => dispatch(changeUserSearch(payload)),
-    /*
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 

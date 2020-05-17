@@ -7,21 +7,15 @@ export const overviewDirectory = {
     Component: IssuesOverview,
     title: 'Issues',
     initialValue: 0,
-    buttonName: 'Add Issue',
-    route: '/issues/add',
   },
   organizations: {
     Component: OrganizationsOverview,
     title: 'Organizations',
     initialValue: 1,
-    buttonName: 'Add Organization',
-    route: '/organizations/add',
   },
   users: {
     Component: UsersOverview,
     title: 'Users',
     initialValue: 2,
-    buttonName: 'Add User [Temp]',
-    route: '/users/add',
   },
 };

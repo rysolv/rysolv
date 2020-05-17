@@ -10,4 +10,10 @@ export const getInitialValue = {
   users: {
     initialValue: 2,
   },
+  'issues/add': {
+    initialValue: 3,
+  },
+  'organizations/add': {
+    initialValue: 4,
+  },
 };
