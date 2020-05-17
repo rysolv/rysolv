@@ -11,6 +11,7 @@ import iconDictionary from 'utils/iconDictionary';
 
 import { excludedPath, getInitialValue } from './helpers';
 import {
+  FixedWrapper,
   StyledIconButton,
   StyledListWrapper,
   StyledSideNav,
@@ -69,40 +70,46 @@ const SideNav = ({ handleNav, view }) => {
   };
 
   const SideNavComponent = (
-    <StyledSideNav open={open}>
-      <List>
-        <StyledListWrapper active={currentValue === 0}>
-          <ListItem
-            button
-            key="Issues"
-            onClick={() => handleClick('/issues', 0)}
-          >
-            <ListItemIcon>{issueIcon}</ListItemIcon>
-            <ListItemText primary="Issues" />
-          </ListItem>
-        </StyledListWrapper>
-        <StyledListWrapper active={currentValue === 1}>
-          <ListItem
-            button
-            key="Organizations"
-            onClick={() => handleClick('/organizations', 1)}
-          >
-            <ListItemIcon>{organizationIcon}</ListItemIcon>
-            <ListItemText primary="Organizations" />
-          </ListItem>
-        </StyledListWrapper>
-        <StyledListWrapper active={currentValue === 2}>
-          <ListItem button key="Users" onClick={() => handleClick('/users', 2)}>
-            <ListItemIcon>{userIcon}</ListItemIcon>
-            <ListItemText primary="Users" />
-          </ListItem>
-        </StyledListWrapper>
-      </List>
-      <Divider />
-      <StyledIconButton disableRipple onClick={toggleDrawer} open>
-        {open ? backArrow : forwardArrow}
-      </StyledIconButton>
-    </StyledSideNav>
+    <FixedWrapper open={open}>
+      <StyledSideNav open={open}>
+        <List>
+          <StyledListWrapper active={currentValue === 0}>
+            <ListItem
+              button
+              key="Issues"
+              onClick={() => handleClick('/issues', 0)}
+            >
+              <ListItemIcon>{issueIcon}</ListItemIcon>
+              <ListItemText primary="Issues" />
+            </ListItem>
+          </StyledListWrapper>
+          <StyledListWrapper active={currentValue === 1}>
+            <ListItem
+              button
+              key="Organizations"
+              onClick={() => handleClick('/organizations', 1)}
+            >
+              <ListItemIcon>{organizationIcon}</ListItemIcon>
+              <ListItemText primary="Organizations" />
+            </ListItem>
+          </StyledListWrapper>
+          <StyledListWrapper active={currentValue === 2}>
+            <ListItem
+              button
+              key="Users"
+              onClick={() => handleClick('/users', 2)}
+            >
+              <ListItemIcon>{userIcon}</ListItemIcon>
+              <ListItemText primary="Users" />
+            </ListItem>
+          </StyledListWrapper>
+        </List>
+        <Divider />
+        <StyledIconButton disableRipple onClick={toggleDrawer} open>
+          {open ? backArrow : forwardArrow}
+        </StyledIconButton>
+      </StyledSideNav>
+    </FixedWrapper>
   );
 
   return (

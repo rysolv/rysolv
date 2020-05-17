@@ -8,11 +8,16 @@ import {
   textColor,
 } from 'defaultStyleHelper';
 
+export const FixedWrapper = styled.div`
+  width: ${({ open }) => (open ? '22.5rem' : '7.5rem')};
+`;
+
 export const StyledIconButton = styled(IconButton)`
   width: ${({ open }) => (open ? '22.5rem' : '7.5rem')};
 `;
 
 export const StyledSideNav = styled.div`
+  position: fixed;
   color: ${textColor};
   height: auto;
   overflow-y: auto;
