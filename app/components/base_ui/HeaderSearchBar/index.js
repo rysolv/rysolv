@@ -16,8 +16,9 @@ const HeaderSearchBar = ({ handleNav }) => {
   useEffect(() => {
     setValue('');
   }, [window.location.pathname]);
-  const handleClick = () => {
+  const handleChange = e => {
     setOpen(true);
+    setValue(e.target.value);
   };
 
   const handleClose = () => {
@@ -28,8 +29,8 @@ const HeaderSearchBar = ({ handleNav }) => {
       <StyledBaseInputWithAdornment
         adornmentComponent={SearchIcon}
         onBlur={handleClose}
-        onChange={e => setValue(e.target.value)}
-        onFocus={handleClick}
+        onChange={e => handleChange(e)}
+        open={open}
         placeholder="Search or jump to..."
         position="end"
         renderIcon

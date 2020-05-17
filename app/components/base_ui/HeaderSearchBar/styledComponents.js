@@ -61,8 +61,8 @@ export const StyledBaseInputWithAdornment = styled(BaseInputWithAdornment)`
     &:active,
     &:focus,
     &:focus-within {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+      border-bottom-left-radius: ${({ open }) => (open ? '0' : '0.5rem')};
+      border-bottom-right-radius: ${({ open }) => (open ? '0' : '0.5rem')};
     }
   }
 `;
