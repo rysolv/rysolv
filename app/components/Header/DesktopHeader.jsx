@@ -6,6 +6,7 @@ import { ButtonsWrapper, Signin, SignUp, Browse } from './styledComponents';
 
 const DesktopHeader = ({
   activeUser,
+  dispatchOpenModal,
   handleNav,
   handleSignout,
   isMobile,
@@ -15,7 +16,11 @@ const DesktopHeader = ({
     <ButtonsWrapper>
       <Browse label="Browse" path="/issues" />
       {isSignedIn ? (
-        <UserNavBar activeUser={activeUser} handleSignout={handleSignout} />
+        <UserNavBar
+          activeUser={activeUser}
+          dispatchOpenModal={dispatchOpenModal}
+          handleSignout={handleSignout}
+        />
       ) : (
         <Fragment>
           <SignUp label="Sign Up" path="/signup" />
@@ -28,6 +33,7 @@ const DesktopHeader = ({
 
 DesktopHeader.propTypes = {
   activeUser: T.object,
+  dispatchOpenModal: T.func,
   handleNav: T.func,
   handleSignout: T.func,
   isMobile: T.bool,

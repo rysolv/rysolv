@@ -8,6 +8,7 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
 import { makeSelectActiveUser } from 'containers/Auth/selectors';
+import { openModalState } from 'containers/Main/actions';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -35,6 +36,7 @@ const IssuesOverview = ({
   alerts,
   disabled,
   dispatchFetchIssues,
+  dispatchOpenModal,
   error,
   handleClearAlerts,
   handleIncrement,
@@ -67,6 +69,7 @@ const IssuesOverview = ({
         activeUser,
         alerts,
         disabled,
+        dispatchOpenModal,
         handleClearAlerts,
         handleIncrement,
         handleInputChange,
@@ -87,6 +90,7 @@ IssuesOverview.propTypes = {
   }),
   disabled: T.bool,
   dispatchFetchIssues: T.func,
+  dispatchOpenModal: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
   handleIncrement: T.func,
@@ -124,7 +128,10 @@ function mapDispatchToProps(dispatch) {
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
     handleUpvote: payload => dispatch(upvoteIssue(payload)),
     handleIncrement: payload => dispatch(addAttempt(payload)),
-
+    /*
+     * Reducer : Main
+     */
+    dispatchOpenModal: payload => dispatch(openModalState(payload)),
     /*
      * Reducer : Router
      */

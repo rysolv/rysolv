@@ -46,6 +46,7 @@ const MenuComponent = props => (
 const UserDropDownMenu = ({
   activeUser,
   anchorEl,
+  dispatchOpenModal,
   handleClose,
   handleSignout,
 }) => {
@@ -88,7 +89,9 @@ const UserDropDownMenu = ({
           </MenuItemValue>
         </StyledMenuItem>
 
-        <StyledMenuItem>
+        <StyledMenuItem
+          onClick={() => dispatchOpenModal({ modalState: 'userWatchList' })}
+        >
           <MenuItemLabel>
             <IconWrapper>
               <MonocleIcon />
@@ -155,6 +158,7 @@ const UserDropDownMenu = ({
 UserDropDownMenu.propTypes = {
   activeUser: T.object,
   anchorEl: T.object,
+  dispatchOpenModal: T.func,
   handleClose: T.func,
   handleSignout: T.func,
 };

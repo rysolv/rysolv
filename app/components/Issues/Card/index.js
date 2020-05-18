@@ -33,6 +33,7 @@ const AttemptingIcon = IconDictionary('attempt');
 const IssueCard = ({
   activeUser,
   data,
+  dispatchOpenModal,
   handleIncrement,
   handleNav,
   handleUpvote,
@@ -132,8 +133,7 @@ const IssueCard = ({
                 {open ? (
                   <IssueCardItem>
                     <WatchButton
-                      label={userWatching ? 'Watching' : 'Watch'}
-                      value={watching.length}
+                      dispatchOpenModal={dispatchOpenModal}
                       handleWatch={() =>
                         handleIncrement({
                           userId: activeUser.id,
@@ -142,6 +142,8 @@ const IssueCard = ({
                           remove: userWatching,
                         })
                       }
+                      label={userWatching ? 'Watching' : 'Watch'}
+                      value={watching.length}
                     />
                   </IssueCardItem>
                 ) : null}
@@ -163,6 +165,7 @@ const IssueCard = ({
 
 IssueCard.propTypes = {
   data: T.array.isRequired,
+  dispatchOpenModal: T.func,
   handleIncrement: T.func,
   handleNav: T.func.isRequired,
   handleUpvote: T.func.isRequired,

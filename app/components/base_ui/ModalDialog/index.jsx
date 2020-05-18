@@ -3,7 +3,7 @@ import T from 'prop-types';
 
 import { StyledModalDialog } from './styledComponents';
 
-const ModalDialog = ({ children, open, ...restProps }) => (
+const ModalDialog = ({ Component, open, propsToPassDown, ...restProps }) => (
   <StyledModalDialog
     BackdropProps={{ classes: { root: 'backdrop' } }}
     classes={{ paper: 'paper' }}
@@ -11,13 +11,14 @@ const ModalDialog = ({ children, open, ...restProps }) => (
     open={open}
     {...restProps}
   >
-    {children}
+    <Component {...propsToPassDown} />
   </StyledModalDialog>
 );
 
 ModalDialog.propTypes = {
-  children: T.node.isRequired,
+  Component: T.oneOfType([T.func, T.node, T.object]).isRequired,
   open: T.bool.isRequired,
+  propsToPassDown: T.object,
 };
 
 export default ModalDialog;

@@ -1,3 +1,4 @@
+import IconButton from './IconButton';
 import {
   FlatIconButton,
   PrimaryAsyncButton,
@@ -8,6 +9,7 @@ import {
 
 export {
   FlatIconButton,
+  IconButton,
   PrimaryAsyncButton,
   PrimaryButton,
   SecondaryAsyncButton,

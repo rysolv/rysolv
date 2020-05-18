@@ -11,10 +11,12 @@ import Attempt from '@material-ui/icons/ListAlt';
 import Cancel from '@material-ui/icons/Cancel';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import Circle from '@material-ui/icons/FiberManualRecord';
+import Close from '@material-ui/icons/Close';
 import CodeIcon from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
+import Edit from '@material-ui/icons/Edit';
 import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
 import Gift from '@material-ui/icons/Redeem';
@@ -46,12 +48,14 @@ export default (name, options) => {
     backArrowHalf: ArrowBackIosIcon,
     cancel: Cancel,
     circle: Circle,
+    close: Close,
     closeMenu: CloseMenu,
     code: CodeIcon,
     comments: Comments,
     creditCard: CreditCard,
     delete: Delete,
     dropdownArrow: ArrowDropDownIcon,
+    edit: Edit,
     exit: Exit,
     forwardArrowHalf: ArrowForwardIosIcon,
     funded: MonetizationOn,

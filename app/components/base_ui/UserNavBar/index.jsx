@@ -10,7 +10,7 @@ import {
   StyledUserNavBar,
 } from './styledComponents';
 
-const UserNavBar = ({ activeUser, handleSignout }) => {
+const UserNavBar = ({ activeUser, dispatchOpenModal, handleSignout }) => {
   const { username, profilePic, rep } = activeUser;
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClose = () => {
@@ -35,6 +35,7 @@ const UserNavBar = ({ activeUser, handleSignout }) => {
       <UserDropDownMenu
         activeUser={activeUser}
         anchorEl={anchorEl}
+        dispatchOpenModal={dispatchOpenModal}
         handleClose={handleClose}
         handleSignout={handleSignout}
       />
@@ -44,6 +45,7 @@ const UserNavBar = ({ activeUser, handleSignout }) => {
 
 UserNavBar.propTypes = {
   activeUser: T.object,
+  dispatchOpenModal: T.func,
   handleSignout: T.func,
 };
 
