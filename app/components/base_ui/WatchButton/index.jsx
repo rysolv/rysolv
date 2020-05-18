@@ -9,17 +9,28 @@ import {
   LabelWrapper,
 } from './styledComponents';
 
-const WatchButton = ({ label, value, handleWatch, disabled }) => (
+const WatchButton = ({
+  disabled,
+  dispatchOpenModal,
+  handleWatch,
+  label,
+  value,
+}) => (
   <WatchButtonContainer>
     <StyledWatchButton disabled={disabled} onClick={handleWatch}>
       <MonocleIcon /> <LabelWrapper>{label}</LabelWrapper>
     </StyledWatchButton>
-    <ValueWrapper>{value}</ValueWrapper>
+    <ValueWrapper
+      onClick={() => dispatchOpenModal({ modalState: 'issueWatchList' })}
+    >
+      {value}
+    </ValueWrapper>
   </WatchButtonContainer>
 );
 
 WatchButton.propTypes = {
   disabled: T.bool,
+  dispatchOpenModal: T.func,
   handleWatch: T.func,
   label: T.string,
   value: T.number,
