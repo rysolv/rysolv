@@ -5,8 +5,13 @@ import { connect } from 'react-redux';
 
 import ImportForm from 'components/Issues/Add/ImportForm';
 
-import { incrementStep, inputChange, inputError } from '../actions';
-import { validateInputs } from './helpers';
+import {
+  incrementStep,
+  inputChange,
+  inputError,
+  importIssue,
+} from '../actions';
+// import { validateInputs } from './helpers';
 import { makeSelectIssues } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -14,16 +19,21 @@ export class ImportIssue extends React.PureComponent {
   render() {
     const {
       data,
-      dispatchInputError,
+      dispatchImportIssue,
+      // dispatchInputError,
       handleIncrementStep,
       handleInputChange,
     } = this.props;
     const handleSubmit = () => {
-      const validationErrors = validateInputs({ data });
-      dispatchInputError({ errors: validationErrors });
-      if (Object.keys(validationErrors).every(err => !validationErrors[err])) {
-        handleIncrementStep({ step: 3, view: 'addIssue' });
-      }
+      const {
+        importUrl: { value: url },
+      } = data;
+      dispatchImportIssue({ url });
+      // const validationErrors = validateInputs({ data });
+      // dispatchInputError({ errors: validationErrors });
+      // if (Object.keys(validationErrors).every(err => !validationErrors[err])) {
+      //   handleIncrementStep({ step: 3, view: 'addIssue' });
+      // }
     };
     return (
       <Fragment>
@@ -40,7 +50,8 @@ export class ImportIssue extends React.PureComponent {
 
 ImportIssue.propTypes = {
   data: T.object,
-  dispatchInputError: T.func,
+  dispatchImportIssue: T.func,
+  // dispatchInputError: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
 };
@@ -57,6 +68,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    dispatchImportIssue: payload => dispatch(importIssue(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),

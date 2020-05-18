@@ -21,6 +21,9 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  IMPORT_ISSUE_FAILURE,
+  IMPORT_ISSUE_SUCCESS,
+  IMPORT_ISSUE,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
@@ -185,6 +188,27 @@ export function fetchIssueDetail(payload) {
   return {
     payload,
     type: FETCH_ISSUE_DETAIL,
+  };
+}
+
+export function importIssueFailure(payload) {
+  return {
+    payload,
+    type: IMPORT_ISSUE_FAILURE,
+  };
+}
+
+export function importIssueSuccess(payload) {
+  return {
+    payload,
+    type: IMPORT_ISSUE_SUCCESS,
+  };
+}
+
+export function importIssue(payload) {
+  return {
+    payload,
+    type: IMPORT_ISSUE,
   };
 }
 
