@@ -21,7 +21,9 @@ const WatchButton = ({
       <MonocleIcon /> <LabelWrapper>{label}</LabelWrapper>
     </StyledWatchButton>
     <ValueWrapper
-      onClick={() => dispatchOpenModal({ modalState: 'issueWatchList' })}
+      onClick={() =>
+        dispatchOpenModal({ modalState: 'issueWatchList', tableData })
+      }
     >
       {value}
     </ValueWrapper>

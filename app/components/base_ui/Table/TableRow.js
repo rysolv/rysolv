@@ -34,7 +34,7 @@ TableRow.propTypes = {
   handleHovered: T.func.isRequired,
   headers: T.array.isRequired,
   isHoveredRow: T.bool.isRequired,
-  rowData: T.shape({ id: T.number }).isRequired,
+  rowData: T.object.isRequired,
   type: T.string.isRequired,
 };
 

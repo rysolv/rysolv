@@ -120,6 +120,12 @@ module.exports = buildSchema(`
     watching: [String]
   }
 
+  type UserWatchList {
+    id: ID
+    Amount: Float
+    Issue: String
+  }
+
   type Organization {
     contributors: [Object]
     createdDate: Object
@@ -161,6 +167,8 @@ module.exports = buildSchema(`
 
     getIssueComments(id: ID!): [Comment]
     getUserOrganizations(id: ID!): [Organization!]
+
+    getUserWatchList(idArray: [ID!]): [UserWatchList!]
 
     oneIssue(id: ID!): IssueResult
     oneOrganization(id: ID!): OrganizationResult

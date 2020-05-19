@@ -13,7 +13,7 @@ export const sortComparator = (a, b, order, orderBy) => {
   return orderMultiplier * defaultComparator(a[orderBy], b[orderBy]);
 };
 
-export const getComparator = (order, orderBy) => (a, b) =>
+export const getComparator = ({ order, orderBy }) => (a, b) =>
   sortComparator(a, b, order, orderBy);
 
 export const stableSort = (array, comparator) =>

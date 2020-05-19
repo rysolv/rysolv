@@ -8,7 +8,7 @@ import MobileHeader from './MobileHeader';
 
 const Header = ({
   activeUser,
-  dispatchOpenModal,
+  dispatchFetchWatchList,
   handleNav,
   handleSignin,
   handleSignout,
@@ -22,7 +22,7 @@ const Header = ({
       FallbackComponent={DesktopHeader}
       propsToPassDown={{
         activeUser,
-        dispatchOpenModal,
+        dispatchFetchWatchList,
         handleNav,
         handleSignin,
         handleSignout,
@@ -37,7 +37,7 @@ const Header = ({
 
 Header.propTypes = {
   activeUser: T.object,
-  dispatchOpenModal: T.func,
+  dispatchFetchWatchList: T.func,
   handleNav: T.func,
   handleSignin: T.func,
   handleSignout: T.func,

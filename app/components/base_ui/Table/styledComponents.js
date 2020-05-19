@@ -17,6 +17,8 @@ export const EmptyTableRow = styled(TableRow)`
 export const IconCellContainer = styled.div`
   align-items: center;
   display: flex;
+  font-size: ${defaultFontSize};
+  font-weight: 300;
   justify-content: space-between;
 `;
 
@@ -33,16 +35,18 @@ export const StyledTableBody = styled(TableBody)`
 `;
 
 export const StyledTableCell = styled(TableCell)`
-  font-size: 1.2rem;
+  font-size: ${defaultFontSize};
+  font-weight: 300;
   line-height: 1.5rem;
   padding: 0 0 0 1rem;
-  text-align: left;
+  text-align: center;
   vertical-align: middle;
 `;
 
 export const StyledIconCell = styled(StyledTableCell)`
   max-width: 28rem;
   min-width: 28rem;
+  text-align: left;
 `;
 
 export const StyledTableRow = styled(TableRow)`
@@ -76,6 +80,7 @@ export const TableHeaderRow = styled(TableRow)``;
 
 export const TableWrapper = styled(Paper)`
   border: 0.1rem solid #cfd8dc;
+  border-bottom: none;
   box-shadow: none;
   color: ${textColor};
   margin: 1rem;

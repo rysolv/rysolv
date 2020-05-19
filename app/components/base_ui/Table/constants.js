@@ -4,6 +4,6 @@ export const emptyTableMessageDictionary = {
 };
 
 export const tableHeaderDictionary = {
-  issueWatchList: ['Users'],
-  userWatchList: ['Issues', 'Amount'],
+  issueWatchList: ['User'],
+  userWatchList: ['Issue', 'Amount'],
 };

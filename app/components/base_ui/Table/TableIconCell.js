@@ -2,7 +2,6 @@ import React from 'react';
 import T from 'prop-types';
 
 import ConditionalRender from '../ConditionalRender';
-
 import IconSections from './IconSections';
 import { IconCellContainer, StyledIconCell } from './styledComponents';
 
@@ -21,7 +20,7 @@ const TableIconCell = ({ cellData, id, isHoveredRow, type }) => (
 
 TableIconCell.propTypes = {
   cellData: T.oneOfType([T.number, T.string]).isRequired,
-  id: T.number.isRequired,
+  id: T.string.isRequired,
   isHoveredRow: T.bool.isRequired,
   type: T.string.isRequired,
 };

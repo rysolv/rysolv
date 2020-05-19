@@ -118,6 +118,12 @@ const getUsers = async table => {
   return rows;
 };
 
+const getUserWatchList = async id => {
+  const queryText = `SELECT id, name AS "Issue", funded_amount AS "Amount" FROM issues WHERE (id = '${id}')`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
 // SEARCH users
 const searchUsers = async (table, value) => {
   const fields = ['first_name', 'last_name', 'username'];
@@ -168,6 +174,7 @@ module.exports = {
   deleteUser,
   getOneUser,
   getUsers,
+  getUserWatchList,
   searchUsers,
   singleSearch,
   transformUser,
