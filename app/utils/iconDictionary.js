@@ -23,6 +23,7 @@ import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
 import Link from '@material-ui/icons/Link';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
+import PublishIcon from '@material-ui/icons/Publish';
 import PullRequest from '@material-ui/icons/AccountTree';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
@@ -73,6 +74,7 @@ export default (name, options) => {
     stackoverflow: Stackoverflow,
     star: Star,
     successOutline: CheckCircleOutline,
+    upload: PublishIcon,
     upvote: Upvote,
     user: AccountCircleIcon,
     verified: Verified,

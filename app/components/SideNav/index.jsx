@@ -16,13 +16,13 @@ import {
   StyledListWrapper,
   StyledSideNav,
 } from './styledComponents';
-
 const addIcon = iconDictionary('addCircle');
 const backArrow = iconDictionary('backArrowHalf');
 const forwardArrow = iconDictionary('forwardArrowHalf');
 const issueIcon = iconDictionary('issue');
 const organizationIcon = iconDictionary('organization');
 const userIcon = iconDictionary('user');
+const uploadIcon = iconDictionary('upload');
 
 const SideNav = ({ handleNav, view }) => {
   const path = window.location.pathname;
@@ -111,8 +111,8 @@ const SideNav = ({ handleNav, view }) => {
               key="addIssues"
               onClick={() => handleClick('/issues/add', 3)}
             >
-              <ListItemIcon>{addIcon}</ListItemIcon>
-              <ListItemText primary="Add Issue" />
+              <ListItemIcon>{uploadIcon}</ListItemIcon>
+              <ListItemText primary="New Issue" />
             </ListItem>
           </StyledListWrapper>
           <StyledListWrapper active={currentValue === 4}>
@@ -122,7 +122,7 @@ const SideNav = ({ handleNav, view }) => {
               onClick={() => handleClick('/organizations/add', 4)}
             >
               <ListItemIcon>{addIcon}</ListItemIcon>
-              <ListItemText primary="Add Organization" />
+              <ListItemText primary="New Organization" />
             </ListItem>
           </StyledListWrapper>
         </List>

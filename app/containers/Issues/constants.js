@@ -30,6 +30,10 @@ export const FETCH_ISSUE_DETAIL_FAILURE =
 export const FETCH_ISSUE_DETAIL_SUCCESS =
   'app/Issues/FETCH_ISSUE_DETAIL_SUCCESS';
 
+export const IMPORT_ISSUE = 'app/Issues/IMPORT_ISSUE';
+export const IMPORT_ISSUE_FAILURE = 'app/Issues/IMPORT_ISSUE_FAILURE';
+export const IMPORT_ISSUE_SUCCESS = 'app/Issues/IMPORT_ISSUE_SUCCESS';
+
 export const INCREMENT_STEP = 'app/Issues/INCREMENT_STEP';
 export const INPUT_CHANGE = 'app/Issues/INPUT_CHANGE';
 export const INPUT_ERROR = 'app/Issues/INPUT_ERROR';

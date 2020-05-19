@@ -15,15 +15,15 @@ import {
 const searchOptions = [
   {
     route: '/issues/search/',
-    title: 'All Issues',
+    title: 'In Issues',
   },
   {
     route: '/organizations/search/',
-    title: 'All Organizations',
+    title: 'In Organizations',
   },
   {
     route: '/users/search/',
-    title: 'All Users',
+    title: 'In Users',
   },
 ];
 
@@ -38,6 +38,7 @@ const SearchDropDown = ({ handleClose, handleNav, open, setValue, value }) => {
         <SearchItemContainer
           key={`search-item-${title}`}
           onMouseDown={() => handleSubmit({ route })}
+          onKeyPress={() => handleSubmit({ route })}
         >
           <ValueWrapper>{value}</ValueWrapper>
           <OptionWrapper>

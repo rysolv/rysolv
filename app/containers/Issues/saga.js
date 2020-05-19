@@ -9,6 +9,7 @@ import {
   DELETE_ISSUE,
   FETCH_ISSUE_DETAIL,
   FETCH_ISSUES,
+  IMPORT_ISSUE,
   SAVE_INFO,
   SEARCH_ISSUES,
   successCreateIssueMessage,
@@ -27,6 +28,8 @@ import {
   fetchIssueDetailSuccess,
   fetchIssuesFailure,
   fetchIssuesSuccess,
+  importIssueFailure,
+  importIssueSuccess,
   saveInfoFailure,
   saveInfoSuccess,
   searchIssuesFailure,
@@ -214,11 +217,30 @@ export function* fetchIssuesSaga() {
   }
 }
 
+export function* importIssueSaga({ payload }) {
+  const { url } = payload;
+  const query = `
+  mutation{
+    importIssue(url: "${url}") {
+      id
+    }
+  }`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const data = yield call(post, '/graphql', graphql);
+    yield put(importIssueSuccess({ data }));
+  } catch (error) {
+    yield put(importIssueFailure({ error }));
+  }
+}
+
 export function* saveInfoSaga({ payload }) {
   const {
     requestBody: {
       body,
-      importIssue,
       issueUrl,
       language,
       name,
@@ -238,7 +260,6 @@ export function* saveInfoSaga({ payload }) {
         contributor: "${userId}",
         language:  ${JSON.stringify(language)},
         name: "${name}",
-        importIssue: "${importIssue}",
         organizationDescription:  "${organizationDescription}",
         organizationId:  "${organizationId}",
         organizationName:  "${organizationName}",
@@ -342,6 +363,7 @@ export default function* watcherSaga() {
   yield takeLatest(DELETE_ISSUE, deleteIssueSaga);
   yield takeLatest(FETCH_ISSUE_DETAIL, fetchIssueDetailSaga);
   yield takeLatest(FETCH_ISSUES, fetchIssuesSaga);
+  yield takeLatest(IMPORT_ISSUE, importIssueSaga);
   yield takeLatest(SAVE_INFO, saveInfoSaga);
   yield takeLatest(SEARCH_ISSUES, searchIssuesSaga);
   yield takeLatest(UPVOTE_ISSUE, upvoteIssuesSaga);

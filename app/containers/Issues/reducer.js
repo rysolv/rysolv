@@ -25,6 +25,9 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  IMPORT_ISSUE_FAILURE,
+  IMPORT_ISSUE_SUCCESS,
+  IMPORT_ISSUE,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
@@ -79,6 +82,7 @@ export const initialState = {
     addIssue: false,
     addWatch: false,
     deleteIssue: false,
+    importIssue: false,
     issueDetail: false,
     issues: false,
     searchIssues: false,
@@ -238,6 +242,19 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_ISSUE_DETAIL: {
       draft.loading.issueDetail = true;
+      break;
+    }
+    case IMPORT_ISSUE_FAILURE: {
+      draft.loading.importIssue = false;
+      break;
+    }
+    case IMPORT_ISSUE_SUCCESS: {
+      console.log(payload);
+      draft.loading.importIssue = false;
+      break;
+    }
+    case IMPORT_ISSUE: {
+      draft.loading.importIssue = true;
       break;
     }
     case INCREMENT_STEP: {

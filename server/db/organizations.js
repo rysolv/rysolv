@@ -40,8 +40,9 @@ const checkDuplicateOrganization = async (table, repo) => {
   `;
   const { rows } = await singleQuery(queryText);
   if (rows.length > 0) {
-    throw new Error(`Error: Organization at ${repo} already exists`);
+    return true;
   }
+  return false;
 };
 
 // Create new organization
@@ -50,6 +51,7 @@ const createOrganization = async data => {
     organizations(id, created_date, ${organizationValues})
     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
     returning *`;
+  console.log('createOrg', data);
   const result = await mapValues(queryText, data);
   return result;
 };

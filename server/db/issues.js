@@ -53,8 +53,9 @@ const checkDuplicateIssue = async (table, repo) => {
   `;
   const { rows } = await singleQuery(queryText);
   if (rows.length > 0) {
-    throw new Error(`Error: Issue at ${repo} already exists`);
+    return true;
   }
+  return false;
 };
 
 // Create new Issue
