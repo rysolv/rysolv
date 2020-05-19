@@ -54,9 +54,10 @@ export const initialState = {
     importUrl: { error: '', value: '' },
   },
   error: {
+    importIssue: { error: false, message: '' },
+    issueDetail: false,
     issues: false,
     searchIssues: false,
-    issueDetail: false,
   },
   filter: {
     language: [],
@@ -73,6 +74,7 @@ export const initialState = {
       feature: false,
     },
   },
+  importIssue: '',
   issueDetail: {},
   issues: [],
   isVerified: false,
@@ -245,12 +247,14 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case IMPORT_ISSUE_FAILURE: {
+      const { error } = payload;
+      draft.error.importIssue = { error: true, message: error.message };
       draft.loading.importIssue = false;
       break;
     }
     case IMPORT_ISSUE_SUCCESS: {
-      console.log(payload);
       draft.loading.importIssue = false;
+      draft.importIssue = 'Successfully imported issue';
       break;
     }
     case IMPORT_ISSUE: {
@@ -264,6 +268,9 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
+      draft.error = initialState.error;
+      draft[form][field].error = '';
+
       if (form === 'filter') {
         draft[form][field] = value;
       } else if (field === 'language') {

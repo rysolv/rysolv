@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { fetchActiveUser } from 'containers/Auth/actions';
@@ -167,8 +168,16 @@ export function* fetchIssueDetailSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { oneIssue, getIssueComments },
+      data: {
+        oneIssue,
+        oneIssue: { __typename },
+        getIssueComments,
+      },
     } = yield call(post, '/graphql', issueQuery);
+
+    if (__typename === 'Error') {
+      throw new Error(oneIssue.message);
+    }
 
     oneIssue.comments = getIssueComments;
 
@@ -218,11 +227,17 @@ export function* fetchIssuesSaga() {
 }
 
 export function* importIssueSaga({ payload }) {
-  const { url } = payload;
+  const { validatedUrl } = payload;
   const query = `
   mutation{
-    importIssue(url: "${url}") {
-      id
+    importIssue(url: "${validatedUrl}") {
+      __typename
+      ... on Issue {
+        id
+      }
+      ... on Error {
+        message
+      }
     }
   }`;
   try {
@@ -230,8 +245,18 @@ export function* importIssueSaga({ payload }) {
       query,
       variables: {},
     });
-    const data = yield call(post, '/graphql', graphql);
-    yield put(importIssueSuccess({ data }));
+    const {
+      data: {
+        importIssue,
+        importIssue: { __typename },
+      },
+    } = yield call(post, '/graphql', graphql);
+
+    if (__typename === 'Error') {
+      throw new Error(importIssue.message);
+    }
+
+    yield put(importIssueSuccess({ importIssue }));
   } catch (error) {
     yield put(importIssueFailure({ error }));
   }

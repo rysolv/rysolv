@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { fetchActiveUser } from 'containers/Auth/actions';
@@ -125,6 +126,11 @@ export function* fetchInfoSaga({ payload }) {
     const {
       data: { oneOrganization },
     } = yield call(post, '/graphql', graphql);
+
+    if (oneOrganization.__typename === 'Error') {
+      throw new Error(oneOrganization.message);
+    }
+
     yield put(fetchInfoSuccess({ organization: oneOrganization }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
@@ -161,7 +167,6 @@ export function* saveInfoSaga({ payload }) {
 
 export function* searchOrganizationsSaga({ payload }) {
   const { value } = payload;
-  console.log('value', value);
   const query = `
   query {
     searchOrganizations(value: "${value}") {

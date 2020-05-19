@@ -18,7 +18,7 @@ export const StyledBaseInput = styled(OutlinedInput)`
   background: white;
   border-radius: 0.5rem;
   color: rgba(0, 0, 0, 0.7);
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   height: 3rem;
   overflow: hidden;
   width: 100%;
@@ -68,13 +68,15 @@ export const StyledFormControl = styled(FormControl)`
 `;
 
 export const StyledFlatIcon = styled.div`
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
+
   justify-content: flex-end;
   padding: 0;
 `;
 
 export const StyledFlatIconButton = styled(FlatIconButton)`
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
+
   justify-content: flex-end;
   padding: 0;
 `;

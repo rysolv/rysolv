@@ -181,7 +181,7 @@ module.exports = {
 
       // check issue repo for duplicate
       if (await checkDuplicateIssue('issues', issueInput.repo)) {
-        throw new Error(`Error: Issue at ${issueInput.repo} already exists`);
+        throw new Error(`Issue at ${issueInput.repo} already exists`);
       }
 
       if (
@@ -213,7 +213,10 @@ module.exports = {
           false,
         );
 
-        return newIssue;
+        return {
+          __typename: 'Issue',
+          ...newIssue,
+        };
       }
 
       // Create organization, get org id, create issue
@@ -231,9 +234,15 @@ module.exports = {
 
       const [newIssue] = await createNewIssue(issueArray);
 
-      return newIssue;
+      return {
+        __typename: 'Issue',
+        ...newIssue,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   oneIssue: async args => {

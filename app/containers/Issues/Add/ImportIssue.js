@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 
 import ImportForm from 'components/Issues/Add/ImportForm';
 
+import { validateUrl } from 'utils/validate';
 import {
+  importIssue,
   incrementStep,
   inputChange,
   inputError,
-  importIssue,
 } from '../actions';
-// import { validateInputs } from './helpers';
-import { makeSelectIssues } from '../selectors';
+import { makeSelectIssueDetailError, makeSelectIssues } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class ImportIssue extends React.PureComponent {
@@ -20,25 +20,29 @@ export class ImportIssue extends React.PureComponent {
     const {
       data,
       dispatchImportIssue,
-      // dispatchInputError,
+      dispatchInputError,
       handleIncrementStep,
       handleInputChange,
+      importError,
     } = this.props;
     const handleSubmit = () => {
       const {
         importUrl: { value: url },
       } = data;
-      dispatchImportIssue({ url });
-      // const validationErrors = validateInputs({ data });
-      // dispatchInputError({ errors: validationErrors });
-      // if (Object.keys(validationErrors).every(err => !validationErrors[err])) {
-      //   handleIncrementStep({ step: 3, view: 'addIssue' });
-      // }
+      const { error, validatedUrl, message } = validateUrl(url);
+
+      if (error) {
+        dispatchInputError({ errors: { importUrl: message } });
+      } else {
+        dispatchImportIssue({ validatedUrl });
+      }
     };
+
     return (
       <Fragment>
         <ImportForm
           data={data}
+          importError={importError}
           handleInputChange={handleInputChange}
           handleIncrementStep={handleIncrementStep}
           handleSubmit={handleSubmit}
@@ -51,9 +55,10 @@ export class ImportIssue extends React.PureComponent {
 ImportIssue.propTypes = {
   data: T.object,
   dispatchImportIssue: T.func,
-  // dispatchInputError: T.func,
+  dispatchInputError: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
+  importError: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -61,6 +66,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   data: makeSelectIssues('data'),
+  importError: makeSelectIssueDetailError('importIssue'),
 });
 
 function mapDispatchToProps(dispatch) {

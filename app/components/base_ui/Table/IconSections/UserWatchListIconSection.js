@@ -2,7 +2,7 @@ import React from 'react';
 
 import iconDictionary from 'utils/iconDictionary';
 
-import IconButton from '../../Buttons';
+import { IconButton } from '../../Buttons';
 
 import { IconContainer } from '../styledComponents';
 

@@ -14,6 +14,9 @@ const getSingleIssue = async issueUrl => {
     const issueRequest = await fetch(formattedUrl, requestOptions);
     const issueData = await issueRequest.json();
     const { html_url, title, state, body, repository_url } = issueData;
+    if (state !== 'open') {
+      throw new Error('Cannot add closed issue');
+    }
 
     const organizationRequest = await fetch(repository_url, requestOptions);
     const organizationData = await organizationRequest.json();
