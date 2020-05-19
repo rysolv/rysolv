@@ -2,9 +2,9 @@ import React from 'react';
 import T from 'prop-types';
 import { IconButton as MuiIconButton, Tooltip } from '@material-ui/core';
 
-const IconButton = ({ icon, label, onClick, ...restProps }) => (
+const IconButton = ({ icon, label, onClick }) => (
   <Tooltip title={label}>
-    <MuiIconButton onClick={onClick} size="small" {...restProps}>
+    <MuiIconButton onClick={onClick} size="small">
       {icon}
     </MuiIconButton>
   </Tooltip>

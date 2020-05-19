@@ -16,10 +16,12 @@ import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectActiveUser } from 'containers/Auth/selectors';
 import { signin, signout } from 'containers/Auth/actions';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
 
-import { closeModalState, openModalState } from './actions';
+import { closeModalState, fetchWatchList } from './actions';
 import reducer from './reducer';
 import routes from './routes';
+import saga from './saga';
 import { makeSelectMain, makeSelectModalProps } from './selectors';
 import { AppBody } from './styledComponents';
 
@@ -28,7 +30,7 @@ export const Main = ({
   data = { test: true },
   deviceView,
   dispatchCloseModal,
-  dispatchOpenModal,
+  dispatchFetchWatchList,
   error,
   handleNav,
   handleSignin,
@@ -39,6 +41,7 @@ export const Main = ({
   loading,
   match,
   modal,
+  tableData,
 }) => {
   const modalPropsDictionary = {
     issueWatchList: {
@@ -47,7 +50,7 @@ export const Main = ({
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         modalState: 'issueWatchList',
-        tableData: [],
+        tableData,
         title: 'Watch List',
         type: 'issueWatchList',
       },
@@ -58,7 +61,7 @@ export const Main = ({
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         modalState: 'userWatchList',
-        tableData: [],
+        tableData,
         title: 'Your Watch List',
         type: 'userWatchList',
       },
@@ -68,7 +71,7 @@ export const Main = ({
     <Fragment>
       <Header
         activeUser={activeUser}
-        dispatchOpenModal={dispatchOpenModal}
+        dispatchFetchWatchList={dispatchFetchWatchList}
         handleNav={handleNav}
         handleSignin={handleSignin}
         handleSignout={handleSignout}
@@ -96,7 +99,7 @@ Main.propTypes = {
   data: T.object,
   deviceView: T.string,
   dispatchCloseModal: T.func,
-  dispatchOpenModal: T.func,
+  dispatchFetchWatchList: T.func,
   error: T.object,
   handleNav: T.func,
   handleSignin: T.func,
@@ -107,6 +110,7 @@ Main.propTypes = {
   loading: T.bool,
   match: T.object,
   modal: T.string,
+  tableData: T.arrayOf(T.object),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -115,6 +119,7 @@ const mapStateToProps = createStructuredSelector({
   isSignedIn: makeSelectActiveUser('isSignedIn'),
   isUserWatchListModalOpen: makeSelectModalProps('userWatchList'),
   modal: makeSelectMain('modal'),
+  tableData: makeSelectMain('tableData'),
   /**
    * Reducer: ViewSizes
    */
@@ -130,7 +135,7 @@ const mapDispatchToProps = dispatch => ({
   /**
    * Main
    */
-  dispatchOpenModal: payload => dispatch(openModalState(payload)),
+  dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
   dispatchCloseModal: payload => dispatch(closeModalState(payload)),
   /*
    * Reducer : Router
@@ -144,10 +149,12 @@ const withConnect = connect(
 );
 
 const withReducer = injectReducer({ key: 'main', reducer });
+const withSaga = injectSaga({ key: 'main', saga });
 
 export default withRouter(
   compose(
     withReducer,
+    withSaga,
     withConnect,
   )(Main),
 );

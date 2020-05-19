@@ -3,7 +3,6 @@ import React from 'react';
 import iconDictionary from 'utils/iconDictionary';
 
 import { IconButton } from '../../Buttons';
-
 import { IconContainer } from '../styledComponents';
 
 const editIcon = iconDictionary('edit');
