@@ -39,6 +39,7 @@ export const Main = ({
   loading,
   match,
   modal,
+  tableData,
 }) => {
   const modalPropsDictionary = {
     issueWatchList: {
@@ -47,7 +48,7 @@ export const Main = ({
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         modalState: 'issueWatchList',
-        tableData: [],
+        tableData,
         title: 'Watch List',
         type: 'issueWatchList',
       },
@@ -58,7 +59,7 @@ export const Main = ({
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         modalState: 'userWatchList',
-        tableData: [],
+        tableData,
         title: 'Your Watch List',
         type: 'userWatchList',
       },
@@ -107,6 +108,7 @@ Main.propTypes = {
   loading: T.bool,
   match: T.object,
   modal: T.string,
+  tableData: T.arrayOf(T.object),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -115,6 +117,7 @@ const mapStateToProps = createStructuredSelector({
   isSignedIn: makeSelectActiveUser('isSignedIn'),
   isUserWatchListModalOpen: makeSelectModalProps('userWatchList'),
   modal: makeSelectMain('modal'),
+  tableData: makeSelectMain('tableData'),
   /**
    * Reducer: ViewSizes
    */

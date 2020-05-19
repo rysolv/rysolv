@@ -6,6 +6,7 @@ import { CLOSE_MODAL_STATE, OPEN_MODAL_STATE } from './constants';
 export const initialState = {
   isModalOpen: { issueWatchList: false, userWatchList: false },
   modal: '',
+  tableData: [],
 };
 
 const mainReducer = produce((draft, { payload, type }) => {
