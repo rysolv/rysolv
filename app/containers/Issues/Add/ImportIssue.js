@@ -12,18 +12,23 @@ import {
   inputChange,
   inputError,
 } from '../actions';
-import { makeSelectIssueDetailError, makeSelectIssues } from '../selectors';
+import {
+  makeSelectIssueDetailError,
+  makeSelectIssues,
+  makeSelectIssuesLoading,
+} from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class ImportIssue extends React.PureComponent {
   render() {
     const {
-      issueData,
       dispatchImportIssue,
       dispatchInputError,
       handleIncrementStep,
       handleInputChange,
       importError,
+      importIssueLoading,
+      issueData,
     } = this.props;
     const handleSubmit = () => {
       const {
@@ -41,11 +46,12 @@ export class ImportIssue extends React.PureComponent {
     return (
       <Fragment>
         <ImportForm
-          issueData={issueData}
-          importError={importError}
-          handleInputChange={handleInputChange}
           handleIncrementStep={handleIncrementStep}
+          handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
+          importError={importError}
+          importIssueLoading={importIssueLoading}
+          issueData={issueData}
         />
       </Fragment>
     );
@@ -53,20 +59,22 @@ export class ImportIssue extends React.PureComponent {
 }
 
 ImportIssue.propTypes = {
-  issueData: T.object,
   dispatchImportIssue: T.func,
   dispatchInputError: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   importError: T.object,
+  importIssueLoading: T.bool,
+  issueData: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
-  issueData: makeSelectIssues('issueData'),
   importError: makeSelectIssueDetailError('importIssue'),
+  importIssueLoading: makeSelectIssuesLoading('importIssue'),
+  issueData: makeSelectIssues('issueData'),
 });
 
 function mapDispatchToProps(dispatch) {

@@ -12,6 +12,7 @@ const SearchIcon = iconDictionary('search');
 
 const ImportForm = ({
   issueData,
+  importIssueLoading,
   handleIncrementStep,
   handleInputChange,
   handleSubmit,
@@ -30,6 +31,7 @@ const ImportForm = ({
     <ImportFormContainer>
       Import GitHub Issue
       <BaseTextInputWithAdornment
+        disabled={importIssueLoading}
         adornmentComponent={SearchIcon}
         error={!!importUrl.error}
         helperText={importUrl.error || ''}
@@ -53,11 +55,12 @@ const ImportForm = ({
 };
 
 ImportForm.propTypes = {
-  issueData: T.object,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   handleSubmit: T.func,
   importError: T.object,
+  importIssueLoading: T.bool,
+  issueData: T.object,
 };
 
 export default ImportForm;

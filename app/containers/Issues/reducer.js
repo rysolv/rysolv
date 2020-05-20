@@ -189,7 +189,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case CLEAR_FORM: {
-      draft.data = initialState.data;
+      draft.issueData = initialState.issueData;
       draft.organizationData = initialState.organizationData;
       draft.isVerified = initialState.isVerified;
       break;
@@ -285,7 +285,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       const { errors } = payload;
       const fields = Object.keys(errors);
       fields.forEach(field => {
-        draft.data[field].error = errors[field] || '';
+        draft.issueData[field].error = errors[field] || '';
       });
       break;
     }

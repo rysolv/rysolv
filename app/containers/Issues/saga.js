@@ -265,10 +265,10 @@ export function* importIssueSaga({ payload }) {
 export function* saveInfoSaga({ payload }) {
   const {
     requestBody: {
-      body,
+      issueName,
+      issueBody,
       issueUrl,
-      language,
-      name,
+      languages,
       organizationDescription,
       organizationId,
       organizationName,
@@ -277,14 +277,15 @@ export function* saveInfoSaga({ payload }) {
     },
     activeUser: { id: userId },
   } = payload;
+
   const query = `
   mutation{
     createIssue(
       issueInput: {
-        body: ${JSON.stringify(body)},
+        body: ${JSON.stringify(issueBody)},
         contributor: "${userId}",
-        language:  ${JSON.stringify(language)},
-        name: "${name}",
+        language:  ${JSON.stringify(languages)},
+        name: "${issueName}",
         organizationDescription:  "${organizationDescription}",
         organizationId:  "${organizationId}",
         organizationName:  "${organizationName}",
