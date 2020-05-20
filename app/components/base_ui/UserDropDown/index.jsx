@@ -46,8 +46,8 @@ const MenuComponent = props => (
 const UserDropDownMenu = ({
   activeUser,
   anchorEl,
-  dispatchFetchWatchList,
   handleClose,
+  handleNav,
   handleSignout,
 }) => {
   const {
@@ -89,14 +89,7 @@ const UserDropDownMenu = ({
           </MenuItemValue>
         </StyledMenuItem>
 
-        <StyledMenuItem
-          onClick={() =>
-            dispatchFetchWatchList({
-              idArray: watching,
-              modalState: 'userWatchList',
-            })
-          }
-        >
+        <StyledMenuItem onClick={() => handleNav('/settings')}>
           <MenuItemLabel>
             <IconWrapper>
               <MonocleIcon />
@@ -106,7 +99,7 @@ const UserDropDownMenu = ({
           <MenuItemValue> {watching ? watching.length : 0}</MenuItemValue>
         </StyledMenuItem>
 
-        <StyledMenuItem>
+        <StyledMenuItem onClick={() => handleNav('/settings')}>
           <MenuItemLabel>
             <IconWrapper>{AttemptIcon}</IconWrapper>
             Attempting
@@ -114,7 +107,7 @@ const UserDropDownMenu = ({
           <MenuItemValue>{attempting ? attempting.length : 0}</MenuItemValue>
         </StyledMenuItem>
 
-        <StyledMenuItem>
+        <StyledMenuItem onClick={() => handleNav('/settings/pullrequests')}>
           <MenuItemLabel>
             <IconWrapper>{PullRequestIcon}</IconWrapper>
             Pull Requests
@@ -124,7 +117,7 @@ const UserDropDownMenu = ({
           </MenuItemValue>
         </StyledMenuItem>
 
-        <StyledMenuItem>
+        <StyledMenuItem onClick={() => handleNav('/settings/issues')}>
           <MenuItemLabel>
             <IconWrapper>{IssueIcon}</IconWrapper>
             Issues
@@ -132,7 +125,7 @@ const UserDropDownMenu = ({
           <MenuItemValue>{issues ? issues.length : 0}</MenuItemValue>
         </StyledMenuItem>
 
-        <StyledMenuItem>
+        <StyledMenuItem onClick={() => handleNav('/settings/organizations')}>
           <MenuItemLabel>
             <IconWrapper>{OrganizationIcon}</IconWrapper>
             Organizations
@@ -143,7 +136,7 @@ const UserDropDownMenu = ({
         </StyledMenuItem>
       </StyledMenuContainer>
 
-      <StyledMenuItem>
+      <StyledMenuItem onClick={() => handleNav('/settings')}>
         <MenuItemLabel>
           <IconWrapper>{SettingsIcon}</IconWrapper>
           Settings
@@ -163,8 +156,8 @@ const UserDropDownMenu = ({
 UserDropDownMenu.propTypes = {
   activeUser: T.object,
   anchorEl: T.object,
-  dispatchFetchWatchList: T.func,
   handleClose: T.func,
+  handleNav: T.func,
   handleSignout: T.func,
 };
 export default UserDropDownMenu;

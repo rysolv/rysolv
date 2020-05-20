@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import IssueDetail from 'components/Issues/Detail';
-import { makeSelectActiveUser } from 'containers/Auth/selectors';
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -93,7 +93,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
-  activeUser: makeSelectActiveUser('activeUser'),
+  activeUser: makeSelectAuth('activeUser'),
   issueDetail: makeSelectIssueDetail('issueDetail'),
   error: makeSelectIssueDetailError('issueDetail'),
   loading: makeSelectIssueDetailLoading('issueDetail'),

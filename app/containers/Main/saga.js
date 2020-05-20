@@ -11,25 +11,27 @@ import { FETCH_WATCH_LIST } from './constants';
 
 export function* fetchWatchListSaga({ payload }) {
   const { idArray, modalState } = payload;
-  const query = `
+  const queryDictionary = {
+    issueWatchList: `
     query {
-      getUserWatchList(idArray: ${JSON.stringify(idArray)}) {
+      getWatchList(idArray: ${JSON.stringify(idArray)}, type: "${modalState}") {
         id,
-        Issue,
-        Amount,
+        User,
+        profilePic,
       }
     }
-  `;
+  `,
+  };
   try {
     const graphql = JSON.stringify({
-      query,
+      query: queryDictionary[modalState],
       variables: {},
     });
     const {
-      data: { getUserWatchList },
+      data: { getWatchList },
     } = yield call(post, '/graphql', graphql);
     yield put(fetchWatchListSuccess());
-    yield put(openModalState({ modalState, tableData: getUserWatchList }));
+    yield put(openModalState({ modalState, tableData: getWatchList }));
   } catch (error) {
     yield put(fetchWatchListFailure());
   }

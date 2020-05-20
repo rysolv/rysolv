@@ -47,6 +47,10 @@ export const StyledIconCell = styled(StyledTableCell)`
   max-width: 28rem;
   min-width: 28rem;
   text-align: left;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const StyledTableRow = styled(TableRow)`

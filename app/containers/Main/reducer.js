@@ -10,7 +10,7 @@ import {
 } from './constants';
 
 export const initialState = {
-  isModalOpen: { issueWatchList: false, userWatchList: false },
+  isModalOpen: { issueWatchList: false },
   error: null,
   loading: false,
   modal: '',
@@ -20,8 +20,7 @@ export const initialState = {
 const mainReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLOSE_MODAL_STATE: {
-      const { modalState } = payload;
-      draft.isModalOpen[modalState] = false;
+      draft.isModalOpen = initialState.isModalOpen;
       draft.modal = initialState.modal;
       draft.tableData = initialState.tableData;
       break;
@@ -40,7 +39,6 @@ const mainReducer = produce((draft, { payload, type }) => {
     }
     case OPEN_MODAL_STATE: {
       const { modalState, tableData } = payload;
-      console.log(tableData)
       draft.isModalOpen[modalState] = true;
       draft.modal = modalState;
       draft.tableData = tableData || [];

@@ -3,10 +3,10 @@ import { initialState } from './reducer';
 
 const selectAuthDomain = state => state.auth || initialState;
 
-const makeSelectActiveUser = prop =>
+const makeSelectAuth = prop =>
   createSelector(
     selectAuthDomain,
     substate => substate[prop],
   );
 
-export { makeSelectActiveUser };
+export { makeSelectAuth };

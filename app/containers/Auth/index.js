@@ -10,7 +10,7 @@ import injectReducer from 'utils/injectReducer';
 
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectActiveUser } from './selectors';
+import { makeSelectAuth } from './selectors';
 import { signin } from './actions';
 import { checkCookie } from './helpers';
 
@@ -37,7 +37,7 @@ export default function withAuth(config, Component) {
     /**
      * Reducer: Auth
      */
-    isSignedIn: makeSelectActiveUser('isSignedIn'),
+    isSignedIn: makeSelectAuth('isSignedIn'),
   });
 
   const mapDispatchToProps = dispatch => ({

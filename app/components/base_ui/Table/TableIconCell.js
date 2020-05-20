@@ -5,14 +5,21 @@ import ConditionalRender from '../ConditionalRender';
 import IconSections from './IconSections';
 import { IconCellContainer, StyledIconCell } from './styledComponents';
 
-const TableIconCell = ({ cellData, id, isHoveredRow, type }) => (
+const TableIconCell = ({
+  cellData,
+  handleRedirect,
+  id,
+  isHoveredRow,
+  route,
+  type,
+}) => (
   <StyledIconCell>
-    <IconCellContainer>
+    <IconCellContainer onClick={() => handleRedirect(`${route}/${id}`)}>
       {cellData}
       <ConditionalRender
         Component={IconSections[type]}
         propsToPassDown={{ id }}
-        shouldRender={isHoveredRow}
+        shouldRender={IconSections[type] && isHoveredRow}
       />
     </IconCellContainer>
   </StyledIconCell>
@@ -20,8 +27,10 @@ const TableIconCell = ({ cellData, id, isHoveredRow, type }) => (
 
 TableIconCell.propTypes = {
   cellData: T.oneOfType([T.number, T.string]).isRequired,
+  handleRedirect: T.func,
   id: T.string.isRequired,
   isHoveredRow: T.bool.isRequired,
+  route: T.string,
   type: T.string.isRequired,
 };
 

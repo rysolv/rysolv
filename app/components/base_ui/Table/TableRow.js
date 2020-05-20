@@ -7,7 +7,15 @@ import TableCell from './TableCell';
 import TableIconCell from './TableIconCell';
 import { StyledTableRow } from './styledComponents';
 
-const TableRow = ({ handleHovered, headers, isHoveredRow, rowData, type }) => (
+const TableRow = ({
+  handleHovered,
+  handleRedirect,
+  headers,
+  isHoveredRow,
+  route,
+  rowData,
+  type,
+}) => (
   <StyledTableRow onMouseEnter={handleHovered}>
     {headers.map((header, index) => {
       const { [header]: cellData, id } = rowData;
@@ -19,8 +27,10 @@ const TableRow = ({ handleHovered, headers, isHoveredRow, rowData, type }) => (
           FallbackComponent={<TableCell cellData={cellData} />}
           propsToPassDown={{
             cellData,
+            handleRedirect,
             id,
             isHoveredRow,
+            route,
             type,
           }}
           shouldRender={isIconCell}
@@ -32,8 +42,10 @@ const TableRow = ({ handleHovered, headers, isHoveredRow, rowData, type }) => (
 
 TableRow.propTypes = {
   handleHovered: T.func.isRequired,
+  handleRedirect: T.func,
   headers: T.array.isRequired,
   isHoveredRow: T.bool.isRequired,
+  route: T.string,
   rowData: T.object.isRequired,
   type: T.string.isRequired,
 };

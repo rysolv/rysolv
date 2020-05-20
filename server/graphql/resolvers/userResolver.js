@@ -7,7 +7,7 @@ const {
   getOneUser,
   getOrganizationsWhere,
   getUsers,
-  getUserWatchList,
+  getWatchList,
   searchUsers,
   transformUser,
   updateUserArray,
@@ -112,13 +112,13 @@ module.exports = {
       throw err;
     }
   },
-  getUserWatchList: async args => {
-    const { idArray } = args;
+  getWatchList: async args => {
+    const { idArray, type } = args;
     try {
       const watchListResult = await Promise.all(
         idArray.map(async issueId => {
-          const [issueResult] = await getUserWatchList(issueId);
-          return issueResult;
+          const [result] = await getWatchList(issueId, type);
+          return result;
         }),
       );
       const result = watchListResult;

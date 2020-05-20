@@ -10,7 +10,7 @@ import {
   StyledUserNavBar,
 } from './styledComponents';
 
-const UserNavBar = ({ activeUser, dispatchFetchWatchList, handleSignout }) => {
+const UserNavBar = ({ activeUser, handleNav, handleSignout }) => {
   const { username, profilePic, rep } = activeUser;
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClose = () => {
@@ -35,8 +35,8 @@ const UserNavBar = ({ activeUser, dispatchFetchWatchList, handleSignout }) => {
       <UserDropDownMenu
         activeUser={activeUser}
         anchorEl={anchorEl}
-        dispatchFetchWatchList={dispatchFetchWatchList}
         handleClose={handleClose}
+        handleNav={handleNav}
         handleSignout={handleSignout}
       />
     </Fragment>
@@ -45,7 +45,7 @@ const UserNavBar = ({ activeUser, dispatchFetchWatchList, handleSignout }) => {
 
 UserNavBar.propTypes = {
   activeUser: T.object,
-  dispatchFetchWatchList: T.func,
+  handleNav: T.func,
   handleSignout: T.func,
 };
 

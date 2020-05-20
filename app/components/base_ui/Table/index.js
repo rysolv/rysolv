@@ -10,7 +10,7 @@ import TableBody from './TableBody';
 import TableHeaders from './TableHeaders';
 import { TableWrapper } from './styledComponents';
 
-const BaseTable = ({ tableData, type }) => {
+const BaseTable = ({ handleRedirect, route, tableData, type }) => {
   const [hoveredRow, setHovered] = useState('0');
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('Issue');
@@ -36,10 +36,12 @@ const BaseTable = ({ tableData, type }) => {
           }
           propsToPassDown={{
             handleHovered: setHovered,
+            handleRedirect,
             headers,
             hoveredRow,
             order,
             orderBy,
+            route,
             tableData,
             type,
           }}
@@ -51,6 +53,8 @@ const BaseTable = ({ tableData, type }) => {
 };
 
 BaseTable.propTypes = {
+  handleRedirect: T.func,
+  route: T.string,
   tableData: T.arrayOf(T.object).isRequired,
   type: T.string.isRequired,
 };
