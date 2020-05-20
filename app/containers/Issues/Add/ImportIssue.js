@@ -3,6 +3,7 @@ import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
+import AsyncRender from 'components/AsyncRender';
 import ImportForm from 'components/Issues/Add/ImportForm';
 
 import { validateUrl } from 'utils/validate';
@@ -45,13 +46,18 @@ export class ImportIssue extends React.PureComponent {
 
     return (
       <Fragment>
-        <ImportForm
-          handleIncrementStep={handleIncrementStep}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-          importError={importError}
-          importIssueLoading={importIssueLoading}
-          issueData={issueData}
+        <AsyncRender
+          isRequiredData={false}
+          component={ImportForm}
+          loading={importIssueLoading}
+          propsToPassDown={{
+            handleIncrementStep,
+            handleInputChange,
+            handleSubmit,
+            importError,
+            importIssueLoading,
+            issueData,
+          }}
         />
       </Fragment>
     );
