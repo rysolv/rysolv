@@ -24,13 +24,13 @@ export class VerifyIssue extends React.PureComponent {
   render() {
     const {
       activeUser,
-      data,
+      issueData,
       dispatchIncrementStep,
       dispatchSaveInfo,
       dispatchVerifyInfo,
       handleNav,
       isVerified,
-      organization,
+      organizationData,
       requestBody,
     } = this.props;
     const handleSaveInfo = () => {
@@ -42,18 +42,18 @@ export class VerifyIssue extends React.PureComponent {
         <StyledH3>Organization</StyledH3>
         <VerifyWrapper>
           <SelectedOrganization>
-            {organization.organizationName.value}
+            {organizationData.organizationName.value}
           </SelectedOrganization>
           <StyledLink
-            href={`//${organization.organizationRepo.value}`}
+            href={`//${organizationData.organizationRepo.value}`}
             target="_blank"
           >
-            {organization.organizationRepo.value}
+            {organizationData.organizationRepo.value}
           </StyledLink>
         </VerifyWrapper>
         <StyledH3>Issue</StyledH3>
         <VerifyWrapper>
-          <VerifyForm activeUser={activeUser} data={data} />
+          <VerifyForm activeUser={activeUser} issueData={issueData} />
         </VerifyWrapper>
         <StyledCheckboxWithLabel
           checked={isVerified}
@@ -78,13 +78,13 @@ export class VerifyIssue extends React.PureComponent {
 
 VerifyIssue.propTypes = {
   activeUser: T.object,
-  data: T.object,
+  issueData: T.object,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
   dispatchVerifyInfo: T.func,
   handleNav: T.func,
   isVerified: T.bool,
-  organization: T.object,
+  organizationData: T.object,
   requestBody: T.object,
 };
 
@@ -92,8 +92,8 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
-  data: makeSelectIssues('data'),
-  organization: makeSelectIssues('organizationData'),
+  issueData: makeSelectIssues('issueData'),
+  organizationData: makeSelectIssues('organizationData'),
   isVerified: makeSelectIssues('isVerified'),
   requestBody: makeSelectIssuesRequestBody(),
 });

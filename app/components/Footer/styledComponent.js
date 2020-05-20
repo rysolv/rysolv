@@ -9,6 +9,7 @@ export const FooterWrapper = styled.footer`
   font-size: ${detailFontSize};
   height: 10rem;
   width: 100%;
+  margin-top: 15rem;
 `;
 
 export const StyledLeft = styled.div`

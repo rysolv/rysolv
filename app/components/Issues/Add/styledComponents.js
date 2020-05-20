@@ -56,13 +56,15 @@ export const KeyWrapper = styled.div`
   display: flex;
   flex-direction: row;
   font-size: ${defaultFontSize};
+  min-width: 15rem;
   padding: 2rem 0;
   text-decoration: underline;
-  min-width: 15rem;
 `;
 export const StyledImportError = styled.div`
   color: red;
   font-size: ${detailFontSize};
+  text-align: left;
+  padding: 0 1rem;
 `;
 
 export const StyledMarkdownWrapper = styled.div`

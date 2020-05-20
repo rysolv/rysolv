@@ -7,6 +7,7 @@ import {
   defaultFontSize,
   subheaderFontSize,
   detailFontSize,
+  codeGrey,
 } from 'defaultStyleHelper';
 import { PrimaryButton } from 'components/base_ui';
 
@@ -29,6 +30,15 @@ export const CommentContainer = styled.div`
   overflow: hidden;
   vertical-align: top;
   width: 100%;
+  pre {
+    background-color: ${codeGrey};
+    padding: 0.5rem;
+  }
+  code {
+    background-color: ${codeGrey};
+    font-family: monospace;
+    white-space: pre-wrap;
+  }
 `;
 
 export const CommentHeader = styled.div`

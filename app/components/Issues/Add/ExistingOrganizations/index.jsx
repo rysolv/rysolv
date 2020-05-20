@@ -10,7 +10,7 @@ import {
 
 const ExistingOrganziations = ({
   activeUser,
-  organization,
+  organizationData,
   handleInputChange,
   handleUpdateOrganization,
   handleClearOrganization,
@@ -51,7 +51,7 @@ const ExistingOrganziations = ({
   };
 
   const userOrganizations = activeUser.organizations.map(el => {
-    const checked = el.id === organization.organizationId.value;
+    const checked = el.id === organizationData.organizationId.value;
 
     return (
       <OrganizationCard key={el.id}>
@@ -89,7 +89,7 @@ ExistingOrganziations.propTypes = {
   handleClearOrganization: T.func,
   handleInputChange: T.func,
   handleUpdateOrganization: T.func,
-  organization: T.object,
+  organizationData: T.object,
 };
 
 export default ExistingOrganziations;

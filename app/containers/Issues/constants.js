@@ -59,8 +59,8 @@ export const VERIFY_INFO = 'app/Issues/VERIFY_INFO';
 export const issueDataDictionary = {
   issueUrl: 'Issue Url',
   external: 'External link',
-  body: 'Detailed description of Issue',
-  language: 'Languages',
+  issueBody: 'Detailed description of Issue',
+  languages: 'Languages',
   fundedAmount: 'Funded amount',
   name: 'Title',
 };

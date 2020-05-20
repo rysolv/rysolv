@@ -19,13 +19,12 @@ import {
 } from './styledComponents';
 
 const LinkIcon = iconDictionary('link');
-const CodeIcon = iconDictionary('code');
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class VerifyForm extends React.PureComponent {
   render() {
     const {
-      data: { body, language, name, repo },
+      issueData: { issueBody, languages, issueName, issueUrl },
       activeUser: { id, profilePic, username },
       handleNav,
     } = this.props;
@@ -39,19 +38,23 @@ export class VerifyForm extends React.PureComponent {
     };
 
     const languageDiv =
-      language.value.length > 0
-        ? language.value.map(el => <LanguageWrapper key={el} language={el} />)
+      languages.value.length > 0
+        ? languages.value.map(el => <LanguageWrapper key={el} language={el} />)
         : 'None Listed';
 
     return (
       <DataWrapper>
         <ValueWrapper>
-          <NameWrapper>{name.value}</NameWrapper>
+          <NameWrapper>{issueName.value}</NameWrapper>
         </ValueWrapper>
+        <StyledLink>
+          {LinkIcon}
+          {issueUrl.value}
+        </StyledLink>
         <ValueWrapper>
           <CommentCard
             primary
-            body={body.value}
+            body={issueBody.value}
             date={Date.now()}
             userProfile={primaryUser}
             handleNav={handleNav}
@@ -71,7 +74,7 @@ export class VerifyForm extends React.PureComponent {
 
 VerifyForm.propTypes = {
   activeUser: T.object,
-  data: T.object,
+  issueData: T.object,
   handleNav: T.func,
 };
 

@@ -29,15 +29,15 @@ export class ManualOrganization extends React.PureComponent {
       handleInputChange,
       handleUpdateOrganization,
       isDisabled,
-      organization,
+      organizationData,
     } = this.props;
-    const idSelected = organization.organizationId.value !== '';
+    const idSelected = organizationData.organizationId.value !== '';
     return (
       <Fragment>
         <StyledH3>Select an Organization</StyledH3>
         <ExistingOrganizations
           activeUser={activeUser}
-          organization={organization}
+          organizationData={organizationData}
           handleInputChange={handleInputChange}
           handleUpdateOrganization={handleUpdateOrganization}
           handleClearOrganization={handleClearOrganization}
@@ -45,7 +45,7 @@ export class ManualOrganization extends React.PureComponent {
         <StyledH3>Or create a new Organization</StyledH3>
 
         <OrganizationForm
-          organization={organization}
+          organizationData={organizationData}
           handleInputChange={handleInputChange}
         />
         <ButtonGroup>
@@ -71,14 +71,14 @@ ManualOrganization.propTypes = {
   handleInputChange: T.func,
   handleUpdateOrganization: T.func,
   isDisabled: T.bool,
-  organization: T.object,
+  organizationData: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
-  organization: makeSelectIssues('organizationData'),
+  organizationData: makeSelectIssues('organizationData'),
   isDisabled: makeSelectOrganizationsDisabled(),
 });
 

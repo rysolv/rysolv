@@ -11,17 +11,17 @@ import {
 const SearchIcon = iconDictionary('search');
 
 const ImportForm = ({
-  data,
+  issueData,
   handleIncrementStep,
   handleInputChange,
   handleSubmit,
   importError,
 }) => {
-  const { importUrl } = data;
+  const { importUrl } = issueData;
   const onChangeHandler = e => {
     handleInputChange({
       field: 'importUrl',
-      form: 'data',
+      form: 'issueData',
       value: e.target.value,
     });
   };
@@ -53,7 +53,7 @@ const ImportForm = ({
 };
 
 ImportForm.propTypes = {
-  data: T.object,
+  issueData: T.object,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   handleSubmit: T.func,

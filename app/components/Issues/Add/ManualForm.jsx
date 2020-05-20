@@ -7,14 +7,14 @@ import Markdown from 'components/Markdown';
 import { InputFormWrapper, StyledMarkdownWrapper } from './styledComponents';
 
 // eslint-disable-next-line arrow-body-style
-const ManualForm = ({ data, handleInputChange }) => {
+const ManualForm = ({ issueData, handleInputChange }) => {
   // eslint-disable-next-line no-param-reassign
-  const { body, issueUrl, language, name } = data;
+  const { issueBody, issueUrl, languages, issueName } = issueData;
 
   const handleMarkdownInput = markdown => {
     handleInputChange({
-      field: 'body',
-      form: 'data',
+      field: 'issueBody',
+      form: 'issueData',
       value: markdown,
     });
   };
@@ -22,21 +22,25 @@ const ManualForm = ({ data, handleInputChange }) => {
   return (
     <InputFormWrapper>
       <MainTextInput
-        error={!!name.error}
-        helperText={name.error}
+        error={!!issueName.error}
+        helperText={issueName.error}
         label={issueDataDictionary.name}
         onChange={e =>
           handleInputChange({
-            field: 'name',
-            form: 'data',
+            field: 'issueName',
+            form: 'issueData',
             value: e.target.value,
           })
         }
-        value={name.value}
+        value={issueName.value}
       />
       <StyledMarkdownWrapper>
-        {issueDataDictionary.body}
-        <Markdown edit body={body.value} handleInput={handleMarkdownInput} />
+        {issueDataDictionary.issueBody}
+        <Markdown
+          edit
+          body={issueBody.value}
+          handleInput={handleMarkdownInput}
+        />
       </StyledMarkdownWrapper>
 
       <MainTextInput
@@ -46,7 +50,7 @@ const ManualForm = ({ data, handleInputChange }) => {
         onChange={e =>
           handleInputChange({
             field: 'issueUrl',
-            form: 'data',
+            form: 'issueData',
             value: e.target.value,
           })
         }
@@ -54,25 +58,25 @@ const ManualForm = ({ data, handleInputChange }) => {
       />
 
       <LanguageAutocomplete
-        error={!!language.error}
-        helperText={language.error}
-        label={issueDataDictionary.language}
+        error={!!languages.error}
+        helperText={languages.error}
+        label={issueDataDictionary.languages}
         // eslint-disable-next-line no-shadow
         onChange={(e, value) =>
           handleInputChange({
-            field: 'language',
-            form: 'data',
+            field: 'languages',
+            form: 'issueData',
             value,
           })
         }
-        value={language.value}
+        value={languages.value}
       />
     </InputFormWrapper>
   );
 };
 
 ManualForm.propTypes = {
-  data: T.object.isRequired,
+  issueData: T.object.isRequired,
   handleInputChange: T.func.isRequired,
 };
 

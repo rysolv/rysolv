@@ -20,28 +20,31 @@ import {
 export class ManualIssue extends React.PureComponent {
   render() {
     const {
-      data,
+      issueData,
       handleIncrementStep,
       handleInputChange,
       isDisabled,
-      organization,
+      organizationData,
     } = this.props;
     return (
       <Fragment>
         <StyledH3>Organization</StyledH3>
         <VerifyWrapper>
           <SelectedOrganization>
-            {organization.organizationName.value}
+            {organizationData.organizationName.value}
           </SelectedOrganization>
           <StyledLink
-            href={`//${organization.organizationRepo.value}`}
+            href={`//${organizationData.organizationRepo.value}`}
             target="_blank"
           >
-            {organization.organizationRepo.value}
+            {organizationData.organizationRepo.value}
           </StyledLink>
         </VerifyWrapper>
         <StyledH3>Add Issue</StyledH3>
-        <ManualForm data={data} handleInputChange={handleInputChange} />
+        <ManualForm
+          issueData={issueData}
+          handleInputChange={handleInputChange}
+        />
         <ButtonGroup>
           <SecondaryButton
             label="Edit Org"
@@ -59,19 +62,19 @@ export class ManualIssue extends React.PureComponent {
 }
 
 ManualIssue.propTypes = {
-  data: T.object,
+  issueData: T.object,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   isDisabled: T.bool,
-  organization: T.object,
+  organizationData: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
-  data: makeSelectIssues('data'),
-  organization: makeSelectIssues('organizationData'),
+  issueData: makeSelectIssues('issueData'),
+  organizationData: makeSelectIssues('organizationData'),
   isDisabled: makeSelectIssuesDisabled(),
 });
 

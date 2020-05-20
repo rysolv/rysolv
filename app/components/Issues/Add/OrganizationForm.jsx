@@ -7,7 +7,7 @@ import { organizationDataDictionary } from 'containers/Organizations/constants';
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 
 // eslint-disable-next-line arrow-body-style
-const OrganizationForm = ({ handleInputChange, organization }) => {
+const OrganizationForm = ({ handleInputChange, organizationData }) => {
   // eslint-disable-next-line no-param-reassign
   const {
     organizationDescription,
@@ -15,7 +15,7 @@ const OrganizationForm = ({ handleInputChange, organization }) => {
     organizationName,
     organizationRepo,
     organizationUrl,
-  } = organization;
+  } = organizationData;
   const idSelected = organizationId.value !== '';
 
   return (
@@ -84,7 +84,7 @@ const OrganizationForm = ({ handleInputChange, organization }) => {
 
 OrganizationForm.propTypes = {
   handleInputChange: T.func.isRequired,
-  organization: T.object.isRequired,
+  organizationData: T.object.isRequired,
 };
 
 export default OrganizationForm;

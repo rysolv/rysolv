@@ -18,7 +18,7 @@ import { makeSelectIssueDetailError, makeSelectIssues } from '../selectors';
 export class ImportIssue extends React.PureComponent {
   render() {
     const {
-      data,
+      issueData,
       dispatchImportIssue,
       dispatchInputError,
       handleIncrementStep,
@@ -28,7 +28,7 @@ export class ImportIssue extends React.PureComponent {
     const handleSubmit = () => {
       const {
         importUrl: { value: url },
-      } = data;
+      } = issueData;
       const { error, validatedUrl, message } = validateUrl(url);
 
       if (error) {
@@ -41,7 +41,7 @@ export class ImportIssue extends React.PureComponent {
     return (
       <Fragment>
         <ImportForm
-          data={data}
+          issueData={issueData}
           importError={importError}
           handleInputChange={handleInputChange}
           handleIncrementStep={handleIncrementStep}
@@ -53,7 +53,7 @@ export class ImportIssue extends React.PureComponent {
 }
 
 ImportIssue.propTypes = {
-  data: T.object,
+  issueData: T.object,
   dispatchImportIssue: T.func,
   dispatchInputError: T.func,
   handleIncrementStep: T.func,
@@ -65,7 +65,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
-  data: makeSelectIssues('data'),
+  issueData: makeSelectIssues('issueData'),
   importError: makeSelectIssueDetailError('importIssue'),
 });
 
