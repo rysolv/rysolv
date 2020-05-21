@@ -24,7 +24,7 @@ const LinkIcon = iconDictionary('link');
 export class VerifyForm extends React.PureComponent {
   render() {
     const {
-      issueData: { issueBody, languages, issueName, issueUrl },
+      issueData: { issueBody, issueLanguages, issueName, issueUrl },
       activeUser: { id, profilePic, username },
       handleNav,
     } = this.props;
@@ -36,11 +36,21 @@ export class VerifyForm extends React.PureComponent {
       username,
       profilePic,
     };
+    const mapLanguages = array => {
+      if (array.value.length > 0) {
+        return array.value.map(el => (
+          <LanguageWrapper key={el} language={el} />
+        ));
+      }
+      return 'None Listed';
+    };
 
-    const languageDiv =
-      languages.value.length > 0
-        ? languages.value.map(el => <LanguageWrapper key={el} language={el} />)
-        : 'None Listed';
+    const languageDiv = mapLanguages(issueLanguages);
+    //   issueLanguages.value.length > 0
+    //     ? issueLanguages.value.map(el => (
+    //         <LanguageWrapper key={el} language={el} />
+    //       ))
+    //     : 'None Listed';
 
     return (
       <DataWrapper>

@@ -45,7 +45,7 @@ export class VerifyIssue extends React.PureComponent {
             {organizationData.organizationName.value}
           </SelectedOrganization>
           <StyledLink
-            href={`//${organizationData.organizationRepo.value}`}
+            href={organizationData.organizationRepo.value}
             target="_blank"
           >
             {organizationData.organizationRepo.value}

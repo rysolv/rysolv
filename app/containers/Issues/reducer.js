@@ -50,7 +50,7 @@ export const initialState = {
     issueName: { error: '', value: '' },
     issueBody: { error: '', value: '' },
     issueUrl: { error: '', value: '' },
-    languages: { error: '', value: [] },
+    issueLanguages: { error: '', value: [] },
     importUrl: { error: '', value: '' },
   },
   error: {
@@ -253,7 +253,14 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case IMPORT_ISSUE_SUCCESS: {
+      const { importIssue } = payload;
       draft.loading.importIssue = false;
+      Object.keys(draft.issueData).map(field => {
+        draft.issueData[field].value = importIssue[field];
+      });
+      Object.keys(draft.organizationData).map(field => {
+        draft.organizationData[field].value = importIssue[field];
+      });
       draft.importIssue = 'Successfully imported issue';
       break;
     }
@@ -273,7 +280,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
 
       if (form === 'filter') {
         draft[form][field] = value;
-      } else if (field === 'languages') {
+      } else if (field === 'issueLanguages') {
         draft[form][field].value = [];
         value.map(language => draft[form][field].value.push(language.value));
       } else {

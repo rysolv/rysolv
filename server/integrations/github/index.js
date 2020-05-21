@@ -1,49 +1,61 @@
 /* eslint-disable camelcase */
-const fetch = require('node-fetch');
+const { FETCH } = require('../helpers');
 const { formatUrl } = require('./helpers');
 
 const getSingleIssue = async issueUrl => {
   const formattedUrl = formatUrl(issueUrl);
 
-  const requestOptions = {
-    method: 'GET',
-    redirect: 'follow',
-  };
-
   try {
-    const issueRequest = await fetch(formattedUrl, requestOptions);
-    const issueData = await issueRequest.json();
+    const issueData = await FETCH(formattedUrl);
     const { html_url, title, state, body, repository_url } = issueData;
     if (state !== 'open') {
       throw new Error('Cannot add closed issue');
     }
 
-    const organizationRequest = await fetch(repository_url, requestOptions);
-    const organizationData = await organizationRequest.json();
+    const issueInput = {
+      issueBody: body,
+      issueName: title,
+      issueUrl: html_url,
+      organizationUrl: repository_url,
+    };
+
+    return { issueInput };
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getSingleOrganization = async organizationUrl => {
+  try {
+    const organizationData = await FETCH(organizationUrl);
     const {
       description,
-      html_url: repo_url,
+      homepage,
+      html_url,
       language,
       name,
+      organization,
     } = organizationData;
 
-    const issueInput = {
-      body,
-      repo: html_url,
-      open: state === 'open',
-      organization: repository_url,
-      language: [language],
-      name: title,
-    };
-
     const organizationInput = {
+      issueLanguages: [language],
       organizationDescription: description,
-      preferred_languages: [language],
       organizationName: name,
-      organizationRepo: repo_url,
+      organizationRepo: html_url,
+      organizationUrl: homepage,
+      organizationLanguages: [language],
     };
 
-    return { issueInput, organizationInput };
+    if (organization) {
+      // If repo has parent organization - pull data from parent
+      const parentOrganization = await FETCH(organization.url);
+      const { name: parentName, avatar_url } = parentOrganization;
+
+      organizationInput.organizationName = parentName;
+      organizationInput.organizationLogo = avatar_url;
+    }
+
+    return { organizationInput };
   } catch (err) {
     throw err;
   }
@@ -51,4 +63,5 @@ const getSingleIssue = async issueUrl => {
 
 module.exports = {
   getSingleIssue,
+  getSingleOrganization,
 };

@@ -46,6 +46,20 @@ module.exports = buildSchema(`
     watching: [String]
   }
 
+  type ImportData {
+    issueBody: String!
+    issueLanguages: [String]
+    issueName: String!
+    issueUrl: String!
+    organizationDescription: String
+    organizationId: ID
+    organizationLanguages: [String]
+    organizationLogo: String
+    organizationName: String
+    organizationRepo: String
+    organizationUrl: String
+  }
+
   input IssueInput {
     attempting: [ID]
     attempts: Int
@@ -158,6 +172,7 @@ module.exports = buildSchema(`
 
   union IssueResult = Issue | Error
   union OrganizationResult = Organization | Error
+  union ImportResult = ImportData | Error
 
   type RootQuery {
     getComments: [Comment]
@@ -189,7 +204,7 @@ module.exports = buildSchema(`
     deleteOrganization(id:ID!): String!
     deleteUser(id:ID!): String!
 
-    importIssue(url: String!): IssueResult
+    importIssue(url: String!): ImportResult
 
     transformIssue(id: ID!, issueInput: IssueInput): Issue!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): Organization!

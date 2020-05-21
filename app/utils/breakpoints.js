@@ -11,7 +11,7 @@ export const deviceSizes = {
 const MEDIA_DECORATOR = '@media';
 
 export const mediaQueriesByDevice = {
-  mobile: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.mobileL}px)`,
+  mobile: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.mobile}px)`,
   tablet: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.tablet}px)`,
   laptop: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.laptop}px)`,
   desktop: `${MEDIA_DECORATOR} (min-width: ${deviceSizes.desktop}px)`,

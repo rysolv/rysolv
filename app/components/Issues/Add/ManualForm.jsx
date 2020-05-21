@@ -9,7 +9,7 @@ import { InputFormWrapper, StyledMarkdownWrapper } from './styledComponents';
 // eslint-disable-next-line arrow-body-style
 const ManualForm = ({ issueData, handleInputChange }) => {
   // eslint-disable-next-line no-param-reassign
-  const { issueBody, issueUrl, languages, issueName } = issueData;
+  const { issueBody, issueUrl, issueLanguages, issueName } = issueData;
 
   const handleMarkdownInput = markdown => {
     handleInputChange({
@@ -58,18 +58,18 @@ const ManualForm = ({ issueData, handleInputChange }) => {
       />
 
       <LanguageAutocomplete
-        error={!!languages.error}
-        helperText={languages.error}
+        error={!!issueLanguages.error}
+        helperText={issueLanguages.error}
         label={issueDataDictionary.languages}
         // eslint-disable-next-line no-shadow
         onChange={(e, value) =>
           handleInputChange({
-            field: 'languages',
+            field: 'issueLanguages',
             form: 'issueData',
             value,
           })
         }
-        value={languages.value}
+        value={issueLanguages.value}
       />
     </InputFormWrapper>
   );
