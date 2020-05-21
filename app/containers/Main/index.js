@@ -13,7 +13,7 @@ import Footer from 'components/Footer';
 import SideNav from 'components/SideNav';
 import WatchList from 'components/WatchList';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
-import { makeSelectActiveUser } from 'containers/Auth/selectors';
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import { signin, signout } from 'containers/Auth/actions';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -30,40 +30,33 @@ export const Main = ({
   data = { test: true },
   deviceView,
   dispatchCloseModal,
-  dispatchFetchWatchList,
   error,
   handleNav,
   handleSignin,
   handleSignout,
   isIssueWatchListModalOpen,
   isSignedIn,
-  isUserWatchListModalOpen,
   loading,
   match,
   modal,
   tableData,
 }) => {
+  const handleRedirect = route => {
+    dispatchCloseModal();
+    handleNav(route);
+  };
   const modalPropsDictionary = {
     issueWatchList: {
       Component: WatchList,
       open: isIssueWatchListModalOpen,
       propsToPassDown: {
         handleClose: dispatchCloseModal,
+        handleRedirect,
         modalState: 'issueWatchList',
+        route: '/users/detail',
         tableData,
         title: 'Watch List',
         type: 'issueWatchList',
-      },
-    },
-    userWatchList: {
-      Component: WatchList,
-      open: isUserWatchListModalOpen,
-      propsToPassDown: {
-        handleClose: dispatchCloseModal,
-        modalState: 'userWatchList',
-        tableData,
-        title: 'Your Watch List',
-        type: 'userWatchList',
       },
     },
   };
@@ -71,7 +64,6 @@ export const Main = ({
     <Fragment>
       <Header
         activeUser={activeUser}
-        dispatchFetchWatchList={dispatchFetchWatchList}
         handleNav={handleNav}
         handleSignin={handleSignin}
         handleSignout={handleSignout}
@@ -99,14 +91,12 @@ Main.propTypes = {
   data: T.object,
   deviceView: T.string,
   dispatchCloseModal: T.func,
-  dispatchFetchWatchList: T.func,
   error: T.object,
   handleNav: T.func,
   handleSignin: T.func,
   handleSignout: T.func,
   isIssueWatchListModalOpen: T.bool,
   isSignedIn: T.bool,
-  isUserWatchListModalOpen: T.bool,
   loading: T.bool,
   match: T.object,
   modal: T.string,
@@ -114,10 +104,12 @@ Main.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  activeUser: makeSelectActiveUser('activeUser'),
+  /**
+   * Reducer: Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
   isIssueWatchListModalOpen: makeSelectModalProps('issueWatchList'),
-  isSignedIn: makeSelectActiveUser('isSignedIn'),
-  isUserWatchListModalOpen: makeSelectModalProps('userWatchList'),
+  isSignedIn: makeSelectAuth('isSignedIn'),
   modal: makeSelectMain('modal'),
   tableData: makeSelectMain('tableData'),
   /**

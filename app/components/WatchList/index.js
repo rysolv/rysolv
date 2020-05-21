@@ -8,23 +8,36 @@ import { IconWrapper, StyledTitle } from './styledComponents';
 
 const closeIcon = iconDictionary('close');
 
-const WatchList = ({ handleClose, modalState, tableData, title, type }) => (
+const WatchList = ({
+  handleClose,
+  handleRedirect,
+  route,
+  tableData,
+  title,
+  type,
+}) => (
   <div>
     <IconWrapper>
       <IconButton
         icon={closeIcon}
         label="Close"
-        onClick={() => handleClose({ modalState })}
+        onClick={() => handleClose()}
       />
     </IconWrapper>
     <StyledTitle>{title}</StyledTitle>
-    <BaseTable tableData={tableData} type={type} />
+    <BaseTable
+      handleRedirect={handleRedirect}
+      route={route}
+      tableData={tableData}
+      type={type}
+    />
   </div>
 );
 
 WatchList.propTypes = {
   handleClose: T.func,
-  modalState: T.string,
+  handleRedirect: T.func,
+  route: T.string,
   tableData: T.arrayOf(T.object),
   title: T.string,
   type: T.string,

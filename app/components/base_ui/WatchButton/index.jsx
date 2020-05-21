@@ -11,10 +11,11 @@ import {
 
 const WatchButton = ({
   disabled,
-  dispatchOpenModal,
+  dispatchFetchWatchList,
   handleWatch,
   label,
   value,
+  watching,
 }) => (
   <WatchButtonContainer>
     <StyledWatchButton disabled={disabled} onClick={handleWatch}>
@@ -22,7 +23,10 @@ const WatchButton = ({
     </StyledWatchButton>
     <ValueWrapper
       onClick={() =>
-        dispatchOpenModal({ modalState: 'issueWatchList', tableData })
+        dispatchFetchWatchList({
+          idArray: watching,
+          modalState: 'issueWatchList',
+        })
       }
     >
       {value}
@@ -32,10 +36,11 @@ const WatchButton = ({
 
 WatchButton.propTypes = {
   disabled: T.bool,
-  dispatchOpenModal: T.func,
+  dispatchFetchWatchList: T.func,
   handleWatch: T.func,
   label: T.string,
   value: T.number,
+  watching: T.array,
 };
 
 export default WatchButton;

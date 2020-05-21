@@ -6,7 +6,6 @@ import { ButtonsWrapper, Signin, SignUp, Browse } from './styledComponents';
 
 const DesktopHeader = ({
   activeUser,
-  dispatchFetchWatchList,
   handleNav,
   handleSignout,
   isMobile,
@@ -18,7 +17,7 @@ const DesktopHeader = ({
       {isSignedIn ? (
         <UserNavBar
           activeUser={activeUser}
-          dispatchFetchWatchList={dispatchFetchWatchList}
+          handleNav={handleNav}
           handleSignout={handleSignout}
         />
       ) : (
@@ -33,7 +32,6 @@ const DesktopHeader = ({
 
 DesktopHeader.propTypes = {
   activeUser: T.object,
-  dispatchFetchWatchList: T.func,
   handleNav: T.func,
   handleSignout: T.func,
   isMobile: T.bool,

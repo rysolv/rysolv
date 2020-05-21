@@ -12,7 +12,6 @@ export { default as ModalDialog } from './ModalDialog';
 export { default as ProfileImage } from './ProfileImage';
 export { default as UserNavBar } from './UserNavBar';
 export { default as WatchButton } from './WatchButton';
-
 export * from './Buttons';
 export * from './Icons';
 export * from './Inputs';

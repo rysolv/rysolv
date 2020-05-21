@@ -118,8 +118,15 @@ const getUsers = async table => {
   return rows;
 };
 
-const getUserWatchList = async id => {
-  const queryText = `SELECT id, name AS "Issue", funded_amount AS "Amount" FROM issues WHERE (id = '${id}')`;
+const getWatchList = async (id, type) => {
+  const paramsDictionary = {
+    issueWatchList: {
+      table: 'users',
+      values: 'id, username AS "User", profile_pic AS "profilePic"',
+    },
+  };
+  const { values, table } = paramsDictionary[type];
+  const queryText = `SELECT ${values} FROM ${table} WHERE (id = '${id}')`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
@@ -174,7 +181,7 @@ module.exports = {
   deleteUser,
   getOneUser,
   getUsers,
-  getUserWatchList,
+  getWatchList,
   searchUsers,
   singleSearch,
   transformUser,

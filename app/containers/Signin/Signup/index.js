@@ -10,7 +10,7 @@ import { ConditionalRender } from 'components/base_ui';
 
 import { push } from 'connected-react-router';
 import { signin } from 'containers/Auth/actions';
-import { makeSelectActiveUser } from 'containers/Auth/selectors';
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import Signup from 'components/Signin/Signup';
 import { makeSelectSignin } from '../selectors';
 import { inputChange } from '../actions';
@@ -59,7 +59,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Auth
    */
   data: makeSelectSignin('data'),
-  isSignedIn: makeSelectActiveUser('isSignedIn'),
+  isSignedIn: makeSelectAuth('isSignedIn'),
 });
 
 function mapDispatchToProps(dispatch) {
