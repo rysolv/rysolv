@@ -52,10 +52,12 @@ export function* fetchInfoSaga({ payload }) {
 
 export function* saveChangeSaga({ payload }) {
   const { field, itemId, value } = payload;
+  const formattedValue =
+    field === 'preferredLanguages' ? JSON.stringify(value) : `"${value}"`;
   const query = `
     mutation {
       transformUser(id: "${itemId}", userInput: {
-        ${field}: "${value}",
+        ${field}: ${formattedValue},
       }) {
         id,
         githubLink,

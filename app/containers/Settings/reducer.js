@@ -13,7 +13,7 @@ import {
 
 export const initialState = {
   account: {},
-  alerts: { error: '', success: '' },
+  alerts: { error: false, success: false },
   error: false,
   filter: {
     language: [],

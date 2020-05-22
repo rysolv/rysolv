@@ -78,7 +78,7 @@ StackoverflowEditComponent.propTypes = {
   handleDone: T.func,
   setChangeStackoverflow: T.func,
   setValue: T.func,
-  value: T.string,
+  value: T.oneOfType([T.array, T.string]),
 };
 
 StackoverflowLinkComponent.propTypes = {

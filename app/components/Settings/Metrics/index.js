@@ -2,39 +2,39 @@ import React, { useState } from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
-import {
-  ConditionalRender,
-  IconButton,
-  LanguageWrapper,
-} from 'components/base_ui';
+import { ConditionalRender } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
-import iconDictionary from 'utils/iconDictionary';
 
+import {
+  PreferredLanguagesComponent,
+  PreferredLanguagesEditComponent,
+} from '../PreferredLanguagesComponents';
 import {
   ActivityContainer,
   DetailListItem,
   DetailsPanel,
   DetailsPanelWrapper,
   Divider,
-  Language,
-  LanguageListItem,
   RankingContainer,
   StyledUserBarTitle,
   UserDetails,
   UserMetricsContainer,
 } from './styledComponents';
 
-const EditIcon = iconDictionary('edit');
-
 const UserMetricsView = ({
   activePullRequests,
+  changePreferredLanguages,
   completedPullRequests,
   createdDate,
   dollarsEarned,
+  handleClose,
+  handleDone,
   handleEdit,
   isDisabled,
   preferredLanguages,
   rejectedPullRequests,
+  setChangePreferredLanguages,
+  setValue,
 }) => {
   const [detailView, setDetailView] = useState(false);
   const hasNoDecimals = true;
@@ -81,22 +81,25 @@ const UserMetricsView = ({
             <b>{formatDollarAmount(dollarsEarned, hasNoDecimals)}</b>
             &nbsp;Earned
           </DetailListItem>
-          <LanguageListItem>
-            <Language>
-              {preferredLanguages.map(language => (
-                <LanguageWrapper
-                  key={`list-item-${language}`}
-                  language={language}
-                />
-              ))}
-            </Language>
-            <IconButton
-              disabled={isDisabled}
-              icon={EditIcon}
-              label="Edit"
-              onClick={handleEdit}
-            />
-          </LanguageListItem>
+          <ConditionalRender
+            Component={PreferredLanguagesComponent}
+            FallbackComponent={
+              <PreferredLanguagesEditComponent
+                handleClose={handleClose}
+                handleDone={handleDone}
+                preferredLanguages={preferredLanguages}
+                setChangePreferredLanguages={setChangePreferredLanguages}
+                setValue={setValue}
+              />
+            }
+            propsToPassDown={{
+              handleEdit,
+              isDisabled,
+              preferredLanguages,
+              setChangePreferredLanguages,
+            }}
+            shouldRender={!changePreferredLanguages}
+          />
         </UserDetails>
       </RankingContainer>
       <ActivityContainer>
@@ -112,13 +115,18 @@ const UserMetricsView = ({
 
 UserMetricsView.propTypes = {
   activePullRequests: T.number,
+  changePreferredLanguages: T.bool,
   completedPullRequests: T.number,
   createdDate: T.string,
   dollarsEarned: T.number,
+  handleClose: T.func,
+  handleDone: T.func,
   handleEdit: T.func.isRequired,
   isDisabled: T.bool,
   preferredLanguages: T.array,
   rejectedPullRequests: T.number,
+  setChangePreferredLanguages: T.func,
+  setValue: T.func,
 };
 
 export default UserMetricsView;

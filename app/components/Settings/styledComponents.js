@@ -20,6 +20,24 @@ export const DetailViewContainer = styled.div`
   width: 100%;
 `;
 
+export const IconButtonContainer = styled.div`
+  align-self: center;
+  height: 100%;
+`;
+
+export const Language = styled.div`
+  align-items: center;
+  display: flex;
+  flex-flow: wrap;
+`;
+
+export const LanguageListItem = styled.div`
+  display: flex;
+  font-size: ${defaultFontSize};
+  padding: 0.5rem 0;
+  justify-content: space-between;
+`;
+
 export const LinkIcon = styled.div`
   padding-right: 0.5rem;
 
@@ -76,6 +94,10 @@ export const SettingsTabsWrapper = styled.div`
   overflow: hidden;
   padding: 2rem;
   width: 100%;
+`;
+
+export const StyledLanguageAutocomplete = styled.div`
+  width: 80%;
 `;
 
 export const StyledCancelIcon = styled.div`

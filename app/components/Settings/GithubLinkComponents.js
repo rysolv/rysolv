@@ -73,7 +73,7 @@ GithubEditComponent.propTypes = {
   handleDone: T.func,
   setChangeGithub: T.func,
   setValue: T.func,
-  value: T.string,
+  value: T.oneOfType([T.array, T.string]),
 };
 
 GithubLinkComponent.propTypes = {

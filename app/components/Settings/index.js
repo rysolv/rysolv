@@ -56,10 +56,13 @@ const SettingsView = ({
   handleInputChange,
   handleNav,
 }) => {
-  const [isDisabled, setIsDisabled] = useState(false);
   const [changeGithub, setChangeGithub] = useState(false);
   const [changePersonal, setChangePersonal] = useState(false);
+  const [changePreferredLanguages, setChangePreferredLanguages] = useState(
+    false,
+  );
   const [changeStackoverflow, setChangeStackoverflow] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [value, setValue] = useState('');
 
   const handleClose = ({ changeInputState }) => {
@@ -163,15 +166,20 @@ const SettingsView = ({
           </Rep>
           <UserMetricsView
             activePullRequests={activePullRequests}
+            changePreferredLanguages={changePreferredLanguages}
             completedPullRequests={completedPullRequests}
             createdDate={createdDate}
             dollarsEarned={dollarsEarned}
+            handleClose={handleClose}
+            handleDone={handleDone}
             handleEdit={handleEdit}
             isDisabled={isDisabled}
             isOnline={isOnline}
             modifiedDate={modifiedDate}
             preferredLanguages={preferredLanguages}
             rejectedPullRequests={rejectedPullRequests}
+            setChangePreferredLanguages={setChangePreferredLanguages}
+            setValue={setValue}
           />
         </UserCardWrapper>
         <SettingsTabsWrapper>
