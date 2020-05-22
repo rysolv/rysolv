@@ -74,7 +74,7 @@ export const initialState = {
       feature: false,
     },
   },
-  importIssue: '',
+  importSuccess: false,
   issueDetail: {},
   issues: [],
   isVerified: false,
@@ -189,7 +189,9 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case CLEAR_FORM: {
+      draft.error = initialState.error;
       draft.issueData = initialState.issueData;
+      draft.importIssue = initialState.importSuccess;
       draft.organizationData = initialState.organizationData;
       draft.isVerified = initialState.isVerified;
       break;
@@ -261,7 +263,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       Object.keys(draft.organizationData).map(field => {
         draft.organizationData[field].value = importIssue[field];
       });
-      draft.importIssue = 'Successfully imported issue';
+      draft.importSuccess = true;
       break;
     }
     case IMPORT_ISSUE: {
@@ -299,6 +301,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
+      draft.importSuccess = false;
       draft.loading.addIssue = false;
       break;
     }
@@ -306,6 +309,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       const { message } = payload;
       draft.alerts.success = { message };
       draft.loading.addIssue = false;
+      draft.importSuccess = false;
       break;
     }
     case SAVE_INFO: {
@@ -316,6 +320,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       const { error } = payload;
       draft.error.searchIssues = error;
       draft.loading.searchIssues = false;
+      draft.importSuccess = false;
       break;
     }
     case SEARCH_ISSUES_SUCCESS: {

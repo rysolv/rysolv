@@ -33,6 +33,9 @@ export const CommentContainer = styled.div`
   pre {
     background-color: ${codeGrey};
     padding: 0.5rem;
+    max-height: 75rem;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   code {
     background-color: ${codeGrey};

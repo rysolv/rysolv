@@ -47,13 +47,20 @@ export class IssuesAdd extends React.PureComponent {
   render() {
     const {
       activeUser,
+      importSuccess,
       issueData,
       handleNav,
+      handleIncrementStep,
       loading,
       organization,
       step,
     } = this.props;
     const StepToRender = addIssueDictionary[step];
+
+    if (importSuccess) {
+      handleIncrementStep({ step: 4, view: 'addIssue' });
+    }
+
     return (
       <AddWrapper>
         <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
@@ -74,6 +81,7 @@ export class IssuesAdd extends React.PureComponent {
 }
 
 IssuesAdd.propTypes = {
+  importSuccess: T.bool,
   activeUser: T.object,
   issueData: T.object,
   dispatchClearForm: T.func,
@@ -89,6 +97,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
+  importSuccess: makeSelectIssues('importSuccess'),
   issueData: makeSelectIssues('issueData'),
   organizationData: makeSelectOrganizations('organizationData'),
   activeUser: makeSelectAuth('activeUser'),

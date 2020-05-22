@@ -65,11 +65,10 @@ const newOrganizationArray = (newIssueId, organizationInput) => [
 module.exports = {
   createIssue: async args => {
     const { issueInput } = args;
+    const { organizationRepo, repo, organizationId } = issueInput;
     const newIssueId = uuidv4();
 
-    // Check for duplicate issue
-    await checkDuplicateIssue('issues', issueInput.repo);
-
+    // Populate issue array and create new issue
     const createNewIssue = async () => {
       const issue = newIssueArray(newIssueId, issueInput);
       try {
@@ -80,14 +79,9 @@ module.exports = {
       }
     };
 
+    // Populate organization array and create new organization
     const createNewOrganization = async () => {
-      // Check for duplicate organization
-      if (
-        await checkDuplicateOrganization(
-          'organizations',
-          issueInput.organizationRepo,
-        )
-      ) {
+      if (await checkDuplicateOrganization('organizations', organizationRepo)) {
         throw new Error(
           `Error: Organization at ${
             issueInput.organizationRepo
@@ -95,7 +89,6 @@ module.exports = {
         );
       }
       const organization = newOrganizationArray(newIssueId, issueInput);
-
       try {
         const [result] = await createOrganization(organization);
         return result;
@@ -104,13 +97,21 @@ module.exports = {
       }
     };
 
-    if (!issueInput.organizationId) {
+    // Check for duplicate issue
+    if (await checkDuplicateIssue('issues', repo)) {
+      throw new Error(`Issue at ${repo} already exists`);
+    }
+
+    // Check for existing organization
+    if (!organizationId) {
       const organizationResult = await createNewOrganization();
       issueInput.organizationId = organizationResult.id;
     }
 
+    // Create new issue
     const [issueResult] = await createNewIssue();
 
+    // add issue to organization
     await updateOrganizationArray(
       'organizations',
       'issues',
@@ -119,6 +120,7 @@ module.exports = {
       false,
     );
 
+    // add issue to user
     await updateUserArray(
       'users',
       'issues',
@@ -126,6 +128,8 @@ module.exports = {
       issueResult.id,
       false,
     );
+
+    // add organization to user
     await updateUserArray(
       'users',
       'organizations',
@@ -179,6 +183,7 @@ module.exports = {
         'repo_url',
         organizationInput.organizationRepo,
       );
+
       if (organization) {
         const { id } = organization;
         issueInput.organizationId = id;
@@ -193,7 +198,7 @@ module.exports = {
     } catch (err) {
       return {
         __typename: 'Error',
-        ...err.message,
+        message: err.message,
       };
     }
   },

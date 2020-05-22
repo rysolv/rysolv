@@ -296,7 +296,7 @@ export function* saveInfoSaga({ payload }) {
         language:  ${JSON.stringify(issueLanguages)},
         name: ${JSON.stringify(issueName)},
         organizationDescription:  "${organizationDescription}",
-        organizationId:  "${organizationId}",
+        organizationId:  ${JSON.stringify(organizationId)},
         organizationName:  "${organizationName}",
         organizationRepo:  "${organizationRepo}",
         organizationUrl:  "${organizationUrl}",
