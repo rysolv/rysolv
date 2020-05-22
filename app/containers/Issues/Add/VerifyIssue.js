@@ -7,13 +7,11 @@ import { push } from 'connected-react-router';
 import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
 import VerifyForm from 'components/Issues/Add/Verify';
 
-import { incrementStep, saveInfo, verifyInfo } from '../actions';
-import { verifyMessage } from '../constants';
+import { incrementStep, saveInfo, verifyInfo, clearForm } from '../actions';
 import { makeSelectIssues, makeSelectIssuesRequestBody } from '../selectors';
 import {
   ButtonGroup,
   SelectedOrganization,
-  StyledCheckboxWithLabel,
   StyledH3,
   StyledLink,
   VerifyWrapper,
@@ -24,18 +22,22 @@ export class VerifyIssue extends React.PureComponent {
   render() {
     const {
       activeUser,
+      dispatchClearForm,
+      importSuccess,
       issueData,
       dispatchIncrementStep,
       dispatchSaveInfo,
-      dispatchVerifyInfo,
       handleNav,
-      isVerified,
       organizationData,
       requestBody,
     } = this.props;
     const handleSaveInfo = () => {
       dispatchSaveInfo({ requestBody, activeUser });
       handleNav('/issues');
+    };
+    const cancelImport = () => {
+      dispatchClearForm();
+      dispatchIncrementStep({ step: 1, view: 'addIssue' });
     };
     return (
       <Fragment>
@@ -55,18 +57,20 @@ export class VerifyIssue extends React.PureComponent {
         <VerifyWrapper>
           <VerifyForm activeUser={activeUser} issueData={issueData} />
         </VerifyWrapper>
-        <StyledCheckboxWithLabel
-          checked={isVerified}
-          label={verifyMessage}
-          onChange={dispatchVerifyInfo}
-        />
         <ButtonGroup>
-          <SecondaryButton
-            label="Edit Issue"
-            onClick={() => dispatchIncrementStep({ step: 3, view: 'addIssue' })}
-          />
+          {importSuccess ? (
+            <SecondaryButton label="Cancel" onClick={() => cancelImport()} />
+          ) : (
+            <SecondaryButton
+              label="Edit Issue"
+              onClick={() =>
+                dispatchIncrementStep({ step: 3, view: 'addIssue' })
+              }
+            />
+          )}
+
           <PrimaryAsyncButton
-            disabled={!isVerified}
+            disabled={!importSuccess}
             label="Submit"
             onClick={handleSaveInfo}
           />
@@ -78,12 +82,12 @@ export class VerifyIssue extends React.PureComponent {
 
 VerifyIssue.propTypes = {
   activeUser: T.object,
+  dispatchClearForm: T.func,
+  importSuccess: T.bool,
   issueData: T.object,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
-  dispatchVerifyInfo: T.func,
   handleNav: T.func,
-  isVerified: T.bool,
   organizationData: T.object,
   requestBody: T.object,
 };
@@ -94,7 +98,6 @@ const mapStateToProps = createStructuredSelector({
    */
   issueData: makeSelectIssues('issueData'),
   organizationData: makeSelectIssues('organizationData'),
-  isVerified: makeSelectIssues('isVerified'),
   requestBody: makeSelectIssuesRequestBody(),
 });
 
@@ -103,6 +106,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    dispatchClearForm: () => dispatch(clearForm()),
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
     dispatchVerifyInfo: () => dispatch(verifyInfo()),

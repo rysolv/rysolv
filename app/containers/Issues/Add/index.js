@@ -27,7 +27,6 @@ import { AddWrapper, AddForm } from './styledComponents';
 // eslint-disable-next-line react/prefer-stateless-function
 export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
-    window.scrollTo(0, 0);
     document.title = 'Add Issue';
     const {
       activeUser,
@@ -45,6 +44,8 @@ export class IssuesAdd extends React.PureComponent {
   }
 
   render() {
+    window.scrollTo(0, 0);
+
     const {
       activeUser,
       importSuccess,
@@ -72,6 +73,7 @@ export class IssuesAdd extends React.PureComponent {
             propsToPassDown={{
               activeUser,
               handleNav,
+              importSuccess,
             }}
           />
         </AddForm>

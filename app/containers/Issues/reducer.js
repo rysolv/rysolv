@@ -191,7 +191,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case CLEAR_FORM: {
       draft.error = initialState.error;
       draft.issueData = initialState.issueData;
-      draft.importIssue = initialState.importSuccess;
+      draft.importSuccess = initialState.importSuccess;
       draft.organizationData = initialState.organizationData;
       draft.isVerified = initialState.isVerified;
       break;

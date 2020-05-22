@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
-import { CheckboxWithLabel } from 'components/base_ui';
 import {
   defaultFontSize,
   subHeaderColor,
   headerFontSize,
-  textColor,
   borderColor,
   hyperlinkColor,
   hoverLinkColor,
@@ -27,11 +25,6 @@ export const AddForm = styled.div`
 
 export const ButtonGroup = styled.div`
   text-align: center;
-`;
-
-export const StyledCheckboxWithLabel = styled(CheckboxWithLabel)`
-  color: ${textColor};
-  padding: 0.9rem 0.9rem 0.9rem 0;
 `;
 
 export const SelectedOrganization = styled.div`
