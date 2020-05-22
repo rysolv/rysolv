@@ -16,6 +16,7 @@ const BaseAutocomplete = ({
 }) => (
   <StyledAutocomplete
     classes={{ focused: 'focused', inputRoot: 'inputRoot' }}
+    getOptionLabel={option => option.value}
     multiple
     onChange={onChange}
     options={options}
@@ -29,7 +30,7 @@ const BaseAutocomplete = ({
     )}
     renderTags={(item, getTagProps) =>
       item.map((option, index) => (
-        <StyledChip label={option} {...getTagProps({ index })} />
+        <StyledChip label={option.value} {...getTagProps({ index })} />
       ))
     }
     value={value}

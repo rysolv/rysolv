@@ -26,7 +26,7 @@ export const PreferredLanguagesEditComponent = ({
   <LanguageListItem>
     <StyledLanguageAutocomplete>
       <LanguageAutocomplete
-        onChange={(e, value) => setValue(value)}
+        onChange={(e, value) => setValue(() => value.map(el => el.value))}
         value={preferredLanguages}
       />
     </StyledLanguageAutocomplete>
