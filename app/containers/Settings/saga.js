@@ -2,8 +2,14 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { post } from 'utils/request';
 
-import { FETCH_INFO } from './constants';
-import { fetchInfoFailure, fetchInfoSuccess } from './actions';
+import { FETCH_INFO, SAVE_CHANGE } from './constants';
+import {
+  fetchInfo,
+  fetchInfoFailure,
+  fetchInfoSuccess,
+  saveChangeFailure,
+  saveChangeSuccess,
+} from './actions';
 
 export function* fetchInfoSaga({ payload }) {
   const { itemId } = payload;
@@ -44,6 +50,35 @@ export function* fetchInfoSaga({ payload }) {
   }
 }
 
+export function* saveChangeSaga({ payload }) {
+  const { field, itemId, value } = payload;
+  const query = `
+    mutation {
+      transformUser(id: "${itemId}", userInput: {
+        ${field}: "${value}",
+      }) {
+        id,
+        githubLink,
+        personalLink,
+        preferredLanguages,
+        stackoverflowLink,
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    yield call(post, '/graphql', graphql);
+    yield put(fetchInfo({ itemId }));
+    yield put(saveChangeSuccess({ message: 'Success' }));
+  } catch (error) {
+    yield put(saveChangeFailure({ error }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
+  yield takeLatest(SAVE_CHANGE, saveChangeSaga);
 }

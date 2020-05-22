@@ -31,6 +31,8 @@ const UserMetricsView = ({
   completedPullRequests,
   createdDate,
   dollarsEarned,
+  handleEdit,
+  isDisabled,
   preferredLanguages,
   rejectedPullRequests,
 }) => {
@@ -88,7 +90,12 @@ const UserMetricsView = ({
                 />
               ))}
             </Language>
-            <IconButton icon={EditIcon} label="Edit" onClick={() => {}} />
+            <IconButton
+              disabled={isDisabled}
+              icon={EditIcon}
+              label="Edit"
+              onClick={handleEdit}
+            />
           </LanguageListItem>
         </UserDetails>
       </RankingContainer>
@@ -108,6 +115,8 @@ UserMetricsView.propTypes = {
   completedPullRequests: T.number,
   createdDate: T.string,
   dollarsEarned: T.number,
+  handleEdit: T.func.isRequired,
+  isDisabled: T.bool,
   preferredLanguages: T.array,
   rejectedPullRequests: T.number,
 };

@@ -79,7 +79,7 @@ const UserDropDownMenu = ({
         </Link>
       </StyledMenuContainer>
       <StyledMenuContainer>
-        <StyledMenuItem>
+        <StyledMenuItem onClick={() => handleNav('/settings/account')}>
           <MenuItemLabel>
             <IconWrapper>{FundedIcon}</IconWrapper>
             Balance:

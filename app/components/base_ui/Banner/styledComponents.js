@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+
 import { FlatIconButton } from 'components/base_ui/Buttons';
+import { defaultFontSize } from 'defaultStyleHelper';
 
 export const BannerWrapper = styled.div`
   align-items: center;
@@ -7,7 +9,7 @@ export const BannerWrapper = styled.div`
   border-radius: 0.4rem;
   color: white;
   display: ${({ displayState }) => (displayState ? 'flex' : 'none')};
-  font-size: 1.5rem;
+  font-size: ${defaultFontSize};
   height: ${({ displayState }) => (displayState ? 'auto' : '0')};
   margin-bottom: ${({ marginRequired }) => marginRequired || '0'};
   margin-top: ${({ topMarginRequired }) => topMarginRequired || '0'};
@@ -34,7 +36,7 @@ export const MessageWrapper = styled.ul`
 `;
 
 export const SingleText = styled.div`
-  font-size: 1rem;
+  font-size: ${defaultFontSize};
   margin: 0rem 1rem;
 `;
 

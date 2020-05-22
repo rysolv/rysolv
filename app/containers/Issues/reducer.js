@@ -249,7 +249,6 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case IMPORT_ISSUE_SUCCESS: {
-      console.log(payload);
       draft.loading.importIssue = false;
       break;
     }

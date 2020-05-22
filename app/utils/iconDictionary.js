@@ -16,6 +16,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
+import Done from '@material-ui/icons/Done';
 import Edit from '@material-ui/icons/Edit';
 import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
@@ -54,6 +55,7 @@ export default (name, options) => {
     comments: Comments,
     creditCard: CreditCard,
     delete: Delete,
+    done: Done,
     dropdownArrow: ArrowDropDownIcon,
     edit: Edit,
     exit: Exit,
