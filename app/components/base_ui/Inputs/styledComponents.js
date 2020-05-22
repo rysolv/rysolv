@@ -37,6 +37,7 @@ export const StyledBaseTextInput = styled(TextField)`
   margin: 0rem 1rem;
 
   .base-input {
+    color: ${textColor};
     font-size: ${defaultFontSize};
   }
 

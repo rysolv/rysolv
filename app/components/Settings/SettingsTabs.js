@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
 
@@ -12,6 +12,7 @@ const SettingsTabs = ({
   handleNav,
 }) => {
   const [value, setValue] = useState(currentTab);
+  useEffect(() => setValue(currentTab), [currentTab]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

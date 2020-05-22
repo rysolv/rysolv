@@ -12,6 +12,7 @@ const BaseAutocomplete = ({
   onChange,
   options,
   value,
+  ...restProps
 }) => (
   <StyledAutocomplete
     classes={{ focused: 'focused', inputRoot: 'inputRoot' }}
@@ -33,6 +34,7 @@ const BaseAutocomplete = ({
       ))
     }
     value={value}
+    {...restProps}
   />
 );
 

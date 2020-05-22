@@ -4,7 +4,7 @@ export const borderColor = '#cfd8dc';
 export const codeGrey = '#eceff1';
 export const commentHeaderColor = '#eceff1';
 export const darkTextColor = '#263238';
-export const errorRed = '#f44336';
+export const errorRed = '#c62838';
 export const fundingClosedBackground = '#edeef0';
 export const fundingOpenBackground = '#e5fbf2';
 export const fundingText = '#08b26e';
@@ -22,6 +22,7 @@ export const primaryButtonHoverColor = '#1976d2';
 export const secondaryButtonColor = '#5e35b1';
 export const secondaryButtonHoverColor = '#512da8';
 export const subHeaderColor = '#0d47a1';
+export const successGreen = '#31b589';
 export const textColor = 'rgba(0,0,0,0.7)';
 
 // Font Sizes

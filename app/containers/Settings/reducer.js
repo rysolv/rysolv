@@ -1,15 +1,19 @@
 import produce from 'immer';
 
 import {
+  CLEAR_ALERTS,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
   INPUT_CHANGE,
+  SAVE_CHANGE_FAILURE,
+  SAVE_CHANGE_SUCCESS,
+  SAVE_CHANGE,
 } from './constants';
 
 export const initialState = {
   account: {},
-  currentTab: 0,
+  alerts: { error: false, success: false },
   error: false,
   filter: {
     language: [],
@@ -22,6 +26,10 @@ export const initialState = {
 /* eslint-disable default-case, no-param-reassign */
 const settingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case CLEAR_ALERTS: {
+      draft.alerts = initialState.alerts;
+      break;
+    }
     case FETCH_INFO_FAILURE: {
       const { error } = payload;
       draft.error = error;
@@ -49,6 +57,22 @@ const settingsReducer = produce((draft, { payload, type }) => {
       } else {
         draft[form][field].value = value;
       }
+      break;
+    }
+    case SAVE_CHANGE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case SAVE_CHANGE_SUCCESS: {
+      const { message } = payload;
+      draft.loading = false;
+      draft.alerts.success = { message };
+      break;
+    }
+    case SAVE_CHANGE: {
+      draft.loading = true;
       break;
     }
   }

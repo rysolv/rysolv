@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 
+import { ErrorSuccessBanner } from 'components/base_ui';
 import { defaultFontSize } from 'defaultStyleHelper';
 
 export const DetailContainer = styled.div`
@@ -17,6 +18,24 @@ export const DetailViewContainer = styled.div`
   flex-direction: row;
   padding: 1.6rem 0;
   width: 100%;
+`;
+
+export const IconButtonContainer = styled.div`
+  align-self: center;
+  height: 100%;
+`;
+
+export const Language = styled.div`
+  align-items: center;
+  display: flex;
+  flex-flow: wrap;
+`;
+
+export const LanguageListItem = styled.div`
+  display: flex;
+  font-size: ${defaultFontSize};
+  padding: 0.5rem 0;
+  justify-content: space-between;
 `;
 
 export const LinkIcon = styled.div`
@@ -71,9 +90,14 @@ export const Rep = styled.div`
 export const SettingsTabsWrapper = styled.div`
   background-color: white;
   border-radius: 0.2rem;
-  margin: 0 2rem;
+  margin-left: 2rem;
+  overflow: hidden;
   padding: 2rem;
   width: 100%;
+`;
+
+export const StyledLanguageAutocomplete = styled.div`
+  width: 80%;
 `;
 
 export const StyledCancelIcon = styled.div`
@@ -86,6 +110,11 @@ export const StyledCancelIcon = styled.div`
   place-content: center;
   position: absolute;
   width: 2.4rem;
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin-top: 1.6rem;
+  width: 100%;
 `;
 
 export const StyledFundedIcon = styled.div`

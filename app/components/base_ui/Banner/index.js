@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
+
+import { errorRed, successGreen } from 'defaultStyleHelper';
 import iconDictionary from 'utils/iconDictionary';
-import { BannerWrapper, CloseButton, IconWrapper } from './styledComponents';
+
 import MessageSection from './bannerMessage';
+import { BannerWrapper, CloseButton, IconWrapper } from './styledComponents';
 
 const CloseIcon = iconDictionary('closeMenu');
 const SuccessIcon = iconDictionary('successOutline');
@@ -23,8 +26,8 @@ const ErrorSuccessBanner = ({ error, onClose, success, ...restProps }) => {
     }
   };
 
-  const successProps = success && { color: 'green', icon: SuccessIcon };
-  const errorProps = error && { color: 'red', icon: WarningIcon };
+  const successProps = success && { color: successGreen, icon: SuccessIcon };
+  const errorProps = error && { color: errorRed, icon: WarningIcon };
   const { color, icon } = successProps || errorProps || {};
 
   return (
