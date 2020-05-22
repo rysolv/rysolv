@@ -81,7 +81,7 @@ module.exports = buildSchema(`
 
   type User {
     activePullRequests: Int
-    attempting: [ID]
+    attempting: [Object]
     balance: Float
     comments: [String]
     completedPullRequests: Int
@@ -105,7 +105,7 @@ module.exports = buildSchema(`
     stackoverflowLink: String
     upvotes: [ID]
     username: String
-    watching: [String]
+    watching: [Object]
   }
 
   input UserInput {

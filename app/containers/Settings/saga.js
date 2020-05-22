@@ -33,6 +33,7 @@ export function* fetchInfoSaga({ payload }) {
         completedPullRequests,
         dollarsEarned,
         rejectedPullRequests,
+        watching,
       }
     }
 `;

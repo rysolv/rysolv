@@ -131,6 +131,23 @@ module.exports = {
     const { column, query } = args;
     try {
       const [result] = await getOneUser('users', query, column);
+      const { attempting, watching } = result;
+      const watchingListResult = await Promise.all(
+        watching.map(async issueId => {
+          const type = 'userWatchList';
+          const [watchingResult] = await getWatchList(issueId, type);
+          return watchingResult;
+        }),
+      );
+      result.watching = watchingListResult;
+      const attemptingListResult = await Promise.all(
+        attempting.map(async issueId => {
+          const type = 'userAttemptList';
+          const [attemptingResult] = await getWatchList(issueId, type);
+          return attemptingResult;
+        }),
+      );
+      result.attempting = attemptingListResult;
       return result;
     } catch (err) {
       throw err;

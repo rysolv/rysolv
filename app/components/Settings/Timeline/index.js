@@ -25,6 +25,7 @@ import {
   TimelineType,
   TimelineVerticalDivider,
 } from './styledComponents';
+import { WatchingListComponent } from '../Watching';
 
 const activityData = [
   {
@@ -83,11 +84,20 @@ const activityData = [
 ];
 
 const UserTimelineView = ({
+  attempting,
   handleInputChange,
   handleNav,
   filterValues: { users: usersFilter },
+  watching,
 }) => (
   <TimelineContainer>
+    <HeaderWrapper>
+      <StyledH3>All Watching</StyledH3>
+    </HeaderWrapper>
+    <WatchingListComponent watching={watching} />
+    <HeaderWrapper>
+      <StyledH3>All Attempting</StyledH3>
+    </HeaderWrapper>
     <HeaderWrapper>
       <StyledH3>All Activity</StyledH3>
       <StyledBaseDropDownMenu
@@ -147,9 +157,11 @@ const UserTimelineView = ({
 );
 
 UserTimelineView.propTypes = {
+  attempting: T.array.isRequired,
   filterValues: T.object.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
+  watching: T.array.isRequired,
 };
 
 export default UserTimelineView;

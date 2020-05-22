@@ -6,10 +6,12 @@ import UserTimelineView from './Timeline';
 import { StyledPaper, StyledTab } from './styledComponents';
 
 const SettingsTabs = ({
+  attemping,
   currentTab,
   filterValues,
   handleInputChange,
   handleNav,
+  watching,
 }) => {
   const [value, setValue] = useState(currentTab);
   useEffect(() => setValue(currentTab), [currentTab]);
@@ -19,9 +21,11 @@ const SettingsTabs = ({
   const ComponentToRender = {
     0: (
       <UserTimelineView
+        attemping={attemping}
         filterValues={filterValues}
         handleInputChange={handleInputChange}
         handleNav={handleNav}
+        watching={watching}
       />
     ),
   };
@@ -45,10 +49,12 @@ const SettingsTabs = ({
 };
 
 SettingsTabs.propTypes = {
+  attemping: T.array,
   currentTab: T.number,
   filterValues: T.object,
   handleInputChange: T.func,
   handleNav: T.func,
+  watching: T.array,
 };
 
 export default SettingsTabs;

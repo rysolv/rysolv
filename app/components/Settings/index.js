@@ -34,6 +34,7 @@ const SettingsView = ({
   currentTab,
   data: {
     activePullRequests,
+    attempting,
     completedPullRequests,
     createdDate,
     dollarsEarned,
@@ -49,6 +50,7 @@ const SettingsView = ({
     rejectedPullRequests,
     rep,
     stackoverflowLink,
+    watching,
   },
   dispatchSaveChange,
   filterValues,
@@ -184,10 +186,12 @@ const SettingsView = ({
         </UserCardWrapper>
         <SettingsTabsWrapper>
           <SettingsTabs
+            attemping={attempting}
             currentTab={currentTab}
             filterValues={filterValues}
             handleInputChange={handleInputChange}
             handleNav={handleNav}
+            watching={watching}
           />
         </SettingsTabsWrapper>
       </DetailViewContainer>
