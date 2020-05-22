@@ -26,9 +26,9 @@ const makeSelectIssuesLoading = prop =>
 
 const makeSelectIssuesDisabled = () =>
   createSelector(
-    makeSelectIssues('data'),
-    data => {
-      const tempData = { ...data };
+    makeSelectIssues('issueData'),
+    issueData => {
+      const tempData = { ...issueData };
       delete tempData.importUrl;
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
@@ -77,10 +77,10 @@ const makeSelectIssueDetailLoading = prop =>
 
 const makeSelectIssuesRequestBody = () =>
   createSelector(
-    makeSelectIssues('data'),
+    makeSelectIssues('issueData'),
     makeSelectIssues('organizationData'),
-    (data, organizationData) => {
-      const formData = { ...data, ...organizationData };
+    (issueData, organizationData) => {
+      const formData = { ...issueData, ...organizationData };
       return Object.keys(formData).reduce((acc, field) => {
         acc[field] = formData[field].value;
         return acc;

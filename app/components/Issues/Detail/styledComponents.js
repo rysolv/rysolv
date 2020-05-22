@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { borderColor, subheaderFontSize, textColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
-const { tablet, laptop } = mediaQueriesByDevice;
+const { tablet, laptop, mobile } = mediaQueriesByDevice;
 
 export const DetailContainer = styled.div`
   display: flex;
@@ -9,7 +9,7 @@ export const DetailContainer = styled.div`
   align-items: flex-start;
   justify-content: center;
   width: 100%;
-  padding: 2.5rem 5rem;
+  padding: 2.5rem 0;
 
   ${tablet} {
     padding: 2.5rem 0;
@@ -20,7 +20,7 @@ export const DetailContainer = styled.div`
 `;
 
 export const IssueDetailWrapper = styled.div`
-  width: 70%;
+  width: 80%;
   display: inline-flex;
   background-color: white;
   border-radius: 0.25rem;
@@ -32,7 +32,11 @@ export const IssueDetailWrapper = styled.div`
   }
   ${tablet} {
     padding: 0;
+    width: 90%;
+  }
+  ${mobile} {
     width: 100%;
+    /* padding: 0; */
   }
 `;
 

@@ -46,17 +46,18 @@ import {
 
 export const initialState = {
   alerts: { error: false, success: false },
-  data: {
-    name: { error: '', value: '' },
-    body: { error: '', value: '' },
+  issueData: {
+    issueName: { error: '', value: '' },
+    issueBody: { error: '', value: '' },
     issueUrl: { error: '', value: '' },
-    language: { error: '', value: [] },
+    issueLanguages: { error: '', value: [] },
     importUrl: { error: '', value: '' },
   },
   error: {
+    importIssue: { error: false, message: '' },
+    issueDetail: false,
     issues: false,
     searchIssues: false,
-    issueDetail: false,
   },
   filter: {
     language: [],
@@ -73,6 +74,7 @@ export const initialState = {
       feature: false,
     },
   },
+  importIssue: '',
   issueDetail: {},
   issues: [],
   isVerified: false,
@@ -187,7 +189,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case CLEAR_FORM: {
-      draft.data = initialState.data;
+      draft.issueData = initialState.issueData;
       draft.organizationData = initialState.organizationData;
       draft.isVerified = initialState.isVerified;
       break;
@@ -245,11 +247,21 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case IMPORT_ISSUE_FAILURE: {
+      const { error } = payload;
+      draft.error.importIssue = { error: true, message: error.message };
       draft.loading.importIssue = false;
       break;
     }
     case IMPORT_ISSUE_SUCCESS: {
+      const { importIssue } = payload;
       draft.loading.importIssue = false;
+      Object.keys(draft.issueData).map(field => {
+        draft.issueData[field].value = importIssue[field];
+      });
+      Object.keys(draft.organizationData).map(field => {
+        draft.organizationData[field].value = importIssue[field];
+      });
+      draft.importIssue = 'Successfully imported issue';
       break;
     }
     case IMPORT_ISSUE: {
@@ -263,9 +275,12 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
+      draft.error = initialState.error;
+      draft[form][field].error = '';
+
       if (form === 'filter') {
         draft[form][field] = value;
-      } else if (field === 'language') {
+      } else if (field === 'issueLanguages') {
         draft[form][field].value = [];
         value.map(language => draft[form][field].value.push(language.value));
       } else {
@@ -277,7 +292,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       const { errors } = payload;
       const fields = Object.keys(errors);
       fields.forEach(field => {
-        draft.data[field].error = errors[field] || '';
+        draft.issueData[field].error = errors[field] || '';
       });
       break;
     }

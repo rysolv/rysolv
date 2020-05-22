@@ -47,7 +47,7 @@ export class IssuesAdd extends React.PureComponent {
   render() {
     const {
       activeUser,
-      data,
+      issueData,
       handleNav,
       loading,
       organization,
@@ -59,7 +59,7 @@ export class IssuesAdd extends React.PureComponent {
         <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
         <AddForm>
           <AsyncRender
-            asyncData={{ data, organization }}
+            asyncData={{ issueData, organization }}
             component={StepToRender}
             loading={loading}
             propsToPassDown={{
@@ -75,7 +75,7 @@ export class IssuesAdd extends React.PureComponent {
 
 IssuesAdd.propTypes = {
   activeUser: T.object,
-  data: T.object,
+  issueData: T.object,
   dispatchClearForm: T.func,
   handleIncrementStep: T.func,
   handleNav: T.func,
@@ -89,9 +89,9 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
+  issueData: makeSelectIssues('issueData'),
+  organizationData: makeSelectOrganizations('organizationData'),
   activeUser: makeSelectAuth('activeUser'),
-  data: makeSelectIssues('data'),
-  organization: makeSelectOrganizations('data'),
   loading: makeSelectIssuesLoading('addIssue'),
   step: makeSelectIssuesStep('addIssue'),
 });

@@ -2,21 +2,27 @@ import React from 'react';
 import T from 'prop-types';
 import iconDictionary from 'utils/iconDictionary';
 import { BaseTextInputWithAdornment } from 'components/base_ui';
-import { ImportFormContainer, StyledLabel } from './styledComponents';
+import {
+  ImportFormContainer,
+  StyledImportError,
+  StyledLabel,
+} from './styledComponents';
 
 const SearchIcon = iconDictionary('search');
 
 const ImportForm = ({
-  data,
+  issueData,
+  importIssueLoading,
   handleIncrementStep,
   handleInputChange,
   handleSubmit,
+  importError,
 }) => {
-  const { importUrl } = data;
+  const { importUrl } = issueData;
   const onChangeHandler = e => {
     handleInputChange({
       field: 'importUrl',
-      form: 'data',
+      form: 'issueData',
       value: e.target.value,
     });
   };
@@ -25,6 +31,7 @@ const ImportForm = ({
     <ImportFormContainer>
       Import GitHub Issue
       <BaseTextInputWithAdornment
+        disabled={importIssueLoading}
         adornmentComponent={SearchIcon}
         error={!!importUrl.error}
         helperText={importUrl.error || ''}
@@ -34,6 +41,9 @@ const ImportForm = ({
         position="end"
         value={importUrl.value}
       />
+      <StyledImportError>
+        {importError.error ? importError.message : null}
+      </StyledImportError>
       or
       <StyledLabel
         onClick={() => handleIncrementStep({ step: 2, view: 'addIssue' })}
@@ -45,10 +55,12 @@ const ImportForm = ({
 };
 
 ImportForm.propTypes = {
-  data: T.object,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   handleSubmit: T.func,
+  importError: T.object,
+  importIssueLoading: T.bool,
+  issueData: T.object,
 };
 
 export default ImportForm;

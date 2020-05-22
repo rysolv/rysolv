@@ -17,7 +17,6 @@ export const StyledSideNav = styled.div`
   height: auto;
   overflow-y: auto;
   overflow: hidden;
-  position: fixed;
   white-space: nowrap;
   width: ${({ open }) => (open ? '20rem' : '7.5rem')};
   z-index: 1;

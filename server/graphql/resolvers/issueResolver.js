@@ -20,7 +20,7 @@ const {
   upvoteIssue,
 } = require('../../db');
 
-const { getSingleIssue } = require('../../integrations');
+const { getSingleIssue, getSingleOrganization } = require('../../integrations');
 
 const newIssueArray = (issueId, issueInput) => [
   [
@@ -94,7 +94,7 @@ module.exports = {
           } already exists`,
         );
       }
-      const [organization] = newOrganizationArray(issueInput);
+      const organization = newOrganizationArray(newIssueId, issueInput);
 
       try {
         const [result] = await createOrganization(organization);
@@ -155,85 +155,46 @@ module.exports = {
   },
   importIssue: async args => {
     const { url } = args;
-    const newIssueId = uuidv4();
 
     try {
-      // get issue and organization detail from Github API
-      const { issueInput, organizationInput } = await getSingleIssue(url);
+      // get issue detail from Github API
+      const {
+        issueInput,
+        issueInput: { organizationUrl },
+      } = await getSingleIssue(url);
 
-      const createNewOrganization = async organizationArray => {
-        try {
-          const [result] = await createOrganization(organizationArray);
-          return result;
-        } catch (err) {
-          throw err;
-        }
-      };
-
-      const createNewIssue = async issueArray => {
-        try {
-          const result = await createIssue(issueArray);
-          return result;
-        } catch (err) {
-          throw err;
-        }
-      };
-
-      // check issue repo for duplicate
+      // Check issue repo for duplicate
       if (await checkDuplicateIssue('issues', issueInput.repo)) {
-        throw new Error(`Error: Issue at ${issueInput.repo} already exists`);
+        throw new Error(`Issue at ${issueInput.repo} already exists`);
       }
 
-      if (
-        await checkDuplicateOrganization(
-          'organizations',
-          organizationInput.organizationRepo,
-        )
-      ) {
-        // Organization exists: get org id, create issue, append issue to org list
-        const [organization] = await getOrganizationsWhere(
-          'organizations',
-          'repo_url',
-          organizationInput.organizationRepo,
-        );
-
-        const { id } = organization;
-
-        issueInput.organizationId = id;
-
-        const issueArray = newIssueArray(newIssueId, issueInput);
-
-        const [newIssue] = await createNewIssue(issueArray);
-
-        await updateOrganizationArray(
-          'organizations',
-          'issues',
-          id,
-          newIssueId,
-          false,
-        );
-
-        return newIssue;
-      }
-
-      // Create organization, get org id, create issue
-      const organizationArray = newOrganizationArray(
-        newIssueId,
-        organizationInput,
+      // get organization detail from Github API
+      const { organizationInput } = await getSingleOrganization(
+        organizationUrl,
       );
-      const newOrganization = await createNewOrganization(organizationArray);
 
-      const { id } = newOrganization;
+      // Return organizaiton ID if exists in db
+      const [organization] = await getOrganizationsWhere(
+        'organizations',
+        'repo_url',
+        organizationInput.organizationRepo,
+      );
+      if (organization) {
+        const { id } = organization;
+        issueInput.organizationId = id;
+      }
 
-      issueInput.organizationId = id;
+      const ImportData = { ...issueInput, ...organizationInput };
 
-      const issueArray = newIssueArray(newIssueId, issueInput);
-
-      const [newIssue] = await createNewIssue(issueArray);
-
-      return newIssue;
+      return {
+        __typename: 'ImportData',
+        ...ImportData,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        ...err.message,
+      };
     }
   },
   oneIssue: async args => {

@@ -1,5 +1,6 @@
-const { getSingleIssue } = require('./github');
+const { getSingleIssue, getSingleOrganization } = require('./github');
 
 module.exports = {
   getSingleIssue,
+  getSingleOrganization,
 };

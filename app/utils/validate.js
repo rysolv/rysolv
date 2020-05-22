@@ -14,25 +14,27 @@ const isEmptyString = str => {
   return false;
 };
 
-const validateUrl = value => {
-  const organization = value.split('/')[1];
-  const url = value.split('/')[0].split('.');
-  const subDomain = url[0];
-  const domain = url[1];
-  const topLevelDomain = url[2];
-  if (
-    subDomain !== 'www' ||
-    domain !== 'github' ||
-    topLevelDomain !== 'com' ||
-    typeof organization !== 'string' ||
-    organization.length === 0
-  ) {
+export const validateUrl = value => {
+  const url = value.split('/');
+  const issueNumber = url[url.length - 1];
+  const validIssueNumber = !Number.isNaN(parseInt(issueNumber, 10) + 1);
+  const validIssues = url[url.length - 2] === 'issues';
+  const repo = url[url.length - 3];
+  const organization = url[url.length - 4];
+  const containsGithub =
+    url[url.length - 5] === 'github.com' ||
+    url[url.length - 5] === 'www.github.com' ||
+    url[url.length - 5] === 'api.github.com';
+  if (validIssueNumber && validIssues && containsGithub) {
     return {
-      error: 'invalidImport',
-      message: 'Invalid GitHub URL',
+      error: false,
+      validatedUrl: `https://github.com/${organization}/${repo}/issues/${issueNumber}`,
     };
   }
-  return false;
+  return {
+    error: 'invalidImport',
+    message: 'Invalid GitHub URL',
+  };
 };
 
 export const validationDictionary = { urlInput: validateUrl };

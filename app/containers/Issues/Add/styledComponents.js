@@ -21,6 +21,9 @@ export const AddForm = styled.div`
   background-color: white;
   padding: 1rem 1rem 5rem 1rem;
   border-radius: 0.5rem;
+  -webkit-box-shadow: 10px 5px 17px -2px rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 10px 5px 17px -2px rgba(0, 0, 0, 0.19);
+  box-shadow: 10px 5px 17px -2px rgba(0, 0, 0, 0.19);
 `;
 
 export const ButtonGroup = styled.div`
