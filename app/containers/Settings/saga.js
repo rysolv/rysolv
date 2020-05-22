@@ -74,7 +74,11 @@ export function* saveChangeSaga({ payload }) {
     });
     yield call(post, '/graphql', graphql);
     yield put(fetchInfo({ itemId }));
-    yield put(saveChangeSuccess({ message: 'Success' }));
+    yield put(
+      saveChangeSuccess({
+        message: 'User account has been successfully updated.',
+      }),
+    );
   } catch (error) {
     yield put(saveChangeFailure({ error }));
   }
