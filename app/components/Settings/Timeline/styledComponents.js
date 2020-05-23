@@ -9,12 +9,6 @@ export const HeaderWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const StyledH3 = styled.h3`
-  font-size: 2rem;
-  font-weight: 500;
-  margin: 3rem 0;
-`;
-
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
   width: 15rem;

@@ -6,7 +6,7 @@ import UserTimelineView from './Timeline';
 import { StyledPaper, StyledTab } from './styledComponents';
 
 const SettingsTabs = ({
-  attemping,
+  attempting,
   currentTab,
   filterValues,
   handleInputChange,
@@ -21,7 +21,7 @@ const SettingsTabs = ({
   const ComponentToRender = {
     0: (
       <UserTimelineView
-        attemping={attemping}
+        attempting={attempting}
         filterValues={filterValues}
         handleInputChange={handleInputChange}
         handleNav={handleNav}
@@ -49,7 +49,7 @@ const SettingsTabs = ({
 };
 
 SettingsTabs.propTypes = {
-  attemping: T.array,
+  attempting: T.array,
   currentTab: T.number,
   filterValues: T.object,
   handleInputChange: T.func,

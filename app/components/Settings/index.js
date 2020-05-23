@@ -186,7 +186,7 @@ const SettingsView = ({
         </UserCardWrapper>
         <SettingsTabsWrapper>
           <SettingsTabs
-            attemping={attempting}
+            attempting={attempting}
             currentTab={currentTab}
             filterValues={filterValues}
             handleInputChange={handleInputChange}

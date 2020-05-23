@@ -1,13 +1,24 @@
 import styled from 'styled-components';
 
-import { hoverLinkColor, textColor } from 'defaultStyleHelper';
+import { defaultFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
 
-export const IssueDetail = styled.div`
+export const EmptyOverviewListDetail = styled.div`
   color: ${textColor};
-  display: flex;
-  flex-direction: row;
+  font-size: ${defaultFontSize};
   height: 100%;
-  margin: 1rem 0;
+  margin: 2rem 0;
+  width: 100%;
+`;
+
+export const EmptyOverviewListItem = styled.div`
+  border-top: 0.1rem solid #d5d5d5;
+  display: flex;
+  text-align: center;
+  width: 90%;
+
+  & :last-child {
+    border-bottom: 0.1rem solid #d5d5d5;
+  }
 `;
 
 export const IssueFundedAmount = styled.div`
@@ -35,7 +46,7 @@ export const IssueNameWrapper = styled.div`
   padding: 0 1.5rem;
 `;
 
-export const WatchingList = styled.ul`
+export const OverviewList = styled.ul`
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -43,7 +54,15 @@ export const WatchingList = styled.ul`
   padding: 0;
 `;
 
-export const WatchingListItem = styled.li`
+export const OverviewListDetail = styled.div`
+  color: ${textColor};
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  margin: 1rem 0;
+`;
+
+export const OverviewListItem = styled.li`
   border-top: 0.1rem solid #d5d5d5;
   display: flex;
   width: 90%;
