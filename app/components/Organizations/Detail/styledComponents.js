@@ -8,6 +8,7 @@ import {
   defaultFontSize,
   dividerBorder,
   hoverLinkColor,
+  textColor,
 } from 'defaultStyleHelper';
 
 export const BaseInputWrapper = styled.div`
@@ -25,7 +26,7 @@ export const ContributorContent = styled.div`
 `;
 
 export const ContributorDetails = styled.div`
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   display: flex;
   flex-direction: column;
   font-size: ${defaultFontSize};
@@ -80,7 +81,7 @@ export const DetailContainer = styled.div`
 `;
 
 export const DetailViewContainer = styled.div`
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   display: flex;
   padding: 1.6rem 0;
   width: 100%;
@@ -147,26 +148,27 @@ export const IssueAttempts = styled.div`
 
 export const IssueContent = styled.div`
   display: flex;
-  flex-direction: row;
+  width: 100%;
   height: 10rem;
   margin: 1rem 0;
 `;
 
 export const IssueContentInfo = styled.div`
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   display: flex;
   flex-direction: column;
+  flex: 100%;
 `;
 
 export const IssueDetail = styled.div`
   display: flex;
-  flex-direction: row;
   height: 100%;
+  justify-content: space-between;
 `;
 
 export const IssueFundedAmount = styled.div`
   align-self: center;
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   display: flex;
   font-size: 1.8rem;
   font-weight: 500;
@@ -232,7 +234,7 @@ export const IssuesSearchHeaderContainer = styled.div`
 `;
 
 export const Language = styled.div`
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   display: flex;
   padding-right: 1rem;
   font-size: 1.4rem;
@@ -279,7 +281,7 @@ export const ProfileImageWrapper = styled.div`
 `;
 
 export const RecentActivityContainer = styled.div`
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   padding: 1.6rem;
 `;
 
@@ -305,7 +307,7 @@ export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
 `;
 
 export const StyledIcon = styled.div`
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   padding-right: 0.5rem;
 
   svg {
@@ -345,7 +347,7 @@ export const TabsContainer = styled.div`
 `;
 
 export const TopLanguagesContainer = styled.div`
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   padding: 1.6rem;
   width: fit-content;
 `;

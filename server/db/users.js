@@ -159,7 +159,7 @@ const transformUser = async (table, id, data) => {
 const updateUserArray = async (table, column, id, data, remove) => {
   const [userData] = await getOneUser('users', id, 'id');
   // Only add uniquew values to array
-  if (!userData[column].includes(data)) {
+  if (!userData[column].includes(data) || remove) {
     const action = remove ? 'array_remove' : 'array_append';
     const queryText = `UPDATE ${table}
       SET ${column} = ${action}(${column}, '${data}')
