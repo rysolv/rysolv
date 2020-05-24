@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-import { defaultFontSize, hyperlinkColor, textColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  detailFontSize,
+  hyperlinkColor,
+  subheaderFontSize,
+  textColor,
+} from 'defaultStyleHelper';
 
 export const DataWrapper = styled.div`
   display: flex;
@@ -24,6 +30,14 @@ export const ImportFormContainer = styled.section`
   padding: 5rem 0;
   text-align: center;
   width: 50%;
+
+  * {
+    font-size: ${defaultFontSize};
+  }
+
+  .MuiFormHelperText-root {
+    font-size: ${detailFontSize};
+  }
 `;
 
 export const InputFormWrapper = styled.div`
@@ -50,6 +64,7 @@ export const KeyWrapper = styled.div`
 
 export const StyledLabel = styled.div`
   color: ${hyperlinkColor};
+  font-size: ${subheaderFontSize};
 
   :hover {
     cursor: pointer;

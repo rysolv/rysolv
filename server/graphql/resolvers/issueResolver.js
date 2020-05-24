@@ -34,7 +34,7 @@ const newIssueArray = (issueId, issueInput) => [
     issueInput.language || [], // language
     issueInput.comments || [], // comments
     issueInput.attempting || [], // attempting
-    issueInput.contributor || 'b519b064-b5db-4472-ad1b-00e30bdbfa4c', // contributor
+    issueInput.contributor, // contributor
     issueInput.rep || 25, // rep
     issueInput.watching || [], // watching
     issueInput.fundedAmount || 0, // funded_amount
@@ -43,7 +43,7 @@ const newIssueArray = (issueId, issueInput) => [
   ],
 ];
 
-const newOrganizationArray = (newIssueId, organizationInput) => [
+const newOrganizationArray = organizationInput => [
   [
     uuidv4(), // id
     new Date(), // created_date
@@ -52,11 +52,11 @@ const newOrganizationArray = (newIssueId, organizationInput) => [
     organizationInput.organizationDescription, // description
     organizationInput.organizationRepo, // repo
     organizationInput.organizationUrl || '', // url
-    [newIssueId], // issues
+    organizationInput.issues || [], // issues
     organizationInput.logo || defaultOrgImage, // logo
     organizationInput.verified || false, // verified
     [], // contributors
-    organizationInput.contributor || 'b519b064-b5db-4472-ad1b-00e30bdbfa4c', // owner_id
+    organizationInput.contributor, // owner_id
     organizationInput.totalFunded || 0, // funded
     organizationInput.preferred_languages || [], // languages
   ],
@@ -65,14 +65,15 @@ const newOrganizationArray = (newIssueId, organizationInput) => [
 module.exports = {
   createIssue: async args => {
     const { issueInput } = args;
+    console.log(issueInput);
     const { organizationRepo, repo, organizationId } = issueInput;
     const newIssueId = uuidv4();
 
     // Populate issue array and create new issue
     const createNewIssue = async () => {
-      const issue = newIssueArray(newIssueId, issueInput);
+      const issueArray = newIssueArray(newIssueId, issueInput);
       try {
-        const result = await createIssue(issue);
+        const result = await createIssue(issueArray);
         return result;
       } catch (err) {
         throw err;
@@ -88,9 +89,9 @@ module.exports = {
           } already exists`,
         );
       }
-      const organization = newOrganizationArray(newIssueId, issueInput);
+      const organizationArray = newOrganizationArray(issueInput);
       try {
-        const [result] = await createOrganization(organization);
+        const [result] = await createOrganization(organizationArray);
         return result;
       } catch (err) {
         throw err;

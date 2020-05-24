@@ -36,7 +36,6 @@ export const IssueDetailWrapper = styled.div`
   }
   ${mobile} {
     width: 100%;
-    /* padding: 0; */
   }
 `;
 
@@ -54,8 +53,8 @@ export const IssueDetailColumn = styled.div`
 `;
 
 export const SidebarContainer = styled.div`
-  display: inline-flex;
-  width: 20%;
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
   padding: 0 1rem;
   ${tablet} {
     display: none;
