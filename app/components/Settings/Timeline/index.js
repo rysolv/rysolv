@@ -92,6 +92,8 @@ const UserTimelineView = ({
   filterValues: { users: usersFilter },
   handleInputChange,
   handleNav,
+  handleRemoveIssue,
+  userId,
   watching,
 }) => {
   const AttemptingComponent = () => (
@@ -100,7 +102,13 @@ const UserTimelineView = ({
       FallbackComponent={
         <EmptyOverviewListComponent handleNav={handleNav} type="attempting" />
       }
-      propsToPassDown={{ handleNav, list: attempting, type: 'attempting' }}
+      propsToPassDown={{
+        handleNav,
+        handleRemoveIssue,
+        list: attempting,
+        type: 'attempting',
+        userId,
+      }}
       shouldRender={!!attempting.length}
     />
   );
@@ -110,7 +118,13 @@ const UserTimelineView = ({
       FallbackComponent={
         <EmptyOverviewListComponent handleNav={handleNav} type="watching" />
       }
-      propsToPassDown={{ handleNav, list: watching, type: 'watching' }}
+      propsToPassDown={{
+        handleNav,
+        handleRemoveIssue,
+        list: watching,
+        type: 'watching',
+        userId,
+      }}
       shouldRender={!!watching.length}
     />
   );
@@ -188,6 +202,8 @@ UserTimelineView.propTypes = {
   filterValues: T.object.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
+  handleRemoveIssue: T.func.isRequired,
+  userId: T.string.isRequired,
   watching: T.array.isRequired,
 };
 

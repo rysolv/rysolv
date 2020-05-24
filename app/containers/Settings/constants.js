@@ -6,6 +6,10 @@ export const FETCH_INFO_SUCCESS = 'app/Settings/FETCH_INFO_SUCCESS';
 
 export const INPUT_CHANGE = 'app/Settings/INPUT_CHANGE';
 
+export const REMOVE_ISSUE = 'app/Settings/REMOVE_ISSUE';
+export const REMOVE_ISSUE_FAILURE = 'app/Settings/REMOVE_ISSUE_FAILURE';
+export const REMOVE_ISSUE_SUCCESS = 'app/Settings/REMOVE_ISSUE_SUCCESS';
+
 export const SAVE_CHANGE = 'app/Settings/SAVE_CHANGE';
 export const SAVE_CHANGE_FAILURE = 'app/Settings/SAVE_CHANGE_FAILURE';
 export const SAVE_CHANGE_SUCCESS = 'app/Settings/SAVE_CHANGE_SUCCESS';

@@ -35,7 +35,13 @@ export const EmptyOverviewListComponent = ({ handleNav, type }) => (
   </OverviewList>
 );
 
-export const OverviewListComponent = ({ handleNav, list, type }) => {
+export const OverviewListComponent = ({
+  handleNav,
+  handleRemoveIssue,
+  list,
+  type,
+  userId,
+}) => {
   const listIconDictionary = {
     attempting: {
       icon: AttemptingIcon,
@@ -52,7 +58,18 @@ export const OverviewListComponent = ({ handleNav, list, type }) => {
       {list.map(({ fundedAmount, id, name }) => (
         <OverviewListItem key={`list-item-${id}`}>
           <IconButtonContainer>
-            <IconButton icon={icon} label={label} onClick={() => {}} />
+            <IconButton
+              icon={icon}
+              label={label}
+              onClick={() =>
+                handleRemoveIssue({
+                  userId,
+                  id,
+                  column: type,
+                  remove: true,
+                })
+              }
+            />
           </IconButtonContainer>
           <OverviewListDetail>
             <IssueNameWrapper>
@@ -77,6 +94,8 @@ EmptyOverviewListComponent.propTypes = {
 
 OverviewListComponent.propTypes = {
   handleNav: T.func,
+  handleRemoveIssue: T.func,
   list: T.array,
   type: T.string,
+  userId: T.string,
 };

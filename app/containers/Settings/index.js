@@ -11,7 +11,13 @@ import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { clearAlerts, fetchInfo, inputChange, saveChange } from './actions';
+import {
+  clearAlerts,
+  fetchInfo,
+  inputChange,
+  removeIssue,
+  saveChange,
+} from './actions';
 import { settingViewDictionary } from './constants';
 import reducer from './reducer';
 import saga from './saga';
@@ -29,6 +35,7 @@ const Settings = ({
   handleClearAlerts,
   handleInputChange,
   handleNav,
+  handleRemoveIssue,
   loading,
   match,
 }) => {
@@ -57,6 +64,7 @@ const Settings = ({
           handleClearAlerts,
           handleInputChange,
           handleNav,
+          handleRemoveIssue,
         }}
       />
     </SettingsWrapper>
@@ -74,6 +82,7 @@ Settings.propTypes = {
   handleClearAlerts: T.func.isRequired,
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
+  handleRemoveIssue: T.func.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
 };
@@ -100,8 +109,9 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
-    handleInputChange: payload => dispatch(inputChange(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
+    handleInputChange: payload => dispatch(inputChange(payload)),
+    handleRemoveIssue: payload => dispatch(removeIssue(payload)),
     /**
      * Reducer : Router
      */

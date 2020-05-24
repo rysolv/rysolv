@@ -11,6 +11,8 @@ const SettingsTabs = ({
   filterValues,
   handleInputChange,
   handleNav,
+  handleRemoveIssue,
+  userId,
   watching,
 }) => {
   const [value, setValue] = useState(currentTab);
@@ -25,6 +27,8 @@ const SettingsTabs = ({
         filterValues={filterValues}
         handleInputChange={handleInputChange}
         handleNav={handleNav}
+        handleRemoveIssue={handleRemoveIssue}
+        userId={userId}
         watching={watching}
       />
     ),
@@ -54,6 +58,8 @@ SettingsTabs.propTypes = {
   filterValues: T.object,
   handleInputChange: T.func,
   handleNav: T.func,
+  handleRemoveIssue: T.func,
+  userId: T.string,
   watching: T.array,
 };
 

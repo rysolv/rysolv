@@ -57,6 +57,7 @@ const SettingsView = ({
   handleClearAlerts,
   handleInputChange,
   handleNav,
+  handleRemoveIssue,
 }) => {
   const [changeGithub, setChangeGithub] = useState(false);
   const [changePersonal, setChangePersonal] = useState(false);
@@ -191,6 +192,8 @@ const SettingsView = ({
             filterValues={filterValues}
             handleInputChange={handleInputChange}
             handleNav={handleNav}
+            handleRemoveIssue={handleRemoveIssue}
+            userId={id}
             watching={watching}
           />
         </SettingsTabsWrapper>
@@ -208,6 +211,7 @@ SettingsView.propTypes = {
   handleClearAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
+  handleRemoveIssue: T.func.isRequired,
 };
 
 export default SettingsView;
