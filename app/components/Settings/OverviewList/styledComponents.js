@@ -13,6 +13,7 @@ export const EmptyOverviewListDetail = styled.div`
 export const EmptyOverviewListItem = styled.div`
   border-top: 0.1rem solid #d5d5d5;
   display: flex;
+  justify-content: center;
   text-align: center;
   width: 90%;
 
@@ -52,6 +53,7 @@ export const OverviewList = styled.ul`
   flex-direction: column;
   margin: 0;
   padding: 0;
+  width: 100%;
 `;
 
 export const OverviewListDetail = styled.div`

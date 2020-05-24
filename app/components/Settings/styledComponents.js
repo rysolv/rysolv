@@ -147,7 +147,9 @@ export const StyledExpansionPanel = styled(ExpansionPanel)`
 `;
 
 export const StyledExpansionPanelDetails = styled(ExpansionPanelDetails)`
+  justify-content: center;
   padding: 0;
+  width: 100%;
 `;
 
 export const StyledFundedIcon = styled.div`
