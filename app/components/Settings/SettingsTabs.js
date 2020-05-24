@@ -128,7 +128,7 @@ SettingsTabs.propTypes = {
   setValue: T.func,
   userId: T.string,
   username: T.string,
-  value: T.string,
+  value: T.oneOfType([T.array, T.number, T.string]),
   watching: T.array,
 };
 
