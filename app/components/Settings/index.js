@@ -34,6 +34,7 @@ const SettingsView = ({
   currentTab,
   data: {
     activePullRequests,
+    attempting,
     completedPullRequests,
     createdDate,
     dollarsEarned,
@@ -49,12 +50,14 @@ const SettingsView = ({
     rejectedPullRequests,
     rep,
     stackoverflowLink,
+    watching,
   },
   dispatchSaveChange,
   filterValues,
   handleClearAlerts,
   handleInputChange,
   handleNav,
+  handleRemoveIssue,
 }) => {
   const [changeGithub, setChangeGithub] = useState(false);
   const [changePersonal, setChangePersonal] = useState(false);
@@ -184,10 +187,14 @@ const SettingsView = ({
         </UserCardWrapper>
         <SettingsTabsWrapper>
           <SettingsTabs
+            attempting={attempting}
             currentTab={currentTab}
             filterValues={filterValues}
             handleInputChange={handleInputChange}
             handleNav={handleNav}
+            handleRemoveIssue={handleRemoveIssue}
+            userId={id}
+            watching={watching}
           />
         </SettingsTabsWrapper>
       </DetailViewContainer>
@@ -204,6 +211,7 @@ SettingsView.propTypes = {
   handleClearAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
+  handleRemoveIssue: T.func.isRequired,
 };
 
 export default SettingsView;

@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 
@@ -117,6 +119,39 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   width: 100%;
 `;
 
+export const StyledExpansionPanel = styled(ExpansionPanel)`
+  box-shadow: none;
+  color: rgba(0, 0, 0, 0.7);
+
+  &:before {
+    background-color: white;
+  }
+
+  &.expanded {
+    margin: 0rem;
+  }
+
+  .MuiExpansionPanelSummary-root {
+    margin: 0;
+    padding: 0;
+  }
+
+  .MuiExpansionPanelSummary-content {
+    margin: 0;
+  }
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+  }
+`;
+
+export const StyledExpansionPanelDetails = styled(ExpansionPanelDetails)`
+  justify-content: center;
+  padding: 0;
+  width: 100%;
+`;
+
 export const StyledFundedIcon = styled.div`
   align-items: center;
   background-color: #c4efe0;
@@ -139,6 +174,13 @@ export const StyledGiftIcon = styled.div`
   place-content: center;
   width: 2.4rem;
   position: absolute;
+`;
+
+export const StyledH3 = styled.h3`
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 3rem 0;
 `;
 
 export const StyledPaper = styled(Paper)`

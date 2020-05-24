@@ -6,6 +6,9 @@ import {
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
   INPUT_CHANGE,
+  REMOVE_ISSUE_FAILURE,
+  REMOVE_ISSUE_SUCCESS,
+  REMOVE_ISSUE,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
@@ -57,6 +60,31 @@ const settingsReducer = produce((draft, { payload, type }) => {
       } else {
         draft[form][field].value = value;
       }
+      break;
+    }
+    case REMOVE_ISSUE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case REMOVE_ISSUE_SUCCESS: {
+      const { column, issueId } = payload;
+      if (column === 'attempting') {
+        draft.account.attempting = draft.account.attempting.filter(
+          issue => issue.id !== issueId,
+        );
+      }
+      if (column === 'watching') {
+        draft.account.watching = draft.account.watching.filter(
+          issue => issue.id !== issueId,
+        );
+      }
+      draft.loading = false;
+      break;
+    }
+    case REMOVE_ISSUE: {
+      draft.loading = true;
       break;
     }
     case SAVE_CHANGE_FAILURE: {

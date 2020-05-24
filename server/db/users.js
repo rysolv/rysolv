@@ -124,6 +124,14 @@ const getWatchList = async (id, type) => {
       table: 'users',
       values: 'id, username AS "User", profile_pic AS "profilePic"',
     },
+    userAttemptList: {
+      table: 'issues',
+      values: 'id, name, funded_amount AS "fundedAmount"',
+    },
+    userWatchList: {
+      table: 'issues',
+      values: 'id, name, funded_amount AS "fundedAmount"',
+    },
   };
   const { values, table } = paramsDictionary[type];
   const queryText = `SELECT ${values} FROM ${table} WHERE (id = '${id}')`;

@@ -9,9 +9,13 @@ import { formatDollarAmount } from 'utils/globalHelpers';
 
 import { userTimelineDictionary } from '../constants';
 import {
+  EmptyOverviewListComponent,
+  OverviewListComponent,
+} from '../OverviewList';
+import SettingsExpansionPanel from '../SettingsExpansionPanel';
+import {
   HeaderWrapper,
   StyledBaseDropDownMenu,
-  StyledH3,
   TimelineActivity,
   TimelineContainer,
   TimelineContent,
@@ -25,6 +29,7 @@ import {
   TimelineType,
   TimelineVerticalDivider,
 } from './styledComponents';
+import { StyledH3 } from '../styledComponents';
 
 const activityData = [
   {
@@ -83,73 +88,123 @@ const activityData = [
 ];
 
 const UserTimelineView = ({
+  attempting,
+  filterValues: { users: usersFilter },
   handleInputChange,
   handleNav,
-  filterValues: { users: usersFilter },
-}) => (
-  <TimelineContainer>
-    <HeaderWrapper>
-      <StyledH3>All Activity</StyledH3>
-      <StyledBaseDropDownMenu
-        handleChange={value =>
-          handleInputChange({ field: 'users', form: 'filter', value })
-        }
-        selectedValue={usersFilter}
-        values={['All', 'Earned', 'Funded', 'Submitted', 'Withdrew']}
-      />
-    </HeaderWrapper>
-    {activityData.map((activity, index) => {
-      const { Image, title } = userTimelineDictionary[activity.type];
-      const TimelineListItemComponent = (
-        <TimelineListItem key={`list-item-${index}`}>
-          <TimelineDividerContainer>
-            <TimelineVerticalDivider /> {Image}
-          </TimelineDividerContainer>
-          <TimelineContent>
-            <TimelineType>{title}</TimelineType>
-            <TimelineInfo>
-              <ConditionalRender
-                Component={
-                  <Fragment>
-                    <TimelineDollar>
-                      {formatDollarAmount(activity.amount)}
-                    </TimelineDollar>
-                    &nbsp;
-                  </Fragment>
-                }
-                shouldRender={!!activity.amount}
-              />
-              for&nbsp;
-              <TimelineActivity onClick={() => handleNav('/issues/detail')}>
-                {activity.issue}
-              </TimelineActivity>
-            </TimelineInfo>
-          </TimelineContent>
-        </TimelineListItem>
-      );
-
-      if (index === 0 || activity.date !== activityData[index - 1].date) {
-        return (
-          <Fragment key={`list-item-${index}`}>
-            <TimelineHeader>
-              <TimelineTitle>
-                {moment(activity.date).format('MMMM DD')}
-              </TimelineTitle>
-              <TimelineHorizontalDivider />
-            </TimelineHeader>
-            {TimelineListItemComponent}
-          </Fragment>
-        );
+  handleRemoveIssue,
+  userId,
+  watching,
+}) => {
+  const AttemptingComponent = () => (
+    <ConditionalRender
+      Component={OverviewListComponent}
+      FallbackComponent={
+        <EmptyOverviewListComponent handleNav={handleNav} type="attempting" />
       }
-      return TimelineListItemComponent;
-    })}
-  </TimelineContainer>
-);
+      propsToPassDown={{
+        handleNav,
+        handleRemoveIssue,
+        list: attempting,
+        type: 'attempting',
+        userId,
+      }}
+      shouldRender={!!attempting.length}
+    />
+  );
+  const WatchingComponent = () => (
+    <ConditionalRender
+      Component={OverviewListComponent}
+      FallbackComponent={
+        <EmptyOverviewListComponent handleNav={handleNav} type="watching" />
+      }
+      propsToPassDown={{
+        handleNav,
+        handleRemoveIssue,
+        list: watching,
+        type: 'watching',
+        userId,
+      }}
+      shouldRender={!!watching.length}
+    />
+  );
+  return (
+    <TimelineContainer>
+      <SettingsExpansionPanel
+        Component={WatchingComponent}
+        title="All Watching"
+      />
+      <SettingsExpansionPanel
+        Component={AttemptingComponent}
+        title="All Attempting"
+      />
+      <HeaderWrapper>
+        <StyledH3>All Activity</StyledH3>
+        <StyledBaseDropDownMenu
+          handleChange={value =>
+            handleInputChange({ field: 'users', form: 'filter', value })
+          }
+          selectedValue={usersFilter}
+          values={['All', 'Earned', 'Funded', 'Submitted', 'Withdrew']}
+        />
+      </HeaderWrapper>
+      {activityData.map((activity, index) => {
+        const { Image, title } = userTimelineDictionary[activity.type];
+        const TimelineListItemComponent = (
+          <TimelineListItem key={`list-item-${index}`}>
+            <TimelineDividerContainer>
+              <TimelineVerticalDivider /> {Image}
+            </TimelineDividerContainer>
+            <TimelineContent>
+              <TimelineType>{title}</TimelineType>
+              <TimelineInfo>
+                <ConditionalRender
+                  Component={
+                    <Fragment>
+                      <TimelineDollar>
+                        {formatDollarAmount(activity.amount)}
+                      </TimelineDollar>
+                      &nbsp;
+                    </Fragment>
+                  }
+                  shouldRender={!!activity.amount}
+                />
+                for&nbsp;
+                <TimelineActivity onClick={() => handleNav('/issues/detail')}>
+                  {activity.issue}
+                </TimelineActivity>
+              </TimelineInfo>
+            </TimelineContent>
+          </TimelineListItem>
+        );
+
+        if (index === 0 || activity.date !== activityData[index - 1].date) {
+          return (
+            <Fragment key={`list-item-${index}`}>
+              <TimelineHeader>
+                <TimelineTitle>
+                  {moment(activity.date).format('MMMM DD')}
+                </TimelineTitle>
+                <TimelineHorizontalDivider />
+              </TimelineHeader>
+              {TimelineListItemComponent}
+            </Fragment>
+          );
+        }
+        return TimelineListItemComponent;
+      })}
+    </TimelineContainer>
+  );
+};
 
 UserTimelineView.propTypes = {
+  attempting: T.array.isRequired,
   filterValues: T.object.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
+  handleRemoveIssue: T.func.isRequired,
+  userId: T.string.isRequired,
+  watching: T.array.isRequired,
 };
 
 export default UserTimelineView;

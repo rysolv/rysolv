@@ -4,6 +4,9 @@ import {
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
   INPUT_CHANGE,
+  REMOVE_ISSUE_FAILURE,
+  REMOVE_ISSUE_SUCCESS,
+  REMOVE_ISSUE,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
@@ -40,6 +43,27 @@ export function inputChange(payload) {
   return {
     payload,
     type: INPUT_CHANGE,
+  };
+}
+
+export function removeIssueFailure(payload) {
+  return {
+    payload,
+    type: REMOVE_ISSUE_FAILURE,
+  };
+}
+
+export function removeIssueSuccess(payload) {
+  return {
+    payload,
+    type: REMOVE_ISSUE_SUCCESS,
+  };
+}
+
+export function removeIssue(payload) {
+  return {
+    payload,
+    type: REMOVE_ISSUE,
   };
 }
 

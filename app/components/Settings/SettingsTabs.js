@@ -6,10 +6,14 @@ import UserTimelineView from './Timeline';
 import { StyledPaper, StyledTab } from './styledComponents';
 
 const SettingsTabs = ({
+  attempting,
   currentTab,
   filterValues,
   handleInputChange,
   handleNav,
+  handleRemoveIssue,
+  userId,
+  watching,
 }) => {
   const [value, setValue] = useState(currentTab);
   useEffect(() => setValue(currentTab), [currentTab]);
@@ -19,9 +23,13 @@ const SettingsTabs = ({
   const ComponentToRender = {
     0: (
       <UserTimelineView
+        attempting={attempting}
         filterValues={filterValues}
         handleInputChange={handleInputChange}
         handleNav={handleNav}
+        handleRemoveIssue={handleRemoveIssue}
+        userId={userId}
+        watching={watching}
       />
     ),
   };
@@ -45,10 +53,14 @@ const SettingsTabs = ({
 };
 
 SettingsTabs.propTypes = {
+  attempting: T.array,
   currentTab: T.number,
   filterValues: T.object,
   handleInputChange: T.func,
   handleNav: T.func,
+  handleRemoveIssue: T.func,
+  userId: T.string,
+  watching: T.array,
 };
 
 export default SettingsTabs;

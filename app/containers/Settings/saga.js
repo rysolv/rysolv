@@ -1,12 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
+import { fetchActiveUser } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
-import { FETCH_INFO, SAVE_CHANGE } from './constants';
+import { FETCH_INFO, REMOVE_ISSUE, SAVE_CHANGE } from './constants';
 import {
   fetchInfo,
   fetchInfoFailure,
   fetchInfoSuccess,
+  removeIssueFailure,
+  removeIssueSuccess,
   saveChangeFailure,
   saveChangeSuccess,
 } from './actions';
@@ -33,6 +36,7 @@ export function* fetchInfoSaga({ payload }) {
         completedPullRequests,
         dollarsEarned,
         rejectedPullRequests,
+        watching,
       }
     }
 `;
@@ -84,7 +88,35 @@ export function* saveChangeSaga({ payload }) {
   }
 }
 
+export function* removeIssueSaga({ payload }) {
+  const { id: issueId, userId, column, remove } = payload;
+  const query = `
+  mutation {
+    updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}", remove: ${remove}) {
+      id,
+      attempting,
+      watching
+    }
+    updateUserArray(id: "${userId}", column: "${column}", data: "${issueId}", remove: ${remove}) {
+      attempting,
+      watching
+    }
+  }`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    yield call(post, '/graphql', graphql);
+    yield put(removeIssueSuccess({ column, issueId }));
+    yield put(fetchActiveUser({ userId }));
+  } catch (error) {
+    yield put(removeIssueFailure({ error }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
+  yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
 }
