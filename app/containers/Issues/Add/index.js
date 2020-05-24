@@ -27,7 +27,6 @@ import { AddWrapper, AddForm } from './styledComponents';
 // eslint-disable-next-line react/prefer-stateless-function
 export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
-    window.scrollTo(0, 0);
     document.title = 'Add Issue';
     const {
       activeUser,
@@ -45,15 +44,24 @@ export class IssuesAdd extends React.PureComponent {
   }
 
   render() {
+    window.scrollTo(0, 0);
+
     const {
       activeUser,
+      importSuccess,
       issueData,
       handleNav,
+      handleIncrementStep,
       loading,
       organization,
       step,
     } = this.props;
     const StepToRender = addIssueDictionary[step];
+
+    if (importSuccess) {
+      handleIncrementStep({ step: 4, view: 'addIssue' });
+    }
+
     return (
       <AddWrapper>
         <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
@@ -65,6 +73,7 @@ export class IssuesAdd extends React.PureComponent {
             propsToPassDown={{
               activeUser,
               handleNav,
+              importSuccess,
             }}
           />
         </AddForm>
@@ -74,6 +83,7 @@ export class IssuesAdd extends React.PureComponent {
 }
 
 IssuesAdd.propTypes = {
+  importSuccess: T.bool,
   activeUser: T.object,
   issueData: T.object,
   dispatchClearForm: T.func,
@@ -89,6 +99,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
+  importSuccess: makeSelectIssues('importSuccess'),
   issueData: makeSelectIssues('issueData'),
   organizationData: makeSelectOrganizations('organizationData'),
   activeUser: makeSelectAuth('activeUser'),
