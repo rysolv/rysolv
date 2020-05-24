@@ -35,10 +35,13 @@ const SettingsView = ({
   data: {
     activePullRequests,
     attempting,
+    balance,
     completedPullRequests,
     createdDate,
     dollarsEarned,
+    email,
     firstName,
+    fundedAmount,
     githubLink,
     id,
     isOnline,
@@ -50,21 +53,27 @@ const SettingsView = ({
     rejectedPullRequests,
     rep,
     stackoverflowLink,
+    username,
     watching,
   },
   dispatchSaveChange,
   filterValues,
   handleClearAlerts,
+  handleDeleteUser,
   handleInputChange,
   handleNav,
   handleRemoveIssue,
 }) => {
+  const [changeEmail, setChangeEmail] = useState(false);
+  const [changeFirstName, setChangeFirstName] = useState(false);
   const [changeGithub, setChangeGithub] = useState(false);
+  const [changeLastName, setChangeLastName] = useState(false);
   const [changePersonal, setChangePersonal] = useState(false);
   const [changePreferredLanguages, setChangePreferredLanguages] = useState(
     false,
   );
   const [changeStackoverflow, setChangeStackoverflow] = useState(false);
+  const [changeUsername, setChangeUsername] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [value, setValue] = useState('');
 
@@ -188,12 +197,33 @@ const SettingsView = ({
         <SettingsTabsWrapper>
           <SettingsTabs
             attempting={attempting}
+            balance={balance}
+            changeEmail={changeEmail}
+            changeFirstName={changeFirstName}
+            changeLastName={changeLastName}
+            changeUsername={changeUsername}
             currentTab={currentTab}
+            email={email}
             filterValues={filterValues}
+            firstName={firstName}
+            fundedAmount={fundedAmount}
+            handleClose={handleClose}
+            handleDeleteUser={handleDeleteUser}
+            handleDone={handleDone}
+            handleEdit={handleEdit}
             handleInputChange={handleInputChange}
             handleNav={handleNav}
             handleRemoveIssue={handleRemoveIssue}
+            isDisabled={isDisabled}
+            lastName={lastName}
+            setChangeEmail={setChangeEmail}
+            setChangeFirstName={setChangeFirstName}
+            setChangeLastName={setChangeLastName}
+            setChangeUsername={setChangeUsername}
+            setValue={setValue}
             userId={id}
+            username={username}
+            value={value}
             watching={watching}
           />
         </SettingsTabsWrapper>
@@ -209,6 +239,7 @@ SettingsView.propTypes = {
   dispatchSaveChange: T.func.isRequired,
   filterValues: T.object.isRequired,
   handleClearAlerts: T.func.isRequired,
+  handleDeleteUser: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,

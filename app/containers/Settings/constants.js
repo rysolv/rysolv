@@ -1,5 +1,9 @@
 export const CLEAR_ALERTS = 'app/Settings/CLEAR_ALERTS';
 
+export const DELETE_USER = 'app/Settings/DELETE_USER';
+export const DELETE_USER_FAILURE = 'app/Settings/DELETE_USER_FAILURE';
+export const DELETE_USER_SUCCESS = 'app/Settings/DELETE_USER_SUCCESS';
+
 export const FETCH_INFO = 'app/Settings/FETCH_INFO';
 export const FETCH_INFO_FAILURE = 'app/Settings/FETCH_INFO_FAILURE';
 export const FETCH_INFO_SUCCESS = 'app/Settings/FETCH_INFO_SUCCESS';

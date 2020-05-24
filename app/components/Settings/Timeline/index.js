@@ -1,5 +1,4 @@
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable no-unused-expressions */
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 import moment from 'moment';
@@ -14,7 +13,6 @@ import {
 } from '../OverviewList';
 import SettingsExpansionPanel from '../SettingsExpansionPanel';
 import {
-  HeaderWrapper,
   StyledBaseDropDownMenu,
   TimelineActivity,
   TimelineContainer,
@@ -29,7 +27,7 @@ import {
   TimelineType,
   TimelineVerticalDivider,
 } from './styledComponents';
-import { StyledH3 } from '../styledComponents';
+import { HeaderWrapper, StyledH3 } from '../styledComponents';
 
 const activityData = [
   {

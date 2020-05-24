@@ -13,6 +13,7 @@ import injectReducer from 'utils/injectReducer';
 
 import {
   clearAlerts,
+  deleteUser,
   fetchInfo,
   inputChange,
   removeIssue,
@@ -33,6 +34,7 @@ const Settings = ({
   error,
   filterValues,
   handleClearAlerts,
+  handleDeleteUser,
   handleInputChange,
   handleNav,
   handleRemoveIssue,
@@ -62,6 +64,7 @@ const Settings = ({
           dispatchSaveChange,
           filterValues,
           handleClearAlerts,
+          handleDeleteUser,
           handleInputChange,
           handleNav,
           handleRemoveIssue,
@@ -80,6 +83,7 @@ Settings.propTypes = {
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object,
   handleClearAlerts: T.func.isRequired,
+  handleDeleteUser: T.func.isRequired,
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
@@ -110,6 +114,7 @@ function mapDispatchToProps(dispatch) {
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
+    handleDeleteUser: payload => dispatch(deleteUser(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleRemoveIssue: payload => dispatch(removeIssue(payload)),
     /**

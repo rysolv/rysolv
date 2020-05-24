@@ -22,6 +22,12 @@ export const DetailViewContainer = styled.div`
   width: 100%;
 `;
 
+export const HeaderWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const IconButtonContainer = styled.div`
   align-self: center;
   height: 100%;

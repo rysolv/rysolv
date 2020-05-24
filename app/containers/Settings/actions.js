@@ -1,5 +1,8 @@
 import {
   CLEAR_ALERTS,
+  DELETE_USER_FAILURE,
+  DELETE_USER_SUCCESS,
+  DELETE_USER,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
@@ -15,6 +18,27 @@ import {
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
+  };
+}
+
+export function deleteUserFailure(payload) {
+  return {
+    payload,
+    type: DELETE_USER_FAILURE,
+  };
+}
+
+export function deleteUserSuccess(payload) {
+  return {
+    payload,
+    type: DELETE_USER_SUCCESS,
+  };
+}
+
+export function deleteUser(payload) {
+  return {
+    payload,
+    type: DELETE_USER,
   };
 }
 
