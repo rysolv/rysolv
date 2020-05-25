@@ -1,12 +1,11 @@
 /* eslint-disable sort-keys */
 
 export const deviceSizes = {
-  mobile: 500,
-  tablet: 780,
-  laptop: 969,
-  desktop: 970,
-  large: 1200,
-  highRes: 300,
+  mobile: 600,
+  tablet: 768,
+  laptop: 992,
+  desktop: 1200,
+  large: 1440,
 };
 const MEDIA_DECORATOR = '@media';
 
@@ -16,5 +15,4 @@ export const mediaQueriesByDevice = {
   laptop: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.laptop}px)`,
   desktop: `${MEDIA_DECORATOR} (min-width: ${deviceSizes.desktop}px)`,
   large: `${MEDIA_DECORATOR} (min-width: ${deviceSizes.large}px)`,
-  highRes: `${MEDIA_DECORATOR} (max-resolution: ${deviceSizes.highRes}dpi)`,
 };

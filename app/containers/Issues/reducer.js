@@ -91,12 +91,13 @@ export const initialState = {
     upvoteIssue: false,
   },
   organizationData: {
-    organizationId: { error: '', value: '' },
-    organizationUrl: { error: '', value: '' },
-    organizationDescription: { error: '', value: '' },
-    organizationRepo: { error: '', value: '' },
     importUrl: { error: '', value: '' },
+    organizationDescription: { error: '', value: '' },
+    organizationId: { error: '', value: '' },
+    organizationLogo: { error: '', value: '' },
     organizationName: { error: '', value: '' },
+    organizationRepo: { error: '', value: '' },
+    organizationUrl: { error: '', value: '' },
   },
   search: {
     overviewInput: { error: '', value: '' },

@@ -53,7 +53,7 @@ const newOrganizationArray = organizationInput => [
     organizationInput.organizationRepo, // repo
     organizationInput.organizationUrl || '', // url
     organizationInput.issues || [], // issues
-    organizationInput.logo || defaultOrgImage, // logo
+    organizationInput.organizationLogo || defaultOrgImage, // logo
     organizationInput.verified || false, // verified
     [], // contributors
     organizationInput.contributor, // owner_id

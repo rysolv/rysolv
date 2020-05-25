@@ -71,6 +71,7 @@ module.exports = buildSchema(`
     name: String
     organizationDescription: String
     organizationId: String
+    organizationLogo: String
     organizationName: String
     organizationRepo: String
     organizationUrl: String
