@@ -30,11 +30,11 @@ const UserAccount = ({
   changeFirstName,
   changeLastName,
   changeUsername,
+  dispatchOpenModal,
   email,
   firstName,
   fundedAmount,
   handleClose,
-  handleDeleteUser,
   handleDone,
   handleEdit,
   isDisabled,
@@ -251,7 +251,7 @@ const UserAccount = ({
       <DeleteText>All issues will be deleted upon removal.</DeleteText>
       <StyledPrimaryAsyncButton
         label="Delete my account"
-        onClick={() => handleDeleteUser({ userId })}
+        onClick={() => dispatchOpenModal({ modalState: 'deleteUser' })}
       />
     </DeleteWrapper>
   </AccountContainer>
@@ -263,11 +263,11 @@ UserAccount.propTypes = {
   changeFirstName: T.bool,
   changeLastName: T.bool,
   changeUsername: T.bool,
+  dispatchOpenModal: T.func,
   email: T.string,
   firstName: T.string,
   fundedAmount: T.number,
   handleClose: T.func,
-  handleDeleteUser: T.func,
   handleDone: T.func,
   handleEdit: T.func,
   isDisabled: T.bool,

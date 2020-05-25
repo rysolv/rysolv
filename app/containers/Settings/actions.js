@@ -1,5 +1,6 @@
 import {
   CLEAR_ALERTS,
+  CLOSE_MODAL_STATE,
   DELETE_USER_FAILURE,
   DELETE_USER_SUCCESS,
   DELETE_USER,
@@ -7,6 +8,7 @@ import {
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
   INPUT_CHANGE,
+  OPEN_MODAL_STATE,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
   REMOVE_ISSUE,
@@ -18,6 +20,13 @@ import {
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
+  };
+}
+
+export function closeModalState(payload) {
+  return {
+    payload,
+    type: CLOSE_MODAL_STATE,
   };
 }
 
@@ -67,6 +76,13 @@ export function inputChange(payload) {
   return {
     payload,
     type: INPUT_CHANGE,
+  };
+}
+
+export function openModalState(payload) {
+  return {
+    payload,
+    type: OPEN_MODAL_STATE,
   };
 }
 

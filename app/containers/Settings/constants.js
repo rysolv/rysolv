@@ -1,5 +1,8 @@
 export const CLEAR_ALERTS = 'app/Settings/CLEAR_ALERTS';
 
+export const CLOSE_MODAL_STATE = 'app/Settings/CLOSE_MODAL_STATE';
+export const OPEN_MODAL_STATE = 'app/Settings/OPEN_MODAL_STATE';
+
 export const DELETE_USER = 'app/Settings/DELETE_USER';
 export const DELETE_USER_FAILURE = 'app/Settings/DELETE_USER_FAILURE';
 export const DELETE_USER_SUCCESS = 'app/Settings/DELETE_USER_SUCCESS';

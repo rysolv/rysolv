@@ -2,6 +2,7 @@ import produce from 'immer';
 
 import {
   CLEAR_ALERTS,
+  CLOSE_MODAL_STATE,
   DELETE_USER_FAILURE,
   DELETE_USER_SUCCESS,
   DELETE_USER,
@@ -9,6 +10,7 @@ import {
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
   INPUT_CHANGE,
+  OPEN_MODAL_STATE,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
   REMOVE_ISSUE,
@@ -26,7 +28,9 @@ export const initialState = {
     overview: 'Newest',
     users: 'All',
   },
+  isModalOpen: false,
   loading: false,
+  modal: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -34,6 +38,11 @@ const settingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
+      break;
+    }
+    case CLOSE_MODAL_STATE: {
+      draft.isModalOpen = initialState.isModalOpen;
+      draft.modal = initialState.modal;
       break;
     }
     case DELETE_USER_FAILURE: {
@@ -77,6 +86,12 @@ const settingsReducer = produce((draft, { payload, type }) => {
       } else {
         draft[form][field].value = value;
       }
+      break;
+    }
+    case OPEN_MODAL_STATE: {
+      const { modalState } = payload;
+      draft.isModalOpen = true;
+      draft.modal = modalState;
       break;
     }
     case REMOVE_ISSUE_FAILURE: {

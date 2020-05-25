@@ -14,12 +14,12 @@ const SettingsTabs = ({
   changeLastName,
   changeUsername,
   currentTab,
+  dispatchOpenModal,
   email,
   filterValues,
   firstName,
   fundedAmount,
   handleClose,
-  handleDeleteUser,
   handleDone,
   handleEdit,
   handleInputChange,
@@ -61,11 +61,11 @@ const SettingsTabs = ({
         changeFirstName={changeFirstName}
         changeLastName={changeLastName}
         changeUsername={changeUsername}
+        dispatchOpenModal={dispatchOpenModal}
         email={email}
         firstName={firstName}
         fundedAmount={fundedAmount}
         handleClose={handleClose}
-        handleDeleteUser={handleDeleteUser}
         handleDone={handleDone}
         handleEdit={handleEdit}
         isDisabled={isDisabled}
@@ -108,12 +108,12 @@ SettingsTabs.propTypes = {
   changeLastName: T.bool,
   changeUsername: T.bool,
   currentTab: T.number,
+  dispatchOpenModal: T.func,
   email: T.string,
   filterValues: T.object,
   firstName: T.string,
   fundedAmount: T.number,
   handleClose: T.func,
-  handleDeleteUser: T.func,
   handleDone: T.func,
   handleEdit: T.func,
   handleInputChange: T.func,
