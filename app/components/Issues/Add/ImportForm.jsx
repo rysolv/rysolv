@@ -30,6 +30,7 @@ const ImportForm = ({
   return (
     <ImportFormContainer>
       Import GitHub Issue
+      <br />
       <BaseTextInputWithAdornment
         disabled={importIssueLoading}
         adornmentComponent={SearchIcon}

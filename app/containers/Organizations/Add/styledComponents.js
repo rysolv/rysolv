@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { CheckboxWithLabel } from 'components/base_ui';
 import { borderColor, subHeaderColor, textColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
-const { desktop, laptop, tablet, mobile } = mediaQueriesByDevice;
+const { desktop, laptop, tablet, mobile, large } = mediaQueriesByDevice;
 
 export const AddWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 0 5%;
+  padding: 0 2.5%;
   width: 100%;
 `;
 
@@ -20,11 +20,15 @@ export const AddForm = styled.div`
   padding: 1rem;
   border-radius: 0.5rem;
 
+  ${large} {
+    width: 70%;
+  }
+
   ${desktop} {
-    width: 60%;
+    width: 70%;
   }
   ${laptop} {
-    width: 80%;
+    width: 90%;
   }
   ${tablet} {
     width: 90%;

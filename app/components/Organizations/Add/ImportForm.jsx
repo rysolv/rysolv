@@ -26,6 +26,7 @@ const ImportForm = ({
   return (
     <ImportFormContainer>
       Import GitHub Organization
+      <br />
       <BaseTextInputWithAdornment
         adornmentComponent={SearchIcon}
         error={!!importUrl.error}
@@ -36,6 +37,7 @@ const ImportForm = ({
         position="end"
         value={importUrl.value}
       />
+      <br />
       or
       <StyledLabel
         onClick={() =>

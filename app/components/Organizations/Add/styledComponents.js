@@ -20,8 +20,6 @@ export const HorizontalWrapper = styled.div`
 
 export const ImportFormContainer = styled.section`
   color: ${textColor};
-  display: flex;
-  flex-direction: column;
   font-size: 2.4rem;
   font-weight: 300;
   height: 50%;
@@ -29,7 +27,7 @@ export const ImportFormContainer = styled.section`
   margin: auto;
   padding: 5rem 0;
   text-align: center;
-  width: 50%;
+  width: 80%;
 
   * {
     font-size: ${defaultFontSize};

@@ -11,6 +11,8 @@ import { incrementStep, saveInfo, verifyInfo, clearForm } from '../actions';
 import { makeSelectIssues, makeSelectIssuesRequestBody } from '../selectors';
 import {
   ButtonGroup,
+  LogoContainer,
+  OrganizationNameWrapper,
   SelectedOrganization,
   StyledH3,
   StyledLink,
@@ -43,15 +45,21 @@ export class VerifyIssue extends React.PureComponent {
       <Fragment>
         <StyledH3>Organization</StyledH3>
         <VerifyWrapper>
-          <SelectedOrganization>
-            {organizationData.organizationName.value}
-          </SelectedOrganization>
-          <StyledLink
-            href={organizationData.organizationRepo.value}
-            target="_blank"
-          >
-            {organizationData.organizationRepo.value}
-          </StyledLink>
+          <LogoContainer
+            src={organizationData.organizationLogo.value}
+            alt={organizationData.organizationName.value}
+          />
+          <OrganizationNameWrapper>
+            <SelectedOrganization>
+              {organizationData.organizationName.value}
+            </SelectedOrganization>
+            <StyledLink
+              href={organizationData.organizationRepo.value}
+              target="_blank"
+            >
+              {organizationData.organizationRepo.value}
+            </StyledLink>
+          </OrganizationNameWrapper>
         </VerifyWrapper>
         <StyledH3>Issue</StyledH3>
         <VerifyWrapper>

@@ -275,12 +275,13 @@ export function* importIssueSaga({ payload }) {
 export function* saveInfoSaga({ payload }) {
   const {
     requestBody: {
-      issueName,
       issueBody,
-      issueUrl,
       issueLanguages,
+      issueName,
+      issueUrl,
       organizationDescription,
       organizationId,
+      organizationLogo,
       organizationName,
       organizationRepo,
       organizationUrl,
@@ -297,6 +298,7 @@ export function* saveInfoSaga({ payload }) {
         name: ${JSON.stringify(issueName)},
         organizationDescription:  "${organizationDescription}",
         organizationId:  ${JSON.stringify(organizationId)},
+        organizationLogo:  "${organizationLogo}"
         organizationName:  "${organizationName}",
         organizationRepo:  "${organizationRepo}",
         organizationUrl:  "${organizationUrl}",
