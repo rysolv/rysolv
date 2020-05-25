@@ -1,10 +1,18 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 
-import { fetchActiveUser } from 'containers/Auth/actions';
+import { fetchActiveUser, signout } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
-import { FETCH_INFO, REMOVE_ISSUE, SAVE_CHANGE } from './constants';
 import {
+  DELETE_USER,
+  FETCH_INFO,
+  REMOVE_ISSUE,
+  SAVE_CHANGE,
+} from './constants';
+import {
+  deleteUserFailure,
+  deleteUserSuccess,
   fetchInfo,
   fetchInfoFailure,
   fetchInfoSuccess,
@@ -13,6 +21,26 @@ import {
   saveChangeFailure,
   saveChangeSuccess,
 } from './actions';
+
+export function* deleteUserSaga({ payload }) {
+  const { userId } = payload;
+  const query = `
+  mutation{
+    deleteUser(id: "${userId}")
+  }`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    yield call(post, '/graphql', graphql);
+    yield put(deleteUserSuccess());
+    yield put(signout());
+    yield put(push('/issues'));
+  } catch (error) {
+    yield put(deleteUserFailure({ error }));
+  }
+}
 
 export function* fetchInfoSaga({ payload }) {
   const { itemId } = payload;
@@ -118,6 +146,7 @@ export function* removeIssueSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);

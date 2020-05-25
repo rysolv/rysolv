@@ -2,6 +2,9 @@ import produce from 'immer';
 
 import {
   CLEAR_ALERTS,
+  DELETE_USER_FAILURE,
+  DELETE_USER_SUCCESS,
+  DELETE_USER,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
@@ -31,6 +34,20 @@ const settingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
+      break;
+    }
+    case DELETE_USER_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case DELETE_USER_SUCCESS: {
+      draft.loading = false;
+      break;
+    }
+    case DELETE_USER: {
+      draft.loading = true;
       break;
     }
     case FETCH_INFO_FAILURE: {
