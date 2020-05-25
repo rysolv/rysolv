@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
@@ -7,9 +6,9 @@ import {
   IconButton,
   MainTextInput,
 } from 'components/base_ui';
-import { formatDollarAmount } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
+import AccountBalance from '../Balance';
 import {
   AccountContainer,
   DeleteText,
@@ -243,7 +242,11 @@ const UserAccount = ({
     <HeaderWrapper>
       <StyledH3>Balance</StyledH3>
     </HeaderWrapper>
-
+    <AccountBalance
+      balance={balance}
+      fundedAmount={fundedAmount}
+      userId={userId}
+    />
     <HeaderWrapper>
       <StyledH3>Delete my account</StyledH3>
     </HeaderWrapper>
