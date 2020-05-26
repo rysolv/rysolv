@@ -7,7 +7,7 @@ import EmptyComponent from './EmptyComponent';
 import OrganizationsComponent from './OrganizationsComponent';
 import { HeaderWrapper, StyledH3 } from '../styledComponents';
 
-const UserOrganizations = ({ organizations }) => (
+const UserOrganizations = ({ handleNav, organizations }) => (
   <Fragment>
     <HeaderWrapper>
       <StyledH3>Your Organizations</StyledH3>
@@ -15,12 +15,15 @@ const UserOrganizations = ({ organizations }) => (
     <ConditionalRender
       Component={OrganizationsComponent}
       FallbackComponent={EmptyComponent}
-      propsToPassDown={{ organizations }}
+      propsToPassDown={{ handleNav, organizations }}
       shouldRender={!!organizations.length}
     />
   </Fragment>
 );
 
-UserOrganizations.propTypes = { organizations: T.array };
+UserOrganizations.propTypes = {
+  handleNav: T.func,
+  organizations: T.array,
+};
 
 export default UserOrganizations;

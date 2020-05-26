@@ -45,7 +45,10 @@ const userSeed = [
       '34b0c547-5558-4c47-8278-7ef113a1dee0',
       '0ce2d9ae-ba16-4013-af33-0cbb8cbc37a2',
     ], // issues
-    [], // organizations
+    [
+      'ddb0ed71-01e8-4a14-a3fd-8d6ee40f131a',
+      '1a64925c-858f-42b4-a09c-39d5699375f4',
+    ], // organizations
     'annapo', // username
     'https://github.com/annapo23', // github_link
     'https://www.annapojawis.com/', // personal_link

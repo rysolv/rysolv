@@ -83,7 +83,9 @@ const SettingsTabs = ({
       />
     ),
     2: <UserIssues handleNav={handleNav} issues={issues} />,
-    3: <UserOrganizations organizations={organizations} />,
+    3: (
+      <UserOrganizations handleNav={handleNav} organizations={organizations} />
+    ),
   };
   return (
     <StyledPaper>
