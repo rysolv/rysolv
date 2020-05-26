@@ -65,7 +65,6 @@ const newOrganizationArray = organizationInput => [
 module.exports = {
   createIssue: async args => {
     const { issueInput } = args;
-    console.log(issueInput);
     const { organizationRepo, repo, organizationId } = issueInput;
     const newIssueId = uuidv4();
 

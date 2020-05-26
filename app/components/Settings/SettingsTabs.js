@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
 
-import UserTimelineView from './Timeline';
 import UserAccount from './Account';
+import UserIssues from './Issues';
+import UserOrganizations from './Organizations';
+import UserTimelineView from './Timeline';
 import { StyledPaper, StyledTab } from './styledComponents';
 
 const SettingsTabs = ({
@@ -14,11 +16,10 @@ const SettingsTabs = ({
   changeLastName,
   changeUsername,
   currentTab,
-  dispatchOpenModal,
+  dollarsEarned,
   email,
   filterValues,
   firstName,
-  fundedAmount,
   handleClose,
   handleDone,
   handleEdit,
@@ -26,7 +27,9 @@ const SettingsTabs = ({
   handleNav,
   handleRemoveIssue,
   isDisabled,
+  issues,
   lastName,
+  organizations,
   setChangeEmail,
   setChangeFirstName,
   setChangeLastName,
@@ -61,10 +64,9 @@ const SettingsTabs = ({
         changeFirstName={changeFirstName}
         changeLastName={changeLastName}
         changeUsername={changeUsername}
-        dispatchOpenModal={dispatchOpenModal}
+        dollarsEarned={dollarsEarned}
         email={email}
         firstName={firstName}
-        fundedAmount={fundedAmount}
         handleClose={handleClose}
         handleDone={handleDone}
         handleEdit={handleEdit}
@@ -80,6 +82,8 @@ const SettingsTabs = ({
         value={value}
       />
     ),
+    2: <UserIssues handleNav={handleNav} issues={issues} />,
+    3: <UserOrganizations organizations={organizations} />,
   };
   return (
     <StyledPaper>
@@ -108,11 +112,10 @@ SettingsTabs.propTypes = {
   changeLastName: T.bool,
   changeUsername: T.bool,
   currentTab: T.number,
-  dispatchOpenModal: T.func,
+  dollarsEarned: T.number,
   email: T.string,
   filterValues: T.object,
   firstName: T.string,
-  fundedAmount: T.number,
   handleClose: T.func,
   handleDone: T.func,
   handleEdit: T.func,
@@ -120,7 +123,9 @@ SettingsTabs.propTypes = {
   handleNav: T.func,
   handleRemoveIssue: T.func,
   isDisabled: T.bool,
+  issues: T.array,
   lastName: T.string,
+  organizations: T.array,
   setChangeEmail: T.func,
   setChangeFirstName: T.func,
   setChangeLastName: T.func,

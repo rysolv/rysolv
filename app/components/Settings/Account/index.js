@@ -30,9 +30,9 @@ const UserAccount = ({
   changeLastName,
   changeUsername,
   dispatchOpenModal,
+  dollarsEarned,
   email,
   firstName,
-  fundedAmount,
   handleClose,
   handleDone,
   handleEdit,
@@ -244,7 +244,7 @@ const UserAccount = ({
     </HeaderWrapper>
     <AccountBalance
       balance={balance}
-      fundedAmount={fundedAmount}
+      dollarsEarned={dollarsEarned}
       userId={userId}
     />
     <HeaderWrapper>
@@ -267,9 +267,9 @@ UserAccount.propTypes = {
   changeLastName: T.bool,
   changeUsername: T.bool,
   dispatchOpenModal: T.func,
+  dollarsEarned: T.number,
   email: T.string,
   firstName: T.string,
-  fundedAmount: T.number,
   handleClose: T.func,
   handleDone: T.func,
   handleEdit: T.func,

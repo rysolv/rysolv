@@ -41,12 +41,13 @@ const SettingsView = ({
     dollarsEarned,
     email,
     firstName,
-    fundedAmount,
     githubLink,
     id,
     isOnline,
+    issues,
     lastName,
     modifiedDate,
+    organizations,
     personalLink,
     preferredLanguages,
     profilePic,
@@ -56,7 +57,6 @@ const SettingsView = ({
     username,
     watching,
   },
-  dispatchOpenModal,
   dispatchSaveChange,
   filterValues,
   handleClearAlerts,
@@ -203,11 +203,10 @@ const SettingsView = ({
             changeLastName={changeLastName}
             changeUsername={changeUsername}
             currentTab={currentTab}
-            dispatchOpenModal={dispatchOpenModal}
+            dollarsEarned={dollarsEarned}
             email={email}
             filterValues={filterValues}
             firstName={firstName}
-            fundedAmount={fundedAmount}
             handleClose={handleClose}
             handleDone={handleDone}
             handleEdit={handleEdit}
@@ -215,7 +214,9 @@ const SettingsView = ({
             handleNav={handleNav}
             handleRemoveIssue={handleRemoveIssue}
             isDisabled={isDisabled}
+            issues={issues}
             lastName={lastName}
+            organizations={organizations}
             setChangeEmail={setChangeEmail}
             setChangeFirstName={setChangeFirstName}
             setChangeLastName={setChangeLastName}
@@ -236,7 +237,6 @@ SettingsView.propTypes = {
   alerts: T.object.isRequired,
   currentTab: T.number.isRequired,
   data: T.object.isRequired,
-  dispatchOpenModal: T.func.isRequired,
   dispatchSaveChange: T.func.isRequired,
   filterValues: T.object.isRequired,
   handleClearAlerts: T.func.isRequired,

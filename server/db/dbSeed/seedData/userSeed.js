@@ -40,7 +40,11 @@ const userSeed = [
     'https://rysolv.s3.us-east-2.amazonaws.com/annaprofile.png',
     [], // comments
     [], // attempting
-    ['d7985d02-382f-424b-9507-78efcb993d88'], // issues
+    [
+      '20619026-0f61-4772-9bb8-36ed643d4dcd',
+      '34b0c547-5558-4c47-8278-7ef113a1dee0',
+      '0ce2d9ae-ba16-4013-af33-0cbb8cbc37a2',
+    ], // issues
     [], // organizations
     'annapo', // username
     'https://github.com/annapo23', // github_link

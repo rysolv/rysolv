@@ -59,6 +59,7 @@ export function* fetchInfoSaga({ payload }) {
         githubLink,
         issues,
         lastName,
+        organizations,
         personalLink,
         preferredLanguages,
         profilePic,
