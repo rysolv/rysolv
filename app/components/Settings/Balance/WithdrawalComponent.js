@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { WithdrawalText } from './styledComponents';
+import { ComponentText } from './styledComponents';
 
 const WithdrawalComponent = () => (
   <div>
-    <WithdrawalText>Transfer money from your account.</WithdrawalText>
+    <ComponentText>Transfer money from your account.</ComponentText>
   </div>
 );
 

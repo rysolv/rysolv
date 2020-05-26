@@ -39,7 +39,7 @@ export const BalanceWrapper = styled.div`
   width: 100%;
 `;
 
-export const DepositText = styled.div`
+export const ComponentText = styled.div`
   color: ${textColor};
   font-size: ${defaultFontSize};
   padding: 2rem 0;
@@ -69,10 +69,4 @@ export const StyledTabs = styled(Tabs)`
   .indicator {
     background-color: transparent;
   }
-`;
-
-export const WithdrawalText = styled.div`
-  color: ${textColor};
-  font-size: ${defaultFontSize};
-  padding: 2rem 0;
 `;

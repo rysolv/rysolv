@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { DepositText } from './styledComponents';
+import { ComponentText } from './styledComponents';
 
 const DepositComponent = () => (
   <div>
-    <DepositText>
+    <ComponentText>
       Add money to your account. 3.6% will be charged as a transaction fee.
-    </DepositText>
+    </ComponentText>
   </div>
 );
 

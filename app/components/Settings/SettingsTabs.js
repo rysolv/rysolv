@@ -16,6 +16,7 @@ const SettingsTabs = ({
   changeLastName,
   changeUsername,
   currentTab,
+  dispatchOpenModal,
   dollarsEarned,
   email,
   filterValues,
@@ -64,6 +65,7 @@ const SettingsTabs = ({
         changeFirstName={changeFirstName}
         changeLastName={changeLastName}
         changeUsername={changeUsername}
+        dispatchOpenModal={dispatchOpenModal}
         dollarsEarned={dollarsEarned}
         email={email}
         firstName={firstName}
@@ -90,6 +92,7 @@ const SettingsTabs = ({
   return (
     <StyledPaper>
       <Tabs
+        centered
         indicatorColor="primary"
         onChange={handleChangeTab}
         textColor="primary"
@@ -114,6 +117,7 @@ SettingsTabs.propTypes = {
   changeLastName: T.bool,
   changeUsername: T.bool,
   currentTab: T.number,
+  dispatchOpenModal: T.func,
   dollarsEarned: T.number,
   email: T.string,
   filterValues: T.object,

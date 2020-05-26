@@ -4,7 +4,9 @@ import T from 'prop-types';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import DepositComponent from './DepositComponent';
+import InvoicesComponent from './InvoicesComponent';
 import WithdrawalComponent from './WithdrawalComponent';
+import WorkHistoryComponent from './WorkHistoryComponent';
 import {
   AccountBalanceContainer,
   BalanceAmount,
@@ -20,6 +22,12 @@ const AccountBalance = ({ balance, dollarsEarned }) => {
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+  const ComponentToRender = {
+    0: <DepositComponent />,
+    1: <WithdrawalComponent />,
+    2: <InvoicesComponent />,
+    3: <WorkHistoryComponent />,
   };
   return (
     <AccountBalanceContainer>
@@ -47,9 +55,11 @@ const AccountBalance = ({ balance, dollarsEarned }) => {
         >
           <StyledTab classes={{ selected: 'selected' }} label="Deposit" />
           <StyledTab classes={{ selected: 'selected' }} label="Withdrawal" />
+          <StyledTab classes={{ selected: 'selected' }} label="Invoices" />
+          <StyledTab classes={{ selected: 'selected' }} label="Work History" />
         </StyledTabs>
       </StyledPaper>
-      {!value ? <DepositComponent /> : <WithdrawalComponent />}
+      {ComponentToRender[value]}
     </AccountBalanceContainer>
   );
 };

@@ -101,7 +101,7 @@ export const SettingsTabsWrapper = styled.div`
   margin-left: 2rem;
   overflow: hidden;
   padding: 2rem;
-  width: 100%;
+  width: 65rem;
 `;
 
 export const StyledLanguageAutocomplete = styled.div`

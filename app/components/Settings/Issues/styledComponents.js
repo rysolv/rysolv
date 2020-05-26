@@ -1,13 +1,19 @@
 import styled from 'styled-components';
 
+import { BaseDropDownMenu } from 'components/base_ui';
 import { hoverLinkColor, textColor } from 'defaultStyleHelper';
+
+export const BaseInputWrapper = styled.div`
+  margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
+  width: 45%;
+`;
 
 export const EmptyComponentContainer = styled.div`
   align-items: center;
   color: ${textColor};
   display: flex;
   font-size: 1.6rem;
-  height: 45rem;
+  height: 40rem;
   justify-content: center;
   text-align: center;
 `;
@@ -58,14 +64,6 @@ export const IssueFundedAmount = styled.div`
   width: 30%;
 `;
 
-export const IssuesList = styled.ul`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  width: 100%;
-`;
-
 export const IssueListItem = styled.li`
   border-top: 0.1rem solid #d5d5d5;
   display: flex;
@@ -112,4 +110,23 @@ export const IssueOpen = styled.div`
 export const IssueOpenWrapper = styled.div`
   display: flex;
   font-size: 1.2rem;
+`;
+
+export const IssuesList = styled.ul`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  width: 100%;
+`;
+
+export const IssuesSearchContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  width: 100%;
+`;
+
+export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
+  margin: 0 1rem;
 `;
