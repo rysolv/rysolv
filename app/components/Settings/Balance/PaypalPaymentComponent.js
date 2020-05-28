@@ -1,11 +1,14 @@
 import React from 'react';
 
-import { ComponentText } from './styledComponents';
+import { PaypalButton } from 'components/base_ui';
+
+import { InputHeader, InputWrapper } from './styledComponents';
 
 const PaypalPaymentComponent = () => (
-  <div>
-    <ComponentText>Transfer money from your account.</ComponentText>
-  </div>
+  <InputWrapper>
+    <InputHeader>Sign in to</InputHeader>
+    <PaypalButton />
+  </InputWrapper>
 );
 
 export default PaypalPaymentComponent;
