@@ -72,6 +72,7 @@ const SettingsTabs = ({
         handleClose={handleClose}
         handleDone={handleDone}
         handleEdit={handleEdit}
+        handleNav={handleNav}
         isDisabled={isDisabled}
         lastName={lastName}
         setChangeEmail={setChangeEmail}
@@ -79,7 +80,6 @@ const SettingsTabs = ({
         setChangeLastName={setChangeLastName}
         setChangeUsername={setChangeUsername}
         setValue={setValue}
-        userId={userId}
         username={username}
         value={value}
       />
@@ -98,11 +98,26 @@ const SettingsTabs = ({
         textColor="primary"
         value={tab}
       >
-        <StyledTab label="Overview" />
-        <StyledTab label="Account" />
-        <StyledTab label="Issues" />
-        <StyledTab label="Organizations" />
-        <StyledTab label="Pull Requests" />
+        <StyledTab
+          label="Overview"
+          onClick={() => handleNav('/settings/overview')}
+        />
+        <StyledTab
+          label="Account"
+          onClick={() => handleNav('/settings/account')}
+        />
+        <StyledTab
+          label="Issues"
+          onClick={() => handleNav('/settings/issues')}
+        />
+        <StyledTab
+          label="Organizations"
+          onClick={() => handleNav('/settings/organizations')}
+        />
+        <StyledTab
+          label="Pull Requests"
+          onClick={() => handleNav('/settings/pullrequests')}
+        />
       </Tabs>
       {ComponentToRender[tab]}
     </StyledPaper>

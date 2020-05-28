@@ -21,6 +21,8 @@ export const SAVE_CHANGE = 'app/Settings/SAVE_CHANGE';
 export const SAVE_CHANGE_FAILURE = 'app/Settings/SAVE_CHANGE_FAILURE';
 export const SAVE_CHANGE_SUCCESS = 'app/Settings/SAVE_CHANGE_SUCCESS';
 
+export const SUBMIT_PAYMENT = 'app/Settings/SUBMIT_PAYMENT';
+
 export const settingViewDictionary = {
   account: 1,
   issues: 2,

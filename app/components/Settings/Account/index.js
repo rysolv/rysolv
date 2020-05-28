@@ -36,6 +36,7 @@ const UserAccount = ({
   handleClose,
   handleDone,
   handleEdit,
+  handleNav,
   isDisabled,
   lastName,
   setChangeEmail,
@@ -43,7 +44,6 @@ const UserAccount = ({
   setChangeLastName,
   setChangeUsername,
   setValue,
-  userId,
   username,
   value,
 }) => (
@@ -245,7 +245,7 @@ const UserAccount = ({
     <AccountBalance
       balance={balance}
       dollarsEarned={dollarsEarned}
-      userId={userId}
+      handleNav={handleNav}
     />
     <HeaderWrapper>
       <StyledH3>Delete my account</StyledH3>
@@ -273,6 +273,7 @@ UserAccount.propTypes = {
   handleClose: T.func,
   handleDone: T.func,
   handleEdit: T.func,
+  handleNav: T.func,
   isDisabled: T.bool,
   lastName: T.string,
   setChangeEmail: T.func,
@@ -280,7 +281,6 @@ UserAccount.propTypes = {
   setChangeLastName: T.func,
   setChangeUsername: T.func,
   setValue: T.func,
-  userId: T.string,
   username: T.string,
   value: T.oneOfType([T.array, T.number, T.string]),
 };

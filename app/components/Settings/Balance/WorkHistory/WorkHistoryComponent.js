@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ComponentText } from './styledComponents';
+import { ComponentText } from '../styledComponents';
 
 const WorkHistoryComponent = () => (
   <div>

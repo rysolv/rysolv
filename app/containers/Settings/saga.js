@@ -9,6 +9,7 @@ import {
   FETCH_INFO,
   REMOVE_ISSUE,
   SAVE_CHANGE,
+  SUBMIT_PAYMENT,
 } from './constants';
 import {
   deleteUserFailure,
@@ -85,6 +86,33 @@ export function* fetchInfoSaga({ payload }) {
   }
 }
 
+export function* removeIssueSaga({ payload }) {
+  const { id: issueId, userId, column, remove } = payload;
+  const query = `
+  mutation {
+    updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}", remove: ${remove}) {
+      id,
+      attempting,
+      watching
+    }
+    updateUserArray(id: "${userId}", column: "${column}", data: "${issueId}", remove: ${remove}) {
+      attempting,
+      watching
+    }
+  }`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    yield call(post, '/graphql', graphql);
+    yield put(removeIssueSuccess({ column, issueId }));
+    yield put(fetchActiveUser({ userId }));
+  } catch (error) {
+    yield put(removeIssueFailure({ error }));
+  }
+}
+
 export function* saveChangeSaga({ payload }) {
   const { field, itemId, value } = payload;
   const formattedValue =
@@ -119,30 +147,11 @@ export function* saveChangeSaga({ payload }) {
   }
 }
 
-export function* removeIssueSaga({ payload }) {
-  const { id: issueId, userId, column, remove } = payload;
-  const query = `
-  mutation {
-    updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}", remove: ${remove}) {
-      id,
-      attempting,
-      watching
-    }
-    updateUserArray(id: "${userId}", column: "${column}", data: "${issueId}", remove: ${remove}) {
-      attempting,
-      watching
-    }
-  }`;
+export function* submitPaymentSaga({ payload }) {
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    yield call(post, '/graphql', graphql);
-    yield put(removeIssueSuccess({ column, issueId }));
-    yield put(fetchActiveUser({ userId }));
+    console.log('Success', payload);
   } catch (error) {
-    yield put(removeIssueFailure({ error }));
+    console.log('Error');
   }
 }
 
@@ -151,4 +160,5 @@ export default function* watcherSaga() {
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
+  yield takeLatest(SUBMIT_PAYMENT, submitPaymentSaga);
 }

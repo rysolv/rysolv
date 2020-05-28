@@ -2,7 +2,13 @@ import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
 import { BaseExpansionPanel } from 'components/base_ui';
-import { formatDollarAmount } from 'utils/globalHelpers';
+import {
+  formatDollarAmount,
+  handleCreditCardNumberChange,
+  handleCvcChange,
+  handleDateChange,
+  handleZipChange,
+} from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import CreditCardView from './CreditCardView';
@@ -52,46 +58,6 @@ const PaymentPortal = ({
   const handleEmailValueChange = (event, newEmail) => {
     setEmailValue(newEmail);
   };
-  const handleCreditCardNumberChange = (event, newCreditCardNumber) => {
-    const formattedNumber = newCreditCardNumber.replace(/[^0-9]/g, '');
-    if (formattedNumber.length > 4 && formattedNumber.length <= 8) {
-      setCreditCardNumber(
-        `${formattedNumber.slice(0, 4)} ${formattedNumber.slice(4)}`,
-      );
-    } else if (formattedNumber.length > 8 && formattedNumber.length <= 12) {
-      setCreditCardNumber(
-        `${formattedNumber.slice(0, 4)} ${formattedNumber.slice(
-          4,
-          8,
-        )} ${formattedNumber.slice(8)}`,
-      );
-    } else if (formattedNumber.length > 12 && formattedNumber.length <= 16) {
-      setCreditCardNumber(
-        `${formattedNumber.slice(0, 4)} ${formattedNumber.slice(
-          4,
-          8,
-        )} ${formattedNumber.slice(8, 12)} ${formattedNumber.slice(12)}`,
-      );
-    } else {
-      setCreditCardNumber(formattedNumber);
-    }
-  };
-  const handleDateChange = (event, newDate) => {
-    const formattedDate = newDate.replace(/[^0-9]/g, '');
-    if (formattedDate.length > 2 && formattedDate.length <= 6) {
-      setDateValue(`${formattedDate.slice(0, 2)}/${formattedDate.slice(2)}`);
-    } else {
-      setDateValue(formattedDate);
-    }
-  };
-  const handleCvcChange = (event, newCvc) => {
-    const formattedCvc = newCvc.replace(/[^0-9]/g, '');
-    setCvcValue(formattedCvc);
-  };
-  const handleZipChange = (event, newZip) => {
-    const formattedZip = newZip.replace(/[^0-9]/g, '');
-    setZipValue(formattedZip);
-  };
   const propsToPassDown = {
     creditCardNumber,
     cvcValue,
@@ -102,6 +68,10 @@ const PaymentPortal = ({
     handleCvcChange,
     handleDateChange,
     handleZipChange,
+    setCreditCardNumber,
+    setCvcValue,
+    setDateValue,
+    setZipValue,
     zipValue,
   };
   return (

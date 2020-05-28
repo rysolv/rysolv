@@ -3,10 +3,10 @@ import T from 'prop-types';
 
 import { formatDollarAmount } from 'utils/globalHelpers';
 
-import DepositComponent from './DepositComponent';
-import InvoicesComponent from './InvoicesComponent';
-import WithdrawalComponent from './WithdrawalComponent';
-import WorkHistoryComponent from './WorkHistoryComponent';
+import DepositComponent from './Deposit';
+import InvoicesComponent from './Invoices';
+import WithdrawalComponent from './Withdrawal';
+import WorkHistoryComponent from './WorkHistory';
 import {
   AccountBalanceContainer,
   BalanceAmount,
@@ -18,13 +18,13 @@ import {
   StyledTabs,
 } from './styledComponents';
 
-const AccountBalance = ({ balance, dollarsEarned }) => {
+const AccountBalance = ({ balance, dollarsEarned, handleNav }) => {
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const ComponentToRender = {
-    0: <DepositComponent />,
+    0: <DepositComponent handleNav={handleNav} />,
     1: <WithdrawalComponent />,
     2: <InvoicesComponent />,
     3: <WorkHistoryComponent />,
@@ -67,6 +67,7 @@ const AccountBalance = ({ balance, dollarsEarned }) => {
 AccountBalance.propTypes = {
   balance: T.number.isRequired,
   dollarsEarned: T.number.isRequired,
+  handleNav: T.func.isRequired,
 };
 
 export default AccountBalance;

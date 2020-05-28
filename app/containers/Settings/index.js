@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -10,6 +10,12 @@ import { ModalDialog } from 'components/base_ui';
 import DeleteUser from 'components/DeleteUser';
 import SettingsView from 'components/Settings';
 import { makeSelectAuth } from 'containers/Auth/selectors';
+import {
+  handleCreditCardNumberChange,
+  handleCvcChange,
+  handleDateChange,
+  handleZipChange,
+} from 'utils/globalHelpers';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -22,6 +28,7 @@ import {
   openModalState,
   removeIssue,
   saveChange,
+  submitPayment,
 } from './actions';
 import { settingViewDictionary } from './constants';
 import reducer from './reducer';
@@ -37,6 +44,7 @@ const Settings = ({
   dispatchFetchInfo,
   dispatchOpenModal,
   dispatchSaveChange,
+  dispatchSubmitPayment,
   error,
   filterValues,
   handleClearAlerts,
@@ -49,14 +57,45 @@ const Settings = ({
   match,
   modal,
 }) => {
+  const [creditCardNumber, setCreditCardNumber] = useState('');
+  const [dateValue, setDateValue] = useState('');
+  const [cvcValue, setCvcValue] = useState('');
+  const [zipValue, setZipValue] = useState('');
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'User Settings';
     dispatchFetchInfo({ itemId: id });
   }, [id]);
+
+  const handleSubmitPayment = ({ amount }) => {
+    dispatchSubmitPayment({
+      amount,
+      creditCardNumber,
+      currency: 'usd',
+      cvcValue,
+      dateValue,
+      email: '',
+      zipValue,
+    });
+  };
   const {
     params: { view },
   } = match;
+  const creditCardProps = {
+    creditCardNumber,
+    cvcValue,
+    dateValue,
+    handleCreditCardNumberChange,
+    handleCvcChange,
+    handleDateChange,
+    handleSubmitPayment,
+    handleZipChange,
+    setCreditCardNumber,
+    setCvcValue,
+    setDateValue,
+    setZipValue,
+    zipValue,
+  };
   const currentTab = settingViewDictionary[view] || 0;
   const modalPropsDictionary = {
     deleteUser: {
@@ -79,6 +118,7 @@ const Settings = ({
         loading={loading}
         propsToPassDown={{
           alerts,
+          creditCardProps,
           currentTab,
           dispatchOpenModal,
           dispatchSaveChange,
@@ -87,6 +127,7 @@ const Settings = ({
           handleInputChange,
           handleNav,
           handleRemoveIssue,
+          view,
         }}
       />
       {isModalOpen && <ModalDialog {...modalPropsDictionary[modal]} />}
@@ -102,6 +143,7 @@ Settings.propTypes = {
   dispatchFetchInfo: T.func,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveChange: T.func,
+  dispatchSubmitPayment: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object,
   handleClearAlerts: T.func.isRequired,
@@ -141,6 +183,7 @@ function mapDispatchToProps(dispatch) {
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
+    dispatchSubmitPayment: payload => dispatch(submitPayment(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleDeleteUser: payload => dispatch(deleteUser(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),

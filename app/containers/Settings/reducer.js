@@ -17,6 +17,7 @@ import {
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
+  SUBMIT_PAYMENT,
 } from './constants';
 
 export const initialState = {
@@ -132,6 +133,10 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SAVE_CHANGE: {
+      draft.loading = true;
+      break;
+    }
+    case SUBMIT_PAYMENT: {
       draft.loading = true;
       break;
     }

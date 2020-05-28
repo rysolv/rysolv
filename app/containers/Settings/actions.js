@@ -7,6 +7,7 @@ import {
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
+  SUBMIT_PAYMENT,
   INPUT_CHANGE,
   OPEN_MODAL_STATE,
   REMOVE_ISSUE_FAILURE,
@@ -125,5 +126,12 @@ export function saveChange(payload) {
   return {
     payload,
     type: SAVE_CHANGE,
+  };
+}
+
+export function submitPayment(payload) {
+  return {
+    payload,
+    type: SUBMIT_PAYMENT,
   };
 }
