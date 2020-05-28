@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
 import VerifyForm from 'components/Organizations/Add/VerifyForm';
 
-import { incrementStep, saveInfo, verifyInfo } from '../actions';
+import { clearForm, incrementStep, saveInfo, verifyInfo } from '../actions';
 import { verifyMessage } from '../constants';
 import {
   makeSelectOrganizations,
@@ -24,23 +24,29 @@ import {
 export class VerifyOrganization extends React.PureComponent {
   render() {
     const {
-      data,
+      dispatchClearForm,
       dispatchIncrementStep,
       dispatchSaveInfo,
       dispatchVerifyInfo,
       handleNav,
+      importSuccess,
       isVerified,
+      organizationData,
       requestBody,
     } = this.props;
     const handleSaveInfo = () => {
       dispatchSaveInfo({ requestBody });
       handleNav('/organizations');
     };
+    const cancelImport = () => {
+      dispatchClearForm();
+      dispatchIncrementStep({ step: 1, view: 'addOrganization' });
+    };
     return (
       <Fragment>
         <StyledH3>Verify Organization Information</StyledH3>
         <Wrapper>
-          <VerifyForm data={data} />
+          <VerifyForm organizationData={organizationData} />
           <StyledCheckboxWithLabel
             checked={isVerified}
             label={verifyMessage}
@@ -48,15 +54,19 @@ export class VerifyOrganization extends React.PureComponent {
           />
         </Wrapper>
         <ButtonGroup>
-          <SecondaryButton
-            label="Back"
-            onClick={() =>
-              dispatchIncrementStep({ step: 2, view: 'addOrganization' })
-            }
-          />
+          {importSuccess ? (
+            <SecondaryButton label="Cancel" onClick={() => cancelImport()} />
+          ) : (
+            <SecondaryButton
+              label="Edit"
+              onClick={() =>
+                dispatchIncrementStep({ step: 2, view: 'addOrganization' })
+              }
+            />
+          )}
           <PrimaryAsyncButton
             disabled={!isVerified}
-            label="Save"
+            label="Submit"
             onClick={handleSaveInfo}
           />
         </ButtonGroup>
@@ -66,12 +76,14 @@ export class VerifyOrganization extends React.PureComponent {
 }
 
 VerifyOrganization.propTypes = {
-  data: T.object,
+  dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
   dispatchVerifyInfo: T.func,
   handleNav: T.func,
+  importSuccess: T.bool,
   isVerified: T.bool,
+  organizationData: T.object,
   requestBody: T.object,
 };
 
@@ -79,8 +91,8 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  data: makeSelectOrganizations('data'),
   isVerified: makeSelectOrganizations('isVerified'),
+  organizationData: makeSelectOrganizations('organizationData'),
   requestBody: makeSelectOrganizationsRequestBody(),
 });
 
@@ -89,6 +101,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Organizations
      */
+    dispatchClearForm: () => dispatch(clearForm()),
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
     dispatchVerifyInfo: () => dispatch(verifyInfo()),

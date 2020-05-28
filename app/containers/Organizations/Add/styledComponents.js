@@ -16,14 +16,13 @@ export const AddWrapper = styled.div`
 export const AddForm = styled.div`
   background-color: white;
   border: 0.1rem solid ${borderColor};
-  width: 60%;
+  width: 80%;
   padding: 1rem;
   border-radius: 0.5rem;
 
   ${large} {
     width: 70%;
   }
-
   ${desktop} {
     width: 70%;
   }
@@ -35,6 +34,11 @@ export const AddForm = styled.div`
   }
   ${mobile} {
     width: 100%;
+  }
+
+  .MuiFormControl-root {
+    width: 100%;
+    margin: 0;
   }
 `;
 
@@ -53,5 +57,5 @@ export const StyledH3 = styled.h3`
 `;
 
 export const Wrapper = styled.div`
-  padding: 0 6.5rem;
+  padding: 0 2.5rem;
 `;

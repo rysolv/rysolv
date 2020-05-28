@@ -7,49 +7,55 @@ import { organizationDataDictionary } from 'containers/Organizations/constants';
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 
 // eslint-disable-next-line arrow-body-style
-const ManualForm = ({ data, handleInputChange }) => {
+const ManualForm = ({ organizationData, handleInputChange }) => {
   // eslint-disable-next-line no-param-reassign
-  const { organizationUrl, description, logo, name, repoUrl } = data;
+  const {
+    organizationDescription,
+    organizationLogo,
+    organizationName,
+    organizationRepo,
+    organizationUrl,
+  } = organizationData;
   return (
     <InputFormWrapper>
       <MainTextInput
-        error={!!name.error}
-        helperText={name.error}
+        error={!!organizationName.error}
+        helperText={organizationName.error}
         label={organizationDataDictionary.name}
         onChange={e =>
           handleInputChange({
-            field: 'name',
-            form: 'data',
+            field: 'organizationName',
+            form: 'organizationData',
             value: e.target.value,
           })
         }
-        value={name.value}
+        value={organizationName.value}
       />
       <MainTextInput
-        error={!!description.error}
-        helperText={description.error}
+        error={!!organizationDescription.error}
+        helperText={organizationDescription.error}
         label={organizationDataDictionary.description}
         onChange={e =>
           handleInputChange({
-            field: 'description',
-            form: 'data',
+            field: 'organizationDescription',
+            form: 'organizationData',
             value: e.target.value,
           })
         }
-        value={description.value}
+        value={organizationDescription.value}
       />
       <MainTextInput
-        error={!!logo.error}
-        helperText={logo.error}
+        error={!!organizationLogo.error}
+        helperText={organizationLogo.error}
         label={organizationDataDictionary.logo}
         onChange={e =>
           handleInputChange({
-            field: 'logo',
-            form: 'data',
+            field: 'organizationLogo',
+            form: 'organizationData',
             value: e.target.value,
           })
         }
-        value={logo.value}
+        value={organizationLogo.value}
       />
       <HorizontalWrapper>
         <MainTextInput
@@ -59,24 +65,24 @@ const ManualForm = ({ data, handleInputChange }) => {
           onChange={e =>
             handleInputChange({
               field: 'organizationUrl',
-              form: 'data',
+              form: 'organizationData',
               value: e.target.value,
             })
           }
           value={organizationUrl.value}
         />
         <MainTextInput
-          error={!!repoUrl.error}
-          helperText={repoUrl.error}
+          error={!!organizationRepo.error}
+          helperText={organizationRepo.error}
           label={organizationDataDictionary.repoUrl}
           onChange={e =>
             handleInputChange({
-              field: 'repoUrl',
-              form: 'data',
+              field: 'organizationRepo',
+              form: 'organizationData',
               value: e.target.value,
             })
           }
-          value={repoUrl.value}
+          value={organizationRepo.value}
         />
       </HorizontalWrapper>
     </InputFormWrapper>
@@ -84,8 +90,8 @@ const ManualForm = ({ data, handleInputChange }) => {
 };
 
 ManualForm.propTypes = {
-  data: T.object.isRequired,
   handleInputChange: T.func.isRequired,
+  organizationData: T.object.isRequired,
 };
 
 export default ManualForm;

@@ -17,6 +17,9 @@ import {
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
   INCREMENT_STEP,
+  IMPORT_ORGANIZATION_FAILURE,
+  IMPORT_ORGANIZATION_SUCCESS,
+  IMPORT_ORGANIZATION,
   INPUT_CHANGE,
   INPUT_ERROR,
   SAVE_INFO_FAILURE,
@@ -38,13 +41,14 @@ export const initialState = {
   alerts: { error: false, success: false },
   organizations: [],
   organization: {},
-  data: {
-    organizationUrl: { error: '', value: '' },
-    description: { error: '', value: '' },
-    repoUrl: { error: '', value: '' },
-    logo: { error: '', value: '' },
+  organizationData: {
     importUrl: { error: '', value: '' },
-    name: { error: '', value: '' },
+    organizationDescription: { error: '', value: '' },
+    organizationId: { error: '', value: '' },
+    organizationLogo: { error: '', value: '' },
+    organizationName: { error: '', value: '' },
+    organizationRepo: { error: '', value: '' },
+    organizationUrl: { error: '', value: '' },
   },
   editInfo: {
     id: { error: '', value: '' },
@@ -69,6 +73,7 @@ export const initialState = {
     addOrganization: false,
     deleteOrganization: false,
     fetchOrganization: false,
+    importOrganization: false,
     organizations: false,
     saveOrganization: false,
     searchOrganizations: false,
@@ -76,10 +81,12 @@ export const initialState = {
     upvoteIssue: false,
   },
   error: {
-    organizations: false,
     fetchOrganization: false,
+    importOrganization: { error: false, message: '' },
+    organizations: false,
     searchOrganizations: false,
   },
+  importSuccess: false,
   isVerified: false,
   search: {
     contributorInput: { error: '', value: '' },
@@ -118,8 +125,10 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case CLEAR_FORM: {
-      draft.data = initialState.data;
+      draft.error = initialState.error;
+      draft.importSuccess = initialState.importSuccess;
       draft.isVerified = initialState.isVerified;
+      draft.organizationData = initialState.organizationData;
       break;
     }
     case DELETE_ORGANIZATION_FAILURE: {
@@ -176,6 +185,25 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       draft.loading.fetchOrganization = true;
       break;
     }
+    case IMPORT_ORGANIZATION_FAILURE: {
+      const { error } = payload;
+      draft.error.importOrganization = { error: true, message: error.message };
+      draft.loading.importOrganization = false;
+      break;
+    }
+    case IMPORT_ORGANIZATION_SUCCESS: {
+      const { importOrganization } = payload;
+      draft.loading.importOrganization = false;
+      Object.keys(draft.organizationData).map(field => {
+        draft.organizationData[field].value = importOrganization[field];
+      });
+      draft.importSuccess = true;
+      break;
+    }
+    case IMPORT_ORGANIZATION: {
+      draft.loading.importOrganization = true;
+      break;
+    }
     case INCREMENT_STEP: {
       const { step, view } = payload;
       draft.step[view] = step;
@@ -183,6 +211,9 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
+      draft.error = initialState.error;
+      draft[form][field].error = '';
+
       if (form === 'filter') {
         draft[form][field] = value;
       } else {
@@ -194,7 +225,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       const { errors } = payload;
       const fields = Object.keys(errors);
       fields.forEach(field => {
-        draft.data[field].error = errors[field] || '';
+        draft.organizationData[field].error = errors[field] || '';
       });
       break;
     }

@@ -11,22 +11,36 @@ const {
   transformOrganization,
 } = require('../../db');
 
+const { getSingleRepo } = require('../../integrations');
+
 module.exports = {
   createOrganization: async args => {
     const { organizationInput } = args;
-    await checkDuplicateOrganization('issues', organizationInput.repoUrl);
+
+    if (
+      await checkDuplicateOrganization(
+        'organizations',
+        organizationInput.organizationRepo,
+      )
+    ) {
+      throw new Error(
+        `An organization at ${
+          organizationInput.organizationRepo
+        } already exists`,
+      );
+    }
 
     const organization = [
       [
         uuidv4(),
         new Date(),
         new Date(),
-        organizationInput.name,
-        organizationInput.description,
-        organizationInput.repoUrl,
+        organizationInput.organizationName,
+        organizationInput.organizationDescription,
+        organizationInput.organizationRepo,
         organizationInput.organizationUrl || '',
         organizationInput.issues || [],
-        organizationInput.logo ||
+        organizationInput.organizationLogo ||
           'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
         organizationInput.verified || false,
         organizationInput.contributors || [],
@@ -57,6 +71,26 @@ module.exports = {
       return result;
     } catch (err) {
       throw err;
+    }
+  },
+  importOrganization: async args => {
+    const { url } = args;
+    try {
+      if (await checkDuplicateOrganization('organizations', url)) {
+        throw new Error(`Organization at ${url} already exists`);
+      }
+
+      const { organizationInput: ImportData } = await getSingleRepo(url);
+
+      return {
+        __typename: 'ImportData',
+        ...ImportData,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   oneOrganization: async args => {

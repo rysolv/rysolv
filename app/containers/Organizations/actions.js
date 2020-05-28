@@ -12,6 +12,9 @@ import {
   FETCH_ORGANIZATIONS_FAILURE,
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
+  IMPORT_ORGANIZATION_FAILURE,
+  IMPORT_ORGANIZATION_SUCCESS,
+  IMPORT_ORGANIZATION,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
@@ -115,6 +118,27 @@ export function fetchInfo(payload) {
   return {
     payload,
     type: FETCH_INFO,
+  };
+}
+
+export function importOrganizationFailure(payload) {
+  return {
+    payload,
+    type: IMPORT_ORGANIZATION_FAILURE,
+  };
+}
+
+export function importOrganizationSuccess(payload) {
+  return {
+    payload,
+    type: IMPORT_ORGANIZATION_SUCCESS,
+  };
+}
+
+export function importOrganization(payload) {
+  return {
+    payload,
+    type: IMPORT_ORGANIZATION,
   };
 }
 

@@ -23,6 +23,12 @@ export const FETCH_INFO = 'app/Organizations/FETCH_INFO';
 export const FETCH_INFO_FAILURE = 'app/Organizations/FETCH_INFO_FAILURE';
 export const FETCH_INFO_SUCCESS = 'app/Organizations/FETCH_INFO_SUCCESS';
 
+export const IMPORT_ORGANIZATION = 'app/organizations/IMPORT_ORGANIZATION';
+export const IMPORT_ORGANIZATION_FAILURE =
+  'app/organizations/IMPORT_ORGANIZATION_FAILURE';
+export const IMPORT_ORGANIZATION_SUCCESS =
+  'app/organizations/IMPORT_ORGANIZATION_SUCCESS';
+
 export const INCREMENT_STEP = 'app/Organizations/INCREMENT_STEP';
 
 export const INPUT_CHANGE = 'app/Organizations/INPUT_CHANGE';

@@ -17,7 +17,7 @@ import { ButtonGroup, StyledH3 } from './styledComponents';
 export class ManualOrganization extends React.PureComponent {
   render() {
     const {
-      data,
+      organizationData,
       handleIncrementStep,
       handleInputChange,
       isDisabled,
@@ -25,7 +25,10 @@ export class ManualOrganization extends React.PureComponent {
     return (
       <Fragment>
         <StyledH3>Add Organization</StyledH3>
-        <ManualForm data={data} handleInputChange={handleInputChange} />
+        <ManualForm
+          organizationData={organizationData}
+          handleInputChange={handleInputChange}
+        />
         <ButtonGroup>
           <SecondaryButton
             label="Back"
@@ -47,18 +50,18 @@ export class ManualOrganization extends React.PureComponent {
 }
 
 ManualOrganization.propTypes = {
-  data: T.object,
   handleIncrementStep: T.func,
-  isDisabled: T.bool,
   handleInputChange: T.func,
+  isDisabled: T.bool,
+  organizationData: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  data: makeSelectOrganizations('data'),
   isDisabled: makeSelectOrganizationsDisabled(),
+  organizationData: makeSelectOrganizations('organizationData'),
 });
 
 function mapDispatchToProps(dispatch) {

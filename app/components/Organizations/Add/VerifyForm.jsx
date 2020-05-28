@@ -1,38 +1,58 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import T from 'prop-types';
-import omit from 'lodash/omit';
-
-import { organizationDataDictionary } from 'containers/Organizations/constants';
 
 import {
   DataWrapper,
-  KeyAndValueContainer,
-  KeyGroupWrapper,
-  KeyWrapper,
+  HeaderWrapper,
+  LogoContainer,
+  OrganizationNameWrapper,
+  SelectedOrganization,
+  StyledLink,
   ValueWrapper,
+  VerifyWrapper,
 } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class VerifyForm extends React.PureComponent {
   render() {
-    const { data } = this.props;
-    const tempData = omit(data, ['importUrl', 'totalFunded', 'verified']);
+    const {
+      organizationData: {
+        organizationDescription,
+        organizationLogo,
+        organizationName,
+        organizationRepo,
+        organizationUrl,
+      },
+    } = this.props;
+
     return (
       <DataWrapper>
-        <KeyGroupWrapper>
-          {Object.keys(tempData).map((key, index) => (
-            <KeyAndValueContainer key={`verify-key-${key}-${index}`}>
-              <KeyWrapper>{organizationDataDictionary[key]}:</KeyWrapper>
-              <ValueWrapper>{tempData[key].value}</ValueWrapper>
-            </KeyAndValueContainer>
-          ))}
-        </KeyGroupWrapper>
+        <VerifyWrapper>
+          <HeaderWrapper>
+            <LogoContainer
+              src={organizationLogo.value}
+              alt={organizationName.value}
+            />
+            <OrganizationNameWrapper>
+              <SelectedOrganization>
+                {organizationName.value}
+              </SelectedOrganization>
+              <StyledLink href={organizationRepo.value} target="_blank">
+                {organizationRepo.value}
+              </StyledLink>
+              <StyledLink href={organizationUrl.value} target="_blank">
+                {organizationUrl.value}
+              </StyledLink>
+            </OrganizationNameWrapper>
+          </HeaderWrapper>
+          <ValueWrapper>{organizationDescription.value}</ValueWrapper>
+        </VerifyWrapper>
       </DataWrapper>
     );
   }
 }
 
-VerifyForm.propTypes = { data: T.object };
+VerifyForm.propTypes = { organizationData: T.object };
 
 export default VerifyForm;

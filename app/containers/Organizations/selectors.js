@@ -21,9 +21,9 @@ const makeSelectOrganizations = prop =>
 
 const makeSelectOrganizationsDisabled = () =>
   createSelector(
-    makeSelectOrganizations('data'),
+    makeSelectOrganizations('organizationData'),
     data => {
-      const tempData = omit(data, ['importUrl', 'totalFunded']);
+      const tempData = omit(data, ['importUrl', 'organizationId']);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );
@@ -106,7 +106,7 @@ const makeSelectOrganizationsLoading = prop =>
 
 const makeSelectOrganizationsRequestBody = () =>
   createSelector(
-    makeSelectOrganizations('data'),
+    makeSelectOrganizations('organizationData'),
     data =>
       Object.keys(data).reduce((acc, field) => {
         acc[field] = data[field].value;

@@ -20,7 +20,7 @@ const {
   upvoteIssue,
 } = require('../../db');
 
-const { getSingleIssue, getSingleOrganization } = require('../../integrations');
+const { getSingleIssue, getSingleRepo } = require('../../integrations');
 
 const newIssueArray = (issueId, issueInput) => [
   [
@@ -65,7 +65,6 @@ const newOrganizationArray = organizationInput => [
 module.exports = {
   createIssue: async args => {
     const { issueInput } = args;
-    console.log(issueInput);
     const { organizationRepo, repo, organizationId } = issueInput;
     const newIssueId = uuidv4();
 
@@ -174,9 +173,7 @@ module.exports = {
       }
 
       // get organization detail from Github API
-      const { organizationInput } = await getSingleOrganization(
-        organizationUrl,
-      );
+      const { organizationInput } = await getSingleRepo(organizationUrl);
 
       // Return organizaiton ID if exists in db
       const [organization] = await getOrganizationsWhere(

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import { BackNav } from 'components/base_ui';
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import AsyncRender from 'components/AsyncRender';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -34,9 +35,22 @@ export class OrganizationsAdd extends React.PureComponent {
   }
 
   render() {
-    const { data, loading, step, handleNav } = this.props;
+    window.scrollTo(0, 0);
+
+    const {
+      activeUser,
+      handleIncrementStep,
+      handleNav,
+      importSuccess,
+      loading,
+      organizationData,
+      step,
+    } = this.props;
 
     const StepToRender = addOrganizationDictionary[step];
+    if (importSuccess) {
+      handleIncrementStep({ step: 3, view: 'addOrganization' });
+    }
     return (
       <AddWrapper>
         <BackNav
@@ -46,9 +60,14 @@ export class OrganizationsAdd extends React.PureComponent {
         />
         <AddForm>
           <AsyncRender
-            asyncData={{ data }}
+            asyncData={{ organizationData }}
             component={StepToRender}
             loading={loading}
+            propsToPassDown={{
+              activeUser,
+              handleNav,
+              importSuccess,
+            }}
           />
         </AddForm>
       </AddWrapper>
@@ -57,11 +76,13 @@ export class OrganizationsAdd extends React.PureComponent {
 }
 
 OrganizationsAdd.propTypes = {
-  data: T.object,
+  activeUser: T.object,
   dispatchClearForm: T.func,
   handleIncrementStep: T.func,
   handleNav: T.func,
+  importSuccess: T.bool,
   loading: T.bool.isRequired,
+  organizationData: T.object,
   step: T.number.isRequired,
 };
 
@@ -69,9 +90,11 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  data: makeSelectOrganizations('data'),
   loading: makeSelectOrganizationsLoading('addOrganization'),
+  organizationData: makeSelectOrganizations('organizationData'),
   step: makeSelectOrganizationsStep('addOrganization'),
+  activeUser: makeSelectAuth('activeUser'),
+  importSuccess: makeSelectOrganizations('importSuccess'),
 });
 
 function mapDispatchToProps(dispatch) {

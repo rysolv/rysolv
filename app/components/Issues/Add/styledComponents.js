@@ -25,7 +25,7 @@ export const ImportFormContainer = styled.section`
   height: 50%;
   line-height: 4rem;
   margin: auto;
-  padding: 5rem 0;
+  padding: 4rem 2rem;
   text-align: center;
   width: 80%;
   * {
@@ -61,8 +61,9 @@ export const KeyWrapper = styled.div`
 export const StyledImportError = styled.div`
   color: red;
   font-size: ${detailFontSize};
-  text-align: left;
+  line-height: ${defaultFontSize};
   padding: 0 1rem;
+  text-align: left;
 `;
 
 export const StyledMarkdownWrapper = styled.div`
