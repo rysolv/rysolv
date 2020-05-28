@@ -137,7 +137,12 @@ const SettingsView = ({
   );
   const BalanceFormComponent = (
     <ConditionalRender
-      Component={<DepositFormComponent creditCardProps={creditCardProps} />}
+      Component={
+        <DepositFormComponent
+          creditCardProps={creditCardProps}
+          handleNav={handleNav}
+        />
+      }
       FallbackComponent={WithdrawalFormComponent}
       shouldRender={view === 'deposit'}
     />

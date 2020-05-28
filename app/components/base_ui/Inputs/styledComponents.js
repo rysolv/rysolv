@@ -17,7 +17,7 @@ export const Spacer = styled.div`
   height: 1.5rem;
 `;
 
-export const StyledBaseInput = styled(({ isActive, ...restProps }) => (
+export const StyledBaseInput = styled(({ textAlign, ...restProps }) => (
   <OutlinedInput {...restProps} />
 ))`
   background: white;

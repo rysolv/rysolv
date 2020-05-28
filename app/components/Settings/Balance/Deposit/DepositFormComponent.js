@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
@@ -24,11 +24,14 @@ import {
 } from '../styledComponents';
 import { StyledH3 } from '../../styledComponents';
 
-const DepositFormComponent = ({ creditCardProps }) => {
+const DepositFormComponent = ({ creditCardProps, handleNav }) => {
   const [dollarValue, setDollarValue] = useState('0');
   const [feeValue, setFeeValue] = useState('0');
   const [totalValue, setTotalValue] = useState('0');
   const [paymentType, setPaymentType] = useState('Credit card');
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleChangeDollarValue = e => {
     const { value } = e.target;
@@ -66,8 +69,8 @@ const DepositFormComponent = ({ creditCardProps }) => {
   return (
     <Fragment>
       <Breadcrumbs>
-        <StyledLink href="/settings">Settings</StyledLink>
-        <StyledLink href="/settings/account">Account</StyledLink>
+        <StyledLink onClick={() => handleNav("/settings")}>Settings</StyledLink>
+        <StyledLink onClick={() => handleNav("/settings/account")}>Account</StyledLink>
         <StyledTypography>Deposit</StyledTypography>
       </Breadcrumbs>
       <StyledH3>Enter your funding amount</StyledH3>
@@ -118,6 +121,9 @@ const DepositFormComponent = ({ creditCardProps }) => {
   );
 };
 
-DepositFormComponent.propTypes = { creditCardProps: T.object.isRequired };
+DepositFormComponent.propTypes = {
+  creditCardProps: T.object.isRequired,
+  handleNav: T.func.isRequired,
+};
 
 export default DepositFormComponent;
