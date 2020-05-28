@@ -60,6 +60,7 @@ export const OverviewListDetail = styled.div`
   color: ${textColor};
   display: flex;
   flex-direction: row;
+  flex: 100%;
   height: 100%;
   margin: 1rem 0;
 `;

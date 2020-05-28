@@ -22,6 +22,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
 import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
+import Info from '@material-ui/icons/Info';
 import Link from '@material-ui/icons/Link';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
 import PublishIcon from '@material-ui/icons/Publish';
@@ -64,6 +65,7 @@ export default (name, options) => {
     gift: Gift,
     github: GitHub,
     gitlab: Gitlab,
+    info: Info,
     issue: ErrorIcon,
     link: Link,
     monocle: Monocle,

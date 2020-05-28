@@ -20,6 +20,10 @@ const CreditCardView = ({
   handleCvcChange,
   handleDateChange,
   handleZipChange,
+  setCreditCardNumber,
+  setCvcValue,
+  setDateValue,
+  setZipValue,
   zipValue,
 }) => {
   const recaptchaRef = useRef(null);
@@ -31,14 +35,20 @@ const CreditCardView = ({
             adornmentComponent="Number"
             fontSize="1rem"
             inputProps={{ maxLength: 19 }}
-            onChange={e => handleCreditCardNumberChange(e, e.target.value)}
+            onChange={e =>
+              handleCreditCardNumberChange(
+                e,
+                e.target.value,
+                setCreditCardNumber,
+              )
+            }
             value={creditCardNumber}
           />
           <StyledBaseInputWithAdornment
             adornmentComponent="MM/YYYY"
             fontSize="1rem"
             inputProps={{ maxLength: 7 }}
-            onChange={e => handleDateChange(e, e.target.value)}
+            onChange={e => handleDateChange(e, e.target.value, setDateValue)}
             value={dateValue}
           />
           <HorizontalInputWrapper>
@@ -46,14 +56,14 @@ const CreditCardView = ({
               adornmentComponent="CVC"
               fontSize="1rem"
               inputProps={{ maxLength: 3 }}
-              onChange={e => handleCvcChange(e, e.target.value)}
+              onChange={e => handleCvcChange(e, e.target.value, setCvcValue)}
               value={cvcValue}
             />
             <StyledBaseInputWithAdornment
               adornmentComponent="Zip"
               fontSize="1rem"
               inputProps={{ maxLength: 5 }}
-              onChange={e => handleZipChange(e, e.target.value)}
+              onChange={e => handleZipChange(e, e.target.value, setZipValue)}
               value={zipValue}
             />
           </HorizontalInputWrapper>
@@ -85,6 +95,10 @@ CreditCardView.propTypes = {
   handleCvcChange: T.func,
   handleDateChange: T.func,
   handleZipChange: T.func,
+  setCreditCardNumber: T.func,
+  setCvcValue: T.func,
+  setDateValue: T.func,
+  setZipValue: T.func,
   zipValue: T.string,
 };
 

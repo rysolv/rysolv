@@ -3,12 +3,6 @@ import styled from 'styled-components';
 import { BaseDropDownMenu } from 'components/base_ui';
 import { hoverLinkColor } from 'defaultStyleHelper';
 
-export const HeaderWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-`;
-
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
   width: 15rem;

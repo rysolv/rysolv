@@ -4,12 +4,12 @@ import IconButton from '@material-ui/core/IconButton';
 import { defaultFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
 
 export const FixedWrapper = styled.div`
-  width: ${({ open }) => (open ? '20rem' : '7.5rem')};
+  width: ${({ open }) => (open ? '22.5rem' : '7.5rem')};
 `;
 
 export const StyledIconButton = styled(IconButton)`
   color: ${textColor};
-  width: ${({ open }) => (open ? '20rem' : '7.5rem')};
+  width: ${({ open }) => (open ? '22.5rem' : '7.5rem')};
 `;
 
 export const StyledSideNav = styled.div`
@@ -18,7 +18,7 @@ export const StyledSideNav = styled.div`
   overflow-y: auto;
   overflow: hidden;
   white-space: nowrap;
-  width: ${({ open }) => (open ? '20rem' : '7.5rem')};
+  width: ${({ open }) => (open ? '22.5rem' : '7.5rem')};
   z-index: 1;
 
   .MuiButtonBase-root {

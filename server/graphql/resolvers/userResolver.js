@@ -4,6 +4,8 @@ const {
   checkDuplicateUser,
   createUser,
   deleteUser,
+  getOneIssue,
+  getOneOrganization,
   getOneUser,
   getOrganizationsWhere,
   getUsers,
@@ -131,15 +133,7 @@ module.exports = {
     const { column, query } = args;
     try {
       const [result] = await getOneUser('users', query, column);
-      const { attempting, watching } = result;
-      const watchingListResult = await Promise.all(
-        watching.map(async issueId => {
-          const type = 'userWatchList';
-          const [watchingResult] = await getWatchList(issueId, type);
-          return watchingResult;
-        }),
-      );
-      result.watching = watchingListResult;
+      const { attempting, issues, organizations, watching } = result;
       const attemptingListResult = await Promise.all(
         attempting.map(async issueId => {
           const type = 'userAttemptList';
@@ -148,6 +142,31 @@ module.exports = {
         }),
       );
       result.attempting = attemptingListResult;
+      const issuesListResult = await Promise.all(
+        issues.map(async issueId => {
+          const [issuesResult] = await getOneIssue('issues', issueId);
+          return issuesResult;
+        }),
+      );
+      result.issues = issuesListResult;
+      const organizationsListResult = await Promise.all(
+        organizations.map(async organizationId => {
+          const [organizationsResult] = await getOneOrganization(
+            'organizations',
+            organizationId,
+          );
+          return organizationsResult;
+        }),
+      );
+      result.organizations = organizationsListResult;
+      const watchingListResult = await Promise.all(
+        watching.map(async issueId => {
+          const type = 'userWatchList';
+          const [watchingResult] = await getWatchList(issueId, type);
+          return watchingResult;
+        }),
+      );
+      result.watching = watchingListResult;
       return result;
     } catch (err) {
       throw err;

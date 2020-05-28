@@ -1,4 +1,5 @@
 import IconButton from './IconButton';
+import PaypalButton from './PaypalButton';
 import {
   FlatIconButton,
   PrimaryAsyncButton,
@@ -10,6 +11,7 @@ import {
 export {
   FlatIconButton,
   IconButton,
+  PaypalButton,
   PrimaryAsyncButton,
   PrimaryButton,
   SecondaryAsyncButton,

@@ -76,7 +76,7 @@ PersonalEditComponent.propTypes = {
   handleDone: T.func,
   setChangePersonal: T.func,
   setValue: T.func,
-  value: T.oneOfType([T.array, T.string]),
+  value: T.oneOfType([T.array, T.number, T.string]),
 };
 
 PersonalLinkComponent.propTypes = {

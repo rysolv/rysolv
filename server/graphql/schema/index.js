@@ -93,10 +93,10 @@ module.exports = buildSchema(`
     githubLink: String
     id: ID!
     isOnline: Boolean
-    issues: [String]
+    issues: [Object]
     lastName: String!
     modifiedDate: Object
-    organizations: [String]
+    organizations: [Object]
     personalLink: String
     preferredLanguages: [String]
     profilePic: String

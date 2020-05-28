@@ -3,6 +3,8 @@ import T from 'prop-types';
 
 import { ConditionalRender, Star } from 'components/base_ui';
 
+import DepositFormComponent from './Balance/Deposit/DepositFormComponent';
+import WithdrawalFormComponent from './Balance/Withdrawal/WithdrawalFormComponent';
 import {
   GithubEditComponent,
   GithubLinkComponent,
@@ -31,40 +33,52 @@ import {
 
 const SettingsView = ({
   alerts: { error, success },
+  creditCardProps,
   currentTab,
   data: {
     activePullRequests,
     attempting,
+    balance,
     completedPullRequests,
     createdDate,
     dollarsEarned,
+    email,
     firstName,
     githubLink,
     id,
     isOnline,
+    issues,
     lastName,
     modifiedDate,
+    organizations,
     personalLink,
     preferredLanguages,
     profilePic,
     rejectedPullRequests,
     rep,
     stackoverflowLink,
+    username,
     watching,
   },
+  dispatchOpenModal,
   dispatchSaveChange,
   filterValues,
   handleClearAlerts,
   handleInputChange,
   handleNav,
   handleRemoveIssue,
+  view,
 }) => {
+  const [changeEmail, setChangeEmail] = useState(false);
+  const [changeFirstName, setChangeFirstName] = useState(false);
   const [changeGithub, setChangeGithub] = useState(false);
+  const [changeLastName, setChangeLastName] = useState(false);
   const [changePersonal, setChangePersonal] = useState(false);
   const [changePreferredLanguages, setChangePreferredLanguages] = useState(
     false,
   );
   const [changeStackoverflow, setChangeStackoverflow] = useState(false);
+  const [changeUsername, setChangeUsername] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [value, setValue] = useState('');
 
@@ -85,6 +99,54 @@ const SettingsView = ({
     changeInputState(true);
     setValue(currentValue);
   };
+
+  const SettingsTabsComponent = (
+    <SettingsTabs
+      attempting={attempting}
+      balance={balance}
+      changeEmail={changeEmail}
+      changeFirstName={changeFirstName}
+      changeLastName={changeLastName}
+      changeUsername={changeUsername}
+      currentTab={currentTab}
+      dispatchOpenModal={dispatchOpenModal}
+      dollarsEarned={dollarsEarned}
+      email={email}
+      filterValues={filterValues}
+      firstName={firstName}
+      handleClose={handleClose}
+      handleDone={handleDone}
+      handleEdit={handleEdit}
+      handleInputChange={handleInputChange}
+      handleNav={handleNav}
+      handleRemoveIssue={handleRemoveIssue}
+      isDisabled={isDisabled}
+      issues={issues}
+      lastName={lastName}
+      organizations={organizations}
+      setChangeEmail={setChangeEmail}
+      setChangeFirstName={setChangeFirstName}
+      setChangeLastName={setChangeLastName}
+      setChangeUsername={setChangeUsername}
+      setValue={setValue}
+      userId={id}
+      username={username}
+      value={value}
+      watching={watching}
+    />
+  );
+  const BalanceFormComponent = (
+    <ConditionalRender
+      Component={
+        <DepositFormComponent
+          creditCardProps={creditCardProps}
+          handleNav={handleNav}
+        />
+      }
+      FallbackComponent={WithdrawalFormComponent}
+      shouldRender={view === 'deposit'}
+    />
+  );
   return (
     <DetailContainer>
       <StyledErrorSuccessBanner
@@ -186,15 +248,10 @@ const SettingsView = ({
           />
         </UserCardWrapper>
         <SettingsTabsWrapper>
-          <SettingsTabs
-            attempting={attempting}
-            currentTab={currentTab}
-            filterValues={filterValues}
-            handleInputChange={handleInputChange}
-            handleNav={handleNav}
-            handleRemoveIssue={handleRemoveIssue}
-            userId={id}
-            watching={watching}
+          <ConditionalRender
+            Component={BalanceFormComponent}
+            FallbackComponent={SettingsTabsComponent}
+            shouldRender={view === 'deposit' || view === 'withdrawal'}
           />
         </SettingsTabsWrapper>
       </DetailViewContainer>
@@ -204,14 +261,17 @@ const SettingsView = ({
 
 SettingsView.propTypes = {
   alerts: T.object.isRequired,
+  creditCardProps: T.object.isRequired,
   currentTab: T.number.isRequired,
   data: T.object.isRequired,
+  dispatchOpenModal: T.func.isRequired,
   dispatchSaveChange: T.func.isRequired,
   filterValues: T.object.isRequired,
   handleClearAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
+  view: T.string,
 };
 
 export default SettingsView;

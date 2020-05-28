@@ -1,20 +1,25 @@
+import React from 'react';
 import styled from 'styled-components';
 import FormControl from '@material-ui/core/FormControl';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import TextField from '@material-ui/core/TextField';
+
 import {
   defaultFontSize,
   errorBorder,
   inputBorder,
   textColor,
 } from 'defaultStyleHelper';
+
 import { FlatIconButton } from '../Buttons';
 
 export const Spacer = styled.div`
   height: 1.5rem;
 `;
 
-export const StyledBaseInput = styled(OutlinedInput)`
+export const StyledBaseInput = styled(({ textAlign, ...restProps }) => (
+  <OutlinedInput {...restProps} />
+))`
   background: white;
   border-radius: 0.5rem;
   color: rgba(0, 0, 0, 0.7);
@@ -29,6 +34,7 @@ export const StyledBaseInput = styled(OutlinedInput)`
 
   .input {
     padding: 0 2rem;
+    text-align: ${({ textAlign }) => textAlign || 'start'};
   }
 `;
 
