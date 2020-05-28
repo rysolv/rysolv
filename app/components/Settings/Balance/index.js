@@ -25,7 +25,7 @@ const AccountBalance = ({ balance, dollarsEarned, handleNav }) => {
   };
   const ComponentToRender = {
     0: <DepositComponent handleNav={handleNav} />,
-    1: <WithdrawalComponent />,
+    1: <WithdrawalComponent handleNav={handleNav} />,
     2: <InvoicesComponent />,
     3: <WorkHistoryComponent />,
   };

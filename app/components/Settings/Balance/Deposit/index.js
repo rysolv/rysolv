@@ -14,6 +14,6 @@ const DepositComponent = ({ handleNav }) => (
   </div>
 );
 
-DepositComponent.propTypes = { handleNav: T.func };
+DepositComponent.propTypes = { handleNav: T.func.isRequired };
 
 export default DepositComponent;
