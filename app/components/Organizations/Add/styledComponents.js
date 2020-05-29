@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 
 import {
+  borderColor,
   defaultFontSize,
   detailFontSize,
+  headerFontSize,
+  hoverLinkColor,
   hyperlinkColor,
   subheaderFontSize,
   textColor,
@@ -10,7 +13,11 @@ import {
 
 export const DataWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+`;
+
+export const HeaderWrapper = styled.div`
+  display: flex;
 `;
 
 export const HorizontalWrapper = styled.div`
@@ -25,7 +32,7 @@ export const ImportFormContainer = styled.section`
   height: 50%;
   line-height: 4rem;
   margin: auto;
-  padding: 5rem 0;
+  padding: 4rem 2rem;
   text-align: center;
   width: 80%;
 
@@ -42,22 +49,29 @@ export const InputFormWrapper = styled.div`
   padding: 0 6.5rem;
 `;
 
-export const KeyAndValueContainer = styled.div`
-  display: flex;
+export const LogoContainer = styled.img`
+  display: inline-flex;
+  height: 7rem;
+  margin: 0 2rem 0 0;
+  width: 7rem;
 `;
 
-export const KeyGroupWrapper = styled.div`
-  padding-right: 2rem;
+export const OrganizationNameWrapper = styled.div`
+  display: inline-flex;
+  flex-direction: column;
 `;
 
-export const KeyWrapper = styled.div`
-  color: ${textColor};
-  display: flex;
-  flex-direction: row;
-  font-size: ${defaultFontSize};
-  padding: 2rem 0;
-  text-decoration: underline;
-  min-width: 15rem;
+export const SelectedOrganization = styled.div`
+  margin: 0.5rem 0;
+  font-size: ${headerFontSize};
+`;
+
+export const StyledImportError = styled.div`
+  color: red;
+  font-size: ${detailFontSize};
+  line-height: ${defaultFontSize};
+  padding: 0;
+  text-align: left;
 `;
 
 export const StyledLabel = styled.div`
@@ -69,11 +83,26 @@ export const StyledLabel = styled.div`
     text-decoration: underline;
   }
 `;
+export const StyledLink = styled.a`
+  font-size: ${defaultFontSize};
+  color: ${hyperlinkColor};
+
+  &:hover {
+    cursor: pointer;
+    color: ${hoverLinkColor};
+  }
+`;
 
 export const ValueWrapper = styled.div`
-  display: flex;
   color: ${textColor};
-  flex-direction: row;
+  display: flex;
   font-size: ${defaultFontSize};
-  padding: 2rem 0;
+  padding: 1rem 0;
+`;
+
+export const VerifyWrapper = styled.div`
+  border-radius: 0.2rem;
+  border: 0.1rem solid ${borderColor};
+  margin: 0 0 4rem 0;
+  padding: 1rem;
 `;

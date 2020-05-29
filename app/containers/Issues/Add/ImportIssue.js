@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import AsyncRender from 'components/AsyncRender';
 import ImportForm from 'components/Issues/Add/ImportForm';
 
-import { validateUrl } from 'utils/validate';
+import { validateIssueUrl } from 'utils/validate';
 import {
   importIssue,
   incrementStep,
@@ -35,7 +35,7 @@ export class ImportIssue extends React.PureComponent {
       const {
         importUrl: { value: url },
       } = issueData;
-      const { error, validatedUrl, message } = validateUrl(url);
+      const { error, validatedUrl, message } = validateIssueUrl(url);
 
       if (error) {
         dispatchInputError({ errors: { importUrl: message } });

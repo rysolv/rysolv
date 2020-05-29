@@ -161,12 +161,12 @@ module.exports = buildSchema(`
   }
 
   input OrganizationInput {
-    description: String
-    logo: String
-    name: String
+    organizationDescription: String
+    organizationLogo: String
+    organizationName: String
     organizationUrl: String
-    repoUrl: String
-    verified: Boolean
+    organizationRepo: String
+    organizationVerified: Boolean
   }
 
   type Error {
@@ -208,6 +208,7 @@ module.exports = buildSchema(`
     deleteUser(id:ID!): String!
 
     importIssue(url: String!): ImportResult
+    importOrganization(url: String!): ImportResult
 
     transformIssue(id: ID!, issueInput: IssueInput): Issue!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): Organization!

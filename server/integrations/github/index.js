@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 const { FETCH } = require('../helpers');
-const { formatUrl } = require('./helpers');
+const { formatIssueUrl, formatOrganizationUrl } = require('./helpers');
 
 const getSingleIssue = async issueUrl => {
-  const formattedUrl = formatUrl(issueUrl);
-
   try {
+    const formattedUrl = formatIssueUrl(issueUrl);
+
     const issueData = await FETCH(formattedUrl);
     const { html_url, title, state, body, repository_url } = issueData;
     if (state !== 'open') {
@@ -25,9 +25,16 @@ const getSingleIssue = async issueUrl => {
   }
 };
 
-const getSingleOrganization = async organizationUrl => {
+const getSingleRepo = async organizationUrl => {
   try {
-    const organizationData = await FETCH(organizationUrl);
+    const { type, formattedUrl } = formatOrganizationUrl(organizationUrl);
+
+    if (type === 'organization') {
+      return await getSingleOrganization(formattedUrl);
+    }
+
+    const organizationData = await FETCH(formattedUrl);
+
     const {
       description,
       homepage,
@@ -49,10 +56,19 @@ const getSingleOrganization = async organizationUrl => {
     if (organization) {
       // If repo has parent organization - pull data from parent
       const parentOrganization = await FETCH(organization.url);
-      const { name: parentName, avatar_url } = parentOrganization;
+      const {
+        name: parentName,
+        avatar_url,
+        html_url: parentRepo,
+        blog,
+        bio,
+      } = parentOrganization;
 
       organizationInput.organizationName = parentName;
       organizationInput.organizationLogo = avatar_url;
+      organizationInput.organizationRepo = parentRepo;
+      organizationInput.organizationUrl = blog;
+      if (bio) organizationInput.organizationDescription = bio;
     }
 
     return { organizationInput };
@@ -61,7 +77,26 @@ const getSingleOrganization = async organizationUrl => {
   }
 };
 
+const getSingleOrganization = async value => {
+  const organizationData = await FETCH(value);
+  const { avatar_url, bio, blog, html_url, name, type } = organizationData;
+  if (type === 'User') {
+    throw new Error('Cannot import user account as organization');
+  }
+  const organizationInput = {
+    organizationDescription: bio || '',
+    organizationName: name,
+    organizationRepo: html_url,
+    organizationUrl: blog,
+    organizationLanguages: [],
+    organizationLogo: avatar_url,
+  };
+
+  return { organizationInput };
+};
+
 module.exports = {
+  getSingleRepo,
   getSingleIssue,
   getSingleOrganization,
 };

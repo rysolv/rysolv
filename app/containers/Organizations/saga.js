@@ -8,6 +8,7 @@ import {
   DELETE_ORGANIZATION,
   FETCH_INFO,
   FETCH_ORGANIZATIONS,
+  IMPORT_ORGANIZATION,
   SAVE_INFO,
   SEARCH_ORGANIZATIONS,
   successCreateOrganizationMessage,
@@ -23,6 +24,8 @@ import {
   fetchOrganizationsSuccess,
   fetchInfoFailure,
   fetchInfoSuccess,
+  importOrganizationSuccess,
+  importOrganizationFailure,
   saveInfoFailure,
   saveInfoSuccess,
   searchOrganizationsFailure,
@@ -137,18 +140,66 @@ export function* fetchInfoSaga({ payload }) {
   }
 }
 
-export function* saveInfoSaga({ payload }) {
-  const {
-    requestBody: { organizationUrl, description, logo, name, repoUrl },
-  } = payload;
+export function* importOrganizationSaga({ payload }) {
+  const { validatedUrl } = payload;
   const query = `
   mutation{
+    importOrganization(url: "${validatedUrl}") {
+      __typename
+      ... on ImportData {
+        organizationDescription,
+        organizationId,
+        organizationLanguages,
+        organizationLogo,
+        organizationName,
+        organizationRepo,
+        organizationUrl,
+      }
+      ... on Error {
+        message
+      }
+    }
+  }`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: {
+        importOrganization,
+        importOrganization: { __typename },
+      },
+    } = yield call(post, '/graphql', graphql);
+
+    if (__typename === 'Error') {
+      throw new Error(importOrganization.message);
+    }
+
+    yield put(importOrganizationSuccess({ importOrganization }));
+  } catch (error) {
+    yield put(importOrganizationFailure({ error }));
+  }
+}
+
+export function* saveInfoSaga({ payload }) {
+  const {
+    requestBody: {
+      organizationDescription,
+      organizationLogo,
+      organizationName,
+      organizationRepo,
+      organizationUrl,
+    },
+  } = payload;
+  const query = `
+  mutation {
     createOrganization(organizationInput: {
-      name: "${name}",
-      description: "${description}",
-      repoUrl: "${repoUrl}",
+      organizationName: "${organizationName}",
+      organizationDescription: "${organizationDescription}",
+      organizationRepo: "${organizationRepo}",
       organizationUrl: "${organizationUrl}",
-      logo: "${logo}",
+      organizationLogo: "${organizationLogo}",
     })
     { id }
   }`;
@@ -285,6 +336,7 @@ export default function* watcherSaga() {
   yield takeLatest(DELETE_ORGANIZATION, deleteOrganizationSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(FETCH_ORGANIZATIONS, fetchOrganizationsSaga);
+  yield takeLatest(IMPORT_ORGANIZATION, importOrganizationSaga);
   yield takeLatest(SAVE_INFO, saveInfoSaga);
   yield takeLatest(SEARCH_ORGANIZATIONS, searchOrganizationsSaga);
   yield takeLatest(UPDATE_INFO, updateInfoSaga);

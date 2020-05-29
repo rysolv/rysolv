@@ -5,20 +5,16 @@ import T from 'prop-types';
 import { issueDataDictionary } from 'containers/Issues/constants';
 import { CommentCard } from 'components/Comments';
 import { LanguageWrapper } from 'components/base_ui';
-import iconDictionary from 'utils/iconDictionary';
 
 import {
   DataWrapper,
   Divider,
-  // IconWrapper,
   LabelWrapper,
   LanguageContainer,
   NameWrapper,
   StyledLink,
   ValueWrapper,
 } from './styledComponents';
-
-const LinkIcon = iconDictionary('link');
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class VerifyForm extends React.PureComponent {
@@ -46,21 +42,13 @@ export class VerifyForm extends React.PureComponent {
     };
 
     const languageDiv = mapLanguages(issueLanguages);
-    //   issueLanguages.value.length > 0
-    //     ? issueLanguages.value.map(el => (
-    //         <LanguageWrapper key={el} language={el} />
-    //       ))
-    //     : 'None Listed';
 
     return (
       <DataWrapper>
         <ValueWrapper>
           <NameWrapper>{issueName.value}</NameWrapper>
         </ValueWrapper>
-        <StyledLink>
-          {LinkIcon}
-          {issueUrl.value}
-        </StyledLink>
+        <StyledLink>{issueUrl.value}</StyledLink>
         <ValueWrapper>
           <CommentCard
             primary

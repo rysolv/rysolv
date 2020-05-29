@@ -21,7 +21,9 @@ export const DetailContainer = styled.div`
 
 export const IssueDetailWrapper = styled.div`
   width: 80%;
+  overflow: hidden;
   display: inline-flex;
+  border: 0.1rem solid ${borderColor};
   background-color: white;
   border-radius: 0.25rem;
   min-height: 40vh;

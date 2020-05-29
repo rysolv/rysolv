@@ -8,7 +8,7 @@ import {
   subHeaderColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
-const { desktop, laptop, tablet, mobile } = mediaQueriesByDevice;
+const { desktop, laptop, tablet, mobile, large } = mediaQueriesByDevice;
 
 export const AddWrapper = styled.div`
   align-items: center;
@@ -24,16 +24,23 @@ export const AddForm = styled.div`
   width: 80%;
   padding: 1rem;
   border-radius: 0.5rem;
+
+  ${large} {
+    width: 70%;
+  }
   ${desktop} {
-    width: 80%;
+    width: 70%;
   }
   ${laptop} {
     width: 90%;
   }
   ${tablet} {
-    width: 100%;
+    width: 90%;
   }
   ${mobile} {
+    width: 100%;
+  }
+  .MuiFormControl-root {
     width: 100%;
   }
 `;
