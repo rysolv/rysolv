@@ -3,7 +3,7 @@ import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import { PrimaryButton, SecondaryButton } from 'components/base_ui';
+import { PrimaryButton } from 'components/base_ui';
 import ManualForm from 'components/Organizations/Add/ManualForm';
 
 import { incrementStep, inputChange } from '../actions';
@@ -11,7 +11,7 @@ import {
   makeSelectOrganizations,
   makeSelectOrganizationsDisabled,
 } from '../selectors';
-import { ButtonGroup, StyledH3 } from './styledComponents';
+import { BackLink, ButtonGroup, StyledH3 } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class ManualOrganization extends React.PureComponent {
@@ -30,12 +30,13 @@ export class ManualOrganization extends React.PureComponent {
           handleInputChange={handleInputChange}
         />
         <ButtonGroup>
-          <SecondaryButton
-            label="Back"
+          <BackLink
             onClick={() =>
               handleIncrementStep({ step: 1, view: 'addOrganization' })
             }
-          />
+          >
+            Back
+          </BackLink>
           <PrimaryButton
             disabled={!isDisabled}
             label="Next"

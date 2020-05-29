@@ -58,7 +58,7 @@ export const SidebarContainer = styled.div`
   flex: 0 0 33.333333%;
   max-width: 33.333333%;
   padding: 0 1rem;
-  ${tablet} {
+  ${laptop} {
     display: none;
   }
 `;

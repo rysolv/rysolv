@@ -28,8 +28,7 @@ const makeSelectIssuesDisabled = () =>
   createSelector(
     makeSelectIssues('issueData'),
     issueData => {
-      const tempData = { ...issueData };
-      delete tempData.importUrl;
+      const tempData = omit(issueData, ['importUrl']);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );
@@ -38,8 +37,11 @@ const makeSelectOrganizationsDisabled = () =>
   createSelector(
     makeSelectIssues('organizationData'),
     data => {
-      const tempData = omit(data, ['organizationId']);
-      delete tempData.importUrl;
+      const tempData = omit(data, [
+        'organizationId',
+        'importUrl',
+        'organizationLogo',
+      ]);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );

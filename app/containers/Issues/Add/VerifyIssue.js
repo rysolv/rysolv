@@ -4,12 +4,13 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
-import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
+import { PrimaryAsyncButton } from 'components/base_ui';
 import VerifyForm from 'components/Issues/Add/Verify';
 
 import { incrementStep, saveInfo, verifyInfo, clearForm } from '../actions';
 import { makeSelectIssues, makeSelectIssuesRequestBody } from '../selectors';
 import {
+  BackLink,
   ButtonGroup,
   LogoContainer,
   OrganizationNameWrapper,
@@ -67,18 +68,19 @@ export class VerifyIssue extends React.PureComponent {
         </VerifyWrapper>
         <ButtonGroup>
           {importSuccess ? (
-            <SecondaryButton label="Cancel" onClick={() => cancelImport()} />
+            <BackLink onClick={() => cancelImport()}>Cancel</BackLink>
           ) : (
-            <SecondaryButton
-              label="Edit Issue"
+            <BackLink
               onClick={() =>
                 dispatchIncrementStep({ step: 3, view: 'addIssue' })
               }
-            />
+            >
+              Edit Issue
+            </BackLink>
           )}
 
           <PrimaryAsyncButton
-            disabled={!importSuccess}
+            disabled={false}
             label="Submit"
             onClick={handleSaveInfo}
           />

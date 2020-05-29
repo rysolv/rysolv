@@ -12,6 +12,8 @@ const {
 } = require('../../db');
 
 const { getSingleRepo } = require('../../integrations');
+const defaultOrgLogo =
+  'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png';
 
 module.exports = {
   createOrganization: async args => {
@@ -40,8 +42,7 @@ module.exports = {
         organizationInput.organizationRepo,
         organizationInput.organizationUrl || '',
         organizationInput.issues || [],
-        organizationInput.organizationLogo ||
-          'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
+        organizationInput.organizationLogo || defaultOrgLogo,
         organizationInput.verified || false,
         organizationInput.contributors || [],
         organizationInput.ownerId || uuidv4(),

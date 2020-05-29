@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
-import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
+import { PrimaryAsyncButton } from 'components/base_ui';
 import VerifyForm from 'components/Organizations/Add/VerifyForm';
 
 import { clearForm, incrementStep, saveInfo, verifyInfo } from '../actions';
@@ -14,6 +14,7 @@ import {
   makeSelectOrganizationsRequestBody,
 } from '../selectors';
 import {
+  BackLink,
   ButtonGroup,
   StyledCheckboxWithLabel,
   StyledH3,
@@ -55,14 +56,15 @@ export class VerifyOrganization extends React.PureComponent {
         </Wrapper>
         <ButtonGroup>
           {importSuccess ? (
-            <SecondaryButton label="Cancel" onClick={() => cancelImport()} />
+            <BackLink onClick={() => cancelImport()}>Cancel</BackLink>
           ) : (
-            <SecondaryButton
-              label="Edit"
+            <BackLink
               onClick={() =>
                 dispatchIncrementStep({ step: 2, view: 'addOrganization' })
               }
-            />
+            >
+              Edit Org
+            </BackLink>
           )}
           <PrimaryAsyncButton
             disabled={!isVerified}

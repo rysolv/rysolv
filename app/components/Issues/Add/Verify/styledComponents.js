@@ -57,6 +57,7 @@ export const StyledLink = styled.a`
   display: inline-block;
   width: auto;
   color: ${hyperlinkColor};
+  margin: 0 1rem;
 
   &:hover {
     cursor: pointer;
