@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
 
+import { ConditionalRender } from 'components/base_ui';
+
 import UserAccount from './Account';
+import DepositFormComponent from './Balance/Deposit/DepositFormComponent';
+import WithdrawalFormComponent from './Balance/Withdrawal/WithdrawalFormComponent';
 import UserIssues from './Issues';
 import UserOrganizations from './Organizations';
 import UserTimelineView from './Timeline';
@@ -15,6 +19,7 @@ const SettingsTabs = ({
   changeFirstName,
   changeLastName,
   changeUsername,
+  creditCardProps,
   currentTab,
   dispatchOpenModal,
   dollarsEarned,
@@ -39,6 +44,7 @@ const SettingsTabs = ({
   userId,
   username,
   value,
+  view,
   watching,
 }) => {
   const [tab, setTab] = useState(currentTab);
@@ -46,6 +52,18 @@ const SettingsTabs = ({
   const handleChangeTab = (event, newValue) => {
     setTab(newValue);
   };
+  const BalanceFormComponent = (
+    <ConditionalRender
+      Component={
+        <DepositFormComponent
+          creditCardProps={creditCardProps}
+          handleNav={handleNav}
+        />
+      }
+      FallbackComponent={WithdrawalFormComponent}
+      shouldRender={view === 'deposit'}
+    />
+  );
   const ComponentToRender = {
     0: (
       <UserTimelineView
@@ -119,7 +137,11 @@ const SettingsTabs = ({
           onClick={() => handleNav('/settings/pullrequests')}
         />
       </Tabs>
-      {ComponentToRender[tab]}
+      <ConditionalRender
+        Component={BalanceFormComponent}
+        FallbackComponent={ComponentToRender[tab]}
+        shouldRender={view === 'deposit' || view === 'withdrawal'}
+      />
     </StyledPaper>
   );
 };
@@ -131,6 +153,7 @@ SettingsTabs.propTypes = {
   changeFirstName: T.bool,
   changeLastName: T.bool,
   changeUsername: T.bool,
+  creditCardProps: T.object,
   currentTab: T.number,
   dispatchOpenModal: T.func,
   dollarsEarned: T.number,
@@ -155,6 +178,7 @@ SettingsTabs.propTypes = {
   userId: T.string,
   username: T.string,
   value: T.oneOfType([T.array, T.number, T.string]),
+  view: T.string,
   watching: T.array,
 };
 

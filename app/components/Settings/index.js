@@ -3,8 +3,6 @@ import T from 'prop-types';
 
 import { ConditionalRender, Star } from 'components/base_ui';
 
-import DepositFormComponent from './Balance/Deposit/DepositFormComponent';
-import WithdrawalFormComponent from './Balance/Withdrawal/WithdrawalFormComponent';
 import {
   GithubEditComponent,
   GithubLinkComponent,
@@ -99,54 +97,6 @@ const SettingsView = ({
     changeInputState(true);
     setValue(currentValue);
   };
-
-  const SettingsTabsComponent = (
-    <SettingsTabs
-      attempting={attempting}
-      balance={balance}
-      changeEmail={changeEmail}
-      changeFirstName={changeFirstName}
-      changeLastName={changeLastName}
-      changeUsername={changeUsername}
-      currentTab={currentTab}
-      dispatchOpenModal={dispatchOpenModal}
-      dollarsEarned={dollarsEarned}
-      email={email}
-      filterValues={filterValues}
-      firstName={firstName}
-      handleClose={handleClose}
-      handleDone={handleDone}
-      handleEdit={handleEdit}
-      handleInputChange={handleInputChange}
-      handleNav={handleNav}
-      handleRemoveIssue={handleRemoveIssue}
-      isDisabled={isDisabled}
-      issues={issues}
-      lastName={lastName}
-      organizations={organizations}
-      setChangeEmail={setChangeEmail}
-      setChangeFirstName={setChangeFirstName}
-      setChangeLastName={setChangeLastName}
-      setChangeUsername={setChangeUsername}
-      setValue={setValue}
-      userId={id}
-      username={username}
-      value={value}
-      watching={watching}
-    />
-  );
-  const BalanceFormComponent = (
-    <ConditionalRender
-      Component={
-        <DepositFormComponent
-          creditCardProps={creditCardProps}
-          handleNav={handleNav}
-        />
-      }
-      FallbackComponent={WithdrawalFormComponent}
-      shouldRender={view === 'deposit'}
-    />
-  );
   return (
     <DetailContainer>
       <StyledErrorSuccessBanner
@@ -248,10 +198,40 @@ const SettingsView = ({
           />
         </UserCardWrapper>
         <SettingsTabsWrapper>
-          <ConditionalRender
-            Component={BalanceFormComponent}
-            FallbackComponent={SettingsTabsComponent}
-            shouldRender={view === 'deposit' || view === 'withdrawal'}
+          <SettingsTabs
+            attempting={attempting}
+            balance={balance}
+            changeEmail={changeEmail}
+            changeFirstName={changeFirstName}
+            changeLastName={changeLastName}
+            changeUsername={changeUsername}
+            creditCardProps={creditCardProps}
+            currentTab={currentTab}
+            dispatchOpenModal={dispatchOpenModal}
+            dollarsEarned={dollarsEarned}
+            email={email}
+            filterValues={filterValues}
+            firstName={firstName}
+            handleClose={handleClose}
+            handleDone={handleDone}
+            handleEdit={handleEdit}
+            handleInputChange={handleInputChange}
+            handleNav={handleNav}
+            handleRemoveIssue={handleRemoveIssue}
+            isDisabled={isDisabled}
+            issues={issues}
+            lastName={lastName}
+            organizations={organizations}
+            setChangeEmail={setChangeEmail}
+            setChangeFirstName={setChangeFirstName}
+            setChangeLastName={setChangeLastName}
+            setChangeUsername={setChangeUsername}
+            setValue={setValue}
+            userId={id}
+            username={username}
+            value={value}
+            view={view}
+            watching={watching}
           />
         </SettingsTabsWrapper>
       </DetailViewContainer>

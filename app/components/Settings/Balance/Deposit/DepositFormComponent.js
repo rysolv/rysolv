@@ -1,9 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
-import { BaseRadioButtonGroup, ConditionalRender } from 'components/base_ui';
+import { BackNav, BaseRadioButtonGroup, ConditionalRender } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import CreditCardPaymentComponent from '../CreditCardPaymentComponent';
@@ -68,11 +67,11 @@ const DepositFormComponent = ({ creditCardProps, handleNav }) => {
   };
   return (
     <Fragment>
-      <Breadcrumbs>
-        <StyledLink onClick={() => handleNav("/settings")}>Settings</StyledLink>
-        <StyledLink onClick={() => handleNav("/settings/account")}>Account</StyledLink>
-        <StyledTypography>Deposit</StyledTypography>
-      </Breadcrumbs>
+      <BackNav
+        label="Back to Account"
+        handleNav={handleNav}
+        path="/settings/account"
+      />
       <StyledH3>Enter your funding amount</StyledH3>
       <StyledPaymentModalInputWithAdornment
         adornmentComponent="$"
