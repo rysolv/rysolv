@@ -14,10 +14,8 @@ import {
   Divider,
   PaymentOptionWrapper,
   PaymentTitle,
-  StyledLink,
   StyledPaymentModalInputWithAdornment,
   StyledText,
-  StyledTypography,
   Title,
   Value,
 } from '../styledComponents';

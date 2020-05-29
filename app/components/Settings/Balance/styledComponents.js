@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-import Typography from '@material-ui/core/Typography';
 
 import { BaseInput, PaymentModalInputWithAdornment } from 'components/base_ui';
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
@@ -119,11 +117,6 @@ export const StyledBaseInput = styled(BaseInput)`
   width: ${({ width }) => width || '50%'};
 `;
 
-export const StyledLink = styled(Link)`
-  font-size: ${defaultFontSize};
-  color: ${textColor};
-`;
-
 export const StyledPaper = styled(Paper)`
   border-bottom: 0.1rem solid lightgrey;
   border-radius: 0;
@@ -171,12 +164,6 @@ export const TooltipIconWrapper = styled.div`
   svg {
     color: ${textColor};
   }
-`;
-
-export const StyledTypography = styled(Typography)`
-  color: ${textColor};
-  font-size: ${defaultFontSize};
-  text-decoration: underline;
 `;
 
 export const Title = styled.div`
