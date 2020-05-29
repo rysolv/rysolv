@@ -217,6 +217,7 @@ export const UserCardWrapper = styled.div`
   border-radius: 0.2rem;
   display: flex;
   flex-direction: column;
+  height: fit-content;
   padding: 15px 2%;
   width: fit-content;
 `;

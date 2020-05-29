@@ -6,6 +6,7 @@ import {
   hoverLinkColor,
   hyperlinkColor,
   subHeaderColor,
+  textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 const { desktop, laptop, tablet, mobile, large } = mediaQueriesByDevice;
@@ -41,7 +42,21 @@ export const AddForm = styled.div`
     width: 100%;
   }
   .MuiFormControl-root {
+    margin: 0 1rem;
     width: 100%;
+  }
+`;
+
+export const BackLink = styled.div`
+  color: ${textColor};
+  display: inline-flex;
+  font-size: ${defaultFontSize};
+  margin: 0 3rem;
+  vertical-align: middle;
+
+  :hover {
+    cursor: pointer;
+    color: ${hoverLinkColor};
   }
 `;
 

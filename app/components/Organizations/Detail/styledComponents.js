@@ -342,8 +342,9 @@ export const StyledWordLink = styled(StyledWord)`
 `;
 
 export const TabsContainer = styled.div`
-  display: flex;
   background-color: white;
+  display: flex;
+  width: 100%;
 `;
 
 export const TopLanguagesContainer = styled.div`

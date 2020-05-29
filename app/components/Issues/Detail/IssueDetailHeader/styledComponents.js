@@ -9,7 +9,7 @@ import {
   textColor,
 } from 'defaultStyleHelper';
 
-const { tablet } = mediaQueriesByDevice;
+const { laptop } = mediaQueriesByDevice;
 
 export const IssueDetailTopBar = styled.div`
   background-color: white;
@@ -22,7 +22,7 @@ export const IssueSubHeader = styled.div`
   align-items: center;
   display: none;
   justify-content: space-between;
-  ${tablet} {
+  ${laptop} {
     display: flex;
   }
 `;

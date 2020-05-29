@@ -3,12 +3,13 @@ import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import { PrimaryButton, SecondaryButton } from 'components/base_ui';
+import { PrimaryButton } from 'components/base_ui';
 import ManualForm from 'components/Issues/Add/ManualForm';
 
 import { incrementStep, inputChange } from '../actions';
 import { makeSelectIssues, makeSelectIssuesDisabled } from '../selectors';
 import {
+  BackLink,
   ButtonGroup,
   StyledLink,
   SelectedOrganization,
@@ -46,10 +47,11 @@ export class ManualIssue extends React.PureComponent {
           handleInputChange={handleInputChange}
         />
         <ButtonGroup>
-          <SecondaryButton
-            label="Edit Org"
+          <BackLink
             onClick={() => handleIncrementStep({ step: 2, view: 'addIssue' })}
-          />
+          >
+            Edit Org
+          </BackLink>
           <PrimaryButton
             disabled={!isDisabled}
             label="Preview Issue"
