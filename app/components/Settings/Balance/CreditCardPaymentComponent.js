@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { PrimaryAsyncButton, TooltipIcon } from 'components/base_ui';
+import { TooltipIcon } from 'components/base_ui';
 import { CvvTooltip } from 'components/Tooltips';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -10,6 +10,7 @@ import {
   InputHeader,
   InputWrapper,
   StyledBaseInput,
+  StyledPrimaryAsyncButton,
   TooltipIconWrapper,
 } from './styledComponents';
 
@@ -78,7 +79,7 @@ const CreditCardPaymentComponent = ({
         width="25%"
       />
     </InputWrapper>
-    <PrimaryAsyncButton
+    <StyledPrimaryAsyncButton
       label="Confirm"
       onClick={() => handleSubmitPayment({ amount })}
     />

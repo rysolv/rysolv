@@ -3,7 +3,12 @@ import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
-import { BaseInput, PaymentModalInputWithAdornment } from 'components/base_ui';
+import {
+  BaseDropDownMenu,
+  BaseInput,
+  PaymentModalInputWithAdornment,
+  PrimaryAsyncButton,
+} from 'components/base_ui';
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
 
 export const AccountBalanceContainer = styled.div`
@@ -23,7 +28,8 @@ export const BalanceSquare = styled.div`
   background-color: #f6f8fa;
   border-radius: 0.3rem;
   padding: 1.6rem 2.4rem;
-  width: 45%;
+  text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
+  width: ${({ isCentered }) => (isCentered ? '100%' : '45%;')};
 `;
 
 export const BalanceTitle = styled.span`
@@ -69,6 +75,16 @@ export const ComponentText = styled.div`
   padding: 2rem 0;
 `;
 
+export const DisplayText = styled.div`
+  color: ${textColor};
+  display: flex;
+  flex-direction: row;
+  font-size: ${defaultFontSize};
+  line-height: 2.1rem;
+  margin: 0 0 0.6rem;
+  white-space: nowrap;
+`;
+
 export const Divider = styled.div`
   border-bottom: 0.1rem solid #d5d5d5;
   margin: 1rem 0;
@@ -84,7 +100,6 @@ export const InputHeader = styled.div`
   display: flex;
   flex-direction: row;
   font-size: ${defaultFontSize};
-  font-weight: 600;
   line-height: 2.1rem;
   margin: 0 0 0.6rem;
   width: 100%;
@@ -106,6 +121,17 @@ export const PaymentTitle = styled.div`
   margin: 0.5rem 0;
 `;
 
+export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
+  background-color: #fafbfc;
+  border-radius: 0.3rem;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 1.4rem;
+  line-height: 2rem;
+  margin-right: 0.5rem;
+  min-height: 34px;
+  width: 100%;
+`;
+
 export const StyledBaseInput = styled(BaseInput)`
   background-color: #fafbfc;
   border-radius: 0.3rem;
@@ -114,7 +140,7 @@ export const StyledBaseInput = styled(BaseInput)`
   line-height: 2rem;
   margin-right: 0.5rem;
   min-height: 34px;
-  width: ${({ width }) => width || '50%'};
+  width: ${({ width }) => width || '100%'};
 `;
 
 export const StyledPaper = styled(Paper)`
@@ -129,6 +155,10 @@ export const StyledPaymentModalInputWithAdornment = styled(
 )`
   margin-bottom: 2rem;
   width: 50%;
+`;
+
+export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
+  margin-left: 0;
 `;
 
 export const StyledTab = styled(Tab)`
@@ -151,6 +181,7 @@ export const StyledTabs = styled(Tabs)`
 `;
 
 export const StyledText = styled.div`
+  color: ${textColor};
   font-size: ${defaultFontSize};
   margin-bottom: 3rem;
   margin-top: -2rem;
@@ -173,4 +204,15 @@ export const Title = styled.div`
 
 export const Value = styled.div`
   padding: 0.75rem 0;
+`;
+
+export const WithdrawalInputContainer = styled.div`
+  width: 50%;
+`;
+
+export const WithdrawalInputWrapper = styled.div`
+  align-items: center;
+  display: ${({ isRow }) => (isRow ? 'flex' : 'block')};
+  font-weight: ${({ isThin }) => (isThin ? '400' : '600')};
+  padding: 1rem 0;
 `;

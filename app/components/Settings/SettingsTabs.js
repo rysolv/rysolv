@@ -60,7 +60,9 @@ const SettingsTabs = ({
           handleNav={handleNav}
         />
       }
-      FallbackComponent={WithdrawalFormComponent}
+      FallbackComponent={
+        <WithdrawalFormComponent balance={balance} handleNav={handleNav} />
+      }
       shouldRender={view === 'deposit'}
     />
   );
