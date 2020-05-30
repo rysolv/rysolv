@@ -109,7 +109,7 @@ const WithdrawalFormComponent = ({ balance, handleNav }) => {
 };
 
 WithdrawalFormComponent.propTypes = {
-  balance: T.string.isRequired,
+  balance: T.number.isRequired,
   handleNav: T.func.isRequired,
 };
 

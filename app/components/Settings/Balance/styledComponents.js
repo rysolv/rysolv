@@ -75,6 +75,10 @@ export const ComponentText = styled.div`
   padding: 2rem 0;
 `;
 
+export const ComponentWrapper = styled.div`
+  min-height: 20rem;
+`;
+
 export const DisplayText = styled.div`
   color: ${textColor};
   display: flex;

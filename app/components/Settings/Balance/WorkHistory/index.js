@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import T from 'prop-types';
 
+import BaseTable from '../Table';
 import { ComponentText } from '../styledComponents';
 
-const WorkHistoryComponent = () => (
-  <div>
+const WorkHistoryComponent = ({ workHistory = [] }) => (
+  <Fragment>
     <ComponentText>Completed and paid out issues.</ComponentText>
-  </div>
+    <BaseTable
+      headers={['Issue', 'Submitted at', 'Status', 'Amount']}
+      rows={workHistory}
+      type="workHistory"
+    />
+  </Fragment>
 );
+
+WorkHistoryComponent.propTypes = { workHistory: T.array };
 
 export default WorkHistoryComponent;
