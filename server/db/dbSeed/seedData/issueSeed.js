@@ -17,7 +17,7 @@ const issueSeed = [
     [], // attempting
     '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d', // Contributor: Reference to User ID
     42, // rep
-    ['517fa5c9-1d6e-4925-8bcc-25c24cd0b95d'], // Watching: Reference to user ID
+    [], // Watching: Reference to user ID
     20.0, // value
     true, // open
     'bug', // type
@@ -53,12 +53,7 @@ const issueSeed = [
     [],
     '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
     40,
-    [
-      '3f6e3ddf-ab68-4ee3-bb79-abfe21c8d014',
-      'cdd583cf-4711-4f33-a202-c937081afd7e',
-      'c2209ded-9219-4ee3-9c29-f863889053c0',
-      'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
-    ],
+    [],
     45.5,
     true,
     'bug',
@@ -94,12 +89,7 @@ const issueSeed = [
     [],
     '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
     40,
-    [
-      '3f6e3ddf-ab68-4ee3-bb79-abfe21c8d014',
-      'cdd583cf-4711-4f33-a202-c937081afd7e',
-      'c2209ded-9219-4ee3-9c29-f863889053c0',
-      'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
-    ],
+    [],
     35.4,
     true,
     'bug',
@@ -117,12 +107,7 @@ const issueSeed = [
     [],
     '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
     40,
-    [
-      '3f6e3ddf-ab68-4ee3-bb79-abfe21c8d014',
-      'cdd583cf-4711-4f33-a202-c937081afd7e',
-      'c2209ded-9219-4ee3-9c29-f863889053c0',
-      'b519b064-b5db-4472-ad1b-00e30bdbfa4c',
-    ],
+    [],
     0.5,
     true,
     'feature',

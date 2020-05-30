@@ -137,7 +137,7 @@ const updateIssueArray = async (table, column, id, data, remove) => {
     const { rows } = await singleQuery(queryText);
     return rows;
   }
-  return false;
+  return issueData;
 };
 
 const upvoteIssue = async (table, id) => {

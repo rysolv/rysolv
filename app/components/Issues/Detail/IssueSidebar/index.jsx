@@ -11,7 +11,8 @@ import { Divider, StyledIssueSidebar, SidebarItem } from './styledComponents';
 
 const IssueSidebar = ({ data, activeUser, handleIncrement }) => {
   const { id, language, open, watching } = data;
-  const userWatching = activeUser.watching && activeUser.watching.includes(id);
+  const userWatching =
+    activeUser.watching && !!activeUser.watching.find(el => el.id === id);
 
   return (
     <StyledIssueSidebar>

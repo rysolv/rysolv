@@ -35,7 +35,7 @@ const userSeed = [
     'Anna',
     'Pojawis',
     'anna.pojawis@gmail.com',
-    ['0ce2d9ae-ba16-4013-af33-0cbb8cbc37a2'], // watching
+    [], // watching
     25,
     'https://rysolv.s3.us-east-2.amazonaws.com/annaprofile.png',
     [], // comments
