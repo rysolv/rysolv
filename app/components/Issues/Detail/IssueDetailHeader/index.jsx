@@ -39,7 +39,8 @@ const IssueDetailHeader = ({
     organizationVerified,
     watching,
   } = data;
-  const userWatching = activeUser.watching && activeUser.watching.includes(id);
+  const userWatching =
+    activeUser.watching && !!activeUser.watching.find(el => el.id === id);
 
   return (
     <IssueDetailTopBar>

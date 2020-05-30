@@ -55,7 +55,7 @@ const IssueCard = ({
       watching,
     }) => {
       const userWatching =
-        activeUser.watching && activeUser.watching.includes(id);
+        activeUser.watching && !!activeUser.watching.find(el => el.id === id);
       const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
       return (
         <Fragment key={id}>
