@@ -25,6 +25,9 @@ export const subHeaderColor = '#0d47a1';
 export const successGreen = '#31b589';
 export const textColor = 'rgba(0,0,0,0.7)';
 
+// Font Family
+export const defaultFontFamily = `'Helvetica Neue', Helvetica, Arial, sans-serif`;
+
 // Font Sizes
 export const defaultFontSize = '1.4rem';
 export const detailFontSize = '1.2rem';

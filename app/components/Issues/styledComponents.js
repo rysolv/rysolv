@@ -3,6 +3,7 @@ import { defaultFontSize, textColor } from 'defaultStyleHelper';
 
 export const BannerWrapper = styled.div`
   font-size: ${defaultFontSize};
+  padding: 1rem;
 `;
 
 export const MessageWrapper = styled.div`

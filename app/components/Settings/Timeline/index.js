@@ -5,15 +5,17 @@ import moment from 'moment';
 
 import { ConditionalRender } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
+import iconDictionary from 'utils/iconDictionary';
 
 import { userTimelineDictionary } from '../constants';
 import {
   EmptyOverviewListComponent,
   OverviewListComponent,
 } from '../OverviewList';
-import SettingsExpansionPanel from '../SettingsExpansionPanel';
 import {
+  HeaderContainer,
   StyledBaseDropDownMenu,
+  StyledButton,
   TimelineActivity,
   TimelineContainer,
   TimelineContent,
@@ -85,6 +87,8 @@ const activityData = [
   },
 ];
 
+const ViewAllIcon = iconDictionary('viewAll');
+
 const UserTimelineView = ({
   attempting,
   filterValues: { users: usersFilter },
@@ -128,14 +132,36 @@ const UserTimelineView = ({
   );
   return (
     <TimelineContainer>
-      <SettingsExpansionPanel
-        Component={WatchingComponent}
-        title="All Watching"
-      />
-      <SettingsExpansionPanel
-        Component={AttemptingComponent}
-        title="All Attempting"
-      />
+      <div>
+        <HeaderContainer>
+          <StyledH3>All Attempting</StyledH3>
+          <ConditionalRender
+            Component={
+              <StyledButton disableRipple onClick={() => {}}>
+                View All
+                {ViewAllIcon}
+              </StyledButton>
+            }
+            shouldRender={!!attempting.length}
+          />
+        </HeaderContainer>
+        <AttemptingComponent />
+      </div>
+      <div>
+        <HeaderContainer>
+          <StyledH3>All Watching</StyledH3>
+          <ConditionalRender
+            Component={
+              <StyledButton disableRipple onClick={() => {}}>
+                View All
+                {ViewAllIcon}
+              </StyledButton>
+            }
+            shouldRender={!!watching.length}
+          />
+        </HeaderContainer>
+        <WatchingComponent />
+      </div>
       <HeaderWrapper>
         <StyledH3>All Activity</StyledH3>
         <StyledBaseDropDownMenu
