@@ -25,7 +25,9 @@ export const SUBMIT_PAYMENT = 'app/Settings/SUBMIT_PAYMENT';
 
 export const settingViewDictionary = {
   account: 1,
+  deposit: 1,
   issues: 2,
   organizations: 3,
   pullrequests: 4,
+  withdrawal: 1,
 };

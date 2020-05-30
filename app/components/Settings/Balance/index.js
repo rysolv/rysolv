@@ -4,7 +4,7 @@ import T from 'prop-types';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import DepositComponent from './Deposit';
-import InvoicesComponent from './Invoices';
+import StatementsComponent from './Statements';
 import WithdrawalComponent from './Withdrawal';
 import WorkHistoryComponent from './WorkHistory';
 import {
@@ -13,6 +13,7 @@ import {
   BalanceSquare,
   BalanceTitle,
   BalanceWrapper,
+  ComponentWrapper,
   StyledPaper,
   StyledTab,
   StyledTabs,
@@ -26,7 +27,7 @@ const AccountBalance = ({ balance, dollarsEarned, handleNav }) => {
   const ComponentToRender = {
     0: <DepositComponent handleNav={handleNav} />,
     1: <WithdrawalComponent handleNav={handleNav} />,
-    2: <InvoicesComponent />,
+    2: <StatementsComponent />,
     3: <WorkHistoryComponent />,
   };
   return (
@@ -55,11 +56,11 @@ const AccountBalance = ({ balance, dollarsEarned, handleNav }) => {
         >
           <StyledTab classes={{ selected: 'selected' }} label="Deposit" />
           <StyledTab classes={{ selected: 'selected' }} label="Withdrawal" />
-          <StyledTab classes={{ selected: 'selected' }} label="Invoices" />
+          <StyledTab classes={{ selected: 'selected' }} label="Statements" />
           <StyledTab classes={{ selected: 'selected' }} label="Work History" />
         </StyledTabs>
       </StyledPaper>
-      {ComponentToRender[value]}
+      <ComponentWrapper>{ComponentToRender[value]}</ComponentWrapper>
     </AccountBalanceContainer>
   );
 };

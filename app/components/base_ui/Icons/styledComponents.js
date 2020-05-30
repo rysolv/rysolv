@@ -4,8 +4,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { defaultFontSize, hyperlinkColor } from 'defaultStyleHelper';
 
 export const StyledBack = styled.div`
+  align-items: center;
   color: inherit;
-  display: inline-block;
+  display: flex;
   text-align: center;
 `;
 
