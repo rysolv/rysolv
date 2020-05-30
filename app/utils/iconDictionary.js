@@ -32,6 +32,7 @@ import Settings from '@material-ui/icons/Settings';
 import Star from '@material-ui/icons/Star';
 import Upvote from '@material-ui/icons/ArrowUpward';
 import Verified from '@material-ui/icons/VerifiedUser';
+import ViewAll from '@material-ui/icons/NavigateNext';
 import Warning from '@material-ui/icons/Warning';
 import WebIcon from '@material-ui/icons/Web';
 
@@ -82,6 +83,7 @@ export default (name, options) => {
     upvote: Upvote,
     user: AccountCircleIcon,
     verified: Verified,
+    viewAll: ViewAll,
     warning: Warning,
   };
   // Create style object to apply to SVG Icon

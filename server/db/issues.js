@@ -127,7 +127,7 @@ const transformIssue = async (table, id, data) => {
 
 const updateIssueArray = async (table, column, id, data, remove) => {
   const [issueData] = await getOneIssue('issues', id, 'id');
-  // Only add uniquew values to array
+  // Only add unique values to array
   if (!issueData[column].includes(data) || remove) {
     const action = remove ? 'array_remove' : 'array_append';
     const queryText = `UPDATE ${table}

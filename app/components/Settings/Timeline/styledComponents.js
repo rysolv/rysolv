@@ -1,11 +1,40 @@
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
 
 import { BaseDropDownMenu } from 'components/base_ui';
-import { hoverLinkColor } from 'defaultStyleHelper';
+import {
+  defaultFontFamily,
+  defaultFontSize,
+  hoverLinkColor,
+  textColor,
+} from 'defaultStyleHelper';
+
+export const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
   width: 15rem;
+`;
+
+export const StyledButton = styled(Button)`
+  color: ${textColor};
+  font-family: ${defaultFontFamily};
+  font-size: ${defaultFontSize};
+  font-weight: 500;
+  padding: 0rem;
+  text-transform: none;
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+  }
 `;
 
 export const TimelineActivity = styled.span`
