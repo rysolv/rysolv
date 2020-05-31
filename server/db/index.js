@@ -1,4 +1,5 @@
-// const pool = require('./connect');
+const { createActivity, getActivity } = require('./activity');
+
 const {
   checkDuplicateIssue,
   createIssue,
@@ -41,6 +42,7 @@ module.exports = {
   checkDuplicateIssue,
   checkDuplicateOrganization,
   checkDuplicateUser,
+  createActivity,
   createComment,
   createIssue,
   createOrganization,
@@ -51,6 +53,7 @@ module.exports = {
   deleteOrganization,
   deleteUser,
   dropAllTables,
+  getActivity,
   getComments,
   getIssueComments,
   getIssues,

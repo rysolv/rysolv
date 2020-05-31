@@ -24,6 +24,7 @@ const createTables = async () => {
 // Drop all tables
 const dropAllTables = async () => {
   // TODO: figure out a way to await/map through this
+  await singleQuery('DROP TABLE IF EXISTS activity cascade');
   await singleQuery('DROP TABLE IF EXISTS issues cascade');
   await singleQuery('DROP TABLE IF EXISTS users cascade');
   await singleQuery('DROP TABLE IF EXISTS comments cascade');
