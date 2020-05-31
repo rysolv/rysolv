@@ -126,11 +126,13 @@ const getWatchList = async (id, type) => {
     },
     userAttemptList: {
       table: 'issues',
-      values: 'id, name, funded_amount AS "fundedAmount"',
+      values:
+        'id, modified_date AS "modifiedDate", name, funded_amount AS "fundedAmount"',
     },
     userWatchList: {
       table: 'issues',
-      values: 'id, name, funded_amount AS "fundedAmount"',
+      values:
+        'id, modified_date AS "modifiedDate", name, funded_amount AS "fundedAmount"',
     },
   };
   const { values, table } = paramsDictionary[type];

@@ -33,19 +33,16 @@ const SideNav = ({ handleNav, view }) => {
   const [displaySideNav, setDisplaySideNav] = useState(
     !excludedPath.includes(formattedPath),
   );
+
   useEffect(() => {
-    const { initialValue } = getInitialValue[formattedPath]
-      ? getInitialValue[formattedPath]
-      : 0;
+    const { initialValue } = getInitialValue[formattedPath] || 0;
     setCurrentValue(initialValue);
     switch (view) {
       case 'desktop':
         setDisplaySideNav(!excludedPath.includes(formattedPath));
-        setOpen(true);
         break;
       case 'laptop':
         setDisplaySideNav(!excludedPath.includes(formattedPath));
-        setOpen(false);
         break;
       case 'tablet':
         setDisplaySideNav(false);
@@ -60,6 +57,11 @@ const SideNav = ({ handleNav, view }) => {
         break;
     }
   }, [view, path]);
+
+  useEffect(() => {
+    if (view === 'desktop') setOpen(true);
+    else setOpen(false);
+  }, [view]);
 
   const handleClick = (route, tab) => {
     handleNav(route);

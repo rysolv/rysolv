@@ -6,7 +6,6 @@ import {
   defaultFontFamily,
   defaultFontSize,
   hoverLinkColor,
-  textColor,
 } from 'defaultStyleHelper';
 
 export const HeaderContainer = styled.div`
@@ -20,7 +19,7 @@ export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
 `;
 
 export const StyledButton = styled(Button)`
-  color: ${textColor};
+  color: #007bff;
   font-family: ${defaultFontFamily};
   font-size: ${defaultFontSize};
   font-weight: 500;

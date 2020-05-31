@@ -13,7 +13,7 @@ import {
   BalanceSquare,
   BalanceTitle,
   BalanceWrapper,
-  ComponentWrapper,
+  FundingContainer,
   StyledPaper,
   StyledTab,
   StyledTabs,
@@ -25,16 +25,14 @@ const AccountBalance = ({ balance, dollarsEarned, handleNav }) => {
     setValue(newValue);
   };
   const ComponentToRender = {
-    0: <DepositComponent handleNav={handleNav} />,
-    1: <WithdrawalComponent handleNav={handleNav} />,
-    2: <StatementsComponent />,
-    3: <WorkHistoryComponent />,
+    0: <StatementsComponent />,
+    1: <WorkHistoryComponent />,
   };
   return (
     <AccountBalanceContainer>
       <BalanceWrapper>
         <BalanceSquare>
-          <BalanceTitle>Current earned balance</BalanceTitle>
+          <BalanceTitle>Lifetime earnings</BalanceTitle>
           <BalanceAmount>
             {dollarsEarned ? formatDollarAmount(dollarsEarned) : '–'}
           </BalanceAmount>
@@ -46,6 +44,10 @@ const AccountBalance = ({ balance, dollarsEarned, handleNav }) => {
           </BalanceAmount>
         </BalanceSquare>
       </BalanceWrapper>
+      <FundingContainer>
+        <DepositComponent handleNav={handleNav} />
+        <WithdrawalComponent handleNav={handleNav} />
+      </FundingContainer>
       <StyledPaper>
         <StyledTabs
           classes={{ indicator: 'indicator' }}
@@ -54,13 +56,11 @@ const AccountBalance = ({ balance, dollarsEarned, handleNav }) => {
           textColor="primary"
           value={value}
         >
-          <StyledTab classes={{ selected: 'selected' }} label="Deposit" />
-          <StyledTab classes={{ selected: 'selected' }} label="Withdrawal" />
           <StyledTab classes={{ selected: 'selected' }} label="Statements" />
           <StyledTab classes={{ selected: 'selected' }} label="Work History" />
         </StyledTabs>
       </StyledPaper>
-      <ComponentWrapper>{ComponentToRender[value]}</ComponentWrapper>
+      {ComponentToRender[value]}
     </AccountBalanceContainer>
   );
 };

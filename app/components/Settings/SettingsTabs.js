@@ -5,11 +5,13 @@ import Tabs from '@material-ui/core/Tabs';
 import { ConditionalRender } from 'components/base_ui';
 
 import UserAccount from './Account';
+import UserAttempting from './Attempting';
 import DepositFormComponent from './Balance/Deposit/DepositFormComponent';
 import WithdrawalFormComponent from './Balance/Withdrawal/WithdrawalFormComponent';
 import UserIssues from './Issues';
 import UserOrganizations from './Organizations';
 import UserTimelineView from './Timeline';
+import UserWatching from './Watching';
 import { StyledPaper, StyledTab } from './styledComponents';
 
 const SettingsTabs = ({
@@ -64,6 +66,36 @@ const SettingsTabs = ({
         <WithdrawalFormComponent balance={balance} handleNav={handleNav} />
       }
       shouldRender={view === 'deposit'}
+    />
+  );
+
+  const ListComponent = (
+    <ConditionalRender
+      Component={
+        <UserAttempting
+          attempting={attempting}
+          handleNav={handleNav}
+          handleRemoveIssue={handleRemoveIssue}
+          userId={userId}
+        />
+      }
+      FallbackComponent={
+        <UserWatching
+          handleNav={handleNav}
+          handleRemoveIssue={handleRemoveIssue}
+          userId={userId}
+          watching={watching}
+        />
+      }
+      shouldRender={view === 'attempting'}
+    />
+  );
+
+  const SecondarySettingsComponent = (
+    <ConditionalRender
+      Component={ListComponent}
+      FallbackComponent={BalanceFormComponent}
+      shouldRender={view === 'attempting' || view === 'watching'}
     />
   );
   const ComponentToRender = {
@@ -140,9 +172,14 @@ const SettingsTabs = ({
         />
       </Tabs>
       <ConditionalRender
-        Component={BalanceFormComponent}
+        Component={SecondarySettingsComponent}
         FallbackComponent={ComponentToRender[tab]}
-        shouldRender={view === 'deposit' || view === 'withdrawal'}
+        shouldRender={
+          view === 'attempting' ||
+          view === 'deposit' ||
+          view === 'watching' ||
+          view === 'withdrawal'
+        }
       />
     </StyledPaper>
   );

@@ -6,8 +6,6 @@ import ConditionalRender from '../ConditionalRender';
 const BaseButton = ({ Icon, label, ClassName, onClick, ...restProps }) => (
   <Button
     classes={{ label: 'label', root: 'root' }}
-    disableFocusRipple
-    disableRipple
     onClick={onClick}
     variant="contained"
     {...restProps}

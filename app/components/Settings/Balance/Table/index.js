@@ -33,7 +33,9 @@ const TableBodyComponent = ({ rows }) => (
     {rows.map(row => (
       <StyledTableRow key={row.name}>
         {Object.keys(row).map(cell => (
-          <StyledTableCell align="right">{row[cell]}</StyledTableCell>
+          <StyledTableCell key={`cell-${cell}`} align="right">
+            {row[cell]}
+          </StyledTableCell>
         ))}
       </StyledTableRow>
     ))}
@@ -45,7 +47,9 @@ const BaseTable = ({ headers, rows, type }) => (
     <TableHead>
       <TableHeaderRow>
         {headers.map(header => (
-          <TableHeaderCell align="right">{header}</TableHeaderCell>
+          <TableHeaderCell key={`header-${header}`} align="right">
+            {header}
+          </TableHeaderCell>
         ))}
       </TableHeaderRow>
     </TableHead>

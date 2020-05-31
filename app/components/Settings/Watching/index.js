@@ -1,11 +1,17 @@
 import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
-import { BaseInputWithAdornment, ConditionalRender } from 'components/base_ui';
+import {
+  BackNav,
+  BaseInputWithAdornment,
+  ConditionalRender,
+} from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
-import EmptyComponent from './EmptyComponent';
-import OrganizationsComponent from './OrganizationsComponent';
+import {
+  EmptyOverviewListComponent,
+  OverviewListComponent,
+} from '../OverviewList';
 import {
   BaseInputWrapper,
   HeaderWrapper,
@@ -16,13 +22,12 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const UserOrganizations = ({ handleNav, organizations }) => {
+const UserWatching = ({ handleNav, handleRemoveIssue, userId, watching }) => {
   const [selectedValue, setSelectedValue] = useState('Newest');
   const [searchValue, setSearchValue] = useState('');
-
-  const filterOrganizations = () => {
+  const filterWatching = () => {
     // eslint-disable-next-line array-callback-return, consistent-return
-    const sortedArray = organizations.sort((a, b) => {
+    const sortedArray = watching.sort((a, b) => {
       if (selectedValue === 'Newest') {
         if (a.modifiedDate < b.modifiedDate) {
           return 1;
@@ -30,7 +35,7 @@ const UserOrganizations = ({ handleNav, organizations }) => {
         return -1;
       }
       if (selectedValue === 'Most Funded') {
-        if (a.totalFunded < b.totalFunded) {
+        if (a.fundedAmount < b.fundedAmount) {
           return 1;
         }
         return -1;
@@ -44,18 +49,23 @@ const UserOrganizations = ({ handleNav, organizations }) => {
     });
     return filteredArray;
   };
-  const filteredOrganizations = filterOrganizations();
+  const filteredWatching = filterWatching();
   return (
     <Fragment>
+      <BackNav
+        label="Back to Overview"
+        handleNav={handleNav}
+        path="/settings"
+      />
       <HeaderWrapper>
-        <StyledH3>Your Organizations</StyledH3>
+        <StyledH3>All Watching</StyledH3>
       </HeaderWrapper>
       <SearchContainer>
         <BaseInputWrapper hasMargin={false}>
           <BaseInputWithAdornment
             adornmentComponent={SearchIcon}
             onChange={e => setSearchValue(e.target.value)}
-            placeholder="Find an organization..."
+            placeholder="Find an issue..."
             position="end"
             renderIcon
           />
@@ -67,24 +77,28 @@ const UserOrganizations = ({ handleNav, organizations }) => {
         />
       </SearchContainer>
       <ConditionalRender
-        Component={OrganizationsComponent}
-        FallbackComponent={EmptyComponent}
+        Component={OverviewListComponent}
+        FallbackComponent={
+          <EmptyOverviewListComponent handleNav={handleNav} type="watching" />
+        }
         propsToPassDown={{
           handleNav,
-          organizations: filteredOrganizations,
-          selectedValue,
-          setSearchValue,
-          setSelectedValue,
+          handleRemoveIssue,
+          list: filteredWatching,
+          type: 'watching',
+          userId,
         }}
-        shouldRender={!!filteredOrganizations.length}
+        shouldRender={!!filteredWatching.length}
       />
     </Fragment>
   );
 };
 
-UserOrganizations.propTypes = {
-  handleNav: T.func,
-  organizations: T.array,
+UserWatching.propTypes = {
+  handleNav: T.func.isRequired,
+  handleRemoveIssue: T.func.isRequired,
+  userId: T.string.isRequired,
+  watching: T.array.isRequired,
 };
 
-export default UserOrganizations;
+export default UserWatching;
