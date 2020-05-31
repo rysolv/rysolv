@@ -8,6 +8,7 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import IssueDetail from 'components/Issues/Detail';
 import { makeSelectAuth } from 'containers/Auth/selectors';
+import { openModalState } from 'containers/Main/actions';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -47,13 +48,15 @@ export class IssuesDetail extends React.PureComponent {
   render() {
     const {
       activeUser,
+      dispatchOpenModal,
       error,
       handleComment,
+      handleIncrement,
       handleNav,
       handleUpvote,
+      isSignedIn,
       issueDetail,
       loading,
-      handleIncrement,
     } = this.props;
 
     return (
@@ -64,11 +67,13 @@ export class IssuesDetail extends React.PureComponent {
         loading={loading}
         isRequiredData
         propsToPassDown={{
-          handleNav,
-          handleUpvote,
           activeUser,
+          dispatchOpenModal,
           handleComment,
           handleIncrement,
+          handleNav,
+          handleUpvote,
+          isSignedIn,
         }}
       />
     );
@@ -78,22 +83,28 @@ export class IssuesDetail extends React.PureComponent {
 IssuesDetail.propTypes = {
   activeUser: T.object,
   dispatchFetchIssueDetail: T.func,
+  dispatchOpenModal: T.func,
   error: T.oneOfType([T.bool, T.object]),
   handleClearAlerts: T.func,
   handleComment: T.func,
+  handleIncrement: T.func,
   handleNav: T.func,
   handleUpvote: T.func,
+  isSignedIn: T.bool,
   issueDetail: T.object,
   loading: T.bool,
-  handleIncrement: T.func,
   match: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
-   * Reducer : Issues
+   * Reducer : Auth
    */
   activeUser: makeSelectAuth('activeUser'),
+  isSignedIn: makeSelectAuth('isSignedIn'),
+  /**
+   * Reducer : Issues
+   */
   issueDetail: makeSelectIssueDetail('issueDetail'),
   error: makeSelectIssueDetailError('issueDetail'),
   loading: makeSelectIssueDetailLoading('issueDetail'),
@@ -109,6 +120,10 @@ function mapDispatchToProps(dispatch) {
     handleUpvote: payload => dispatch(upvoteIssue(payload)),
     handleComment: payload => dispatch(addComment(payload)),
     handleIncrement: payload => dispatch(addAttempt(payload)),
+    /*
+     * Reducer : Main
+     */
+    dispatchOpenModal: payload => dispatch(openModalState(payload)),
     /**
      * Reducer : Router
      */

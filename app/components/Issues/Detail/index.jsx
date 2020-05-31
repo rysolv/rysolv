@@ -19,10 +19,12 @@ import {
 const IssueDetail = ({
   activeUser,
   data,
+  dispatchOpenModal,
   handleComment,
+  handleIncrement,
   handleNav,
   handleUpvote,
-  handleIncrement,
+  isSignedIn,
 }) => {
   const {
     id,
@@ -76,28 +78,32 @@ const IssueDetail = ({
         <IssueDetailWrapper>
           <LeftPanel>
             <UpvotePanel
-              upvoted={upvoted}
+              dispatchOpenModal={dispatchOpenModal}
               handleUpvote={handleUpvote}
+              isSignedIn={isSignedIn}
               issueId={id}
-              userId={activeUser.id}
               rep={rep}
+              upvoted={upvoted}
+              userId={activeUser.id}
             />
           </LeftPanel>
           <IssueDetailColumn>
             <IssueDetailHeader
               activeUser={activeUser}
               data={data}
+              dispatchOpenModal={dispatchOpenModal}
               handleIncrement={handleIncrement}
               handleNav={handleNav}
+              isSignedIn={isSignedIn}
             />
 
             <div style={{ minHeight: '30rem' }}>
               <CommentCard
-                primary
                 body={body}
                 date={createdDate}
-                userProfile={primaryUser}
                 handleNav={handleNav}
+                primary
+                userProfile={primaryUser}
               />
             </div>
 
@@ -106,7 +112,9 @@ const IssueDetail = ({
             <IssueStatusBar
               activeUser={activeUser}
               data={data}
+              dispatchOpenModal={dispatchOpenModal}
               handleIncrement={handleIncrement}
+              isSignedIn={isSignedIn}
             />
 
             <Divider>Comments</Divider>
@@ -125,7 +133,9 @@ const IssueDetail = ({
           <IssueSidebar
             activeUser={activeUser}
             data={data}
+            dispatchOpenModal={dispatchOpenModal}
             handleIncrement={handleIncrement}
+            isSignedIn={isSignedIn}
           />
         </SidebarContainer>
       </DetailContainer>
@@ -139,11 +149,13 @@ IssueDetail.propTypes = {
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
-  handleComment: T.func,
-  handleUpvote: T.func,
   data: T.object,
-  handleNav: T.func,
+  dispatchOpenModal: T.func,
+  handleComment: T.func,
   handleIncrement: T.func,
+  handleNav: T.func,
+  handleUpvote: T.func,
+  isSignedIn: T.bool,
 };
 
 export default IssueDetail;

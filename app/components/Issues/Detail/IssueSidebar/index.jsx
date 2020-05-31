@@ -9,7 +9,13 @@ import {
 
 import { Divider, StyledIssueSidebar, SidebarItem } from './styledComponents';
 
-const IssueSidebar = ({ data, activeUser, handleIncrement }) => {
+const IssueSidebar = ({
+  activeUser,
+  data,
+  dispatchOpenModal,
+  handleIncrement,
+  isSignedIn,
+}) => {
   const { id, language, open, watching } = data;
   const userWatching =
     activeUser.watching && !!activeUser.watching.find(el => el.id === id);
@@ -36,8 +42,7 @@ const IssueSidebar = ({ data, activeUser, handleIncrement }) => {
       <SidebarItem>
         <WatchButton
           disabled={!open}
-          label={userWatching ? 'Watching' : 'Watch'}
-          value={watching.length}
+          dispatchOpenModal={dispatchOpenModal}
           handleWatch={() =>
             handleIncrement({
               userId: activeUser.id,
@@ -46,6 +51,9 @@ const IssueSidebar = ({ data, activeUser, handleIncrement }) => {
               remove: userWatching,
             })
           }
+          isSignedIn={isSignedIn}
+          label={userWatching ? 'Watching' : 'Watch'}
+          value={watching.length}
         />
       </SidebarItem>
       <Divider />
@@ -58,7 +66,9 @@ const IssueSidebar = ({ data, activeUser, handleIncrement }) => {
 IssueSidebar.propTypes = {
   activeUser: T.object,
   data: T.object,
+  dispatchOpenModal: T.func,
   handleIncrement: T.func,
+  isSignedIn: T.bool,
 };
 
 export default IssueSidebar;

@@ -1,24 +1,41 @@
 import React from 'react';
 import T from 'prop-types';
+
 import { Upvote } from 'components/base_ui';
+
 import { StyledFlatIconButton, UpvoteContainer } from './styledComponents';
 
-const UpvotePanel = ({ upvoted, handleUpvote, issueId, userId, rep }) => (
+const UpvotePanel = ({
+  dispatchOpenModal,
+  handleUpvote,
+  isSignedIn,
+  issueId,
+  rep,
+  upvoted,
+  userId,
+}) => (
   <UpvoteContainer upvoted={upvoted}>
     <StyledFlatIconButton
       Icon={<Upvote />}
-      onClick={() => handleUpvote({ issueId, userId })}
+      onClick={() => {
+        if (!isSignedIn) {
+          return dispatchOpenModal({ modalState: 'signIn' });
+        }
+        return handleUpvote({ issueId, userId });
+      }}
     />
     {rep}
   </UpvoteContainer>
 );
 
 UpvotePanel.propTypes = {
-  upvoted: T.bool,
+  dispatchOpenModal: T.func,
   handleUpvote: T.func,
+  isSignedIn: T.bool,
   issueId: T.string,
-  userId: T.string,
   rep: T.number,
+  upvoted: T.bool,
+  userId: T.string,
 };
 
 export default UpvotePanel;

@@ -7,15 +7,17 @@ import { formatDollarAmount } from 'utils/globalHelpers';
 import {
   StatusBar,
   StatusItem,
-  StyledSecondaryButton,
   StatusTitle,
+  StyledSecondaryButton,
 } from './styledComponents';
 
 const IssueStatusBar = ({
   activeUser,
   activeUser: { id: userId },
   data,
+  dispatchOpenModal,
   handleIncrement,
+  isSignedIn,
 }) => {
   const { attempting, fundedAmount, id, open } = data;
   const hasAttempting =
@@ -27,19 +29,31 @@ const IssueStatusBar = ({
         <StyledSecondaryButton
           disabled={!open}
           label={hasAttempting ? 'un-attempt' : 'attempt'}
-          onClick={() =>
-            handleIncrement({
+          onClick={() => {
+            if (!isSignedIn) {
+              return dispatchOpenModal({ modalState: 'signIn' });
+            }
+            return handleIncrement({
               userId,
               id,
               column: 'attempting',
               remove: hasAttempting,
-            })
-          }
+            });
+          }}
         />
       </StatusItem>
       <StatusItem>
         <StatusTitle>0 Pull Requests</StatusTitle>
-        <StyledSecondaryButton disabled={!open} label="Submit PR" />
+        <StyledSecondaryButton
+          disabled={!open}
+          label="Submit PR"
+          onClick={() => {
+            if (!isSignedIn) {
+              return dispatchOpenModal({ modalState: 'signIn' });
+            }
+            return null;
+          }}
+        />
       </StatusItem>
       <StatusItem>
         <StatusTitle>
@@ -59,7 +73,9 @@ const IssueStatusBar = ({
 IssueStatusBar.propTypes = {
   activeUser: T.object,
   data: T.object,
+  dispatchOpenModal: T.func,
   handleIncrement: T.func,
+  isSignedIn: T.bool,
 };
 
 export default IssueStatusBar;

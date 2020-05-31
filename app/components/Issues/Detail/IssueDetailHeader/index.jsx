@@ -23,10 +23,12 @@ import {
 } from './styledComponents';
 
 const IssueDetailHeader = ({
-  data,
   activeUser,
+  data,
+  dispatchOpenModal,
   handleIncrement,
   handleNav,
+  isSignedIn,
 }) => {
   const {
     id,
@@ -82,8 +84,7 @@ const IssueDetailHeader = ({
         <IssueSubItem>
           <WatchButton
             disabled={!open}
-            label={userWatching ? 'Watching' : 'Watch'}
-            value={watching.length}
+            dispatchOpenModal={dispatchOpenModal}
             handleWatch={() =>
               handleIncrement({
                 userId: activeUser.id,
@@ -92,6 +93,9 @@ const IssueDetailHeader = ({
                 remove: userWatching,
               })
             }
+            isSignedIn={isSignedIn}
+            label={userWatching ? 'Watching' : 'Watch'}
+            value={watching.length}
           />
         </IssueSubItem>
       </IssueSubHeader>
@@ -102,8 +106,10 @@ const IssueDetailHeader = ({
 IssueDetailHeader.propTypes = {
   activeUser: T.object,
   data: T.object,
+  dispatchOpenModal: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
+  isSignedIn: T.bool,
 };
 
 export default IssueDetailHeader;

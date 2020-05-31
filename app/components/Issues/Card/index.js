@@ -63,11 +63,13 @@ const IssueCard = ({
         <Fragment key={id}>
           <StyledListItem>
             <UpvotePanel
-              upvoted={upvoted}
+              dispatchOpenModal={dispatchOpenModal}
               handleUpvote={handleUpvote}
+              isSignedIn={isSignedIn}
               issueId={id}
-              userId={activeUser.id}
               rep={rep}
+              upvoted={upvoted}
+              userId={activeUser.id}
             />
             <StyledIssueContent>
               <StyledIssueHeader>
