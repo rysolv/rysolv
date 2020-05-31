@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
-import DeleteUser from 'components/DeleteUser';
+import DeleteUserModal from 'components/DeleteUserModal';
 import SettingsView from 'components/Settings';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import {
@@ -99,7 +99,7 @@ const Settings = ({
   const currentTab = settingViewDictionary[view] || 0;
   const modalPropsDictionary = {
     deleteUser: {
-      Component: DeleteUser,
+      Component: DeleteUserModal,
       open: isModalOpen,
       propsToPassDown: {
         handleClose: dispatchCloseModal,
@@ -179,7 +179,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Settings
      */
-    dispatchCloseModal: payload => dispatch(closeModalState(payload)),
+    dispatchCloseModal: () => dispatch(closeModalState()),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),

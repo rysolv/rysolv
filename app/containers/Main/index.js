@@ -11,6 +11,7 @@ import { ModalDialog } from 'components/base_ui';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import SideNav from 'components/SideNav';
+import SigninModal from 'components/SigninModal';
 import WatchList from 'components/WatchList';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
@@ -22,7 +23,7 @@ import { closeModalState, fetchWatchList } from './actions';
 import reducer from './reducer';
 import routes from './routes';
 import saga from './saga';
-import { makeSelectMain, makeSelectModalProps } from './selectors';
+import { makeSelectMain } from './selectors';
 import { AppBody } from './styledComponents';
 
 export const Main = ({
@@ -34,7 +35,7 @@ export const Main = ({
   handleNav,
   handleSignin,
   handleSignout,
-  isIssueWatchListModalOpen,
+  isModalOpen,
   isSignedIn,
   loading,
   match,
@@ -48,7 +49,7 @@ export const Main = ({
   const modalPropsDictionary = {
     issueWatchList: {
       Component: WatchList,
-      open: isIssueWatchListModalOpen,
+      open: isModalOpen,
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         handleRedirect,
@@ -57,6 +58,14 @@ export const Main = ({
         tableData,
         title: 'Watch List',
         type: 'issueWatchList',
+      },
+    },
+    signIn: {
+      Component: SigninModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        handleClose: dispatchCloseModal,
+        handleRedirect,
       },
     },
   };
@@ -95,7 +104,7 @@ Main.propTypes = {
   handleNav: T.func,
   handleSignin: T.func,
   handleSignout: T.func,
-  isIssueWatchListModalOpen: T.bool,
+  isModalOpen: T.bool,
   isSignedIn: T.bool,
   loading: T.bool,
   match: T.object,
@@ -108,8 +117,11 @@ const mapStateToProps = createStructuredSelector({
    * Reducer: Auth
    */
   activeUser: makeSelectAuth('activeUser'),
-  isIssueWatchListModalOpen: makeSelectModalProps('issueWatchList'),
   isSignedIn: makeSelectAuth('isSignedIn'),
+  /**
+   * Reducer: Main
+   */
+  isModalOpen: makeSelectMain('isModalOpen'),
   modal: makeSelectMain('modal'),
   tableData: makeSelectMain('tableData'),
   /**
@@ -128,7 +140,7 @@ const mapDispatchToProps = dispatch => ({
    * Main
    */
   dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
-  dispatchCloseModal: payload => dispatch(closeModalState(payload)),
+  dispatchCloseModal: () => dispatch(closeModalState()),
   /*
    * Reducer : Router
    */

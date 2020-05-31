@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 
 import { BaseDropDownMenu, ErrorSuccessBanner } from 'components/base_ui';
-import { defaultFontSize } from 'defaultStyleHelper';
+import { defaultFontSize, textColor } from 'defaultStyleHelper';
 
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
@@ -195,7 +195,7 @@ export const StyledGiftIcon = styled.div`
 `;
 
 export const StyledH3 = styled.h3`
-  color: rgba(0, 0, 0, 0.87);
+  color: ${textColor};
   font-size: 2rem;
   font-weight: 500;
   margin: 3rem 0;

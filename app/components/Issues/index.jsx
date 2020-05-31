@@ -13,20 +13,24 @@ const Issues = ({
   clearAlerts,
   data,
   dispatchFetchWatchList,
+  dispatchOpenModal,
   handleDeleteIssue,
   handleIncrement,
   handleNav,
   handleUpvote,
+  isSignedIn,
 }) => {
   const hasData = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
     activeUser,
     data,
     dispatchFetchWatchList,
+    dispatchOpenModal,
     handleDeleteIssue,
     handleIncrement,
     handleNav,
     handleUpvote,
+    isSignedIn,
   };
   const viewToRender = hasData ? (
     <IssueCard {...propsToPassDown} />
@@ -57,12 +61,14 @@ Issues.propTypes = {
   data: T.array,
   disabled: T.bool.isRequired,
   dispatchFetchWatchList: T.func,
+  dispatchOpenModal: T.func,
   handleDeleteIssue: T.func,
   handleIncrement: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
-  handleUpvote: T.func,
   handleSearchIssues: T.func,
+  handleUpvote: T.func,
+  isSignedIn: T.bool,
   search: T.object,
 };
 

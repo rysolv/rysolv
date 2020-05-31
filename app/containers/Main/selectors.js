@@ -10,11 +10,5 @@ const makeSelectMain = prop =>
     substate => substate[prop],
   );
 
-const makeSelectModalProps = prop =>
-  createSelector(
-    makeSelectMain('isModalOpen'),
-    isModalOpen => isModalOpen[prop],
-  );
-
 export default selectMainDomain;
-export { makeSelectMain, makeSelectModalProps };
+export { makeSelectMain };

@@ -34,9 +34,11 @@ const IssueCard = ({
   activeUser,
   data,
   dispatchFetchWatchList,
+  dispatchOpenModal,
   handleIncrement,
   handleNav,
   handleUpvote,
+  isSignedIn,
 }) =>
   data.map(
     ({
@@ -134,6 +136,7 @@ const IssueCard = ({
                   <IssueCardItem>
                     <WatchButton
                       dispatchFetchWatchList={dispatchFetchWatchList}
+                      dispatchOpenModal={dispatchOpenModal}
                       handleWatch={() =>
                         handleIncrement({
                           userId: activeUser.id,
@@ -142,6 +145,7 @@ const IssueCard = ({
                           remove: userWatching,
                         })
                       }
+                      isSignedIn={isSignedIn}
                       label={userWatching ? 'Watching' : 'Watch'}
                       value={watching.length}
                       watching={watching}
@@ -167,6 +171,7 @@ const IssueCard = ({
 IssueCard.propTypes = {
   data: T.array.isRequired,
   dispatchFetchWatchList: T.func,
+  dispatchOpenModal: T.func,
   handleIncrement: T.func,
   handleNav: T.func.isRequired,
   handleUpvote: T.func.isRequired,

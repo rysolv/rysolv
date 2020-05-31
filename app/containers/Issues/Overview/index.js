@@ -8,7 +8,7 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { fetchWatchList } from 'containers/Main/actions';
+import { fetchWatchList, openModalState } from 'containers/Main/actions';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -37,6 +37,7 @@ const IssuesOverview = ({
   disabled,
   dispatchFetchIssues,
   dispatchFetchWatchList,
+  dispatchOpenModal,
   error,
   handleClearAlerts,
   handleIncrement,
@@ -44,6 +45,7 @@ const IssuesOverview = ({
   handleNav,
   handleSearchIssues,
   handleUpvote,
+  isSignedIn,
   issues,
   loading,
   params: { searchValue },
@@ -70,12 +72,14 @@ const IssuesOverview = ({
         alerts,
         disabled,
         dispatchFetchWatchList,
+        dispatchOpenModal,
         handleClearAlerts,
         handleIncrement,
         handleInputChange,
         handleNav,
         handleSearchIssues,
         handleUpvote,
+        isSignedIn,
         search,
       }}
     />
@@ -91,6 +95,7 @@ IssuesOverview.propTypes = {
   disabled: T.bool,
   dispatchFetchIssues: T.func,
   dispatchFetchWatchList: T.func,
+  dispatchOpenModal: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
   handleIncrement: T.func,
@@ -98,6 +103,7 @@ IssuesOverview.propTypes = {
   handleNav: T.func,
   handleSearchIssues: T.func,
   handleUpvote: T.func,
+  isSignedIn: T.bool,
   issues: T.array,
   loading: T.bool,
   params: T.object,
@@ -106,9 +112,13 @@ IssuesOverview.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   /**
-   * Reducer : Issues
+   * Reducer : Auth
    */
   activeUser: makeSelectAuth('activeUser'),
+  isSignedIn: makeSelectAuth('isSignedIn'),
+  /**
+   * Reducer : Issues
+   */
   alerts: makeSelectIssues('alerts'),
   disabled: makeSelectIssuesSearchDisabled(),
   error: makeSelectIssuesError('issues'),
@@ -132,6 +142,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Main
      */
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
+    dispatchOpenModal: payload => dispatch(openModalState(payload)),
     /*
      * Reducer : Router
      */

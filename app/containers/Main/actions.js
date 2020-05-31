@@ -6,9 +6,8 @@ import {
   OPEN_MODAL_STATE,
 } from './constants';
 
-export function closeModalState(payload) {
+export function closeModalState() {
   return {
-    payload,
     type: CLOSE_MODAL_STATE,
   };
 }

@@ -4,9 +4,7 @@ import styled, { css } from 'styled-components';
 import {
   detailFontSize,
   primaryButtonColor,
-  primaryButtonHoverColor,
   secondaryButtonColor,
-  secondaryButtonHoverColor,
 } from 'defaultStyleHelper';
 
 import BaseButton from './BaseButton';
@@ -31,13 +29,13 @@ export const PrimaryButton = styled(BaseButton)`
   ${baseButtonStyle};
 
   &:hover {
-    background-color: ${primaryButtonHoverColor};
+    background-color: ${primaryButtonColor};
   }
 `;
 
 export const SecondaryButton = styled(PrimaryButton)`
   &:hover {
-    background-color: ${secondaryButtonHoverColor};
+    background-color: ${secondaryButtonColor};
   }
 
   background-color: ${secondaryButtonColor};
@@ -48,7 +46,7 @@ export const PrimaryAsyncButton = styled(BaseAsyncButton)`
   ${baseButtonStyle};
 
   &:hover {
-    background-color: ${primaryButtonHoverColor};
+    background-color: ${primaryButtonColor};
   }
 
   & .progressWheel {
@@ -58,7 +56,7 @@ export const PrimaryAsyncButton = styled(BaseAsyncButton)`
 
 export const SecondaryAsyncButton = styled(PrimaryAsyncButton)`
   &:hover {
-    background-color: ${secondaryButtonHoverColor};
+    background-color: ${secondaryButtonColor};
   }
 
   background-color: ${secondaryButtonColor};

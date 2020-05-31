@@ -10,7 +10,7 @@ import {
   StyledTitle,
 } from './styledComponents';
 
-const DeleteUser = ({ handleClose, handleDeleteUser, userId }) => (
+const DeleteUserModal = ({ handleClose, handleDeleteUser, userId }) => (
   <DeleteUserContainer>
     <StyledTitle>Account Removal</StyledTitle>
     <StyledBodyMessage>
@@ -27,10 +27,10 @@ const DeleteUser = ({ handleClose, handleDeleteUser, userId }) => (
   </DeleteUserContainer>
 );
 
-DeleteUser.propTypes = {
+DeleteUserModal.propTypes = {
   handleClose: T.func.isRequired,
   handleDeleteUser: T.func.isRequired,
   userId: T.string.isRequired,
 };
 
-export default DeleteUser;
+export default DeleteUserModal;

@@ -10,7 +10,7 @@ import {
 } from './constants';
 
 export const initialState = {
-  isModalOpen: { issueWatchList: false },
+  isModalOpen: false,
   error: null,
   loading: false,
   modal: '',
@@ -39,7 +39,7 @@ const mainReducer = produce((draft, { payload, type }) => {
     }
     case OPEN_MODAL_STATE: {
       const { modalState, tableData } = payload;
-      draft.isModalOpen[modalState] = true;
+      draft.isModalOpen = true;
       draft.modal = modalState;
       draft.tableData = tableData || [];
       break;

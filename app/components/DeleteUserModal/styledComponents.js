@@ -35,7 +35,7 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
 `;
 
 export const StyledTitle = styled.h3`
-  color: rgba(0, 0, 0, 0.87);
+  color: ${textColor};
   font-size: 2rem;
   font-weight: 500;
   margin: 1rem 0;
