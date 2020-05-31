@@ -1,10 +1,10 @@
 /* eslint-disable default-case, no-param-reassign */
 import produce from 'immer';
+
 import { CHANGE_RESPONSIVE_VIEW } from './constants';
 
-export const initialState = { deviceView: 'desktop' };
+export const initialState = { deviceView: '' };
 
-// eslint-disable-next-line consistent-return
 const viewSizeReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_RESPONSIVE_VIEW: {
@@ -12,9 +12,7 @@ const viewSizeReducer = produce((draft, { payload, type }) => {
       draft.deviceView = newView;
       break;
     }
-    default:
-      return initialState;
   }
-});
+}, initialState);
 
 export default viewSizeReducer;

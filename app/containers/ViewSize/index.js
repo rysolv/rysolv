@@ -7,10 +7,11 @@ import { throttle } from 'lodash';
 import { compose } from 'redux';
 
 import injectReducer from 'utils/injectReducer';
-import makeSelectViewSize from './selectors';
-import reducer from './reducer';
-import { deviceViewToRender } from './helpers';
+
 import { changeResponsiveView } from './actions';
+import { deviceViewToRender } from './helpers';
+import reducer from './reducer';
+import makeSelectViewSize from './selectors';
 
 export class ViewSize extends React.Component {
   componentDidMount() {
