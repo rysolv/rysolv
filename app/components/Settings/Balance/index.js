@@ -32,7 +32,7 @@ const AccountBalance = ({ balance, dollarsEarned, handleNav }) => {
     <AccountBalanceContainer>
       <BalanceWrapper>
         <BalanceSquare>
-          <BalanceTitle>Current earned balance</BalanceTitle>
+          <BalanceTitle>Lifetime earnings</BalanceTitle>
           <BalanceAmount>
             {dollarsEarned ? formatDollarAmount(dollarsEarned) : '–'}
           </BalanceAmount>

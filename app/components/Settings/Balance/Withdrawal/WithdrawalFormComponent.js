@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
 import { BackNav } from 'components/base_ui';
@@ -24,6 +24,10 @@ import { StyledH3 } from '../../styledComponents';
 const WithdrawalFormComponent = ({ balance, handleNav }) => {
   const [transferLocation, setTransferLocation] = useState('PayPal');
   const [transferValue, setTransferValue] = useState('0');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleChangeDollarValue = e => {
     const { value } = e.target;
