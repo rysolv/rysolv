@@ -1,13 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const { createActivity, getActivity } = require('../../db');
-//   activity_id,
-//   created_date,
-//   action_type,
-//   issue_id,
-//   organization_id,
-//   pullrequest_id,
-//   user_id,
-//   value
+
 module.exports = {
   createActivity: async args => {
     const { activityInput } = args;
