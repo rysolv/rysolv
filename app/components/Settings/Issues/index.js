@@ -8,10 +8,11 @@ import IssuesComponent from './IssuesComponent';
 import EmptyComponent from './EmptyComponent';
 import {
   BaseInputWrapper,
-  IssuesSearchContainer,
+  HeaderWrapper,
+  SearchContainer,
   StyledBaseDropDownMenu,
-} from './styledComponents';
-import { HeaderWrapper, StyledH3 } from '../styledComponents';
+  StyledH3,
+} from '../styledComponents';
 
 const SearchIcon = iconDictionary('search');
 
@@ -50,7 +51,7 @@ const UserIssues = ({ handleNav, issues }) => {
       <HeaderWrapper>
         <StyledH3>Your Issues</StyledH3>
       </HeaderWrapper>
-      <IssuesSearchContainer>
+      <SearchContainer>
         <BaseInputWrapper hasMargin={false}>
           <BaseInputWithAdornment
             adornmentComponent={SearchIcon}
@@ -65,7 +66,7 @@ const UserIssues = ({ handleNav, issues }) => {
           selectedValue={selectedValue}
           values={['Newest', 'Most Funded']}
         />
-      </IssuesSearchContainer>
+      </SearchContainer>
       <ConditionalRender
         Component={IssuesComponent}
         FallbackComponent={EmptyComponent}

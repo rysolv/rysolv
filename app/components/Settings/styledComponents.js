@@ -4,8 +4,13 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 
-import { ErrorSuccessBanner } from 'components/base_ui';
+import { BaseDropDownMenu, ErrorSuccessBanner } from 'components/base_ui';
 import { defaultFontSize } from 'defaultStyleHelper';
+
+export const BaseInputWrapper = styled.div`
+  margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
+  width: 45%;
+`;
 
 export const DetailContainer = styled.div`
   display: flex;
@@ -95,6 +100,13 @@ export const Rep = styled.div`
   margin: 0.5rem 0 0.5rem 0.5rem;
 `;
 
+export const SearchContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  width: 100%;
+`;
+
 export const SettingsTabsWrapper = styled.div`
   background-color: white;
   border-radius: 0.2rem;
@@ -104,8 +116,8 @@ export const SettingsTabsWrapper = styled.div`
   width: 65rem;
 `;
 
-export const StyledLanguageAutocomplete = styled.div`
-  width: 80%;
+export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
+  margin: 0 1rem;
 `;
 
 export const StyledCancelIcon = styled.div`
@@ -187,6 +199,10 @@ export const StyledH3 = styled.h3`
   font-size: 2rem;
   font-weight: 500;
   margin: 3rem 0;
+`;
+
+export const StyledLanguageAutocomplete = styled.div`
+  width: 80%;
 `;
 
 export const StyledPaper = styled(Paper)`

@@ -1,12 +1,6 @@
 import styled from 'styled-components';
 
-import { BaseDropDownMenu } from 'components/base_ui';
 import { hoverLinkColor, textColor } from 'defaultStyleHelper';
-
-export const BaseInputWrapper = styled.div`
-  margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
-  width: 45%;
-`;
 
 export const EmptyComponentContainer = styled.div`
   align-items: center;
@@ -108,17 +102,6 @@ export const OrganizationsList = styled.ul`
   flex-direction: column;
   padding: 0;
   width: 100%;
-`;
-
-export const OrganizationsSearchContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 3rem;
-  width: 100%;
-`;
-
-export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
-  margin: 0 1rem;
 `;
 
 export const StyledImage = styled.img`

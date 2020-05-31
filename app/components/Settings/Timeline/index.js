@@ -107,7 +107,7 @@ const UserTimelineView = ({
       propsToPassDown={{
         handleNav,
         handleRemoveIssue,
-        list: attempting,
+        list: attempting.slice(0, 5),
         type: 'attempting',
         userId,
       }}
@@ -123,7 +123,7 @@ const UserTimelineView = ({
       propsToPassDown={{
         handleNav,
         handleRemoveIssue,
-        list: watching,
+        list: watching.slice(0, 5),
         type: 'watching',
         userId,
       }}
@@ -134,10 +134,13 @@ const UserTimelineView = ({
     <TimelineContainer>
       <div>
         <HeaderContainer>
-          <StyledH3>All Attempting</StyledH3>
+          <StyledH3>Your Attempting</StyledH3>
           <ConditionalRender
             Component={
-              <StyledButton disableRipple onClick={() => {}}>
+              <StyledButton
+                disableRipple
+                onClick={() => handleNav('/settings/attempting')}
+              >
                 View All
                 {ViewAllIcon}
               </StyledButton>
@@ -149,10 +152,13 @@ const UserTimelineView = ({
       </div>
       <div>
         <HeaderContainer>
-          <StyledH3>All Watching</StyledH3>
+          <StyledH3>Your Watching</StyledH3>
           <ConditionalRender
             Component={
-              <StyledButton disableRipple onClick={() => {}}>
+              <StyledButton
+                disableRipple
+                onClick={() => handleNav('/settings/watching')}
+              >
                 View All
                 {ViewAllIcon}
               </StyledButton>
