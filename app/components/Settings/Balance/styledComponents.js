@@ -8,6 +8,7 @@ import {
   BaseInput,
   PaymentModalInputWithAdornment,
   PrimaryAsyncButton,
+  SecondaryButton,
 } from 'components/base_ui';
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
 
@@ -58,25 +59,26 @@ export const ChargeValue = styled.div`
   text-align: end;
 `;
 
-export const ComponentLink = styled.div`
-  color: #007bff;
-  font-size: ${defaultFontSize};
-  white-space: nowrap;
-
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
+export const ComponentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: justify;
+  width: 45%;
 `;
 
 export const ComponentText = styled.div`
+  align-items: center;
   color: ${textColor};
+  display: flex;
   font-size: ${defaultFontSize};
   padding: 2rem 0;
 `;
 
-export const ComponentWrapper = styled.div`
-  min-height: 20rem;
+export const ComponentTitle = styled.div`
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  text-decoration: underline;
 `;
 
 export const DisplayText = styled.div`
@@ -93,6 +95,12 @@ export const Divider = styled.div`
   border-bottom: 0.1rem solid #d5d5d5;
   margin: 1rem 0;
   width: 100%;
+`;
+
+export const FundingContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0 1rem 0;
 `;
 
 export const HorizontalWrapper = styled.div`
@@ -163,6 +171,18 @@ export const StyledPaymentModalInputWithAdornment = styled(
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   margin-left: 0;
+`;
+
+export const StyledSecondaryButton = styled(SecondaryButton)`
+  align-self: center;
+  background-color: #00eb93;
+  font-size: ${defaultFontSize};
+  margin-left: 0;
+  width: 11.5rem;
+
+  &:hover {
+    background-color: #00eb93;
+  }
 `;
 
 export const StyledTab = styled(Tab)`

@@ -30,6 +30,17 @@ export const StyledTableCell = styled(TableCell)`
   vertical-align: middle;
 `;
 
+export const StyledTable = styled(Table)`
+  border: 0.1rem solid #d5d5d5;
+  margin-bottom: 2.2rem;
+`;
+
+export const StyledTableRow = styled(TableRow)`
+  border: 0.1rem solid #d5d5d5;
+  font-size: 1.2rem;
+  height: 4rem;
+`;
+
 export const TableHeaderCell = styled(StyledTableCell)`
   color: ${textColor};
   font-size: 1.2rem;
@@ -39,14 +50,4 @@ export const TableHeaderCell = styled(StyledTableCell)`
 
 export const TableHeaderRow = styled(TableRow)`
   background-color: white;
-`;
-
-export const StyledTableRow = styled(TableRow)`
-  border: 0.1rem solid #d5d5d5;
-  font-size: 1.2rem;
-  height: 4rem;
-`;
-
-export const StyledTable = styled(Table)`
-  border: 0.1rem solid #d5d5d5;
 `;

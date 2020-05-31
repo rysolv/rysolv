@@ -1,15 +1,22 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 
-import { ComponentLink, ComponentText } from '../styledComponents';
+import {
+  ComponentContainer,
+  ComponentText,
+  ComponentTitle,
+  StyledSecondaryButton,
+} from '../styledComponents';
 
 const WithdrawalComponent = ({ handleNav }) => (
-  <Fragment>
+  <ComponentContainer>
+    <ComponentTitle>Withdraw Funding</ComponentTitle>
     <ComponentText>Transfer money from your account.</ComponentText>
-    <ComponentLink onClick={() => handleNav('/settings/withdrawal')}>
-      Withdraw money
-    </ComponentLink>
-  </Fragment>
+    <StyledSecondaryButton
+      label="Withdraw"
+      onClick={() => handleNav('/settings/withdrawal')}
+    />
+  </ComponentContainer>
 );
 
 WithdrawalComponent.propTypes = { handleNav: T.func.isRequired };
