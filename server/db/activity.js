@@ -1,42 +1,46 @@
 const { mapValues, singleQuery } = require('../db/query');
 
-const commentReturnValues = `
-  action,
-  activity_id AS "activityId",
-  created_date AS "createdDate",
-  issue_id AS "issueId",
-  organization_id AS "organizationId",
-  pullrequest_id AS "pullRequestId",
-  user_id AS "userId",
+const activityValues = `
+  activity_id,
+  created_date,
+  action_type,
+  issue_id,
+  organization_id,
+  pullrequest_id,
+  user_id,
   value
 `;
 
-// Create new Comments from seed
+const activityReturnValues = `
+  activity_id AS "activityId",
+  activity.created_date AS "createdDate",
+  activity.action_type AS "actionType",
+  activity.issue_id AS "issueId",
+  activity.organization_id AS "organizationId",
+  activity.pullrequest_id AS "pullRequestId",
+  activity.user_id AS "userId",
+  activity.value
+`;
+
+// Record a new activity
 const createActivity = async data => {
   const queryText = `INSERT INTO
-    comments(action, activity_id, created_date, issue_id, organization_id, user_id, value)
+    activity(${activityValues})
     VALUES($1, $2, $3, $4, $5, $6, $7)
     returning *`;
   const result = await mapValues(queryText, data);
   return result;
 };
 
-// GET all issues
+// GET activity for a specific id
 const getActivity = async (table, column, id) => {
-  const queryText = `SELECT ${commentReturnValues} FROM ${table}
-    JOIN issues on (activity.issue_id = issues.id)
-    JOIN organizations on (activity.organization_id = organizations.id)
-    JOIN users on (activity.user_id = users.id)
+  const queryText = `SELECT ${activityReturnValues} FROM ${table}
+    LEFT JOIN issues on (activity.issue_id = issues.id)
+    LEFT JOIN organizations on (activity.organization_id = organizations.id)
+    LEFT JOIN users on (activity.user_id = users.id)
     WHERE ${column} ='${id}'`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
 
-// GET all issues
-const getIssueComments = async (table, id) => {
-  const queryText = `SELECT ${commentReturnValues} FROM ${table} JOIN users ON (comments.user_id = users.id) WHERE comments.target='${id}'`;
-  const { rows } = await singleQuery(queryText);
-  return rows;
-};
-
-module.exports = { createActivity, getActivity, getIssueComments };
+module.exports = { createActivity, getActivity };

@@ -3,6 +3,26 @@ const { buildSchema } = require('graphql');
 module.exports = buildSchema(`
   scalar Object
 
+  type Activity {
+    activityId: ID
+    createdDate: Object
+    actionType: String
+    issueId: ID
+    organizationId: ID
+    pullRequestId: ID
+    userId: ID
+    value: Float
+  }
+
+  input ActivityInput {
+    actionType: String
+    issueId: ID
+    organizationId: ID
+    pullRequestId: ID
+    userId: ID
+    value: Float
+  }
+
   type Comment {
     body: String
     commentId: ID
@@ -178,7 +198,8 @@ module.exports = buildSchema(`
   union ImportResult = ImportData | Error
 
   type RootQuery {
-    getComments: [Comment]
+    getActivity(column: String!, id: ID): [Activity]!
+    getComments: [Comment]!
     getIssues: [Issue!]!
     getOrganizations: [Organization!]!
     getUsers: [User!]!
@@ -198,6 +219,7 @@ module.exports = buildSchema(`
   }
 
   type RootMutation {
+    createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): Comment
     createIssue(issueInput: IssueInput): Issue!
     createOrganization(organizationInput: OrganizationInput): [Organization!]!
