@@ -20,6 +20,5 @@ export const StyledIssueSidebar = styled.div`
   color: ${textColor};
   font-size: ${detailFontSize};
   margin-bottom: 1rem;
-  max-width: 30rem;
   padding: 1rem;
 `;

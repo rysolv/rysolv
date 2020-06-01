@@ -17,6 +17,7 @@ const IssueStatusBar = ({
   data,
   dispatchOpenModal,
   handleIncrement,
+  isDesktop,
   isSignedIn,
 }) => {
   const { attempting, fundedAmount, id, open } = data;
@@ -55,17 +56,19 @@ const IssueStatusBar = ({
           }}
         />
       </StatusItem>
-      <StatusItem>
-        <StatusTitle>
-          Funded:{' '}
-          <FundingWrapper
-            medium
-            open={open}
-            value={formatDollarAmount(fundedAmount)}
-          />
-        </StatusTitle>
-        <StyledSecondaryButton disabled={!open} label="$ Fund Issue" />
-      </StatusItem>
+      {!isDesktop && (
+        <StatusItem>
+          <StatusTitle>
+            Funded:{' '}
+            <FundingWrapper
+              medium
+              open={open}
+              value={formatDollarAmount(fundedAmount)}
+            />
+          </StatusTitle>
+          <StyledSecondaryButton disabled={!open} label="$ Fund Issue" />
+        </StatusItem>
+      )}
     </StatusBar>
   );
 };
@@ -75,6 +78,7 @@ IssueStatusBar.propTypes = {
   data: T.object,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,
+  isDesktop: T.string,
   isSignedIn: T.bool,
 };
 

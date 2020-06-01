@@ -7,8 +7,9 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import IssueDetail from 'components/Issues/Detail';
-import { makeSelectAuth } from 'containers/Auth/selectors';
 import { fetchWatchList, openModalState } from 'containers/Main/actions';
+import { makeSelectAuth } from 'containers/Auth/selectors';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -48,6 +49,7 @@ export class IssuesDetail extends React.PureComponent {
   render() {
     const {
       activeUser,
+      deviceView,
       dispatchFetchWatchList,
       dispatchOpenModal,
       error,
@@ -69,6 +71,7 @@ export class IssuesDetail extends React.PureComponent {
         isRequiredData
         propsToPassDown={{
           activeUser,
+          deviceView,
           dispatchFetchWatchList,
           dispatchOpenModal,
           handleComment,
@@ -84,6 +87,7 @@ export class IssuesDetail extends React.PureComponent {
 
 IssuesDetail.propTypes = {
   activeUser: T.object,
+  deviceView: T.string,
   dispatchFetchIssueDetail: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
@@ -111,6 +115,10 @@ const mapStateToProps = createStructuredSelector({
   issueDetail: makeSelectIssueDetail('issueDetail'),
   error: makeSelectIssueDetailError('issueDetail'),
   loading: makeSelectIssueDetailLoading('issueDetail'),
+  /**
+   * Reducer : ViewSize
+   */
+  deviceView: makeSelectViewSize('deviceView'),
 });
 
 function mapDispatchToProps(dispatch) {

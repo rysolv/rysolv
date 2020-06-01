@@ -76,7 +76,6 @@ export const PaymentContainer = styled.div`
   border-radius: 0.2rem;
   border: 0.1rem solid ${borderColor};
   color: rgba(0, 0, 0, 0.7);
-  max-width: 30rem;
 `;
 
 export const PaymentInformationWrapper = styled.div`
@@ -129,6 +128,8 @@ export const StyledReCAPTCHA = styled(ReCAPTCHA)`
 `;
 
 export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
+  display: flex;
+  justify-content: center;
   white-space: nowrap;
 
   .grouped {

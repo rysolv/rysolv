@@ -20,6 +20,7 @@ import {
 const IssueDetail = ({
   activeUser,
   data,
+  deviceView,
   dispatchFetchWatchList,
   dispatchOpenModal,
   handleComment,
@@ -71,6 +72,9 @@ const IssueDetail = ({
     });
   const commentsDiv =
     comments && comments.length > 0 ? generateComments() : <NoComment />;
+
+  const isDesktop = deviceView === 'desktop';
+
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
   return (
     <Fragment>
@@ -116,6 +120,7 @@ const IssueDetail = ({
               data={data}
               dispatchOpenModal={dispatchOpenModal}
               handleIncrement={handleIncrement}
+              isDesktop={isDesktop}
               isSignedIn={isSignedIn}
             />
 
@@ -158,6 +163,7 @@ IssueDetail.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   data: T.object,
+  deviceView: T.string,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
   handleComment: T.func,
