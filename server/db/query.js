@@ -5,7 +5,7 @@ const mapQuery = async array => {
   const client = await pool.connect();
   const queryDB = async queryText => {
     try {
-      await pool.query(queryText);
+      await client.query(queryText);
     } catch (error) {
       client.release();
       throw error;
@@ -20,7 +20,7 @@ const mapQueryPrint = async array => {
   const client = await pool.connect();
   const queryDB = async queryText => {
     try {
-      const { rows } = await pool.query(queryText);
+      const { rows } = await client.query(queryText);
       // eslint-disable-next-line no-console
       console.table(rows);
     } catch (error) {
@@ -38,7 +38,7 @@ const mapValues = async (queryText, array) => {
   const results = [];
   const queryDB = async value => {
     try {
-      const { rows } = await pool.query(queryText, value);
+      const { rows } = await client.query(queryText, value);
       if (rows.length > 0) {
         results.push(rows[0]);
       }
@@ -56,7 +56,7 @@ const mapValues = async (queryText, array) => {
 const singleQuery = async queryText => {
   const client = await pool.connect();
   try {
-    const result = await pool.query(queryText);
+    const result = await client.query(queryText);
     client.release();
     return result;
   } catch (error) {
