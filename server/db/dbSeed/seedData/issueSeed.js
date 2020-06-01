@@ -17,7 +17,10 @@ const issueSeed = [
     [], // attempting
     '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d', // Contributor: Reference to User ID
     42, // rep
-    [], // Watching: Reference to user ID
+    [
+      '517fa5c9-1d6e-4925-8bcc-25c24cd0b95d',
+      'cdd583cf-4711-4f33-a202-c937081afd7e',
+    ], // Watching: Reference to user ID
     20.0, // value
     true, // open
     'bug', // type

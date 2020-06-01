@@ -25,6 +25,7 @@ import {
 const IssueDetailHeader = ({
   activeUser,
   data,
+  dispatchFetchWatchList,
   dispatchOpenModal,
   handleIncrement,
   handleNav,
@@ -84,6 +85,7 @@ const IssueDetailHeader = ({
         <IssueSubItem>
           <WatchButton
             disabled={!open}
+            dispatchFetchWatchList={dispatchFetchWatchList}
             dispatchOpenModal={dispatchOpenModal}
             handleWatch={() =>
               handleIncrement({
@@ -96,6 +98,7 @@ const IssueDetailHeader = ({
             isSignedIn={isSignedIn}
             label={userWatching ? 'Watching' : 'Watch'}
             value={watching.length}
+            watching={watching}
           />
         </IssueSubItem>
       </IssueSubHeader>
@@ -106,6 +109,7 @@ const IssueDetailHeader = ({
 IssueDetailHeader.propTypes = {
   activeUser: T.object,
   data: T.object,
+  dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,
   handleNav: T.func,

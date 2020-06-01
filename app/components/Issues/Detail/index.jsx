@@ -19,6 +19,7 @@ import {
 const IssueDetail = ({
   activeUser,
   data,
+  dispatchFetchWatchList,
   dispatchOpenModal,
   handleComment,
   handleIncrement,
@@ -91,6 +92,7 @@ const IssueDetail = ({
             <IssueDetailHeader
               activeUser={activeUser}
               data={data}
+              dispatchFetchWatchList={dispatchFetchWatchList}
               dispatchOpenModal={dispatchOpenModal}
               handleIncrement={handleIncrement}
               handleNav={handleNav}
@@ -133,6 +135,7 @@ const IssueDetail = ({
           <IssueSidebar
             activeUser={activeUser}
             data={data}
+            dispatchFetchWatchList={dispatchFetchWatchList}
             dispatchOpenModal={dispatchOpenModal}
             handleIncrement={handleIncrement}
             isSignedIn={isSignedIn}
@@ -150,6 +153,7 @@ IssueDetail.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   data: T.object,
+  dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
   handleComment: T.func,
   handleIncrement: T.func,

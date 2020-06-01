@@ -12,12 +12,21 @@ import { FETCH_WATCH_LIST } from './constants';
 export function* fetchWatchListSaga({ payload }) {
   const { idArray, modalState } = payload;
   const queryDictionary = {
+    issueAttemptList: `
+    query {
+      getWatchList(idArray: ${JSON.stringify(idArray)}, type: "${modalState}") {
+        id,
+        profilePic,
+        username,
+      }
+    }
+  `,
     issueWatchList: `
     query {
       getWatchList(idArray: ${JSON.stringify(idArray)}, type: "${modalState}") {
         id,
-        User,
         profilePic,
+        username,
       }
     }
   `,

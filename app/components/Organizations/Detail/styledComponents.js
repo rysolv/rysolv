@@ -173,6 +173,7 @@ export const IssueFundedAmount = styled.div`
   font-size: 1.8rem;
   font-weight: 500;
   justify-content: flex-end;
+  white-space: nowrap;
   width: 30%;
 `;
 
@@ -234,14 +235,17 @@ export const IssuesSearchHeaderContainer = styled.div`
 `;
 
 export const Language = styled.div`
+  align-items: center;
   color: ${textColor};
   display: flex;
-  padding-right: 1rem;
   font-size: 1.4rem;
+  padding: 0 1rem 1rem 0;
+  white-space: nowrap;
 `;
 
 export const LanguageWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 export const MainTabs = styled.div`

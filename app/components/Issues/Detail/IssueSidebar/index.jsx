@@ -12,6 +12,7 @@ import { Divider, StyledIssueSidebar, SidebarItem } from './styledComponents';
 const IssueSidebar = ({
   activeUser,
   data,
+  dispatchFetchWatchList,
   dispatchOpenModal,
   handleIncrement,
   isSignedIn,
@@ -42,6 +43,7 @@ const IssueSidebar = ({
       <SidebarItem>
         <WatchButton
           disabled={!open}
+          dispatchFetchWatchList={dispatchFetchWatchList}
           dispatchOpenModal={dispatchOpenModal}
           handleWatch={() =>
             handleIncrement({
@@ -54,6 +56,7 @@ const IssueSidebar = ({
           isSignedIn={isSignedIn}
           label={userWatching ? 'Watching' : 'Watch'}
           value={watching.length}
+          watching={watching}
         />
       </SidebarItem>
       <Divider />
@@ -66,6 +69,7 @@ const IssueSidebar = ({
 IssueSidebar.propTypes = {
   activeUser: T.object,
   data: T.object,
+  dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,
   isSignedIn: T.bool,

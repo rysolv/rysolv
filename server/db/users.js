@@ -120,9 +120,13 @@ const getUsers = async table => {
 
 const getWatchList = async (id, type) => {
   const paramsDictionary = {
+    issueAttemptList: {
+      table: 'users',
+      values: 'id, profile_pic AS "profilePic", username',
+    },
     issueWatchList: {
       table: 'users',
-      values: 'id, username AS "User", profile_pic AS "profilePic"',
+      values: 'id, profile_pic AS "profilePic", username',
     },
     userAttemptList: {
       table: 'issues',

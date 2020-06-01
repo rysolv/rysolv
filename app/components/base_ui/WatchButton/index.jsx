@@ -26,7 +26,7 @@ const WatchButton = ({
         if (!isSignedIn) {
           return dispatchOpenModal({ modalState: 'signIn' });
         }
-        return handleWatch;
+        return handleWatch();
       }}
     >
       <MonocleIcon /> <LabelWrapper>{label}</LabelWrapper>

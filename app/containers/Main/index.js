@@ -47,6 +47,19 @@ export const Main = ({
     handleNav(route);
   };
   const modalPropsDictionary = {
+    issueAttemptList: {
+      Component: WatchList,
+      open: isModalOpen,
+      propsToPassDown: {
+        handleClose: dispatchCloseModal,
+        handleRedirect,
+        modalState: 'issueAttemptList',
+        route: '/users/detail',
+        tableData,
+        title: 'Attempt List',
+        type: 'issueAttemptList',
+      },
+    },
     issueWatchList: {
       Component: WatchList,
       open: isModalOpen,

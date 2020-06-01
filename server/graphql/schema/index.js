@@ -157,10 +157,8 @@ module.exports = buildSchema(`
 
   type WatchList {
     id: ID
-    Amount: Float
-    Issue: String
     profilePic: String
-    User: String
+    username: String
   }
 
   type Organization {

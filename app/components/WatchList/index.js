@@ -1,10 +1,16 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { BaseTable, IconButton } from 'components/base_ui';
+import { ConditionalRender, IconButton } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
-import { IconWrapper, StyledTitle } from './styledComponents';
+import EmptyList from './EmptyList';
+import ListComponent from './ListComponent';
+import {
+  IconWrapper,
+  StyledTitle,
+  WatchListContainer,
+} from './styledComponents';
 
 const closeIcon = iconDictionary('close');
 
@@ -16,7 +22,7 @@ const WatchList = ({
   title,
   type,
 }) => (
-  <div>
+  <WatchListContainer>
     <IconWrapper>
       <IconButton
         icon={closeIcon}
@@ -25,13 +31,18 @@ const WatchList = ({
       />
     </IconWrapper>
     <StyledTitle>{title}</StyledTitle>
-    <BaseTable
-      handleRedirect={handleRedirect}
-      route={route}
-      tableData={tableData}
-      type={type}
+    <ConditionalRender
+      Component={
+        <ListComponent
+          handleRedirect={handleRedirect}
+          route={route}
+          tableData={tableData}
+        />
+      }
+      FallbackComponent={<EmptyList type={type} />}
+      shouldRender={!!tableData.length}
     />
-  </div>
+  </WatchListContainer>
 );
 
 WatchList.propTypes = {

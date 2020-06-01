@@ -8,7 +8,7 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import IssueDetail from 'components/Issues/Detail';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { openModalState } from 'containers/Main/actions';
+import { fetchWatchList, openModalState } from 'containers/Main/actions';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -48,6 +48,7 @@ export class IssuesDetail extends React.PureComponent {
   render() {
     const {
       activeUser,
+      dispatchFetchWatchList,
       dispatchOpenModal,
       error,
       handleComment,
@@ -68,6 +69,7 @@ export class IssuesDetail extends React.PureComponent {
         isRequiredData
         propsToPassDown={{
           activeUser,
+          dispatchFetchWatchList,
           dispatchOpenModal,
           handleComment,
           handleIncrement,
@@ -83,6 +85,7 @@ export class IssuesDetail extends React.PureComponent {
 IssuesDetail.propTypes = {
   activeUser: T.object,
   dispatchFetchIssueDetail: T.func,
+  dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
   error: T.oneOfType([T.bool, T.object]),
   handleClearAlerts: T.func,
@@ -123,6 +126,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Main
      */
+    dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     /**
      * Reducer : Router

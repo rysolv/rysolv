@@ -124,7 +124,14 @@ const IssueCard = ({
                 ) : null}
 
                 {open ? (
-                  <IssueCardItem>
+                  <IssueCardItem
+                    onClick={() =>
+                      dispatchFetchWatchList({
+                        idArray: attempting,
+                        modalState: 'issueAttemptList',
+                      })
+                    }
+                  >
                     <IssueCardIconWrapper>
                       {AttemptingIcon}
                     </IssueCardIconWrapper>
