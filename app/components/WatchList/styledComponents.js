@@ -38,6 +38,7 @@ export const StyledTitle = styled.h1`
 
 export const Username = styled.a`
   font-size: ${defaultFontSize};
+  font-weight: 500;
   padding-left: 2rem;
 
   &:hover {
@@ -60,7 +61,7 @@ export const WatchListContainer = styled.div`
 
 export const WatchListDetail = styled.div`
   align-items: center;
-  color: ${textColor};
+  color: #007bff;
   display: flex;
   flex: 100%;
   height: 100%;
