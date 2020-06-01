@@ -33,11 +33,10 @@ const CreditCardIcon = iconDictionary('creditCard');
 const PaypalIcon = iconDictionary('paypal');
 
 const PaymentPortal = ({
-  amountFunded,
+  fundedAmount,
   dispatchVerifyRecaptcha,
   dispatchVerifyRecaptchaFailure,
   handleNav,
-  isFunded,
   users,
 }) => {
   const [fundAmount, setFundAmount] = useState('2');
@@ -77,8 +76,8 @@ const PaymentPortal = ({
   return (
     <PaymentContainer>
       <OverviewWrapper>
-        <Amount>{formatDollarAmount(amountFunded)}</Amount>
-        <Funded>{isFunded ? 'Funded' : 'Unfunded'}</Funded>
+        <Amount>{formatDollarAmount(fundedAmount)}</Amount>
+        <Funded>{fundedAmount ? 'Funded' : 'Unfunded'}</Funded>
         <UsersFunded>
           {users.map(({ amount, image, name }) => (
             <Fragment key={`user-${name}`}>
@@ -135,11 +134,10 @@ const PaymentPortal = ({
 };
 
 PaymentPortal.propTypes = {
-  amountFunded: T.string,
   dispatchVerifyRecaptcha: T.func,
   dispatchVerifyRecaptchaFailure: T.func,
+  fundedAmount: T.string,
   handleNav: T.func,
-  isFunded: T.bool,
   users: T.array,
 };
 

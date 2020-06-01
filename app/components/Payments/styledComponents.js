@@ -129,6 +129,8 @@ export const StyledReCAPTCHA = styled(ReCAPTCHA)`
 `;
 
 export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
+  white-space: nowrap;
+
   .grouped {
     border-radius: inherit;
     border: 1px solid rgba(0, 0, 0, 0.12);

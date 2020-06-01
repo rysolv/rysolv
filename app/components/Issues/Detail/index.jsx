@@ -3,6 +3,7 @@ import T from 'prop-types';
 // import { BackNav } from 'components/base_ui';
 import { CommentCard, NoComment, NewComment } from 'components/Comments';
 import UpvotePanel from 'components/Upvote';
+import PaymentPortal from 'components/Payments';
 import IssueDetailHeader from './IssueDetailHeader';
 import IssueStatusBar from './IssueStatusBar';
 import IssueSidebar from './IssueSidebar';
@@ -28,23 +29,24 @@ const IssueDetail = ({
   isSignedIn,
 }) => {
   const {
-    id,
-    createdDate,
     body,
-    rep,
     comments,
+    createdDate,
+    fundedAmount,
+    id,
     open,
+    profilePic,
+    rep,
     userId,
     username,
-    profilePic,
   } = data;
 
   const primaryUser = {
-    small: true,
-    detailRoute: `/users/detail/${userId}`,
     alt: username,
-    username,
+    detailRoute: `/users/detail/${userId}`,
     profilePic,
+    small: true,
+    username,
   };
 
   const generateComments = () =>
@@ -70,11 +72,9 @@ const IssueDetail = ({
   const commentsDiv =
     comments && comments.length > 0 ? generateComments() : <NoComment />;
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
-
   return (
     <Fragment>
       {/* <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" /> */}
-
       <DetailContainer>
         <IssueDetailWrapper>
           <LeftPanel>
@@ -139,6 +139,11 @@ const IssueDetail = ({
             dispatchOpenModal={dispatchOpenModal}
             handleIncrement={handleIncrement}
             isSignedIn={isSignedIn}
+          />
+          <PaymentPortal
+            fundedAmount={fundedAmount}
+            handleNav={handleNav}
+            users={[]}
           />
         </SidebarContainer>
       </DetailContainer>
