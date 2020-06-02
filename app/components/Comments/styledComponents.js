@@ -37,6 +37,9 @@ export const CommentContainer = styled.div`
     overflow-y: auto;
     overflow-x: hidden;
   }
+  image {
+    width: auto;
+  }
   code {
     background-color: ${codeGrey};
     font-family: monospace;
@@ -61,7 +64,7 @@ export const CommentBody = styled.div`
     background-color: white;
     color: ${textColor};
     font-family: inherit;
-    width: 100%;
+    max-width: 100%;
   }
 `;
 
