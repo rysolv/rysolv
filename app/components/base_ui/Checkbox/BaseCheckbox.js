@@ -1,43 +1,24 @@
 import React from 'react';
 import T from 'prop-types';
 import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import StyledCheckbox from './styledComponents';
 
-const BaseCheckbox = ({
-  checked,
-  className,
-  disabled,
-  formControlProps,
-  label,
-  onChange,
-  ...restProps
-}) => (
-  <StyledCheckbox className={className}>
-    <FormControlLabel
-      classes={{ label: 'label', root: 'formControl' }}
-      control={
-        <Checkbox
-          checked={checked}
-          classes={{ checked: 'checked', root: 'checkbox' }}
-          disabled={disabled}
-          onChange={onChange}
-          {...restProps}
-        />
-      }
-      label={label}
-      {...formControlProps}
-    />
-  </StyledCheckbox>
+const CheckboxComponent = ({ checked, disabled, onChange, ...restProps }) => (
+  <Checkbox
+    checked={checked}
+    classes={{ checked: 'checked', root: 'checkbox' }}
+    color="default"
+    disabled={disabled}
+    onChange={onChange}
+    {...restProps}
+  />
 );
 
-BaseCheckbox.propTypes = {
-  checked: T.bool,
-  className: T.string,
+Checkbox.defaultProps = { disabled: false };
+
+CheckboxComponent.propTypes = {
+  checked: T.bool.isRequired,
   disabled: T.bool,
-  formControlProps: T.object,
-  label: T.string,
-  onChange: T.func,
+  onChange: T.func.isRequired,
 };
 
-export default BaseCheckbox;
+export default CheckboxComponent;

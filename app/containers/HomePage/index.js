@@ -1,30 +1,16 @@
-/*
- * HomePage
- *
- * This is the first thing users see of our App, at the '/' route
- *
- */
-
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
-import {
-  BaseButton,
-  BaseCheckbox,
-  BaseInput,
-  BaseLink,
-} from '../../components/base_ui';
-import Footer from '../../components/Footer';
+
+import Splash from 'components/Splash';
+import Landing from 'components/Landing';
+
+import { HomePageContainer } from './styledComponents';
 
 export default function HomePage() {
+  document.title = 'Rysolv';
   return (
-    <h1>
-      <BaseButton label="hello" />
-      <BaseLink label="hello" path="/" />
-      <FormattedMessage {...messages.header} />
-      <Footer />
-      <BaseInput label="hello" />
-      <BaseCheckbox label="hello" />
-    </h1>
+    <HomePageContainer>
+      <Splash />
+      <Landing />
+    </HomePageContainer>
   );
 }

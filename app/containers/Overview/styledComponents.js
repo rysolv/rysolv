@@ -1,0 +1,33 @@
+import styled from 'styled-components';
+
+import { headerFontSize, textColor } from 'defaultStyleHelper';
+
+export const ComponentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 0 0 10rem 0;
+`;
+
+export const ContentContainer = styled.div`
+  display: inline-flex;
+  justify-content: space-between;
+`;
+
+export const FilterContainer = styled.div`
+  width: 30%;
+`;
+
+export const OverviewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const OverviewHeader = styled.div`
+  color: ${textColor};
+  display: flex;
+  font-size: ${headerFontSize};
+  margin: 5rem 0 2rem 2rem;
+  width: 100%;
+`;

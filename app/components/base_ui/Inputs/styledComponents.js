@@ -1,12 +1,98 @@
+import React from 'react';
 import styled from 'styled-components';
+import FormControl from '@material-ui/core/FormControl';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import TextField from '@material-ui/core/TextField';
 
-const StyledBaseInput = styled(OutlinedInput)`
+import {
+  defaultFontSize,
+  errorBorder,
+  inputBorder,
+  textColor,
+} from 'defaultStyleHelper';
+
+import { FlatIconButton } from '../Buttons';
+
+export const Spacer = styled.div`
+  height: 1.5rem;
+`;
+
+export const StyledBaseInput = styled(({ textAlign, ...restProps }) => (
+  <OutlinedInput {...restProps} />
+))`
   background: white;
   border-radius: 0.5rem;
-  font-size: 1rem;
-  height: 4rem;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: ${defaultFontSize};
+  height: 3rem;
+  overflow: hidden;
+  width: 100%;
+
+  &.adornedStart {
+    padding: 0;
+  }
+
+  .input {
+    padding: 0 2rem;
+    text-align: ${({ textAlign }) => textAlign || 'start'};
+  }
+`;
+
+export const StyledBaseTextInput = styled(TextField)`
+  font-size: ${defaultFontSize};
+  margin: 0rem 1rem;
+
+  .base-input {
+    color: ${textColor};
+    font-size: ${defaultFontSize};
+  }
+
+  .label {
+    color: ${textColor};
+    font-size: ${defaultFontSize};
+
+    &.focused {
+      color: ${textColor};
+    }
+  }
+
+  .underline {
+    border-bottom: ${({ error }) => (error ? errorBorder : inputBorder)};
+
+    &:before {
+      border-bottom: none;
+    }
+
+    &:after {
+      border-bottom: none;
+    }
+  }
+`;
+
+export const StyledFormControl = styled(FormControl)`
+  margin-bottom: 0.7rem;
   width: 100%;
 `;
 
-export default StyledBaseInput;
+export const StyledFlatIcon = styled.div`
+  font-size: ${defaultFontSize};
+
+  justify-content: flex-end;
+  padding: 0;
+`;
+
+export const StyledFlatIconButton = styled(FlatIconButton)`
+  font-size: ${defaultFontSize};
+
+  justify-content: flex-end;
+  padding: 0;
+`;
+
+export const StyledModalIcon = styled.div`
+  background-color: rgba(0, 0, 0, 0.12);
+  border-radius: 0;
+  font-size: ${({ fontSize }) => fontSize || '1.4rem'};
+  padding: 2rem 0;
+  text-align: center;
+  width: 10rem;
+`;

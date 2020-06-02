@@ -1,10 +1,25 @@
+/* eslint-disable no-restricted-globals */
 import { createGlobalStyle } from 'styled-components';
+import { bodyColor } from './defaultStyleHelper';
 
 const GlobalStyle = createGlobalStyle`
+  html {
+    font-size: 62.5%;
+  }
+
   html,
   body {
     height: 100%;
     width: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  a:hover {
+    color: inherit;
   }
 
   body {
@@ -16,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #app {
-    background-color: #fafafa;
+    background-color: ${bodyColor};
     min-height: 100%;
     min-width: 100%;
   }

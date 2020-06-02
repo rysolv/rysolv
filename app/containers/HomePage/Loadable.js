@@ -1,7 +1,11 @@
 /**
- * Asynchronously loads the component for HomePage
+ * Asynchronously loads the container for HomePage
  */
 
-import loadable from 'utils/loadable';
+import loadable from 'react-loadable';
+import AsyncLoad from '../../components/AsyncLoad';
 
-export default loadable(() => import('./index'));
+export default loadable({
+  loader: () => import('./index'),
+  loading: AsyncLoad,
+});
