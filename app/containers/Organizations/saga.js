@@ -191,15 +191,17 @@ export function* saveInfoSaga({ payload }) {
       organizationRepo,
       organizationUrl,
     },
+    activeUser: { id: userId },
   } = payload;
   const query = `
   mutation {
     createOrganization(organizationInput: {
-      organizationName: "${organizationName}",
       organizationDescription: "${organizationDescription}",
+      organizationLogo: "${organizationLogo}",
+      organizationName: "${organizationName}",
       organizationRepo: "${organizationRepo}",
       organizationUrl: "${organizationUrl}",
-      organizationLogo: "${organizationLogo}",
+      ownerId: "${userId}"
     })
     { id }
   }`;

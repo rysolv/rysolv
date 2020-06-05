@@ -4,11 +4,13 @@ module.exports = buildSchema(`
   scalar Object
 
   type Activity {
+    actionType: String
     activityId: ID
     createdDate: Object
-    actionType: String
     issueId: ID
+    issueName: String
     organizationId: ID
+    organizationName: String
     pullRequestId: ID
     userId: ID
     value: Float
@@ -182,9 +184,10 @@ module.exports = buildSchema(`
     organizationDescription: String
     organizationLogo: String
     organizationName: String
-    organizationUrl: String
     organizationRepo: String
+    organizationUrl: String
     organizationVerified: Boolean
+    ownerId: ID
   }
 
   type Error {
@@ -197,6 +200,7 @@ module.exports = buildSchema(`
 
   type RootQuery {
     getActivity(column: String!, id: ID): [Activity]!
+    getAllActivity: [Activity]!
     getComments: [Comment]!
     getIssues: [Issue!]!
     getOrganizations: [Organization!]!
@@ -220,7 +224,7 @@ module.exports = buildSchema(`
     createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): Comment
     createIssue(issueInput: IssueInput): Issue!
-    createOrganization(organizationInput: OrganizationInput): [Organization!]!
+    createOrganization(organizationInput: OrganizationInput): Organization!
     createUser(userInput: UserInput): [User!]!
 
     deleteIssue(id: ID!): String!

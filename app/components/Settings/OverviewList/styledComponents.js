@@ -62,6 +62,7 @@ export const OverviewListDetail = styled.div`
   flex-direction: row;
   flex: 100%;
   height: 100%;
+  justify-content: space-between;
   margin: 1rem 0;
 `;
 
