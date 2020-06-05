@@ -8,8 +8,8 @@ export const FooterWrapper = styled.footer`
   flex-direction: row;
   font-size: ${detailFontSize};
   height: 10rem;
-  width: 100%;
   margin-top: 15rem;
+  width: 100%;
 `;
 
 export const StyledLeft = styled.div`
