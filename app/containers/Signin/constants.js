@@ -1,2 +1,3 @@
-export const INPUT_CHANGE = 'app/Organizations/INPUT_CHANGE';
-export const INPUT_ERROR = 'app/Organizations/INPUT_ERROR';
+export const INPUT_CHANGE = 'app/Signin/INPUT_CHANGE';
+
+export const INPUT_ERROR = 'app/Signin/INPUT_ERROR';

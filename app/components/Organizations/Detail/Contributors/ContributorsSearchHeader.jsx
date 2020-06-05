@@ -12,13 +12,16 @@ import {
 const SearchIcon = iconDictionary('search');
 
 const ContributorsSearchHeader = ({ handleInputChange }) => {
-  useEffect(() => {
-    handleInputChange({
-      field: 'contributorInput',
-      form: 'search',
-      value: '',
-    });
-  }, []);
+  useEffect(
+    () => () => {
+      handleInputChange({
+        field: 'contributorInput',
+        form: 'search',
+        value: '',
+      });
+    },
+    [],
+  );
 
   return (
     <ContributorsSearchHeaderContainer>
