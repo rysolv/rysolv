@@ -136,7 +136,7 @@ const PaymentPortal = ({
 PaymentPortal.propTypes = {
   dispatchVerifyRecaptcha: T.func,
   dispatchVerifyRecaptchaFailure: T.func,
-  fundedAmount: T.string,
+  fundedAmount: T.number,
   handleNav: T.func,
   users: T.array,
 };

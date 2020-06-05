@@ -93,6 +93,15 @@ export const Divider = styled.div`
   width: 90%;
 `;
 
+export const EmptyMessageComponent = styled.div`
+  align-items: center;
+  color: ${textColor};
+  display: flex;
+  font-size: ${defaultFontSize};
+  height: 50%;
+  justify-content: center;
+`;
+
 export const FundContent = styled.div`
   display: flex;
   flex-direction: column;

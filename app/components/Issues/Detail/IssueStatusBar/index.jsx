@@ -78,7 +78,7 @@ IssueStatusBar.propTypes = {
   data: T.object,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,
-  isDesktop: T.string,
+  isDesktop: T.bool,
   isSignedIn: T.bool,
 };
 

@@ -68,10 +68,12 @@ export class OrganizationDetailView extends React.PureComponent {
         repoUrl,
         verified,
       },
+      dispatchOpenModal,
       filterValues,
       handleInputChange,
       handleNav,
       handleUpvote,
+      isSignedIn,
     } = this.props;
     return (
       <DetailContainer>
@@ -108,10 +110,12 @@ export class OrganizationDetailView extends React.PureComponent {
           <MainTabs>
             <OrganizationDetailTabs
               contributors={contributors}
+              dispatchOpenModal={dispatchOpenModal}
               filterValues={filterValues}
               handleInputChange={handleInputChange}
               handleNav={handleNav}
               handleUpvote={handleUpvote}
+              isSignedIn={isSignedIn}
               issues={issues}
             />
           </MainTabs>
@@ -128,10 +132,12 @@ export class OrganizationDetailView extends React.PureComponent {
 
 OrganizationDetailView.propTypes = {
   data: T.object,
+  dispatchOpenModal: T.func,
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
   handleNav: T.func,
   handleUpvote: T.func,
+  isSignedIn: T.bool,
 };
 
 export default OrganizationDetailView;
