@@ -17,11 +17,7 @@ module.exports = {
       ],
     ];
 
-    console.log('activity input', activity);
-
     const [result] = await createActivity(activity);
-
-    console.log('activity', result);
 
     return {
       commentId: result.activity_id,
