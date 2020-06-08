@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 
+const { createActivity } = require('./activityResolver');
 const {
   checkDuplicateOrganization,
   createOrganization,
@@ -47,13 +48,21 @@ module.exports = {
         organizationInput.organizationLogo || defaultOrgLogo,
         organizationInput.verified || false,
         organizationInput.contributors || [],
-        organizationInput.ownerId || uuidv4(),
+        organizationInput.ownerId,
         organizationInput.totalFunded || 0,
         organizationInput.preferredLanguages || [],
       ],
     ];
     try {
-      const result = await createOrganization(organization);
+      const [result] = await createOrganization(organization);
+
+      const activityInput = {
+        actionType: 'create',
+        organizationId: result.id,
+        userId: result.owner_id,
+      };
+      await createActivity({ activityInput });
+
       return result;
     } catch (err) {
       throw err;
@@ -189,6 +198,12 @@ module.exports = {
               totalFunded: queryResult.total_funded,
               preferredLanguages: queryResult.preferred_languages,
             };
+            const activityInput = {
+              actionType: 'create',
+              organizationId: result.id,
+              userId: result.owner_id,
+            };
+            await createActivity({ activityInput });
             return {
               __typename: 'Organization',
               ...result,
@@ -238,6 +253,12 @@ module.exports = {
           totalFunded: queryResult.total_funded,
           preferredLanguages: queryResult.preferred_languages,
         };
+        const activityInput = {
+          actionType: 'create',
+          organizationId: result.id,
+          userId: result.owner_id,
+        };
+        await createActivity({ activityInput });
         return {
           __typename: 'Organization',
           ...result,

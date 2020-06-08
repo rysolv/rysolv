@@ -20,6 +20,8 @@ const {
   upvoteIssue,
 } = require('../../db');
 
+const { createActivity } = require('./activityResolver');
+
 const { getSingleIssue, getSingleRepo } = require('../../integrations');
 
 const newIssueArray = (issueId, issueInput) => [
@@ -105,11 +107,26 @@ module.exports = {
     // Check for existing organization
     if (!organizationId) {
       const organizationResult = await createNewOrganization();
+
+      const activityInput = {
+        actionType: 'create',
+        organizationId: organizationResult.id,
+        userId: organizationResult.owner_id,
+      };
+      await createActivity({ activityInput });
+
       issueInput.organizationId = organizationResult.id;
     }
 
     // Create new issue
     const [issueResult] = await createNewIssue();
+
+    const activityInput = {
+      actionType: 'create',
+      issueId: issueResult.id,
+      userId: issueResult.contributor_id,
+    };
+    await createActivity({ activityInput });
 
     // add issue to organization
     await updateOrganizationArray(
@@ -236,7 +253,7 @@ module.exports = {
         language: issueInput.language,
         comments: issueInput.comments,
         attempting: issueInput.attempting,
-        contributor: issueInput.contributor,
+        contributor_id: issueInput.contributorId,
         rep: issueInput.rep,
         watching: issueInput.watching,
         funded_amount: issueInput.fundedAmount,
@@ -254,12 +271,20 @@ module.exports = {
         language: queryResult.language,
         comments: queryResult.comments,
         attempting: queryResult.attempting,
-        contributor: queryResult.contributor,
+        contributorId: queryResult.contributor_id,
         rep: queryResult.rep,
         watching: queryResult.watching,
         fundedAmount: queryResult.funded_amount,
         open: queryResult.open,
       };
+
+      const activityInput = {
+        actionType: 'update',
+        issueId: result.id,
+        userId: result.contributorId,
+      };
+      await createActivity({ activityInput });
+
       return result;
     } catch (err) {
       throw err;

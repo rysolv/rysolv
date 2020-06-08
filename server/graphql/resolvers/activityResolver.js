@@ -8,15 +8,20 @@ module.exports = {
       [
         uuidv4(),
         new Date(),
-        activityInput.actionType,
-        activityInput.issueId,
-        activityInput.organizationId,
-        activityInput.pullRequestId,
-        activityInput.userId,
-        activityInput.value,
+        activityInput.actionType || null,
+        activityInput.issueId || null,
+        activityInput.organizationId || null,
+        activityInput.pullRequestId || null,
+        activityInput.userId || null,
+        activityInput.value || null,
       ],
     ];
+
+    console.log('activity input', activity);
+
     const [result] = await createActivity(activity);
+
+    console.log('activity', result);
 
     return {
       commentId: result.activity_id,
@@ -28,6 +33,14 @@ module.exports = {
       userId: result.user_id,
       value: result.value,
     };
+  },
+  getAllActivity: async () => {
+    try {
+      const result = await getActivity('activity');
+      return result;
+    } catch (err) {
+      throw err;
+    }
   },
   getActivity: async args => {
     const { column, id } = args;

@@ -8,7 +8,7 @@ rysolv is built on a React front end with a Node/Express/GraphQL API and a Postg
 
 ### Running
 
-First follow the instructions in [/server/README.md](README.md)
+First follow the instructions in [/server/README.md](/server/README.md)
 
 - `npm i` to install dependencies
 - `npm run seed` to seed the database

@@ -7,6 +7,8 @@ const {
   updateUserArray,
 } = require('../../db');
 
+const { createActivity } = require('./activityResolver');
+
 module.exports = {
   createComment: async args => {
     const { commentInput } = args;
@@ -22,18 +24,22 @@ module.exports = {
     ];
     const [result] = await createComment(comment);
 
+    const activityInput = {
+      actionType: 'comment',
+      issueId: result.target,
+      userId: result.user_id,
+    };
+
+    await createActivity({ activityInput });
+
     const [user] = await updateUserArray(
       'users',
       'comments',
       commentInput.user,
       result.id,
     );
-    await updateIssueArray(
-      'issues',
-      'comments',
-      commentInput.target,
-      result.id,
-    );
+
+    await updateIssueArray('issues', 'comments', result.target, result.id);
 
     return {
       commentId: result.id,
