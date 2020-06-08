@@ -20,6 +20,18 @@ export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   width: 15rem;
 `;
 
+export const StyledFundedIcon = styled.div`
+  align-items: center;
+  background-color: #c4efe0;
+  border-radius: 50%;
+  color: #31b589;
+  display: flex;
+  height: 2.4rem;
+  place-content: center;
+  width: 2.4rem;
+  position: absolute;
+`;
+
 export const TimelineActivity = styled.span`
   color: #007bff;
 

@@ -7,22 +7,26 @@ module.exports = buildSchema(`
     actionType: String
     activityId: ID
     createdDate: Object
+    fundedValue: Float
     issueId: ID
     issueName: String
     organizationId: ID
     organizationName: String
     pullRequestId: ID
     userId: ID
-    value: Float
+    username: String
+  }
+  type ActivityArray {
+    activityArray: [Activity]
   }
 
   input ActivityInput {
     actionType: String
+    fundedValue: Float
     issueId: ID
     organizationId: ID
     pullRequestId: ID
     userId: ID
-    value: Float
   }
 
   type Comment {
@@ -197,10 +201,11 @@ module.exports = buildSchema(`
   union IssueResult = Issue | Error
   union OrganizationResult = Organization | Error
   union ImportResult = ImportData | Error
+  union ActivityResult = ActivityArray | Error
 
   type RootQuery {
-    getActivity(column: String!, id: ID): [Activity]!
-    getAllActivity: [Activity]!
+    getActivity(column: String!, id: ID): ActivityResult!
+    getAllActivity: ActivityResult!
     getComments: [Comment]!
     getIssues: [Issue!]!
     getOrganizations: [Organization!]!

@@ -4,11 +4,11 @@ const activityValues = `
   activity_id,
   created_date,
   action_type,
+  funded_value,
   issue_id,
   organization_id,
   pullrequest_id,
-  user_id,
-  value
+  user_id
 `;
 
 const activityReturnValues = `
@@ -19,7 +19,7 @@ const activityReturnValues = `
   activity.organization_id AS "organizationId",
   activity.pullrequest_id AS "pullRequestId",
   activity.user_id AS "userId",
-  activity.value,
+  activity.funded_value AS "fundedValue",
   issues.name AS "issueName",
   organizations.name AS "organizationName",
   users.username AS "username"

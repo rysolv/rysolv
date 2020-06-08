@@ -51,10 +51,10 @@ export function* deleteUserSaga({ payload }) {
 }
 
 export function* fetchInfoSaga({ payload }) {
-  const { itemId } = payload;
+  const { userId } = payload;
   const query = `
     query {
-      oneUser(column: "id", query: "${itemId}") {
+      oneUser(column: "id", query: "${userId}") {
         id,
         createdDate,
         firstName,
@@ -75,6 +75,27 @@ export function* fetchInfoSaga({ payload }) {
         modifiedDate,
         rejectedPullRequests,
       }
+      getActivity(column: "user_id", id: "${userId}") {
+        __typename
+        ... on ActivityArray {
+          activityArray {
+            activityId
+            createdDate
+            actionType
+            issueId
+            organizationId
+            organizationName
+            pullRequestId
+            userId
+            fundedValue
+            issueName
+            username
+          }
+        }
+        ... on Error {
+          message
+        }
+      }
     }
 `;
   try {
@@ -83,8 +104,12 @@ export function* fetchInfoSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { oneUser },
+      data: {
+        oneUser,
+        getActivity: { activityArray },
+      },
     } = yield call(post, '/graphql', graphql);
+    oneUser.activity = activityArray;
     yield put(fetchInfoSuccess({ oneUser }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
