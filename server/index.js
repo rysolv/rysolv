@@ -19,8 +19,8 @@ const { resolve } = require('path');
 const app = express();
 
 // for those extra large issues
-app.use(express.json({ limit: '25mb' }));
-app.use(express.urlencoded({ limit: '25mb' }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb' }));
 
 // route requests through GraphQL
 app.use(

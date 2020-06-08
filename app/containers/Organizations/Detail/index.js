@@ -12,7 +12,13 @@ import { openModalState } from 'containers/Main/actions';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { fetchInfo, inputChange, upvoteIssue } from '../actions';
+import {
+  clearAlerts,
+  fetchInfo,
+  inputChange,
+  updateInfo,
+  upvoteIssue,
+} from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -34,19 +40,27 @@ export class OrganizationsDetail extends React.PureComponent {
     dispatchFetchInfo({ itemId: id });
   }
 
+  componentWillUnmount() {
+    const { handleClearAlerts } = this.props;
+    handleClearAlerts();
+  }
+
   render() {
     const {
+      activeUser,
+      alerts,
       data,
+      dispatchEditOrganization,
       dispatchOpenModal,
       error,
       filterValues,
+      handleClearAlerts,
       handleInputChange,
       handleNav,
       handleUpvote,
       isSignedIn,
       loading,
     } = this.props;
-
     return (
       <AsyncRender
         asyncData={data}
@@ -55,8 +69,12 @@ export class OrganizationsDetail extends React.PureComponent {
         isRequiredData
         loading={loading}
         propsToPassDown={{
+          activeUser,
+          alerts,
+          dispatchEditOrganization,
           dispatchOpenModal,
           filterValues,
+          handleClearAlerts,
           handleInputChange,
           handleNav,
           handleUpvote,
@@ -68,11 +86,15 @@ export class OrganizationsDetail extends React.PureComponent {
 }
 
 OrganizationsDetail.propTypes = {
+  activeUser: T.object.isRequired,
+  alerts: T.object.isRequired,
   data: T.object,
-  dispatchFetchInfo: T.func,
+  dispatchEditOrganization: T.func.isRequired,
+  dispatchFetchInfo: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object.isRequired,
+  handleClearAlerts: T.func.isRequired,
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
   handleUpvote: T.func.isRequired,
@@ -85,10 +107,12 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Auth
    */
+  activeUser: makeSelectAuth('activeUser'),
   isSignedIn: makeSelectAuth('isSignedIn'),
   /**
    * Reducer : Organizations
    */
+  alerts: makeSelectOrganizations('alerts'),
   data: makeSelectOrganizationsFormattedData(),
   error: makeSelectOrganizationsError('fetchOrganization'),
   filterValues: makeSelectOrganizations('filter'),
@@ -108,7 +132,9 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Organizations
      */
+    dispatchEditOrganization: payload => dispatch(updateInfo(payload)),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleInputChange: payload => dispatch(inputChange(payload)),
     /**
      * Reducer : Router

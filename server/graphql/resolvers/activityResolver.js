@@ -31,13 +31,10 @@ module.exports = {
   },
   getActivity: async args => {
     const { column, id } = args;
-    console.log(args);
     try {
       const result = await getActivity('activity', column, id);
-      console.log(result);
       return result;
     } catch (err) {
-      console.log(err);
       throw err;
     }
   },

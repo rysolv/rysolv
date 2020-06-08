@@ -13,6 +13,39 @@ import {
 
 import { FlatIconButton } from '../Buttons';
 
+export const FileInputIcon = styled.label`
+  align-items: center;
+  background-color: white;
+  border-radius: 50%;
+  border: 0.2rem solid #1e88e5;
+  bottom: -1rem;
+  color: #1e88e5;
+  display: flex;
+  height: 4rem;
+  justify-content: center;
+  position: absolute;
+  right: -1rem;
+  width: 4rem;
+
+  &:hover {
+    background-color: white;
+    cursor: pointer;
+  }
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+  }
+`;
+
+export const HiddenInput = styled.input`
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 0.1rem;
+  overflow: hidden;
+  position: absolute;
+  width: 0.1rem;
+`;
+
 export const Spacer = styled.div`
   height: 1.5rem;
 `;
