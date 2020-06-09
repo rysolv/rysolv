@@ -10,7 +10,6 @@ import { formatDollarAmount } from 'utils/globalHelpers';
 import {
   HeaderWrapper,
   StyledBaseDropDownMenu,
-  StyledFundedIcon,
   StyledH3,
   TimelineActivity,
   TimelineContainer,
@@ -34,38 +33,40 @@ const UserTimelineView = ({
 }) => {
   const activityDiv = activity.map((el, index) => {
     const {
-      user: { username },
       action,
       activityId,
-      icon,
-      target: { targetType, targetName },
       date,
+      fundedValue,
+      icon,
+      path,
+      target: { targetType, targetName },
+      user: { username },
     } = el;
 
     const TimelineListItemComponent = (
       <TimelineListItem key={activityId}>
         <TimelineDividerContainer>
-          <TimelineVerticalDivider />{' '}
-          <StyledFundedIcon>{icon}</StyledFundedIcon>
+          <TimelineVerticalDivider />
+          {icon}
         </TimelineDividerContainer>
         <TimelineContent>
           <TimelineType>
-            {username} {action} {targetType} {targetName}
+            {username} {action} {targetType}
           </TimelineType>
           <TimelineInfo>
             <ConditionalRender
               Component={
                 <Fragment>
                   <TimelineDollar>
-                    {formatDollarAmount(activity.amount)}
+                    {formatDollarAmount(fundedValue)}
                   </TimelineDollar>
-                  &nbsp;
+                  for &nbsp;
                 </Fragment>
               }
-              shouldRender={!!activity.amount}
+              shouldRender={!!fundedValue}
             />
-            <TimelineActivity onClick={() => handleNav('/issues/detail')}>
-              {activity.issue}
+            <TimelineActivity onClick={() => handleNav(path)}>
+              {targetName}
             </TimelineActivity>
           </TimelineInfo>
         </TimelineContent>
