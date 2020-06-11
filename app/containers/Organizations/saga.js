@@ -19,13 +19,14 @@ import {
 import {
   deleteOrganizationFailure,
   deleteOrganizationSuccess,
+  fetchInfo,
+  fetchInfoFailure,
+  fetchInfoSuccess,
   fetchOrganizations,
   fetchOrganizationsFailure,
   fetchOrganizationsSuccess,
-  fetchInfoFailure,
-  fetchInfoSuccess,
-  importOrganizationSuccess,
   importOrganizationFailure,
+  importOrganizationSuccess,
   saveInfoFailure,
   saveInfoSuccess,
   searchOrganizationsFailure,
@@ -260,29 +261,37 @@ export function* updateInfoSaga({ payload }) {
     description,
     logo,
     name,
+    preferredLanguages,
     repoUrl,
     verified,
   } = editRequest;
   const query = `
     mutation {
       transformOrganization(id: "${itemId}", organizationInput: {
-        name: "${name}",
-        description: "${description}",
-        repoUrl: "${repoUrl}",
+        organizationDescription: "${description}",
+        organizationLogo: "${logo}",
+        organizationName: "${name}",
+        organizationPreferredLanguages: ${JSON.stringify(preferredLanguages)},
+        organizationRepo: "${repoUrl}",
         organizationUrl: "${organizationUrl}",
-        logo: "${logo}",
-        verified: ${verified},
+        organizationVerified: ${verified},
       }) {
-        id,
-        createdDate,
-        modifiedDate,
-        name,
-        description,
-        repoUrl,
-        organizationUrl,
-        issues,
-        logo,
-        verified,
+        __typename
+        ... on Organization {
+          id,
+          createdDate,
+          modifiedDate,
+          name,
+          description,
+          repoUrl,
+          organizationUrl,
+          issues,
+          logo,
+          verified,
+        }
+        ... on Error {
+          message
+        }
       }
     }
   `;
@@ -291,8 +300,13 @@ export function* updateInfoSaga({ payload }) {
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
-    yield put(fetchOrganizations());
+    const {
+      data: { transformOrganization },
+    } = yield call(post, '/graphql', graphql);
+    if (transformOrganization.__typename === 'Error') {
+      throw transformOrganization;
+    }
+    yield put(fetchInfo({ itemId }));
     yield put(updateInfoSuccess({ message: successEditOrganizationMessage }));
   } catch (error) {
     yield put(updateInfoFailure({ error }));

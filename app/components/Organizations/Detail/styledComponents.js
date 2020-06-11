@@ -2,7 +2,13 @@ import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 
-import { BaseDropDownMenu } from 'components/base_ui';
+import {
+  BaseDropDownMenu,
+  BaseTextInput,
+  ErrorSuccessBanner,
+  PrimaryButton,
+  SecondaryButton,
+} from 'components/base_ui';
 
 import {
   defaultFontSize,
@@ -18,6 +24,7 @@ export const BaseInputWrapper = styled.div`
 
 export const ContentWrapper = styled.div`
   padding-left: 2rem;
+  width: 100%;
 `;
 
 export const ContributorContent = styled.div`
@@ -71,6 +78,7 @@ export const Description = styled.div`
   color: #6a737d;
   font-size: ${defaultFontSize};
   margin-bottom: 2rem;
+  text-align: justify;
 `;
 
 export const DetailContainer = styled.div`
@@ -91,6 +99,20 @@ export const Divider = styled.div`
   border-top: ${dividerBorder};
   margin: 1rem auto;
   width: 90%;
+`;
+
+export const EditLogoWrapper = styled.div`
+  height: 10rem;
+  position: relative;
+`;
+
+export const EmptyMessageComponent = styled.div`
+  align-items: center;
+  color: ${textColor};
+  display: flex;
+  font-size: ${defaultFontSize};
+  height: 50%;
+  justify-content: center;
 `;
 
 export const FundContent = styled.div`
@@ -121,6 +143,11 @@ export const FundsContainer = styled.div`
 export const FundWrapper = styled.div`
   display: flex;
   padding: 1.2rem 2rem;
+`;
+
+export const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const Icon = styled.div`
@@ -264,14 +291,13 @@ export const Name = styled.div`
 export const NameWrapper = styled.div`
   align-items: center;
   display: flex;
-  display: flex;
-  margin-bottom: 1rem;
 `;
 
 export const OrganizationUrl = styled.a`
   align-items: center;
   display: flex;
   margin-right: 2rem;
+  width: ${({ width }) => width || 'inherit'};
 
   &:hover {
     cursor: pointer;
@@ -293,6 +319,7 @@ export const RepoUrl = styled.a`
   align-items: center;
   display: flex;
   margin-right: 2rem;
+  width: ${({ width }) => width || 'inherit'};
 
   &:hover {
     cursor: pointer;
@@ -310,6 +337,15 @@ export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
 `;
 
+export const StyledBaseTextInput = styled(BaseTextInput)`
+  margin: 0.5rem 0;
+  width: ${({ width }) => width || 'inherit'};
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  width: 100%;
+`;
+
 export const StyledIcon = styled.div`
   color: ${textColor};
   padding-right: 0.5rem;
@@ -320,9 +356,28 @@ export const StyledIcon = styled.div`
   }
 `;
 
+export const StyledLanguageAutocomplete = styled.div`
+  margin: 0 -1rem;
+  width: 100%;
+`;
+
 export const StyledPaper = styled(Paper)`
   box-shadow: none;
   width: 100%;
+`;
+
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  margin-right: 0;
+`;
+
+export const StyledSecondayButton = styled(SecondaryButton)`
+  background-color: white;
+  border: 0.1rem solid #1e88e5;
+  color: #1e88e5;
+
+  &:hover {
+    background-color: white;
+  }
 `;
 
 export const StyledTab = styled(Tab)`
@@ -354,7 +409,7 @@ export const TabsContainer = styled.div`
 export const TopLanguagesContainer = styled.div`
   color: ${textColor};
   padding: 1.6rem;
-  width: fit-content;
+  width: 100%;
 `;
 
 export const VerifiedWrapper = styled.div`
@@ -368,8 +423,8 @@ export const VerifiedWrapper = styled.div`
 `;
 
 export const UrlWrapper = styled.div`
-  color: #24292e;
+  color: ${textColor};
   display: flex;
   flex-direction: row;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 `;

@@ -20,7 +20,13 @@ import {
   IssuesList,
 } from '../styledComponents';
 
-const OrganizationIssuesTab = ({ handleNav, handleUpvote, issues }) => (
+const OrganizationIssuesTab = ({
+  dispatchOpenModal,
+  handleNav,
+  handleUpvote,
+  isSignedIn,
+  issues,
+}) => (
   <IssuesList>
     {issues.map(
       ({
@@ -36,11 +42,13 @@ const OrganizationIssuesTab = ({ handleNav, handleUpvote, issues }) => (
         <IssueListItem key={`list-item-${id}`}>
           <IssueContent>
             <UpvotePanel
-              upvoted={false}
+              dispatchOpenModal={dispatchOpenModal}
               handleUpvote={handleUpvote}
+              isSignedIn={isSignedIn}
               issueId={id}
-              userId={userId} // bug
               rep={rep}
+              upvoted={false}
+              userId={userId} // bug
             />
             <IssueContentInfo>
               <IssueModifiedDate>
@@ -71,9 +79,11 @@ const OrganizationIssuesTab = ({ handleNav, handleUpvote, issues }) => (
 );
 
 OrganizationIssuesTab.propTypes = {
-  issues: T.array,
+  dispatchOpenModal: T.func,
   handleNav: T.func,
   handleUpvote: T.func,
+  isSignedIn: T.bool,
+  issues: T.array,
 };
 
 export default OrganizationIssuesTab;

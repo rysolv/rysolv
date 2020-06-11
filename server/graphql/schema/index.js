@@ -188,6 +188,7 @@ module.exports = buildSchema(`
     organizationDescription: String
     organizationLogo: String
     organizationName: String
+    organizationPreferredLanguages: [String]
     organizationRepo: String
     organizationUrl: String
     organizationVerified: Boolean
@@ -240,7 +241,7 @@ module.exports = buildSchema(`
     importOrganization(url: String!): ImportResult
 
     transformIssue(id: ID!, issueInput: IssueInput): Issue!
-    transformOrganization(id: ID!, organizationInput: OrganizationInput): Organization!
+    transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!
     transformUser(id: ID!, userInput: UserInput): User!
 
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!

@@ -4,16 +4,16 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import injectReducer from 'utils/injectReducer';
+import { push } from 'connected-react-router';
 
 import { ConditionalRender } from 'components/base_ui';
-
-import { push } from 'connected-react-router';
+import Signup from 'components/Signin/Signup';
 import { signin } from 'containers/Auth/actions';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import Signup from 'components/Signin/Signup';
-import { makeSelectSignin } from '../selectors';
+import injectReducer from 'utils/injectReducer';
+
 import { inputChange } from '../actions';
+import { makeSelectSignin } from '../selectors';
 import reducer from '../reducer';
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -24,7 +24,7 @@ export class SignupContainer extends React.PureComponent {
   }
 
   render() {
-    const { data, isSignedIn, handleSignin, handleInputChange } = this.props;
+    const { data, handleInputChange, handleSignin, isSignedIn } = this.props;
     const signinComponent = (
       <Signup
         data={data}
@@ -58,17 +58,26 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : Auth
    */
-  data: makeSelectSignin('data'),
   isSignedIn: makeSelectAuth('isSignedIn'),
+  /*
+   * Reducer : Signin
+   */
+  data: makeSelectSignin('data'),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     /*
-     * Reducer : Router
+     * Reducer : Auth
      */
     handleSignin: payload => dispatch(signin(payload)),
+    /*
+     * Reducer : Router
+     */
     handleNav: route => dispatch(push(route)),
+    /*
+     * Reducer : Signin
+     */
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }
