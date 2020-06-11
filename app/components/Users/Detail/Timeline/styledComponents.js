@@ -15,6 +15,11 @@ export const StyledH3 = styled.h3`
   margin: 3rem 0;
 `;
 
+export const StyledAction = styled.div`
+  text-transform: capitalize;
+  font-weight: bold;
+`;
+
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
   width: 15rem;
@@ -94,7 +99,6 @@ export const TimelineTitle = styled.h4`
 export const TimelineType = styled.div`
   display: flex;
   font-size: 1.6rem;
-  font-weight: bolder;
   letter-spacing: 0.05rem;
   line-height: 2rem;
 `;

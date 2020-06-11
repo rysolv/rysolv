@@ -4,7 +4,12 @@ import React from 'react';
 import moment from 'moment';
 import iconDictionary from 'utils/iconDictionary';
 
-import { StyledAddIcon, StyledRemoveIcon } from './styledComponents';
+import {
+  StyledAddIcon,
+  StyledPullRequestIcon,
+  StyledRemoveIcon,
+  StyledCommentIcon,
+} from './styledComponents';
 
 const AddIcon = iconDictionary('addCircle');
 const CancelIcon = iconDictionary('cancel');
@@ -23,14 +28,16 @@ const AddAttempting = <StyledAddIcon>{AttemptIcon}</StyledAddIcon>;
 const RemoveAttempting = <StyledRemoveIcon>{AttemptIcon}</StyledRemoveIcon>;
 const Created = <StyledAddIcon>{AddIcon}</StyledAddIcon>;
 const Deleted = <StyledRemoveIcon>{CancelIcon}</StyledRemoveIcon>;
-const AddComment = <StyledAddIcon>{CommentIcon}</StyledAddIcon>;
+const AddComment = <StyledCommentIcon>{CommentIcon}</StyledCommentIcon>;
 const Edited = <StyledAddIcon>{Edit}</StyledAddIcon>;
 const Resolved = <StyledAddIcon>{SuccessIcon}</StyledAddIcon>;
-const PullRequest = <StyledAddIcon>{PullRequestIcon}</StyledAddIcon>;
+const PullRequest = (
+  <StyledPullRequestIcon>{PullRequestIcon}</StyledPullRequestIcon>
+);
 const Funded = <StyledAddIcon>{FundedIcon}</StyledAddIcon>;
 const Earned = <StyledAddIcon>{GiftIcon}</StyledAddIcon>;
 
-export const formatActivity = prop => {
+export const formatActivity = data => {
   const {
     activityId,
     createdDate,
@@ -43,16 +50,16 @@ export const formatActivity = prop => {
     fundedValue,
     issueName,
     username,
-  } = prop;
+  } = data;
 
   const actionDictionary = {
-    add_attempting: { action: 'attemped issue', icon: AddAttempting },
+    add_attempting: { action: 'started attempting', icon: AddAttempting },
     add_watching: { action: 'started watching', icon: AddWatching },
     close: { action: 'closed issue', icon: Deleted },
-    comment: { action: 'commented on an', icon: AddComment },
+    comment: { action: 'commented on', icon: AddComment },
     create: { action: 'created', icon: Created },
     delete: { action: 'deleted', icon: Deleted },
-    earn: { action: 'earned', icon: Earned },
+    earn: { action: 'earned a bounty', icon: Earned },
     fund: { action: 'funded', icon: Funded },
     open_pr: { action: 'opened pull request', icon: PullRequest },
     remove_attempting: { action: 'stopped attempting', icon: RemoveAttempting },

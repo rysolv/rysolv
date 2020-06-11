@@ -20,7 +20,14 @@ const makeSelectUserDetail = () =>
       const { activity } = user;
       const tempUser = { ...user };
       if (activity) {
-        const formattedActivity = activity.map(el => formatActivity(el));
+        const filteredActivity = activity.filter(
+          el =>
+            el.actionType !== 'add_watching' &&
+            el.actionType !== 'remove_watching',
+        );
+        const formattedActivity = filteredActivity.map(el =>
+          formatActivity(el),
+        );
         tempUser.activity = formattedActivity;
       }
       return tempUser;

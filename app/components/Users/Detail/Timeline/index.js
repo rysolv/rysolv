@@ -11,6 +11,7 @@ import {
   HeaderWrapper,
   StyledBaseDropDownMenu,
   StyledH3,
+  StyledAction,
   TimelineActivity,
   TimelineContainer,
   TimelineContent,
@@ -40,7 +41,6 @@ const UserTimelineView = ({
       icon,
       path,
       target: { targetType, targetName },
-      user: { username },
     } = el;
 
     const TimelineListItemComponent = (
@@ -51,7 +51,7 @@ const UserTimelineView = ({
         </TimelineDividerContainer>
         <TimelineContent>
           <TimelineType>
-            {username} {action} {targetType}
+            <StyledAction>{action}</StyledAction>&nbsp;{targetType}
           </TimelineType>
           <TimelineInfo>
             <ConditionalRender

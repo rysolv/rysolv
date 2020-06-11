@@ -22,7 +22,7 @@ const IssueStatusBar = ({
 }) => {
   const { attempting, fundedAmount, id, open } = data;
   const hasAttempting =
-    activeUser.attempting && activeUser.attempting.includes(id);
+    activeUser.attempting && !!activeUser.attempting.find(el => el.id === id);
   return (
     <StatusBar>
       <StatusItem>
