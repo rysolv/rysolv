@@ -120,18 +120,6 @@ export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
 `;
 
-export const StyledCancelIcon = styled.div`
-  align-items: center;
-  background-color: #ffcdd2;
-  border-radius: 50%;
-  color: #c62828;
-  display: flex;
-  height: 2.4rem;
-  place-content: center;
-  position: absolute;
-  width: 2.4rem;
-`;
-
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   margin-top: 1.6rem;
   width: 100%;
@@ -170,30 +158,6 @@ export const StyledExpansionPanelDetails = styled(ExpansionPanelDetails)`
   width: 100%;
 `;
 
-export const StyledFundedIcon = styled.div`
-  align-items: center;
-  background-color: #c4efe0;
-  border-radius: 50%;
-  color: #31b589;
-  display: flex;
-  height: 2.4rem;
-  place-content: center;
-  position: absolute;
-  width: 2.4rem;
-`;
-
-export const StyledGiftIcon = styled.div`
-  align-items: center;
-  background-color: rgb(236, 234, 252);
-  border-radius: 50%;
-  color: rgb(105, 8, 201);
-  display: flex;
-  height: 2.4rem;
-  place-content: center;
-  width: 2.4rem;
-  position: absolute;
-`;
-
 export const StyledH3 = styled.h3`
   color: ${textColor};
   font-size: 2rem;
@@ -208,18 +172,6 @@ export const StyledLanguageAutocomplete = styled.div`
 export const StyledPaper = styled(Paper)`
   box-shadow: none;
   width: 100%;
-`;
-
-export const StyledPullRequestIcon = styled.div`
-  align-items: center;
-  background-color: #fcdbc6;
-  border-radius: 50%;
-  color: #f47e34;
-  display: flex;
-  height: 2.4rem;
-  place-content: center;
-  position: absolute;
-  width: 2.4rem;
 `;
 
 export const StyledTab = styled(Tab)`

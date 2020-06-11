@@ -13,6 +13,11 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
 `;
 
+export const StyledAction = styled.div`
+  text-transform: capitalize;
+  font-weight: bold;
+`;
+
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
   width: 15rem;
