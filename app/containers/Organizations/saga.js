@@ -120,6 +120,27 @@ export function* fetchInfoSaga({ payload }) {
         message
       }
     }
+    getActivity(column: "activity.organization_id", id: "${itemId}") {
+      __typename
+      ... on ActivityArray {
+        activityArray {
+          activityId
+          createdDate
+          actionType
+          issueId
+          organizationId
+          organizationName
+          pullRequestId
+          userId
+          fundedValue
+          issueName
+          username
+        }
+      }
+      ... on Error {
+        message
+      }
+    }
   }
 `;
   try {
@@ -128,8 +149,12 @@ export function* fetchInfoSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { oneOrganization },
+      data: {
+        oneOrganization,
+        getActivity: { activityArray },
+      },
     } = yield call(post, '/graphql', graphql);
+    oneOrganization.activity = activityArray;
 
     if (oneOrganization.__typename === 'Error') {
       throw new Error(oneOrganization.message);
