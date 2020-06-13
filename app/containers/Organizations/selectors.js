@@ -2,6 +2,7 @@
 import { createSelector } from 'reselect';
 import { extend, omit } from 'lodash';
 
+import { formatActivity } from 'utils/formatActivity';
 import { filterContributors, filterIssues } from 'utils/filterHelpers';
 
 import {
@@ -74,7 +75,13 @@ const makeSelectOrganizationsFormattedData = () =>
     makeSelectOrganizations('search'),
     makeSelectOrganizations('shouldSearch'),
     (organization, filter, { contributorInput, issueInput }) => {
-      const { contributors, issues, ownerId, ...restProps } = organization;
+      const {
+        activity,
+        contributors,
+        issues,
+        ownerId,
+        ...restProps
+      } = organization;
       const newIssues = extend([], issues);
       let returnObj = {};
       if (contributors) {
@@ -93,6 +100,17 @@ const makeSelectOrganizationsFormattedData = () =>
       if (issues) {
         const filteredIssues = filterIssues(newIssues, filter, issueInput);
         returnObj = { issues: filteredIssues, ...returnObj };
+      }
+      if (activity) {
+        const filteredActivity = activity.filter(
+          el =>
+            el.actionType !== 'add_watching' &&
+            el.actionType !== 'remove_watching',
+        );
+        const formattedActivity = filteredActivity.map(el =>
+          formatActivity(el),
+        );
+        returnObj = { activity: formattedActivity, ...returnObj };
       }
       return returnObj;
     },

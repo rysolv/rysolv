@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
+import { Link } from 'react-router-dom';
 
 import {
   BaseDropDownMenu,
@@ -12,6 +13,7 @@ import {
 
 import {
   defaultFontSize,
+  detailFontSize,
   dividerBorder,
   hoverLinkColor,
   textColor,
@@ -116,33 +118,28 @@ export const EmptyMessageComponent = styled.div`
 `;
 
 export const FundContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 1.4rem;
+  width: 100%;
+  font-size: ${defaultFontSize};
   padding-left: 0.8rem;
 `;
 
-export const FundDate = styled.div`
-  color: #6a737d;
+export const ActivityDate = styled.div`
+  color: ${textColor};
+  font-size: ${detailFontSize};
   text-transform: uppercase;
+  text-align: right;
   padding: 0.5rem 0;
 `;
 
-export const FundSentence = styled.div`
-  line-height: 2rem;
-  width: 90%;
-`;
-
-export const FundsContainer = styled.div`
+export const ActivityContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 0;
   padding-left: 0;
 `;
 
-export const FundWrapper = styled.div`
-  display: flex;
-  padding: 1.2rem 2rem;
+export const ActivityWrapper = styled.div`
+  padding: 0.5rem 1rem;
 `;
 
 export const HeaderWrapper = styled.div`
@@ -204,12 +201,14 @@ export const IssueFundedAmount = styled.div`
   width: 30%;
 `;
 
-export const IssuesList = styled.ul``;
+export const IssuesList = styled.ul`
+  padding: 0 2rem;
+`;
 
 export const IssueListItem = styled.li`
   border-top: 0.1rem solid #d5d5d5;
   display: flex;
-  width: 90%;
+  width: 100%;
 
   & :last-child {
     border-bottom: 0.1rem solid #d5d5d5;
@@ -256,8 +255,9 @@ export const IssueOpenWrapper = styled.div`
 
 export const IssuesSearchHeaderContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
-  margin: 3rem 0;
+  justify-content: space-between;
+  margin: 2rem 0;
+  padding: 0 2rem;
   width: 100%;
 `;
 
@@ -333,6 +333,8 @@ export const SidebarTabs = styled.div`
   width: 40%;
 `;
 
+export const StyledAction = styled.span``;
+
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
 `;
@@ -386,23 +388,24 @@ export const StyledTab = styled(Tab)`
 
 export const StyledTitled = styled.div`
   font-size: 1.8rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 `;
 
-export const StyledWord = styled.span`
-  font-weight: 500;
-`;
-
-export const StyledWordLink = styled(StyledWord)`
+export const StyledWordLink = styled(Link)`
+  display: inline;
+  font-weight: bold;
   &:hover {
     cursor: pointer;
     text-decoration: underline;
   }
 `;
 
+export const StyledExternalLink = styled(Link)``;
+
 export const TabsContainer = styled.div`
   background-color: white;
   display: flex;
+  min-height: 50rem;
   width: 100%;
 `;
 

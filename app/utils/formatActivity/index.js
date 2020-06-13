@@ -39,16 +39,17 @@ const Earned = <StyledAddIcon>{GiftIcon}</StyledAddIcon>;
 
 export const formatActivity = data => {
   const {
+    actionType,
     activityId,
     createdDate,
-    actionType,
+    fundedValue,
     issueId,
+    issueName,
     organizationId,
     organizationName,
+    profilePic,
     pullRequestId,
     userId,
-    fundedValue,
-    issueName,
     username,
   } = data;
 
@@ -101,6 +102,7 @@ export const formatActivity = data => {
       targetType,
     },
     user: {
+      profilePic,
       userId,
       username,
     },

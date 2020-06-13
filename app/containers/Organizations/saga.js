@@ -101,20 +101,20 @@ export function* fetchInfoSaga({ payload }) {
     oneOrganization(id: "${itemId}") {
       __typename
       ... on Organization {
-        id,
+        contributors,
         createdDate,
-        modifiedDate,
-        name,
         description,
-        repoUrl,
-        organizationUrl,
+        id,
         issues,
         logo,
-        verified,
-        contributors,
+        modifiedDate,
+        name,
+        organizationUrl,
         ownerId,
-        totalFunded,
         preferredLanguages
+        repoUrl,
+        totalFunded,
+        verified,
       }
       ... on Error {
         message
@@ -124,16 +124,17 @@ export function* fetchInfoSaga({ payload }) {
       __typename
       ... on ActivityArray {
         activityArray {
+          actionType
           activityId
           createdDate
-          actionType
+          fundedValue
           issueId
+          issueName
           organizationId
           organizationName
+          profilePic
           pullRequestId
           userId
-          fundedValue
-          issueName
           username
         }
       }
@@ -249,17 +250,17 @@ export function* searchOrganizationsSaga({ payload }) {
   const query = `
   query {
     searchOrganizations(value: "${value}") {
-      id,
       createdDate,
-      modifiedDate,
-      name,
       description,
-      repoUrl,
-      organizationUrl,
+      id,
       issues,
       logo,
-      verified,
+      modifiedDate,
+      name,
+      organizationUrl,
+      repoUrl,
       totalFunded,
+      verified,
     }
   }
 `;

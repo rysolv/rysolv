@@ -12,6 +12,7 @@ module.exports = buildSchema(`
     issueName: String
     organizationId: ID
     organizationName: String
+    profilePic: String
     pullRequestId: ID
     userId: ID
     username: String
@@ -199,10 +200,10 @@ module.exports = buildSchema(`
     message: String
   }
 
+  union ActivityResult = ActivityArray | Error
+  union ImportResult = ImportData | Error
   union IssueResult = Issue | Error
   union OrganizationResult = Organization | Error
-  union ImportResult = ImportData | Error
-  union ActivityResult = ActivityArray | Error
 
   type RootQuery {
     getActivity(column: String!, id: ID): ActivityResult!
