@@ -16,6 +16,7 @@ import {
   detailFontSize,
   dividerBorder,
   hoverLinkColor,
+  hyperlinkColor,
   textColor,
 } from 'defaultStyleHelper';
 
@@ -400,7 +401,13 @@ export const StyledWordLink = styled(Link)`
   }
 `;
 
-export const StyledExternalLink = styled(Link)``;
+export const StyledExternalLink = styled(Link)`
+  color: ${hyperlinkColor};
+  &:hover {
+    cursor: pointer;
+    color: ${hoverLinkColor};
+  }
+`;
 
 export const TabsContainer = styled.div`
   background-color: white;

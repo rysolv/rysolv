@@ -14,6 +14,7 @@ import {
   ProfileImageWrapper,
   RecentActivityContainer,
   StyledTitled,
+  StyledExternalLink,
   StyledWordLink,
 } from './styledComponents';
 
@@ -54,7 +55,9 @@ export class RecentActivityView extends React.PureComponent {
                     {action} {targetType.toLowerCase()}
                   </StyledAction>
                   &nbsp;
-                  <StyledWordLink to={path}>{targetName}</StyledWordLink>
+                  <StyledExternalLink to={path}>
+                    {targetName}
+                  </StyledExternalLink>
                   {fundedValue ? ` for ${formatDollarAmount(fundedValue)}` : ''}
                 </FundContent>
               </div>

@@ -123,6 +123,7 @@ module.exports = {
 
     const activityInput = {
       actionType: 'create',
+      organizationId: issueResult.organization_id,
       issueId: issueResult.id,
       userId: issueResult.contributor_id,
     };
@@ -265,6 +266,7 @@ module.exports = {
         id: queryResult.id,
         createdDate: queryResult.created_date,
         modifiedDate: queryResult.modified_date,
+        organizationId: issueInput.organization_id,
         name: queryResult.name,
         body: queryResult.body,
         repo: queryResult.repo,
@@ -280,6 +282,7 @@ module.exports = {
 
       const activityInput = {
         actionType: 'update',
+        queryResult: result.organizationId,
         issueId: result.id,
         userId: result.contributorId,
       };
