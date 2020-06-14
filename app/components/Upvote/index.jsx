@@ -32,6 +32,7 @@ const UpvotePanel = ({
 UpvotePanel.propTypes = {
   dispatchOpenModal: T.func,
   handleUpvote: T.func,
+  isIssueDetail: T.bool,
   isSignedIn: T.bool,
   issueId: T.string,
   rep: T.number,
