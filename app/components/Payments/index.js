@@ -38,6 +38,7 @@ const PaymentPortal = ({
   dispatchVerifyRecaptchaFailure,
   handleNav,
   users,
+  ...restProps
 }) => {
   const [fundAmount, setFundAmount] = useState('2');
   const [nameValue, setNameValue] = useState('');
@@ -74,7 +75,7 @@ const PaymentPortal = ({
     zipValue,
   };
   return (
-    <PaymentContainer>
+    <PaymentContainer {...restProps}>
       <OverviewWrapper>
         <Amount>{formatDollarAmount(fundedAmount)}</Amount>
         <Funded>{fundedAmount ? 'Funded' : 'Unfunded'}</Funded>
@@ -138,6 +139,7 @@ PaymentPortal.propTypes = {
   dispatchVerifyRecaptchaFailure: T.func,
   fundedAmount: T.number,
   handleNav: T.func,
+  removeBorder: T.bool,
   users: T.array,
 };
 

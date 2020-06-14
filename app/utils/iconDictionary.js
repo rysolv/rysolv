@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Add from '@material-ui/icons/Add';
 import AddCircle from '@material-ui/icons/AddCircle';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -16,6 +17,7 @@ import CodeIcon from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
+import Dollar from '@material-ui/icons/AttachMoney';
 import Done from '@material-ui/icons/Done';
 import Edit from '@material-ui/icons/Edit';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -45,6 +47,7 @@ import CloseMenu from './svg/CloseMenu';
 
 export default (name, options) => {
   const icons = {
+    add: Add,
     addCircle: AddCircle,
     attempt: Attempt,
     backArrow: ArrowBackIcon,
@@ -57,6 +60,7 @@ export default (name, options) => {
     comments: Comments,
     creditCard: CreditCard,
     delete: Delete,
+    dollar: Dollar,
     done: Done,
     dropdownArrow: ArrowDropDownIcon,
     edit: Edit,

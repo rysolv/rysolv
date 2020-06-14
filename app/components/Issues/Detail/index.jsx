@@ -1,20 +1,23 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
-// import { BackNav } from 'components/base_ui';
-import { CommentCard, NoComment, NewComment } from 'components/Comments';
-import UpvotePanel from 'components/Upvote';
-import PaymentPortal from 'components/Payments';
-import IssueDetailHeader from './IssueDetailHeader';
-import IssueStatusBar from './IssueStatusBar';
-import IssueSidebar from './IssueSidebar';
 
+import { BackNav, ConditionalRender } from 'components/base_ui';
+import { CommentCard, NoComment, NewComment } from 'components/Comments';
+import PaymentPortal from 'components/Payments';
+import UpvotePanel from 'components/Upvote';
+
+import IssueDetailBody from './IssueDetailBody';
+import IssueDetailHeader from './IssueDetailHeader';
+import IssueTopBar from './IssueTopBar';
 import {
+  CommmentWrapper,
   DetailContainer,
   Divider,
   IssueDetailColumn,
   IssueDetailWrapper,
   LeftPanel,
   SidebarContainer,
+  TopBarWrapper,
 } from './styledComponents';
 
 const IssueDetail = ({
@@ -35,13 +38,12 @@ const IssueDetail = ({
     createdDate,
     fundedAmount,
     id,
-    open,
+    language,
     profilePic,
     rep,
     userId,
     username,
   } = data;
-
   const primaryUser = {
     alt: username,
     detailRoute: `/users/detail/${userId}`,
@@ -70,6 +72,7 @@ const IssueDetail = ({
         />
       );
     });
+
   const commentsDiv =
     comments && comments.length > 0 ? generateComments() : <NoComment />;
 
@@ -77,14 +80,15 @@ const IssueDetail = ({
 
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
   return (
-    <Fragment>
-      {/* <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" /> */}
+    <div>
+      <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
       <DetailContainer>
         <IssueDetailWrapper>
           <LeftPanel>
             <UpvotePanel
               dispatchOpenModal={dispatchOpenModal}
               handleUpvote={handleUpvote}
+              isIssueDetail
               isSignedIn={isSignedIn}
               issueId={id}
               rep={rep}
@@ -92,59 +96,63 @@ const IssueDetail = ({
               userId={activeUser.id}
             />
           </LeftPanel>
-          <IssueDetailColumn>
-            <IssueDetailHeader
-              activeUser={activeUser}
-              data={data}
-              dispatchFetchWatchList={dispatchFetchWatchList}
-              dispatchOpenModal={dispatchOpenModal}
-              handleIncrement={handleIncrement}
-              handleNav={handleNav}
-              isSignedIn={isSignedIn}
-            />
-
-            <div style={{ minHeight: '30rem' }}>
-              <CommentCard
-                body={body}
-                date={createdDate}
+          <div>
+            <TopBarWrapper>
+              <IssueTopBar
+                activeUser={activeUser}
+                data={data}
+                dispatchFetchWatchList={dispatchFetchWatchList}
+                dispatchOpenModal={dispatchOpenModal}
+                handleIncrement={handleIncrement}
                 handleNav={handleNav}
-                primary
-                userProfile={primaryUser}
+                isDesktop={isDesktop}
+                isSignedIn={isSignedIn}
               />
-            </div>
+            </TopBarWrapper>
+            <IssueDetailColumn>
+              <IssueDetailHeader
+                activeUser={activeUser}
+                data={data}
+                dispatchFetchWatchList={dispatchFetchWatchList}
+                dispatchOpenModal={dispatchOpenModal}
+                handleIncrement={handleIncrement}
+                handleNav={handleNav}
+                isSignedIn={isSignedIn}
+              />
 
-            <Divider>Status: {open ? 'Open' : 'Issue Closed'}</Divider>
+              <div style={{ minHeight: '30rem' }}>
+                <IssueDetailBody
+                  body={body}
+                  date={createdDate}
+                  handleNav={handleNav}
+                  language={language}
+                  userProfile={primaryUser}
+                />
+              </div>
 
-            <IssueStatusBar
-              activeUser={activeUser}
-              data={data}
-              dispatchOpenModal={dispatchOpenModal}
-              handleIncrement={handleIncrement}
-              isDesktop={isDesktop}
-              isSignedIn={isSignedIn}
-            />
+              <Divider>Comments</Divider>
+              <CommmentWrapper>{commentsDiv}</CommmentWrapper>
 
-            <Divider>Comments</Divider>
-            {commentsDiv}
-
-            <Divider>Leave a Comment</Divider>
-            <NewComment
-              activeUser={activeUser}
-              handleComment={handleComment}
-              handleNav={handleNav}
-              issueId={id}
-            />
-          </IssueDetailColumn>
+              <ConditionalRender
+                Component={
+                  <Fragment>
+                    <Divider>Leave a Comment</Divider>
+                    <CommmentWrapper>
+                      <NewComment
+                        activeUser={activeUser}
+                        handleComment={handleComment}
+                        handleNav={handleNav}
+                        issueId={id}
+                      />
+                    </CommmentWrapper>
+                  </Fragment>
+                }
+                shouldRender={isSignedIn}
+              />
+            </IssueDetailColumn>
+          </div>
         </IssueDetailWrapper>
         <SidebarContainer>
-          <IssueSidebar
-            activeUser={activeUser}
-            data={data}
-            dispatchFetchWatchList={dispatchFetchWatchList}
-            dispatchOpenModal={dispatchOpenModal}
-            handleIncrement={handleIncrement}
-            isSignedIn={isSignedIn}
-          />
           <PaymentPortal
             fundedAmount={fundedAmount}
             handleNav={handleNav}
@@ -152,7 +160,7 @@ const IssueDetail = ({
           />
         </SidebarContainer>
       </DetailContainer>
-    </Fragment>
+    </div>
   );
 };
 

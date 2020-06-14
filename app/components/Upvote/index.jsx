@@ -8,13 +8,14 @@ import { StyledFlatIconButton, UpvoteContainer } from './styledComponents';
 const UpvotePanel = ({
   dispatchOpenModal,
   handleUpvote,
+  isIssueDetail,
   isSignedIn,
   issueId,
   rep,
   upvoted,
   userId,
 }) => (
-  <UpvoteContainer upvoted={upvoted}>
+  <UpvoteContainer isIssueDetail={isIssueDetail} upvoted={upvoted}>
     <StyledFlatIconButton
       Icon={<Upvote />}
       onClick={() => {

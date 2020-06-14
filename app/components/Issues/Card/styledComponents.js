@@ -13,8 +13,8 @@ export const IssueCardIconWrapper = styled.div`
 `;
 
 export const IssueCardItem = styled.div`
-  display: inline-flex;
   align-items: center;
+  display: inline-flex;
 
   &:hover {
     cursor: pointer;
@@ -50,45 +50,41 @@ export const OrganizationNameWrapper = styled.a`
 `;
 
 export const StyledIssueContent = styled.div`
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #e0e0e0;
   background-color: white;
-  border-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+  border: 1px solid #e0e0e0;
+  padding: 0.5rem;
+  width: 100%;
 `;
 
 export const StyledIssueFooter = styled.div`
-  display: flex;
-  justify-content: ${props => (props.open ? 'space-between' : 'flex-end')};
-  font-size: ${detailFontSize};
   color: ${textColor};
+  display: flex;
+  font-size: ${detailFontSize};
+  justify-content: ${props => (props.open ? 'space-between' : 'flex-end')};
   padding: 0.5rem 1rem 0.25rem 0;
 `;
 
 export const StyledIssueHeader = styled.div`
-  width: 100%;
-  font-size: ${detailFontSize};
-
-  padding: 0.25rem 1rem 0 0.25rem;
   display: flex;
+  font-size: ${detailFontSize};
   justify-content: space-between;
+  padding: 0.25rem 1rem 0 0.25rem;
+  width: 100%;
 `;
 
 export const StyledIssueText = styled.div`
-  padding: 0 1rem 0 0;
   height: auto;
   min-height: 6rem;
+  padding: 0 1rem 0 0;
 `;
 
 export const StyledListItem = styled.li`
-  display: flex;
   border-radius: 2px;
-  overflow: hidden;
-  margin: 0 1rem 1rem 1rem;
+  display: flex;
   flex-direction: row;
   list-style-type: none;
-`;
-
-export const StyledVerified = styled.div`
-  padding: 0 0.5rem;
+  margin: 0 1rem 1rem 1rem;
+  overflow: hidden;
 `;

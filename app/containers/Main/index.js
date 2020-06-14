@@ -10,6 +10,7 @@ import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import PaymentPortalModal from 'components/PaymentsModal';
 import SideNav from 'components/SideNav';
 import SigninModal from 'components/SigninModal';
 import WatchList from 'components/WatchList';
@@ -47,6 +48,15 @@ export const Main = ({
     handleNav(route);
   };
   const modalPropsDictionary = {
+    fundIssue: {
+      Component: PaymentPortalModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        handleClose: dispatchCloseModal,
+        fundedAmount: tableData,
+        users: [],
+      },
+    },
     issueAttemptList: {
       Component: WatchList,
       open: isModalOpen,
