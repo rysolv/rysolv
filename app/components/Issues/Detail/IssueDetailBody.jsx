@@ -8,6 +8,7 @@ import { navHelper } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
+  CommentWrapper,
   ExternalLinkWrapper,
   Icon,
   IssueBody,
@@ -44,13 +45,15 @@ const IssueDetailBody = ({ body, date, handleNav, language, userProfile }) => {
           <Icon>{GithubIcon}</Icon> View on Github
         </ExternalLinkWrapper>
       </PostingInfoWrapper>
-      <LanguagesWrapper>
-        <LanguagesTitle>Languages:</LanguagesTitle>
-        {language.map(el => (
-          <LanguageWrapper key={`${el}`} language={el} />
-        ))}
-      </LanguagesWrapper>
-      <IssueBody dangerouslySetInnerHTML={{ __html: html }} />
+      <CommentWrapper>
+        <LanguagesWrapper>
+          <LanguagesTitle>Languages:</LanguagesTitle>
+          {language.map(el => (
+            <LanguageWrapper key={`${el}`} language={el} />
+          ))}
+        </LanguagesWrapper>
+        <IssueBody dangerouslySetInnerHTML={{ __html: html }} />
+      </CommentWrapper>
     </IssueBodyContainer>
   );
 };

@@ -10,7 +10,7 @@ import IssueDetailBody from './IssueDetailBody';
 import IssueDetailHeader from './IssueDetailHeader';
 import IssueTopBar from './IssueTopBar';
 import {
-  CommmentWrapper,
+  CommentWrapper,
   DetailContainer,
   Divider,
   IssueDetailColumn,
@@ -131,20 +131,20 @@ const IssueDetail = ({
               </div>
 
               <Divider>Comments</Divider>
-              <CommmentWrapper>{commentsDiv}</CommmentWrapper>
+              <CommentWrapper>{commentsDiv}</CommentWrapper>
 
               <ConditionalRender
                 Component={
                   <Fragment>
                     <Divider>Leave a Comment</Divider>
-                    <CommmentWrapper>
+                    <CommentWrapper>
                       <NewComment
                         activeUser={activeUser}
                         handleComment={handleComment}
                         handleNav={handleNav}
                         issueId={id}
                       />
-                    </CommmentWrapper>
+                    </CommentWrapper>
                   </Fragment>
                 }
                 shouldRender={isSignedIn}

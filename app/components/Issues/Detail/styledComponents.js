@@ -11,8 +11,8 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { tablet, laptop } = mediaQueriesByDevice;
 
-export const CommmentWrapper = styled.div`
-  margin: 3rem 0;
+export const CommentWrapper = styled.div`
+  margin: 3rem 3rem 3rem 0;
 `;
 
 export const DetailContainer = styled.div`
@@ -125,8 +125,7 @@ export const LanguagesWrapper = styled.div`
   align-items: center;
   display: flex;
   font-size: 1.4rem;
-  padding: 2rem 0 1rem 0;
-  margin: 0;
+  margin: -1rem 0 1rem 0;
 `;
 
 export const LanguagesTitle = styled.div`

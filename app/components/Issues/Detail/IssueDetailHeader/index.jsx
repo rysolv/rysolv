@@ -6,7 +6,6 @@ import { IconToolTip } from 'components/base_ui';
 import { navHelper } from 'utils/globalHelpers';
 
 import {
-  DateWrapper,
   IssueDetailContainer,
   NameWrapper,
   OrganizationNameContainer,
@@ -42,12 +41,12 @@ const IssueDetailHeader = ({
             ''
           )}
         </OrganizationNameContainer>
-        <DateWrapper>
+        <div>
           Issue opened{' '}
           {moment(createdDate)
             .utc()
             .format('M/D/YYYY')}
-        </DateWrapper>
+        </div>
       </StyledIssueDetail>
       <NameWrapper>{name}</NameWrapper>
     </IssueDetailContainer>

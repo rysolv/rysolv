@@ -2,17 +2,6 @@ import styled from 'styled-components';
 
 import { Verified } from 'components/base_ui';
 import { defaultFontSize, detailFontSize, textColor } from 'defaultStyleHelper';
-import { mediaQueriesByDevice } from 'utils/breakpoints';
-
-const { laptop } = mediaQueriesByDevice;
-
-export const DateWrapper = styled.div`
-  margin-right: -1rem;
-
-  ${laptop} {
-    margin-right: 0;
-  }
-`;
 
 export const IssueDetailContainer = styled.div`
   margin-bottom: 2rem;
