@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-import OrganizationDetailView from 'components/Organizations/Detail/OrganizationDetailView';
+import OrganizationDetailView from 'components/Organizations/Detail';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { openModalState } from 'containers/Main/actions';
 

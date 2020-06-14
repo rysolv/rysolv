@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
 import { BackNav, ConditionalRender } from 'components/base_ui';
@@ -17,6 +17,7 @@ import {
   IssueDetailWrapper,
   LeftPanel,
   SidebarContainer,
+  StyledIssueAccountManager,
   TopBarWrapper,
 } from './styledComponents';
 
@@ -32,18 +33,21 @@ const IssueDetail = ({
   handleUpvote,
   isSignedIn,
 }) => {
+  const [displayEditView, setDisplayEditView] = useState(false);
+  const { issues } = activeUser;
   const {
     body,
     comments,
     createdDate,
     fundedAmount,
-    id,
+    id: issueId,
     language,
     profilePic,
     rep,
     userId,
     username,
   } = data;
+
   const primaryUser = {
     alt: username,
     detailRoute: `/users/detail/${userId}`,
@@ -61,7 +65,6 @@ const IssueDetail = ({
         size: '4rem',
         username: comment.username,
       };
-
       return (
         <CommentCard
           key={`${comment.username}-${comment.createdDate}`}
@@ -78,7 +81,7 @@ const IssueDetail = ({
 
   const isDesktop = deviceView === 'desktop';
 
-  const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
+  const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
   return (
     <div>
       <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
@@ -90,7 +93,7 @@ const IssueDetail = ({
               handleUpvote={handleUpvote}
               isIssueDetail
               isSignedIn={isSignedIn}
-              issueId={id}
+              issueId={issueId}
               rep={rep}
               upvoted={upvoted}
               userId={activeUser.id}
@@ -142,7 +145,7 @@ const IssueDetail = ({
                         activeUser={activeUser}
                         handleComment={handleComment}
                         handleNav={handleNav}
-                        issueId={id}
+                        issueId={issueId}
                       />
                     </CommentWrapper>
                   </Fragment>
@@ -153,6 +156,18 @@ const IssueDetail = ({
           </div>
         </IssueDetailWrapper>
         <SidebarContainer>
+          <ConditionalRender
+            Component={
+              <StyledIssueAccountManager
+                displayEditView={displayEditView}
+                setDisplayEditView={setDisplayEditView}
+                type="issue"
+              />
+            }
+            shouldRender={
+              isSignedIn && !!issues.find(({ id }) => issueId === id)
+            }
+          />
           <PaymentPortal
             fundedAmount={fundedAmount}
             handleNav={handleNav}

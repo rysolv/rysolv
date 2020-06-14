@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import IssueAccountManager from 'components/IssueAccountManager';
 import {
   borderColor,
   defaultFontSize,
@@ -158,6 +159,10 @@ export const SidebarContainer = styled.div`
   ${laptop} {
     display: none;
   }
+`;
+
+export const StyledIssueAccountManager = styled(IssueAccountManager)`
+  margin-bottom: 1rem;
 `;
 
 export const UsernameLink = styled.a`

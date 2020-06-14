@@ -128,7 +128,7 @@ const OrganizationDetailView = ({
             }
           />
         </HeaderWrapper>
-        <Description>I love Tyler and {description}</Description>
+        <Description>{description}</Description>
         <UrlWrapper>
           <OrganizationUrl href={organizationUrl} target="_blank">
             <StyledIcon>{LinkIcon}</StyledIcon>
