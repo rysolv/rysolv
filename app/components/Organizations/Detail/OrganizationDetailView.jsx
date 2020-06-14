@@ -47,29 +47,11 @@ const VerifiedComponent = (
   </VerifiedWrapper>
 );
 
-const fundData = [
-  {
-    fundAmount: '10',
-    fundDate: '10/12/2018',
-    id: 'c234823ndhfudsf',
-    issueName: 'react-native-community/react-native-camera# 2786',
-    user: 'ceefour',
-    userImage: 'https://rysolv.s3.us-east-2.amazonaws.com/tylerprofile.png',
-  },
-  {
-    fundAmount: '2',
-    fundDate: '03/15/2017',
-    id: 'sdfb23i8budsf',
-    issueName: 'react-native-community/react-native-camera# 959',
-    user: 'sibelius',
-    userImage: 'https://rysolv.s3.us-east-2.amazonaws.com/paulprofile.png',
-  },
-];
-
 const OrganizationDetailView = ({
   activeUser: { organizations },
   alerts: { error, success },
   data: {
+    activity,
     contributors,
     description,
     id: organizationId,
@@ -160,7 +142,6 @@ const OrganizationDetailView = ({
       </ContentWrapper>
     </DetailViewContainer>
   );
-
   const EditViewComponent = (
     <DetailViewContainer>
       <EditLogoWrapper>
@@ -218,6 +199,7 @@ const OrganizationDetailView = ({
       </ContentWrapper>
     </DetailViewContainer>
   );
+
   return (
     <DetailContainer>
       <BackNav
@@ -262,7 +244,7 @@ const OrganizationDetailView = ({
             setLanguagesChange={setLanguagesChange}
           />
           <Divider />
-          <RecentActivityView fundData={fundData} handleNav={handleNav} />
+          <RecentActivityView activity={activity} handleNav={handleNav} />
         </SidebarTabs>
       </TabsContainer>
     </DetailContainer>

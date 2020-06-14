@@ -29,6 +29,7 @@ export class UserDetailView extends React.PureComponent {
   render() {
     const {
       data: {
+        activity,
         activePullRequests,
         completedPullRequests,
         createdDate,
@@ -101,6 +102,7 @@ export class UserDetailView extends React.PureComponent {
               rejectedPullRequests={rejectedPullRequests}
             />
             <UserTimelineView
+              activity={activity}
               filterValues={filterValues}
               handleInputChange={handleInputChange}
               handleNav={handleNav}

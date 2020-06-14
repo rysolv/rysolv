@@ -1,64 +1,74 @@
 /* eslint-disable react/no-array-index-key */
 import React, { Fragment } from 'react';
 import T from 'prop-types';
-import moment from 'moment';
 
 import { ProfileImage } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
   FundContent,
-  FundDate,
-  FundsContainer,
-  FundSentence,
-  FundWrapper,
+  StyledAction,
+  ActivityDate,
+  ActivityContainer,
+  ActivityWrapper,
   ProfileImageWrapper,
   RecentActivityContainer,
   StyledTitled,
-  StyledWord,
   StyledWordLink,
 } from './styledComponents';
 
 export class RecentActivityView extends React.PureComponent {
   render() {
-    const { fundData, handleNav } = this.props;
+    const { activity, handleNav } = this.props;
+
+    const activityDiv = (
+      <ActivityContainer>
+        {activity.map(
+          ({
+            fundedValue,
+            action,
+            path,
+            date,
+            activityId,
+            target: { targetName, targetType },
+            user: { userId, username, profilePic },
+          }) => (
+            <ActivityWrapper key={activityId}>
+              <ActivityDate>{date}</ActivityDate>
+              <div style={{ display: 'flex' }}>
+                <ProfileImageWrapper>
+                  <ProfileImage
+                    alt={username}
+                    detailRoute={`/users/detail/${userId}`}
+                    handleNav={handleNav}
+                    profilePic={profilePic}
+                    size="4rem"
+                  />
+                </ProfileImageWrapper>
+                <FundContent>
+                  <StyledWordLink to={`/users/detail/${userId}`}>
+                    {username}
+                  </StyledWordLink>
+                  &nbsp;
+                  <StyledAction>
+                    {action} {targetType.toLowerCase()}
+                  </StyledAction>
+                  &nbsp;
+                  <StyledWordLink to={path}>{targetName}</StyledWordLink>
+                  {fundedValue ? ` for ${formatDollarAmount(fundedValue)}` : ''}
+                </FundContent>
+              </div>
+            </ActivityWrapper>
+          ),
+        )}
+      </ActivityContainer>
+    );
+
     return (
       <Fragment>
         <RecentActivityContainer>
           <StyledTitled>Recent activities</StyledTitled>
-          <FundsContainer>
-            {fundData.map(
-              (
-                { fundAmount, fundDate, id, issueName, user, userImage },
-                index,
-              ) => (
-                <FundWrapper key={`list-item-${index}`}>
-                  <ProfileImageWrapper>
-                    <ProfileImage
-                      alt={user}
-                      detailRoute={`/users/detail/${id}`}
-                      handleNav={handleNav}
-                      profilePic={userImage}
-                      size="4rem"
-                    />
-                  </ProfileImageWrapper>
-                  <FundContent>
-                    <FundSentence>
-                      <StyledWordLink>{user}</StyledWordLink>
-                      &nbsp;funded&nbsp;
-                      <StyledWord>{formatDollarAmount(fundAmount)}</StyledWord>
-                      &nbsp;for&nbsp;
-                      <br />
-                      <StyledWordLink>{issueName}</StyledWordLink>
-                    </FundSentence>
-                    <FundDate>
-                      About {moment(fundDate, 'MM/DD/YYYY').fromNow()}
-                    </FundDate>
-                  </FundContent>
-                </FundWrapper>
-              ),
-            )}
-          </FundsContainer>
+          {activityDiv}
         </RecentActivityContainer>
       </Fragment>
     );
@@ -66,7 +76,7 @@ export class RecentActivityView extends React.PureComponent {
 }
 
 RecentActivityView.propTypes = {
-  fundData: T.array,
+  activity: T.array,
   handleNav: T.func.isRequired,
 };
 

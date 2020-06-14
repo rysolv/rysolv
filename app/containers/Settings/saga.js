@@ -70,6 +70,27 @@ export function* fetchInfoSaga({ payload }) {
         username,
         watching,
       }
+      getActivity(column: "user_id", id: "${itemId}") {
+        __typename
+        ... on ActivityArray {
+          activityArray {
+            activityId
+            createdDate
+            actionType
+            issueId
+            organizationId
+            organizationName
+            pullRequestId
+            userId
+            fundedValue
+            issueName
+            username
+          }
+        }
+        ... on Error {
+          message
+        }
+      }
     }
 `;
   try {
@@ -78,8 +99,12 @@ export function* fetchInfoSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { oneUser },
+      data: {
+        oneUser,
+        getActivity: { activityArray },
+      },
     } = yield call(post, '/graphql', graphql);
+    oneUser.activity = activityArray;
     yield put(fetchInfoSuccess({ oneUser }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));

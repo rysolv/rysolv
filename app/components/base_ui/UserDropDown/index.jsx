@@ -71,7 +71,7 @@ const UserDropDownMenu = ({
       onClick={() => handleClose()}
     >
       <StyledMenuContainer>
-        <Link to={`/users/detail/${id}`}>
+        <Link to="/settings">
           <StyledUserOverview>
             <StyledAvatar alt={username} src={profilePic} />
             {username}

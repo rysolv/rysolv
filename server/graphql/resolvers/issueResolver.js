@@ -291,8 +291,23 @@ module.exports = {
     }
   },
   updateIssueArray: async args => {
-    const { id, column, data, remove } = args;
-    const [result] = await updateIssueArray('issues', column, id, data, remove);
+    const { id: issueId, column, data: userId, remove } = args;
+
+    const [result] = await updateIssueArray(
+      'issues',
+      column,
+      issueId,
+      userId,
+      remove,
+    );
+
+    const activityInput = {
+      actionType: remove ? `remove_${column}` : `add_${column}`,
+      issueId,
+      userId,
+    };
+    await createActivity({ activityInput });
+
     return result;
   },
   upvoteIssue: async args => {

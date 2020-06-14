@@ -46,8 +46,8 @@ const CommentCard = ({
         <CommentHeader primary={primary}>
           {primary ? 'Opened by' : 'Posted by'}{' '}
           <UsernameLink
-            onClick={e => navHelper(e, handleNav, `/users/detail/${username}`)}
-            href={`/users/detail/${username}`}
+            onClick={e => navHelper(e, handleNav, detailRoute)}
+            href={detailRoute}
           >
             {username}
           </UsernameLink>{' '}

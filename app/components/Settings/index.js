@@ -34,6 +34,7 @@ const SettingsView = ({
   creditCardProps,
   currentTab,
   data: {
+    activity,
     activePullRequests,
     attempting,
     balance,
@@ -199,6 +200,7 @@ const SettingsView = ({
         </UserCardWrapper>
         <SettingsTabsWrapper>
           <SettingsTabs
+            activity={activity}
             attempting={attempting}
             balance={balance}
             changeEmail={changeEmail}

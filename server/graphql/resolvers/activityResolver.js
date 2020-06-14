@@ -9,19 +9,15 @@ module.exports = {
         uuidv4(),
         new Date(),
         activityInput.actionType || null,
+        activityInput.fundedValue || null,
         activityInput.issueId || null,
         activityInput.organizationId || null,
         activityInput.pullRequestId || null,
         activityInput.userId || null,
-        activityInput.value || null,
       ],
     ];
 
-    console.log('activity input', activity);
-
     const [result] = await createActivity(activity);
-
-    console.log('activity', result);
 
     return {
       commentId: result.activity_id,
@@ -31,24 +27,36 @@ module.exports = {
       organizationId: result.organization_id,
       pullRequestId: result.pullrequest_id,
       userId: result.user_id,
-      value: result.value,
+      fundedValue: result.funded_value,
     };
   },
   getAllActivity: async () => {
     try {
       const result = await getActivity('activity');
-      return result;
+      return {
+        __typename: 'ActivityArray',
+        activityArray: result,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   getActivity: async args => {
     const { column, id } = args;
     try {
       const result = await getActivity('activity', column, id);
-      return result;
+      return {
+        __typename: 'ActivityArray',
+        activityArray: result,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
 };

@@ -9,6 +9,7 @@ import AsyncRender from 'components/AsyncRender';
 import OrganizationDetailView from 'components/Organizations/Detail/OrganizationDetailView';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { openModalState } from 'containers/Main/actions';
+
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 

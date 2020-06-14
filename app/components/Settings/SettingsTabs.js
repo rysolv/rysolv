@@ -15,6 +15,7 @@ import UserWatching from './Watching';
 import { StyledPaper, StyledTab } from './styledComponents';
 
 const SettingsTabs = ({
+  activity,
   attempting,
   balance,
   changeEmail,
@@ -101,6 +102,7 @@ const SettingsTabs = ({
   const ComponentToRender = {
     0: (
       <UserTimelineView
+        activity={activity}
         attempting={attempting}
         filterValues={filterValues}
         handleInputChange={handleInputChange}
@@ -186,6 +188,7 @@ const SettingsTabs = ({
 };
 
 SettingsTabs.propTypes = {
+  activity: T.array,
   attempting: T.array,
   balance: T.number,
   changeEmail: T.bool,
