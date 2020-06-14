@@ -132,7 +132,7 @@ Main.propTypes = {
   loading: T.bool,
   match: T.object,
   modal: T.string,
-  tableData: T.arrayOf(T.object),
+  tableData: T.oneOfType([T.array, T.number]),
 };
 
 const mapStateToProps = createStructuredSelector({
