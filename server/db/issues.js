@@ -50,7 +50,7 @@ const issueDetailValues = `
 const closeIssue = async (table, id, shouldClose) => {
   const rows = await singleItem(table, id);
   if (rows) {
-    const queryText = `UPDATE ${table} SET open = ${shouldClose} WHERE (id='${id}')`;
+    const queryText = `UPDATE ${table} SET open=${!shouldClose} WHERE (id='${id}')`;
     await singleQuery(queryText);
     return `Issue ${id} has been successfully ${
       shouldClose ? 'closed' : 'reopened'
