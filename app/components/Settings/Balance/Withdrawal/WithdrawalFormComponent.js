@@ -97,13 +97,13 @@ const WithdrawalFormComponent = ({ balance, handleNav }) => {
       <Divider />
       <WithdrawalInputContainer>
         <WithdrawalInputWrapper isRow isThin>
-          <InputHeader>PayPal fee:</InputHeader>
-          <DisplayText>$1.00</DisplayText>
+          <InputHeader>15% Rysolv Service Fee:</InputHeader>
+          <DisplayText>{formatDollarAmount(transferValue*0.15)}</DisplayText>
         </WithdrawalInputWrapper>
         <WithdrawalInputWrapper isRow>
           <InputHeader>Transfer to PayPal:</InputHeader>
           <DisplayText>
-            {transferValue > 0 ? `${formatDollarAmount(transferValue - 1)} USD` : '–'}
+            {transferValue > 0 ? `${formatDollarAmount(transferValue - (transferValue*0.15))} USD` : '–'}
           </DisplayText>
         </WithdrawalInputWrapper>
       </WithdrawalInputContainer>
