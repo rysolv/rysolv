@@ -53,28 +53,17 @@ export const HorizontalInputWrapper = styled.div`
   width: 83%;
 `;
 
-export const Image = styled.img`
-  border-radius: 50%;
-  width: 10%;
-`;
-
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: auto;
 `;
 
-export const Name = styled.div`
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`;
-
 export const PaymentContainer = styled.div`
   background-color: white;
   border-radius: 0.2rem;
-  border: 0.1rem solid ${borderColor};
+  border: ${({ removeBorder }) =>
+    removeBorder ? 'none' : `0.1rem solid ${borderColor}`};
   color: rgba(0, 0, 0, 0.7);
 `;
 
@@ -95,7 +84,6 @@ export const OverviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 3rem;
-  padding-bottom: 2rem;
 `;
 
 export const StyledBaseInputWithAdornment = styled(
@@ -140,12 +128,4 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
     margin: 0.5rem;
     padding: 1rem;
   }
-`;
-
-export const UsersFunded = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: 1.4rem;
-  justify-content: space-evenly;
-  padding: 0.5rem;
 `;

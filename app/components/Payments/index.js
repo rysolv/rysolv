@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
 
 import { BaseExpansionPanel, ConditionalRender } from 'components/base_ui';
@@ -19,25 +19,23 @@ import {
   Divider,
   DollarValueWrapper,
   Funded,
-  Image,
-  Name,
   OverviewWrapper,
   PaymentContainer,
   PaymentInformationWrapper,
   StyledBaseInputWithAdornment,
   StyledLabel,
-  UsersFunded,
 } from './styledComponents';
 
+const AccountIcon = iconDictionary('user');
 const CreditCardIcon = iconDictionary('creditCard');
 const PaypalIcon = iconDictionary('paypal');
 
 const PaymentPortal = ({
-  fundedAmount,
   dispatchVerifyRecaptcha,
   dispatchVerifyRecaptchaFailure,
+  fundedAmount,
   handleNav,
-  users,
+  isSignedIn,
   ...restProps
 }) => {
   const [renderPaypal, setRenderPaypal] = useState(false);
@@ -81,15 +79,6 @@ const PaymentPortal = ({
       <OverviewWrapper>
         <Amount>{formatDollarAmount(fundedAmount)}</Amount>
         <Funded>{fundedAmount ? 'Funded' : 'Unfunded'}</Funded>
-        <UsersFunded>
-          {users.map(({ amount, image, name }) => (
-            <Fragment key={`user-${name}`}>
-              <Image src={image} />
-              <Name onClick={() => handleNav(`/user/${name}`)}>{name}</Name>
-              <div>{formatDollarAmount(amount)}</div>
-            </Fragment>
-          ))}
-        </UsersFunded>
       </OverviewWrapper>
       <DollarValueWrapper>
         <DollarValueToggle
@@ -121,6 +110,17 @@ const PaymentPortal = ({
         />
       </PaymentInformationWrapper>
       <StyledLabel>Payment Methods</StyledLabel>
+      <ConditionalRender
+        Component={() => (
+          <BaseExpansionPanel
+            Component={() => <div>Hi</div>}
+            Icon={AccountIcon}
+            propsToPassDown={propsToPassDown}
+            title="Your Account"
+          />
+        )}
+        shouldRender={isSignedIn}
+      />
       <BaseExpansionPanel
         Component={() => (
           <ConditionalRender
@@ -153,8 +153,7 @@ PaymentPortal.propTypes = {
   dispatchVerifyRecaptchaFailure: T.func,
   fundedAmount: T.number,
   handleNav: T.func,
-  removeBorder: T.bool,
-  users: T.array,
+  isSignedIn: T.bool,
 };
 
 export default PaymentPortal;

@@ -69,9 +69,9 @@ export const Main = ({
       Component: PaymentPortalModal,
       open: isModalOpen,
       propsToPassDown: {
-        handleClose: dispatchCloseModal,
         fundedAmount: tableData,
-        users: [],
+        handleClose: dispatchCloseModal,
+        isSignedIn,
       },
     },
     issueAttemptList: {

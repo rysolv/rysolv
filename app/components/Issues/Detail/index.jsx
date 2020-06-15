@@ -256,7 +256,7 @@ const IssueDetail = ({
           <PaymentPortal
             fundedAmount={fundedAmount}
             handleNav={handleNav}
-            users={[]}
+            isSignedIn={isSignedIn}
           />
           <ConditionalRender
             Component={CloseOpenIssueComponent}

@@ -12,7 +12,7 @@ import {
 
 const closeIcon = iconDictionary('close');
 
-const PaymentPortalModal = ({ fundedAmount, handleClose, users }) => (
+const PaymentPortalModal = ({ fundedAmount, handleClose, isSignedIn }) => (
   <PaymentPortalContainer>
     <IconWrapper>
       <IconButton
@@ -21,14 +21,18 @@ const PaymentPortalModal = ({ fundedAmount, handleClose, users }) => (
         onClick={() => handleClose()}
       />
     </IconWrapper>
-    <StyledPaymentPortal fundedAmount={fundedAmount} users={users} />
+    <StyledPaymentPortal
+      fundedAmount={fundedAmount}
+      isSignedIn={isSignedIn}
+      removeBorder
+    />
   </PaymentPortalContainer>
 );
 
 PaymentPortalModal.propTypes = {
   fundedAmount: T.number,
   handleClose: T.func,
-  users: T.array,
+  isSignedIn: T.bool,
 };
 
 export default PaymentPortalModal;
