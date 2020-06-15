@@ -28,8 +28,6 @@ import {
   addWatchSuccess,
   closeIssueFailure,
   closeIssueSuccess,
-  deleteIssueFailure,
-  deleteIssueSuccess,
   editIssueFailure,
   editIssueSuccess,
   fetchIssueDetail,
@@ -124,26 +122,6 @@ export function* closeIssueSaga({ payload }) {
     yield put(closeIssueSuccess({ issueId, message: closeIssue }));
   } catch (error) {
     yield put(closeIssueFailure({ error }));
-  }
-}
-
-export function* deleteIssueSaga({ payload }) {
-  const { itemId } = payload;
-  const query = `
-  mutation{
-    deleteIssue(id: "${itemId}")
-  }`;
-  try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: { deleteIssue },
-    } = yield call(post, '/graphql', graphql);
-    yield put(deleteIssueSuccess({ itemId, message: deleteIssue }));
-  } catch (error) {
-    yield put(deleteIssueFailure({ error }));
   }
 }
 
@@ -484,7 +462,6 @@ export default function* watcherSaga() {
   yield takeLatest(ADD_ATTEMPT, addAttemptSaga);
   yield takeLatest(ADD_COMMENT, addCommentSaga);
   yield takeLatest(CLOSE_ISSUE, closeIssueSaga);
-  yield takeLatest(DELETE_ISSUE, deleteIssueSaga);
   yield takeLatest(EDIT_ISSUE, editIssueSaga);
   yield takeLatest(FETCH_ISSUE_DETAIL, fetchIssueDetailSaga);
   yield takeLatest(FETCH_ISSUES, fetchIssuesSaga);

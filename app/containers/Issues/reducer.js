@@ -1,6 +1,5 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
-import remove from 'lodash/remove';
 
 import {
   ADD_ATTEMPT_FAILURE,
@@ -19,9 +18,6 @@ import {
   CLOSE_ISSUE_FAILURE,
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
-  DELETE_ISSUE_FAILURE,
-  DELETE_ISSUE_SUCCESS,
-  DELETE_ISSUE,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -90,7 +86,6 @@ export const initialState = {
     addIssue: false,
     addWatch: false,
     closeIssue: false,
-    deleteIssue: false,
     importIssue: false,
     issueDetail: false,
     issues: false,
@@ -223,23 +218,6 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case CLOSE_ISSUE: {
       draft.loading.closeIssue = true;
-      break;
-    }
-    case DELETE_ISSUE_FAILURE: {
-      const { error } = payload;
-      draft.alerts.error = error;
-      draft.loading.deleteIssue = false;
-      break;
-    }
-    case DELETE_ISSUE_SUCCESS: {
-      const { itemId, message } = payload;
-      draft.alerts.success = { message };
-      draft.loading.deleteIssue = false;
-      remove(draft.issues, ({ id }) => id === itemId);
-      break;
-    }
-    case DELETE_ISSUE: {
-      draft.loading.deleteIssue = true;
       break;
     }
     case EDIT_ISSUE_FAILURE: {

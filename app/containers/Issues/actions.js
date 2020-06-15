@@ -15,9 +15,6 @@ import {
   CLOSE_ISSUE_FAILURE,
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
-  DELETE_ISSUE_FAILURE,
-  DELETE_ISSUE_SUCCESS,
-  DELETE_ISSUE,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -153,27 +150,6 @@ export function closeIssue(payload) {
   return {
     payload,
     type: CLOSE_ISSUE,
-  };
-}
-
-export function deleteIssueFailure(payload) {
-  return {
-    payload,
-    type: DELETE_ISSUE_FAILURE,
-  };
-}
-
-export function deleteIssueSuccess(payload) {
-  return {
-    payload,
-    type: DELETE_ISSUE_SUCCESS,
-  };
-}
-
-export function deleteIssue(payload) {
-  return {
-    payload,
-    type: DELETE_ISSUE,
   };
 }
 
