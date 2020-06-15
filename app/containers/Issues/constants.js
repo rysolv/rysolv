@@ -16,6 +16,10 @@ export const CLEAR_ALERTS = 'app/Issues/CLEAR_ALERTS';
 export const CLEAR_FORM = 'app/Issues/CLEAR_FORM';
 export const CLEAR_ORGANIZATION = 'app/Issues/CLEAR_ORGANIZATION';
 
+export const CLOSE_ISSUE = 'app/Issues/CLOSE_ISSUE';
+export const CLOSE_ISSUE_FAILURE = 'app/Issues/CLOSE_ISSUE_FAILURE';
+export const CLOSE_ISSUE_SUCCESS = 'app/Issues/CLOSE_ISSUE_SUCCESS';
+
 export const DELETE_ISSUE = 'app/Issues/DELETE_ISSUE';
 export const DELETE_ISSUE_FAILURE = 'app/Issues/DELETE_ISSUE_FAILURE';
 export const DELETE_ISSUE_SUCCESS = 'app/Issues/DELETE_ISSUE_SUCCESS';

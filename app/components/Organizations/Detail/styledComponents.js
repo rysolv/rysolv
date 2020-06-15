@@ -19,6 +19,25 @@ import {
   textColor,
 } from 'defaultStyleHelper';
 
+export const ActivityContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  padding-left: 0;
+`;
+
+export const ActivityDate = styled.div`
+  color: ${textColor};
+  font-size: ${detailFontSize};
+  text-transform: uppercase;
+  text-align: right;
+  padding: 0.5rem 0;
+`;
+
+export const ActivityWrapper = styled.div`
+  padding: 0.5rem 1rem;
+`;
+
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
   width: 45%;
@@ -121,25 +140,6 @@ export const FundContent = styled.div`
   width: 100%;
   font-size: ${defaultFontSize};
   padding-left: 0.8rem;
-`;
-
-export const ActivityDate = styled.div`
-  color: ${textColor};
-  font-size: ${detailFontSize};
-  text-transform: uppercase;
-  text-align: right;
-  padding: 0.5rem 0;
-`;
-
-export const ActivityContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0;
-  padding-left: 0;
-`;
-
-export const ActivityWrapper = styled.div`
-  padding: 0.5rem 1rem;
 `;
 
 export const HeaderWrapper = styled.div`

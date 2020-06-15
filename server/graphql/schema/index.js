@@ -228,6 +228,8 @@ module.exports = buildSchema(`
   }
 
   type RootMutation {
+    closeIssue(id: ID!, shouldClose: Boolean): String!
+
     createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): Comment
     createIssue(issueInput: IssueInput): Issue!

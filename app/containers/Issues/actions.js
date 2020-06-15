@@ -12,6 +12,9 @@ import {
   CLEAR_ALERTS,
   CLEAR_FORM,
   CLEAR_ORGANIZATION,
+  CLOSE_ISSUE_FAILURE,
+  CLOSE_ISSUE_SUCCESS,
+  CLOSE_ISSUE,
   DELETE_ISSUE_FAILURE,
   DELETE_ISSUE_SUCCESS,
   DELETE_ISSUE,
@@ -126,6 +129,27 @@ export function clearOrganization(payload) {
   return {
     payload,
     type: CLEAR_ORGANIZATION,
+  };
+}
+
+export function closeIssueFailure(payload) {
+  return {
+    payload,
+    type: CLOSE_ISSUE_FAILURE,
+  };
+}
+
+export function closeIssueSuccess(payload) {
+  return {
+    payload,
+    type: CLOSE_ISSUE_SUCCESS,
+  };
+}
+
+export function closeIssue(payload) {
+  return {
+    payload,
+    type: CLOSE_ISSUE,
   };
 }
 

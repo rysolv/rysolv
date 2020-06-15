@@ -6,6 +6,7 @@ const defaultOrgImage =
 const {
   checkDuplicateIssue,
   checkDuplicateOrganization,
+  closeIssue,
   createIssue,
   createOrganization,
   deleteIssue,
@@ -65,6 +66,15 @@ const newOrganizationArray = organizationInput => [
 ];
 
 module.exports = {
+  closeIssue: async args => {
+    const { id, shouldClose } = args;
+    try {
+      const issues = await closeIssue('issues', id, shouldClose);
+      return issues;
+    } catch (err) {
+      throw err;
+    }
+  },
   createIssue: async args => {
     const { issueInput } = args;
     const { organizationRepo, repo, organizationId } = issueInput;

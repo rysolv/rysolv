@@ -1,6 +1,7 @@
 // Colors
 export const bodyColor = '#fafafa';
 export const borderColor = '#e0e0e0';
+export const buttonRed = '#dc3545';
 export const codeGrey = '#eceff1';
 export const commentHeaderColor = '#f6f8fa';
 export const darkTextColor = '#263238';

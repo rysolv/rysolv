@@ -16,6 +16,9 @@ import {
   CLEAR_ALERTS,
   CLEAR_FORM,
   CLEAR_ORGANIZATION,
+  CLOSE_ISSUE_FAILURE,
+  CLOSE_ISSUE_SUCCESS,
+  CLOSE_ISSUE,
   DELETE_ISSUE_FAILURE,
   DELETE_ISSUE_SUCCESS,
   DELETE_ISSUE,
@@ -83,6 +86,7 @@ export const initialState = {
     addComment: false,
     addIssue: false,
     addWatch: false,
+    closeIssue: false,
     deleteIssue: false,
     importIssue: false,
     issueDetail: false,
@@ -199,6 +203,23 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case CLEAR_ORGANIZATION: {
       draft.organizationData = initialState.organizationData;
+      break;
+    }
+    case CLOSE_ISSUE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.closeIssue = false;
+      break;
+    }
+    case CLOSE_ISSUE_SUCCESS: {
+      const { message } = payload;
+      draft.alerts.success = { message };
+      draft.loading.closeIssue = false;
+      draft.issueDetail.open = !draft.issueDetail.open;
+      break;
+    }
+    case CLOSE_ISSUE: {
+      draft.loading.closeIssue = true;
       break;
     }
     case DELETE_ISSUE_FAILURE: {

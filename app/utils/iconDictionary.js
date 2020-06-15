@@ -13,6 +13,7 @@ import Cancel from '@material-ui/icons/Cancel';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import Circle from '@material-ui/icons/FiberManualRecord';
 import Close from '@material-ui/icons/Close';
+import CloseCircle from '@material-ui/icons/HighlightOff';
 import CodeIcon from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
 import CreditCard from '@material-ui/icons/CreditCard';
@@ -55,6 +56,7 @@ export default (name, options) => {
     cancel: Cancel,
     circle: Circle,
     close: Close,
+    closeCircle: CloseCircle,
     closeMenu: CloseMenu,
     code: CodeIcon,
     comments: Comments,

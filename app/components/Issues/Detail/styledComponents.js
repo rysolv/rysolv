@@ -1,12 +1,17 @@
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
 
+import { ErrorSuccessBanner } from 'components/base_ui';
 import IssueAccountManager from 'components/IssueAccountManager';
 import {
   borderColor,
-  defaultFontSize,
-  textColor,
-  detailFontSize,
+  buttonRed,
   codeGrey,
+  defaultFontFamily,
+  defaultFontSize,
+  detailFontSize,
+  fundingText,
+  textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
@@ -161,8 +166,37 @@ export const SidebarContainer = styled.div`
   }
 `;
 
+export const StyledButton = styled(Button)`
+  color: ${({ open }) => (!open ? fundingText : buttonRed)};
+  font-family: ${defaultFontFamily};
+  font-size: ${defaultFontSize};
+  font-weight: 500;
+  margin: 1rem;
+  padding: 0rem;
+  text-transform: none;
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  svg {
+    height: 2rem;
+    margin-right: 1rem;
+    width: 2rem;
+  }
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  width: 100%;
+`;
+
 export const StyledIssueAccountManager = styled(IssueAccountManager)`
   margin-bottom: 1rem;
+`;
+
+export const TopBarWrapper = styled.div`
+  background-color: #f6f8fa;
+  height: 10rem;
 `;
 
 export const UsernameLink = styled.a`
@@ -172,9 +206,4 @@ export const UsernameLink = styled.a`
   &:hover {
     color: #007bff;
   }
-`;
-
-export const TopBarWrapper = styled.div`
-  background-color: #f6f8fa;
-  height: 10rem;
 `;

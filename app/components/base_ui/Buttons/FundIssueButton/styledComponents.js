@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-import { defaultFontSize } from 'defaultStyleHelper';
+import { defaultFontSize, fundingText } from 'defaultStyleHelper';
 
 import { FundingWrapper } from '../../StyledWrappers';
 
 export const AddFundsButton = styled.button`
   background-color: #e5fbf2;
   border: 0;
-  color: #08b26e;
+  color: ${fundingText};
   cursor: pointer;
   padding: 0.3rem 1rem;
   stroke-width: 0.2rem;

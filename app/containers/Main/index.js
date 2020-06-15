@@ -8,6 +8,7 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
+import CloseIssueModal from 'components/CloseIssueModal';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import PaymentPortalModal from 'components/PaymentsModal';
@@ -17,6 +18,7 @@ import WatchList from 'components/WatchList';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { signin, signout } from 'containers/Auth/actions';
+import { closeIssue } from 'containers/Issues/actions';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -31,6 +33,7 @@ export const Main = ({
   activeUser,
   data = { test: true },
   deviceView,
+  dispatchCloseIssue,
   dispatchCloseModal,
   error,
   handleNav,
@@ -43,11 +46,25 @@ export const Main = ({
   modal,
   tableData,
 }) => {
+  const handleCloseIssue = ({ issueId, shouldClose }) => {
+    dispatchCloseModal();
+    dispatchCloseIssue({ issueId, shouldClose });
+  };
   const handleRedirect = route => {
     dispatchCloseModal();
     handleNav(route);
   };
   const modalPropsDictionary = {
+    closeIssue: {
+      Component: CloseIssueModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        dispatchCloseIssue,
+        handleClose: dispatchCloseModal,
+        handleCloseIssue,
+        tableData,
+      },
+    },
     fundIssue: {
       Component: PaymentPortalModal,
       open: isModalOpen,
@@ -122,7 +139,8 @@ Main.propTypes = {
   activeUser: T.object,
   data: T.object,
   deviceView: T.string,
-  dispatchCloseModal: T.func,
+  dispatchCloseIssue: T.func.isRequired,
+  dispatchCloseModal: T.func.isRequired,
   error: T.object,
   handleNav: T.func,
   handleSignin: T.func,
@@ -132,7 +150,7 @@ Main.propTypes = {
   loading: T.bool,
   match: T.object,
   modal: T.string,
-  tableData: T.oneOfType([T.array, T.number]),
+  tableData: T.oneOfType([T.array, T.object, T.number]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -159,6 +177,10 @@ const mapDispatchToProps = dispatch => ({
    */
   handleSignin: payload => dispatch(signin(payload)),
   handleSignout: payload => dispatch(signout(payload)),
+  /**
+   * Issues
+   */
+  dispatchCloseIssue: payload => dispatch(closeIssue(payload)),
   /**
    * Main
    */

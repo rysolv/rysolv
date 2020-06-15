@@ -2,6 +2,7 @@ const { createActivity, getActivity } = require('./activity');
 
 const {
   checkDuplicateIssue,
+  closeIssue,
   createIssue,
   deleteIssue,
   getIssues,
@@ -42,6 +43,7 @@ module.exports = {
   checkDuplicateIssue,
   checkDuplicateOrganization,
   checkDuplicateUser,
+  closeIssue,
   createActivity,
   createComment,
   createIssue,

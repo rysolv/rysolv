@@ -46,6 +46,19 @@ const issueDetailValues = `
   users.profile_pic AS "profilePic"
 `;
 
+// CLOSE single issue
+const closeIssue = async (table, id, shouldClose) => {
+  const rows = await singleItem(table, id);
+  if (rows) {
+    const queryText = `UPDATE ${table} SET open = ${shouldClose} WHERE (id='${id}')`;
+    await singleQuery(queryText);
+    return `Issue ${id} has been successfully ${
+      shouldClose ? 'closed' : 'reopened'
+    }.`;
+  }
+  throw new Error(`Failed to close issue. ID not found in ${table}`);
+};
+
 // Check duplicate issue
 const checkDuplicateIssue = async (table, repo) => {
   const queryText = `
@@ -152,6 +165,7 @@ const upvoteIssue = async (table, id) => {
 
 module.exports = {
   checkDuplicateIssue,
+  closeIssue,
   createIssue,
   deleteIssue,
   getIssues,

@@ -17,6 +17,7 @@ import {
   addAttempt,
   addComment,
   clearAlerts,
+  closeIssue,
   fetchIssueDetail,
   upvoteIssue,
 } from '../actions';
@@ -26,6 +27,7 @@ import {
   makeSelectIssueDetail,
   makeSelectIssueDetailError,
   makeSelectIssueDetailLoading,
+  makeSelectIssues,
 } from '../selectors';
 
 export class IssuesDetail extends React.PureComponent {
@@ -49,10 +51,13 @@ export class IssuesDetail extends React.PureComponent {
   render() {
     const {
       activeUser,
+      alerts,
       deviceView,
+      dispatchCloseIssue,
       dispatchFetchWatchList,
       dispatchOpenModal,
       error,
+      handleClearAlerts,
       handleComment,
       handleIncrement,
       handleNav,
@@ -71,9 +76,12 @@ export class IssuesDetail extends React.PureComponent {
         isRequiredData
         propsToPassDown={{
           activeUser,
+          alerts,
           deviceView,
+          dispatchCloseIssue,
           dispatchFetchWatchList,
           dispatchOpenModal,
+          handleClearAlerts,
           handleComment,
           handleIncrement,
           handleNav,
@@ -87,7 +95,9 @@ export class IssuesDetail extends React.PureComponent {
 
 IssuesDetail.propTypes = {
   activeUser: T.object,
+  alerts: T.object,
   deviceView: T.string,
+  dispatchCloseIssue: T.func,
   dispatchFetchIssueDetail: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
@@ -112,6 +122,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
+  alerts: makeSelectIssues('alerts'),
   issueDetail: makeSelectIssueDetail('issueDetail'),
   error: makeSelectIssueDetailError('issueDetail'),
   loading: makeSelectIssueDetailLoading('issueDetail'),
@@ -126,11 +137,12 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    dispatchCloseIssue: payload => dispatch(closeIssue(payload)),
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
-    handleUpvote: payload => dispatch(upvoteIssue(payload)),
     handleComment: payload => dispatch(addComment(payload)),
     handleIncrement: payload => dispatch(addAttempt(payload)),
+    handleUpvote: payload => dispatch(upvoteIssue(payload)),
     /*
      * Reducer : Main
      */
