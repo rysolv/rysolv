@@ -18,6 +18,7 @@ import {
   addComment,
   clearAlerts,
   closeIssue,
+  editIssue,
   fetchIssueDetail,
   upvoteIssue,
 } from '../actions';
@@ -54,6 +55,7 @@ export class IssuesDetail extends React.PureComponent {
       alerts,
       deviceView,
       dispatchCloseIssue,
+      dispatchEditIssue,
       dispatchFetchWatchList,
       dispatchOpenModal,
       error,
@@ -79,6 +81,7 @@ export class IssuesDetail extends React.PureComponent {
           alerts,
           deviceView,
           dispatchCloseIssue,
+          dispatchEditIssue,
           dispatchFetchWatchList,
           dispatchOpenModal,
           handleClearAlerts,
@@ -98,6 +101,7 @@ IssuesDetail.propTypes = {
   alerts: T.object,
   deviceView: T.string,
   dispatchCloseIssue: T.func,
+  dispatchEditIssue: T.func,
   dispatchFetchIssueDetail: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
@@ -138,6 +142,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Issues
      */
     dispatchCloseIssue: payload => dispatch(closeIssue(payload)),
+    dispatchEditIssue: payload => dispatch(editIssue(payload)),
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleComment: payload => dispatch(addComment(payload)),

@@ -22,6 +22,9 @@ import {
   DELETE_ISSUE_FAILURE,
   DELETE_ISSUE_SUCCESS,
   DELETE_ISSUE,
+  EDIT_ISSUE_FAILURE,
+  EDIT_ISSUE_SUCCESS,
+  EDIT_ISSUE,
   FETCH_ISSUE_DETAIL_FAILURE,
   FETCH_ISSUE_DETAIL_SUCCESS,
   FETCH_ISSUE_DETAIL,
@@ -237,6 +240,22 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case DELETE_ISSUE: {
       draft.loading.deleteIssue = true;
+      break;
+    }
+    case EDIT_ISSUE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.editIssue = false;
+      break;
+    }
+    case EDIT_ISSUE_SUCCESS: {
+      const { message } = payload;
+      draft.alerts.success = { message };
+      draft.loading.editIssue = false;
+      break;
+    }
+    case EDIT_ISSUE: {
+      draft.loading.editIssue = true;
       break;
     }
     case FETCH_ISSUES_FAILURE: {

@@ -39,6 +39,7 @@ const IssueDetail = ({
     fundedAmount,
     id: issueId,
     language,
+    name,
     open,
     profilePic,
     rep,
@@ -47,6 +48,7 @@ const IssueDetail = ({
   },
   deviceView,
   dispatchCloseIssue,
+  dispatchEditIssue,
   dispatchFetchWatchList,
   dispatchOpenModal,
   handleClearAlerts,
@@ -57,6 +59,27 @@ const IssueDetail = ({
   isSignedIn,
 }) => {
   const [displayEditView, setDisplayEditView] = useState(false);
+  const [bodyChange, setBodyChange] = useState(body);
+  const [languageChange, setLanguageChange] = useState(language);
+  const [nameChange, setNameChange] = useState(name);
+
+  const handleClose = () => {
+    setDisplayEditView(false);
+    setBodyChange(body);
+    setLanguageChange(language);
+    setNameChange(name);
+  };
+
+  const handleSave = () => {
+    dispatchEditIssue({
+      editRequest: {
+        body: bodyChange,
+        name: nameChange,
+        language: languageChange,
+      },
+      issueId,
+    });
+  };
 
   const CloseOpenIssueComponent = (
     <ConditionalRender
@@ -164,28 +187,31 @@ const IssueDetail = ({
                 dispatchFetchWatchList={dispatchFetchWatchList}
                 dispatchOpenModal={dispatchOpenModal}
                 handleIncrement={handleIncrement}
-                handleNav={handleNav}
                 isDesktop={isDesktop}
                 isSignedIn={isSignedIn}
               />
             </TopBarWrapper>
             <IssueDetailColumn>
               <IssueDetailHeader
-                activeUser={activeUser}
                 data={data}
-                dispatchFetchWatchList={dispatchFetchWatchList}
-                dispatchOpenModal={dispatchOpenModal}
-                handleIncrement={handleIncrement}
+                displayEditView={displayEditView}
                 handleNav={handleNav}
                 isSignedIn={isSignedIn}
+                nameChange={nameChange}
+                setNameChange={setNameChange}
               />
 
               <div style={{ minHeight: '30rem' }}>
                 <IssueDetailBody
                   body={body}
+                  bodyChange={bodyChange}
                   date={createdDate}
+                  displayEditView={displayEditView}
                   handleNav={handleNav}
                   language={language}
+                  languageChange={languageChange}
+                  setBodyChange={setBodyChange}
+                  setLanguageChange={setLanguageChange}
                   userProfile={primaryUser}
                 />
               </div>
@@ -217,6 +243,8 @@ const IssueDetail = ({
             Component={
               <StyledIssueAccountManager
                 displayEditView={displayEditView}
+                handleClose={handleClose}
+                handleSave={handleSave}
                 setDisplayEditView={setDisplayEditView}
                 type="issue"
               />
@@ -251,6 +279,7 @@ IssueDetail.propTypes = {
   data: T.object,
   deviceView: T.string,
   dispatchCloseIssue: T.func,
+  dispatchEditIssue: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
   handleClearAlerts: T.func,

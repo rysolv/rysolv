@@ -295,9 +295,15 @@ module.exports = {
       };
       await createActivity({ activityInput });
 
-      return result;
+      return {
+        __typename: 'Issue',
+        ...result,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   updateIssueArray: async args => {

@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 
 import { ErrorSuccessBanner } from 'components/base_ui';
 import IssueAccountManager from 'components/IssueAccountManager';
+import LanguageAutocomplete from 'components/LanguageAutocomplete';
+import Markdown from 'components/Markdown';
 import {
   borderColor,
   buttonRed,
@@ -141,6 +143,7 @@ export const LanguagesTitle = styled.div`
   letter-spacing: 0.02rem;
   line-height: 1.5;
   padding-right: 1rem;
+  white-space: nowrap;
 `;
 
 export const LeftPanel = styled.div`
@@ -192,6 +195,17 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
 
 export const StyledIssueAccountManager = styled(IssueAccountManager)`
   margin-bottom: 1rem;
+`;
+
+export const StyledLanguageAutocomplete = styled(LanguageAutocomplete)`
+  margin: 0 -1rem;
+  width: 100%;
+`;
+
+export const StyledMarkdown = styled(Markdown)`
+  color: ${textColor};
+  font-size: 1.2rem;
+  padding: 1rem;
 `;
 
 export const TopBarWrapper = styled.div`

@@ -243,7 +243,7 @@ module.exports = buildSchema(`
     importIssue(url: String!): ImportResult
     importOrganization(url: String!): ImportResult
 
-    transformIssue(id: ID!, issueInput: IssueInput): Issue!
+    transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!
     transformUser(id: ID!, userInput: UserInput): User!
 

@@ -18,6 +18,9 @@ import {
   DELETE_ISSUE_FAILURE,
   DELETE_ISSUE_SUCCESS,
   DELETE_ISSUE,
+  EDIT_ISSUE_FAILURE,
+  EDIT_ISSUE_SUCCESS,
+  EDIT_ISSUE,
   FETCH_ISSUE_DETAIL_FAILURE,
   FETCH_ISSUE_DETAIL_SUCCESS,
   FETCH_ISSUE_DETAIL,
@@ -174,6 +177,27 @@ export function deleteIssue(payload) {
   };
 }
 
+export function editIssueFailure(payload) {
+  return {
+    payload,
+    type: EDIT_ISSUE_FAILURE,
+  };
+}
+
+export function editIssueSuccess(payload) {
+  return {
+    payload,
+    type: EDIT_ISSUE_SUCCESS,
+  };
+}
+
+export function editIssue(payload) {
+  return {
+    payload,
+    type: EDIT_ISSUE,
+  };
+}
+
 export function fetchIssuesFailure(payload) {
   return {
     payload,
@@ -277,6 +301,7 @@ export function saveInfo(payload) {
     type: SAVE_INFO,
   };
 }
+
 export function searchIssuesFailure(payload) {
   return {
     payload,

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Verified } from 'components/base_ui';
+import { BaseTextInput, Verified } from 'components/base_ui';
 import { defaultFontSize, detailFontSize, textColor } from 'defaultStyleHelper';
 
 export const IssueDetailContainer = styled.div`
@@ -23,6 +23,17 @@ export const OrganizationNameContainer = styled.a`
 
   &:hover {
     color: #007bff;
+  }
+`;
+
+export const StyledBaseTextInput = styled(BaseTextInput)`
+  margin: 0.5rem 0;
+  width: ${({ width }) => width || 'inherit'};
+
+  .base-input {
+    color: ${textColor};
+    font-size: 2rem;
+    font-weight: 500;
   }
 `;
 

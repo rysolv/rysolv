@@ -9,12 +9,14 @@ import {
   ADD_COMMENT,
   CLOSE_ISSUE,
   DELETE_ISSUE,
+  EDIT_ISSUE,
   FETCH_ISSUE_DETAIL,
   FETCH_ISSUES,
   IMPORT_ISSUE,
   SAVE_INFO,
   SEARCH_ISSUES,
   successCreateIssueMessage,
+  successEditIssueMessage,
   UPVOTE_ISSUE,
 } from './constants';
 import {
@@ -28,6 +30,9 @@ import {
   closeIssueSuccess,
   deleteIssueFailure,
   deleteIssueSuccess,
+  editIssueFailure,
+  editIssueSuccess,
+  fetchIssueDetail,
   fetchIssueDetailFailure,
   fetchIssueDetailSuccess,
   fetchIssuesFailure,
@@ -139,6 +144,64 @@ export function* deleteIssueSaga({ payload }) {
     yield put(deleteIssueSuccess({ itemId, message: deleteIssue }));
   } catch (error) {
     yield put(deleteIssueFailure({ error }));
+  }
+}
+
+export function* editIssueSaga({ payload }) {
+  const { editRequest, issueId } = payload;
+  const { body, language, name } = editRequest;
+  const query = `
+    mutation {
+      transformIssue(id: "${issueId}", issueInput: {
+        body: ${JSON.stringify(body)},
+        language: ${JSON.stringify(language)},
+        name: "${name}",
+      }) {
+        __typename
+        ... on Issue {
+          id,
+          attempting,
+          attempts,
+          body,
+          comments,
+          contributor,
+          createdDate,
+          fundedAmount,
+          language,
+          modifiedDate,
+          name,
+          open,
+          organizationId,
+          organizationName,
+          organizationVerified,
+          profilePic,
+          rep,
+          repo,
+          userId,
+          username,
+          watching
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { transformIssue },
+    } = yield call(post, '/graphql', graphql);
+    if (transformIssue.__typename === 'Error') {
+      throw transformIssue;
+    }
+    yield put(fetchIssueDetail({ id: issueId }));
+    yield put(editIssueSuccess({ message: successEditIssueMessage }));
+  } catch (error) {
+    yield put(editIssueFailure({ error }));
   }
 }
 
@@ -422,6 +485,7 @@ export default function* watcherSaga() {
   yield takeLatest(ADD_COMMENT, addCommentSaga);
   yield takeLatest(CLOSE_ISSUE, closeIssueSaga);
   yield takeLatest(DELETE_ISSUE, deleteIssueSaga);
+  yield takeLatest(EDIT_ISSUE, editIssueSaga);
   yield takeLatest(FETCH_ISSUE_DETAIL, fetchIssueDetailSaga);
   yield takeLatest(FETCH_ISSUES, fetchIssuesSaga);
   yield takeLatest(IMPORT_ISSUE, importIssueSaga);

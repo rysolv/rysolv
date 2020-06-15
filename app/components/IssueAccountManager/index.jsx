@@ -11,6 +11,7 @@ import {
 
 const IssueAccountManager = ({
   displayEditView,
+  handleClose,
   handleSave,
   setDisplayEditView,
   ...restProps
@@ -24,10 +25,7 @@ const IssueAccountManager = ({
 
   const SaveView = (
     <div>
-      <StyledSecondayButton
-        label="Cancel"
-        onClick={() => setDisplayEditView(false)}
-      />
+      <StyledSecondayButton label="Cancel" onClick={handleClose} />
       <StyledPrimaryButton label="Save" onClick={() => handleSave()} />
     </div>
   );
@@ -44,6 +42,7 @@ const IssueAccountManager = ({
 
 IssueAccountManager.propTypes = {
   displayEditView: T.bool,
+  handleClose: T.func,
   handleSave: T.func,
   setDisplayEditView: T.func,
 };
