@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
-import { BaseExpansionPanel } from 'components/base_ui';
+import { BaseExpansionPanel, ConditionalRender } from 'components/base_ui';
 import {
   formatDollarAmount,
   handleCreditCardNumberChange,
@@ -40,6 +40,8 @@ const PaymentPortal = ({
   users,
   ...restProps
 }) => {
+  const [renderPaypal, setRenderPaypal] = useState(false);
+  const [renderCreditCard, setRenderCreditCard] = useState(false);
   const [fundAmount, setFundAmount] = useState('2');
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
@@ -120,13 +122,25 @@ const PaymentPortal = ({
       </PaymentInformationWrapper>
       <StyledLabel>Payment Methods</StyledLabel>
       <BaseExpansionPanel
-        Component={CreditCardView}
+        Component={() => (
+          <ConditionalRender
+            Component={CreditCardView}
+            shouldRender={renderCreditCard}
+          />
+        )}
+        handleRender={() => setRenderCreditCard(!renderCreditCard)}
         Icon={CreditCardIcon}
         propsToPassDown={propsToPassDown}
         title="Credit Card"
       />
       <BaseExpansionPanel
-        Component={PaypalView}
+        Component={() => (
+          <ConditionalRender
+            Component={PaypalView}
+            shouldRender={renderPaypal}
+          />
+        )}
+        handleRender={() => setRenderPaypal(!renderPaypal)}
         Icon={PaypalIcon}
         title="Paypal"
       />
