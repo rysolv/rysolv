@@ -19,7 +19,8 @@ const IssueTopBar = ({
   isDesktop,
   isSignedIn,
 }) => {
-  const { fundedAmount, open } = data;
+  const { balance, id: userId } = activeUser;
+  const { fundedAmount, id: issueId, open } = data;
   return (
     <Fragment>
       <StyledIssueHeader>
@@ -31,10 +32,13 @@ const IssueTopBar = ({
           />
           {!isDesktop && (
             <FundIssueButton
+              balance={balance}
               disabled={!open}
               dispatchOpenModal={dispatchOpenModal}
               fundedAmount={fundedAmount}
+              issueId={issueId}
               open={open}
+              userId={userId}
             />
           )}
         </IssueBarTopRow>
