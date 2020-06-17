@@ -20,7 +20,9 @@ import {
   IssueCardIconWrapper,
   IssueCardItem,
   IssueCardLabelWrapper,
+  IssueFooterIconWrapper,
   IssueLanguageContainer,
+  Name,
   NameWrapper,
   OrganizationNameWrapper,
   StyledIssueContent,
@@ -101,11 +103,15 @@ const IssueCard = ({
                 {moment.utc(createdDate).fromNow()}
               </StyledIssueHeader>
               <StyledIssueText>
-                <NameWrapper
-                  href={`/issues/detail/${id}`}
-                  onClick={e => navHelper(e, handleNav, `/issues/detail/${id}`)}
-                >
-                  {name}
+                <NameWrapper>
+                  <Name
+                    href={`/issues/detail/${id}`}
+                    onClick={e =>
+                      navHelper(e, handleNav, `/issues/detail/${id}`)
+                    }
+                  >
+                    {name}
+                  </Name>
                 </NameWrapper>
                 <IssueLanguageContainer>
                   {language.map(el => (
@@ -115,55 +121,61 @@ const IssueCard = ({
               </StyledIssueText>
 
               <StyledIssueFooter open={open}>
-                {open ? (
-                  <IssueCardItem>
-                    <IssueCardIconWrapper>
-                      <CommentIcon />
-                    </IssueCardIconWrapper>
-                    <IssueCardLabelWrapper>
-                      {comments.length} Comments
-                    </IssueCardLabelWrapper>
-                  </IssueCardItem>
-                ) : null}
+                <IssueFooterIconWrapper>
+                  {open ? (
+                    <IssueCardItem
+                      onClick={e =>
+                        navHelper(e, handleNav, `/issues/detail/${id}`)
+                      }
+                    >
+                      <IssueCardIconWrapper>
+                        <CommentIcon />
+                      </IssueCardIconWrapper>
+                      <IssueCardLabelWrapper>
+                        {comments.length} Comments
+                      </IssueCardLabelWrapper>
+                    </IssueCardItem>
+                  ) : null}
 
-                {open ? (
-                  <IssueCardItem
-                    onClick={() =>
-                      dispatchFetchWatchList({
-                        idArray: attempting,
-                        modalState: 'issueAttemptList',
-                      })
-                    }
-                  >
-                    <IssueCardIconWrapper>
-                      {AttemptingIcon}
-                    </IssueCardIconWrapper>
-                    <IssueCardLabelWrapper>
-                      {attempting.length} Attempting
-                    </IssueCardLabelWrapper>
-                  </IssueCardItem>
-                ) : null}
-
-                {open ? (
-                  <IssueCardItem>
-                    <WatchButton
-                      dispatchFetchWatchList={dispatchFetchWatchList}
-                      dispatchOpenModal={dispatchOpenModal}
-                      handleWatch={() =>
-                        handleIncrement({
-                          userId: activeUser.id,
-                          id,
-                          column: 'watching',
-                          remove: userWatching,
+                  {open ? (
+                    <IssueCardItem
+                      onClick={() =>
+                        dispatchFetchWatchList({
+                          idArray: attempting,
+                          modalState: 'issueAttemptList',
                         })
                       }
-                      isSignedIn={isSignedIn}
-                      label={userWatching ? 'Watching' : 'Watch'}
-                      value={watching.length}
-                      watching={watching}
-                    />
-                  </IssueCardItem>
-                ) : null}
+                    >
+                      <IssueCardIconWrapper>
+                        {AttemptingIcon}
+                      </IssueCardIconWrapper>
+                      <IssueCardLabelWrapper>
+                        {attempting.length} Attempting
+                      </IssueCardLabelWrapper>
+                    </IssueCardItem>
+                  ) : null}
+
+                  {open ? (
+                    <IssueCardItem>
+                      <WatchButton
+                        dispatchFetchWatchList={dispatchFetchWatchList}
+                        dispatchOpenModal={dispatchOpenModal}
+                        handleWatch={() =>
+                          handleIncrement({
+                            userId: activeUser.id,
+                            id,
+                            column: 'watching',
+                            remove: userWatching,
+                          })
+                        }
+                        isSignedIn={isSignedIn}
+                        label={userWatching ? 'Watching' : 'Watch'}
+                        value={watching.length}
+                        watching={watching}
+                      />
+                    </IssueCardItem>
+                  ) : null}
+                </IssueFooterIconWrapper>
 
                 <ConditionalRender
                   Component={

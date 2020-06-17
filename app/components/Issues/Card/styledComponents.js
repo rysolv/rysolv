@@ -8,13 +8,18 @@ import {
 } from 'defaultStyleHelper';
 
 export const IssueCardIconWrapper = styled.div`
-  display: inline-flex;
-  margin: 0 0.5rem;
+  display: flex;
+  margin: 0 0.25rem;
 `;
 
 export const IssueCardItem = styled.div`
   align-items: center;
-  display: inline-flex;
+  color: #878a8c;
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+  padding-right: 1rem;
 
   &:hover {
     cursor: pointer;
@@ -26,12 +31,17 @@ export const IssueCardLabelWrapper = styled.div`
   display: inline-flex;
 `;
 
+export const IssueFooterIconWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const IssueLanguageContainer = styled.div`
   margin: 1rem 0;
   font-size: ${detailFontSize};
 `;
 
-export const NameWrapper = styled.a`
+export const Name = styled.a`
   font-size: ${subheaderFontSize};
   overflow: hidden;
   color: ${textColor};
@@ -40,6 +50,10 @@ export const NameWrapper = styled.a`
     cursor: pointer;
     color: ${hoverLinkColor};
   }
+`;
+
+export const NameWrapper = styled.div`
+  margin: 1rem 0;
 `;
 
 export const OrganizationNameWrapper = styled.a`
@@ -67,10 +81,11 @@ export const StyledIssueFooter = styled.div`
 `;
 
 export const StyledIssueHeader = styled.div`
+  color: ${textColor};
   display: flex;
   font-size: ${detailFontSize};
   justify-content: space-between;
-  padding: 0.25rem 1rem 0 0.25rem;
+  padding: 0.25rem 1rem 0 0;
   width: 100%;
 `;
 
