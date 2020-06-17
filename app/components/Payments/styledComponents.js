@@ -43,7 +43,9 @@ export const BalanceWrapper = styled.div`
   border-radius: 0.3rem;
   display: flex;
   justify-content: space-between;
+  margin: auto;
   padding: 1rem;
+  width: 80%;
 `;
 
 export const ConfirmAmount = styled.div`
@@ -52,6 +54,8 @@ export const ConfirmAmount = styled.div`
 
 export const ConfirmContainer = styled.div`
   font-size: ${defaultFontSize};
+  margin: auto;
+  width: 80%;
 `;
 
 export const ConfirmText = styled.div`
@@ -144,7 +148,7 @@ export const StyledBaseInputWithAdornment = styled(
 
 export const StyledAccountBaseInput = styled(StyledBaseInputWithAdornment)`
   margin: 0.5rem 0;
-  width: 100%;
+  width: 80%;
 `;
 
 export const StyledLabel = styled.div`
@@ -188,13 +192,15 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
 
 export const TextWrapper = styled.div`
   font-size: 1.2rem;
+  margin: auto;
   padding-bottom: 0;
   padding: 2rem 0;
   text-align: left;
+  width: 80%;
 `;
 
 export const YourAccountContainer = styled.div`
-  margin: 0.5rem 1rem;
+  margin: 0.5rem 0;
   text-align: center;
   width: 100%;
 `;

@@ -46,8 +46,6 @@ const PaymentPortal = ({
   userId,
   ...restProps
 }) => {
-  const [renderPaypal, setRenderPaypal] = useState(false);
-  const [renderCreditCard, setRenderCreditCard] = useState(false);
   const [fundAmount, setFundAmount] = useState('2');
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
@@ -141,25 +139,13 @@ const PaymentPortal = ({
         shouldRender={isSignedIn}
       />
       <BaseExpansionPanel
-        Component={() => (
-          <ConditionalRender
-            Component={CreditCardView}
-            shouldRender={renderCreditCard}
-          />
-        )}
-        handleRender={() => setRenderCreditCard(!renderCreditCard)}
+        Component={CreditCardView}
         Icon={CreditCardIcon}
         propsToPassDown={propsToPassDown}
         title="Credit Card"
       />
       <BaseExpansionPanel
-        Component={() => (
-          <ConditionalRender
-            Component={PaypalView}
-            shouldRender={renderPaypal}
-          />
-        )}
-        handleRender={() => setRenderPaypal(!renderPaypal)}
+        Component={PaypalView}
         Icon={PaypalIcon}
         title="Paypal"
       />

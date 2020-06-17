@@ -13,7 +13,6 @@ import {
 
 const BaseExpansionPanel = ({
   Component,
-  handleRender,
   Icon,
   open,
   propsToPassDown,
@@ -28,7 +27,6 @@ const BaseExpansionPanel = ({
     <StyledExpansionPanelSummary
       classes={{ expanded: 'expanded', expandIcon: 'expandIcon' }}
       expandIcon={<ExpandMoreIcon />}
-      onClick={handleRender}
     >
       <ConditionalRender
         Component={<IconWrapper>{Icon}</IconWrapper>}
@@ -44,7 +42,6 @@ const BaseExpansionPanel = ({
 
 BaseExpansionPanel.propTypes = {
   Component: T.oneOfType([T.func, T.object]),
-  handleRender: T.func,
   Icon: T.node,
   open: T.bool,
   propsToPassDown: T.object,
