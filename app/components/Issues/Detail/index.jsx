@@ -15,6 +15,8 @@ import {
   DetailContainer,
   Divider,
   IssueDetailColumn,
+  IssueDetailContainer,
+  IssueDetailContentContainer,
   IssueDetailWrapper,
   LeftPanel,
   SidebarContainer,
@@ -154,7 +156,7 @@ const IssueDetail = ({
 
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
   return (
-    <div>
+    <IssueDetailContainer>
       <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
       <ConditionalRender
         Component={
@@ -180,7 +182,7 @@ const IssueDetail = ({
               userId={activeUserId}
             />
           </LeftPanel>
-          <div>
+          <IssueDetailContentContainer>
             <TopBarWrapper>
               <IssueTopBar
                 activeUser={activeUser}
@@ -237,7 +239,7 @@ const IssueDetail = ({
                 shouldRender={isSignedIn}
               />
             </IssueDetailColumn>
-          </div>
+          </IssueDetailContentContainer>
         </IssueDetailWrapper>
         <SidebarContainer>
           <ConditionalRender
@@ -273,7 +275,7 @@ const IssueDetail = ({
           />
         </SidebarContainer>
       </DetailContainer>
-    </div>
+    </IssueDetailContainer>
   );
 };
 

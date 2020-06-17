@@ -13,9 +13,9 @@ export const BaseInputWrapper = styled.div`
 `;
 
 export const DetailContainer = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
 `;
 

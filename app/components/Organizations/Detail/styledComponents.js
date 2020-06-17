@@ -45,6 +45,15 @@ export const BaseInputWrapper = styled.div`
   width: 45%;
 `;
 
+export const ButtonGroup = styled.div`
+  ${mobile} {
+    display: flex;
+    flex-flow: wrap-reverse;
+    justify-content: flex-end;
+    width: 50%;
+  }
+`;
+
 export const ContentWrapper = styled.div`
   padding-left: 2rem;
   width: 100%;
@@ -398,6 +407,10 @@ export const StyledSecondayButton = styled(SecondaryButton)`
 
   &:hover {
     background-color: white;
+  }
+
+  ${mobile} {
+    margin-right: 0;
   }
 `;
 

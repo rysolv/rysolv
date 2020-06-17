@@ -17,7 +17,7 @@ import {
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { laptop, tablet } = mediaQueriesByDevice;
+const { laptop, mobile, tablet } = mediaQueriesByDevice;
 
 export const CommentWrapper = styled.div`
   margin: 3rem 3rem 3rem 0;
@@ -45,6 +45,10 @@ export const Icon = styled.span`
   margin-right: 0.5rem;
 `;
 
+export const IssueDetailContainer = styled.div`
+  width: 100%;
+`;
+
 export const Divider = styled.div`
   border-bottom: 1px solid ${borderColor};
   color: ${textColor};
@@ -63,6 +67,10 @@ export const ExternalLinkWrapper = styled.a`
   &:hover {
     color: #007bff;
     cursor: pointer;
+  }
+
+  ${mobile} {
+    white-space: nowrap;
   }
 `;
 
@@ -117,6 +125,10 @@ export const IssueDetailColumn = styled.div`
   ${tablet} {
     padding: 1rem;
   }
+`;
+
+export const IssueDetailContentContainer = styled.div`
+  width: calc(100% - 3.5rem);
 `;
 
 export const IssueDetailWrapper = styled.div`

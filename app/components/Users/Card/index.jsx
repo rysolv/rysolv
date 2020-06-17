@@ -22,60 +22,77 @@ import {
   StyledSquare,
 } from './styledComponents';
 
-const UserCard = ({ data, handleNav }) => (
-  <OverviewWrapper>
-    {data.map(
-      (
-        { attempting, createdDate, id, issues, name, pointsNumber, profilePic },
-        index,
-      ) => (
-        <StyledListSquare key={`${name}-${index}`}>
-          <StyledSquare>
-            <StyledSettingWrapper>
-              <MemberWrapper>
-                <NameWrapper
-                  onClick={e => navHelper(e, handleNav, `/users/detail/${id}`)}
-                  href={`/users/detail/${id}`}
-                >
-                  {name}
-                </NameWrapper>
-                <MemberInfoContainer>
-                  Member since {createdDate}
-                </MemberInfoContainer>
-              </MemberWrapper>
-            </StyledSettingWrapper>
-            <ContentWrapper>
-              <ImageContainer>
-                <ProfileImage
-                  alt="Profile Image"
-                  detailRoute={`/users/detail/${id}`}
-                  handleNav={handleNav}
-                  profilePic={profilePic}
-                  size="7.5rem"
-                />
-                <IconWrapper>
-                  <div>
-                    <Star />
-                  </div>
-                  <NumberContainer>{pointsNumber}</NumberContainer>
-                </IconWrapper>
-              </ImageContainer>
-            </ContentWrapper>
-            <IssuesWrapper>
-              <IssuesContainer>
-                {issues.length} {issues.length === 1 ? `Issue` : `Issues`}
-              </IssuesContainer>
-              <ActiveContainer>{attempting.length} Attempting</ActiveContainer>
-            </IssuesWrapper>
-          </StyledSquare>
-        </StyledListSquare>
-      ),
-    )}
-  </OverviewWrapper>
-);
+const UserCard = ({ data, deviceView, handleNav }) => {
+  const isMobile = deviceView === 'mobile';
+
+  return (
+    <OverviewWrapper>
+      {data.map(
+        (
+          {
+            attempting,
+            createdDate,
+            id,
+            issues,
+            name,
+            pointsNumber,
+            profilePic,
+          },
+          index,
+        ) => (
+          <StyledListSquare key={`${name}-${index}`}>
+            <StyledSquare>
+              <StyledSettingWrapper>
+                <MemberWrapper>
+                  <NameWrapper
+                    onClick={e =>
+                      navHelper(e, handleNav, `/users/detail/${id}`)
+                    }
+                    href={`/users/detail/${id}`}
+                  >
+                    {name}
+                  </NameWrapper>
+                  <MemberInfoContainer>
+                    Member since {createdDate}
+                  </MemberInfoContainer>
+                </MemberWrapper>
+              </StyledSettingWrapper>
+              <ContentWrapper>
+                <ImageContainer>
+                  <ProfileImage
+                    alt="Profile Image"
+                    detailRoute={`/users/detail/${id}`}
+                    handleNav={handleNav}
+                    profilePic={profilePic}
+                    size={isMobile ? '4.75rem' : '7.5rem'}
+                  />
+                  <IconWrapper>
+                    <div>
+                      <Star />
+                    </div>
+                    <NumberContainer>{pointsNumber}</NumberContainer>
+                  </IconWrapper>
+                </ImageContainer>
+              </ContentWrapper>
+              <IssuesWrapper>
+                <IssuesContainer>
+                  {issues.length} {issues.length === 1 ? `Issue` : `Issues`}
+                </IssuesContainer>
+                <ActiveContainer>
+                  {attempting.length} Attempting
+                </ActiveContainer>
+              </IssuesWrapper>
+            </StyledSquare>
+          </StyledListSquare>
+        ),
+      )}
+    </OverviewWrapper>
+  );
+};
 
 UserCard.propTypes = {
   data: T.array.isRequired,
+  deviceView: T.string.isRequired,
   handleNav: T.func.isRequired,
 };
 

@@ -8,6 +8,9 @@ import {
   subTextColor,
   textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const ActiveContainer = styled.div`
   color: #388e3c;
@@ -73,6 +76,11 @@ export const OverviewWrapper = styled.div`
   flex-flow: wrap;
   justify-content: space-between;
   margin-left: 1rem;
+
+  ${mobile} {
+    justify-content: center;
+    margin-left: 2rem;
+  }
 `;
 
 export const StyledListSquare = styled.div`
@@ -83,6 +91,11 @@ export const StyledListSquare = styled.div`
   margin: 0 1rem 1rem 0;
   padding: 0.5rem;
   width: 17.5rem;
+
+  ${mobile} {
+    margin: 0 2rem 2rem 0;
+    width: auto;
+  }
 `;
 
 export const StyledSettingWrapper = styled.div`

@@ -1,7 +1,17 @@
 import styled from 'styled-components';
 
 import { BaseDropDownMenu } from 'components/base_ui';
-import { hoverLinkColor } from 'defaultStyleHelper';
+import { defaultFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
+
+export const EmptyMessageContainer = styled.div`
+  align-items: center;
+  color: ${textColor};
+  display: flex;
+  font-size: ${defaultFontSize};
+  height: 10rem;
+  justify-content: center;
+  width: 100%;
+`;
 
 export const HeaderWrapper = styled.div`
   align-items: center;

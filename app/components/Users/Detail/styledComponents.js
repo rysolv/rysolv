@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 import { defaultFontSize } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const DetailContainer = styled.div`
   align-items: center;
@@ -11,9 +14,12 @@ export const DetailContainer = styled.div`
 export const DetailViewContainer = styled.div`
   color: rgba(0, 0, 0, 0.7);
   display: flex;
-  flex-direction: row;
   padding: 1.6rem 0;
   width: 100%;
+
+  ${mobile} {
+    flex-direction: column;
+  }
 `;
 
 export const LinkIcon = styled.div`
@@ -114,6 +120,10 @@ export const UserCardWrapper = styled.div`
   height: fit-content;
   padding: 15px 2%;
   width: fit-content;
+
+  ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const UserContentsWrapper = styled.div`
@@ -122,10 +132,18 @@ export const UserContentsWrapper = styled.div`
   margin: 0 2rem;
   padding: 2rem;
   width: 100%;
+
+  ${mobile} {
+    margin: 2rem 0;
+  }
 `;
 
 export const UserImage = styled.img`
   margin: 0.5rem;
   max-height: 25rem;
   max-width: 25rem;
+
+  ${mobile} {
+    align-self: center;
+  }
 `;

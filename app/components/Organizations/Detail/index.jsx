@@ -14,6 +14,7 @@ import OrganizationDetailTabs from './OrganizationDetailTabs';
 import TopLanguagesView from './TopLanguagesView';
 import RecentActivityView from './RecentActivityView';
 import {
+  ButtonGroup,
   ContentWrapper,
   Description,
   DetailContainer,
@@ -168,13 +169,13 @@ const OrganizationDetailView = ({
               shouldRender={verified}
             />
           </NameWrapper>
-          <div>
+          <ButtonGroup>
             <StyledSecondayButton
               label="Cancel"
               onClick={() => setDisplayEditView(false)}
             />
             <StyledPrimaryButton label="Save" onClick={() => handleSave()} />
-          </div>
+          </ButtonGroup>
         </HeaderWrapper>
         <StyledBaseTextInput
           multiline
