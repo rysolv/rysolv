@@ -6,6 +6,9 @@ import Tab from '@material-ui/core/Tab';
 
 import { BaseDropDownMenu, ErrorSuccessBanner } from 'components/base_ui';
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
@@ -22,9 +25,12 @@ export const DetailContainer = styled.div`
 export const DetailViewContainer = styled.div`
   color: rgba(0, 0, 0, 0.7);
   display: flex;
-  flex-direction: row;
   padding: 1.6rem 0;
   width: 100%;
+
+  ${mobile} {
+    flex-direction: column;
+  }
 `;
 
 export const HeaderWrapper = styled.div`
@@ -114,10 +120,19 @@ export const SettingsTabsWrapper = styled.div`
   overflow: hidden;
   padding: 2rem;
   width: 65rem;
+
+  ${mobile} {
+    margin-left: 0;
+    width: 100%;
+  }
 `;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
+
+  ${mobile} {
+    margin-right: 0;
+  }
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
@@ -188,10 +203,18 @@ export const UserCardWrapper = styled.div`
   height: fit-content;
   padding: 15px 2%;
   width: fit-content;
+
+  ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const UserImage = styled.img`
   margin: 0.5rem;
   max-height: 25rem;
   max-width: 25rem;
+
+  ${mobile} {
+    align-self: center;
+  }
 `;

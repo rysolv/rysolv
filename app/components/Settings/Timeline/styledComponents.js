@@ -6,6 +6,7 @@ import {
   defaultFontFamily,
   defaultFontSize,
   hoverLinkColor,
+  textColor,
 } from 'defaultStyleHelper';
 
 export const HeaderContainer = styled.div`
@@ -13,9 +14,8 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const StyledAction = styled.div`
-  text-transform: capitalize;
-  font-weight: bold;
+export const StyledAction = styled.span`
+  font-weight: 700;
 `;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
@@ -56,6 +56,7 @@ export const TimelineContainer = styled.div`
 `;
 
 export const TimelineContent = styled.div`
+  color: ${textColor};
   font-size: 1.6rem;
   padding: 1rem;
 `;
@@ -80,6 +81,7 @@ export const TimelineHorizontalDivider = styled.div`
 
 export const TimelineHeader = styled.ul`
   align-items: center;
+  color: ${textColor};
   display: flex;
   margin-bottom: 0.5rem;
   padding: 0;
@@ -100,10 +102,10 @@ export const TimelineTitle = styled.h4`
   white-space: nowrap;
 `;
 
-export const TimelineType = styled.div`
+export const TimelineType = styled.span`
   display: flex;
   font-size: 1.6rem;
-  font-weight: bolder;
+  font-weight: 400;
   letter-spacing: 0.05rem;
   line-height: 2rem;
 `;
