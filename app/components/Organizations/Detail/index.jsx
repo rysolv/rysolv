@@ -63,6 +63,7 @@ const OrganizationDetailView = ({
     repoUrl,
     verified,
   },
+  deviceView,
   dispatchEditOrganization,
   dispatchOpenModal,
   filterValues,
@@ -102,6 +103,8 @@ const OrganizationDetailView = ({
     const formattedLogo = await getBase64(files[0]);
     setLogoChange(formattedLogo);
   };
+
+  const isMobileOrTable = deviceView === 'mobile';
 
   const DetailViewComponent = (
     <DetailViewContainer>
@@ -245,6 +248,7 @@ const OrganizationDetailView = ({
           />
           <Divider />
           <RecentActivityView activity={activity} handleNav={handleNav} />
+          <Divider shouldHide={!isMobileOrTable} />
         </SidebarTabs>
       </TabsContainer>
     </DetailContainer>
@@ -255,6 +259,7 @@ OrganizationDetailView.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
   data: T.object.isRequired,
+  deviceView: T.string.isRequired,
   dispatchEditOrganization: T.func.isRequired,
   dispatchOpenModal: T.func,
   filterValues: T.object.isRequired,

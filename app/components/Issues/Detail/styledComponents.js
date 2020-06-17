@@ -17,7 +17,7 @@ import {
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { tablet, laptop } = mediaQueriesByDevice;
+const { laptop, tablet } = mediaQueriesByDevice;
 
 export const CommentWrapper = styled.div`
   margin: 3rem 3rem 3rem 0;

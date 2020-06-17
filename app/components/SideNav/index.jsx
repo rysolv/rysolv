@@ -47,10 +47,7 @@ const SideNav = ({ handleNav, view }) => {
       case 'tablet':
         setDisplaySideNav(false);
         break;
-      case 'mobileL':
-        setDisplaySideNav(false);
-        break;
-      case 'mobileS':
+      case 'mobile':
         setDisplaySideNav(false);
         break;
       default:

@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 import { BaseDropDownMenu } from 'components/base_ui';
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
@@ -19,10 +22,18 @@ export const SearchHeaderContainer = styled.div`
   margin-bottom: 2rem;
   padding-left: 1rem;
   width: 100%;
+
+  ${mobile} {
+    padding-left: 0;
+  }
 `;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
+
+  ${mobile} {
+    margin-right: 0;
+  }
 `;
 
 export const StyledLabel = styled.div`

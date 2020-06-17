@@ -10,7 +10,6 @@ import {
   PrimaryButton,
   SecondaryButton,
 } from 'components/base_ui';
-
 import {
   defaultFontSize,
   detailFontSize,
@@ -18,6 +17,9 @@ import {
   hoverLinkColor,
   textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const ActivityContainer = styled.div`
   display: flex;
@@ -117,6 +119,7 @@ export const DetailViewContainer = styled.div`
 `;
 
 export const Divider = styled.div`
+  display: ${({ shouldHide }) => (shouldHide ? 'none' : 'inherit')};
   border-top: ${dividerBorder};
   margin: 1rem auto;
   width: 90%;
@@ -132,7 +135,7 @@ export const EmptyMessageComponent = styled.div`
   color: ${textColor};
   display: flex;
   font-size: ${defaultFontSize};
-  height: 50%;
+  height: 100%;
   justify-content: center;
 `;
 
@@ -175,6 +178,10 @@ export const IssueContent = styled.div`
   width: 100%;
   height: 10rem;
   margin: 1rem 0;
+
+  ${mobile} {
+    height: auto;
+  }
 `;
 
 export const IssueContentInfo = styled.div`
@@ -278,6 +285,10 @@ export const LanguageWrapper = styled.div`
 export const MainTabs = styled.div`
   display: flex;
   width: 60%;
+
+  ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const Name = styled.div`
@@ -331,12 +342,20 @@ export const SidebarTabs = styled.div`
   display: flex;
   flex-direction: column;
   width: 40%;
+
+  ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const StyledAction = styled.span``;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
+
+  ${mobile} {
+    margin: 0;
+  }
 `;
 
 export const StyledBaseTextInput = styled(BaseTextInput)`
@@ -407,6 +426,10 @@ export const TabsContainer = styled.div`
   display: flex;
   min-height: 50rem;
   width: 100%;
+
+  ${mobile} {
+    flex-direction: column-reverse;
+  }
 `;
 
 export const TopLanguagesContainer = styled.div`
@@ -430,4 +453,9 @@ export const UrlWrapper = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 1.4rem;
+
+  ${mobile} {
+    flex-direction: column;
+    margin-left: -12rem;
+  }
 `;

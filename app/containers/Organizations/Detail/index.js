@@ -9,6 +9,7 @@ import AsyncRender from 'components/AsyncRender';
 import OrganizationDetailView from 'components/Organizations/Detail';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { openModalState } from 'containers/Main/actions';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -51,6 +52,7 @@ export class OrganizationsDetail extends React.PureComponent {
       activeUser,
       alerts,
       data,
+      deviceView,
       dispatchEditOrganization,
       dispatchOpenModal,
       error,
@@ -72,6 +74,7 @@ export class OrganizationsDetail extends React.PureComponent {
         propsToPassDown={{
           activeUser,
           alerts,
+          deviceView,
           dispatchEditOrganization,
           dispatchOpenModal,
           filterValues,
@@ -90,6 +93,7 @@ OrganizationsDetail.propTypes = {
   activeUser: T.object.isRequired,
   alerts: T.object.isRequired,
   data: T.object,
+  deviceView: T.string.isRequired,
   dispatchEditOrganization: T.func.isRequired,
   dispatchFetchInfo: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
@@ -118,6 +122,10 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectOrganizationsError('fetchOrganization'),
   filterValues: makeSelectOrganizations('filter'),
   loading: makeSelectOrganizationsLoading('fetchOrganization'),
+  /**
+   * Reducer : ViewSize
+   */
+  deviceView: makeSelectViewSize('deviceView'),
 });
 
 function mapDispatchToProps(dispatch) {
