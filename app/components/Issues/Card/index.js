@@ -4,14 +4,16 @@ import T from 'prop-types';
 
 import {
   CommentIcon,
+  ConditionalRender,
   FundingWrapper,
+  FundIssueButton,
   IconToolTip,
   LanguageWrapper,
   Verified,
   WatchButton,
 } from 'components/base_ui';
 import UpvotePanel from 'components/Upvote';
-import { formatDollarAmount, navHelper } from 'utils/globalHelpers';
+import { navHelper } from 'utils/globalHelpers';
 import IconDictionary from 'utils/iconDictionary';
 
 import {
@@ -56,6 +58,7 @@ const IssueCard = ({
       rep,
       watching,
     }) => {
+      const { balance, id: userId } = activeUser;
       const userWatching =
         activeUser.watching && !!activeUser.watching.find(el => el.id === id);
       const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
@@ -162,12 +165,21 @@ const IssueCard = ({
                   </IssueCardItem>
                 ) : null}
 
-                <FundingWrapper
-                  open={open}
-                  value={
-                    open ? formatDollarAmount(fundedAmount) : 'Issue Closed'
+                <ConditionalRender
+                  Component={
+                    <FundIssueButton
+                      balance={balance}
+                      dispatchOpenModal={dispatchOpenModal}
+                      fundedAmount={fundedAmount}
+                      issueId={id}
+                      open={open}
+                      userId={userId}
+                    />
                   }
-                  medium
+                  FallbackComponent={
+                    <FundingWrapper open={open} value="Issue Closed" medium />
+                  }
+                  shouldRender={open}
                 />
               </StyledIssueFooter>
             </StyledIssueContent>
