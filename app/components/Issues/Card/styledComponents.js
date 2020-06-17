@@ -4,6 +4,7 @@ import {
   detailFontSize,
   hoverLinkColor,
   subheaderFontSize,
+  subTextColor,
   textColor,
 } from 'defaultStyleHelper';
 
@@ -14,10 +15,10 @@ export const IssueCardIconWrapper = styled.div`
 
 export const IssueCardItem = styled.div`
   align-items: center;
-  color: #878a8c;
+  color: ${subTextColor};
   display: flex;
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1;
   padding-right: 1rem;
 

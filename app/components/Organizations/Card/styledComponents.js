@@ -4,10 +4,11 @@ import {
   borderColor,
   defaultFontSize,
   detailFontSize,
+  headerColor,
   hoverLinkColor,
   subheaderFontSize,
+  subTextColor,
   textColor,
-  headerColor,
 } from 'defaultStyleHelper';
 
 export const ContentContainer = styled.div`
@@ -29,6 +30,19 @@ export const DescriptionWrapper = styled.div`
 export const ImageContainer = styled.div`
   min-width: 15%;
   text-align: center;
+`;
+
+export const Issues = styled.div``;
+
+export const IssuesIcon = styled.div`
+  padding-right: 0.25rem;
+`;
+
+export const IssuesWrapper = styled.div`
+  align-items: center;
+  color: ${subTextColor};
+  display: flex;
+  font-weight: 500;
 `;
 
 export const NameWrapper = styled.div`

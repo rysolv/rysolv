@@ -62,7 +62,9 @@ const UserCard = ({ data, handleNav }) => (
               </ImageContainer>
             </ContentWrapper>
             <IssuesWrapper>
-              <IssuesContainer>{issues.length} Issues</IssuesContainer>
+              <IssuesContainer>
+                {issues.length} {issues.length === 1 ? `Issue` : `Issues`}
+              </IssuesContainer>
               <ActiveContainer>{attempting.length} Attempting</ActiveContainer>
             </IssuesWrapper>
           </StyledSquare>

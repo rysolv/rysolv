@@ -5,6 +5,7 @@ import {
   detailFontSize,
   hoverLinkColor,
   subheaderFontSize,
+  subTextColor,
   textColor,
 } from 'defaultStyleHelper';
 
@@ -30,6 +31,7 @@ export const ImageContainer = styled.div`
 `;
 
 export const IssuesContainer = styled.div`
+  color: ${subTextColor};
   font-weight: 500;
 `;
 
@@ -41,7 +43,7 @@ export const IssuesWrapper = styled.div`
 `;
 
 export const MemberInfoContainer = styled.div`
-  color: #6a737d;
+  color: ${subTextColor};
   font-size: ${detailFontSize};
   line-height: 2rem;
 `;
