@@ -138,6 +138,16 @@ const transformIssue = async (table, id, data) => {
   throw new Error(`Failed to update. ID not found in ${table}`);
 };
 
+// UPDATE fund_value of issue for payment
+const submitAccountPaymentIssue = async (issueId, fundValue) => {
+  const [issueData] = await getOneIssue('issues', issueId);
+  const { fundedAmount } = issueData;
+  const adjustedFundValue = fundValue + fundedAmount;
+  const queryText = `UPDATE issues SET funded_amount=${adjustedFundValue} WHERE (id = '${issueId}') RETURNING *`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
 const updateIssueArray = async (table, column, id, data, remove) => {
   const [issueData] = await getOneIssue('issues', id, 'id');
   // Only add unique values to array
@@ -171,6 +181,7 @@ module.exports = {
   getIssues,
   getOneIssue,
   searchIssues,
+  submitAccountPaymentIssue,
   transformIssue,
   updateIssueArray,
   upvoteIssue,

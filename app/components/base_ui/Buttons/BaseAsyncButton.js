@@ -3,7 +3,14 @@ import T from 'prop-types';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const BaseAsyncButton = ({ Icon, label, loading, onClick, ...restProps }) => {
+const BaseAsyncButton = ({
+  disabled,
+  Icon,
+  label,
+  loading,
+  onClick,
+  ...restProps
+}) => {
   const loadingDisplay = (
     <CircularProgress className="progressWheel" size={24} />
   );
@@ -16,7 +23,7 @@ const BaseAsyncButton = ({ Icon, label, loading, onClick, ...restProps }) => {
         label: 'label',
         root: 'root',
       }}
-      disabled={loading}
+      disabled={disabled || loading}
       onClick={onClick}
       variant="contained"
       {...restProps}
@@ -27,6 +34,7 @@ const BaseAsyncButton = ({ Icon, label, loading, onClick, ...restProps }) => {
 };
 
 BaseAsyncButton.propTypes = {
+  disabled: T.bool,
   Icon: T.object,
   label: T.string,
   loading: T.bool,

@@ -39,6 +39,9 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
+  SUBMIT_ACCOUNT_PAYMENT_FAILURE,
+  SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
+  SUBMIT_ACCOUNT_PAYMENT,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
@@ -60,6 +63,7 @@ export const initialState = {
     issueDetail: false,
     issues: false,
     searchIssues: false,
+    submitAccountPayment: false,
   },
   filter: {
     language: [],
@@ -90,6 +94,7 @@ export const initialState = {
     issueDetail: false,
     issues: false,
     searchIssues: false,
+    submitAccountPayment: false,
     upvoteIssue: false,
   },
   organizationData: {
@@ -101,6 +106,7 @@ export const initialState = {
     organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
   },
+  paymentAlerts: { error: false, success: false },
   search: {
     overviewInput: { error: '', value: '' },
     searchInput: { error: '', value: '' },
@@ -188,6 +194,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       draft.filter = initialState.filter;
+      draft.paymentAlerts = initialState.paymentAlerts;
       draft.search = initialState.search;
       break;
     }
@@ -350,6 +357,23 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case SEARCH_ISSUES: {
       draft.loading.searchIssues = true;
+      break;
+    }
+    case SUBMIT_ACCOUNT_PAYMENT_FAILURE: {
+      const { error } = payload;
+      draft.loading.submitAccountPayment = false;
+      draft.paymentAlerts.submitAccountPayment = error;
+      break;
+    }
+    case SUBMIT_ACCOUNT_PAYMENT_SUCCESS: {
+      const { fundedAmount, message } = payload;
+      draft.issueDetail.fundedAmount = fundedAmount;
+      draft.loading.submitAccountPayment = false;
+      draft.paymentAlerts.success = { message };
+      break;
+    }
+    case SUBMIT_ACCOUNT_PAYMENT: {
+      draft.loading.submitAccountPayment = true;
       break;
     }
     case UPDATE_ORGANIZATION: {

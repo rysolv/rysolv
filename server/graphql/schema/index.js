@@ -17,6 +17,7 @@ module.exports = buildSchema(`
     userId: ID
     username: String
   }
+
   type ActivityArray {
     activityArray: [Activity]
   }
@@ -47,6 +48,24 @@ module.exports = buildSchema(`
     user: ID!
   }
 
+  type Error {
+    message: String
+  }
+
+  type ImportData {
+    issueBody: String!
+    issueLanguages: [String]
+    issueName: String!
+    issueUrl: String!
+    organizationDescription: String
+    organizationId: ID
+    organizationLanguages: [String]
+    organizationLogo: String
+    organizationName: String
+    organizationRepo: String
+    organizationUrl: String
+  }
+
   type Issue {
     activeAttempts: Int
     attempting: [ID]
@@ -73,20 +92,6 @@ module.exports = buildSchema(`
     watching: [String]
   }
 
-  type ImportData {
-    issueBody: String!
-    issueLanguages: [String]
-    issueName: String!
-    issueUrl: String!
-    organizationDescription: String
-    organizationId: ID
-    organizationLanguages: [String]
-    organizationLogo: String
-    organizationName: String
-    organizationRepo: String
-    organizationUrl: String
-  }
-
   input IssueInput {
     attempting: [ID]
     attempts: Int
@@ -105,6 +110,39 @@ module.exports = buildSchema(`
     rep: Int
     repo: String
     watching: [String]
+  }
+
+  type Organization {
+    contributors: [Object]
+    createdDate: Object
+    description: String!
+    id: ID!
+    issues: [Object]
+    logo: String
+    modifiedDate: Object
+    name: String!
+    organizationUrl: String
+    ownerId: ID
+    preferredLanguages: [String]
+    repoUrl: String!
+    totalFunded: Float
+    verified: Boolean
+  }
+
+  input OrganizationInput {
+    organizationDescription: String
+    organizationLogo: String
+    organizationName: String
+    organizationPreferredLanguages: [String]
+    organizationRepo: String
+    organizationUrl: String
+    organizationVerified: Boolean
+    ownerId: ID
+  }
+
+  type Payment {
+    balance: Float
+    fundedAmount: Float
   }
 
   type User {
@@ -168,42 +206,11 @@ module.exports = buildSchema(`
     username: String
   }
 
-  type Organization {
-    contributors: [Object]
-    createdDate: Object
-    description: String!
-    id: ID!
-    issues: [Object]
-    logo: String
-    modifiedDate: Object
-    name: String!
-    organizationUrl: String
-    ownerId: ID
-    preferredLanguages: [String]
-    repoUrl: String!
-    totalFunded: Float
-    verified: Boolean
-  }
-
-  input OrganizationInput {
-    organizationDescription: String
-    organizationLogo: String
-    organizationName: String
-    organizationPreferredLanguages: [String]
-    organizationRepo: String
-    organizationUrl: String
-    organizationVerified: Boolean
-    ownerId: ID
-  }
-
-  type Error {
-    message: String
-  }
-
   union ActivityResult = ActivityArray | Error
   union ImportResult = ImportData | Error
   union IssueResult = Issue | Error
   union OrganizationResult = Organization | Error
+  union PaymentResult = Payment | Error
 
   type RootQuery {
     getActivity(column: String!, id: ID): ActivityResult!
@@ -242,6 +249,8 @@ module.exports = buildSchema(`
 
     importIssue(url: String!): ImportResult
     importOrganization(url: String!): ImportResult
+
+    submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
 
     transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!

@@ -1,23 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { fetchActiveUser } from 'containers/Auth/actions';
+import { fetchActiveUser, updateActiveUser } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
-import {
-  ADD_ATTEMPT,
-  ADD_COMMENT,
-  CLOSE_ISSUE,
-  EDIT_ISSUE,
-  FETCH_ISSUE_DETAIL,
-  FETCH_ISSUES,
-  IMPORT_ISSUE,
-  SAVE_INFO,
-  SEARCH_ISSUES,
-  successCreateIssueMessage,
-  successEditIssueMessage,
-  UPVOTE_ISSUE,
-} from './constants';
 import {
   addAttemptFailure,
   addAttemptSuccess,
@@ -40,9 +26,27 @@ import {
   saveInfoSuccess,
   searchIssuesFailure,
   searchIssuesSuccess,
+  submitAccountPaymentFailure,
+  submitAccountPaymentSuccess,
   upvoteIssueFailure,
   upvoteIssueSuccess,
 } from './actions';
+import {
+  ADD_ATTEMPT,
+  ADD_COMMENT,
+  CLOSE_ISSUE,
+  EDIT_ISSUE,
+  FETCH_ISSUE_DETAIL,
+  FETCH_ISSUES,
+  IMPORT_ISSUE,
+  SAVE_INFO,
+  SEARCH_ISSUES,
+  SUBMIT_ACCOUNT_PAYMENT,
+  successCreateIssueMessage,
+  successEditIssueMessage,
+  successAccountPaymentMessage,
+  UPVOTE_ISSUE,
+} from './constants';
 
 export function* addAttemptSaga({ payload }) {
   const { id: issueId, userId, column, remove } = payload;
@@ -421,6 +425,43 @@ export function* searchIssuesSaga({ payload }) {
   }
 }
 
+export function* submitAccountPaymentSaga({ payload }) {
+  const { fundValue, issueId, userId } = payload;
+  const submitAccountPaymentQuery = `
+      mutation {
+        submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", userId: "${userId}" ) {
+          __typename
+          ... on Payment {
+            balance,
+            fundedAmount
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    `;
+  try {
+    const graphql = JSON.stringify({
+      query: submitAccountPaymentQuery,
+      variables: {},
+    });
+    const {
+      data: { submitAccountPayment },
+    } = yield call(post, '/graphql', graphql);
+    const { balance, fundedAmount } = submitAccountPayment;
+    yield put(
+      submitAccountPaymentSuccess({
+        fundedAmount,
+        message: successAccountPaymentMessage,
+      }),
+    );
+    yield put(updateActiveUser({ balance }));
+  } catch (error) {
+    yield put(submitAccountPaymentFailure({ error }));
+  }
+}
+
 export function* upvoteIssuesSaga({ payload }) {
   const { issueId, userId } = payload;
   const upvoteIssueQuery = `
@@ -467,5 +508,6 @@ export default function* watcherSaga() {
   yield takeLatest(IMPORT_ISSUE, importIssueSaga);
   yield takeLatest(SAVE_INFO, saveInfoSaga);
   yield takeLatest(SEARCH_ISSUES, searchIssuesSaga);
+  yield takeLatest(SUBMIT_ACCOUNT_PAYMENT, submitAccountPaymentSaga);
   yield takeLatest(UPVOTE_ISSUE, upvoteIssuesSaga);
 }

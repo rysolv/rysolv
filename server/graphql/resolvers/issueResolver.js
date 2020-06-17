@@ -14,6 +14,8 @@ const {
   getOneIssue,
   getOrganizationsWhere,
   searchIssues,
+  submitAccountPaymentIssue,
+  submitAccountPaymentUser,
   transformIssue,
   updateIssueArray,
   updateOrganizationArray,
@@ -249,6 +251,26 @@ module.exports = {
       return result;
     } catch (err) {
       throw err;
+    }
+  },
+  submitAccountPayment: async args => {
+    try {
+      const { issueId, fundValue, userId } = args;
+      const [issueResult] = await submitAccountPaymentIssue(issueId, fundValue);
+      const [userResult] = await submitAccountPaymentUser(userId, fundValue);
+      const result = {
+        balance: userResult.balance,
+        fundedAmount: issueResult.funded_amount,
+      };
+      return {
+        __typename: 'Payment',
+        ...result,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   transformIssue: async args => {

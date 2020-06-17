@@ -3,12 +3,14 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import {
+  ErrorSuccessBanner,
   PaymentModalInputWithAdornment,
   PrimaryAsyncButton,
 } from 'components/base_ui';
 
 import {
   borderColor,
+  defaultFontSize,
   dividerBorder,
   errorRed,
   fundingText,
@@ -18,6 +20,51 @@ export const Amount = styled.div`
   align-self: center;
   font-size: 2.4rem;
   font-weight: 500;
+`;
+
+export const BalanceAmount = styled.h3`
+  align-self: center;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: ${defaultFontSize};
+  font-weight: 400;
+  margin: 0;
+`;
+
+export const BalanceTitle = styled.span`
+  color: #586069;
+  display: flex;
+  font-size: ${defaultFontSize};
+  font-weight: 400;
+  line-height: 1.5;
+`;
+
+export const BalanceWrapper = styled.div`
+  background-color: #f6f8fa;
+  border-radius: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+`;
+
+export const ConfirmAmount = styled.div`
+  white-space: nowrap;
+`;
+
+export const ConfirmContainer = styled.div`
+  font-size: ${defaultFontSize};
+`;
+
+export const ConfirmText = styled.div`
+  max-width: 15rem;
+  text-align: left;
+`;
+
+export const ConfirmWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-weight: ${({ isBold }) => (isBold ? '400' : '600')};
+  justify-content: space-between;
+  padding: 1rem;
 `;
 
 export const CreditCardViewContainer = styled.div`
@@ -95,6 +142,11 @@ export const StyledBaseInputWithAdornment = styled(
   width: 80%;
 `;
 
+export const StyledAccountBaseInput = styled(StyledBaseInputWithAdornment)`
+  margin: 0.5rem 0;
+  width: 100%;
+`;
+
 export const StyledLabel = styled.div`
   font-size: 1.4rem;
   font-weight: 500;
@@ -115,6 +167,10 @@ export const StyledReCAPTCHA = styled(ReCAPTCHA)`
   transform: scale(0.8);
 `;
 
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin: 1rem;
+`;
+
 export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
   display: flex;
   justify-content: center;
@@ -128,4 +184,17 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
     margin: 0.5rem;
     padding: 1rem;
   }
+`;
+
+export const TextWrapper = styled.div`
+  font-size: 1.2rem;
+  padding-bottom: 0;
+  padding: 2rem 0;
+  text-align: left;
+`;
+
+export const YourAccountContainer = styled.div`
+  margin: 0.5rem 1rem;
+  text-align: center;
+  width: 100%;
 `;

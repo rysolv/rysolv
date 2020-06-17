@@ -20,6 +20,7 @@ import {
   closeIssue,
   editIssue,
   fetchIssueDetail,
+  submitAccountPayment,
   upvoteIssue,
 } from '../actions';
 import reducer from '../reducer';
@@ -63,10 +64,12 @@ export class IssuesDetail extends React.PureComponent {
       handleComment,
       handleIncrement,
       handleNav,
+      handleSubmitAccountPayment,
       handleUpvote,
       isSignedIn,
       issueDetail,
       loading,
+      paymentAlerts,
     } = this.props;
 
     return (
@@ -88,8 +91,10 @@ export class IssuesDetail extends React.PureComponent {
           handleComment,
           handleIncrement,
           handleNav,
+          handleSubmitAccountPayment,
           handleUpvote,
           isSignedIn,
+          paymentAlerts,
         }}
       />
     );
@@ -110,11 +115,13 @@ IssuesDetail.propTypes = {
   handleComment: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
+  handleSubmitAccountPayment: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
   issueDetail: T.object,
   loading: T.bool,
   match: T.object,
+  paymentAlerts: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -127,9 +134,10 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   alerts: makeSelectIssues('alerts'),
-  issueDetail: makeSelectIssueDetail('issueDetail'),
   error: makeSelectIssueDetailError('issueDetail'),
+  issueDetail: makeSelectIssueDetail('issueDetail'),
   loading: makeSelectIssueDetailLoading('issueDetail'),
+  paymentAlerts: makeSelectIssues('paymentAlerts'),
   /**
    * Reducer : ViewSize
    */
@@ -147,6 +155,8 @@ function mapDispatchToProps(dispatch) {
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleComment: payload => dispatch(addComment(payload)),
     handleIncrement: payload => dispatch(addAttempt(payload)),
+    handleSubmitAccountPayment: payload =>
+      dispatch(submitAccountPayment(payload)),
     handleUpvote: payload => dispatch(upvoteIssue(payload)),
     /*
      * Reducer : Main

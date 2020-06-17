@@ -15,11 +15,16 @@ const BaseExpansionPanel = ({
   Component,
   handleRender,
   Icon,
+  open,
   propsToPassDown,
   title,
   ...restProps
 }) => (
-  <StyledExpansionPanel classes={{ expanded: 'expanded' }} {...restProps}>
+  <StyledExpansionPanel
+    classes={{ expanded: 'expanded' }}
+    defaultExpanded={open}
+    {...restProps}
+  >
     <StyledExpansionPanelSummary
       classes={{ expanded: 'expanded', expandIcon: 'expandIcon' }}
       expandIcon={<ExpandMoreIcon />}
@@ -41,6 +46,7 @@ BaseExpansionPanel.propTypes = {
   Component: T.oneOfType([T.func, T.object]),
   handleRender: T.func,
   Icon: T.node,
+  open: T.bool,
   propsToPassDown: T.object,
   title: T.string,
 };

@@ -36,6 +36,9 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
+  SUBMIT_ACCOUNT_PAYMENT_FAILURE,
+  SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
+  SUBMIT_ACCOUNT_PAYMENT,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
@@ -296,6 +299,27 @@ export function searchIssues(payload) {
   return {
     payload,
     type: SEARCH_ISSUES,
+  };
+}
+
+export function submitAccountPaymentFailure(payload) {
+  return {
+    payload,
+    type: SUBMIT_ACCOUNT_PAYMENT_FAILURE,
+  };
+}
+
+export function submitAccountPaymentSuccess(payload) {
+  return {
+    payload,
+    type: SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
+  };
+}
+
+export function submitAccountPayment(payload) {
+  return {
+    payload,
+    type: SUBMIT_ACCOUNT_PAYMENT,
   };
 }
 

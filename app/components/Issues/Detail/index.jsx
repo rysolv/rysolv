@@ -29,7 +29,7 @@ const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
-  activeUser: { issues },
+  activeUser: { balance, id: activeUserId, issues },
   alerts: { error, success },
   data,
   data: {
@@ -55,14 +55,15 @@ const IssueDetail = ({
   handleComment,
   handleIncrement,
   handleNav,
+  handleSubmitAccountPayment,
   handleUpvote,
   isSignedIn,
+  paymentAlerts,
 }) => {
   const [displayEditView, setDisplayEditView] = useState(false);
   const [bodyChange, setBodyChange] = useState(body);
   const [languageChange, setLanguageChange] = useState(language);
   const [nameChange, setNameChange] = useState(name);
-
   const handleClose = () => {
     setDisplayEditView(false);
     setBodyChange(body);
@@ -105,7 +106,7 @@ const IssueDetail = ({
             dispatchCloseIssue({
               issueId,
               shouldClose: false,
-              userId: activeUser.id,
+              userId: activeUserId,
             })
           }
           open={open}
@@ -176,7 +177,7 @@ const IssueDetail = ({
               issueId={issueId}
               rep={rep}
               upvoted={upvoted}
-              userId={activeUser.id}
+              userId={activeUserId}
             />
           </LeftPanel>
           <div>
@@ -254,9 +255,15 @@ const IssueDetail = ({
             }
           />
           <PaymentPortal
+            balance={balance}
             fundedAmount={fundedAmount}
+            handleClearAlerts={handleClearAlerts}
             handleNav={handleNav}
+            handleSubmitAccountPayment={handleSubmitAccountPayment}
             isSignedIn={isSignedIn}
+            issueId={issueId}
+            paymentAlerts={paymentAlerts}
+            userId={activeUserId}
           />
           <ConditionalRender
             Component={CloseOpenIssueComponent}
@@ -286,8 +293,10 @@ IssueDetail.propTypes = {
   handleComment: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
+  handleSubmitAccountPayment: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
+  paymentAlerts: T.object,
 };
 
 export default IssueDetail;

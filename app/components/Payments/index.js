@@ -14,6 +14,7 @@ import iconDictionary from 'utils/iconDictionary';
 import CreditCardView from './CreditCardView';
 import DollarValueToggle from './DollarValueToggle';
 import PaypalView from './PaypalView';
+import YourAccountView from './YourAccountView';
 import {
   Amount,
   Divider,
@@ -23,6 +24,7 @@ import {
   PaymentContainer,
   PaymentInformationWrapper,
   StyledBaseInputWithAdornment,
+  StyledErrorSuccessBanner,
   StyledLabel,
 } from './styledComponents';
 
@@ -31,11 +33,17 @@ const CreditCardIcon = iconDictionary('creditCard');
 const PaypalIcon = iconDictionary('paypal');
 
 const PaymentPortal = ({
+  balance,
   dispatchVerifyRecaptcha,
   dispatchVerifyRecaptchaFailure,
   fundedAmount,
+  handleClearAlerts,
   handleNav,
+  handleSubmitAccountPayment,
   isSignedIn,
+  issueId,
+  paymentAlerts: { error, success },
+  userId,
   ...restProps
 }) => {
   const [renderPaypal, setRenderPaypal] = useState(false);
@@ -110,12 +118,23 @@ const PaymentPortal = ({
         />
       </PaymentInformationWrapper>
       <StyledLabel>Payment Methods</StyledLabel>
+      <StyledErrorSuccessBanner
+        error={error}
+        onClose={handleClearAlerts}
+        success={success}
+      />
       <ConditionalRender
         Component={() => (
           <BaseExpansionPanel
-            Component={() => <div>Hi</div>}
+            Component={YourAccountView}
             Icon={AccountIcon}
-            propsToPassDown={propsToPassDown}
+            open
+            propsToPassDown={{
+              balance,
+              handleSubmitAccountPayment,
+              issueId,
+              userId,
+            }}
             title="Your Account"
           />
         )}
@@ -149,11 +168,17 @@ const PaymentPortal = ({
 };
 
 PaymentPortal.propTypes = {
+  balance: T.number,
   dispatchVerifyRecaptcha: T.func,
   dispatchVerifyRecaptchaFailure: T.func,
   fundedAmount: T.number,
+  handleClearAlerts: T.func,
   handleNav: T.func,
+  handleSubmitAccountPayment: T.func,
   isSignedIn: T.bool,
+  issueId: T.string,
+  paymentAlerts: T.object,
+  userId: T.string,
 };
 
 export default PaymentPortal;
