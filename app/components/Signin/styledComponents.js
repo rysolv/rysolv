@@ -9,22 +9,32 @@ import {
   subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const InputFormWrapper = styled.div`
+  align-self: center;
   background-color: white;
   border-radius: 0.2rem;
   border: 0.1rem solid ${borderColor};
   display: flex;
   flex-direction: column;
   font-size: ${defaultFontSize};
-  height: auto;
-  margin: 10rem 0 0 0;
-  min-width: 40rem;
   padding: 5rem;
-  width: 30%;
+  width: 40rem;
+
+  ${mobile} {
+    width: 100%;
+  }
 `;
 
-export const SigninWrapper = styled.div``;
+export const SigninWrapper = styled.div`
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 
 export const SubText = styled.div`
   font-size: ${detailFontSize};

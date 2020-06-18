@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
+
 const { tablet } = mediaQueriesByDevice;
 
 export const AppBody = styled.div`

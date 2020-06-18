@@ -6,7 +6,6 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
-import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
 import CloseIssueModal from 'components/CloseIssueModal';
 import Header from 'components/Header';
@@ -29,14 +28,13 @@ import injectSaga from 'utils/injectSaga';
 
 import { closeModalState, fetchWatchList } from './actions';
 import reducer from './reducer';
-import routes from './routes';
+import Routes from './routes';
 import saga from './saga';
 import { makeSelectMain } from './selectors';
 import { AppBody } from './styledComponents';
 
 export const Main = ({
   activeUser,
-  data = { test: true },
   deviceView,
   dispatchCloseIssue,
   dispatchCloseModal,
@@ -133,13 +131,7 @@ export const Main = ({
       />
       <AppBody>
         <SideNav handleNav={handleNav} view={deviceView} />
-        <AsyncRender
-          asyncData={data}
-          component={routes}
-          error={error}
-          loading={loading}
-          match={match}
-        />
+        <Routes error={error} loading={loading} match={match} />
       </AppBody>
       <Footer />
       {modal && <ModalDialog {...modalPropsDictionary[modal]} />}
@@ -149,7 +141,6 @@ export const Main = ({
 
 Main.propTypes = {
   activeUser: T.object,
-  data: T.object,
   deviceView: T.string,
   dispatchCloseIssue: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
