@@ -20,6 +20,7 @@ export const markdownHeader = '#546e7a';
 export const menuColor = '#1e88e5';
 export const primaryButtonColor = '#1e88e5';
 export const secondaryButtonColor = '#5e35b1';
+export const selectedColor = '#00eb93';
 export const subHeaderColor = '#0d47a1';
 export const subTextColor = '#878a8c';
 export const successGreen = '#31b589';

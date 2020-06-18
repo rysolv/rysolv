@@ -12,6 +12,7 @@ const Issues = ({
   alerts: { error, success },
   clearAlerts,
   data,
+  deviceView,
   dispatchFetchWatchList,
   dispatchOpenModal,
   handleIncrement,
@@ -23,6 +24,7 @@ const Issues = ({
   const propsToPassDown = {
     activeUser,
     data,
+    deviceView,
     dispatchFetchWatchList,
     dispatchOpenModal,
     handleIncrement,
@@ -57,6 +59,7 @@ Issues.propTypes = {
   }),
   clearAlerts: T.func,
   data: T.array,
+  deviceView: T.string.isRequired,
   disabled: T.bool.isRequired,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,

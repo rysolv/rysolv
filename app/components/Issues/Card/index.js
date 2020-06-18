@@ -9,6 +9,7 @@ import {
   FundIssueButton,
   IconToolTip,
   LanguageWrapper,
+  MonocleIcon,
   Verified,
   WatchButton,
 } from 'components/base_ui';
@@ -22,9 +23,11 @@ import {
   IssueCardLabelWrapper,
   IssueFooterIconWrapper,
   IssueLanguageContainer,
+  MobileIconDescription,
   Name,
   NameWrapper,
   OrganizationNameWrapper,
+  StyledIconButton,
   StyledIssueContent,
   StyledIssueFooter,
   StyledIssueHeader,
@@ -37,6 +40,7 @@ const AttemptingIcon = IconDictionary('attempt');
 const IssueCard = ({
   activeUser,
   data,
+  deviceView,
   dispatchFetchWatchList,
   dispatchOpenModal,
   handleIncrement,
@@ -61,9 +65,127 @@ const IssueCard = ({
       watching,
     }) => {
       const { balance, id: userId } = activeUser;
+      const isMobile =
+        deviceView === 'mobile' ||
+        deviceView === 'mobileS' ||
+        deviceView === 'mobileXS';
       const userWatching =
         activeUser.watching && !!activeUser.watching.find(el => el.id === id);
       const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
+
+      const DesktopButtonBar = (
+        <Fragment>
+          {open ? (
+            <IssueCardItem
+              onClick={e => navHelper(e, handleNav, `/issues/detail/${id}`)}
+            >
+              <IssueCardIconWrapper>
+                <CommentIcon />
+              </IssueCardIconWrapper>
+              <IssueCardLabelWrapper>
+                {comments.length} Comments
+              </IssueCardLabelWrapper>
+            </IssueCardItem>
+          ) : null}
+
+          {open ? (
+            <IssueCardItem
+              onClick={() =>
+                dispatchFetchWatchList({
+                  idArray: attempting,
+                  modalState: 'issueAttemptList',
+                })
+              }
+            >
+              <IssueCardIconWrapper>{AttemptingIcon}</IssueCardIconWrapper>
+              <IssueCardLabelWrapper>
+                {attempting.length} Attempting
+              </IssueCardLabelWrapper>
+            </IssueCardItem>
+          ) : null}
+
+          {open ? (
+            <IssueCardItem>
+              <WatchButton
+                dispatchFetchWatchList={dispatchFetchWatchList}
+                dispatchOpenModal={dispatchOpenModal}
+                handleWatch={() =>
+                  handleIncrement({
+                    userId: activeUser.id,
+                    id,
+                    column: 'watching',
+                    remove: userWatching,
+                  })
+                }
+                isSignedIn={isSignedIn}
+                label={userWatching ? 'Watching' : 'Watch'}
+                value={watching.length}
+                watching={watching}
+              />
+            </IssueCardItem>
+          ) : null}
+        </Fragment>
+      );
+
+      const MobileButtonBar = (
+        <Fragment>
+          {open ? (
+            <StyledIconButton
+              label="Comments"
+              onClick={e => navHelper(e, handleNav, `/issues/detail/${id}`)}
+              icon={
+                <Fragment>
+                  <CommentIcon />{' '}
+                  <MobileIconDescription>
+                    {comments.length}
+                  </MobileIconDescription>
+                </Fragment>
+              }
+            />
+          ) : null}
+
+          {open ? (
+            <StyledIconButton
+              label="Attempting"
+              onClick={() =>
+                dispatchFetchWatchList({
+                  idArray: attempting,
+                  modalState: 'issueAttemptList',
+                })
+              }
+              icon={
+                <Fragment>
+                  {AttemptingIcon}{' '}
+                  <MobileIconDescription>
+                    {attempting.length}
+                  </MobileIconDescription>
+                </Fragment>
+              }
+            />
+          ) : null}
+
+          {open ? (
+            <StyledIconButton
+              label={userWatching ? 'Watching' : 'Watch'}
+              onClick={() => {
+                if (!isSignedIn) {
+                  return dispatchOpenModal({ modalState: 'signIn' });
+                }
+                return handleIncrement({
+                  userId: activeUser.id,
+                  id,
+                  column: 'watching',
+                  remove: userWatching,
+                });
+              }}
+              icon={<MonocleIcon />}
+              isWatching={userWatching}
+              shouldBold
+            />
+          ) : null}
+        </Fragment>
+      );
+
       return (
         <Fragment key={id}>
           <StyledListItem>
@@ -122,59 +244,11 @@ const IssueCard = ({
 
               <StyledIssueFooter open={open}>
                 <IssueFooterIconWrapper>
-                  {open ? (
-                    <IssueCardItem
-                      onClick={e =>
-                        navHelper(e, handleNav, `/issues/detail/${id}`)
-                      }
-                    >
-                      <IssueCardIconWrapper>
-                        <CommentIcon />
-                      </IssueCardIconWrapper>
-                      <IssueCardLabelWrapper>
-                        {comments.length} Comments
-                      </IssueCardLabelWrapper>
-                    </IssueCardItem>
-                  ) : null}
-
-                  {open ? (
-                    <IssueCardItem
-                      onClick={() =>
-                        dispatchFetchWatchList({
-                          idArray: attempting,
-                          modalState: 'issueAttemptList',
-                        })
-                      }
-                    >
-                      <IssueCardIconWrapper>
-                        {AttemptingIcon}
-                      </IssueCardIconWrapper>
-                      <IssueCardLabelWrapper>
-                        {attempting.length} Attempting
-                      </IssueCardLabelWrapper>
-                    </IssueCardItem>
-                  ) : null}
-
-                  {open ? (
-                    <IssueCardItem>
-                      <WatchButton
-                        dispatchFetchWatchList={dispatchFetchWatchList}
-                        dispatchOpenModal={dispatchOpenModal}
-                        handleWatch={() =>
-                          handleIncrement({
-                            userId: activeUser.id,
-                            id,
-                            column: 'watching',
-                            remove: userWatching,
-                          })
-                        }
-                        isSignedIn={isSignedIn}
-                        label={userWatching ? 'Watching' : 'Watch'}
-                        value={watching.length}
-                        watching={watching}
-                      />
-                    </IssueCardItem>
-                  ) : null}
+                  <ConditionalRender
+                    Component={DesktopButtonBar}
+                    FallbackComponent={MobileButtonBar}
+                    shouldRender={!isMobile}
+                  />
                 </IssueFooterIconWrapper>
 
                 <ConditionalRender
@@ -203,6 +277,7 @@ const IssueCard = ({
 
 IssueCard.propTypes = {
   data: T.array.isRequired,
+  deviceView: T.string.isRequired,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,

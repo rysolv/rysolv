@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { defaultFontSize, hyperlinkColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  hyperlinkColor,
+  selectedColor,
+} from 'defaultStyleHelper';
 
 export const StyledBack = styled.div`
   align-items: center;
@@ -69,7 +73,7 @@ export const StyledUpvote = styled.div`
   }
 
   &:hover {
-    color: #ff5722;
+    color: ${selectedColor};
     cursor: pointer;
   }
 `;

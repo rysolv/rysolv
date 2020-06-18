@@ -123,6 +123,7 @@ export const SettingsTabsWrapper = styled.div`
 
   ${mobile} {
     margin-left: 0;
+    margin-top: 2rem;
     width: 100%;
   }
 `;

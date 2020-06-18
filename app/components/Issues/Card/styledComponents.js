@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
+import { IconButton } from 'components/base_ui';
 import {
   detailFontSize,
   hoverLinkColor,
+  selectedColor,
   subheaderFontSize,
   subTextColor,
   textColor,
@@ -42,6 +44,10 @@ export const IssueLanguageContainer = styled.div`
   font-size: ${detailFontSize};
 `;
 
+export const MobileIconDescription = styled.div`
+  padding-left: 0.25rem;
+`;
+
 export const Name = styled.a`
   font-size: ${subheaderFontSize};
   overflow: hidden;
@@ -62,6 +68,13 @@ export const OrganizationNameWrapper = styled.a`
   color: ${textColor};
   display: flex;
   font-weight: bold;
+`;
+
+export const StyledIconButton = styled(IconButton)`
+  color: ${({ isWatching }) => (isWatching ? selectedColor : subTextColor)};
+  font-weight: 700;
+  padding-right: 1rem;
+  stroke: ${({ shouldBold }) => (shouldBold ? 'currentColor' : 'none')};
 `;
 
 export const StyledIssueContent = styled.div`

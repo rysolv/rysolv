@@ -9,6 +9,7 @@ import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { fetchWatchList, openModalState } from 'containers/Main/actions';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -34,6 +35,7 @@ import {
 const IssuesOverview = ({
   activeUser,
   alerts,
+  deviceView,
   disabled,
   dispatchFetchIssues,
   dispatchFetchWatchList,
@@ -70,6 +72,7 @@ const IssuesOverview = ({
       propsToPassDown={{
         activeUser,
         alerts,
+        deviceView,
         disabled,
         dispatchFetchWatchList,
         dispatchOpenModal,
@@ -92,6 +95,7 @@ IssuesOverview.propTypes = {
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
+  deviceView: T.string,
   disabled: T.bool,
   dispatchFetchIssues: T.func,
   dispatchFetchWatchList: T.func,
@@ -125,6 +129,10 @@ const mapStateToProps = createStructuredSelector({
   issues: makeSelectIssuesFiltered(),
   loading: makeSelectIssuesLoading('issues'),
   search: makeSelectIssues('search'),
+  /**
+   * Reducer : ViewSize
+   */
+  deviceView: makeSelectViewSize('deviceView'),
 });
 
 function mapDispatchToProps(dispatch) {

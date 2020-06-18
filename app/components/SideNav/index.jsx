@@ -50,6 +50,12 @@ const SideNav = ({ handleNav, view }) => {
       case 'mobile':
         setDisplaySideNav(false);
         break;
+      case 'mobileS':
+        setDisplaySideNav(false);
+        break;
+      case 'mobileXS':
+        setDisplaySideNav(false);
+        break;
       default:
         break;
     }

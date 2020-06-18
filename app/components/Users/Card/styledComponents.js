@@ -10,7 +10,7 @@ import {
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile } = mediaQueriesByDevice;
+const { mobile, mobileS } = mediaQueriesByDevice;
 
 export const ActiveContainer = styled.div`
   color: #388e3c;
@@ -81,6 +81,10 @@ export const OverviewWrapper = styled.div`
     justify-content: center;
     margin-left: 2rem;
   }
+
+  ${mobileS} {
+    margin-left: 0;
+  }
 `;
 
 export const StyledListSquare = styled.div`
@@ -96,6 +100,12 @@ export const StyledListSquare = styled.div`
     margin: 0 2rem 2rem 0;
     width: auto;
   }
+
+  ${mobileS} {
+    margin-right: 0;
+    padding: 0 1rem;
+    width: 100%;
+  }
 `;
 
 export const StyledSettingWrapper = styled.div`
@@ -107,4 +117,18 @@ export const StyledSquare = styled.div`
   display: flex;
   flex-direction: column;
   height: auto;
+
+  ${mobileS} {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+`;
+
+export const TextContainer = styled.div`
+  ${mobileS} {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 70%;
+  }
 `;
