@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { IconButton } from 'components/base_ui';
 import {
+  defaultFontSize,
   detailFontSize,
   hoverLinkColor,
   selectedColor,
@@ -9,6 +10,9 @@ import {
   subTextColor,
   textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const IssueCardIconWrapper = styled.div`
   display: flex;
@@ -56,6 +60,10 @@ export const Name = styled.a`
   &:hover {
     cursor: pointer;
     color: ${hoverLinkColor};
+  }
+
+  ${mobile} {
+    font-size: ${defaultFontSize};
   }
 `;
 
@@ -116,4 +124,8 @@ export const StyledListItem = styled.li`
   list-style-type: none;
   margin: 0 1rem 1rem 1rem;
   overflow: hidden;
+
+  ${mobile} {
+    margin: 0 0 1rem 0;
+  }
 `;
