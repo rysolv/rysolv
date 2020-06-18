@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import T from 'prop-types';
 
-import { MainTextInput, PrimaryButton } from 'components/base_ui';
+import { MainTextInput } from 'components/base_ui';
+
 import {
   InputFormWrapper,
   SigninWrapper,
+  StyledPrimaryButton,
   SubText,
   Title,
 } from '../styledComponents';
@@ -57,7 +59,7 @@ const Signup = ({ data, handleInputChange, handleSignin }) => {
           }
           value={password.value}
         />
-        <PrimaryButton
+        <StyledPrimaryButton
           label="Sign Up"
           onClick={() =>
             handleSignin({ userId: 'b519b064-b5db-4472-ad1b-00e30bdbfa4c' })

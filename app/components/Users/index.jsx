@@ -10,7 +10,10 @@ import UserCard from './Card';
 
 const Users = ({ data, deviceView, handleNav }) => {
   const hasUsers = data.length > 0 && !data.includes(null);
-  const isMobile = deviceView === 'mobileS' || deviceView === 'mobileXS';
+  const isMobile =
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
   const propsToPassDown = {
     data,
     deviceView,

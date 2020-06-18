@@ -68,7 +68,8 @@ const IssueCard = ({
       const isMobile =
         deviceView === 'mobile' ||
         deviceView === 'mobileS' ||
-        deviceView === 'mobileXS';
+        deviceView === 'mobileXS' ||
+        deviceView === 'mobileXXS';
       const userWatching =
         activeUser.watching && !!activeUser.watching.find(el => el.id === id);
       const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);

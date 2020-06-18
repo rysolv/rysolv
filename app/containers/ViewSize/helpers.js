@@ -6,11 +6,13 @@ export const deviceViewToRender = width => {
     mobile,
     mobileS,
     mobileXS,
+    mobileXXS,
     tablet,
     tabletS,
     tabletXS,
   } = deviceSizes;
   const isMobileTabletDevice = /Mobi/.test(navigator.userAgent);
+  if (width <= mobileXXS) return 'mobileXXS';
   if (width <= mobileXS) return 'mobileXS';
   if (width <= mobileS) return 'mobileS';
   if (width <= mobile) return 'mobile';

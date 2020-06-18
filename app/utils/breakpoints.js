@@ -1,6 +1,7 @@
 /* eslint-disable sort-keys */
 
 export const deviceSizes = {
+  mobileXXS: 320,
   mobileXS: 370,
   mobileS: 395,
   mobile: 600,
@@ -12,6 +13,7 @@ export const deviceSizes = {
 const MEDIA_DECORATOR = '@media';
 
 export const mediaQueriesByDevice = {
+  mobileXXS: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.mobileXXS}px)`,
   mobileXS: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.mobileXS}px)`,
   mobileS: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.mobileS}px)`,
   mobile: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.mobile}px)`,

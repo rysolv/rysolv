@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { PrimaryButton } from 'components/base_ui';
 import {
   borderColor,
   defaultFontSize,
@@ -34,6 +35,11 @@ export const SigninWrapper = styled.div`
   flex-direction: column;
   margin-top: 5rem;
   width: 100%;
+`;
+
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  align-self: center;
+  width: fit-content;
 `;
 
 export const SubText = styled.div`

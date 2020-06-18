@@ -5,6 +5,9 @@ import Radio from '@material-ui/core/Radio';
 import RadioButtonGroup from '@material-ui/core/RadioGroup';
 
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobileXS, mobileXXS } = mediaQueriesByDevice;
 
 export const StyledFormControlLabel = styled(({ isActive, ...restProps }) => (
   <FormControlLabel {...restProps} />
@@ -31,6 +34,14 @@ export const StyledFormControlLabel = styled(({ isActive, ...restProps }) => (
     color: ${textColor};
     font-size: ${defaultFontSize};
     padding: 0 2rem 0 1rem;
+
+    ${mobileXS} {
+      padding: 0 1rem 0 1rem;
+    }
+
+    ${mobileXXS} {
+      padding: 0 0.5rem 0 0;
+    }
   }
 `;
 
