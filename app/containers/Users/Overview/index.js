@@ -11,7 +11,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 
-import { clearAlerts, fetchUsers, inputChange, searchUsers } from '../actions';
+import { fetchUsers, inputChange, searchUsers } from '../actions';
 import {
   makeSelectUsers,
   makeSelectUsersError,
@@ -24,12 +24,10 @@ import saga from '../saga';
 
 // eslint-disable-next-line react/prefer-stateless-function
 const UsersOverview = ({
-  alerts,
   deviceView,
   disabled,
   dispatchFetchUsers,
   error,
-  handleClearAlerts,
   handleInputChange,
   handleNav,
   handleSearchUsers,
@@ -46,7 +44,6 @@ const UsersOverview = ({
     } else {
       dispatchFetchUsers();
     }
-    return handleClearAlerts;
   }, [searchValue]);
   return (
     <AsyncRender
@@ -55,10 +52,8 @@ const UsersOverview = ({
       error={error}
       loading={loading}
       propsToPassDown={{
-        alerts,
         deviceView,
         disabled,
-        handleClearAlerts,
         handleInputChange,
         handleNav,
         handleSearchUsers,
@@ -69,15 +64,10 @@ const UsersOverview = ({
 };
 
 UsersOverview.propTypes = {
-  alerts: T.shape({
-    error: T.oneOfType([T.bool, T.object]),
-    success: T.oneOfType([T.bool, T.object]),
-  }),
   deviceView: T.string,
   disabled: T.bool,
   dispatchFetchUsers: T.func,
   error: T.oneOfType([T.object, T.bool]),
-  handleClearAlerts: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearchUsers: T.func,
@@ -91,7 +81,6 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Users
    */
-  alerts: makeSelectUsers('alerts'),
   disabled: makeSelectUsersSearchDisabled(),
   error: makeSelectUsersError('users'),
   loading: makeSelectUsersLoading('users'),
@@ -109,7 +98,6 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Users
      */
     dispatchFetchUsers: () => dispatch(fetchUsers()),
-    handleClearAlerts: () => dispatch(clearAlerts()),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchUsers: payload => dispatch(searchUsers(payload)),
     /**

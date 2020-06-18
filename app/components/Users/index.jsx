@@ -2,19 +2,10 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { ErrorSuccessBanner } from 'components/base_ui';
-
 import EmptyCard from './EmptyCard';
 import UserCard from './Card';
-import { BannerWrapper } from './styledComponents';
 
-const Users = ({
-  alerts: { error, success },
-  clearAlerts,
-  data,
-  deviceView,
-  handleNav,
-}) => {
+const Users = ({ data, deviceView, handleNav }) => {
   const hasUsers = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
     data,
@@ -26,25 +17,10 @@ const Users = ({
   ) : (
     <EmptyCard />
   );
-  return (
-    <Fragment>
-      <BannerWrapper>
-        <ErrorSuccessBanner
-          error={error}
-          onClose={clearAlerts}
-          success={success}
-        />
-      </BannerWrapper>
-      {viewToRender}
-    </Fragment>
-  );
+  return <Fragment>{viewToRender}</Fragment>;
 };
 
 Users.propTypes = {
-  alerts: T.shape({
-    error: T.oneOfType([T.bool, T.object]),
-    success: T.oneOfType([T.bool, T.object]),
-  }),
   clearAlerts: T.func,
   data: T.array,
   deviceView: T.string.isRequired,

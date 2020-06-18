@@ -106,6 +106,5 @@ export const StyledSettingWrapper = styled.div`
 export const StyledSquare = styled.div`
   display: flex;
   flex-direction: column;
-  height: 0;
-  padding-bottom: 100%;
+  height: auto;
 `;

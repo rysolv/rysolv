@@ -38,6 +38,10 @@ export const OverviewContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  ${mobile} {
+    margin: 0 1rem;
+  }
 `;
 
 export const OverviewHeader = styled.div`
@@ -46,4 +50,8 @@ export const OverviewHeader = styled.div`
   font-size: ${headerFontSize};
   margin: 5rem 0 2rem 2rem;
   width: 100%;
+
+  ${mobile} {
+    margin: 2rem 0 2rem -1rem;
+  }
 `;

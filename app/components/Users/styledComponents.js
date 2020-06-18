@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 import { textColor } from 'defaultStyleHelper';
 
-export const BannerWrapper = styled.div`
-  font-size: 1.2rem;
-`;
-
 export const MessageWrapper = styled.div`
   align-items: center;
   background-color: white;
