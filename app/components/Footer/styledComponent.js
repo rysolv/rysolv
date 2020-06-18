@@ -6,10 +6,12 @@ const { mobile } = mediaQueriesByDevice;
 
 export const FooterWrapper = styled.footer`
   background-color: #607d8b;
+  bottom: 0;
   color: white;
   display: flex;
   font-size: ${detailFontSize};
   height: 10rem;
+  position: absolute;
   width: 100%;
 
   ${mobile} {

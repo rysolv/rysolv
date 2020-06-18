@@ -31,7 +31,11 @@ import reducer from './reducer';
 import Routes from './routes';
 import saga from './saga';
 import { makeSelectMain } from './selectors';
-import { AppBody } from './styledComponents';
+import {
+  AppBodyWrapper,
+  AppContentWrapper,
+  RoutesWrapper,
+} from './styledComponents';
 
 export const Main = ({
   activeUser,
@@ -121,18 +125,22 @@ export const Main = ({
   };
   return (
     <Fragment>
-      <Header
-        activeUser={activeUser}
-        handleNav={handleNav}
-        handleSignin={handleSignin}
-        handleSignout={handleSignout}
-        isSignedIn={isSignedIn}
-        view={deviceView}
-      />
-      <AppBody>
-        <SideNav handleNav={handleNav} view={deviceView} />
-        <Routes error={error} loading={loading} match={match} />
-      </AppBody>
+      <AppBodyWrapper>
+        <Header
+          activeUser={activeUser}
+          handleNav={handleNav}
+          handleSignin={handleSignin}
+          handleSignout={handleSignout}
+          isSignedIn={isSignedIn}
+          view={deviceView}
+        />
+        <AppContentWrapper>
+          <SideNav handleNav={handleNav} view={deviceView} />
+          <RoutesWrapper>
+            <Routes error={error} loading={loading} match={match} />
+          </RoutesWrapper>
+        </AppContentWrapper>
+      </AppBodyWrapper>
       <Footer />
       {modal && <ModalDialog {...modalPropsDictionary[modal]} />}
     </Fragment>

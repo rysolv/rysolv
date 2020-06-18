@@ -30,9 +30,9 @@ export const InputFormWrapper = styled.div`
 `;
 
 export const SigninWrapper = styled.div`
-  align-self: center;
   display: flex;
   flex-direction: column;
+  margin-top: 5rem;
   width: 100%;
 `;
 
