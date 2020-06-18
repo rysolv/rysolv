@@ -27,7 +27,9 @@ export const PreferredLanguagesEditComponent = ({
     <StyledLanguageAutocomplete>
       <LanguageAutocomplete
         onChange={(e, value) => setValue(() => value.map(el => el.value))}
-        value={preferredLanguages}
+        value={preferredLanguages.map(el => ({
+          value: el,
+        }))}
       />
     </StyledLanguageAutocomplete>
 
