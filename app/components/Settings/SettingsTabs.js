@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
-import Tabs from '@material-ui/core/Tabs';
 
 import { ConditionalRender } from 'components/base_ui';
 
@@ -12,7 +11,7 @@ import UserIssues from './Issues';
 import UserOrganizations from './Organizations';
 import UserTimelineView from './Timeline';
 import UserWatching from './Watching';
-import { StyledPaper, StyledTab } from './styledComponents';
+import { StyledPaper, StyledTab, StyledTabs } from './styledComponents';
 
 const SettingsTabs = ({
   activity,
@@ -25,6 +24,7 @@ const SettingsTabs = ({
   creditCardProps,
   currentTab,
   dispatchOpenModal,
+  displayBottom,
   dollarsEarned,
   email,
   filterValues,
@@ -43,6 +43,7 @@ const SettingsTabs = ({
   setChangeFirstName,
   setChangeLastName,
   setChangeUsername,
+  setDisplayBottom,
   setValue,
   userId,
   username,
@@ -61,10 +62,15 @@ const SettingsTabs = ({
         <DepositFormComponent
           creditCardProps={creditCardProps}
           handleNav={handleNav}
+          setDisplayBottom={setDisplayBottom}
         />
       }
       FallbackComponent={
-        <WithdrawalFormComponent balance={balance} handleNav={handleNav} />
+        <WithdrawalFormComponent
+          balance={balance}
+          handleNav={handleNav}
+          setDisplayBottom={setDisplayBottom}
+        />
       }
       shouldRender={view === 'deposit'}
     />
@@ -133,6 +139,7 @@ const SettingsTabs = ({
         setChangeFirstName={setChangeFirstName}
         setChangeLastName={setChangeLastName}
         setChangeUsername={setChangeUsername}
+        setDisplayBottom={setDisplayBottom}
         setValue={setValue}
         username={username}
         value={value}
@@ -145,8 +152,9 @@ const SettingsTabs = ({
   };
   return (
     <StyledPaper>
-      <Tabs
+      <StyledTabs
         centered
+        displayBottom={displayBottom}
         indicatorColor="primary"
         onChange={handleChangeTab}
         textColor="primary"
@@ -172,7 +180,7 @@ const SettingsTabs = ({
           label="Pull Requests"
           onClick={() => handleNav('/settings/pullrequests')}
         />
-      </Tabs>
+      </StyledTabs>
       <ConditionalRender
         Component={SecondarySettingsComponent}
         FallbackComponent={ComponentToRender[tab]}
@@ -198,6 +206,7 @@ SettingsTabs.propTypes = {
   creditCardProps: T.object,
   currentTab: T.number,
   dispatchOpenModal: T.func,
+  displayBottom: T.bool,
   dollarsEarned: T.number,
   email: T.string,
   filterValues: T.object,
@@ -216,6 +225,7 @@ SettingsTabs.propTypes = {
   setChangeFirstName: T.func,
   setChangeLastName: T.func,
   setChangeUsername: T.func,
+  setDisplayBottom: T.func,
   setValue: T.func,
   userId: T.string,
   username: T.string,

@@ -19,7 +19,12 @@ import {
   StyledTabs,
 } from './styledComponents';
 
-const AccountBalance = ({ balance, dollarsEarned, handleNav }) => {
+const AccountBalance = ({
+  balance,
+  dollarsEarned,
+  handleNav,
+  setDisplayBottom,
+}) => {
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -45,8 +50,14 @@ const AccountBalance = ({ balance, dollarsEarned, handleNav }) => {
         </BalanceSquare>
       </BalanceWrapper>
       <FundingContainer>
-        <DepositComponent handleNav={handleNav} />
-        <WithdrawalComponent handleNav={handleNav} />
+        <DepositComponent
+          handleNav={handleNav}
+          setDisplayBottom={setDisplayBottom}
+        />
+        <WithdrawalComponent
+          handleNav={handleNav}
+          setDisplayBottom={setDisplayBottom}
+        />
       </FundingContainer>
       <StyledPaper>
         <StyledTabs
@@ -69,6 +80,7 @@ AccountBalance.propTypes = {
   balance: T.number.isRequired,
   dollarsEarned: T.number.isRequired,
   handleNav: T.func.isRequired,
+  setDisplayBottom: T.func.isRequired,
 };
 
 export default AccountBalance;

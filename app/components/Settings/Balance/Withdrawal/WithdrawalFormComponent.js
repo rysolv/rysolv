@@ -21,12 +21,13 @@ import {
 } from '../styledComponents';
 import { StyledH3 } from '../../styledComponents';
 
-const WithdrawalFormComponent = ({ balance, handleNav }) => {
+const WithdrawalFormComponent = ({ balance, handleNav, setDisplayBottom }) => {
   const [transferLocation, setTransferLocation] = useState('PayPal');
   const [transferValue, setTransferValue] = useState('0');
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    return () => setDisplayBottom(false);
   }, []);
 
   const handleChangeDollarValue = e => {
@@ -115,6 +116,7 @@ const WithdrawalFormComponent = ({ balance, handleNav }) => {
 WithdrawalFormComponent.propTypes = {
   balance: T.number.isRequired,
   handleNav: T.func.isRequired,
+  setDisplayBottom: T.func.isRequired,
 };
 
 export default WithdrawalFormComponent;

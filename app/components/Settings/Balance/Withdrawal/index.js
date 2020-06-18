@@ -8,17 +8,23 @@ import {
   StyledSecondaryButton,
 } from '../styledComponents';
 
-const WithdrawalComponent = ({ handleNav }) => (
-  <ComponentContainer>
-    <ComponentTitle>Withdraw Funding</ComponentTitle>
-    <ComponentText>Transfer money from your account.</ComponentText>
-    <StyledSecondaryButton
-      label="Withdraw"
-      onClick={() => handleNav('/settings/withdrawal')}
-    />
-  </ComponentContainer>
-);
+const WithdrawalComponent = ({ handleNav, setDisplayBottom }) => {
+  const handleClick = () => {
+    handleNav('/settings/withdrawal');
+    setDisplayBottom(true);
+  };
+  return (
+    <ComponentContainer>
+      <ComponentTitle>Withdraw Funding</ComponentTitle>
+      <ComponentText>Transfer money from your account.</ComponentText>
+      <StyledSecondaryButton label="Withdraw" onClick={handleClick} />
+    </ComponentContainer>
+  );
+};
 
-WithdrawalComponent.propTypes = { handleNav: T.func.isRequired };
+WithdrawalComponent.propTypes = {
+  handleNav: T.func.isRequired,
+  setDisplayBottom: T.func.isRequired,
+};
 
 export default WithdrawalComponent;

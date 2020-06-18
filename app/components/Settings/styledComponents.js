@@ -1,8 +1,10 @@
+import React from 'react';
 import styled from 'styled-components';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 
 import { BaseDropDownMenu, ErrorSuccessBanner } from 'components/base_ui';
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
@@ -123,7 +125,7 @@ export const SettingsTabsWrapper = styled.div`
 
   ${mobile} {
     margin-left: 0;
-    margin-top: 2rem;
+    margin-top: ${({ displayBottom }) => (displayBottom ? '0' : '2rem')};
     width: 100%;
   }
 `;
@@ -196,6 +198,14 @@ export const StyledTab = styled(Tab)`
   padding: 0.6rem;
 `;
 
+export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
+  <Tabs {...restProps} />
+))`
+  ${mobile} {
+    display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
+  }
+`;
+
 export const UserCardWrapper = styled.div`
   background-color: white;
   border-radius: 0.2rem;
@@ -206,6 +216,7 @@ export const UserCardWrapper = styled.div`
   width: fit-content;
 
   ${mobile} {
+    display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
     width: 100%;
   }
 `;
