@@ -149,21 +149,21 @@ module.exports = buildSchema(`
   }
 
   type PullRequest {
-    apiUrl: String,
-    createdDate: Object!,
-    githubUsername: String,
-    htmlUrl: String,
-    issueId: ID!,
-    mergeable: Boolean,
-    mergeableState: String,
-    merged: Boolean,
-    modifiedDate: Object!,
-    issueName: String,
-    open: Boolean!,
-    pullNumber: Int,
-    pullRequestId: ID!,
-    status: String!,
-    title: String!,
+    apiUrl: String
+    createdDate: Object!
+    githubUsername: String
+    htmlUrl: String
+    issueId: ID!
+    mergeable: Boolean
+    mergeableState: String
+    merged: Boolean
+    modifiedDate: Object!
+    issueName: String
+    open: Boolean!
+    pullNumber: Int
+    pullRequestId: ID!
+    status: String!
+    title: String!
     userId: ID!
   }
 
@@ -180,6 +180,7 @@ module.exports = buildSchema(`
     issueId: ID!
     githubUsername: String
     mergeable: Boolean
+    mergeableState: String
     merged: Boolean
     open: Boolean!
     pullNumber: Int

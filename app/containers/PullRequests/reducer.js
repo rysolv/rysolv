@@ -30,6 +30,7 @@ export const initialState = {
     htmlUrl: { error: '', value: '' },
     importUrl: { error: '', value: '' },
     mergeable: { error: '', value: null },
+    mergeableState: { error: '', value: '' },
     merged: { error: '', value: null },
     open: { error: '', value: null },
     pullNumber: { error: '', value: '' },

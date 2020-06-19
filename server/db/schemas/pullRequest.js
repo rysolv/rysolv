@@ -6,7 +6,7 @@ const pullRequests = `CREATE TABLE IF NOT EXISTS
     html_url VARCHAR(128),
     issue_id UUID REFERENCES issues(id),
     mergeable BOOLEAN,
-    mergeableState VARCHAR(128),
+    mergeable_state VARCHAR(128),
     merged BOOLEAN,
     modified_date TIMESTAMP,
     open BOOLEAN DEFAULT true,

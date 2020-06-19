@@ -18,6 +18,7 @@ const ImportPullRequest = ({
     githubUsername,
     htmlUrl,
     mergeable,
+    mergeableState,
     merged,
     open,
     pullNumber,
@@ -52,6 +53,11 @@ const ImportPullRequest = ({
         <StyledItem>
           <StyledLabel>Mergeable: </StyledLabel>
           {mergeable.value ? 'true' : false}
+        </StyledItem>
+
+        <StyledItem>
+          <StyledLabel>MergeableState: </StyledLabel>
+          {mergeableState.value}
         </StyledItem>
 
         <StyledItem>

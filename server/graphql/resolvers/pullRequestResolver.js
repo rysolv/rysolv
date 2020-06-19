@@ -17,6 +17,7 @@ module.exports = {
       html_url: pullRequestInput.htmlUrl,
       issue_id: pullRequestInput.issueId,
       mergeable: pullRequestInput.mergeable,
+      mergeable_state: pullRequestInput.mergeableState,
       merged: pullRequestInput.merged,
       modified_date: new Date(),
       open: pullRequestInput.open,

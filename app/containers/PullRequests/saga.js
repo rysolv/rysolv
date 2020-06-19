@@ -23,6 +23,7 @@ export function* createPullRequestSaga({ payload }) {
       htmlUrl,
       mergeable,
       merged,
+      mergeableState,
       open,
       githubUsername,
       pullNumber,
@@ -39,6 +40,7 @@ export function* createPullRequestSaga({ payload }) {
           htmlUrl: "${htmlUrl.value}",
           issueId: "${issueId}",
           mergeable: ${mergeable.value},
+          mergeableState: "${mergeableState.value}",
           merged: ${merged.value},
           open: ${open.value},
           pullNumber: ${pullNumber.value},
@@ -82,12 +84,18 @@ export function* fetchUserPullRequestsSaga({ payload }) {
         __typename
         ... on PullRequestArray {
           pullRequestArray {
-            issueName
             createdDate
-            pullRequestId
+            githubUsername
+            htmlUrl
             issueId
+            issueName
+            mergeable
+            mergeableState
+            merged
             modifiedDate
             open
+            pullNumber
+            pullRequestId
             status
             title
             userId

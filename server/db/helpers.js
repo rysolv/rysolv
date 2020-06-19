@@ -6,7 +6,7 @@ const formatParamaters = (array, obj) => {
   const substitution = [];
 
   const values = array.reduce((acc, key) => {
-    if (obj[key]) {
+    if (obj[key] !== undefined) {
       parameters.push(key);
       substitution.push(`$${acc.length + 1}`);
       acc.push(obj[key]);

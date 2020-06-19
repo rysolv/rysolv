@@ -15,6 +15,9 @@ const PullRequestCard = ({ data }) => {
       htmlUrl,
       issueId,
       issueName,
+      mergeable,
+      mergeableState,
+      merged,
       modifiedDate,
       open,
       pullRequestId,
@@ -43,6 +46,22 @@ const PullRequestCard = ({ data }) => {
           <StyledLabel>Issue Name: </StyledLabel>
           {issueName}
         </StyledItem>
+
+        <StyledItem>
+          <StyledLabel>Mergeable: </StyledLabel>
+          {mergeable ? 'true' : 'false'}
+        </StyledItem>
+
+        <StyledItem>
+          <StyledLabel>MergeableState: </StyledLabel>
+          {mergeableState}
+        </StyledItem>
+
+        <StyledItem>
+          <StyledLabel>Merged: </StyledLabel>
+          {merged ? 'true' : 'false'}
+        </StyledItem>
+
         <StyledItem>
           <StyledLabel>Modified Date: </StyledLabel>
           {modifiedDate}
