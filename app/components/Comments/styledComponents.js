@@ -1,65 +1,22 @@
 import styled from 'styled-components';
 
+import { PrimaryButton } from 'components/base_ui';
 import {
   borderColor,
+  codeGrey,
   commentHeaderColor,
-  textColor,
+  defaultFontFamily,
   defaultFontSize,
   subheaderFontSize,
-  detailFontSize,
-  codeGrey,
+  textColor,
 } from 'defaultStyleHelper';
-import { PrimaryButton } from 'components/base_ui';
-
-export const FlexContainer = styled.div`
-  display: flex;
-  margin: 1rem 0;
-  width: 100%;
-`;
-
-export const ProfileContainer = styled.div`
-  display: inline-block;
-  vertical-align: top;
-`;
-
-export const CommentContainer = styled.div`
-  background-color: white;
-  border-radius: 0.25rem;
-  border: ${props => (props.primary ? `none` : `1px solid ${borderColor}`)};
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: top;
-  width: 100%;
-  pre {
-    background-color: ${codeGrey};
-    padding: 0.5rem;
-    max-height: 75rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  image {
-    width: auto;
-  }
-  code {
-    background-color: ${codeGrey};
-    font-family: monospace;
-    white-space: pre-wrap;
-  }
-`;
-
-export const CommentHeader = styled.div`
-  background-color: ${props => (props.primary ? `none` : commentHeaderColor)};
-  border-bottom: 1px solid ${borderColor};
-  font-size: ${detailFontSize};
-  padding: 0.4rem;
-  width: 100%;
-`;
 
 export const CommentBody = styled.div`
-  min-height: 4rem;
-  padding: 0 1rem;
   font-size: ${defaultFontSize};
+  min-height: 4rem;
+  padding: 0 0.8rem;
   width: 100%;
+
   * {
     background-color: white;
     color: ${textColor};
@@ -68,38 +25,101 @@ export const CommentBody = styled.div`
   }
 `;
 
-export const ProfileLine = styled.div`
-  background-color: ${borderColor};
-  display: inline-block;
-  height: 0.2rem;
-  margin: 2rem 0 0 0;
-  vertical-align: top;
-  width: 1.5rem;
+export const CommentContainer = styled.div`
+  background-color: white;
+  border-radius: 0.2rem;
+  border: 1px solid ${borderColor};
+  margin-left: 1.6rem;
+  position: relative;
+  width: 100%;
+
+  &:after,
+  &:before {
+    border-style: solid;
+    content: '';
+    display: block;
+    height: 0;
+    left: 0;
+    position: absolute;
+    width: 0;
+  }
+
+  &:after {
+    border-color: transparent #f6f8fa transparent transparent;
+    border-width: 9px;
+    left: -18px;
+    top: 8px;
+  }
+
+  &:before {
+    border-color: transparent ${borderColor} transparent transparent;
+    border-width: 10px;
+    left: -20px;
+    top: 7px;
+  }
+
+  code {
+    background-color: ${codeGrey};
+    font-family: ${defaultFontFamily};
+    white-space: pre-wrap;
+  }
+
+  image {
+    width: auto;
+  }
+
+  pre {
+    background-color: ${codeGrey};
+    padding: 0.5rem;
+    max-height: 75rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+`;
+
+export const CommentHeader = styled.div`
+  background-color: ${props =>
+    props.primary ? `transparent` : commentHeaderColor};
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  padding: 0.8rem;
+  width: 100%;
+`;
+
+export const FlexContainer = styled.div`
+  display: flex;
+  margin: 3rem 0;
+  width: 100%;
 `;
 
 export const NewCommentContainer = styled.div`
-  width: 100%;
   text-align: right;
+  width: 100%;
+`;
+
+export const ProfileImageContainer = styled.div`
+  display: inline-block;
+  vertical-align: top;
 `;
 
 export const StyledNoComments = styled.div`
   color: ${textColor};
   font-size: ${subheaderFontSize};
-  text-align: center;
   margin: 2rem 0;
+  text-align: center;
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
-  width: auto;
-  margin: 1rem 0 0 0;
   display: inline-block;
+  margin: 1rem 0 0 0;
+  width: auto;
 `;
 
 export const UsernameLink = styled.a`
-  font-weight: bold;
   display: inline;
+  font-weight: bold;
 
   &:hover {
-    color: ${textColor};
+    color: #007bff;
   }
 `;

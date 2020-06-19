@@ -14,6 +14,7 @@ import OrganizationDetailTabs from './OrganizationDetailTabs';
 import TopLanguagesView from './TopLanguagesView';
 import RecentActivityView from './RecentActivityView';
 import {
+  ButtonGroup,
   ContentWrapper,
   Description,
   DetailContainer,
@@ -63,6 +64,7 @@ const OrganizationDetailView = ({
     repoUrl,
     verified,
   },
+  deviceView,
   dispatchEditOrganization,
   dispatchOpenModal,
   filterValues,
@@ -103,6 +105,8 @@ const OrganizationDetailView = ({
     setLogoChange(formattedLogo);
   };
 
+  const isMobileOrTable = deviceView === 'mobile';
+
   const DetailViewComponent = (
     <DetailViewContainer>
       <Image src={logoChange} />
@@ -128,7 +132,7 @@ const OrganizationDetailView = ({
             }
           />
         </HeaderWrapper>
-        <Description>I love Tyler and {description}</Description>
+        <Description>{description}</Description>
         <UrlWrapper>
           <OrganizationUrl href={organizationUrl} target="_blank">
             <StyledIcon>{LinkIcon}</StyledIcon>
@@ -165,13 +169,13 @@ const OrganizationDetailView = ({
               shouldRender={verified}
             />
           </NameWrapper>
-          <div>
+          <ButtonGroup>
             <StyledSecondayButton
               label="Cancel"
               onClick={() => setDisplayEditView(false)}
             />
             <StyledPrimaryButton label="Save" onClick={() => handleSave()} />
-          </div>
+          </ButtonGroup>
         </HeaderWrapper>
         <StyledBaseTextInput
           multiline
@@ -245,6 +249,7 @@ const OrganizationDetailView = ({
           />
           <Divider />
           <RecentActivityView activity={activity} handleNav={handleNav} />
+          <Divider shouldHide={!isMobileOrTable} />
         </SidebarTabs>
       </TabsContainer>
     </DetailContainer>
@@ -255,6 +260,7 @@ OrganizationDetailView.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
   data: T.object.isRequired,
+  deviceView: T.string.isRequired,
   dispatchEditOrganization: T.func.isRequired,
   dispatchOpenModal: T.func,
   filterValues: T.object.isRequired,

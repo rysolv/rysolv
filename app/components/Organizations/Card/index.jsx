@@ -4,12 +4,16 @@ import moment from 'moment';
 
 import { FundingWrapper } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
+import iconDictionary from 'utils/iconDictionary';
 
 import {
   ContentContainer,
   DateWrapper,
   DescriptionWrapper,
   ImageContainer,
+  Issues,
+  IssuesIcon,
+  IssuesWrapper,
   NameWrapper,
   OrganizationCardItem,
   SettingsContainer,
@@ -20,6 +24,8 @@ import {
   TextContainer,
   TitleContainer,
 } from './styledComponents';
+
+const issueIcon = iconDictionary('issue');
 
 const OrganizationCard = ({ data, handleNav }) => (
   <Fragment>
@@ -55,7 +61,13 @@ const OrganizationCard = ({ data, handleNav }) => (
                 <DescriptionWrapper>{description}</DescriptionWrapper>
                 <StatsWrapper>
                   <OrganizationCardItem>
-                    {issues.length} Issues
+                    <IssuesWrapper>
+                      <IssuesIcon>{issueIcon}</IssuesIcon>
+                      <Issues>
+                        {issues.length}{' '}
+                        {issues.length === 1 ? `Issue` : `Issues`}
+                      </Issues>
+                    </IssuesWrapper>
                   </OrganizationCardItem>
                   <OrganizationCardItem>
                     <FundingWrapper

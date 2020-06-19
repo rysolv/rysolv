@@ -17,7 +17,10 @@ import {
   addAttempt,
   addComment,
   clearAlerts,
+  closeIssue,
+  editIssue,
   fetchIssueDetail,
+  submitAccountPayment,
   upvoteIssue,
 } from '../actions';
 import reducer from '../reducer';
@@ -26,6 +29,7 @@ import {
   makeSelectIssueDetail,
   makeSelectIssueDetailError,
   makeSelectIssueDetailLoading,
+  makeSelectIssues,
 } from '../selectors';
 
 export class IssuesDetail extends React.PureComponent {
@@ -49,17 +53,23 @@ export class IssuesDetail extends React.PureComponent {
   render() {
     const {
       activeUser,
+      alerts,
       deviceView,
+      dispatchCloseIssue,
+      dispatchEditIssue,
       dispatchFetchWatchList,
       dispatchOpenModal,
       error,
+      handleClearAlerts,
       handleComment,
       handleIncrement,
       handleNav,
+      handleSubmitAccountPayment,
       handleUpvote,
       isSignedIn,
       issueDetail,
       loading,
+      paymentAlerts,
     } = this.props;
 
     return (
@@ -71,14 +81,20 @@ export class IssuesDetail extends React.PureComponent {
         isRequiredData
         propsToPassDown={{
           activeUser,
+          alerts,
           deviceView,
+          dispatchCloseIssue,
+          dispatchEditIssue,
           dispatchFetchWatchList,
           dispatchOpenModal,
+          handleClearAlerts,
           handleComment,
           handleIncrement,
           handleNav,
+          handleSubmitAccountPayment,
           handleUpvote,
           isSignedIn,
+          paymentAlerts,
         }}
       />
     );
@@ -87,7 +103,10 @@ export class IssuesDetail extends React.PureComponent {
 
 IssuesDetail.propTypes = {
   activeUser: T.object,
+  alerts: T.object,
   deviceView: T.string,
+  dispatchCloseIssue: T.func,
+  dispatchEditIssue: T.func,
   dispatchFetchIssueDetail: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
@@ -96,11 +115,13 @@ IssuesDetail.propTypes = {
   handleComment: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
+  handleSubmitAccountPayment: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
   issueDetail: T.object,
   loading: T.bool,
   match: T.object,
+  paymentAlerts: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -112,9 +133,11 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
-  issueDetail: makeSelectIssueDetail('issueDetail'),
+  alerts: makeSelectIssues('alerts'),
   error: makeSelectIssueDetailError('issueDetail'),
+  issueDetail: makeSelectIssueDetail('issueDetail'),
   loading: makeSelectIssueDetailLoading('issueDetail'),
+  paymentAlerts: makeSelectIssues('paymentAlerts'),
   /**
    * Reducer : ViewSize
    */
@@ -126,11 +149,15 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    dispatchCloseIssue: payload => dispatch(closeIssue(payload)),
+    dispatchEditIssue: payload => dispatch(editIssue(payload)),
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
-    handleUpvote: payload => dispatch(upvoteIssue(payload)),
     handleComment: payload => dispatch(addComment(payload)),
     handleIncrement: payload => dispatch(addAttempt(payload)),
+    handleSubmitAccountPayment: payload =>
+      dispatch(submitAccountPayment(payload)),
+    handleUpvote: payload => dispatch(upvoteIssue(payload)),
     /*
      * Reducer : Main
      */

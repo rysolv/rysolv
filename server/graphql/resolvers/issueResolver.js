@@ -6,6 +6,7 @@ const defaultOrgImage =
 const {
   checkDuplicateIssue,
   checkDuplicateOrganization,
+  closeIssue,
   createIssue,
   createOrganization,
   deleteIssue,
@@ -13,6 +14,8 @@ const {
   getOneIssue,
   getOrganizationsWhere,
   searchIssues,
+  submitAccountPaymentIssue,
+  submitAccountPaymentUser,
   transformIssue,
   updateIssueArray,
   updateOrganizationArray,
@@ -65,6 +68,15 @@ const newOrganizationArray = organizationInput => [
 ];
 
 module.exports = {
+  closeIssue: async args => {
+    const { id, shouldClose } = args;
+    try {
+      const issues = await closeIssue('issues', id, shouldClose);
+      return issues;
+    } catch (err) {
+      throw err;
+    }
+  },
   createIssue: async args => {
     const { issueInput } = args;
     const { organizationRepo, repo, organizationId } = issueInput;
@@ -242,6 +254,26 @@ module.exports = {
       throw err;
     }
   },
+  submitAccountPayment: async args => {
+    try {
+      const { issueId, fundValue, userId } = args;
+      const [issueResult] = await submitAccountPaymentIssue(issueId, fundValue);
+      const [userResult] = await submitAccountPaymentUser(userId, fundValue);
+      const result = {
+        balance: userResult.balance,
+        fundedAmount: issueResult.funded_amount,
+      };
+      return {
+        __typename: 'Payment',
+        ...result,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
+    }
+  },
   transformIssue: async args => {
     const { id, issueInput } = args;
     try {
@@ -288,9 +320,15 @@ module.exports = {
       };
       await createActivity({ activityInput });
 
-      return result;
+      return {
+        __typename: 'Issue',
+        ...result,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   updateIssueArray: async args => {

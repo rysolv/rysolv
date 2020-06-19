@@ -1,11 +1,16 @@
+import React from 'react';
 import styled from 'styled-components';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 
 import { BaseDropDownMenu, ErrorSuccessBanner } from 'components/base_ui';
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
@@ -13,18 +18,21 @@ export const BaseInputWrapper = styled.div`
 `;
 
 export const DetailContainer = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
 `;
 
 export const DetailViewContainer = styled.div`
   color: rgba(0, 0, 0, 0.7);
   display: flex;
-  flex-direction: row;
   padding: 1.6rem 0;
   width: 100%;
+
+  ${mobile} {
+    flex-direction: column;
+  }
 `;
 
 export const HeaderWrapper = styled.div`
@@ -114,10 +122,20 @@ export const SettingsTabsWrapper = styled.div`
   overflow: hidden;
   padding: 2rem;
   width: 65rem;
+
+  ${mobile} {
+    margin-left: 0;
+    margin-top: ${({ displayBottom }) => (displayBottom ? '0' : '2rem')};
+    width: 100%;
+  }
 `;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
+
+  ${mobile} {
+    margin-right: 0;
+  }
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
@@ -180,6 +198,14 @@ export const StyledTab = styled(Tab)`
   padding: 0.6rem;
 `;
 
+export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
+  <Tabs {...restProps} />
+))`
+  ${mobile} {
+    display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
+  }
+`;
+
 export const UserCardWrapper = styled.div`
   background-color: white;
   border-radius: 0.2rem;
@@ -188,10 +214,19 @@ export const UserCardWrapper = styled.div`
   height: fit-content;
   padding: 15px 2%;
   width: fit-content;
+
+  ${mobile} {
+    display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
+    width: 100%;
+  }
 `;
 
 export const UserImage = styled.img`
   margin: 0.5rem;
   max-height: 25rem;
   max-width: 25rem;
+
+  ${mobile} {
+    align-self: center;
+  }
 `;

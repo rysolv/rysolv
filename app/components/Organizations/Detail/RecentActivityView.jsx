@@ -2,17 +2,18 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { ProfileImage } from 'components/base_ui';
+import { ConditionalRender, ProfileImage } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
-  FundContent,
-  StyledAction,
-  ActivityDate,
   ActivityContainer,
+  ActivityDate,
   ActivityWrapper,
+  EmptyMessageComponent,
+  FundContent,
   ProfileImageWrapper,
   RecentActivityContainer,
+  StyledAction,
   StyledTitled,
   StyledExternalLink,
   StyledWordLink,
@@ -21,16 +22,15 @@ import {
 export class RecentActivityView extends React.PureComponent {
   render() {
     const { activity, handleNav } = this.props;
-
-    const activityDiv = (
+    const ActivityComponent = (
       <ActivityContainer>
         {activity.map(
           ({
-            fundedValue,
             action,
-            path,
-            date,
             activityId,
+            date,
+            fundedValue,
+            path,
             target: { targetName, targetType },
             user: { userId, username, profilePic },
           }) => (
@@ -71,7 +71,13 @@ export class RecentActivityView extends React.PureComponent {
       <Fragment>
         <RecentActivityContainer>
           <StyledTitled>Recent activities</StyledTitled>
-          {activityDiv}
+          <ConditionalRender
+            Component={ActivityComponent}
+            FallbackComponent={
+              <EmptyMessageComponent>No recent activity.</EmptyMessageComponent>
+            }
+            shouldRender={activity.length > 0}
+          />
         </RecentActivityContainer>
       </Fragment>
     );

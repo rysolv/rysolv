@@ -18,7 +18,6 @@ import Test from 'containers/Test';
 import UsersAdd from 'containers/Users/Add';
 import UsersDetail from 'containers/Users/Detail';
 import UsersEdit from 'containers/Users/Edit';
-import { RoutesWrapper } from './styledComponents';
 
 const privateConfig = { isAdmin: false, isPrivate: true };
 const publicConfig = { isAdmin: false, isPrivate: false };
@@ -40,31 +39,29 @@ const PublicUsersDetail = withAuth(publicConfig, UsersDetail);
 
 // prettier-ignore
 const Routes = () => (
-  <RoutesWrapper>
-    <Switch>
-      <Route exact path="/" component={PublicMain} />
-      <Route exact path="/issues" component={PublicOverview} />
-      <Route exact path="/issues/search/:searchValue?" component={PublicOverview} />
-      <Route exact path="/issues/add" component={PrivateIssuesAdd} />
-      <Route exact path="/issues/detail/:id?" component={PublicIssuesDetail} />
-      <Route exact path="/issues/edit/:id?" component={PrivateIssuesEdit} />
-      <Route exact path="/organizations" component={PublicOverview} />
-      <Route exact path="/organizations/search/:searchValue?" component={PublicOverview} />
-      <Route exact path="/organizations/add" component={PrivateOrganizationsAdd} />
-      <Route exact path="/organizations/detail/:id?" component={PublicOrganizationsDetail} />
-      <Route exact path="/organizations/edit/:id?" component={PrivateOrganizationsEdit} />
-      <Route exact path="/settings/:view?" component={PrivateSettings} />
-      <Route exact path="/signin" component={PublicSignin} />
-      <Route exact path="/signup" component={PublicSignup} />
-      <Route exact path="/test" component={Test} />
-      <Route exact path="/users" component={PublicOverview} />
-      <Route exact path="/users/search/:searchValue?" component={PublicOverview} />
-      <Route exact path="/users/add" component={PrivateUsersAdd} />
-      <Route exact path="/users/detail/:id?" component={PublicUsersDetail} />
-      <Route exact path="/users/edit/:id?" component={PrivateUsersEdit} />
-      <Route component={NotFoundPage} />
-    </Switch>
-  </RoutesWrapper>
+  <Switch>
+    <Route exact path="/" component={PublicMain} />
+    <Route exact path="/issues" component={PublicOverview} />
+    <Route exact path="/issues/search/:searchValue?" component={PublicOverview} />
+    <Route exact path="/issues/add" component={PrivateIssuesAdd} />
+    <Route exact path="/issues/detail/:id?" component={PublicIssuesDetail} />
+    <Route exact path="/issues/edit/:id?" component={PrivateIssuesEdit} />
+    <Route exact path="/organizations" component={PublicOverview} />
+    <Route exact path="/organizations/search/:searchValue?" component={PublicOverview} />
+    <Route exact path="/organizations/add" component={PrivateOrganizationsAdd} />
+    <Route exact path="/organizations/detail/:id?" component={PublicOrganizationsDetail} />
+    <Route exact path="/organizations/edit/:id?" component={PrivateOrganizationsEdit} />
+    <Route exact path="/settings/:view?" component={PrivateSettings} />
+    <Route exact path="/signin" component={PublicSignin} />
+    <Route exact path="/signup" component={PublicSignup} />
+    <Route exact path="/test" component={Test} />
+    <Route exact path="/users" component={PublicOverview} />
+    <Route exact path="/users/search/:searchValue?" component={PublicOverview} />
+    <Route exact path="/users/add" component={PrivateUsersAdd} />
+    <Route exact path="/users/detail/:id?" component={PublicUsersDetail} />
+    <Route exact path="/users/edit/:id?" component={PrivateUsersEdit} />
+    <Route component={NotFoundPage} />
+  </Switch>
 );
 
 export default Routes;

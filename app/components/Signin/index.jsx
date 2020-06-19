@@ -2,13 +2,14 @@ import React from 'react';
 import T from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { MainTextInput, PrimaryButton } from 'components/base_ui';
+import { MainTextInput } from 'components/base_ui';
 
 import {
-  SigninWrapper,
   InputFormWrapper,
-  Title,
+  SigninWrapper,
+  StyledPrimaryButton,
   SubText,
+  Title,
 } from './styledComponents';
 
 // eslint-disable-next-line arrow-body-style
@@ -45,7 +46,7 @@ const Signin = ({ data, handleInputChange, handleSignin }) => {
           }
           value={password.value}
         />
-        <PrimaryButton
+        <StyledPrimaryButton
           label="Sign in"
           onClick={() =>
             handleSignin({ userId: 'b519b064-b5db-4472-ad1b-00e30bdbfa4c' })

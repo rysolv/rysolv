@@ -1,9 +1,10 @@
 import React from 'react';
 import T from 'prop-types';
+
 import { StyledFundingWrapper } from './styledComponents';
 
-const FundingWrapper = ({ value, open, medium }) => (
-  <StyledFundingWrapper open={open} medium={medium}>
+const FundingWrapper = ({ medium, open, value, ...restProps }) => (
+  <StyledFundingWrapper medium={medium} open={open} {...restProps}>
     {value}
   </StyledFundingWrapper>
 );

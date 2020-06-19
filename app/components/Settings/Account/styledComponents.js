@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { PrimaryAsyncButton } from 'components/base_ui';
-import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { buttonRed, defaultFontSize, textColor } from 'defaultStyleHelper';
 
 export const AccountContainer = styled.div`
   height: 100%;
@@ -28,12 +28,12 @@ export const InputWrapper = styled.div`
 `;
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
-  background-color: #dc3545;
+  background-color: ${buttonRed};
   font-size: ${defaultFontSize};
   margin: 2rem 0;
   width: fit-content;
 
   &:hover {
-    background-color: #dc3545;
+    background-color: ${buttonRed};
   }
 `;

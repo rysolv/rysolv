@@ -10,7 +10,6 @@ import {
   PrimaryButton,
   SecondaryButton,
 } from 'components/base_ui';
-
 import {
   defaultFontSize,
   detailFontSize,
@@ -19,10 +18,41 @@ import {
   hyperlinkColor,
   textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
+
+export const ActivityContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  padding-left: 0;
+`;
+
+export const ActivityDate = styled.div`
+  color: ${textColor};
+  font-size: ${detailFontSize};
+  text-transform: uppercase;
+  text-align: right;
+  padding: 0.5rem 0;
+`;
+
+export const ActivityWrapper = styled.div`
+  padding: 0.5rem 1rem;
+`;
 
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
   width: 45%;
+`;
+
+export const ButtonGroup = styled.div`
+  ${mobile} {
+    display: flex;
+    flex-flow: wrap-reverse;
+    justify-content: flex-end;
+    width: 50%;
+  }
 `;
 
 export const ContentWrapper = styled.div`
@@ -99,6 +129,7 @@ export const DetailViewContainer = styled.div`
 `;
 
 export const Divider = styled.div`
+  display: ${({ shouldHide }) => (shouldHide ? 'none' : 'inherit')};
   border-top: ${dividerBorder};
   margin: 1rem auto;
   width: 90%;
@@ -114,7 +145,7 @@ export const EmptyMessageComponent = styled.div`
   color: ${textColor};
   display: flex;
   font-size: ${defaultFontSize};
-  height: 50%;
+  height: 100%;
   justify-content: center;
 `;
 
@@ -122,25 +153,6 @@ export const FundContent = styled.div`
   width: 100%;
   font-size: ${defaultFontSize};
   padding-left: 0.8rem;
-`;
-
-export const ActivityDate = styled.div`
-  color: ${textColor};
-  font-size: ${detailFontSize};
-  text-transform: uppercase;
-  text-align: right;
-  padding: 0.5rem 0;
-`;
-
-export const ActivityContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0;
-  padding-left: 0;
-`;
-
-export const ActivityWrapper = styled.div`
-  padding: 0.5rem 1rem;
 `;
 
 export const HeaderWrapper = styled.div`
@@ -176,6 +188,10 @@ export const IssueContent = styled.div`
   width: 100%;
   height: 10rem;
   margin: 1rem 0;
+
+  ${mobile} {
+    height: auto;
+  }
 `;
 
 export const IssueContentInfo = styled.div`
@@ -279,6 +295,10 @@ export const LanguageWrapper = styled.div`
 export const MainTabs = styled.div`
   display: flex;
   width: 60%;
+
+  ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const Name = styled.div`
@@ -332,12 +352,20 @@ export const SidebarTabs = styled.div`
   display: flex;
   flex-direction: column;
   width: 40%;
+
+  ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const StyledAction = styled.span``;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
+
+  ${mobile} {
+    margin: 0;
+  }
 `;
 
 export const StyledBaseTextInput = styled(BaseTextInput)`
@@ -381,6 +409,10 @@ export const StyledSecondayButton = styled(SecondaryButton)`
   &:hover {
     background-color: white;
   }
+
+  ${mobile} {
+    margin-right: 0;
+  }
 `;
 
 export const StyledTab = styled(Tab)`
@@ -414,6 +446,10 @@ export const TabsContainer = styled.div`
   display: flex;
   min-height: 50rem;
   width: 100%;
+
+  ${mobile} {
+    flex-direction: column-reverse;
+  }
 `;
 
 export const TopLanguagesContainer = styled.div`
@@ -437,4 +473,9 @@ export const UrlWrapper = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 1.4rem;
+
+  ${mobile} {
+    flex-direction: column;
+    margin-left: -12rem;
+  }
 `;

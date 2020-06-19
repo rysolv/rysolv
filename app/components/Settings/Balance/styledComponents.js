@@ -11,6 +11,9 @@ import {
   SecondaryButton,
 } from 'components/base_ui';
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const AccountBalanceContainer = styled.div`
   display: flex;
@@ -65,6 +68,10 @@ export const ComponentContainer = styled.div`
   justify-content: space-between;
   text-align: justify;
   width: 45%;
+
+  ${mobile} {
+    text-align: left;
+  }
 `;
 
 export const ComponentText = styled.div`
@@ -182,6 +189,10 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
 
   &:hover {
     background-color: #00eb93;
+  }
+
+  ${mobile} {
+    margin-right: 0;
   }
 `;
 

@@ -32,7 +32,9 @@ export class TopLanguagesView extends React.PureComponent {
           onChange={(e, value) =>
             setLanguagesChange(() => value.map(el => el.value))
           }
-          value={preferredLanguages}
+          value={preferredLanguages.map(el => ({
+            value: el,
+          }))}
         />
       </StyledLanguageAutocomplete>
     );

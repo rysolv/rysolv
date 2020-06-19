@@ -17,6 +17,7 @@ module.exports = buildSchema(`
     userId: ID
     username: String
   }
+
   type ActivityArray {
     activityArray: [Activity]
   }
@@ -189,6 +190,11 @@ module.exports = buildSchema(`
     userId: ID!
   }
 
+  type Payment {
+    balance: Float
+    fundedAmount: Float
+  }
+
   type User {
     activePullRequests: Int
     attempting: [Object]
@@ -266,6 +272,7 @@ module.exports = buildSchema(`
   union IssueResult = Issue | Error
   union OrganizationResult = Organization | Error
   union EventResponse = Success | Error
+  union PaymentResult = Payment | Error
 
   type RootQuery {
     getActivity(column: String!, id: ID): ActivityResult!
@@ -293,6 +300,8 @@ module.exports = buildSchema(`
   }
 
   type RootMutation {
+    closeIssue(id: ID!, shouldClose: Boolean): String!
+
     createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): Comment
     createIssue(issueInput: IssueInput): Issue!
@@ -308,7 +317,9 @@ module.exports = buildSchema(`
     importOrganization(url: String!): ImportResult
     importPullRequest(url: String!): ImportPullRequestResult
 
-    transformIssue(id: ID!, issueInput: IssueInput): Issue!
+    submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
+
+    transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!
     transformUser(id: ID!, userInput: UserInput): User!
 

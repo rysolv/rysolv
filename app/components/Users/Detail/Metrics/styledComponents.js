@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 import { defaultFontSize } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const ActivityContainer = styled.div`
   display: flex;
@@ -66,4 +69,8 @@ export const UserDetails = styled.div`
 export const UserMetricsContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
+
+  ${mobile} {
+    flex-direction: column;
+  }
 `;

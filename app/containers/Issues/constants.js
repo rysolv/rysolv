@@ -16,9 +16,17 @@ export const CLEAR_ALERTS = 'app/Issues/CLEAR_ALERTS';
 export const CLEAR_FORM = 'app/Issues/CLEAR_FORM';
 export const CLEAR_ORGANIZATION = 'app/Issues/CLEAR_ORGANIZATION';
 
+export const CLOSE_ISSUE = 'app/Issues/CLOSE_ISSUE';
+export const CLOSE_ISSUE_FAILURE = 'app/Issues/CLOSE_ISSUE_FAILURE';
+export const CLOSE_ISSUE_SUCCESS = 'app/Issues/CLOSE_ISSUE_SUCCESS';
+
 export const DELETE_ISSUE = 'app/Issues/DELETE_ISSUE';
 export const DELETE_ISSUE_FAILURE = 'app/Issues/DELETE_ISSUE_FAILURE';
 export const DELETE_ISSUE_SUCCESS = 'app/Issues/DELETE_ISSUE_SUCCESS';
+
+export const EDIT_ISSUE = 'app/Issues/EDIT_ISSUE';
+export const EDIT_ISSUE_FAILURE = 'app/Issues/EDIT_ISSUE_FAILURE';
+export const EDIT_ISSUE_SUCCESS = 'app/Issues/EDIT_ISSUE_SUCCESS';
 
 export const FETCH_ISSUES = 'app/Issues/FETCH_ISSUES';
 export const FETCH_ISSUES_FAILURE = 'app/Issues/FETCH_ISSUES_FAILURE';
@@ -48,6 +56,12 @@ export const SEARCH_ISSUES = 'app/Issues/SEARCH_ISSUES';
 export const SEARCH_ISSUES_FAILURE = 'app/Issues/SEARCH_ISSUES_FAILURE';
 export const SEARCH_ISSUES_SUCCESS = 'app/Issues/SEARCH_ISSUES_SUCCESS';
 
+export const SUBMIT_ACCOUNT_PAYMENT = 'app/Issues/SUBMIT_ACCOUNT_PAYMENT';
+export const SUBMIT_ACCOUNT_PAYMENT_FAILURE =
+  'app/Issues/SUBMIT_ACCOUNT_PAYMENT_FAILURE';
+export const SUBMIT_ACCOUNT_PAYMENT_SUCCESS =
+  'app/Issues/SUBMIT_ACCOUNT_PAYMENT_SUCCESS';
+
 export const UPDATE_ORGANIZATION = 'app/Issues/UPDATE_ORGANIZATION';
 
 export const UPVOTE_ISSUE = 'app/Issues/UPVOTE_ISSUE';
@@ -68,6 +82,10 @@ export const issueDataDictionary = {
 export const emptyCardMessage =
   'There are no issues matching the search terms.';
 
-export const successCreateIssueMessage = 'Successfuly created issue.';
+export const successAccountPaymentMessage = 'Thank you for funding!';
+
+export const successCreateIssueMessage = 'Issue was successfully created.';
+
+export const successEditIssueMessage = 'Issue was successfully edited.';
 
 export const verifyMessage = 'I agree that this information is correct.';

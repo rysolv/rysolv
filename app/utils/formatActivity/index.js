@@ -71,10 +71,10 @@ export const formatActivity = data => {
 
   const { action, icon } = actionDictionary[actionType];
   const targetType = issueId
-    ? 'Issue'
+    ? 'issue'
     : organizationId
-    ? 'Organization'
-    : 'Pull Request';
+    ? 'organization'
+    : 'pull request';
 
   const route = issueId
     ? 'issues'

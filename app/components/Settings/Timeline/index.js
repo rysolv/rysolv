@@ -4,7 +4,7 @@ import T from 'prop-types';
 import moment from 'moment';
 
 import { ConditionalRender } from 'components/base_ui';
-import { formatDollarAmount } from 'utils/globalHelpers';
+import { formatDollarAmount, formatWordString } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
@@ -95,7 +95,8 @@ const UserTimelineView = ({
         </TimelineDividerContainer>
         <TimelineContent>
           <TimelineType>
-            <StyledAction>{action}</StyledAction>&nbsp;{targetType}
+            <StyledAction>{formatWordString(action)}</StyledAction>&nbsp;
+            {targetType}
           </TimelineType>
           <TimelineInfo>
             <ConditionalRender

@@ -1,60 +1,52 @@
 import styled from 'styled-components';
-import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-import {
-  darkTextColor,
-  defaultFontSize,
-  detailFontSize,
-  headerFontSize,
-  textColor,
-} from 'defaultStyleHelper';
+import { BaseTextInput, Verified } from 'components/base_ui';
+import { defaultFontSize, detailFontSize, textColor } from 'defaultStyleHelper';
 
-const { laptop } = mediaQueriesByDevice;
-
-export const IssueDetailTopBar = styled.div`
-  background-color: white;
-  border-radius: 0.25rem;
-  margin: 0 0 0 0;
-  padding: 0.5rem 0;
-`;
-
-export const IssueSubHeader = styled.div`
-  align-items: center;
-  display: none;
-  justify-content: space-between;
-  ${laptop} {
-    display: flex;
-  }
-`;
-
-export const IssueSubItem = styled.div`
-  color: ${textColor};
-  font-size: ${detailFontSize};
-  margin: 0 1rem 0 1rem;
+export const IssueDetailContainer = styled.div`
+  margin-bottom: 2rem;
 `;
 
 export const NameWrapper = styled.div`
-  color: ${darkTextColor};
-  font-size: ${headerFontSize};
-  margin: 1rem 0;
+  color: ${textColor};
+  font-size: 2rem;
+  font-weight: 500;
+  margin-top: 1rem;
 `;
 
-export const OrganizationNameWrapper = styled.a`
+export const OrganizationNameContainer = styled.a`
   align-items: center;
   color: ${textColor};
   display: flex;
   font-size: ${defaultFontSize};
   font-weight: bold;
+
+  &:hover {
+    color: #007bff;
+  }
 `;
 
-export const StyledIssueHeader = styled.div`
+export const StyledBaseTextInput = styled(BaseTextInput)`
+  margin: 0.5rem 0;
+  width: ${({ width }) => width || 'inherit'};
+
+  .base-input {
+    color: ${textColor};
+    font-size: 2rem;
+    font-weight: 500;
+  }
+`;
+
+export const StyledIssueDetail = styled.div`
+  align-items: center;
+  color: ${textColor};
   display: flex;
-  justify-content: space-between;
-  padding: 0.25rem;
   font-size: ${detailFontSize};
+  justify-content: space-between;
   width: 100%;
 `;
 
-export const StyledVerified = styled.div`
+export const StyledVerified = styled(Verified)`
   padding: 0 0.5rem;
+  display: flex;
 `;

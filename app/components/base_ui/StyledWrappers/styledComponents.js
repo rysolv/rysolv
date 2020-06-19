@@ -15,7 +15,8 @@ export const StyledFundingWrapper = styled.div`
   display: inline-flex;
   font-size: ${({ medium }) => (medium ? '1.4rem' : 'inherit')};
   font-weight: 700;
-  padding: 0.5rem 1rem;
+  line-height: 2rem;
+  padding: 0.2rem 1rem;
   white-space: nowrap;
 `;
 

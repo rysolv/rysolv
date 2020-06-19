@@ -12,9 +12,12 @@ import {
   CLEAR_ALERTS,
   CLEAR_FORM,
   CLEAR_ORGANIZATION,
-  DELETE_ISSUE_FAILURE,
-  DELETE_ISSUE_SUCCESS,
-  DELETE_ISSUE,
+  CLOSE_ISSUE_FAILURE,
+  CLOSE_ISSUE_SUCCESS,
+  CLOSE_ISSUE,
+  EDIT_ISSUE_FAILURE,
+  EDIT_ISSUE_SUCCESS,
+  EDIT_ISSUE,
   FETCH_ISSUE_DETAIL_FAILURE,
   FETCH_ISSUE_DETAIL_SUCCESS,
   FETCH_ISSUE_DETAIL,
@@ -33,6 +36,9 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
+  SUBMIT_ACCOUNT_PAYMENT_FAILURE,
+  SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
+  SUBMIT_ACCOUNT_PAYMENT,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
@@ -129,24 +135,45 @@ export function clearOrganization(payload) {
   };
 }
 
-export function deleteIssueFailure(payload) {
+export function closeIssueFailure(payload) {
   return {
     payload,
-    type: DELETE_ISSUE_FAILURE,
+    type: CLOSE_ISSUE_FAILURE,
   };
 }
 
-export function deleteIssueSuccess(payload) {
+export function closeIssueSuccess(payload) {
   return {
     payload,
-    type: DELETE_ISSUE_SUCCESS,
+    type: CLOSE_ISSUE_SUCCESS,
   };
 }
 
-export function deleteIssue(payload) {
+export function closeIssue(payload) {
   return {
     payload,
-    type: DELETE_ISSUE,
+    type: CLOSE_ISSUE,
+  };
+}
+
+export function editIssueFailure(payload) {
+  return {
+    payload,
+    type: EDIT_ISSUE_FAILURE,
+  };
+}
+
+export function editIssueSuccess(payload) {
+  return {
+    payload,
+    type: EDIT_ISSUE_SUCCESS,
+  };
+}
+
+export function editIssue(payload) {
+  return {
+    payload,
+    type: EDIT_ISSUE,
   };
 }
 
@@ -253,6 +280,7 @@ export function saveInfo(payload) {
     type: SAVE_INFO,
   };
 }
+
 export function searchIssuesFailure(payload) {
   return {
     payload,
@@ -271,6 +299,27 @@ export function searchIssues(payload) {
   return {
     payload,
     type: SEARCH_ISSUES,
+  };
+}
+
+export function submitAccountPaymentFailure(payload) {
+  return {
+    payload,
+    type: SUBMIT_ACCOUNT_PAYMENT_FAILURE,
+  };
+}
+
+export function submitAccountPaymentSuccess(payload) {
+  return {
+    payload,
+    type: SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
+  };
+}
+
+export function submitAccountPayment(payload) {
+  return {
+    payload,
+    type: SUBMIT_ACCOUNT_PAYMENT,
   };
 }
 

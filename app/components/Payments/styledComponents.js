@@ -3,12 +3,14 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import {
+  ErrorSuccessBanner,
   PaymentModalInputWithAdornment,
   PrimaryAsyncButton,
 } from 'components/base_ui';
 
 import {
   borderColor,
+  defaultFontSize,
   dividerBorder,
   errorRed,
   fundingText,
@@ -18,6 +20,55 @@ export const Amount = styled.div`
   align-self: center;
   font-size: 2.4rem;
   font-weight: 500;
+`;
+
+export const BalanceAmount = styled.h3`
+  align-self: center;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: ${defaultFontSize};
+  font-weight: 400;
+  margin: 0;
+`;
+
+export const BalanceTitle = styled.span`
+  color: #586069;
+  display: flex;
+  font-size: ${defaultFontSize};
+  font-weight: 400;
+  line-height: 1.5;
+`;
+
+export const BalanceWrapper = styled.div`
+  background-color: #f6f8fa;
+  border-radius: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  padding: 1rem;
+  width: 80%;
+`;
+
+export const ConfirmAmount = styled.div`
+  white-space: nowrap;
+`;
+
+export const ConfirmContainer = styled.div`
+  font-size: ${defaultFontSize};
+  margin: auto;
+  width: 80%;
+`;
+
+export const ConfirmText = styled.div`
+  max-width: 15rem;
+  text-align: left;
+`;
+
+export const ConfirmWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-weight: ${({ isBold }) => (isBold ? '400' : '600')};
+  justify-content: space-between;
+  padding: 1rem;
 `;
 
 export const CreditCardViewContainer = styled.div`
@@ -53,28 +104,17 @@ export const HorizontalInputWrapper = styled.div`
   width: 83%;
 `;
 
-export const Image = styled.img`
-  border-radius: 50%;
-  width: 10%;
-`;
-
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: auto;
 `;
 
-export const Name = styled.div`
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`;
-
 export const PaymentContainer = styled.div`
   background-color: white;
   border-radius: 0.2rem;
-  border: 0.1rem solid ${borderColor};
+  border: ${({ removeBorder }) =>
+    removeBorder ? 'none' : `0.1rem solid ${borderColor}`};
   color: rgba(0, 0, 0, 0.7);
 `;
 
@@ -95,7 +135,6 @@ export const OverviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 3rem;
-  padding-bottom: 2rem;
 `;
 
 export const StyledBaseInputWithAdornment = styled(
@@ -104,6 +143,11 @@ export const StyledBaseInputWithAdornment = styled(
   align-self: center;
   font-size: 1.4rem;
   margin: 0.5rem;
+  width: 80%;
+`;
+
+export const StyledAccountBaseInput = styled(StyledBaseInputWithAdornment)`
+  margin: 0.5rem 0;
   width: 80%;
 `;
 
@@ -127,6 +171,10 @@ export const StyledReCAPTCHA = styled(ReCAPTCHA)`
   transform: scale(0.8);
 `;
 
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin: 1rem;
+`;
+
 export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
   display: flex;
   justify-content: center;
@@ -142,10 +190,17 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
   }
 `;
 
-export const UsersFunded = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: 1.4rem;
-  justify-content: space-evenly;
-  padding: 0.5rem;
+export const TextWrapper = styled.div`
+  font-size: 1.2rem;
+  margin: auto;
+  padding-bottom: 0;
+  padding: 2rem 0;
+  text-align: left;
+  width: 80%;
+`;
+
+export const YourAccountContainer = styled.div`
+  margin: 0.5rem 0;
+  text-align: center;
+  width: 100%;
 `;

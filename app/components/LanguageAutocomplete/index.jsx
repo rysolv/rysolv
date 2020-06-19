@@ -4,13 +4,20 @@ import T from 'prop-types';
 import { BaseAutocomplete } from 'components/base_ui';
 import autocompleteDictionary from 'utils/autocompleteDictionary';
 
-const LanguageAutocomplete = ({ error, helperText, label, onChange }) => (
+const LanguageAutocomplete = ({
+  error,
+  helperText,
+  label,
+  onChange,
+  ...restProps
+}) => (
   <BaseAutocomplete
     error={error}
     helperText={helperText}
     label={label}
     onChange={onChange}
     options={autocompleteDictionary.language}
+    {...restProps}
   />
 );
 

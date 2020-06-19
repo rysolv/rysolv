@@ -30,6 +30,9 @@ export const formatUrlLinks = value => {
   return value;
 };
 
+export const formatWordString = string =>
+  string.charAt(0).toUpperCase() + string.slice(1);
+
 export const getBase64 = file =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();

@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { markdownHeader, defaultFontSize } from 'defaultStyleHelper';
+import {
+  defaultFontFamily,
+  defaultFontSize,
+  markdownHeader,
+  textColor,
+} from 'defaultStyleHelper';
 
 import { SecondaryButton } from '../base_ui';
 
@@ -53,6 +58,8 @@ export const EditContainer = styled.div`
   }
 
   * {
+    color: ${textColor};
+    font-family: ${defaultFontFamily};
     width: auto;
   }
 

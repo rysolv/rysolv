@@ -1,10 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { ConditionalRender } from 'components/base_ui';
-
 import DesktopHeader from './DesktopHeader';
-import MobileHeader from './MobileHeader';
 
 const Header = ({
   activeUser,
@@ -16,19 +13,14 @@ const Header = ({
 }) => {
   const isMobile = view === 'mobile';
   return (
-    <ConditionalRender
-      Component={MobileHeader}
-      FallbackComponent={DesktopHeader}
-      propsToPassDown={{
-        activeUser,
-        handleNav,
-        handleSignin,
-        handleSignout,
-        isMobile,
-        isSignedIn,
-        view,
-      }}
-      shouldRender={isMobile}
+    <DesktopHeader
+      activeUser={activeUser}
+      handleNav={handleNav}
+      handleSignin={handleSignin}
+      handleSignout={handleSignout}
+      isMobile={isMobile}
+      isSignedIn={isSignedIn}
+      view={view}
     />
   );
 };

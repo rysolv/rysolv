@@ -1,46 +1,125 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
-// import { BackNav } from 'components/base_ui';
-import { CommentCard, NoComment, NewComment } from 'components/Comments';
-import UpvotePanel from 'components/Upvote';
-import PaymentPortal from 'components/Payments';
-import IssueDetailHeader from './IssueDetailHeader';
-import IssueStatusBar from './IssueStatusBar';
-import IssueSidebar from './IssueSidebar';
 
+import { BackNav, ConditionalRender } from 'components/base_ui';
+import { CommentCard, NoComment, NewComment } from 'components/Comments';
+import PaymentPortal from 'components/Payments';
+import UpvotePanel from 'components/Upvote';
+import iconDictionary from 'utils/iconDictionary';
+
+import IssueDetailBody from './IssueDetailBody';
+import IssueDetailHeader from './IssueDetailHeader';
+import IssueTopBar from './IssueTopBar';
 import {
+  CommentWrapper,
   DetailContainer,
   Divider,
   IssueDetailColumn,
+  IssueDetailContainer,
+  IssueDetailContentContainer,
   IssueDetailWrapper,
   LeftPanel,
   SidebarContainer,
+  StyledButton,
+  StyledErrorSuccessBanner,
+  StyledIssueAccountManager,
+  TopBarWrapper,
 } from './styledComponents';
+
+const CloseCircleIcon = iconDictionary('closeCircle');
+const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
+  activeUser: { balance, id: activeUserId, issues },
+  alerts: { error, success },
   data,
-  deviceView,
-  dispatchFetchWatchList,
-  dispatchOpenModal,
-  handleComment,
-  handleIncrement,
-  handleNav,
-  handleUpvote,
-  isSignedIn,
-}) => {
-  const {
+  data: {
     body,
     comments,
     createdDate,
     fundedAmount,
-    id,
+    id: issueId,
+    language,
+    name,
     open,
     profilePic,
     rep,
     userId,
     username,
-  } = data;
+  },
+  deviceView,
+  dispatchCloseIssue,
+  dispatchEditIssue,
+  dispatchFetchWatchList,
+  dispatchOpenModal,
+  handleClearAlerts,
+  handleComment,
+  handleIncrement,
+  handleNav,
+  handleSubmitAccountPayment,
+  handleUpvote,
+  isSignedIn,
+  paymentAlerts,
+}) => {
+  const [displayEditView, setDisplayEditView] = useState(false);
+  const [bodyChange, setBodyChange] = useState(body);
+  const [languageChange, setLanguageChange] = useState(language);
+  const [nameChange, setNameChange] = useState(name);
+  const handleClose = () => {
+    setDisplayEditView(false);
+    setBodyChange(body);
+    setLanguageChange(language);
+    setNameChange(name);
+  };
+
+  const handleSave = () => {
+    dispatchEditIssue({
+      editRequest: {
+        body: bodyChange,
+        name: nameChange,
+        language: languageChange,
+      },
+      issueId,
+    });
+  };
+
+  const CloseOpenIssueComponent = (
+    <ConditionalRender
+      Component={
+        <StyledButton
+          disableRipple
+          onClick={() =>
+            dispatchOpenModal({
+              modalState: 'closeIssue',
+              tableData: { issueId },
+            })
+          }
+          open={open}
+        >
+          {CloseCircleIcon}
+          Close Issue
+        </StyledButton>
+      }
+      FallbackComponent={
+        <StyledButton
+          disableRipple
+          onClick={() =>
+            dispatchCloseIssue({
+              issueId,
+              shouldClose: false,
+              userId: activeUserId,
+            })
+          }
+          open={open}
+        >
+          {OpenCircleIcon}
+          Reopen Issue
+        </StyledButton>
+      }
+      shouldRender={open}
+    />
+  );
 
   const primaryUser = {
     alt: username,
@@ -59,7 +138,6 @@ const IssueDetail = ({
         size: '4rem',
         username: comment.username,
       };
-
       return (
         <CommentCard
           key={`${comment.username}-${comment.createdDate}`}
@@ -70,89 +148,134 @@ const IssueDetail = ({
         />
       );
     });
+
   const commentsDiv =
     comments && comments.length > 0 ? generateComments() : <NoComment />;
 
   const isDesktop = deviceView === 'desktop';
 
-  const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
+  const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
   return (
-    <Fragment>
-      {/* <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" /> */}
+    <IssueDetailContainer>
+      <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
+      <ConditionalRender
+        Component={
+          <StyledErrorSuccessBanner
+            error={error}
+            onClose={handleClearAlerts}
+            success={success}
+          />
+        }
+        shouldRender={isSignedIn && !!issues.find(({ id }) => issueId === id)}
+      />
       <DetailContainer>
         <IssueDetailWrapper>
           <LeftPanel>
             <UpvotePanel
               dispatchOpenModal={dispatchOpenModal}
               handleUpvote={handleUpvote}
+              isIssueDetail
               isSignedIn={isSignedIn}
-              issueId={id}
+              issueId={issueId}
               rep={rep}
               upvoted={upvoted}
-              userId={activeUser.id}
+              userId={activeUserId}
             />
           </LeftPanel>
-          <IssueDetailColumn>
-            <IssueDetailHeader
-              activeUser={activeUser}
-              data={data}
-              dispatchFetchWatchList={dispatchFetchWatchList}
-              dispatchOpenModal={dispatchOpenModal}
-              handleIncrement={handleIncrement}
-              handleNav={handleNav}
-              isSignedIn={isSignedIn}
-            />
-
-            <div style={{ minHeight: '30rem' }}>
-              <CommentCard
-                body={body}
-                date={createdDate}
-                handleNav={handleNav}
-                primary
-                userProfile={primaryUser}
+          <IssueDetailContentContainer>
+            <TopBarWrapper>
+              <IssueTopBar
+                activeUser={activeUser}
+                data={data}
+                dispatchFetchWatchList={dispatchFetchWatchList}
+                dispatchOpenModal={dispatchOpenModal}
+                handleIncrement={handleIncrement}
+                isDesktop={isDesktop}
+                isSignedIn={isSignedIn}
               />
-            </div>
+            </TopBarWrapper>
+            <IssueDetailColumn>
+              <IssueDetailHeader
+                data={data}
+                displayEditView={displayEditView}
+                handleNav={handleNav}
+                isSignedIn={isSignedIn}
+                nameChange={nameChange}
+                setNameChange={setNameChange}
+              />
 
-            <Divider>Status: {open ? 'Open' : 'Issue Closed'}</Divider>
+              <div style={{ minHeight: '30rem' }}>
+                <IssueDetailBody
+                  body={body}
+                  bodyChange={bodyChange}
+                  date={createdDate}
+                  displayEditView={displayEditView}
+                  handleNav={handleNav}
+                  language={language}
+                  languageChange={languageChange}
+                  setBodyChange={setBodyChange}
+                  setLanguageChange={setLanguageChange}
+                  userProfile={primaryUser}
+                />
+              </div>
 
-            <IssueStatusBar
-              activeUser={activeUser}
-              data={data}
-              dispatchOpenModal={dispatchOpenModal}
-              handleIncrement={handleIncrement}
-              isDesktop={isDesktop}
-              isSignedIn={isSignedIn}
-            />
+              <Divider>Comments</Divider>
+              <CommentWrapper>{commentsDiv}</CommentWrapper>
 
-            <Divider>Comments</Divider>
-            {commentsDiv}
-
-            <Divider>Leave a Comment</Divider>
-            <NewComment
-              activeUser={activeUser}
-              handleComment={handleComment}
-              handleNav={handleNav}
-              issueId={id}
-            />
-          </IssueDetailColumn>
+              <ConditionalRender
+                Component={
+                  <Fragment>
+                    <Divider>Leave a Comment</Divider>
+                    <CommentWrapper>
+                      <NewComment
+                        activeUser={activeUser}
+                        handleComment={handleComment}
+                        handleNav={handleNav}
+                        issueId={issueId}
+                      />
+                    </CommentWrapper>
+                  </Fragment>
+                }
+                shouldRender={isSignedIn}
+              />
+            </IssueDetailColumn>
+          </IssueDetailContentContainer>
         </IssueDetailWrapper>
         <SidebarContainer>
-          <IssueSidebar
-            activeUser={activeUser}
-            data={data}
-            dispatchFetchWatchList={dispatchFetchWatchList}
-            dispatchOpenModal={dispatchOpenModal}
-            handleIncrement={handleIncrement}
-            isSignedIn={isSignedIn}
+          <ConditionalRender
+            Component={
+              <StyledIssueAccountManager
+                displayEditView={displayEditView}
+                handleClose={handleClose}
+                handleSave={handleSave}
+                setDisplayEditView={setDisplayEditView}
+                type="issue"
+              />
+            }
+            shouldRender={
+              isSignedIn && !!issues.find(({ id }) => issueId === id)
+            }
           />
           <PaymentPortal
+            balance={balance}
             fundedAmount={fundedAmount}
+            handleClearAlerts={handleClearAlerts}
             handleNav={handleNav}
-            users={[]}
+            handleSubmitAccountPayment={handleSubmitAccountPayment}
+            isSignedIn={isSignedIn}
+            issueId={issueId}
+            paymentAlerts={paymentAlerts}
+            userId={activeUserId}
+          />
+          <ConditionalRender
+            Component={CloseOpenIssueComponent}
+            shouldRender={
+              isSignedIn && !!issues.find(({ id }) => issueId === id)
+            }
           />
         </SidebarContainer>
       </DetailContainer>
-    </Fragment>
+    </IssueDetailContainer>
   );
 };
 
@@ -164,13 +287,18 @@ IssueDetail.propTypes = {
   }),
   data: T.object,
   deviceView: T.string,
+  dispatchCloseIssue: T.func,
+  dispatchEditIssue: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
+  handleClearAlerts: T.func,
   handleComment: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
+  handleSubmitAccountPayment: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
+  paymentAlerts: T.object,
 };
 
 export default IssueDetail;

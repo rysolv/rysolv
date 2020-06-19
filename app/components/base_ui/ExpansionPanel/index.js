@@ -1,6 +1,5 @@
 import React from 'react';
 import T from 'prop-types';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ConditionalRender from '../ConditionalRender';
@@ -8,18 +7,33 @@ import {
   IconWrapper,
   StyledExpansionPanel,
   StyledExpansionPanelDetails,
+  StyledExpansionPanelSummary,
   StyledTypography,
 } from './styleComponents';
 
-const BaseExpansionPanel = ({ Component, Icon, propsToPassDown, title }) => (
-  <StyledExpansionPanel>
-    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+const BaseExpansionPanel = ({
+  Component,
+  Icon,
+  open,
+  propsToPassDown,
+  title,
+  ...restProps
+}) => (
+  <StyledExpansionPanel
+    classes={{ expanded: 'expanded' }}
+    defaultExpanded={open}
+    {...restProps}
+  >
+    <StyledExpansionPanelSummary
+      classes={{ expanded: 'expanded', expandIcon: 'expandIcon' }}
+      expandIcon={<ExpandMoreIcon />}
+    >
       <ConditionalRender
         Component={<IconWrapper>{Icon}</IconWrapper>}
         shouldRender={!!Icon}
       />
       <StyledTypography>{title}</StyledTypography>
-    </ExpansionPanelSummary>
+    </StyledExpansionPanelSummary>
     <StyledExpansionPanelDetails>
       <Component {...propsToPassDown} />
     </StyledExpansionPanelDetails>
@@ -29,6 +43,7 @@ const BaseExpansionPanel = ({ Component, Icon, propsToPassDown, title }) => (
 BaseExpansionPanel.propTypes = {
   Component: T.oneOfType([T.func, T.object]),
   Icon: T.node,
+  open: T.bool,
   propsToPassDown: T.object,
   title: T.string,
 };
