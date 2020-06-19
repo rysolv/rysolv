@@ -7,6 +7,7 @@ const AsyncRender = ({
   asyncData,
   component,
   error,
+  FallbackComponent,
   isRequiredData,
   loading,
   propsToPassDown,
@@ -22,6 +23,9 @@ const AsyncRender = ({
     const ComponentToRender = component;
     return <ComponentToRender data={asyncData} {...propsToPassDown} />;
   }
+  if (FallbackComponent) {
+    return <FallbackComponent />;
+  }
   return <div>Please contact customer support at (860) 491-7218</div>;
 };
 
@@ -31,6 +35,7 @@ AsyncRender.propTypes = {
   asyncData: T.oneOfType([T.array, T.object]),
   component: T.oneOfType([T.func, T.object]),
   error: T.oneOfType([T.object, T.bool]),
+  FallbackComponent: T.oneOfType([T.func, T.object]),
   isRequiredData: T.bool,
   loading: T.bool,
   propsToPassDown: T.object,

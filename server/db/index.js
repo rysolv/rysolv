@@ -24,7 +24,13 @@ const {
   userUpvote,
 } = require('./users');
 const { createComment, getComments, getIssueComments } = require('./comments');
-const { createPullRequest } = require('./pullRequests');
+const {
+  createPullRequest,
+  deletePullRequest,
+  getOnePullRequest,
+  getPullRequests,
+  getUserPullRequests,
+} = require('./pullRequests');
 const {
   checkDuplicateOrganization,
   createOrganization,
@@ -51,6 +57,7 @@ module.exports = {
   createUser,
   deleteIssue,
   deleteOrganization,
+  deletePullRequest,
   deleteUser,
   dropAllTables,
   getActivity,
@@ -59,9 +66,12 @@ module.exports = {
   getIssues,
   getOneIssue,
   getOneOrganization,
+  getOnePullRequest,
   getOneUser,
   getOrganizations,
   getOrganizationsWhere,
+  getPullRequests,
+  getUserPullRequests,
   getUsers,
   getWatchList,
   printTables,

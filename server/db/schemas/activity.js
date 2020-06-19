@@ -6,7 +6,7 @@ activity(
   funded_value FLOAT DEFAULT 0,
   issue_id UUID REFERENCES issues(id),
   organization_id UUID REFERENCES organizations(id),
-  pullrequest_id UUID REFERENCES pullRequests(id),
+  pullrequest_id UUID REFERENCES pullRequests(pullrequest_id),
   user_id UUID REFERENCES users(id)
 )`;
 

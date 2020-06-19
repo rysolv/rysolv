@@ -1,4 +1,5 @@
-// validate and format github url
+// ISSUE URL
+// https://api.github.com/repos/organization/repo/issues/issueNumber
 const formatIssueUrl = value => {
   const url = value.split('/');
   const issueNumber = url[url.length - 1];
@@ -16,6 +17,8 @@ const formatIssueUrl = value => {
   throw new Error('Not a valid issue url');
 };
 
+// ORGANIZATION URL
+// https://api.github.com/repos/organization/repo
 const formatOrganizationUrl = value => {
   const url = value.split('/');
 
@@ -56,7 +59,27 @@ const formatOrganizationUrl = value => {
   throw new Error('Not a valid organization url');
 };
 
+// PULL_REQUEST URL
+// https://api.github.com/repos/organization/repo/pulls/pullNumber
+const formatPullRequestUrl = value => {
+  const url = value.split('/');
+  const pullNumber = url[url.length - 1];
+  const validPullNumber = !Number.isNaN(parseInt(pullNumber, 10) + 1);
+  const validPull = url[url.length - 2] === 'pull';
+  const repo = url[url.length - 3];
+  const organization = url[url.length - 4];
+  const containsGithub =
+    url[url.length - 5] === 'github.com' ||
+    url[url.length - 5] === 'www.github.com' ||
+    url[url.length - 5] === 'api.github.com';
+  if (validPullNumber && validPull && containsGithub) {
+    return `https://api.github.com/repos/${organization}/${repo}/pulls/${pullNumber}`;
+  }
+  throw new Error('Not a valid pull request url');
+};
+
 module.exports = {
   formatIssueUrl,
   formatOrganizationUrl,
+  formatPullRequestUrl,
 };

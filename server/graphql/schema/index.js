@@ -47,6 +47,33 @@ module.exports = buildSchema(`
     user: ID!
   }
 
+  type ImportData {
+    issueBody: String!
+    issueLanguages: [String]
+    issueName: String!
+    issueUrl: String!
+    organizationDescription: String
+    organizationId: ID
+    organizationLanguages: [String]
+    organizationLogo: String
+    organizationName: String
+    organizationRepo: String
+    organizationUrl: String
+  }
+
+  type ImportPullRequest {
+    apiUrl: String,
+    githubUsername: String,
+    htmlUrl: String,
+    mergeable: Boolean,
+    mergeableState: String,
+    merged: Boolean,
+    open: Boolean,
+    pullNumber: Int,
+    status: String,
+    title: String,
+  }
+
   type Issue {
     activeAttempts: Int
     attempting: [ID]
@@ -73,20 +100,6 @@ module.exports = buildSchema(`
     watching: [String]
   }
 
-  type ImportData {
-    issueBody: String!
-    issueLanguages: [String]
-    issueName: String!
-    issueUrl: String!
-    organizationDescription: String
-    organizationId: ID
-    organizationLanguages: [String]
-    organizationLogo: String
-    organizationName: String
-    organizationRepo: String
-    organizationUrl: String
-  }
-
   input IssueInput {
     attempting: [ID]
     attempts: Int
@@ -105,6 +118,74 @@ module.exports = buildSchema(`
     rep: Int
     repo: String
     watching: [String]
+  }
+
+  type Organization {
+    contributors: [Object]
+    createdDate: Object
+    description: String!
+    id: ID!
+    issues: [Object]
+    logo: String
+    modifiedDate: Object
+    name: String!
+    organizationUrl: String
+    ownerId: ID
+    preferredLanguages: [String]
+    repoUrl: String!
+    totalFunded: Float
+    verified: Boolean
+  }
+
+  input OrganizationInput {
+    organizationDescription: String
+    organizationLogo: String
+    organizationName: String
+    organizationPreferredLanguages: [String]
+    organizationRepo: String
+    organizationUrl: String
+    organizationVerified: Boolean
+    ownerId: ID
+  }
+
+  type PullRequest {
+    apiUrl: String,
+    createdDate: Object!,
+    githubUsername: String,
+    htmlUrl: String,
+    issueId: ID!,
+    mergeable: Boolean,
+    mergeableState: String,
+    merged: Boolean,
+    modifiedDate: Object!,
+    issueName: String,
+    open: Boolean!,
+    pullNumber: Int,
+    pullRequestId: ID!,
+    status: String!,
+    title: String!,
+    userId: ID!
+  }
+
+  type PullRequestImport {
+    status: String!
+  }
+
+  type PullRequestArray {
+    pullRequestArray: [PullRequest]
+  }
+
+  input PullRequestInput {
+    htmlUrl: String
+    issueId: ID!
+    githubUsername: String
+    mergeable: Boolean
+    merged: Boolean
+    open: Boolean!
+    pullNumber: Int
+    status: String!
+    title: String!
+    userId: ID!
   }
 
   type User {
@@ -168,42 +249,22 @@ module.exports = buildSchema(`
     username: String
   }
 
-  type Organization {
-    contributors: [Object]
-    createdDate: Object
-    description: String!
-    id: ID!
-    issues: [Object]
-    logo: String
-    modifiedDate: Object
-    name: String!
-    organizationUrl: String
-    ownerId: ID
-    preferredLanguages: [String]
-    repoUrl: String!
-    totalFunded: Float
-    verified: Boolean
-  }
-
-  input OrganizationInput {
-    organizationDescription: String
-    organizationLogo: String
-    organizationName: String
-    organizationPreferredLanguages: [String]
-    organizationRepo: String
-    organizationUrl: String
-    organizationVerified: Boolean
-    ownerId: ID
-  }
-
   type Error {
     message: String
   }
 
+  type Success {
+    message: String
+  }
+
   union ActivityResult = ActivityArray | Error
+  union PullRequestArrayResult = PullRequestArray | Error
+  union PullRequestResult = PullRequest | Error
   union ImportResult = ImportData | Error
+  union ImportPullRequestResult = ImportPullRequest | Error
   union IssueResult = Issue | Error
   union OrganizationResult = Organization | Error
+  union EventResponse = Success | Error
 
   type RootQuery {
     getActivity(column: String!, id: ID): ActivityResult!
@@ -212,15 +273,18 @@ module.exports = buildSchema(`
     getIssues: [Issue!]!
     getOrganizations: [Organization!]!
     getUsers: [User!]!
+    getPullRequests: PullRequestArrayResult
 
     getIssueComments(id: ID!): [Comment]
     getUserOrganizations(id: ID!): [Organization!]
+    getUserPullRequests(id: ID!): PullRequestArrayResult
 
     getWatchList(idArray: [ID!], type: String!): [WatchList!]
 
     oneIssue(id: ID!): IssueResult
     oneOrganization(id: ID!): OrganizationResult
     oneUser(column: String!, query: ID!): User!
+    onePullRequest(id: ID!): PullRequestResult
 
     searchIssues(value: String!): [Issue!]!
     searchOrganizations(value: String!): [Organization!]!
@@ -233,6 +297,7 @@ module.exports = buildSchema(`
     createIssue(issueInput: IssueInput): Issue!
     createOrganization(organizationInput: OrganizationInput): Organization!
     createUser(userInput: UserInput): [User!]!
+    createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
 
     deleteIssue(id: ID!): String!
     deleteOrganization(id:ID!): String!
@@ -240,6 +305,7 @@ module.exports = buildSchema(`
 
     importIssue(url: String!): ImportResult
     importOrganization(url: String!): ImportResult
+    importPullRequest(url: String!): ImportPullRequestResult
 
     transformIssue(id: ID!, issueInput: IssueInput): Issue!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!

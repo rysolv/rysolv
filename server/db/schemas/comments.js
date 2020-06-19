@@ -4,7 +4,7 @@ comments(
   created_date TIMESTAMP,
   modified_date TIMESTAMP,
   target UUID NOT NULL,
-  body VARCHAR(128) NOT NULL,
+  body TEXT NOT NULL,
   user_id UUID REFERENCES users(id)
 )`;
 

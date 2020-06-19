@@ -16,8 +16,8 @@ const createTables = async () => {
   await singleQuery(organizationSchema);
   await singleQuery(userSchema);
   await singleQuery(commentSchema);
-  await singleQuery(pullRequestSchema);
   await singleQuery(issueSchema);
+  await singleQuery(pullRequestSchema);
   await singleQuery(activitySchema);
 };
 

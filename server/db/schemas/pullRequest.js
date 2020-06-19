@@ -1,11 +1,20 @@
 const pullRequests = `CREATE TABLE IF NOT EXISTS
-pullRequests(
-  id UUID PRIMARY KEY,
-  created_date TIMESTAMP,
-  modified_date TIMESTAMP,
-  title VARCHAR(128) NOT NULL,
-  body VARCHAR(128) NOT NULL,
-  repo VARCHAR(128) NOT NULL
-)`;
+  pullrequests(
+    api_url VARCHAR(128),
+    created_date TIMESTAMP,
+    github_username VARCHAR(128),
+    html_url VARCHAR(128),
+    issue_id UUID REFERENCES issues(id),
+    mergeable BOOLEAN,
+    mergeableState VARCHAR(128),
+    merged BOOLEAN,
+    modified_date TIMESTAMP,
+    open BOOLEAN DEFAULT true,
+    pull_number SMALLINT,
+    pullRequest_id UUID PRIMARY KEY,
+    status VARCHAR(128),
+    title VARCHAR(256),
+    user_id UUID
+  )`;
 
 module.exports = pullRequests;

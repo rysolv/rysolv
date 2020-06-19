@@ -1,13 +1,17 @@
 /* eslint-disable camelcase */
 const { FETCH } = require('../helpers');
-const { formatIssueUrl, formatOrganizationUrl } = require('./helpers');
+const {
+  formatIssueUrl,
+  formatOrganizationUrl,
+  formatPullRequestUrl,
+} = require('./helpers');
 
 const getSingleIssue = async issueUrl => {
   try {
     const formattedUrl = formatIssueUrl(issueUrl);
-
     const issueData = await FETCH(formattedUrl);
     const { html_url, title, state, body, repository_url } = issueData;
+
     if (state !== 'open') {
       throw new Error('Cannot add closed issue');
     }
@@ -95,8 +99,47 @@ const getSingleOrganization = async value => {
   return { organizationInput };
 };
 
+const getSinglePullRequest = async pullRequestUrl => {
+  const formattedUrl = formatPullRequestUrl(pullRequestUrl);
+  const pullRequestData = await FETCH(formattedUrl);
+
+  const {
+    html_url,
+    mergeable_state,
+    mergeable,
+    merged,
+    number,
+    state,
+    title,
+    url: api_url,
+    user: { login },
+  } = pullRequestData;
+
+  if (state !== 'open') {
+    throw new Error('This pullrequest is not open');
+  }
+  if (merged) {
+    throw new Error('Pull request has already been merged');
+  }
+
+  const pullData = {
+    apiUrl: api_url,
+    githubUsername: login,
+    htmlUrl: html_url,
+    mergeable: !!mergeable,
+    mergeableState: mergeable_state,
+    merged: !!merged,
+    open: state === 'open',
+    pullNumber: number,
+    status: state,
+    title,
+  };
+  return pullData;
+};
+
 module.exports = {
-  getSingleRepo,
   getSingleIssue,
   getSingleOrganization,
+  getSinglePullRequest,
+  getSingleRepo,
 };

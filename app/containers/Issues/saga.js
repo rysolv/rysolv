@@ -298,7 +298,7 @@ export function* saveInfoSaga({ payload }) {
         name: ${JSON.stringify(issueName)},
         organizationDescription:  "${organizationDescription}",
         organizationId:  ${JSON.stringify(organizationId)},
-        organizationLogo:  "${organizationLogo}"
+        organizationLogo:  ${JSON.stringify(organizationLogo)},
         organizationName:  "${organizationName}",
         organizationRepo:  "${organizationRepo}",
         organizationUrl:  "${organizationUrl}",

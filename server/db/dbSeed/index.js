@@ -6,7 +6,6 @@ const {
   userSeed,
   issueSeed,
   commentSeed,
-  pullRequestSeed,
   organzationSeed,
 } = require('./seedData');
 
@@ -15,7 +14,6 @@ const {
   createComment,
   createIssue,
   createOrganization,
-  createPullRequest,
   createUser,
   createTables,
   dropAllTables,
@@ -34,7 +32,6 @@ const seed = async () => {
   await createOrganization(organzationSeed);
   await createIssue(issueSeed);
   await createComment(commentSeed);
-  await createPullRequest(pullRequestSeed);
 
   // Log results and end connection
   const t2 = Date.now();
