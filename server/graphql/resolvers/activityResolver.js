@@ -19,6 +19,8 @@ module.exports = {
 
     const [result] = await createActivity(activity);
 
+    console.log(result);
+
     return {
       commentId: result.activity_id,
       createdDate: result.created_date,

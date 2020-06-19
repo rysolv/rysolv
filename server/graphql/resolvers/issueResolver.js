@@ -71,8 +71,18 @@ module.exports = {
   closeIssue: async args => {
     const { id, shouldClose } = args;
     try {
-      const issues = await closeIssue('issues', id, shouldClose);
-      return issues;
+      const response = await closeIssue('issues', id, shouldClose);
+
+      const [result] = await getOneIssue('issues', id);
+
+      const activityInput = {
+        actionType: shouldClose ? 'close' : 'reopen',
+        issueId: result.id,
+        userId: result.userId,
+      };
+      await createActivity({ activityInput });
+
+      return response;
     } catch (err) {
       throw err;
     }

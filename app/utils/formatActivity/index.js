@@ -56,7 +56,7 @@ export const formatActivity = data => {
   const actionDictionary = {
     add_attempting: { action: 'started attempting', icon: AddAttempting },
     add_watching: { action: 'started watching', icon: AddWatching },
-    close: { action: 'closed issue', icon: Deleted },
+    close: { action: 'closed', icon: Deleted },
     comment: { action: 'commented on', icon: AddComment },
     create: { action: 'created', icon: Created },
     delete: { action: 'deleted', icon: Deleted },
@@ -65,6 +65,7 @@ export const formatActivity = data => {
     open_pr: { action: 'opened pull request', icon: PullRequest },
     remove_attempting: { action: 'stopped attempting', icon: RemoveAttempting },
     remove_watching: { action: 'stopped watching', icon: RemoveWatching },
+    reopen: { action: 'reopened', icon: Created },
     resolve: { action: 'resolved', icon: Resolved },
     update: { action: 'updated', icon: Edited },
   };

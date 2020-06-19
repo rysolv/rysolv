@@ -35,7 +35,7 @@ const IssueDetailBody = ({
   setLanguageChange,
   userProfile,
 }) => {
-  const { username } = userProfile;
+  const { username, detailRoute } = userProfile;
   const html = marked(body);
 
   const EditIssueBodyComponent = (
@@ -71,8 +71,8 @@ const IssueDetailBody = ({
         <div>
           Opened by{' '}
           <UsernameLink
-            onClick={e => navHelper(e, handleNav, `/users/detail/${username}`)}
-            href={`/users/detail/${username}`}
+            onClick={e => navHelper(e, handleNav, detailRoute)}
+            href={detailRoute}
           >
             {username}
           </UsernameLink>{' '}
