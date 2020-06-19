@@ -21,13 +21,14 @@ import {
 } from '../styledComponents';
 import { StyledH3 } from '../../styledComponents';
 
-const DepositFormComponent = ({ creditCardProps, handleNav }) => {
+const DepositFormComponent = ({ creditCardProps, handleNav, setDisplayBottom }) => {
   const [dollarValue, setDollarValue] = useState('0');
   const [feeValue, setFeeValue] = useState('0');
   const [totalValue, setTotalValue] = useState('0');
   const [paymentType, setPaymentType] = useState('Credit card');
   useEffect(() => {
     window.scrollTo(0, 0);
+    return () => setDisplayBottom(false);
   }, []);
 
   const handleChangeDollarValue = e => {
@@ -121,6 +122,7 @@ const DepositFormComponent = ({ creditCardProps, handleNav }) => {
 DepositFormComponent.propTypes = {
   creditCardProps: T.object.isRequired,
   handleNav: T.func.isRequired,
+  setDisplayBottom: T.func.isRequired,
 };
 
 export default DepositFormComponent;

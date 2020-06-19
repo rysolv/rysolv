@@ -11,7 +11,7 @@ const userSeed = [
     'https://rysolv.s3.us-east-2.amazonaws.com/tylerprofile.png', // profile_pic
     [], // comments
     [], // attempting
-    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues
+    [], // issues
     [], // organizations
     'norris23', // username
     'https://github.com/tylermaran', // github_link
@@ -76,7 +76,7 @@ const userSeed = [
     'https://rysolv.s3.us-east-2.amazonaws.com/paulprofile.png',
     [], // comments
     [], // attempting
-    ['04790329-9fa7-438c-8627-4d400822f673'], // issues
+    [], // issues
     [], // organizations
     'paulhouse45', // username
     'https://github.com/paulhouse', // github_link
@@ -105,10 +105,7 @@ const userSeed = [
     'https://rysolv.s3.us-east-2.amazonaws.com/jay.png',
     [], // comments
     [], // attempting
-    [
-      '04790329-9fa7-438c-8627-4d400822f673',
-      '04790329-9fa7-438c-8627-4d400822f673',
-    ], // issues
+    [], // issues
     [], // organizations
     'jquerie', // username
     'https://github.com/jquerie', // github_link
@@ -137,7 +134,7 @@ const userSeed = [
     'https://cdn0.iconfinder.com/data/icons/web-service-and-development/512/key_protection_lock_security_access_forbidden_safe_secure_private_red_alert_password_protect_admin_safety_unlock_system_flat_design_icon-512.png', // profile_pic
     [], // comments
     [], // attempting
-    ['20619026-0f61-4772-9bb8-36ed643d4dcd'], // issues
+    [], // issues
     [], // organizations
     'ADMIN', // username
     'https://github.com/tylermaran', // github_link

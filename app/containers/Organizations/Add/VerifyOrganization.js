@@ -25,6 +25,7 @@ import {
 export class VerifyOrganization extends React.PureComponent {
   render() {
     const {
+      activeUser,
       dispatchClearForm,
       dispatchIncrementStep,
       dispatchSaveInfo,
@@ -36,7 +37,7 @@ export class VerifyOrganization extends React.PureComponent {
       requestBody,
     } = this.props;
     const handleSaveInfo = () => {
-      dispatchSaveInfo({ requestBody });
+      dispatchSaveInfo({ requestBody, activeUser });
       handleNav('/organizations');
     };
     const cancelImport = () => {
@@ -78,6 +79,7 @@ export class VerifyOrganization extends React.PureComponent {
 }
 
 VerifyOrganization.propTypes = {
+  activeUser: T.func,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,

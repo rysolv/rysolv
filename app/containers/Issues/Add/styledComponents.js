@@ -41,6 +41,7 @@ export const AddForm = styled.div`
   ${mobile} {
     width: 100%;
   }
+
   .MuiFormControl-root {
     margin: 0 1rem;
     width: 100%;

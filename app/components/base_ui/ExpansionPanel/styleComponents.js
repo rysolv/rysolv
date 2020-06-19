@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 
 export const IconWrapper = styled.div`
@@ -20,10 +21,26 @@ export const StyledExpansionPanel = styled(ExpansionPanel)`
   &:before {
     background-color: white;
   }
+
+  &.expanded {
+    margin: 0rem;
+  }
 `;
 
 export const StyledExpansionPanelDetails = styled(ExpansionPanelDetails)`
   padding: 0;
+`;
+
+export const StyledExpansionPanelSummary = styled(ExpansionPanelSummary)`
+  min-height: 0 !important;
+
+  .expanded {
+    margin: 0;
+  }
+
+  .expandIcon {
+    margin-right: -1.2rem;
+  }
 `;
 
 export const StyledTypography = styled(Typography)`

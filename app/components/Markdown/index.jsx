@@ -37,8 +37,9 @@ class Markdown extends React.PureComponent {
   }
 
   render() {
+    const { comment, ...restProps } = this.props;
     return (
-      <MarkdownContainer comment={this.props.comment}>
+      <MarkdownContainer comment={comment} {...restProps}>
         <EditContainer>
           <textarea id="editor" />
         </EditContainer>

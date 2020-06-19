@@ -10,17 +10,17 @@ import {
   CommentBody,
   CommentContainer,
   CommentHeader,
-  ProfileContainer,
   FlexContainer,
-  ProfileLine,
+  ProfileImageContainer,
   UsernameLink,
 } from './styledComponents';
 
 const CommentCard = ({
-  primary,
   body,
-  createdDate,
+  Component,
+  date,
   handleNav,
+  primary,
   userProfile,
 }) => {
   const { alt, detailRoute, profilePic, username } = userProfile;
@@ -28,7 +28,7 @@ const CommentCard = ({
 
   const profileView = (
     <Fragment>
-      <ProfileContainer>
+      <ProfileImageContainer>
         <ProfileImage
           alt={alt}
           detailRoute={detailRoute}
@@ -36,11 +36,9 @@ const CommentCard = ({
           profilePic={profilePic}
           size="4rem"
         />
-      </ProfileContainer>
-      <ProfileLine />
+      </ProfileImageContainer>
     </Fragment>
   );
-
   return (
     <FlexContainer>
       {primary ? null : profileView}
@@ -48,13 +46,16 @@ const CommentCard = ({
         <CommentHeader primary={primary}>
           {primary ? 'Opened by' : 'Posted by'}{' '}
           <UsernameLink
-            onClick={e => navHelper(e, handleNav, `/users/detail/${username}`)}
-            href={`/users/detail/${username}`}
+            onClick={e => navHelper(e, handleNav, detailRoute)}
+            href={detailRoute}
           >
             {username}
           </UsernameLink>{' '}
-          on {moment(createdDate).format('M/D/YYYY')}
+          {moment(date)
+            .utc()
+            .fromNow()}
         </CommentHeader>
+        {primary && <Component />}
         <CommentBody dangerouslySetInnerHTML={{ __html: html }} />
       </CommentContainer>
     </FlexContainer>
@@ -63,9 +64,10 @@ const CommentCard = ({
 
 CommentCard.propTypes = {
   body: T.string,
-  primary: T.bool,
-  createdDate: T.string,
+  Component: T.oneOfType([T.func, T.object]),
+  date: T.string,
   handleNav: T.func,
+  primary: T.bool,
   userProfile: T.object,
 };
 

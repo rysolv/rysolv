@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 import { hoverLinkColor, textColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const EmptyComponentContainer = styled.div`
   align-items: center;
@@ -33,6 +36,10 @@ export const IssueContent = styled.div`
   height: 10rem;
   margin: 1rem 0;
   width: 100%;
+
+  ${mobile} {
+    height: auto;
+  }
 `;
 
 export const IssueContentInfo = styled.div`
@@ -55,6 +62,7 @@ export const IssueFundedAmount = styled.div`
   font-size: 1.8rem;
   font-weight: 500;
   justify-content: flex-end;
+  white-space: nowrap;
   width: 30%;
 `;
 
@@ -104,6 +112,11 @@ export const IssueOpen = styled.div`
 export const IssueOpenWrapper = styled.div`
   display: flex;
   font-size: 1.2rem;
+
+  ${mobile} {
+    margin-top: 1rem;
+    white-space: nowrap;
+  }
 `;
 
 export const IssuesList = styled.ul`

@@ -90,8 +90,13 @@ const authReducer = produce((draft, { payload, type }) => {
       return initialState;
     }
     case UPDATE_ACTIVE_USER: {
-      const { attempting } = payload;
-      draft.activeUser.attempting = attempting;
+      const { attempting, balance } = payload;
+      if (attempting) {
+        draft.activeUser.attempting = attempting;
+      }
+      if (balance) {
+        draft.activeUser.balance = balance;
+      }
       break;
     }
     default: {

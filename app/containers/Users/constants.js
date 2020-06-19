@@ -53,4 +53,4 @@ export const userDataDictionary = {
   rep: 'Number of Points',
 };
 
-export const verifyMessage = 'I agree that this information is correct.';
+export const verifyMessage = 'Looks good to me!';

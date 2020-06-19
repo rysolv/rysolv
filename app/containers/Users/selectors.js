@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import moment from 'moment';
 
+import { formatActivity } from 'utils/formatActivity';
 import { filterUsers, organizeUsers, searchUsers } from './helpers';
 import { initialState } from './reducer';
 
@@ -10,6 +11,27 @@ const makeSelectUsers = prop =>
   createSelector(
     selectUsersDomain,
     substate => substate[prop],
+  );
+
+const makeSelectUserDetail = () =>
+  createSelector(
+    makeSelectUsers('user'),
+    user => {
+      const { activity } = user;
+      const tempUser = { ...user };
+      if (activity) {
+        const filteredActivity = activity.filter(
+          el =>
+            el.actionType !== 'add_watching' &&
+            el.actionType !== 'remove_watching',
+        );
+        const formattedActivity = filteredActivity.map(el =>
+          formatActivity(el),
+        );
+        tempUser.activity = formattedActivity;
+      }
+      return tempUser;
+    },
   );
 
 const makeSelectUsersDisabled = () =>
@@ -106,6 +128,7 @@ const makeSelectUsersStep = prop =>
 
 export default selectUsersDomain;
 export {
+  makeSelectUserDetail,
   makeSelectUsers,
   makeSelectUsersDisabled,
   makeSelectUsersEditRequest,

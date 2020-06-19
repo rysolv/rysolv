@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
 
-import { BaseExpansionPanel } from 'components/base_ui';
+import { BaseExpansionPanel, ConditionalRender } from 'components/base_ui';
 import {
   formatDollarAmount,
   handleCreditCardNumberChange,
@@ -14,30 +14,37 @@ import iconDictionary from 'utils/iconDictionary';
 import CreditCardView from './CreditCardView';
 import DollarValueToggle from './DollarValueToggle';
 import PaypalView from './PaypalView';
+import YourAccountView from './YourAccountView';
 import {
   Amount,
   Divider,
   DollarValueWrapper,
   Funded,
-  Image,
-  Name,
   OverviewWrapper,
   PaymentContainer,
   PaymentInformationWrapper,
   StyledBaseInputWithAdornment,
+  StyledErrorSuccessBanner,
   StyledLabel,
-  UsersFunded,
 } from './styledComponents';
 
+const AccountIcon = iconDictionary('user');
 const CreditCardIcon = iconDictionary('creditCard');
 const PaypalIcon = iconDictionary('paypal');
 
 const PaymentPortal = ({
-  fundedAmount,
+  balance,
   dispatchVerifyRecaptcha,
   dispatchVerifyRecaptchaFailure,
+  fundedAmount,
+  handleClearAlerts,
   handleNav,
-  users,
+  handleSubmitAccountPayment,
+  isSignedIn,
+  issueId,
+  paymentAlerts: { error, success },
+  userId,
+  ...restProps
 }) => {
   const [fundAmount, setFundAmount] = useState('2');
   const [nameValue, setNameValue] = useState('');
@@ -74,19 +81,10 @@ const PaymentPortal = ({
     zipValue,
   };
   return (
-    <PaymentContainer>
+    <PaymentContainer {...restProps}>
       <OverviewWrapper>
         <Amount>{formatDollarAmount(fundedAmount)}</Amount>
         <Funded>{fundedAmount ? 'Funded' : 'Unfunded'}</Funded>
-        <UsersFunded>
-          {users.map(({ amount, image, name }) => (
-            <Fragment key={`user-${name}`}>
-              <Image src={image} />
-              <Name onClick={() => handleNav(`/user/${name}`)}>{name}</Name>
-              <div>{formatDollarAmount(amount)}</div>
-            </Fragment>
-          ))}
-        </UsersFunded>
       </OverviewWrapper>
       <DollarValueWrapper>
         <DollarValueToggle
@@ -118,6 +116,28 @@ const PaymentPortal = ({
         />
       </PaymentInformationWrapper>
       <StyledLabel>Payment Methods</StyledLabel>
+      <StyledErrorSuccessBanner
+        error={error}
+        onClose={handleClearAlerts}
+        success={success}
+      />
+      <ConditionalRender
+        Component={() => (
+          <BaseExpansionPanel
+            Component={YourAccountView}
+            Icon={AccountIcon}
+            open
+            propsToPassDown={{
+              balance,
+              handleSubmitAccountPayment,
+              issueId,
+              userId,
+            }}
+            title="Your Account"
+          />
+        )}
+        shouldRender={isSignedIn}
+      />
       <BaseExpansionPanel
         Component={CreditCardView}
         Icon={CreditCardIcon}
@@ -134,11 +154,17 @@ const PaymentPortal = ({
 };
 
 PaymentPortal.propTypes = {
+  balance: T.number,
   dispatchVerifyRecaptcha: T.func,
   dispatchVerifyRecaptchaFailure: T.func,
-  fundedAmount: T.string,
+  fundedAmount: T.number,
+  handleClearAlerts: T.func,
   handleNav: T.func,
-  users: T.array,
+  handleSubmitAccountPayment: T.func,
+  isSignedIn: T.bool,
+  issueId: T.string,
+  paymentAlerts: T.object,
+  userId: T.string,
 };
 
 export default PaymentPortal;

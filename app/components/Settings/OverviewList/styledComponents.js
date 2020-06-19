@@ -28,6 +28,7 @@ export const IssueFundedAmount = styled.div`
   font-size: 1.8rem;
   font-weight: 500;
   justify-content: flex-end;
+  white-space: nowrap;
   width: 30%;
 `;
 
@@ -62,6 +63,7 @@ export const OverviewListDetail = styled.div`
   flex-direction: row;
   flex: 100%;
   height: 100%;
+  justify-content: space-between;
   margin: 1rem 0;
 `;
 

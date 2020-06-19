@@ -1,21 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { fetchActiveUser } from 'containers/Auth/actions';
+import { fetchActiveUser, updateActiveUser } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
-import {
-  ADD_ATTEMPT,
-  ADD_COMMENT,
-  DELETE_ISSUE,
-  FETCH_ISSUE_DETAIL,
-  FETCH_ISSUES,
-  IMPORT_ISSUE,
-  SAVE_INFO,
-  SEARCH_ISSUES,
-  successCreateIssueMessage,
-  UPVOTE_ISSUE,
-} from './constants';
 import {
   addAttemptFailure,
   addAttemptSuccess,
@@ -23,8 +11,11 @@ import {
   addCommentSuccess,
   addWatchFailure,
   addWatchSuccess,
-  deleteIssueFailure,
-  deleteIssueSuccess,
+  closeIssueFailure,
+  closeIssueSuccess,
+  editIssueFailure,
+  editIssueSuccess,
+  fetchIssueDetail,
   fetchIssueDetailFailure,
   fetchIssueDetailSuccess,
   fetchIssuesFailure,
@@ -35,9 +26,27 @@ import {
   saveInfoSuccess,
   searchIssuesFailure,
   searchIssuesSuccess,
+  submitAccountPaymentFailure,
+  submitAccountPaymentSuccess,
   upvoteIssueFailure,
   upvoteIssueSuccess,
 } from './actions';
+import {
+  ADD_ATTEMPT,
+  ADD_COMMENT,
+  CLOSE_ISSUE,
+  EDIT_ISSUE,
+  FETCH_ISSUE_DETAIL,
+  FETCH_ISSUES,
+  IMPORT_ISSUE,
+  SAVE_INFO,
+  SEARCH_ISSUES,
+  SUBMIT_ACCOUNT_PAYMENT,
+  successCreateIssueMessage,
+  successEditIssueMessage,
+  successAccountPaymentMessage,
+  UPVOTE_ISSUE,
+} from './constants';
 
 export function* addAttemptSaga({ payload }) {
   const { id: issueId, userId, column, remove } = payload;
@@ -99,11 +108,11 @@ export function* addCommentSaga({ payload }) {
   }
 }
 
-export function* deleteIssueSaga({ payload }) {
-  const { itemId } = payload;
+export function* closeIssueSaga({ payload }) {
+  const { issueId, shouldClose } = payload;
   const query = `
   mutation{
-    deleteIssue(id: "${itemId}")
+    closeIssue(id: "${issueId}", shouldClose: ${shouldClose})
   }`;
   try {
     const graphql = JSON.stringify({
@@ -111,11 +120,69 @@ export function* deleteIssueSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { deleteIssue },
+      data: { closeIssue },
     } = yield call(post, '/graphql', graphql);
-    yield put(deleteIssueSuccess({ itemId, message: deleteIssue }));
+    yield put(closeIssueSuccess({ issueId, message: closeIssue }));
   } catch (error) {
-    yield put(deleteIssueFailure({ error }));
+    yield put(closeIssueFailure({ error }));
+  }
+}
+
+export function* editIssueSaga({ payload }) {
+  const { editRequest, issueId } = payload;
+  const { body, language, name } = editRequest;
+  const query = `
+    mutation {
+      transformIssue(id: "${issueId}", issueInput: {
+        body: ${JSON.stringify(body)},
+        language: ${JSON.stringify(language)},
+        name: "${name}",
+      }) {
+        __typename
+        ... on Issue {
+          id,
+          attempting,
+          attempts,
+          body,
+          comments,
+          contributor,
+          createdDate,
+          fundedAmount,
+          language,
+          modifiedDate,
+          name,
+          open,
+          organizationId,
+          organizationName,
+          organizationVerified,
+          profilePic,
+          rep,
+          repo,
+          userId,
+          username,
+          watching
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { transformIssue },
+    } = yield call(post, '/graphql', graphql);
+    if (transformIssue.__typename === 'Error') {
+      throw transformIssue;
+    }
+    yield put(fetchIssueDetail({ id: issueId }));
+    yield put(editIssueSuccess({ message: successEditIssueMessage }));
+  } catch (error) {
+    yield put(editIssueFailure({ error }));
   }
 }
 
@@ -298,7 +365,7 @@ export function* saveInfoSaga({ payload }) {
         name: ${JSON.stringify(issueName)},
         organizationDescription:  "${organizationDescription}",
         organizationId:  ${JSON.stringify(organizationId)},
-        organizationLogo:  "${organizationLogo}"
+        organizationLogo:  ${JSON.stringify(organizationLogo)},
         organizationName:  "${organizationName}",
         organizationRepo:  "${organizationRepo}",
         organizationUrl:  "${organizationUrl}",
@@ -358,6 +425,43 @@ export function* searchIssuesSaga({ payload }) {
   }
 }
 
+export function* submitAccountPaymentSaga({ payload }) {
+  const { fundValue, issueId, userId } = payload;
+  const submitAccountPaymentQuery = `
+      mutation {
+        submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", userId: "${userId}" ) {
+          __typename
+          ... on Payment {
+            balance,
+            fundedAmount
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    `;
+  try {
+    const graphql = JSON.stringify({
+      query: submitAccountPaymentQuery,
+      variables: {},
+    });
+    const {
+      data: { submitAccountPayment },
+    } = yield call(post, '/graphql', graphql);
+    const { balance, fundedAmount } = submitAccountPayment;
+    yield put(
+      submitAccountPaymentSuccess({
+        fundedAmount,
+        message: successAccountPaymentMessage,
+      }),
+    );
+    yield put(updateActiveUser({ balance }));
+  } catch (error) {
+    yield put(submitAccountPaymentFailure({ error }));
+  }
+}
+
 export function* upvoteIssuesSaga({ payload }) {
   const { issueId, userId } = payload;
   const upvoteIssueQuery = `
@@ -397,11 +501,13 @@ export function* upvoteIssuesSaga({ payload }) {
 export default function* watcherSaga() {
   yield takeLatest(ADD_ATTEMPT, addAttemptSaga);
   yield takeLatest(ADD_COMMENT, addCommentSaga);
-  yield takeLatest(DELETE_ISSUE, deleteIssueSaga);
+  yield takeLatest(CLOSE_ISSUE, closeIssueSaga);
+  yield takeLatest(EDIT_ISSUE, editIssueSaga);
   yield takeLatest(FETCH_ISSUE_DETAIL, fetchIssueDetailSaga);
   yield takeLatest(FETCH_ISSUES, fetchIssuesSaga);
   yield takeLatest(IMPORT_ISSUE, importIssueSaga);
   yield takeLatest(SAVE_INFO, saveInfoSaga);
   yield takeLatest(SEARCH_ISSUES, searchIssuesSaga);
+  yield takeLatest(SUBMIT_ACCOUNT_PAYMENT, submitAccountPaymentSaga);
   yield takeLatest(UPVOTE_ISSUE, upvoteIssuesSaga);
 }

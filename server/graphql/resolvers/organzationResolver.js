@@ -1,4 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
+
+const { createActivity } = require('./activityResolver');
 const {
   checkDuplicateOrganization,
   createOrganization,
@@ -10,8 +12,9 @@ const {
   searchOrganizations,
   transformOrganization,
 } = require('../../db');
-
 const { getSingleRepo } = require('../../integrations');
+const { uploadImage } = require('../../middlewares/imageUpload');
+
 const defaultOrgLogo =
   'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png';
 
@@ -45,13 +48,21 @@ module.exports = {
         organizationInput.organizationLogo || defaultOrgLogo,
         organizationInput.verified || false,
         organizationInput.contributors || [],
-        organizationInput.ownerId || uuidv4(),
+        organizationInput.ownerId,
         organizationInput.totalFunded || 0,
         organizationInput.preferredLanguages || [],
       ],
     ];
     try {
-      const result = await createOrganization(organization);
+      const [result] = await createOrganization(organization);
+
+      const activityInput = {
+        actionType: 'create',
+        organizationId: result.id,
+        userId: result.owner_id,
+      };
+      await createActivity({ activityInput });
+
       return result;
     } catch (err) {
       throw err;
@@ -136,19 +147,27 @@ module.exports = {
   transformOrganization: async args => {
     const { id, organizationInput } = args;
     try {
+      const logo = organizationInput.organizationLogo;
+      const protocol = logo.substring(0, 5);
+
+      if (logo && protocol !== 'https') {
+        const { uploadUrl } = await uploadImage(logo);
+        organizationInput.logo = uploadUrl;
+      }
+
       const data = {
-        modified_date: new Date(), // update modified date
-        name: organizationInput.name,
-        description: organizationInput.description,
-        repo_url: organizationInput.repoUrl,
-        organizationUrl: organizationInput.organizationUrl,
+        contributors: organizationInput.contributors,
+        description: organizationInput.organizationDescription,
         issues: organizationInput.issues,
         logo: organizationInput.logo,
-        verified: organizationInput.verified,
-        contributors: organizationInput.contributors,
+        modified_date: new Date(), // update modified date
+        name: organizationInput.organizationName,
+        organizationUrl: organizationInput.organizationUrl,
         owner_id: organizationInput.ownerId,
+        preferred_languages: organizationInput.organizationPreferredLanguages,
+        repo_url: organizationInput.organizationRepo,
         total_funded: organizationInput.totalFunded,
-        preferred_languages: organizationInput.preferredLanguages,
+        verified: organizationInput.organizationVerified,
       };
       const queryResult = await transformOrganization(
         'organizations',
@@ -171,9 +190,23 @@ module.exports = {
         totalFunded: queryResult.total_funded,
         preferredLanguages: queryResult.preferred_languages,
       };
-      return result;
+
+      const activityInput = {
+        actionType: 'update',
+        organizationId: queryResult.id,
+        userId: queryResult.owner_id,
+      };
+
+      await createActivity({ activityInput });
+      return {
+        __typename: 'Organization',
+        ...result,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
 };

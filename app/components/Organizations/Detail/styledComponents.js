@@ -1,23 +1,63 @@
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
-
-import { BaseDropDownMenu } from 'components/base_ui';
+import { Link } from 'react-router-dom';
 
 import {
+  BaseDropDownMenu,
+  BaseTextInput,
+  ErrorSuccessBanner,
+  PrimaryButton,
+  SecondaryButton,
+} from 'components/base_ui';
+import {
   defaultFontSize,
+  detailFontSize,
   dividerBorder,
   hoverLinkColor,
+  hyperlinkColor,
   textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
+
+export const ActivityContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  padding-left: 0;
+`;
+
+export const ActivityDate = styled.div`
+  color: ${textColor};
+  font-size: ${detailFontSize};
+  text-transform: uppercase;
+  text-align: right;
+  padding: 0.5rem 0;
+`;
+
+export const ActivityWrapper = styled.div`
+  padding: 0.5rem 1rem;
+`;
 
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
   width: 45%;
 `;
 
+export const ButtonGroup = styled.div`
+  ${mobile} {
+    display: flex;
+    flex-flow: wrap-reverse;
+    justify-content: flex-end;
+    width: 50%;
+  }
+`;
+
 export const ContentWrapper = styled.div`
   padding-left: 2rem;
+  width: 100%;
 `;
 
 export const ContributorContent = styled.div`
@@ -71,6 +111,7 @@ export const Description = styled.div`
   color: #6a737d;
   font-size: ${defaultFontSize};
   margin-bottom: 2rem;
+  text-align: justify;
 `;
 
 export const DetailContainer = styled.div`
@@ -88,39 +129,35 @@ export const DetailViewContainer = styled.div`
 `;
 
 export const Divider = styled.div`
+  display: ${({ shouldHide }) => (shouldHide ? 'none' : 'inherit')};
   border-top: ${dividerBorder};
   margin: 1rem auto;
   width: 90%;
 `;
 
-export const FundContent = styled.div`
+export const EditLogoWrapper = styled.div`
+  height: 10rem;
+  position: relative;
+`;
+
+export const EmptyMessageComponent = styled.div`
+  align-items: center;
+  color: ${textColor};
   display: flex;
-  flex-direction: column;
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
+  height: 100%;
+  justify-content: center;
+`;
+
+export const FundContent = styled.div`
+  width: 100%;
+  font-size: ${defaultFontSize};
   padding-left: 0.8rem;
 `;
 
-export const FundDate = styled.div`
-  color: #6a737d;
-  text-transform: uppercase;
-  padding: 0.5rem 0;
-`;
-
-export const FundSentence = styled.div`
-  line-height: 2rem;
-  width: 90%;
-`;
-
-export const FundsContainer = styled.div`
+export const HeaderWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  margin-bottom: 0;
-  padding-left: 0;
-`;
-
-export const FundWrapper = styled.div`
-  display: flex;
-  padding: 1.2rem 2rem;
+  justify-content: space-between;
 `;
 
 export const Icon = styled.div`
@@ -151,6 +188,10 @@ export const IssueContent = styled.div`
   width: 100%;
   height: 10rem;
   margin: 1rem 0;
+
+  ${mobile} {
+    height: auto;
+  }
 `;
 
 export const IssueContentInfo = styled.div`
@@ -177,12 +218,14 @@ export const IssueFundedAmount = styled.div`
   width: 30%;
 `;
 
-export const IssuesList = styled.ul``;
+export const IssuesList = styled.ul`
+  padding: 0 2rem;
+`;
 
 export const IssueListItem = styled.li`
   border-top: 0.1rem solid #d5d5d5;
   display: flex;
-  width: 90%;
+  width: 100%;
 
   & :last-child {
     border-bottom: 0.1rem solid #d5d5d5;
@@ -229,8 +272,9 @@ export const IssueOpenWrapper = styled.div`
 
 export const IssuesSearchHeaderContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
-  margin: 3rem 0;
+  justify-content: space-between;
+  margin: 2rem 0;
+  padding: 0 2rem;
   width: 100%;
 `;
 
@@ -251,6 +295,10 @@ export const LanguageWrapper = styled.div`
 export const MainTabs = styled.div`
   display: flex;
   width: 60%;
+
+  ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const Name = styled.div`
@@ -264,14 +312,13 @@ export const Name = styled.div`
 export const NameWrapper = styled.div`
   align-items: center;
   display: flex;
-  display: flex;
-  margin-bottom: 1rem;
 `;
 
 export const OrganizationUrl = styled.a`
   align-items: center;
   display: flex;
   margin-right: 2rem;
+  width: ${({ width }) => width || 'inherit'};
 
   &:hover {
     cursor: pointer;
@@ -293,6 +340,7 @@ export const RepoUrl = styled.a`
   align-items: center;
   display: flex;
   margin-right: 2rem;
+  width: ${({ width }) => width || 'inherit'};
 
   &:hover {
     cursor: pointer;
@@ -304,10 +352,29 @@ export const SidebarTabs = styled.div`
   display: flex;
   flex-direction: column;
   width: 40%;
+
+  ${mobile} {
+    width: 100%;
+  }
 `;
+
+export const StyledAction = styled.span``;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
+
+  ${mobile} {
+    margin: 0;
+  }
+`;
+
+export const StyledBaseTextInput = styled(BaseTextInput)`
+  margin: 0.5rem 0;
+  width: ${({ width }) => width || 'inherit'};
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  width: 100%;
 `;
 
 export const StyledIcon = styled.div`
@@ -320,9 +387,32 @@ export const StyledIcon = styled.div`
   }
 `;
 
+export const StyledLanguageAutocomplete = styled.div`
+  margin: 0 -1rem;
+  width: 100%;
+`;
+
 export const StyledPaper = styled(Paper)`
   box-shadow: none;
   width: 100%;
+`;
+
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  margin-right: 0;
+`;
+
+export const StyledSecondayButton = styled(SecondaryButton)`
+  background-color: white;
+  border: 0.1rem solid #1e88e5;
+  color: #1e88e5;
+
+  &:hover {
+    background-color: white;
+  }
+
+  ${mobile} {
+    margin-right: 0;
+  }
 `;
 
 export const StyledTab = styled(Tab)`
@@ -331,30 +421,41 @@ export const StyledTab = styled(Tab)`
 
 export const StyledTitled = styled.div`
   font-size: 1.8rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 `;
 
-export const StyledWord = styled.span`
-  font-weight: 500;
-`;
-
-export const StyledWordLink = styled(StyledWord)`
+export const StyledWordLink = styled(Link)`
+  display: inline;
+  font-weight: bold;
   &:hover {
     cursor: pointer;
     text-decoration: underline;
   }
 `;
 
+export const StyledExternalLink = styled(Link)`
+  color: ${hyperlinkColor};
+  &:hover {
+    cursor: pointer;
+    color: ${hoverLinkColor};
+  }
+`;
+
 export const TabsContainer = styled.div`
   background-color: white;
   display: flex;
+  min-height: 50rem;
   width: 100%;
+
+  ${mobile} {
+    flex-direction: column-reverse;
+  }
 `;
 
 export const TopLanguagesContainer = styled.div`
   color: ${textColor};
   padding: 1.6rem;
-  width: fit-content;
+  width: 100%;
 `;
 
 export const VerifiedWrapper = styled.div`
@@ -368,8 +469,13 @@ export const VerifiedWrapper = styled.div`
 `;
 
 export const UrlWrapper = styled.div`
-  color: #24292e;
+  color: ${textColor};
   display: flex;
   flex-direction: row;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+
+  ${mobile} {
+    flex-direction: column;
+    margin-left: -12rem;
+  }
 `;

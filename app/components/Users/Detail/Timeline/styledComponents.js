@@ -1,7 +1,17 @@
 import styled from 'styled-components';
 
 import { BaseDropDownMenu } from 'components/base_ui';
-import { hoverLinkColor } from 'defaultStyleHelper';
+import { defaultFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
+
+export const EmptyMessageContainer = styled.div`
+  align-items: center;
+  color: ${textColor};
+  display: flex;
+  font-size: ${defaultFontSize};
+  height: 10rem;
+  justify-content: center;
+  width: 100%;
+`;
 
 export const HeaderWrapper = styled.div`
   align-items: center;
@@ -15,9 +25,25 @@ export const StyledH3 = styled.h3`
   margin: 3rem 0;
 `;
 
+export const StyledAction = styled.span`
+  font-weight: 700;
+`;
+
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
   width: 15rem;
+`;
+
+export const StyledFundedIcon = styled.div`
+  align-items: center;
+  background-color: #c4efe0;
+  border-radius: 50%;
+  color: #31b589;
+  display: flex;
+  height: 2.4rem;
+  place-content: center;
+  position: absolute;
+  width: 2.4rem;
 `;
 
 export const TimelineActivity = styled.span`
@@ -79,10 +105,10 @@ export const TimelineTitle = styled.h4`
   white-space: nowrap;
 `;
 
-export const TimelineType = styled.div`
+export const TimelineType = styled.span`
   display: flex;
   font-size: 1.6rem;
-  font-weight: bolder;
+  font-weight: 400;
   letter-spacing: 0.05rem;
   line-height: 2rem;
 `;

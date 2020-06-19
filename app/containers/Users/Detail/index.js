@@ -15,6 +15,7 @@ import reducer from '../reducer';
 import saga from '../saga';
 import {
   makeSelectUsers,
+  makeSelectUserDetail,
   makeSelectUsersError,
   makeSelectUsersLoading,
 } from '../selectors';
@@ -35,7 +36,7 @@ const UsersDetail = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'User Detail';
-    dispatchFetchInfo({ itemId: id });
+    dispatchFetchInfo({ userId: id });
   }, [id]);
 
   return (
@@ -71,7 +72,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Users
    */
-  data: makeSelectUsers('user'),
+  data: makeSelectUserDetail(),
   error: makeSelectUsersError('fetchUser'),
   filterValues: makeSelectUsers('filter'),
   loading: makeSelectUsersLoading('fetchUser'),

@@ -6,6 +6,7 @@ const defaultOrgImage =
 const {
   checkDuplicateIssue,
   checkDuplicateOrganization,
+  closeIssue,
   createIssue,
   createOrganization,
   deleteIssue,
@@ -13,12 +14,16 @@ const {
   getOneIssue,
   getOrganizationsWhere,
   searchIssues,
+  submitAccountPaymentIssue,
+  submitAccountPaymentUser,
   transformIssue,
   updateIssueArray,
   updateOrganizationArray,
   updateUserArray,
   upvoteIssue,
 } = require('../../db');
+
+const { createActivity } = require('./activityResolver');
 
 const { getSingleIssue, getSingleRepo } = require('../../integrations');
 
@@ -63,6 +68,15 @@ const newOrganizationArray = organizationInput => [
 ];
 
 module.exports = {
+  closeIssue: async args => {
+    const { id, shouldClose } = args;
+    try {
+      const issues = await closeIssue('issues', id, shouldClose);
+      return issues;
+    } catch (err) {
+      throw err;
+    }
+  },
   createIssue: async args => {
     const { issueInput } = args;
     const { organizationRepo, repo, organizationId } = issueInput;
@@ -105,11 +119,27 @@ module.exports = {
     // Check for existing organization
     if (!organizationId) {
       const organizationResult = await createNewOrganization();
+
+      const activityInput = {
+        actionType: 'create',
+        organizationId: organizationResult.id,
+        userId: organizationResult.owner_id,
+      };
+      await createActivity({ activityInput });
+
       issueInput.organizationId = organizationResult.id;
     }
 
     // Create new issue
     const [issueResult] = await createNewIssue();
+
+    const activityInput = {
+      actionType: 'create',
+      organizationId: issueResult.organization_id,
+      issueId: issueResult.id,
+      userId: issueResult.contributor_id,
+    };
+    await createActivity({ activityInput });
 
     // add issue to organization
     await updateOrganizationArray(
@@ -224,6 +254,26 @@ module.exports = {
       throw err;
     }
   },
+  submitAccountPayment: async args => {
+    try {
+      const { issueId, fundValue, userId } = args;
+      const [issueResult] = await submitAccountPaymentIssue(issueId, fundValue);
+      const [userResult] = await submitAccountPaymentUser(userId, fundValue);
+      const result = {
+        balance: userResult.balance,
+        fundedAmount: issueResult.funded_amount,
+      };
+      return {
+        __typename: 'Payment',
+        ...result,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
+    }
+  },
   transformIssue: async args => {
     const { id, issueInput } = args;
     try {
@@ -236,7 +286,7 @@ module.exports = {
         language: issueInput.language,
         comments: issueInput.comments,
         attempting: issueInput.attempting,
-        contributor: issueInput.contributor,
+        contributor_id: issueInput.contributorId,
         rep: issueInput.rep,
         watching: issueInput.watching,
         funded_amount: issueInput.fundedAmount,
@@ -248,26 +298,57 @@ module.exports = {
         id: queryResult.id,
         createdDate: queryResult.created_date,
         modifiedDate: queryResult.modified_date,
+        organizationId: issueInput.organization_id,
         name: queryResult.name,
         body: queryResult.body,
         repo: queryResult.repo,
         language: queryResult.language,
         comments: queryResult.comments,
         attempting: queryResult.attempting,
-        contributor: queryResult.contributor,
+        contributorId: queryResult.contributor_id,
         rep: queryResult.rep,
         watching: queryResult.watching,
         fundedAmount: queryResult.funded_amount,
         open: queryResult.open,
       };
-      return result;
+
+      const activityInput = {
+        actionType: 'update',
+        queryResult: result.organizationId,
+        issueId: result.id,
+        userId: result.contributorId,
+      };
+      await createActivity({ activityInput });
+
+      return {
+        __typename: 'Issue',
+        ...result,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   updateIssueArray: async args => {
-    const { id, column, data, remove } = args;
-    const [result] = await updateIssueArray('issues', column, id, data, remove);
+    const { id: issueId, column, data: userId, remove } = args;
+
+    const [result] = await updateIssueArray(
+      'issues',
+      column,
+      issueId,
+      userId,
+      remove,
+    );
+
+    const activityInput = {
+      actionType: remove ? `remove_${column}` : `add_${column}`,
+      issueId,
+      userId,
+    };
+    await createActivity({ activityInput });
+
     return result;
   },
   upvoteIssue: async args => {

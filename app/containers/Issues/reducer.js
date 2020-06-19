@@ -1,6 +1,5 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
-import remove from 'lodash/remove';
 
 import {
   ADD_ATTEMPT_FAILURE,
@@ -16,9 +15,12 @@ import {
   CLEAR_ALERTS,
   CLEAR_FORM,
   CLEAR_ORGANIZATION,
-  DELETE_ISSUE_FAILURE,
-  DELETE_ISSUE_SUCCESS,
-  DELETE_ISSUE,
+  CLOSE_ISSUE_FAILURE,
+  CLOSE_ISSUE_SUCCESS,
+  CLOSE_ISSUE,
+  EDIT_ISSUE_FAILURE,
+  EDIT_ISSUE_SUCCESS,
+  EDIT_ISSUE,
   FETCH_ISSUE_DETAIL_FAILURE,
   FETCH_ISSUE_DETAIL_SUCCESS,
   FETCH_ISSUE_DETAIL,
@@ -37,6 +39,9 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
+  SUBMIT_ACCOUNT_PAYMENT_FAILURE,
+  SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
+  SUBMIT_ACCOUNT_PAYMENT,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
@@ -58,6 +63,7 @@ export const initialState = {
     issueDetail: false,
     issues: false,
     searchIssues: false,
+    submitAccountPayment: false,
   },
   filter: {
     language: [],
@@ -83,11 +89,12 @@ export const initialState = {
     addComment: false,
     addIssue: false,
     addWatch: false,
-    deleteIssue: false,
+    closeIssue: false,
     importIssue: false,
     issueDetail: false,
     issues: false,
     searchIssues: false,
+    submitAccountPayment: false,
     upvoteIssue: false,
   },
   organizationData: {
@@ -99,6 +106,7 @@ export const initialState = {
     organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
   },
+  paymentAlerts: { error: false, success: false },
   search: {
     overviewInput: { error: '', value: '' },
     searchInput: { error: '', value: '' },
@@ -186,6 +194,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       draft.filter = initialState.filter;
+      draft.paymentAlerts = initialState.paymentAlerts;
       draft.search = initialState.search;
       break;
     }
@@ -201,21 +210,37 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.organizationData = initialState.organizationData;
       break;
     }
-    case DELETE_ISSUE_FAILURE: {
+    case CLOSE_ISSUE_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.deleteIssue = false;
+      draft.loading.closeIssue = false;
       break;
     }
-    case DELETE_ISSUE_SUCCESS: {
-      const { itemId, message } = payload;
+    case CLOSE_ISSUE_SUCCESS: {
+      const { message } = payload;
       draft.alerts.success = { message };
-      draft.loading.deleteIssue = false;
-      remove(draft.issues, ({ id }) => id === itemId);
+      draft.loading.closeIssue = false;
+      draft.issueDetail.open = !draft.issueDetail.open;
       break;
     }
-    case DELETE_ISSUE: {
-      draft.loading.deleteIssue = true;
+    case CLOSE_ISSUE: {
+      draft.loading.closeIssue = true;
+      break;
+    }
+    case EDIT_ISSUE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.editIssue = false;
+      break;
+    }
+    case EDIT_ISSUE_SUCCESS: {
+      const { message } = payload;
+      draft.alerts.success = { message };
+      draft.loading.editIssue = false;
+      break;
+    }
+    case EDIT_ISSUE: {
+      draft.loading.editIssue = true;
       break;
     }
     case FETCH_ISSUES_FAILURE: {
@@ -332,6 +357,23 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case SEARCH_ISSUES: {
       draft.loading.searchIssues = true;
+      break;
+    }
+    case SUBMIT_ACCOUNT_PAYMENT_FAILURE: {
+      const { error } = payload;
+      draft.loading.submitAccountPayment = false;
+      draft.paymentAlerts.submitAccountPayment = error;
+      break;
+    }
+    case SUBMIT_ACCOUNT_PAYMENT_SUCCESS: {
+      const { fundedAmount, message } = payload;
+      draft.issueDetail.fundedAmount = fundedAmount;
+      draft.loading.submitAccountPayment = false;
+      draft.paymentAlerts.success = { message };
+      break;
+    }
+    case SUBMIT_ACCOUNT_PAYMENT: {
+      draft.loading.submitAccountPayment = true;
       break;
     }
     case UPDATE_ORGANIZATION: {

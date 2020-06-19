@@ -6,6 +6,11 @@ import { StyledVerified } from './styledComponents';
 
 const defaultVerified = iconDictionary('verified');
 
-const Verified = () => <StyledVerified>{defaultVerified}</StyledVerified>;
+class Verified extends React.PureComponent {
+  render() {
+    const { ...restProps } = this.props;
+    return <StyledVerified {...restProps}>{defaultVerified}</StyledVerified>;
+  }
+}
 
 export default Verified;

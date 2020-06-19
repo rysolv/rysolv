@@ -12,6 +12,15 @@ const makeSelectIssues = prop =>
     substate => substate[prop],
   );
 
+const makeSelectIssuesDisabled = () =>
+  createSelector(
+    makeSelectIssues('issueData'),
+    issueData => {
+      const tempData = omit(issueData, ['importUrl']);
+      return Object.keys(tempData).every(item => tempData[item].value !== '');
+    },
+  );
+
 const makeSelectIssuesError = prop =>
   createSelector(
     makeSelectIssues('error'),
@@ -22,15 +31,6 @@ const makeSelectIssuesLoading = prop =>
   createSelector(
     makeSelectIssues('loading'),
     loading => loading[prop],
-  );
-
-const makeSelectIssuesDisabled = () =>
-  createSelector(
-    makeSelectIssues('issueData'),
-    issueData => {
-      const tempData = omit(issueData, ['importUrl']);
-      return Object.keys(tempData).every(item => tempData[item].value !== '');
-    },
   );
 
 const makeSelectOrganizationsDisabled = () =>

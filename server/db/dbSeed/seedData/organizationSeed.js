@@ -28,7 +28,7 @@ const OrganizationSeed = [
     new Date(),
     'OBS',
     'OBS Studio is software designed for capturing, compositing, encoding, recording, and streaming video content, efficiently. Its distributed under the GNU General Public License v2 (or any later version) - see the accompanying COPYING file for more details.',
-    'https://github.com/obsproject/obs-studio',
+    'https://github.com/obsproject',
     'https://obsproject.com/',
     ['20619026-0f61-4772-9bb8-36ed643d4dcd'],
     'https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/OBS.svg/1200px-OBS.svg.png',

@@ -19,13 +19,14 @@ import {
 import {
   deleteOrganizationFailure,
   deleteOrganizationSuccess,
+  fetchInfo,
+  fetchInfoFailure,
+  fetchInfoSuccess,
   fetchOrganizations,
   fetchOrganizationsFailure,
   fetchOrganizationsSuccess,
-  fetchInfoFailure,
-  fetchInfoSuccess,
-  importOrganizationSuccess,
   importOrganizationFailure,
+  importOrganizationSuccess,
   saveInfoFailure,
   saveInfoSuccess,
   searchOrganizationsFailure,
@@ -100,20 +101,42 @@ export function* fetchInfoSaga({ payload }) {
     oneOrganization(id: "${itemId}") {
       __typename
       ... on Organization {
-        id,
+        contributors,
         createdDate,
-        modifiedDate,
-        name,
         description,
-        repoUrl,
-        organizationUrl,
+        id,
         issues,
         logo,
-        verified,
-        contributors,
+        modifiedDate,
+        name,
+        organizationUrl,
         ownerId,
-        totalFunded,
         preferredLanguages
+        repoUrl,
+        totalFunded,
+        verified,
+      }
+      ... on Error {
+        message
+      }
+    }
+    getActivity(column: "activity.organization_id", id: "${itemId}") {
+      __typename
+      ... on ActivityArray {
+        activityArray {
+          actionType
+          activityId
+          createdDate
+          fundedValue
+          issueId
+          issueName
+          organizationId
+          organizationName
+          profilePic
+          pullRequestId
+          userId
+          username
+        }
       }
       ... on Error {
         message
@@ -127,8 +150,12 @@ export function* fetchInfoSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { oneOrganization },
+      data: {
+        oneOrganization,
+        getActivity: { activityArray },
+      },
     } = yield call(post, '/graphql', graphql);
+    oneOrganization.activity = activityArray;
 
     if (oneOrganization.__typename === 'Error') {
       throw new Error(oneOrganization.message);
@@ -191,15 +218,17 @@ export function* saveInfoSaga({ payload }) {
       organizationRepo,
       organizationUrl,
     },
+    activeUser: { id: userId },
   } = payload;
   const query = `
   mutation {
     createOrganization(organizationInput: {
-      organizationName: "${organizationName}",
       organizationDescription: "${organizationDescription}",
+      organizationLogo: "${organizationLogo}",
+      organizationName: "${organizationName}",
       organizationRepo: "${organizationRepo}",
       organizationUrl: "${organizationUrl}",
-      organizationLogo: "${organizationLogo}",
+      ownerId: "${userId}"
     })
     { id }
   }`;
@@ -221,17 +250,17 @@ export function* searchOrganizationsSaga({ payload }) {
   const query = `
   query {
     searchOrganizations(value: "${value}") {
-      id,
       createdDate,
-      modifiedDate,
-      name,
       description,
-      repoUrl,
-      organizationUrl,
+      id,
       issues,
       logo,
-      verified,
+      modifiedDate,
+      name,
+      organizationUrl,
+      repoUrl,
       totalFunded,
+      verified,
     }
   }
 `;
@@ -258,29 +287,37 @@ export function* updateInfoSaga({ payload }) {
     description,
     logo,
     name,
+    preferredLanguages,
     repoUrl,
     verified,
   } = editRequest;
   const query = `
     mutation {
       transformOrganization(id: "${itemId}", organizationInput: {
-        name: "${name}",
-        description: "${description}",
-        repoUrl: "${repoUrl}",
+        organizationDescription: "${description}",
+        organizationLogo: "${logo}",
+        organizationName: "${name}",
+        organizationPreferredLanguages: ${JSON.stringify(preferredLanguages)},
+        organizationRepo: "${repoUrl}",
         organizationUrl: "${organizationUrl}",
-        logo: "${logo}",
-        verified: ${verified},
+        organizationVerified: ${verified},
       }) {
-        id,
-        createdDate,
-        modifiedDate,
-        name,
-        description,
-        repoUrl,
-        organizationUrl,
-        issues,
-        logo,
-        verified,
+        __typename
+        ... on Organization {
+          id,
+          createdDate,
+          modifiedDate,
+          name,
+          description,
+          repoUrl,
+          organizationUrl,
+          issues,
+          logo,
+          verified,
+        }
+        ... on Error {
+          message
+        }
       }
     }
   `;
@@ -289,8 +326,13 @@ export function* updateInfoSaga({ payload }) {
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
-    yield put(fetchOrganizations());
+    const {
+      data: { transformOrganization },
+    } = yield call(post, '/graphql', graphql);
+    if (transformOrganization.__typename === 'Error') {
+      throw transformOrganization;
+    }
+    yield put(fetchInfo({ itemId }));
     yield put(updateInfoSuccess({ message: successEditOrganizationMessage }));
   } catch (error) {
     yield put(updateInfoFailure({ error }));

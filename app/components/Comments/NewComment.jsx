@@ -7,7 +7,7 @@ import Markdown from 'components/Markdown';
 import {
   FlexContainer,
   NewCommentContainer,
-  ProfileContainer,
+  ProfileImageContainer,
   StyledPrimaryButton,
 } from './styledComponents';
 
@@ -22,7 +22,7 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
 
   return (
     <FlexContainer>
-      <ProfileContainer style={{ marginRight: '1rem' }}>
+      <ProfileImageContainer style={{ marginRight: '1rem' }}>
         <ProfileImage
           alt={username}
           detailRoute={`/users/detail/${id}`}
@@ -30,7 +30,7 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
           profilePic={profilePic}
           size="4rem"
         />
-      </ProfileContainer>
+      </ProfileImageContainer>
       <NewCommentContainer>
         <Markdown
           comment

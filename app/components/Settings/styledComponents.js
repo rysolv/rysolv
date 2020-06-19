@@ -1,11 +1,16 @@
+import React from 'react';
 import styled from 'styled-components';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 
 import { BaseDropDownMenu, ErrorSuccessBanner } from 'components/base_ui';
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
 
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
@@ -13,18 +18,21 @@ export const BaseInputWrapper = styled.div`
 `;
 
 export const DetailContainer = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
 `;
 
 export const DetailViewContainer = styled.div`
   color: rgba(0, 0, 0, 0.7);
   display: flex;
-  flex-direction: row;
   padding: 1.6rem 0;
   width: 100%;
+
+  ${mobile} {
+    flex-direction: column;
+  }
 `;
 
 export const HeaderWrapper = styled.div`
@@ -114,22 +122,20 @@ export const SettingsTabsWrapper = styled.div`
   overflow: hidden;
   padding: 2rem;
   width: 65rem;
+
+  ${mobile} {
+    margin-left: 0;
+    margin-top: ${({ displayBottom }) => (displayBottom ? '0' : '2rem')};
+    width: 100%;
+  }
 `;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   margin: 0 1rem;
-`;
 
-export const StyledCancelIcon = styled.div`
-  align-items: center;
-  background-color: #ffcdd2;
-  border-radius: 50%;
-  color: #c62828;
-  display: flex;
-  height: 2.4rem;
-  place-content: center;
-  position: absolute;
-  width: 2.4rem;
+  ${mobile} {
+    margin-right: 0;
+  }
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
@@ -170,30 +176,6 @@ export const StyledExpansionPanelDetails = styled(ExpansionPanelDetails)`
   width: 100%;
 `;
 
-export const StyledFundedIcon = styled.div`
-  align-items: center;
-  background-color: #c4efe0;
-  border-radius: 50%;
-  color: #31b589;
-  display: flex;
-  height: 2.4rem;
-  place-content: center;
-  position: absolute;
-  width: 2.4rem;
-`;
-
-export const StyledGiftIcon = styled.div`
-  align-items: center;
-  background-color: rgb(236, 234, 252);
-  border-radius: 50%;
-  color: rgb(105, 8, 201);
-  display: flex;
-  height: 2.4rem;
-  place-content: center;
-  width: 2.4rem;
-  position: absolute;
-`;
-
 export const StyledH3 = styled.h3`
   color: ${textColor};
   font-size: 2rem;
@@ -210,22 +192,18 @@ export const StyledPaper = styled(Paper)`
   width: 100%;
 `;
 
-export const StyledPullRequestIcon = styled.div`
-  align-items: center;
-  background-color: #fcdbc6;
-  border-radius: 50%;
-  color: #f47e34;
-  display: flex;
-  height: 2.4rem;
-  place-content: center;
-  position: absolute;
-  width: 2.4rem;
-`;
-
 export const StyledTab = styled(Tab)`
   font-size: ${defaultFontSize};
   min-width: 9rem;
   padding: 0.6rem;
+`;
+
+export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
+  <Tabs {...restProps} />
+))`
+  ${mobile} {
+    display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
+  }
 `;
 
 export const UserCardWrapper = styled.div`
@@ -236,10 +214,19 @@ export const UserCardWrapper = styled.div`
   height: fit-content;
   padding: 15px 2%;
   width: fit-content;
+
+  ${mobile} {
+    display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
+    width: 100%;
+  }
 `;
 
 export const UserImage = styled.img`
   margin: 0.5rem;
   max-height: 25rem;
   max-width: 25rem;
+
+  ${mobile} {
+    align-self: center;
+  }
 `;

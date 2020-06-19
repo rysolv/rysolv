@@ -43,6 +43,7 @@ const UserAccount = ({
   setChangeFirstName,
   setChangeLastName,
   setChangeUsername,
+  setDisplayBottom,
   setValue,
   username,
   value,
@@ -246,6 +247,7 @@ const UserAccount = ({
       balance={balance}
       dollarsEarned={dollarsEarned}
       handleNav={handleNav}
+      setDisplayBottom={setDisplayBottom}
     />
     <HeaderWrapper>
       <StyledH3>Delete my account</StyledH3>
@@ -280,6 +282,7 @@ UserAccount.propTypes = {
   setChangeFirstName: T.func,
   setChangeLastName: T.func,
   setChangeUsername: T.func,
+  setDisplayBottom: T.func,
   setValue: T.func,
   username: T.string,
   value: T.oneOfType([T.array, T.number, T.string]),

@@ -34,6 +34,7 @@ const SettingsView = ({
   creditCardProps,
   currentTab,
   data: {
+    activity,
     activePullRequests,
     attempting,
     balance,
@@ -67,6 +68,7 @@ const SettingsView = ({
   handleRemoveIssue,
   view,
 }) => {
+  const [displayBottom, setDisplayBottom] = useState(false);
   const [changeEmail, setChangeEmail] = useState(false);
   const [changeFirstName, setChangeFirstName] = useState(false);
   const [changeGithub, setChangeGithub] = useState(false);
@@ -105,7 +107,7 @@ const SettingsView = ({
         success={success}
       />
       <DetailViewContainer>
-        <UserCardWrapper>
+        <UserCardWrapper displayBottom={displayBottom}>
           <UserImage src={profilePic} />
           <Name>
             {firstName} {lastName}
@@ -197,8 +199,9 @@ const SettingsView = ({
             setValue={setValue}
           />
         </UserCardWrapper>
-        <SettingsTabsWrapper>
+        <SettingsTabsWrapper displayBottom={displayBottom}>
           <SettingsTabs
+            activity={activity}
             attempting={attempting}
             balance={balance}
             changeEmail={changeEmail}
@@ -208,6 +211,7 @@ const SettingsView = ({
             creditCardProps={creditCardProps}
             currentTab={currentTab}
             dispatchOpenModal={dispatchOpenModal}
+            displayBottom={displayBottom}
             dollarsEarned={dollarsEarned}
             email={email}
             filterValues={filterValues}
@@ -226,6 +230,7 @@ const SettingsView = ({
             setChangeFirstName={setChangeFirstName}
             setChangeLastName={setChangeLastName}
             setChangeUsername={setChangeUsername}
+            setDisplayBottom={setDisplayBottom}
             setValue={setValue}
             userId={id}
             username={username}

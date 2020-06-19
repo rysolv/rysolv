@@ -46,6 +46,19 @@ const issueDetailValues = `
   users.profile_pic AS "profilePic"
 `;
 
+// CLOSE single issue
+const closeIssue = async (table, id, shouldClose) => {
+  const rows = await singleItem(table, id);
+  if (rows) {
+    const queryText = `UPDATE ${table} SET open=${!shouldClose} WHERE (id='${id}')`;
+    await singleQuery(queryText);
+    return `Issue ${id} has been successfully ${
+      shouldClose ? 'closed' : 'reopened'
+    }.`;
+  }
+  throw new Error(`Failed to close issue. ID not found in ${table}`);
+};
+
 // Check duplicate issue
 const checkDuplicateIssue = async (table, repo) => {
   const queryText = `
@@ -116,13 +129,23 @@ const transformIssue = async (table, id, data) => {
     const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE ${table}
       SET (${issueValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
       WHERE (id = '${id}')
       RETURNING *`;
     const [result] = await mapValues(queryText, [newObjectArray]);
     return result;
   }
   throw new Error(`Failed to update. ID not found in ${table}`);
+};
+
+// UPDATE fund_value of issue for payment
+const submitAccountPaymentIssue = async (issueId, fundValue) => {
+  const [issueData] = await getOneIssue('issues', issueId);
+  const { fundedAmount } = issueData;
+  const adjustedFundValue = fundValue + fundedAmount;
+  const queryText = `UPDATE issues SET funded_amount=${adjustedFundValue} WHERE (id = '${issueId}') RETURNING *`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
 };
 
 const updateIssueArray = async (table, column, id, data, remove) => {
@@ -152,11 +175,13 @@ const upvoteIssue = async (table, id) => {
 
 module.exports = {
   checkDuplicateIssue,
+  closeIssue,
   createIssue,
   deleteIssue,
   getIssues,
   getOneIssue,
   searchIssues,
+  submitAccountPaymentIssue,
   transformIssue,
   updateIssueArray,
   upvoteIssue,

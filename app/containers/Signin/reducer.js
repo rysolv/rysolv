@@ -4,7 +4,6 @@ import { INPUT_CHANGE, INPUT_ERROR } from './constants';
 
 export const initialState = {
   alerts: { error: false, success: false },
-
   data: {
     email: { error: '', value: '' },
     password: { error: '', value: '' },
@@ -12,7 +11,7 @@ export const initialState = {
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const organizationsReducer = produce((draft, { payload, type }) => {
+const signinReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
@@ -30,4 +29,4 @@ const organizationsReducer = produce((draft, { payload, type }) => {
   }
 }, initialState);
 
-export default organizationsReducer;
+export default signinReducer;

@@ -1,16 +1,18 @@
 const activityResolver = require('./activityResolver');
-const issueResolver = require('./issueResolver');
-const userResolver = require('./userResolver');
 const commentResolver = require('./commentResolver');
+const issueResolver = require('./issueResolver');
 const organizationResolver = require('./organzationResolver');
+const pullRequestResolver = require('./pullRequestResolver');
+const userResolver = require('./userResolver');
 const { objectScalerType } = require('./scalers');
 
 const rootResolver = {
   ...activityResolver,
-  ...issueResolver,
   ...commentResolver,
+  ...issueResolver,
   ...objectScalerType,
   ...organizationResolver,
+  ...pullRequestResolver,
   ...userResolver,
 };
 

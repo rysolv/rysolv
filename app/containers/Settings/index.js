@@ -33,7 +33,7 @@ import {
 import { settingViewDictionary } from './constants';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectSettings } from './selectors';
+import { makeSelectSettings, makeSelectSettingsDetail } from './selectors';
 import { SettingsWrapper } from './styledComponents';
 
 const Settings = ({
@@ -166,7 +166,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Settings
    */
   alerts: makeSelectSettings('alerts'),
-  data: makeSelectSettings('account'),
+  data: makeSelectSettingsDetail('account'),
   error: makeSelectSettings('error'),
   filterValues: makeSelectSettings('filter'),
   isModalOpen: makeSelectSettings('isModalOpen'),

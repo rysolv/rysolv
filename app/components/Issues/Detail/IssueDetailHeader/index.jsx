@@ -1,119 +1,86 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
+import { ConditionalRender, IconToolTip } from 'components/base_ui';
 import { navHelper } from 'utils/globalHelpers';
 
 import {
-  FundingWrapper,
-  IconToolTip,
-  LanguageWrapper,
-  Verified,
-  WatchButton,
-} from 'components/base_ui';
-
-import {
-  IssueDetailTopBar,
-  IssueSubHeader,
-  IssueSubItem,
+  IssueDetailContainer,
   NameWrapper,
-  OrganizationNameWrapper,
-  StyledIssueHeader,
+  OrganizationNameContainer,
+  StyledBaseTextInput,
+  StyledIssueDetail,
   StyledVerified,
 } from './styledComponents';
 
 const IssueDetailHeader = ({
-  activeUser,
-  data,
-  dispatchFetchWatchList,
-  dispatchOpenModal,
-  handleIncrement,
-  handleNav,
-  isSignedIn,
-}) => {
-  const {
-    id,
+  data: {
     createdDate,
-    language,
     name,
-    open,
     organizationId,
     organizationName,
     organizationVerified,
-    watching,
-  } = data;
-  const userWatching =
-    activeUser.watching && !!activeUser.watching.find(el => el.id === id);
+  },
+  displayEditView,
+  handleNav,
+  nameChange,
+  setNameChange,
+}) => {
+  const EditNameComponent = (
+    <StyledBaseTextInput
+      onChange={e => setNameChange(e.target.value)}
+      multiline
+      value={nameChange}
+      width="100%"
+    />
+  );
 
+  const NameComponent = <Fragment>{name}</Fragment>;
   return (
-    <IssueDetailTopBar>
-      <StyledIssueHeader>
-        <OrganizationNameWrapper
-          href={`/organizations/detail/${organizationId}`}
-          onClick={e =>
-            navHelper(e, handleNav, `/organizations/detail/${organizationId}`)
-          }
-        >
-          {organizationName}
-
-          {organizationVerified ? (
-            <IconToolTip toolTipText="Verified Contributor">
-              <StyledVerified>
-                <Verified />
-              </StyledVerified>
-            </IconToolTip>
-          ) : (
-            ''
-          )}
-        </OrganizationNameWrapper>
-        Issue opened {moment(createdDate).format('M/D/YYYY')}
-      </StyledIssueHeader>
-      <NameWrapper>{name}</NameWrapper>
-      <IssueSubHeader>
-        <FundingWrapper
-          medium
-          open={open}
-          value={open ? 'Open Issue' : 'Issue Closed'}
-        />
-
-        <IssueSubItem>
-          {language.map(el => (
-            <LanguageWrapper key={`${id}-${el}`} language={el} />
-          ))}
-        </IssueSubItem>
-        <IssueSubItem>0 Open PR</IssueSubItem>
-        <IssueSubItem>
-          <WatchButton
-            disabled={!open}
-            dispatchFetchWatchList={dispatchFetchWatchList}
-            dispatchOpenModal={dispatchOpenModal}
-            handleWatch={() =>
-              handleIncrement({
-                userId: activeUser.id,
-                id,
-                column: 'watching',
-                remove: userWatching,
-              })
+    <Fragment>
+      <IssueDetailContainer>
+        <StyledIssueDetail>
+          <OrganizationNameContainer
+            href={`/organizations/detail/${organizationId}`}
+            onClick={e =>
+              navHelper(e, handleNav, `/organizations/detail/${organizationId}`)
             }
-            isSignedIn={isSignedIn}
-            label={userWatching ? 'Watching' : 'Watch'}
-            value={watching.length}
-            watching={watching}
+          >
+            {organizationName}
+            {organizationVerified ? (
+              <IconToolTip toolTipText="Verified Contributor">
+                <StyledVerified />
+              </IconToolTip>
+            ) : (
+              ''
+            )}
+          </OrganizationNameContainer>
+          <div>
+            Issue opened{' '}
+            {moment(createdDate)
+              .utc()
+              .format('M/D/YYYY')}
+          </div>
+        </StyledIssueDetail>
+        <NameWrapper>
+          <ConditionalRender
+            Component={NameComponent}
+            FallbackComponent={EditNameComponent}
+            shouldRender={!displayEditView}
           />
-        </IssueSubItem>
-      </IssueSubHeader>
-    </IssueDetailTopBar>
+        </NameWrapper>
+      </IssueDetailContainer>
+    </Fragment>
   );
 };
 
 IssueDetailHeader.propTypes = {
-  activeUser: T.object,
   data: T.object,
-  dispatchFetchWatchList: T.func,
-  dispatchOpenModal: T.func,
-  handleIncrement: T.func,
+  displayEditView: T.bool,
   handleNav: T.func,
-  isSignedIn: T.bool,
+  nameChange: T.string,
+  setNameChange: T.func,
 };
 
 export default IssueDetailHeader;

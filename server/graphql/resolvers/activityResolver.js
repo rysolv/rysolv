@@ -8,14 +8,15 @@ module.exports = {
       [
         uuidv4(),
         new Date(),
-        activityInput.actionType,
-        activityInput.issueId,
-        activityInput.organizationId,
-        activityInput.pullRequestId,
-        activityInput.userId,
-        activityInput.value,
+        activityInput.actionType || null,
+        activityInput.fundedValue || null,
+        activityInput.issueId || null,
+        activityInput.organizationId || null,
+        activityInput.pullRequestId || null,
+        activityInput.userId || null,
       ],
     ];
+
     const [result] = await createActivity(activity);
 
     return {
@@ -26,19 +27,36 @@ module.exports = {
       organizationId: result.organization_id,
       pullRequestId: result.pullrequest_id,
       userId: result.user_id,
-      value: result.value,
+      fundedValue: result.funded_value,
     };
+  },
+  getAllActivity: async () => {
+    try {
+      const result = await getActivity('activity');
+      return {
+        __typename: 'ActivityArray',
+        activityArray: result,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
+    }
   },
   getActivity: async args => {
     const { column, id } = args;
-    console.log(args);
     try {
       const result = await getActivity('activity', column, id);
-      console.log(result);
-      return result;
+      return {
+        __typename: 'ActivityArray',
+        activityArray: result,
+      };
     } catch (err) {
-      console.log(err);
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
 };

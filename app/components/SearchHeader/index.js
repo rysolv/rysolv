@@ -1,7 +1,6 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { BaseInputWithAdornment } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
@@ -9,6 +8,7 @@ import {
   DropDownMenuWrapper,
   SearchHeaderContainer,
   StyledBaseDropDownMenu,
+  StyledBaseInputWithAdornment,
   StyledLabel,
 } from './styledComponents';
 
@@ -23,7 +23,7 @@ const SearchHeader = ({
 }) => (
   <SearchHeaderContainer>
     <BaseInputWrapper hasMargin={false}>
-      <BaseInputWithAdornment
+      <StyledBaseInputWithAdornment
         adornmentComponent={SearchIcon}
         onChange={e =>
           handleChangeSearch({
