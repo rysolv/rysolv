@@ -1,37 +1,48 @@
 import React from 'react';
 import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
+
 import DesktopHeader from './DesktopHeader';
+import MobileHeader from './MobileHeader';
 
 const Header = ({
   activeUser,
+  deviceView,
   handleNav,
   handleSignin,
   handleSignout,
   isSignedIn,
-  view,
 }) => {
-  const isMobile = view === 'mobile';
+  const isMobile =
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
   return (
-    <DesktopHeader
-      activeUser={activeUser}
-      handleNav={handleNav}
-      handleSignin={handleSignin}
-      handleSignout={handleSignout}
-      isMobile={isMobile}
-      isSignedIn={isSignedIn}
-      view={view}
+    <ConditionalRender
+      Component={DesktopHeader}
+      FallbackComponent={MobileHeader}
+      propsToPassDown={{
+        activeUser,
+        handleNav,
+        handleSignin,
+        handleSignout,
+        isMobile,
+        isSignedIn,
+      }}
+      shouldRender={!isMobile}
     />
   );
 };
 
 Header.propTypes = {
   activeUser: T.object,
+  deviceView: T.string,
   handleNav: T.func,
   handleSignin: T.func,
   handleSignout: T.func,
   isSignedIn: T.bool,
-  view: T.string,
 };
 
 export default Header;

@@ -24,7 +24,7 @@ const organizationIcon = iconDictionary('organization');
 const userIcon = iconDictionary('user');
 const uploadIcon = iconDictionary('upload');
 
-const SideNav = ({ handleNav, view }) => {
+const SideNav = ({ deviceView, handleNav }) => {
   const path = window.location.pathname;
   const formattedPath = path.replace(/^\/+/, '');
 
@@ -37,7 +37,7 @@ const SideNav = ({ handleNav, view }) => {
   useEffect(() => {
     const { initialValue } = getInitialValue[formattedPath] || 0;
     setCurrentValue(initialValue);
-    switch (view) {
+    switch (deviceView) {
       case 'desktop':
         setDisplaySideNav(!excludedPath.includes(formattedPath));
         break;
@@ -62,12 +62,12 @@ const SideNav = ({ handleNav, view }) => {
       default:
         break;
     }
-  }, [view, path]);
+  }, [deviceView, path]);
 
   useEffect(() => {
-    if (view === 'desktop') setOpen(true);
+    if (deviceView === 'desktop') setOpen(true);
     else setOpen(false);
-  }, [view]);
+  }, [deviceView]);
 
   const handleClick = (route, tab) => {
     handleNav(route);
@@ -151,8 +151,8 @@ const SideNav = ({ handleNav, view }) => {
 };
 
 SideNav.propTypes = {
+  deviceView: T.string,
   handleNav: T.func,
-  view: T.string,
 };
 
 export default SideNav;
