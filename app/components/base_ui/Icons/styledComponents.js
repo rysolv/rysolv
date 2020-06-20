@@ -36,6 +36,47 @@ export const StyledDownArrow = styled.div`
   }
 `;
 
+export const StyledNavIcon = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 2rem;
+  justify-content: space-around;
+  padding: 0;
+  position: absolute;
+  width: 2rem;
+  z-index: 10;
+
+  &:focus {
+    outline: none;
+  }
+
+  div {
+    background: white;
+    border-radius: 10px;
+    height: 0.2rem;
+    position: relative;
+    transform-origin: 1px;
+    transition: all 0.3s linear;
+    width: 2rem;
+
+    :first-child {
+      transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};
+    }
+
+    :nth-child(2) {
+      opacity: ${({ open }) => (open ? '0' : '1')};
+      transform: ${({ open }) => (open ? 'translateX(20px)' : 'translateX(0)')};
+    }
+
+    :nth-child(3) {
+      transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
+    }
+  }
+`;
+
 export const StyledSettings = styled.div`
   color: #424242;
   display: inline-block;

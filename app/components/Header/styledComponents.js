@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-import { BaseLink, HeaderSearchBar } from 'components/base_ui';
+import { BaseLink, HeaderSearchBar, UserNavBar } from 'components/base_ui';
 import { defaultFontSize, headerColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
@@ -47,6 +48,10 @@ export const HeaderSection = styled.section`
   }
 `;
 
+export const LinkTitle = styled.div`
+  margin-left: ${({ isMobile }) => (isMobile ? '3rem' : '0')};
+`;
+
 export const LogoWrapper = styled.div`
   align-self: center;
   display: flex;
@@ -79,9 +84,20 @@ export const StyledHeaderSearchBar = styled(HeaderSearchBar)`
   }
 `;
 
-export const StyledLink = styled.div`
+export const StyledLink = styled(Link)`
   align-self: center;
+  display: flex;
   padding-right: 2rem;
+  white-space: nowrap;
+`;
+
+export const StyledLogo = styled.div`
+  padding-right: 0.5rem;
+`;
+
+export const StyledUserNavBar = styled(UserNavBar)`
+  margin-right: 0.5rem;
+  padding: 0.25rem;
   white-space: nowrap;
 `;
 
@@ -90,5 +106,6 @@ export const TopBarWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: ${({ isSignedIn }) => (isSignedIn ? '0.5rem' : '0')};
   }
 `;

@@ -2,8 +2,6 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 
-import { UserNavBar } from 'components/base_ui';
-
 import Logo from './Logo';
 import {
   BottomBarWrapper,
@@ -14,6 +12,7 @@ import {
   LogoWrapper,
   StyledHeaderLink,
   StyledHeaderSearchBar,
+  StyledUserNavBar,
   TopBarWrapper,
 } from './styledComponents';
 
@@ -27,14 +26,14 @@ const MobileHeader = ({
   <HeaderSection>
     <AppBar color="default">
       <Container>
-        <TopBarWrapper>
+        <TopBarWrapper isSignedIn={isSignedIn}>
           <LogoWrapper>
             <Logo isMobile={isMobile} />
           </LogoWrapper>
           <ButtonsWrapper>
             <Browse label="Browse" path="/issues" />
             {isSignedIn ? (
-              <UserNavBar
+              <StyledUserNavBar
                 activeUser={activeUser}
                 handleNav={handleNav}
                 handleSignout={handleSignout}
