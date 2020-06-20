@@ -78,6 +78,7 @@ module.exports = {
       const activityInput = {
         actionType: shouldClose ? 'close' : 'reopen',
         issueId: result.id,
+        organizationId: result.organizationId,
         userId: result.userId,
       };
       await createActivity({ activityInput });
