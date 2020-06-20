@@ -1,8 +1,18 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
 
-import { HeaderWrap, UserNavBar } from '../base_ui';
-import { ButtonsWrapper, Signin, SignUp, Browse } from './styledComponents';
+import { HeaderSearchBar, UserNavBar } from 'components/base_ui';
+
+import Logo from './Logo';
+import {
+  Browse,
+  ButtonsWrapper,
+  Container,
+  HeaderSection,
+  LogoWrapper,
+  StyledHeaderLink,
+} from './styledComponents';
 
 const DesktopHeader = ({
   activeUser,
@@ -11,23 +21,31 @@ const DesktopHeader = ({
   isMobile,
   isSignedIn,
 }) => (
-  <HeaderWrap handleNav={handleNav} isMobile={isMobile}>
-    <ButtonsWrapper>
-      <Browse label="Browse" path="/issues" />
-      {isSignedIn ? (
-        <UserNavBar
-          activeUser={activeUser}
-          handleNav={handleNav}
-          handleSignout={handleSignout}
-        />
-      ) : (
-        <Fragment>
-          <SignUp label="Sign Up" path="/signup" />
-          <Signin label="Sign In" path="/signin" />
-        </Fragment>
-      )}
-    </ButtonsWrapper>
-  </HeaderWrap>
+  <HeaderSection>
+    <AppBar color="default">
+      <Container>
+        <LogoWrapper>
+          <Logo isMobile={isMobile} />
+          <HeaderSearchBar handleNav={handleNav} />
+        </LogoWrapper>
+        <ButtonsWrapper>
+          <Browse label="Browse" path="/issues" />
+          {isSignedIn ? (
+            <UserNavBar
+              activeUser={activeUser}
+              handleNav={handleNav}
+              handleSignout={handleSignout}
+            />
+          ) : (
+            <Fragment>
+              <StyledHeaderLink label="Sign Up" path="/signup" />
+              <StyledHeaderLink label="Sign In" path="/signin" />
+            </Fragment>
+          )}
+        </ButtonsWrapper>
+      </Container>
+    </AppBar>
+  </HeaderSection>
 );
 
 DesktopHeader.propTypes = {

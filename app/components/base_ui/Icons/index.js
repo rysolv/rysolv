@@ -3,6 +3,7 @@ import CodeIcon from './CodeIcon';
 import CommentIcon from './CommentIcon';
 import DownArrow from './DownArrow';
 import IconToolTip from './IconTooltip';
+import MobileNavIcon from './MobileNavIcon';
 import MonocleIcon from './Monocle';
 import Settings from './Settings';
 import Star from './Star';
@@ -15,6 +16,7 @@ export {
   CommentIcon,
   DownArrow,
   IconToolTip,
+  MobileNavIcon,
   MonocleIcon,
   Settings,
   Star,

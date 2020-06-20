@@ -7,7 +7,7 @@ export { default as BaseSlider } from './Slider';
 export { default as CheckboxWithLabel } from './Checkbox';
 export { default as ConditionalRender } from './ConditionalRender';
 export { default as ErrorSuccessBanner } from './Banner';
-export { default as HeaderWrap } from './HeaderWrap';
+export { default as HeaderSearchBar } from './HeaderSearchBar';
 export { default as ModalDialog } from './ModalDialog';
 export { default as ProfileImage } from './ProfileImage';
 export { default as TooltipIcon } from './TooltipIcon';

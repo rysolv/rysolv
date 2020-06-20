@@ -128,14 +128,14 @@ export const Main = ({
       <AppBodyWrapper>
         <Header
           activeUser={activeUser}
+          deviceView={deviceView}
           handleNav={handleNav}
           handleSignin={handleSignin}
           handleSignout={handleSignout}
           isSignedIn={isSignedIn}
-          view={deviceView}
         />
         <AppContentWrapper>
-          <SideNav handleNav={handleNav} view={deviceView} />
+          <SideNav deviceView={deviceView} handleNav={handleNav} />
           <RoutesWrapper>
             <Routes error={error} loading={loading} match={match} />
           </RoutesWrapper>

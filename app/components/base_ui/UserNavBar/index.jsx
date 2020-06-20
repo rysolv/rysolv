@@ -10,7 +10,7 @@ import {
   StyledUserNavBar,
 } from './styledComponents';
 
-const UserNavBar = ({ activeUser, handleNav, handleSignout }) => {
+const UserNavBar = ({ activeUser, handleNav, handleSignout, ...restProps }) => {
   const { username, profilePic, rep } = activeUser;
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClose = () => {
@@ -24,7 +24,11 @@ const UserNavBar = ({ activeUser, handleNav, handleSignout }) => {
 
   return (
     <Fragment>
-      <StyledUserNavBar onClick={() => handleOpen()} id="userNavBar">
+      <StyledUserNavBar
+        id="userNavBar"
+        onClick={() => handleOpen()}
+        {...restProps}
+      >
         <IconWrapper>
           <Star />
           <NumberContainer>{rep}</NumberContainer>
