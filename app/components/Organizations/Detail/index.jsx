@@ -40,6 +40,7 @@ import {
 } from './styledComponents';
 
 const LinkIcon = iconDictionary('link');
+const CodeIcon = iconDictionary('code');
 
 const VerifiedComponent = (
   <VerifiedWrapper>
@@ -139,7 +140,7 @@ const OrganizationDetailView = ({
             {organizationUrl}
           </OrganizationUrl>
           <RepoUrl href={repoUrl} target="_blank">
-            <StyledIcon>{LinkIcon}</StyledIcon>
+            <StyledIcon>{CodeIcon}</StyledIcon>
             {repoUrl}
           </RepoUrl>
         </UrlWrapper>

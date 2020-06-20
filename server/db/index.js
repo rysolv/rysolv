@@ -28,6 +28,7 @@ const {
 } = require('./users');
 const { createComment, getComments, getIssueComments } = require('./comments');
 const {
+  checkDuplicatePullRequest,
   createPullRequest,
   deletePullRequest,
   getOnePullRequest,
@@ -50,6 +51,7 @@ const { createTables, dropAllTables, printTables } = require('./tables');
 module.exports = {
   checkDuplicateIssue,
   checkDuplicateOrganization,
+  checkDuplicatePullRequest,
   checkDuplicateUser,
   closeIssue,
   createActivity,

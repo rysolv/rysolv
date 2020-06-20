@@ -1,7 +1,6 @@
 /* eslint-disable indent */
 /* eslint-disable no-nested-ternary */
 import React from 'react';
-import moment from 'moment';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
@@ -88,12 +87,11 @@ export const formatActivity = data => {
   const path = `/${route}/detail/${targetId}`;
 
   const targetName = issueName || organizationName;
-  const formattedDate = moment(createdDate).format('YYYY/MM/DD');
 
   const formattedActivity = {
     action,
     activityId,
-    date: formattedDate,
+    date: createdDate,
     fundedValue,
     icon,
     path,
