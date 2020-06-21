@@ -12,10 +12,8 @@ import {
 } from 'components/base_ui';
 import {
   defaultFontSize,
-  detailFontSize,
   dividerBorder,
   hoverLinkColor,
-  hyperlinkColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -30,14 +28,15 @@ export const ActivityContainer = styled.div`
 `;
 
 export const ActivityDate = styled.div`
-  color: ${textColor};
-  font-size: ${detailFontSize};
-  text-align: right;
+  color: #6c757d;
+  font-size: 90%;
+  font-weight: 400;
   padding: 0.5rem 0;
+  text-transform: uppercase;
 `;
 
 export const ActivityWrapper = styled.div`
-  padding: 0.5rem 1rem;
+  padding: 1.6rem;
 `;
 
 export const BaseInputWrapper = styled.div`
@@ -149,9 +148,10 @@ export const EmptyMessageComponent = styled.div`
 `;
 
 export const FundContent = styled.div`
-  width: 100%;
   font-size: ${defaultFontSize};
+  line-height: 1.7rem;
   padding-left: 0.8rem;
+  width: 100%;
 `;
 
 export const HeaderWrapper = styled.div`
@@ -424,8 +424,8 @@ export const StyledTitled = styled.div`
 `;
 
 export const StyledWordLink = styled(Link)`
-  display: inline;
-  font-weight: bold;
+  font-weight: 700;
+
   &:hover {
     cursor: pointer;
     text-decoration: underline;
@@ -433,10 +433,12 @@ export const StyledWordLink = styled(Link)`
 `;
 
 export const StyledExternalLink = styled(Link)`
-  color: ${hyperlinkColor};
+  color: ${hoverLinkColor};
+
   &:hover {
-    cursor: pointer;
     color: ${hoverLinkColor};
+    cursor: pointer;
+    text-decoration: underline;
   }
 `;
 

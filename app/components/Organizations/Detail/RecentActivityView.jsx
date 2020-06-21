@@ -36,7 +36,6 @@ export class RecentActivityView extends React.PureComponent {
             user: { userId, username, profilePic },
           }) => (
             <ActivityWrapper key={activityId}>
-              <ActivityDate>{moment(date).fromNow()}</ActivityDate>
               <div style={{ display: 'flex' }}>
                 <ProfileImageWrapper>
                   <ProfileImage
@@ -60,6 +59,7 @@ export class RecentActivityView extends React.PureComponent {
                     {targetName}
                   </StyledExternalLink>
                   {fundedValue ? ` for ${formatDollarAmount(fundedValue)}` : ''}
+                  <ActivityDate>{moment(date).fromNow()}</ActivityDate>
                 </FundContent>
               </div>
             </ActivityWrapper>
