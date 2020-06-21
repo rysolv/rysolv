@@ -28,6 +28,12 @@ export const MarkdownContainer = styled.div`
   }
 
   .editor-toolbar {
+    ::before {
+      content: none;
+    }
+    ::after {
+      content: none;
+    }
     opacity: 1 !important;
   }
 
