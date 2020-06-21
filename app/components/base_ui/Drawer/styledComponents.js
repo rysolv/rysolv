@@ -15,12 +15,15 @@ export const FixedWrapper = styled.div`
 `;
 
 export const StyledDrawer = styled(Drawer)`
-  background-color: #f6f8fa;
   bottom: inherit !important;
   left: inherit !important;
   right: inherit !important;
   top: inherit !important;
   z-index: 0 !important;
+
+  .MuiDrawer-paperAnchorLeft {
+    background-color: #f6f8fa;
+  }
 `;
 
 export const StyledIconButton = styled(IconButton)`

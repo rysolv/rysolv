@@ -78,6 +78,7 @@ export const StyledBaseTextInput = styled(TextField)`
   .base-input {
     border-bottom: ${({ error }) => (error ? errorBorder : inputBorder)};
     color: ${textColor};
+    font-size: ${defaultFontSize};
   }
 
   .label {

@@ -11,7 +11,14 @@ import UserIssues from './Issues';
 import UserOrganizations from './Organizations';
 import UserTimelineView from './Timeline';
 import UserWatching from './Watching';
-import { StyledPaper, StyledTab, StyledTabs } from './styledComponents';
+import {
+  StyledPaper,
+  StyledPopper,
+  StyledTab,
+  StyledTabs,
+  TabItem,
+  TabItemBorder,
+} from './styledComponents';
 
 const SettingsTabs = ({
   activity,
@@ -23,6 +30,7 @@ const SettingsTabs = ({
   changeUsername,
   creditCardProps,
   currentTab,
+  deviceView,
   dispatchOpenModal,
   displayBottom,
   dollarsEarned,
@@ -51,11 +59,45 @@ const SettingsTabs = ({
   view,
   watching,
 }) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const [tab, setTab] = useState(currentTab);
+  const [tabsInMenu, setTabsInMenu] = useState([
+    'Organizations',
+    'Pull Requests',
+  ]);
+
   useEffect(() => setValue(currentTab), [currentTab]);
-  const handleChangeTab = (event, newValue) => {
-    setTab(newValue);
+
+  useEffect(() => {
+    if (deviceView === 'mobile') {
+      setTabsInMenu(['Issues', 'Organizations', 'Pull Requests']);
+    }
+    if (deviceView === 'tablet') {
+      setTabsInMenu(['Organizations', 'Pull Requests']);
+    }
+    if (deviceView === 'desktop') {
+      setTabsInMenu(['Pull Requests']);
+    }
+  }, [deviceView]);
+
+  const isMobile =
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
+  const isMobileOrTablet = isMobile || deviceView === 'tablet';
+  const openMenu = Boolean(anchorEl);
+
+  const handleClick = (newVal, route) => {
+    setTab(newVal);
+    handleNav(route);
+    setAnchorEl(null);
   };
+
+  const handeOpenMenu = event => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
   const BalanceFormComponent = (
     <ConditionalRender
       Component={
@@ -75,7 +117,6 @@ const SettingsTabs = ({
       shouldRender={view === 'deposit'}
     />
   );
-
   const ListComponent = (
     <ConditionalRender
       Component={
@@ -97,7 +138,6 @@ const SettingsTabs = ({
       shouldRender={view === 'attempting'}
     />
   );
-
   const SecondarySettingsComponent = (
     <ConditionalRender
       Component={ListComponent}
@@ -150,36 +190,67 @@ const SettingsTabs = ({
       <UserOrganizations handleNav={handleNav} organizations={organizations} />
     ),
   };
+  const TabMenu = () => (
+    <StyledPopper anchorEl={anchorEl} open={openMenu}>
+      {tabsInMenu.map((newTab, index) => {
+        const tabIndex = 5 - tabsInMenu.length + index;
+        return (
+          <TabItemBorder
+            key={`tab-item-${newTab}`}
+            isActive={currentTab === tabIndex}
+          >
+            <TabItem
+              onClick={() =>
+                handleClick(
+                  tabIndex,
+                  `/settings/${newTab.toLowerCase().replace(/\s/g, '')}`,
+                )
+              }
+            >
+              {newTab}
+            </TabItem>
+          </TabItemBorder>
+        );
+      })}
+    </StyledPopper>
+  );
   return (
     <StyledPaper>
       <StyledTabs
         centered
+        classes={{ indicator: 'indicator' }}
         displayBottom={displayBottom}
-        indicatorColor="primary"
-        onChange={handleChangeTab}
         textColor="primary"
         value={tab}
       >
         <StyledTab
+          classes={{ selected: 'selected' }}
           label="Overview"
-          onClick={() => handleNav('/settings/overview')}
+          onClick={() => handleClick(0, '/settings/overview')}
         />
         <StyledTab
+          classes={{ selected: 'selected' }}
           label="Account"
-          onClick={() => handleNav('/settings/account')}
+          onClick={() => handleClick(1, '/settings/account')}
         />
-        <StyledTab
-          label="Issues"
-          onClick={() => handleNav('/settings/issues')}
-        />
-        <StyledTab
-          label="Organizations"
-          onClick={() => handleNav('/settings/organizations')}
-        />
-        <StyledTab
-          label="Pull Requests"
-          onClick={() => handleNav('/settings/pullrequests')}
-        />
+        {!isMobile && (
+          <StyledTab
+            classes={{ selected: 'selected' }}
+            label="Issues"
+            onClick={() => handleClick(2, '/settings/issues')}
+          />
+        )}
+        {!isMobileOrTablet && (
+          <StyledTab
+            classes={{ selected: 'selected' }}
+            label="Organizations"
+            onClick={() => handleClick(3, '/settings/organizations')}
+          />
+        )}
+        <div>
+          <StyledTab label="..." onClick={handeOpenMenu} />
+          {openMenu && <TabMenu />}
+        </div>
       </StyledTabs>
       <ConditionalRender
         Component={SecondarySettingsComponent}
@@ -205,6 +276,7 @@ SettingsTabs.propTypes = {
   changeUsername: T.bool,
   creditCardProps: T.object,
   currentTab: T.number,
+  deviceView: T.string,
   dispatchOpenModal: T.func,
   displayBottom: T.bool,
   dollarsEarned: T.number,
