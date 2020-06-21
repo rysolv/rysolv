@@ -10,6 +10,7 @@ import {
 } from './styledComponents';
 
 const ImportPullRequest = ({
+  createError,
   dispatchHandleStep,
   handleSubmit,
   importData,
@@ -75,6 +76,7 @@ const ImportPullRequest = ({
           {pullNumber.value}
         </StyledItem>
       </PullRequestCard>
+      <div style={{ color: 'red' }}>{createError}</div>
 
       <ButtonContainer>
         <button type="button" onClick={() => dispatchHandleStep({ step: 1 })}>
@@ -89,6 +91,7 @@ const ImportPullRequest = ({
 };
 
 ImportPullRequest.propTypes = {
+  createError: T.string,
   dispatchHandleStep: T.func,
   handleSubmit: T.func,
   importData: T.object,

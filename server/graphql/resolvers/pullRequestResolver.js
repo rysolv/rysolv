@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const {
+  checkDuplicatePullRequest,
   createPullRequest,
   getPullRequests,
   getOnePullRequest,
@@ -28,13 +29,21 @@ module.exports = {
       user_id: pullRequestInput.userId,
     };
     try {
+      if (await checkDuplicatePullRequest(pullRequest.html_url)) {
+        throw new Error(
+          `Pull request at ${pullRequest.html_url} already exists`,
+        );
+      }
       await createPullRequest(pullRequest);
       return {
         __typename: 'Success',
         message: 'Pull request created',
       };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   importPullRequest: async args => {

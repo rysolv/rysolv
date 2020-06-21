@@ -30,13 +30,14 @@ import { ImportPullRequestWrapper } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
 const AddPullRequest = ({
+  createError,
+  dispatchClearForm,
   dispatchCreatePullRequest,
   dispatchHandleStep,
   dispatchImportPullRequest,
-  error,
   handleInputChange,
-  dispatchClearForm,
   importData,
+  importError,
   importLoading,
   issueId,
   step,
@@ -60,13 +61,14 @@ const AddPullRequest = ({
         component={StepToRender}
         loading={importLoading}
         propsToPassDown={{
-          dispatchHandleStep,
-          error,
-          handleImport,
+          createError,
           dispatchClearForm,
+          dispatchHandleStep,
+          handleImport,
           handleInputChange,
           handleSubmit,
           importData,
+          importError,
           importLoading,
         }}
       />
@@ -75,13 +77,14 @@ const AddPullRequest = ({
 };
 
 AddPullRequest.propTypes = {
+  createError: T.string,
+  dispatchClearForm: T.func,
   dispatchCreatePullRequest: T.func,
   dispatchHandleStep: T.func,
   dispatchImportPullRequest: T.func,
-  error: T.string,
   handleInputChange: T.func,
-  dispatchClearForm: T.func,
   importData: T.object,
+  importError: T.string,
   importLoading: T.bool,
   issueId: T.string,
   step: T.number,
@@ -89,10 +92,11 @@ AddPullRequest.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  step: makeSelectPullRequests('step'),
-  error: makeSelectPullRequestsError('importPullRequest'),
+  createError: makeSelectPullRequestsError('createPullRequest'),
   importData: makeSelectPullRequests('importData'),
+  importError: makeSelectPullRequestsError('importPullRequest'),
   importLoading: makeSelectPullRequestsLoading('importPullRequest'),
+  step: makeSelectPullRequests('step'),
 });
 
 function mapDispatchToProps(dispatch) {

@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { Fragment } from 'react';
+import moment from 'moment';
 import T from 'prop-types';
 
 import { ConditionalRender, ProfileImage } from 'components/base_ui';
@@ -35,7 +36,7 @@ export class RecentActivityView extends React.PureComponent {
             user: { userId, username, profilePic },
           }) => (
             <ActivityWrapper key={activityId}>
-              <ActivityDate>{date}</ActivityDate>
+              <ActivityDate>{moment(date).fromNow()}</ActivityDate>
               <div style={{ display: 'flex' }}>
                 <ProfileImageWrapper>
                   <ProfileImage

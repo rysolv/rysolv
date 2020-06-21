@@ -32,7 +32,6 @@ export const ActivityContainer = styled.div`
 export const ActivityDate = styled.div`
   color: ${textColor};
   font-size: ${detailFontSize};
-  text-transform: uppercase;
   text-align: right;
   padding: 0.5rem 0;
 `;

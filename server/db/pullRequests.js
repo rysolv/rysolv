@@ -38,6 +38,18 @@ const pullRequestReturnValues = `
   pullRequests.user_id AS "userId"
 `;
 
+// Check duplicate organization
+const checkDuplicatePullRequest = async repo => {
+  const queryText = `
+    SELECT pullrequest_id FROM pullrequests WHERE (html_url='${repo}')
+  `;
+  const { rows } = await singleQuery(queryText);
+  if (rows.length > 0) {
+    return true;
+  }
+  return false;
+};
+
 const createPullRequest = async data => {
   const { parameters, substitution, values } = formatParamaters(
     pullRequestValues,
@@ -90,6 +102,7 @@ const getUserPullRequests = async id => {
 };
 
 module.exports = {
+  checkDuplicatePullRequest,
   createPullRequest,
   deletePullRequest,
   getOnePullRequest,

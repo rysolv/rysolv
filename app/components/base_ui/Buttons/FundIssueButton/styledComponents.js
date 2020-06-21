@@ -9,7 +9,7 @@ export const AddFundsButton = styled.button`
   border: 0;
   color: ${fundingText};
   cursor: pointer;
-  padding: 0.3rem 1rem;
+  padding: 0.3rem 0.5rem;
   stroke-width: 0.2rem;
   stroke: currentColor;
 
