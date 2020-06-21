@@ -16,6 +16,7 @@ import {
   StyledListWrapper,
   StyledSideNav,
 } from './styledComponents';
+
 const addIcon = iconDictionary('addCircle');
 const backArrow = iconDictionary('backArrowHalf');
 const forwardArrow = iconDictionary('forwardArrowHalf');

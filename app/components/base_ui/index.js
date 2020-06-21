@@ -1,5 +1,6 @@
 export { default as BaseAutocomplete } from './Autocomplete';
 export { default as BaseContainer } from './Containers';
+export { default as BaseDrawer } from './Drawer';
 export { default as BaseDropDownMenu } from './DropDownMenu';
 export { default as BaseExpansionPanel } from './ExpansionPanel';
 export { default as BaseRadioButtonGroup } from './RadioButtonGroup';

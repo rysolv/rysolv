@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
@@ -14,6 +14,7 @@ const Header = ({
   handleSignout,
   isSignedIn,
 }) => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const isMobile =
     deviceView === 'mobile' ||
     deviceView === 'mobileS' ||
@@ -25,11 +26,14 @@ const Header = ({
       FallbackComponent={MobileHeader}
       propsToPassDown={{
         activeUser,
+        deviceView,
         handleNav,
         handleSignin,
         handleSignout,
+        isDrawerOpen,
         isMobile,
         isSignedIn,
+        setIsDrawerOpen,
       }}
       shouldRender={!isMobile}
     />
