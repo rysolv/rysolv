@@ -143,7 +143,7 @@ export const EmptyMessageComponent = styled.div`
   color: ${textColor};
   display: flex;
   font-size: ${defaultFontSize};
-  height: 100%;
+  height: 70%;
   justify-content: center;
 `;
 
