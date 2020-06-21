@@ -449,6 +449,7 @@ export const TabsContainer = styled.div`
 
   ${mobile} {
     flex-direction: column-reverse;
+    justify-content: flex-end;
   }
 `;
 

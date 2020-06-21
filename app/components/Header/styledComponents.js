@@ -1,7 +1,12 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import AppBar from '@material-ui/core/AppBar';
 
-import { BaseLink, HeaderSearchBar, UserNavBar } from 'components/base_ui';
+import {
+  BaseDrawer,
+  BaseLink,
+  HeaderSearchBar,
+  UserNavBar,
+} from 'components/base_ui';
 import { defaultFontSize, headerColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
@@ -40,13 +45,7 @@ export const Container = styled.section`
   }
 `;
 
-export const HeaderSection = styled.section`
-  padding-bottom: 6rem;
-
-  ${mobile} {
-    padding-bottom: 8.188rem;
-  }
-`;
+export const HeaderSection = styled.section``;
 
 export const LinkTitle = styled.div`
   margin-left: ${({ isMobile }) => (isMobile ? '3rem' : '0')};
@@ -59,6 +58,15 @@ export const LogoWrapper = styled.div`
   padding: 1rem;
   width: 40%;
 `;
+
+export const MobileDrawerComponent = styled(BaseDrawer)`
+  .drawer-paper {
+    height: 100%;
+    width: 25rem;
+  }
+`;
+
+export const StyledAppBar = styled(AppBar)``;
 
 export const StyledHeaderLink = styled(BaseLink)`
   color: white;
@@ -84,7 +92,7 @@ export const StyledHeaderSearchBar = styled(HeaderSearchBar)`
   }
 `;
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled.div`
   align-self: center;
   display: flex;
   padding-right: 2rem;

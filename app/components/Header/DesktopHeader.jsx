@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
 
 import { HeaderSearchBar, UserNavBar } from 'components/base_ui';
 
@@ -11,21 +10,31 @@ import {
   Container,
   HeaderSection,
   LogoWrapper,
+  MobileDrawerComponent,
+  StyledAppBar,
   StyledHeaderLink,
 } from './styledComponents';
 
 const DesktopHeader = ({
   activeUser,
+  deviceView,
   handleNav,
   handleSignout,
+  isDrawerOpen,
   isMobile,
   isSignedIn,
+  setIsDrawerOpen,
 }) => (
   <HeaderSection>
-    <AppBar color="default">
+    <StyledAppBar color="default" position="relative">
       <Container>
         <LogoWrapper>
-          <Logo isMobile={isMobile} />
+          <Logo
+            deviceView={deviceView}
+            isMobile={isMobile}
+            open={isDrawerOpen}
+            setOpen={setIsDrawerOpen}
+          />
           <HeaderSearchBar handleNav={handleNav} />
         </LogoWrapper>
         <ButtonsWrapper>
@@ -44,16 +53,25 @@ const DesktopHeader = ({
           )}
         </ButtonsWrapper>
       </Container>
-    </AppBar>
+    </StyledAppBar>
+    <MobileDrawerComponent
+      handleNav={handleNav}
+      isDrawerOpen={isDrawerOpen}
+      isSignedIn={isSignedIn}
+      setIsDrawerOpen={() => setIsDrawerOpen(!isDrawerOpen)}
+    />
   </HeaderSection>
 );
 
 DesktopHeader.propTypes = {
   activeUser: T.object,
+  deviceView: T.string,
   handleNav: T.func,
   handleSignout: T.func,
+  isDrawerOpen: T.bool,
   isMobile: T.bool,
   isSignedIn: T.bool,
+  setIsDrawerOpen: T.func,
 };
 
 export default DesktopHeader;
