@@ -18,6 +18,6 @@ export const RoutesWrapper = styled.section`
   width: 100%;
 
   ${tablet} {
-    padding: 0 1rem;
+    padding: 0 1rem 3.6rem 1rem;
   }
 `;
