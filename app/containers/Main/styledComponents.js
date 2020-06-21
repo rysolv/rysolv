@@ -14,7 +14,7 @@ export const AppContentWrapper = styled.div`
 export const RoutesWrapper = styled.section`
   display: flex;
   justify-content: center;
-  padding: 0 5% 0 5%;
+  padding: 0 5% 3.6rem 5%;
   width: 100%;
 
   ${tablet} {

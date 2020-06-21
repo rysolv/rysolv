@@ -89,10 +89,6 @@ export const StyledBaseTextInput = styled(TextField)`
     }
   }
 
-  .MuiInputBase-input {
-    padding: 0;
-  }
-
   .MuiInput-underline {
     border-bottom: ${({ error }) => (error ? errorBorder : inputBorder)};
 
