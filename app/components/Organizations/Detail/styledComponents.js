@@ -28,7 +28,7 @@ export const ActivityContainer = styled.div`
 `;
 
 export const ActivityDate = styled.div`
-  color: #6c757d;
+  color: #6a737d;
   font-size: 90%;
   font-weight: 400;
   padding: 0.5rem 0;
