@@ -15,14 +15,7 @@ import {
   UsernameLink,
 } from './styledComponents';
 
-const CommentCard = ({
-  body,
-  Component,
-  date,
-  handleNav,
-  primary,
-  userProfile,
-}) => {
+const CommentCard = ({ body, date, handleNav, primary, userProfile }) => {
   const { alt, detailRoute, profilePic, username } = userProfile;
   const html = marked(body);
 
@@ -55,7 +48,6 @@ const CommentCard = ({
             .utc()
             .fromNow()}
         </CommentHeader>
-        {primary && <Component />}
         <CommentBody dangerouslySetInnerHTML={{ __html: html }} />
       </CommentContainer>
     </FlexContainer>
@@ -64,8 +56,7 @@ const CommentCard = ({
 
 CommentCard.propTypes = {
   body: T.string,
-  Component: T.oneOfType([T.func, T.object]),
-  date: T.string,
+  date: T.oneOfType([T.number, T.string]),
   handleNav: T.func,
   primary: T.bool,
   userProfile: T.object,

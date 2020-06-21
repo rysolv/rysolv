@@ -51,11 +51,11 @@ export class VerifyForm extends React.PureComponent {
         <StyledLink>{issueUrl.value}</StyledLink>
         <ValueWrapper>
           <CommentCard
-            primary
             body={issueBody.value}
             date={Date.now()}
-            userProfile={primaryUser}
             handleNav={handleNav}
+            primary
+            userProfile={primaryUser}
           />
         </ValueWrapper>
         <ValueWrapper>
