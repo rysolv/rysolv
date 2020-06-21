@@ -2,6 +2,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { fetchActiveUser, updateActiveUser } from 'containers/Auth/actions';
+import { updatePaymentModal } from 'containers/Main/actions';
 import { post } from 'utils/request';
 
 import {
@@ -457,6 +458,7 @@ export function* submitAccountPaymentSaga({ payload }) {
       }),
     );
     yield put(updateActiveUser({ balance }));
+    yield put(updatePaymentModal({ balance, fundedAmount }));
   } catch (error) {
     yield put(submitAccountPaymentFailure({ error }));
   }
