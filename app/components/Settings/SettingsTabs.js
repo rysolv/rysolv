@@ -261,12 +261,10 @@ const SettingsTabs = ({
             onClick={() => handleClick(4, '/settings/pullrequests')}
           />
         )}
-        {!isDesktopL && (
-          <div>
-            <StyledTab label="..." onClick={handeOpenMenu} />
-            {openMenu && <TabMenu />}
-          </div>
-        )}
+        {!isDesktopL && [
+          <StyledTab label="..." onClick={handeOpenMenu} />,
+          <ConditionalRender Component={TabMenu} shouldRender={openMenu} />,
+        ]}
       </StyledTabs>
       <ConditionalRender
         Component={SecondarySettingsComponent}
