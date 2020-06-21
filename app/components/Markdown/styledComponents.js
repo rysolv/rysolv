@@ -28,13 +28,15 @@ export const MarkdownContainer = styled.div`
   }
 
   .editor-toolbar {
-    ::before {
-      content: none;
-    }
+    opacity: 1 !important;
+
     ::after {
       content: none;
     }
-    opacity: 1 !important;
+
+    ::before {
+      content: none;
+    }
   }
 
   .CodeMirror,
