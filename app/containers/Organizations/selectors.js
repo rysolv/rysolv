@@ -105,7 +105,9 @@ const makeSelectOrganizationsFormattedData = () =>
         const filteredActivity = activity.filter(
           el =>
             el.actionType !== 'add_watching' &&
-            el.actionType !== 'remove_watching',
+            el.actionType !== 'remove_watching' &&
+            el.actionType !== 'add_attempting' &&
+            el.actionType !== 'remove_attempting',
         );
         const formattedActivity = filteredActivity.map(el =>
           formatActivity(el),

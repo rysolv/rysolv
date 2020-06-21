@@ -356,6 +356,7 @@ module.exports = {
     const activityInput = {
       actionType: remove ? `remove_${column}` : `add_${column}`,
       issueId,
+      organizationId: result.organization_id,
       userId,
     };
     await createActivity({ activityInput });
