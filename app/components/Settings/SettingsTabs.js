@@ -69,10 +69,10 @@ const SettingsTabs = ({
   useEffect(() => setValue(currentTab), [currentTab]);
 
   useEffect(() => {
-    if (deviceView === 'mobile') {
+    if (deviceView === 'tablet') {
       setTabsInMenu(['Issues', 'Organizations', 'Pull Requests']);
     }
-    if (deviceView === 'tablet') {
+    if (deviceView === 'desktopS') {
       setTabsInMenu(['Organizations', 'Pull Requests']);
     }
     if (deviceView === 'desktop') {
@@ -80,12 +80,18 @@ const SettingsTabs = ({
     }
   }, [deviceView]);
 
-  const isMobile =
+  const isMobileOrTablet =
+    deviceView === 'tablet' ||
     deviceView === 'mobile' ||
     deviceView === 'mobileS' ||
     deviceView === 'mobileXS' ||
     deviceView === 'mobileXXS';
-  const isMobileOrTablet = isMobile || deviceView === 'tablet';
+  const isMobileOrTabletOrLaptop =
+    isMobileOrTablet ||
+    deviceView === 'laptopS' ||
+    deviceView === 'laptop' ||
+    deviceView === 'desktopS';
+  const isDesktopL = deviceView === 'desktopL';
   const openMenu = Boolean(anchorEl);
 
   const handleClick = (newVal, route) => {
@@ -189,9 +195,10 @@ const SettingsTabs = ({
     3: (
       <UserOrganizations handleNav={handleNav} organizations={organizations} />
     ),
+    4: <div />,
   };
   const TabMenu = () => (
-    <StyledPopper anchorEl={anchorEl} open={openMenu}>
+    <StyledPopper anchorEl={anchorEl} open={openMenu} placement="bottom-start">
       {tabsInMenu.map((newTab, index) => {
         const tabIndex = 5 - tabsInMenu.length + index;
         return (
@@ -233,24 +240,33 @@ const SettingsTabs = ({
           label="Account"
           onClick={() => handleClick(1, '/settings/account')}
         />
-        {!isMobile && (
+        {!isMobileOrTablet && (
           <StyledTab
             classes={{ selected: 'selected' }}
             label="Issues"
             onClick={() => handleClick(2, '/settings/issues')}
           />
         )}
-        {!isMobileOrTablet && (
+        {!isMobileOrTabletOrLaptop && (
           <StyledTab
             classes={{ selected: 'selected' }}
             label="Organizations"
             onClick={() => handleClick(3, '/settings/organizations')}
           />
         )}
-        <div>
-          <StyledTab label="..." onClick={handeOpenMenu} />
-          {openMenu && <TabMenu />}
-        </div>
+        {isDesktopL && (
+          <StyledTab
+            classes={{ selected: 'selected' }}
+            label="Pull Requests"
+            onClick={() => handleClick(4, '/settings/pullrequests')}
+          />
+        )}
+        {!isDesktopL && (
+          <div>
+            <StyledTab label="..." onClick={handeOpenMenu} />
+            {openMenu && <TabMenu />}
+          </div>
+        )}
       </StyledTabs>
       <ConditionalRender
         Component={SecondarySettingsComponent}

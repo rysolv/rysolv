@@ -9,7 +9,14 @@ import {
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
-const { desktop, laptop, tablet, mobile, large } = mediaQueriesByDevice;
+const {
+  desktop,
+  desktopL,
+  desktopS,
+  laptop,
+  mobile,
+  tablet,
+} = mediaQueriesByDevice;
 
 export const AddWrapper = styled.div`
   align-items: center;
@@ -26,10 +33,13 @@ export const AddForm = styled.div`
   padding: 1rem;
   border-radius: 0.5rem;
 
-  ${large} {
+  ${desktopL} {
     width: 70%;
   }
   ${desktop} {
+    width: 70%;
+  }
+  ${desktopS} {
     width: 70%;
   }
   ${laptop} {

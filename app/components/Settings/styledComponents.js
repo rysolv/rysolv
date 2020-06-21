@@ -207,6 +207,10 @@ export const StyledTab = styled(Tab)`
   &.selected {
     color: ${headerColor};
   }
+
+  .MuiTab-wrapper {
+    white-space: nowrap;
+  }
 `;
 
 export const StyledTabs = styled(({ displayBottom, ...restProps }) => (

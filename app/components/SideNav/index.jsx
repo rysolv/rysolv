@@ -42,7 +42,13 @@ const SideNav = ({ deviceView, handleNav }) => {
       case 'desktop':
         setDisplaySideNav(!excludedPath.includes(formattedPath));
         break;
+      case 'desktopS':
+        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        break;
       case 'laptop':
+        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        break;
+      case 'laptopS':
         setDisplaySideNav(!excludedPath.includes(formattedPath));
         break;
       case 'tablet':
