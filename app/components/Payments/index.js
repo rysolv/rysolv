@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import T from 'prop-types';
 
@@ -46,7 +47,7 @@ const PaymentPortal = ({
   userId,
   ...restProps
 }) => {
-  const [fundAmount, setFundAmount] = useState('2');
+  const [fundValue, setFundValue] = useState('2');
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [creditCardNumber, setCreditCardNumber] = useState('');
@@ -54,10 +55,37 @@ const PaymentPortal = ({
   const [cvcValue, setCvcValue] = useState('');
   const [zipValue, setZipValue] = useState('');
 
-  const handleFundAmountChange = (event, newFundAmount) => {
-    const formattedFundAmount = newFundAmount.replace(/[^0-9]/g, '');
-    setFundAmount(formattedFundAmount);
+  const handleChangeDollarValue = (e, valuePassedIn) => {
+    const { value: valueFromTarget } = e.target;
+    const value = valuePassedIn || valueFromTarget;
+    if (value <= balance) {
+      const string = value
+        ? value
+          .replace(',', '.')
+          .replace(/[^\d.]/g, '')
+          .replace(/\./, 'x')
+          .replace(/\./g, '')
+          .replace(/x/, '.')
+        : '0';
+      const formattedString =
+        string.length === 1
+          ? string.split('.')
+          : string.replace(/^0+/, '').split('.');
+
+      if (formattedString.length === 1) {
+        const formattedValue = formattedString.join('.');
+        setFundValue(formattedValue);
+      }
+      if (formattedString.length === 2) {
+        formattedString[1] = formattedString[1]
+          ? formattedString[1].slice(0, 2)
+          : '';
+        const formattedValue = formattedString.join('.');
+        setFundValue(formattedValue);
+      }
+    }
   };
+
   const handleNameValueChange = (event, newName) => {
     setNameValue(newName);
   };
@@ -88,15 +116,15 @@ const PaymentPortal = ({
       </OverviewWrapper>
       <DollarValueWrapper>
         <DollarValueToggle
-          fundAmount={fundAmount}
-          handleChange={handleFundAmountChange}
+          fundValue={fundValue}
+          handleChange={handleChangeDollarValue}
         />
         - or -
         <StyledBaseInputWithAdornment
           adornmentComponent="$"
           fontSize="1.4rem"
-          onChange={e => handleFundAmountChange(e, e.target.value)}
-          value={fundAmount}
+          onChange={e => handleChangeDollarValue(e, e.target.value)}
+          value={fundValue}
         />
       </DollarValueWrapper>
       <Divider />
@@ -129,8 +157,10 @@ const PaymentPortal = ({
             open
             propsToPassDown={{
               balance,
+              fundValue,
               handleSubmitAccountPayment,
               issueId,
+              setFundValue,
               userId,
             }}
             title="Your Account"

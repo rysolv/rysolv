@@ -146,11 +146,6 @@ export const StyledBaseInputWithAdornment = styled(
   width: 80%;
 `;
 
-export const StyledAccountBaseInput = styled(StyledBaseInputWithAdornment)`
-  margin: 0.5rem 0;
-  width: 80%;
-`;
-
 export const StyledLabel = styled.div`
   font-size: 1.4rem;
   font-weight: 500;
