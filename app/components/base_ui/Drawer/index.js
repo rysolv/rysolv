@@ -42,7 +42,7 @@ const BaseDrawer = ({
             onClick={() => handleClick('/issues', 0)}
           >
             <ListItemIcon>{issueIcon}</ListItemIcon>
-            <StyledListItemText primary="Issues" />
+            <StyledListItemText active={currentValue === 0} primary="Issues" />
           </ListItem>
         </StyledListWrapper>
         <StyledListWrapper active={currentValue === 1}>
@@ -52,13 +52,16 @@ const BaseDrawer = ({
             onClick={() => handleClick('/organizations', 1)}
           >
             <ListItemIcon>{organizationIcon}</ListItemIcon>
-            <StyledListItemText primary="Organizations" />
+            <StyledListItemText
+              active={currentValue === 1}
+              primary="Organizations"
+            />
           </ListItem>
         </StyledListWrapper>
         <StyledListWrapper active={currentValue === 2}>
           <ListItem button key="Users" onClick={() => handleClick('/users', 2)}>
             <ListItemIcon>{userIcon}</ListItemIcon>
-            <StyledListItemText primary="Users" />
+            <StyledListItemText active={currentValue === 2} primary="Users" />
           </ListItem>
         </StyledListWrapper>
         <Divider />
@@ -69,7 +72,10 @@ const BaseDrawer = ({
             onClick={() => handleClick('/issues/add', 3)}
           >
             <ListItemIcon>{uploadIcon}</ListItemIcon>
-            <StyledListItemText primary="New Issue" />
+            <StyledListItemText
+              active={currentValue === 3}
+              primary="New Issue"
+            />
           </ListItem>
         </StyledListWrapper>
         <StyledListWrapper active={currentValue === 4}>
@@ -79,7 +85,10 @@ const BaseDrawer = ({
             onClick={() => handleClick('/organizations/add', 4)}
           >
             <ListItemIcon>{addIcon}</ListItemIcon>
-            <StyledListItemText primary="New Organization" />
+            <StyledListItemText
+              active={currentValue === 4}
+              primary="New Organization"
+            />
           </ListItem>
         </StyledListWrapper>
       </StyledList>

@@ -118,7 +118,11 @@ const UserTimelineView = ({
       </TimelineListItem>
     );
 
-    if (index === 0 || date !== activity[index - 1].date) {
+    if (
+      index === 0 ||
+      moment(date).format('YYYY/MM/DD') !==
+        moment(activity[index - 1].date).format('YYYY/MM/DD')
+    ) {
       return (
         <Fragment key={`list-item-${index}`}>
           <TimelineHeader>
