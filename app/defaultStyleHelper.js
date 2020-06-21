@@ -37,6 +37,6 @@ export const subheaderFontSize = '1.6rem';
 
 // Borders
 export const dividerBorder = `0.2rem solid #d5d5d5`;
-export const errorBorder = `0.1rem solid ${errorRed}`;
+export const errorBorder = `0.1rem solid #f44336`;
 export const inputBorder = `0.1rem solid ${inputFieldColor}`;
 export const issueBorder = `0.1rem solid ${borderColor}`;
