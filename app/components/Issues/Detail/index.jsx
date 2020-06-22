@@ -52,6 +52,7 @@ const IssueDetail = ({
   dispatchCloseIssue,
   dispatchEditIssue,
   dispatchFetchWatchList,
+  dispatchOpenIssueModal,
   dispatchOpenModal,
   handleClearAlerts,
   handleComment,
@@ -188,6 +189,7 @@ const IssueDetail = ({
                 activeUser={activeUser}
                 data={data}
                 dispatchFetchWatchList={dispatchFetchWatchList}
+                dispatchOpenIssueModal={dispatchOpenIssueModal}
                 dispatchOpenModal={dispatchOpenModal}
                 handleIncrement={handleIncrement}
                 isDesktop={isDesktop}
@@ -290,6 +292,7 @@ IssueDetail.propTypes = {
   dispatchCloseIssue: T.func,
   dispatchEditIssue: T.func,
   dispatchFetchWatchList: T.func,
+  dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   handleClearAlerts: T.func,
   handleComment: T.func,

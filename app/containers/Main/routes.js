@@ -4,7 +4,6 @@ import withAuth from 'containers/Auth';
 
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
-import IssuesEdit from 'containers/Issues/Edit';
 import Main from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import OrganizationsAdd from 'containers/Organizations/Add';
@@ -23,7 +22,6 @@ const privateConfig = { isAdmin: false, isPrivate: true };
 const publicConfig = { isAdmin: false, isPrivate: false };
 
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
-const PrivateIssuesEdit = withAuth(privateConfig, IssuesEdit);
 const PrivateOrganizationsAdd = withAuth(privateConfig, OrganizationsAdd);
 const PrivateOrganizationsEdit = withAuth(privateConfig, OrganizationsEdit);
 const PrivateSettings = withAuth(privateConfig, Settings);
@@ -45,7 +43,6 @@ const Routes = () => (
     <Route exact path="/issues/search/:searchValue?" component={PublicOverview} />
     <Route exact path="/issues/add" component={PrivateIssuesAdd} />
     <Route exact path="/issues/detail/:id?" component={PublicIssuesDetail} />
-    <Route exact path="/issues/edit/:id?" component={PrivateIssuesEdit} />
     <Route exact path="/organizations" component={PublicOverview} />
     <Route exact path="/organizations/search/:searchValue?" component={PublicOverview} />
     <Route exact path="/organizations/add" component={PrivateOrganizationsAdd} />

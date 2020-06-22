@@ -14,6 +14,7 @@ const IssueTopBar = ({
   activeUser,
   data,
   dispatchFetchWatchList,
+  dispatchOpenIssueModal,
   dispatchOpenModal,
   handleIncrement,
   isDesktop,
@@ -48,6 +49,7 @@ const IssueTopBar = ({
             activeUser={activeUser}
             data={data}
             dispatchFetchWatchList={dispatchFetchWatchList}
+            dispatchOpenIssueModal={dispatchOpenIssueModal}
             dispatchOpenModal={dispatchOpenModal}
             handleIncrement={handleIncrement}
             isSignedIn={isSignedIn}
@@ -62,6 +64,7 @@ IssueTopBar.propTypes = {
   activeUser: T.object,
   data: T.object,
   dispatchFetchWatchList: T.func,
+  dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,
   isDesktop: T.bool,

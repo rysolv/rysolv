@@ -8,13 +8,14 @@ import { ImportForm } from './styledComponents';
 const SearchIcon = iconDictionary('search');
 
 const ImportPullRequest = ({
-  handleInputChange,
-  handleImport,
-  importData,
   error,
-  importLoading,
+  handleImport,
+  handleInputChange,
+  importData,
+  loading,
 }) => {
   const { importUrl } = importData;
+
   const onChangeHandler = e => {
     handleInputChange({
       field: 'importUrl',
@@ -22,30 +23,29 @@ const ImportPullRequest = ({
       value: e.target.value,
     });
   };
-
   return (
     <ImportForm>
       <p>Import Pull Reqest</p>
       <BaseTextInputWithAdornment
-        disabled={importLoading}
         adornmentComponent={SearchIcon}
-        name="url"
-        onClick={handleImport}
+        disabled={loading}
+        error={!!error}
+        helperText={error}
         onChange={onChangeHandler}
+        onClick={handleImport}
         position="end"
         value={importUrl.value}
       />
-      <p style={{ color: 'red' }}>{error}</p>
     </ImportForm>
   );
 };
 
 ImportPullRequest.propTypes = {
-  handleInputChange: T.func,
-  handleImport: T.func,
-  importData: T.object,
-  importLoading: T.bool,
   error: T.string,
+  handleImport: T.func,
+  handleInputChange: T.func,
+  importData: T.object,
+  loading: T.bool,
 };
 
 export default ImportPullRequest;

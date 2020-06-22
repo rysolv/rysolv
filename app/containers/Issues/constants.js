@@ -46,6 +46,9 @@ export const INCREMENT_STEP = 'app/Issues/INCREMENT_STEP';
 export const INPUT_CHANGE = 'app/Issues/INPUT_CHANGE';
 export const INPUT_ERROR = 'app/Issues/INPUT_ERROR';
 
+export const OPEN_MODAL_STATE = 'app/Issues/OPEN_MODAL_STATE';
+export const CLOSE_MODAL_STATE = 'app/Issues/CLOSE_MODAL_STATE';
+
 export const REMOVE_ATTEMPT = 'app/Issues/REMOVE_ATTEMPT';
 
 export const SAVE_INFO = 'app/Issues/SAVE_INFO';
