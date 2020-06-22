@@ -7,6 +7,7 @@ import UserAccount from './Account';
 import UserAttempting from './Attempting';
 import DepositFormComponent from './Balance/Deposit/DepositFormComponent';
 import WithdrawalFormComponent from './Balance/Withdrawal/WithdrawalFormComponent';
+import { getTabToDisplay } from './helpers';
 import UserIssues from './Issues';
 import UserOrganizations from './Organizations';
 import UserTimelineView from './Timeline';
@@ -61,18 +62,30 @@ const SettingsTabs = ({
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [tab, setTab] = useState(currentTab);
-  const [tabsInMenu, setTabsInMenu] = useState([
-    'Organizations',
-    'Pull Requests',
-  ]);
-
-  useEffect(() => setValue(currentTab), [currentTab]);
+  const [tabsInMenu, setTabsInMenu] = useState([]);
+  const [tabToDisplay, setTabToDisplay] = useState(currentTab);
 
   useEffect(() => {
-    if (deviceView === 'tablet') {
+    setTab(currentTab);
+    setValue(currentTab);
+    setTabToDisplay(getTabToDisplay(currentTab, tabsInMenu));
+  }, [currentTab]);
+
+  useEffect(() => {
+    if (
+      deviceView === 'tablet' ||
+      deviceView === 'mobile' ||
+      deviceView === 'mobileS' ||
+      deviceView === 'mobileXS' ||
+      deviceView === 'mobileXXS'
+    ) {
       setTabsInMenu(['Issues', 'Organizations', 'Pull Requests']);
     }
-    if (deviceView === 'desktopS') {
+    if (
+      deviceView === 'laptopS' ||
+      deviceView === 'laptop' ||
+      deviceView === 'desktopS'
+    ) {
       setTabsInMenu(['Organizations', 'Pull Requests']);
     }
     if (deviceView === 'desktop') {
@@ -94,8 +107,9 @@ const SettingsTabs = ({
   const isDesktopL = deviceView === 'desktopL';
   const openMenu = Boolean(anchorEl);
 
-  const handleClick = (newVal, route) => {
-    setTab(newVal);
+  const handleClick = (newTab, route) => {
+    setTab(newTab);
+    setTabToDisplay(getTabToDisplay(newTab, tabsInMenu));
     handleNav(route);
     setAnchorEl(null);
   };
@@ -228,7 +242,7 @@ const SettingsTabs = ({
         classes={{ indicator: 'indicator' }}
         displayBottom={displayBottom}
         textColor="primary"
-        value={tab}
+        value={tabsInMenu.length > 0 ? tabToDisplay : false}
       >
         <StyledTab
           classes={{ selected: 'selected' }}
@@ -262,8 +276,17 @@ const SettingsTabs = ({
           />
         )}
         {!isDesktopL && [
-          <StyledTab label="..." onClick={handeOpenMenu} />,
-          <ConditionalRender Component={TabMenu} shouldRender={openMenu} />,
+          <StyledTab
+            key="more"
+            classes={{ selected: 'selected' }}
+            label="..."
+            onClick={handeOpenMenu}
+          />,
+          <ConditionalRender
+            key="tabMenu"
+            Component={TabMenu}
+            shouldRender={openMenu}
+          />,
         ]}
       </StyledTabs>
       <ConditionalRender
