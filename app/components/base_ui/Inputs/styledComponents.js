@@ -76,6 +76,7 @@ export const StyledBaseTextInput = styled(TextField)`
   margin: 0rem 1rem;
 
   .base-input {
+    border-bottom: ${({ error }) => (error ? errorBorder : inputBorder)};
     color: ${textColor};
     font-size: ${defaultFontSize};
   }
@@ -89,14 +90,14 @@ export const StyledBaseTextInput = styled(TextField)`
     }
   }
 
-  .underline {
+  .MuiInput-underline {
     border-bottom: ${({ error }) => (error ? errorBorder : inputBorder)};
 
-    &:before {
+    &:after {
       border-bottom: none;
     }
 
-    &:after {
+    &:before {
       border-bottom: none;
     }
   }

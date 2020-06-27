@@ -3,6 +3,7 @@ import { textColor } from 'defaultStyleHelper';
 
 export const BannerWrapper = styled.div`
   font-size: 1.2rem;
+  padding: 1rem;
 `;
 
 export const MessageWrapper = styled.div`

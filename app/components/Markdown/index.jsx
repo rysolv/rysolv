@@ -10,7 +10,6 @@ class Markdown extends React.PureComponent {
   componentDidMount() {
     const textArea = document.getElementById('editor');
     this.markdown = new SimpleMDE({
-      // autoDownloadFontAwesome: false,
       autosave: false,
       element: textArea,
       hideIcons: ['side-by-side', 'fullscreen', 'guide', 'preview'],

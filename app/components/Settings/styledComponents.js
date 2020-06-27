@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
 import { BaseDropDownMenu, ErrorSuccessBanner } from 'components/base_ui';
-import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { defaultFontSize, headerColor, textColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -121,12 +122,11 @@ export const SettingsTabsWrapper = styled.div`
   margin-left: 2rem;
   overflow: hidden;
   padding: 2rem;
-  width: 65rem;
+  width: 100%;
 
   ${mobile} {
     margin-left: 0;
     margin-top: ${({ displayBottom }) => (displayBottom ? '0' : '2rem')};
-    width: 100%;
   }
 `;
 
@@ -192,10 +192,25 @@ export const StyledPaper = styled(Paper)`
   width: 100%;
 `;
 
+export const StyledPopper = styled(Popper)`
+  background: #37474f;
+  border-radius: 0.2rem;
+  padding: 1rem;
+  top: -0.2rem !important;
+`;
+
 export const StyledTab = styled(Tab)`
   font-size: ${defaultFontSize};
-  min-width: 9rem;
+  min-width: fit-content;
   padding: 0.6rem;
+
+  &.selected {
+    color: ${headerColor};
+  }
+
+  .MuiTab-wrapper {
+    white-space: nowrap;
+  }
 `;
 
 export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
@@ -203,6 +218,30 @@ export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
 ))`
   ${mobile} {
     display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
+  }
+
+  .indicator {
+    background-color: ${headerColor};
+  }
+
+  .MuiTabs-centered {
+    justify-content: end;
+  }
+`;
+
+export const TabItem = styled.div`
+  color: #f6f8fa;
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
+`;
+
+export const TabItemBorder = styled.div`
+  border-bottom: ${({ isActive }) =>
+    isActive ? '0.2rem solid #f6f8fa' : 'none'};
+
+  &:hover {
+    cursor: pointer;
+    border-bottom: 0.2rem solid #f6f8fa;
   }
 `;
 

@@ -7,6 +7,7 @@ import {
   FETCH_WATCH_LIST_SUCCESS,
   FETCH_WATCH_LIST,
   OPEN_MODAL_STATE,
+  UPDATE_PAYMENT_MODAL,
 } from './constants';
 
 export const initialState = {
@@ -42,6 +43,12 @@ const mainReducer = produce((draft, { payload, type }) => {
       draft.isModalOpen = true;
       draft.modal = modalState;
       draft.tableData = tableData || [];
+      break;
+    }
+    case UPDATE_PAYMENT_MODAL: {
+      const { balance, fundedAmount } = payload;
+      draft.tableData.balance = balance;
+      draft.tableData.fundedAmount = fundedAmount;
       break;
     }
   }

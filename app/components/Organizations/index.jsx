@@ -11,7 +11,6 @@ const Organizations = ({
   alerts: { error, success },
   clearAlerts,
   data,
-
   handleNav,
 }) => {
   const hasOrganizations = data.length > 0 && !data.includes(null);

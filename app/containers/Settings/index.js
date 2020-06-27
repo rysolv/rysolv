@@ -10,6 +10,7 @@ import { ModalDialog } from 'components/base_ui';
 import DeleteUserModal from 'components/DeleteUserModal';
 import SettingsView from 'components/Settings';
 import { makeSelectAuth } from 'containers/Auth/selectors';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 import {
   handleCreditCardNumberChange,
   handleCvcChange,
@@ -40,6 +41,7 @@ const Settings = ({
   activeUser: { id },
   alerts,
   data,
+  deviceView,
   dispatchCloseModal,
   dispatchFetchInfo,
   dispatchOpenModal,
@@ -120,6 +122,7 @@ const Settings = ({
           alerts,
           creditCardProps,
           currentTab,
+          deviceView,
           dispatchOpenModal,
           dispatchSaveChange,
           filterValues,
@@ -139,6 +142,7 @@ Settings.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
   data: T.object,
+  deviceView: T.string.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchInfo: T.func,
   dispatchOpenModal: T.func.isRequired,
@@ -172,6 +176,10 @@ const mapStateToProps = createStructuredSelector({
   isModalOpen: makeSelectSettings('isModalOpen'),
   loading: makeSelectSettings('loading'),
   modal: makeSelectSettings('modal'),
+  /**
+   * Reducer : ViewSize
+   */
+  deviceView: makeSelectViewSize('deviceView'),
 });
 
 function mapDispatchToProps(dispatch) {

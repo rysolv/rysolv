@@ -14,11 +14,10 @@ export const AppContentWrapper = styled.div`
 export const RoutesWrapper = styled.section`
   display: flex;
   justify-content: center;
-  margin: 0 0 10rem 0;
-  padding: 0 5% 0 5%;
+  padding: 0 5% 3.6rem 5%;
   width: 100%;
 
   ${tablet} {
-    padding: 0 1rem;
+    padding: 0 1rem 3.6rem 1rem;
   }
 `;

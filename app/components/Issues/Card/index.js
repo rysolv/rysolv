@@ -66,6 +66,8 @@ const IssueCard = ({
     }) => {
       const { balance, id: userId } = activeUser;
       const isMobile =
+        deviceView === 'laptopS' ||
+        deviceView === 'tablet' ||
         deviceView === 'mobile' ||
         deviceView === 'mobileS' ||
         deviceView === 'mobileXS' ||

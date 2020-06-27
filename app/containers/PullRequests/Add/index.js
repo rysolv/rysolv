@@ -5,10 +5,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import AsyncRender from 'components/AsyncRender';
-
-import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { importPullRequestDictionary } from '../stepDictionary';
+import injectSaga from 'utils/injectSaga';
 
 import {
   clearForm,
@@ -20,30 +18,23 @@ import {
 } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
-import {
-  makeSelectPullRequests,
-  makeSelectPullRequestsError,
-  makeSelectPullRequestsLoading,
-} from '../selectors';
+import { makeSelectPullRequests } from '../selectors';
+import { importPullRequestDictionary } from '../stepDictionary';
 
-import { ImportPullRequestWrapper } from './styledComponents';
-
-// eslint-disable-next-line react/prefer-stateless-function
 const AddPullRequest = ({
-  createError,
   dispatchClearForm,
   dispatchCreatePullRequest,
   dispatchHandleStep,
   dispatchImportPullRequest,
+  error,
   handleInputChange,
   importData,
-  importError,
-  importLoading,
   issueId,
+  loading,
   step,
   userId,
 }) => {
-  const StepToRender = importPullRequestDictionary[step];
+  const ComponentToRender = importPullRequestDictionary[step];
 
   const handleImport = () => {
     const { importUrl } = importData;
@@ -55,47 +46,45 @@ const AddPullRequest = ({
     dispatchCreatePullRequest({ issueId, userId, importData });
   };
   return (
-    <ImportPullRequestWrapper>
-      <AsyncRender
-        asyncData={[]}
-        component={StepToRender}
-        loading={importLoading}
-        propsToPassDown={{
-          createError,
-          dispatchClearForm,
-          dispatchHandleStep,
-          handleImport,
-          handleInputChange,
-          handleSubmit,
-          importData,
-          importError,
-          importLoading,
-        }}
-      />
-    </ImportPullRequestWrapper>
+    <AsyncRender
+      asyncData={{}}
+      component={ComponentToRender}
+      loading={loading}
+      propsToPassDown={{
+        dispatchClearForm,
+        dispatchHandleStep,
+        error,
+        handleImport,
+        handleInputChange,
+        handleSubmit,
+        importData,
+        loading,
+      }}
+    />
   );
 };
 
 AddPullRequest.propTypes = {
-  createError: T.string,
   dispatchClearForm: T.func,
   dispatchCreatePullRequest: T.func,
   dispatchHandleStep: T.func,
   dispatchImportPullRequest: T.func,
+  error: T.oneOfType([T.bool, T.string]),
   handleInputChange: T.func,
   importData: T.object,
-  importError: T.string,
-  importLoading: T.bool,
   issueId: T.string,
+  loading: T.bool,
   step: T.number,
   userId: T.string,
 };
 
 const mapStateToProps = createStructuredSelector({
-  createError: makeSelectPullRequestsError('createPullRequest'),
+  /*
+   * Reducer : PullRequests
+   */
+  error: makeSelectPullRequests('error'),
   importData: makeSelectPullRequests('importData'),
-  importError: makeSelectPullRequestsError('importPullRequest'),
-  importLoading: makeSelectPullRequestsLoading('importPullRequest'),
+  loading: makeSelectPullRequests('loading'),
   step: makeSelectPullRequests('step'),
 });
 

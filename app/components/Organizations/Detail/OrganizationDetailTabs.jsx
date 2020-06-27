@@ -1,6 +1,5 @@
 import React from 'react';
 import T from 'prop-types';
-import Tabs from '@material-ui/core/Tabs';
 
 import { ConditionalRender } from 'components/base_ui';
 
@@ -12,6 +11,7 @@ import {
   EmptyMessageComponent,
   StyledPaper,
   StyledTab,
+  StyledTabs,
 } from './styledComponents';
 
 const OrganizationDetailTabs = ({
@@ -69,15 +69,15 @@ const OrganizationDetailTabs = ({
 
   return (
     <StyledPaper>
-      <Tabs
-        value={value}
+      <StyledTabs
+        classes={{ indicator: 'indicator' }}
         onChange={handleChange}
-        indicatorColor="primary"
         textColor="primary"
+        value={value}
       >
-        <StyledTab label="Issues" />
-        <StyledTab label="Contributors" />
-      </Tabs>
+        <StyledTab classes={{ selected: 'selected' }} label="Issues" />
+        <StyledTab classes={{ selected: 'selected' }} label="Contributors" />
+      </StyledTabs>
       <ConditionalRender
         Component={
           <ContributorsSearchHeader handleInputChange={handleInputChange} />

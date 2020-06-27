@@ -59,6 +59,7 @@ const SettingsView = ({
     username,
     watching,
   },
+  deviceView,
   dispatchOpenModal,
   dispatchSaveChange,
   filterValues,
@@ -210,6 +211,7 @@ const SettingsView = ({
             changeUsername={changeUsername}
             creditCardProps={creditCardProps}
             currentTab={currentTab}
+            deviceView={deviceView}
             dispatchOpenModal={dispatchOpenModal}
             displayBottom={displayBottom}
             dollarsEarned={dollarsEarned}
@@ -249,6 +251,7 @@ SettingsView.propTypes = {
   creditCardProps: T.object.isRequired,
   currentTab: T.number.isRequired,
   data: T.object.isRequired,
+  deviceView: T.string.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveChange: T.func.isRequired,
   filterValues: T.object.isRequired,

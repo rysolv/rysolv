@@ -11,7 +11,6 @@ const BaseTextInput = ({ disabled, onChange, type, value, ...restProps }) => (
     InputProps={{
       classes: {
         root: 'base-input',
-        underline: 'underline',
       },
     }}
     InputLabelProps={{

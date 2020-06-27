@@ -18,6 +18,7 @@ import {
   CLOSE_ISSUE_FAILURE,
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
+  CLOSE_MODAL_STATE,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -33,6 +34,7 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  OPEN_MODAL_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -81,6 +83,7 @@ export const initialState = {
     },
   },
   importSuccess: false,
+  isModalOpen: false,
   issueDetail: {},
   issues: [],
   isVerified: false,
@@ -97,6 +100,7 @@ export const initialState = {
     submitAccountPayment: false,
     upvoteIssue: false,
   },
+  modal: '',
   organizationData: {
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
@@ -227,6 +231,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.closeIssue = true;
       break;
     }
+    case CLOSE_MODAL_STATE: {
+      draft.isModalOpen = initialState.isModalOpen;
+      draft.modal = initialState.modal;
+      break;
+    }
     case EDIT_ISSUE_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
@@ -322,6 +331,12 @@ const issuesReducer = produce((draft, { payload, type }) => {
       fields.forEach(field => {
         draft.issueData[field].error = errors[field] || '';
       });
+      break;
+    }
+    case OPEN_MODAL_STATE: {
+      const { modalState } = payload;
+      draft.isModalOpen = true;
+      draft.modal = modalState;
       break;
     }
     case SAVE_INFO_FAILURE: {

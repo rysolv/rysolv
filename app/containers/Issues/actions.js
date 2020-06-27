@@ -15,6 +15,7 @@ import {
   CLOSE_ISSUE_FAILURE,
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
+  CLOSE_MODAL_STATE,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -30,6 +31,7 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  OPEN_MODAL_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -156,6 +158,12 @@ export function closeIssue(payload) {
   };
 }
 
+export function closeIssueModalState() {
+  return {
+    type: CLOSE_MODAL_STATE,
+  };
+}
+
 export function editIssueFailure(payload) {
   return {
     payload,
@@ -257,6 +265,13 @@ export function inputError(payload) {
   return {
     payload,
     type: INPUT_ERROR,
+  };
+}
+
+export function openIssueModalState(payload) {
+  return {
+    payload,
+    type: OPEN_MODAL_STATE,
   };
 }
 
