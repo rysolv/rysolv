@@ -1,20 +1,22 @@
 const { mapValues, singleItem, singleQuery, singleSearch } = require('./query');
-const { diff } = require('./helpers');
+const { formatParamaters } = require('./helpers');
 
-const organizationValues = `
-  modified_date,
-  name,
-  description,
-  repo_url,
-  organization_url,
-  issues,
-  logo,
-  verified,
-  contributors,
-  owner_id,
-  total_funded,
-  preferred_languages
-`; // Excludes ID & created_date
+const organizationValues = [
+  'contributors',
+  'created_date',
+  'description',
+  'id',
+  'issues',
+  'logo',
+  'modified_date',
+  'name',
+  'organization_url',
+  'owner_id',
+  'preferred_languages',
+  'repo_url',
+  'total_funded',
+  'verified',
+];
 
 const organizationReturnValues = `
   id,
@@ -34,9 +36,9 @@ const organizationReturnValues = `
 `;
 
 // Check duplicate organization
-const checkDuplicateOrganization = async (table, repo) => {
+const checkDuplicateOrganization = async repo => {
   const queryText = `
-    SELECT id FROM ${table} WHERE (repo_url='${repo}')
+    SELECT id FROM organizations WHERE (repo_url='${repo}')
   `;
   const { rows } = await singleQuery(queryText);
   if (rows.length > 0) {
@@ -47,80 +49,90 @@ const checkDuplicateOrganization = async (table, repo) => {
 
 // Create new organization
 const createOrganization = async data => {
+  const { parameters, substitution, values } = formatParamaters(
+    organizationValues,
+    data,
+  );
   const queryText = `INSERT INTO
-    organizations(id, created_date, ${organizationValues})
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
-    returning *`;
-  const result = await mapValues(queryText, data);
+    organizations(${parameters})
+    VALUES(${substitution})
+    returning ${organizationReturnValues}`;
+  const result = await mapValues(queryText, values);
   return result;
 };
 
 // DELETE single organization
-const deleteOrganization = async (table, id) => {
-  const rows = await singleItem(table, id);
+const deleteOrganization = async id => {
+  const rows = await singleItem('organizations', id);
   if (rows) {
-    const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
+    const queryText = `DELETE FROM organizations WHERE (id='${id}') RETURNING *`;
     const {
       rows: [resultRow],
     } = await singleQuery(queryText);
     const { name } = resultRow;
-    return `${name} was successfully deleted from ${table}.`;
+    return `${name} was successfully deleted from organizations.`;
   }
-  throw new Error(`Failed to delete organization. ID not found in ${table}`);
+  throw new Error(
+    `Failed to delete organization. ID not found in organizations`,
+  );
 };
 
 // GET single organization
-const getOneOrganization = async (table, id) => {
-  const rows = await singleItem(table, id, organizationReturnValues);
+const getOneOrganization = async id => {
+  const rows = await singleItem('organizations', id, organizationReturnValues);
   if (rows) {
     return rows;
   }
-  throw new Error(`ID not found in ${table}`);
+  throw new Error(`ID not found in organizations`);
 };
 
 // GET all organizations
-const getOrganizations = async table => {
-  const queryText = `SELECT ${organizationReturnValues} FROM ${table};`;
+const getOrganizations = async () => {
+  const queryText = `SELECT ${organizationReturnValues} FROM organizations`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
 
 // GET all organizations
-const getOrganizationsWhere = async (table, column, value) => {
-  const queryText = `SELECT ${organizationReturnValues} FROM ${table} WHERE (${column}='${value}');`;
+const getOrganizationsWhere = async (column, value) => {
+  const queryText = `SELECT ${organizationReturnValues} FROM organizations WHERE (${column}='${value}')`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
 
 // SEARCH organizations
-const searchOrganizations = async (table, value) => {
+const searchOrganizations = async value => {
   const fields = ['name'];
 
-  const queryText = `SELECT ${organizationReturnValues} FROM ${table}`;
+  const queryText = `SELECT ${organizationReturnValues} FROM organizations`;
   const rows = await singleSearch(queryText, fields, value);
   return rows;
 };
 
 // TRANSFORM single Organization
-const transformOrganization = async (table, id, data) => {
-  const [rows] = await singleItem(table, id, organizationValues);
+const transformOrganization = async (id, data) => {
+  const [rows] = await singleItem('organizations', id, organizationValues);
   if (rows) {
-    const { newObjectArray } = diff(rows, data);
-    const queryText = `UPDATE ${table}
-      SET (${organizationValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+    const { parameters, substitution, values } = formatParamaters(
+      organizationValues,
+      data,
+    );
+
+    const queryText = `UPDATE organizations
+      SET (${parameters})
+      = (${substitution})
       WHERE (id = '${id}')
-      RETURNING *`;
-    const [result] = await mapValues(queryText, [newObjectArray]);
+      RETURNING ${organizationReturnValues}`;
+    const [result] = await mapValues(queryText, values);
     return result;
   }
-  throw new Error(`Failed to update. ID not found in ${table}`);
+  throw new Error(`Failed to update. ID not found in organizations`);
 };
 
 // ADD TO ARRAY
-const updateOrganizationArray = async (table, column, id, data, remove) => {
+const updateOrganizationArray = async (column, id, data, remove) => {
   const action = remove ? 'array_remove' : 'array_append';
-  const queryText = `UPDATE ${table}
+  const queryText = `UPDATE organizations
     SET ${column} = ${action}(${column}, '${data}')
     WHERE (id = '${id}')
     RETURNING *`;

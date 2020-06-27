@@ -104,11 +104,7 @@ module.exports = {
   getUserOrganizations: async args => {
     const { id } = args;
     try {
-      const result = await getOrganizationsWhere(
-        'organizations',
-        'owner_id',
-        id,
-      );
+      const result = await getOrganizationsWhere('owner_id', id);
       return result;
     } catch (err) {
       throw err;
@@ -152,7 +148,6 @@ module.exports = {
       const organizationsListResult = await Promise.all(
         organizations.map(async organizationId => {
           const [organizationsResult] = await getOneOrganization(
-            'organizations',
             organizationId,
           );
           return organizationsResult;

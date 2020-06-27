@@ -79,7 +79,7 @@ export class VerifyOrganization extends React.PureComponent {
 }
 
 VerifyOrganization.propTypes = {
-  activeUser: T.func,
+  activeUser: T.object,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,

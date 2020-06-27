@@ -55,6 +55,8 @@ const getSingleRepo = async organizationUrl => {
       organizationRepo: html_url,
       organizationUrl: homepage,
       organizationLanguages: [language],
+      organizationLogo:
+        'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
     };
 
     if (organization) {
@@ -83,13 +85,21 @@ const getSingleRepo = async organizationUrl => {
 
 const getSingleOrganization = async value => {
   const organizationData = await FETCH(value);
-  const { avatar_url, bio, blog, html_url, name, type } = organizationData;
+  const {
+    avatar_url,
+    bio,
+    blog,
+    html_url,
+    name,
+    type,
+    login,
+  } = organizationData;
   if (type === 'User') {
     throw new Error('Cannot import user account as organization');
   }
   const organizationInput = {
     organizationDescription: bio || '',
-    organizationName: name,
+    organizationName: name || login,
     organizationRepo: html_url,
     organizationUrl: blog,
     organizationLanguages: [],

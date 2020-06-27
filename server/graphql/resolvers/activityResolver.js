@@ -12,7 +12,7 @@ module.exports = {
       issue_id: activityInput.issueId || null,
       organization_id: activityInput.organizationId || null,
       pullrequest_id: activityInput.pullRequestId || null,
-      activity_input: activityInput.userId || null,
+      user_id: activityInput.userId || null,
     };
 
     const message = await createActivity(activity);
