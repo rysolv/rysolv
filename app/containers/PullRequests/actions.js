@@ -1,4 +1,5 @@
 import {
+  CLEAR_ERROR,
   CLEAR_FORM,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
@@ -13,6 +14,12 @@ import {
   INPUT_CHANGE,
   INPUT_ERROR,
 } from './constants';
+
+export function clearError() {
+  return {
+    type: CLEAR_ERROR,
+  };
+}
 
 export function clearForm() {
   return {

@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
+import AddPullRequestModal from 'components/AddPullRequestModal';
 import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
 import IssueDetail from 'components/Issues/Detail';
 import { fetchWatchList, openModalState } from 'containers/Main/actions';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import AddPullRequestModal from 'containers/PullRequests/Add';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
