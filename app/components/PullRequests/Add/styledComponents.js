@@ -73,7 +73,7 @@ export const StyledCheckbox = styled(({ hasError, ...restProps }) => (
 `;
 
 export const StyledHeader = styled.h1`
-  color: ${textColor};
+  color: ${({ isSuccess }) => (isSuccess ? successGreen : textColor)};
   font-size: 1.8rem;
   font-weight: 500;
   margin: 0;
@@ -121,6 +121,13 @@ export const StyledSubHeader = styled.div`
   font-size: 1.2rem;
   font-weight: 500;
   text-transform: uppercase;
+`;
+
+export const StyledSuccessContent = styled.div`
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  line-height: 1.5;
+  padding: 0 1rem;
 `;
 
 export const StyledTextareaAutosize = styled(TextareaAutosize)`

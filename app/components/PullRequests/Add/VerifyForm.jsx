@@ -35,6 +35,10 @@ const ImportPullRequest = ({
   loading,
 }) => {
   const errorToDisplay = error ? { message: error } : false;
+  const handleBack = () => {
+    dispatchHandleStep({ step: 1 });
+    handleClearError();
+  };
   return (
     <Fragment>
       <StyledHeader>Verify</StyledHeader>
@@ -84,10 +88,7 @@ const ImportPullRequest = ({
         </PullRequestInfo>
       </PullRequestContainer>
       <ButtonGroup>
-        <StyledSecondayButton
-          label="Cancel"
-          onClick={() => dispatchHandleStep({ step: 1 })}
-        />
+        <StyledSecondayButton label="Back" onClick={handleBack} />
         <StyledPrimaryAsyncButton
           label="Submit"
           loading={loading}
