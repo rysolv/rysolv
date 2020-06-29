@@ -341,7 +341,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = error;
+      draft.alerts.error = { message: error };
       draft.importSuccess = false;
       draft.loading.addIssue = false;
       break;

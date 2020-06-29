@@ -231,7 +231,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = error;
+      draft.alerts.error = { message: error };
       draft.loading.addOrganization = false;
       break;
     }

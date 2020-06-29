@@ -229,15 +229,28 @@ export function* saveInfoSaga({ payload }) {
       organizationRepo: "${organizationRepo}",
       organizationUrl: "${organizationUrl}",
       ownerId: "${userId}"
-    })
-    { id }
+    }) {
+      __typename
+      ... on Organization {
+        id
+        name
+      }
+      ... on Error {
+        message
+      }
+    }
   }`;
   try {
     const graphql = JSON.stringify({
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
+    const {
+      data: { createOrganization },
+    } = yield call(post, '/graphql', graphql);
+    const { __typename, message } = createOrganization;
+    if (__typename === 'Error') throw message;
+
     yield put(fetchOrganizations());
     yield put(saveInfoSuccess({ message: successCreateOrganizationMessage }));
   } catch (error) {
@@ -246,21 +259,30 @@ export function* saveInfoSaga({ payload }) {
 }
 
 export function* searchOrganizationsSaga({ payload }) {
+  console.log('its the same function');
   const { value } = payload;
   const query = `
   query {
     searchOrganizations(value: "${value}") {
-      createdDate,
-      description,
-      id,
-      issues,
-      logo,
-      modifiedDate,
-      name,
-      organizationUrl,
-      repoUrl,
-      totalFunded,
-      verified,
+    __typename
+      ... on OrganizationArray {
+        organizationArray {
+          createdDate
+          description
+          id
+          issues
+          logo
+          modifiedDate
+          name
+          organizationUrl
+          repoUrl
+          totalFunded
+          verified
+        }
+      }
+      ... on Error {
+        message
+      }
     }
   }
 `;
@@ -270,11 +292,13 @@ export function* searchOrganizationsSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { searchOrganizations },
+      data: {
+        searchOrganizations: { __typename, message, organizationArray },
+      },
     } = yield call(post, '/graphql', graphql);
-    yield put(
-      searchOrganizationsSuccess({ organizations: searchOrganizations }),
-    );
+    if (__typename === 'Error') throw message;
+
+    yield put(searchOrganizationsSuccess({ organizations: organizationArray }));
   } catch (error) {
     yield put(searchOrganizationsFailure({ error }));
   }

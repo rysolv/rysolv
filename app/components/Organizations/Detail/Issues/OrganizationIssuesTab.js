@@ -61,7 +61,7 @@ const OrganizationIssuesTab = ({
                   </IssueName>
                   <IssueOpenWrapper>
                     <IssueOpen open={open}>
-                      {open ? 'Funded' : 'Unfunded'}
+                      {open ? 'Open' : 'Closed'}
                     </IssueOpen>
                     <IssueAttempts>{attempting.length} Attempts</IssueAttempts>
                   </IssueOpenWrapper>

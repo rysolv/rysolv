@@ -18,7 +18,7 @@ const userSeed = [
     'https://www.tylermaran.com/', // personal_link
     ['Javascript', 'Go'], // preferred_languages
     'https://stackoverflow.com/users/22656/tyler-maran', // stackoverflow_link
-    true, // is_deleted
+    false, // is_deleted
     [], // pull_requests
     [], // upvotes
     24, // active_pull_requests
@@ -40,15 +40,8 @@ const userSeed = [
     'https://rysolv.s3.us-east-2.amazonaws.com/annaprofile.png',
     [], // comments
     [], // attempting
-    [
-      '20619026-0f61-4772-9bb8-36ed643d4dcd',
-      '34b0c547-5558-4c47-8278-7ef113a1dee0',
-      '0ce2d9ae-ba16-4013-af33-0cbb8cbc37a2',
-    ], // issues
-    [
-      'ddb0ed71-01e8-4a14-a3fd-8d6ee40f131a',
-      '1a64925c-858f-42b4-a09c-39d5699375f4',
-    ], // organizations
+    [], // issues
+    [], // organizations
     'annapo', // username
     'https://github.com/annapo23', // github_link
     'https://www.annapojawis.com/', // personal_link

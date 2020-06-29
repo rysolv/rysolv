@@ -372,15 +372,27 @@ export function* saveInfoSaga({ payload }) {
         organizationUrl:  "${organizationUrl}",
         repo: "${issueUrl}",
       }
-    )
-    { id }
+    ) {
+      __typename
+      ... on Issue {
+        id
+      }
+      ... on Error {
+        message
+      }
+    }
   }`;
   try {
     const graphql = JSON.stringify({
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
+    const {
+      data: { createIssue },
+    } = yield call(post, '/graphql', graphql);
+    const { __typename, message } = createIssue;
+    if (__typename === 'Error') throw message;
+
     yield put(saveInfoSuccess({ message: successCreateIssueMessage }));
   } catch (error) {
     yield put(saveInfoFailure({ error }));

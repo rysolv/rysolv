@@ -1,15 +1,16 @@
 const { mapValues, singleQuery } = require('../db/query');
+const { formatParamaters } = require('./helpers');
 
-const activityValues = `
-  activity_id,
-  created_date,
-  action_type,
-  funded_value,
-  issue_id,
-  organization_id,
-  pullrequest_id,
-  user_id
-`;
+const activityValues = [
+  'activity_id',
+  'created_date',
+  'action_type',
+  'funded_value',
+  'issue_id',
+  'organization_id',
+  'pullrequest_id',
+  'user_id',
+];
 
 const activityReturnValues = `
   activity_id AS "activityId",
@@ -28,12 +29,15 @@ const activityReturnValues = `
 
 // Record a new activity
 const createActivity = async data => {
+  const { parameters, substitution, values } = formatParamaters(
+    activityValues,
+    data,
+  );
   const queryText = `INSERT INTO
-    activity(${activityValues})
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8)
-    returning *`;
-  const result = await mapValues(queryText, data);
-  return result;
+    activity(${parameters})
+    VALUES(${substitution})`;
+  await mapValues(queryText, values);
+  return 'Successfully logged activity';
 };
 
 // GET activity for a specific id

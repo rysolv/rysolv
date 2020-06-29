@@ -48,24 +48,22 @@ const newIssueArray = (issueId, issueInput) => [
   ],
 ];
 
-const newOrganizationArray = organizationInput => [
-  [
-    uuidv4(), // id
-    new Date(), // created_date
-    new Date(), // modified_date
-    organizationInput.organizationName, // name
-    organizationInput.organizationDescription, // description
-    organizationInput.organizationRepo, // repo
-    organizationInput.organizationUrl || '', // url
-    organizationInput.issues || [], // issues
-    organizationInput.organizationLogo || defaultOrgImage, // logo
-    organizationInput.verified || false, // verified
-    [], // contributors
-    organizationInput.contributor, // owner_id
-    organizationInput.totalFunded || 0, // funded
-    organizationInput.preferred_languages || [], // languages
-  ],
-];
+const newOrganizationObject = organizationInput => ({
+  id: uuidv4(), // id
+  created_date: new Date(), // created_date
+  modified_date: new Date(), // modified_date
+  name: organizationInput.organizationName, // name
+  description: organizationInput.organizationDescription, // description
+  repo_url: organizationInput.organizationRepo, // repo
+  organization_url: organizationInput.organizationUrl || '', // url
+  issues: organizationInput.issues || [], // issues
+  logo: organizationInput.organizationLogo || defaultOrgImage, // logo
+  verified: organizationInput.verified || false, // verified
+  contributors: [], // contributors
+  owner_id: organizationInput.contributor, // owner_id
+  total_funded: organizationInput.totalFunded || 0, // funded
+  preferred_languages: organizationInput.preferred_languages || [], // languages
+});
 
 module.exports = {
   closeIssue: async args => {
@@ -103,83 +101,96 @@ module.exports = {
         throw err;
       }
     };
+    // ***
 
     // Populate organization array and create new organization
     const createNewOrganization = async () => {
-      if (await checkDuplicateOrganization('organizations', organizationRepo)) {
+      // backup check
+      if (await checkDuplicateOrganization(organizationRepo)) {
         throw new Error(
           `Error: Organization at ${
             issueInput.organizationRepo
           } already exists`,
         );
       }
-      const organizationArray = newOrganizationArray(issueInput);
+
+      const organizationObject = newOrganizationObject(issueInput);
       try {
-        const [result] = await createOrganization(organizationArray);
+        const [result] = await createOrganization(organizationObject);
         return result;
       } catch (err) {
         throw err;
       }
     };
+    // ***
 
-    // Check for duplicate issue
-    if (await checkDuplicateIssue('issues', repo)) {
-      throw new Error(`Issue at ${repo} already exists`);
-    }
+    try {
+      // Check for duplicate issue
+      if (await checkDuplicateIssue('issues', repo)) {
+        throw new Error(`Issue at ${repo} already exists`);
+      }
 
-    // Check for existing organization
-    if (!organizationId) {
-      const organizationResult = await createNewOrganization();
+      // Check for existing organization. If not: create organization
+      if (!organizationId) {
+        const organizationResult = await createNewOrganization();
+
+        const activityInput = {
+          actionType: 'create',
+          organizationId: organizationResult.id,
+          userId: organizationResult.ownerId,
+        };
+        await createActivity({ activityInput });
+
+        issueInput.organizationId = organizationResult.id;
+      }
+
+      // Create new issue
+      const [issueResult] = await createNewIssue();
 
       const activityInput = {
         actionType: 'create',
-        organizationId: organizationResult.id,
-        userId: organizationResult.owner_id,
+        organizationId: issueResult.organization_id,
+        issueId: issueResult.id,
+        userId: issueResult.contributor_id,
       };
       await createActivity({ activityInput });
 
-      issueInput.organizationId = organizationResult.id;
+      // add issue to organization issue list
+      await updateOrganizationArray(
+        'issues',
+        issueInput.organizationId,
+        newIssueId,
+        false,
+      );
+
+      // add issue to user issue list
+      await updateUserArray(
+        'users',
+        'issues',
+        issueInput.contributor,
+        issueResult.id,
+        false,
+      );
+
+      // add organization to user list
+      await updateUserArray(
+        'users',
+        'organizations',
+        issueInput.contributor,
+        issueInput.organizationId,
+        false,
+      );
+
+      return {
+        __typename: 'Issue',
+        ...issueResult,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
-
-    // Create new issue
-    const [issueResult] = await createNewIssue();
-
-    const activityInput = {
-      actionType: 'create',
-      organizationId: issueResult.organization_id,
-      issueId: issueResult.id,
-      userId: issueResult.contributor_id,
-    };
-    await createActivity({ activityInput });
-
-    // add issue to organization
-    await updateOrganizationArray(
-      'organizations',
-      'issues',
-      issueInput.organizationId,
-      newIssueId,
-      false,
-    );
-
-    // add issue to user
-    await updateUserArray(
-      'users',
-      'issues',
-      issueInput.contributor,
-      issueResult.id,
-      false,
-    );
-
-    // add organization to user
-    await updateUserArray(
-      'users',
-      'organizations',
-      issueInput.contributor,
-      issueInput.organizationId,
-      false,
-    );
-
-    return issueResult;
   },
   deleteIssue: async args => {
     const { id } = args;
@@ -218,7 +229,6 @@ module.exports = {
 
       // Return organizaiton ID if exists in db
       const [organization] = await getOrganizationsWhere(
-        'organizations',
         'repo_url',
         organizationInput.organizationRepo,
       );

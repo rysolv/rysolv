@@ -13,6 +13,7 @@ import {
   defaultFontSize,
   detailFontSize,
   fundingText,
+  styledScrollbar,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -20,7 +21,10 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 const { laptop, mobile, tablet } = mediaQueriesByDevice;
 
 export const CommentWrapper = styled.div`
-  margin: 3rem 3rem 3rem 0;
+  ${styledScrollbar}
+  max-height: 150rem;
+  overflow-y: auto;
+  padding: 0 1rem 0 0;
 `;
 
 export const DetailContainer = styled.div`
@@ -145,7 +149,7 @@ export const LanguagesWrapper = styled.div`
   align-items: center;
   display: flex;
   font-size: 1.4rem;
-  margin: -1rem 0 1rem 0;
+  margin: 1rem 0;
 `;
 
 export const LanguagesTitle = styled.div`

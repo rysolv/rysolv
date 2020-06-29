@@ -138,6 +138,10 @@ module.exports = buildSchema(`
     verified: Boolean
   }
 
+  type OrganizationArray {
+    organizationArray: [Organization]
+  }
+
   input OrganizationInput {
     organizationDescription: String
     organizationLogo: String
@@ -271,6 +275,7 @@ module.exports = buildSchema(`
   union ImportPullRequestResult = ImportPullRequest | Error
   union IssueResult = Issue | Error
   union OrganizationResult = Organization | Error
+  union OrganizationArrayResult = OrganizationArray | Error
   union EventResponse = Success | Error
   union PaymentResult = Payment | Error
 
@@ -295,7 +300,7 @@ module.exports = buildSchema(`
     onePullRequest(id: ID!): PullRequestResult
 
     searchIssues(value: String!): [Issue!]!
-    searchOrganizations(value: String!): [Organization!]!
+    searchOrganizations(value: String!): OrganizationArrayResult
     searchUsers(value: String!): [User!]!
   }
 
@@ -304,8 +309,8 @@ module.exports = buildSchema(`
 
     createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): Comment
-    createIssue(issueInput: IssueInput): Issue!
-    createOrganization(organizationInput: OrganizationInput): Organization!
+    createIssue(issueInput: IssueInput): IssueResult
+    createOrganization(organizationInput: OrganizationInput): OrganizationResult
     createUser(userInput: UserInput): [User!]!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
 

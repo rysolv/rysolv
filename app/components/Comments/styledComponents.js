@@ -7,13 +7,17 @@ import {
   commentHeaderColor,
   defaultFontFamily,
   defaultFontSize,
+  styledScrollbar,
   subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
 
 export const CommentBody = styled.div`
+  ${styledScrollbar}
   font-size: ${defaultFontSize};
+  max-height: 150rem;
   min-height: 4rem;
+  overflow-y: auto;
   padding: 0 0.8rem;
   width: 100%;
 
@@ -74,6 +78,7 @@ export const CommentContainer = styled.div`
     max-height: 75rem;
     overflow-y: auto;
     overflow-x: hidden;
+    ${styledScrollbar}
   }
 `;
 

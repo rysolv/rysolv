@@ -40,3 +40,19 @@ export const dividerBorder = `0.2rem solid #d5d5d5`;
 export const errorBorder = `0.1rem solid #f44336`;
 export const inputBorder = `0.1rem solid ${inputFieldColor}`;
 export const issueBorder = `0.1rem solid ${borderColor}`;
+
+// Scrollbar
+export const styledScrollbar = `
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+`;
