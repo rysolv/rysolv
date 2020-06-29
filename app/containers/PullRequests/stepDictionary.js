@@ -1,9 +1,9 @@
-import ImportPullRequest from 'components/PullRequests/Add/ImportForm';
-import VerifyPullRequest from 'components/PullRequests/Add/VerifyForm';
-import ImportSuccess from 'components/PullRequests/Add/Success';
+import ImportForm from 'components/PullRequests/Add/ImportForm';
+import ImportSuccess from 'components/PullRequests/Add/ImportSuccess';
+import VerifyForm from 'components/PullRequests/Add/VerifyForm';
 
 export const importPullRequestDictionary = {
-  1: ImportPullRequest,
-  2: VerifyPullRequest,
+  1: ImportForm,
+  2: VerifyForm,
   3: ImportSuccess,
 };

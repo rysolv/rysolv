@@ -18,7 +18,7 @@ import {
   StyledSubHeader,
 } from './styledComponents';
 
-const ImportPullRequest = ({
+const VerifyForm = ({
   dispatchHandleStep,
   error,
   handleClearError,
@@ -99,7 +99,7 @@ const ImportPullRequest = ({
   );
 };
 
-ImportPullRequest.propTypes = {
+VerifyForm.propTypes = {
   dispatchHandleStep: T.func,
   error: T.string,
   handleClearError: T.func,
@@ -108,4 +108,4 @@ ImportPullRequest.propTypes = {
   loading: T.bool,
 };
 
-export default ImportPullRequest;
+export default VerifyForm;

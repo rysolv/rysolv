@@ -26,22 +26,22 @@ export const Divider = styled.div`
   width: 100%;
 `;
 
-export const ImportForm = styled.div`
+export const ImportFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
-export const ImportUrlContainer = styled.div`
+export const ImportUrlLabel = styled.div`
+  padding-right: 1rem;
+  width: 12.5rem;
+`;
+
+export const ImportUrlWrapper = styled.div`
   color: #6a737d;
   display: flex;
   font-size: ${defaultFontSize};
   padding: 2rem;
-`;
-
-export const ImportUrlLabel = styled.div`
-  padding-right: 1rem;
-  width: 12.5rem;
 `;
 
 export const PullRequestContainer = styled.div`

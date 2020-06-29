@@ -4,9 +4,9 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import {
   ButtonGroup,
-  ImportForm,
-  ImportUrlContainer,
+  ImportFormContainer,
   ImportUrlLabel,
+  ImportUrlWrapper,
   StyledHeader,
   StyledPrimaryAsyncButton,
   StyledSecondayButton,
@@ -14,7 +14,7 @@ import {
   TextareaWrapper,
 } from './styledComponents';
 
-const ImportPullRequest = ({
+const ImportForm = ({
   error,
   handleClose,
   handleImport,
@@ -23,7 +23,6 @@ const ImportPullRequest = ({
   loading,
 }) => {
   const { importUrl } = importData;
-
   const handleChange = e => {
     handleInputChange({
       field: 'importUrl',
@@ -31,11 +30,10 @@ const ImportPullRequest = ({
       value: e.target.value,
     });
   };
-
   return (
-    <ImportForm>
+    <ImportFormContainer>
       <StyledHeader>Import Pull Request</StyledHeader>
-      <ImportUrlContainer>
+      <ImportUrlWrapper>
         <ImportUrlLabel>Pull Request URL</ImportUrlLabel>
         <TextareaWrapper>
           <StyledTextareaAutosize
@@ -46,7 +44,7 @@ const ImportPullRequest = ({
           />
           <FormHelperText error={!!error}>{error}</FormHelperText>
         </TextareaWrapper>
-      </ImportUrlContainer>
+      </ImportUrlWrapper>
       <ButtonGroup>
         <StyledSecondayButton label="Cancel" onClick={handleClose} />
         <StyledPrimaryAsyncButton
@@ -55,11 +53,11 @@ const ImportPullRequest = ({
           onClick={() => handleImport()}
         />
       </ButtonGroup>
-    </ImportForm>
+    </ImportFormContainer>
   );
 };
 
-ImportPullRequest.propTypes = {
+ImportForm.propTypes = {
   error: T.string,
   handleClose: T.func,
   handleImport: T.func,
@@ -68,4 +66,4 @@ ImportPullRequest.propTypes = {
   loading: T.bool,
 };
 
-export default ImportPullRequest;
+export default ImportForm;
