@@ -47,8 +47,8 @@ export class ImportIssue extends React.PureComponent {
     return (
       <Fragment>
         <AsyncRender
-          isRequiredData={false}
           component={ImportForm}
+          isRequiredData={false}
           loading={importIssueLoading}
           propsToPassDown={{
             handleIncrementStep,
