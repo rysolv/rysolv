@@ -54,6 +54,7 @@ const PullRequestCard = ({ data }) => (
                 <TitleWrapper>{title}</TitleWrapper>
                 <UrlContainer>
                   <UrlWrapper
+                    addPadding
                     href={`/issues/detail/${issueId}`}
                     target="_blank"
                   >

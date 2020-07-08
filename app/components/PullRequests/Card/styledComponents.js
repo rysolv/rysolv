@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { laptopS, mobile, mobileXS } = mediaQueriesByDevice;
 
 export const ContentWrapper = styled.div`
   display: flex;
@@ -113,6 +116,18 @@ export const UrlContainer = styled.div`
   justify-content: space-between;
   padding: 0.5rem 0 1.5rem 0;
   width: 80%;
+
+  ${laptopS} {
+    flex-direction: column;
+  }
+
+  ${mobile} {
+    flex-direction: row;
+  }
+
+  ${mobileXS} {
+    flex-direction: column;
+  }
 `;
 
 export const UrlWrapper = styled.a`
@@ -120,6 +135,8 @@ export const UrlWrapper = styled.a`
   display: flex;
   font-size: 1.4rem;
   font-weight: 500;
+  padding-right: ${({ addPadding }) => (addPadding ? '0.5rem' : '0')};
+  white-space: nowrap;
 
   &:hover {
     color: #007bff;
