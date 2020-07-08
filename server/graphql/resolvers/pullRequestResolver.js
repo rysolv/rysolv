@@ -2,8 +2,9 @@ const { v4: uuidv4 } = require('uuid');
 const {
   checkDuplicatePullRequest,
   createPullRequest,
-  getPullRequests,
+  getOneIssue,
   getOnePullRequest,
+  getPullRequests,
   getUserPullRequests,
 } = require('../../db');
 
@@ -94,9 +95,18 @@ module.exports = {
     const { id } = args;
     try {
       const result = await getUserPullRequests(id);
+      const formattedResult = await Promise.all(
+        result.map(async pullRequest => {
+          const { issueId } = pullRequest;
+          const [{ fundedAmount }] = await getOneIssue('issues', issueId);
+          // eslint-disable-next-line no-param-reassign
+          pullRequest.fundedAmount = fundedAmount;
+          return pullRequest;
+        }),
+      );
       return {
         __typename: 'PullRequestArray',
-        pullRequestArray: result,
+        pullRequestArray: formattedResult,
       };
     } catch (err) {
       return {

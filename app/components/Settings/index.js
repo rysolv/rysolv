@@ -67,6 +67,7 @@ const SettingsView = ({
   handleInputChange,
   handleNav,
   handleRemoveIssue,
+  PullRequestComponent,
   view,
 }) => {
   const [displayBottom, setDisplayBottom] = useState(false);
@@ -228,6 +229,7 @@ const SettingsView = ({
             issues={issues}
             lastName={lastName}
             organizations={organizations}
+            PullRequestComponent={PullRequestComponent}
             setChangeEmail={setChangeEmail}
             setChangeFirstName={setChangeFirstName}
             setChangeLastName={setChangeLastName}
@@ -259,6 +261,7 @@ SettingsView.propTypes = {
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
+  PullRequestComponent: T.oneOfType([T.func, T.node, T.object]),
   view: T.string,
 };
 

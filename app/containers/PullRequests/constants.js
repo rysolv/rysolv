@@ -1,3 +1,5 @@
+export const CLEAR_ERROR = 'app/PullRequests/CLEAR_ERROR';
+
 export const CLEAR_FORM = 'app/PullRequests/CLEAR_FORM';
 
 export const CREATE_PULL_REQUEST_FAILURE =

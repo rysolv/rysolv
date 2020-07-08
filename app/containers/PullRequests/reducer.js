@@ -2,6 +2,7 @@
 import produce from 'immer';
 
 import {
+  CLEAR_ERROR,
   CLEAR_FORM,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
@@ -41,6 +42,10 @@ export const initialState = {
 /* eslint-disable default-case, no-param-reassign */
 const pullRequestReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case CLEAR_ERROR: {
+      draft.error = initialState.error;
+      break;
+    }
     case CLEAR_FORM: {
       draft.createSuccess = initialState.createSuccess;
       draft.error = initialState.error;

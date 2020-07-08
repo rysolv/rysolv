@@ -10,6 +10,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Attempt from '@material-ui/icons/ListAlt';
 import Cancel from '@material-ui/icons/Cancel';
+import Check from '@material-ui/icons/Check';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import Circle from '@material-ui/icons/FiberManualRecord';
 import Close from '@material-ui/icons/Close';
@@ -54,6 +55,7 @@ export default (name, options) => {
     backArrow: ArrowBackIcon,
     backArrowHalf: ArrowBackIosIcon,
     cancel: Cancel,
+    check: Check,
     circle: Circle,
     close: Close,
     closeCircle: CloseCircle,

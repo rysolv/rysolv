@@ -1,22 +1,29 @@
 import React from 'react';
 import T from 'prop-types';
-import iconDictionary from 'utils/iconDictionary';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
-import { BaseTextInputWithAdornment } from 'components/base_ui';
-import { ImportForm } from './styledComponents';
+import {
+  ButtonGroup,
+  ImportFormContainer,
+  ImportUrlLabel,
+  ImportUrlWrapper,
+  StyledHeader,
+  StyledPrimaryAsyncButton,
+  StyledSecondayButton,
+  StyledTextareaAutosize,
+  TextareaWrapper,
+} from './styledComponents';
 
-const SearchIcon = iconDictionary('search');
-
-const ImportPullRequest = ({
+const ImportForm = ({
   error,
+  handleClose,
   handleImport,
   handleInputChange,
   importData,
   loading,
 }) => {
   const { importUrl } = importData;
-
-  const onChangeHandler = e => {
+  const handleChange = e => {
     handleInputChange({
       field: 'importUrl',
       form: 'importData',
@@ -24,28 +31,39 @@ const ImportPullRequest = ({
     });
   };
   return (
-    <ImportForm>
-      <p>Import Pull Reqest</p>
-      <BaseTextInputWithAdornment
-        adornmentComponent={SearchIcon}
-        disabled={loading}
-        error={!!error}
-        helperText={error}
-        onChange={onChangeHandler}
-        onClick={handleImport}
-        position="end"
-        value={importUrl.value}
-      />
-    </ImportForm>
+    <ImportFormContainer>
+      <StyledHeader>Import Pull Request</StyledHeader>
+      <ImportUrlWrapper>
+        <ImportUrlLabel>Pull Request URL</ImportUrlLabel>
+        <TextareaWrapper>
+          <StyledTextareaAutosize
+            disabled={loading}
+            onChange={handleChange}
+            rows={2}
+            value={importUrl.value}
+          />
+          <FormHelperText error={!!error}>{error}</FormHelperText>
+        </TextareaWrapper>
+      </ImportUrlWrapper>
+      <ButtonGroup>
+        <StyledSecondayButton label="Cancel" onClick={handleClose} />
+        <StyledPrimaryAsyncButton
+          label="Import"
+          loading={loading}
+          onClick={() => handleImport()}
+        />
+      </ButtonGroup>
+    </ImportFormContainer>
   );
 };
 
-ImportPullRequest.propTypes = {
+ImportForm.propTypes = {
   error: T.string,
+  handleClose: T.func,
   handleImport: T.func,
   handleInputChange: T.func,
   importData: T.object,
   loading: T.bool,
 };
 
-export default ImportPullRequest;
+export default ImportForm;

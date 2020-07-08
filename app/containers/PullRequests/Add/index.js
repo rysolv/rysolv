@@ -4,11 +4,11 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import AsyncRender from 'components/AsyncRender';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import {
+  clearError,
   clearForm,
   createPullRequest,
   handleStep,
@@ -27,6 +27,8 @@ const AddPullRequest = ({
   dispatchHandleStep,
   dispatchImportPullRequest,
   error,
+  handleClearError,
+  handleClose,
   handleInputChange,
   importData,
   issueId,
@@ -45,23 +47,21 @@ const AddPullRequest = ({
   const handleSubmit = () => {
     dispatchCreatePullRequest({ issueId, userId, importData });
   };
-  return (
-    <AsyncRender
-      asyncData={{}}
-      component={ComponentToRender}
-      loading={loading}
-      propsToPassDown={{
-        dispatchClearForm,
-        dispatchHandleStep,
-        error,
-        handleImport,
-        handleInputChange,
-        handleSubmit,
-        importData,
-        loading,
-      }}
-    />
-  );
+
+  const propsToPassDown = {
+    dispatchClearForm,
+    dispatchHandleStep,
+    error,
+    handleClearError,
+    handleClose,
+    handleImport,
+    handleInputChange,
+    handleSubmit,
+    importData,
+    loading,
+  };
+
+  return <ComponentToRender {...propsToPassDown} />;
 };
 
 AddPullRequest.propTypes = {
@@ -70,6 +70,8 @@ AddPullRequest.propTypes = {
   dispatchHandleStep: T.func,
   dispatchImportPullRequest: T.func,
   error: T.oneOfType([T.bool, T.string]),
+  handleClearError: T.func,
+  handleClose: T.func,
   handleInputChange: T.func,
   importData: T.object,
   issueId: T.string,
@@ -98,6 +100,7 @@ function mapDispatchToProps(dispatch) {
     dispatchHandleStep: payload => dispatch(handleStep(payload)),
     dispatchImportPullRequest: payload => dispatch(importPullRequest(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
+    handleClearError: () => dispatch(clearError()),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }

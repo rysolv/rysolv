@@ -85,6 +85,7 @@ export function* fetchUserPullRequestsSaga({ payload }) {
         ... on PullRequestArray {
           pullRequestArray {
             createdDate
+            fundedAmount
             githubUsername
             htmlUrl
             issueId
