@@ -96,12 +96,6 @@ export const OneLinkWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const StyledA = styled.a`
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
 export const Rep = styled.div`
   align-items: center;
   display: flex;
@@ -127,6 +121,12 @@ export const SettingsTabsWrapper = styled.div`
   ${mobile} {
     margin-left: 0;
     margin-top: ${({ displayBottom }) => (displayBottom ? '0' : '2rem')};
+  }
+`;
+
+export const StyledA = styled.a`
+  &:hover {
+    text-decoration: underline;
   }
 `;
 

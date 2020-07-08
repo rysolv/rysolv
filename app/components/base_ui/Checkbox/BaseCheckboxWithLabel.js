@@ -26,6 +26,7 @@ const CheckboxWithLabel = ({
       }
       label={label}
       {...formControlProps}
+      {...restProps}
     />
   </CheckboxWrapper>
 );

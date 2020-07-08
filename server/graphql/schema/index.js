@@ -159,6 +159,7 @@ module.exports = buildSchema(`
     githubUsername: String
     htmlUrl: String
     issueId: ID!
+    fundedAmount: Float
     mergeable: Boolean
     mergeableState: String
     merged: Boolean

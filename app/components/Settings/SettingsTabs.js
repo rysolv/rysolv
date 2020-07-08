@@ -10,6 +10,7 @@ import WithdrawalFormComponent from './Balance/Withdrawal/WithdrawalFormComponen
 import { getTabToDisplay } from './helpers';
 import UserIssues from './Issues';
 import UserOrganizations from './Organizations';
+import UserPullRequests from './PullRequests';
 import UserTimelineView from './Timeline';
 import UserWatching from './Watching';
 import {
@@ -48,6 +49,7 @@ const SettingsTabs = ({
   issues,
   lastName,
   organizations,
+  PullRequestComponent,
   setChangeEmail,
   setChangeFirstName,
   setChangeLastName,
@@ -209,7 +211,7 @@ const SettingsTabs = ({
     3: (
       <UserOrganizations handleNav={handleNav} organizations={organizations} />
     ),
-    4: <div />,
+    4: <UserPullRequests Component={PullRequestComponent} />,
   };
   const TabMenu = () => (
     <StyledPopper anchorEl={anchorEl} open={openMenu} placement="bottom-start">
@@ -330,6 +332,7 @@ SettingsTabs.propTypes = {
   issues: T.array,
   lastName: T.string,
   organizations: T.array,
+  PullRequestComponent: T.oneOfType([T.func, T.node, T.object]),
   setChangeEmail: T.func,
   setChangeFirstName: T.func,
   setChangeLastName: T.func,

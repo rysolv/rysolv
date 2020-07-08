@@ -11,6 +11,7 @@ import DeleteUserModal from 'components/DeleteUserModal';
 import SettingsView from 'components/Settings';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
+import PullRequestOverview from 'containers/PullRequests/Overview';
 import {
   handleCreditCardNumberChange,
   handleCvcChange,
@@ -110,6 +111,7 @@ const Settings = ({
       },
     },
   };
+  const PullRequestComponent = () => <PullRequestOverview userId={id} />;
   return (
     <SettingsWrapper>
       <AsyncRender
@@ -130,6 +132,7 @@ const Settings = ({
           handleInputChange,
           handleNav,
           handleRemoveIssue,
+          PullRequestComponent,
           view,
         }}
       />
