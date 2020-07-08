@@ -26,6 +26,7 @@ const {
 const { createActivity } = require('./activityResolver');
 
 const { getSingleIssue, getSingleRepo } = require('../../integrations');
+const { formatIssueUrl } = require('../../integrations/github/helpers');
 
 const newIssueArray = (issueId, issueInput) => [
   [
@@ -211,30 +212,36 @@ module.exports = {
   },
   importIssue: async args => {
     const { url } = args;
-
     try {
-      // get issue detail from Github API
-      const {
-        issueInput,
-        issueInput: { organizationUrl },
-      } = await getSingleIssue(url);
+      // Parse issue url
+      const { issueNumber, organization, repo } = formatIssueUrl(url);
+
+      // Get issue detail from github API
+      const { issueInput } = await getSingleIssue({
+        issueNumber,
+        organization,
+        repo,
+      });
 
       // Check issue repo for duplicate
       if (await checkDuplicateIssue('issues', issueInput.repo)) {
         throw new Error(`Issue at ${issueInput.repo} already exists`);
       }
 
-      // get organization detail from Github API
-      const { organizationInput } = await getSingleRepo(organizationUrl);
+      // Get organization detail from github API
+      const { organizationInput } = await getSingleRepo({
+        organization,
+        repo,
+      });
 
       // Return organizaiton ID if exists in db
-      const [organization] = await getOrganizationsWhere(
+      const [organizationData] = await getOrganizationsWhere(
         'repo_url',
         organizationInput.organizationRepo,
       );
 
-      if (organization) {
-        const { id } = organization;
+      if (organizationData) {
+        const { id } = organizationData;
         issueInput.organizationId = id;
       }
 
@@ -375,7 +382,7 @@ module.exports = {
   },
   upvoteIssue: async args => {
     const { id } = args;
-    const [result] = await upvoteIssue('issues', id);
+    const [result] = await upvoteIssue(id);
     return result;
   },
 };

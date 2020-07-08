@@ -15,6 +15,7 @@ import {
 } from './styledComponents';
 
 const OrganizationDetailTabs = ({
+  activeUser,
   contributors,
   dispatchOpenModal,
   filterValues,
@@ -51,6 +52,7 @@ const OrganizationDetailTabs = ({
     <ConditionalRender
       Component={
         <OrganizationIssuesTab
+          activeUser={activeUser}
           dispatchOpenModal={dispatchOpenModal}
           handleNav={handleNav}
           handleUpvote={handleUpvote}
@@ -100,6 +102,7 @@ const OrganizationDetailTabs = ({
 };
 
 OrganizationDetailTabs.propTypes = {
+  activeUser: T.object,
   contributors: T.array,
   dispatchOpenModal: T.func,
   filterValues: T.object.isRequired,

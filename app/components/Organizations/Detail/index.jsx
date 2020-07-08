@@ -50,6 +50,7 @@ const VerifiedComponent = (
 );
 
 const OrganizationDetailView = ({
+  activeUser,
   activeUser: { organizations },
   alerts: { error, success },
   data: {
@@ -232,6 +233,7 @@ const OrganizationDetailView = ({
       <TabsContainer>
         <MainTabs>
           <OrganizationDetailTabs
+            activeUser={activeUser}
             contributors={contributors}
             dispatchOpenModal={dispatchOpenModal}
             filterValues={filterValues}

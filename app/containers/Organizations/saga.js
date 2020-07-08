@@ -259,7 +259,6 @@ export function* saveInfoSaga({ payload }) {
 }
 
 export function* searchOrganizationsSaga({ payload }) {
-  console.log('its the same function');
   const { value } = payload;
   const query = `
   query {

@@ -12,7 +12,12 @@ const formatIssueUrl = value => {
     url[url.length - 5] === 'www.github.com' ||
     url[url.length - 5] === 'api.github.com';
   if (validIssueNumber && validIssues && containsGithub) {
-    return `https://api.github.com/repos/${organization}/${repo}/issues/${issueNumber}`;
+    return {
+      formattedUrl: `https://api.github.com/repos/${organization}/${repo}/issues/${issueNumber}`,
+      issueNumber,
+      organization,
+      repo,
+    };
   }
   throw new Error('Not a valid issue url');
 };
@@ -25,7 +30,8 @@ const formatOrganizationUrl = value => {
   if (url.includes('api.github.com')) {
     return {
       type: 'repo',
-      formattedUrl: value,
+      organization: url[url.length - 2],
+      repo: url[url.length - 1],
     };
   }
 
@@ -46,14 +52,17 @@ const formatOrganizationUrl = value => {
       const repo = url[githubPosition + 2];
       const organization = url[githubPosition + 1];
       return {
-        type: 'repo',
         formattedUrl: `https://api.github.com/repos/${organization}/${repo}`,
+        organization,
+        repo,
+        type: 'repo',
       };
     }
     const organization = url[githubPosition + 1];
     return {
-      type: 'organization',
       formattedUrl: `https://api.github.com/users/${organization}`,
+      organization,
+      type: 'organization',
     };
   }
   throw new Error('Not a valid organization url');

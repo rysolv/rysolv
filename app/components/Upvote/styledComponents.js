@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { FlatIconButton } from 'components/base_ui';
 
-import { defaultFontSize, selectedColor, textColor } from 'defaultStyleHelper';
+import { defaultFontSize, upvoteColor, textColor } from 'defaultStyleHelper';
 
 export const StyledFlatIconButton = styled(FlatIconButton)`
   padding: 0;
@@ -15,7 +15,7 @@ export const UpvoteContainer = styled.div`
     isIssueDetail ? '0' : '0.2rem'};
   color: ${textColor};
   * {
-    color: ${({ upvoted }) => (upvoted ? selectedColor : textColor)};
+    color: ${({ upvoted }) => (upvoted ? upvoteColor : textColor)};
   }
   font-size: ${defaultFontSize};
   font-weight: 550;

@@ -163,9 +163,9 @@ const updateIssueArray = async (table, column, id, data, remove) => {
   return issueData;
 };
 
-const upvoteIssue = async (table, id) => {
+const upvoteIssue = async id => {
   const upvoteQuery = `
-    UPDATE ${table} SET rep = rep + 1
+    UPDATE issues SET rep = rep + 1
     WHERE (id = '${id}')
     RETURNING *`;
   const { rows } = await singleQuery(upvoteQuery);
