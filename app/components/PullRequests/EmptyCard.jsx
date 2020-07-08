@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { EmptyComponentContainer } from './styledComponents';
+
 const EmptyCard = () => (
-  <div style={{ margin: '3rem 0', textAlign: 'center' }}>
-    <p>No active pull requests</p>
-  </div>
+  <EmptyComponentContainer>
+    No pull requests could be found.
+  </EmptyComponentContainer>
 );
 
 export default EmptyCard;
