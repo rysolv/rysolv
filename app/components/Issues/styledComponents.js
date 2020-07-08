@@ -12,7 +12,7 @@ export const MessageWrapper = styled.div`
   border-radius: 0.5rem;
   color: ${textColor};
   display: flex;
-  font-size: ${defaultFontSize};
+  font-size: 1.6rem;
   height: 55rem;
   justify-content: center;
   margin: 0.5rem 1rem;

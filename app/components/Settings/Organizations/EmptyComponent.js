@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { EmptyComponentContainer } from './styledComponents';
+import { EmptyComponentContainer } from '../styledComponents';
 
 const EmptyComponent = () => (
   <EmptyComponentContainer>

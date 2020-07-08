@@ -29,7 +29,11 @@ import {
   TimelineVerticalDivider,
   StyledAction,
 } from './styledComponents';
-import { HeaderWrapper, StyledH3 } from '../styledComponents';
+import {
+  EmptyComponentContainer,
+  HeaderWrapper,
+  StyledH3,
+} from '../styledComponents';
 
 const ViewAllIcon = iconDictionary('viewAll');
 
@@ -76,7 +80,7 @@ const UserTimelineView = ({
     />
   );
 
-  const activityDiv = activity.map((el, index) => {
+  const ActivityComponent = activity.map((el, index) => {
     const {
       action,
       activityId,
@@ -184,7 +188,13 @@ const UserTimelineView = ({
           values={['All', 'Earned', 'Funded', 'Submitted', 'Withdrew']}
         />
       </HeaderWrapper>
-      {activityDiv}
+      <ConditionalRender
+        Component={ActivityComponent}
+        FallbackComponent={
+          <EmptyComponentContainer>No recent activity.</EmptyComponentContainer>
+        }
+        shouldRender={activity.length > 0}
+      />
     </TimelineContainer>
   );
 };

@@ -16,7 +16,7 @@ export const EmptyComponentContainer = styled.div`
   color: ${textColor};
   display: flex;
   font-size: 1.6rem;
-  height: 40rem;
+  height: 30rem;
   justify-content: center;
   text-align: center;
 `;

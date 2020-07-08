@@ -36,6 +36,16 @@ export const DetailViewContainer = styled.div`
   }
 `;
 
+export const EmptyComponentContainer = styled.div`
+  align-items: center;
+  color: ${textColor};
+  display: flex;
+  font-size: 1.6rem;
+  height: 30rem;
+  justify-content: center;
+  text-align: center;
+`;
+
 export const HeaderWrapper = styled.div`
   align-items: center;
   display: flex;
