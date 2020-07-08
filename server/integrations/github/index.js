@@ -53,10 +53,6 @@ const getSingleRepo = async ({ organization, repo }) => {
     // Authenticate with oktokit API - TODO: create better auth middleware
     const { GITHUB } = await authenticate();
 
-    // if (type === 'organization') {
-    //   return await getSingleOrganization(organization);
-    // }
-
     const { data: repoData } = await GITHUB.repos.get({
       owner: organization,
       repo,

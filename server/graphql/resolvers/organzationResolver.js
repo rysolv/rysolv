@@ -13,8 +13,9 @@ const {
   transformOrganization,
   updateUserArray,
 } = require('../../db');
-const { getSingleRepo } = require('../../integrations');
+const { getSingleRepo, getSingleOrganization } = require('../../integrations');
 const { uploadImage } = require('../../middlewares/imageUpload');
+const { formatOrganizationUrl } = require('../../integrations/github/helpers');
 
 const defaultOrgLogo =
   'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png';
@@ -105,7 +106,27 @@ module.exports = {
   importOrganization: async args => {
     const { url } = args;
     try {
-      const { organizationInput: ImportData } = await getSingleRepo(url);
+      // Parse organization url
+      const { organization, repo, type } = formatOrganizationUrl(url);
+
+      // If user supplied an organization : pull organization data
+      if (type === 'organization') {
+        const { organizationInput: ImportData } = await getSingleOrganization(
+          organization,
+        );
+        await checkDuplicate(ImportData.organizationRepo);
+
+        return {
+          __typename: 'ImportData',
+          ...ImportData,
+        };
+      }
+
+      // Else pull repo data
+      const { organizationInput: ImportData } = await getSingleRepo({
+        organization,
+        repo,
+      });
 
       await checkDuplicate(ImportData.organizationRepo);
 
