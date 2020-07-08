@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
-import { defaultFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
+import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { laptopS, mobile, mobileXS } = mediaQueriesByDevice;
 
 export const ContentWrapper = styled.div`
   display: flex;
@@ -55,7 +58,10 @@ export const PullRequestContent = styled.div`
 `;
 
 export const PullRequestDateWrapper = styled.div`
+  display: flex;
   font-size: 1.2rem;
+  justify-content: flex-end;
+  width: 100%;
 `;
 
 export const PullRequestListItem = styled.li`
@@ -102,19 +108,26 @@ export const TestIconWrapper = styled.div`
 `;
 
 export const TitleWrapper = styled.div`
-  padding: 1.5rem 0;
-
-  &:hover {
-    color: ${hoverLinkColor};
-    cursor: pointer;
-  }
+  padding-top: 1.5rem;
 `;
 
-export const TopContainer = styled.div`
-  align-items: center;
+export const UrlContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  padding: 0.5rem 0 1.5rem 0;
+  width: 80%;
+
+  ${laptopS} {
+    flex-direction: column;
+  }
+
+  ${mobile} {
+    flex-direction: row;
+  }
+
+  ${mobileXS} {
+    flex-direction: column;
+  }
 `;
 
 export const UrlWrapper = styled.a`
@@ -122,6 +135,8 @@ export const UrlWrapper = styled.a`
   display: flex;
   font-size: 1.4rem;
   font-weight: 500;
+  padding-right: ${({ addPadding }) => (addPadding ? '0.5rem' : '0')};
+  white-space: nowrap;
 
   &:hover {
     color: #007bff;
