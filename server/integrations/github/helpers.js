@@ -82,7 +82,12 @@ const formatPullRequestUrl = value => {
     url[url.length - 5] === 'www.github.com' ||
     url[url.length - 5] === 'api.github.com';
   if (validPullNumber && validPull && containsGithub) {
-    return `https://api.github.com/repos/${organization}/${repo}/pulls/${pullNumber}`;
+    return {
+      formattedUrl: `https://api.github.com/repos/${organization}/${repo}/pulls/${pullNumber}`,
+      organization,
+      repo,
+      pullNumber,
+    };
   }
   throw new Error('Not a valid pull request url');
 };

@@ -127,10 +127,10 @@ export function* fetchUserPullRequestsSaga({ payload }) {
 }
 
 export function* importPullRequestSaga({ payload }) {
-  const { url } = payload;
+  const { url, issueId } = payload;
   const query = `
     mutation {
-      importPullRequest(url: "${url}") {
+      importPullRequest(url: "${url}", issueId:"${issueId}") {
         __typename
         ... on ImportPullRequest {
           apiUrl

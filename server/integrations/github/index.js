@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-const { FETCH } = require('../helpers');
-const { formatPullRequestUrl } = require('./helpers');
 const { authenticate } = require('./auth');
 
 const getSingleIssue = async ({ issueNumber, organization, repo }) => {
@@ -146,12 +144,15 @@ const getSingleOrganization = async organization => {
   return { organizationInput };
 };
 
-const getSinglePullRequest = async pullRequestUrl => {
+const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
   // Authenticate with oktokit API - TODO: create better auth middleware
-  // const { GITHUB } = await authenticate();
+  const { GITHUB } = await authenticate();
 
-  const formattedUrl = formatPullRequestUrl(pullRequestUrl);
-  const pullRequestData = await FETCH(formattedUrl);
+  const { data: pullRequestData } = await GITHUB.pulls.get({
+    owner: organization,
+    repo,
+    pull_number: pullNumber,
+  });
 
   const {
     html_url,

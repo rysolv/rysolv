@@ -42,6 +42,7 @@ const AddPullRequest = ({
     const { importUrl } = importData;
     dispatchImportPullRequest({
       url: importUrl.value,
+      issueId,
     });
   };
   const handleSubmit = () => {

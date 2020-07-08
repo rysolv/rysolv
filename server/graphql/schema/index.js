@@ -321,7 +321,7 @@ module.exports = buildSchema(`
 
     importIssue(url: String!): ImportResult
     importOrganization(url: String!): ImportResult
-    importPullRequest(url: String!): ImportPullRequestResult
+    importPullRequest(url: String!, issueId: ID!): ImportPullRequestResult
 
     submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
 

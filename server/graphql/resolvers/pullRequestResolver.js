@@ -9,6 +9,7 @@ const {
 } = require('../../db');
 
 const { getSinglePullRequest } = require('../../integrations');
+const { formatPullRequestUrl } = require('../../integrations/github/helpers');
 
 module.exports = {
   createPullRequest: async args => {
@@ -48,9 +49,21 @@ module.exports = {
     }
   },
   importPullRequest: async args => {
-    const { url } = args;
+    const { url, issueId } = args;
     try {
-      const result = await getSinglePullRequest(url);
+      const { organization, repo, pullNumber } = formatPullRequestUrl(url);
+      const [{ organizationName }] = await getOneIssue('issues', issueId);
+
+      if (organizationName !== organization && organizationName !== repo) {
+        throw new Error('Pull request does not match issue repo');
+      }
+
+      const result = await getSinglePullRequest({
+        organization,
+        repo,
+        pullNumber,
+      });
+
       return {
         __typename: 'ImportPullRequest',
         ...result,
