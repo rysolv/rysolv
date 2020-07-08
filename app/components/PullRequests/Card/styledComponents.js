@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { defaultFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
+import { defaultFontSize, textColor } from 'defaultStyleHelper';
 
 export const ContentWrapper = styled.div`
   display: flex;
@@ -55,7 +55,10 @@ export const PullRequestContent = styled.div`
 `;
 
 export const PullRequestDateWrapper = styled.div`
+  display: flex;
   font-size: 1.2rem;
+  justify-content: flex-end;
+  width: 100%;
 `;
 
 export const PullRequestListItem = styled.li`
@@ -102,19 +105,14 @@ export const TestIconWrapper = styled.div`
 `;
 
 export const TitleWrapper = styled.div`
-  padding: 1.5rem 0;
-
-  &:hover {
-    color: ${hoverLinkColor};
-    cursor: pointer;
-  }
+  padding-top: 1.5rem;
 `;
 
-export const TopContainer = styled.div`
-  align-items: center;
+export const UrlContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  padding: 0.5rem 0 1.5rem 0;
+  width: 80%;
 `;
 
 export const UrlWrapper = styled.a`

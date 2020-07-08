@@ -19,35 +19,50 @@ import {
   TestIconContainer,
   TestIconWrapper,
   TitleWrapper,
-  TopContainer,
+  UrlContainer,
   UrlWrapper,
 } from './styledComponents';
 
 const CheckIcon = iconDictionary('check');
 const CloseIcon = iconDictionary('close');
 const GithubIcon = iconDictionary('github');
+const IssueIcon = iconDictionary('issue');
 
 const PullRequestCard = ({ data }) => (
   <PullRequestCardContainer>
     {data.map(
       (
-        { createdDate, fundedAmount, htmlUrl, mergeableState, merged, title },
+        {
+          createdDate,
+          fundedAmount,
+          htmlUrl,
+          issueId,
+          mergeableState,
+          merged,
+          title,
+        },
         index,
       ) => {
         const isMergeable = mergeableState === 'clean';
         return (
           <PullRequestListItem key={`list-item-${index}`}>
-            <TopContainer>
-              <UrlWrapper href={htmlUrl} target="_blank">
-                <Icon>{GithubIcon}</Icon> View on Github
-              </UrlWrapper>
-              <PullRequestDateWrapper>
-                Created {moment(createdDate).format('M/D/YYYY')}
-              </PullRequestDateWrapper>
-            </TopContainer>
+            <PullRequestDateWrapper>
+              Created {moment(createdDate).format('M/D/YYYY')}
+            </PullRequestDateWrapper>
             <PullRequestContent>
               <ContentWrapper>
                 <TitleWrapper>{title}</TitleWrapper>
+                <UrlContainer>
+                  <UrlWrapper
+                    href={`/issues/detail/${issueId}`}
+                    target="_blank"
+                  >
+                    <Icon>{IssueIcon}</Icon> View Issue
+                  </UrlWrapper>
+                  <UrlWrapper href={htmlUrl} target="_blank">
+                    <Icon>{GithubIcon}</Icon> View on Github
+                  </UrlWrapper>
+                </UrlContainer>
                 <StatusWrapper>
                   <div>
                     <IssueMerged merged={merged}>
