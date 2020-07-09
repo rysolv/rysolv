@@ -261,6 +261,10 @@ module.exports = buildSchema(`
     username: String
   }
 
+  type Withdrawal {
+    balance: Float
+  }
+
   type Error {
     message: String
   }
@@ -279,6 +283,7 @@ module.exports = buildSchema(`
   union OrganizationArrayResult = OrganizationArray | Error
   union EventResponse = Success | Error
   union PaymentResult = Payment | Error
+  union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
     getActivity(column: String!, id: ID): ActivityResult!
@@ -314,6 +319,7 @@ module.exports = buildSchema(`
     createOrganization(organizationInput: OrganizationInput): OrganizationResult
     createUser(userInput: UserInput): [User!]!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
+    createWithdrawal(fee: Float!, transferValue: Float!, userId: String!): WithdrawalResult!
 
     deleteIssue(id: ID!): String!
     deleteOrganization(id:ID!): String!

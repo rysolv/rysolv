@@ -67,6 +67,7 @@ const SettingsView = ({
   handleInputChange,
   handleNav,
   handleRemoveIssue,
+  handleWithdrawFunds,
   PullRequestComponent,
   view,
 }) => {
@@ -225,6 +226,7 @@ const SettingsView = ({
             handleInputChange={handleInputChange}
             handleNav={handleNav}
             handleRemoveIssue={handleRemoveIssue}
+            handleWithdrawFunds={handleWithdrawFunds}
             isDisabled={isDisabled}
             issues={issues}
             lastName={lastName}
@@ -261,6 +263,7 @@ SettingsView.propTypes = {
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
+  handleWithdrawFunds: T.func.isRequired,
   PullRequestComponent: T.oneOfType([T.func, T.node, T.object]),
   view: T.string,
 };

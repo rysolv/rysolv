@@ -1,7 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { fetchActiveUser, signout } from 'containers/Auth/actions';
+import {
+  fetchActiveUser,
+  signout,
+  updateActiveUser,
+} from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
@@ -10,6 +14,7 @@ import {
   REMOVE_ISSUE,
   SAVE_CHANGE,
   SUBMIT_PAYMENT,
+  WITHDRAW_FUNDS,
 } from './constants';
 import {
   deleteUserFailure,
@@ -21,6 +26,8 @@ import {
   removeIssueSuccess,
   saveChangeFailure,
   saveChangeSuccess,
+  withdrawFundsFailure,
+  withdrawFundsSuccess,
 } from './actions';
 
 export function* deleteUserSaga({ payload }) {
@@ -180,10 +187,46 @@ export function* submitPaymentSaga({ payload }) {
   }
 }
 
+export function* withdrawFundsSaga({ payload }) {
+  const { fee, transferValue, userId } = payload;
+  const query = `
+    mutation {
+      createWithdrawal(fee: ${fee}, transferValue: ${transferValue}, userId: "${userId}") {
+        ... on Withdrawal {
+          balance
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { createWithdrawal },
+    } = yield call(post, '/graphql', graphql);
+    const { balance } = createWithdrawal;
+    yield put(updateActiveUser({ balance }));
+    yield put(
+      withdrawFundsSuccess({
+        balance,
+        message: 'Withdrawal request has been successfully submitted.',
+      }),
+    );
+  } catch (error) {
+    yield put(withdrawFundsFailure({ error }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
   yield takeLatest(SUBMIT_PAYMENT, submitPaymentSaga);
+  yield takeLatest(WITHDRAW_FUNDS, withdrawFundsSaga);
 }

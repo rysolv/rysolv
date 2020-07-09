@@ -18,6 +18,9 @@ import {
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
   SUBMIT_PAYMENT,
+  WITHDRAW_FUNDS_FAILURE,
+  WITHDRAW_FUNDS_SUCCESS,
+  WITHDRAW_FUNDS,
 } from './constants';
 
 export const initialState = {
@@ -137,6 +140,23 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SUBMIT_PAYMENT: {
+      draft.loading = true;
+      break;
+    }
+    case WITHDRAW_FUNDS_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case WITHDRAW_FUNDS_SUCCESS: {
+      const { balance, message } = payload;
+      draft.loading = false;
+      draft.account.balance = balance;
+      draft.alerts.success = { message };
+      break;
+    }
+    case WITHDRAW_FUNDS: {
       draft.loading = true;
       break;
     }

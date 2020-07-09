@@ -31,6 +31,7 @@ import {
   removeIssue,
   saveChange,
   submitPayment,
+  withdrawFunds,
 } from './actions';
 import { settingViewDictionary } from './constants';
 import reducer from './reducer';
@@ -48,6 +49,7 @@ const Settings = ({
   dispatchOpenModal,
   dispatchSaveChange,
   dispatchSubmitPayment,
+  dispatchWithdrawFunds,
   error,
   filterValues,
   handleClearAlerts,
@@ -80,6 +82,12 @@ const Settings = ({
       email: '',
       zipValue,
     });
+  };
+
+  const handleWithdrawFunds = ({ fee, transferValue, userId }) => {
+    if (transferValue > 0) {
+      dispatchWithdrawFunds({ fee, transferValue, userId });
+    }
   };
   const {
     params: { view },
@@ -132,6 +140,7 @@ const Settings = ({
           handleInputChange,
           handleNav,
           handleRemoveIssue,
+          handleWithdrawFunds,
           PullRequestComponent,
           view,
         }}
@@ -151,6 +160,7 @@ Settings.propTypes = {
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveChange: T.func,
   dispatchSubmitPayment: T.func.isRequired,
+  dispatchWithdrawFunds: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object,
   handleClearAlerts: T.func.isRequired,
@@ -195,6 +205,7 @@ function mapDispatchToProps(dispatch) {
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
     dispatchSubmitPayment: payload => dispatch(submitPayment(payload)),
+    dispatchWithdrawFunds: payload => dispatch(withdrawFunds(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleDeleteUser: payload => dispatch(deleteUser(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),

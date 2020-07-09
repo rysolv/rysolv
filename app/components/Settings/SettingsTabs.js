@@ -45,6 +45,7 @@ const SettingsTabs = ({
   handleInputChange,
   handleNav,
   handleRemoveIssue,
+  handleWithdrawFunds,
   isDisabled,
   issues,
   lastName,
@@ -133,7 +134,9 @@ const SettingsTabs = ({
         <WithdrawalFormComponent
           balance={balance}
           handleNav={handleNav}
+          handleWithdrawFunds={handleWithdrawFunds}
           setDisplayBottom={setDisplayBottom}
+          userId={userId}
         />
       }
       shouldRender={view === 'deposit'}
@@ -328,6 +331,7 @@ SettingsTabs.propTypes = {
   handleInputChange: T.func,
   handleNav: T.func,
   handleRemoveIssue: T.func,
+  handleWithdrawFunds: T.func,
   isDisabled: T.bool,
   issues: T.array,
   lastName: T.string,

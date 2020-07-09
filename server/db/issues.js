@@ -169,7 +169,6 @@ const upvoteIssue = async id => {
     WHERE (id = '${id}')
     RETURNING *`;
   const { rows } = await singleQuery(upvoteQuery);
-
   return rows;
 };
 

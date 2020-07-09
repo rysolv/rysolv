@@ -16,6 +16,9 @@ import {
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
+  WITHDRAW_FUNDS_FAILURE,
+  WITHDRAW_FUNDS_SUCCESS,
+  WITHDRAW_FUNDS,
 } from './constants';
 
 export function clearAlerts() {
@@ -132,5 +135,26 @@ export function submitPayment(payload) {
   return {
     payload,
     type: SUBMIT_PAYMENT,
+  };
+}
+
+export function withdrawFundsFailure(payload) {
+  return {
+    payload,
+    type: WITHDRAW_FUNDS_FAILURE,
+  };
+}
+
+export function withdrawFundsSuccess(payload) {
+  return {
+    payload,
+    type: WITHDRAW_FUNDS_SUCCESS,
+  };
+}
+
+export function withdrawFunds(payload) {
+  return {
+    payload,
+    type: WITHDRAW_FUNDS,
   };
 }

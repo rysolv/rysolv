@@ -8,6 +8,7 @@ const {
   organizationSchema,
   pullRequestSchema,
   userSchema,
+  withdrawalSchema,
 } = require('./schemas');
 
 // Create empty tables from schema
@@ -19,6 +20,7 @@ const createTables = async () => {
   await singleQuery(issueSchema);
   await singleQuery(pullRequestSchema);
   await singleQuery(activitySchema);
+  await singleQuery(withdrawalSchema);
 };
 
 // Drop all tables
@@ -30,6 +32,7 @@ const dropAllTables = async () => {
   await singleQuery('DROP TABLE IF EXISTS comments cascade');
   await singleQuery('DROP TABLE IF EXISTS organizations cascade');
   await singleQuery('DROP TABLE IF EXISTS pullRequests cascade');
+  await singleQuery('DROP TABLE IF EXISTS withdrawal cascade');
 };
 
 // Print all rows in all tables
@@ -41,6 +44,7 @@ const printTables = async () => {
     'SELECT * FROM organizations',
     'SELECT * FROM pullRequests',
     'SELECT * FROM users',
+    'SELECT * FROM withdrawal',
   ];
   await mapQueryPrint(queryArray);
 };

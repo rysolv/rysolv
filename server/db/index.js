@@ -47,6 +47,7 @@ const {
   updateOrganizationArray,
 } = require('./organizations');
 const { createTables, dropAllTables, printTables } = require('./tables');
+const { createWithdrawal, transformUserBalance } = require('./withdrawal');
 
 module.exports = {
   checkDuplicateIssue,
@@ -61,6 +62,7 @@ module.exports = {
   createPullRequest,
   createTables,
   createUser,
+  createWithdrawal,
   deleteIssue,
   deleteOrganization,
   deletePullRequest,
@@ -89,6 +91,7 @@ module.exports = {
   transformIssue,
   transformOrganization,
   transformUser,
+  transformUserBalance,
   updateIssueArray,
   updateOrganizationArray,
   updateUserArray,

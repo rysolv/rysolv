@@ -23,6 +23,10 @@ export const SAVE_CHANGE_SUCCESS = 'app/Settings/SAVE_CHANGE_SUCCESS';
 
 export const SUBMIT_PAYMENT = 'app/Settings/SUBMIT_PAYMENT';
 
+export const WITHDRAW_FUNDS = 'app/Settings/WITHDRAW_FUNDS';
+export const WITHDRAW_FUNDS_FAILURE = 'app/Settings/WITHDRAW_FUNDS_FAILURE';
+export const WITHDRAW_FUNDS_SUCCESS = 'app/Settings/WITHDRAW_FUNDS_SUCCESS';
+
 export const settingViewDictionary = {
   account: 1,
   attempting: 0,

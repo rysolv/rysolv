@@ -21,7 +21,13 @@ import {
 } from '../styledComponents';
 import { StyledH3 } from '../../styledComponents';
 
-const WithdrawalFormComponent = ({ balance, handleNav, setDisplayBottom }) => {
+const WithdrawalFormComponent = ({
+  balance,
+  handleNav,
+  handleWithdrawFunds,
+  setDisplayBottom,
+  userId,
+}) => {
   const [transferLocation, setTransferLocation] = useState('PayPal');
   const [transferValue, setTransferValue] = useState('0');
 
@@ -99,16 +105,25 @@ const WithdrawalFormComponent = ({ balance, handleNav, setDisplayBottom }) => {
       <WithdrawalInputContainer>
         <WithdrawalInputWrapper isRow isThin>
           <InputHeader>15% Rysolv Service Fee:</InputHeader>
-          <DisplayText>{formatDollarAmount(transferValue*0.15)}</DisplayText>
+          <DisplayText>{formatDollarAmount(transferValue * 0.15)}</DisplayText>
         </WithdrawalInputWrapper>
         <WithdrawalInputWrapper isRow>
           <InputHeader>Transfer to PayPal:</InputHeader>
           <DisplayText>
-            {transferValue > 0 ? `${formatDollarAmount(transferValue - (transferValue*0.15))} USD` : '–'}
+            {transferValue > 0
+              ? `${formatDollarAmount(
+                transferValue - transferValue * 0.15,
+              )} USD`
+              : '–'}
           </DisplayText>
         </WithdrawalInputWrapper>
       </WithdrawalInputContainer>
-      <StyledPrimaryAsyncButton label="Withdraw Funds" onClick={() => {}} />
+      <StyledPrimaryAsyncButton
+        label="Withdraw Funds"
+        onClick={() =>
+          handleWithdrawFunds({ fee: transferValue * 0.15, transferValue, userId })
+        }
+      />
     </Fragment>
   );
 };
@@ -116,7 +131,9 @@ const WithdrawalFormComponent = ({ balance, handleNav, setDisplayBottom }) => {
 WithdrawalFormComponent.propTypes = {
   balance: T.number.isRequired,
   handleNav: T.func.isRequired,
+  handleWithdrawFunds: T.func.isRequired,
   setDisplayBottom: T.func.isRequired,
+  userId: T.string.isRequired,
 };
 
 export default WithdrawalFormComponent;
