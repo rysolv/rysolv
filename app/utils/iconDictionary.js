@@ -24,6 +24,7 @@ import Done from '@material-ui/icons/Done';
 import Edit from '@material-ui/icons/Edit';
 import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
+import Facebook from '@material-ui/icons/Facebook';
 import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
 import Info from '@material-ui/icons/Info';
@@ -34,6 +35,7 @@ import PullRequest from '@material-ui/icons/AccountTree';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
 import Star from '@material-ui/icons/Star';
+import Twitter from '@material-ui/icons/Twitter';
 import Upvote from '@material-ui/icons/ArrowUpward';
 import Verified from '@material-ui/icons/VerifiedUser';
 import ViewAll from '@material-ui/icons/NavigateNext';
@@ -69,6 +71,7 @@ export default (name, options) => {
     dropdownArrow: ArrowDropDownIcon,
     edit: Edit,
     exit: Exit,
+    facebook: Facebook,
     forwardArrowHalf: ArrowForwardIosIcon,
     funded: MonetizationOn,
     gift: Gift,
@@ -87,6 +90,7 @@ export default (name, options) => {
     stackoverflow: Stackoverflow,
     star: Star,
     successOutline: CheckCircleOutline,
+    twitter: Twitter,
     upload: PublishIcon,
     upvote: Upvote,
     user: AccountCircleIcon,

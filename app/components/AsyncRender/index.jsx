@@ -1,7 +1,8 @@
 import React from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import { LoadingIndicator } from '../base_ui';
+
+import { LoadingIndicator } from 'components/base_ui';
 
 const AsyncRender = ({
   asyncData,
