@@ -24,7 +24,7 @@ const Footer = () => (
     <StyledTop>
       <TextContainer>
         <StyledTitle>rysolv</StyledTitle>
-        <div>Fixing the internet. One bug at a time...</div>
+        <div>Fixing the internet. One bug at a time.</div>
       </TextContainer>
       <div>
         <StyledUrl href="https://facebook.com/rysolv" target="_blank">

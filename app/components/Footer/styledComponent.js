@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { detailFontSize } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile } = mediaQueriesByDevice;
+const { mobile, mobileXS } = mediaQueriesByDevice;
 
 export const CopyrightWrapper = styled.div`
   color: lightgrey;
@@ -53,10 +53,6 @@ export const StyledTop = styled.div`
   justify-content: space-between;
   padding-left: 1rem;
   width: 100%;
-
-  ${mobile} {
-    place-content: center;
-  }
 `;
 
 export const StyledBottom = styled(StyledTop)`
@@ -88,6 +84,10 @@ export const StyledUrl = styled.a`
   svg {
     height: 2rem;
     width: 2rem;
+  }
+
+  ${mobileXS} {
+    padding: 0.5rem;
   }
 `;
 
