@@ -39,6 +39,9 @@ const SideNav = ({ deviceView, handleNav }) => {
     const { initialValue } = getInitialValue[formattedPath] || 0;
     setCurrentValue(initialValue);
     switch (deviceView) {
+      case 'desktopL':
+        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        break;
       case 'desktop':
         setDisplaySideNav(!excludedPath.includes(formattedPath));
         break;

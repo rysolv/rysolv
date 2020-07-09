@@ -54,7 +54,7 @@ export const IssueDetailContainer = styled.div`
 `;
 
 export const Divider = styled.div`
-  border-bottom: 1px solid ${borderColor};
+  border-bottom: 0.1rem solid ${borderColor};
   color: ${textColor};
   font-size: 2rem;
   font-weight: 500;

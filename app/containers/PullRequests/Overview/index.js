@@ -32,7 +32,7 @@ const PullRequestOverview = ({
       asyncData={pullRequests}
       component={PullRequests}
       error={error}
-      isRequiredData
+      isRequiredData={false}
       loading={loading}
     />
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import withAuth from 'containers/Auth';
 
+import Contact from 'components/Contact';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
 import Main from 'containers/HomePage/Loadable';
@@ -39,6 +40,7 @@ const PublicUsersDetail = withAuth(publicConfig, UsersDetail);
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={PublicMain} />
+    <Route exact path="/contactus" component={Contact} />
     <Route exact path="/issues" component={PublicOverview} />
     <Route exact path="/issues/search/:searchValue?" component={PublicOverview} />
     <Route exact path="/issues/add" component={PrivateIssuesAdd} />

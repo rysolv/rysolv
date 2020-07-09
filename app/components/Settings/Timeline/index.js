@@ -29,7 +29,11 @@ import {
   TimelineVerticalDivider,
   StyledAction,
 } from './styledComponents';
-import { HeaderWrapper, StyledH3 } from '../styledComponents';
+import {
+  EmptyComponentContainer,
+  HeaderWrapper,
+  StyledH3,
+} from '../styledComponents';
 
 const ViewAllIcon = iconDictionary('viewAll');
 
@@ -76,65 +80,66 @@ const UserTimelineView = ({
     />
   );
 
-  const activityDiv = activity.map((el, index) => {
-    const {
-      action,
-      activityId,
-      date,
-      fundedValue,
-      icon,
-      path,
-      target: { targetType, targetName },
-    } = el;
+  const ActivityComponent = () =>
+    activity.map((el, index) => {
+      const {
+        action,
+        activityId,
+        date,
+        fundedValue,
+        icon,
+        path,
+        target: { targetType, targetName },
+      } = el;
 
-    const TimelineListItemComponent = (
-      <TimelineListItem key={activityId}>
-        <TimelineDividerContainer>
-          <TimelineVerticalDivider />
-          {icon}
-        </TimelineDividerContainer>
-        <TimelineContent>
-          <TimelineType>
-            <StyledAction>{formatWordString(action)}</StyledAction>&nbsp;
-            {targetType}
-          </TimelineType>
-          <TimelineInfo>
-            <ConditionalRender
-              Component={
-                <Fragment>
-                  <TimelineDollar>
-                    {formatDollarAmount(fundedValue)}
-                  </TimelineDollar>
-                  for &nbsp;
-                </Fragment>
-              }
-              shouldRender={!!fundedValue}
-            />
-            <TimelineActivity onClick={() => handleNav(path)}>
-              {targetName}
-            </TimelineActivity>
-          </TimelineInfo>
-        </TimelineContent>
-      </TimelineListItem>
-    );
-
-    if (
-      index === 0 ||
-      moment(date).format('YYYY/MM/DD') !==
-        moment(activity[index - 1].date).format('YYYY/MM/DD')
-    ) {
-      return (
-        <Fragment key={`list-item-${index}`}>
-          <TimelineHeader>
-            <TimelineTitle>{moment(date).format('MMMM DD')}</TimelineTitle>
-            <TimelineHorizontalDivider />
-          </TimelineHeader>
-          {TimelineListItemComponent}
-        </Fragment>
+      const TimelineListItemComponent = (
+        <TimelineListItem key={activityId}>
+          <TimelineDividerContainer>
+            <TimelineVerticalDivider />
+            {icon}
+          </TimelineDividerContainer>
+          <TimelineContent>
+            <TimelineType>
+              <StyledAction>{formatWordString(action)}</StyledAction>&nbsp;
+              {targetType}
+            </TimelineType>
+            <TimelineInfo>
+              <ConditionalRender
+                Component={
+                  <Fragment>
+                    <TimelineDollar>
+                      {formatDollarAmount(fundedValue)}
+                    </TimelineDollar>
+                    for &nbsp;
+                  </Fragment>
+                }
+                shouldRender={!!fundedValue}
+              />
+              <TimelineActivity onClick={() => handleNav(path)}>
+                {targetName}
+              </TimelineActivity>
+            </TimelineInfo>
+          </TimelineContent>
+        </TimelineListItem>
       );
-    }
-    return TimelineListItemComponent;
-  });
+
+      if (
+        index === 0 ||
+        moment(date).format('YYYY/MM/DD') !==
+          moment(activity[index - 1].date).format('YYYY/MM/DD')
+      ) {
+        return (
+          <Fragment key={`list-item-${index}`}>
+            <TimelineHeader>
+              <TimelineTitle>{moment(date).format('MMMM DD')}</TimelineTitle>
+              <TimelineHorizontalDivider />
+            </TimelineHeader>
+            {TimelineListItemComponent}
+          </Fragment>
+        );
+      }
+      return TimelineListItemComponent;
+    });
 
   return (
     <TimelineContainer>
@@ -184,7 +189,13 @@ const UserTimelineView = ({
           values={['All', 'Earned', 'Funded', 'Submitted', 'Withdrew']}
         />
       </HeaderWrapper>
-      {activityDiv}
+      <ConditionalRender
+        Component={ActivityComponent}
+        FallbackComponent={
+          <EmptyComponentContainer>No recent activity.</EmptyComponentContainer>
+        }
+        shouldRender={activity.length > 0}
+      />
     </TimelineContainer>
   );
 };
