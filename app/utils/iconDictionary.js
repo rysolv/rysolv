@@ -22,6 +22,7 @@ import Delete from '@material-ui/icons/Delete';
 import Dollar from '@material-ui/icons/AttachMoney';
 import Done from '@material-ui/icons/Done';
 import Edit from '@material-ui/icons/Edit';
+import Email from '@material-ui/icons/Email';
 import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
 import Facebook from '@material-ui/icons/Facebook';
@@ -70,6 +71,7 @@ export default (name, options) => {
     done: Done,
     dropdownArrow: ArrowDropDownIcon,
     edit: Edit,
+    email: Email,
     exit: Exit,
     facebook: Facebook,
     forwardArrowHalf: ArrowForwardIosIcon,

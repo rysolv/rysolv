@@ -6,6 +6,7 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 const { mobile } = mediaQueriesByDevice;
 
 export const CopyrightWrapper = styled.div`
+  color: lightgrey;
   display: flex;
 `;
 
@@ -22,7 +23,7 @@ export const FooterWrapper = styled.footer`
   display: flex;
   flex-direction: column;
   font-size: ${detailFontSize};
-  padding: 3.6rem 5%;
+  padding: 1.6rem 5%;
   position: absolute;
   width: 100%;
 
@@ -73,7 +74,8 @@ export const StyledText = styled.div`
 
 export const StyledTitle = styled.div`
   font-size: 2.2rem;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 0;
+  text-align: start;
 `;
 
 export const StyledUrl = styled.a`
