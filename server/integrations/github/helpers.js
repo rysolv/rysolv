@@ -1,5 +1,5 @@
 // ISSUE URL
-// https://api.github.com/repos/organization/repo/issues/issueNumber
+// Incoming:  https://github.com/tylermaran/cadl/issues/5
 const formatIssueUrl = value => {
   const url = value.split('/');
   const issueNumber = url[url.length - 1];
@@ -23,17 +23,9 @@ const formatIssueUrl = value => {
 };
 
 // ORGANIZATION URL
-// https://api.github.com/repos/organization/repo
+// Incoming:  https://github.com/NixOS or https://github.com/NixOS/nixpkgs-channels
 const formatOrganizationUrl = value => {
   const url = value.split('/');
-
-  if (url.includes('api.github.com')) {
-    return {
-      type: 'repo',
-      organization: url[url.length - 2],
-      repo: url[url.length - 1],
-    };
-  }
 
   const containsHttps = url.includes('https:');
   if (!containsHttps) {
@@ -69,7 +61,7 @@ const formatOrganizationUrl = value => {
 };
 
 // PULL_REQUEST URL
-// https://api.github.com/repos/organization/repo/pulls/pullNumber
+// Incoming:  https://github.com/rysolv/rysolv/pull/4
 const formatPullRequestUrl = value => {
   const url = value.split('/');
   const pullNumber = url[url.length - 1];

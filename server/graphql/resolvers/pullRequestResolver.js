@@ -54,6 +54,7 @@ module.exports = {
       const { organization, repo, pullNumber } = formatPullRequestUrl(url);
       const [{ organizationName }] = await getOneIssue('issues', issueId);
 
+      // Check PR organization against issue organization
       if (organizationName !== organization && organizationName !== repo) {
         throw new Error('Pull request does not match issue repo');
       }
@@ -63,6 +64,12 @@ module.exports = {
         repo,
         pullNumber,
       });
+
+      if (await checkDuplicatePullRequest(result.htmlUrl)) {
+        throw new Error(
+          `Pull request at ${result.htmlUrl} has already been submitted`,
+        );
+      }
 
       return {
         __typename: 'ImportPullRequest',
