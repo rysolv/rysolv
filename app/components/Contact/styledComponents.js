@@ -36,7 +36,7 @@ export const EmailContainer = styled.div`
   flex-direction: column;
   font-size: ${defaultFontSize};
   min-height: 50rem;
-  padding: 1.6rem 2.6rem;
+  padding: 3.8rem 2.6rem;
   text-align: center;
   width: 100%;
 `;
