@@ -141,7 +141,7 @@ export const Main = ({
           </RoutesWrapper>
         </AppContentWrapper>
       </AppBodyWrapper>
-      <Footer />
+      <Footer handleNav={handleNav} />
       {modal && <ModalDialog {...modalPropsDictionary[modal]} />}
     </Fragment>
   );

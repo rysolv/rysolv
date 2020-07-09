@@ -10,7 +10,7 @@ export const BottomParagraph = styled.p``;
 export const ContactContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
 
   ${mobile} {
     margin: 0 1rem;

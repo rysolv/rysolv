@@ -1,4 +1,5 @@
 import React from 'react';
+import T from 'prop-types';
 
 import iconDictionary from 'utils/iconDictionary';
 
@@ -19,7 +20,7 @@ import {
 const FacebookIcon = iconDictionary('facebook');
 const TwitterIcon = iconDictionary('twitter');
 
-const Footer = () => (
+const Footer = ({ handleNav }) => (
   <FooterWrapper>
     <StyledTop>
       <TextContainer>
@@ -38,7 +39,9 @@ const Footer = () => (
     <Divider />
     <StyledBottom>
       <LinkContainer>
-        <LinkWrapper href="/contactus">Contact Us</LinkWrapper>
+        <LinkWrapper onClick={() => handleNav('/contactus')}>
+          Contact Us
+        </LinkWrapper>
       </LinkContainer>
       <CopyrightWrapper>
         <div>{`© ${new Date().getFullYear()} Rysolv, LLC`}</div>
@@ -48,5 +51,7 @@ const Footer = () => (
     </StyledBottom>
   </FooterWrapper>
 );
+
+Footer.propTypes = { handleNav: T.func.isRequired };
 
 export default Footer;
