@@ -140,7 +140,7 @@ module.exports = {
       result.attempting = attemptingListResult;
       const issuesListResult = await Promise.all(
         issues.map(async issueId => {
-          const [issuesResult] = await getOneIssue('issues', issueId);
+          const [issuesResult] = await getOneIssue(issueId);
           return issuesResult;
         }),
       );

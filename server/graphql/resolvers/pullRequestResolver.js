@@ -52,7 +52,7 @@ module.exports = {
     const { url, issueId } = args;
     try {
       const { organization, repo, pullNumber } = formatPullRequestUrl(url);
-      const [{ organizationName }] = await getOneIssue('issues', issueId);
+      const [{ organizationName }] = await getOneIssue(issueId);
 
       // Check PR organization against issue organization
       if (organizationName !== organization && organizationName !== repo) {
@@ -118,7 +118,7 @@ module.exports = {
       const formattedResult = await Promise.all(
         result.map(async pullRequest => {
           const { issueId } = pullRequest;
-          const [{ fundedAmount }] = await getOneIssue('issues', issueId);
+          const [{ fundedAmount }] = await getOneIssue(issueId);
           // eslint-disable-next-line no-param-reassign
           pullRequest.fundedAmount = fundedAmount;
           return pullRequest;

@@ -1,7 +1,7 @@
 // ISSUE URL
 // Incoming:  https://github.com/tylermaran/cadl/issues/5
 const formatIssueUrl = value => {
-  const { pathname, hostname } = new URL(value);
+  const { hostname, pathname } = new URL(value);
   const url = pathname.split('/');
   url.shift();
 
@@ -28,7 +28,7 @@ const formatIssueUrl = value => {
 // ORGANIZATION URL
 // Incoming:  https://github.com/NixOS or https://github.com/NixOS/nixpkgs-channels
 const formatOrganizationUrl = value => {
-  const { pathname, hostname } = new URL(value);
+  const { hostname, pathname } = new URL(value);
 
   const containsGithub = hostname === 'github.com';
   const url = pathname.split('/');
@@ -59,7 +59,7 @@ const formatOrganizationUrl = value => {
 // PULL_REQUEST URL
 // Incoming:  https://github.com/rysolv/rysolv/pull/4
 const formatPullRequestUrl = value => {
-  const { pathname, hostname } = new URL(value);
+  const { hostname, pathname } = new URL(value);
   const url = pathname.split('/');
   url.shift();
 
@@ -76,8 +76,8 @@ const formatPullRequestUrl = value => {
     return {
       formattedUrl: `https://api.github.com/repos/${organization}/${repo}/pulls/${pullNumber}`,
       organization,
-      repo,
       pullNumber,
+      repo,
     };
   }
   throw new Error('Not a valid pull request url');

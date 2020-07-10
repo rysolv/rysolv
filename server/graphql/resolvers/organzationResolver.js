@@ -155,7 +155,7 @@ module.exports = {
       result.contributors = contributorsResult;
       const issuesResult = await Promise.all(
         issues.map(async issueId => {
-          const [issueResult] = await getOneIssue('issues', issueId);
+          const [issueResult] = await getOneIssue(issueId);
           return issueResult;
         }),
       );

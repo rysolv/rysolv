@@ -28,51 +28,49 @@ const { createActivity } = require('./activityResolver');
 const { getSingleIssue, getSingleRepo } = require('../../integrations');
 const { formatIssueUrl } = require('../../integrations/github/helpers');
 
-const newIssueArray = (issueId, issueInput) => [
-  [
-    issueId, // id
-    new Date(), // created_date
-    new Date(), // modified_data
-    issueInput.organizationId, // organization_id
-    issueInput.name, // name
-    issueInput.body, // nody
-    issueInput.repo, // repo
-    issueInput.language || [], // language
-    issueInput.comments || [], // comments
-    issueInput.attempting || [], // attempting
-    issueInput.contributor, // contributor
-    issueInput.rep || 25, // rep
-    issueInput.watching || [], // watching
-    issueInput.fundedAmount || 0, // funded_amount
-    issueInput.open || true, // open
-    issueInput.type || 'bug', // bug
-  ],
-];
+const newIssueObject = (issueId, issueInput) => ({
+  attempting: issueInput.attempting || [], // attempting
+  body: issueInput.body, // body
+  comments: issueInput.comments || [], // comments
+  contributor_id: issueInput.contributor, // contributor
+  created_date: new Date(), // created_date
+  funded_amount: issueInput.fundedAmount || 0, // funded_amount
+  id: issueId, // id
+  language: issueInput.language || [], // language
+  modified_date: new Date(), // modified_data
+  name: issueInput.name, // name
+  open: issueInput.open || true, // open
+  organization_id: issueInput.organizationId, // organization_id
+  rep: issueInput.rep || 25, // rep
+  repo: issueInput.repo, // repo
+  type: issueInput.type || 'bug', // bug
+  watching: issueInput.watching || [], // watching
+});
 
 const newOrganizationObject = organizationInput => ({
-  id: uuidv4(), // id
+  contributors: [], // contributors
   created_date: new Date(), // created_date
-  modified_date: new Date(), // modified_date
-  name: organizationInput.organizationName, // name
   description: organizationInput.organizationDescription, // description
-  repo_url: organizationInput.organizationRepo, // repo
-  organization_url: organizationInput.organizationUrl || '', // url
+  id: uuidv4(), // id
   issues: organizationInput.issues || [], // issues
   logo: organizationInput.organizationLogo || defaultOrgImage, // logo
-  verified: organizationInput.verified || false, // verified
-  contributors: [], // contributors
+  modified_date: new Date(), // modified_date
+  name: organizationInput.organizationName, // name
+  organization_url: organizationInput.organizationUrl || '', // url
   owner_id: organizationInput.contributor, // owner_id
-  total_funded: organizationInput.totalFunded || 0, // funded
   preferred_languages: organizationInput.preferred_languages || [], // languages
+  repo_url: organizationInput.organizationRepo, // repo
+  total_funded: organizationInput.totalFunded || 0, // funded
+  verified: organizationInput.verified || false, // verified
 });
 
 module.exports = {
   closeIssue: async args => {
     const { id, shouldClose } = args;
     try {
-      const response = await closeIssue('issues', id, shouldClose);
+      const response = await closeIssue(id, shouldClose);
 
-      const [result] = await getOneIssue('issues', id);
+      const [result] = await getOneIssue(id);
 
       const activityInput = {
         actionType: shouldClose ? 'close' : 'reopen',
@@ -92,19 +90,19 @@ module.exports = {
     const { organizationRepo, repo, organizationId } = issueInput;
     const newIssueId = uuidv4();
 
-    // Populate issue array and create new issue
+    // Populate issue object and create new issue
     const createNewIssue = async () => {
-      const issueArray = newIssueArray(newIssueId, issueInput);
+      const issueObject = newIssueObject(newIssueId, issueInput);
       try {
-        const result = await createIssue(issueArray);
+        const result = await createIssue(issueObject);
         return result;
       } catch (err) {
         throw err;
       }
     };
-    // ***
+    // **********
 
-    // Populate organization array and create new organization
+    // Populate organization object and create new organization
     const createNewOrganization = async () => {
       // backup check
       if (await checkDuplicateOrganization(organizationRepo)) {
@@ -123,11 +121,11 @@ module.exports = {
         throw err;
       }
     };
-    // ***
+    // **********
 
     try {
       // Check for duplicate issue
-      if (await checkDuplicateIssue('issues', repo)) {
+      if (await checkDuplicateIssue(repo)) {
         throw new Error(`Issue at ${repo} already exists`);
       }
 
@@ -196,7 +194,7 @@ module.exports = {
   deleteIssue: async args => {
     const { id } = args;
     try {
-      const issues = await deleteIssue('issues', id);
+      const issues = await deleteIssue(id);
       return issues;
     } catch (err) {
       throw err;
@@ -204,7 +202,7 @@ module.exports = {
   },
   getIssues: async () => {
     try {
-      const issues = await getIssues('issues');
+      const issues = await getIssues();
       return issues;
     } catch (err) {
       throw err;
@@ -224,8 +222,8 @@ module.exports = {
       });
 
       // Check issue repo for duplicate
-      if (await checkDuplicateIssue('issues', issueInput.repo)) {
-        throw new Error(`Issue at ${issueInput.repo} already exists`);
+      if (await checkDuplicateIssue(issueInput.issueUrl)) {
+        throw new Error(`Issue at ${issueInput.issueUrl} already exists`);
       }
 
       // Get organization detail from github API
@@ -261,7 +259,7 @@ module.exports = {
   oneIssue: async args => {
     const { id } = args;
     try {
-      const [result] = await getOneIssue('issues', id);
+      const [result] = await getOneIssue(id);
       return {
         __typename: 'Issue',
         ...result,
@@ -276,7 +274,7 @@ module.exports = {
   searchIssues: async args => {
     const { value } = args;
     try {
-      const result = await searchIssues('issues', value);
+      const result = await searchIssues(value);
       return result;
     } catch (err) {
       throw err;
@@ -320,7 +318,7 @@ module.exports = {
         funded_amount: issueInput.fundedAmount,
         open: issueInput.open,
       };
-      const queryResult = await transformIssue('issues', id, data);
+      const queryResult = await transformIssue(id, data);
 
       const result = {
         id: queryResult.id,
@@ -362,13 +360,7 @@ module.exports = {
   updateIssueArray: async args => {
     const { id: issueId, column, data: userId, remove } = args;
 
-    const [result] = await updateIssueArray(
-      'issues',
-      column,
-      issueId,
-      userId,
-      remove,
-    );
+    const [result] = await updateIssueArray(column, issueId, userId, remove);
 
     const activityInput = {
       actionType: remove ? `remove_${column}` : `add_${column}`,
