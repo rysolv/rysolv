@@ -62,7 +62,7 @@ const VerifyForm = ({
             {htmlUrl.value}
           </StyledItem>
           <StyledItem>
-            <StyledLabel>Github Username</StyledLabel>
+            <StyledLabel>Posted by</StyledLabel>
             {githubUsername.value}
           </StyledItem>
         </PullRequestInfo>

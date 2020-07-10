@@ -52,10 +52,14 @@ module.exports = {
     const { url, issueId } = args;
     try {
       const { organization, repo, pullNumber } = formatPullRequestUrl(url);
-      const [{ organizationName }] = await getOneIssue(issueId);
+      const [{ repo: issueRepo }] = await getOneIssue(issueId);
+
+      // TODO: add org_displayname to issues schema to avoid this url parsing
+      const { pathname } = new URL(issueRepo);
+      const issueUrl = pathname.split('/');
 
       // Check PR organization against issue organization
-      if (organizationName !== organization && organizationName !== repo) {
+      if (issueUrl[1] !== organization && issueUrl[2] !== repo) {
         throw new Error('Pull request does not match issue repo');
       }
 
