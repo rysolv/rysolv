@@ -13,6 +13,8 @@ export const FETCH_INFO_SUCCESS = 'app/Settings/FETCH_INFO_SUCCESS';
 
 export const INPUT_CHANGE = 'app/Settings/INPUT_CHANGE';
 
+export const INPUT_ERROR = 'app/Settings/INPUT_ERROR';
+
 export const REMOVE_ISSUE = 'app/Settings/REMOVE_ISSUE';
 export const REMOVE_ISSUE_FAILURE = 'app/Settings/REMOVE_ISSUE_FAILURE';
 export const REMOVE_ISSUE_SUCCESS = 'app/Settings/REMOVE_ISSUE_SUCCESS';
@@ -26,6 +28,9 @@ export const SUBMIT_PAYMENT = 'app/Settings/SUBMIT_PAYMENT';
 export const WITHDRAW_FUNDS = 'app/Settings/WITHDRAW_FUNDS';
 export const WITHDRAW_FUNDS_FAILURE = 'app/Settings/WITHDRAW_FUNDS_FAILURE';
 export const WITHDRAW_FUNDS_SUCCESS = 'app/Settings/WITHDRAW_FUNDS_SUCCESS';
+
+export const transferValueLowErrorMessage =
+  'Transfer amount must be greater than $0.00.';
 
 export const settingViewDictionary = {
   account: 1,

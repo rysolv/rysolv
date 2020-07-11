@@ -1,10 +1,10 @@
 const { singleQuery } = require('../db/query');
 
 // CREATE single withdrawal
-const createWithdrawal = async (userId, fee, transferValue) => {
+const createWithdrawal = async (userId, withdrawalId, fee, transferValue) => {
   const withdrawalQuery = `
-    INSERT INTO withdrawal(fee, transfer_value, user_id)
-    VALUES(${fee}, ${transferValue}, '${userId}')
+    INSERT INTO withdrawal(id, fee, transfer_value, user_id)
+    VALUES('${withdrawalId}', ${fee}, ${transferValue}, '${userId}')
     RETURNING *`;
   const { rows } = await singleQuery(withdrawalQuery);
   return rows;

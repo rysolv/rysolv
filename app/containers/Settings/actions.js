@@ -7,8 +7,8 @@ import {
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
-  SUBMIT_PAYMENT,
   INPUT_CHANGE,
+  INPUT_ERROR,
   OPEN_MODAL_STATE,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
@@ -16,6 +16,7 @@ import {
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
+  SUBMIT_PAYMENT,
   WITHDRAW_FUNDS_FAILURE,
   WITHDRAW_FUNDS_SUCCESS,
   WITHDRAW_FUNDS,
@@ -79,6 +80,13 @@ export function inputChange(payload) {
   return {
     payload,
     type: INPUT_CHANGE,
+  };
+}
+
+export function inputError(payload) {
+  return {
+    payload,
+    type: INPUT_ERROR,
   };
 }
 

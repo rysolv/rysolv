@@ -33,6 +33,7 @@ const SettingsTabs = ({
   creditCardProps,
   currentTab,
   deviceView,
+  dispatchInputError,
   dispatchOpenModal,
   displayBottom,
   dollarsEarned,
@@ -46,6 +47,7 @@ const SettingsTabs = ({
   handleNav,
   handleRemoveIssue,
   handleWithdrawFunds,
+  inputErrors,
   isDisabled,
   issues,
   lastName,
@@ -133,8 +135,10 @@ const SettingsTabs = ({
       FallbackComponent={
         <WithdrawalFormComponent
           balance={balance}
+          dispatchInputError={dispatchInputError}
           handleNav={handleNav}
           handleWithdrawFunds={handleWithdrawFunds}
+          inputErrors={inputErrors}
           setDisplayBottom={setDisplayBottom}
           userId={userId}
         />
@@ -319,6 +323,7 @@ SettingsTabs.propTypes = {
   creditCardProps: T.object,
   currentTab: T.number,
   deviceView: T.string,
+  dispatchInputError: T.func,
   dispatchOpenModal: T.func,
   displayBottom: T.bool,
   dollarsEarned: T.number,
@@ -332,6 +337,7 @@ SettingsTabs.propTypes = {
   handleNav: T.func,
   handleRemoveIssue: T.func,
   handleWithdrawFunds: T.func,
+  inputErrors: T.object,
   isDisabled: T.bool,
   issues: T.array,
   lastName: T.string,

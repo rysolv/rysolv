@@ -60,6 +60,7 @@ const SettingsView = ({
     watching,
   },
   deviceView,
+  dispatchInputError,
   dispatchOpenModal,
   dispatchSaveChange,
   filterValues,
@@ -68,6 +69,7 @@ const SettingsView = ({
   handleNav,
   handleRemoveIssue,
   handleWithdrawFunds,
+  inputErrors,
   PullRequestComponent,
   view,
 }) => {
@@ -214,6 +216,7 @@ const SettingsView = ({
             creditCardProps={creditCardProps}
             currentTab={currentTab}
             deviceView={deviceView}
+            dispatchInputError={dispatchInputError}
             dispatchOpenModal={dispatchOpenModal}
             displayBottom={displayBottom}
             dollarsEarned={dollarsEarned}
@@ -227,6 +230,7 @@ const SettingsView = ({
             handleNav={handleNav}
             handleRemoveIssue={handleRemoveIssue}
             handleWithdrawFunds={handleWithdrawFunds}
+            inputErrors={inputErrors}
             isDisabled={isDisabled}
             issues={issues}
             lastName={lastName}
@@ -256,6 +260,7 @@ SettingsView.propTypes = {
   currentTab: T.number.isRequired,
   data: T.object.isRequired,
   deviceView: T.string.isRequired,
+  dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveChange: T.func.isRequired,
   filterValues: T.object.isRequired,
@@ -264,6 +269,7 @@ SettingsView.propTypes = {
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
   handleWithdrawFunds: T.func.isRequired,
+  inputErrors: T.object.isRequired,
   PullRequestComponent: T.oneOfType([T.func, T.node, T.object]),
   view: T.string,
 };

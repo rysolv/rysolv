@@ -10,6 +10,7 @@ import {
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
   INPUT_CHANGE,
+  INPUT_ERROR,
   OPEN_MODAL_STATE,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
@@ -31,6 +32,9 @@ export const initialState = {
     language: [],
     overview: 'Newest',
     users: 'All',
+  },
+  inputErrors: {
+    transferValue: false,
   },
   isModalOpen: false,
   loading: false,
@@ -90,6 +94,11 @@ const settingsReducer = produce((draft, { payload, type }) => {
       } else {
         draft[form][field].value = value;
       }
+      break;
+    }
+    case INPUT_ERROR: {
+      const { field, message } = payload;
+      draft.inputErrors[field] = message;
       break;
     }
     case OPEN_MODAL_STATE: {

@@ -27,13 +27,17 @@ import {
   deleteUser,
   fetchInfo,
   inputChange,
+  inputError,
   openModalState,
   removeIssue,
   saveChange,
   submitPayment,
   withdrawFunds,
 } from './actions';
-import { settingViewDictionary } from './constants';
+import {
+  settingViewDictionary,
+  transferValueLowErrorMessage,
+} from './constants';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectSettings, makeSelectSettingsDetail } from './selectors';
@@ -46,6 +50,7 @@ const Settings = ({
   deviceView,
   dispatchCloseModal,
   dispatchFetchInfo,
+  dispatchInputError,
   dispatchOpenModal,
   dispatchSaveChange,
   dispatchSubmitPayment,
@@ -57,6 +62,7 @@ const Settings = ({
   handleInputChange,
   handleNav,
   handleRemoveIssue,
+  inputErrors,
   isModalOpen,
   loading,
   match,
@@ -84,9 +90,14 @@ const Settings = ({
     });
   };
 
-  const handleWithdrawFunds = ({ fee, transferValue, userId }) => {
+  const handleWithdrawFunds = ({ transferValue, userId }) => {
     if (transferValue > 0) {
-      dispatchWithdrawFunds({ fee, transferValue, userId });
+      dispatchWithdrawFunds({ transferValue, userId });
+    } else {
+      dispatchInputError({
+        field: 'transferValue',
+        message: transferValueLowErrorMessage,
+      });
     }
   };
   const {
@@ -133,6 +144,7 @@ const Settings = ({
           creditCardProps,
           currentTab,
           deviceView,
+          dispatchInputError,
           dispatchOpenModal,
           dispatchSaveChange,
           filterValues,
@@ -141,6 +153,7 @@ const Settings = ({
           handleNav,
           handleRemoveIssue,
           handleWithdrawFunds,
+          inputErrors,
           PullRequestComponent,
           view,
         }}
@@ -157,6 +170,7 @@ Settings.propTypes = {
   deviceView: T.string.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchInfo: T.func,
+  dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveChange: T.func,
   dispatchSubmitPayment: T.func.isRequired,
@@ -168,6 +182,7 @@ Settings.propTypes = {
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
+  inputErrors: T.object.isRequired,
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
@@ -186,6 +201,7 @@ const mapStateToProps = createStructuredSelector({
   data: makeSelectSettingsDetail('account'),
   error: makeSelectSettings('error'),
   filterValues: makeSelectSettings('filter'),
+  inputErrors: makeSelectSettings('inputErrors'),
   isModalOpen: makeSelectSettings('isModalOpen'),
   loading: makeSelectSettings('loading'),
   modal: makeSelectSettings('modal'),
@@ -202,6 +218,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchCloseModal: () => dispatch(closeModalState()),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
+    dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
     dispatchSubmitPayment: payload => dispatch(submitPayment(payload)),

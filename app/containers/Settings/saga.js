@@ -188,10 +188,10 @@ export function* submitPaymentSaga({ payload }) {
 }
 
 export function* withdrawFundsSaga({ payload }) {
-  const { fee, transferValue, userId } = payload;
+  const { transferValue, userId } = payload;
   const query = `
     mutation {
-      createWithdrawal(fee: ${fee}, transferValue: ${transferValue}, userId: "${userId}") {
+      createWithdrawal(transferValue: ${transferValue}, userId: "${userId}") {
         ... on Withdrawal {
           balance
         }

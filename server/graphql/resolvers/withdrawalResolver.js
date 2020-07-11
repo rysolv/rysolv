@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 const {
   createWithdrawal,
   getOneUser,
@@ -6,15 +8,31 @@ const {
 
 module.exports = {
   createWithdrawal: async args => {
-    const { fee, transferValue, userId } = args;
+    const { transferValue, userId } = args;
     try {
       const [{ balance }] = await getOneUser('users', userId);
-      const adjustedBalanceValue = balance - transferValue;
-      const [result] = await transformUserBalance(userId, adjustedBalanceValue);
-      await createWithdrawal(userId, fee, transferValue);
+      const lessThanBalance = balance >= transferValue;
+      const greaterThanZero = transferValue > 0;
+      if (lessThanBalance && greaterThanZero) {
+        const adjustedBalanceValue = balance - transferValue;
+        const fee = transferValue * 0.15;
+        const withdrawalId = uuidv4();
+        const [result] = await transformUserBalance(
+          userId,
+          adjustedBalanceValue,
+        );
+        await createWithdrawal(userId, withdrawalId, fee, transferValue);
+        return {
+          __typename: 'Withdrawal',
+          ...result,
+        };
+      }
+      const err = new Error();
       return {
-        __typename: 'Withdrawal',
-        ...result,
+        __typename: 'Error',
+        message: err.lessThanBalance
+          ? 'Transfer amount is greater than balance'
+          : 'Transfer amount must be greater than $0.00.',
       };
     } catch (err) {
       return {

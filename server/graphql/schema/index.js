@@ -319,7 +319,7 @@ module.exports = buildSchema(`
     createOrganization(organizationInput: OrganizationInput): OrganizationResult
     createUser(userInput: UserInput): [User!]!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
-    createWithdrawal(fee: Float!, transferValue: Float!, userId: String!): WithdrawalResult!
+    createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
     deleteIssue(id: ID!): String!
     deleteOrganization(id:ID!): String!

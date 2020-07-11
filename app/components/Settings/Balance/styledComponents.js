@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
@@ -160,6 +161,10 @@ export const StyledBaseInput = styled(BaseInput)`
   margin-right: 0.5rem;
   min-height: 34px;
   width: ${({ width }) => width || '100%'};
+`;
+
+export const StyledFormHelperText = styled(FormHelperText)`
+  font-size: 1.2rem;
 `;
 
 export const StyledPaper = styled(Paper)`

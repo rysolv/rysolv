@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
 import { BackNav } from 'components/base_ui';
+import { transferValueLowErrorMessage } from 'containers/Settings/constants';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
@@ -14,6 +15,7 @@ import {
   InputHeader,
   StyledBaseDropDownMenu,
   StyledBaseInput,
+  StyledFormHelperText,
   StyledPrimaryAsyncButton,
   StyledText,
   WithdrawalInputContainer,
@@ -23,8 +25,10 @@ import { StyledH3 } from '../../styledComponents';
 
 const WithdrawalFormComponent = ({
   balance,
+  dispatchInputError,
   handleNav,
   handleWithdrawFunds,
+  inputErrors: { transferValue: transferValueError },
   setDisplayBottom,
   userId,
 }) => {
@@ -65,6 +69,16 @@ const WithdrawalFormComponent = ({
       }
     }
   };
+
+  const handleValidateInput = ({ field, value }) => {
+    if (field === 'transferValue') {
+      if (value > 0) {
+        dispatchInputError({ field, message: '' })
+      } else {
+        dispatchInputError({ field, message: transferValueLowErrorMessage })
+      }
+    }
+  };
   return (
     <Fragment>
       <BackNav
@@ -96,9 +110,11 @@ const WithdrawalFormComponent = ({
           <InputHeader>Amount to withdraw:</InputHeader>
           <StyledBaseInput
             inputProps={{ maxLength: 7 }}
+            onBlur={() => handleValidateInput({ field: 'transferValue', value: transferValue })}
             onChange={e => handleChangeDollarValue(e)}
             value={transferValue}
           />
+          <StyledFormHelperText error={!!transferValueError}>{transferValueError}</StyledFormHelperText>
         </WithdrawalInputWrapper>
       </WithdrawalInputContainer>
       <Divider />
@@ -119,9 +135,10 @@ const WithdrawalFormComponent = ({
         </WithdrawalInputWrapper>
       </WithdrawalInputContainer>
       <StyledPrimaryAsyncButton
+        disabled={!!transferValueError || transferValue <= 0}
         label="Withdraw Funds"
         onClick={() =>
-          handleWithdrawFunds({ fee: transferValue * 0.15, transferValue, userId })
+          handleWithdrawFunds({ transferValue, userId })
         }
       />
     </Fragment>
@@ -130,8 +147,10 @@ const WithdrawalFormComponent = ({
 
 WithdrawalFormComponent.propTypes = {
   balance: T.number.isRequired,
+  dispatchInputError: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleWithdrawFunds: T.func.isRequired,
+  inputErrors: T.object.isRequired,
   setDisplayBottom: T.func.isRequired,
   userId: T.string.isRequired,
 };
