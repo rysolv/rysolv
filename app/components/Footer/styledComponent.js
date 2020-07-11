@@ -70,6 +70,7 @@ export const StyledText = styled.div`
 
 export const StyledTitle = styled.div`
   font-size: 2.2rem;
+  letter-spacing: 0.1rem;
   padding: 1rem 1rem 1rem 0;
   text-align: start;
 `;

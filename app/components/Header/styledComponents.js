@@ -48,6 +48,9 @@ export const Container = styled.section`
 export const HeaderSection = styled.section``;
 
 export const LinkTitle = styled.div`
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 0.1rem;
   margin-left: ${({ isMobile }) => (isMobile ? '3rem' : '0')};
 `;
 
@@ -97,10 +100,6 @@ export const StyledLink = styled.div`
   display: flex;
   padding-right: 2rem;
   white-space: nowrap;
-`;
-
-export const StyledLogo = styled.div`
-  padding-right: 0.5rem;
 `;
 
 export const StyledUserNavBar = styled(UserNavBar)`

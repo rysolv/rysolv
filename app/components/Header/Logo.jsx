@@ -3,11 +3,8 @@ import T from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { MobileNavIcon } from 'components/base_ui';
-import iconDictionary from 'utils/iconDictionary';
 
-import { LinkTitle, StyledLink, StyledLogo } from './styledComponents';
-
-const defaultSiteLogo = iconDictionary('siteLogo');
+import { LinkTitle, StyledLink } from './styledComponents';
 
 export const Logo = ({ deviceView, isMobile, open, setOpen }) => {
   const isMobileOrTablet = isMobile || deviceView === 'tablet';
@@ -15,11 +12,9 @@ export const Logo = ({ deviceView, isMobile, open, setOpen }) => {
     <StyledLink>
       {isMobileOrTablet ? (
         <MobileNavIcon open={open} setOpen={setOpen} />
-      ) : (
-        <StyledLogo>{defaultSiteLogo}</StyledLogo>
-      )}
+      ) : null}
       <Link aria-label="Home Page" to="/">
-        <LinkTitle isMobile={isMobileOrTablet}>RYSOLV</LinkTitle>
+        <LinkTitle isMobile={isMobileOrTablet}>rysolv</LinkTitle>
       </Link>
     </StyledLink>
   );
