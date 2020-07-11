@@ -143,7 +143,7 @@ export const IssueDetailWrapper = styled.div`
   min-height: 40vh;
   overflow: hidden;
   padding: 0 0 3rem 0;
-  width: 60%;
+  width: 100%;
 `;
 
 export const LanguagesWrapper = styled.div`
