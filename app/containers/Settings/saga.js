@@ -192,6 +192,7 @@ export function* withdrawFundsSaga({ payload }) {
   const query = `
     mutation {
       createWithdrawal(transferValue: ${transferValue}, userId: "${userId}") {
+        __typename
         ... on Withdrawal {
           balance
         }
@@ -209,7 +210,10 @@ export function* withdrawFundsSaga({ payload }) {
     const {
       data: { createWithdrawal },
     } = yield call(post, '/graphql', graphql);
-    const { balance } = createWithdrawal;
+    const { balance, message, __typename } = createWithdrawal;
+    if (__typename === 'Error') {
+      throw new Error(message);
+    }
     yield put(updateActiveUser({ balance }));
     yield put(
       withdrawFundsSuccess({

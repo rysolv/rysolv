@@ -27,11 +27,10 @@ module.exports = {
           ...result,
         };
       }
-      const err = new Error();
       return {
         __typename: 'Error',
-        message: err.lessThanBalance
-          ? 'Transfer amount is greater than balance'
+        message: lessThanBalance
+          ? 'Transfer amount is greater than balance.'
           : 'Transfer amount must be greater than $0.00.',
       };
     } catch (err) {
