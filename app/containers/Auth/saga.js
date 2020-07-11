@@ -24,7 +24,7 @@ export function* fetchActiveUserSaga({ payload }) {
   try {
     const query = `
     query{
-      oneUser(column: "id", query: "${userId}") {
+      oneUser(id: "${userId}") {
         attempting,
         balance,
         id,
@@ -56,7 +56,7 @@ export function* signinSaga({ payload }) {
   try {
     const query = `
     query{
-      oneUser(column: "id", query: "${userId}") {
+      oneUser(id: "${userId}") {
         attempting,
         balance,
         id,
