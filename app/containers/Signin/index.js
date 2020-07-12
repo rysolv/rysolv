@@ -20,7 +20,7 @@ import { makeSelectSignin } from './selectors';
 export class SigninContainer extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
-    document.title = 'Sign in';
+    document.title = 'Sign In';
   }
 
   render() {

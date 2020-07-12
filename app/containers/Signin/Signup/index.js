@@ -20,7 +20,7 @@ import reducer from '../reducer';
 export class SignupContainer extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
-    document.title = 'Sign in';
+    document.title = 'Sign Up';
   }
 
   render() {

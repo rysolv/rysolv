@@ -3,10 +3,10 @@ import { Switch, Route } from 'react-router-dom';
 import withAuth from 'containers/Auth';
 
 import Contact from 'components/Contact';
+import NotFoundPage from 'components/NotFoundPage';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
 import Main from 'containers/HomePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import OrganizationsAdd from 'containers/Organizations/Add';
 import OrganizationsDetail from 'containers/Organizations/Detail';
 import OrganizationsEdit from 'containers/Organizations/Edit';
