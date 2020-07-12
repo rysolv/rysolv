@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { detailFontSize } from 'defaultStyleHelper';
+import { detailFontSize, textColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile, mobileXS } = mediaQueriesByDevice;
@@ -11,19 +11,18 @@ export const CopyrightWrapper = styled.div`
 `;
 
 export const Divider = styled.div`
-  border-top: 0.2rem solid #f6f8fa;
+  border-top: 0.2rem solid ${textColor};
   margin: 1rem auto;
   width: 100%;
 `;
 
 export const FooterWrapper = styled.footer`
-  background-color: #607d8b;
   bottom: 0;
-  color: #f6f8fa;
+  color: ${textColor};
   display: flex;
   flex-direction: column;
   font-size: ${detailFontSize};
-  padding: 1.6rem 5%;
+  padding: 0 5% 1.6rem 5%;
   position: absolute;
   width: 100%;
 
