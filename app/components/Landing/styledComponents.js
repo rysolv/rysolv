@@ -46,6 +46,8 @@ export const CardIcon = styled.div`
 `;
 
 export const CardItem = styled.li`
+  display: flex;
+  flex: 1;
   min-height: 0.1rem;
   padding: 0 1.5rem;
   width: 33.33333333%;
@@ -61,6 +63,15 @@ export const CardTitleWrapper = styled.div`
   font-weight: 400;
   line-height: 32px;
   margin-top: 17px;
+`;
+
+export const HorizontalList = styled.div`
+  display: flex;
+  width: 100%;
+
+  ${laptopS} {
+    margin-bottom: 2.5rem;
+  }
 `;
 
 export const Icon = styled.div`
@@ -141,6 +152,64 @@ export const LandingWrapper = styled.div`
   margin-top: 52.5rem;
 `;
 
+export const List = styled.li`
+  align-items: center;
+  color: ${textColor};
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  padding: 0 1.5rem;
+  text-align: center;
+`;
+
+export const ListContainer = styled.ul`
+  display: flex;
+  list-style: none;
+  padding: 0;
+
+  ${laptopS} {
+    flex-direction: column;
+  }
+`;
+
+export const ListContent = styled.div``;
+
+export const ListImage = styled.div`
+  margin: 0 2rem 2rem 2rem;
+
+  svg {
+    color: #1e88e5;
+    height: 6rem;
+    stroke-width: 0.05rem;
+    stroke: white;
+    width: 6rem;
+  }
+`;
+
+export const ListText = styled.p`
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: 2.4rem;
+`;
+
+export const ListTitle = styled.div`
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 1rem 0;
+`;
+
+export const Section = styled.div`
+  margin-bottom: 10rem;
+
+  ${mobile} {
+    padding-top: 10rem;
+
+    :nth-child(2) {
+      padding-top: 0;
+    }
+  }
+`;
+
 export const StyledLink = styled(Link)`
   background: #1da09c;
   border-radius: 10.2rem;
@@ -171,7 +240,7 @@ export const StyledLink = styled(Link)`
 
 export const StyledSubheader = styled.h2`
   color: #1da09c;
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   font-weight: 500;
   line-height: 1.5em;
   margin: 1rem 2rem 2rem 0;
@@ -182,14 +251,11 @@ export const SubheaderWrapper = styled.div`
   align-items: flex-end;
   display: flex;
   justify-content: center;
-
-  ${mobile} {
-    padding-top: 5rem;
-  }
+  margin-bottom: 2.5rem;
 `;
 
 export const TextWrapper = styled.p`
   font-size: 1.6rem;
   font-weight: 300;
-  line-height: 3rem;
+  line-height: 2.4rem;
 `;

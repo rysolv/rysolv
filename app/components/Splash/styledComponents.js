@@ -42,6 +42,7 @@ export const CircleWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
+  max-width: fit-content;
   padding: 5rem 3rem 5rem 5rem;
   width: 45%;
 
@@ -98,11 +99,8 @@ export const ImageWrapper = styled.div`
   border-radius: 0.5rem;
   box-shadow: 6px 28px 77px -24px rgba(0, 0, 0, 1);
   height: fit-content;
-  width: 75%;
-
-  ${laptopS} {
-    width: 55%;
-  }
+  max-width: 80rem;
+  width: 55%;
 
   ${mobile} {
     width: 85%;
@@ -136,34 +134,35 @@ export const RowWrapper = styled.div`
 `;
 
 export const SplashBackground = styled.div`
-  background-color: #37474f;
-  height: 60rem;
-  left: 0;
-  padding: 2rem;
-  position: absolute;
-  top: -10rem;
-  transform: skewY(-15deg);
-  width: 100%;
+  &:before {
+    background-color: #37474f;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
+    content: '';
+    height: 50rem;
+    left: 0;
+    padding: 2rem;
+    position: absolute;
+    width: 100%;
+  }
 `;
 
 export const SplashContent = styled.div`
   align-items: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   left: 0;
   padding: 0 2rem;
   position: absolute;
-  top: 20rem;
-  transform: skewY(15deg);
+  top: 10rem;
   width: 100%;
 
   ${laptopS} {
-    top: 17.5rem;
+    top: 10rem;
   }
 
   ${mobile} {
     flex-direction: column-reverse;
-    top: 15rem;
+    top: 5rem;
   }
 `;
 
