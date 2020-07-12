@@ -167,9 +167,16 @@ const updateIssueArray = async (column, id, data, remove) => {
   const [issueData] = await getOneIssue(id);
   // Only add unique values to array
   if (!issueData[column].includes(data) || remove) {
-    const action = remove ? 'array_remove' : 'array_append';
+    if (remove) {
+      const queryText = `UPDATE issues
+      SET ${column} = array_remove(${column}, '${data}')
+      WHERE (id = '${id}')
+      RETURNING *`;
+      const { rows } = await singleQuery(queryText);
+      return rows;
+    }
     const queryText = `UPDATE issues
-      SET ${column} = ${action}(${column}, '${data}')
+      SET ${column} = array_append(${column}, '${data}')
       WHERE (id = '${id}')
       RETURNING *`;
     const { rows } = await singleQuery(queryText);
