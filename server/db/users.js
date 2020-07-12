@@ -103,12 +103,12 @@ const deleteUser = async (table, id, data) => {
 };
 
 // GET single user
-const getOneUser = async (table, query, column) => {
-  const rows = await singleItem(table, query, userReturnValues, column);
+const getOneUser = async userId => {
+  const rows = await singleItem('users', userId, userReturnValues);
   if (rows) {
     return rows;
   }
-  throw new Error(`ID not found in ${table}`);
+  throw new Error(`ID not found in users`);
 };
 
 // GET all users

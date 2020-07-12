@@ -126,9 +126,9 @@ module.exports = {
     }
   },
   oneUser: async args => {
-    const { column, query } = args;
+    const { id: userId } = args;
     try {
-      const [result] = await getOneUser('users', query, column);
+      const [result] = await getOneUser(userId);
       const { attempting, issues, organizations, watching } = result;
       const attemptingListResult = await Promise.all(
         attempting.map(async issueId => {

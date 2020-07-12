@@ -54,7 +54,7 @@ export function* fetchInfoSaga({ payload }) {
   const { itemId } = payload;
   const query = `
     query {
-      oneUser(column: "id", query: "${itemId}") {
+      oneUser(id: "${itemId}") {
         id,
         activePullRequests,
         attempting,
