@@ -16,8 +16,8 @@ import Circle from '@material-ui/icons/FiberManualRecord';
 import Close from '@material-ui/icons/Close';
 import CloseCircle from '@material-ui/icons/HighlightOff';
 import Code from '@material-ui/icons/Code';
-import Computer from '@material-ui/icons/Computer';
 import Comments from '@material-ui/icons/Forum';
+import Computer from '@material-ui/icons/Computer';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
 import Dollar from '@material-ui/icons/AttachMoney';
@@ -27,29 +27,33 @@ import Email from '@material-ui/icons/Email';
 import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
 import Facebook from '@material-ui/icons/Facebook';
+import Four from '@material-ui/icons/Looks4Outlined';
 import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
 import Info from '@material-ui/icons/Info';
 import Link from '@material-ui/icons/Link';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
+import One from '@material-ui/icons/LooksOneOutlined';
 import PublishIcon from '@material-ui/icons/Publish';
 import PullRequest from '@material-ui/icons/AccountTree';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
 import Star from '@material-ui/icons/Star';
+import Three from '@material-ui/icons/Looks3Outlined';
 import Twitter from '@material-ui/icons/Twitter';
+import Two from '@material-ui/icons/LooksTwoOutlined';
 import Upvote from '@material-ui/icons/ArrowUpward';
 import Verified from '@material-ui/icons/VerifiedUser';
 import ViewAll from '@material-ui/icons/NavigateNext';
 import Warning from '@material-ui/icons/Warning';
 import WebIcon from '@material-ui/icons/Web';
 
+import CloseMenu from './svg/CloseMenu';
+import Gitlab from './svg/Gitlab';
+import Monocle from './svg/Monocle';
+import Paypal from './svg/Paypal';
 import SiteLogo from './svg/SiteLogo';
 import Stackoverflow from './svg/Stackoverflow';
-import Paypal from './svg/Paypal';
-import Monocle from './svg/Monocle';
-import Gitlab from './svg/Gitlab';
-import CloseMenu from './svg/CloseMenu';
 
 export default (name, options) => {
   const icons = {
@@ -77,6 +81,7 @@ export default (name, options) => {
     exit: Exit,
     facebook: Facebook,
     forwardArrowHalf: ArrowForwardIosIcon,
+    four: Four,
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,
@@ -85,6 +90,7 @@ export default (name, options) => {
     issue: ErrorIcon,
     link: Link,
     monocle: Monocle,
+    one: One,
     organization: WebIcon,
     paypal: Paypal,
     pullRequest: PullRequest,
@@ -94,7 +100,9 @@ export default (name, options) => {
     stackoverflow: Stackoverflow,
     star: Star,
     successOutline: CheckCircleOutline,
+    three: Three,
     twitter: Twitter,
+    two: Two,
     upload: PublishIcon,
     upvote: Upvote,
     user: AccountCircleIcon,

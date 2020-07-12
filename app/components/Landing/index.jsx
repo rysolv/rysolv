@@ -8,12 +8,17 @@ import {
   CardIcon,
   CardItem,
   CardTitleWrapper,
+  HorizontalList,
   Icon,
   IconCircle,
   IconWrapper,
   LandingWrapper,
   List,
   ListContainer,
+  ListContent,
+  ListImage,
+  ListText,
+  ListTitle,
   Section,
   StyledLink,
   StyledSubheader,
@@ -24,8 +29,12 @@ import {
 const ArrowIcon = iconDictionary('viewAll');
 const CodeIcon = iconDictionary('code');
 const ComputerIcon = iconDictionary('computer');
+const FourIcon = iconDictionary('four');
 const IssueIcon = iconDictionary('issue');
+const OneIcon = iconDictionary('one');
 const OrganizationIcon = iconDictionary('organization');
+const ThreeIcon = iconDictionary('three');
+const TwoIcon = iconDictionary('two');
 const UserIcon = iconDictionary('user');
 
 const Landing = () => (
@@ -43,12 +52,12 @@ const Landing = () => (
         <CardItem>
           <Card>
             <CardIcon>{UserIcon}</CardIcon>
-            <CardTitleWrapper>Sign Up Today</CardTitleWrapper>
+            <CardTitleWrapper>Sign Up</CardTitleWrapper>
             <TextWrapper>
               The best way to earn income while contributing to open source
               development.
             </TextWrapper>
-            <StyledLink to="/users">Create account {ArrowIcon}</StyledLink>
+            <StyledLink to="/signup">Create account {ArrowIcon}</StyledLink>
           </Card>
         </CardItem>
         <CardItem>
@@ -86,10 +95,50 @@ const Landing = () => (
         </IconWrapper>
       </SubheaderWrapper>
       <ListContainer>
-        <List>Hi</List>
-        <List>Hi</List>
-        <List>Hi</List>
-        <List>Hi</List>
+        <HorizontalList>
+          <List>
+            <ListImage>{OneIcon}</ListImage>
+            <ListContent>
+              <ListTitle>Browse through issues</ListTitle>
+              <ListText>
+                Create an account to have instant access to browse through the
+                newest and most funded issues.
+              </ListText>
+            </ListContent>
+          </List>
+          <List>
+            <ListImage>{TwoIcon}</ListImage>
+            <ListContent>
+              <ListTitle>Rysolv issue</ListTitle>
+              <ListText>
+                Find issues you can solve from issues list. There are tons of
+                opportunities.
+              </ListText>
+            </ListContent>
+          </List>
+        </HorizontalList>
+        <HorizontalList>
+          <List>
+            <ListImage>{ThreeIcon}</ListImage>
+            <ListContent>
+              <ListTitle>Submit pull request</ListTitle>
+              <ListText>
+                After you solve the problem, you can submit your pull request
+                via Rysolv.
+              </ListText>
+            </ListContent>
+          </List>
+          <List>
+            <ListImage>{FourIcon}</ListImage>
+            <ListContent>
+              <ListTitle>Get paid</ListTitle>
+              <ListText>
+                After your pull request is accepted and merged, you can get your
+                rewards based on the funds!
+              </ListText>
+            </ListContent>
+          </List>
+        </HorizontalList>
       </ListContainer>
     </Section>
   </LandingWrapper>
