@@ -42,6 +42,7 @@ export const CircleWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
+  max-width: fit-content;
   padding: 5rem 3rem 5rem 5rem;
   width: 45%;
 
@@ -98,6 +99,7 @@ export const ImageWrapper = styled.div`
   border-radius: 0.5rem;
   box-shadow: 6px 28px 77px -24px rgba(0, 0, 0, 1);
   height: fit-content;
+  max-width: 80rem;
   width: 55%;
 
   ${mobile} {
@@ -147,7 +149,7 @@ export const SplashBackground = styled.div`
 export const SplashContent = styled.div`
   align-items: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   left: 0;
   padding: 0 2rem;
   position: absolute;
