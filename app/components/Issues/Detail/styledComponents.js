@@ -118,7 +118,8 @@ export const IssueBody = styled.div`
   * {
     color: ${textColor};
     font-family: inherit;
-    width: 100%;
+    width: auto;
+    max-width: 100%;
   }
 `;
 
