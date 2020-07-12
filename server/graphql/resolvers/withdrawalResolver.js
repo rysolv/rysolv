@@ -9,7 +9,6 @@ const {
 module.exports = {
   createWithdrawal: async args => {
     const { transferValue, userId } = args;
-    console.log(transferValue);
     try {
       const [{ balance }] = await getOneUser(userId);
       const lessThanBalance = balance >= transferValue;
@@ -19,8 +18,8 @@ module.exports = {
         // Update user balance
         const adjustedBalanceValue = balance - transferValue;
         const result = await transformUserBalance({
-          userId,
           adjustedBalanceValue,
+          userId,
         });
 
         // Record new withdrawal
