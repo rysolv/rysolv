@@ -141,6 +141,22 @@ export const LandingWrapper = styled.div`
   margin-top: 52.5rem;
 `;
 
+export const List = styled.li`
+  flex: 0 0 25%;
+  max-width: 25%;
+  padding: 0 1.5rem;
+`;
+
+export const ListContainer = styled.ul`
+  display: flex;
+  list-style: none;
+  padding: 0;
+`;
+
+export const Section = styled.div`
+  margin: 5rem 0;
+`;
+
 export const StyledLink = styled(Link)`
   background: #1da09c;
   border-radius: 10.2rem;

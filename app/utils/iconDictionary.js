@@ -16,6 +16,7 @@ import Circle from '@material-ui/icons/FiberManualRecord';
 import Close from '@material-ui/icons/Close';
 import CloseCircle from '@material-ui/icons/HighlightOff';
 import Code from '@material-ui/icons/Code';
+import Computer from '@material-ui/icons/Computer';
 import Comments from '@material-ui/icons/Forum';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
@@ -65,6 +66,7 @@ export default (name, options) => {
     closeMenu: CloseMenu,
     code: Code,
     comments: Comments,
+    computer: Computer,
     creditCard: CreditCard,
     delete: Delete,
     dollar: Dollar,
