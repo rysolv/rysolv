@@ -1,19 +1,29 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-import { defaultFontSize } from 'defaultStyleHelper';
+import { defaultFontSize, textColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptopS, mobile } = mediaQueriesByDevice;
 
 export const Card = styled.div`
+  align-items: center;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  color: ${textColor};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   margin: 0 auto 30px;
-  max-width: 500px;
+  max-width: 40rem;
   min-height: 36rem;
   padding: 30px 35px;
   text-align: center;
+
+  ${laptopS} {
+    min-height: 30rem;
+  }
 `;
 
 export const CardContainer = styled.ul`
@@ -27,6 +37,14 @@ export const CardContainer = styled.ul`
   }
 `;
 
+export const CardIcon = styled.div`
+  svg {
+    color: rgb(142, 142, 147);
+    height: 4rem;
+    width: 4rem;
+  }
+`;
+
 export const CardItem = styled.li`
   min-height: 0.1rem;
   padding: 0 1.5rem;
@@ -35,6 +53,14 @@ export const CardItem = styled.li`
   ${laptopS} {
     width: 100%;
   }
+`;
+
+export const CardTitleWrapper = styled.div`
+  color: #1e88e5;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  margin-top: 17px;
 `;
 
 export const Icon = styled.div`
@@ -115,6 +141,34 @@ export const LandingWrapper = styled.div`
   margin-top: 52.5rem;
 `;
 
+export const StyledLink = styled(Link)`
+  background: #1da09c;
+  border-radius: 10.2rem;
+  color: white;
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+  margin-bottom: 0;
+  margin-top: 30px;
+  padding: 0.6rem 1.2rem 0.6rem 1.8rem;
+  white-space: nowrap;
+  width: fit-content;
+
+  svg {
+    font-size: 2rem;
+    stroke-width: 0;
+    stroke: currentColor;
+  }
+
+  &:hover {
+    background: #17807d;
+    color: white;
+    cursor: pointer;
+  }
+`;
+
 export const StyledSubheader = styled.h2`
   color: #1da09c;
   font-size: 2.2rem;
@@ -132,4 +186,10 @@ export const SubheaderWrapper = styled.div`
   ${mobile} {
     padding-top: 5rem;
   }
+`;
+
+export const TextWrapper = styled.p`
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: 3rem;
 `;
