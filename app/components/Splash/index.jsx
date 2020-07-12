@@ -1,14 +1,65 @@
 import React, { Fragment } from 'react';
-import { Divider, Logo, SplashImage, TagLine } from './styledComponents';
+import T from 'prop-types';
 
-const DesktopSplash = () => (
+import issueExampleImage from 'images/issueExampleLandingPage.png';
+import iconDictionary from 'utils/iconDictionary';
+
+import {
+  ButtonWrapper,
+  CircleOne,
+  CircleThree,
+  CircleTwo,
+  CircleWrapper,
+  ContentWrapper,
+  CreateAccountButton,
+  Image,
+  ImageNavBar,
+  ImageWrapper,
+  Logo,
+  Row,
+  RowWrapper,
+  SplashBackground,
+  SplashContent,
+  TagLine,
+} from './styledComponents';
+
+const ArrowIcon = iconDictionary('viewAll');
+
+const Splash = ({ handleNav }) => (
   <Fragment>
-    <SplashImage>
-      <Logo>RYSOLV</Logo>
-      <TagLine>Fixing the internet. One bug at a time</TagLine>
-    </SplashImage>
-    <Divider />
+    <SplashBackground>
+      <SplashContent>
+        <ImageWrapper>
+          <ImageNavBar>
+            <CircleWrapper>
+              <CircleOne />
+              <CircleTwo />
+              <CircleThree />
+            </CircleWrapper>
+            <RowWrapper>
+              <Row />
+              <Row />
+              <Row />
+            </RowWrapper>
+          </ImageNavBar>
+          <Image src={issueExampleImage} />
+        </ImageWrapper>
+        <ContentWrapper>
+          <Logo>rysolv</Logo>
+          <TagLine>
+            A crowdfunding platform for open source development.
+          </TagLine>
+          <ButtonWrapper>
+            <CreateAccountButton onClick={() => handleNav('/signup')}>
+              Create Account {ArrowIcon}
+            </CreateAccountButton>
+          </ButtonWrapper>
+        </ContentWrapper>
+      </SplashContent>
+    </SplashBackground>
   </Fragment>
 );
 
-export default DesktopSplash;
+Splash.propTypes = { handleNav: T.func.isRequired };
+
+export default Splash;

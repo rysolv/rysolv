@@ -23,13 +23,18 @@ const MobileHeader = ({
   handleNav,
   handleSignout,
   isDrawerOpen,
+  isLandingPage,
   isMobile,
   isSignedIn,
   setIsDrawerOpen,
 }) => (
   <Fragment>
     <HeaderSection>
-      <StyledAppBar color="default" position="relative">
+      <StyledAppBar
+        color="default"
+        isLandingPage={isLandingPage}
+        position="relative"
+      >
         <Container>
           <TopBarWrapper isSignedIn={isSignedIn}>
             <LogoWrapper>
@@ -77,6 +82,7 @@ MobileHeader.propTypes = {
   handleNav: T.func,
   handleSignout: T.func,
   isDrawerOpen: T.bool,
+  isLandingPage: T.bool.isRequired,
   isMobile: T.bool,
   isSignedIn: T.bool,
   setIsDrawerOpen: T.func,
