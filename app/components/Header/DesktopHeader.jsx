@@ -21,12 +21,17 @@ const DesktopHeader = ({
   handleNav,
   handleSignout,
   isDrawerOpen,
+  isLandingPage,
   isMobile,
   isSignedIn,
   setIsDrawerOpen,
 }) => (
   <HeaderSection>
-    <StyledAppBar color="default" position="relative">
+    <StyledAppBar
+      color="default"
+      isLandingPage={isLandingPage}
+      position="relative"
+    >
       <Container>
         <LogoWrapper>
           <Logo
@@ -69,6 +74,7 @@ DesktopHeader.propTypes = {
   handleNav: T.func,
   handleSignout: T.func,
   isDrawerOpen: T.bool,
+  isLandingPage: T.bool.isRequired,
   isMobile: T.bool,
   isSignedIn: T.bool,
   setIsDrawerOpen: T.func,

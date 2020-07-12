@@ -4,4 +4,5 @@ import { defaultFontSize } from 'defaultStyleHelper';
 
 export const LandingWrapper = styled.div`
   font-size: ${defaultFontSize};
+  margin-top: 60rem;
 `;

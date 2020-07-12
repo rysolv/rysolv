@@ -20,6 +20,8 @@ const Header = ({
     deviceView === 'mobileS' ||
     deviceView === 'mobileXS' ||
     deviceView === 'mobileXXS';
+  const { pathname } = window.location;
+  const isLandingPage = pathname === '/';
   return (
     <ConditionalRender
       Component={DesktopHeader}
@@ -31,6 +33,7 @@ const Header = ({
         handleSignin,
         handleSignout,
         isDrawerOpen,
+        isLandingPage,
         isMobile,
         isSignedIn,
         setIsDrawerOpen,

@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import AppBar from '@material-ui/core/AppBar';
 
@@ -69,7 +70,11 @@ export const MobileDrawerComponent = styled(BaseDrawer)`
   }
 `;
 
-export const StyledAppBar = styled(AppBar)``;
+export const StyledAppBar = styled(({ isLandingPage, ...restProps }) => (
+  <AppBar {...restProps} />
+))`
+  box-shadow: ${({ isLandingPage }) => (isLandingPage ? 'none' : '')};
+`;
 
 export const StyledHeaderLink = styled(BaseLink)`
   color: white;
