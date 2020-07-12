@@ -318,25 +318,7 @@ module.exports = {
         funded_amount: issueInput.fundedAmount,
         open: issueInput.open,
       };
-      const queryResult = await transformIssue(id, data);
-
-      const result = {
-        id: queryResult.id,
-        createdDate: queryResult.created_date,
-        modifiedDate: queryResult.modified_date,
-        organizationId: issueInput.organization_id,
-        name: queryResult.name,
-        body: queryResult.body,
-        repo: queryResult.repo,
-        language: queryResult.language,
-        comments: queryResult.comments,
-        attempting: queryResult.attempting,
-        contributorId: queryResult.contributor_id,
-        rep: queryResult.rep,
-        watching: queryResult.watching,
-        fundedAmount: queryResult.funded_amount,
-        open: queryResult.open,
-      };
+      const result = await transformIssue(id, data);
 
       const activityInput = {
         actionType: 'update',
