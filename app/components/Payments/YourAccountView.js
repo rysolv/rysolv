@@ -56,7 +56,7 @@ const YourAccountView = ({
         </ConfirmWrapper>
       </ConfirmContainer>
       <StyledPrimaryAsyncButton
-        disabled={fundValue === 0}
+        disabled={balance <= 0 || fundValue <= 0 || fundValue === '.'}
         label="Confirm"
         onClick={() =>
           handleSubmit({

@@ -1,11 +1,8 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
-const isBlank = value =>
-  isUndefined(value) ||
-  isNull(value) ||
-  value.length === 0 ||
-  isEmptyString(value);
+export const isBlank = value =>
+  isUndefined(value) || isNull(value) || isEmptyString(value);
 
 const isEmptyString = str => {
   if (typeof str === 'string') {

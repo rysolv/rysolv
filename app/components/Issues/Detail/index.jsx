@@ -153,7 +153,10 @@ const IssueDetail = ({
   const commentsDiv =
     comments && comments.length > 0 ? generateComments() : <NoComment />;
 
-  const isDesktop = deviceView === 'desktop';
+  const isDesktop =
+    deviceView === 'desktopS' ||
+    deviceView === 'desktop' ||
+    deviceView === 'desktopL';
 
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
   return (

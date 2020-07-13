@@ -441,6 +441,7 @@ export function* searchIssuesSaga({ payload }) {
 
 export function* submitAccountPaymentSaga({ payload }) {
   const { fundValue, issueId, userId } = payload;
+  const isFundedFromOverview = window.location.pathname === '/issues';
   const submitAccountPaymentQuery = `
       mutation {
         submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", userId: "${userId}" ) {
@@ -467,6 +468,8 @@ export function* submitAccountPaymentSaga({ payload }) {
     yield put(
       submitAccountPaymentSuccess({
         fundedAmount,
+        isFundedFromOverview,
+        issueId,
         message: successAccountPaymentMessage,
       }),
     );

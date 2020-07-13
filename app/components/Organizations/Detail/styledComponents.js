@@ -491,5 +491,6 @@ export const UrlWrapper = styled.div`
   ${mobile} {
     flex-direction: column;
     margin-left: -12rem;
+    padding-top: 1.5rem;
   }
 `;
