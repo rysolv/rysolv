@@ -393,6 +393,7 @@ export function* saveInfoSaga({ payload }) {
     const { __typename, message } = createIssue;
     if (__typename === 'Error') throw message;
 
+    yield put(fetchActiveUser({ userId }));
     yield put(saveInfoSuccess({ message: successCreateIssueMessage }));
   } catch (error) {
     yield put(saveInfoFailure({ error }));

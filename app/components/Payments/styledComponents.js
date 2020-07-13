@@ -141,9 +141,14 @@ export const StyledBaseInputWithAdornment = styled(
   PaymentModalInputWithAdornment,
 )`
   align-self: center;
+  border: 0.1rem solid #e0e0e0;
   font-size: 1.4rem;
   margin: 0.5rem;
   width: 80%;
+
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
 `;
 
 export const StyledLabel = styled.div`
