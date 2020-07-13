@@ -247,6 +247,7 @@ const OrganizationDetailView = ({
         <SidebarTabs>
           <TopLanguagesView
             displayEditView={displayEditView}
+            languagesChange={languagesChange}
             preferredLanguages={preferredLanguages}
             setLanguagesChange={setLanguagesChange}
           />

@@ -202,6 +202,7 @@ const SettingsView = ({
             rejectedPullRequests={rejectedPullRequests}
             setChangePreferredLanguages={setChangePreferredLanguages}
             setValue={setValue}
+            value={value}
           />
         </UserCardWrapper>
         <SettingsTabsWrapper displayBottom={displayBottom}>

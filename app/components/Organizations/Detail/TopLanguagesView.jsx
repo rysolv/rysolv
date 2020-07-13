@@ -22,6 +22,7 @@ export class TopLanguagesView extends React.PureComponent {
   render() {
     const {
       displayEditView,
+      languagesChange,
       preferredLanguages,
       setLanguagesChange,
     } = this.props;
@@ -32,7 +33,7 @@ export class TopLanguagesView extends React.PureComponent {
           onChange={(e, value) =>
             setLanguagesChange(() => value.map(el => el.value))
           }
-          value={preferredLanguages.map(el => ({
+          value={languagesChange.map(el => ({
             value: el,
           }))}
         />
@@ -67,6 +68,7 @@ export class TopLanguagesView extends React.PureComponent {
 
 TopLanguagesView.propTypes = {
   displayEditView: T.bool,
+  languagesChange: T.array,
   preferredLanguages: T.array,
   setLanguagesChange: T.func,
 };
