@@ -40,6 +40,7 @@ export const initialState = {
 };
 
 /* eslint-disable default-case, no-param-reassign */
+// eslint-disable-next-line consistent-return
 const pullRequestReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_ERROR: {
@@ -47,13 +48,7 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
       break;
     }
     case CLEAR_FORM: {
-      draft.createSuccess = initialState.createSuccess;
-      draft.error = initialState.error;
-      draft.importData = initialState.importData;
-      draft.importSuccess = initialState.importSuccess;
-      draft.pullRequests = initialState.pullRequests;
-      draft.step = initialState.step;
-      break;
+      return initialState;
     }
     case CREATE_PULL_REQUEST_FAILURE: {
       const { error } = payload;
