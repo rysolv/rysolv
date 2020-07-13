@@ -11,25 +11,26 @@ import injectReducer from 'utils/injectReducer';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectAuth } from './selectors';
-import { signin } from './actions';
-import { checkCookie } from './helpers';
+import { signIn, signUp } from './actions';
 
 export default function withAuth(config, Component) {
-  const Auth = ({ isSignedIn, handleSignin, ...restProps }) => {
+  const Auth = ({ isSignedIn, handleSignIn, handleSignUp, ...restProps }) => {
     const { isPrivate } = config;
+    if (!isSignedIn && isPrivate) return <Redirect to="/signin" />;
 
-    if (!isSignedIn) {
-      const { userId } = checkCookie();
-      if (userId) {
-        handleSignin({ userId });
-      } else if (!isSignedIn && isPrivate) return <Redirect to="/signin" />;
-    }
+    // if (!isSignedIn) {
+    //   const { userId } = checkCookie();
+    //   if (userId) {
+    //     handleSignIn({ userId });
+    //   } else if (!isSignedIn && isPrivate) return <Redirect to="/signin" />;
+    // }
 
     return <Component {...restProps} />;
   };
 
   Auth.propTypes = {
-    handleSignin: T.func,
+    handleSignIn: T.func,
+    handleSignUp: T.func,
     isSignedIn: T.bool,
   };
 
@@ -44,7 +45,8 @@ export default function withAuth(config, Component) {
     /**
      * Auth
      */
-    handleSignin: payload => dispatch(signin(payload)),
+    handleSignIn: payload => dispatch(signIn(payload)),
+    handleSignUp: payload => dispatch(signUp(payload)),
   });
 
   const withConnect = connect(

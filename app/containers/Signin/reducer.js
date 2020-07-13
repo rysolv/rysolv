@@ -7,6 +7,7 @@ export const initialState = {
   data: {
     email: { error: '', value: '' },
     password: { error: '', value: '' },
+    verifyPassword: { error: '', value: '' },
   },
 };
 

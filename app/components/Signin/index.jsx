@@ -13,7 +13,7 @@ import {
 } from './styledComponents';
 
 // eslint-disable-next-line arrow-body-style
-const Signin = ({ data, handleInputChange, handleSignin }) => {
+const Signin = ({ data, handleInputChange, handleSignIn }) => {
   // eslint-disable-next-line no-param-reassign
   const { email, password } = data;
   return (
@@ -49,7 +49,7 @@ const Signin = ({ data, handleInputChange, handleSignin }) => {
         <StyledPrimaryButton
           label="Sign in"
           onClick={() =>
-            handleSignin({ userId: 'b519b064-b5db-4472-ad1b-00e30bdbfa4c' })
+            handleSignIn({ userId: 'b519b064-b5db-4472-ad1b-00e30bdbfa4c' })
           }
         />
       </InputFormWrapper>
@@ -63,7 +63,7 @@ const Signin = ({ data, handleInputChange, handleSignin }) => {
 Signin.propTypes = {
   data: T.object.isRequired,
   handleInputChange: T.func.isRequired,
-  handleSignin: T.func.isRequired,
+  handleSignIn: T.func.isRequired,
 };
 
 export default Signin;

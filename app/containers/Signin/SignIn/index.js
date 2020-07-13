@@ -8,13 +8,13 @@ import { push } from 'connected-react-router';
 
 import { ConditionalRender } from 'components/base_ui';
 import Signin from 'components/Signin';
-import { signin } from 'containers/Auth/actions';
+import { signIn } from 'containers/Auth/actions';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
-import { inputChange } from './actions';
-import reducer from './reducer';
-import { makeSelectSignin } from './selectors';
+import { inputChange } from '../actions';
+import reducer from '../reducer';
+import { makeSelectSignIn } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class SigninContainer extends React.PureComponent {
@@ -24,12 +24,22 @@ export class SigninContainer extends React.PureComponent {
   }
 
   render() {
-    const { data, isSignedIn, handleSignin, handleInputChange } = this.props;
+    const { data, isSignedIn, dispatchSignIn, handleInputChange } = this.props;
+    console.log(data);
+    const { email, password } = data;
+
+    const handleSignIn = () => {
+      dispatchSignIn({
+        username: email.value,
+        password: password.value,
+      });
+    };
+
     const signinComponent = (
       <Signin
         data={data}
         handleInputChange={handleInputChange}
-        handleSignin={handleSignin}
+        handleSignIn={handleSignIn}
         isSignedIn={isSignedIn}
       />
     );
@@ -49,8 +59,8 @@ export class SigninContainer extends React.PureComponent {
 
 SigninContainer.propTypes = {
   data: T.object,
+  dispatchSignIn: T.func,
   handleInputChange: T.func,
-  handleSignin: T.func,
   isSignedIn: T.bool,
 };
 
@@ -62,7 +72,7 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : Signin
    */
-  data: makeSelectSignin('data'),
+  data: makeSelectSignIn('data'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -70,7 +80,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Auth
      */
-    handleSignin: payload => dispatch(signin(payload)),
+    dispatchSignIn: payload => dispatch(signIn(payload)),
     /*
      * Reducer : Router
      */

@@ -4,10 +4,10 @@ import { initialState } from './reducer';
 
 const selectSigninDomain = state => state.signin || initialState;
 
-const makeSelectSignin = prop =>
+const makeSelectSignIn = prop =>
   createSelector(
     selectSigninDomain,
     substate => substate[prop],
   );
 
-export { makeSelectSignin };
+export { makeSelectSignIn };

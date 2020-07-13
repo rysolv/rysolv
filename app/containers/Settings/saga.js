@@ -3,7 +3,7 @@ import { push } from 'connected-react-router';
 
 import {
   fetchActiveUser,
-  signout,
+  signOut,
   updateActiveUser,
 } from 'containers/Auth/actions';
 import { post } from 'utils/request';
@@ -43,7 +43,7 @@ export function* deleteUserSaga({ payload }) {
     });
     yield call(post, '/graphql', graphql);
     yield put(deleteUserSuccess());
-    yield put(signout());
+    yield put(signOut());
     yield put(push('/issues'));
   } catch (error) {
     yield put(deleteUserFailure({ error }));

@@ -8,12 +8,12 @@ import { push } from 'connected-react-router';
 
 import { ConditionalRender } from 'components/base_ui';
 import Signup from 'components/Signin/Signup';
-import { signin } from 'containers/Auth/actions';
+import { signUp } from 'containers/Auth/actions';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
 import { inputChange } from '../actions';
-import { makeSelectSignin } from '../selectors';
+import { makeSelectSignIn } from '../selectors';
 import reducer from '../reducer';
 
 // eslint-disable-next-line react/prefer-stateless-function
@@ -24,12 +24,22 @@ export class SignupContainer extends React.PureComponent {
   }
 
   render() {
-    const { data, handleInputChange, handleSignin, isSignedIn } = this.props;
+    const { data, handleInputChange, dispatchSignUp, isSignedIn } = this.props;
+
+    const { email, password } = data;
+
+    const handleSignUp = () => {
+      dispatchSignUp({
+        username: email.value,
+        password: password.value,
+      });
+    };
+
     const signinComponent = (
       <Signup
         data={data}
         handleInputChange={handleInputChange}
-        handleSignin={handleSignin}
+        handleSignUp={handleSignUp}
         isSignedIn={isSignedIn}
       />
     );
@@ -50,7 +60,7 @@ export class SignupContainer extends React.PureComponent {
 SignupContainer.propTypes = {
   data: T.object,
   handleInputChange: T.func,
-  handleSignin: T.func,
+  dispatchSignUp: T.func,
   isSignedIn: T.bool,
 };
 
@@ -62,7 +72,7 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : Signin
    */
-  data: makeSelectSignin('data'),
+  data: makeSelectSignIn('data'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -70,7 +80,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Auth
      */
-    handleSignin: payload => dispatch(signin(payload)),
+    dispatchSignUp: payload => dispatch(signUp(payload)),
     /*
      * Reducer : Router
      */
@@ -87,7 +97,7 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'signin', reducer });
+const withReducer = injectReducer({ key: 'signn', reducer });
 
 export default compose(
   withReducer,

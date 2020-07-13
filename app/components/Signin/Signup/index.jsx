@@ -13,9 +13,9 @@ import {
 } from '../styledComponents';
 
 // eslint-disable-next-line arrow-body-style
-const Signup = ({ data, handleInputChange, handleSignin }) => {
+const Signup = ({ data, handleInputChange, handleSignUp }) => {
   // eslint-disable-next-line no-param-reassign
-  const { email, password } = data;
+  const { email, password, verifyPassword } = data;
   return (
     <SigninWrapper>
       <InputFormWrapper>
@@ -47,24 +47,19 @@ const Signup = ({ data, handleInputChange, handleSignin }) => {
           value={password.value}
         />
         <MainTextInput
-          error={!!password.error}
-          helperText={password.error}
+          error={!!verifyPassword.error}
+          helperText={verifyPassword.error}
           label="confirm password"
           onChange={e =>
             handleInputChange({
-              field: 'password',
+              field: 'verifyPassword',
               form: 'data',
               value: e.target.value,
             })
           }
-          value={password.value}
+          value={verifyPassword.value}
         />
-        <StyledPrimaryButton
-          label="Sign Up"
-          onClick={() =>
-            handleSignin({ userId: 'b519b064-b5db-4472-ad1b-00e30bdbfa4c' })
-          }
-        />
+        <StyledPrimaryButton label="Sign Up" onClick={() => handleSignUp()} />
       </InputFormWrapper>
       <SubText>
         Already have an account? <Link to="/signin">Sign in</Link>
@@ -76,7 +71,7 @@ const Signup = ({ data, handleInputChange, handleSignin }) => {
 Signup.propTypes = {
   data: T.object.isRequired,
   handleInputChange: T.func.isRequired,
-  handleSignin: T.func.isRequired,
+  handleSignUp: T.func.isRequired,
 };
 
 export default Signup;

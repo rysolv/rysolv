@@ -16,7 +16,7 @@ import SigninModal from 'components/SigninModal';
 import WatchList from 'components/WatchList';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { signin, signout } from 'containers/Auth/actions';
+import { signIn, signOut } from 'containers/Auth/actions';
 import {
   clearAlerts,
   closeIssue,
@@ -193,8 +193,8 @@ const mapDispatchToProps = dispatch => ({
   /**
    * Auth
    */
-  handleSignin: payload => dispatch(signin(payload)),
-  handleSignout: payload => dispatch(signout(payload)),
+  handleSignin: payload => dispatch(signIn(payload)),
+  handleSignout: payload => dispatch(signOut(payload)),
   /**
    * Issues
    */

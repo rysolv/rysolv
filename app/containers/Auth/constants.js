@@ -8,12 +8,16 @@ export const SEARCH_ORGANIZATIONS_SUCCESS =
 export const SEARCH_ORGANIZATIONS_FAILURE =
   'app/Auth/SEARCH_ORGANIZATIONS_FAILURE';
 
-export const SIGNIN = 'app/Auth/SIGNIN';
-export const SIGNIN_FAILURE = 'app/Auth/SIGNIN_FAILURE';
-export const SIGNIN_SUCCESS = 'app/Auth/SIGNIN_SUCCESS';
+export const SIGN_IN = 'app/Auth/SIGN_IN';
+export const SIGN_IN_FAILURE = 'app/Auth/SIGN_IN_FAILURE';
+export const SIGN_IN_SUCCESS = 'app/Auth/SIGN_IN_SUCCESS';
 
-export const SIGNOUT = 'app/Auth/SIGNOUT';
-export const SIGNOUT_FAILURE = 'app/Auth/SIGNOUT_FAILURE';
-export const SIGNOUT_SUCCESS = 'app/Auth/SIGNOUT_SUCCESS';
+export const SIGN_OUT = 'app/Auth/SIGN_OUT';
+export const SIGN_OUT_FAILURE = 'app/Auth/SIGN_OUT_FAILURE';
+export const SIGN_OUT_SUCCESS = 'app/Auth/SIGN_OUT_SUCCESS';
+
+export const SIGN_UP = 'app/Auth/SIGN_UP';
+export const SIGN_UP_FAILURE = 'app/Auth/SIGN_UP_FAILURE';
+export const SIGN_UP_SUCCESS = 'app/Auth/SIGN_UP_SUCCESS';
 
 export const UPDATE_ACTIVE_USER = 'app/Auth/UPDATE_ACTIVE_USER';

@@ -6,8 +6,8 @@ import Amplify, { Auth } from 'aws-amplify';
 
 const config = {
   REGION: 'us-east-2',
-  USER_POOL_ID: 'us-east-2_KhLkhtKf8',
-  APP_CLIENT_ID: '1oqcfq3ul83jmqi21aki2thg94',
+  USER_POOL_ID: 'us-east-2_zrDDO05Jw',
+  APP_CLIENT_ID: '6hbiad3sk019r18tfu2kivvsuh',
 };
 
 Amplify.configure({
@@ -21,21 +21,39 @@ Amplify.configure({
 const signUp = async () => {
   try {
     const signUpResponse = await Auth.signUp({
-      username: 'tyllllllerrrr',
-      password: 'Readypl@yer1',
-      attributes: {
-        email: 'tyler.maran@gmail.com',
-      },
+      username: 'tyler.maran+14@gmail.com',
+      password: 'coolPassword1!',
     });
     console.log(signUpResponse);
   } catch (error) {
     console.log(error.message);
   }
 };
-signUp();
+
+const signIn = async () => {
+  try {
+    const user = await Auth.signIn(
+      'tyler.maran+14@gmail.com',
+      'coolPassword1!',
+    );
+    console.log(user);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 const Test = () => {
-  return <div style={{ width: '60%' }}>Create account</div>;
+  return (
+    <div style={{ width: '60%', padding: '10rem 0' }}>
+      Create account
+      <button type="button" onClick={() => signUp()}>
+        Sign up!
+      </button>
+      <button type="button" onClick={() => signIn()}>
+        Sign in!
+      </button>
+    </div>
+  );
 };
 
 export default Test;
