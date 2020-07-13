@@ -180,6 +180,13 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
   justify-content: center;
   white-space: nowrap;
 
+  .button {
+    &:hover {
+      color: white;
+      background: #08b26e;
+    }
+  }
+
   .grouped {
     border-radius: inherit;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -187,6 +194,11 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
     font-size: 1.4rem;
     margin: 0.5rem;
     padding: 1rem;
+  }
+
+  .selected {
+    color: white;
+    background: #08b26e;
   }
 `;
 
