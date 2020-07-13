@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { textColor } from 'defaultStyleHelper';
+import { detailFontSize, textColor } from 'defaultStyleHelper';
 
 export const StyledTooltip = styled(props => (
   <Tooltip
@@ -11,6 +11,7 @@ export const StyledTooltip = styled(props => (
   />
 ))`
   opacity: 1;
+
   & .tooltip {
     background-color: white;
     border: 0.1rem solid white;
@@ -18,4 +19,8 @@ export const StyledTooltip = styled(props => (
     color: ${textColor};
     font-size: 1.3rem;
   }
+`;
+
+export const StyledTooltipLabel = styled.span`
+  font-size: ${detailFontSize};
 `;
