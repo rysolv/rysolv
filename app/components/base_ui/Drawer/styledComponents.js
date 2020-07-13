@@ -52,7 +52,9 @@ export const StyledListWrapper = styled.div`
   }
 `;
 
-export const StyledListItemText = styled(ListItemText)`
+export const StyledListItemText = styled(({ active, ...restProps }) => (
+  <ListItemText {...restProps} />
+))`
   .MuiTypography-body1 {
     color: ${({ active }) => (active ? hoverLinkColor : textColor)};
     font-size: ${defaultFontSize};
