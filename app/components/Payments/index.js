@@ -77,6 +77,7 @@ const PaymentPortal = ({
         setFundValue(formattedValue);
       }
       if (formattedString.length === 2) {
+        formattedString[0] = formattedString[0] === '' ? '0' : formattedString[0];
         formattedString[1] = formattedString[1]
           ? formattedString[1].slice(0, 2)
           : '';
