@@ -25,7 +25,6 @@ export class SigninContainer extends React.PureComponent {
 
   render() {
     const { data, isSignedIn, dispatchSignIn, handleInputChange } = this.props;
-    console.log(data);
     const { email, password } = data;
 
     const handleSignIn = () => {
