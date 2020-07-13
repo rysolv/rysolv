@@ -14,11 +14,13 @@ import {
   CommentWrapper,
   DetailContainer,
   Divider,
+  EditIssueWrapper,
   IssueDetailColumn,
   IssueDetailContainer,
   IssueDetailContentContainer,
   IssueDetailWrapper,
   LeftPanel,
+  ManageIssueWrapper,
   SidebarContainer,
   StyledButton,
   StyledErrorSuccessBanner,
@@ -122,6 +124,16 @@ const IssueDetail = ({
     />
   );
 
+  const EditIssueComponent = (
+    <StyledIssueAccountManager
+      displayEditView={displayEditView}
+      handleClose={handleClose}
+      handleSave={handleSave}
+      setDisplayEditView={setDisplayEditView}
+      type="issue"
+    />
+  );
+
   const primaryUser = {
     alt: username,
     detailRoute: `/users/detail/${userId}`,
@@ -158,7 +170,26 @@ const IssueDetail = ({
     deviceView === 'desktop' ||
     deviceView === 'desktopL';
 
+  const isMobileOrLaptop =
+    deviceView === 'mobileXXS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobile' ||
+    deviceView === 'tablet' ||
+    deviceView === 'laptopS' ||
+    deviceView === 'laptop';
+
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
+
+  const ManageIssueComponent = () => (
+    <Fragment>
+      <Divider>Manage Issue</Divider>
+      <ManageIssueWrapper>
+        <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
+        {CloseOpenIssueComponent}
+      </ManageIssueWrapper>
+    </Fragment>
+  );
   return (
     <IssueDetailContainer>
       <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
@@ -224,6 +255,15 @@ const IssueDetail = ({
                 />
               </div>
 
+              <ConditionalRender
+                Component={ManageIssueComponent}
+                shouldRender={
+                  isMobileOrLaptop &&
+                  isSignedIn &&
+                  !!issues.find(({ id }) => issueId === id)
+                }
+              />
+
               <Divider>Comments</Divider>
               <CommentWrapper>{commentsDiv}</CommentWrapper>
 
@@ -248,15 +288,7 @@ const IssueDetail = ({
         </IssueDetailWrapper>
         <SidebarContainer>
           <ConditionalRender
-            Component={
-              <StyledIssueAccountManager
-                displayEditView={displayEditView}
-                handleClose={handleClose}
-                handleSave={handleSave}
-                setDisplayEditView={setDisplayEditView}
-                type="issue"
-              />
-            }
+            Component={EditIssueComponent}
             shouldRender={
               isSignedIn && !!issues.find(({ id }) => issueId === id)
             }
