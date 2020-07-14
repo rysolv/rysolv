@@ -23,7 +23,7 @@ const FundIssueButton = ({
   userId,
 }) => (
   <FundIssueButtonContainer>
-    <FundAmount>
+    <FundAmount open={open}>
       <StyledFundingWrapper
         open={open}
         value={formatDollarAmount(fundedAmount)}
@@ -31,6 +31,7 @@ const FundIssueButton = ({
     </FundAmount>
     <AddFundsButton
       disabled={disabled}
+      open={open}
       onClick={() =>
         dispatchOpenModal({
           modalState: 'fundIssue',
@@ -38,6 +39,7 @@ const FundIssueButton = ({
             balance,
             fundedAmount,
             issueId,
+            open,
             userId,
           },
         })

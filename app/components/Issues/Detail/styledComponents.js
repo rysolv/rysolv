@@ -54,7 +54,10 @@ export const Divider = styled.div`
 
 export const EditIssueWrapper = styled.div`
   margin-bottom: -1rem;
-  width: 100%;
+
+  ${mobileS} {
+    width: 100%;
+  }
 `;
 
 export const ExternalLinkWrapper = styled.a`

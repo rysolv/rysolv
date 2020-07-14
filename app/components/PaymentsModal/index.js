@@ -21,6 +21,7 @@ const PaymentPortalModal = ({
   handleSubmitAccountPayment,
   isSignedIn,
   issueId,
+  open,
   paymentAlerts,
   userId,
 }) => (
@@ -40,6 +41,7 @@ const PaymentPortalModal = ({
       handleSubmitAccountPayment={handleSubmitAccountPayment}
       isSignedIn={isSignedIn}
       issueId={issueId}
+      open={open}
       paymentAlerts={paymentAlerts}
       removeBorder
       userId={userId}
@@ -56,6 +58,7 @@ PaymentPortalModal.propTypes = {
   handleSubmitAccountPayment: T.func,
   isSignedIn: T.bool,
   issueId: T.string,
+  open: T.bool,
   paymentAlerts: T.object,
   userId: T.string,
 };

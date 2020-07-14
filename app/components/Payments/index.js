@@ -21,6 +21,7 @@ import {
   Divider,
   DollarValueWrapper,
   Funded,
+  FundingContainer,
   OverviewWrapper,
   PaymentContainer,
   PaymentInformationWrapper,
@@ -43,6 +44,7 @@ const PaymentPortal = ({
   handleSubmitAccountPayment,
   isSignedIn,
   issueId,
+  open,
   paymentAlerts: { error, success },
   userId,
   ...restProps
@@ -113,73 +115,75 @@ const PaymentPortal = ({
     <PaymentContainer {...restProps}>
       <OverviewWrapper>
         <Amount>{formatDollarAmount(fundedAmount)}</Amount>
-        <Funded>{fundedAmount ? 'Funded' : 'Unfunded'}</Funded>
+        <Funded isFunded={!fundedAmount || !open}>{fundedAmount ? 'Funded' : 'Unfunded'}</Funded>
       </OverviewWrapper>
-      <DollarValueWrapper>
-        <DollarValueToggle
-          fundValue={fundValue}
-          handleChange={handleChangeDollarValue}
-        />
-        - or -
-        <StyledBaseInputWithAdornment
-          adornmentComponent="$"
-          fontSize="1.4rem"
-          onChange={e => handleChangeDollarValue(e, e.target.value)}
-          value={fundValue}
-        />
-      </DollarValueWrapper>
-      <Divider />
-      <PaymentInformationWrapper>
-        <StyledLabel>Information</StyledLabel>
-        <StyledBaseInputWithAdornment
-          adornmentComponent="Name"
-          fontSize="1rem"
-          onChange={e => handleNameValueChange(e, e.target.value)}
-          value={nameValue}
-        />
-        <StyledBaseInputWithAdornment
-          adornmentComponent="Email"
-          fontSize="1rem"
-          onChange={e => handleEmailValueChange(e, e.target.value)}
-          value={emailValue}
-        />
-      </PaymentInformationWrapper>
-      <StyledLabel>Payment Methods</StyledLabel>
-      <StyledErrorSuccessBanner
-        error={error}
-        onClose={handleClearAlerts}
-        success={success}
-      />
-      <ConditionalRender
-        Component={() => (
-          <BaseExpansionPanel
-            Component={YourAccountView}
-            Icon={AccountIcon}
-            open
-            propsToPassDown={{
-              balance,
-              fundValue,
-              handleSubmitAccountPayment,
-              issueId,
-              setFundValue,
-              userId,
-            }}
-            title="Your Account"
+      <FundingContainer open={open}>
+        <DollarValueWrapper>
+          <DollarValueToggle
+            fundValue={fundValue}
+            handleChange={handleChangeDollarValue}
           />
-        )}
-        shouldRender={isSignedIn}
-      />
-      <BaseExpansionPanel
-        Component={CreditCardView}
-        Icon={CreditCardIcon}
-        propsToPassDown={propsToPassDown}
-        title="Credit Card"
-      />
-      <BaseExpansionPanel
-        Component={PaypalView}
-        Icon={PaypalIcon}
-        title="Paypal"
-      />
+        - or -
+          <StyledBaseInputWithAdornment
+            adornmentComponent="$"
+            fontSize="1.4rem"
+            onChange={e => handleChangeDollarValue(e, e.target.value)}
+            value={fundValue}
+          />
+        </DollarValueWrapper>
+        <Divider />
+        <PaymentInformationWrapper>
+          <StyledLabel>Information</StyledLabel>
+          <StyledBaseInputWithAdornment
+            adornmentComponent="Name"
+            fontSize="1rem"
+            onChange={e => handleNameValueChange(e, e.target.value)}
+            value={nameValue}
+          />
+          <StyledBaseInputWithAdornment
+            adornmentComponent="Email"
+            fontSize="1rem"
+            onChange={e => handleEmailValueChange(e, e.target.value)}
+            value={emailValue}
+          />
+        </PaymentInformationWrapper>
+        <StyledLabel>Payment Methods</StyledLabel>
+        <StyledErrorSuccessBanner
+          error={error}
+          onClose={handleClearAlerts}
+          success={success}
+        />
+        <ConditionalRender
+          Component={() => (
+            <BaseExpansionPanel
+              Component={YourAccountView}
+              Icon={AccountIcon}
+              open
+              propsToPassDown={{
+                balance,
+                fundValue,
+                handleSubmitAccountPayment,
+                issueId,
+                setFundValue,
+                userId,
+              }}
+              title="Your Account"
+            />
+          )}
+          shouldRender={isSignedIn}
+        />
+        <BaseExpansionPanel
+          Component={CreditCardView}
+          Icon={CreditCardIcon}
+          propsToPassDown={propsToPassDown}
+          title="Credit Card"
+        />
+        <BaseExpansionPanel
+          Component={PaypalView}
+          Icon={PaypalIcon}
+          title="Paypal"
+        />
+      </FundingContainer>
     </PaymentContainer>
   );
 };
@@ -194,6 +198,7 @@ PaymentPortal.propTypes = {
   handleSubmitAccountPayment: T.func,
   isSignedIn: T.bool,
   issueId: T.string,
+  open: T.bool,
   paymentAlerts: T.object,
   userId: T.string,
 };

@@ -12,7 +12,6 @@ import {
   borderColor,
   defaultFontSize,
   dividerBorder,
-  errorRed,
   fundingText,
 } from 'defaultStyleHelper';
 
@@ -91,10 +90,14 @@ export const DollarValueWrapper = styled.div`
 
 export const Funded = styled.div`
   align-self: center;
-  color: ${({ isFunded }) => (isFunded ? errorRed : fundingText)};
+  color: ${({ isFunded }) => (isFunded ? 'rgba(0,0,0,0.4)' : fundingText)};
   font-size: 1.4rem;
   font-weight: 500;
   padding: 0.5rem;
+`;
+
+export const FundingContainer = styled.div`
+  display: ${({ open }) => (!open ? 'none' : 'inherit')};
 `;
 
 export const HorizontalInputWrapper = styled.div`

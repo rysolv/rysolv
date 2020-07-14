@@ -301,6 +301,7 @@ const IssueDetail = ({
             handleSubmitAccountPayment={handleSubmitAccountPayment}
             isSignedIn={isSignedIn}
             issueId={issueId}
+            open={open}
             paymentAlerts={paymentAlerts}
             userId={activeUserId}
           />
