@@ -1,4 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
+
+const { createActivity } = require('./activityResolver');
 const {
   getComments,
   getIssueComments,
@@ -6,8 +8,6 @@ const {
   updateIssueArray,
   updateUserArray,
 } = require('../../db');
-
-const { createActivity } = require('./activityResolver');
 
 module.exports = {
   createComment: async args => {

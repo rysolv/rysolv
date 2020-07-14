@@ -2,10 +2,11 @@ const { mapValues, singleQuery } = require('../db/query');
 const { formatParamaters } = require('./helpers');
 
 const activityValues = [
+  'action_type',
   'activity_id',
   'created_date',
-  'action_type',
   'funded_value',
+  'is_private',
   'issue_id',
   'organization_id',
   'pullrequest_id',
@@ -42,7 +43,9 @@ const createActivity = async data => {
 
 // GET activity for a specific id
 const getActivity = async (table, column, id) => {
-  const selection = column ? `WHERE ${column} ='${id}'` : '';
+  const selection = column
+    ? `WHERE ${column} = '${id}' AND activity.is_private = false`
+    : 'WHERE activity.is_private = false';
 
   const queryText = `SELECT ${activityReturnValues} FROM ${table}
     LEFT JOIN issues on (activity.issue_id = issues.id)
