@@ -38,12 +38,15 @@ const PaymentPortal = ({
   balance,
   dispatchVerifyRecaptcha,
   dispatchVerifyRecaptchaFailure,
+  email,
+  firstName,
   fundedAmount,
   handleClearAlerts,
   handleNav,
   handleSubmitAccountPayment,
   isSignedIn,
   issueId,
+  lastName,
   open,
   paymentAlerts: { error, success },
   userId,
@@ -52,18 +55,20 @@ const PaymentPortal = ({
   const [creditCardNumber, setCreditCardNumber] = useState('');
   const [cvcValue, setCvcValue] = useState('');
   const [dateValue, setDateValue] = useState('');
-  const [emailValue, setEmailValue] = useState('');
+  const [emailValue, setEmailValue] = useState(email || '');
   const [fundValue, setFundValue] = useState('2');
   const [isAccountPaymentOpen, setIsAccountPaymentOpen] = useState(true);
   const [isCreditPaymentOpen, setIsCreditPaymentOpen] = useState(false);
   const [isPaypalPaymentOpen, setIsPaypalPaymentOpen] = useState(false);
-  const [nameValue, setNameValue] = useState('');
+  const [firstNameValue, setFirstNameValue] = useState(firstName || '');
+  const [lastNameValue, setLastNameValue] = useState(lastName || '');
   const [zipValue, setZipValue] = useState('');
 
   const handleChangeDollarValue = (e, valuePassedIn) => {
     const { value: valueFromTarget } = e.target;
     const value = valuePassedIn || valueFromTarget;
-    if (value <= balance) {
+    const compareValue = isSignedIn ? balance : 1000000;
+    if (value <= compareValue) {
       const string = value
         ? value
           .replace(',', '.')
@@ -94,19 +99,31 @@ const PaymentPortal = ({
 
   const handleChangePaymentPanel = (type) => {
     if (type === 'account') {
-      setIsAccountPaymentOpen(true);
+      if (isAccountPaymentOpen) {
+        setIsAccountPaymentOpen(false);
+      } else {
+        setIsAccountPaymentOpen(true);
+      }
       setIsCreditPaymentOpen(false);
       setIsPaypalPaymentOpen(false);
     }
     if (type === 'credit') {
+      if (isCreditPaymentOpen) {
+        setIsCreditPaymentOpen(false);
+      } else {
+        setIsCreditPaymentOpen(true);
+      }
       setIsAccountPaymentOpen(false);
-      setIsCreditPaymentOpen(true);
       setIsPaypalPaymentOpen(false);
     }
     if (type === 'paypal') {
+      if (isPaypalPaymentOpen) {
+        setIsPaypalPaymentOpen(false);
+      } else {
+        setIsPaypalPaymentOpen(true);
+      }
       setIsAccountPaymentOpen(false);
       setIsCreditPaymentOpen(false);
-      setIsPaypalPaymentOpen(true);
     }
   };
 
@@ -114,8 +131,12 @@ const PaymentPortal = ({
     setEmailValue(newEmail);
   };
 
-  const handleNameValueChange = (event, newName) => {
-    setNameValue(newName);
+  const handleFirstNameValueChange = (event, newName) => {
+    setFirstNameValue(newName);
+  };
+
+  const handleLastNameValueChange = (event, newName) => {
+    setLastNameValue(newName);
   };
   const propsToPassDown = {
     creditCardNumber,
@@ -123,11 +144,14 @@ const PaymentPortal = ({
     dateValue,
     dispatchVerifyRecaptcha,
     dispatchVerifyRecaptchaFailure,
+    emailValue,
+    firstNameValue,
     handleCreditCardNumberChange,
     handleCvcChange,
     handleDateChange,
     handleZipChange,
     isCreditPaymentOpen,
+    lastNameValue,
     setCreditCardNumber,
     setCvcValue,
     setDateValue,
@@ -158,10 +182,16 @@ const PaymentPortal = ({
         <PaymentInformationWrapper>
           <StyledLabel>Information</StyledLabel>
           <StyledBaseInputWithAdornment
-            adornmentComponent="Name"
+            adornmentComponent="First Name"
             fontSize="1rem"
-            onChange={e => handleNameValueChange(e, e.target.value)}
-            value={nameValue}
+            onChange={e => handleFirstNameValueChange(e, e.target.value)}
+            value={firstNameValue}
+          />
+          <StyledBaseInputWithAdornment
+            adornmentComponent="Last Name"
+            fontSize="1rem"
+            onChange={e => handleLastNameValueChange(e, e.target.value)}
+            value={lastNameValue}
           />
           <StyledBaseInputWithAdornment
             adornmentComponent="Email"
@@ -181,13 +211,16 @@ const PaymentPortal = ({
             <BaseExpansionPanel
               Component={YourAccountView}
               expanded={isAccountPaymentOpen}
+              handleLabelClick={() => handleChangePaymentPanel('account')}
               Icon={AccountIcon}
-              onClick={() => handleChangePaymentPanel('account')}
               propsToPassDown={{
                 balance,
+                emailValue,
+                firstNameValue,
                 fundValue,
                 handleSubmitAccountPayment,
                 issueId,
+                lastNameValue,
                 setFundValue,
                 userId,
               }}
@@ -199,17 +232,17 @@ const PaymentPortal = ({
         <BaseExpansionPanel
           Component={CreditCardView}
           expanded={isCreditPaymentOpen}
+          handleLabelClick={() => handleChangePaymentPanel('credit')}
           Icon={CreditCardIcon}
-          onClick={() => handleChangePaymentPanel('credit')}
           propsToPassDown={propsToPassDown}
           title="Credit Card"
         />
         <BaseExpansionPanel
           Component={PaypalView}
           expanded={isPaypalPaymentOpen}
+          handleLabelClick={() => handleChangePaymentPanel('paypal')}
           Icon={PaypalIcon}
           propsToPassDown={{ isPaypalPaymentOpen }}
-          onClick={() => handleChangePaymentPanel('paypal')}
           title="Paypal"
         />
       </FundingContainer>
@@ -221,12 +254,15 @@ PaymentPortal.propTypes = {
   balance: T.number,
   dispatchVerifyRecaptcha: T.func,
   dispatchVerifyRecaptchaFailure: T.func,
+  email: T.string,
+  firstName: T.string,
   fundedAmount: T.number,
   handleClearAlerts: T.func,
   handleNav: T.func,
   handleSubmitAccountPayment: T.func,
   isSignedIn: T.bool,
   issueId: T.string,
+  lastName: T.string,
   open: T.bool,
   paymentAlerts: T.object,
   userId: T.string,

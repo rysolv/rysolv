@@ -201,7 +201,7 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
 
   .selected {
     color: white;
-    background: #08b26e;
+    background: #31b589;
   }
 `;
 

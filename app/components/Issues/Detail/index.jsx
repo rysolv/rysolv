@@ -33,7 +33,7 @@ const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
-  activeUser: { balance, id: activeUserId, issues },
+  activeUser: { balance, email, firstName, id: activeUserId, issues, lastName },
   alerts: { error, success },
   data,
   data: {
@@ -295,12 +295,15 @@ const IssueDetail = ({
           />
           <PaymentPortal
             balance={balance}
+            email={email}
+            firstName={firstName}
             fundedAmount={fundedAmount}
             handleClearAlerts={handleClearAlerts}
             handleNav={handleNav}
             handleSubmitAccountPayment={handleSubmitAccountPayment}
             isSignedIn={isSignedIn}
             issueId={issueId}
+            lastName={lastName}
             open={open}
             paymentAlerts={paymentAlerts}
             userId={activeUserId}

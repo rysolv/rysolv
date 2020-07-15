@@ -20,7 +20,7 @@ const IssueTopBar = ({
   isDesktop,
   isSignedIn,
 }) => {
-  const { balance, id: userId } = activeUser;
+  const { balance, email, firstName, id: userId, lastName } = activeUser;
   const { fundedAmount, id: issueId, open } = data;
   return (
     <Fragment>
@@ -36,8 +36,11 @@ const IssueTopBar = ({
               balance={balance}
               disabled={!open}
               dispatchOpenModal={dispatchOpenModal}
+              email={email}
+              firstName={firstName}
               fundedAmount={fundedAmount}
               issueId={issueId}
+              lastName={lastName}
               open={open}
               userId={userId}
             />
