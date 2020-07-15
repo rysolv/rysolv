@@ -68,6 +68,7 @@ export const UserActivityContainer = styled.div`
 
 export const UserActivityButtonWrapper = styled.div`
   color: white;
+  margin: 0 1rem 0 0.75rem;
 
   &:hover {
     color: #b0bec5;
