@@ -19,10 +19,10 @@ export const StyledActivityMenu = styled.div`
   border-radius: 0.4rem;
   border: 0.1rem solid #e1e4e8;
   box-shadow: 0 0.8rem 2.4rem rgba(149, 157, 165, 0.2);
-  left: -355%;
   margin-top: 2.2rem;
   padding: 0.4rem 0;
   position: absolute;
+  right: 9%;
   top: 100%;
   width: 16rem;
   z-index: 100;

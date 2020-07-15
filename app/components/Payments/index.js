@@ -127,6 +127,7 @@ const PaymentPortal = ({
     handleCvcChange,
     handleDateChange,
     handleZipChange,
+    isCreditPaymentOpen,
     setCreditCardNumber,
     setCvcValue,
     setDateValue,
@@ -207,6 +208,7 @@ const PaymentPortal = ({
           Component={PaypalView}
           expanded={isPaypalPaymentOpen}
           Icon={PaypalIcon}
+          propsToPassDown={{ isPaypalPaymentOpen }}
           onClick={() => handleChangePaymentPanel('paypal')}
           title="Paypal"
         />
