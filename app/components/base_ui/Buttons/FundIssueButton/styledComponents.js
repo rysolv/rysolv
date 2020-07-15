@@ -26,7 +26,7 @@ export const AddFundsButton = styled.button`
   }
 
   svg {
-    font-size: 1.4rem;
+    font-size: ${defaultFontSize};
   }
 `;
 

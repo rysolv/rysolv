@@ -6,6 +6,8 @@ import { StyledDownArrow } from './styledComponents';
 
 const dropdownArrow = iconDictionary('dropdownArrow');
 
-const BackIcon = () => <StyledDownArrow>{dropdownArrow}</StyledDownArrow>;
+const BackIcon = ({ ...restProps }) => (
+  <StyledDownArrow {...restProps}>{dropdownArrow}</StyledDownArrow>
+);
 
 export default BackIcon;

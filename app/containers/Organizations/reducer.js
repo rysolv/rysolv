@@ -211,12 +211,11 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
-      draft.error = initialState.error;
-      draft[form][field].error = '';
-
       if (form === 'filter') {
         draft[form][field] = value;
       } else {
+        draft.error = initialState.error;
+        draft[form][field].error = '';
         draft[form][field].value = value;
       }
       break;
