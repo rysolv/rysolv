@@ -49,12 +49,15 @@ const PaymentPortal = ({
   userId,
   ...restProps
 }) => {
-  const [fundValue, setFundValue] = useState('2');
-  const [nameValue, setNameValue] = useState('');
-  const [emailValue, setEmailValue] = useState('');
   const [creditCardNumber, setCreditCardNumber] = useState('');
-  const [dateValue, setDateValue] = useState('');
   const [cvcValue, setCvcValue] = useState('');
+  const [dateValue, setDateValue] = useState('');
+  const [emailValue, setEmailValue] = useState('');
+  const [fundValue, setFundValue] = useState('2');
+  const [isAccountPaymentOpen, setIsAccountPaymentOpen] = useState(true);
+  const [isCreditPaymentOpen, setIsCreditPaymentOpen] = useState(false);
+  const [isPaypalPaymentOpen, setIsPaypalPaymentOpen] = useState(false);
+  const [nameValue, setNameValue] = useState('');
   const [zipValue, setZipValue] = useState('');
 
   const handleChangeDollarValue = (e, valuePassedIn) => {
@@ -89,11 +92,30 @@ const PaymentPortal = ({
     }
   };
 
-  const handleNameValueChange = (event, newName) => {
-    setNameValue(newName);
+  const handleChangePaymentPanel = (type) => {
+    if (type === 'account') {
+      setIsAccountPaymentOpen(true);
+      setIsCreditPaymentOpen(false);
+      setIsPaypalPaymentOpen(false);
+    }
+    if (type === 'credit') {
+      setIsAccountPaymentOpen(false);
+      setIsCreditPaymentOpen(true);
+      setIsPaypalPaymentOpen(false);
+    }
+    if (type === 'paypal') {
+      setIsAccountPaymentOpen(false);
+      setIsCreditPaymentOpen(false);
+      setIsPaypalPaymentOpen(true);
+    }
   };
+
   const handleEmailValueChange = (event, newEmail) => {
     setEmailValue(newEmail);
+  };
+
+  const handleNameValueChange = (event, newName) => {
+    setNameValue(newName);
   };
   const propsToPassDown = {
     creditCardNumber,
@@ -157,8 +179,9 @@ const PaymentPortal = ({
           Component={() => (
             <BaseExpansionPanel
               Component={YourAccountView}
+              expanded={isAccountPaymentOpen}
               Icon={AccountIcon}
-              open
+              onClick={() => handleChangePaymentPanel('account')}
               propsToPassDown={{
                 balance,
                 fundValue,
@@ -174,13 +197,17 @@ const PaymentPortal = ({
         />
         <BaseExpansionPanel
           Component={CreditCardView}
+          expanded={isCreditPaymentOpen}
           Icon={CreditCardIcon}
+          onClick={() => handleChangePaymentPanel('credit')}
           propsToPassDown={propsToPassDown}
           title="Credit Card"
         />
         <BaseExpansionPanel
           Component={PaypalView}
+          expanded={isPaypalPaymentOpen}
           Icon={PaypalIcon}
+          onClick={() => handleChangePaymentPanel('paypal')}
           title="Paypal"
         />
       </FundingContainer>
