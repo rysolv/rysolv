@@ -39,7 +39,7 @@ const Footer = ({ handleNav }) => (
     <Divider />
     <StyledBottom>
       <LinkContainer>
-        <LinkWrapper onClick={() => handleNav('/contactus')}>
+        <LinkWrapper onClick={() => handleNav('/contact-us')}>
           Contact Us
         </LinkWrapper>
       </LinkContainer>

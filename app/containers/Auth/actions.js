@@ -15,6 +15,9 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP,
   UPDATE_ACTIVE_USER,
+  VERIFY_EMAIL_FAILURE,
+  VERIFY_EMAIL_SUCCESS,
+  VERIFY_EMAIL,
 } from './constants';
 
 export function fetchActiveUserFailure(payload) {
@@ -126,5 +129,26 @@ export function updateActiveUser(payload) {
   return {
     payload,
     type: UPDATE_ACTIVE_USER,
+  };
+}
+
+export function verifyEmailFailure(payload) {
+  return {
+    payload,
+    type: VERIFY_EMAIL_FAILURE,
+  };
+}
+
+export function verifyEmailSuccess(payload) {
+  return {
+    payload,
+    type: VERIFY_EMAIL_SUCCESS,
+  };
+}
+
+export function verifyEmail(payload) {
+  return {
+    payload,
+    type: VERIFY_EMAIL,
   };
 }

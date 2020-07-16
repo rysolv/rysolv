@@ -13,14 +13,26 @@ import {
   SIGN_OUT_FAILURE,
   SIGN_OUT_SUCCESS,
   SIGN_OUT,
+  SIGN_UP_FAILURE,
+  SIGN_UP_SUCCESS,
+  SIGN_UP,
   UPDATE_ACTIVE_USER,
+  VERIFY_EMAIL_FAILURE,
+  VERIFY_EMAIL_SUCCESS,
+  VERIFY_EMAIL,
 } from './constants';
 
 export const initialState = {
-  alerts: { error: false, success: false },
   activeUser: {},
+  alerts: { error: false, success: false },
+  error: {
+    signUp: { error: false, message: '' },
+    verifyEmail: { error: false, message: '' },
+  },
   isSignedIn: false,
   loading: false,
+  verificationSent: false,
+  verifyUserId: '',
 };
 
 /* eslint-disable default-case, no-param-reassign, consistent-return */
@@ -89,6 +101,30 @@ const authReducer = produce((draft, { payload, type }) => {
     case SIGN_OUT_SUCCESS: {
       return initialState;
     }
+    case SIGN_UP: {
+      draft.isSignedIn = false;
+      draft.loading = true;
+      break;
+    }
+    case SIGN_UP_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+
+      draft.error.signUp.error = true;
+      draft.error.signUp.message = error.message;
+
+      draft.isSignedIn = false;
+      draft.loading = false;
+      break;
+    }
+    case SIGN_UP_SUCCESS: {
+      const { createUser } = payload;
+      draft.activeUser = createUser;
+      draft.error = initialState.error;
+      draft.loading = false;
+      draft.verificationSent = true;
+      break;
+    }
     case UPDATE_ACTIVE_USER: {
       const { attempting, balance } = payload;
       if (attempting) {
@@ -97,6 +133,26 @@ const authReducer = produce((draft, { payload, type }) => {
       if (balance) {
         draft.activeUser.balance = balance;
       }
+      break;
+    }
+    case VERIFY_EMAIL: {
+      draft.loading = true;
+      break;
+    }
+    case VERIFY_EMAIL_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+
+      draft.error.verifyEmail.error = true;
+      draft.error.verifyEmail.message = error.message;
+
+      draft.isSignedIn = false;
+      draft.loading = false;
+      break;
+    }
+    case VERIFY_EMAIL_SUCCESS: {
+      draft.error = initialState.error;
+      draft.loading = false;
       break;
     }
     default: {

@@ -1,9 +1,7 @@
-const { v4: uuidv4 } = require('uuid');
-
 const {
-  checkDuplicateUser,
+  checkDuplicateUserEmail,
+  checkDuplicateUsername,
   createUser,
-  deleteUser,
   getOneIssue,
   getOneOrganization,
   getOneUser,
@@ -16,43 +14,49 @@ const {
   userUpvote,
 } = require('../../db');
 
+const defaultUserImage =
+  'https://rysolv.s3.us-east-2.amazonaws.com/default-profile-picture.png';
+const deletedUserImage =
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTBvwAcytGFLkWO2eT-FCwE5z_mlQxBdI9uwbyeczCTVBci7Vrg&usqp=CAU';
+
 module.exports = {
+  checkDuplicateUser: async args => {
+    const { username, email } = args;
+    try {
+      await checkDuplicateUserEmail(email);
+      await checkDuplicateUsername(username);
+
+      return {
+        __typename: 'Success',
+        message: 'No duplicate user exists',
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
+    }
+  },
   createUser: async args => {
     const { userInput } = args;
-    await checkDuplicateUser('users', userInput.email);
-    const issue = [
-      [
-        uuidv4(),
-        new Date(),
-        new Date(),
-        userInput.firstName,
-        userInput.lastName,
-        userInput.email,
-        userInput.watching || [],
-        userInput.rep || 0,
-        userInput.profilePic,
-        userInput.comments || [],
-        userInput.attempting || [],
-        userInput.issues || [],
-        userInput.organizations || [],
-        userInput.username,
-        userInput.githubLink || '',
-        userInput.personalLink || '',
-        userInput.preferredLanguages || [],
-        userInput.stackoverflowLink || '',
-        false,
-        userInput.pullRequests || [],
-        userInput.upvotes || [],
-        userInput.activePullRequests || 0,
-        userInput.completedPullRequests || 0,
-        userInput.dollarsEarned || 0,
-        userInput.isOnline || true,
-        userInput.rejectedPullRequests,
-        userInput.balance || 0,
-      ],
-    ];
+
+    const newUser = {
+      id: userInput.id,
+      created_date: new Date(),
+      email: userInput.email,
+      first_name: userInput.firstName,
+      last_name: userInput.lastName,
+      modified_date: new Date(),
+      profile_pic: defaultUserImage,
+      username: userInput.username,
+    };
+
     try {
-      const result = await createUser(issue);
+      await checkDuplicateUserEmail(userInput.email);
+      await checkDuplicateUsername(userInput.username);
+
+      const result = await createUser(newUser);
+
       return result;
     } catch (err) {
       throw err;
@@ -62,33 +66,33 @@ module.exports = {
     const { id } = args;
     try {
       const data = {
-        modified_date: new Date(), // update modified date
-        first_name: 'Deleted',
-        last_name: 'User',
-        email: '',
-        watching: [],
-        rep: 0,
-        profile_pic:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTBvwAcytGFLkWO2eT-FCwE5z_mlQxBdI9uwbyeczCTVBci7Vrg&usqp=CAU',
-        comments: [],
-        attempting: [],
-        issues: [],
-        organizations: [],
-        username: '[deleted]',
-        github_link: '',
-        personal_link: '',
-        preferred_languages: [],
-        stackoverflow_link: '',
-        is_deleted: true,
         activePullRequests: 0,
+        attempting: [],
+        balance: 0,
+        comments: [],
         completedPullRequests: 0,
         dollarsEarned: 0,
+        email_verified: false,
+        email: '',
+        first_name: 'Deleted',
+        github_link: '',
+        is_deleted: true,
         isOnline: false,
+        issues: [],
+        last_name: 'User',
+        modified_date: new Date(), // update modified date
+        organizations: [],
+        personal_link: '',
+        preferred_languages: [],
+        profile_pic: deletedUserImage,
         rejectedPullRequests: 0,
-        balance: 0,
+        rep: 0,
+        stackoverflow_link: '',
+        username: '[deleted]',
+        watching: [],
       };
-      const result = await deleteUser('users', id, data);
-      return result;
+      await transformUser(id, data);
+      return 'User successfully deleted';
     } catch (err) {
       throw err;
     }
@@ -180,48 +184,28 @@ module.exports = {
     const { id, userInput } = args;
     try {
       const data = {
-        modified_date: new Date(), // update modified date
-        first_name: userInput.firstName,
-        last_name: userInput.lastName,
-        email: userInput.email,
-        watching: userInput.watching,
-        rep: userInput.rep,
-        profile_pic: userInput.profilePic,
-        comments: userInput.comments,
         attempting: userInput.attempting,
-        issues: userInput.issues,
-        organizations: userInput.organizations,
-        username: userInput.username,
+        balance: userInput.balance,
+        comments: userInput.comments,
+        email_verified: userInput.emailVerified,
+        email: userInput.email,
+        first_name: userInput.firstName,
         github_link: userInput.githubLink,
+        issues: userInput.issues,
+        last_name: userInput.lastName,
+        modified_date: new Date(), // update modified date
+        organizations: userInput.organizations,
         personal_link: userInput.personalLink,
         preferred_languages: userInput.preferredLanguages,
-        stackoverflow_link: userInput.stackoverflowLink,
+        profile_pic: userInput.profilePic,
         pull_requests: userInput.pullRequests,
-        balance: userInput.balance,
+        rep: userInput.rep,
+        stackoverflow_link: userInput.stackoverflowLink,
+        username: userInput.username,
+        watching: userInput.watching,
       };
-      const queryResult = await transformUser('users', id, data);
-      const result = {
-        id: queryResult.id,
-        createdDate: queryResult.created_date,
-        modifiedDate: queryResult.modified_date,
-        firstName: queryResult.first_name,
-        lastName: queryResult.last_name,
-        email: queryResult.email,
-        watching: queryResult.watching,
-        rep: queryResult.rep,
-        profilePic: queryResult.profile_pic,
-        comments: queryResult.comments,
-        attempting: queryResult.attempting,
-        issues: queryResult.issues,
-        organizations: queryResult.organizations,
-        username: queryResult.username,
-        githubLink: userInput.github_link,
-        personalLink: userInput.personal_link,
-        preferredLanguages: userInput.preferred_languages,
-        stackoverflowLink: userInput.stackoverflow_link,
-        pullRequests: userInput.pull_requests,
-        balance: userInput.balance,
-      };
+      const result = await transformUser(id, data);
+
       return result;
     } catch (err) {
       throw err;

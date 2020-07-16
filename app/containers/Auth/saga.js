@@ -1,7 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { Auth } from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 import { post } from 'utils/request';
-import { setCookie, clearCookie } from './helpers';
 
 import {
   FETCH_ACTIVE_USER,
@@ -9,16 +8,22 @@ import {
   SIGN_IN,
   SIGN_OUT,
   SIGN_UP,
+  VERIFY_EMAIL,
 } from './constants';
+
 import {
   fetchActiveUserFailure,
   fetchActiveUserSuccess,
   searchOrganizationsFailure,
   searchOrganizationsSuccess,
+  signIn,
   signInFailure,
   signInSuccess,
   signOutFailure,
   signOutSuccess,
+  signUpFailure,
+  signUpSuccess,
+  verifyEmailFailure,
 } from './actions';
 
 export function* fetchActiveUserSaga({ payload }) {
@@ -62,7 +67,9 @@ export function* signInSaga({ payload }) {
   };
 
   try {
-    const { username: userId } = yield call(cognitoSignIn);
+    const {
+      attributes: { sub: userId },
+    } = yield call(cognitoSignIn);
 
     const query = `
     query{
@@ -88,80 +95,104 @@ export function* signInSaga({ payload }) {
       data: { oneUser },
     } = yield call(post, '/graphql', graphql);
     yield put(signInSuccess({ oneUser }));
-    setCookie({ userId });
   } catch (error) {
-    console.log(error.message);
     yield put(signInFailure({ error }));
   }
 }
 
 export function* signUpSaga({ payload }) {
-  const { username, password } = payload;
+  const { username, password, firstName, lastName, email } = payload;
 
   const cognitoSignUp = async () => {
     const signUpResponse = await Auth.signUp({
-      username,
+      username: email,
       password,
     });
     return signUpResponse;
   };
 
   try {
-    const data = yield call(cognitoSignUp);
-    console.log('signup: ', data);
+    // Check duplicate username / email
+    const duplicateUserQuery = `
+      query {
+        checkDuplicateUser(email: "${email}", username: "${username}") {
+          __typename
+          ... on Success {
+            message
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    `;
+    const request = JSON.stringify({
+      query: duplicateUserQuery,
+      variables: {},
+    });
+    const {
+      data: {
+        checkDuplicateUser: { __typename, message },
+      },
+    } = yield call(post, '/graphql', request);
+    if (__typename === 'Error') {
+      throw new Error(message);
+    }
 
-    // CREATE USER WITH ID
+    // Register email / pasword with Cognito
+    const { userSub } = yield call(cognitoSignUp);
 
-    // const query = `
-    // query{
-    //   oneUser(id: "${userId}") {
-    //     attempting,
-    //     balance,
-    //     id,
-    //     issues,
-    //     organizations,
-    //     profilePic,
-    //     pullRequests,
-    //     rep,
-    //     upvotes,
-    //     username,
-    //     watching,
-    //   }
-    // }`;
-    // const graphql = JSON.stringify({
-    //   query,
-    //   variables: {},
-    // });
-    // const {
-    //   data: { oneUser },
-    // } = yield call(post, '/graphql', graphql);
-    // yield put(signInSuccess({ oneUser }));
-    // setCookie({ userId });
+    // Create User account with Cognito id
+    const query = `
+      mutation {
+        createUser(
+          userInput: {
+            id: "${userSub}",
+            email: "${email}",
+            firstName: "${firstName}",
+            lastName: "${lastName}",
+            username: "${username}"
+          }
+        ) {
+          id,
+          username,
+          email
+        }
+      }
+    `;
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { createUser },
+    } = yield call(post, '/graphql', graphql);
+
+    yield put(signUpSuccess({ createUser }));
   } catch (error) {
-    console.log(error.message);
-    yield put(signInFailure({ error }));
+    yield put(signUpFailure({ error }));
   }
 }
 
 export function* getUserOrganizationsSaga({ payload }) {
   const { id } = payload;
   const query = `
-  query {
-    getUserOrganizations(id: "${id}") {
-      id,
-      createdDate,
-      modifiedDate,
-      name,
-      description,
-      repoUrl,
-      organizationUrl,
-      issues,
-      logo,
-      verified,
-      totalFunded,
+    query {
+      getUserOrganizations(id: "${id}") {
+        id,
+        createdDate,
+        modifiedDate,
+        name,
+        description,
+        repoUrl,
+        organizationUrl,
+        issues,
+        logo,
+        verified,
+        totalFunded,
+      }
     }
-  }
-`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,
@@ -179,11 +210,53 @@ export function* getUserOrganizationsSaga({ payload }) {
 }
 
 export function* signOutSaga() {
+  const cognitoSignOut = async () => {
+    await Auth.signOut();
+  };
   try {
-    clearCookie('userId');
+    yield call(cognitoSignOut);
+
     yield put(signOutSuccess());
   } catch (error) {
     yield put(signOutFailure({ error }));
+  }
+}
+
+export function* verifyEmailSaga({ payload }) {
+  const { userEmail, password, userId, verificationCode } = payload;
+
+  const cognitoSignUp = async () => {
+    const signUpResponse = await Auth.confirmSignUp(
+      userEmail,
+      verificationCode.value,
+    );
+    return signUpResponse;
+  };
+
+  try {
+    // Register email / pasword with Cognito
+    yield call(cognitoSignUp);
+
+    // Update email to be verified
+    const query = `
+      mutation {
+        transformUser( id: "${userId}",
+          userInput: {
+            emailVerified: true,
+          }
+        ) { id }
+      }
+    `;
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    yield call(post, '/graphql', graphql);
+
+    // yield put(verifyEmailSuccess({ userId }));
+    yield put(signIn({ username: userEmail, password }));
+  } catch (error) {
+    yield put(verifyEmailFailure({ error }));
   }
 }
 
@@ -193,4 +266,5 @@ export default function* watcherSaga() {
   yield takeLatest(SIGN_IN, signInSaga);
   yield takeLatest(SIGN_OUT, signOutSaga);
   yield takeLatest(SIGN_UP, signUpSaga);
+  yield takeLatest(VERIFY_EMAIL, verifyEmailSaga);
 }

@@ -21,3 +21,7 @@ export const SIGN_UP_FAILURE = 'app/Auth/SIGN_UP_FAILURE';
 export const SIGN_UP_SUCCESS = 'app/Auth/SIGN_UP_SUCCESS';
 
 export const UPDATE_ACTIVE_USER = 'app/Auth/UPDATE_ACTIVE_USER';
+
+export const VERIFY_EMAIL = 'app/Auth/VERIFY_EMAIL';
+export const VERIFY_EMAIL_FAILURE = 'app/Auth/VERIFY_EMAIL_FAILURE';
+export const VERIFY_EMAIL_SUCCESS = 'app/Auth/VERIFY_EMAIL_SUCCESS';

@@ -209,6 +209,7 @@ module.exports = buildSchema(`
     createdDate: Object
     dollarsEarned: Int
     email: String!
+    emailVerified: Boolean
     firstName: String!
     githubLink: String
     id: ID!
@@ -237,8 +238,10 @@ module.exports = buildSchema(`
     completedPullRequests: Int
     dollarsEarned: Int
     email: String
+    emailVerified: Boolean
     firstName: String
     githubLink: String
+    id: ID
     isOnline: Boolean
     issues: [String]
     lastName: String
@@ -286,6 +289,7 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
+    checkDuplicateUser(email: String, username: String): EventResponse!
     getActivity(column: String!, id: ID): ActivityResult!
     getAllActivity: ActivityResult!
     getComments: [Comment]!
@@ -317,7 +321,7 @@ module.exports = buildSchema(`
     createComment(commentInput: CommentInput): Comment
     createIssue(issueInput: IssueInput): IssueResult
     createOrganization(organizationInput: OrganizationInput): OrganizationResult
-    createUser(userInput: UserInput): [User!]!
+    createUser(userInput: UserInput): User!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 

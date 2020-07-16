@@ -10,7 +10,7 @@ import {
   StyledPrimaryButton,
   SubText,
   Title,
-} from './styledComponents';
+} from '../styledComponents';
 
 // eslint-disable-next-line arrow-body-style
 const Signin = ({ data, handleInputChange, handleSignIn }) => {
@@ -23,11 +23,11 @@ const Signin = ({ data, handleInputChange, handleSignIn }) => {
         <MainTextInput
           error={!!email.error}
           helperText={email.error}
-          label="email"
+          label="Email"
           onChange={e =>
             handleInputChange({
               field: 'email',
-              form: 'data',
+              form: 'signIn',
               value: e.target.value,
             })
           }
@@ -40,7 +40,7 @@ const Signin = ({ data, handleInputChange, handleSignIn }) => {
           onChange={e =>
             handleInputChange({
               field: 'password',
-              form: 'data',
+              form: 'signIn',
               value: e.target.value,
             })
           }

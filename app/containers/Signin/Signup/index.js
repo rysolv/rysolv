@@ -7,72 +7,135 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import { ConditionalRender } from 'components/base_ui';
-import Signup from 'components/Signin/Signup';
-import { signUp } from 'containers/Auth/actions';
+import { signUp, verifyEmail } from 'containers/Auth/actions';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
-import { inputChange } from '../actions';
-import { makeSelectSignIn } from '../selectors';
+import { inputChange, incrementStep, clearForm } from '../actions';
+import {
+  makeSelectSignIn,
+  makeSelectSignUpDisabled,
+  makeSelectVerifyDisabled,
+} from '../selectors';
 import reducer from '../reducer';
+import { signUpDictionary } from '../stepDictionary';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class SignupContainer extends React.PureComponent {
+export class SignUpContainer extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
-    document.title = 'Sign in';
+    document.title = 'Create Account';
+  }
+
+  componentWillUnmount() {
+    const { dispatchClearForm } = this.props;
+    dispatchClearForm();
   }
 
   render() {
-    const { data, handleInputChange, dispatchSignUp, isSignedIn } = this.props;
+    const {
+      activeUser,
+      data,
+      dispatchIncrementStep,
+      dispatchSignUp,
+      error,
+      handleInputChange,
+      isSignedIn,
+      signUpDisabled,
+      step,
+      verificationSent,
+      verify,
+      verifyDisabled,
+      dispatchVerifyEmail,
+    } = this.props;
 
-    const { email, password } = data;
+    if (verificationSent) {
+      dispatchIncrementStep({ step: 2 });
+    }
+
+    const StepToRender = signUpDictionary[step];
+    const { email: userEmail, id: userId } = activeUser;
+    const { email, firstName, lastName, password, username } = data;
+    const { verificationCode } = verify;
 
     const handleSignUp = () => {
       dispatchSignUp({
-        username: email.value,
+        email: email.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
         password: password.value,
+        username: username.value,
       });
     };
 
-    const signinComponent = (
-      <Signup
-        data={data}
-        handleInputChange={handleInputChange}
-        handleSignUp={handleSignUp}
-        isSignedIn={isSignedIn}
-      />
-    );
+    const handleVerifyEmail = () => {
+      dispatchVerifyEmail({
+        password: password.value,
+        userEmail,
+        userId,
+        verificationCode,
+      });
+    };
+
     const redirect = <Redirect to="/issues" />;
 
     return (
       <Fragment>
         <ConditionalRender
-          Component={signinComponent}
+          Component={StepToRender}
           FallbackComponent={redirect}
           shouldRender={!isSignedIn}
+          propsToPassDown={{
+            activeUser,
+            data,
+            error: error.signUp,
+            handleInputChange,
+            handleSignUp,
+            handleVerifyEmail,
+            isSignedIn,
+            signUpDisabled,
+            verify,
+            verifyDisabled,
+          }}
         />
       </Fragment>
     );
   }
 }
 
-SignupContainer.propTypes = {
+SignUpContainer.propTypes = {
+  activeUser: T.object,
   data: T.object,
-  handleInputChange: T.func,
+  dispatchClearForm: T.func,
+  dispatchIncrementStep: T.func,
   dispatchSignUp: T.func,
+  dispatchVerifyEmail: T.func,
+  error: T.object,
+  handleInputChange: T.func,
   isSignedIn: T.bool,
+  signUpDisabled: T.bool,
+  step: T.number,
+  verificationSent: T.bool,
+  verify: T.object,
+  verifyDisabled: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : Auth
    */
+  activeUser: makeSelectAuth('activeUser'),
+  error: makeSelectAuth('error'),
   isSignedIn: makeSelectAuth('isSignedIn'),
+  verificationSent: makeSelectAuth('verificationSent'),
   /*
    * Reducer : Signin
    */
-  data: makeSelectSignIn('data'),
+  data: makeSelectSignIn('signUp'),
+  signUpDisabled: makeSelectSignUpDisabled(),
+  step: makeSelectSignIn('step'),
+  verify: makeSelectSignIn('verify'),
+  verifyDisabled: makeSelectVerifyDisabled(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -88,6 +151,9 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Signin
      */
+    dispatchClearForm: () => dispatch(clearForm()),
+    dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
+    dispatchVerifyEmail: payload => dispatch(verifyEmail(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }
@@ -97,9 +163,9 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'signn', reducer });
+const withReducer = injectReducer({ key: 'signin', reducer });
 
 export default compose(
   withReducer,
   withConnect,
-)(SignupContainer);
+)(SignUpContainer);

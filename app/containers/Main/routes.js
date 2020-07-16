@@ -40,7 +40,7 @@ const PublicUsersDetail = withAuth(publicConfig, UsersDetail);
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={PublicMain} />
-    <Route exact path="/contactus" component={Contact} />
+    <Route exact path="/contact-us" component={Contact} />
     <Route exact path="/issues" component={PublicOverview} />
     <Route exact path="/issues/search/:searchValue?" component={PublicOverview} />
     <Route exact path="/issues/add" component={PrivateIssuesAdd} />

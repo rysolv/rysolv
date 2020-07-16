@@ -2,6 +2,9 @@ import React from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
+// AWS Amplify
+import Amplify from '@aws-amplify/core';
+
 // MUI Theme Imports
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { create } from 'jss';
@@ -13,7 +16,6 @@ import {
 
 import Main from 'containers/Main/Loadable';
 import ViewSize from 'containers/ViewSize';
-
 import GlobalStyles from '../../global-styles';
 
 const generateClassName = createGenerateClassName();
@@ -32,6 +34,21 @@ const muiTheme = createMuiTheme({
   palette: {
     accent3Color: 'green',
     primary1Color: 'green',
+  },
+});
+
+const config = {
+  REGION: process.env.REACT_APP_COGNITO_REGION,
+  USER_POOL_ID: process.env.REACT_APP_USER_POOL_ID,
+  APP_CLIENT_ID: process.env.REACT_APP_APP_CLIENT_ID,
+};
+
+Amplify.configure({
+  Auth: {
+    mandatorySignIn: true,
+    region: config.REGION,
+    userPoolId: config.USER_POOL_ID,
+    userPoolWebClientId: config.APP_CLIENT_ID,
   },
 });
 

@@ -7,12 +7,12 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import { ConditionalRender } from 'components/base_ui';
-import Signin from 'components/Signin';
+import Signin from 'components/Signin/Signin';
 import { signIn } from 'containers/Auth/actions';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
-import { inputChange } from '../actions';
+import { clearForm, inputChange } from '../actions';
 import reducer from '../reducer';
 import { makeSelectSignIn } from '../selectors';
 
@@ -23,8 +23,14 @@ export class SigninContainer extends React.PureComponent {
     document.title = 'Sign in';
   }
 
+  componentWillUnmount() {
+    const { dispatchClearForm } = this.props;
+    dispatchClearForm();
+  }
+
   render() {
-    const { data, isSignedIn, dispatchSignIn, handleInputChange } = this.props;
+    const { data, dispatchSignIn, handleInputChange, isSignedIn } = this.props;
+
     const { email, password } = data;
 
     const handleSignIn = () => {
@@ -34,22 +40,20 @@ export class SigninContainer extends React.PureComponent {
       });
     };
 
-    const signinComponent = (
-      <Signin
-        data={data}
-        handleInputChange={handleInputChange}
-        handleSignIn={handleSignIn}
-        isSignedIn={isSignedIn}
-      />
-    );
     const redirect = <Redirect to="/issues" />;
 
     return (
       <Fragment>
         <ConditionalRender
-          Component={signinComponent}
+          Component={Signin}
           FallbackComponent={redirect}
           shouldRender={!isSignedIn}
+          propsToPassDown={{
+            data,
+            handleInputChange,
+            handleSignIn,
+            isSignedIn,
+          }}
         />
       </Fragment>
     );
@@ -58,6 +62,7 @@ export class SigninContainer extends React.PureComponent {
 
 SigninContainer.propTypes = {
   data: T.object,
+  dispatchClearForm: T.func,
   dispatchSignIn: T.func,
   handleInputChange: T.func,
   isSignedIn: T.bool,
@@ -71,7 +76,7 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : Signin
    */
-  data: makeSelectSignIn('data'),
+  data: makeSelectSignIn('signIn'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -87,6 +92,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Signin
      */
+    dispatchClearForm: () => dispatch(clearForm()),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }

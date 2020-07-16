@@ -6,6 +6,7 @@ export const codeGrey = '#eceff1';
 export const commentHeaderColor = '#f6f8fa';
 export const darkTextColor = '#263238';
 export const errorRed = '#c62838';
+export const redText = '#f44336';
 export const fundingClosedBackground = '#edeef0';
 export const fundingOpenBackground = '#e5fbf2';
 export const fundingText = '#08b26e';
