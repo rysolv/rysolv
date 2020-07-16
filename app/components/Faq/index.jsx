@@ -83,7 +83,7 @@ const Faq = () => {
                     it as your own exclusive community/referral network.
                   </AnswerWrapper>
                 )}
-                title="How to add organizations to ?"
+                title="How does Rysolv work?"
               />
             </ExpansionPanel>
             <ExpansionPanel>
@@ -96,7 +96,7 @@ const Faq = () => {
                     it as your own exclusive community/referral network.
                   </AnswerWrapper>
                 )}
-                title="What is Rysolv?"
+                title="What types of issues are allowed on Rysolv?"
               />
             </ExpansionPanel>
             <ExpansionPanel>
@@ -109,7 +109,7 @@ const Faq = () => {
                     it as your own exclusive community/referral network.
                   </AnswerWrapper>
                 )}
-                title="What is Rysolv?"
+                title="Who can fund an issue?"
               />
             </ExpansionPanel>
             <ExpansionPanel>
@@ -122,13 +122,52 @@ const Faq = () => {
                     it as your own exclusive community/referral network.
                   </AnswerWrapper>
                 )}
-                title="What is Rysolv?"
+                title="What does it cost to fund an issue?"
+              />
+            </ExpansionPanel>
+            <ExpansionPanel>
+              <StyledBaseExpansionPanel
+                Component={() => (
+                  <AnswerWrapper>
+                    Contra is a new type of professional network for people you
+                    actually work with. Contra allows you to find flexible work
+                    opportunities from people that you know and love. Think of
+                    it as your own exclusive community/referral network.
+                  </AnswerWrapper>
+                )}
+                title="What happens after I fund an issue?"
+              />
+            </ExpansionPanel>
+            <ExpansionPanel>
+              <StyledBaseExpansionPanel
+                Component={() => (
+                  <AnswerWrapper>
+                    Contra is a new type of professional network for people you
+                    actually work with. Contra allows you to find flexible work
+                    opportunities from people that you know and love. Think of
+                    it as your own exclusive community/referral network.
+                  </AnswerWrapper>
+                )}
+                title="How do I submit a solution to an issue?"
               />
             </ExpansionPanel>
           </QuestionGroup>
 
           <QuestionGroup hasPadding>
             <FaqSubheader>Payments</FaqSubheader>
+            <ExpansionPanel>
+              <StyledBaseExpansionPanel
+                Component={() => (
+                  <AnswerWrapper>
+                    Contra is a new type of professional network for people you
+                    actually work with. Contra allows you to find flexible work
+                    opportunities from people that you know and love. Think of
+                    it as your own exclusive community/referral network.
+                  </AnswerWrapper>
+                )}
+                title="How do I receive payment?"
+              />
+            </ExpansionPanel>
           </QuestionGroup>
         </QuestionWrapper>
       </StyledQuestionContainer>
