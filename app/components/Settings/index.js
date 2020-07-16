@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
 
-import { ConditionalRender, Star } from 'components/base_ui';
+import {
+  BaseFileInput,
+  ConditionalRender,
+  IconButton,
+  Star,
+} from 'components/base_ui';
+import { getBase64 } from 'utils/globalHelpers';
+import iconDictionary from 'utils/iconDictionary';
 
 import {
   GithubEditComponent,
@@ -20,6 +27,8 @@ import SettingsTabs from './SettingsTabs';
 import {
   DetailContainer,
   DetailViewContainer,
+  EditUserImageWrapper,
+  InputIconGroup,
   LinksWrapper,
   Name,
   Rep,
@@ -28,6 +37,9 @@ import {
   UserCardWrapper,
   UserImage,
 } from './styledComponents';
+
+const CloseIcon = iconDictionary('close');
+const DoneIcon = iconDictionary('done');
 
 const SettingsView = ({
   alerts: { error, success },
@@ -83,6 +95,7 @@ const SettingsView = ({
     false,
   );
   const [changeStackoverflow, setChangeStackoverflow] = useState(false);
+  const [changeUserImage, setChangeUserImage] = useState(false);
   const [changeUsername, setChangeUsername] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [value, setValue] = useState('');
@@ -104,6 +117,16 @@ const SettingsView = ({
     changeInputState(true);
     setValue(currentValue);
   };
+
+  const handleUploadUserImage = async e => {
+    const { files } = e.target;
+    const formattedUserImage = await getBase64(files[0]);
+    setIsDisabled(true);
+    setChangeUserImage(true);
+    setValue(formattedUserImage);
+  };
+
+  const profilePicToRender = !changeUserImage ? profilePic : value;
   return (
     <DetailContainer>
       <StyledErrorSuccessBanner
@@ -113,7 +136,40 @@ const SettingsView = ({
       />
       <DetailViewContainer>
         <UserCardWrapper displayBottom={displayBottom}>
-          <UserImage src={profilePic} />
+          <EditUserImageWrapper>
+            <UserImage src={profilePicToRender} />
+            <ConditionalRender
+              Component={
+                <BaseFileInput
+                  accept="image/png, image/jpeg"
+                  id="logo-file-input"
+                  onChange={handleUploadUserImage}
+                />
+              }
+              FallbackComponent={
+                <InputIconGroup>
+                  <IconButton
+                    icon={CloseIcon}
+                    label="Close"
+                    onClick={() =>
+                      handleClose({ changeInputState: setChangeUserImage })
+                    }
+                  />
+                  <IconButton
+                    icon={DoneIcon}
+                    label="Save"
+                    onClick={() =>
+                      handleDone({
+                        changeInputState: setChangeUserImage,
+                        field: 'profilePic',
+                      })
+                    }
+                  />
+                </InputIconGroup>
+              }
+              shouldRender={!changeUserImage}
+            />
+          </EditUserImageWrapper>
           <Name>
             {firstName} {lastName}
           </Name>

@@ -36,6 +36,10 @@ export const DetailViewContainer = styled.div`
   }
 `;
 
+export const EditUserImageWrapper = styled.div`
+  position: relative;
+`;
+
 export const EmptyComponentContainer = styled.div`
   align-items: center;
   color: ${textColor};
@@ -55,6 +59,36 @@ export const HeaderWrapper = styled.div`
 export const IconButtonContainer = styled.div`
   align-self: center;
   height: 100%;
+`;
+
+export const IconButtonGroup = styled.div`
+  white-space: nowrap;
+`;
+
+export const InputIconGroup = styled.label`
+  align-items: center;
+  background-color: white;
+  border-radius: 2rem;
+  border: 0.2rem solid #1e88e5;
+  bottom: -1rem;
+  color: #1e88e5;
+  display: flex;
+  height: 4rem;
+  justify-content: center;
+  padding: 1rem 0;
+  position: absolute;
+  right: -1rem;
+  width: auto;
+
+  &:hover {
+    background-color: white;
+    cursor: pointer;
+  }
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+  }
 `;
 
 export const Language = styled.div`

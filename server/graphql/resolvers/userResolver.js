@@ -15,6 +15,7 @@ const {
   updateUserArray,
   userUpvote,
 } = require('../../db');
+const { uploadImage } = require('../../middlewares/imageUpload');
 
 module.exports = {
   createUser: async args => {
@@ -179,6 +180,15 @@ module.exports = {
   transformUser: async args => {
     const { id, userInput } = args;
     try {
+      if (userInput.profilePic) {
+        const formattedProfilePic = userInput.profilePic;
+        const protocol = formattedProfilePic.substring(0, 5);
+
+        if (formattedProfilePic && protocol !== 'https') {
+          const { uploadUrl } = await uploadImage(formattedProfilePic);
+          userInput.profilePic = uploadUrl;
+        }
+      }
       const data = {
         modified_date: new Date(), // update modified date
         first_name: userInput.firstName,
@@ -222,9 +232,15 @@ module.exports = {
         pullRequests: userInput.pull_requests,
         balance: userInput.balance,
       };
-      return result;
+      return {
+        __typename: 'User',
+        ...result,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   updateUserArray: async args => {

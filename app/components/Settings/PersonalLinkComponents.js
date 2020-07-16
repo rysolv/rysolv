@@ -5,7 +5,13 @@ import { BaseTextInput, IconButton } from 'components/base_ui';
 import { formatUrlLinks } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
-import { LinkIcon, OneLink, OneLinkWrapper, StyledA } from './styledComponents';
+import {
+  IconButtonGroup,
+  LinkIcon,
+  OneLink,
+  OneLinkWrapper,
+  StyledA,
+} from './styledComponents';
 
 const CloseIcon = iconDictionary('close');
 const DoneIcon = iconDictionary('done');
@@ -24,7 +30,7 @@ export const PersonalEditComponent = ({
       <LinkIcon>{PersonalIcon}</LinkIcon>
       <BaseTextInput onChange={e => setValue(e.target.value)} value={value} />
     </OneLink>
-    <div>
+    <IconButtonGroup>
       <IconButton
         icon={CloseIcon}
         label="Close"
@@ -40,7 +46,7 @@ export const PersonalEditComponent = ({
           })
         }
       />
-    </div>
+    </IconButtonGroup>
   </OneLinkWrapper>
 );
 
