@@ -139,8 +139,9 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SAVE_CHANGE_SUCCESS: {
-      const { message } = payload;
+      const { field, message, value } = payload;
       draft.loading = false;
+      draft.account[field] = value;
       draft.alerts.success = { message };
       break;
     }

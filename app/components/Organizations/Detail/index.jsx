@@ -136,10 +136,12 @@ const OrganizationDetailView = ({
         </HeaderWrapper>
         <Description>{description}</Description>
         <UrlWrapper>
-          <OrganizationUrl href={organizationUrl} target="_blank">
-            <StyledIcon>{LinkIcon}</StyledIcon>
-            {organizationUrl}
-          </OrganizationUrl>
+          {!!organizationUrl && (
+            <OrganizationUrl href={organizationUrl} target="_blank">
+              <StyledIcon>{LinkIcon}</StyledIcon>
+              {organizationUrl}
+            </OrganizationUrl>
+          )}
           <RepoUrl href={repoUrl} target="_blank">
             <StyledIcon>{CodeIcon}</StyledIcon>
             {repoUrl}
@@ -163,6 +165,7 @@ const OrganizationDetailView = ({
           <NameWrapper>
             <StyledBaseTextInput
               onChange={e => setNameChange(e.target.value)}
+              placeholder="Organization Name"
               value={nameChange}
             />
 
@@ -182,6 +185,7 @@ const OrganizationDetailView = ({
         <StyledBaseTextInput
           multiline
           onChange={e => setDescriptionChange(e.target.value)}
+          placeholder="Organization Description"
           value={descriptionChange}
           width="100%"
         />
@@ -190,14 +194,16 @@ const OrganizationDetailView = ({
             <StyledIcon>{LinkIcon}</StyledIcon>
             <StyledBaseTextInput
               onChange={e => setOrganizationUrlChange(e.target.value)}
+              placeholder="Organization Url"
               value={organizationUrlChange}
             />
           </OrganizationUrl>
 
           <RepoUrl width="100%">
-            <StyledIcon>{LinkIcon}</StyledIcon>
+            <StyledIcon>{CodeIcon}</StyledIcon>
             <StyledBaseTextInput
               onChange={e => setRepoUrlChange(e.target.value)}
+              placeholder="Repo Url"
               value={repoUrlChange}
             />
           </RepoUrl>
@@ -247,6 +253,7 @@ const OrganizationDetailView = ({
         <SidebarTabs>
           <TopLanguagesView
             displayEditView={displayEditView}
+            languagesChange={languagesChange}
             preferredLanguages={preferredLanguages}
             setLanguagesChange={setLanguagesChange}
           />

@@ -75,7 +75,8 @@ const SideNav = ({ deviceView, handleNav }) => {
   }, [deviceView, path]);
 
   useEffect(() => {
-    if (deviceView === 'desktop') setOpen(true);
+    const isDesktop = deviceView === 'desktop' || deviceView === 'desktopL';
+    if (isDesktop) setOpen(true);
     else setOpen(false);
   }, [deviceView]);
 

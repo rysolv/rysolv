@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { laptopS, mobile } = mediaQueriesByDevice;
+const { desktopL, laptopS, mobile } = mediaQueriesByDevice;
 
 export const Card = styled.div`
   align-items: center;
@@ -150,6 +150,10 @@ export const IconWrapper = styled.div`
 export const LandingWrapper = styled.div`
   font-size: ${defaultFontSize};
   margin-top: 52.5rem;
+
+  ${desktopL} {
+    margin-top: 55rem;
+  }
 `;
 
 export const List = styled.li`

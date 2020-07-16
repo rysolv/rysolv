@@ -25,6 +25,28 @@ const baseButtonStyle = css`
   width: auto;
 `;
 
+export const FlatIconButton = styled(({ disabled, ...restProps }) => (
+  <BaseButton disabled={disabled} {...restProps} />
+))`
+  &:hover {
+    background-color: transparent;
+    box-shadow: none;
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  &:disabled {
+    background-color: transparent;
+  }
+
+  background-color: transparent;
+  box-shadow: none;
+`;
+
 export const PrimaryButton = styled(BaseButton)`
   ${baseButtonStyle};
 
@@ -63,24 +85,6 @@ export const SecondaryAsyncButton = styled(PrimaryAsyncButton)`
   color: white;
 `;
 
-export const FlatIconButton = styled(({ disabled, ...restProps }) => (
-  <BaseButton disabled={disabled} {...restProps} />
-))`
-  &:hover {
-    background-color: transparent;
-    box-shadow: none;
-    cursor: pointer;
-  }
-
-  &:active {
-    background-color: transparent;
-    box-shadow: none;
-  }
-
-  &:disabled {
-    background-color: transparent;
-  }
-
-  background-color: transparent;
-  box-shadow: none;
+export const StyledTooltipLabel = styled.span`
+  font-size: ${detailFontSize};
 `;

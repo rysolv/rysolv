@@ -18,9 +18,12 @@ import {
 
 const YourAccountView = ({
   balance,
+  emailValue,
+  firstNameValue,
   fundValue,
   handleSubmitAccountPayment,
   issueId,
+  lastNameValue,
   setFundValue,
   userId,
 }) => {
@@ -32,6 +35,8 @@ const YourAccountView = ({
     });
     setFundValue(0);
   };
+  const isPersonalInfoComplete =
+    !!emailValue && !!firstNameValue && !!lastNameValue;
   return (
     <YourAccountContainer>
       <BalanceWrapper>
@@ -56,7 +61,12 @@ const YourAccountView = ({
         </ConfirmWrapper>
       </ConfirmContainer>
       <StyledPrimaryAsyncButton
-        disabled={fundValue === 0}
+        disabled={
+          balance <= 0 ||
+          fundValue <= 0 ||
+          fundValue === '.' ||
+          !isPersonalInfoComplete
+        }
         label="Confirm"
         onClick={() =>
           handleSubmit({
@@ -71,9 +81,12 @@ const YourAccountView = ({
 };
 YourAccountView.propTypes = {
   balance: T.number,
+  emailValue: T.string,
+  firstNameValue: T.string,
   fundValue: T.oneOfType([T.number, T.string]),
   handleSubmitAccountPayment: T.func,
   issueId: T.string,
+  lastNameValue: T.string,
   setFundValue: T.func,
   userId: T.string,
 };

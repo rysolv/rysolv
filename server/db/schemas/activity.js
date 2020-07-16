@@ -4,6 +4,7 @@ activity(
   activity_id UUID PRIMARY KEY,
   created_date TIMESTAMP,
   funded_value FLOAT DEFAULT 0,
+  is_private BOOLEAN DEFAULT false,
   issue_id UUID REFERENCES issues(id),
   organization_id UUID REFERENCES organizations(id),
   pullrequest_id UUID REFERENCES pullRequests(pullrequest_id),

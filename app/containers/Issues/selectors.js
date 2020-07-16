@@ -38,9 +38,10 @@ const makeSelectOrganizationsDisabled = () =>
     makeSelectIssues('organizationData'),
     data => {
       const tempData = omit(data, [
-        'organizationId',
         'importUrl',
+        'organizationId',
         'organizationLogo',
+        'organizationUrl',
       ]);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },

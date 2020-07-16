@@ -34,8 +34,11 @@ export function* fetchActiveUserSaga({ payload }) {
       oneUser(id: "${userId}") {
         attempting,
         balance,
+        email,
+        firstName,
         id,
         issues,
+        lastName,
         organizations,
         profilePic,
         pullRequests,
@@ -76,8 +79,11 @@ export function* signInSaga({ payload }) {
       oneUser(id: "${userId}") {
         attempting,
         balance,
+        email,
+        firstName,
         id,
         issues,
+        lastName,
         organizations,
         profilePic,
         pullRequests,

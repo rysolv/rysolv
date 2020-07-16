@@ -1,12 +1,12 @@
 import React from 'react';
 import T from 'prop-types';
-import FormHelperText from '@material-ui/core/FormHelperText';
 
 import {
   ButtonGroup,
   ImportFormContainer,
   ImportUrlLabel,
   ImportUrlWrapper,
+  StyledFormHelperText,
   StyledHeader,
   StyledPrimaryAsyncButton,
   StyledSecondayButton,
@@ -42,7 +42,7 @@ const ImportForm = ({
             rows={2}
             value={importUrl.value}
           />
-          <FormHelperText error={!!error}>{error}</FormHelperText>
+          <StyledFormHelperText error={!!error}>{error}</StyledFormHelperText>
         </TextareaWrapper>
       </ImportUrlWrapper>
       <ButtonGroup>

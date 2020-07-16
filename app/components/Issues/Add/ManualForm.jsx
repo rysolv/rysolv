@@ -8,9 +8,7 @@ import { issueDataDictionary } from 'containers/Issues/constants';
 
 import { InputFormWrapper, StyledMarkdownWrapper } from './styledComponents';
 
-// eslint-disable-next-line arrow-body-style
 const ManualForm = ({ issueData, handleInputChange }) => {
-  // eslint-disable-next-line no-param-reassign
   const { issueBody, issueUrl, issueLanguages, issueName } = issueData;
 
   const handleMarkdownInput = markdown => {
@@ -20,7 +18,6 @@ const ManualForm = ({ issueData, handleInputChange }) => {
       value: markdown,
     });
   };
-
   return (
     <InputFormWrapper>
       <MainTextInput
@@ -63,7 +60,6 @@ const ManualForm = ({ issueData, handleInputChange }) => {
         error={!!issueLanguages.error}
         helperText={issueLanguages.error}
         label={issueDataDictionary.languages}
-        // eslint-disable-next-line no-shadow
         onChange={(e, value) =>
           handleInputChange({
             field: 'issueLanguages',
@@ -71,7 +67,9 @@ const ManualForm = ({ issueData, handleInputChange }) => {
             value,
           })
         }
-        value={issueLanguages.value}
+        value={issueLanguages.value.map(el => ({
+          value: el,
+        }))}
       />
     </InputFormWrapper>
   );

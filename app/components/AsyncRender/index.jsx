@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
 import { LoadingIndicator } from 'components/base_ui';
+import Message from 'components/Message';
+import iconDictionary from 'utils/iconDictionary';
+
+import { IconWrapper, LinkWrapper } from './styledComponents';
+
+const WarningIcon = iconDictionary('warning');
 
 const AsyncRender = ({
   asyncData,
@@ -12,18 +18,38 @@ const AsyncRender = ({
   loading,
   propsToPassDown,
 }) => {
+  const FootnoteComponent = (
+    <Fragment>
+      <span>You can</span>
+      {<LinkWrapper to="/contactus"> contact us </LinkWrapper>}
+      <span>if the problem persists</span>.
+    </Fragment>
+  );
   if (loading) {
     return <LoadingIndicator />;
   }
   if (error) {
-    return <div>Error loading, please refresh the page.</div>;
+    return (
+      <Message
+        body="We couldn't load the content for this page. Please try again later."
+        footnote={FootnoteComponent}
+        icon={<IconWrapper>{WarningIcon}</IconWrapper>}
+        title="Error loading page."
+      />
+    );
   }
-  // Should be false but, at the moment, true due to lack of data
   if (!isRequiredData || !isEmpty(asyncData)) {
     const ComponentToRender = component;
     return <ComponentToRender data={asyncData} {...propsToPassDown} />;
   }
-  return <div>Please contact customer support at (860) 491-7218</div>;
+  return (
+    <Message
+      body="Please try reloading the page to see if this rysolves the problem."
+      footnote={FootnoteComponent}
+      icon={<IconWrapper>{WarningIcon}</IconWrapper>}
+      title="Sorry, something went wrong."
+    />
+  );
 };
 
 AsyncRender.defaultProps = { isRequiredData: false, propsToPassDown: {} };

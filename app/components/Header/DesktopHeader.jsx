@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import { HeaderSearchBar, UserNavBar } from 'components/base_ui';
+import UserActivityButton from 'components/UserActivityButton';
 
 import Logo from './Logo';
 import {
@@ -44,6 +45,8 @@ const DesktopHeader = ({
         </LogoWrapper>
         <ButtonsWrapper>
           <Browse label="Browse" path="/issues" />
+          <UserActivityButton handleNav={handleNav} />
+
           {isSignedIn ? (
             <UserNavBar
               activeUser={activeUser}

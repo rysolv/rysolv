@@ -19,7 +19,6 @@ import {
 import {
   deleteUserFailure,
   deleteUserSuccess,
-  fetchInfo,
   fetchInfoFailure,
   fetchInfoSuccess,
   removeIssueFailure,
@@ -154,24 +153,38 @@ export function* saveChangeSaga({ payload }) {
       transformUser(id: "${itemId}", userInput: {
         ${field}: ${formattedValue},
       }) {
+      __typename
+      ... on User {
         id,
         githubLink,
         personalLink,
         preferredLanguages,
         stackoverflowLink,
       }
+      ... on Error {
+        message
+      }
     }
-  `;
+  }`;
   try {
     const graphql = JSON.stringify({
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
-    yield put(fetchInfo({ itemId }));
+    const {
+      data: {
+        transformUser,
+        transformUser: { __typename },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') {
+      throw new Error(transformUser.message);
+    }
     yield put(
       saveChangeSuccess({
+        field,
         message: 'User account has been successfully updated.',
+        value,
       }),
     );
   } catch (error) {

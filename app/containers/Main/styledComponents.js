@@ -4,7 +4,7 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 const { tablet } = mediaQueriesByDevice;
 
 export const AppBodyWrapper = styled.div`
-  padding-bottom: 17.7rem;
+  padding-bottom: 16rem;
 `;
 
 export const AppContentWrapper = styled.div`

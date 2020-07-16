@@ -15,6 +15,7 @@ const DollarValueToggle = ({ fundValue, handleChange }) => (
       {dollarValues.map(value => (
         <ToggleButton
           key={`toggle-${value}`}
+          classes={{ root: 'button', selected: 'selected' }}
           onClick={e => handleChange(e, value)}
           value={value}
         >

@@ -5,10 +5,12 @@ import { defaultFontSize, fundingText } from 'defaultStyleHelper';
 import { FundingWrapper } from '../../StyledWrappers';
 
 export const AddFundsButton = styled.button`
+  align-items: center;
   background-color: #e5fbf2;
   border: 0;
   color: ${fundingText};
   cursor: pointer;
+  display: ${({ open }) => (!open ? 'none' : 'inherit')};
   padding: 0.3rem 0.5rem;
   stroke-width: 0.2rem;
   stroke: currentColor;
@@ -24,26 +26,27 @@ export const AddFundsButton = styled.button`
   }
 
   svg {
-    font-size: 1.4rem;
+    font-size: ${defaultFontSize};
   }
 `;
 
 export const FundAmount = styled.div`
-  background-color: #e5fbf2;
+  background: ${({ open }) => (!open ? '#edeef0' : '#e5fbf2')};
+  border-radius: ${({ open }) => (!open ? '0.25rem' : '0')};
   line-height: 2rem;
-  padding: 0.3rem 1rem;
+  padding: ${({ open }) => (!open ? '0.2rem 1rem' : '0.3rem 1rem')};
   position: relative;
 
   &:after {
-    border-right: 0.1rem solid #08b26e;
+    border-right: ${({ open }) => (!open ? 'none' : '0.1rem solid #08b26e')};
     bottom: 0;
     content: '';
-    top: 0;
+    height: 80%;
     margin: auto 0;
     position: absolute;
     right: 0;
     text-align: center;
-    height: 80%;
+    top: 0;
   }
 `;
 

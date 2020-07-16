@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 import {
@@ -40,6 +41,7 @@ export const ImportUrlLabel = styled.div`
 export const ImportUrlWrapper = styled.div`
   color: #6a737d;
   display: flex;
+  flex-direction: column;
   font-size: ${defaultFontSize};
   padding: 2rem;
 `;
@@ -70,6 +72,10 @@ export const StyledCheckbox = styled(({ hasError, ...restProps }) => (
     height: 1.75rem;
     width: 1.75rem;
   }
+`;
+
+export const StyledFormHelperText = styled(FormHelperText)`
+  font-size: 1.2rem;
 `;
 
 export const StyledHeader = styled.h1`

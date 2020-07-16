@@ -13,6 +13,7 @@ const {
   updateUserArray,
   userUpvote,
 } = require('../../db');
+const { uploadImage } = require('../../middlewares/imageUpload');
 
 const defaultUserImage =
   'https://rysolv.s3.us-east-2.amazonaws.com/default-profile-picture.png';
@@ -183,6 +184,15 @@ module.exports = {
   transformUser: async args => {
     const { id, userInput } = args;
     try {
+      if (userInput.profilePic) {
+        const formattedProfilePic = userInput.profilePic;
+        const protocol = formattedProfilePic.substring(0, 5);
+
+        if (formattedProfilePic && protocol !== 'https') {
+          const { uploadUrl } = await uploadImage(formattedProfilePic);
+          userInput.profilePic = uploadUrl;
+        }
+      }
       const data = {
         attempting: userInput.attempting,
         balance: userInput.balance,
@@ -206,9 +216,15 @@ module.exports = {
       };
       const result = await transformUser(id, data);
 
-      return result;
+      return {
+        __typename: 'User',
+        ...result,
+      };
     } catch (err) {
-      throw err;
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
   updateUserArray: async args => {

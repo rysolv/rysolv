@@ -394,6 +394,7 @@ export function* saveInfoSaga({ payload }) {
     const { __typename, message } = createIssue;
     if (__typename === 'Error') throw message;
 
+    yield put(fetchActiveUser({ userId }));
     yield put(saveInfoSuccess({ message: successCreateIssueMessage }));
   } catch (error) {
     yield put(saveInfoFailure({ error }));
@@ -441,6 +442,7 @@ export function* searchIssuesSaga({ payload }) {
 
 export function* submitAccountPaymentSaga({ payload }) {
   const { fundValue, issueId, userId } = payload;
+  const isFundedFromOverview = window.location.pathname === '/issues';
   const submitAccountPaymentQuery = `
       mutation {
         submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", userId: "${userId}" ) {
@@ -467,6 +469,8 @@ export function* submitAccountPaymentSaga({ payload }) {
     yield put(
       submitAccountPaymentSuccess({
         fundedAmount,
+        isFundedFromOverview,
+        issueId,
         message: successAccountPaymentMessage,
       }),
     );

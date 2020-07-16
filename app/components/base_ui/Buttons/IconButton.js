@@ -2,6 +2,8 @@ import React from 'react';
 import T from 'prop-types';
 import { IconButton as MuiIconButton, Tooltip } from '@material-ui/core';
 
+import { StyledTooltipLabel } from './styledComponents';
+
 const IconButton = ({
   disabled,
   icon,
@@ -10,7 +12,10 @@ const IconButton = ({
   tooltipProps,
   ...restProps
 }) => (
-  <Tooltip title={label} {...tooltipProps}>
+  <Tooltip
+    title={<StyledTooltipLabel>{label}</StyledTooltipLabel>}
+    {...tooltipProps}
+  >
     <MuiIconButton
       disabled={disabled}
       onClick={onClick}

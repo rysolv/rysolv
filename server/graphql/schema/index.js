@@ -277,15 +277,16 @@ module.exports = buildSchema(`
   }
 
   union ActivityResult = ActivityArray | Error
+  union EventResponse = Success | Error
+  union ImportPullRequestResult = ImportPullRequest | Error
+  union ImportResult = ImportData | Error
+  union IssueResult = Issue | Error
+  union OrganizationArrayResult = OrganizationArray | Error
+  union OrganizationResult = Organization | Error
+  union PaymentResult = Payment | Error
   union PullRequestArrayResult = PullRequestArray | Error
   union PullRequestResult = PullRequest | Error
-  union ImportResult = ImportData | Error
-  union ImportPullRequestResult = ImportPullRequest | Error
-  union IssueResult = Issue | Error
-  union OrganizationResult = Organization | Error
-  union OrganizationArrayResult = OrganizationArray | Error
-  union EventResponse = Success | Error
-  union PaymentResult = Payment | Error
+  union UserResult = User | Error
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
@@ -337,7 +338,7 @@ module.exports = buildSchema(`
 
     transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!
-    transformUser(id: ID!, userInput: UserInput): User!
+    transformUser(id: ID!, userInput: UserInput): UserResult!
 
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!

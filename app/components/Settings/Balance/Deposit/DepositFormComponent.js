@@ -54,6 +54,7 @@ const DepositFormComponent = ({ creditCardProps, handleNav, setDisplayBottom }) 
         setTotalValue((formattedValue * 1.036).toString());
       }
       if (formattedString.length === 2) {
+        formattedString[0] = formattedString[0] === '' ? '0' : formattedString[0];
         formattedString[1] = formattedString[1]
           ? formattedString[1].slice(0, 2)
           : '';

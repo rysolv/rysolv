@@ -61,6 +61,7 @@ const WithdrawalFormComponent = ({
         setTransferValue(formattedValue);
       }
       if (formattedString.length === 2) {
+        formattedString[0] = formattedString[0] === '' ? '0' : formattedString[0];
         formattedString[1] = formattedString[1]
           ? formattedString[1].slice(0, 2)
           : '';
@@ -135,7 +136,7 @@ const WithdrawalFormComponent = ({
         </WithdrawalInputWrapper>
       </WithdrawalInputContainer>
       <StyledPrimaryAsyncButton
-        disabled={!!transferValueError || transferValue <= 0}
+        disabled={!!transferValueError || transferValue <= 0 || transferValue === '.'}
         label="Withdraw Funds"
         onClick={() =>
           handleWithdrawFunds({ transferValue, userId })

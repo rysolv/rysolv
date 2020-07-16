@@ -251,6 +251,7 @@ export function* saveInfoSaga({ payload }) {
     const { __typename, message } = createOrganization;
     if (__typename === 'Error') throw message;
 
+    yield put(fetchActiveUser({ userId }));
     yield put(fetchOrganizations());
     yield put(saveInfoSuccess({ message: successCreateOrganizationMessage }));
   } catch (error) {

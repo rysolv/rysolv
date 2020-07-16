@@ -14,11 +14,13 @@ import {
   CommentWrapper,
   DetailContainer,
   Divider,
+  EditIssueWrapper,
   IssueDetailColumn,
   IssueDetailContainer,
   IssueDetailContentContainer,
   IssueDetailWrapper,
   LeftPanel,
+  ManageIssueWrapper,
   SidebarContainer,
   StyledButton,
   StyledErrorSuccessBanner,
@@ -31,7 +33,7 @@ const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
-  activeUser: { balance, id: activeUserId, issues },
+  activeUser: { balance, email, firstName, id: activeUserId, issues, lastName },
   alerts: { error, success },
   data,
   data: {
@@ -122,6 +124,16 @@ const IssueDetail = ({
     />
   );
 
+  const EditIssueComponent = (
+    <StyledIssueAccountManager
+      displayEditView={displayEditView}
+      handleClose={handleClose}
+      handleSave={handleSave}
+      setDisplayEditView={setDisplayEditView}
+      type="issue"
+    />
+  );
+
   const primaryUser = {
     alt: username,
     detailRoute: `/users/detail/${userId}`,
@@ -153,9 +165,31 @@ const IssueDetail = ({
   const commentsDiv =
     comments && comments.length > 0 ? generateComments() : <NoComment />;
 
-  const isDesktop = deviceView === 'desktop';
+  const isDesktop =
+    deviceView === 'desktopS' ||
+    deviceView === 'desktop' ||
+    deviceView === 'desktopL';
+
+  const isMobileOrLaptop =
+    deviceView === 'mobileXXS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobile' ||
+    deviceView === 'tablet' ||
+    deviceView === 'laptopS' ||
+    deviceView === 'laptop';
 
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
+
+  const ManageIssueComponent = () => (
+    <Fragment>
+      <Divider>Manage Issue</Divider>
+      <ManageIssueWrapper>
+        <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
+        {CloseOpenIssueComponent}
+      </ManageIssueWrapper>
+    </Fragment>
+  );
   return (
     <IssueDetailContainer>
       <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
@@ -221,6 +255,15 @@ const IssueDetail = ({
                 />
               </div>
 
+              <ConditionalRender
+                Component={ManageIssueComponent}
+                shouldRender={
+                  isMobileOrLaptop &&
+                  isSignedIn &&
+                  !!issues.find(({ id }) => issueId === id)
+                }
+              />
+
               <Divider>Comments</Divider>
               <CommentWrapper>{commentsDiv}</CommentWrapper>
 
@@ -245,27 +288,23 @@ const IssueDetail = ({
         </IssueDetailWrapper>
         <SidebarContainer>
           <ConditionalRender
-            Component={
-              <StyledIssueAccountManager
-                displayEditView={displayEditView}
-                handleClose={handleClose}
-                handleSave={handleSave}
-                setDisplayEditView={setDisplayEditView}
-                type="issue"
-              />
-            }
+            Component={EditIssueComponent}
             shouldRender={
               isSignedIn && !!issues.find(({ id }) => issueId === id)
             }
           />
           <PaymentPortal
             balance={balance}
+            email={email}
+            firstName={firstName}
             fundedAmount={fundedAmount}
             handleClearAlerts={handleClearAlerts}
             handleNav={handleNav}
             handleSubmitAccountPayment={handleSubmitAccountPayment}
             isSignedIn={isSignedIn}
             issueId={issueId}
+            lastName={lastName}
+            open={open}
             paymentAlerts={paymentAlerts}
             userId={activeUserId}
           />

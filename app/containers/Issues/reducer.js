@@ -381,8 +381,14 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SUBMIT_ACCOUNT_PAYMENT_SUCCESS: {
-      const { fundedAmount, message } = payload;
-      draft.issueDetail.fundedAmount = fundedAmount;
+      const { fundedAmount, isFundedFromOverview, issueId, message } = payload;
+      if (!isFundedFromOverview) {
+        draft.issueDetail.fundedAmount = fundedAmount;
+      }
+      draft.issues.map(issue => {
+        const { id } = issue;
+        if (id === issueId) issue.fundedAmount = fundedAmount;
+      });
       draft.loading.submitAccountPayment = false;
       draft.paymentAlerts.success = { message };
       break;

@@ -1,5 +1,7 @@
 import produce from 'immer';
 
+import { isBlank } from 'utils/validate';
+
 import {
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
@@ -130,7 +132,7 @@ const authReducer = produce((draft, { payload, type }) => {
       if (attempting) {
         draft.activeUser.attempting = attempting;
       }
-      if (balance) {
+      if (!isBlank(balance)) {
         draft.activeUser.balance = balance;
       }
       break;

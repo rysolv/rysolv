@@ -24,7 +24,11 @@ const makeSelectOrganizationsDisabled = () =>
   createSelector(
     makeSelectOrganizations('organizationData'),
     data => {
-      const tempData = omit(data, ['importUrl', 'organizationId']);
+      const tempData = omit(data, [
+        'importUrl',
+        'organizationId',
+        'organizationUrl',
+      ]);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -36,6 +36,7 @@ const AddPullRequest = ({
   step,
   userId,
 }) => {
+  useEffect(() => dispatchClearForm, []);
   const ComponentToRender = importPullRequestDictionary[step];
 
   const handleImport = () => {
@@ -50,7 +51,6 @@ const AddPullRequest = ({
   };
 
   const propsToPassDown = {
-    dispatchClearForm,
     dispatchHandleStep,
     error,
     handleClearError,

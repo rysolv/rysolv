@@ -35,6 +35,7 @@ const UserMetricsView = ({
   rejectedPullRequests,
   setChangePreferredLanguages,
   setValue,
+  value,
 }) => {
   const [detailView, setDetailView] = useState(false);
   const hasNoDecimals = true;
@@ -87,7 +88,7 @@ const UserMetricsView = ({
               <PreferredLanguagesEditComponent
                 handleClose={handleClose}
                 handleDone={handleDone}
-                preferredLanguages={preferredLanguages}
+                preferredLanguages={value}
                 setChangePreferredLanguages={setChangePreferredLanguages}
                 setValue={setValue}
               />
@@ -127,6 +128,7 @@ UserMetricsView.propTypes = {
   rejectedPullRequests: T.number,
   setChangePreferredLanguages: T.func,
   setValue: T.func,
+  value: T.oneOfType([T.array, T.number, T.string]),
 };
 
 export default UserMetricsView;

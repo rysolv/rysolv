@@ -6,9 +6,10 @@ module.exports = {
     const { activityInput } = args;
     const activity = {
       activity_id: uuidv4(),
-      created_date: new Date(),
+      created_date: activityInput.createdDate || new Date(),
       action_type: activityInput.actionType || null,
       funded_value: activityInput.fundedValue || null,
+      is_private: activityInput.isPrivate || false,
       issue_id: activityInput.issueId || null,
       organization_id: activityInput.organizationId || null,
       pullrequest_id: activityInput.pullRequestId || null,

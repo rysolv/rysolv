@@ -12,7 +12,6 @@ import {
   borderColor,
   defaultFontSize,
   dividerBorder,
-  errorRed,
   fundingText,
 } from 'defaultStyleHelper';
 
@@ -91,10 +90,14 @@ export const DollarValueWrapper = styled.div`
 
 export const Funded = styled.div`
   align-self: center;
-  color: ${({ isFunded }) => (isFunded ? errorRed : fundingText)};
+  color: ${({ isFunded }) => (isFunded ? 'rgba(0,0,0,0.4)' : fundingText)};
   font-size: 1.4rem;
   font-weight: 500;
   padding: 0.5rem;
+`;
+
+export const FundingContainer = styled.div`
+  display: ${({ open }) => (!open ? 'none' : 'inherit')};
 `;
 
 export const HorizontalInputWrapper = styled.div`
@@ -141,9 +144,14 @@ export const StyledBaseInputWithAdornment = styled(
   PaymentModalInputWithAdornment,
 )`
   align-self: center;
+  border: 0.1rem solid #e0e0e0;
   font-size: 1.4rem;
   margin: 0.5rem;
   width: 80%;
+
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
 `;
 
 export const StyledLabel = styled.div`
@@ -175,6 +183,13 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
   justify-content: center;
   white-space: nowrap;
 
+  .button {
+    &:hover {
+      color: white;
+      background: #08b26e;
+    }
+  }
+
   .grouped {
     border-radius: inherit;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -182,6 +197,11 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
     font-size: 1.4rem;
     margin: 0.5rem;
     padding: 1rem;
+  }
+
+  .selected {
+    color: white;
+    background: #31b589;
   }
 `;
 

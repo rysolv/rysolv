@@ -7,6 +7,7 @@ import iconDictionary from 'utils/iconDictionary';
 
 import {
   IconButtonContainer,
+  IconButtonGroup,
   Language,
   LanguageListItem,
   StyledLanguageAutocomplete,
@@ -33,7 +34,7 @@ export const PreferredLanguagesEditComponent = ({
       />
     </StyledLanguageAutocomplete>
 
-    <div>
+    <IconButtonGroup>
       <IconButton
         icon={CloseIcon}
         label="Close"
@@ -51,7 +52,7 @@ export const PreferredLanguagesEditComponent = ({
           })
         }
       />
-    </div>
+    </IconButtonGroup>
   </LanguageListItem>
 );
 
@@ -86,7 +87,7 @@ export const PreferredLanguagesComponent = ({
 PreferredLanguagesEditComponent.propTypes = {
   handleClose: T.func,
   handleDone: T.func,
-  preferredLanguages: T.array,
+  preferredLanguages: T.oneOfType([T.array, T.number, T.string]),
   setChangePreferredLanguages: T.func,
   setValue: T.func,
 };
