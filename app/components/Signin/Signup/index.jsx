@@ -9,7 +9,7 @@ import {
   HorizontalWrapper,
   InputFormWrapper,
   SigninWrapper,
-  StyledPrimaryButton,
+  StyledPrimaryAsyncButton,
   SubText,
   Title,
 } from '../styledComponents';
@@ -21,6 +21,7 @@ const Signup = ({
   handleInputChange,
   handleSignUp,
   signUpDisabled,
+  signUpLoading,
 }) => {
   // eslint-disable-next-line no-param-reassign
   const {
@@ -36,6 +37,8 @@ const Signup = ({
     <SigninWrapper>
       <InputFormWrapper>
         <Title>Create Account</Title>
+        {error.error && <ErrorWrapper>{error.message}</ErrorWrapper>}
+
         <MainTextInput
           error={!!username.error}
           helperText={username.error}
@@ -50,6 +53,8 @@ const Signup = ({
           value={username.value}
         />
         <MainTextInput
+          autoComplete="email"
+          type="email"
           error={!!email.error}
           helperText={email.error}
           label="Email"
@@ -91,6 +96,7 @@ const Signup = ({
           />
         </HorizontalWrapper>
         <MainTextInput
+          autoComplete="new-password"
           error={!!password.error}
           helperText={password.error}
           label="Password"
@@ -104,6 +110,7 @@ const Signup = ({
           value={password.value}
         />
         <MainTextInput
+          autoComplete="new-password"
           error={!!verifyPassword.error}
           helperText={verifyPassword.error}
           label="Confirm password"
@@ -116,9 +123,8 @@ const Signup = ({
           }
           value={verifyPassword.value}
         />
-        <ErrorWrapper>{error.error ? error.message : ''}</ErrorWrapper>
-
-        <StyledPrimaryButton
+        <StyledPrimaryAsyncButton
+          loading={signUpLoading}
           disabled={!signUpDisabled}
           label="Sign Up"
           onClick={() => handleSignUp()}
@@ -136,6 +142,7 @@ Signup.propTypes = {
   error: T.object,
   handleInputChange: T.func.isRequired,
   handleSignUp: T.func.isRequired,
+  signUpLoading: T.bool,
   signUpDisabled: T.bool,
 };
 

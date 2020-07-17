@@ -1,34 +1,51 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { ConditionalRender, LoadingIndicator } from 'components/base_ui';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectAuth } from './selectors';
-import { signIn, signUp } from './actions';
+import { makeSelectAuth, makeSelectAuthLoading } from './selectors';
+import { fetchUserSession, signIn, signUp } from './actions';
 
 export default function withAuth(config, Component) {
-  const Auth = ({ isSignedIn, handleSignIn, handleSignUp, ...restProps }) => {
+  const Auth = ({
+    authenticateLoading,
+    dispatchFetchUserSession,
+    handleSignIn,
+    handleSignUp,
+    isSignedIn,
+    ...restProps
+  }) => {
     const { isPrivate } = config;
-    if (!isSignedIn && isPrivate) return <Redirect to="/signin" />;
 
-    // if (!isSignedIn) {
-    //   const { userId } = checkCookie();
-    //   if (userId) {
-    //     handleSignIn({ userId });
-    //   } else if (!isSignedIn && isPrivate) return <Redirect to="/signin" />;
-    // }
+    // eslint-disable-next-line consistent-return
+    useEffect(() => {
+      dispatchFetchUserSession();
+    }, []);
 
-    return <Component {...restProps} />;
+    if (!isSignedIn && isPrivate && !authenticateLoading)
+      return <Redirect to="/signin" />;
+
+    return (
+      <ConditionalRender
+        Component={Component}
+        shouldRender={!authenticateLoading}
+        propsToPassDown={{ ...restProps }}
+        fallBackComponent={LoadingIndicator}
+      />
+    );
   };
 
   Auth.propTypes = {
+    authenticateLoading: T.bool,
+    dispatchFetchUserSession: T.func,
     handleSignIn: T.func,
     handleSignUp: T.func,
     isSignedIn: T.bool,
@@ -38,6 +55,7 @@ export default function withAuth(config, Component) {
     /**
      * Reducer: Auth
      */
+    authenticateLoading: makeSelectAuthLoading('authenticateUser'),
     isSignedIn: makeSelectAuth('isSignedIn'),
   });
 
@@ -45,6 +63,7 @@ export default function withAuth(config, Component) {
     /**
      * Auth
      */
+    dispatchFetchUserSession: () => dispatch(fetchUserSession()),
     handleSignIn: payload => dispatch(signIn(payload)),
     handleSignUp: payload => dispatch(signUp(payload)),
   });

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { PrimaryButton } from 'components/base_ui';
+import { PrimaryAsyncButton } from 'components/base_ui';
 import {
   borderColor,
   defaultFontSize,
@@ -21,7 +21,7 @@ export const EmailWrapper = styled.span`
 
 export const ErrorWrapper = styled.div`
   color: ${redText};
-  padding: 0.5rem 2rem;
+  padding: 1rem 0.5rem 2rem 0.5rem;
   font-style: italic;
 `;
 
@@ -57,9 +57,10 @@ export const SigninWrapper = styled.div`
   width: 100%;
 `;
 
-export const StyledPrimaryButton = styled(PrimaryButton)`
+export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   align-self: center;
   width: fit-content;
+  min-width: 50%;
 `;
 
 export const SubText = styled.div`

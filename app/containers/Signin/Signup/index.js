@@ -8,7 +8,11 @@ import { push } from 'connected-react-router';
 
 import { ConditionalRender } from 'components/base_ui';
 import { signUp, verifyEmail } from 'containers/Auth/actions';
-import { makeSelectAuth } from 'containers/Auth/selectors';
+import {
+  makeSelectAuth,
+  makeSelectAuthError,
+  makeSelectAuthLoading,
+} from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
 import { inputChange, incrementStep, clearForm } from '../actions';
@@ -38,15 +42,17 @@ export class SignUpContainer extends React.PureComponent {
       data,
       dispatchIncrementStep,
       dispatchSignUp,
+      dispatchVerifyEmail,
       error,
       handleInputChange,
       isSignedIn,
       signUpDisabled,
+      signUpLoading,
       step,
       verificationSent,
       verify,
       verifyDisabled,
-      dispatchVerifyEmail,
+      verifyEmailLoading,
     } = this.props;
 
     if (verificationSent) {
@@ -88,14 +94,16 @@ export class SignUpContainer extends React.PureComponent {
           propsToPassDown={{
             activeUser,
             data,
-            error: error.signUp,
+            error,
             handleInputChange,
             handleSignUp,
             handleVerifyEmail,
             isSignedIn,
             signUpDisabled,
+            signUpLoading,
             verify,
             verifyDisabled,
+            verifyEmailLoading,
           }}
         />
       </Fragment>
@@ -114,10 +122,12 @@ SignUpContainer.propTypes = {
   handleInputChange: T.func,
   isSignedIn: T.bool,
   signUpDisabled: T.bool,
+  signUpLoading: T.bool,
   step: T.number,
   verificationSent: T.bool,
   verify: T.object,
   verifyDisabled: T.bool,
+  verifyEmailLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -125,9 +135,12 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Auth
    */
   activeUser: makeSelectAuth('activeUser'),
-  error: makeSelectAuth('error'),
+  error: makeSelectAuthError('signUp'),
   isSignedIn: makeSelectAuth('isSignedIn'),
   verificationSent: makeSelectAuth('verificationSent'),
+  signUpLoading: makeSelectAuthLoading('signUp'),
+  verifyEmailLoading: makeSelectAuthLoading('verifyEmail'),
+
   /*
    * Reducer : Signin
    */

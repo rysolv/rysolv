@@ -2,7 +2,7 @@ const users = `CREATE TABLE IF NOT EXISTS
 users(
   active_pull_requests SMALLINT DEFAULT 0,
   attempting UUID [] DEFAULT '{}',
-  balance FLOAT DEFAULT 0,
+  balance FLOAT DEFAULT 100,
   comments UUID [] DEFAULT '{}',
   completed_pull_requests SMALLINT DEFAULT 0,
   created_date TIMESTAMP,
@@ -23,7 +23,7 @@ users(
   profile_pic VARCHAR(255),
   pull_requests UUID [] DEFAULT '{}',
   rejected_pull_requests SMALLINT DEFAULT 0,
-  rep SMALLINT NOT NULL DEFAULT 0,
+  rep SMALLINT NOT NULL DEFAULT 25,
   stackoverflow_link VARCHAR(128),
   upvotes UUID [] DEFAULT '{}',
   username VARCHAR(40),

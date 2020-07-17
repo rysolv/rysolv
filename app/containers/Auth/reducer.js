@@ -3,9 +3,13 @@ import produce from 'immer';
 import { isBlank } from 'utils/validate';
 
 import {
+  CLEAR_ALERTS,
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
   FETCH_ACTIVE_USER,
+  FETCH_USER_SESSION_FAILURE,
+  FETCH_USER_SESSION_SUCCESS,
+  FETCH_USER_SESSION,
   SEARCH_ORGANIZATIONS_FAILURE,
   SEARCH_ORGANIZATIONS_SUCCESS,
   SEARCH_ORGANIZATIONS,
@@ -29,10 +33,19 @@ export const initialState = {
   alerts: { error: false, success: false },
   error: {
     signUp: { error: false, message: '' },
+    signIn: { error: false, message: '' },
     verifyEmail: { error: false, message: '' },
   },
   isSignedIn: false,
-  loading: false,
+  loading: {
+    authenticateUser: true,
+    fetchActiveUser: false,
+    searchOrganizations: false,
+    signIn: false,
+    signOut: false,
+    signUp: false,
+    verifyEmail: false,
+  },
   verificationSent: false,
   verifyUserId: '',
 };
@@ -40,72 +53,98 @@ export const initialState = {
 /* eslint-disable default-case, no-param-reassign, consistent-return */
 const authReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case CLEAR_ALERTS: {
+      draft.error = initialState.error;
+      break;
+    }
     case FETCH_ACTIVE_USER: {
-      draft.loading = true;
+      draft.loading.fetchActiveUser = true;
       break;
     }
     case FETCH_ACTIVE_USER_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = error;
+      draft.error.signIn.error = true;
+      draft.error.signIn.message = error.message;
       draft.isSignedIn = false;
-      draft.loading = false;
+      draft.loading.fetchActiveUser = false;
       break;
     }
     case FETCH_ACTIVE_USER_SUCCESS: {
       const { oneUser } = payload;
       draft.activeUser = oneUser;
       draft.isSignedIn = true;
-      draft.loading = false;
+      draft.loading.fetchActiveUser = false;
+      break;
+    }
+    case FETCH_USER_SESSION: {
+      draft.loading.authenticateUser = true;
+      break;
+    }
+    case FETCH_USER_SESSION_FAILURE: {
+      draft.isSignedIn = false;
+      draft.loading.authenticateUser = false;
+      break;
+    }
+    case FETCH_USER_SESSION_SUCCESS: {
+      draft.isSignedIn = true;
+      draft.loading.authenticateUser = false;
       break;
     }
     case SEARCH_ORGANIZATIONS: {
-      draft.loading = true;
+      draft.loading.searchOrganizations = true;
       break;
     }
     case SEARCH_ORGANIZATIONS_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading = false;
+      draft.loading.searchOrganizations = false;
       break;
     }
     case SEARCH_ORGANIZATIONS_SUCCESS: {
       const { organizations } = payload;
       draft.activeUser.organizations = organizations;
-      draft.loading = false;
+      draft.loading.searchOrganizations = false;
       break;
     }
     case SIGN_IN: {
       draft.isSignedIn = false;
-      draft.loading = true;
+      draft.loading.signIn = true;
       break;
     }
     case SIGN_IN_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = error;
+      draft.error.signIn.error = true;
+      draft.error.signIn.message = error.message;
+
       draft.isSignedIn = false;
-      draft.loading = false;
+      draft.loading.signIn = false;
       break;
     }
     case SIGN_IN_SUCCESS: {
       const { oneUser } = payload;
       draft.activeUser = oneUser;
       draft.isSignedIn = true;
-      draft.loading = false;
+      draft.loading.signIn = false;
       break;
     }
     case SIGN_OUT: {
-      draft.loading = true;
+      draft.loading.signOut = true;
+      draft.loading.authenticateUser = true;
       break;
     }
     case SIGN_OUT_FAILURE: {
-      return initialState;
+      const tempState = { ...initialState };
+      tempState.loading.authenticateUser = false;
+      return tempState;
     }
     case SIGN_OUT_SUCCESS: {
-      return initialState;
+      const tempState = { ...initialState };
+      tempState.loading.authenticateUser = false;
+      return tempState;
     }
     case SIGN_UP: {
       draft.isSignedIn = false;
-      draft.loading = true;
+      draft.loading.signUp = true;
       break;
     }
     case SIGN_UP_FAILURE: {
@@ -116,15 +155,15 @@ const authReducer = produce((draft, { payload, type }) => {
       draft.error.signUp.message = error.message;
 
       draft.isSignedIn = false;
-      draft.loading = false;
+      draft.loading.signUp = false;
       break;
     }
     case SIGN_UP_SUCCESS: {
       const { createUser } = payload;
       draft.activeUser = createUser;
       draft.error = initialState.error;
-      draft.loading = false;
       draft.verificationSent = true;
+      draft.loading.signUp = false;
       break;
     }
     case UPDATE_ACTIVE_USER: {
@@ -138,7 +177,7 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case VERIFY_EMAIL: {
-      draft.loading = true;
+      draft.loading.verifyEmail = true;
       break;
     }
     case VERIFY_EMAIL_FAILURE: {
@@ -149,12 +188,12 @@ const authReducer = produce((draft, { payload, type }) => {
       draft.error.verifyEmail.message = error.message;
 
       draft.isSignedIn = false;
-      draft.loading = false;
+      draft.loading.verifyEmail = false;
       break;
     }
     case VERIFY_EMAIL_SUCCESS: {
       draft.error = initialState.error;
-      draft.loading = false;
+      draft.loading.verifyEmail = false;
       break;
     }
     default: {

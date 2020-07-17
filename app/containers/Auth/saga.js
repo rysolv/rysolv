@@ -4,6 +4,7 @@ import { post } from 'utils/request';
 
 import {
   FETCH_ACTIVE_USER,
+  FETCH_USER_SESSION,
   SEARCH_ORGANIZATIONS,
   SIGN_IN,
   SIGN_OUT,
@@ -12,11 +13,15 @@ import {
 } from './constants';
 
 import {
+  fetchActiveUser,
   fetchActiveUserFailure,
   fetchActiveUserSuccess,
+  fetchUserSessionFailure,
+  fetchUserSessionSuccess,
   searchOrganizationsFailure,
   searchOrganizationsSuccess,
   signIn,
+  signOut,
   signInFailure,
   signInSuccess,
   signOutFailure,
@@ -57,7 +62,23 @@ export function* fetchActiveUserSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     yield put(fetchActiveUserSuccess({ oneUser }));
   } catch (error) {
+    yield put(signOut());
     yield put(fetchActiveUserFailure({ error }));
+  }
+}
+
+export function* fetchUserSessionSaga() {
+  const fetchCurrentSession = async () => {
+    const { username } = await Auth.currentAuthenticatedUser();
+    return { username };
+  };
+
+  try {
+    const { username: userId } = yield call(fetchCurrentSession);
+    yield put(fetchActiveUser({ userId }));
+    yield put(fetchUserSessionSuccess());
+  } catch (error) {
+    yield put(fetchUserSessionFailure({ error }));
   }
 }
 
@@ -221,7 +242,6 @@ export function* signOutSaga() {
   };
   try {
     yield call(cognitoSignOut);
-
     yield put(signOutSuccess());
   } catch (error) {
     yield put(signOutFailure({ error }));
@@ -250,7 +270,15 @@ export function* verifyEmailSaga({ payload }) {
           userInput: {
             emailVerified: true,
           }
-        ) { id }
+        ){
+           __typename
+          ... on User {
+            id
+          }
+          ... on Error {
+            message
+          }
+        }
       }
     `;
     const graphql = JSON.stringify({
@@ -259,7 +287,6 @@ export function* verifyEmailSaga({ payload }) {
     });
     yield call(post, '/graphql', graphql);
 
-    // yield put(verifyEmailSuccess({ userId }));
     yield put(signIn({ username: userEmail, password }));
   } catch (error) {
     yield put(verifyEmailFailure({ error }));
@@ -268,6 +295,7 @@ export function* verifyEmailSaga({ payload }) {
 
 export default function* watcherSaga() {
   yield takeLatest(FETCH_ACTIVE_USER, fetchActiveUserSaga);
+  yield takeLatest(FETCH_USER_SESSION, fetchUserSessionSaga);
   yield takeLatest(SEARCH_ORGANIZATIONS, getUserOrganizationsSaga);
   yield takeLatest(SIGN_IN, signInSaga);
   yield takeLatest(SIGN_OUT, signOutSaga);

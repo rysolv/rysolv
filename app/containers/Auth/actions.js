@@ -1,7 +1,11 @@
 import {
+  CLEAR_ALERTS,
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
   FETCH_ACTIVE_USER,
+  FETCH_USER_SESSION,
+  FETCH_USER_SESSION_FAILURE,
+  FETCH_USER_SESSION_SUCCESS,
   SEARCH_ORGANIZATIONS_FAILURE,
   SEARCH_ORGANIZATIONS_SUCCESS,
   SEARCH_ORGANIZATIONS,
@@ -19,6 +23,12 @@ import {
   VERIFY_EMAIL_SUCCESS,
   VERIFY_EMAIL,
 } from './constants';
+
+export function clearAlerts() {
+  return {
+    type: CLEAR_ALERTS,
+  };
+}
 
 export function fetchActiveUserFailure(payload) {
   return {
@@ -38,6 +48,26 @@ export function fetchActiveUser(payload) {
   return {
     payload,
     type: FETCH_ACTIVE_USER,
+  };
+}
+
+export function fetchUserSession() {
+  return {
+    type: FETCH_USER_SESSION,
+  };
+}
+
+export function fetchUserSessionFailure(payload) {
+  return {
+    payload,
+    type: FETCH_USER_SESSION_FAILURE,
+  };
+}
+
+export function fetchUserSessionSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_USER_SESSION_SUCCESS,
   };
 }
 

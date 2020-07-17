@@ -9,7 +9,7 @@ import {
   ErrorWrapper,
   InputFormWrapper,
   SigninWrapper,
-  StyledPrimaryButton,
+  StyledPrimaryAsyncButton,
   SubText,
   Title,
   VerificationWrapper,
@@ -21,8 +21,9 @@ const VerifyEmail = ({
   error,
   handleInputChange,
   handleVerifyEmail,
-  verifyDisabled,
   verify,
+  verifyDisabled,
+  verifyEmailLoading,
 }) => {
   // eslint-disable-next-line no-param-reassign
   const { email } = activeUser;
@@ -37,6 +38,7 @@ const VerifyEmail = ({
         </SubText>
         <VerificationWrapper>
           <MainTextInput
+            autoComplete="one-time-code"
             error={!!verificationCode.error}
             helperText={verificationCode.error}
             label="Verification code"
@@ -52,7 +54,8 @@ const VerifyEmail = ({
         </VerificationWrapper>
 
         <ErrorWrapper>{error.error ? error.message : ''}</ErrorWrapper>
-        <StyledPrimaryButton
+        <StyledPrimaryAsyncButton
+          loading={verifyEmailLoading}
           disabled={!verifyDisabled}
           label="Verify Email"
           onClick={() => handleVerifyEmail()}
@@ -72,6 +75,7 @@ VerifyEmail.propTypes = {
   handleVerifyEmail: T.func.isRequired,
   verify: T.object.isRequired,
   verifyDisabled: T.bool,
+  verifyEmailLoading: T.bool,
 };
 
 export default VerifyEmail;

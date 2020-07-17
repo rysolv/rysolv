@@ -51,6 +51,7 @@ const userReturnValues = `
   email,
   first_name AS "firstName",
   github_link AS "githubLink",
+  is_deleted AS "isDeleted",
   is_online AS "isOnline",
   issues,
   last_name AS "lastName",
@@ -106,11 +107,11 @@ const createUser = async data => {
 
 // GET single user
 const getOneUser = async userId => {
-  const rows = await singleItem('users', userId, userReturnValues);
-  if (rows) {
+  const [rows] = await singleItem('users', userId, userReturnValues);
+  if (rows && !rows.isDeleted) {
     return rows;
   }
-  throw new Error(`ID not found in users`);
+  throw new Error(`User does not exist`);
 };
 
 // GET all users
