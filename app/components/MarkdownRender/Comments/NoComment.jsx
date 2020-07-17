@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyledNoComments } from '../styledComponents';
 
-const NoComment = () => <StyledNoComments>No comments</StyledNoComments>;
+import { NoCommentContainer } from '../styledComponents';
+
+const NoComment = () => <NoCommentContainer>No comments</NoCommentContainer>;
 
 export default NoComment;

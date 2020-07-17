@@ -11,7 +11,7 @@ module.exports = {
   createWithdrawal: async args => {
     const { transferValue, userId } = args;
     try {
-      const [{ balance }] = await getOneUser(userId);
+      const { balance } = await getOneUser(userId);
       const createdDate = new Date();
       const lessThanBalance = balance >= transferValue;
       const greaterThanZero = transferValue > 0;

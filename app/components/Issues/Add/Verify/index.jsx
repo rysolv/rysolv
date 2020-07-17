@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import T from 'prop-types';
 
@@ -16,7 +15,6 @@ import {
   ValueWrapper,
 } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export class VerifyForm extends React.PureComponent {
   render() {
     const {
@@ -54,7 +52,6 @@ export class VerifyForm extends React.PureComponent {
             body={issueBody.value}
             date={Date.now()}
             handleNav={handleNav}
-            primary
             userProfile={primaryUser}
           />
         </ValueWrapper>

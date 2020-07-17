@@ -1,5 +1,5 @@
 import CommentCard from './CommentCard';
-import NoComment from './NoComment';
 import NewComment from './NewComment';
+import NoComment from './NoComment';
 
-export { CommentCard, NoComment, NewComment };
+export { CommentCard, NewComment, NoComment };
