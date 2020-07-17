@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import withAuth from 'containers/Auth';
 
 import Contact from 'components/Contact';
+import Faq from 'components/Faq';
 import NotFoundPage from 'components/NotFoundPage';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
@@ -41,6 +42,7 @@ const Routes = () => (
   <Switch>
     <Route exact path="/" component={PublicMain} />
     <Route exact path="/contact-us" component={Contact} />
+    <Route exact path="/faq" component={Faq} />
     <Route exact path="/issues" component={PublicOverview} />
     <Route exact path="/issues/search/:searchValue?" component={PublicOverview} />
     <Route exact path="/issues/add" component={PrivateIssuesAdd} />

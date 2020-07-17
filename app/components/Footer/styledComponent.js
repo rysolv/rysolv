@@ -37,7 +37,8 @@ export const LinkContainer = styled.div`
 `;
 
 export const LinkWrapper = styled.a`
-  font-size: 16px;
+  font-size: 1.6rem;
+  padding: 0 3rem;
   text-decoration: underline;
 
   &:hover {

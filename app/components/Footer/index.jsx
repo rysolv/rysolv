@@ -42,6 +42,7 @@ const Footer = ({ handleNav }) => (
         <LinkWrapper onClick={() => handleNav('/contact-us')}>
           Contact Us
         </LinkWrapper>
+        <LinkWrapper onClick={() => handleNav('/faq')}>FAQ</LinkWrapper>
       </LinkContainer>
       <CopyrightWrapper>
         <div>{`© ${new Date().getFullYear()} Rysolv, LLC`}</div>
