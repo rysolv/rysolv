@@ -5,7 +5,6 @@ import {
   borderColor,
   codeGrey,
   commentHeaderColor,
-  defaultFontFamily,
   defaultFontSize,
   styledScrollbar,
   subheaderFontSize,
@@ -22,17 +21,17 @@ export const CommentBody = styled.div`
   width: 100%;
 
   * {
-    background-color: white;
+    background: white;
     color: ${textColor};
     font-family: inherit;
-    max-width: 100%;
+    width: 100%;
   }
 `;
 
 export const CommentContainer = styled.div`
   background-color: white;
   border-radius: 0.2rem;
-  border: 1px solid ${borderColor};
+  border: 0.1rem solid ${borderColor};
   margin-left: 1.6rem;
   position: relative;
   width: 100%;
@@ -64,7 +63,9 @@ export const CommentContainer = styled.div`
 
   code {
     background-color: ${codeGrey};
-    font-family: ${defaultFontFamily};
+    border-radius: 0.25rem;
+    color: ${textColor};
+    font-family: monospace;
     white-space: pre-wrap;
   }
 
@@ -73,18 +74,17 @@ export const CommentContainer = styled.div`
   }
 
   pre {
-    background-color: ${codeGrey};
-    padding: 0.5rem;
-    max-height: 75rem;
-    overflow-y: auto;
-    overflow-x: hidden;
     ${styledScrollbar}
+    background-color: ${codeGrey};
+    max-height: 75rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0.5rem;
   }
 `;
 
 export const CommentHeader = styled.div`
-  background-color: ${props =>
-    props.primary ? `transparent` : commentHeaderColor};
+  background-color: ${commentHeaderColor};
   color: ${textColor};
   font-size: ${defaultFontSize};
   padding: 0.8rem;
@@ -97,21 +97,69 @@ export const FlexContainer = styled.div`
   width: 100%;
 `;
 
+export const IssueBody = styled.div`
+  ${styledScrollbar}
+  font-size: ${defaultFontSize};
+  min-height: 4rem;
+  overflow-y: auto;
+  padding: 0 1rem;
+  width: 100%;
+
+  * {
+    background: white;
+    color: ${textColor};
+    font-family: inherit;
+    width: 100%;
+  }
+`;
+
+export const IssueBodyContainer = styled.div`
+  background: white;
+  border-radius: 0.25rem;
+  border: none;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  width: 100%;
+
+  code {
+    background-color: ${codeGrey};
+    border-radius: 0.25rem;
+    color: ${textColor};
+    font-family: monospace;
+    white-space: pre-wrap;
+  }
+
+  image {
+    width: auto;
+  }
+
+  pre {
+    ${styledScrollbar}
+    background-color: ${codeGrey};
+    max-height: 75rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0.5rem;
+  }
+`;
+
 export const NewCommentContainer = styled.div`
   text-align: right;
   width: 100%;
 `;
 
-export const ProfileImageContainer = styled.div`
-  display: inline-block;
-  vertical-align: top;
-`;
-
-export const StyledNoComments = styled.div`
+export const NoCommentContainer = styled.div`
   color: ${textColor};
   font-size: ${subheaderFontSize};
   margin: 2rem 0;
   text-align: center;
+`;
+
+export const ProfileImageContainer = styled.div`
+  display: inline-block;
+  margin-right: ${({ addMargin }) => (addMargin ? '1rem' : '0')};
+  vertical-align: top;
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`

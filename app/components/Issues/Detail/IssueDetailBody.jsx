@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
-import marked from 'marked';
 import moment from 'moment';
 
 import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
+import { BodyCard } from 'components/MarkdownRender';
 import { navHelper } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -11,8 +11,6 @@ import {
   CommentWrapper,
   ExternalLinkWrapper,
   Icon,
-  IssueBody,
-  IssueBodyContainer,
   LanguagesTitle,
   LanguagesWrapper,
   PostingInfoWrapper,
@@ -33,11 +31,8 @@ const IssueDetailBody = ({
   languageChange,
   setBodyChange,
   setLanguageChange,
-  userProfile,
+  userProfile: { detailRoute, username },
 }) => {
-  const { username, detailRoute } = userProfile;
-  const html = marked(body);
-
   const EditIssueBodyComponent = (
     <StyledMarkdown edit body={bodyChange} handleInput={setBodyChange} />
   );
@@ -53,10 +48,6 @@ const IssueDetailBody = ({
     />
   );
 
-  const IssueBodyComponent = (
-    <IssueBody dangerouslySetInnerHTML={{ __html: html }} />
-  );
-
   const LanguagesComponent = (
     <Fragment>
       {language.map(el => (
@@ -66,7 +57,7 @@ const IssueDetailBody = ({
   );
 
   return (
-    <IssueBodyContainer>
+    <Fragment>
       <PostingInfoWrapper>
         <div>
           Opened by{' '}
@@ -95,12 +86,13 @@ const IssueDetailBody = ({
           />
         </LanguagesWrapper>
         <ConditionalRender
-          Component={IssueBodyComponent}
+          Component={BodyCard}
           FallbackComponent={EditIssueBodyComponent}
+          propsToPassDown={{ body }}
           shouldRender={!displayEditView}
         />
       </CommentWrapper>
-    </IssueBodyContainer>
+    </Fragment>
   );
 };
 

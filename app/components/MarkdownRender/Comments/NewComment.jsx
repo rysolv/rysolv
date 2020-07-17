@@ -9,11 +9,11 @@ import {
   NewCommentContainer,
   ProfileImageContainer,
   StyledPrimaryButton,
-} from './styledComponents';
+} from '../styledComponents';
 
 const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
-  const { id, profilePic, username } = activeUser;
   const [body, setBody] = useState('');
+  const { id, profilePic, username } = activeUser;
 
   const handleClick = () => {
     handleComment({ activeUser, body, issueId });
@@ -22,7 +22,7 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
 
   return (
     <FlexContainer>
-      <ProfileImageContainer style={{ marginRight: '1rem' }}>
+      <ProfileImageContainer addMargin>
         <ProfileImage
           alt={username}
           detailRoute={`/users/detail/${id}`}
@@ -39,7 +39,7 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
           handleEnter={handleClick}
         />
         <StyledPrimaryButton
-          disabled={!(body.length !== 0)}
+          disabled={body.length === 0}
           label="Comment"
           onClick={() => handleClick()}
         />
@@ -49,10 +49,10 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
 };
 
 NewComment.propTypes = {
-  activeUser: T.object,
-  handleComment: T.func,
-  handleNav: T.func,
-  issueId: T.string,
+  activeUser: T.object.isRequired,
+  handleComment: T.func.isRequired,
+  handleNav: T.func.isRequired,
+  issueId: T.string.isRequired,
 };
 
 export default NewComment;

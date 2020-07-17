@@ -140,7 +140,6 @@ const mapStateToProps = createStructuredSelector({
   verificationSent: makeSelectAuth('verificationSent'),
   signUpLoading: makeSelectAuthLoading('signUp'),
   verifyEmailLoading: makeSelectAuthLoading('verifyEmail'),
-
   /*
    * Reducer : Signin
    */

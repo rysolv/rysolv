@@ -5,9 +5,9 @@ import {
   borderColor,
   defaultFontSize,
   detailFontSize,
-  redText,
   hoverLinkColor,
   hyperlinkColor,
+  redText,
   subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
@@ -21,8 +21,8 @@ export const EmailWrapper = styled.span`
 
 export const ErrorWrapper = styled.div`
   color: ${redText};
-  padding: 1rem 0.5rem 2rem 0.5rem;
   font-style: italic;
+  padding: 1rem 0.5rem 2rem 0.5rem;
 `;
 
 export const HorizontalWrapper = styled.div`
@@ -59,8 +59,8 @@ export const SigninWrapper = styled.div`
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   align-self: center;
-  width: fit-content;
   min-width: 50%;
+  width: fit-content;
 `;
 
 export const SubText = styled.div`
@@ -83,7 +83,7 @@ export const Title = styled.div`
 `;
 
 export const VerificationWrapper = styled.div`
-  display: flex;
   align-self: center;
+  display: flex;
   width: 60%;
 `;

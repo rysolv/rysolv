@@ -14,7 +14,6 @@ import {
   Title,
 } from '../styledComponents';
 
-// eslint-disable-next-line arrow-body-style
 const Signup = ({
   data,
   error,
@@ -23,7 +22,6 @@ const Signup = ({
   signUpDisabled,
   signUpLoading,
 }) => {
-  // eslint-disable-next-line no-param-reassign
   const {
     email,
     firstName,
@@ -54,7 +52,6 @@ const Signup = ({
         />
         <MainTextInput
           autoComplete="email"
-          type="email"
           error={!!email.error}
           helperText={email.error}
           label="Email"
@@ -65,6 +62,7 @@ const Signup = ({
               value: e.target.value,
             })
           }
+          type="email"
           value={email.value}
         />
         <HorizontalWrapper>
@@ -124,9 +122,9 @@ const Signup = ({
           value={verifyPassword.value}
         />
         <StyledPrimaryAsyncButton
-          loading={signUpLoading}
           disabled={!signUpDisabled}
           label="Sign Up"
+          loading={signUpLoading}
           onClick={() => handleSignUp()}
         />
       </InputFormWrapper>

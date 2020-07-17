@@ -159,8 +159,7 @@ const searchUsers = async (table, value) => {
 
 // UPDATE balance of user for payment
 const submitAccountPaymentUser = async (userId, fundValue) => {
-  const [userData] = await getOneUser(userId);
-  const { balance } = userData;
+  const { balance } = await getOneUser(userId);
   const adjustedBalanceValue = balance - fundValue;
   const queryText = `UPDATE users SET balance=${adjustedBalanceValue} WHERE (id = '${userId}') RETURNING *`;
   const { rows } = await singleQuery(queryText);
@@ -188,7 +187,7 @@ const transformUser = async (id, data) => {
 };
 
 const updateUserArray = async (table, column, id, data, remove) => {
-  const [userData] = await getOneUser(id);
+  const userData = await getOneUser(id);
   // Only add uniquew values to array
   if (!userData[column].includes(data) || remove) {
     const action = remove ? 'array_remove' : 'array_append';

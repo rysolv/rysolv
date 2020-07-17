@@ -141,7 +141,6 @@ const transformIssue = async (id, data) => {
       issueValues,
       data,
     );
-    // const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE issues
       SET (${parameters})
       = (${substitution})

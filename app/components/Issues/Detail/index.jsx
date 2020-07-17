@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
 import { BackNav, ConditionalRender } from 'components/base_ui';
-import { CommentCard, NoComment, NewComment } from 'components/Comments';
+import { CommentCard, NewComment, NoComment } from 'components/MarkdownRender';
 import PaymentPortal from 'components/Payments';
 import UpvotePanel from 'components/Upvote';
 import iconDictionary from 'utils/iconDictionary';
