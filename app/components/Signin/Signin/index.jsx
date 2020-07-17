@@ -13,7 +13,6 @@ import {
   Title,
 } from '../styledComponents';
 
-// eslint-disable-next-line arrow-body-style
 const Signin = ({
   data,
   error,
@@ -22,7 +21,6 @@ const Signin = ({
   signInDisabled,
   signInLoading,
 }) => {
-  // eslint-disable-next-line no-param-reassign
   const { email, password } = data;
 
   return (
@@ -37,7 +35,6 @@ const Signin = ({
           error={!!email.error}
           helperText={email.error}
           label="Email"
-          type="email"
           onChange={e =>
             handleInputChange({
               field: 'email',
@@ -45,14 +42,14 @@ const Signin = ({
               value: e.target.value,
             })
           }
+          type="email"
           value={email.value}
         />
         <MainTextInput
           autoComplete="current-password"
           error={!!password.error}
           helperText={password.error}
-          label="password"
-          type="password"
+          label="Password"
           onChange={e =>
             handleInputChange({
               field: 'password',
@@ -60,12 +57,13 @@ const Signin = ({
               value: e.target.value,
             })
           }
+          type="password"
           value={password.value}
         />
         <StyledPrimaryAsyncButton
-          loading={signInLoading}
           disabled={!signInDisabled}
           label="Sign in"
+          loading={signInLoading}
           onClick={() => handleSignIn()}
         />
       </InputFormWrapper>

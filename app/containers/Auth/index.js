@@ -25,7 +25,6 @@ export default function withAuth(config, Component) {
   }) => {
     const { isPrivate } = config;
 
-    // eslint-disable-next-line consistent-return
     useEffect(() => {
       dispatchFetchUserSession();
     }, []);
@@ -36,9 +35,9 @@ export default function withAuth(config, Component) {
     return (
       <ConditionalRender
         Component={Component}
-        shouldRender={!authenticateLoading}
-        propsToPassDown={{ ...restProps }}
         fallBackComponent={LoadingIndicator}
+        propsToPassDown={{ ...restProps }}
+        shouldRender={!authenticateLoading}
       />
     );
   };

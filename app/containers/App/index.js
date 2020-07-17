@@ -16,6 +16,7 @@ import {
 
 import Main from 'containers/Main/Loadable';
 import ViewSize from 'containers/ViewSize';
+
 import GlobalStyles from '../../global-styles';
 
 const generateClassName = createGenerateClassName();

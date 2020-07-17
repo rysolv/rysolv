@@ -143,6 +143,7 @@ const authReducer = produce((draft, { payload, type }) => {
       return tempState;
     }
     case SIGN_UP: {
+      draft.error = initialState.error;
       draft.isSignedIn = false;
       draft.loading.signUp = true;
       break;
@@ -161,9 +162,8 @@ const authReducer = produce((draft, { payload, type }) => {
     case SIGN_UP_SUCCESS: {
       const { createUser } = payload;
       draft.activeUser = createUser;
-      draft.error = initialState.error;
-      draft.verificationSent = true;
       draft.loading.signUp = false;
+      draft.verificationSent = true;
       break;
     }
     case UPDATE_ACTIVE_USER: {

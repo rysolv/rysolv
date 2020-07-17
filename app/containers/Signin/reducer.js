@@ -27,16 +27,11 @@ export const initialState = {
   },
 };
 
-/* eslint-disable default-case, no-param-reassign */
+/* eslint-disable consistent-return, default-case, no-param-reassign */
 const signinReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_FORM: {
-      draft.alerts = initialState.alerts;
-      draft.signIn = initialState.signIn;
-      draft.signUp = initialState.signUp;
-      draft.step = initialState.step;
-      draft.verify = initialState.verify;
-      break;
+      return initialState;
     }
     case INCREMENT_STEP: {
       const { step } = payload;

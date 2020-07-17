@@ -15,58 +15,51 @@ import {
   VerificationWrapper,
 } from '../styledComponents';
 
-// eslint-disable-next-line arrow-body-style
 const VerifyEmail = ({
-  activeUser,
+  activeUser: { email },
   error,
   handleInputChange,
   handleVerifyEmail,
-  verify,
+  verify: { verificationCode },
   verifyDisabled,
   verifyEmailLoading,
-}) => {
-  // eslint-disable-next-line no-param-reassign
-  const { email } = activeUser;
-  const { verificationCode } = verify;
-
-  return (
-    <SigninWrapper>
-      <InputFormWrapper>
-        <Title>Confirm your email</Title>
-        <SubText>
-          A confirmation email was sent to <EmailWrapper>{email}</EmailWrapper>
-        </SubText>
-        <VerificationWrapper>
-          <MainTextInput
-            autoComplete="one-time-code"
-            error={!!verificationCode.error}
-            helperText={verificationCode.error}
-            label="Verification code"
-            onChange={e =>
-              handleInputChange({
-                field: 'verificationCode',
-                form: 'verify',
-                value: e.target.value,
-              })
-            }
-            value={verificationCode.value}
-          />
-        </VerificationWrapper>
-
-        <ErrorWrapper>{error.error ? error.message : ''}</ErrorWrapper>
-        <StyledPrimaryAsyncButton
-          loading={verifyEmailLoading}
-          disabled={!verifyDisabled}
-          label="Verify Email"
-          onClick={() => handleVerifyEmail()}
-        />
-      </InputFormWrapper>
+}) => (
+  <SigninWrapper>
+    <InputFormWrapper>
+      <Title>Confirm your email</Title>
       <SubText>
-        Never received a code? <Link to="/contact-us">Contact support</Link>
+        A confirmation email was sent to <EmailWrapper>{email}</EmailWrapper>
       </SubText>
-    </SigninWrapper>
-  );
-};
+      <VerificationWrapper>
+        <MainTextInput
+          autoComplete="one-time-code"
+          error={!!verificationCode.error}
+          helperText={verificationCode.error}
+          label="Verification code"
+          onChange={e =>
+            handleInputChange({
+              field: 'verificationCode',
+              form: 'verify',
+              value: e.target.value,
+            })
+          }
+          value={verificationCode.value}
+        />
+      </VerificationWrapper>
+
+      <ErrorWrapper>{error.error ? error.message : ''}</ErrorWrapper>
+      <StyledPrimaryAsyncButton
+        loading={verifyEmailLoading}
+        disabled={!verifyDisabled}
+        label="Verify Email"
+        onClick={() => handleVerifyEmail()}
+      />
+    </InputFormWrapper>
+    <SubText>
+      Never received a code? <Link to="/contact-us">Contact support</Link>
+    </SubText>
+  </SigninWrapper>
+);
 
 VerifyEmail.propTypes = {
   activeUser: T.object,
