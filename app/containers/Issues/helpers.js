@@ -87,6 +87,12 @@ export const organizeIssues = (issues, organizeParam) => {
       }
       return -1;
     }
+    if (organizeParam === 'Most Popular') {
+      if (a.rep < b.rep) {
+        return 1;
+      }
+      return -1;
+    }
   });
   return sortedArray;
 };
