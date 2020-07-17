@@ -16,6 +16,8 @@ import {
   ImageNavBar,
   ImageWrapper,
   Logo,
+  LogoContainer,
+  LogoText,
   Row,
   RowWrapper,
   SplashBackground,
@@ -24,6 +26,7 @@ import {
 } from './styledComponents';
 
 const ArrowIcon = iconDictionary('viewAll');
+const siteLogo = iconDictionary('siteLogo');
 
 const Splash = ({ handleNav }) => (
   <Fragment>
@@ -45,7 +48,10 @@ const Splash = ({ handleNav }) => (
           <Image src={issueExampleImage} />
         </ImageWrapper>
         <ContentWrapper>
-          <Logo>rysolv</Logo>
+          <LogoContainer>
+            <Logo>{siteLogo}</Logo>
+            <LogoText>rysolv</LogoText>
+          </LogoContainer>
           <TagLine>
             A crowdfunding platform for open source development.
           </TagLine>

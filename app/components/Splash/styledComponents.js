@@ -111,13 +111,29 @@ export const ImageWrapper = styled.div`
   }
 `;
 
-export const Logo = styled.p`
+export const Logo = styled.div`
+  height: 4rem;
+  margin: 0 0.5rem 0 0;
+  width: 4rem;
+  svg {
+    height: 4rem;
+    width: 4rem;
+  }
+`;
+
+export const LogoContainer = styled.div`
+  align-items: flex-end;
   color: white;
   display: flex;
+  display: inline-flex;
   font-size: 2.6rem;
   letter-spacing: 0.2rem;
   user-select: none;
   white-space: nowrap;
+`;
+
+export const LogoText = styled.div`
+  display: inline-flex;
 `;
 
 export const Row = styled.div`
