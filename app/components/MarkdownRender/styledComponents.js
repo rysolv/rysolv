@@ -11,13 +11,13 @@ import {
   textColor,
 } from 'defaultStyleHelper';
 
-export const CommentBody = styled.div`
+export const Body = styled.div`
   ${styledScrollbar}
   font-size: ${defaultFontSize};
   max-height: 150rem;
   min-height: 4rem;
   overflow-y: auto;
-  padding: 0 0.8rem;
+  padding: 0 1rem;
   width: 100%;
 
   * {
@@ -95,22 +95,6 @@ export const FlexContainer = styled.div`
   display: flex;
   margin: 3rem 0;
   width: 100%;
-`;
-
-export const IssueBody = styled.div`
-  ${styledScrollbar}
-  font-size: ${defaultFontSize};
-  min-height: 4rem;
-  overflow-y: auto;
-  padding: 0 1rem;
-  width: 100%;
-
-  * {
-    background: white;
-    color: ${textColor};
-    font-family: inherit;
-    width: 100%;
-  }
 `;
 
 export const IssueBodyContainer = styled.div`

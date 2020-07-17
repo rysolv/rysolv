@@ -7,7 +7,7 @@ import { ProfileImage } from 'components/base_ui';
 import { navHelper } from 'utils/globalHelpers';
 
 import {
-  CommentBody,
+  Body,
   CommentContainer,
   CommentHeader,
   FlexContainer,
@@ -46,7 +46,7 @@ const CommentCard = ({
             .utc()
             .fromNow()}
         </CommentHeader>
-        <CommentBody dangerouslySetInnerHTML={{ __html: html }} />
+        <Body dangerouslySetInnerHTML={{ __html: html }} />
       </CommentContainer>
     </FlexContainer>
   );
