@@ -2,9 +2,9 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { issueDataDictionary } from 'containers/Issues/constants';
-import { CommentCard } from 'components/Comments';
 import { LanguageWrapper } from 'components/base_ui';
+import { CommentCard } from 'components/MarkdownRender';
+import { issueDataDictionary } from 'containers/Issues/constants';
 
 import {
   DataWrapper,
