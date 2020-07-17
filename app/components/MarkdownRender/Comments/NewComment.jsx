@@ -49,10 +49,10 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
 };
 
 NewComment.propTypes = {
-  activeUser: T.object,
-  handleComment: T.func,
-  handleNav: T.func,
-  issueId: T.string,
+  activeUser: T.object.isRequired,
+  handleComment: T.func.isRequired,
+  handleNav: T.func.isRequired,
+  issueId: T.string.isRequired,
 };
 
 export default NewComment;

@@ -8,7 +8,6 @@ import Markdown from 'components/Markdown';
 import {
   borderColor,
   buttonRed,
-  codeGrey,
   defaultFontFamily,
   defaultFontSize,
   detailFontSize,
@@ -80,50 +79,6 @@ export const Icon = styled.span`
   align-items: center;
   display: flex;
   margin-right: 0.5rem;
-`;
-
-export const IssueBody = styled.div`
-  font-size: ${defaultFontSize};
-  min-height: 4rem;
-  padding: 0 1rem;
-  width: 100%;
-
-  * {
-    color: ${textColor};
-    font-family: inherit;
-    width: 100%;
-  }
-`;
-
-export const IssueBodyContainer = styled.div`
-  background-color: white;
-  border-radius: 0.25rem;
-  border: none;
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: top;
-  width: 100%;
-
-  code {
-    background-color: ${codeGrey};
-    font-family: monospace;
-    white-space: pre-wrap;
-    border-bottom-left-radius: 2.5px;
-    border-bottom-right-radius: 2.5px;
-    color: ${textColor};
-  }
-
-  image {
-    width: auto;
-  }
-
-  pre {
-    background-color: ${codeGrey};
-    padding: 0.5rem;
-    max-height: 75rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
 `;
 
 export const IssueDetailColumn = styled.div`

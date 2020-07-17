@@ -53,10 +53,10 @@ const CommentCard = ({
 };
 
 CommentCard.propTypes = {
-  body: T.string,
-  date: T.oneOfType([T.number, T.string]),
-  handleNav: T.func,
-  userProfile: T.object,
+  body: T.string.isRequired,
+  date: T.oneOfType([T.number, T.string]).isRequired,
+  handleNav: T.func.isRequired,
+  userProfile: T.object.isRequired,
 };
 
 export default CommentCard;

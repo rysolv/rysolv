@@ -5,7 +5,6 @@ import {
   borderColor,
   codeGrey,
   commentHeaderColor,
-  defaultFontFamily,
   defaultFontSize,
   styledScrollbar,
   subheaderFontSize,
@@ -22,10 +21,10 @@ export const CommentBody = styled.div`
   width: 100%;
 
   * {
-    background-color: white;
+    background: white;
     color: ${textColor};
     font-family: inherit;
-    max-width: 100%;
+    width: 100%;
   }
 `;
 
@@ -64,7 +63,9 @@ export const CommentContainer = styled.div`
 
   code {
     background-color: ${codeGrey};
-    font-family: ${defaultFontFamily};
+    border-radius: 0.25rem;
+    color: ${textColor};
+    font-family: monospace;
     white-space: pre-wrap;
   }
 
@@ -94,6 +95,53 @@ export const FlexContainer = styled.div`
   display: flex;
   margin: 3rem 0;
   width: 100%;
+`;
+
+export const IssueBody = styled.div`
+  ${styledScrollbar}
+  font-size: ${defaultFontSize};
+  min-height: 4rem;
+  overflow-y: auto;
+  padding: 0 1rem;
+  width: 100%;
+
+  * {
+    background: white;
+    color: ${textColor};
+    font-family: inherit;
+    width: 100%;
+  }
+`;
+
+export const IssueBodyContainer = styled.div`
+  background: white;
+  border-radius: 0.25rem;
+  border: none;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  width: 100%;
+
+  code {
+    background-color: ${codeGrey};
+    border-radius: 0.25rem;
+    color: ${textColor};
+    font-family: monospace;
+    white-space: pre-wrap;
+  }
+
+  image {
+    width: auto;
+  }
+
+  pre {
+    ${styledScrollbar}
+    background-color: ${codeGrey};
+    max-height: 75rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0.5rem;
+  }
 `;
 
 export const NewCommentContainer = styled.div`
