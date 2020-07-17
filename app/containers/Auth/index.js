@@ -35,7 +35,7 @@ export default function withAuth(config, Component) {
     return (
       <ConditionalRender
         Component={Component}
-        fallBackComponent={LoadingIndicator}
+        FallbackComponent={LoadingIndicator}
         propsToPassDown={{ ...restProps }}
         shouldRender={!authenticateLoading}
       />
