@@ -9,4 +9,16 @@ const makeSelectAuth = prop =>
     substate => substate[prop],
   );
 
-export { makeSelectAuth };
+const makeSelectAuthError = prop =>
+  createSelector(
+    makeSelectAuth('error'),
+    loading => loading[prop],
+  );
+
+const makeSelectAuthLoading = prop =>
+  createSelector(
+    makeSelectAuth('loading'),
+    loading => loading[prop],
+  );
+
+export { makeSelectAuth, makeSelectAuthError, makeSelectAuthLoading };

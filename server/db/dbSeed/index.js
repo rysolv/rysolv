@@ -2,19 +2,19 @@
 const pool = require('../connect');
 
 // Import seed data
-const {
-  userSeed,
-  // issueSeed,
-  // commentSeed,
-  // organzationSeed,
-} = require('./seedData');
+// const {
+//   userSeed,
+//   issueSeed,
+//   commentSeed,
+//   organzationSeed,
+// } = require('./seedData');
 
 // Import db functions
 const {
   // createComment,
   // createIssue,
   // createOrganization,
-  createUser,
+  // createUser,
   createTables,
   dropAllTables,
   printTables,
@@ -28,7 +28,7 @@ const seed = async () => {
   await createTables();
 
   // populate data
-  await createUser(userSeed);
+  // await createUser(userSeed);
   // organzationSeed.forEach(async el => {
   //   await createOrganization(el);
   // });

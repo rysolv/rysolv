@@ -357,31 +357,32 @@ export function* saveInfoSaga({ payload }) {
     activeUser: { id: userId },
   } = payload;
   const query = `
-  mutation{
-    createIssue(
-      issueInput: {
-        body: ${JSON.stringify(issueBody)},
-        contributor: "${userId}",
-        language:  ${JSON.stringify(issueLanguages)},
-        name: ${JSON.stringify(issueName)},
-        organizationDescription:  "${organizationDescription}",
-        organizationId:  ${JSON.stringify(organizationId)},
-        organizationLogo:  ${JSON.stringify(organizationLogo)},
-        organizationName:  "${organizationName}",
-        organizationRepo:  "${organizationRepo}",
-        organizationUrl:  "${organizationUrl}",
-        repo: "${issueUrl}",
-      }
-    ) {
-      __typename
-      ... on Issue {
-        id
-      }
-      ... on Error {
-        message
+    mutation{
+      createIssue(
+        issueInput: {
+          body: ${JSON.stringify(issueBody)},
+          contributor: "${userId}",
+          language:  ${JSON.stringify(issueLanguages)},
+          name: ${JSON.stringify(issueName)},
+          organizationDescription:  "${organizationDescription}",
+          organizationId:  ${JSON.stringify(organizationId)},
+          organizationLogo:  ${JSON.stringify(organizationLogo)},
+          organizationName:  "${organizationName}",
+          organizationRepo:  "${organizationRepo}",
+          organizationUrl:  "${organizationUrl}",
+          repo: "${issueUrl}",
+        }
+      ) {
+        __typename
+        ... on Issue {
+          id
+        }
+        ... on Error {
+          message
+        }
       }
     }
-  }`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,

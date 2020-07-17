@@ -1,5 +1,4 @@
 const { mapValues, singleItem, singleQuery, singleSearch } = require('./query');
-const { diff } = require('./helpers');
 const { formatParamaters } = require('./helpers');
 
 const issueValues = [
@@ -138,13 +137,17 @@ const searchIssues = async value => {
 const transformIssue = async (id, data) => {
   const [rows] = await singleItem('issues', id, issueValues);
   if (rows) {
-    const { newObjectArray } = diff(rows, data);
+    const { parameters, substitution, values } = formatParamaters(
+      issueValues,
+      data,
+    );
+    // const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE issues
-      SET (${issueValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+      SET (${parameters})
+      = (${substitution})
       WHERE (id = '${id}')
-      RETURNING *`;
-    const [result] = await mapValues(queryText, [newObjectArray]);
+      RETURNING ${issueReturnValues}`;
+    const [result] = await mapValues(queryText, values);
     return result;
   }
   throw new Error(`Failed to update. ID not found in issues`);
@@ -164,9 +167,16 @@ const updateIssueArray = async (column, id, data, remove) => {
   const [issueData] = await getOneIssue(id);
   // Only add unique values to array
   if (!issueData[column].includes(data) || remove) {
-    const action = remove ? 'array_remove' : 'array_append';
+    if (remove) {
+      const queryText = `UPDATE issues
+      SET ${column} = array_remove(${column}, '${data}')
+      WHERE (id = '${id}')
+      RETURNING *`;
+      const { rows } = await singleQuery(queryText);
+      return rows;
+    }
     const queryText = `UPDATE issues
-      SET ${column} = ${action}(${column}, '${data}')
+      SET ${column} = array_append(${column}, '${data}')
       WHERE (id = '${id}')
       RETURNING *`;
     const { rows } = await singleQuery(queryText);

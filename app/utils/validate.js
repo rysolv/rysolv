@@ -79,7 +79,7 @@ export const validate = ({ required, type, value, ...validationProps }) => {
     };
   }
   if (!Array.isArray(type)) {
-    const validationFunction = [type];
+    const validationFunction = validationDictionary[type];
     return validationFunction(value, validationProps);
   }
   // If multiple validationTypes, return the first error encountered or false if no errors

@@ -5,52 +5,68 @@ import { Link } from 'react-router-dom';
 import { MainTextInput } from 'components/base_ui';
 
 import {
+  ErrorWrapper,
   InputFormWrapper,
   SigninWrapper,
-  StyledPrimaryButton,
+  StyledPrimaryAsyncButton,
   SubText,
   Title,
-} from './styledComponents';
+} from '../styledComponents';
 
 // eslint-disable-next-line arrow-body-style
-const Signin = ({ data, handleInputChange, handleSignin }) => {
+const Signin = ({
+  data,
+  error,
+  handleInputChange,
+  handleSignIn,
+  signInDisabled,
+  signInLoading,
+}) => {
   // eslint-disable-next-line no-param-reassign
   const { email, password } = data;
+
   return (
     <SigninWrapper>
       <InputFormWrapper>
         <Title>Sign in</Title>
+
+        {error.error && <ErrorWrapper>{error.message}</ErrorWrapper>}
+
         <MainTextInput
+          autoComplete="email"
           error={!!email.error}
           helperText={email.error}
-          label="email"
+          label="Email"
+          type="email"
           onChange={e =>
             handleInputChange({
               field: 'email',
-              form: 'data',
+              form: 'signIn',
               value: e.target.value,
             })
           }
           value={email.value}
         />
         <MainTextInput
+          autoComplete="current-password"
           error={!!password.error}
           helperText={password.error}
           label="password"
+          type="password"
           onChange={e =>
             handleInputChange({
               field: 'password',
-              form: 'data',
+              form: 'signIn',
               value: e.target.value,
             })
           }
           value={password.value}
         />
-        <StyledPrimaryButton
+        <StyledPrimaryAsyncButton
+          loading={signInLoading}
+          disabled={!signInDisabled}
           label="Sign in"
-          onClick={() =>
-            handleSignin({ userId: 'b519b064-b5db-4472-ad1b-00e30bdbfa4c' })
-          }
+          onClick={() => handleSignIn()}
         />
       </InputFormWrapper>
       <SubText>
@@ -61,9 +77,12 @@ const Signin = ({ data, handleInputChange, handleSignin }) => {
 };
 
 Signin.propTypes = {
+  error: T.object,
   data: T.object.isRequired,
   handleInputChange: T.func.isRequired,
-  handleSignin: T.func.isRequired,
+  handleSignIn: T.func.isRequired,
+  signInDisabled: T.bool,
+  signInLoading: T.bool,
 };
 
 export default Signin;
