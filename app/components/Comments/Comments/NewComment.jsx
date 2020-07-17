@@ -9,7 +9,7 @@ import {
   NewCommentContainer,
   ProfileImageContainer,
   StyledPrimaryButton,
-} from './styledComponents';
+} from '../styledComponents';
 
 const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
   const { id, profilePic, username } = activeUser;

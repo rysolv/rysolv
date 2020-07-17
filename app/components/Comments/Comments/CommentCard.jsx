@@ -13,7 +13,7 @@ import {
   FlexContainer,
   ProfileImageContainer,
   UsernameLink,
-} from './styledComponents';
+} from '../styledComponents';
 
 const CommentCard = ({ body, date, handleNav, primary, userProfile }) => {
   const { alt, detailRoute, profilePic, username } = userProfile;

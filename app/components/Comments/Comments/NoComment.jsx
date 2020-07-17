@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledNoComments } from './styledComponents';
+import { StyledNoComments } from '../styledComponents';
 
 const NoComment = () => <StyledNoComments>No comments</StyledNoComments>;
 
