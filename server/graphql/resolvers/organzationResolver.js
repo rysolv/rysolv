@@ -53,13 +53,11 @@ module.exports = {
       const [result] = await createOrganization(organization);
 
       // add organization to user
-      await updateUserArray(
-        'users',
-        'organizations',
-        result.ownerId,
-        result.id,
-        false,
-      );
+      await updateUserArray({
+        column: 'organizations',
+        userId: result.ownerId,
+        data: result.id,
+      });
 
       // log activity
       const activityInput = {

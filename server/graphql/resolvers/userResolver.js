@@ -135,6 +135,7 @@ module.exports = {
     try {
       const result = await getOneUser(userId);
       const { attempting, issues, organizations, watching } = result;
+
       const attemptingListResult = await Promise.all(
         attempting.map(async issueId => {
           const type = 'userAttemptList';
@@ -143,6 +144,7 @@ module.exports = {
         }),
       );
       result.attempting = attemptingListResult;
+
       const issuesListResult = await Promise.all(
         issues.map(async issueId => {
           const [issuesResult] = await getOneIssue(issueId);
@@ -150,6 +152,7 @@ module.exports = {
         }),
       );
       result.issues = issuesListResult;
+
       const organizationsListResult = await Promise.all(
         organizations.map(async organizationId => {
           const [organizationsResult] = await getOneOrganization(
@@ -159,6 +162,7 @@ module.exports = {
         }),
       );
       result.organizations = organizationsListResult;
+
       const watchingListResult = await Promise.all(
         watching.map(async issueId => {
           const type = 'userWatchList';
@@ -167,6 +171,7 @@ module.exports = {
         }),
       );
       result.watching = watchingListResult;
+
       return result;
     } catch (err) {
       throw err;
@@ -229,7 +234,12 @@ module.exports = {
   },
   updateUserArray: async args => {
     const { id, column, data, remove } = args;
-    const [result] = await updateUserArray('users', column, id, data, remove);
+    const [result] = await updateUserArray({
+      column,
+      userId: id,
+      data,
+      remove,
+    });
     return result;
   },
   userUpvote: async args => {

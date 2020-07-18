@@ -32,12 +32,11 @@ module.exports = {
       };
       await createActivity({ activityInput });
 
-      const [user] = await updateUserArray(
-        'users',
-        'comments',
-        commentInput.user,
-        result.id,
-      );
+      const [user] = await updateUserArray({
+        column: 'comments',
+        userId: commentInput.user,
+        data: result.id,
+      });
       await updateIssueArray('comments', result.target, result.id);
 
       return {
