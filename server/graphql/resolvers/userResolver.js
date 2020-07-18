@@ -233,12 +233,12 @@ module.exports = {
     }
   },
   updateUserArray: async args => {
-    const { id, column, data, remove } = args;
+    const { column, data, id, remove } = args;
     const [result] = await updateUserArray({
       column,
-      userId: id,
       data,
       remove,
+      userId: id,
     });
     return result;
   },

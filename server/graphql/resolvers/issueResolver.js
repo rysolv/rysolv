@@ -165,15 +165,15 @@ module.exports = {
       // add issue to user issue list
       await updateUserArray({
         column: 'issues',
-        userId: issueInput.contributor,
         data: issueResult.id,
+        userId: issueInput.contributor,
       });
 
       // add organization to user list
       await updateUserArray({
         column: 'organizations',
-        userId: issueInput.contributor,
         data: issueInput.organizationId,
+        userId: issueInput.contributor,
       });
 
       return {

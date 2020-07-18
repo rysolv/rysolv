@@ -185,7 +185,7 @@ const transformUser = async (id, data) => {
   throw new Error(`Failed to update users. ID not found in users`);
 };
 
-const updateUserArray = async ({ column, userId, data, remove }) => {
+const updateUserArray = async ({ column, data, remove, userId }) => {
   const userData = await getOneUser(userId);
   // Only add unique values to array
   if (!userData[column].includes(data) || remove) {
