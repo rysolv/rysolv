@@ -15,6 +15,7 @@ const {
   getOrganizationsWhere,
   searchIssues,
   submitAccountPaymentIssue,
+  submitAccountPaymentOrganization,
   submitAccountPaymentUser,
   transformIssue,
   updateIssueArray,
@@ -278,9 +279,20 @@ module.exports = {
   },
   submitAccountPayment: async args => {
     try {
-      const { issueId, fundValue, userId } = args;
+      const { issueId, fundValue, organizationId, userId } = args;
       const [issueResult] = await submitAccountPaymentIssue(issueId, fundValue);
+      await submitAccountPaymentOrganization(organizationId, fundValue);
       const [userResult] = await submitAccountPaymentUser(userId, fundValue);
+
+      const activityInput = {
+        actionType: 'fund',
+        fundedValue: fundValue,
+        issueId,
+        organizationId,
+        userId,
+      };
+      await createActivity({ activityInput });
+
       const result = {
         balance: userResult.balance,
         fundedAmount: issueResult.funded_amount,

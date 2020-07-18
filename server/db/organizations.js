@@ -100,6 +100,15 @@ const getOrganizationsWhere = async (column, value) => {
   return rows;
 };
 
+// UPDATE balance of organization for payment
+const submitAccountPaymentOrganization = async (organizationId, fundValue) => {
+  const [{ totalFunded }] = await getOneOrganization(organizationId);
+  const adjustedFundedValue = totalFunded + fundValue;
+  const queryText = `UPDATE organizations SET total_funded=${adjustedFundedValue} WHERE (id = '${organizationId}') RETURNING *`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
 // SEARCH organizations
 const searchOrganizations = async value => {
   const fields = ['name'];
@@ -148,6 +157,7 @@ module.exports = {
   getOrganizations,
   getOrganizationsWhere,
   searchOrganizations,
+  submitAccountPaymentOrganization,
   transformOrganization,
   updateOrganizationArray,
 };

@@ -25,6 +25,7 @@ const PaymentPortalModal = ({
   issueId,
   lastName,
   open,
+  organizationId,
   paymentAlerts,
   userId,
 }) => (
@@ -48,6 +49,7 @@ const PaymentPortalModal = ({
       issueId={issueId}
       lastName={lastName}
       open={open}
+      organizationId={organizationId}
       paymentAlerts={paymentAlerts}
       removeBorder
       userId={userId}
@@ -68,6 +70,7 @@ PaymentPortalModal.propTypes = {
   issueId: T.string,
   lastName: T.string,
   open: T.bool,
+  organizationId: T.string,
   paymentAlerts: T.object,
   userId: T.string,
 };

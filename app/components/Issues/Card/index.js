@@ -265,6 +265,7 @@ const IssueCard = ({
                       issueId={id}
                       lastName={lastName}
                       open={open}
+                      organizationId={organizationId}
                       userId={userId}
                     />
                   }

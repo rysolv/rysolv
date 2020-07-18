@@ -441,11 +441,11 @@ export function* searchIssuesSaga({ payload }) {
 }
 
 export function* submitAccountPaymentSaga({ payload }) {
-  const { fundValue, issueId, userId } = payload;
+  const { fundValue, issueId, organizationId, userId } = payload;
   const isFundedFromOverview = window.location.pathname === '/issues';
   const submitAccountPaymentQuery = `
       mutation {
-        submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", userId: "${userId}" ) {
+        submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", organizationId: "${organizationId}", userId: "${userId}" ) {
           __typename
           ... on Payment {
             balance,
