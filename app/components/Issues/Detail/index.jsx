@@ -47,6 +47,7 @@ const IssueDetail = ({
     open,
     profilePic,
     rep,
+    repo,
     userId,
     username,
   },
@@ -249,6 +250,7 @@ const IssueDetail = ({
                   handleNav={handleNav}
                   language={language}
                   languageChange={languageChange}
+                  repo={repo}
                   setBodyChange={setBodyChange}
                   setLanguageChange={setLanguageChange}
                   userProfile={primaryUser}

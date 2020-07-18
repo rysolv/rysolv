@@ -1,5 +1,6 @@
 import {
   CLEAR_ALERTS,
+  CLEAR_STATE,
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
   FETCH_ACTIVE_USER,
@@ -27,6 +28,13 @@ import {
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
+  };
+}
+
+export function clearState(payload) {
+  return {
+    payload,
+    type: CLEAR_STATE,
   };
 }
 

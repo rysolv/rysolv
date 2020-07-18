@@ -1,5 +1,7 @@
 export const CLEAR_ALERTS = 'app/Auth/CLEAR_ALERTS';
 
+export const CLEAR_STATE = 'app/Auth/CLEAR_STATE';
+
 export const FETCH_ACTIVE_USER = 'app/Auth/FETCH_ACTIVE_USER';
 export const FETCH_ACTIVE_USER_SUCCESS = 'app/Auth/FETCH_ACTIVE_USER_SUCCESS';
 export const FETCH_ACTIVE_USER_FAILURE = 'app/Auth/FETCH_ACTIVE_USER_FAILURE';

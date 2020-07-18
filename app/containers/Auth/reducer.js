@@ -4,6 +4,7 @@ import { isBlank } from 'utils/validate';
 
 import {
   CLEAR_ALERTS,
+  CLEAR_STATE,
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
   FETCH_ACTIVE_USER,
@@ -55,6 +56,15 @@ const authReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_ALERTS: {
       draft.error = initialState.error;
+      break;
+    }
+    case CLEAR_STATE: {
+      const { state } = payload || {};
+      if (state) {
+        draft[state] = initialState[state];
+      } else {
+        return initialState;
+      }
       break;
     }
     case FETCH_ACTIVE_USER: {

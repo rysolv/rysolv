@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import { ConditionalRender } from 'components/base_ui';
-import { signUp, verifyEmail } from 'containers/Auth/actions';
+import { clearState, signUp, verifyEmail } from 'containers/Auth/actions';
 import {
   makeSelectAuth,
   makeSelectAuthError,
@@ -32,7 +32,8 @@ export class SignUpContainer extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { dispatchClearForm } = this.props;
+    const { dispatchClearAuthState, dispatchClearForm } = this.props;
+    dispatchClearAuthState({ state: 'verificationSent' });
     dispatchClearForm();
   }
 
@@ -114,6 +115,7 @@ export class SignUpContainer extends React.PureComponent {
 SignUpContainer.propTypes = {
   activeUser: T.object,
   data: T.object,
+  dispatchClearAuthState: T.func,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSignUp: T.func,
@@ -155,6 +157,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Auth
      */
+    dispatchClearAuthState: payload => dispatch(clearState(payload)),
     dispatchSignUp: payload => dispatch(signUp(payload)),
     /*
      * Reducer : Router
