@@ -163,22 +163,18 @@ module.exports = {
       );
 
       // add issue to user issue list
-      await updateUserArray(
-        'users',
-        'issues',
-        issueInput.contributor,
-        issueResult.id,
-        false,
-      );
+      await updateUserArray({
+        column: 'issues',
+        userId: issueInput.contributor,
+        data: issueResult.id,
+      });
 
       // add organization to user list
-      await updateUserArray(
-        'users',
-        'organizations',
-        issueInput.contributor,
-        issueInput.organizationId,
-        false,
-      );
+      await updateUserArray({
+        column: 'organizations',
+        userId: issueInput.contributor,
+        data: issueInput.organizationId,
+      });
 
       return {
         __typename: 'Issue',

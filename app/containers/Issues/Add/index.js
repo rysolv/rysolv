@@ -28,13 +28,8 @@ import { AddWrapper, AddForm } from './styledComponents';
 export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
     document.title = 'Add Issue';
-    const {
-      activeUser,
-      handleIncrementStep,
-      handleSearchOrganizations,
-    } = this.props;
-    const { id } = activeUser;
-    handleSearchOrganizations({ id });
+    const { handleIncrementStep } = this.props;
+
     handleIncrementStep({ step: 1, view: 'addIssue' });
   }
 
@@ -89,7 +84,6 @@ IssuesAdd.propTypes = {
   dispatchClearForm: T.func,
   handleIncrementStep: T.func,
   handleNav: T.func,
-  handleSearchOrganizations: T.func,
   loading: T.bool.isRequired,
   organization: T.object,
   step: T.number.isRequired,

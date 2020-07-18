@@ -174,7 +174,6 @@ const transformUser = async (id, data) => {
       userValues,
       data,
     );
-    // const { newObjectArray } = diff(rows, data);
     const queryText = `UPDATE users
       SET (${parameters})
       = (${substitution})
@@ -186,14 +185,14 @@ const transformUser = async (id, data) => {
   throw new Error(`Failed to update users. ID not found in users`);
 };
 
-const updateUserArray = async (table, column, id, data, remove) => {
-  const userData = await getOneUser(id);
-  // Only add uniquew values to array
+const updateUserArray = async ({ column, userId, data, remove }) => {
+  const userData = await getOneUser(userId);
+  // Only add unique values to array
   if (!userData[column].includes(data) || remove) {
     const action = remove ? 'array_remove' : 'array_append';
-    const queryText = `UPDATE ${table}
+    const queryText = `UPDATE users
       SET ${column} = ${action}(${column}, '${data}')
-      WHERE (id = '${id}')
+      WHERE (id = '${userId}')
       RETURNING *`;
     const { rows } = await singleQuery(queryText);
     return rows;

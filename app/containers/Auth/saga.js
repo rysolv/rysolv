@@ -89,6 +89,9 @@ export function* signInSaga({ payload }) {
     const user = await Auth.signIn(username, password);
     return user;
   };
+  const cognitoSignOut = async () => {
+    await Auth.signOut();
+  };
 
   try {
     const {
@@ -123,6 +126,7 @@ export function* signInSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     yield put(signInSuccess({ oneUser }));
   } catch (error) {
+    yield call(cognitoSignOut);
     yield put(signInFailure({ error }));
   }
 }
