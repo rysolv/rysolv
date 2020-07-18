@@ -15,7 +15,6 @@ import Overview from 'containers/Overview';
 import Settings from 'containers/Settings';
 import SignIn from 'containers/Signin/SignIn';
 import SignUp from 'containers/Signin/Signup';
-import Test from 'containers/Test';
 import UsersAdd from 'containers/Users/Add';
 import UsersDetail from 'containers/Users/Detail';
 import UsersEdit from 'containers/Users/Edit';
@@ -38,7 +37,6 @@ const PublicOrganizationsDetail = withAuth(publicConfig, OrganizationsDetail);
 const PublicOverview = withAuth(publicConfig, Overview);
 const PublicSignIn = withAuth(publicConfig, SignIn);
 const PublicSignUp = withAuth(publicConfig, SignUp);
-const PublicTest = withAuth(publicConfig, Test);
 const PublicUsersDetail = withAuth(publicConfig, UsersDetail);
 
 // prettier-ignore
@@ -59,7 +57,6 @@ const Routes = () => (
     <Route exact path="/settings/:view?" component={PrivateSettings} />
     <Route exact path="/signin" component={PublicSignIn} />
     <Route exact path="/signup" component={PublicSignUp} />
-    <Route exact path="/test" component={PublicTest} />
     <Route exact path="/users" component={PublicOverview} />
     <Route exact path="/users/add" component={PrivateUsersAdd} />
     <Route exact path="/users/detail/:id?" component={PublicUsersDetail} />
