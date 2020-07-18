@@ -40,52 +40,50 @@ const UserCard = ({ data, deviceView, handleNav }) => {
           },
           index,
         ) => (
-          <div>
-            <StyledListSquare key={`${username}-${index}`}>
-              <StyledSquare>
-                <StyledSettingWrapper>
-                  <MemberWrapper>
-                    <NameWrapper
-                      onClick={e =>
-                        navHelper(e, handleNav, `/users/detail/${id}`)
-                      }
-                      href={`/users/detail/${id}`}
-                    >
-                      {username}
-                    </NameWrapper>
-                    <MemberInfoContainer>
-                      Member since {createdDate}
-                    </MemberInfoContainer>
-                  </MemberWrapper>
-                </StyledSettingWrapper>
-                <ContentWrapper>
-                  <ImageContainer>
-                    <ProfileImage
-                      alt="Profile Image"
-                      detailRoute={`/users/detail/${id}`}
-                      handleNav={handleNav}
-                      profilePic={profilePic}
-                      size={isMobile ? '4.75rem' : '7.5rem'}
-                    />
-                    <IconWrapper>
-                      <div>
-                        <Star />
-                      </div>
-                      <NumberContainer>{pointsNumber}</NumberContainer>
-                    </IconWrapper>
-                  </ImageContainer>
-                </ContentWrapper>
-                <IssuesWrapper>
-                  <IssuesContainer>
-                    {issues.length} {issues.length === 1 ? `Issue` : `Issues`}
-                  </IssuesContainer>
-                  <ActiveContainer>
-                    {attempting.length} Attempting
-                  </ActiveContainer>
-                </IssuesWrapper>
-              </StyledSquare>
-            </StyledListSquare>
-          </div>
+          <StyledListSquare key={`${username}-${index}`}>
+            <StyledSquare>
+              <StyledSettingWrapper>
+                <MemberWrapper>
+                  <NameWrapper
+                    onClick={e =>
+                      navHelper(e, handleNav, `/users/detail/${id}`)
+                    }
+                    href={`/users/detail/${id}`}
+                  >
+                    {username}
+                  </NameWrapper>
+                  <MemberInfoContainer>
+                    Member since {createdDate}
+                  </MemberInfoContainer>
+                </MemberWrapper>
+              </StyledSettingWrapper>
+              <ContentWrapper>
+                <ImageContainer>
+                  <ProfileImage
+                    alt="Profile Image"
+                    detailRoute={`/users/detail/${id}`}
+                    handleNav={handleNav}
+                    profilePic={profilePic}
+                    size={isMobile ? '4.75rem' : '7.5rem'}
+                  />
+                  <IconWrapper>
+                    <div>
+                      <Star />
+                    </div>
+                    <NumberContainer>{pointsNumber}</NumberContainer>
+                  </IconWrapper>
+                </ImageContainer>
+              </ContentWrapper>
+              <IssuesWrapper>
+                <IssuesContainer>
+                  {issues.length} {issues.length === 1 ? `Issue` : `Issues`}
+                </IssuesContainer>
+                <ActiveContainer>
+                  {attempting.length} Attempting
+                </ActiveContainer>
+              </IssuesWrapper>
+            </StyledSquare>
+          </StyledListSquare>
         ),
       )}
     </OverviewWrapper>
