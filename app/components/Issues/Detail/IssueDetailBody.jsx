@@ -29,6 +29,7 @@ const IssueDetailBody = ({
   handleNav,
   language,
   languageChange,
+  repo,
   setBodyChange,
   setLanguageChange,
   userProfile: { detailRoute, username },
@@ -72,7 +73,7 @@ const IssueDetailBody = ({
             .utc()
             .format('M/D/YYYY')}
         </div>
-        <ExternalLinkWrapper>
+        <ExternalLinkWrapper href={repo} target="_blank">
           <Icon>{GithubIcon}</Icon> View on Github
         </ExternalLinkWrapper>
       </PostingInfoWrapper>
@@ -104,6 +105,7 @@ IssueDetailBody.propTypes = {
   handleNav: T.func,
   language: T.array,
   languageChange: T.array,
+  repo: T.string,
   setBodyChange: T.func,
   setLanguageChange: T.func,
   userProfile: T.object,

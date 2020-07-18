@@ -186,7 +186,7 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
   .button {
     &:hover {
       color: white;
-      background: #08b26e;
+      background: #31b589;
     }
   }
 
