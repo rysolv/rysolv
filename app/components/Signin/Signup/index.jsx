@@ -7,6 +7,7 @@ import { MainTextInput } from 'components/base_ui';
 import {
   HorizontalWrapper,
   InputFormWrapper,
+  PasswordRequirements,
   SigninWrapper,
   StyledErrorSuccessBanner,
   StyledPrimaryAsyncButton,
@@ -20,6 +21,7 @@ const Signup = ({
   handleClearAuthAlerts,
   handleInputChange,
   handleSignUp,
+  handleVerifyPassword,
   signUpDisabled,
   signUpLoading,
 }) => (
@@ -102,11 +104,18 @@ const Signup = ({
         }
         value={password.value}
       />
+      <PasswordRequirements>
+        <li>8 or more characters</li>
+        <li>Include capital and lowercase</li>
+        <li>Include one number</li>
+        <li>Include one special character </li>
+      </PasswordRequirements>
       <MainTextInput
         autoComplete="new-password"
         error={!!verifyPassword.error}
         helperText={verifyPassword.error}
         label="Confirm password"
+        onBlur={() => handleVerifyPassword()}
         onChange={e =>
           handleInputChange({
             field: 'verifyPassword',
@@ -135,6 +144,7 @@ Signup.propTypes = {
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignUp: T.func.isRequired,
+  handleVerifyPassword: T.func,
   signUpDisabled: T.bool,
   signUpLoading: T.bool,
 };

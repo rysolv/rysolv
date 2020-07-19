@@ -45,10 +45,10 @@ const signinReducer = produce((draft, { payload, type }) => {
       break;
     }
     case INPUT_ERROR: {
-      const { errors } = payload;
+      const { errors, form } = payload;
       const fields = Object.keys(errors);
       fields.forEach(field => {
-        draft.data[field].error = errors[field] || '';
+        draft[form][field].error = errors[field] || '';
       });
       break;
     }
