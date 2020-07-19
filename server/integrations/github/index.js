@@ -87,13 +87,14 @@ const getSingleRepo = async ({ organization, repo }) => {
 
       const {
         name: parentName,
+        login,
         avatar_url,
         html_url: parentRepo,
         blog,
         bio,
       } = parentData;
 
-      organizationInput.organizationName = parentName;
+      organizationInput.organizationName = parentName || login;
       organizationInput.organizationLogo = avatar_url;
       organizationInput.organizationRepo = parentRepo;
       organizationInput.organizationUrl = blog;
