@@ -4,7 +4,7 @@ const pool = require('../connect');
 // Import db functions
 const { createTables, dropAllTables, printTables } = require('..');
 
-// seed function - run via 'npm run seed'
+// Seed function - run via 'npm run seed'
 const seed = async () => {
   //  Rebuild tables
   const t1 = Date.now();
