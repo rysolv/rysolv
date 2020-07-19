@@ -8,6 +8,7 @@ import {
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT,
+  ADD_PULL_REQUEST_SUCCESS,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
   CHANGE_ISSUE_FILTER,
@@ -150,6 +151,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
       const { createComment } = payload;
       draft.issueDetail.comments.push(createComment);
       draft.loading.addComment = false;
+      break;
+    }
+    case ADD_PULL_REQUEST_SUCCESS: {
+      const { pullRequestId } = payload;
+      draft.issueDetail.pullRequests.push(pullRequestId);
       break;
     }
     case ADD_WATCH_FAILURE: {

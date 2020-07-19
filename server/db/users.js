@@ -186,7 +186,7 @@ const transformUser = async (id, data) => {
 };
 
 const updateUserArray = async ({ column, userId, data, remove }) => {
-  const userData = await getOneUser(userId);
+  const [userData] = await singleItem('users', userId);
   // Only add unique values to array
   if (!userData[column].includes(data) || remove) {
     const action = remove ? 'array_remove' : 'array_append';

@@ -2,6 +2,8 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { post } from 'utils/request';
 
+import { fetchActiveUser } from 'containers/Auth/actions';
+import { addPullRequestSuccess } from 'containers/Issues/actions';
 import {
   createPullRequestFailure,
   createPullRequestSuccess,
@@ -50,8 +52,8 @@ export function* createPullRequestSaga({ payload }) {
         })
         {
         __typename
-        ... on Success {
-          message
+        ... on PullRequest {
+          pullRequestId
         }
         ... on Error {
           message
@@ -68,9 +70,11 @@ export function* createPullRequestSaga({ payload }) {
     const {
       data: { createPullRequest },
     } = yield call(post, '/graphql', pullRequestQuery);
-    const { __typename, message } = createPullRequest;
+    const { __typename, message, pullRequestId } = createPullRequest;
     if (__typename === 'Error') throw message;
-    yield put(createPullRequestSuccess({ message }));
+    yield put(createPullRequestSuccess({ message: 'Pull Request created' }));
+    yield put(fetchActiveUser({ userId }));
+    yield put(addPullRequestSuccess({ pullRequestId }));
   } catch (error) {
     yield put(createPullRequestFailure({ error }));
   }

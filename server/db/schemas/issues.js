@@ -12,6 +12,7 @@ issues(
   name VARCHAR(255) NOT NULL,
   open BOOLEAN DEFAULT true,
   organization_id UUID REFERENCES organizations(id),
+  pull_requests UUID [] DEFAULT '{}',
   rep SMALLINT DEFAULT 25,
   repo VARCHAR(128) NOT NULL,
   type VARCHAR(40) NOT NULL,

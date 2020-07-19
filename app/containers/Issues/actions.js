@@ -5,6 +5,7 @@ import {
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT,
+  ADD_PULL_REQUEST_SUCCESS,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
   CHANGE_ISSUE_FILTER,
@@ -87,6 +88,13 @@ export function addCommentSuccess(payload) {
   return {
     payload,
     type: ADD_COMMENT_SUCCESS,
+  };
+}
+
+export function addPullRequestSuccess(payload) {
+  return {
+    payload,
+    type: ADD_PULL_REQUEST_SUCCESS,
   };
 }
 

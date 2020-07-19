@@ -12,7 +12,7 @@ import { ButtonBar } from './styledComponents';
 const IssueButtonBar = ({
   activeUser,
   activeUser: { id: userId },
-  data: { attempting, id, open, watching },
+  data: { attempting, id, open, watching, pullRequests },
   dispatchFetchWatchList,
   dispatchOpenIssueModal,
   dispatchOpenModal,
@@ -58,7 +58,7 @@ const IssueButtonBar = ({
         dispatchOpenIssueModal={dispatchOpenIssueModal}
         dispatchOpenModal={dispatchOpenModal}
         isSignedIn={isSignedIn}
-        pullRequests={[]}
+        pullRequests={pullRequests}
       />
     </ButtonBar>
   );

@@ -2,6 +2,8 @@ export const ADD_COMMENT = 'app/Issues/ADD_COMMENT';
 export const ADD_COMMENT_FAILURE = 'app/Issues/ADD_COMMENT_FAILURE';
 export const ADD_COMMENT_SUCCESS = 'app/Issues/ADD_COMMENT_SUCCESS';
 
+export const ADD_PULL_REQUEST_SUCCESS = 'app/ADD_PULL_REQUEST_SUCCESS';
+
 export const ADD_WATCH_FAILURE = 'app/Issues/ADD_WATCH_FAILURE';
 export const ADD_WATCH_SUCCESS = 'app/Issues/ADD_WATCH_SUCCESS';
 
