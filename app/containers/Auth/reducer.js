@@ -177,12 +177,15 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_ACTIVE_USER: {
-      const { attempting, balance } = payload;
+      const { attempting, balance, profilePic } = payload;
       if (attempting) {
         draft.activeUser.attempting = attempting;
       }
       if (!isBlank(balance)) {
         draft.activeUser.balance = balance;
+      }
+      if (profilePic) {
+        draft.activeUser.profilePic = profilePic;
       }
       break;
     }

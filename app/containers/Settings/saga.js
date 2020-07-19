@@ -187,6 +187,9 @@ export function* saveChangeSaga({ payload }) {
         value,
       }),
     );
+    if (field === 'profilePic') {
+      yield put(updateActiveUser({ profilePic: value }));
+    }
   } catch (error) {
     yield put(saveChangeFailure({ error }));
   }
