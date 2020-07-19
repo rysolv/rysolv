@@ -11,7 +11,6 @@ const ManualForm = ({ organizationData, handleInputChange }) => {
   // eslint-disable-next-line no-param-reassign
   const {
     organizationDescription,
-    organizationLogo,
     organizationName,
     organizationRepo,
     organizationUrl,
@@ -43,19 +42,6 @@ const ManualForm = ({ organizationData, handleInputChange }) => {
           })
         }
         value={organizationDescription.value}
-      />
-      <MainTextInput
-        error={!!organizationLogo.error}
-        helperText={organizationLogo.error}
-        label={organizationDataDictionary.logo}
-        onChange={e =>
-          handleInputChange({
-            field: 'organizationLogo',
-            form: 'organizationData',
-            value: e.target.value,
-          })
-        }
-        value={organizationLogo.value}
       />
       <HorizontalWrapper>
         <MainTextInput

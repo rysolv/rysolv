@@ -45,7 +45,10 @@ export const initialState = {
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
     organizationId: { error: '', value: '' },
-    organizationLogo: { error: '', value: '' },
+    organizationLogo: {
+      error: '',
+      value: 'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
+    },
     organizationName: { error: '', value: '' },
     organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },

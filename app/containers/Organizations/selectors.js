@@ -27,6 +27,7 @@ const makeSelectOrganizationsDisabled = () =>
       const tempData = omit(data, [
         'importUrl',
         'organizationId',
+        'organizationLogo',
         'organizationUrl',
       ]);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
