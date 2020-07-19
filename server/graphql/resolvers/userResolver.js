@@ -11,6 +11,7 @@ const {
   searchUsers,
   transformUser,
   updateUserArray,
+  userDownvote,
   userUpvote,
 } = require('../../db');
 const { uploadImage } = require('../../middlewares/imageUpload');
@@ -234,17 +235,29 @@ module.exports = {
   },
   updateUserArray: async args => {
     const { column, data, id, remove } = args;
-    const [result] = await updateUserArray({
-      column,
-      data,
-      remove,
-      userId: id,
-    });
-    return result;
+    try {
+      const [result] = await updateUserArray({
+        column,
+        data,
+        remove,
+        userId: id,
+      });
+      return result;
+    } catch (error) {
+      throw new Error('Too many requests.');
+    }
   },
   userUpvote: async args => {
-    const { id } = args;
-    const [result] = await userUpvote('users', id);
-    return result;
+    const { id, upvote } = args;
+    try {
+      if (upvote) {
+        const result = await userUpvote('users', id);
+        return result;
+      }
+      const result = await userDownvote('users', id);
+      return result;
+    } catch (error) {
+      throw error;
+    }
   },
 };

@@ -364,23 +364,23 @@ export function* updateInfoSaga({ payload }) {
 }
 
 export function* upvoteIssueSaga({ payload }) {
-  const { issueId, userId } = payload;
+  const { issueId, upvote, userId } = payload;
   const upvoteIssueQuery = `
-      mutation {
-        upvoteIssue(id: "${issueId}" ) {
-          id,
-          rep
-        }
-        userUpvote(id: "${userId}" ) {
-          id,
-          rep
-        }
-        updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: false ) {
-          attempting,
-          watching
-        }
+    mutation {
+      upvoteIssue(id: "${issueId}", upvote: ${upvote} ) {
+        id,
+        rep
       }
-    `;
+      userUpvote(id: "${userId}", upvote: ${upvote} ) {
+        id,
+        rep
+      }
+      updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: ${!upvote} ) {
+        attempting,
+        watching
+      }
+    }
+  `;
   try {
     const upvoteIssue = JSON.stringify({
       query: upvoteIssueQuery,

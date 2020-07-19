@@ -483,18 +483,18 @@ export function* submitAccountPaymentSaga({ payload }) {
 }
 
 export function* upvoteIssuesSaga({ payload }) {
-  const { issueId, userId } = payload;
+  const { issueId, upvote, userId } = payload;
   const upvoteIssueQuery = `
       mutation {
-        upvoteIssue(id: "${issueId}" ) {
+        upvoteIssue(id: "${issueId}", upvote: ${upvote} ) {
           id,
           rep
         }
-        userUpvote(id: "${userId}" ) {
+        userUpvote(id: "${userId}", upvote: ${upvote} ) {
           id,
           rep
         }
-        updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: false ) {
+        updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: ${!upvote} ) {
           attempting,
           watching
         }

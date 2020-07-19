@@ -104,6 +104,17 @@ const deleteIssue = async id => {
   throw new Error(`Failed to delete issue. ID not found in issues`);
 };
 
+// Downvote issue
+const downvoteIssue = async id => {
+  const upvoteQuery = `
+    UPDATE issues SET rep = rep - 1
+    WHERE (id = '${id}')
+    RETURNING *`;
+  const { rows } = await singleQuery(upvoteQuery);
+  const [oneRow] = rows;
+  return oneRow;
+};
+
 // GET all issues
 const getIssues = async () => {
   const queryText = `SELECT ${issueCardValues} FROM issues JOIN organizations ON (issues.organization_id = organizations.id)`;
@@ -193,7 +204,8 @@ const upvoteIssue = async id => {
     WHERE (id = '${id}')
     RETURNING *`;
   const { rows } = await singleQuery(upvoteQuery);
-  return rows;
+  const [oneRow] = rows;
+  return oneRow;
 };
 
 module.exports = {
@@ -201,6 +213,7 @@ module.exports = {
   closeIssue,
   createIssue,
   deleteIssue,
+  downvoteIssue,
   getIssues,
   getOneIssue,
   searchIssues,

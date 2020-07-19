@@ -200,13 +200,24 @@ const updateUserArray = async ({ column, userId, data, remove }) => {
   return false;
 };
 
+const userDownvote = async (table, id) => {
+  const upvoteQuery = `
+    UPDATE ${table} SET rep = rep + 1
+    WHERE (id = '${id}')
+    RETURNING *`;
+  const { rows } = await singleQuery(upvoteQuery);
+  const [oneRow] = rows;
+  return oneRow;
+};
+
 const userUpvote = async (table, id) => {
   const upvoteQuery = `
     UPDATE ${table} SET rep = rep - 1
     WHERE (id = '${id}')
     RETURNING *`;
   const { rows } = await singleQuery(upvoteQuery);
-  return rows;
+  const [oneRow] = rows;
+  return oneRow;
 };
 
 module.exports = {
@@ -221,5 +232,6 @@ module.exports = {
   submitAccountPaymentUser,
   transformUser,
   updateUserArray,
+  userDownvote,
   userUpvote,
 };
