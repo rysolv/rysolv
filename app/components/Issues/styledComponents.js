@@ -18,5 +18,5 @@ export const MessageWrapper = styled.div`
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   font-size: ${defaultFontSize};
-  padding: 1rem;
+  margin: 1rem;
 `;
