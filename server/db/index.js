@@ -5,6 +5,7 @@ const {
   closeIssue,
   createIssue,
   deleteIssue,
+  downvoteIssue,
   getIssues,
   getOneIssue,
   searchIssues,
@@ -24,6 +25,7 @@ const {
   submitAccountPaymentUser,
   transformUser,
   updateUserArray,
+  userDownvote,
   userUpvote,
 } = require('./users');
 const { createComment, getComments, getIssueComments } = require('./comments');
@@ -68,6 +70,7 @@ module.exports = {
   deleteIssue,
   deleteOrganization,
   deletePullRequest,
+  downvoteIssue,
   dropAllTables,
   getActivity,
   getComments,
@@ -98,5 +101,6 @@ module.exports = {
   updateOrganizationArray,
   updateUserArray,
   upvoteIssue,
+  userDownvote,
   userUpvote,
 };

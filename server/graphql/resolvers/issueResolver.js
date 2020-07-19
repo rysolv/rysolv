@@ -10,6 +10,7 @@ const {
   createIssue,
   createOrganization,
   deleteIssue,
+  downvoteIssue,
   getIssues,
   getOneIssue,
   getOrganizationsWhere,
@@ -368,8 +369,16 @@ module.exports = {
     return result;
   },
   upvoteIssue: async args => {
-    const { id } = args;
-    const [result] = await upvoteIssue(id);
-    return result;
+    const { id, upvote } = args;
+    try {
+      if (upvote) {
+        const result = await upvoteIssue(id);
+        return result;
+      }
+      const result = await downvoteIssue(id);
+      return result;
+    } catch (error) {
+      throw error;
+    }
   },
 };

@@ -344,8 +344,8 @@ module.exports = buildSchema(`
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
 
-    upvoteIssue(id: ID): Issue!
-    userUpvote(id: ID): User!
+    upvoteIssue(id: ID, upvote: Boolean): Issue!
+    userUpvote(id: ID, upvote: Boolean): User!
   }
 
   schema {
