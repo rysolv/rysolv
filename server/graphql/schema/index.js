@@ -93,6 +93,7 @@ module.exports = buildSchema(`
     organizationName: String
     organizationVerified: Boolean
     profilePic: String
+    pullRequests: [ID]
     rep: Int
     repo: String
     type: String
@@ -323,7 +324,7 @@ module.exports = buildSchema(`
     createIssue(issueInput: IssueInput): IssueResult
     createOrganization(organizationInput: OrganizationInput): OrganizationResult
     createUser(userInput: UserInput): User!
-    createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
+    createPullRequest(pullRequestInput: PullRequestInput!): PullRequestResult!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
     deleteIssue(id: ID!): String!

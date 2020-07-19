@@ -41,6 +41,7 @@ import {
   SUBMIT_ACCOUNT_PAYMENT_FAILURE,
   SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
   SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
@@ -335,6 +336,13 @@ export function submitAccountPayment(payload) {
   return {
     payload,
     type: SUBMIT_ACCOUNT_PAYMENT,
+  };
+}
+
+export function updateIssueDetail(payload) {
+  return {
+    payload,
+    type: UPDATE_ISSUE_DETAIL,
   };
 }
 

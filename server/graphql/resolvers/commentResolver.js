@@ -37,7 +37,11 @@ module.exports = {
         data: result.id,
         userId: commentInput.user,
       });
-      await updateIssueArray('comments', result.target, result.id);
+      await updateIssueArray({
+        column: 'comments',
+        data: result.id,
+        issueId: result.target,
+      });
 
       return {
         commentId: result.id,

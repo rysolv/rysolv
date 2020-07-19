@@ -194,27 +194,28 @@ export function* fetchIssueDetailSaga({ payload }) {
       oneIssue(id: "${id}") {
         __typename
         ... on Issue {
-          id,
-          createdDate,
-          modifiedDate,
+          attempting,
           attempts,
           body,
           comments,
-          attempting,
           contributor,
+          createdDate,
+          fundedAmount,
+          id,
           language,
+          modifiedDate,
           name,
+          open,
           organizationId,
           organizationName,
           organizationVerified,
+          profilePic
+          pullRequests,
           rep,
           repo,
-          fundedAmount,
-          watching,
-          open,
           userId,
           username,
-          profilePic
+          watching,
         }
         ... on Error {
           message

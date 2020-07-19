@@ -33,6 +33,7 @@ const issueReturnValues = `
   issues.name,
   issues.open,
   issues.organization_id AS "organizationId",
+  issues.pull_requests AS "pullRequests",
   issues.rep,
   issues.repo,
   issues.type,
@@ -162,21 +163,21 @@ const submitAccountPaymentIssue = async (issueId, fundValue) => {
   return rows;
 };
 
-const updateIssueArray = async (column, id, data, remove) => {
-  const [issueData] = await getOneIssue(id);
+const updateIssueArray = async ({ column, issueId, data, remove }) => {
+  const [issueData] = await singleItem('issues', issueId);
   // Only add unique values to array
   if (!issueData[column].includes(data) || remove) {
     if (remove) {
       const queryText = `UPDATE issues
       SET ${column} = array_remove(${column}, '${data}')
-      WHERE (id = '${id}')
+      WHERE (id = '${issueId}')
       RETURNING *`;
       const { rows } = await singleQuery(queryText);
       return rows;
     }
     const queryText = `UPDATE issues
       SET ${column} = array_append(${column}, '${data}')
-      WHERE (id = '${id}')
+      WHERE (id = '${issueId}')
       RETURNING *`;
     const { rows } = await singleQuery(queryText);
     return rows;

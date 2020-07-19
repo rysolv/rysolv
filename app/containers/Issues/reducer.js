@@ -44,6 +44,7 @@ import {
   SUBMIT_ACCOUNT_PAYMENT_FAILURE,
   SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
   SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
@@ -395,6 +396,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case SUBMIT_ACCOUNT_PAYMENT: {
       draft.loading.submitAccountPayment = true;
+      break;
+    }
+    case UPDATE_ISSUE_DETAIL: {
+      const { pullRequestId } = payload;
+      draft.issueDetail.pullRequests.push(pullRequestId);
       break;
     }
     case UPDATE_ORGANIZATION: {
