@@ -18,6 +18,29 @@ const DoneIcon = iconDictionary('done');
 const EditIcon = iconDictionary('edit');
 const PersonalIcon = iconDictionary('link');
 
+export const EmptyPersonalLinkComponent = ({
+  handleEdit,
+  isDisabled,
+  setChangePersonal,
+}) => (
+  <OneLinkWrapper>
+    <OneLink>
+      <LinkIcon>{PersonalIcon}</LinkIcon>
+      Add personal link
+    </OneLink>
+    <IconButton
+      disabled={isDisabled}
+      icon={EditIcon}
+      label="Edit"
+      onClick={() =>
+        handleEdit({
+          changeInputState: setChangePersonal,
+        })
+      }
+    />
+  </OneLinkWrapper>
+);
+
 export const PersonalEditComponent = ({
   handleClose,
   handleDone,
@@ -76,6 +99,12 @@ export const PersonalLinkComponent = ({
     />
   </OneLinkWrapper>
 );
+
+EmptyPersonalLinkComponent.propTypes = {
+  handleEdit: T.func,
+  isDisabled: T.bool,
+  setChangePersonal: T.func,
+};
 
 PersonalEditComponent.propTypes = {
   handleClose: T.func,

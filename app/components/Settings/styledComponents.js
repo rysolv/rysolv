@@ -62,7 +62,7 @@ export const IconButtonContainer = styled.div`
 `;
 
 export const IconButtonGroup = styled.div`
-  white-space: nowrap;
+  display: flex;
 `;
 
 export const InputIconGroup = styled.label`

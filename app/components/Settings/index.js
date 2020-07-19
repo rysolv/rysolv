@@ -11,14 +11,17 @@ import { getBase64 } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
+  EmptyGithubLinkComponent,
   GithubEditComponent,
   GithubLinkComponent,
 } from './GithubLinkComponents';
 import {
+  EmptyPersonalLinkComponent,
   PersonalEditComponent,
   PersonalLinkComponent,
 } from './PersonalLinkComponents';
 import {
+  EmptyStackoverflowLinkComponent,
   StackoverflowEditComponent,
   StackoverflowLinkComponent,
 } from './StackoverflowLinkComponents';
@@ -112,7 +115,7 @@ const SettingsView = ({
     setIsDisabled(false);
   };
 
-  const handleEdit = ({ changeInputState, currentValue }) => {
+  const handleEdit = ({ changeInputState, currentValue = '' }) => {
     setIsDisabled(true);
     changeInputState(true);
     setValue(currentValue);
@@ -174,69 +177,81 @@ const SettingsView = ({
             {firstName} {lastName}
           </Name>
           <LinksWrapper>
-            {githubLink && (
-              <ConditionalRender
-                Component={GithubLinkComponent}
-                FallbackComponent={
-                  <GithubEditComponent
-                    handleClose={handleClose}
-                    handleDone={handleDone}
-                    setChangeGithub={setChangeGithub}
-                    setValue={setValue}
-                    value={value}
-                  />
-                }
-                propsToPassDown={{
-                  githubLink,
-                  handleEdit,
-                  isDisabled,
-                  setChangeGithub,
-                }}
-                shouldRender={!changeGithub}
-              />
-            )}
-            {personalLink && (
-              <ConditionalRender
-                Component={PersonalLinkComponent}
-                FallbackComponent={
-                  <PersonalEditComponent
-                    handleClose={handleClose}
-                    handleDone={handleDone}
-                    setChangePersonal={setChangePersonal}
-                    setValue={setValue}
-                    value={value}
-                  />
-                }
-                propsToPassDown={{
-                  handleEdit,
-                  isDisabled,
-                  personalLink,
-                  setChangePersonal,
-                }}
-                shouldRender={!changePersonal}
-              />
-            )}
-            {stackoverflowLink && (
-              <ConditionalRender
-                Component={StackoverflowLinkComponent}
-                FallbackComponent={
-                  <StackoverflowEditComponent
-                    handleClose={handleClose}
-                    handleDone={handleDone}
-                    setChangeStackoverflow={setChangeStackoverflow}
-                    setValue={setValue}
-                    value={value}
-                  />
-                }
-                propsToPassDown={{
-                  stackoverflowLink,
-                  handleEdit,
-                  isDisabled,
-                  setChangeStackoverflow,
-                }}
-                shouldRender={!changeStackoverflow}
-              />
-            )}
+            <ConditionalRender
+              Component={
+                <ConditionalRender
+                  Component={GithubLinkComponent}
+                  FallbackComponent={EmptyGithubLinkComponent}
+                  propsToPassDown={{
+                    githubLink,
+                    handleEdit,
+                    isDisabled,
+                    setChangeGithub,
+                  }}
+                  shouldRender={githubLink}
+                />
+              }
+              FallbackComponent={
+                <GithubEditComponent
+                  handleClose={handleClose}
+                  handleDone={handleDone}
+                  setChangeGithub={setChangeGithub}
+                  setValue={setValue}
+                  value={value}
+                />
+              }
+              shouldRender={!changeGithub}
+            />
+            <ConditionalRender
+              Component={
+                <ConditionalRender
+                  Component={PersonalLinkComponent}
+                  FallbackComponent={EmptyPersonalLinkComponent}
+                  propsToPassDown={{
+                    handleEdit,
+                    isDisabled,
+                    personalLink,
+                    setChangePersonal,
+                  }}
+                  shouldRender={personalLink}
+                />
+              }
+              FallbackComponent={
+                <PersonalEditComponent
+                  handleClose={handleClose}
+                  handleDone={handleDone}
+                  setChangePersonal={setChangePersonal}
+                  setValue={setValue}
+                  value={value}
+                />
+              }
+              shouldRender={!changePersonal}
+            />
+            <ConditionalRender
+              Component={
+                <ConditionalRender
+                  Component={StackoverflowLinkComponent}
+                  FallbackComponent={EmptyStackoverflowLinkComponent}
+                  propsToPassDown={{
+                    stackoverflowLink,
+                    handleEdit,
+                    isDisabled,
+                    setChangeStackoverflow,
+                  }}
+                  shouldRender={stackoverflowLink}
+                />
+              }
+              FallbackComponent={
+                <StackoverflowEditComponent
+                  handleClose={handleClose}
+                  handleDone={handleDone}
+                  setChangeStackoverflow={setChangeStackoverflow}
+                  setValue={setValue}
+                  value={value}
+                />
+              }
+              shouldRender={!changeStackoverflow}
+            />
           </LinksWrapper>
           <Rep>
             <Star />
