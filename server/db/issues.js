@@ -173,14 +173,16 @@ const updateIssueArray = async ({ column, issueId, data, remove }) => {
       WHERE (id = '${issueId}')
       RETURNING *`;
       const { rows } = await singleQuery(queryText);
-      return rows;
+      const [oneRow] = rows;
+      return oneRow;
     }
     const queryText = `UPDATE issues
       SET ${column} = array_append(${column}, '${data}')
       WHERE (id = '${issueId}')
       RETURNING *`;
     const { rows } = await singleQuery(queryText);
-    return rows;
+    const [oneRow] = rows;
+    return oneRow;
   }
   return issueData;
 };

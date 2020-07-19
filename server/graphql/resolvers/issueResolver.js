@@ -350,7 +350,7 @@ module.exports = {
   updateIssueArray: async args => {
     const { id: issueId, column, data: userId, remove } = args;
 
-    const [result] = await updateIssueArray({
+    const result = await updateIssueArray({
       column,
       issueId,
       data: userId,
