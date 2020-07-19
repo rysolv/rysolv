@@ -71,7 +71,7 @@ const getSingleRepo = async ({ organization, repo }) => {
 
     const organizationInput = {
       issueLanguages: [language],
-      organizationDescription: description,
+      organizationDescription: description || '',
       organizationName: name,
       organizationRepo: html_url,
       organizationUrl: homepage,
