@@ -1,10 +1,7 @@
 import styled from 'styled-components';
-import { textColor } from 'defaultStyleHelper';
 
-export const BannerWrapper = styled.div`
-  font-size: 1.2rem;
-  padding: 1rem;
-`;
+import { ErrorSuccessBanner } from 'components/base_ui';
+import { defaultFontSize, textColor } from 'defaultStyleHelper';
 
 export const MessageWrapper = styled.div`
   align-items: center;
@@ -17,4 +14,9 @@ export const MessageWrapper = styled.div`
   justify-content: center;
   margin: 0.5rem 1rem;
   text-align: center;
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  font-size: ${defaultFontSize};
+  padding: 1rem;
 `;
