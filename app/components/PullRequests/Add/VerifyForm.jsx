@@ -1,14 +1,16 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
+import iconDictionary from 'utils/iconDictionary';
+
 import {
   ButtonGroup,
+  Checkbox,
   Divider,
   PullNumberWrapper,
   PullRequestContainer,
   PullRequestInfo,
   StatusWrapper,
-  StyledCheckbox,
   StyledErrorSuccessBanner,
   StyledHeader,
   StyledItem,
@@ -17,6 +19,9 @@ import {
   StyledSecondayButton,
   StyledSubHeader,
 } from './styledComponents';
+
+const CheckIcon = iconDictionary('check');
+const CloseIcon = iconDictionary('close');
 
 const VerifyForm = ({
   dispatchHandleStep,
@@ -39,6 +44,8 @@ const VerifyForm = ({
     dispatchHandleStep({ step: 1 });
     handleClearError();
   };
+  const isMergeable = mergeable.value;
+  const haveTestsPassed = mergeableState.value !== 'unstable';
   return (
     <Fragment>
       <StyledHeader>Verify</StyledHeader>
@@ -75,15 +82,15 @@ const VerifyForm = ({
           </StyledItem>
           <StyledItem>
             <StyledLabel>Mergeable</StyledLabel>
-            <StyledCheckbox checked disabled hasError={!mergeable.value} />
+            <Checkbox hasError={isMergeable}>
+              {isMergeable ? CheckIcon : CloseIcon}
+            </Checkbox>
           </StyledItem>
           <StyledItem>
             <StyledLabel>Tests Passed</StyledLabel>
-            <StyledCheckbox
-              disabled
-              checked
-              hasError={mergeableState.value === 'unstable'}
-            />
+            <Checkbox hasError={haveTestsPassed}>
+              {haveTestsPassed ? CheckIcon : CloseIcon}
+            </Checkbox>
           </StyledItem>
         </PullRequestInfo>
       </PullRequestContainer>

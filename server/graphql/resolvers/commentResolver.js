@@ -39,8 +39,8 @@ module.exports = {
       });
       await updateIssueArray({
         column: 'comments',
-        issueId: result.target,
         data: result.id,
+        issueId: result.target,
       });
 
       return {

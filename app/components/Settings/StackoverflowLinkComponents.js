@@ -18,6 +18,29 @@ const DoneIcon = iconDictionary('done');
 const EditIcon = iconDictionary('edit');
 const StackoverflowIcon = iconDictionary('stackoverflow');
 
+export const EmptyStackoverflowLinkComponent = ({
+  handleEdit,
+  isDisabled,
+  setChangeStackoverflow,
+}) => (
+  <OneLinkWrapper>
+    <OneLink>
+      <LinkIcon>{StackoverflowIcon}</LinkIcon>
+      Add Stackoverflow link
+    </OneLink>
+    <IconButton
+      disabled={isDisabled}
+      icon={EditIcon}
+      label="Edit"
+      onClick={() =>
+        handleEdit({
+          changeInputState: setChangeStackoverflow,
+        })
+      }
+    />
+  </OneLinkWrapper>
+);
+
 export const StackoverflowEditComponent = ({
   handleClose,
   handleDone,
@@ -78,6 +101,12 @@ export const StackoverflowLinkComponent = ({
     />
   </OneLinkWrapper>
 );
+
+EmptyStackoverflowLinkComponent.propTypes = {
+  handleEdit: T.func,
+  isDisabled: T.bool,
+  setChangeStackoverflow: T.func,
+};
 
 StackoverflowEditComponent.propTypes = {
   handleClose: T.func,

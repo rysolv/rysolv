@@ -1,10 +1,8 @@
-import React from 'react';
 import styled from 'styled-components';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 import {
-  Checkbox,
   ErrorSuccessBanner,
   PrimaryAsyncButton,
   SecondaryButton,
@@ -12,13 +10,22 @@ import {
 import {
   defaultFontSize,
   dividerBorder,
-  errorRed,
   successGreen,
   textColor,
 } from 'defaultStyleHelper';
 
 export const ButtonGroup = styled.div`
   text-align: right;
+`;
+
+export const Checkbox = styled.div`
+  svg {
+    background: ${({ hasError }) => (hasError ? '#31b589' : '#c62838')};
+    border-radius: 0.2rem;
+    color: white;
+    display: flex;
+    font-size: ${defaultFontSize};
+  }
 `;
 
 export const Divider = styled.div`
@@ -60,18 +67,6 @@ export const PullNumberWrapper = styled.span`
 
 export const StatusWrapper = styled.span`
   text-transform: capitalize;
-`;
-
-export const StyledCheckbox = styled(({ hasError, ...restProps }) => (
-  <Checkbox {...restProps} />
-))`
-  padding: 0;
-
-  svg {
-    color: ${({ hasError }) => (hasError ? errorRed : successGreen)};
-    height: 1.75rem;
-    width: 1.75rem;
-  }
 `;
 
 export const StyledFormHelperText = styled(FormHelperText)`

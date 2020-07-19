@@ -106,7 +106,7 @@ const Signup = ({
       />
       <PasswordRequirements>
         <li>8 or more characters</li>
-        <li>Include capital and lowercase</li>
+        <li>Include capital and lowercase letter</li>
         <li>Include one number</li>
         <li>Include one special character </li>
       </PasswordRequirements>

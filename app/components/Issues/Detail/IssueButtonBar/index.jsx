@@ -12,7 +12,7 @@ import { ButtonBar } from './styledComponents';
 const IssueButtonBar = ({
   activeUser,
   activeUser: { id: userId },
-  data: { attempting, id, open, watching, pullRequests },
+  data: { attempting, id, open, pullRequests, watching },
   dispatchFetchWatchList,
   dispatchOpenIssueModal,
   dispatchOpenModal,

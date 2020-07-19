@@ -53,8 +53,8 @@ export const InputSubText = styled.div`
 export const PasswordRequirements = styled.div`
   color: grey;
   font-size: ${detailFontSize};
-  margin: -1.5rem 0 1rem 0;
-  padding: 0 1.5rem;
+  margin: -1.4rem 0 1rem 0;
+  padding: 0 1.4rem;
 `;
 
 export const SigninWrapper = styled.div`

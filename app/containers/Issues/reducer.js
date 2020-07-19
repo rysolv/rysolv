@@ -8,7 +8,6 @@ import {
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT,
-  ADD_PULL_REQUEST_SUCCESS,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
   CHANGE_ISSUE_FILTER,
@@ -45,6 +44,7 @@ import {
   SUBMIT_ACCOUNT_PAYMENT_FAILURE,
   SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
   SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
@@ -151,11 +151,6 @@ const issuesReducer = produce((draft, { payload, type }) => {
       const { createComment } = payload;
       draft.issueDetail.comments.push(createComment);
       draft.loading.addComment = false;
-      break;
-    }
-    case ADD_PULL_REQUEST_SUCCESS: {
-      const { pullRequestId } = payload;
-      draft.issueDetail.pullRequests.push(pullRequestId);
       break;
     }
     case ADD_WATCH_FAILURE: {
@@ -401,6 +396,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case SUBMIT_ACCOUNT_PAYMENT: {
       draft.loading.submitAccountPayment = true;
+      break;
+    }
+    case UPDATE_ISSUE_DETAIL: {
+      const { pullRequestId } = payload;
+      draft.issueDetail.pullRequests.push(pullRequestId);
       break;
     }
     case UPDATE_ORGANIZATION: {

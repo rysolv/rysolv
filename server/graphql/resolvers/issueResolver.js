@@ -353,8 +353,8 @@ module.exports = {
 
     const result = await updateIssueArray({
       column,
-      issueId,
       data: userId,
+      issueId,
       remove,
     });
 

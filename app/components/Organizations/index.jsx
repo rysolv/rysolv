@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { ErrorSuccessBanner } from 'components/base_ui';
-
 import EmptyCard from './EmptyCard';
 import OrganizationCard from './Card';
-import { BannerWrapper } from './styledComponents';
+import { StyledErrorSuccessBanner } from './styledComponents';
 
 const Organizations = ({
   alerts: { error, success },
@@ -25,13 +23,11 @@ const Organizations = ({
   );
   return (
     <Fragment>
-      <BannerWrapper>
-        <ErrorSuccessBanner
-          error={error}
-          onClose={clearAlerts}
-          success={success}
-        />
-      </BannerWrapper>
+      <StyledErrorSuccessBanner
+        error={error}
+        onClose={clearAlerts}
+        success={success}
+      />
       {viewToRender}
     </Fragment>
   );

@@ -7,30 +7,28 @@ const getSingleIssue = async ({ issueNumber, organization, repo }) => {
     const { GITHUB } = await authenticate();
 
     const { data: issueData } = await GITHUB.issues.get({
+      issue_number: issueNumber,
       owner: organization,
       repo,
-      issue_number: issueNumber,
     });
 
     const {
-      html_url,
-      title,
-      state,
       body,
-      repository_url,
+      html_url,
       pull_request,
+      repository_url,
+      state,
+      title,
     } = issueData;
 
     if (!html_url) {
-      throw new Error(`Unable to import issue from ${repo}`);
+      throw new Error(`Unable to import issue from ${repo}.`);
     }
-
-    if (state !== 'open') {
-      throw new Error('Cannot add closed issue');
-    }
-
     if (pull_request) {
-      throw new Error('Issue addressed by existing pull request');
+      throw new Error('Issue addressed by existing pull request.');
+    }
+    if (state !== 'open') {
+      throw new Error('Cannot add closed issue.');
     }
 
     const issueInput = {
@@ -39,7 +37,6 @@ const getSingleIssue = async ({ issueNumber, organization, repo }) => {
       issueUrl: html_url,
       organizationUrl: repository_url,
     };
-
     return { issueInput };
   } catch (err) {
     throw err;
@@ -66,18 +63,18 @@ const getSingleRepo = async ({ organization, repo }) => {
     } = repoData;
 
     if (!html_url) {
-      throw new Error(`Unable to import organization`);
+      throw new Error(`Unable to import organization.`);
     }
 
     const organizationInput = {
       issueLanguages: [language],
       organizationDescription: description || '',
-      organizationName: name,
-      organizationRepo: html_url,
-      organizationUrl: homepage,
       organizationLanguages: [language],
       organizationLogo:
         'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
+      organizationName: name,
+      organizationRepo: html_url,
+      organizationUrl: homepage,
     };
 
     if (parentOrganization) {
@@ -86,16 +83,16 @@ const getSingleRepo = async ({ organization, repo }) => {
       });
 
       const {
-        name: parentName,
-        login,
         avatar_url,
-        html_url: parentRepo,
-        blog,
         bio,
+        blog,
+        html_url: parentRepo,
+        login,
+        name: parentName,
       } = parentData;
 
-      organizationInput.organizationName = parentName || login;
       organizationInput.organizationLogo = avatar_url;
+      organizationInput.organizationName = parentName || login;
       organizationInput.organizationRepo = parentRepo;
       organizationInput.organizationUrl = blog;
       if (bio) organizationInput.organizationDescription = bio;
@@ -120,28 +117,26 @@ const getSingleOrganization = async organization => {
     bio,
     blog,
     html_url,
+    login,
     name,
     type,
-    login,
   } = organizationData;
 
   if (!html_url) {
-    throw new Error(`Unable to import organization from ${organization}`);
+    throw new Error(`Unable to import organization from ${organization}.`);
   }
-
   if (type === 'User') {
-    throw new Error('Cannot import user account as organization');
+    throw new Error('Cannot import user account as organization.');
   }
 
   const organizationInput = {
     organizationDescription: bio || '',
+    organizationLanguages: [],
+    organizationLogo: avatar_url,
     organizationName: name || login,
     organizationRepo: html_url,
     organizationUrl: blog,
-    organizationLanguages: [],
-    organizationLogo: avatar_url,
   };
-
   return { organizationInput };
 };
 
@@ -151,8 +146,8 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
 
   const { data: pullRequestData } = await GITHUB.pulls.get({
     owner: organization,
-    repo,
     pull_number: pullNumber,
+    repo,
   });
 
   const {
@@ -168,10 +163,10 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
   } = pullRequestData;
 
   if (state !== 'open') {
-    throw new Error('This pullrequest has been closed');
+    throw new Error('This pull request has been closed.');
   }
   if (merged) {
-    throw new Error('Pull request has already been merged');
+    throw new Error('Pull request has already been merged.');
   }
 
   const pullData = {

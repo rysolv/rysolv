@@ -5,7 +5,6 @@ import {
   ADD_COMMENT_FAILURE,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT,
-  ADD_PULL_REQUEST_SUCCESS,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
   CHANGE_ISSUE_FILTER,
@@ -42,6 +41,7 @@ import {
   SUBMIT_ACCOUNT_PAYMENT_FAILURE,
   SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
   SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
@@ -88,13 +88,6 @@ export function addCommentSuccess(payload) {
   return {
     payload,
     type: ADD_COMMENT_SUCCESS,
-  };
-}
-
-export function addPullRequestSuccess(payload) {
-  return {
-    payload,
-    type: ADD_PULL_REQUEST_SUCCESS,
   };
 }
 
@@ -343,6 +336,13 @@ export function submitAccountPayment(payload) {
   return {
     payload,
     type: SUBMIT_ACCOUNT_PAYMENT,
+  };
+}
+
+export function updateIssueDetail(payload) {
+  return {
+    payload,
+    type: UPDATE_ISSUE_DETAIL,
   };
 }
 

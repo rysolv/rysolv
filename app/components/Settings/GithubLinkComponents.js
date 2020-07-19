@@ -18,6 +18,29 @@ const EditIcon = iconDictionary('edit');
 const GithubIcon = iconDictionary('github');
 const DoneIcon = iconDictionary('done');
 
+export const EmptyGithubLinkComponent = ({
+  handleEdit,
+  isDisabled,
+  setChangeGithub,
+}) => (
+  <OneLinkWrapper>
+    <OneLink>
+      <LinkIcon>{GithubIcon}</LinkIcon>
+      Add Github link
+    </OneLink>
+    <IconButton
+      disabled={isDisabled}
+      icon={EditIcon}
+      label="Edit"
+      onClick={() =>
+        handleEdit({
+          changeInputState: setChangeGithub,
+        })
+      }
+    />
+  </OneLinkWrapper>
+);
+
 export const GithubEditComponent = ({
   handleClose,
   handleDone,
@@ -73,6 +96,12 @@ export const GithubLinkComponent = ({
     />
   </OneLinkWrapper>
 );
+
+EmptyGithubLinkComponent.propTypes = {
+  handleEdit: T.func,
+  isDisabled: T.bool,
+  setChangeGithub: T.func,
+};
 
 GithubEditComponent.propTypes = {
   handleClose: T.func,

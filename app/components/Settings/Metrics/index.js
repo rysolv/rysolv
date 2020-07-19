@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 
 import { ConditionalRender } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
+  EmptyPreferredLanguagesComponent,
   PreferredLanguagesComponent,
   PreferredLanguagesEditComponent,
 } from '../PreferredLanguagesComponents';
@@ -83,7 +85,19 @@ const UserMetricsView = ({
             &nbsp;Earned
           </DetailListItem>
           <ConditionalRender
-            Component={PreferredLanguagesComponent}
+            Component={
+              <ConditionalRender
+                Component={PreferredLanguagesComponent}
+                FallbackComponent={EmptyPreferredLanguagesComponent}
+                propsToPassDown={{
+                  handleEdit,
+                  isDisabled,
+                  preferredLanguages,
+                  setChangePreferredLanguages,
+                }}
+                shouldRender={!isEmpty(preferredLanguages)}
+              />
+            }
             FallbackComponent={
               <PreferredLanguagesEditComponent
                 handleClose={handleClose}
@@ -93,12 +107,6 @@ const UserMetricsView = ({
                 setValue={setValue}
               />
             }
-            propsToPassDown={{
-              handleEdit,
-              isDisabled,
-              preferredLanguages,
-              setChangePreferredLanguages,
-            }}
             shouldRender={!changePreferredLanguages}
           />
         </UserDetails>
