@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
-import { PrimaryAsyncButton } from 'components/base_ui';
+import { ErrorSuccessBanner, PrimaryAsyncButton } from 'components/base_ui';
 import {
   borderColor,
   defaultFontSize,
   detailFontSize,
   hoverLinkColor,
-  hyperlinkColor,
-  redText,
   subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
@@ -16,13 +14,7 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 const { mobile } = mediaQueriesByDevice;
 
 export const EmailWrapper = styled.span`
-  color: ${hyperlinkColor};
-`;
-
-export const ErrorWrapper = styled.div`
-  color: ${redText};
-  font-style: italic;
-  padding: 1rem 0.5rem 2rem 0.5rem;
+  color: ${hoverLinkColor};
 `;
 
 export const HorizontalWrapper = styled.div`
@@ -46,8 +38,16 @@ export const InputFormWrapper = styled.div`
   width: 50rem;
 
   ${mobile} {
+    padding: 3rem;
     width: 100%;
   }
+`;
+
+export const InputSubText = styled.div`
+  color: ${textColor};
+  font-size: ${detailFontSize};
+  margin-bottom: 1rem;
+  text-align: left;
 `;
 
 export const SigninWrapper = styled.div`
@@ -57,6 +57,10 @@ export const SigninWrapper = styled.div`
   width: 100%;
 `;
 
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin-bottom: 3rem;
+`;
+
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   align-self: center;
   min-width: 50%;
@@ -64,14 +68,15 @@ export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
 `;
 
 export const SubText = styled.div`
+  color: ${textColor};
   font-size: ${detailFontSize};
   margin: 1rem 0;
   text-align: center;
 
   a {
-    color: ${hyperlinkColor};
-    :hover {
-      color: ${hoverLinkColor};
+    color: ${hoverLinkColor};
+    &:hover {
+      text-decoration: underline;
     }
   }
 `;
@@ -79,7 +84,7 @@ export const SubText = styled.div`
 export const Title = styled.div`
   color: ${textColor};
   font-size: ${subheaderFontSize};
-  margin: 0 0 3rem 0;
+  margin-bottom: 3rem;
 `;
 
 export const VerificationWrapper = styled.div`

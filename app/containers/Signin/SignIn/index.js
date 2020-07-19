@@ -28,9 +28,9 @@ export class SigninContainer extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { dispatchClearAuthAlerts, dispatchClearForm } = this.props;
+    const { dispatchClearForm, handleClearAuthAlerts } = this.props;
     dispatchClearForm();
-    dispatchClearAuthAlerts();
+    handleClearAuthAlerts();
   }
 
   render() {
@@ -38,6 +38,7 @@ export class SigninContainer extends React.PureComponent {
       data,
       dispatchSignIn,
       error,
+      handleClearAuthAlerts,
       handleInputChange,
       isSignedIn,
       signInDisabled,
@@ -64,6 +65,7 @@ export class SigninContainer extends React.PureComponent {
           propsToPassDown={{
             data,
             error,
+            handleClearAuthAlerts,
             handleInputChange,
             handleSignIn,
             isSignedIn,
@@ -78,10 +80,10 @@ export class SigninContainer extends React.PureComponent {
 
 SigninContainer.propTypes = {
   data: T.object,
-  dispatchClearAuthAlerts: T.func,
   dispatchClearForm: T.func,
   dispatchSignIn: T.func,
   error: T.object,
+  handleClearAuthAlerts: T.func,
   handleInputChange: T.func,
   isSignedIn: T.bool,
   signInDisabled: T.bool,
@@ -108,7 +110,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Auth
      */
     dispatchSignIn: payload => dispatch(signIn(payload)),
-    dispatchClearAuthAlerts: () => dispatch(clearAlerts()),
+    handleClearAuthAlerts: () => dispatch(clearAlerts()),
 
     /*
      * Reducer : Router
