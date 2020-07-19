@@ -1,4 +1,6 @@
 import { createSelector } from 'reselect';
+import omit from 'lodash/omit';
+
 import { initialState } from './reducer';
 
 const selectAuthDomain = state => state.auth || initialState;
@@ -12,7 +14,12 @@ const makeSelectAuth = prop =>
 const makeSelectAuthError = prop =>
   createSelector(
     makeSelectAuth('error'),
-    loading => loading[prop],
+    error => {
+      if (prop === 'signUp') {
+        return omit(error, ['signIn']);
+      }
+      return error[prop];
+    },
   );
 
 const makeSelectAuthLoading = prop =>

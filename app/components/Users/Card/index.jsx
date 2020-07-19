@@ -34,13 +34,13 @@ const UserCard = ({ data, deviceView, handleNav }) => {
             createdDate,
             id,
             issues,
-            name,
             pointsNumber,
             profilePic,
+            username,
           },
           index,
         ) => (
-          <StyledListSquare key={`${name}-${index}`}>
+          <StyledListSquare key={`${username}-${index}`}>
             <StyledSquare>
               <StyledSettingWrapper>
                 <MemberWrapper>
@@ -50,7 +50,7 @@ const UserCard = ({ data, deviceView, handleNav }) => {
                     }
                     href={`/users/detail/${id}`}
                   >
-                    {name}
+                    {username}
                   </NameWrapper>
                   <MemberInfoContainer>
                     Member since {createdDate}

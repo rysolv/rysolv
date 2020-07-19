@@ -34,8 +34,8 @@ module.exports = {
 
       const [user] = await updateUserArray({
         column: 'comments',
-        userId: commentInput.user,
         data: result.id,
+        userId: commentInput.user,
       });
       await updateIssueArray({
         column: 'comments',

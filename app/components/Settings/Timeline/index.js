@@ -108,9 +108,9 @@ const UserTimelineView = ({
                 Component={
                   <Fragment>
                     <TimelineDollar>
-                      {formatDollarAmount(fundedValue)}
+                      {formatDollarAmount(fundedValue)}&nbsp;
                     </TimelineDollar>
-                    for &nbsp;
+                    for&nbsp;
                   </Fragment>
                 }
                 shouldRender={!!fundedValue}

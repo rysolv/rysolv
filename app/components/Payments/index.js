@@ -48,6 +48,7 @@ const PaymentPortal = ({
   issueId,
   lastName,
   open,
+  organizationId,
   paymentAlerts: { error, success },
   userId,
   ...restProps
@@ -221,6 +222,7 @@ const PaymentPortal = ({
                 handleSubmitAccountPayment,
                 issueId,
                 lastNameValue,
+                organizationId,
                 setFundValue,
                 userId,
               }}
@@ -264,6 +266,7 @@ PaymentPortal.propTypes = {
   issueId: T.string,
   lastName: T.string,
   open: T.bool,
+  organizationId: T.string,
   paymentAlerts: T.object,
   userId: T.string,
 };

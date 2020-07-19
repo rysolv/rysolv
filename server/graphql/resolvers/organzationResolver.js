@@ -55,8 +55,8 @@ module.exports = {
       // add organization to user
       await updateUserArray({
         column: 'organizations',
-        userId: result.ownerId,
         data: result.id,
+        userId: result.ownerId,
       });
 
       // log activity

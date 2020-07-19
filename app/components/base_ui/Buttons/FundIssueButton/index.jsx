@@ -23,6 +23,7 @@ const FundIssueButton = ({
   issueId,
   lastName,
   open,
+  organizationId,
   userId,
 }) => (
   <FundIssueButtonContainer>
@@ -46,6 +47,7 @@ const FundIssueButton = ({
             issueId,
             lastName,
             open,
+            organizationId,
             userId,
           },
         })
@@ -66,6 +68,7 @@ FundIssueButton.propTypes = {
   issueId: T.string,
   lastName: T.string,
   open: T.bool,
+  organizationId: T.string,
   userId: T.string,
 };
 

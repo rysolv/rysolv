@@ -15,6 +15,7 @@ const {
   getOrganizationsWhere,
   searchIssues,
   submitAccountPaymentIssue,
+  submitAccountPaymentOrganization,
   submitAccountPaymentUser,
   transformIssue,
   updateIssueArray,
@@ -165,15 +166,15 @@ module.exports = {
       // add issue to user issue list
       await updateUserArray({
         column: 'issues',
-        userId: issueInput.contributor,
         data: issueResult.id,
+        userId: issueInput.contributor,
       });
 
       // add organization to user list
       await updateUserArray({
         column: 'organizations',
-        userId: issueInput.contributor,
         data: issueInput.organizationId,
+        userId: issueInput.contributor,
       });
 
       return {
@@ -278,9 +279,20 @@ module.exports = {
   },
   submitAccountPayment: async args => {
     try {
-      const { issueId, fundValue, userId } = args;
+      const { issueId, fundValue, organizationId, userId } = args;
       const [issueResult] = await submitAccountPaymentIssue(issueId, fundValue);
+      await submitAccountPaymentOrganization(organizationId, fundValue);
       const [userResult] = await submitAccountPaymentUser(userId, fundValue);
+
+      const activityInput = {
+        actionType: 'fund',
+        fundedValue: fundValue,
+        issueId,
+        organizationId,
+        userId,
+      };
+      await createActivity({ activityInput });
+
       const result = {
         balance: userResult.balance,
         fundedAmount: issueResult.funded_amount,

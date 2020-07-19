@@ -6,9 +6,10 @@ import { MainTextInput } from 'components/base_ui';
 
 import {
   EmailWrapper,
-  ErrorWrapper,
   InputFormWrapper,
+  InputSubText,
   SigninWrapper,
+  StyledErrorSuccessBanner,
   StyledPrimaryAsyncButton,
   SubText,
   Title,
@@ -17,7 +18,8 @@ import {
 
 const VerifyEmail = ({
   activeUser: { email },
-  error,
+  error: { verifyEmail: verifyEmailError },
+  handleClearAuthAlerts,
   handleInputChange,
   handleVerifyEmail,
   verify: { verificationCode },
@@ -27,9 +29,15 @@ const VerifyEmail = ({
   <SigninWrapper>
     <InputFormWrapper>
       <Title>Confirm your email</Title>
-      <SubText>
-        A confirmation email was sent to <EmailWrapper>{email}</EmailWrapper>
-      </SubText>
+      {verifyEmailError.error && (
+        <StyledErrorSuccessBanner
+          error={verifyEmailError}
+          onClose={handleClearAuthAlerts}
+        />
+      )}
+      <InputSubText>
+        A confirmation email was sent to <EmailWrapper>{email}</EmailWrapper>.
+      </InputSubText>
       <VerificationWrapper>
         <MainTextInput
           autoComplete="one-time-code"
@@ -46,12 +54,10 @@ const VerifyEmail = ({
           value={verificationCode.value}
         />
       </VerificationWrapper>
-
-      <ErrorWrapper>{error.error ? error.message : ''}</ErrorWrapper>
       <StyledPrimaryAsyncButton
         loading={verifyEmailLoading}
         disabled={!verifyDisabled}
-        label="Verify Email"
+        label="Verify email"
         onClick={() => handleVerifyEmail()}
       />
     </InputFormWrapper>
@@ -64,6 +70,7 @@ const VerifyEmail = ({
 VerifyEmail.propTypes = {
   activeUser: T.object,
   error: T.object,
+  handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleVerifyEmail: T.func.isRequired,
   verify: T.object.isRequired,

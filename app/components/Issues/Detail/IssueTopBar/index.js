@@ -21,7 +21,7 @@ const IssueTopBar = ({
   isSignedIn,
 }) => {
   const { balance, email, firstName, id: userId, lastName } = activeUser;
-  const { fundedAmount, id: issueId, open } = data;
+  const { fundedAmount, id: issueId, open, organizationId } = data;
   return (
     <Fragment>
       <StyledIssueHeader>
@@ -42,6 +42,7 @@ const IssueTopBar = ({
               issueId={issueId}
               lastName={lastName}
               open={open}
+              organizationId={organizationId}
               userId={userId}
             />
           )}

@@ -55,10 +55,10 @@ export class RecentActivityView extends React.PureComponent {
                     {action} {targetType.toLowerCase()}
                   </StyledAction>
                   &nbsp;
+                  {fundedValue ? `for ${formatDollarAmount(fundedValue)} ` : ''}
                   <StyledExternalLink to={path}>
                     {targetName}
                   </StyledExternalLink>
-                  {fundedValue ? ` for ${formatDollarAmount(fundedValue)}` : ''}
                   <ActivityDate>{moment(date).fromNow()}</ActivityDate>
                 </FundContent>
               </div>

@@ -29,7 +29,6 @@ export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
     document.title = 'Add Issue';
     const { handleIncrementStep } = this.props;
-
     handleIncrementStep({ step: 1, view: 'addIssue' });
   }
 

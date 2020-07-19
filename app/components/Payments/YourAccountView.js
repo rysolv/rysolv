@@ -24,13 +24,20 @@ const YourAccountView = ({
   handleSubmitAccountPayment,
   issueId,
   lastNameValue,
+  organizationId,
   setFundValue,
   userId,
 }) => {
-  const handleSubmit = ({ fundedIssueId, fundingUserId, value }) => {
+  const handleSubmit = ({
+    fundedIssueId,
+    fundedOrganizationId,
+    fundingUserId,
+    value,
+  }) => {
     handleSubmitAccountPayment({
       fundValue: value,
       issueId: fundedIssueId,
+      organizationId: fundedOrganizationId,
       userId: fundingUserId,
     });
     setFundValue(0);
@@ -70,9 +77,10 @@ const YourAccountView = ({
         label="Confirm"
         onClick={() =>
           handleSubmit({
-            value: fundValue,
             fundedIssueId: issueId,
+            fundedOrganizationId: organizationId,
             fundingUserId: userId,
+            value: fundValue,
           })
         }
       />
@@ -87,6 +95,7 @@ YourAccountView.propTypes = {
   handleSubmitAccountPayment: T.func,
   issueId: T.string,
   lastNameValue: T.string,
+  organizationId: T.string,
   setFundValue: T.func,
   userId: T.string,
 };
