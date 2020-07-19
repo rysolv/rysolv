@@ -7,6 +7,7 @@ import { MainTextInput } from 'components/base_ui';
 import {
   HorizontalWrapper,
   InputFormWrapper,
+  PasswordRequirements,
   SigninWrapper,
   StyledErrorSuccessBanner,
   StyledPrimaryAsyncButton,
@@ -20,12 +21,13 @@ const Signup = ({
   handleClearAuthAlerts,
   handleInputChange,
   handleSignUp,
+  handleVerifyPassword,
   signUpDisabled,
   signUpLoading,
 }) => (
   <SigninWrapper>
     <InputFormWrapper>
-      <Title>Create Account</Title>
+      <Title>Create account</Title>
       {signUpError.error && (
         <StyledErrorSuccessBanner
           error={signUpError}
@@ -64,7 +66,7 @@ const Signup = ({
         <MainTextInput
           error={!!firstName.error}
           helperText={firstName.error}
-          label="First Name"
+          label="First name"
           onChange={e =>
             handleInputChange({
               field: 'firstName',
@@ -77,7 +79,7 @@ const Signup = ({
         <MainTextInput
           error={!!lastName.error}
           helperText={lastName.error}
-          label="Last Name"
+          label="Last name"
           onChange={e =>
             handleInputChange({
               field: 'lastName',
@@ -102,11 +104,18 @@ const Signup = ({
         }
         value={password.value}
       />
+      <PasswordRequirements>
+        <li>8 or more characters</li>
+        <li>Include capital and lowercase letter</li>
+        <li>Include one number</li>
+        <li>Include one special character </li>
+      </PasswordRequirements>
       <MainTextInput
         autoComplete="new-password"
         error={!!verifyPassword.error}
         helperText={verifyPassword.error}
-        label="Confirm Password"
+        label="Confirm password"
+        onBlur={() => handleVerifyPassword()}
         onChange={e =>
           handleInputChange({
             field: 'verifyPassword',
@@ -118,7 +127,7 @@ const Signup = ({
       />
       <StyledPrimaryAsyncButton
         disabled={!signUpDisabled}
-        label="Sign Up"
+        label="Sign up"
         loading={signUpLoading}
         onClick={() => handleSignUp()}
       />
@@ -135,6 +144,7 @@ Signup.propTypes = {
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignUp: T.func.isRequired,
+  handleVerifyPassword: T.func,
   signUpDisabled: T.bool,
   signUpLoading: T.bool,
 };

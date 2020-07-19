@@ -28,7 +28,7 @@ const VerifyEmail = ({
 }) => (
   <SigninWrapper>
     <InputFormWrapper>
-      <Title>Confirm Your Email</Title>
+      <Title>Confirm your email</Title>
       {verifyEmailError.error && (
         <StyledErrorSuccessBanner
           error={verifyEmailError}
@@ -43,7 +43,7 @@ const VerifyEmail = ({
           autoComplete="one-time-code"
           error={!!verificationCode.error}
           helperText={verificationCode.error}
-          label="Verification Code"
+          label="Verification code"
           onChange={e =>
             handleInputChange({
               field: 'verificationCode',
@@ -57,7 +57,7 @@ const VerifyEmail = ({
       <StyledPrimaryAsyncButton
         loading={verifyEmailLoading}
         disabled={!verifyDisabled}
-        label="Verify Email"
+        label="Verify email"
         onClick={() => handleVerifyEmail()}
       />
     </InputFormWrapper>

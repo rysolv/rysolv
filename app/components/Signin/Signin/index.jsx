@@ -24,7 +24,7 @@ const Signin = ({
 }) => (
   <SigninWrapper>
     <InputFormWrapper>
-      <Title>Sign In</Title>
+      <Title>Sign in</Title>
       {error.error && (
         <StyledErrorSuccessBanner
           error={error}
@@ -63,7 +63,7 @@ const Signin = ({
       />
       <StyledPrimaryAsyncButton
         disabled={!signInDisabled}
-        label="Sign In"
+        label="Sign in"
         loading={signInLoading}
         onClick={() => handleSignIn()}
       />

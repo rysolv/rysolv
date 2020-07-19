@@ -31,12 +31,13 @@ const ExistingOrganziations = ({
     activeUser.organizations.forEach(el => {
       if (el.id === id) {
         const selectedOrganization = {
-          organizationId: { error: '', value: el.id },
-          organizationUrl: { error: '', value: el.organizationUrl },
-          organizationDescription: { error: '', value: el.description },
-          organizationRepo: { error: '', value: el.repoUrl },
           importUrl: { error: '', value: '' },
+          organizationDescription: { error: '', value: el.description },
+          organizationId: { error: '', value: el.id },
+          organizationLogo: { error: '', value: el.organizationUrl },
           organizationName: { error: '', value: el.name },
+          organizationRepo: { error: '', value: el.repoUrl },
+          organizationUrl: { error: '', value: el.organizationUrl },
         };
 
         handleUpdateOrganization(selectedOrganization);

@@ -20,7 +20,7 @@ import {
 } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
-import { inputChange, incrementStep, clearForm } from '../actions';
+import { clearForm, incrementStep, inputChange, inputError } from '../actions';
 import {
   makeSelectSignIn,
   makeSelectSignUpDisabled,
@@ -47,6 +47,7 @@ export class SignUpContainer extends React.PureComponent {
       activeUser,
       data,
       dispatchIncrementStep,
+      dispatchInputError,
       dispatchSignUp,
       dispatchVerifyEmail,
       error,
@@ -68,17 +69,26 @@ export class SignUpContainer extends React.PureComponent {
 
     const StepToRender = signUpDictionary[step];
     const { email: userEmail, id: userId } = activeUser;
-    const { email, firstName, lastName, password, username } = data;
+    const {
+      email,
+      firstName,
+      lastName,
+      password,
+      username,
+      verifyPassword,
+    } = data;
     const { verificationCode } = verify;
 
     const handleSignUp = () => {
-      dispatchSignUp({
-        email: email.value,
-        firstName: firstName.value,
-        lastName: lastName.value,
-        password: password.value,
-        username: username.value,
-      });
+      if (password.value === verifyPassword.value) {
+        dispatchSignUp({
+          email: email.value,
+          firstName: firstName.value,
+          lastName: lastName.value,
+          password: password.value,
+          username: username.value,
+        });
+      }
     };
 
     const handleVerifyEmail = () => {
@@ -88,6 +98,17 @@ export class SignUpContainer extends React.PureComponent {
         userId,
         verificationCode,
       });
+    };
+
+    const handleVerifyPassword = () => {
+      if (password.value !== verifyPassword.value) {
+        dispatchInputError({
+          errors: {
+            verifyPassword: 'Passwords do not match.',
+          },
+          form: 'signUp',
+        });
+      }
     };
 
     const redirect = <Redirect to="/issues" />;
@@ -106,6 +127,7 @@ export class SignUpContainer extends React.PureComponent {
             handleInputChange,
             handleSignUp,
             handleVerifyEmail,
+            handleVerifyPassword,
             isSignedIn,
             signUpDisabled,
             signUpLoading,
@@ -125,6 +147,7 @@ SignUpContainer.propTypes = {
   dispatchClearAuthState: T.func,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
+  dispatchInputError: T.func,
   dispatchSignUp: T.func,
   dispatchVerifyEmail: T.func,
   error: T.object,
@@ -147,8 +170,8 @@ const mapStateToProps = createStructuredSelector({
   activeUser: makeSelectAuth('activeUser'),
   error: makeSelectAuthError('signUp'),
   isSignedIn: makeSelectAuth('isSignedIn'),
-  verificationSent: makeSelectAuth('verificationSent'),
   signUpLoading: makeSelectAuthLoading('signUp'),
+  verificationSent: makeSelectAuth('verificationSent'),
   verifyEmailLoading: makeSelectAuthLoading('verifyEmail'),
   /*
    * Reducer : Signin
@@ -177,6 +200,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchClearForm: () => dispatch(clearForm()),
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
+    dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchVerifyEmail: payload => dispatch(verifyEmail(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
