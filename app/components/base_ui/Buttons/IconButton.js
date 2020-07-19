@@ -16,14 +16,16 @@ const IconButton = ({
     title={<StyledTooltipLabel>{label}</StyledTooltipLabel>}
     {...tooltipProps}
   >
-    <MuiIconButton
-      disabled={disabled}
-      onClick={onClick}
-      size="small"
-      {...restProps}
-    >
-      {icon}
-    </MuiIconButton>
+    <div>
+      <MuiIconButton
+        disabled={disabled}
+        onClick={onClick}
+        size="small"
+        {...restProps}
+      >
+        {icon}
+      </MuiIconButton>
+    </div>
   </Tooltip>
 );
 
