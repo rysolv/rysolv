@@ -188,7 +188,7 @@ const SettingsView = ({
                     isDisabled,
                     setChangeGithub,
                   }}
-                  shouldRender={githubLink}
+                  shouldRender={!!githubLink}
                 />
               }
               FallbackComponent={
@@ -213,7 +213,7 @@ const SettingsView = ({
                     personalLink,
                     setChangePersonal,
                   }}
-                  shouldRender={personalLink}
+                  shouldRender={!!personalLink}
                 />
               }
               FallbackComponent={
@@ -238,7 +238,7 @@ const SettingsView = ({
                     isDisabled,
                     setChangeStackoverflow,
                   }}
-                  shouldRender={stackoverflowLink}
+                  shouldRender={!!stackoverflowLink}
                 />
               }
               FallbackComponent={
