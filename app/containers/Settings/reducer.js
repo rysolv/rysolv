@@ -10,6 +10,7 @@ import {
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
   INPUT_CHANGE,
+  INPUT_ERROR,
   OPEN_MODAL_STATE,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
@@ -18,6 +19,9 @@ import {
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
   SUBMIT_PAYMENT,
+  WITHDRAW_FUNDS_FAILURE,
+  WITHDRAW_FUNDS_SUCCESS,
+  WITHDRAW_FUNDS,
 } from './constants';
 
 export const initialState = {
@@ -28,6 +32,9 @@ export const initialState = {
     language: [],
     overview: 'Newest',
     users: 'All',
+  },
+  inputErrors: {
+    transferValue: false,
   },
   isModalOpen: false,
   loading: false,
@@ -89,6 +96,11 @@ const settingsReducer = produce((draft, { payload, type }) => {
       }
       break;
     }
+    case INPUT_ERROR: {
+      const { field, message } = payload;
+      draft.inputErrors[field] = message;
+      break;
+    }
     case OPEN_MODAL_STATE: {
       const { modalState } = payload;
       draft.isModalOpen = true;
@@ -127,8 +139,9 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SAVE_CHANGE_SUCCESS: {
-      const { message } = payload;
+      const { field, message, value } = payload;
       draft.loading = false;
+      draft.account[field] = value;
       draft.alerts.success = { message };
       break;
     }
@@ -137,6 +150,23 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SUBMIT_PAYMENT: {
+      draft.loading = true;
+      break;
+    }
+    case WITHDRAW_FUNDS_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case WITHDRAW_FUNDS_SUCCESS: {
+      const { balance, message } = payload;
+      draft.loading = false;
+      draft.account.balance = balance;
+      draft.alerts.success = { message };
+      break;
+    }
+    case WITHDRAW_FUNDS: {
       draft.loading = true;
       break;
     }

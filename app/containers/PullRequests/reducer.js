@@ -2,6 +2,7 @@
 import produce from 'immer';
 
 import {
+  CLEAR_ERROR,
   CLEAR_FORM,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
@@ -19,12 +20,7 @@ import {
 
 export const initialState = {
   createSuccess: false,
-  error: {
-    createPullRequest: null,
-    fetchPullRequests: null,
-    importPullRequest: null,
-  },
-  importSuccess: false,
+  error: null,
   importData: {
     githubUsername: { error: '', value: '' },
     htmlUrl: { error: '', value: '' },
@@ -37,57 +33,53 @@ export const initialState = {
     status: { error: '', value: '' },
     title: { error: '', value: '' },
   },
-  loading: {
-    createPullRequest: false,
-    fetchPullRequests: false,
-    importPullRequest: false,
-  },
+  importSuccess: false,
+  loading: false,
   pullRequests: [],
   step: 1,
 };
 
 /* eslint-disable default-case, no-param-reassign */
+// eslint-disable-next-line consistent-return
 const pullRequestReducer = produce((draft, { payload, type }) => {
   switch (type) {
-    case CLEAR_FORM: {
-      draft.createSuccess = initialState.createSuccess;
+    case CLEAR_ERROR: {
       draft.error = initialState.error;
-      draft.importData = initialState.importData;
-      draft.importSuccess = initialState.importSuccess;
-      draft.pullRequests = initialState.pullRequests;
-      draft.step = initialState.step;
       break;
+    }
+    case CLEAR_FORM: {
+      return initialState;
     }
     case CREATE_PULL_REQUEST_FAILURE: {
       const { error } = payload;
-      draft.error.createPullRequest = error;
-      draft.loading.createPullRequest = false;
+      draft.error = error;
+      draft.loading = false;
       break;
     }
     case CREATE_PULL_REQUEST_SUCCESS: {
-      draft.loading.createPullRequest = false;
+      draft.loading = false;
       draft.createSuccess = true;
       draft.step = 3;
       break;
     }
     case CREATE_PULL_REQUEST: {
-      draft.loading.createPullRequest = true;
+      draft.loading = true;
       break;
     }
     case FETCH_USER_PULL_REQUESTS_FAILURE: {
       const { error } = payload;
-      draft.error.fetchPullRequests = error;
-      draft.loading.fetchPullRequests = false;
+      draft.error = error;
+      draft.loading = false;
       break;
     }
     case FETCH_USER_PULL_REQUESTS_SUCCESS: {
       const data = payload;
-      draft.loading.fetchPullRequests = false;
+      draft.loading = false;
       draft.pullRequests = data;
       break;
     }
     case FETCH_USER_PULL_REQUESTS: {
-      draft.loading.fetchPullRequests = true;
+      draft.loading = true;
       break;
     }
     case HANDLE_STEP: {
@@ -97,15 +89,15 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
     }
     case IMPORT_PULL_REQUEST_FAILURE: {
       const { error } = payload;
-      draft.error.importPullRequest = error;
-      draft.loading.importPullRequest = false;
+      draft.error = error;
+      draft.loading = false;
       break;
     }
     case IMPORT_PULL_REQUEST_SUCCESS: {
       const { importPullRequest } = payload;
       draft.importSuccess = true;
       draft.step = 2;
-      draft.loading.importPullRequest = false;
+      draft.loading = false;
 
       Object.keys(draft.importData).map(field => {
         draft.importData[field].value = importPullRequest[field];
@@ -114,7 +106,7 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
       break;
     }
     case IMPORT_PULL_REQUEST: {
-      draft.loading.importPullRequest = true;
+      draft.loading = true;
       break;
     }
     case INPUT_CHANGE: {

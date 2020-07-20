@@ -10,7 +10,7 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const HeaderSearchBar = ({ handleNav }) => {
+const HeaderSearchBar = ({ handleNav, ...restProps }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   useEffect(() => {
@@ -25,7 +25,7 @@ const HeaderSearchBar = ({ handleNav }) => {
     setOpen(false);
   };
   return (
-    <HeaderSearchBarContainer>
+    <HeaderSearchBarContainer {...restProps}>
       <StyledBaseInputWithAdornment
         adornmentComponent={SearchIcon}
         onBlur={handleClose}

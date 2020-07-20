@@ -14,13 +14,14 @@ const IssueTopBar = ({
   activeUser,
   data,
   dispatchFetchWatchList,
+  dispatchOpenIssueModal,
   dispatchOpenModal,
   handleIncrement,
   isDesktop,
   isSignedIn,
 }) => {
-  const { balance, id: userId } = activeUser;
-  const { fundedAmount, id: issueId, open } = data;
+  const { balance, email, firstName, id: userId, lastName } = activeUser;
+  const { fundedAmount, id: issueId, open, organizationId } = data;
   return (
     <Fragment>
       <StyledIssueHeader>
@@ -35,9 +36,13 @@ const IssueTopBar = ({
               balance={balance}
               disabled={!open}
               dispatchOpenModal={dispatchOpenModal}
+              email={email}
+              firstName={firstName}
               fundedAmount={fundedAmount}
               issueId={issueId}
+              lastName={lastName}
               open={open}
+              organizationId={organizationId}
               userId={userId}
             />
           )}
@@ -48,6 +53,7 @@ const IssueTopBar = ({
             activeUser={activeUser}
             data={data}
             dispatchFetchWatchList={dispatchFetchWatchList}
+            dispatchOpenIssueModal={dispatchOpenIssueModal}
             dispatchOpenModal={dispatchOpenModal}
             handleIncrement={handleIncrement}
             isSignedIn={isSignedIn}
@@ -62,6 +68,7 @@ IssueTopBar.propTypes = {
   activeUser: T.object,
   data: T.object,
   dispatchFetchWatchList: T.func,
+  dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,
   isDesktop: T.bool,

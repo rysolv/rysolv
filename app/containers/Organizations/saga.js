@@ -229,15 +229,29 @@ export function* saveInfoSaga({ payload }) {
       organizationRepo: "${organizationRepo}",
       organizationUrl: "${organizationUrl}",
       ownerId: "${userId}"
-    })
-    { id }
+    }) {
+      __typename
+      ... on Organization {
+        id
+        name
+      }
+      ... on Error {
+        message
+      }
+    }
   }`;
   try {
     const graphql = JSON.stringify({
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
+    const {
+      data: { createOrganization },
+    } = yield call(post, '/graphql', graphql);
+    const { __typename, message } = createOrganization;
+    if (__typename === 'Error') throw message;
+
+    yield put(fetchActiveUser({ userId }));
     yield put(fetchOrganizations());
     yield put(saveInfoSuccess({ message: successCreateOrganizationMessage }));
   } catch (error) {
@@ -250,17 +264,25 @@ export function* searchOrganizationsSaga({ payload }) {
   const query = `
   query {
     searchOrganizations(value: "${value}") {
-      createdDate,
-      description,
-      id,
-      issues,
-      logo,
-      modifiedDate,
-      name,
-      organizationUrl,
-      repoUrl,
-      totalFunded,
-      verified,
+    __typename
+      ... on OrganizationArray {
+        organizationArray {
+          createdDate
+          description
+          id
+          issues
+          logo
+          modifiedDate
+          name
+          organizationUrl
+          repoUrl
+          totalFunded
+          verified
+        }
+      }
+      ... on Error {
+        message
+      }
     }
   }
 `;
@@ -270,11 +292,13 @@ export function* searchOrganizationsSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { searchOrganizations },
+      data: {
+        searchOrganizations: { __typename, message, organizationArray },
+      },
     } = yield call(post, '/graphql', graphql);
-    yield put(
-      searchOrganizationsSuccess({ organizations: searchOrganizations }),
-    );
+    if (__typename === 'Error') throw message;
+
+    yield put(searchOrganizationsSuccess({ organizations: organizationArray }));
   } catch (error) {
     yield put(searchOrganizationsFailure({ error }));
   }
@@ -340,23 +364,23 @@ export function* updateInfoSaga({ payload }) {
 }
 
 export function* upvoteIssueSaga({ payload }) {
-  const { issueId, userId } = payload;
+  const { issueId, upvote, userId } = payload;
   const upvoteIssueQuery = `
-      mutation {
-        upvoteIssue(id: "${issueId}" ) {
-          id,
-          rep
-        }
-        userUpvote(id: "${userId}" ) {
-          id,
-          rep
-        }
-        updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: false ) {
-          attempting,
-          watching
-        }
+    mutation {
+      upvoteIssue(id: "${issueId}", upvote: ${upvote} ) {
+        id,
+        rep
       }
-    `;
+      userUpvote(id: "${userId}", upvote: ${upvote} ) {
+        id,
+        rep
+      }
+      updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: ${!upvote} ) {
+        attempting,
+        watching
+      }
+    }
+  `;
   try {
     const upvoteIssue = JSON.stringify({
       query: upvoteIssueQuery,

@@ -12,10 +12,11 @@ class Markdown extends React.PureComponent {
     this.markdown = new SimpleMDE({
       autosave: false,
       element: textArea,
+      hideIcons: ['side-by-side', 'fullscreen', 'guide', 'preview'],
       initialValue: this.props.body || '',
-      status: false,
       placeholder: 'Type here. Use Markdown or HTML to format.',
-      hideIcons: ['side-by-side', 'fullscreen'],
+      spellChecker: false,
+      status: false,
     });
 
     this.markdown.codemirror.options.extraKeys.Tab = false;

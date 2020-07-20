@@ -93,6 +93,7 @@ module.exports = buildSchema(`
     organizationName: String
     organizationVerified: Boolean
     profilePic: String
+    pullRequests: [ID]
     rep: Int
     repo: String
     type: String
@@ -138,6 +139,10 @@ module.exports = buildSchema(`
     verified: Boolean
   }
 
+  type OrganizationArray {
+    organizationArray: [Organization]
+  }
+
   input OrganizationInput {
     organizationDescription: String
     organizationLogo: String
@@ -155,6 +160,7 @@ module.exports = buildSchema(`
     githubUsername: String
     htmlUrl: String
     issueId: ID!
+    fundedAmount: Float
     mergeable: Boolean
     mergeableState: String
     merged: Boolean
@@ -204,6 +210,7 @@ module.exports = buildSchema(`
     createdDate: Object
     dollarsEarned: Int
     email: String!
+    emailVerified: Boolean
     firstName: String!
     githubLink: String
     id: ID!
@@ -232,8 +239,10 @@ module.exports = buildSchema(`
     completedPullRequests: Int
     dollarsEarned: Int
     email: String
+    emailVerified: Boolean
     firstName: String
     githubLink: String
+    id: ID
     isOnline: Boolean
     issues: [String]
     lastName: String
@@ -256,6 +265,10 @@ module.exports = buildSchema(`
     username: String
   }
 
+  type Withdrawal {
+    balance: Float
+  }
+
   type Error {
     message: String
   }
@@ -265,16 +278,20 @@ module.exports = buildSchema(`
   }
 
   union ActivityResult = ActivityArray | Error
+  union EventResponse = Success | Error
+  union ImportPullRequestResult = ImportPullRequest | Error
+  union ImportResult = ImportData | Error
+  union IssueResult = Issue | Error
+  union OrganizationArrayResult = OrganizationArray | Error
+  union OrganizationResult = Organization | Error
+  union PaymentResult = Payment | Error
   union PullRequestArrayResult = PullRequestArray | Error
   union PullRequestResult = PullRequest | Error
-  union ImportResult = ImportData | Error
-  union ImportPullRequestResult = ImportPullRequest | Error
-  union IssueResult = Issue | Error
-  union OrganizationResult = Organization | Error
-  union EventResponse = Success | Error
-  union PaymentResult = Payment | Error
+  union UserResult = User | Error
+  union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
+    checkDuplicateUser(email: String, username: String): EventResponse!
     getActivity(column: String!, id: ID): ActivityResult!
     getAllActivity: ActivityResult!
     getComments: [Comment]!
@@ -291,11 +308,11 @@ module.exports = buildSchema(`
 
     oneIssue(id: ID!): IssueResult
     oneOrganization(id: ID!): OrganizationResult
-    oneUser(column: String!, query: ID!): User!
+    oneUser(id: ID!): User!
     onePullRequest(id: ID!): PullRequestResult
 
     searchIssues(value: String!): [Issue!]!
-    searchOrganizations(value: String!): [Organization!]!
+    searchOrganizations(value: String!): OrganizationArrayResult
     searchUsers(value: String!): [User!]!
   }
 
@@ -304,10 +321,11 @@ module.exports = buildSchema(`
 
     createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): Comment
-    createIssue(issueInput: IssueInput): Issue!
-    createOrganization(organizationInput: OrganizationInput): Organization!
-    createUser(userInput: UserInput): [User!]!
-    createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
+    createIssue(issueInput: IssueInput): IssueResult
+    createOrganization(organizationInput: OrganizationInput): OrganizationResult
+    createUser(userInput: UserInput): User!
+    createPullRequest(pullRequestInput: PullRequestInput!): PullRequestResult!
+    createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
     deleteIssue(id: ID!): String!
     deleteOrganization(id:ID!): String!
@@ -315,19 +333,19 @@ module.exports = buildSchema(`
 
     importIssue(url: String!): ImportResult
     importOrganization(url: String!): ImportResult
-    importPullRequest(url: String!): ImportPullRequestResult
+    importPullRequest(url: String!, issueId: ID!): ImportPullRequestResult
 
-    submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
+    submitAccountPayment(issueId: ID!, fundValue: Float!, organizationId: ID!, userId: ID!): PaymentResult!
 
     transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!
-    transformUser(id: ID!, userInput: UserInput): User!
+    transformUser(id: ID!, userInput: UserInput): UserResult!
 
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
 
-    upvoteIssue(id: ID): Issue!
-    userUpvote(id: ID): User!
+    upvoteIssue(id: ID, upvote: Boolean): Issue!
+    userUpvote(id: ID, upvote: Boolean): User!
   }
 
   schema {

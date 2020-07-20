@@ -1,9 +1,14 @@
 import React from 'react';
 import T from 'prop-types';
-import { StyledIconTooltip } from './styledComponents';
+
+import { StyledIconTooltip, StyledTooltipLabel } from './styledComponents';
 
 const IconToolTip = ({ children, toolTipText }) => (
-  <StyledIconTooltip title={toolTipText}>{children}</StyledIconTooltip>
+  <StyledIconTooltip
+    title={<StyledTooltipLabel>{toolTipText}</StyledTooltipLabel>}
+  >
+    {children}
+  </StyledIconTooltip>
 );
 
 IconToolTip.propTypes = {

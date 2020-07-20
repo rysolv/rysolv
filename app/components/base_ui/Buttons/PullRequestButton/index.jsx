@@ -14,6 +14,7 @@ const PullRequestIcon = iconDictionary('pullRequest');
 
 const PullRequestButton = ({
   disabled,
+  dispatchOpenIssueModal,
   dispatchOpenModal,
   isSignedIn,
   pullRequests,
@@ -25,7 +26,7 @@ const PullRequestButton = ({
         if (!isSignedIn) {
           return dispatchOpenModal({ modalState: 'signIn' });
         }
-        return null;
+        return dispatchOpenIssueModal({ modalState: 'addPullRequest' });
       }}
     >
       {PullRequestIcon}
@@ -37,6 +38,7 @@ const PullRequestButton = ({
 
 PullRequestButton.propTypes = {
   disabled: T.bool,
+  dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   isSignedIn: T.bool,
   pullRequests: T.array,

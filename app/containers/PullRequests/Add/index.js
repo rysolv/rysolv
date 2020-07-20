@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import AsyncRender from 'components/AsyncRender';
-
-import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { importPullRequestDictionary } from '../stepDictionary';
+import injectSaga from 'utils/injectSaga';
 
 import {
+  clearError,
   clearForm,
   createPullRequest,
   handleStep,
@@ -20,79 +18,77 @@ import {
 } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
-import {
-  makeSelectPullRequests,
-  makeSelectPullRequestsError,
-  makeSelectPullRequestsLoading,
-} from '../selectors';
+import { makeSelectPullRequests } from '../selectors';
+import { importPullRequestDictionary } from '../stepDictionary';
 
-import { ImportPullRequestWrapper } from './styledComponents';
-
-// eslint-disable-next-line react/prefer-stateless-function
 const AddPullRequest = ({
+  dispatchClearForm,
   dispatchCreatePullRequest,
   dispatchHandleStep,
   dispatchImportPullRequest,
   error,
+  handleClearError,
+  handleClose,
   handleInputChange,
-  dispatchClearForm,
   importData,
-  importLoading,
   issueId,
+  loading,
   step,
   userId,
 }) => {
-  const StepToRender = importPullRequestDictionary[step];
+  useEffect(() => dispatchClearForm, []);
+  const ComponentToRender = importPullRequestDictionary[step];
 
   const handleImport = () => {
     const { importUrl } = importData;
     dispatchImportPullRequest({
       url: importUrl.value,
+      issueId,
     });
   };
   const handleSubmit = () => {
     dispatchCreatePullRequest({ issueId, userId, importData });
   };
-  return (
-    <ImportPullRequestWrapper>
-      <AsyncRender
-        asyncData={[]}
-        component={StepToRender}
-        loading={importLoading}
-        propsToPassDown={{
-          dispatchHandleStep,
-          error,
-          handleImport,
-          dispatchClearForm,
-          handleInputChange,
-          handleSubmit,
-          importData,
-          importLoading,
-        }}
-      />
-    </ImportPullRequestWrapper>
-  );
+
+  const propsToPassDown = {
+    dispatchHandleStep,
+    error,
+    handleClearError,
+    handleClose,
+    handleImport,
+    handleInputChange,
+    handleSubmit,
+    importData,
+    loading,
+  };
+
+  return <ComponentToRender {...propsToPassDown} />;
 };
 
 AddPullRequest.propTypes = {
+  dispatchClearForm: T.func,
   dispatchCreatePullRequest: T.func,
   dispatchHandleStep: T.func,
   dispatchImportPullRequest: T.func,
-  error: T.string,
+  error: T.oneOfType([T.bool, T.string]),
+  handleClearError: T.func,
+  handleClose: T.func,
   handleInputChange: T.func,
-  dispatchClearForm: T.func,
   importData: T.object,
-  importLoading: T.bool,
   issueId: T.string,
+  loading: T.bool,
   step: T.number,
   userId: T.string,
 };
 
 const mapStateToProps = createStructuredSelector({
-  step: makeSelectPullRequests('step'),
-  error: makeSelectPullRequestsError('importPullRequest'),
+  /*
+   * Reducer : PullRequests
+   */
+  error: makeSelectPullRequests('error'),
   importData: makeSelectPullRequests('importData'),
-  importLoading: makeSelectPullRequestsLoading('importPullRequest'),
+  loading: makeSelectPullRequests('loading'),
+  step: makeSelectPullRequests('step'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -105,6 +101,7 @@ function mapDispatchToProps(dispatch) {
     dispatchHandleStep: payload => dispatch(handleStep(payload)),
     dispatchImportPullRequest: payload => dispatch(importPullRequest(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
+    handleClearError: () => dispatch(clearError()),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }

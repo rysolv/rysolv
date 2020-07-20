@@ -2,7 +2,10 @@ import { deviceSizes } from 'utils/breakpoints';
 
 export const deviceViewToRender = width => {
   const {
+    desktop,
+    desktopS,
     laptop,
+    laptopS,
     mobile,
     mobileS,
     mobileXS,
@@ -22,8 +25,17 @@ export const deviceViewToRender = width => {
     if (width <= tabletS) return 'tabletS';
     return 'tablet';
   }
+  if (width <= laptopS) {
+    return 'laptopS';
+  }
   if (width <= laptop) {
     return 'laptop';
   }
-  return 'desktop';
+  if (width <= desktopS) {
+    return 'desktopS';
+  }
+  if (width <= desktop) {
+    return 'desktop';
+  }
+  return 'desktopL';
 };

@@ -45,7 +45,10 @@ export const initialState = {
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
     organizationId: { error: '', value: '' },
-    organizationLogo: { error: '', value: '' },
+    organizationLogo: {
+      error: '',
+      value: 'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
+    },
     organizationName: { error: '', value: '' },
     organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
@@ -211,12 +214,11 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
-      draft.error = initialState.error;
-      draft[form][field].error = '';
-
       if (form === 'filter') {
         draft[form][field] = value;
       } else {
+        draft.error = initialState.error;
+        draft[form][field].error = '';
         draft[form][field].value = value;
       }
       break;
@@ -231,7 +233,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = error;
+      draft.alerts.error = { message: error };
       draft.loading.addOrganization = false;
       break;
     }

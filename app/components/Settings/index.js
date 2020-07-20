@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
 
-import { ConditionalRender, Star } from 'components/base_ui';
+import {
+  BaseFileInput,
+  ConditionalRender,
+  IconButton,
+  Star,
+} from 'components/base_ui';
+import { getBase64 } from 'utils/globalHelpers';
+import iconDictionary from 'utils/iconDictionary';
 
 import {
+  EmptyGithubLinkComponent,
   GithubEditComponent,
   GithubLinkComponent,
 } from './GithubLinkComponents';
 import {
+  EmptyPersonalLinkComponent,
   PersonalEditComponent,
   PersonalLinkComponent,
 } from './PersonalLinkComponents';
 import {
+  EmptyStackoverflowLinkComponent,
   StackoverflowEditComponent,
   StackoverflowLinkComponent,
 } from './StackoverflowLinkComponents';
@@ -20,6 +30,8 @@ import SettingsTabs from './SettingsTabs';
 import {
   DetailContainer,
   DetailViewContainer,
+  EditUserImageWrapper,
+  InputIconGroup,
   LinksWrapper,
   Name,
   Rep,
@@ -28,6 +40,9 @@ import {
   UserCardWrapper,
   UserImage,
 } from './styledComponents';
+
+const CloseIcon = iconDictionary('close');
+const DoneIcon = iconDictionary('done');
 
 const SettingsView = ({
   alerts: { error, success },
@@ -59,6 +74,8 @@ const SettingsView = ({
     username,
     watching,
   },
+  deviceView,
+  dispatchInputError,
   dispatchOpenModal,
   dispatchSaveChange,
   filterValues,
@@ -66,6 +83,9 @@ const SettingsView = ({
   handleInputChange,
   handleNav,
   handleRemoveIssue,
+  handleWithdrawFunds,
+  inputErrors,
+  PullRequestComponent,
   view,
 }) => {
   const [displayBottom, setDisplayBottom] = useState(false);
@@ -78,6 +98,7 @@ const SettingsView = ({
     false,
   );
   const [changeStackoverflow, setChangeStackoverflow] = useState(false);
+  const [changeUserImage, setChangeUserImage] = useState(false);
   const [changeUsername, setChangeUsername] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [value, setValue] = useState('');
@@ -94,11 +115,21 @@ const SettingsView = ({
     setIsDisabled(false);
   };
 
-  const handleEdit = ({ changeInputState, currentValue }) => {
+  const handleEdit = ({ changeInputState, currentValue = '' }) => {
     setIsDisabled(true);
     changeInputState(true);
     setValue(currentValue);
   };
+
+  const handleUploadUserImage = async e => {
+    const { files } = e.target;
+    const formattedUserImage = await getBase64(files[0]);
+    setIsDisabled(true);
+    setChangeUserImage(true);
+    setValue(formattedUserImage);
+  };
+
+  const profilePicToRender = !changeUserImage ? profilePic : value;
   return (
     <DetailContainer>
       <StyledErrorSuccessBanner
@@ -108,74 +139,119 @@ const SettingsView = ({
       />
       <DetailViewContainer>
         <UserCardWrapper displayBottom={displayBottom}>
-          <UserImage src={profilePic} />
+          <EditUserImageWrapper>
+            <UserImage src={profilePicToRender} />
+            <ConditionalRender
+              Component={
+                <BaseFileInput
+                  accept="image/png, image/jpeg"
+                  id="logo-file-input"
+                  onChange={handleUploadUserImage}
+                />
+              }
+              FallbackComponent={
+                <InputIconGroup>
+                  <IconButton
+                    icon={CloseIcon}
+                    label="Close"
+                    onClick={() =>
+                      handleClose({ changeInputState: setChangeUserImage })
+                    }
+                  />
+                  <IconButton
+                    icon={DoneIcon}
+                    label="Save"
+                    onClick={() =>
+                      handleDone({
+                        changeInputState: setChangeUserImage,
+                        field: 'profilePic',
+                      })
+                    }
+                  />
+                </InputIconGroup>
+              }
+              shouldRender={!changeUserImage}
+            />
+          </EditUserImageWrapper>
           <Name>
             {firstName} {lastName}
           </Name>
           <LinksWrapper>
-            {githubLink && (
-              <ConditionalRender
-                Component={GithubLinkComponent}
-                FallbackComponent={
-                  <GithubEditComponent
-                    handleClose={handleClose}
-                    handleDone={handleDone}
-                    setChangeGithub={setChangeGithub}
-                    setValue={setValue}
-                    value={value}
-                  />
-                }
-                propsToPassDown={{
-                  githubLink,
-                  handleEdit,
-                  isDisabled,
-                  setChangeGithub,
-                }}
-                shouldRender={!changeGithub}
-              />
-            )}
-            {personalLink && (
-              <ConditionalRender
-                Component={PersonalLinkComponent}
-                FallbackComponent={
-                  <PersonalEditComponent
-                    handleClose={handleClose}
-                    handleDone={handleDone}
-                    setChangePersonal={setChangePersonal}
-                    setValue={setValue}
-                    value={value}
-                  />
-                }
-                propsToPassDown={{
-                  handleEdit,
-                  isDisabled,
-                  personalLink,
-                  setChangePersonal,
-                }}
-                shouldRender={!changePersonal}
-              />
-            )}
-            {stackoverflowLink && (
-              <ConditionalRender
-                Component={StackoverflowLinkComponent}
-                FallbackComponent={
-                  <StackoverflowEditComponent
-                    handleClose={handleClose}
-                    handleDone={handleDone}
-                    setChangeStackoverflow={setChangeStackoverflow}
-                    setValue={setValue}
-                    value={value}
-                  />
-                }
-                propsToPassDown={{
-                  stackoverflowLink,
-                  handleEdit,
-                  isDisabled,
-                  setChangeStackoverflow,
-                }}
-                shouldRender={!changeStackoverflow}
-              />
-            )}
+            <ConditionalRender
+              Component={
+                <ConditionalRender
+                  Component={GithubLinkComponent}
+                  FallbackComponent={EmptyGithubLinkComponent}
+                  propsToPassDown={{
+                    githubLink,
+                    handleEdit,
+                    isDisabled,
+                    setChangeGithub,
+                  }}
+                  shouldRender={!!githubLink}
+                />
+              }
+              FallbackComponent={
+                <GithubEditComponent
+                  handleClose={handleClose}
+                  handleDone={handleDone}
+                  setChangeGithub={setChangeGithub}
+                  setValue={setValue}
+                  value={value}
+                />
+              }
+              shouldRender={!changeGithub}
+            />
+            <ConditionalRender
+              Component={
+                <ConditionalRender
+                  Component={PersonalLinkComponent}
+                  FallbackComponent={EmptyPersonalLinkComponent}
+                  propsToPassDown={{
+                    handleEdit,
+                    isDisabled,
+                    personalLink,
+                    setChangePersonal,
+                  }}
+                  shouldRender={!!personalLink}
+                />
+              }
+              FallbackComponent={
+                <PersonalEditComponent
+                  handleClose={handleClose}
+                  handleDone={handleDone}
+                  setChangePersonal={setChangePersonal}
+                  setValue={setValue}
+                  value={value}
+                />
+              }
+              shouldRender={!changePersonal}
+            />
+            <ConditionalRender
+              Component={
+                <ConditionalRender
+                  Component={StackoverflowLinkComponent}
+                  FallbackComponent={EmptyStackoverflowLinkComponent}
+                  propsToPassDown={{
+                    stackoverflowLink,
+                    handleEdit,
+                    isDisabled,
+                    setChangeStackoverflow,
+                  }}
+                  shouldRender={!!stackoverflowLink}
+                />
+              }
+              FallbackComponent={
+                <StackoverflowEditComponent
+                  handleClose={handleClose}
+                  handleDone={handleDone}
+                  setChangeStackoverflow={setChangeStackoverflow}
+                  setValue={setValue}
+                  value={value}
+                />
+              }
+              shouldRender={!changeStackoverflow}
+            />
           </LinksWrapper>
           <Rep>
             <Star />
@@ -197,6 +273,7 @@ const SettingsView = ({
             rejectedPullRequests={rejectedPullRequests}
             setChangePreferredLanguages={setChangePreferredLanguages}
             setValue={setValue}
+            value={value}
           />
         </UserCardWrapper>
         <SettingsTabsWrapper displayBottom={displayBottom}>
@@ -210,6 +287,8 @@ const SettingsView = ({
             changeUsername={changeUsername}
             creditCardProps={creditCardProps}
             currentTab={currentTab}
+            deviceView={deviceView}
+            dispatchInputError={dispatchInputError}
             dispatchOpenModal={dispatchOpenModal}
             displayBottom={displayBottom}
             dollarsEarned={dollarsEarned}
@@ -222,10 +301,13 @@ const SettingsView = ({
             handleInputChange={handleInputChange}
             handleNav={handleNav}
             handleRemoveIssue={handleRemoveIssue}
+            handleWithdrawFunds={handleWithdrawFunds}
+            inputErrors={inputErrors}
             isDisabled={isDisabled}
             issues={issues}
             lastName={lastName}
             organizations={organizations}
+            PullRequestComponent={PullRequestComponent}
             setChangeEmail={setChangeEmail}
             setChangeFirstName={setChangeFirstName}
             setChangeLastName={setChangeLastName}
@@ -249,6 +331,8 @@ SettingsView.propTypes = {
   creditCardProps: T.object.isRequired,
   currentTab: T.number.isRequired,
   data: T.object.isRequired,
+  deviceView: T.string.isRequired,
+  dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveChange: T.func.isRequired,
   filterValues: T.object.isRequired,
@@ -256,6 +340,9 @@ SettingsView.propTypes = {
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
+  handleWithdrawFunds: T.func.isRequired,
+  inputErrors: T.object.isRequired,
+  PullRequestComponent: T.oneOfType([T.func, T.node, T.object]),
   view: T.string,
 };
 

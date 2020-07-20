@@ -1,19 +1,34 @@
 /* eslint-disable camelcase */
-const { FETCH } = require('../helpers');
-const {
-  formatIssueUrl,
-  formatOrganizationUrl,
-  formatPullRequestUrl,
-} = require('./helpers');
+const { authenticate } = require('./auth');
 
-const getSingleIssue = async issueUrl => {
+const getSingleIssue = async ({ issueNumber, organization, repo }) => {
   try {
-    const formattedUrl = formatIssueUrl(issueUrl);
-    const issueData = await FETCH(formattedUrl);
-    const { html_url, title, state, body, repository_url } = issueData;
+    // Authenticate with oktokit API - TODO: create better auth middleware
+    const { GITHUB } = await authenticate();
 
+    const { data: issueData } = await GITHUB.issues.get({
+      issue_number: issueNumber,
+      owner: organization,
+      repo,
+    });
+
+    const {
+      body,
+      html_url,
+      pull_request,
+      repository_url,
+      state,
+      title,
+    } = issueData;
+
+    if (!html_url) {
+      throw new Error(`Unable to import issue from ${repo}.`);
+    }
+    if (pull_request) {
+      throw new Error('Issue addressed by existing pull request.');
+    }
     if (state !== 'open') {
-      throw new Error('Cannot add closed issue');
+      throw new Error('Cannot add closed issue.');
     }
 
     const issueInput = {
@@ -22,22 +37,21 @@ const getSingleIssue = async issueUrl => {
       issueUrl: html_url,
       organizationUrl: repository_url,
     };
-
     return { issueInput };
   } catch (err) {
     throw err;
   }
 };
 
-const getSingleRepo = async organizationUrl => {
+const getSingleRepo = async ({ organization, repo }) => {
   try {
-    const { type, formattedUrl } = formatOrganizationUrl(organizationUrl);
+    // Authenticate with oktokit API - TODO: create better auth middleware
+    const { GITHUB } = await authenticate();
 
-    if (type === 'organization') {
-      return await getSingleOrganization(formattedUrl);
-    }
-
-    const organizationData = await FETCH(formattedUrl);
+    const { data: repoData } = await GITHUB.repos.get({
+      owner: organization,
+      repo,
+    });
 
     const {
       description,
@@ -45,31 +59,40 @@ const getSingleRepo = async organizationUrl => {
       html_url,
       language,
       name,
-      organization,
-    } = organizationData;
+      organization: parentOrganization,
+    } = repoData;
+
+    if (!html_url) {
+      throw new Error(`Unable to import organization.`);
+    }
 
     const organizationInput = {
       issueLanguages: [language],
-      organizationDescription: description,
+      organizationDescription: description || '',
+      organizationLanguages: [language],
+      organizationLogo:
+        'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
       organizationName: name,
       organizationRepo: html_url,
       organizationUrl: homepage,
-      organizationLanguages: [language],
     };
 
-    if (organization) {
-      // If repo has parent organization - pull data from parent
-      const parentOrganization = await FETCH(organization.url);
-      const {
-        name: parentName,
-        avatar_url,
-        html_url: parentRepo,
-        blog,
-        bio,
-      } = parentOrganization;
+    if (parentOrganization) {
+      const { data: parentData } = await GITHUB.orgs.get({
+        org: parentOrganization.login,
+      });
 
-      organizationInput.organizationName = parentName;
+      const {
+        avatar_url,
+        bio,
+        blog,
+        html_url: parentRepo,
+        login,
+        name: parentName,
+      } = parentData;
+
       organizationInput.organizationLogo = avatar_url;
+      organizationInput.organizationName = parentName || login;
       organizationInput.organizationRepo = parentRepo;
       organizationInput.organizationUrl = blog;
       if (bio) organizationInput.organizationDescription = bio;
@@ -81,27 +104,51 @@ const getSingleRepo = async organizationUrl => {
   }
 };
 
-const getSingleOrganization = async value => {
-  const organizationData = await FETCH(value);
-  const { avatar_url, bio, blog, html_url, name, type } = organizationData;
-  if (type === 'User') {
-    throw new Error('Cannot import user account as organization');
+const getSingleOrganization = async organization => {
+  // Authenticate with oktokit API - TODO: create better auth middleware
+  const { GITHUB } = await authenticate();
+
+  const { data: organizationData } = await GITHUB.orgs.get({
+    org: organization,
+  });
+
+  const {
+    avatar_url,
+    bio,
+    blog,
+    html_url,
+    login,
+    name,
+    type,
+  } = organizationData;
+
+  if (!html_url) {
+    throw new Error(`Unable to import organization from ${organization}.`);
   }
+  if (type === 'User') {
+    throw new Error('Cannot import user account as organization.');
+  }
+
   const organizationInput = {
     organizationDescription: bio || '',
-    organizationName: name,
-    organizationRepo: html_url,
-    organizationUrl: blog,
     organizationLanguages: [],
     organizationLogo: avatar_url,
+    organizationName: name || login,
+    organizationRepo: html_url,
+    organizationUrl: blog,
   };
-
   return { organizationInput };
 };
 
-const getSinglePullRequest = async pullRequestUrl => {
-  const formattedUrl = formatPullRequestUrl(pullRequestUrl);
-  const pullRequestData = await FETCH(formattedUrl);
+const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
+  // Authenticate with oktokit API - TODO: create better auth middleware
+  const { GITHUB } = await authenticate();
+
+  const { data: pullRequestData } = await GITHUB.pulls.get({
+    owner: organization,
+    pull_number: pullNumber,
+    repo,
+  });
 
   const {
     html_url,
@@ -116,10 +163,10 @@ const getSinglePullRequest = async pullRequestUrl => {
   } = pullRequestData;
 
   if (state !== 'open') {
-    throw new Error('This pullrequest is not open');
+    throw new Error('This pull request has been closed.');
   }
   if (merged) {
-    throw new Error('Pull request has already been merged');
+    throw new Error('Pull request has already been merged.');
   }
 
   const pullData = {

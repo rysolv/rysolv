@@ -29,6 +29,14 @@ export const MarkdownContainer = styled.div`
 
   .editor-toolbar {
     opacity: 1 !important;
+
+    ::after {
+      content: none;
+    }
+
+    ::before {
+      content: none;
+    }
   }
 
   .CodeMirror,

@@ -1,6 +1,8 @@
 import React, { Fragment, useRef } from 'react';
 import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
+
 import {
   CreditCardViewContainer,
   HorizontalInputWrapper,
@@ -16,10 +18,14 @@ const CreditCardView = ({
   dateValue,
   dispatchVerifyRecaptcha,
   dispatchVerifyRecaptchaFailure,
+  emailValue,
+  firstNameValue,
   handleCreditCardNumberChange,
   handleCvcChange,
   handleDateChange,
   handleZipChange,
+  isCreditPaymentOpen,
+  lastNameValue,
   setCreditCardNumber,
   setCvcValue,
   setDateValue,
@@ -27,61 +33,84 @@ const CreditCardView = ({
   zipValue,
 }) => {
   const recaptchaRef = useRef(null);
+  const isCreditComplete =
+    !!creditCardNumber &&
+    !!cvcValue &&
+    !!dateValue &&
+    !!emailValue &&
+    !!firstNameValue &&
+    !!lastNameValue &&
+    !!zipValue;
   return (
-    <Fragment>
-      <CreditCardViewContainer>
-        <InputWrapper>
-          <StyledBaseInputWithAdornment
-            adornmentComponent="Number"
-            fontSize="1rem"
-            inputProps={{ maxLength: 19 }}
-            onChange={e =>
-              handleCreditCardNumberChange(
-                e,
-                e.target.value,
-                setCreditCardNumber,
-              )
-            }
-            value={creditCardNumber}
-          />
-          <StyledBaseInputWithAdornment
-            adornmentComponent="MM/YYYY"
-            fontSize="1rem"
-            inputProps={{ maxLength: 7 }}
-            onChange={e => handleDateChange(e, e.target.value, setDateValue)}
-            value={dateValue}
-          />
-          <HorizontalInputWrapper>
-            <StyledBaseInputWithAdornment
-              adornmentComponent="CVC"
-              fontSize="1rem"
-              inputProps={{ maxLength: 3 }}
-              onChange={e => handleCvcChange(e, e.target.value, setCvcValue)}
-              value={cvcValue}
+    <ConditionalRender
+      Component={
+        <Fragment>
+          <CreditCardViewContainer>
+            <InputWrapper>
+              <StyledBaseInputWithAdornment
+                adornmentComponent="Number"
+                fontSize="1rem"
+                inputProps={{ maxLength: 19 }}
+                onChange={e =>
+                  handleCreditCardNumberChange(
+                    e,
+                    e.target.value,
+                    setCreditCardNumber,
+                  )
+                }
+                value={creditCardNumber}
+              />
+              <StyledBaseInputWithAdornment
+                adornmentComponent="MM/YYYY"
+                fontSize="1rem"
+                inputProps={{ maxLength: 7 }}
+                onChange={e =>
+                  handleDateChange(e, e.target.value, setDateValue)
+                }
+                value={dateValue}
+              />
+              <HorizontalInputWrapper>
+                <StyledBaseInputWithAdornment
+                  adornmentComponent="CVC"
+                  fontSize="1rem"
+                  inputProps={{ maxLength: 3 }}
+                  onChange={e =>
+                    handleCvcChange(e, e.target.value, setCvcValue)
+                  }
+                  value={cvcValue}
+                />
+                <StyledBaseInputWithAdornment
+                  adornmentComponent="Zip"
+                  fontSize="1rem"
+                  inputProps={{ maxLength: 5 }}
+                  onChange={e =>
+                    handleZipChange(e, e.target.value, setZipValue)
+                  }
+                  value={zipValue}
+                />
+              </HorizontalInputWrapper>
+              <StyledReCAPTCHA
+                ref={recaptchaRef}
+                onChange={response =>
+                  dispatchVerifyRecaptcha({
+                    resetRecaptcha: () => recaptchaRef.current.reset(),
+                    response,
+                  })
+                }
+                onExpired={dispatchVerifyRecaptchaFailure}
+                sitekey={process.env.RECAPTCHA_SITE_KEY}
+              />
+            </InputWrapper>
+            <StyledPrimaryAsyncButton
+              disabled={!isCreditComplete}
+              label="Confirm"
+              onClick={() => {}}
             />
-            <StyledBaseInputWithAdornment
-              adornmentComponent="Zip"
-              fontSize="1rem"
-              inputProps={{ maxLength: 5 }}
-              onChange={e => handleZipChange(e, e.target.value, setZipValue)}
-              value={zipValue}
-            />
-          </HorizontalInputWrapper>
-          <StyledReCAPTCHA
-            ref={recaptchaRef}
-            onChange={response =>
-              dispatchVerifyRecaptcha({
-                resetRecaptcha: () => recaptchaRef.current.reset(),
-                response,
-              })
-            }
-            onExpired={dispatchVerifyRecaptchaFailure}
-            sitekey={process.env.RECAPTCHA_SITE_KEY}
-          />
-        </InputWrapper>
-        <StyledPrimaryAsyncButton label="Confirm" onClick={() => {}} />
-      </CreditCardViewContainer>
-    </Fragment>
+          </CreditCardViewContainer>
+        </Fragment>
+      }
+      shouldRender={isCreditPaymentOpen}
+    />
   );
 };
 
@@ -91,10 +120,14 @@ CreditCardView.propTypes = {
   dateValue: T.string,
   dispatchVerifyRecaptcha: T.func,
   dispatchVerifyRecaptchaFailure: T.func,
+  emailValue: T.string,
+  firstNameValue: T.string,
   handleCreditCardNumberChange: T.func,
   handleCvcChange: T.func,
   handleDateChange: T.func,
   handleZipChange: T.func,
+  isCreditPaymentOpen: T.bool,
+  lastNameValue: T.string,
   setCreditCardNumber: T.func,
   setCvcValue: T.func,
   setDateValue: T.func,

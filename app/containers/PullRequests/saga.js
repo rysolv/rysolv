@@ -2,6 +2,8 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { post } from 'utils/request';
 
+import { fetchActiveUser } from 'containers/Auth/actions';
+import { updateIssueDetail } from 'containers/Issues/actions';
 import {
   createPullRequestFailure,
   createPullRequestSuccess,
@@ -50,8 +52,8 @@ export function* createPullRequestSaga({ payload }) {
         })
         {
         __typename
-        ... on Success {
-          message
+        ... on PullRequest {
+          pullRequestId
         }
         ... on Error {
           message
@@ -68,9 +70,11 @@ export function* createPullRequestSaga({ payload }) {
     const {
       data: { createPullRequest },
     } = yield call(post, '/graphql', pullRequestQuery);
-    const { __typename, message } = createPullRequest;
+    const { __typename, message, pullRequestId } = createPullRequest;
     if (__typename === 'Error') throw message;
-    yield put(createPullRequestSuccess({ message }));
+    yield put(createPullRequestSuccess({ message: 'Pull Request created' }));
+    yield put(fetchActiveUser({ userId }));
+    yield put(updateIssueDetail({ pullRequestId }));
   } catch (error) {
     yield put(createPullRequestFailure({ error }));
   }
@@ -85,6 +89,7 @@ export function* fetchUserPullRequestsSaga({ payload }) {
         ... on PullRequestArray {
           pullRequestArray {
             createdDate
+            fundedAmount
             githubUsername
             htmlUrl
             issueId
@@ -126,10 +131,10 @@ export function* fetchUserPullRequestsSaga({ payload }) {
 }
 
 export function* importPullRequestSaga({ payload }) {
-  const { url } = payload;
+  const { url, issueId } = payload;
   const query = `
     mutation {
-      importPullRequest(url: "${url}") {
+      importPullRequest(url: "${url}", issueId:"${issueId}") {
         __typename
         ... on ImportPullRequest {
           apiUrl

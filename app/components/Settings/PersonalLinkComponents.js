@@ -5,12 +5,41 @@ import { BaseTextInput, IconButton } from 'components/base_ui';
 import { formatUrlLinks } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
-import { LinkIcon, OneLink, OneLinkWrapper, StyledA } from './styledComponents';
+import {
+  IconButtonGroup,
+  LinkIcon,
+  OneLink,
+  OneLinkWrapper,
+  StyledA,
+} from './styledComponents';
 
 const CloseIcon = iconDictionary('close');
 const DoneIcon = iconDictionary('done');
 const EditIcon = iconDictionary('edit');
 const PersonalIcon = iconDictionary('link');
+
+export const EmptyPersonalLinkComponent = ({
+  handleEdit,
+  isDisabled,
+  setChangePersonal,
+}) => (
+  <OneLinkWrapper>
+    <OneLink>
+      <LinkIcon>{PersonalIcon}</LinkIcon>
+      Add personal link
+    </OneLink>
+    <IconButton
+      disabled={isDisabled}
+      icon={EditIcon}
+      label="Edit"
+      onClick={() =>
+        handleEdit({
+          changeInputState: setChangePersonal,
+        })
+      }
+    />
+  </OneLinkWrapper>
+);
 
 export const PersonalEditComponent = ({
   handleClose,
@@ -24,7 +53,7 @@ export const PersonalEditComponent = ({
       <LinkIcon>{PersonalIcon}</LinkIcon>
       <BaseTextInput onChange={e => setValue(e.target.value)} value={value} />
     </OneLink>
-    <div>
+    <IconButtonGroup>
       <IconButton
         icon={CloseIcon}
         label="Close"
@@ -40,7 +69,7 @@ export const PersonalEditComponent = ({
           })
         }
       />
-    </div>
+    </IconButtonGroup>
   </OneLinkWrapper>
 );
 
@@ -70,6 +99,12 @@ export const PersonalLinkComponent = ({
     />
   </OneLinkWrapper>
 );
+
+EmptyPersonalLinkComponent.propTypes = {
+  handleEdit: T.func,
+  isDisabled: T.bool,
+  setChangePersonal: T.func,
+};
 
 PersonalEditComponent.propTypes = {
   handleClose: T.func,

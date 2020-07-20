@@ -10,6 +10,7 @@ const MainTextInput = ({
   helperText,
   label,
   onChange,
+  type,
   value,
   ...restProps
 }) => (
@@ -20,6 +21,7 @@ const MainTextInput = ({
       helperText={helperText}
       label={label}
       onChange={onChange}
+      type={type}
       value={value}
       {...restProps}
     />
@@ -35,6 +37,7 @@ MainTextInput.propTypes = {
   helperText: T.string,
   label: T.string,
   onChange: T.func,
+  type: T.string,
   value: T.oneOfType([T.number, T.string]),
 };
 

@@ -2,6 +2,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { fetchActiveUser, updateActiveUser } from 'containers/Auth/actions';
+import { updatePaymentModal } from 'containers/Main/actions';
 import { post } from 'utils/request';
 
 import {
@@ -193,27 +194,28 @@ export function* fetchIssueDetailSaga({ payload }) {
       oneIssue(id: "${id}") {
         __typename
         ... on Issue {
-          id,
-          createdDate,
-          modifiedDate,
+          attempting,
           attempts,
           body,
           comments,
-          attempting,
           contributor,
+          createdDate,
+          fundedAmount,
+          id,
           language,
+          modifiedDate,
           name,
+          open,
           organizationId,
           organizationName,
           organizationVerified,
+          profilePic
+          pullRequests,
           rep,
           repo,
-          fundedAmount,
-          watching,
-          open,
           userId,
           username,
-          profilePic
+          watching,
         }
         ... on Error {
           message
@@ -356,30 +358,44 @@ export function* saveInfoSaga({ payload }) {
     activeUser: { id: userId },
   } = payload;
   const query = `
-  mutation{
-    createIssue(
-      issueInput: {
-        body: ${JSON.stringify(issueBody)},
-        contributor: "${userId}",
-        language:  ${JSON.stringify(issueLanguages)},
-        name: ${JSON.stringify(issueName)},
-        organizationDescription:  "${organizationDescription}",
-        organizationId:  ${JSON.stringify(organizationId)},
-        organizationLogo:  ${JSON.stringify(organizationLogo)},
-        organizationName:  "${organizationName}",
-        organizationRepo:  "${organizationRepo}",
-        organizationUrl:  "${organizationUrl}",
-        repo: "${issueUrl}",
+    mutation{
+      createIssue(
+        issueInput: {
+          body: ${JSON.stringify(issueBody)},
+          contributor: "${userId}",
+          language:  ${JSON.stringify(issueLanguages)},
+          name: ${JSON.stringify(issueName)},
+          organizationDescription:  "${organizationDescription}",
+          organizationId:  ${JSON.stringify(organizationId)},
+          organizationLogo:  ${JSON.stringify(organizationLogo)},
+          organizationName:  "${organizationName}",
+          organizationRepo:  "${organizationRepo}",
+          organizationUrl:  "${organizationUrl}",
+          repo: "${issueUrl}",
+        }
+      ) {
+        __typename
+        ... on Issue {
+          id
+        }
+        ... on Error {
+          message
+        }
       }
-    )
-    { id }
-  }`;
+    }
+  `;
   try {
     const graphql = JSON.stringify({
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
+    const {
+      data: { createIssue },
+    } = yield call(post, '/graphql', graphql);
+    const { __typename, message } = createIssue;
+    if (__typename === 'Error') throw message;
+
+    yield put(fetchActiveUser({ userId }));
     yield put(saveInfoSuccess({ message: successCreateIssueMessage }));
   } catch (error) {
     yield put(saveInfoFailure({ error }));
@@ -426,10 +442,11 @@ export function* searchIssuesSaga({ payload }) {
 }
 
 export function* submitAccountPaymentSaga({ payload }) {
-  const { fundValue, issueId, userId } = payload;
+  const { fundValue, issueId, organizationId, userId } = payload;
+  const isFundedFromOverview = window.location.pathname === '/issues';
   const submitAccountPaymentQuery = `
       mutation {
-        submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", userId: "${userId}" ) {
+        submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", organizationId: "${organizationId}", userId: "${userId}" ) {
           __typename
           ... on Payment {
             balance,
@@ -453,28 +470,31 @@ export function* submitAccountPaymentSaga({ payload }) {
     yield put(
       submitAccountPaymentSuccess({
         fundedAmount,
+        isFundedFromOverview,
+        issueId,
         message: successAccountPaymentMessage,
       }),
     );
     yield put(updateActiveUser({ balance }));
+    yield put(updatePaymentModal({ balance, fundedAmount }));
   } catch (error) {
     yield put(submitAccountPaymentFailure({ error }));
   }
 }
 
 export function* upvoteIssuesSaga({ payload }) {
-  const { issueId, userId } = payload;
+  const { issueId, upvote, userId } = payload;
   const upvoteIssueQuery = `
       mutation {
-        upvoteIssue(id: "${issueId}" ) {
+        upvoteIssue(id: "${issueId}", upvote: ${upvote} ) {
           id,
           rep
         }
-        userUpvote(id: "${userId}" ) {
+        userUpvote(id: "${userId}", upvote: ${upvote} ) {
           id,
           rep
         }
-        updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: false ) {
+        updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: ${!upvote} ) {
           attempting,
           watching
         }

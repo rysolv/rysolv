@@ -3,6 +3,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import {
   defaultFontSize,
+  detailFontSize,
   hyperlinkColor,
   selectedColor,
 } from 'defaultStyleHelper';
@@ -33,6 +34,66 @@ export const StyledDownArrow = styled.div`
   }
   &:hover {
     color: #b0bec5;
+  }
+`;
+
+export const StyledIconTooltip = styled(Tooltip)`
+  display: inline-block;
+
+  .MuiTooltip-popper {
+    font-size: ${defaultFontSize};
+  }
+`;
+
+export const StyledMonocleIcon = styled.div`
+  color: inherit;
+  display: inline-block;
+  text-align: center;
+  * {
+    fill: inherit;
+    stroke: inherit;
+    stroke-width: 150;
+  }
+`;
+
+export const StyledNavIcon = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 2rem;
+  justify-content: space-around;
+  padding: 0;
+  position: absolute;
+  width: 2rem;
+  z-index: 10;
+
+  &:focus {
+    outline: none;
+  }
+
+  div {
+    background: white;
+    border-radius: 10px;
+    height: 0.2rem;
+    position: relative;
+    transform-origin: 1px;
+    transition: all 0.3s linear;
+    width: 2rem;
+
+    :first-child {
+      transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};
+    }
+
+    :nth-child(2) {
+      opacity: ${({ open }) => (open ? '0' : '1')};
+      transform: ${({ open }) => (open ? 'translateX(20px)' : 'translateX(0)')};
+    }
+
+    :nth-child(3) {
+      transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
+    }
   }
 `;
 
@@ -78,20 +139,6 @@ export const StyledUpvote = styled.div`
   }
 `;
 
-export const StyledIconTooltip = styled(Tooltip)`
-  .MuiTooltip-popper {
-    font-size: ${defaultFontSize};
-  }
-  display: inline-block;
-`;
-
-export const StyledMonocleIcon = styled.div`
-  color: inherit;
-  display: inline-block;
-  text-align: center;
-  * {
-    fill: inherit;
-    stroke: inherit;
-    stroke-width: 150;
-  }
+export const StyledTooltipLabel = styled.span`
+  font-size: ${detailFontSize};
 `;

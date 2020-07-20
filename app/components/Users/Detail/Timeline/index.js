@@ -33,64 +33,69 @@ const UserTimelineView = ({
   handleNav,
   filterValues: { users: usersFilter },
 }) => {
-  const ActivityComponent = activity.map(
-    (
-      {
-        action,
-        activityId,
-        date,
-        fundedValue,
-        icon,
-        path,
-        target: { targetType, targetName },
-      },
-      index,
-    ) => {
-      const TimelineListItemComponent = (
-        <TimelineListItem key={activityId}>
-          <TimelineDividerContainer>
-            <TimelineVerticalDivider />
-            {icon}
-          </TimelineDividerContainer>
-          <TimelineContent>
-            <TimelineType>
-              <StyledAction>{formatWordString(action)}</StyledAction>&nbsp;
-              {targetType}
-            </TimelineType>
-            <TimelineInfo>
-              <ConditionalRender
-                Component={
-                  <Fragment>
-                    <TimelineDollar>
-                      {formatDollarAmount(fundedValue)}
-                    </TimelineDollar>
-                    for &nbsp;
-                  </Fragment>
-                }
-                shouldRender={!!fundedValue}
-              />
-              <TimelineActivity onClick={() => handleNav(path)}>
-                {targetName}
-              </TimelineActivity>
-            </TimelineInfo>
-          </TimelineContent>
-        </TimelineListItem>
-      );
-
-      if (index === 0 || date !== activity[index - 1].date) {
-        return (
-          <Fragment key={`list-item-${index}`}>
-            <TimelineHeader>
-              <TimelineTitle>{moment(date).format('MMMM DD')}</TimelineTitle>
-              <TimelineHorizontalDivider />
-            </TimelineHeader>
-            {TimelineListItemComponent}
-          </Fragment>
+  const ActivityComponent = () =>
+    activity.map(
+      (
+        {
+          action,
+          activityId,
+          date,
+          fundedValue,
+          icon,
+          path,
+          target: { targetType, targetName },
+        },
+        index,
+      ) => {
+        const TimelineListItemComponent = (
+          <TimelineListItem key={activityId}>
+            <TimelineDividerContainer>
+              <TimelineVerticalDivider />
+              {icon}
+            </TimelineDividerContainer>
+            <TimelineContent>
+              <TimelineType>
+                <StyledAction>{formatWordString(action)}</StyledAction>&nbsp;
+                {targetType}
+              </TimelineType>
+              <TimelineInfo>
+                <ConditionalRender
+                  Component={
+                    <Fragment>
+                      <TimelineDollar>
+                        {formatDollarAmount(fundedValue)}&nbsp;
+                      </TimelineDollar>
+                      for&nbsp;
+                    </Fragment>
+                  }
+                  shouldRender={!!fundedValue}
+                />
+                <TimelineActivity onClick={() => handleNav(path)}>
+                  {targetName}
+                </TimelineActivity>
+              </TimelineInfo>
+            </TimelineContent>
+          </TimelineListItem>
         );
-      }
-      return TimelineListItemComponent;
-    },
-  );
+
+        if (
+          index === 0 ||
+          moment(date).format('YYYY/MM/DD') !==
+            moment(activity[index - 1].date).format('YYYY/MM/DD')
+        ) {
+          return (
+            <Fragment key={`list-item-${index}`}>
+              <TimelineHeader>
+                <TimelineTitle>{moment(date).format('MMMM DD')}</TimelineTitle>
+                <TimelineHorizontalDivider />
+              </TimelineHeader>
+              {TimelineListItemComponent}
+            </Fragment>
+          );
+        }
+        return TimelineListItemComponent;
+      },
+    );
 
   return (
     <TimelineContainer>

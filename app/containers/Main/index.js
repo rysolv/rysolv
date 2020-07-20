@@ -16,7 +16,7 @@ import SigninModal from 'components/SigninModal';
 import WatchList from 'components/WatchList';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { signin, signout } from 'containers/Auth/actions';
+import { signIn, signOut } from 'containers/Auth/actions';
 import {
   clearAlerts,
   closeIssue,
@@ -128,20 +128,20 @@ export const Main = ({
       <AppBodyWrapper>
         <Header
           activeUser={activeUser}
+          deviceView={deviceView}
           handleNav={handleNav}
           handleSignin={handleSignin}
           handleSignout={handleSignout}
           isSignedIn={isSignedIn}
-          view={deviceView}
         />
         <AppContentWrapper>
-          <SideNav handleNav={handleNav} view={deviceView} />
+          <SideNav deviceView={deviceView} handleNav={handleNav} />
           <RoutesWrapper>
             <Routes error={error} loading={loading} match={match} />
           </RoutesWrapper>
         </AppContentWrapper>
       </AppBodyWrapper>
-      <Footer />
+      <Footer handleNav={handleNav} />
       {modal && <ModalDialog {...modalPropsDictionary[modal]} />}
     </Fragment>
   );
@@ -193,8 +193,8 @@ const mapDispatchToProps = dispatch => ({
   /**
    * Auth
    */
-  handleSignin: payload => dispatch(signin(payload)),
-  handleSignout: payload => dispatch(signout(payload)),
+  handleSignin: payload => dispatch(signIn(payload)),
+  handleSignout: payload => dispatch(signOut(payload)),
   /**
    * Issues
    */

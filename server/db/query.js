@@ -20,9 +20,9 @@ const mapQueryPrint = async array => {
   const client = await pool.connect();
   const queryDB = async queryText => {
     try {
-      const { rows } = await client.query(queryText);
+      const { fields } = await client.query(queryText);
       // eslint-disable-next-line no-console
-      console.table(rows);
+      console.table(fields);
     } catch (error) {
       client.release();
       throw error;

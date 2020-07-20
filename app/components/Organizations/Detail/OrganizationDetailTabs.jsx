@@ -1,6 +1,5 @@
 import React from 'react';
 import T from 'prop-types';
-import Tabs from '@material-ui/core/Tabs';
 
 import { ConditionalRender } from 'components/base_ui';
 
@@ -12,9 +11,11 @@ import {
   EmptyMessageComponent,
   StyledPaper,
   StyledTab,
+  StyledTabs,
 } from './styledComponents';
 
 const OrganizationDetailTabs = ({
+  activeUser,
   contributors,
   dispatchOpenModal,
   filterValues,
@@ -51,6 +52,7 @@ const OrganizationDetailTabs = ({
     <ConditionalRender
       Component={
         <OrganizationIssuesTab
+          activeUser={activeUser}
           dispatchOpenModal={dispatchOpenModal}
           handleNav={handleNav}
           handleUpvote={handleUpvote}
@@ -69,15 +71,15 @@ const OrganizationDetailTabs = ({
 
   return (
     <StyledPaper>
-      <Tabs
-        value={value}
+      <StyledTabs
+        classes={{ indicator: 'indicator' }}
         onChange={handleChange}
-        indicatorColor="primary"
         textColor="primary"
+        value={value}
       >
-        <StyledTab label="Issues" />
-        <StyledTab label="Contributors" />
-      </Tabs>
+        <StyledTab classes={{ selected: 'selected' }} label="Issues" />
+        <StyledTab classes={{ selected: 'selected' }} label="Contributors" />
+      </StyledTabs>
       <ConditionalRender
         Component={
           <ContributorsSearchHeader handleInputChange={handleInputChange} />
@@ -100,6 +102,7 @@ const OrganizationDetailTabs = ({
 };
 
 OrganizationDetailTabs.propTypes = {
+  activeUser: T.object,
   contributors: T.array,
   dispatchOpenModal: T.func,
   filterValues: T.object.isRequired,

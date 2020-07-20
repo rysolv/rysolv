@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { Fragment } from 'react';
+import moment from 'moment';
 import T from 'prop-types';
 
 import { ConditionalRender, ProfileImage } from 'components/base_ui';
@@ -35,7 +36,6 @@ export class RecentActivityView extends React.PureComponent {
             user: { userId, username, profilePic },
           }) => (
             <ActivityWrapper key={activityId}>
-              <ActivityDate>{date}</ActivityDate>
               <div style={{ display: 'flex' }}>
                 <ProfileImageWrapper>
                   <ProfileImage
@@ -55,10 +55,11 @@ export class RecentActivityView extends React.PureComponent {
                     {action} {targetType.toLowerCase()}
                   </StyledAction>
                   &nbsp;
+                  {fundedValue ? `for ${formatDollarAmount(fundedValue)} ` : ''}
                   <StyledExternalLink to={path}>
                     {targetName}
                   </StyledExternalLink>
-                  {fundedValue ? ` for ${formatDollarAmount(fundedValue)}` : ''}
+                  <ActivityDate>{moment(date).fromNow()}</ActivityDate>
                 </FundContent>
               </div>
             </ActivityWrapper>

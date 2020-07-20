@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
 import { BackNav } from 'components/base_ui';
+import { transferValueLowErrorMessage } from 'containers/Settings/constants';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
@@ -14,6 +15,7 @@ import {
   InputHeader,
   StyledBaseDropDownMenu,
   StyledBaseInput,
+  StyledFormHelperText,
   StyledPrimaryAsyncButton,
   StyledText,
   WithdrawalInputContainer,
@@ -21,7 +23,15 @@ import {
 } from '../styledComponents';
 import { StyledH3 } from '../../styledComponents';
 
-const WithdrawalFormComponent = ({ balance, handleNav, setDisplayBottom }) => {
+const WithdrawalFormComponent = ({
+  balance,
+  dispatchInputError,
+  handleNav,
+  handleWithdrawFunds,
+  inputErrors: { transferValue: transferValueError },
+  setDisplayBottom,
+  userId,
+}) => {
   const [transferLocation, setTransferLocation] = useState('PayPal');
   const [transferValue, setTransferValue] = useState('0');
 
@@ -51,11 +61,22 @@ const WithdrawalFormComponent = ({ balance, handleNav, setDisplayBottom }) => {
         setTransferValue(formattedValue);
       }
       if (formattedString.length === 2) {
+        formattedString[0] = formattedString[0] === '' ? '0' : formattedString[0];
         formattedString[1] = formattedString[1]
           ? formattedString[1].slice(0, 2)
           : '';
         const formattedValue = formattedString.join('.');
         setTransferValue(formattedValue);
+      }
+    }
+  };
+
+  const handleValidateInput = ({ field, value }) => {
+    if (field === 'transferValue') {
+      if (value > 0) {
+        dispatchInputError({ field, message: '' })
+      } else {
+        dispatchInputError({ field, message: transferValueLowErrorMessage })
       }
     }
   };
@@ -90,33 +111,49 @@ const WithdrawalFormComponent = ({ balance, handleNav, setDisplayBottom }) => {
           <InputHeader>Amount to withdraw:</InputHeader>
           <StyledBaseInput
             inputProps={{ maxLength: 7 }}
+            onBlur={() => handleValidateInput({ field: 'transferValue', value: transferValue })}
             onChange={e => handleChangeDollarValue(e)}
             value={transferValue}
           />
+          <StyledFormHelperText error={!!transferValueError}>{transferValueError}</StyledFormHelperText>
         </WithdrawalInputWrapper>
       </WithdrawalInputContainer>
       <Divider />
       <WithdrawalInputContainer>
         <WithdrawalInputWrapper isRow isThin>
           <InputHeader>15% Rysolv Service Fee:</InputHeader>
-          <DisplayText>{formatDollarAmount(transferValue*0.15)}</DisplayText>
+          <DisplayText>{formatDollarAmount(transferValue * 0.15)}</DisplayText>
         </WithdrawalInputWrapper>
         <WithdrawalInputWrapper isRow>
           <InputHeader>Transfer to PayPal:</InputHeader>
           <DisplayText>
-            {transferValue > 0 ? `${formatDollarAmount(transferValue - (transferValue*0.15))} USD` : '–'}
+            {transferValue > 0
+              ? `${formatDollarAmount(
+                transferValue - transferValue * 0.15,
+              )} USD`
+              : '–'}
           </DisplayText>
         </WithdrawalInputWrapper>
       </WithdrawalInputContainer>
-      <StyledPrimaryAsyncButton label="Withdraw Funds" onClick={() => {}} />
+      <StyledPrimaryAsyncButton
+        disabled={!!transferValueError || transferValue <= 0 || transferValue === '.'}
+        label="Withdraw Funds"
+        onClick={() =>
+          handleWithdrawFunds({ transferValue, userId })
+        }
+      />
     </Fragment>
   );
 };
 
 WithdrawalFormComponent.propTypes = {
   balance: T.number.isRequired,
+  dispatchInputError: T.func.isRequired,
   handleNav: T.func.isRequired,
+  handleWithdrawFunds: T.func.isRequired,
+  inputErrors: T.object.isRequired,
   setDisplayBottom: T.func.isRequired,
+  userId: T.string.isRequired,
 };
 
 export default WithdrawalFormComponent;

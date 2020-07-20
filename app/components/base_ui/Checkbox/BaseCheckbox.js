@@ -18,7 +18,7 @@ Checkbox.defaultProps = { disabled: false };
 CheckboxComponent.propTypes = {
   checked: T.bool.isRequired,
   disabled: T.bool,
-  onChange: T.func.isRequired,
+  onChange: T.func,
 };
 
 export default CheckboxComponent;

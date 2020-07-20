@@ -4,6 +4,7 @@ const issueSchema = require('./issues');
 const organizationSchema = require('./organizations');
 const pullRequestSchema = require('./pullRequest');
 const userSchema = require('./users');
+const withdrawalSchema = require('./withdrawal');
 
 module.exports = {
   activitySchema,
@@ -12,4 +13,5 @@ module.exports = {
   organizationSchema,
   pullRequestSchema,
   userSchema,
+  withdrawalSchema,
 };

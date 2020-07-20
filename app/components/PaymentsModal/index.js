@@ -14,6 +14,8 @@ const closeIcon = iconDictionary('close');
 
 const PaymentPortalModal = ({
   balance,
+  email,
+  firstName,
   fundedAmount,
   handleClearAlerts,
   handleClose,
@@ -21,6 +23,9 @@ const PaymentPortalModal = ({
   handleSubmitAccountPayment,
   isSignedIn,
   issueId,
+  lastName,
+  open,
+  organizationId,
   paymentAlerts,
   userId,
 }) => (
@@ -34,12 +39,17 @@ const PaymentPortalModal = ({
     </IconWrapper>
     <StyledPaymentPortal
       balance={balance}
+      email={email}
+      firstName={firstName}
       fundedAmount={fundedAmount}
       handleClearAlerts={handleClearAlerts}
       handleNav={handleNav}
       handleSubmitAccountPayment={handleSubmitAccountPayment}
       isSignedIn={isSignedIn}
       issueId={issueId}
+      lastName={lastName}
+      open={open}
+      organizationId={organizationId}
       paymentAlerts={paymentAlerts}
       removeBorder
       userId={userId}
@@ -49,6 +59,8 @@ const PaymentPortalModal = ({
 
 PaymentPortalModal.propTypes = {
   balance: T.number,
+  email: T.string,
+  firstName: T.string,
   fundedAmount: T.number,
   handleClearAlerts: T.func,
   handleClose: T.func,
@@ -56,6 +68,9 @@ PaymentPortalModal.propTypes = {
   handleSubmitAccountPayment: T.func,
   isSignedIn: T.bool,
   issueId: T.string,
+  lastName: T.string,
+  open: T.bool,
+  organizationId: T.string,
   paymentAlerts: T.object,
   userId: T.string,
 };

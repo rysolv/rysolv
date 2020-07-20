@@ -24,7 +24,12 @@ const makeSelectOrganizationsDisabled = () =>
   createSelector(
     makeSelectOrganizations('organizationData'),
     data => {
-      const tempData = omit(data, ['importUrl', 'organizationId']);
+      const tempData = omit(data, [
+        'importUrl',
+        'organizationId',
+        'organizationLogo',
+        'organizationUrl',
+      ]);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );
@@ -105,7 +110,9 @@ const makeSelectOrganizationsFormattedData = () =>
         const filteredActivity = activity.filter(
           el =>
             el.actionType !== 'add_watching' &&
-            el.actionType !== 'remove_watching',
+            el.actionType !== 'remove_watching' &&
+            el.actionType !== 'add_attempting' &&
+            el.actionType !== 'remove_attempting',
         );
         const formattedActivity = filteredActivity.map(el =>
           formatActivity(el),

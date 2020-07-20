@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 import { Link } from 'react-router-dom';
 
 import {
@@ -12,10 +13,9 @@ import {
 } from 'components/base_ui';
 import {
   defaultFontSize,
-  detailFontSize,
   dividerBorder,
+  headerColor,
   hoverLinkColor,
-  hyperlinkColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -30,15 +30,15 @@ export const ActivityContainer = styled.div`
 `;
 
 export const ActivityDate = styled.div`
-  color: ${textColor};
-  font-size: ${detailFontSize};
-  text-transform: uppercase;
-  text-align: right;
+  color: #6a737d;
+  font-size: 90%;
+  font-weight: 400;
   padding: 0.5rem 0;
+  text-transform: uppercase;
 `;
 
 export const ActivityWrapper = styled.div`
-  padding: 0.5rem 1rem;
+  padding: 1.6rem;
 `;
 
 export const BaseInputWrapper = styled.div`
@@ -145,14 +145,15 @@ export const EmptyMessageComponent = styled.div`
   color: ${textColor};
   display: flex;
   font-size: ${defaultFontSize};
-  height: 100%;
+  height: 70%;
   justify-content: center;
 `;
 
 export const FundContent = styled.div`
-  width: 100%;
   font-size: ${defaultFontSize};
+  line-height: 1.7rem;
   padding-left: 0.8rem;
+  width: 100%;
 `;
 
 export const HeaderWrapper = styled.div`
@@ -417,6 +418,16 @@ export const StyledSecondayButton = styled(SecondaryButton)`
 
 export const StyledTab = styled(Tab)`
   font-size: ${defaultFontSize};
+
+  &.selected {
+    color: ${headerColor};
+  }
+`;
+
+export const StyledTabs = styled(Tabs)`
+  .indicator {
+    background-color: ${headerColor};
+  }
 `;
 
 export const StyledTitled = styled.div`
@@ -425,8 +436,8 @@ export const StyledTitled = styled.div`
 `;
 
 export const StyledWordLink = styled(Link)`
-  display: inline;
-  font-weight: bold;
+  font-weight: 700;
+
   &:hover {
     cursor: pointer;
     text-decoration: underline;
@@ -434,10 +445,12 @@ export const StyledWordLink = styled(Link)`
 `;
 
 export const StyledExternalLink = styled(Link)`
-  color: ${hyperlinkColor};
+  color: ${hoverLinkColor};
+
   &:hover {
-    cursor: pointer;
     color: ${hoverLinkColor};
+    cursor: pointer;
+    text-decoration: underline;
   }
 `;
 
@@ -449,6 +462,7 @@ export const TabsContainer = styled.div`
 
   ${mobile} {
     flex-direction: column-reverse;
+    justify-content: flex-end;
   }
 `;
 
@@ -477,5 +491,6 @@ export const UrlWrapper = styled.div`
   ${mobile} {
     flex-direction: column;
     margin-left: -12rem;
+    padding-top: 1.5rem;
   }
 `;

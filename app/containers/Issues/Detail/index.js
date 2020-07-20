@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
+import AddPullRequestModal from 'components/AddPullRequestModal';
 import AsyncRender from 'components/AsyncRender';
+import { ModalDialog } from 'components/base_ui';
 import IssueDetail from 'components/Issues/Detail';
 import { fetchWatchList, openModalState } from 'containers/Main/actions';
 import { makeSelectAuth } from 'containers/Auth/selectors';
@@ -18,8 +20,10 @@ import {
   addComment,
   clearAlerts,
   closeIssue,
+  closeIssueModalState,
   editIssue,
   fetchIssueDetail,
+  openIssueModalState,
   submitAccountPayment,
   upvoteIssue,
 } from '../actions';
@@ -56,8 +60,10 @@ export class IssuesDetail extends React.PureComponent {
       alerts,
       deviceView,
       dispatchCloseIssue,
+      dispatchCloseIssueModal,
       dispatchEditIssue,
       dispatchFetchWatchList,
+      dispatchOpenIssueModal,
       dispatchOpenModal,
       error,
       handleClearAlerts,
@@ -66,37 +72,58 @@ export class IssuesDetail extends React.PureComponent {
       handleNav,
       handleSubmitAccountPayment,
       handleUpvote,
+      isModalOpen,
       isSignedIn,
       issueDetail,
       loading,
+      match: {
+        params: { id },
+      },
+      modal,
       paymentAlerts,
     } = this.props;
 
+    const modalPropsDictionary = {
+      addPullRequest: {
+        Component: AddPullRequestModal,
+        open: isModalOpen,
+        propsToPassDown: {
+          handleClose: dispatchCloseIssueModal,
+          issueId: id,
+          userId: activeUser.id,
+        },
+      },
+    };
+
     return (
-      <AsyncRender
-        asyncData={issueDetail}
-        component={IssueDetail}
-        error={error}
-        loading={loading}
-        isRequiredData
-        propsToPassDown={{
-          activeUser,
-          alerts,
-          deviceView,
-          dispatchCloseIssue,
-          dispatchEditIssue,
-          dispatchFetchWatchList,
-          dispatchOpenModal,
-          handleClearAlerts,
-          handleComment,
-          handleIncrement,
-          handleNav,
-          handleSubmitAccountPayment,
-          handleUpvote,
-          isSignedIn,
-          paymentAlerts,
-        }}
-      />
+      <Fragment>
+        <AsyncRender
+          asyncData={issueDetail}
+          component={IssueDetail}
+          error={error}
+          loading={loading}
+          isRequiredData
+          propsToPassDown={{
+            activeUser,
+            alerts,
+            deviceView,
+            dispatchCloseIssue,
+            dispatchEditIssue,
+            dispatchFetchWatchList,
+            dispatchOpenIssueModal,
+            dispatchOpenModal,
+            handleClearAlerts,
+            handleComment,
+            handleIncrement,
+            handleNav,
+            handleSubmitAccountPayment,
+            handleUpvote,
+            isSignedIn,
+            paymentAlerts,
+          }}
+        />
+        {isModalOpen && <ModalDialog {...modalPropsDictionary[modal]} />}
+      </Fragment>
     );
   }
 }
@@ -106,9 +133,11 @@ IssuesDetail.propTypes = {
   alerts: T.object,
   deviceView: T.string,
   dispatchCloseIssue: T.func,
+  dispatchCloseIssueModal: T.func,
   dispatchEditIssue: T.func,
   dispatchFetchIssueDetail: T.func,
   dispatchFetchWatchList: T.func,
+  dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   error: T.oneOfType([T.bool, T.object]),
   handleClearAlerts: T.func,
@@ -117,10 +146,12 @@ IssuesDetail.propTypes = {
   handleNav: T.func,
   handleSubmitAccountPayment: T.func,
   handleUpvote: T.func,
+  isModalOpen: T.bool,
   isSignedIn: T.bool,
   issueDetail: T.object,
   loading: T.bool,
   match: T.object,
+  modal: T.string,
   paymentAlerts: T.object,
 };
 
@@ -135,8 +166,10 @@ const mapStateToProps = createStructuredSelector({
    */
   alerts: makeSelectIssues('alerts'),
   error: makeSelectIssueDetailError('issueDetail'),
+  isModalOpen: makeSelectIssues('isModalOpen'),
   issueDetail: makeSelectIssueDetail('issueDetail'),
   loading: makeSelectIssueDetailLoading('issueDetail'),
+  modal: makeSelectIssues('modal'),
   paymentAlerts: makeSelectIssues('paymentAlerts'),
   /**
    * Reducer : ViewSize
@@ -150,8 +183,10 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Issues
      */
     dispatchCloseIssue: payload => dispatch(closeIssue(payload)),
+    dispatchCloseIssueModal: () => dispatch(closeIssueModalState()),
     dispatchEditIssue: payload => dispatch(editIssue(payload)),
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
+    dispatchOpenIssueModal: payload => dispatch(openIssueModalState(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleComment: payload => dispatch(addComment(payload)),
     handleIncrement: payload => dispatch(addAttempt(payload)),

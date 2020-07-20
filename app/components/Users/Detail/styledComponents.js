@@ -119,7 +119,7 @@ export const UserCardWrapper = styled.div`
   flex-direction: column;
   height: fit-content;
   padding: 15px 2%;
-  width: fit-content;
+  width: 29.453rem;
 
   ${mobile} {
     width: 100%;
@@ -139,9 +139,10 @@ export const UserContentsWrapper = styled.div`
 `;
 
 export const UserImage = styled.img`
+  height: 25rem;
   margin: 0.5rem;
-  max-height: 25rem;
   max-width: 25rem;
+  object-fit: contain;
 
   ${mobile} {
     align-self: center;

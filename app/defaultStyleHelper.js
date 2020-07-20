@@ -6,6 +6,7 @@ export const codeGrey = '#eceff1';
 export const commentHeaderColor = '#f6f8fa';
 export const darkTextColor = '#263238';
 export const errorRed = '#c62838';
+export const footerColor = '#607d8b';
 export const fundingClosedBackground = '#edeef0';
 export const fundingOpenBackground = '#e5fbf2';
 export const fundingText = '#08b26e';
@@ -25,6 +26,7 @@ export const subHeaderColor = '#0d47a1';
 export const subTextColor = '#878a8c';
 export const successGreen = '#31b589';
 export const textColor = 'rgba(0,0,0,0.7)';
+export const upvoteColor = '#ff5722';
 
 // Font Family
 export const defaultFontFamily = `'Helvetica Neue', Helvetica, Arial, sans-serif`;
@@ -37,6 +39,22 @@ export const subheaderFontSize = '1.6rem';
 
 // Borders
 export const dividerBorder = `0.2rem solid #d5d5d5`;
-export const errorBorder = `0.1rem solid ${errorRed}`;
+export const errorBorder = `0.1rem solid #f44336`;
 export const inputBorder = `0.1rem solid ${inputFieldColor}`;
 export const issueBorder = `0.1rem solid ${borderColor}`;
+
+// Scrollbar
+export const styledScrollbar = `
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+`;

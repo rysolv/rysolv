@@ -1,11 +1,8 @@
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
-const isBlank = value =>
-  isUndefined(value) ||
-  isNull(value) ||
-  value.length === 0 ||
-  isEmptyString(value);
+export const isBlank = value =>
+  isUndefined(value) || isNull(value) || isEmptyString(value);
 
 const isEmptyString = str => {
   if (typeof str === 'string') {
@@ -82,7 +79,7 @@ export const validate = ({ required, type, value, ...validationProps }) => {
     };
   }
   if (!Array.isArray(type)) {
-    const validationFunction = [type];
+    const validationFunction = validationDictionary[type];
     return validationFunction(value, validationProps);
   }
   // If multiple validationTypes, return the first error encountered or false if no errors

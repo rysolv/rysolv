@@ -9,11 +9,12 @@ import {
 
 import { ButtonBar } from './styledComponents';
 
-const IssueStatusBar = ({
+const IssueButtonBar = ({
   activeUser,
   activeUser: { id: userId },
-  data: { attempting, id, open, watching },
+  data: { attempting, id, open, pullRequests, watching },
   dispatchFetchWatchList,
+  dispatchOpenIssueModal,
   dispatchOpenModal,
   handleIncrement,
   isSignedIn,
@@ -54,21 +55,23 @@ const IssueStatusBar = ({
       />
       <PullRequestButton
         disabled={!open}
+        dispatchOpenIssueModal={dispatchOpenIssueModal}
         dispatchOpenModal={dispatchOpenModal}
         isSignedIn={isSignedIn}
-        pullRequests={[]}
+        pullRequests={pullRequests}
       />
     </ButtonBar>
   );
 };
 
-IssueStatusBar.propTypes = {
+IssueButtonBar.propTypes = {
   activeUser: T.object,
   data: T.object,
   dispatchFetchWatchList: T.func,
+  dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,
   isSignedIn: T.bool,
 };
 
-export default IssueStatusBar;
+export default IssueButtonBar;

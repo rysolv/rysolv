@@ -1,10 +1,9 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import T from 'prop-types';
 
-import { issueDataDictionary } from 'containers/Issues/constants';
-import { CommentCard } from 'components/Comments';
 import { LanguageWrapper } from 'components/base_ui';
+import { BodyCard } from 'components/MarkdownRender';
+import { issueDataDictionary } from 'containers/Issues/constants';
 
 import {
   DataWrapper,
@@ -16,22 +15,12 @@ import {
   ValueWrapper,
 } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export class VerifyForm extends React.PureComponent {
   render() {
     const {
       issueData: { issueBody, issueLanguages, issueName, issueUrl },
-      activeUser: { id, profilePic, username },
-      handleNav,
     } = this.props;
 
-    const primaryUser = {
-      small: true,
-      detailRoute: `/users/detail/${id}`,
-      alt: username,
-      username,
-      profilePic,
-    };
     const mapLanguages = array => {
       if (array.value.length > 0) {
         return array.value.map(el => (
@@ -50,13 +39,7 @@ export class VerifyForm extends React.PureComponent {
         </ValueWrapper>
         <StyledLink>{issueUrl.value}</StyledLink>
         <ValueWrapper>
-          <CommentCard
-            primary
-            body={issueBody.value}
-            date={Date.now()}
-            userProfile={primaryUser}
-            handleNav={handleNav}
-          />
+          <BodyCard body={issueBody.value} />
         </ValueWrapper>
         <ValueWrapper>
           <Divider />
@@ -70,10 +53,6 @@ export class VerifyForm extends React.PureComponent {
   }
 }
 
-VerifyForm.propTypes = {
-  activeUser: T.object,
-  issueData: T.object,
-  handleNav: T.func,
-};
+VerifyForm.propTypes = { issueData: T.object };
 
 export default VerifyForm;

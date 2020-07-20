@@ -11,21 +11,5 @@ const makeSelectPullRequests = prop =>
     substate => substate[prop],
   );
 
-const makeSelectPullRequestsLoading = prop =>
-  createSelector(
-    makeSelectPullRequests('loading'),
-    loading => loading[prop],
-  );
-
-const makeSelectPullRequestsError = prop =>
-  createSelector(
-    makeSelectPullRequests('error'),
-    error => error[prop],
-  );
-
 export default selectPullRequestsDomain;
-export {
-  makeSelectPullRequests,
-  makeSelectPullRequestsLoading,
-  makeSelectPullRequestsError,
-};
+export { makeSelectPullRequests };

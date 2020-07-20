@@ -1,4 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
+
+const { createActivity } = require('./activityResolver');
 const {
   getComments,
   getIssueComments,
@@ -7,50 +9,53 @@ const {
   updateUserArray,
 } = require('../../db');
 
-const { createActivity } = require('./activityResolver');
-
 module.exports = {
   createComment: async args => {
     const { commentInput } = args;
-    const comment = [
-      [
-        uuidv4(),
-        new Date(),
-        new Date(),
-        commentInput.target,
-        commentInput.body || '',
-        commentInput.user,
-      ],
-    ];
-    const [result] = await createComment(comment);
+    try {
+      const comment = [
+        [
+          uuidv4(),
+          new Date(),
+          new Date(),
+          commentInput.target,
+          commentInput.body || '',
+          commentInput.user,
+        ],
+      ];
+      const [result] = await createComment(comment);
 
-    const activityInput = {
-      actionType: 'comment',
-      issueId: result.target,
-      userId: result.user_id,
-    };
+      const activityInput = {
+        actionType: 'comment',
+        issueId: result.target,
+        userId: result.user_id,
+      };
+      await createActivity({ activityInput });
 
-    await createActivity({ activityInput });
+      const [user] = await updateUserArray({
+        column: 'comments',
+        data: result.id,
+        userId: commentInput.user,
+      });
+      await updateIssueArray({
+        column: 'comments',
+        data: result.id,
+        issueId: result.target,
+      });
 
-    const [user] = await updateUserArray(
-      'users',
-      'comments',
-      commentInput.user,
-      result.id,
-    );
-
-    await updateIssueArray('issues', 'comments', result.target, result.id);
-
-    return {
-      commentId: result.id,
-      createdDate: result.created_date,
-      modifiedDate: result.modified_date,
-      target: result.target,
-      body: result.body,
-      userId: result.user_id,
-      username: user.username,
-      profilePic: user.profile_pic,
-    };
+      return {
+        commentId: result.id,
+        createdDate: result.created_date,
+        modifiedDate: result.modified_date,
+        target: result.target,
+        body: result.body,
+        userId: result.user_id,
+        username: user.username,
+        profilePic: user.profile_pic,
+      };
+    } catch (err) {
+      throw err;
+    }
   },
   getComments: async () => {
     try {

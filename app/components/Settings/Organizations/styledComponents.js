@@ -2,16 +2,6 @@ import styled from 'styled-components';
 
 import { hoverLinkColor, textColor } from 'defaultStyleHelper';
 
-export const EmptyComponentContainer = styled.div`
-  align-items: center;
-  color: ${textColor};
-  display: flex;
-  font-size: 1.6rem;
-  height: 40rem;
-  justify-content: center;
-  text-align: center;
-`;
-
 export const IconButtonWrapper = styled.div`
   align-self: center;
   display: flex;

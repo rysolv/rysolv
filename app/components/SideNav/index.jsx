@@ -16,6 +16,7 @@ import {
   StyledListWrapper,
   StyledSideNav,
 } from './styledComponents';
+
 const addIcon = iconDictionary('addCircle');
 const backArrow = iconDictionary('backArrowHalf');
 const forwardArrow = iconDictionary('forwardArrowHalf');
@@ -24,7 +25,7 @@ const organizationIcon = iconDictionary('organization');
 const userIcon = iconDictionary('user');
 const uploadIcon = iconDictionary('upload');
 
-const SideNav = ({ handleNav, view }) => {
+const SideNav = ({ deviceView, handleNav }) => {
   const path = window.location.pathname;
   const formattedPath = path.replace(/^\/+/, '');
 
@@ -37,11 +38,20 @@ const SideNav = ({ handleNav, view }) => {
   useEffect(() => {
     const { initialValue } = getInitialValue[formattedPath] || 0;
     setCurrentValue(initialValue);
-    switch (view) {
+    switch (deviceView) {
+      case 'desktopL':
+        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        break;
       case 'desktop':
         setDisplaySideNav(!excludedPath.includes(formattedPath));
         break;
+      case 'desktopS':
+        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        break;
       case 'laptop':
+        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        break;
+      case 'laptopS':
         setDisplaySideNav(!excludedPath.includes(formattedPath));
         break;
       case 'tablet':
@@ -62,12 +72,13 @@ const SideNav = ({ handleNav, view }) => {
       default:
         break;
     }
-  }, [view, path]);
+  }, [deviceView, path]);
 
   useEffect(() => {
-    if (view === 'desktop') setOpen(true);
+    const isDesktop = deviceView === 'desktop' || deviceView === 'desktopL';
+    if (isDesktop) setOpen(true);
     else setOpen(false);
-  }, [view]);
+  }, [deviceView]);
 
   const handleClick = (route, tab) => {
     handleNav(route);
@@ -151,8 +162,8 @@ const SideNav = ({ handleNav, view }) => {
 };
 
 SideNav.propTypes = {
+  deviceView: T.string,
   handleNav: T.func,
-  view: T.string,
 };
 
 export default SideNav;

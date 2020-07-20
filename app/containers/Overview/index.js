@@ -83,7 +83,7 @@ const Overview = ({
       handleChangeSearch: handleChangeIssueSearch,
       overviewFilter: filterIssueValues.overview,
       placeholder: 'Find an issue...',
-      values: ['Newest', 'Most Funded'],
+      values: ['Newest', 'Most Funded', 'Most Popular'],
     },
     organizations: {
       handleChangeFilter: handleChangeOrganizationFilter,

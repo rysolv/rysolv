@@ -18,6 +18,7 @@ import {
   CLOSE_ISSUE_FAILURE,
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
+  CLOSE_MODAL_STATE,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -33,6 +34,7 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  OPEN_MODAL_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -42,6 +44,7 @@ import {
   SUBMIT_ACCOUNT_PAYMENT_FAILURE,
   SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
   SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
@@ -81,6 +84,7 @@ export const initialState = {
     },
   },
   importSuccess: false,
+  isModalOpen: false,
   issueDetail: {},
   issues: [],
   isVerified: false,
@@ -97,6 +101,7 @@ export const initialState = {
     submitAccountPayment: false,
     upvoteIssue: false,
   },
+  modal: '',
   organizationData: {
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
@@ -227,6 +232,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.closeIssue = true;
       break;
     }
+    case CLOSE_MODAL_STATE: {
+      draft.isModalOpen = initialState.isModalOpen;
+      draft.modal = initialState.modal;
+      break;
+    }
     case EDIT_ISSUE_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
@@ -324,9 +334,15 @@ const issuesReducer = produce((draft, { payload, type }) => {
       });
       break;
     }
+    case OPEN_MODAL_STATE: {
+      const { modalState } = payload;
+      draft.isModalOpen = true;
+      draft.modal = modalState;
+      break;
+    }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = error;
+      draft.alerts.error = { message: error };
       draft.importSuccess = false;
       draft.loading.addIssue = false;
       break;
@@ -366,14 +382,25 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SUBMIT_ACCOUNT_PAYMENT_SUCCESS: {
-      const { fundedAmount, message } = payload;
-      draft.issueDetail.fundedAmount = fundedAmount;
+      const { fundedAmount, isFundedFromOverview, issueId, message } = payload;
+      if (!isFundedFromOverview) {
+        draft.issueDetail.fundedAmount = fundedAmount;
+      }
+      draft.issues.map(issue => {
+        const { id } = issue;
+        if (id === issueId) issue.fundedAmount = fundedAmount;
+      });
       draft.loading.submitAccountPayment = false;
       draft.paymentAlerts.success = { message };
       break;
     }
     case SUBMIT_ACCOUNT_PAYMENT: {
       draft.loading.submitAccountPayment = true;
+      break;
+    }
+    case UPDATE_ISSUE_DETAIL: {
+      const { pullRequestId } = payload;
+      draft.issueDetail.pullRequests.push(pullRequestId);
       break;
     }
     case UPDATE_ORGANIZATION: {
@@ -391,7 +418,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
           draft.issues[index].rep = rep;
         }
       });
-      if (draft.issueDetail) {
+      if (draft.issueDetail.id) {
         draft.issueDetail.rep = rep;
       }
       draft.loading.upvoteIssue = false;

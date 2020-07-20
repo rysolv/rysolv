@@ -20,7 +20,6 @@ const pullRequestValues = [
 ];
 
 const pullRequestReturnValues = `
-  issues.name AS "issueName",
   pullRequests.api_url AS "apiUrl",
   pullRequests.created_date AS "createdDate",
   pullRequests.github_username AS "githubUsername",
@@ -38,6 +37,23 @@ const pullRequestReturnValues = `
   pullRequests.user_id AS "userId"
 `;
 
+const pullRequestDetailValues = `
+  ${pullRequestReturnValues},
+  issues.name AS "issueName"
+`;
+
+// Check duplicate organization
+const checkDuplicatePullRequest = async repo => {
+  const queryText = `
+    SELECT pullrequest_id FROM pullrequests WHERE (html_url='${repo}')
+  `;
+  const { rows } = await singleQuery(queryText);
+  if (rows.length > 0) {
+    return true;
+  }
+  return false;
+};
+
 const createPullRequest = async data => {
   const { parameters, substitution, values } = formatParamaters(
     pullRequestValues,
@@ -46,8 +62,8 @@ const createPullRequest = async data => {
   const queryText = `INSERT INTO
     pullRequests(${parameters})
     VALUES(${substitution})
-    returning *`;
-  const result = await mapValues(queryText, values);
+    returning ${pullRequestReturnValues}`;
+  const [result] = await mapValues(queryText, values);
   return result;
 };
 
@@ -64,7 +80,7 @@ const deletePullRequest = async id => {
 };
 
 const getOnePullRequest = async id => {
-  const queryText = `SELECT ${pullRequestReturnValues} FROM pullRequests
+  const queryText = `SELECT ${pullRequestDetailValues} FROM pullRequests
     LEFT JOIN issues ON (pullRequests.issue_id = issues.id)
     WHERE (pullRequests.pullrequest_id='${id}')`;
   const { rows } = await singleQuery(queryText);
@@ -75,14 +91,14 @@ const getOnePullRequest = async id => {
 };
 
 const getPullRequests = async () => {
-  const queryText = `SELECT ${pullRequestReturnValues} FROM pullRequests
+  const queryText = `SELECT ${pullRequestDetailValues} FROM pullRequests
     LEFT JOIN issues ON (pullRequests.issue_id = issues.id)`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
 
 const getUserPullRequests = async id => {
-  const queryText = `SELECT ${pullRequestReturnValues} FROM pullRequests
+  const queryText = `SELECT ${pullRequestDetailValues} FROM pullRequests
     LEFT JOIN issues ON (pullRequests.issue_id = issues.id)
     WHERE (pullRequests.user_id='${id}')`;
   const { rows } = await singleQuery(queryText);
@@ -90,6 +106,7 @@ const getUserPullRequests = async id => {
 };
 
 module.exports = {
+  checkDuplicatePullRequest,
   createPullRequest,
   deletePullRequest,
   getOnePullRequest,

@@ -1,7 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { fetchActiveUser, signout } from 'containers/Auth/actions';
+import {
+  fetchActiveUser,
+  signOut,
+  updateActiveUser,
+} from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
@@ -10,17 +14,19 @@ import {
   REMOVE_ISSUE,
   SAVE_CHANGE,
   SUBMIT_PAYMENT,
+  WITHDRAW_FUNDS,
 } from './constants';
 import {
   deleteUserFailure,
   deleteUserSuccess,
-  fetchInfo,
   fetchInfoFailure,
   fetchInfoSuccess,
   removeIssueFailure,
   removeIssueSuccess,
   saveChangeFailure,
   saveChangeSuccess,
+  withdrawFundsFailure,
+  withdrawFundsSuccess,
 } from './actions';
 
 export function* deleteUserSaga({ payload }) {
@@ -36,7 +42,7 @@ export function* deleteUserSaga({ payload }) {
     });
     yield call(post, '/graphql', graphql);
     yield put(deleteUserSuccess());
-    yield put(signout());
+    yield put(signOut());
     yield put(push('/issues'));
   } catch (error) {
     yield put(deleteUserFailure({ error }));
@@ -47,7 +53,7 @@ export function* fetchInfoSaga({ payload }) {
   const { itemId } = payload;
   const query = `
     query {
-      oneUser(column: "id", query: "${itemId}") {
+      oneUser(id: "${itemId}") {
         id,
         activePullRequests,
         attempting,
@@ -147,26 +153,43 @@ export function* saveChangeSaga({ payload }) {
       transformUser(id: "${itemId}", userInput: {
         ${field}: ${formattedValue},
       }) {
+      __typename
+      ... on User {
         id,
         githubLink,
         personalLink,
         preferredLanguages,
         stackoverflowLink,
       }
+      ... on Error {
+        message
+      }
     }
-  `;
+  }`;
   try {
     const graphql = JSON.stringify({
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
-    yield put(fetchInfo({ itemId }));
+    const {
+      data: {
+        transformUser,
+        transformUser: { __typename },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') {
+      throw new Error(transformUser.message);
+    }
     yield put(
       saveChangeSuccess({
+        field,
         message: 'User account has been successfully updated.',
+        value,
       }),
     );
+    if (field === 'profilePic') {
+      yield put(updateActiveUser({ profilePic: value }));
+    }
   } catch (error) {
     yield put(saveChangeFailure({ error }));
   }
@@ -180,10 +203,50 @@ export function* submitPaymentSaga({ payload }) {
   }
 }
 
+export function* withdrawFundsSaga({ payload }) {
+  const { transferValue, userId } = payload;
+  const query = `
+    mutation {
+      createWithdrawal(transferValue: ${transferValue}, userId: "${userId}") {
+        __typename
+        ... on Withdrawal {
+          balance
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { createWithdrawal },
+    } = yield call(post, '/graphql', graphql);
+    const { balance, message, __typename } = createWithdrawal;
+    if (__typename === 'Error') {
+      throw new Error(message);
+    }
+    yield put(updateActiveUser({ balance }));
+    yield put(
+      withdrawFundsSuccess({
+        balance,
+        message: 'Withdrawal request has been successfully submitted.',
+      }),
+    );
+  } catch (error) {
+    yield put(withdrawFundsFailure({ error }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
   yield takeLatest(SUBMIT_PAYMENT, submitPaymentSaga);
+  yield takeLatest(WITHDRAW_FUNDS, withdrawFundsSaga);
 }

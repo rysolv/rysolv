@@ -7,8 +7,8 @@ import {
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
-  SUBMIT_PAYMENT,
   INPUT_CHANGE,
+  INPUT_ERROR,
   OPEN_MODAL_STATE,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
@@ -16,6 +16,10 @@ import {
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
+  SUBMIT_PAYMENT,
+  WITHDRAW_FUNDS_FAILURE,
+  WITHDRAW_FUNDS_SUCCESS,
+  WITHDRAW_FUNDS,
 } from './constants';
 
 export function clearAlerts() {
@@ -79,6 +83,13 @@ export function inputChange(payload) {
   };
 }
 
+export function inputError(payload) {
+  return {
+    payload,
+    type: INPUT_ERROR,
+  };
+}
+
 export function openModalState(payload) {
   return {
     payload,
@@ -132,5 +143,26 @@ export function submitPayment(payload) {
   return {
     payload,
     type: SUBMIT_PAYMENT,
+  };
+}
+
+export function withdrawFundsFailure(payload) {
+  return {
+    payload,
+    type: WITHDRAW_FUNDS_FAILURE,
+  };
+}
+
+export function withdrawFundsSuccess(payload) {
+  return {
+    payload,
+    type: WITHDRAW_FUNDS_SUCCESS,
+  };
+}
+
+export function withdrawFunds(payload) {
+  return {
+    payload,
+    type: WITHDRAW_FUNDS,
   };
 }

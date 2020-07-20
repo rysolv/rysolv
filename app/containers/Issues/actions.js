@@ -15,6 +15,7 @@ import {
   CLOSE_ISSUE_FAILURE,
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
+  CLOSE_MODAL_STATE,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -30,6 +31,7 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  OPEN_MODAL_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -39,6 +41,7 @@ import {
   SUBMIT_ACCOUNT_PAYMENT_FAILURE,
   SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
   SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
@@ -156,6 +159,12 @@ export function closeIssue(payload) {
   };
 }
 
+export function closeIssueModalState() {
+  return {
+    type: CLOSE_MODAL_STATE,
+  };
+}
+
 export function editIssueFailure(payload) {
   return {
     payload,
@@ -260,6 +269,13 @@ export function inputError(payload) {
   };
 }
 
+export function openIssueModalState(payload) {
+  return {
+    payload,
+    type: OPEN_MODAL_STATE,
+  };
+}
+
 export function saveInfoFailure(payload) {
   return {
     payload,
@@ -320,6 +336,13 @@ export function submitAccountPayment(payload) {
   return {
     payload,
     type: SUBMIT_ACCOUNT_PAYMENT,
+  };
+}
+
+export function updateIssueDetail(payload) {
+  return {
+    payload,
+    type: UPDATE_ISSUE_DETAIL,
   };
 }
 

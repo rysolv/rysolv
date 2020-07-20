@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
 import { BackNav, ConditionalRender } from 'components/base_ui';
-import { CommentCard, NoComment, NewComment } from 'components/Comments';
+import { CommentCard, NewComment, NoComment } from 'components/MarkdownRender';
 import PaymentPortal from 'components/Payments';
 import UpvotePanel from 'components/Upvote';
 import iconDictionary from 'utils/iconDictionary';
@@ -14,11 +14,13 @@ import {
   CommentWrapper,
   DetailContainer,
   Divider,
+  EditIssueWrapper,
   IssueDetailColumn,
   IssueDetailContainer,
   IssueDetailContentContainer,
   IssueDetailWrapper,
   LeftPanel,
+  ManageIssueWrapper,
   SidebarContainer,
   StyledButton,
   StyledErrorSuccessBanner,
@@ -31,7 +33,7 @@ const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
-  activeUser: { balance, id: activeUserId, issues },
+  activeUser: { balance, email, firstName, id: activeUserId, issues, lastName },
   alerts: { error, success },
   data,
   data: {
@@ -43,8 +45,10 @@ const IssueDetail = ({
     language,
     name,
     open,
+    organizationId,
     profilePic,
     rep,
+    repo,
     userId,
     username,
   },
@@ -52,6 +56,7 @@ const IssueDetail = ({
   dispatchCloseIssue,
   dispatchEditIssue,
   dispatchFetchWatchList,
+  dispatchOpenIssueModal,
   dispatchOpenModal,
   handleClearAlerts,
   handleComment,
@@ -121,6 +126,16 @@ const IssueDetail = ({
     />
   );
 
+  const EditIssueComponent = (
+    <StyledIssueAccountManager
+      displayEditView={displayEditView}
+      handleClose={handleClose}
+      handleSave={handleSave}
+      setDisplayEditView={setDisplayEditView}
+      type="issue"
+    />
+  );
+
   const primaryUser = {
     alt: username,
     detailRoute: `/users/detail/${userId}`,
@@ -152,9 +167,31 @@ const IssueDetail = ({
   const commentsDiv =
     comments && comments.length > 0 ? generateComments() : <NoComment />;
 
-  const isDesktop = deviceView === 'desktop';
+  const isDesktop =
+    deviceView === 'desktopS' ||
+    deviceView === 'desktop' ||
+    deviceView === 'desktopL';
+
+  const isMobileOrLaptop =
+    deviceView === 'mobileXXS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobile' ||
+    deviceView === 'tablet' ||
+    deviceView === 'laptopS' ||
+    deviceView === 'laptop';
 
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
+
+  const ManageIssueComponent = () => (
+    <Fragment>
+      <Divider>Manage Issue</Divider>
+      <ManageIssueWrapper>
+        <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
+        {CloseOpenIssueComponent}
+      </ManageIssueWrapper>
+    </Fragment>
+  );
   return (
     <IssueDetailContainer>
       <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
@@ -188,6 +225,7 @@ const IssueDetail = ({
                 activeUser={activeUser}
                 data={data}
                 dispatchFetchWatchList={dispatchFetchWatchList}
+                dispatchOpenIssueModal={dispatchOpenIssueModal}
                 dispatchOpenModal={dispatchOpenModal}
                 handleIncrement={handleIncrement}
                 isDesktop={isDesktop}
@@ -213,11 +251,21 @@ const IssueDetail = ({
                   handleNav={handleNav}
                   language={language}
                   languageChange={languageChange}
+                  repo={repo}
                   setBodyChange={setBodyChange}
                   setLanguageChange={setLanguageChange}
                   userProfile={primaryUser}
                 />
               </div>
+
+              <ConditionalRender
+                Component={ManageIssueComponent}
+                shouldRender={
+                  isMobileOrLaptop &&
+                  isSignedIn &&
+                  !!issues.find(({ id }) => issueId === id)
+                }
+              />
 
               <Divider>Comments</Divider>
               <CommentWrapper>{commentsDiv}</CommentWrapper>
@@ -243,27 +291,24 @@ const IssueDetail = ({
         </IssueDetailWrapper>
         <SidebarContainer>
           <ConditionalRender
-            Component={
-              <StyledIssueAccountManager
-                displayEditView={displayEditView}
-                handleClose={handleClose}
-                handleSave={handleSave}
-                setDisplayEditView={setDisplayEditView}
-                type="issue"
-              />
-            }
+            Component={EditIssueComponent}
             shouldRender={
               isSignedIn && !!issues.find(({ id }) => issueId === id)
             }
           />
           <PaymentPortal
             balance={balance}
+            email={email}
+            firstName={firstName}
             fundedAmount={fundedAmount}
             handleClearAlerts={handleClearAlerts}
             handleNav={handleNav}
             handleSubmitAccountPayment={handleSubmitAccountPayment}
             isSignedIn={isSignedIn}
             issueId={issueId}
+            lastName={lastName}
+            open={open}
+            organizationId={organizationId}
             paymentAlerts={paymentAlerts}
             userId={activeUserId}
           />
@@ -290,6 +335,7 @@ IssueDetail.propTypes = {
   dispatchCloseIssue: T.func,
   dispatchEditIssue: T.func,
   dispatchFetchWatchList: T.func,
+  dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   handleClearAlerts: T.func,
   handleComment: T.func,

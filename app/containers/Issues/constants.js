@@ -46,6 +46,9 @@ export const INCREMENT_STEP = 'app/Issues/INCREMENT_STEP';
 export const INPUT_CHANGE = 'app/Issues/INPUT_CHANGE';
 export const INPUT_ERROR = 'app/Issues/INPUT_ERROR';
 
+export const OPEN_MODAL_STATE = 'app/Issues/OPEN_MODAL_STATE';
+export const CLOSE_MODAL_STATE = 'app/Issues/CLOSE_MODAL_STATE';
+
 export const REMOVE_ATTEMPT = 'app/Issues/REMOVE_ATTEMPT';
 
 export const SAVE_INFO = 'app/Issues/SAVE_INFO';
@@ -62,6 +65,8 @@ export const SUBMIT_ACCOUNT_PAYMENT_FAILURE =
 export const SUBMIT_ACCOUNT_PAYMENT_SUCCESS =
   'app/Issues/SUBMIT_ACCOUNT_PAYMENT_SUCCESS';
 
+export const UPDATE_ISSUE_DETAIL = 'app/Issues/UPDATE_ISSUE_DETAIL';
+
 export const UPDATE_ORGANIZATION = 'app/Issues/UPDATE_ORGANIZATION';
 
 export const UPVOTE_ISSUE = 'app/Issues/UPVOTE_ISSUE';
@@ -72,10 +77,10 @@ export const VERIFY_INFO = 'app/Issues/VERIFY_INFO';
 
 export const issueDataDictionary = {
   issueUrl: 'Issue Url',
-  external: 'External link',
-  issueBody: 'Detailed description of Issue',
+  external: 'External Link',
+  issueBody: 'Detailed Description of Issue',
   languages: 'Languages',
-  fundedAmount: 'Funded amount',
+  fundedAmount: 'Funded Amount',
   name: 'Title',
 };
 

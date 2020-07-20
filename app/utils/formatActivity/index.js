@@ -1,7 +1,6 @@
 /* eslint-disable indent */
 /* eslint-disable no-nested-ternary */
 import React from 'react';
-import moment from 'moment';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
@@ -56,7 +55,7 @@ export const formatActivity = data => {
   const actionDictionary = {
     add_attempting: { action: 'started attempting', icon: AddAttempting },
     add_watching: { action: 'started watching', icon: AddWatching },
-    close: { action: 'closed issue', icon: Deleted },
+    close: { action: 'closed', icon: Deleted },
     comment: { action: 'commented on', icon: AddComment },
     create: { action: 'created', icon: Created },
     delete: { action: 'deleted', icon: Deleted },
@@ -65,6 +64,7 @@ export const formatActivity = data => {
     open_pr: { action: 'opened pull request', icon: PullRequest },
     remove_attempting: { action: 'stopped attempting', icon: RemoveAttempting },
     remove_watching: { action: 'stopped watching', icon: RemoveWatching },
+    reopen: { action: 'reopened', icon: Created },
     resolve: { action: 'resolved', icon: Resolved },
     update: { action: 'updated', icon: Edited },
   };
@@ -87,12 +87,11 @@ export const formatActivity = data => {
   const path = `/${route}/detail/${targetId}`;
 
   const targetName = issueName || organizationName;
-  const formattedDate = moment(createdDate).format('YYYY/MM/DD');
 
   const formattedActivity = {
     action,
     activityId,
-    date: formattedDate,
+    date: createdDate,
     fundedValue,
     icon,
     path,

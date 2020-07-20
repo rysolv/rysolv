@@ -5,78 +5,148 @@ import T from 'prop-types';
 import { MainTextInput } from 'components/base_ui';
 
 import {
+  HorizontalWrapper,
   InputFormWrapper,
+  PasswordRequirements,
   SigninWrapper,
-  StyledPrimaryButton,
+  StyledErrorSuccessBanner,
+  StyledPrimaryAsyncButton,
   SubText,
   Title,
 } from '../styledComponents';
 
-// eslint-disable-next-line arrow-body-style
-const Signup = ({ data, handleInputChange, handleSignin }) => {
-  // eslint-disable-next-line no-param-reassign
-  const { email, password } = data;
-  return (
-    <SigninWrapper>
-      <InputFormWrapper>
-        <Title>Register</Title>
+const Signup = ({
+  data: { email, firstName, lastName, password, username, verifyPassword },
+  error: { signUp: signUpError },
+  handleClearAuthAlerts,
+  handleInputChange,
+  handleSignUp,
+  handleVerifyPassword,
+  signUpDisabled,
+  signUpLoading,
+}) => (
+  <SigninWrapper>
+    <InputFormWrapper>
+      <Title>Create account</Title>
+      {signUpError.error && (
+        <StyledErrorSuccessBanner
+          error={signUpError}
+          onClose={handleClearAuthAlerts}
+        />
+      )}
+      <MainTextInput
+        error={!!username.error}
+        helperText={username.error}
+        label="Username"
+        onChange={e =>
+          handleInputChange({
+            field: 'username',
+            form: 'signUp',
+            value: e.target.value,
+          })
+        }
+        value={username.value}
+      />
+      <MainTextInput
+        autoComplete="email"
+        error={!!email.error}
+        helperText={email.error}
+        label="Email"
+        onChange={e =>
+          handleInputChange({
+            field: 'email',
+            form: 'signUp',
+            value: e.target.value,
+          })
+        }
+        type="email"
+        value={email.value}
+      />
+      <HorizontalWrapper>
         <MainTextInput
-          error={!!email.error}
-          helperText={email.error}
-          label="email"
+          error={!!firstName.error}
+          helperText={firstName.error}
+          label="First name"
           onChange={e =>
             handleInputChange({
-              field: 'email',
-              form: 'data',
+              field: 'firstName',
+              form: 'signUp',
               value: e.target.value,
             })
           }
-          value={email.value}
+          value={firstName.value}
         />
         <MainTextInput
-          error={!!password.error}
-          helperText={password.error}
-          label="password"
+          error={!!lastName.error}
+          helperText={lastName.error}
+          label="Last name"
           onChange={e =>
             handleInputChange({
-              field: 'password',
-              form: 'data',
+              field: 'lastName',
+              form: 'signUp',
               value: e.target.value,
             })
           }
-          value={password.value}
+          value={lastName.value}
         />
-        <MainTextInput
-          error={!!password.error}
-          helperText={password.error}
-          label="confirm password"
-          onChange={e =>
-            handleInputChange({
-              field: 'password',
-              form: 'data',
-              value: e.target.value,
-            })
-          }
-          value={password.value}
-        />
-        <StyledPrimaryButton
-          label="Sign Up"
-          onClick={() =>
-            handleSignin({ userId: 'b519b064-b5db-4472-ad1b-00e30bdbfa4c' })
-          }
-        />
-      </InputFormWrapper>
-      <SubText>
-        Already have an account? <Link to="/signin">Sign in</Link>
-      </SubText>
-    </SigninWrapper>
-  );
-};
+      </HorizontalWrapper>
+      <MainTextInput
+        autoComplete="new-password"
+        error={!!password.error}
+        helperText={password.error}
+        label="Password"
+        onChange={e =>
+          handleInputChange({
+            field: 'password',
+            form: 'signUp',
+            value: e.target.value,
+          })
+        }
+        value={password.value}
+      />
+      <PasswordRequirements>
+        <li>8 or more characters</li>
+        <li>Include capital and lowercase letter</li>
+        <li>Include one number</li>
+        <li>Include one special character </li>
+      </PasswordRequirements>
+      <MainTextInput
+        autoComplete="new-password"
+        error={!!verifyPassword.error}
+        helperText={verifyPassword.error}
+        label="Confirm password"
+        onBlur={() => handleVerifyPassword()}
+        onChange={e =>
+          handleInputChange({
+            field: 'verifyPassword',
+            form: 'signUp',
+            value: e.target.value,
+          })
+        }
+        value={verifyPassword.value}
+      />
+      <StyledPrimaryAsyncButton
+        disabled={!signUpDisabled}
+        label="Sign up"
+        loading={signUpLoading}
+        onClick={() => handleSignUp()}
+      />
+    </InputFormWrapper>
+    <SubText>
+      Already have an account? <Link to="/signin">Sign in</Link>
+    </SubText>
+  </SigninWrapper>
+);
 
 Signup.propTypes = {
   data: T.object.isRequired,
+  error: T.object,
+  handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
-  handleSignin: T.func.isRequired,
+  handleSignUp: T.func.isRequired,
+  handleVerifyPassword: T.func,
+  signUpDisabled: T.bool,
+  signUpLoading: T.bool,
 };
 
 export default Signup;

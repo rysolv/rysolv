@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 import { IconButton } from 'components/base_ui';
@@ -78,7 +79,9 @@ export const OrganizationNameWrapper = styled.a`
   font-weight: bold;
 `;
 
-export const StyledIconButton = styled(IconButton)`
+export const StyledIconButton = styled(
+  ({ isWatching, shouldBold, ...restProps }) => <IconButton {...restProps} />,
+)`
   color: ${({ isWatching }) => (isWatching ? selectedColor : subTextColor)};
   font-weight: 700;
   padding-right: 1rem;

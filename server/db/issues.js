@@ -1,40 +1,47 @@
 const { mapValues, singleItem, singleQuery, singleSearch } = require('./query');
-const { diff } = require('./helpers');
+const { formatParamaters } = require('./helpers');
 
-const issueValues = `
-  modified_date,
-  organization_id,
-  name,
-  body,
-  repo,
-  language,
-  comments,
-  attempting,
-  contributor_id,
-  rep,
-  watching,
-  funded_amount,
-  open,
-  type
-`; // Excludes ID & created_date
+const issueValues = [
+  'attempting',
+  'body',
+  'comments',
+  'contributor_id',
+  'created_date',
+  'funded_amount',
+  'id',
+  'language',
+  'modified_date',
+  'name',
+  'open',
+  'organization_id',
+  'rep',
+  'repo',
+  'type',
+  'watching',
+];
+
+const issueReturnValues = `
+  issues.attempting,
+  issues.body,
+  issues.comments,
+  issues.contributor_id AS "contributorId",
+  issues.created_date AS "createdDate",
+  issues.funded_amount AS "fundedAmount",
+  issues.id,
+  issues.language,
+  issues.modified_date AS "modifiedDate",
+  issues.name,
+  issues.open,
+  issues.organization_id AS "organizationId",
+  issues.pull_requests AS "pullRequests",
+  issues.rep,
+  issues.repo,
+  issues.type,
+  issues.watching
+`;
 
 const issueCardValues = `
-  issues.id,
-  issues.created_date AS "createdDate",
-  issues.modified_date AS "modifiedDate",
-  issues.organization_id AS "organizationId",
-  issues.name,
-  issues.body,
-  issues.repo,
-  issues.language,
-  issues.comments,
-  issues.attempting,
-  issues.contributor_id AS "contributorId",
-  issues.rep,
-  issues.watching,
-  issues.funded_amount AS "fundedAmount",
-  issues.open,
-  issues.type,
+  ${issueReturnValues},
   organizations.name AS "organizationName",
   organizations.verified AS "organizationVerified"
 `;
@@ -47,22 +54,22 @@ const issueDetailValues = `
 `;
 
 // CLOSE single issue
-const closeIssue = async (table, id, shouldClose) => {
-  const rows = await singleItem(table, id);
+const closeIssue = async (id, shouldClose) => {
+  const rows = await singleItem('issues', id);
   if (rows) {
-    const queryText = `UPDATE ${table} SET open=${!shouldClose} WHERE (id='${id}')`;
+    const queryText = `UPDATE issues SET open=${!shouldClose} WHERE (id='${id}')`;
     await singleQuery(queryText);
     return `Issue ${id} has been successfully ${
       shouldClose ? 'closed' : 'reopened'
     }.`;
   }
-  throw new Error(`Failed to close issue. ID not found in ${table}`);
+  throw new Error(`Failed to close issue. ID not found in issues`);
 };
 
 // Check duplicate issue
-const checkDuplicateIssue = async (table, repo) => {
+const checkDuplicateIssue = async repo => {
   const queryText = `
-    SELECT id FROM ${table} WHERE (repo='${repo}')
+    SELECT id FROM issues WHERE (repo='${repo}')
   `;
   const { rows } = await singleQuery(queryText);
   if (rows.length > 0) {
@@ -73,36 +80,52 @@ const checkDuplicateIssue = async (table, repo) => {
 
 // Create new Issue
 const createIssue = async data => {
+  const { parameters, substitution, values } = formatParamaters(
+    issueValues,
+    data,
+  );
+
   const queryText = `INSERT INTO
-    issues(id, created_date, ${issueValues})
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+    issues(${parameters})
+    VALUES(${substitution})
     returning *`;
-  const result = await mapValues(queryText, data);
+  const result = await mapValues(queryText, values);
   return result;
 };
 
 // DELETE single issue
-const deleteIssue = async (table, id) => {
-  const rows = await singleItem(table, id);
+const deleteIssue = async id => {
+  const rows = await singleItem('issues', id);
   if (rows) {
-    const queryText = `DELETE FROM ${table} WHERE (id='${id}') RETURNING *`;
+    const queryText = `DELETE FROM issues WHERE (id='${id}') RETURNING *`;
     await singleQuery(queryText);
-    return `ID ${id} successfully deleted from table ${table}`;
+    return `ID ${id} successfully deleted from table issues`;
   }
-  throw new Error(`Failed to delete issue. ID not found in ${table}`);
+  throw new Error(`Failed to delete issue. ID not found in issues`);
+};
+
+// Downvote issue
+const downvoteIssue = async id => {
+  const upvoteQuery = `
+    UPDATE issues SET rep = rep - 1
+    WHERE (id = '${id}')
+    RETURNING *`;
+  const { rows } = await singleQuery(upvoteQuery);
+  const [oneRow] = rows;
+  return oneRow;
 };
 
 // GET all issues
-const getIssues = async table => {
-  const queryText = `SELECT ${issueCardValues} FROM ${table} JOIN organizations ON (issues.organization_id = organizations.id)`;
+const getIssues = async () => {
+  const queryText = `SELECT ${issueCardValues} FROM issues JOIN organizations ON (issues.organization_id = organizations.id)`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
 
 // GET single issue
-const getOneIssue = async (table, id) => {
+const getOneIssue = async id => {
   const queryText = `
-    SELECT ${issueDetailValues} FROM ${table}
+    SELECT ${issueDetailValues} FROM issues
     JOIN organizations ON (issues.organization_id = organizations.id)
     JOIN users ON (issues.contributor_id = users.id)
     WHERE (issues.id='${id}')
@@ -111,36 +134,39 @@ const getOneIssue = async (table, id) => {
   if (rows.length > 0) {
     return rows;
   }
-  throw new Error(`ID not found in ${table}`);
+  throw new Error(`ID not found in issues`);
 };
 
 // SEARCH issues
-const searchIssues = async (table, value) => {
+const searchIssues = async value => {
   const fields = ['issues.body', 'issues.name', 'organizations.name'];
-  const queryText = `SELECT ${issueCardValues} FROM ${table} JOIN organizations ON (issues.organization_id = organizations.id)`;
+  const queryText = `SELECT ${issueCardValues} FROM issues JOIN organizations ON (issues.organization_id = organizations.id)`;
   const rows = await singleSearch(queryText, fields, value);
   return rows;
 };
 
 // TRANSFORM single issue
-const transformIssue = async (table, id, data) => {
-  const [rows] = await singleItem(table, id, issueValues);
+const transformIssue = async (id, data) => {
+  const [rows] = await singleItem('issues', id, issueValues);
   if (rows) {
-    const { newObjectArray } = diff(rows, data);
-    const queryText = `UPDATE ${table}
-      SET (${issueValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+    const { parameters, substitution, values } = formatParamaters(
+      issueValues,
+      data,
+    );
+    const queryText = `UPDATE issues
+      SET (${parameters})
+      = (${substitution})
       WHERE (id = '${id}')
-      RETURNING *`;
-    const [result] = await mapValues(queryText, [newObjectArray]);
+      RETURNING ${issueReturnValues}`;
+    const [result] = await mapValues(queryText, values);
     return result;
   }
-  throw new Error(`Failed to update. ID not found in ${table}`);
+  throw new Error(`Failed to update. ID not found in issues`);
 };
 
 // UPDATE fund_value of issue for payment
 const submitAccountPaymentIssue = async (issueId, fundValue) => {
-  const [issueData] = await getOneIssue('issues', issueId);
+  const [issueData] = await getOneIssue(issueId);
   const { fundedAmount } = issueData;
   const adjustedFundValue = fundValue + fundedAmount;
   const queryText = `UPDATE issues SET funded_amount=${adjustedFundValue} WHERE (id = '${issueId}') RETURNING *`;
@@ -148,29 +174,38 @@ const submitAccountPaymentIssue = async (issueId, fundValue) => {
   return rows;
 };
 
-const updateIssueArray = async (table, column, id, data, remove) => {
-  const [issueData] = await getOneIssue('issues', id, 'id');
+const updateIssueArray = async ({ column, issueId, data, remove }) => {
+  const [issueData] = await singleItem('issues', issueId);
   // Only add unique values to array
   if (!issueData[column].includes(data) || remove) {
-    const action = remove ? 'array_remove' : 'array_append';
-    const queryText = `UPDATE ${table}
-      SET ${column} = ${action}(${column}, '${data}')
-      WHERE (id = '${id}')
+    if (remove) {
+      const queryText = `UPDATE issues
+      SET ${column} = array_remove(${column}, '${data}')
+      WHERE (id = '${issueId}')
+      RETURNING *`;
+      const { rows } = await singleQuery(queryText);
+      const [oneRow] = rows;
+      return oneRow;
+    }
+    const queryText = `UPDATE issues
+      SET ${column} = array_append(${column}, '${data}')
+      WHERE (id = '${issueId}')
       RETURNING *`;
     const { rows } = await singleQuery(queryText);
-    return rows;
+    const [oneRow] = rows;
+    return oneRow;
   }
   return issueData;
 };
 
-const upvoteIssue = async (table, id) => {
+const upvoteIssue = async id => {
   const upvoteQuery = `
-    UPDATE ${table} SET rep = rep + 1
+    UPDATE issues SET rep = rep + 1
     WHERE (id = '${id}')
     RETURNING *`;
   const { rows } = await singleQuery(upvoteQuery);
-
-  return rows;
+  const [oneRow] = rows;
+  return oneRow;
 };
 
 module.exports = {
@@ -178,6 +213,7 @@ module.exports = {
   closeIssue,
   createIssue,
   deleteIssue,
+  downvoteIssue,
   getIssues,
   getOneIssue,
   searchIssues,

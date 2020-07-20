@@ -5,6 +5,7 @@ const {
   closeIssue,
   createIssue,
   deleteIssue,
+  downvoteIssue,
   getIssues,
   getOneIssue,
   searchIssues,
@@ -14,9 +15,9 @@ const {
   upvoteIssue,
 } = require('./issues');
 const {
-  checkDuplicateUser,
+  checkDuplicateUserEmail,
+  checkDuplicateUsername,
   createUser,
-  deleteUser,
   getOneUser,
   getUsers,
   getWatchList,
@@ -24,10 +25,12 @@ const {
   submitAccountPaymentUser,
   transformUser,
   updateUserArray,
+  userDownvote,
   userUpvote,
 } = require('./users');
 const { createComment, getComments, getIssueComments } = require('./comments');
 const {
+  checkDuplicatePullRequest,
   createPullRequest,
   deletePullRequest,
   getOnePullRequest,
@@ -40,17 +43,21 @@ const {
   deleteOrganization,
   getOneOrganization,
   getOrganizations,
+  submitAccountPaymentOrganization,
   getOrganizationsWhere,
   searchOrganizations,
   transformOrganization,
   updateOrganizationArray,
 } = require('./organizations');
 const { createTables, dropAllTables, printTables } = require('./tables');
+const { createWithdrawal, transformUserBalance } = require('./withdrawal');
 
 module.exports = {
   checkDuplicateIssue,
   checkDuplicateOrganization,
-  checkDuplicateUser,
+  checkDuplicatePullRequest,
+  checkDuplicateUserEmail,
+  checkDuplicateUsername,
   closeIssue,
   createActivity,
   createComment,
@@ -59,10 +66,11 @@ module.exports = {
   createPullRequest,
   createTables,
   createUser,
+  createWithdrawal,
   deleteIssue,
   deleteOrganization,
   deletePullRequest,
-  deleteUser,
+  downvoteIssue,
   dropAllTables,
   getActivity,
   getComments,
@@ -83,13 +91,16 @@ module.exports = {
   searchOrganizations,
   searchUsers,
   submitAccountPaymentIssue,
+  submitAccountPaymentOrganization,
   submitAccountPaymentUser,
   transformIssue,
   transformOrganization,
   transformUser,
+  transformUserBalance,
   updateIssueArray,
   updateOrganizationArray,
   updateUserArray,
   upvoteIssue,
+  userDownvote,
   userUpvote,
 };

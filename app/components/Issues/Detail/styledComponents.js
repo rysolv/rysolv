@@ -8,19 +8,22 @@ import Markdown from 'components/Markdown';
 import {
   borderColor,
   buttonRed,
-  codeGrey,
   defaultFontFamily,
   defaultFontSize,
   detailFontSize,
   fundingText,
+  styledScrollbar,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { laptop, mobile, tablet } = mediaQueriesByDevice;
+const { laptop, mobile, mobileS, tablet } = mediaQueriesByDevice;
 
 export const CommentWrapper = styled.div`
-  margin: 3rem 3rem 3rem 0;
+  ${styledScrollbar}
+  max-height: 150rem;
+  overflow-y: auto;
+  padding: 0 1rem 0 0;
 `;
 
 export const DetailContainer = styled.div`
@@ -39,23 +42,21 @@ export const DetailContainer = styled.div`
   }
 `;
 
-export const Icon = styled.span`
-  align-items: center;
-  display: flex;
-  margin-right: 0.5rem;
-`;
-
-export const IssueDetailContainer = styled.div`
-  width: 100%;
-`;
-
 export const Divider = styled.div`
-  border-bottom: 1px solid ${borderColor};
+  border-bottom: 0.1rem solid ${borderColor};
   color: ${textColor};
   font-size: 2rem;
   font-weight: 500;
   margin: 1rem 0;
   width: 100%;
+`;
+
+export const EditIssueWrapper = styled.div`
+  margin-bottom: -1rem;
+
+  ${mobileS} {
+    width: 100%;
+  }
 `;
 
 export const ExternalLinkWrapper = styled.a`
@@ -74,48 +75,10 @@ export const ExternalLinkWrapper = styled.a`
   }
 `;
 
-export const IssueBodyContainer = styled.div`
-  background-color: white;
-  border-radius: 0.25rem;
-  border: none;
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: top;
-  width: 100%;
-
-  code {
-    background-color: ${codeGrey};
-    font-family: monospace;
-    white-space: pre-wrap;
-    border-bottom-left-radius: 2.5px;
-    border-bottom-right-radius: 2.5px;
-    color: ${textColor};
-  }
-
-  image {
-    width: auto;
-  }
-
-  pre {
-    background-color: ${codeGrey};
-    padding: 0.5rem;
-    max-height: 75rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-`;
-
-export const IssueBody = styled.div`
-  font-size: ${defaultFontSize};
-  min-height: 4rem;
-  padding: 0 1rem;
-  width: 100%;
-
-  * {
-    color: ${textColor};
-    font-family: inherit;
-    width: 100%;
-  }
+export const Icon = styled.span`
+  align-items: center;
+  display: flex;
+  margin-right: 0.5rem;
 `;
 
 export const IssueDetailColumn = styled.div`
@@ -125,6 +88,10 @@ export const IssueDetailColumn = styled.div`
   ${tablet} {
     padding: 1rem;
   }
+`;
+
+export const IssueDetailContainer = styled.div`
+  width: 100%;
 `;
 
 export const IssueDetailContentContainer = styled.div`
@@ -139,13 +106,14 @@ export const IssueDetailWrapper = styled.div`
   min-height: 40vh;
   overflow: hidden;
   padding: 0 0 3rem 0;
+  width: 100%;
 `;
 
 export const LanguagesWrapper = styled.div`
   align-items: center;
   display: flex;
   font-size: 1.4rem;
-  margin: -1rem 0 1rem 0;
+  margin: 1rem 0;
 `;
 
 export const LanguagesTitle = styled.div`
@@ -162,6 +130,19 @@ export const LeftPanel = styled.div`
   width: 3.5rem;
 `;
 
+export const ManageIssueWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  min-height: 7.5rem;
+  padding: 0 1rem;
+  white-space: nowrap;
+
+  ${mobileS} {
+    flex-direction: column;
+  }
+`;
+
 export const PostingInfoWrapper = styled.div`
   align-items: center;
   border-bottom: 1px solid ${borderColor};
@@ -176,6 +157,7 @@ export const SidebarContainer = styled.div`
   flex: 0 0 33.333333%;
   max-width: 33.333333%;
   padding: 0 1rem;
+
   ${laptop} {
     display: none;
   }
@@ -199,6 +181,11 @@ export const StyledButton = styled(Button)`
     margin-right: 1rem;
     width: 2rem;
   }
+
+  ${mobileS} {
+    justify-content: start;
+    width: 100%;
+  }
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
@@ -207,6 +194,10 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
 
 export const StyledIssueAccountManager = styled(IssueAccountManager)`
   margin-bottom: 1rem;
+
+  ${mobileS} {
+    text-align: left;
+  }
 `;
 
 export const StyledLanguageAutocomplete = styled(LanguageAutocomplete)`

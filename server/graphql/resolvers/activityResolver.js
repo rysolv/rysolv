@@ -4,31 +4,20 @@ const { createActivity, getActivity } = require('../../db');
 module.exports = {
   createActivity: async args => {
     const { activityInput } = args;
-    const activity = [
-      [
-        uuidv4(),
-        new Date(),
-        activityInput.actionType || null,
-        activityInput.fundedValue || null,
-        activityInput.issueId || null,
-        activityInput.organizationId || null,
-        activityInput.pullRequestId || null,
-        activityInput.userId || null,
-      ],
-    ];
-
-    const [result] = await createActivity(activity);
-
-    return {
-      commentId: result.activity_id,
-      createdDate: result.created_date,
-      actionType: result.action_type,
-      issueId: result.issue_id,
-      organizationId: result.organization_id,
-      pullRequestId: result.pullrequest_id,
-      userId: result.user_id,
-      fundedValue: result.funded_value,
+    const activity = {
+      activity_id: uuidv4(),
+      created_date: activityInput.createdDate || new Date(),
+      action_type: activityInput.actionType || null,
+      funded_value: activityInput.fundedValue || null,
+      is_private: activityInput.isPrivate || false,
+      issue_id: activityInput.issueId || null,
+      organization_id: activityInput.organizationId || null,
+      pullrequest_id: activityInput.pullRequestId || null,
+      user_id: activityInput.userId || null,
     };
+
+    const message = await createActivity(activity);
+    return message;
   },
   getAllActivity: async () => {
     try {

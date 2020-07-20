@@ -22,7 +22,7 @@ const UpvotePanel = ({
         if (!isSignedIn) {
           return dispatchOpenModal({ modalState: 'signIn' });
         }
-        return handleUpvote({ issueId, userId });
+        return handleUpvote({ issueId, upvote: !upvoted, userId });
       }}
     />
     {rep}

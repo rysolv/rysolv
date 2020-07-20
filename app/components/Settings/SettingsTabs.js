@@ -7,11 +7,20 @@ import UserAccount from './Account';
 import UserAttempting from './Attempting';
 import DepositFormComponent from './Balance/Deposit/DepositFormComponent';
 import WithdrawalFormComponent from './Balance/Withdrawal/WithdrawalFormComponent';
+import { getTabToDisplay } from './helpers';
 import UserIssues from './Issues';
 import UserOrganizations from './Organizations';
+import UserPullRequests from './PullRequests';
 import UserTimelineView from './Timeline';
 import UserWatching from './Watching';
-import { StyledPaper, StyledTab, StyledTabs } from './styledComponents';
+import {
+  StyledPaper,
+  StyledPopper,
+  StyledTab,
+  StyledTabs,
+  TabItem,
+  TabItemBorder,
+} from './styledComponents';
 
 const SettingsTabs = ({
   activity,
@@ -23,6 +32,8 @@ const SettingsTabs = ({
   changeUsername,
   creditCardProps,
   currentTab,
+  deviceView,
+  dispatchInputError,
   dispatchOpenModal,
   displayBottom,
   dollarsEarned,
@@ -35,10 +46,13 @@ const SettingsTabs = ({
   handleInputChange,
   handleNav,
   handleRemoveIssue,
+  handleWithdrawFunds,
+  inputErrors,
   isDisabled,
   issues,
   lastName,
   organizations,
+  PullRequestComponent,
   setChangeEmail,
   setChangeFirstName,
   setChangeLastName,
@@ -51,11 +65,64 @@ const SettingsTabs = ({
   view,
   watching,
 }) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const [tab, setTab] = useState(currentTab);
-  useEffect(() => setValue(currentTab), [currentTab]);
-  const handleChangeTab = (event, newValue) => {
-    setTab(newValue);
+  const [tabsInMenu, setTabsInMenu] = useState([]);
+  const [tabToDisplay, setTabToDisplay] = useState(currentTab);
+
+  useEffect(() => {
+    setTab(currentTab);
+    setValue(currentTab);
+    setTabToDisplay(getTabToDisplay(currentTab, tabsInMenu));
+  }, [currentTab]);
+
+  useEffect(() => {
+    if (
+      deviceView === 'tablet' ||
+      deviceView === 'mobile' ||
+      deviceView === 'mobileS' ||
+      deviceView === 'mobileXS' ||
+      deviceView === 'mobileXXS'
+    ) {
+      setTabsInMenu(['Issues', 'Organizations', 'Pull Requests']);
+    }
+    if (
+      deviceView === 'laptopS' ||
+      deviceView === 'laptop' ||
+      deviceView === 'desktopS'
+    ) {
+      setTabsInMenu(['Organizations', 'Pull Requests']);
+    }
+    if (deviceView === 'desktop') {
+      setTabsInMenu(['Pull Requests']);
+    }
+  }, [deviceView]);
+
+  const isMobileOrTablet =
+    deviceView === 'tablet' ||
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
+  const isMobileOrTabletOrLaptop =
+    isMobileOrTablet ||
+    deviceView === 'laptopS' ||
+    deviceView === 'laptop' ||
+    deviceView === 'desktopS';
+  const isDesktopL = deviceView === 'desktopL';
+  const openMenu = Boolean(anchorEl);
+
+  const handleClick = (newTab, route) => {
+    setTab(newTab);
+    setTabToDisplay(getTabToDisplay(newTab, tabsInMenu));
+    handleNav(route);
+    setAnchorEl(null);
   };
+
+  const handeOpenMenu = event => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
   const BalanceFormComponent = (
     <ConditionalRender
       Component={
@@ -68,14 +135,17 @@ const SettingsTabs = ({
       FallbackComponent={
         <WithdrawalFormComponent
           balance={balance}
+          dispatchInputError={dispatchInputError}
           handleNav={handleNav}
+          handleWithdrawFunds={handleWithdrawFunds}
+          inputErrors={inputErrors}
           setDisplayBottom={setDisplayBottom}
+          userId={userId}
         />
       }
       shouldRender={view === 'deposit'}
     />
   );
-
   const ListComponent = (
     <ConditionalRender
       Component={
@@ -97,7 +167,6 @@ const SettingsTabs = ({
       shouldRender={view === 'attempting'}
     />
   );
-
   const SecondarySettingsComponent = (
     <ConditionalRender
       Component={ListComponent}
@@ -149,37 +218,85 @@ const SettingsTabs = ({
     3: (
       <UserOrganizations handleNav={handleNav} organizations={organizations} />
     ),
+    4: <UserPullRequests Component={PullRequestComponent} />,
   };
+  const TabMenu = () => (
+    <StyledPopper anchorEl={anchorEl} open={openMenu} placement="bottom-start">
+      {tabsInMenu.map((newTab, index) => {
+        const tabIndex = 5 - tabsInMenu.length + index;
+        return (
+          <TabItemBorder
+            key={`tab-item-${newTab}`}
+            isActive={currentTab === tabIndex}
+          >
+            <TabItem
+              onClick={() =>
+                handleClick(
+                  tabIndex,
+                  `/settings/${newTab.toLowerCase().replace(/\s/g, '')}`,
+                )
+              }
+            >
+              {newTab}
+            </TabItem>
+          </TabItemBorder>
+        );
+      })}
+    </StyledPopper>
+  );
   return (
     <StyledPaper>
       <StyledTabs
         centered
+        classes={{ indicator: 'indicator' }}
         displayBottom={displayBottom}
-        indicatorColor="primary"
-        onChange={handleChangeTab}
         textColor="primary"
-        value={tab}
+        value={tabsInMenu.length > 0 ? tabToDisplay : false}
       >
         <StyledTab
+          classes={{ selected: 'selected' }}
           label="Overview"
-          onClick={() => handleNav('/settings/overview')}
+          onClick={() => handleClick(0, '/settings/overview')}
         />
         <StyledTab
+          classes={{ selected: 'selected' }}
           label="Account"
-          onClick={() => handleNav('/settings/account')}
+          onClick={() => handleClick(1, '/settings/account')}
         />
-        <StyledTab
-          label="Issues"
-          onClick={() => handleNav('/settings/issues')}
-        />
-        <StyledTab
-          label="Organizations"
-          onClick={() => handleNav('/settings/organizations')}
-        />
-        <StyledTab
-          label="Pull Requests"
-          onClick={() => handleNav('/settings/pullrequests')}
-        />
+        {!isMobileOrTablet && (
+          <StyledTab
+            classes={{ selected: 'selected' }}
+            label="Issues"
+            onClick={() => handleClick(2, '/settings/issues')}
+          />
+        )}
+        {!isMobileOrTabletOrLaptop && (
+          <StyledTab
+            classes={{ selected: 'selected' }}
+            label="Organizations"
+            onClick={() => handleClick(3, '/settings/organizations')}
+          />
+        )}
+        {isDesktopL && (
+          <StyledTab
+            classes={{ selected: 'selected' }}
+            label="Pull Requests"
+            onClick={() => handleClick(4, '/settings/pullrequests')}
+          />
+        )}
+        {!isDesktopL && [
+          <StyledTab
+            key="more"
+            classes={{ selected: 'selected' }}
+            label="..."
+            onClick={handeOpenMenu}
+          />,
+          <ConditionalRender
+            key="tabMenu"
+            Component={TabMenu}
+            shouldRender={openMenu}
+          />,
+        ]}
       </StyledTabs>
       <ConditionalRender
         Component={SecondarySettingsComponent}
@@ -205,6 +322,8 @@ SettingsTabs.propTypes = {
   changeUsername: T.bool,
   creditCardProps: T.object,
   currentTab: T.number,
+  deviceView: T.string,
+  dispatchInputError: T.func,
   dispatchOpenModal: T.func,
   displayBottom: T.bool,
   dollarsEarned: T.number,
@@ -217,10 +336,13 @@ SettingsTabs.propTypes = {
   handleInputChange: T.func,
   handleNav: T.func,
   handleRemoveIssue: T.func,
+  handleWithdrawFunds: T.func,
+  inputErrors: T.object,
   isDisabled: T.bool,
   issues: T.array,
   lastName: T.string,
   organizations: T.array,
+  PullRequestComponent: T.oneOfType([T.func, T.node, T.object]),
   setChangeEmail: T.func,
   setChangeFirstName: T.func,
   setChangeLastName: T.func,

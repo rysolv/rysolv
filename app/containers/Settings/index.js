@@ -10,6 +10,8 @@ import { ModalDialog } from 'components/base_ui';
 import DeleteUserModal from 'components/DeleteUserModal';
 import SettingsView from 'components/Settings';
 import { makeSelectAuth } from 'containers/Auth/selectors';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
+import PullRequestOverview from 'containers/PullRequests/Overview';
 import {
   handleCreditCardNumberChange,
   handleCvcChange,
@@ -25,12 +27,17 @@ import {
   deleteUser,
   fetchInfo,
   inputChange,
+  inputError,
   openModalState,
   removeIssue,
   saveChange,
   submitPayment,
+  withdrawFunds,
 } from './actions';
-import { settingViewDictionary } from './constants';
+import {
+  settingViewDictionary,
+  transferValueLowErrorMessage,
+} from './constants';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectSettings, makeSelectSettingsDetail } from './selectors';
@@ -40,11 +47,14 @@ const Settings = ({
   activeUser: { id },
   alerts,
   data,
+  deviceView,
   dispatchCloseModal,
   dispatchFetchInfo,
+  dispatchInputError,
   dispatchOpenModal,
   dispatchSaveChange,
   dispatchSubmitPayment,
+  dispatchWithdrawFunds,
   error,
   filterValues,
   handleClearAlerts,
@@ -52,6 +62,7 @@ const Settings = ({
   handleInputChange,
   handleNav,
   handleRemoveIssue,
+  inputErrors,
   isModalOpen,
   loading,
   match,
@@ -77,6 +88,17 @@ const Settings = ({
       email: '',
       zipValue,
     });
+  };
+
+  const handleWithdrawFunds = ({ transferValue, userId }) => {
+    if (transferValue > 0) {
+      dispatchWithdrawFunds({ transferValue, userId });
+    } else {
+      dispatchInputError({
+        field: 'transferValue',
+        message: transferValueLowErrorMessage,
+      });
+    }
   };
   const {
     params: { view },
@@ -108,6 +130,7 @@ const Settings = ({
       },
     },
   };
+  const PullRequestComponent = () => <PullRequestOverview userId={id} />;
   return (
     <SettingsWrapper>
       <AsyncRender
@@ -120,6 +143,8 @@ const Settings = ({
           alerts,
           creditCardProps,
           currentTab,
+          deviceView,
+          dispatchInputError,
           dispatchOpenModal,
           dispatchSaveChange,
           filterValues,
@@ -127,6 +152,9 @@ const Settings = ({
           handleInputChange,
           handleNav,
           handleRemoveIssue,
+          handleWithdrawFunds,
+          inputErrors,
+          PullRequestComponent,
           view,
         }}
       />
@@ -139,11 +167,14 @@ Settings.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
   data: T.object,
+  deviceView: T.string.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchInfo: T.func,
+  dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveChange: T.func,
   dispatchSubmitPayment: T.func.isRequired,
+  dispatchWithdrawFunds: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object,
   handleClearAlerts: T.func.isRequired,
@@ -151,6 +182,7 @@ Settings.propTypes = {
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
+  inputErrors: T.object.isRequired,
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
@@ -169,9 +201,14 @@ const mapStateToProps = createStructuredSelector({
   data: makeSelectSettingsDetail('account'),
   error: makeSelectSettings('error'),
   filterValues: makeSelectSettings('filter'),
+  inputErrors: makeSelectSettings('inputErrors'),
   isModalOpen: makeSelectSettings('isModalOpen'),
   loading: makeSelectSettings('loading'),
   modal: makeSelectSettings('modal'),
+  /**
+   * Reducer : ViewSize
+   */
+  deviceView: makeSelectViewSize('deviceView'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -181,9 +218,11 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchCloseModal: () => dispatch(closeModalState()),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
+    dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
     dispatchSubmitPayment: payload => dispatch(submitPayment(payload)),
+    dispatchWithdrawFunds: payload => dispatch(withdrawFunds(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleDeleteUser: payload => dispatch(deleteUser(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),

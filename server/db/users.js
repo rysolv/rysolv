@@ -5,115 +5,118 @@ const {
   singleQuery,
   singleSearch,
 } = require('../db/query');
-const { diff } = require('./helpers');
+const { formatParamaters } = require('./helpers');
 
-const userValues = `
-  modified_date,
-  first_name,
-  last_name,
-  email,
-  watching,
-  rep,
-  profile_pic,
-  comments,
-  attempting,
-  issues,
-  organizations,
-  username,
-  github_link,
-  personal_link,
-  preferred_languages,
-  stackoverflow_link,
-  is_deleted,
-  pull_requests,
-  upvotes,
-  active_pull_requests,
-  completed_pull_requests,
-  dollars_earned,
-  is_online,
-  rejected_pull_requests,
-  balance
-`;
+const userValues = [
+  'id',
+  'active_pull_requests',
+  'attempting',
+  'balance',
+  'comments',
+  'completed_pull_requests',
+  'created_date',
+  'dollars_earned',
+  'email_verified',
+  'email',
+  'first_name',
+  'github_link',
+  'is_deleted',
+  'is_online',
+  'issues',
+  'last_name',
+  'modified_date',
+  'organizations',
+  'personal_link',
+  'preferred_languages',
+  'profile_pic',
+  'pull_requests',
+  'rejected_pull_requests',
+  'rep',
+  'stackoverflow_link',
+  'upvotes',
+  'username',
+  'watching',
+];
 
 const userReturnValues = `
   id,
-  created_date AS "createdDate",
-  modified_date AS "modifiedDate",
-  first_name AS "firstName",
-  last_name AS "lastName",
-  email,
-  watching,
-  rep,
-  profile_pic AS "profilePic",
-  comments,
+  active_pull_requests AS "activePullRequests",
   attempting,
-  issues,
-  organizations,
-  username,
+  balance,
+  comments,
+  completed_pull_requests AS "completedPullRequests",
+  created_date AS "createdDate",
+  dollars_earned AS "dollarsEarned",
+  email_verified AS "emailVerified",
+  email,
+  first_name AS "firstName",
   github_link AS "githubLink",
+  is_deleted AS "isDeleted",
+  is_online AS "isOnline",
+  issues,
+  last_name AS "lastName",
+  modified_date AS "modifiedDate",
+  organizations,
   personal_link AS "personalLink",
   preferred_languages AS "preferredLanguages",
-  stackoverflow_link AS "stackoverflowLink",
+  profile_pic AS "profilePic",
   pull_requests AS "pullRequests",
-  upvotes,
-  active_pull_requests AS "activePullRequests",
-  completed_pull_requests AS "completedPullRequests",
-  dollars_earned AS "dollarsEarned",
-  is_online AS "isOnline",
   rejected_pull_requests AS "rejectedPullRequests",
-  balance
+  rep,
+  stackoverflow_link AS "stackoverflowLink",
+  upvotes,
+  username,
+  watching
 `;
 
-// Check duplicate user
-const checkDuplicateUser = async (table, repo) => {
+// Check duplicate user email
+const checkDuplicateUserEmail = async email => {
   const queryText = `
-    SELECT id FROM ${table} WHERE (email='${repo}')
+    SELECT id FROM users WHERE (email='${email}')
   `;
   const { rows } = await singleQuery(queryText);
   if (rows.length > 0) {
-    throw new Error(`Error: User at ${repo} already exists`);
+    throw new Error(`User at email already exists`);
+  }
+};
+
+// Check duplicate username
+const checkDuplicateUsername = async username => {
+  const queryText = `
+    SELECT id FROM users WHERE (username='${username}')
+  `;
+  const { rows } = await singleQuery(queryText);
+  if (rows.length > 0) {
+    throw new Error(`Username ${username} already exists`);
   }
 };
 
 // Create new User
 const createUser = async data => {
+  const { parameters, substitution, values } = formatParamaters(
+    userValues,
+    data,
+  );
   const queryText = `INSERT INTO
-    users( id, created_date, ${userValues} )
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27)
+    users( ${parameters} )
+    VALUES(${substitution})
     returning *`;
-  const result = await mapValues(queryText, data);
+  const [result] = await mapValues(queryText, values);
   return result;
 };
 
-// DELETE single user
-const deleteUser = async (table, id, data) => {
-  const [rows] = await singleItem(table, id);
-  if (rows) {
-    const { newObjectArray } = diff(rows, data);
-    const queryText = `UPDATE ${table}
-      SET ( id, created_date, ${userValues} )
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27)
-      WHERE (id = '${id}')
-      RETURNING *`;
-    await mapValues(queryText, [newObjectArray]);
-    const { first_name, last_name } = rows;
-    return `${first_name} ${last_name} was successfully deleted from ${table}.`;
-  }
-  throw new Error(`Failed to delete user. ID not found in ${table}`);
-};
-
 // GET single user
-const getOneUser = async (table, query, column) => {
-  const rows = await singleItem(table, query, userReturnValues, column);
-  if (rows) {
+const getOneUser = async userId => {
+  const [rows] = await singleItem('users', userId, userReturnValues);
+  if (rows && !rows.isDeleted) {
     return rows;
   }
-  throw new Error(`ID not found in ${table}`);
+  throw new Error(`User does not exist`);
 };
 
 // GET all users
-const getUsers = async table => {
-  const queryText = `SELECT ${userReturnValues} FROM ${table} WHERE is_deleted = false;`;
+const getUsers = async () => {
+  const queryText = `SELECT ${userReturnValues} FROM users WHERE is_deleted = false AND email_verified = true`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
@@ -156,8 +159,7 @@ const searchUsers = async (table, value) => {
 
 // UPDATE balance of user for payment
 const submitAccountPaymentUser = async (userId, fundValue) => {
-  const [userData] = await getOneUser('users', userId);
-  const { balance } = userData;
+  const { balance } = await getOneUser(userId);
   const adjustedBalanceValue = balance - fundValue;
   const queryText = `UPDATE users SET balance=${adjustedBalanceValue} WHERE (id = '${userId}') RETURNING *`;
   const { rows } = await singleQuery(queryText);
@@ -165,34 +167,47 @@ const submitAccountPaymentUser = async (userId, fundValue) => {
 };
 
 // PATCH single user
-const transformUser = async (table, id, data) => {
-  const [rows] = await singleItem(table, id, userValues);
+const transformUser = async (id, data) => {
+  const [rows] = await singleItem('users', id, userValues);
   if (rows) {
-    const { newObjectArray } = diff(rows, data);
-    const queryText = `UPDATE ${table}
-      SET (${userValues})
-      = ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
+    const { parameters, substitution, values } = formatParamaters(
+      userValues,
+      data,
+    );
+    const queryText = `UPDATE users
+      SET (${parameters})
+      = (${substitution})
       WHERE (id = '${id}')
-      RETURNING *`;
-    const [result] = await mapValues(queryText, [newObjectArray]);
+      RETURNING ${userReturnValues}`;
+    const [result] = await mapValues(queryText, values);
     return result;
   }
-  throw new Error(`Failed to update users. ID not found in ${table}`);
+  throw new Error(`Failed to update users. ID not found in users`);
 };
 
-const updateUserArray = async (table, column, id, data, remove) => {
-  const [userData] = await getOneUser('users', id, 'id');
-  // Only add uniquew values to array
+const updateUserArray = async ({ column, data, remove, userId }) => {
+  const [userData] = await singleItem('users', userId);
+  // Only add unique values to array
   if (!userData[column].includes(data) || remove) {
     const action = remove ? 'array_remove' : 'array_append';
-    const queryText = `UPDATE ${table}
+    const queryText = `UPDATE users
       SET ${column} = ${action}(${column}, '${data}')
-      WHERE (id = '${id}')
+      WHERE (id = '${userId}')
       RETURNING *`;
     const { rows } = await singleQuery(queryText);
     return rows;
   }
   return false;
+};
+
+const userDownvote = async (table, id) => {
+  const upvoteQuery = `
+    UPDATE ${table} SET rep = rep + 1
+    WHERE (id = '${id}')
+    RETURNING *`;
+  const { rows } = await singleQuery(upvoteQuery);
+  const [oneRow] = rows;
+  return oneRow;
 };
 
 const userUpvote = async (table, id) => {
@@ -201,13 +216,14 @@ const userUpvote = async (table, id) => {
     WHERE (id = '${id}')
     RETURNING *`;
   const { rows } = await singleQuery(upvoteQuery);
-  return rows;
+  const [oneRow] = rows;
+  return oneRow;
 };
 
 module.exports = {
-  checkDuplicateUser,
+  checkDuplicateUserEmail,
+  checkDuplicateUsername,
   createUser,
-  deleteUser,
   getOneUser,
   getUsers,
   getWatchList,
@@ -216,5 +232,6 @@ module.exports = {
   submitAccountPaymentUser,
   transformUser,
   updateUserArray,
+  userDownvote,
   userUpvote,
 };

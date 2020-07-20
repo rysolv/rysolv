@@ -5,12 +5,41 @@ import { BaseTextInput, IconButton } from 'components/base_ui';
 import { formatUrlLinks } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
-import { LinkIcon, OneLink, OneLinkWrapper, StyledA } from './styledComponents';
+import {
+  IconButtonGroup,
+  LinkIcon,
+  OneLink,
+  OneLinkWrapper,
+  StyledA,
+} from './styledComponents';
 
 const CloseIcon = iconDictionary('close');
 const EditIcon = iconDictionary('edit');
 const GithubIcon = iconDictionary('github');
 const DoneIcon = iconDictionary('done');
+
+export const EmptyGithubLinkComponent = ({
+  handleEdit,
+  isDisabled,
+  setChangeGithub,
+}) => (
+  <OneLinkWrapper>
+    <OneLink>
+      <LinkIcon>{GithubIcon}</LinkIcon>
+      Add Github link
+    </OneLink>
+    <IconButton
+      disabled={isDisabled}
+      icon={EditIcon}
+      label="Edit"
+      onClick={() =>
+        handleEdit({
+          changeInputState: setChangeGithub,
+        })
+      }
+    />
+  </OneLinkWrapper>
+);
 
 export const GithubEditComponent = ({
   handleClose,
@@ -24,7 +53,7 @@ export const GithubEditComponent = ({
       <LinkIcon>{GithubIcon}</LinkIcon>
       <BaseTextInput onChange={e => setValue(e.target.value)} value={value} />
     </OneLink>
-    <div>
+    <IconButtonGroup>
       <IconButton
         icon={CloseIcon}
         label="Close"
@@ -37,7 +66,7 @@ export const GithubEditComponent = ({
           handleDone({ changeInputState: setChangeGithub, field: 'githubLink' })
         }
       />
-    </div>
+    </IconButtonGroup>
   </OneLinkWrapper>
 );
 
@@ -67,6 +96,12 @@ export const GithubLinkComponent = ({
     />
   </OneLinkWrapper>
 );
+
+EmptyGithubLinkComponent.propTypes = {
+  handleEdit: T.func,
+  isDisabled: T.bool,
+  setChangeGithub: T.func,
+};
 
 GithubEditComponent.propTypes = {
   handleClose: T.func,

@@ -5,65 +5,56 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import AsyncRender from 'components/AsyncRender';
-import PullRequestCard from 'components/PullRequests/Card';
-import EmptyCard from 'components/PullRequests/EmptyCard';
+import PullRequests from 'components/PullRequests';
 
-import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
 
 import { fetchUserPullRequests } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
-import {
-  makeSelectPullRequests,
-  makeSelectPullRequestsLoading,
-  makeSelectPullRequestsError,
-} from '../selectors';
+import { makeSelectPullRequests } from '../selectors';
 
-import { PullRequestCardWrapper } from './styledComponents';
-
-// eslint-disable-next-line react/prefer-stateless-function
 const PullRequestOverview = ({
-  dispatchFetchUserPullRequests,
-  pullRequests,
-  loading,
   createSuccess,
-  userId,
+  dispatchFetchUserPullRequests,
   error,
+  loading,
+  pullRequests,
+  userId,
 }) => {
   useEffect(() => {
     dispatchFetchUserPullRequests({ userId });
-    // the listener on createSuccess is only temporary
   }, [createSuccess]);
 
   return (
-    <PullRequestCardWrapper>
-      <AsyncRender
-        asyncData={pullRequests}
-        isRequiredData
-        component={PullRequestCard}
-        FallbackComponent={EmptyCard}
-        error={error}
-        loading={loading}
-      />
-    </PullRequestCardWrapper>
+    <AsyncRender
+      asyncData={pullRequests}
+      component={PullRequests}
+      error={error}
+      isRequiredData={false}
+      loading={loading}
+    />
   );
 };
 
 PullRequestOverview.propTypes = {
   createSuccess: T.bool,
   dispatchFetchUserPullRequests: T.func,
-  error: T.oneOfType([T.object, T.bool]),
+  error: T.oneOfType([T.object, T.string]),
   loading: T.bool,
   pullRequests: T.array,
   userId: T.string,
 };
 
 const mapStateToProps = createStructuredSelector({
+  /*
+   * Reducer : PullRequests
+   */
   createSuccess: makeSelectPullRequests('createSuccess'),
-  error: makeSelectPullRequestsError('fetchPullRequests'),
+  error: makeSelectPullRequests('error'),
+  loading: makeSelectPullRequests('loading'),
   pullRequests: makeSelectPullRequests('pullRequests'),
-  loading: makeSelectPullRequestsLoading('fetchPullRequests'),
 });
 
 function mapDispatchToProps(dispatch) {

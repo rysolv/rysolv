@@ -1,32 +1,55 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import { LoadingIndicator } from '../base_ui';
+
+import { LoadingIndicator } from 'components/base_ui';
+import Message from 'components/Message';
+import iconDictionary from 'utils/iconDictionary';
+
+import { IconWrapper, LinkWrapper } from './styledComponents';
+
+const WarningIcon = iconDictionary('warning');
 
 const AsyncRender = ({
   asyncData,
   component,
   error,
-  FallbackComponent,
   isRequiredData,
   loading,
   propsToPassDown,
 }) => {
+  const FootnoteComponent = (
+    <Fragment>
+      <span>You can</span>
+      {<LinkWrapper to="/contactus"> contact us </LinkWrapper>}
+      <span>if the problem persists</span>.
+    </Fragment>
+  );
   if (loading) {
     return <LoadingIndicator />;
   }
   if (error) {
-    return <div>Error loading, please refresh the page.</div>;
+    return (
+      <Message
+        body="We couldn't load the content for this page. Please try again later."
+        footnote={FootnoteComponent}
+        icon={<IconWrapper>{WarningIcon}</IconWrapper>}
+        title="Error loading page."
+      />
+    );
   }
-  // Should be false but, at the moment, true due to lack of data
   if (!isRequiredData || !isEmpty(asyncData)) {
     const ComponentToRender = component;
     return <ComponentToRender data={asyncData} {...propsToPassDown} />;
   }
-  if (FallbackComponent) {
-    return <FallbackComponent />;
-  }
-  return <div>Please contact customer support at (860) 491-7218</div>;
+  return (
+    <Message
+      body="Please try reloading the page to see if this rysolves the problem."
+      footnote={FootnoteComponent}
+      icon={<IconWrapper>{WarningIcon}</IconWrapper>}
+      title="Sorry, something went wrong."
+    />
+  );
 };
 
 AsyncRender.defaultProps = { isRequiredData: false, propsToPassDown: {} };
@@ -34,8 +57,7 @@ AsyncRender.defaultProps = { isRequiredData: false, propsToPassDown: {} };
 AsyncRender.propTypes = {
   asyncData: T.oneOfType([T.array, T.object]),
   component: T.oneOfType([T.func, T.object]),
-  error: T.oneOfType([T.object, T.bool]),
-  FallbackComponent: T.oneOfType([T.func, T.object]),
+  error: T.oneOfType([T.bool, T.object, T.string]),
   isRequiredData: T.bool,
   loading: T.bool,
   propsToPassDown: T.object,

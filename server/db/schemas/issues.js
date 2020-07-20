@@ -1,21 +1,22 @@
 const issues = `CREATE TABLE IF NOT EXISTS
 issues(
-  id UUID PRIMARY KEY,
-  created_date TIMESTAMP,
-  modified_date TIMESTAMP,
-  organization_id UUID REFERENCES organizations(id),
-  name VARCHAR(255) NOT NULL,
-  body TEXT NOT NULL,
-  repo VARCHAR(128) NOT NULL,
-  language VARCHAR(128) [],
-  comments UUID [],
   attempting UUID [],
+  body TEXT NOT NULL,
+  comments UUID [],
   contributor_id UUID REFERENCES users(id),
-  rep SMALLINT DEFAULT 25,
-  watching UUID [],
+  created_date TIMESTAMP,
   funded_amount FLOAT DEFAULT 0,
+  id UUID PRIMARY KEY,
+  language VARCHAR(128) [],
+  modified_date TIMESTAMP,
+  name VARCHAR(255) NOT NULL,
   open BOOLEAN DEFAULT true,
-  type VARCHAR(40) NOT NULL
+  organization_id UUID REFERENCES organizations(id),
+  pull_requests UUID [] DEFAULT '{}',
+  rep SMALLINT DEFAULT 25,
+  repo VARCHAR(128) NOT NULL,
+  type VARCHAR(40) NOT NULL,
+  watching UUID []
 )`;
 
 module.exports = issues;

@@ -1,97 +1,118 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
+import iconDictionary from 'utils/iconDictionary';
+
 import {
-  ButtonContainer,
-  PullRequestCard,
+  ButtonGroup,
+  Checkbox,
+  Divider,
+  PullNumberWrapper,
+  PullRequestContainer,
+  PullRequestInfo,
+  StatusWrapper,
+  StyledErrorSuccessBanner,
+  StyledHeader,
   StyledItem,
   StyledLabel,
-  VerifyForm,
+  StyledPrimaryAsyncButton,
+  StyledSecondayButton,
+  StyledSubHeader,
 } from './styledComponents';
 
-const ImportPullRequest = ({
+const CheckIcon = iconDictionary('check');
+const CloseIcon = iconDictionary('close');
+
+const VerifyForm = ({
   dispatchHandleStep,
+  error,
+  handleClearError,
   handleSubmit,
-  importData,
-}) => {
-  const {
+  importData: {
     githubUsername,
     htmlUrl,
     mergeable,
     mergeableState,
-    merged,
-    open,
     pullNumber,
     status,
     title,
-  } = importData;
+  },
+  loading,
+}) => {
+  const errorToDisplay = error ? { message: error } : false;
+  const handleBack = () => {
+    dispatchHandleStep({ step: 1 });
+    handleClearError();
+  };
+  const isMergeable = mergeable.value;
+  const haveTestsPassed = mergeableState.value !== 'unstable';
   return (
-    <VerifyForm>
-      <h3>VERIFY</h3>
-
-      <PullRequestCard>
-        <StyledItem>
-          <StyledLabel>Title: </StyledLabel>
-          {title.value}
-        </StyledItem>
-
-        <StyledItem>
-          <StyledLabel>Status: </StyledLabel>
-          {status.value}
-        </StyledItem>
-
-        <StyledItem>
-          <StyledLabel>URL: </StyledLabel>
-          {htmlUrl.value}
-        </StyledItem>
-
-        <StyledItem>
-          <StyledLabel>Github Username: </StyledLabel>
-          {githubUsername.value}
-        </StyledItem>
-
-        <StyledItem>
-          <StyledLabel>Mergeable: </StyledLabel>
-          {mergeable.value ? 'true' : false}
-        </StyledItem>
-
-        <StyledItem>
-          <StyledLabel>MergeableState: </StyledLabel>
-          {mergeableState.value}
-        </StyledItem>
-
-        <StyledItem>
-          <StyledLabel>Merged: </StyledLabel>
-          {merged.value ? 'true' : 'false'}
-        </StyledItem>
-
-        <StyledItem>
-          <StyledLabel>Open: </StyledLabel>
-          {open.value ? 'true' : 'false'}
-        </StyledItem>
-
-        <StyledItem>
-          <StyledLabel>Pull Number: </StyledLabel>
-          {pullNumber.value}
-        </StyledItem>
-      </PullRequestCard>
-
-      <ButtonContainer>
-        <button type="button" onClick={() => dispatchHandleStep({ step: 1 })}>
-          Cancel
-        </button>
-        <button type="button" onClick={() => handleSubmit()}>
-          Submit
-        </button>
-      </ButtonContainer>
-    </VerifyForm>
+    <Fragment>
+      <StyledHeader>Verify</StyledHeader>
+      <StyledErrorSuccessBanner
+        error={errorToDisplay}
+        onClose={handleClearError}
+      />
+      <PullRequestContainer>
+        <StyledSubHeader>General</StyledSubHeader>
+        <Divider />
+        <PullRequestInfo>
+          <StyledItem>
+            <StyledLabel>Title</StyledLabel>
+            <div>
+              {title.value}
+              <PullNumberWrapper> #{pullNumber.value}</PullNumberWrapper>
+            </div>
+          </StyledItem>
+          <StyledItem>
+            <StyledLabel>Url</StyledLabel>
+            {htmlUrl.value}
+          </StyledItem>
+          <StyledItem>
+            <StyledLabel>Posted by</StyledLabel>
+            {githubUsername.value}
+          </StyledItem>
+        </PullRequestInfo>
+        <StyledSubHeader>Mergeable Status</StyledSubHeader>
+        <Divider />
+        <PullRequestInfo>
+          <StyledItem>
+            <StyledLabel>Status</StyledLabel>
+            <StatusWrapper>{status.value}</StatusWrapper>
+          </StyledItem>
+          <StyledItem>
+            <StyledLabel>Mergeable</StyledLabel>
+            <Checkbox hasError={isMergeable}>
+              {isMergeable ? CheckIcon : CloseIcon}
+            </Checkbox>
+          </StyledItem>
+          <StyledItem>
+            <StyledLabel>Tests Passed</StyledLabel>
+            <Checkbox hasError={haveTestsPassed}>
+              {haveTestsPassed ? CheckIcon : CloseIcon}
+            </Checkbox>
+          </StyledItem>
+        </PullRequestInfo>
+      </PullRequestContainer>
+      <ButtonGroup>
+        <StyledSecondayButton label="Back" onClick={handleBack} />
+        <StyledPrimaryAsyncButton
+          label="Submit"
+          loading={loading}
+          onClick={() => handleSubmit()}
+        />
+      </ButtonGroup>
+    </Fragment>
   );
 };
 
-ImportPullRequest.propTypes = {
+VerifyForm.propTypes = {
   dispatchHandleStep: T.func,
+  error: T.string,
+  handleClearError: T.func,
   handleSubmit: T.func,
   importData: T.object,
+  loading: T.bool,
 };
 
-export default ImportPullRequest;
+export default VerifyForm;

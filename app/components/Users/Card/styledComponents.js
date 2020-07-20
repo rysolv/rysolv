@@ -74,11 +74,10 @@ export const OverviewWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-flow: wrap;
-  justify-content: space-between;
+  justify-content: start;
   margin-left: 1rem;
 
   ${mobile} {
-    justify-content: center;
     margin-left: 2rem;
   }
 

@@ -7,14 +7,39 @@ import iconDictionary from 'utils/iconDictionary';
 
 import {
   IconButtonContainer,
+  IconButtonGroup,
   Language,
   LanguageListItem,
+  LinksWrapper,
   StyledLanguageAutocomplete,
 } from './styledComponents';
 
 const CloseIcon = iconDictionary('close');
 const DoneIcon = iconDictionary('done');
 const EditIcon = iconDictionary('edit');
+
+export const EmptyPreferredLanguagesComponent = ({
+  handleEdit,
+  isDisabled,
+  setChangePreferredLanguages,
+}) => (
+  <LanguageListItem>
+    <LinksWrapper>Add languages</LinksWrapper>
+    <IconButtonContainer>
+      <IconButton
+        disabled={isDisabled}
+        icon={EditIcon}
+        label="Edit"
+        onClick={() =>
+          handleEdit({
+            changeInputState: setChangePreferredLanguages,
+            currentValue: [],
+          })
+        }
+      />
+    </IconButtonContainer>
+  </LanguageListItem>
+);
 
 export const PreferredLanguagesEditComponent = ({
   handleClose,
@@ -33,7 +58,7 @@ export const PreferredLanguagesEditComponent = ({
       />
     </StyledLanguageAutocomplete>
 
-    <div>
+    <IconButtonGroup>
       <IconButton
         icon={CloseIcon}
         label="Close"
@@ -51,7 +76,7 @@ export const PreferredLanguagesEditComponent = ({
           })
         }
       />
-    </div>
+    </IconButtonGroup>
   </LanguageListItem>
 );
 
@@ -83,10 +108,16 @@ export const PreferredLanguagesComponent = ({
   </LanguageListItem>
 );
 
+EmptyPreferredLanguagesComponent.propTypes = {
+  handleEdit: T.func,
+  isDisabled: T.bool,
+  setChangePreferredLanguages: T.func,
+};
+
 PreferredLanguagesEditComponent.propTypes = {
   handleClose: T.func,
   handleDone: T.func,
-  preferredLanguages: T.array,
+  preferredLanguages: T.oneOfType([T.array, T.number, T.string]),
   setChangePreferredLanguages: T.func,
   setValue: T.func,
 };

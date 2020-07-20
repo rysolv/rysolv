@@ -5,16 +5,6 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
 
-export const EmptyComponentContainer = styled.div`
-  align-items: center;
-  color: ${textColor};
-  display: flex;
-  font-size: 1.6rem;
-  height: 40rem;
-  justify-content: center;
-  text-align: center;
-`;
-
 export const IconButtonContainer = styled.div`
   display: flex;
 `;
@@ -33,8 +23,8 @@ export const IssueAttempts = styled.div`
 
 export const IssueContent = styled.div`
   display: flex;
-  height: 10rem;
   margin: 1rem 0;
+  min-height: 10rem;
   width: 100%;
 
   ${mobile} {

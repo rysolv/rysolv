@@ -21,6 +21,7 @@ import {
 } from '../styledComponents';
 
 const OrganizationIssuesTab = ({
+  activeUser,
   dispatchOpenModal,
   handleNav,
   handleUpvote,
@@ -38,47 +39,55 @@ const OrganizationIssuesTab = ({
         open,
         rep,
         userId,
-      }) => (
-        <IssueListItem key={`list-item-${id}`}>
-          <IssueContent>
-            <UpvotePanel
-              dispatchOpenModal={dispatchOpenModal}
-              handleUpvote={handleUpvote}
-              isSignedIn={isSignedIn}
-              issueId={id}
-              rep={rep}
-              upvoted={false}
-              userId={userId} // bug
-            />
-            <IssueContentInfo>
-              <IssueModifiedDate>
-                {moment.utc(modifiedDate).fromNow()}
-              </IssueModifiedDate>
-              <IssueDetail>
-                <IssueNameWrapper>
-                  <IssueName onClick={() => handleNav(`/issues/detail/${id}`)}>
-                    {name}
-                  </IssueName>
-                  <IssueOpenWrapper>
-                    <IssueOpen open={open}>
-                      {open ? 'Funded' : 'Unfunded'}
-                    </IssueOpen>
-                    <IssueAttempts>{attempting.length} Attempts</IssueAttempts>
-                  </IssueOpenWrapper>
-                </IssueNameWrapper>
-                <IssueFundedAmount>
-                  {formatDollarAmount(fundedAmount)}
-                </IssueFundedAmount>
-              </IssueDetail>
-            </IssueContentInfo>
-          </IssueContent>
-        </IssueListItem>
-      ),
+      }) => {
+        const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
+        return (
+          <IssueListItem key={`list-item-${id}`}>
+            <IssueContent>
+              <UpvotePanel
+                dispatchOpenModal={dispatchOpenModal}
+                handleUpvote={handleUpvote}
+                isSignedIn={isSignedIn}
+                issueId={id}
+                rep={rep}
+                upvoted={upvoted}
+                userId={userId} // bug
+              />
+              <IssueContentInfo>
+                <IssueModifiedDate>
+                  {moment.utc(modifiedDate).fromNow()}
+                </IssueModifiedDate>
+                <IssueDetail>
+                  <IssueNameWrapper>
+                    <IssueName
+                      onClick={() => handleNav(`/issues/detail/${id}`)}
+                    >
+                      {name}
+                    </IssueName>
+                    <IssueOpenWrapper>
+                      <IssueOpen open={open}>
+                        {open ? 'Open' : 'Closed'}
+                      </IssueOpen>
+                      <IssueAttempts>
+                        {attempting.length} Attempts
+                      </IssueAttempts>
+                    </IssueOpenWrapper>
+                  </IssueNameWrapper>
+                  <IssueFundedAmount>
+                    {formatDollarAmount(fundedAmount)}
+                  </IssueFundedAmount>
+                </IssueDetail>
+              </IssueContentInfo>
+            </IssueContent>
+          </IssueListItem>
+        );
+      },
     )}
   </IssuesList>
 );
 
 OrganizationIssuesTab.propTypes = {
+  activeUser: T.object,
   dispatchOpenModal: T.func,
   handleNav: T.func,
   handleUpvote: T.func,

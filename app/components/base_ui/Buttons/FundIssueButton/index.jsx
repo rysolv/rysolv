@@ -17,13 +17,17 @@ const FundIssueButton = ({
   balance,
   disabled,
   dispatchOpenModal,
+  email,
+  firstName,
   fundedAmount,
   issueId,
+  lastName,
   open,
+  organizationId,
   userId,
 }) => (
   <FundIssueButtonContainer>
-    <FundAmount>
+    <FundAmount open={open}>
       <StyledFundingWrapper
         open={open}
         value={formatDollarAmount(fundedAmount)}
@@ -31,13 +35,19 @@ const FundIssueButton = ({
     </FundAmount>
     <AddFundsButton
       disabled={disabled}
+      open={open}
       onClick={() =>
         dispatchOpenModal({
           modalState: 'fundIssue',
           tableData: {
             balance,
+            email,
+            firstName,
             fundedAmount,
             issueId,
+            lastName,
+            open,
+            organizationId,
             userId,
           },
         })
@@ -52,9 +62,13 @@ FundIssueButton.propTypes = {
   balance: T.number,
   disabled: T.bool,
   dispatchOpenModal: T.func,
+  email: T.string,
+  firstName: T.string,
   fundedAmount: T.number,
   issueId: T.string,
+  lastName: T.string,
   open: T.bool,
+  organizationId: T.string,
   userId: T.string,
 };
 
