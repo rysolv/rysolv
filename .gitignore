@@ -3,8 +3,12 @@ coverage
 build
 node_modules
 stats.json
+.vscode
 
 # Cruft
 .DS_Store
 npm-debug.log
 .idea
+
+# Local credentials
+.env

@@ -1,14 +1,54 @@
-import produce from 'immer';
-import { TEST } from './constants';
-
-export const initialState = { test: true };
-
 /* eslint-disable default-case, no-param-reassign */
+import produce from 'immer';
+
+import {
+  CLOSE_MODAL_STATE,
+  FETCH_WATCH_LIST_FAILURE,
+  FETCH_WATCH_LIST_SUCCESS,
+  FETCH_WATCH_LIST,
+  OPEN_MODAL_STATE,
+  UPDATE_PAYMENT_MODAL,
+} from './constants';
+
+export const initialState = {
+  isModalOpen: false,
+  error: null,
+  loading: false,
+  modal: '',
+  tableData: [],
+};
+
 const mainReducer = produce((draft, { payload, type }) => {
   switch (type) {
-    case TEST: {
-      const { result } = payload;
-      draft.test = result || false;
+    case CLOSE_MODAL_STATE: {
+      draft.isModalOpen = initialState.isModalOpen;
+      draft.modal = initialState.modal;
+      draft.tableData = initialState.tableData;
+      break;
+    }
+    case FETCH_WATCH_LIST_FAILURE: {
+      draft.loading = false;
+      break;
+    }
+    case FETCH_WATCH_LIST_SUCCESS: {
+      draft.loading = false;
+      break;
+    }
+    case FETCH_WATCH_LIST: {
+      draft.loading = true;
+      break;
+    }
+    case OPEN_MODAL_STATE: {
+      const { modalState, tableData } = payload;
+      draft.isModalOpen = true;
+      draft.modal = modalState;
+      draft.tableData = tableData || [];
+      break;
+    }
+    case UPDATE_PAYMENT_MODAL: {
+      const { balance, fundedAmount } = payload;
+      draft.tableData.balance = balance;
+      draft.tableData.fundedAmount = fundedAmount;
       break;
     }
   }
