@@ -4,7 +4,7 @@
   "description": "A crowdfunding platform for open source development",
   "repository": {
     "type": "git",
-    "url": "git://github.com/rysolv/rysolv"
+    "url": "git://github.com/rysolv/rysolv.git"
   },
   "engines": {
     "npm": ">=5",
