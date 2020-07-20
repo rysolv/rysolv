@@ -21,7 +21,6 @@
     "clean:all": "npm run analyze:clean && npm run test:clean && npm run build:clean",
     "clean": "shjs ./internals/scripts/clean.js",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "dev": "cross-env NODE_ENV=development node server",
     "extract-intl": "node ./internals/scripts/extract-intl.js",
     "generate": "plop --plopfile internals/generators/index.js",
     "lint:css": "stylelint app/**/*.js",
@@ -39,8 +38,9 @@
     "prettify": "prettier --write",
     "seed": "node ./server/db/dbseed seed",
     "setup": "node ./internals/scripts/setup.js",
+    "start:prod": "cross-env NODE_ENV=production node server",
     "start:production": "npm run test && npm run build && npm run start:prod",
-    "start": "cross-env NODE_ENV=production node server",
+    "start": "cross-env NODE_ENV=development node server",
     "test:clean": "rimraf ./coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "test": "cross-env NODE_ENV=test jest --coverage"
