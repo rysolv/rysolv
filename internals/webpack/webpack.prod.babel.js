@@ -1,11 +1,20 @@
 // Important modules this config uses
 const path = require('path');
+const webpack = require('webpack');
+const dotenv = require('dotenv');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const OfflinePlugin = require('offline-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+
+const env = dotenv.config().parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  // eslint-disable-next-line no-param-reassign
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
@@ -66,6 +75,7 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
+    new webpack.DefinePlugin(envKeys),
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
       template: 'app/index.html',

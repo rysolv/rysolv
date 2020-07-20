@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import issueExampleImage from 'images/issueExampleLandingPage.png';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
@@ -42,7 +41,7 @@ const Splash = ({ handleNav }) => (
               <Row />
             </RowWrapper>
           </ImageNavBar>
-          <Image src={issueExampleImage} />
+          <Image src="https://rysolv.s3.us-east-2.amazonaws.com/issueExampleLandingPage.png" />
         </ImageWrapper>
         <ContentWrapper>
           <LogoText>rysolv</LogoText>
