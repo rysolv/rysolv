@@ -10,14 +10,14 @@
     "npm": ">=5",
     "node": "12.0.0"
   },
-  "author": "Max Stoiber",
+  "author": "Anna P, Tyler M",
   "license": "MIT",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
     "analyze": "node ./internals/scripts/analyze.js",
     "aws-eb:prod": "npm run build && npm run start:prod",
     "build:clean": "rimraf ./build",
-    "build": "cross-env NODE_ENV=production RECAPTCHA_SITE_KEY=6LfwuOoUAAAAAJzJ1Bh0v4yrbz-A6kvABz6DgcGl webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "build": "cross-env NODE_ENV=production REACT_APP_APP_CLIENT_ID=11l7p718jl4ntk4igsj7r5s48g REACT_APP_COGNITO_REGION=us-east-2 REACT_APP_USER_POOL_ID=us-east-2_ePT5miokm RECAPTCHA_SITE_KEY=6LfwuOoUAAAAAJzJ1Bh0v4yrbz-A6kvABz6DgcGl webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
     "clean:all": "npm run analyze:clean && npm run test:clean && npm run build:clean",
     "clean": "shjs ./internals/scripts/clean.js",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
