@@ -1,10 +1,10 @@
 {
-  "name": "react-boilerplate",
-  "version": "4.0.0",
-  "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
+  "name": "rysolv",
+  "version": "0.0.1",
+  "description": "A crowdfunding platform for open source development",
   "repository": {
     "type": "git",
-    "url": "git://github.com/react-boilerplate/react-boilerplate.git"
+    "url": "git://github.com/rysolv/rysolv.git"
   },
   "engines": {
     "npm": ">=5",
