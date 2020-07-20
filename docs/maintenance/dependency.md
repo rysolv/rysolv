@@ -106,7 +106,6 @@ import TestPage from 'containers/TestPage/Loadable';
 **[0] PATCH UPDATES**
 
 ```
- fontfaceobserver                        2.0.8  →    2.0.9
  ip                                      1.1.4  →    1.1.5
  react-redux                             5.0.2  →    5.0.5
  react-router                            3.0.2  →    3.0.5
@@ -122,7 +121,6 @@ import TestPage from 'containers/TestPage/Loadable';
  html-loader                             0.4.4  →    0.4.5
  imports-loader                          0.7.0  →    0.7.1
  lint-staged                             3.3.0  →    3.3.2
- ngrok                                   2.2.6  →    2.2.9
  offline-plugin                          4.6.1  →    4.6.2
  shelljs                                 0.7.6  →    0.7.7
  sinon                             2.0.0-pre.5  →    2.0.0

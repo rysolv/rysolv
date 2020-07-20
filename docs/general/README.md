@@ -107,10 +107,6 @@ If you simply use web fonts in your project, the page will stay blank until
 these fonts are downloaded. That means a lot of waiting time in which users
 could already read the content.
 
-[FontFaceObserver](https://github.com/bramstein/fontfaceobserver) adds a class
-to the `body` when the fonts have loaded. (see [`app.js`](../../app/app.js#L26-L36)
-and [`App/styles.css`](../../app/containers/App/styles.css))
-
 ### Adding a new font
 
 1.  Either add the `@font-face` declaration to `App/styles.css` or add a `<link>`

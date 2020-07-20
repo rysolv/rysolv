@@ -114,15 +114,6 @@ npm run test:watch
 
 Watches changes to your application and re-runs tests whenever a file changes.
 
-### Remote testing
-
-```Shell
-npm run start:tunnel
-```
-
-Starts the development server and tunnels it with `ngrok`, making the website
-available worldwide. Useful for testing on different devices in different locations!
-
 ### Dependency size test
 
 ```Shell
