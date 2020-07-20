@@ -1,30 +1,33 @@
-/*
- * HomePage
- *
- * This is the first thing users see of our App, at the '/' route
- *
- */
-
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
-import {
-  BaseButton,
-  BaseCheckbox,
-  BaseInput,
-  BaseLink,
-} from '../../components/base_ui';
-import Footer from '../../components/Footer';
+import T from 'prop-types';
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 
-export default function HomePage() {
+import Splash from 'components/Splash';
+import Landing from 'components/Landing';
+
+import { HomePageContainer } from './styledComponents';
+
+const HomePage = ({ handleNav }) => {
+  document.title = 'Rysolv';
   return (
-    <h1>
-      <BaseButton label="hello" />
-      <BaseLink label="hello" path="/" />
-      <FormattedMessage {...messages.header} />
-      <Footer />
-      <BaseInput label="hello" />
-      <BaseCheckbox label="hello" />
-    </h1>
+    <HomePageContainer>
+      <Splash handleNav={handleNav} />
+      <Landing />
+    </HomePageContainer>
   );
-}
+};
+
+HomePage.propTypes = { handleNav: T.func.isRequired };
+
+const mapDispatchToProps = dispatch => ({
+  /*
+   * Reducer : Router
+   */
+  handleNav: route => dispatch(push(route)),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(HomePage);

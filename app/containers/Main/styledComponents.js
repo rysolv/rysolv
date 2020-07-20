@@ -1,13 +1,23 @@
 import styled from 'styled-components';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-export const AppBody = styled.div`
+const { tablet } = mediaQueriesByDevice;
+
+export const AppBodyWrapper = styled.div`
+  padding-bottom: 16rem;
+`;
+
+export const AppContentWrapper = styled.div`
   display: flex;
-  flex-direction: row;
 `;
 
 export const RoutesWrapper = styled.section`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
+  justify-content: center;
+  padding: 0 5% 3.6rem 5%;
+  width: 100%;
+
+  ${tablet} {
+    padding: 0 1rem 3.6rem 1rem;
+  }
 `;

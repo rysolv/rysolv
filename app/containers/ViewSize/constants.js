@@ -1,0 +1,1 @@
+export const CHANGE_RESPONSIVE_VIEW = 'app/ViewSize/CHANGE_RESPONSIVE_VIEW';

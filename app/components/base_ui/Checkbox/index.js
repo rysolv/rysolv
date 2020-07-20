@@ -1,3 +1,4 @@
-import BaseCheckbox from './BaseCheckbox';
+import Checkbox from './BaseCheckbox';
+import CheckboxWithLabel from './BaseCheckboxWithLabel';
 
-export { BaseCheckbox };
+export { Checkbox, CheckboxWithLabel };
