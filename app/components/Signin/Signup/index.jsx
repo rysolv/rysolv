@@ -102,6 +102,7 @@ const Signup = ({
             value: e.target.value,
           })
         }
+        type="password"
         value={password.value}
       />
       <PasswordRequirements>
@@ -123,6 +124,7 @@ const Signup = ({
             value: e.target.value,
           })
         }
+        type="password"
         value={verifyPassword.value}
       />
       <StyledPrimaryAsyncButton

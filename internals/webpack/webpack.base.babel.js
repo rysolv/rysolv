@@ -2,8 +2,16 @@
  * COMMON WEBPACK CONFIGURATION
  */
 
+const dotenv = require('dotenv');
 const path = require('path');
 const webpack = require('webpack');
+
+const env = dotenv.config().parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  // eslint-disable-next-line no-param-reassign
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 module.exports = options => ({
   mode: options.mode,
@@ -108,23 +116,13 @@ module.exports = options => ({
     ],
   },
   plugins: options.plugins.concat([
+    new webpack.DefinePlugin(envKeys),
     // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`
     // inside your code for any environment checks; Terser will automatically
     // drop any unreachable code.
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        REACT_APP_APP_CLIENT_ID: JSON.stringify(
-          process.env.REACT_APP_APP_CLIENT_ID,
-        ),
-        REACT_APP_COGNITO_REGION: JSON.stringify(
-          process.env.REACT_APP_COGNITO_REGION,
-        ),
-        REACT_APP_USER_POOL_ID: JSON.stringify(
-          process.env.REACT_APP_USER_POOL_ID,
-        ),
-        RECAPTCHA_SITE_KEY: JSON.stringify(process.env.RECAPTCHA_SITE_KEY),
-      },
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development',
+      RECAPTCHA_SITE_KEY: JSON.stringify(process.env.RECAPTCHA_SITE_KEY),
     }),
   ]),
   resolve: {
