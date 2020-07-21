@@ -99,20 +99,19 @@ const Landing = () => (
           <List>
             <ListImage>{OneIcon}</ListImage>
             <ListContent>
-              <ListTitle>Browse through issues</ListTitle>
+              <ListTitle>Fund an issue</ListTitle>
               <ListText>
-                Create an account to have instant access to browse through the
-                newest and most funded issues.
+                Help improve tools people use everyday. Anyone can create an
+                issue, and add bounties to it.
               </ListText>
             </ListContent>
           </List>
           <List>
             <ListImage>{TwoIcon}</ListImage>
             <ListContent>
-              <ListTitle>Rysolv issue</ListTitle>
+              <ListTitle>Find issues to solve</ListTitle>
               <ListText>
-                Find issues you can solve from issues list. There are tons of
-                opportunities.
+                Browse through opportunities, and find an issue to fix.
               </ListText>
             </ListContent>
           </List>
@@ -121,7 +120,7 @@ const Landing = () => (
           <List>
             <ListImage>{ThreeIcon}</ListImage>
             <ListContent>
-              <ListTitle>Submit pull request</ListTitle>
+              <ListTitle>Submit a solution</ListTitle>
               <ListText>
                 After you solve the problem, you can submit your pull request
                 via Rysolv.
@@ -133,8 +132,8 @@ const Landing = () => (
             <ListContent>
               <ListTitle>Get paid</ListTitle>
               <ListText>
-                After your pull request is accepted and merged, you can get your
-                rewards based on the funds!
+                When your pull request is merged, you will earn the bounty
+                placed on that issue.
               </ListText>
             </ListContent>
           </List>
