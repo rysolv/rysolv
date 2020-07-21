@@ -3,9 +3,9 @@
 
 # Except
 !build/
-!server/
 !package.json
 !Procfile
+!server/
 
 # Ignore node_modules
 node_modules
