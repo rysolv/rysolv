@@ -1,0 +1,11 @@
+# Ignore everything
+*
+
+# Except
+!build/
+!server/
+!package.json
+!Procfile
+
+# Ignore node_modules
+node_modules
