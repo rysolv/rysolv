@@ -21,58 +21,66 @@ const Signin = ({
   handleSignIn,
   signInDisabled,
   signInLoading,
-}) => (
-  <SigninWrapper>
-    <InputFormWrapper>
-      <Title>Sign in</Title>
-      {error.error && (
-        <StyledErrorSuccessBanner
-          error={error}
-          onClose={handleClearAuthAlerts}
+}) => {
+  const handleKeypress = e => {
+    if (e.keyCode === 13 && !signInDisabled) {
+      handleSignIn();
+    }
+  };
+
+  return (
+    <SigninWrapper onKeyDown={e => handleKeypress(e)}>
+      <InputFormWrapper>
+        <Title>Sign in</Title>
+        {error.error && (
+          <StyledErrorSuccessBanner
+            error={error}
+            onClose={handleClearAuthAlerts}
+          />
+        )}
+        <MainTextInput
+          autoComplete="email"
+          error={!!email.error}
+          helperText={email.error}
+          label="Email"
+          onChange={e =>
+            handleInputChange({
+              field: 'email',
+              form: 'signIn',
+              value: e.target.value,
+            })
+          }
+          type="email"
+          value={email.value}
         />
-      )}
-      <MainTextInput
-        autoComplete="email"
-        error={!!email.error}
-        helperText={email.error}
-        label="Email"
-        onChange={e =>
-          handleInputChange({
-            field: 'email',
-            form: 'signIn',
-            value: e.target.value,
-          })
-        }
-        type="email"
-        value={email.value}
-      />
-      <MainTextInput
-        autoComplete="current-password"
-        error={!!password.error}
-        helperText={password.error}
-        label="Password"
-        onChange={e =>
-          handleInputChange({
-            field: 'password',
-            form: 'signIn',
-            value: e.target.value,
-          })
-        }
-        type="password"
-        value={password.value}
-      />
-      <StyledPrimaryAsyncButton
-        disabled={!signInDisabled}
-        label="Sign in"
-        loading={signInLoading}
-        onClick={() => handleSignIn()}
-      />
-    </InputFormWrapper>
-    <SubText>
-      Don’t have an account? <Link to="/signup">Sign up</Link>
-    </SubText>
-  </SigninWrapper>
-);
+        <MainTextInput
+          autoComplete="current-password"
+          error={!!password.error}
+          helperText={password.error}
+          label="Password"
+          onChange={e =>
+            handleInputChange({
+              field: 'password',
+              form: 'signIn',
+              value: e.target.value,
+            })
+          }
+          type="password"
+          value={password.value}
+        />
+        <StyledPrimaryAsyncButton
+          disabled={signInDisabled}
+          label="Sign in"
+          loading={signInLoading}
+          onClick={() => handleSignIn()}
+        />
+      </InputFormWrapper>
+      <SubText>
+        Don’t have an account? <Link to="/signup">Sign up</Link>
+      </SubText>
+    </SigninWrapper>
+  );
+};
 
 Signin.propTypes = {
   data: T.object.isRequired,
