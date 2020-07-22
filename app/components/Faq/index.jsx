@@ -80,7 +80,7 @@ const Faq = () => {
                     Rysolv connects users with developers allowing them to
                     support software they care about. Users can fund open source
                     projects issue by issue, and developers get paid for working
-                    on their passions
+                    on their passions.
                   </AnswerWrapper>
                 )}
                 title="How does Rysolv work?"
@@ -124,8 +124,8 @@ const Faq = () => {
                     <br />
                     <br />
                     Keep in mind you must create the pull request in Github
-                    first. And you can only import a Pull Request that matches
-                    the issue repo;
+                    first. And you can only import a pull request that matches
+                    the issue repo.
                   </AnswerWrapper>
                 )}
                 title="How do I submit a solution to an issue?"
@@ -141,7 +141,7 @@ const Faq = () => {
                   <AnswerWrapper>
                     When a solution is accepted, your account will be credited
                     for the bounty on that issue. You can withdraw your balance
-                    under your accounts Settings page.
+                    in your account &apos;Settings&apos; page.
                   </AnswerWrapper>
                 )}
                 title="How do I receive payment?"
