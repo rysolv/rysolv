@@ -1,9 +1,13 @@
 import {
+  CLEAR_ALERTS,
   CLEAR_ERROR,
   CLEAR_FORM,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
   CREATE_PULL_REQUEST,
+  DELETE_PULL_REQUEST_FAILURE,
+  DELETE_PULL_REQUEST_SUCCESS,
+  DELETE_PULL_REQUEST,
   FETCH_USER_PULL_REQUESTS_FAILURE,
   FETCH_USER_PULL_REQUESTS_SUCCESS,
   FETCH_USER_PULL_REQUESTS,
@@ -14,6 +18,12 @@ import {
   INPUT_CHANGE,
   INPUT_ERROR,
 } from './constants';
+
+export function clearAlerts() {
+  return {
+    type: CLEAR_ALERTS,
+  };
+}
 
 export function clearError() {
   return {
@@ -45,6 +55,27 @@ export function createPullRequest(payload) {
   return {
     payload,
     type: CREATE_PULL_REQUEST,
+  };
+}
+
+export function deletePullRequestFailure(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_FAILURE,
+  };
+}
+
+export function deletePullRequestSuccess(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_SUCCESS,
+  };
+}
+
+export function deletePullRequest(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST,
   };
 }
 

@@ -10,15 +10,22 @@ import PullRequests from 'components/PullRequests';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { fetchUserPullRequests } from '../actions';
+import {
+  clearAlerts,
+  deletePullRequest,
+  fetchUserPullRequests,
+} from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectPullRequests } from '../selectors';
 
 const PullRequestOverview = ({
+  alerts,
   createSuccess,
   dispatchFetchUserPullRequests,
   error,
+  handleClearAlerts,
+  handleDelete,
   loading,
   pullRequests,
   userId,
@@ -34,14 +41,18 @@ const PullRequestOverview = ({
       error={error}
       isRequiredData={false}
       loading={loading}
+      propsToPassDown={{ alerts, handleClearAlerts, handleDelete }}
     />
   );
 };
 
 PullRequestOverview.propTypes = {
+  alerts: T.object,
   createSuccess: T.bool,
   dispatchFetchUserPullRequests: T.func,
   error: T.oneOfType([T.object, T.string]),
+  handleClearAlerts: T.func,
+  handleDelete: T.func,
   loading: T.bool,
   pullRequests: T.array,
   userId: T.string,
@@ -51,6 +62,7 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : PullRequests
    */
+  alerts: makeSelectPullRequests('alerts'),
   createSuccess: makeSelectPullRequests('createSuccess'),
   error: makeSelectPullRequests('error'),
   loading: makeSelectPullRequests('loading'),
@@ -64,6 +76,8 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchUserPullRequests: payload =>
       dispatch(fetchUserPullRequests(payload)),
+    handleClearAlerts: () => dispatch(clearAlerts()),
+    handleDelete: payload => dispatch(deletePullRequest(payload)),
   };
 }
 
