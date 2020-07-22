@@ -18,7 +18,7 @@ import injectReducer from 'utils/injectReducer';
 
 import { clearForm, inputChange } from '../actions';
 import reducer from '../reducer';
-import { makeSelectSignIn, makeSelectSignInDisabled } from '../selectors';
+import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class SigninContainer extends React.PureComponent {
@@ -101,7 +101,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Signin
    */
   data: makeSelectSignIn('signIn'),
-  signInDisabled: makeSelectSignInDisabled(),
+  signInDisabled: makeSelectDisabled('signIn'),
 });
 
 function mapDispatchToProps(dispatch) {

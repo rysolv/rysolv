@@ -11,22 +11,10 @@ const makeSelectSignIn = prop =>
     substate => substate[prop],
   );
 
-const makeSelectSignInDisabled = () =>
+const makeSelectDisabled = prop =>
   createSelector(
-    makeSelectSignIn('signIn'),
-    data => {
-      const tempData = omit(data, []);
-      return !Object.keys(tempData).every(item => tempData[item].value !== '');
-    },
-  );
-
-const makeSelectSignUpDisabled = () =>
-  createSelector(
-    makeSelectSignIn('signUp'),
-    data => {
-      const tempData = omit(data, []);
-      return !Object.keys(tempData).every(item => tempData[item].value !== '');
-    },
+    makeSelectSignIn(prop),
+    data => !Object.keys(data).every(item => data[item].value !== ''),
   );
 
 const makeSelectVerifyDisabled = () =>
@@ -37,9 +25,4 @@ const makeSelectVerifyDisabled = () =>
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );
-export {
-  makeSelectSignIn,
-  makeSelectSignInDisabled,
-  makeSelectSignUpDisabled,
-  makeSelectVerifyDisabled,
-};
+export { makeSelectDisabled, makeSelectSignIn, makeSelectVerifyDisabled };
