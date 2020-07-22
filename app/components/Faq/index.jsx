@@ -63,10 +63,10 @@ const Faq = () => {
               <StyledBaseExpansionPanel
                 Component={() => (
                   <AnswerWrapper>
-                    Contra is a new type of professional network for people you
-                    actually work with. Contra allows you to find flexible work
-                    opportunities from people that you know and love. Think of
-                    it as your own exclusive community/referral network.
+                    Rysolv is a crowdfunding platform designed to accelerate
+                    work on open source projects. Users sponsor outstanding
+                    issues or feature requests in open source projects.
+                    Developers earn bounties by resolving them.
                   </AnswerWrapper>
                 )}
                 open
@@ -77,10 +77,10 @@ const Faq = () => {
               <StyledBaseExpansionPanel
                 Component={() => (
                   <AnswerWrapper>
-                    Contra is a new type of professional network for people you
-                    actually work with. Contra allows you to find flexible work
-                    opportunities from people that you know and love. Think of
-                    it as your own exclusive community/referral network.
+                    Rysolv connects users with developers allowing them to
+                    support software they care about. Users can fund open source
+                    projects issue by issue, and developers get paid for working
+                    on their passions.
                   </AnswerWrapper>
                 )}
                 title="How does Rysolv work?"
@@ -90,62 +90,42 @@ const Faq = () => {
               <StyledBaseExpansionPanel
                 Component={() => (
                   <AnswerWrapper>
-                    Contra is a new type of professional network for people you
-                    actually work with. Contra allows you to find flexible work
-                    opportunities from people that you know and love. Think of
-                    it as your own exclusive community/referral network.
+                    Anyone can create an issue for any repository. For issues
+                    imported from Github, Rysolv monitors the issue on Github to
+                    determine when it is closed.
                   </AnswerWrapper>
                 )}
-                title="What types of issues are allowed on Rysolv?"
+                title="Who can create an issue?"
               />
             </ExpansionPanel>
             <ExpansionPanel>
               <StyledBaseExpansionPanel
                 Component={() => (
                   <AnswerWrapper>
-                    Contra is a new type of professional network for people you
-                    actually work with. Contra allows you to find flexible work
-                    opportunities from people that you know and love. Think of
-                    it as your own exclusive community/referral network.
+                    Any user can contribute to an issue. Any contribution adds
+                    to the bounty on that issue, and will be earned by whoever
+                    submits a successful solution.
+                    <br />
+                    <br />
+                    You can fund an issue with a credit/debit card, or through
+                    PayPal.
                   </AnswerWrapper>
                 )}
-                title="Who can fund an issue?"
+                title="How do issues get funded?"
               />
             </ExpansionPanel>
             <ExpansionPanel>
               <StyledBaseExpansionPanel
                 Component={() => (
                   <AnswerWrapper>
-                    Contra is a new type of professional network for people you
-                    actually work with. Contra allows you to find flexible work
-                    opportunities from people that you know and love. Think of
-                    it as your own exclusive community/referral network.
-                  </AnswerWrapper>
-                )}
-                title="What does it cost to fund an issue?"
-              />
-            </ExpansionPanel>
-            <ExpansionPanel>
-              <StyledBaseExpansionPanel
-                Component={() => (
-                  <AnswerWrapper>
-                    Contra is a new type of professional network for people you
-                    actually work with. Contra allows you to find flexible work
-                    opportunities from people that you know and love. Think of
-                    it as your own exclusive community/referral network.
-                  </AnswerWrapper>
-                )}
-                title="What happens after I fund an issue?"
-              />
-            </ExpansionPanel>
-            <ExpansionPanel>
-              <StyledBaseExpansionPanel
-                Component={() => (
-                  <AnswerWrapper>
-                    Contra is a new type of professional network for people you
-                    actually work with. Contra allows you to find flexible work
-                    opportunities from people that you know and love. Think of
-                    it as your own exclusive community/referral network.
+                    At the top of each issue page, you will see a &apos;Submit
+                    Pull Request&apos; button. From there you can import a pull
+                    request from Github.
+                    <br />
+                    <br />
+                    Keep in mind you must create the pull request in Github
+                    first. And you can only import a pull request that matches
+                    the issue repo.
                   </AnswerWrapper>
                 )}
                 title="How do I submit a solution to an issue?"
@@ -159,10 +139,9 @@ const Faq = () => {
               <StyledBaseExpansionPanel
                 Component={() => (
                   <AnswerWrapper>
-                    Contra is a new type of professional network for people you
-                    actually work with. Contra allows you to find flexible work
-                    opportunities from people that you know and love. Think of
-                    it as your own exclusive community/referral network.
+                    When a solution is accepted, your account will be credited
+                    for the bounty on that issue. You can withdraw your balance
+                    in your account &apos;Settings&apos; page.
                   </AnswerWrapper>
                 )}
                 title="How do I receive payment?"
