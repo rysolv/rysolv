@@ -16,7 +16,7 @@ const makeSelectSignInDisabled = () =>
     makeSelectSignIn('signIn'),
     data => {
       const tempData = omit(data, []);
-      return Object.keys(tempData).every(item => tempData[item].value !== '');
+      return !Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );
 
@@ -25,7 +25,7 @@ const makeSelectSignUpDisabled = () =>
     makeSelectSignIn('signUp'),
     data => {
       const tempData = omit(data, []);
-      return Object.keys(tempData).every(item => tempData[item].value !== '');
+      return !Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );
 
