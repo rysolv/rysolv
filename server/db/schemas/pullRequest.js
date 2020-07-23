@@ -11,7 +11,7 @@ const pullRequests = `CREATE TABLE IF NOT EXISTS
     modified_date TIMESTAMP,
     open BOOLEAN DEFAULT true,
     pull_number SMALLINT,
-    pullRequest_id UUID PRIMARY KEY,
+    pullrequest_id UUID PRIMARY KEY,
     status VARCHAR(128),
     title VARCHAR(256),
     user_id UUID

@@ -68,9 +68,9 @@ const createPullRequest = async data => {
 };
 
 const deletePullRequest = async id => {
-  const [rows] = await singleItem('pullRequests', id, '*', 'pullRequest_id');
+  const [rows] = await singleItem('pullRequests', id, '*', 'pullrequest_id');
   if (rows) {
-    const queryText = `DELETE FROM pullRequests WHERE (pullRequest_id='${id}') RETURNING *`;
+    const queryText = `DELETE FROM pullrequests WHERE (pullrequest_id='${id}')`;
     await singleQuery(queryText);
     return rows;
   }
