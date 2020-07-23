@@ -1,15 +1,13 @@
 import styled from 'styled-components';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { Link } from 'react-router-dom';
 
-import {
-  ErrorSuccessBanner,
-  PrimaryAsyncButton,
-  SecondaryButton,
-} from 'components/base_ui';
+import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
 import {
   defaultFontSize,
   dividerBorder,
+  hoverLinkColor,
   successGreen,
   textColor,
 } from 'defaultStyleHelper';
@@ -90,16 +88,21 @@ export const StyledItem = styled.div`
   color: ${textColor};
 `;
 
-export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
-  margin-bottom: 1rem;
-`;
-
 export const StyledLabel = styled.div`
   align-self: center;
   color: rgba(0, 0, 0, 0.4);
   font-size: 1.2rem;
   font-weight: 400;
   min-width: 10rem;
+`;
+
+export const StyledLink = styled(Link)`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    text-decoration: underline;
+  }
 `;
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`

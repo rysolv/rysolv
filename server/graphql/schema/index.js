@@ -330,6 +330,7 @@ module.exports = buildSchema(`
     deleteIssue(id: ID!): String!
     deleteOrganization(id:ID!): String!
     deleteUser(id:ID!): String!
+    deletePullRequest(id:ID!): EventResponse!
 
     importIssue(url: String!): ImportResult
     importOrganization(url: String!): ImportResult

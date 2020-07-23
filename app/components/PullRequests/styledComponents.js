@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 
-import { BaseDropDownMenu } from 'components/base_ui';
+import { ErrorSuccessBanner } from 'components/base_ui';
 import { textColor } from 'defaultStyleHelper';
-import { mediaQueriesByDevice } from 'utils/breakpoints';
-
-const { mobile } = mediaQueriesByDevice;
 
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
@@ -28,10 +25,7 @@ export const SearchContainer = styled.div`
   width: 100%;
 `;
 
-export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
-  margin: 0 1rem;
-
-  ${mobile} {
-    margin-right: 0;
-  }
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin-bottom: 1rem;
+  width: 100%;
 `;

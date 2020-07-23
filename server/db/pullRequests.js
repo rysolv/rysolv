@@ -68,11 +68,11 @@ const createPullRequest = async data => {
 };
 
 const deletePullRequest = async id => {
-  const rows = await singleItem('pullRequests', id);
+  const [rows] = await singleItem('pullRequests', id, '*', 'pullrequest_id');
   if (rows) {
-    const queryText = `DELETE FROM pullRequests WHERE (id='${id}') RETURNING *`;
+    const queryText = `DELETE FROM pullrequests WHERE (pullrequest_id='${id}')`;
     await singleQuery(queryText);
-    return `ID ${id} successfully deleted from Pull Requests`;
+    return rows;
   }
   throw new Error(
     `Failed to delete pull request. ID not found in Pull Requests`,

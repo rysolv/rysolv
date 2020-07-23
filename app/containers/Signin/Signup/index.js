@@ -22,8 +22,8 @@ import injectReducer from 'utils/injectReducer';
 
 import { clearForm, incrementStep, inputChange, inputError } from '../actions';
 import {
+  makeSelectDisabled,
   makeSelectSignIn,
-  makeSelectSignUpDisabled,
   makeSelectVerifyDisabled,
 } from '../selectors';
 import reducer from '../reducer';
@@ -177,7 +177,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Signin
    */
   data: makeSelectSignIn('signUp'),
-  signUpDisabled: makeSelectSignUpDisabled(),
+  signUpDisabled: makeSelectDisabled('signUp'),
   step: makeSelectSignIn('step'),
   verify: makeSelectSignIn('verify'),
   verifyDisabled: makeSelectVerifyDisabled(),

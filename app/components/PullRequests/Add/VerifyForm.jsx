@@ -11,7 +11,6 @@ import {
   PullRequestContainer,
   PullRequestInfo,
   StatusWrapper,
-  StyledErrorSuccessBanner,
   StyledHeader,
   StyledItem,
   StyledLabel,
@@ -19,6 +18,7 @@ import {
   StyledSecondayButton,
   StyledSubHeader,
 } from './styledComponents';
+import { StyledErrorSuccessBanner } from '../styledComponents';
 
 const CheckIcon = iconDictionary('check');
 const CloseIcon = iconDictionary('close');

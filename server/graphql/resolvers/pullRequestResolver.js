@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const {
   checkDuplicatePullRequest,
   createPullRequest,
+  deletePullRequest,
   getOneIssue,
   getOnePullRequest,
   getPullRequests,
@@ -56,6 +57,35 @@ module.exports = {
       return {
         __typename: 'PullRequest',
         ...result,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
+    }
+  },
+  deletePullRequest: async args => {
+    const { id } = args;
+    try {
+      const result = await deletePullRequest(id);
+      await updateUserArray({
+        column: 'pull_requests',
+        data: id,
+        userId: result.user_id,
+        remove: true,
+      });
+
+      await updateIssueArray({
+        column: 'pull_requests',
+        data: id,
+        issueId: result.issue_id,
+        remove: true,
+      });
+
+      return {
+        __typename: 'Success',
+        message: `Pull request ${result.title} has successfully been deleted.`,
       };
     } catch (err) {
       return {
