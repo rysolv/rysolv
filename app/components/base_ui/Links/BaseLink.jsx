@@ -1,5 +1,6 @@
 import React from 'react';
 import T from 'prop-types';
+
 import StyledLink from './styledComponents';
 
 const BaseLink = ({ label, path, ...restProps }) => (

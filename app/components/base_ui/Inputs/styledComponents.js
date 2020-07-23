@@ -101,6 +101,11 @@ export const StyledBaseTextInput = styled(TextField)`
       border-bottom: none;
     }
   }
+
+  .MuiInputBase-input {
+    color: ${textColor};
+    font-size: ${defaultFontSize};
+  }
 `;
 
 export const StyledFormControl = styled(FormControl)`

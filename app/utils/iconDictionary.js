@@ -45,6 +45,8 @@ import Two from '@material-ui/icons/LooksTwoOutlined';
 import Upvote from '@material-ui/icons/ArrowUpward';
 import Verified from '@material-ui/icons/VerifiedUser';
 import ViewAll from '@material-ui/icons/NavigateNext';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Warning from '@material-ui/icons/Warning';
 import WebIcon from '@material-ui/icons/Web';
 
@@ -108,6 +110,8 @@ export default (name, options) => {
     user: AccountCircleIcon,
     verified: Verified,
     viewAll: ViewAll,
+    visibility: Visibility,
+    visibilityOff: VisibilityOff,
     warning: Warning,
   };
   // Create style object to apply to SVG Icon
