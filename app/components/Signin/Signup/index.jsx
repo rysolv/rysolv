@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import T from 'prop-types';
 
-import { MainTextInput } from 'components/base_ui';
+import { MainTextInput, PasswordTextInput } from 'components/base_ui';
 
 import {
   HorizontalWrapper,
@@ -96,7 +96,7 @@ const Signup = ({
             value={lastName.value}
           />
         </HorizontalWrapper>
-        <MainTextInput
+        <PasswordTextInput
           autoComplete="new-password"
           error={!!password.error}
           helperText={password.error}
@@ -108,7 +108,6 @@ const Signup = ({
               value: e.target.value,
             })
           }
-          type="password"
           value={password.value}
         />
         <PasswordRequirements>
@@ -117,7 +116,7 @@ const Signup = ({
           <li>Include one number</li>
           <li>Include one special character </li>
         </PasswordRequirements>
-        <MainTextInput
+        <PasswordTextInput
           autoComplete="new-password"
           error={!!verifyPassword.error}
           helperText={verifyPassword.error}
@@ -130,7 +129,6 @@ const Signup = ({
               value: e.target.value,
             })
           }
-          type="password"
           value={verifyPassword.value}
         />
         <StyledPrimaryAsyncButton

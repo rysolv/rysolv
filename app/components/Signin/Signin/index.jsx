@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { MainTextInput } from 'components/base_ui';
+import { MainTextInput, PasswordTextInput } from 'components/base_ui';
 
 import {
   InputFormWrapper,
@@ -53,7 +53,7 @@ const Signin = ({
           type="email"
           value={email.value}
         />
-        <MainTextInput
+        <PasswordTextInput
           autoComplete="current-password"
           error={!!password.error}
           helperText={password.error}
@@ -65,7 +65,6 @@ const Signin = ({
               value: e.target.value,
             })
           }
-          type="password"
           value={password.value}
         />
         <StyledPrimaryAsyncButton
