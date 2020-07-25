@@ -19,6 +19,7 @@ const Signin = ({
   handleClearAuthAlerts,
   handleInputChange,
   handleSignIn,
+  handleValidateInput,
   signInDisabled,
   signInLoading,
 }) => {
@@ -43,6 +44,7 @@ const Signin = ({
           error={!!email.error}
           helperText={email.error}
           label="Email"
+          onBlur={() => handleValidateInput({ field: 'email' })}
           onChange={e =>
             handleInputChange({
               field: 'email',
@@ -58,6 +60,7 @@ const Signin = ({
           error={!!password.error}
           helperText={password.error}
           label="Password"
+          onBlur={() => handleValidateInput({ field: 'password' })}
           onChange={e =>
             handleInputChange({
               field: 'password',
@@ -87,6 +90,7 @@ Signin.propTypes = {
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignIn: T.func.isRequired,
+  handleValidateInput: T.func.isRequired,
   signInDisabled: T.bool,
   signInLoading: T.bool,
 };

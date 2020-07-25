@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { omit } from 'lodash';
 
 import { initialState } from './reducer';
 
@@ -14,15 +13,10 @@ const makeSelectSignIn = prop =>
 const makeSelectDisabled = prop =>
   createSelector(
     makeSelectSignIn(prop),
-    data => !Object.keys(data).every(item => data[item].value !== ''),
+    data =>
+      !Object.keys(data).every(
+        item => data[item].error === '' && data[item].value !== '',
+      ),
   );
 
-const makeSelectVerifyDisabled = () =>
-  createSelector(
-    makeSelectSignIn('verify'),
-    data => {
-      const tempData = omit(data, []);
-      return Object.keys(tempData).every(item => tempData[item].value !== '');
-    },
-  );
-export { makeSelectDisabled, makeSelectSignIn, makeSelectVerifyDisabled };
+export { makeSelectDisabled, makeSelectSignIn };

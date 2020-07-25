@@ -16,7 +16,8 @@ import {
 } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
-import { clearForm, inputChange } from '../actions';
+import { clearForm, inputChange, inputError } from '../actions';
+import { validateFields, validateOneField } from '../helpers';
 import reducer from '../reducer';
 import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
 
@@ -36,6 +37,7 @@ export class SigninContainer extends React.PureComponent {
   render() {
     const {
       data,
+      dispatchInputError,
       dispatchSignIn,
       error,
       handleClearAuthAlerts,
@@ -48,30 +50,48 @@ export class SigninContainer extends React.PureComponent {
     const { email, password } = data;
 
     const handleSignIn = () => {
-      dispatchSignIn({
-        username: email.value,
-        password: password.value,
+      const { isValidated, validationErrors } = validateFields({
+        values: data,
+      });
+      if (isValidated) {
+        dispatchSignIn({
+          password: password.value,
+          username: email.value,
+        });
+      } else {
+        dispatchInputError({ errors: validationErrors, form: 'signIn' });
+      }
+    };
+
+    const handleValidateInput = ({ field }) => {
+      const validationError = validateOneField({ field, values: data }) || '';
+      dispatchInputError({
+        errors: {
+          [field]: validationError,
+        },
+        form: 'signIn',
       });
     };
 
-    const redirect = <Redirect to="/issues" />;
+    const RedirectComponent = () => <Redirect to="/issues" />;
 
     return (
       <Fragment>
         <ConditionalRender
           Component={Signin}
-          FallbackComponent={redirect}
-          shouldRender={!isSignedIn}
+          FallbackComponent={RedirectComponent}
           propsToPassDown={{
             data,
             error,
             handleClearAuthAlerts,
             handleInputChange,
             handleSignIn,
+            handleValidateInput,
             isSignedIn,
             signInDisabled,
             signInLoading,
           }}
+          shouldRender={!isSignedIn}
         />
       </Fragment>
     );
@@ -81,6 +101,7 @@ export class SigninContainer extends React.PureComponent {
 SigninContainer.propTypes = {
   data: T.object,
   dispatchClearForm: T.func,
+  dispatchInputError: T.func,
   dispatchSignIn: T.func,
   error: T.object,
   handleClearAuthAlerts: T.func,
@@ -120,6 +141,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Signin
      */
     dispatchClearForm: () => dispatch(clearForm()),
+    dispatchInputError: payload => dispatch(inputError(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }
