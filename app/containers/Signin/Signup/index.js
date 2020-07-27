@@ -72,7 +72,7 @@ export class SignUpContainer extends React.PureComponent {
     const handleSignUp = () => {
       const { isValidated, validationErrors } = validateFields({
         values: data,
-        verifyField: { verifyValue: password.value, field: 'password' },
+        verifyField: { field: 'password', verifyValue: password.value },
       });
       if (isValidated) {
         dispatchSignUp({

@@ -129,7 +129,7 @@ const Signup = ({
           onBlur={() =>
             handleValidateInput({
               field: 'verifyPassword',
-              verifyField: { verifyValue: password.value, field: 'password' },
+              verifyField: { field: 'password', verifyValue: password.value },
             })
           }
           onChange={e =>
