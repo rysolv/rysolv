@@ -90,6 +90,21 @@ const getOnePullRequest = async id => {
   throw new Error('ID not found in Pull Requests');
 };
 
+const getPullRequestList = async id => {
+  const queryText = `
+    SELECT
+      pullRequests.html_url AS "htmlUrl",
+      pullRequests.title,
+      pullRequests.user_id AS "userId",
+      pullRequests.pullrequest_id AS "pullRequestId",
+      users.rep,
+      users.username FROM pullRequests
+    LEFT JOIN users ON (pullRequests.user_id = users.id)
+    WHERE (pullRequests.pullrequest_id='${id}')`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
 const getPullRequests = async () => {
   const queryText = `SELECT ${pullRequestDetailValues} FROM pullRequests
     LEFT JOIN issues ON (pullRequests.issue_id = issues.id)`;
@@ -110,6 +125,7 @@ module.exports = {
   createPullRequest,
   deletePullRequest,
   getOnePullRequest,
+  getPullRequestList,
   getPullRequests,
   getUserPullRequests,
 };

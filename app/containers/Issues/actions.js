@@ -16,6 +16,9 @@ import {
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
   CLOSE_MODAL_STATE,
+  DELETE_PULL_REQUEST_FAILURE,
+  DELETE_PULL_REQUEST_SUCCESS,
+  DELETE_PULL_REQUEST,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -162,6 +165,27 @@ export function closeIssue(payload) {
 export function closeIssueModalState() {
   return {
     type: CLOSE_MODAL_STATE,
+  };
+}
+
+export function deletePullRequestFailure(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_FAILURE,
+  };
+}
+
+export function deletePullRequestSuccess(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_SUCCESS,
+  };
+}
+
+export function deletePullRequest(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST,
   };
 }
 

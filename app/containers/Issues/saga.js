@@ -14,6 +14,8 @@ import {
   addWatchSuccess,
   closeIssueFailure,
   closeIssueSuccess,
+  deletePullRequestFailure,
+  deletePullRequestSuccess,
   editIssueFailure,
   editIssueSuccess,
   fetchIssueDetail,
@@ -36,6 +38,7 @@ import {
   ADD_ATTEMPT,
   ADD_COMMENT,
   CLOSE_ISSUE,
+  DELETE_PULL_REQUEST,
   EDIT_ISSUE,
   FETCH_ISSUE_DETAIL,
   FETCH_ISSUES,
@@ -126,6 +129,45 @@ export function* closeIssueSaga({ payload }) {
     yield put(closeIssueSuccess({ issueId, message: closeIssue }));
   } catch (error) {
     yield put(closeIssueFailure({ error }));
+  }
+}
+
+export function* deletePullRequestSaga({ payload }) {
+  const { pullRequestId, userId } = payload;
+  const query = `
+    mutation {
+      deletePullRequest(id: "${pullRequestId}")
+        {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+
+  try {
+    const pullRequestQuery = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { deletePullRequest },
+    } = yield call(post, '/graphql', pullRequestQuery);
+    const { __typename, message } = deletePullRequest;
+    if (__typename === 'Error') throw new Error(message);
+    yield put(
+      deletePullRequestSuccess({
+        id: pullRequestId,
+        message,
+      }),
+    );
+    yield put(fetchActiveUser({ userId }));
+  } catch (error) {
+    yield put(deletePullRequestFailure({ error }));
   }
 }
 
@@ -393,7 +435,7 @@ export function* saveInfoSaga({ payload }) {
       data: { createIssue },
     } = yield call(post, '/graphql', graphql);
     const { __typename, message } = createIssue;
-    if (__typename === 'Error') throw message;
+    if (__typename === 'Error') throw new Error(message);
 
     yield put(fetchActiveUser({ userId }));
     yield put(saveInfoSuccess({ message: successCreateIssueMessage }));
@@ -522,6 +564,7 @@ export default function* watcherSaga() {
   yield takeLatest(ADD_ATTEMPT, addAttemptSaga);
   yield takeLatest(ADD_COMMENT, addCommentSaga);
   yield takeLatest(CLOSE_ISSUE, closeIssueSaga);
+  yield takeLatest(DELETE_PULL_REQUEST, deletePullRequestSaga);
   yield takeLatest(EDIT_ISSUE, editIssueSaga);
   yield takeLatest(FETCH_ISSUE_DETAIL, fetchIssueDetailSaga);
   yield takeLatest(FETCH_ISSUES, fetchIssuesSaga);

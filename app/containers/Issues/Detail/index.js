@@ -9,7 +9,11 @@ import AddPullRequestModal from 'components/AddPullRequestModal';
 import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
 import IssueDetail from 'components/Issues/Detail';
-import { fetchWatchList, openModalState } from 'containers/Main/actions';
+import {
+  fetchPullRequestList,
+  fetchWatchList,
+  openModalState,
+} from 'containers/Main/actions';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectSaga from 'utils/injectSaga';
@@ -62,6 +66,7 @@ export class IssuesDetail extends React.PureComponent {
       dispatchCloseIssue,
       dispatchCloseIssueModal,
       dispatchEditIssue,
+      dispatchFetchPullRequestList,
       dispatchFetchWatchList,
       dispatchOpenIssueModal,
       dispatchOpenModal,
@@ -109,6 +114,7 @@ export class IssuesDetail extends React.PureComponent {
             deviceView,
             dispatchCloseIssue,
             dispatchEditIssue,
+            dispatchFetchPullRequestList,
             dispatchFetchWatchList,
             dispatchOpenIssueModal,
             dispatchOpenModal,
@@ -136,6 +142,7 @@ IssuesDetail.propTypes = {
   dispatchCloseIssueModal: T.func,
   dispatchEditIssue: T.func,
   dispatchFetchIssueDetail: T.func,
+  dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
@@ -196,6 +203,8 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Main
      */
+    dispatchFetchPullRequestList: payload =>
+      dispatch(fetchPullRequestList(payload)),
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     /**

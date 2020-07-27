@@ -13,6 +13,7 @@ import {
 const IssueTopBar = ({
   activeUser,
   data,
+  dispatchFetchPullRequestList,
   dispatchFetchWatchList,
   dispatchOpenIssueModal,
   dispatchOpenModal,
@@ -52,6 +53,7 @@ const IssueTopBar = ({
           <StyledIssueButtonBar
             activeUser={activeUser}
             data={data}
+            dispatchFetchPullRequestList={dispatchFetchPullRequestList}
             dispatchFetchWatchList={dispatchFetchWatchList}
             dispatchOpenIssueModal={dispatchOpenIssueModal}
             dispatchOpenModal={dispatchOpenModal}
@@ -67,6 +69,7 @@ const IssueTopBar = ({
 IssueTopBar.propTypes = {
   activeUser: T.object,
   data: T.object,
+  dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
