@@ -121,23 +121,20 @@ export function signIn(payload) {
   };
 }
 
-export function signOutFailure(payload) {
+export function signOutFailure() {
   return {
-    payload,
     type: SIGN_OUT_FAILURE,
   };
 }
 
-export function signOutSuccess(payload) {
+export function signOutSuccess() {
   return {
-    payload,
     type: SIGN_OUT_SUCCESS,
   };
 }
 
-export function signOut(payload) {
+export function signOut() {
   return {
-    payload,
     type: SIGN_OUT,
   };
 }

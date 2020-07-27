@@ -21,9 +21,9 @@ import {
   searchOrganizationsFailure,
   searchOrganizationsSuccess,
   signIn,
-  signOut,
   signInFailure,
   signInSuccess,
+  signOut,
   signOutFailure,
   signOutSuccess,
   signUpFailure,
@@ -248,7 +248,7 @@ export function* signOutSaga() {
     yield call(cognitoSignOut);
     yield put(signOutSuccess());
   } catch (error) {
-    yield put(signOutFailure({ error }));
+    yield put(signOutFailure());
   }
 }
 

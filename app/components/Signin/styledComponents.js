@@ -1,8 +1,14 @@
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
 
-import { ErrorSuccessBanner, PrimaryAsyncButton } from 'components/base_ui';
+import {
+  ErrorSuccessBanner,
+  PrimaryAsyncButton,
+  PrimaryButton,
+} from 'components/base_ui';
 import {
   borderColor,
+  defaultFontFamily,
   defaultFontSize,
   detailFontSize,
   hoverLinkColor,
@@ -57,11 +63,30 @@ export const PasswordRequirements = styled.div`
   padding: 0 1.4rem;
 `;
 
+export const RedirectText = styled.span`
+  color: ${textColor};
+  margin: 1rem 0;
+`;
+
 export const SigninWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 5rem;
   width: 100%;
+`;
+
+export const StyledButton = styled(Button)`
+  color: rgba(0, 0, 0, 0.4);
+  font-family: ${defaultFontFamily};
+  font-size: ${defaultFontSize};
+  font-weight: 500;
+  padding: 0;
+  text-transform: none;
+
+  &:hover {
+    background-color: transparent;
+    color: #1e88e5;
+  }
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
@@ -71,7 +96,11 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   align-self: center;
   min-width: 50%;
-  width: fit-content;
+`;
+
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  align-self: center;
+  min-width: 50%;
 `;
 
 export const SubText = styled.div`
@@ -92,6 +121,10 @@ export const Title = styled.div`
   color: ${textColor};
   font-size: ${subheaderFontSize};
   margin-bottom: 3rem;
+`;
+
+export const UsernameWrapper = styled.span`
+  font-weight: 500;
 `;
 
 export const VerificationWrapper = styled.div`

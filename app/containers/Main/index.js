@@ -194,7 +194,7 @@ const mapDispatchToProps = dispatch => ({
    * Auth
    */
   handleSignin: payload => dispatch(signIn(payload)),
-  handleSignout: payload => dispatch(signOut(payload)),
+  handleSignout: () => dispatch(signOut()),
   /**
    * Issues
    */
