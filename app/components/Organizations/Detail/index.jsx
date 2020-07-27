@@ -130,6 +130,7 @@ const OrganizationDetailView = ({
             }
             shouldRender={
               isSignedIn &&
+              organizations &&
               !!organizations.find(({ id }) => organizationId === id)
             }
           />
@@ -228,7 +229,9 @@ const OrganizationDetailView = ({
           />
         }
         shouldRender={
-          isSignedIn && !!organizations.find(({ id }) => organizationId === id)
+          isSignedIn &&
+          organizations &&
+          !!organizations.find(({ id }) => organizationId === id)
         }
       />
       <ConditionalRender
