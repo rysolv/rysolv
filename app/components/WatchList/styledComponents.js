@@ -100,6 +100,7 @@ export const PullRequestListDetail = styled.div`
   display: flex;
   flex-direction: column;
   margin: 1rem;
+  width: 70%;
 `;
 
 export const PullRequestUsername = styled.a`

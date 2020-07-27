@@ -56,7 +56,7 @@ const PullRequestListComponent = ({
             shouldRender={
               isSignedIn &&
               activeUserPullRequests &&
-              !!activeUserPullRequests.filter(id => pullRequestId === id)
+              activeUserPullRequests.includes(pullRequestId)
             }
           />
         </ListItemWrapper>
