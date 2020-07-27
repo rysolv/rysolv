@@ -40,18 +40,19 @@ const IssuesOverview = ({
   dispatchFetchIssues,
   dispatchFetchWatchList,
   dispatchOpenModal,
+  dispatchUpvote,
   error,
   handleClearAlerts,
   handleIncrement,
   handleInputChange,
   handleNav,
   handleSearchIssues,
-  handleUpvote,
   isSignedIn,
   issues,
   loading,
   params: { searchValue },
   search,
+  upvoteLoading,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -63,6 +64,11 @@ const IssuesOverview = ({
     }
     return handleClearAlerts;
   }, [searchValue]);
+
+  const handleUpvote = payload => {
+    if (!upvoteLoading) dispatchUpvote(payload);
+  };
+
   return (
     <AsyncRender
       asyncData={issues}
@@ -100,18 +106,19 @@ IssuesOverview.propTypes = {
   dispatchFetchIssues: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
+  dispatchUpvote: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
   handleIncrement: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleSearchIssues: T.func,
-  handleUpvote: T.func,
   isSignedIn: T.bool,
   issues: T.array,
   loading: T.bool,
   params: T.object,
   search: T.object,
+  upvoteLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -128,6 +135,7 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectIssuesError('issues'),
   issues: makeSelectIssuesFiltered(),
   loading: makeSelectIssuesLoading('issues'),
+  upvoteLoading: makeSelectIssuesLoading('upvoteIssue'),
   search: makeSelectIssues('search'),
   /**
    * Reducer : ViewSize
@@ -141,11 +149,11 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Issues
      */
     dispatchFetchIssues: () => dispatch(fetchIssues()),
+    dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
+    handleIncrement: payload => dispatch(addAttempt(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
-    handleUpvote: payload => dispatch(upvoteIssue(payload)),
-    handleIncrement: payload => dispatch(addAttempt(payload)),
     /*
      * Reducer : Main
      */

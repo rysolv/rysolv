@@ -25,8 +25,6 @@ const {
   submitAccountPaymentUser,
   transformUser,
   updateUserArray,
-  userDownvote,
-  userUpvote,
 } = require('./users');
 const { createComment, getComments, getIssueComments } = require('./comments');
 const {
@@ -101,6 +99,4 @@ module.exports = {
   updateOrganizationArray,
   updateUserArray,
   upvoteIssue,
-  userDownvote,
-  userUpvote,
 };

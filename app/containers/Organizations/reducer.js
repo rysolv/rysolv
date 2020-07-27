@@ -16,10 +16,10 @@ import {
   FETCH_ORGANIZATIONS_FAILURE,
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
-  INCREMENT_STEP,
   IMPORT_ORGANIZATION_FAILURE,
   IMPORT_ORGANIZATION_SUCCESS,
   IMPORT_ORGANIZATION,
+  INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
   SAVE_INFO_FAILURE,
@@ -33,6 +33,7 @@ import {
   UPDATE_INFO,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
   VERIFY_INFO,
 } from './constants';
@@ -286,13 +287,25 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPVOTE_ISSUE_SUCCESS: {
-      const { id, rep } = payload;
+      const { issueId, issueRep } = payload;
       draft.organization.issues.map((issue, index) => {
-        if (issue.id === id) {
-          draft.organization.issues[index].rep = rep;
+        if (issue.id === issueId) {
+          draft.organization.issues[index].rep = issueRep;
         }
       });
       draft.loading.upvoteIssue = false;
+      break;
+    }
+    case UPVOTE_ISSUE_TEMP: {
+      const { issueId, upvote } = payload;
+      draft.organization.issues.map((issue, index) => {
+        if (issue.id === issueId) {
+          // eslint-disable-next-line no-unused-expressions
+          upvote
+            ? (draft.organization.issues[index].rep += 1)
+            : (draft.organization.issues[index].rep -= 1);
+        }
+      });
       break;
     }
     case UPVOTE_ISSUE: {

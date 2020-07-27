@@ -369,14 +369,20 @@ module.exports = {
     return result;
   },
   upvoteIssue: async args => {
-    const { id, upvote } = args;
+    const { issueId, upvote, userId } = args;
     try {
       if (upvote) {
-        const result = await upvoteIssue(id);
-        return result;
+        const { issueRep, userRep } = await upvoteIssue({
+          issueId,
+          userId,
+        });
+        return { issueRep, userRep };
       }
-      const result = await downvoteIssue(id);
-      return result;
+      const { issueRep, userRep } = await downvoteIssue({
+        issueId,
+        userId,
+      });
+      return { issueRep, userRep };
     } catch (error) {
       throw error;
     }

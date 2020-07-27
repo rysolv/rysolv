@@ -24,6 +24,7 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP,
   UPDATE_ACTIVE_USER,
+  UPVOTE_USER_TEMP,
   VERIFY_EMAIL_FAILURE,
   VERIFY_EMAIL_SUCCESS,
   VERIFY_EMAIL,
@@ -177,7 +178,18 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_ACTIVE_USER: {
-      const { attempting, balance, profilePic } = payload;
+      const {
+        addUpvote,
+        attempting,
+        balance,
+        profilePic,
+        removeUpvote,
+        rep,
+      } = payload;
+      if (addUpvote && rep) {
+        draft.activeUser.upvotes.push(addUpvote);
+        draft.activeUser.rep = rep;
+      }
       if (attempting) {
         draft.activeUser.attempting = attempting;
       }
@@ -186,6 +198,23 @@ const authReducer = produce((draft, { payload, type }) => {
       }
       if (profilePic) {
         draft.activeUser.profilePic = profilePic;
+      }
+      if (removeUpvote && rep) {
+        const i = draft.activeUser.upvotes.indexOf(removeUpvote);
+        if (i > -1) draft.activeUser.upvotes.splice(i, 1);
+        draft.activeUser.rep = rep;
+      }
+      break;
+    }
+    case UPVOTE_USER_TEMP: {
+      const { issueId, upvote } = payload;
+      if (upvote) {
+        draft.activeUser.rep -= 1;
+        draft.activeUser.upvotes.push(issueId);
+      } else {
+        draft.activeUser.rep += 1;
+        const i = draft.activeUser.upvotes.indexOf(issueId);
+        if (i > -1) draft.activeUser.upvotes.splice(i, 1);
       }
       break;
     }

@@ -48,6 +48,7 @@ import {
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
   VERIFY_INFO,
 } from './constants';
@@ -412,14 +413,14 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPVOTE_ISSUE_SUCCESS: {
-      const { id, rep } = payload;
+      const { issueId, issueRep } = payload;
       draft.issues.map((issue, index) => {
-        if (issue.id === id) {
-          draft.issues[index].rep = rep;
+        if (issue.id === issueId) {
+          draft.issues[index].rep = issueRep;
         }
       });
       if (draft.issueDetail.id) {
-        draft.issueDetail.rep = rep;
+        draft.issueDetail.rep = issueRep;
       }
       draft.loading.upvoteIssue = false;
       break;
@@ -428,6 +429,22 @@ const issuesReducer = produce((draft, { payload, type }) => {
       const { error } = payload;
       draft.alerts.error = error;
       draft.loading.upvoteIssue = false;
+      break;
+    }
+    case UPVOTE_ISSUE_TEMP: {
+      const { issueId, upvote } = payload;
+      draft.issues.map((issue, index) => {
+        if (issue.id === issueId) {
+          // eslint-disable-next-line no-unused-expressions
+          upvote
+            ? (draft.issues[index].rep += 1)
+            : (draft.issues[index].rep -= 1);
+        }
+      });
+      if (draft.issueDetail.id) {
+        // eslint-disable-next-line no-unused-expressions
+        upvote ? (draft.issueDetail.rep += 1) : (draft.issueDetail.rep -= 1);
+      }
       break;
     }
     case VERIFY_INFO: {

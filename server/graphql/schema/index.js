@@ -201,6 +201,12 @@ module.exports = buildSchema(`
     fundedAmount: Float
   }
 
+  type Upvote {
+    issueRep: Int
+    upvotes: [ID]
+    userRep: Int
+  }
+
   type User {
     activePullRequests: Int
     attempting: [Object]
@@ -345,8 +351,7 @@ module.exports = buildSchema(`
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
 
-    upvoteIssue(id: ID, upvote: Boolean): Issue!
-    userUpvote(id: ID, upvote: Boolean): User!
+    upvoteIssue(issueId: ID, upvote: Boolean, userId: ID): Upvote!
   }
 
   schema {
