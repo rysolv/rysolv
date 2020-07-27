@@ -376,13 +376,19 @@ export function* upvoteIssueSaga({ payload }) {
   yield put(upvoteUserTemp({ issueId, upvote }));
 
   const upvoteIssueQuery = `
-      mutation {
-        upvoteIssue(issueId: "${issueId}", userId: "${userId}", upvote: ${upvote} ) {
+    mutation {
+      upvoteIssue(issueId: "${issueId}", userId: "${userId}", upvote: ${upvote} ) {
+        __typename
+        ... on Upvote {
           issueRep,
           userRep
         }
+        ... on Error {
+          message
+        }
       }
-    `;
+    }
+  `;
   try {
     const upvoteIssue = JSON.stringify({
       query: upvoteIssueQuery,
@@ -390,9 +396,10 @@ export function* upvoteIssueSaga({ payload }) {
     });
     const {
       data: {
-        upvoteIssue: { issueRep, userRep },
+        upvoteIssue: { __typename, issueRep, message, userRep },
       },
     } = yield call(post, '/graphql', upvoteIssue);
+    if (__typename === 'Error') throw new Error(message);
 
     yield put(upvoteIssueSuccess({ issueId, issueRep }));
 

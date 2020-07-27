@@ -376,15 +376,27 @@ module.exports = {
           issueId,
           userId,
         });
-        return { issueRep, userRep };
+        const result = { issueRep, userRep };
+        return {
+          __typename: 'Upvote',
+          ...result,
+        };
       }
       const { issueRep, userRep } = await downvoteIssue({
         issueId,
         userId,
       });
-      return { issueRep, userRep };
-    } catch (error) {
-      throw error;
+
+      const result = { issueRep, userRep };
+      return {
+        __typename: 'Upvote',
+        ...result,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
 };

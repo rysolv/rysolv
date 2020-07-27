@@ -293,6 +293,7 @@ module.exports = buildSchema(`
   union PaymentResult = Payment | Error
   union PullRequestArrayResult = PullRequestArray | Error
   union PullRequestResult = PullRequest | Error
+  union UpvoteResult = Upvote | Error
   union UserResult = User | Error
   union WithdrawalResult = Withdrawal | Error
 
@@ -351,7 +352,7 @@ module.exports = buildSchema(`
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
 
-    upvoteIssue(issueId: ID, upvote: Boolean, userId: ID): Upvote!
+    upvoteIssue(issueId: ID, upvote: Boolean, userId: ID): UpvoteResult!
   }
 
   schema {
