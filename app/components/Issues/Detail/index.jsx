@@ -204,7 +204,9 @@ const IssueDetail = ({
             success={success}
           />
         }
-        shouldRender={isSignedIn && !!issues.find(({ id }) => issueId === id)}
+        shouldRender={
+          isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
+        }
       />
       <DetailContainer>
         <IssueDetailWrapper>
@@ -265,6 +267,7 @@ const IssueDetail = ({
                 shouldRender={
                   isMobileOrLaptop &&
                   isSignedIn &&
+                  issues &&
                   !!issues.find(({ id }) => issueId === id)
                 }
               />
@@ -295,7 +298,7 @@ const IssueDetail = ({
           <ConditionalRender
             Component={EditIssueComponent}
             shouldRender={
-              isSignedIn && !!issues.find(({ id }) => issueId === id)
+              isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
             }
           />
           <PaymentPortal
@@ -317,7 +320,7 @@ const IssueDetail = ({
           <ConditionalRender
             Component={CloseOpenIssueComponent}
             shouldRender={
-              isSignedIn && !!issues.find(({ id }) => issueId === id)
+              isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
             }
           />
         </SidebarContainer>

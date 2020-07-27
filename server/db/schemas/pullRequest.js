@@ -13,7 +13,7 @@ const pullRequests = `CREATE TABLE IF NOT EXISTS
     pull_number SMALLINT,
     pullrequest_id UUID PRIMARY KEY,
     status VARCHAR(128),
-    title VARCHAR(256),
+    title VARCHAR(512),
     user_id UUID REFERENCES users(id)
   )`;
 
