@@ -109,7 +109,7 @@ export function* deletePullRequestSaga({ payload }) {
       data: { deletePullRequest },
     } = yield call(post, '/graphql', pullRequestQuery);
     const { __typename, message } = deletePullRequest;
-    if (__typename === 'Error') throw message;
+    if (__typename === 'Error') throw new Error(message);
     yield put(
       deletePullRequestSuccess({
         id: pullRequestId,
