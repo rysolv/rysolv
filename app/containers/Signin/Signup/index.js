@@ -21,11 +21,8 @@ import {
 import injectReducer from 'utils/injectReducer';
 
 import { clearForm, incrementStep, inputChange, inputError } from '../actions';
-import {
-  makeSelectDisabled,
-  makeSelectSignIn,
-  makeSelectVerifyDisabled,
-} from '../selectors';
+import { validateFields, validateOneField } from '../helpers';
+import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
 import reducer from '../reducer';
 import { signUpDictionary } from '../stepDictionary';
 
@@ -69,18 +66,15 @@ export class SignUpContainer extends React.PureComponent {
 
     const StepToRender = signUpDictionary[step];
     const { email: userEmail, id: userId } = activeUser;
-    const {
-      email,
-      firstName,
-      lastName,
-      password,
-      username,
-      verifyPassword,
-    } = data;
+    const { email, firstName, lastName, password, username } = data;
     const { verificationCode } = verify;
 
     const handleSignUp = () => {
-      if (password.value === verifyPassword.value) {
+      const { isValidated, validationErrors } = validateFields({
+        values: data,
+        verifyField: { field: 'password', verifyValue: password.value },
+      });
+      if (isValidated) {
         dispatchSignUp({
           email: email.value,
           firstName: firstName.value,
@@ -88,6 +82,8 @@ export class SignUpContainer extends React.PureComponent {
           password: password.value,
           username: username.value,
         });
+      } else {
+        dispatchInputError({ errors: validationErrors, form: 'signUp' });
       }
     };
 
@@ -100,25 +96,24 @@ export class SignUpContainer extends React.PureComponent {
       });
     };
 
-    const handleVerifyPassword = () => {
-      if (password.value !== verifyPassword.value) {
-        dispatchInputError({
-          errors: {
-            verifyPassword: 'Passwords do not match.',
-          },
-          form: 'signUp',
-        });
-      }
+    const handleValidateInput = ({ field, verifyField }) => {
+      const validationError =
+        validateOneField({ field, values: data, verifyField }) || '';
+      dispatchInputError({
+        errors: {
+          [field]: validationError,
+        },
+        form: 'signUp',
+      });
     };
 
-    const redirect = <Redirect to="/issues" />;
+    const RedirectComponent = () => <Redirect to="/issues" />;
 
     return (
       <Fragment>
         <ConditionalRender
           Component={StepToRender}
-          FallbackComponent={redirect}
-          shouldRender={!isSignedIn}
+          FallbackComponent={RedirectComponent}
           propsToPassDown={{
             activeUser,
             data,
@@ -126,8 +121,8 @@ export class SignUpContainer extends React.PureComponent {
             handleClearAuthAlerts,
             handleInputChange,
             handleSignUp,
+            handleValidateInput,
             handleVerifyEmail,
-            handleVerifyPassword,
             isSignedIn,
             signUpDisabled,
             signUpLoading,
@@ -135,6 +130,7 @@ export class SignUpContainer extends React.PureComponent {
             verifyDisabled,
             verifyEmailLoading,
           }}
+          shouldRender={!isSignedIn}
         />
       </Fragment>
     );
@@ -180,7 +176,7 @@ const mapStateToProps = createStructuredSelector({
   signUpDisabled: makeSelectDisabled('signUp'),
   step: makeSelectSignIn('step'),
   verify: makeSelectSignIn('verify'),
-  verifyDisabled: makeSelectVerifyDisabled(),
+  verifyDisabled: makeSelectDisabled('verify'),
 });
 
 function mapDispatchToProps(dispatch) {
