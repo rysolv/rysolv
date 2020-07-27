@@ -1,5 +1,6 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
+import remove from 'lodash/remove';
 
 import {
   ADD_ATTEMPT_FAILURE,
@@ -19,6 +20,9 @@ import {
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
   CLOSE_MODAL_STATE,
+  DELETE_PULL_REQUEST_FAILURE,
+  DELETE_PULL_REQUEST_SUCCESS,
+  DELETE_PULL_REQUEST,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -235,6 +239,26 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case CLOSE_MODAL_STATE: {
       draft.isModalOpen = initialState.isModalOpen;
       draft.modal = initialState.modal;
+      break;
+    }
+    case DELETE_PULL_REQUEST_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case DELETE_PULL_REQUEST_SUCCESS: {
+      const { id, message } = payload;
+      draft.alerts.success = { message };
+      remove(
+        draft.issueDetail.pullRequests,
+        pullRequestId => pullRequestId === id,
+      );
+      draft.loading = false;
+      break;
+    }
+    case DELETE_PULL_REQUEST: {
+      draft.loading = true;
       break;
     }
     case EDIT_ISSUE_FAILURE: {

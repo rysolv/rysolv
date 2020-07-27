@@ -34,6 +34,7 @@ const {
   createPullRequest,
   deletePullRequest,
   getOnePullRequest,
+  getPullRequestList,
   getPullRequests,
   getUserPullRequests,
 } = require('./pullRequests');
@@ -82,6 +83,7 @@ module.exports = {
   getOneUser,
   getOrganizations,
   getOrganizationsWhere,
+  getPullRequestList,
   getPullRequests,
   getUserPullRequests,
   getUsers,

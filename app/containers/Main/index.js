@@ -20,6 +20,7 @@ import { signIn, signOut } from 'containers/Auth/actions';
 import {
   clearAlerts,
   closeIssue,
+  deletePullRequest,
   submitAccountPayment,
 } from 'containers/Issues/actions';
 import { makeSelectIssues } from 'containers/Issues/selectors';
@@ -44,6 +45,7 @@ export const Main = ({
   dispatchCloseModal,
   error,
   handleClearAlerts,
+  handleDelete,
   handleNav,
   handleSignin,
   handleSignout,
@@ -59,6 +61,10 @@ export const Main = ({
   const handleCloseIssue = ({ issueId, shouldClose }) => {
     dispatchCloseModal();
     dispatchCloseIssue({ issueId, shouldClose });
+  };
+  const handleDeletePullRequest = ({ pullRequestId, userId }) => {
+    dispatchCloseModal();
+    handleDelete({ pullRequestId, userId });
   };
   const handleRedirect = route => {
     dispatchCloseModal();
@@ -114,6 +120,21 @@ export const Main = ({
         type: 'issueWatchList',
       },
     },
+    pullRequestList: {
+      Component: WatchList,
+      open: isModalOpen,
+      propsToPassDown: {
+        handleClose: dispatchCloseModal,
+        handleDeletePullRequest,
+        handleRedirect,
+        isSignedIn,
+        modalState: 'pullRequestList',
+        route: '/users/detail',
+        tableData,
+        title: 'Pull Requests',
+        type: 'pullRequestList',
+      },
+    },
     signIn: {
       Component: SigninModal,
       open: isModalOpen,
@@ -154,6 +175,7 @@ Main.propTypes = {
   dispatchCloseModal: T.func.isRequired,
   error: T.object,
   handleClearAlerts: T.func,
+  handleDelete: T.func,
   handleNav: T.func,
   handleSignin: T.func,
   handleSignout: T.func,
@@ -208,6 +230,11 @@ const mapDispatchToProps = dispatch => ({
   dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
   dispatchCloseModal: () => dispatch(closeModalState()),
   /*
+   * Reducer : PullRequests
+   */
+
+  handleDelete: payload => dispatch(deletePullRequest(payload)),
+  /*
    * Reducer : Router
    */
   handleNav: route => dispatch(push(route)),
@@ -223,8 +250,8 @@ const withSaga = injectSaga({ key: 'main', saga });
 
 export default withRouter(
   compose(
+    withConnect,
     withReducer,
     withSaga,
-    withConnect,
   )(Main),
 );

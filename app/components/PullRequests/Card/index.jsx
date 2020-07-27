@@ -84,7 +84,7 @@ const PullRequestCard = ({ data, handleDelete }) => (
                   <DeleteButton
                     onClick={() => handleDelete({ pullRequestId, userId })}
                   >
-                    <Icon>{CloseCircleIcon}</Icon>Delete
+                    <Icon>{CloseCircleIcon}</Icon>Cancel
                   </DeleteButton>
                 </ButtomBarContainer>
               </ContentWrapper>

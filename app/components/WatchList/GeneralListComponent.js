@@ -10,7 +10,7 @@ import {
   WatchListItem,
 } from './styledComponents';
 
-const ListComponent = ({ handleRedirect, route, tableData }) => (
+const GeneralListComponent = ({ handleRedirect, route, tableData }) => (
   <WatchList>
     {tableData.map(({ id, username, profilePic }) => (
       <WatchListItem key={`list-item-${id}`}>
@@ -34,10 +34,10 @@ const ListComponent = ({ handleRedirect, route, tableData }) => (
   </WatchList>
 );
 
-ListComponent.propTypes = {
+GeneralListComponent.propTypes = {
   handleRedirect: T.func.isRequired,
   route: T.string.isRequired,
   tableData: T.array.isRequired,
 };
 
-export default ListComponent;
+export default GeneralListComponent;

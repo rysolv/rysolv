@@ -24,6 +24,12 @@ export const DELETE_ISSUE = 'app/Issues/DELETE_ISSUE';
 export const DELETE_ISSUE_FAILURE = 'app/Issues/DELETE_ISSUE_FAILURE';
 export const DELETE_ISSUE_SUCCESS = 'app/Issues/DELETE_ISSUE_SUCCESS';
 
+export const DELETE_PULL_REQUEST = 'app/Issues/DELETE_PULL_REQUEST';
+export const DELETE_PULL_REQUEST_FAILURE =
+  'app/Issues/DELETE_PULL_REQUEST_FAILURE';
+export const DELETE_PULL_REQUEST_SUCCESS =
+  'app/Issues/DELETE_PULL_REQUEST_SUCCESS';
+
 export const EDIT_ISSUE = 'app/Issues/EDIT_ISSUE';
 export const EDIT_ISSUE_FAILURE = 'app/Issues/EDIT_ISSUE_FAILURE';
 export const EDIT_ISSUE_SUCCESS = 'app/Issues/EDIT_ISSUE_SUCCESS';

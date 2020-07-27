@@ -14,7 +14,7 @@ const pullRequests = `CREATE TABLE IF NOT EXISTS
     pullrequest_id UUID PRIMARY KEY,
     status VARCHAR(128),
     title VARCHAR(256),
-    user_id UUID
+    user_id UUID REFERENCES users(id)
   )`;
 
 module.exports = pullRequests;
