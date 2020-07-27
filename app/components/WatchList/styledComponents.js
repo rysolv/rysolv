@@ -23,15 +23,7 @@ export const DeleteButton = styled.div`
   }
 `;
 
-export const EmptyWatchListMessage = styled.div`
-  color: ${textColor};
-  font-size: ${defaultFontSize};
-  height: 100%;
-  margin: 2rem 0;
-  width: 100%;
-`;
-
-export const EmptyWatchListItem = styled.div`
+export const EmptyListItem = styled.div`
   border-top: 0.1rem solid #d5d5d5;
   display: flex;
   justify-content: center;
@@ -43,6 +35,14 @@ export const EmptyWatchListItem = styled.div`
   }
 `;
 
+export const EmptyListMessage = styled.div`
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  height: 100%;
+  margin: 2rem 0;
+  width: 100%;
+`;
+
 export const Icon = styled.span`
   align-items: center;
   display: flex;
@@ -51,6 +51,35 @@ export const Icon = styled.span`
 
 export const IconWrapper = styled.div`
   float: right;
+`;
+
+export const ListContainer = styled.ul`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 1rem;
+  width: 100%;
+`;
+
+export const ListDetail = styled.div`
+  align-items: center;
+  color: #007bff;
+  display: flex;
+  flex: 100%;
+  height: 100%;
+  margin: 0.5rem 0 0.5rem 1rem;
+`;
+
+export const ListItemWrapper = styled.li`
+  border-top: 0.1rem solid #d5d5d5;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+
+  & :last-child {
+    border-bottom: 0.1rem solid #d5d5d5;
+  }
 `;
 
 export const PullRequest = styled.a`
@@ -116,35 +145,6 @@ export const Username = styled.a`
   }
 `;
 
-export const WatchList = styled.ul`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 1rem;
-  width: 100%;
-`;
-
 export const WatchListContainer = styled.div`
   padding: 1rem;
-`;
-
-export const WatchListDetail = styled.div`
-  align-items: center;
-  color: #007bff;
-  display: flex;
-  flex: 100%;
-  height: 100%;
-  margin: 0.5rem 0 0.5rem 1rem;
-`;
-
-export const WatchListItem = styled.li`
-  border-top: 0.1rem solid #d5d5d5;
-  display: flex;
-  justify-content: space-between;
-  width: 90%;
-
-  & :last-child {
-    border-bottom: 0.1rem solid #d5d5d5;
-  }
 `;

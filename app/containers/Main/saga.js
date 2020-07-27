@@ -15,8 +15,8 @@ export function* fetchPullRequestListSaga({ payload }) {
     query {
       getPullRequestList(idArray: ${JSON.stringify(idArray)}) {
         __typename
-        ... on PullRequestListArray {
-          pullRequestListArray {
+        ... on PullRequestList {
+          pullRequestList {
             htmlUrl,
             pullRequestId,
             rep,
@@ -39,7 +39,7 @@ export function* fetchPullRequestListSaga({ payload }) {
     const {
       data: { getPullRequestList },
     } = yield call(post, '/graphql', graphql);
-    const { __typename, message, pullRequestListArray } = getPullRequestList;
+    const { __typename, message, pullRequestList } = getPullRequestList;
     if (__typename === 'Error') throw new Error(message);
     yield put(fetchPullRequestListResponse());
     yield put(
@@ -47,7 +47,7 @@ export function* fetchPullRequestListSaga({ payload }) {
         modalState,
         tableData: {
           activeUserPullRequests,
-          pullRequests: pullRequestListArray,
+          pullRequests: pullRequestList,
         },
       }),
     );

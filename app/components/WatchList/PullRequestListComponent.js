@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import T from 'prop-types';
 
@@ -8,13 +7,13 @@ import iconDictionary from 'utils/iconDictionary';
 import {
   DeleteButton,
   Icon,
+  ListContainer,
+  ListItemWrapper,
   PullRequest,
   PullRequestListDetail,
   PullRequestUsername,
   StyledStar,
   SubmittedWrapper,
-  WatchList,
-  WatchListItem,
 } from './styledComponents';
 
 const CloseCircleIcon = iconDictionary('closeCircle');
@@ -26,10 +25,10 @@ const PullRequestListComponent = ({
   route,
   tableData: { activeUserPullRequests, pullRequests },
 }) => (
-  <WatchList>
+  <ListContainer>
     {pullRequests.map(
-      ({ htmlUrl, rep, title, username, userId, pullRequestId }, index) => (
-        <WatchListItem key={`list-item-${index}`}>
+      ({ htmlUrl, pullRequestId, rep, title, userId, username }) => (
+        <ListItemWrapper key={`list-item-${pullRequestId}`}>
           <PullRequestListDetail>
             <PullRequest href={htmlUrl} target="_blank">
               {title}
@@ -60,10 +59,10 @@ const PullRequestListComponent = ({
               !!activeUserPullRequests.filter(id => pullRequestId === id)
             }
           />
-        </WatchListItem>
+        </ListItemWrapper>
       ),
     )}
-  </WatchList>
+  </ListContainer>
 );
 
 PullRequestListComponent.propTypes = {

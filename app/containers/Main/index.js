@@ -100,7 +100,6 @@ export const Main = ({
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         handleRedirect,
-        modalState: 'issueAttemptList',
         route: '/users/detail',
         tableData,
         title: 'Attempt List',
@@ -113,7 +112,6 @@ export const Main = ({
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         handleRedirect,
-        modalState: 'issueWatchList',
         route: '/users/detail',
         tableData,
         title: 'Watch List',
@@ -128,7 +126,6 @@ export const Main = ({
         handleDeletePullRequest,
         handleRedirect,
         isSignedIn,
-        modalState: 'pullRequestList',
         route: '/users/detail',
         tableData,
         title: 'Pull Requests',
@@ -232,7 +229,6 @@ const mapDispatchToProps = dispatch => ({
   /*
    * Reducer : PullRequests
    */
-
   handleDelete: payload => dispatch(deletePullRequest(payload)),
   /*
    * Reducer : Router
@@ -250,8 +246,8 @@ const withSaga = injectSaga({ key: 'main', saga });
 
 export default withRouter(
   compose(
-    withConnect,
     withReducer,
     withSaga,
+    withConnect,
   )(Main),
 );

@@ -196,7 +196,7 @@ module.exports = buildSchema(`
     userId: ID!
   }
 
-  type PullRequestList {
+  type PullRequestSubmissions {
     htmlUrl: String
     pullRequestId: ID
     rep: Int
@@ -205,8 +205,8 @@ module.exports = buildSchema(`
     username: String
   }
 
-  type PullRequestListArray {
-    pullRequestListArray: [PullRequestList]
+  type PullRequestList {
+    pullRequestList: [PullRequestSubmissions]
   }
 
   type Payment {
@@ -299,7 +299,7 @@ module.exports = buildSchema(`
   union OrganizationResult = Organization | Error
   union PaymentResult = Payment | Error
   union PullRequestArrayResult = PullRequestArray | Error
-  union PullRequestListResult = PullRequestListArray | Error
+  union PullRequestListResult = PullRequestList | Error
   union PullRequestResult = PullRequest | Error
   union UserResult = User | Error
   union WithdrawalResult = Withdrawal | Error
@@ -318,7 +318,7 @@ module.exports = buildSchema(`
     getUserOrganizations(id: ID!): [Organization!]
     getUserPullRequests(id: ID!): PullRequestArrayResult
 
-    getPullRequestList(idArray: [ID!]): PullRequestListResult
+    getPullRequestList(idArray: [ID!]): PullRequestListResult!
     getWatchList(idArray: [ID!], type: String!): [WatchList!]
 
     oneIssue(id: ID!): IssueResult

@@ -3,19 +3,17 @@ import T from 'prop-types';
 
 import { emptyListMessageDictionary } from './constants';
 import {
-  EmptyWatchListItem,
-  EmptyWatchListMessage,
-  WatchList,
+  EmptyListItem,
+  EmptyListMessage,
+  ListContainer,
 } from './styledComponents';
 
 const EmptyList = ({ type }) => (
-  <WatchList>
-    <EmptyWatchListItem>
-      <EmptyWatchListMessage>
-        {emptyListMessageDictionary[type]}
-      </EmptyWatchListMessage>
-    </EmptyWatchListItem>
-  </WatchList>
+  <ListContainer>
+    <EmptyListItem>
+      <EmptyListMessage>{emptyListMessageDictionary[type]}</EmptyListMessage>
+    </EmptyListItem>
+  </ListContainer>
 );
 
 EmptyList.propTypes = { type: T.string.isRequired };

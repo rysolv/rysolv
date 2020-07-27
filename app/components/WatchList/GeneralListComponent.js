@@ -4,17 +4,17 @@ import T from 'prop-types';
 import { ProfileImage } from 'components/base_ui';
 
 import {
+  ListContainer,
+  ListDetail,
+  ListItemWrapper,
   Username,
-  WatchList,
-  WatchListDetail,
-  WatchListItem,
 } from './styledComponents';
 
 const GeneralListComponent = ({ handleRedirect, route, tableData }) => (
-  <WatchList>
+  <ListContainer>
     {tableData.map(({ id, username, profilePic }) => (
-      <WatchListItem key={`list-item-${id}`}>
-        <WatchListDetail>
+      <ListItemWrapper key={`list-item-${id}`}>
+        <ListDetail>
           <ProfileImage
             alt={username}
             detailRoute={`${route}/${id}`}
@@ -28,10 +28,10 @@ const GeneralListComponent = ({ handleRedirect, route, tableData }) => (
           >
             {username}
           </Username>
-        </WatchListDetail>
-      </WatchListItem>
+        </ListDetail>
+      </ListItemWrapper>
     ))}
-  </WatchList>
+  </ListContainer>
 );
 
 GeneralListComponent.propTypes = {

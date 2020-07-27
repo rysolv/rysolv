@@ -144,8 +144,8 @@ module.exports = {
       );
       const result = pullRequestList;
       return {
-        __typename: 'PullRequestListArray',
-        pullRequestListArray: result,
+        __typename: 'PullRequestList',
+        pullRequestList: result,
       };
     } catch (err) {
       return {
