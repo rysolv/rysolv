@@ -56,7 +56,7 @@ const VerifyEmail = ({
       </VerificationWrapper>
       <StyledPrimaryAsyncButton
         loading={verifyEmailLoading}
-        disabled={!verifyDisabled}
+        disabled={verifyDisabled}
         label="Verify email"
         onClick={() => handleVerifyEmail()}
       />
