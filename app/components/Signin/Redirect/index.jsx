@@ -12,17 +12,12 @@ import {
 } from '../styledComponents';
 
 const Redirect = ({ data: { username }, dispatchSignout, handleNav }) => {
-  const handleKeypress = e => {
-    if (e.keyCode === 13) {
-      handleNav('/issues');
-    }
-  };
   const handleSignout = () => {
     dispatchSignout();
     handleNav('/signin');
   };
   return (
-    <SigninWrapper onKeyDown={e => handleKeypress(e)}>
+    <SigninWrapper>
       <InputFormWrapper>
         <Title>Return to your account</Title>
         <RedirectText>
@@ -30,10 +25,14 @@ const Redirect = ({ data: { username }, dispatchSignout, handleNav }) => {
           <UsernameWrapper>{username}</UsernameWrapper>.
         </RedirectText>
         <StyledPrimaryButton
+          autoFocus
+          disableFocusRipple
           label="Go to My Account"
           onClick={() => handleNav('/settings')}
         />
-        <StyledButton onClick={handleSignout}>Sign out</StyledButton>
+        <StyledButton disableFocusRipple onClick={handleSignout}>
+          Sign out
+        </StyledButton>
       </InputFormWrapper>
     </SigninWrapper>
   );

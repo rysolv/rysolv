@@ -83,6 +83,7 @@ export const StyledButton = styled(Button)`
   padding: 0;
   text-transform: none;
 
+  &:focus,
   &:hover {
     background-color: transparent;
     color: #1e88e5;
