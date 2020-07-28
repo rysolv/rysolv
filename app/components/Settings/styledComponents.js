@@ -8,7 +8,12 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
 import { BaseDropDownMenu, ErrorSuccessBanner } from 'components/base_ui';
-import { defaultFontSize, headerColor, textColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  headerColor,
+  lightBlueColor,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -69,9 +74,9 @@ export const InputIconGroup = styled.label`
   align-items: center;
   background-color: white;
   border-radius: 2rem;
-  border: 0.2rem solid #1e88e5;
+  border: 0.2rem solid ${lightBlueColor};
   bottom: -1rem;
-  color: #1e88e5;
+  color: ${lightBlueColor};
   display: flex;
   height: 4rem;
   justify-content: center;

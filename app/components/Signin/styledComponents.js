@@ -12,6 +12,7 @@ import {
   defaultFontSize,
   detailFontSize,
   hoverLinkColor,
+  lightBlueColor,
   subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
@@ -86,7 +87,7 @@ export const StyledButton = styled(Button)`
   &:focus,
   &:hover {
     background-color: transparent;
-    color: #1e88e5;
+    color: ${lightBlueColor};
   }
 `;
 

@@ -8,6 +8,7 @@ import {
   defaultFontSize,
   errorBorder,
   inputBorder,
+  lightBlueColor,
   textColor,
 } from 'defaultStyleHelper';
 
@@ -17,9 +18,9 @@ export const FileInputIcon = styled.label`
   align-items: center;
   background-color: white;
   border-radius: 50%;
-  border: 0.2rem solid #1e88e5;
+  border: 0.2rem solid ${lightBlueColor};
   bottom: -1rem;
-  color: #1e88e5;
+  color: ${lightBlueColor};
   display: flex;
   height: 4rem;
   justify-content: center;
@@ -115,14 +116,12 @@ export const StyledFormControl = styled(FormControl)`
 
 export const StyledFlatIcon = styled.div`
   font-size: ${defaultFontSize};
-
   justify-content: flex-end;
   padding: 0;
 `;
 
 export const StyledFlatIconButton = styled(FlatIconButton)`
   font-size: ${defaultFontSize};
-
   justify-content: flex-end;
   padding: 0;
 `;

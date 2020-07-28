@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { defaultFontSize, lightBlueColor, textColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { desktopL, laptopS, mobile } = mediaQueriesByDevice;
@@ -58,7 +58,7 @@ export const CardItem = styled.li`
 `;
 
 export const CardTitleWrapper = styled.div`
-  color: #1e88e5;
+  color: ${lightBlueColor};
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
@@ -76,44 +76,44 @@ export const HorizontalList = styled.div`
 
 export const Icon = styled.div`
   background: linear-gradient(to bottom right, #4db6ac 0%, #00796b 100%);
-  color: #34a297;
-  position: relative;
-  margin: 0 20px;
-  width: 56px;
-  height: 87px;
   border-radius: 10px;
+  color: #34a297;
   display: inline-block;
+  height: 87px;
+  margin: 0 20px;
+  position: relative;
   top: 0;
   transition: all 0.2s ease;
+  width: 56px;
 
   &:before {
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    border-radius: inherit;
     background: inherit;
-    content: '';
-    top: 0;
-    left: 0;
-    right: 0;
+    border-radius: inherit;
     bottom: 0;
+    content: '';
+    height: inherit;
+    left: 0;
     margin: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
     transform: rotate(60deg);
+    width: inherit;
   }
 
   &:after {
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    border-radius: inherit;
     background: inherit;
-    content: '';
-    top: 0;
-    left: 0;
-    right: 0;
+    border-radius: inherit;
     bottom: 0;
+    content: '';
+    height: inherit;
+    left: 0;
     margin: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
     transform: rotate(-60deg);
+    width: inherit;
   }
 `;
 
@@ -182,7 +182,7 @@ export const ListImage = styled.div`
   margin: 0 2rem 2rem 2rem;
 
   svg {
-    color: #1e88e5;
+    color: ${lightBlueColor};
     height: 6rem;
     stroke-width: 0.05rem;
     stroke: white;

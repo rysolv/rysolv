@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import {
   detailFontSize,
-  primaryButtonColor,
+  lightBlueColor,
   secondaryButtonColor,
 } from 'defaultStyleHelper';
 
@@ -14,7 +14,7 @@ const baseButtonStyle = css`
   &:active {
     box-shadow: none;
   }
-  background-color: ${primaryButtonColor};
+  background-color: ${lightBlueColor};
   box-shadow: none;
   color: white;
   font-size: ${detailFontSize};
@@ -51,7 +51,7 @@ export const PrimaryButton = styled(BaseButton)`
   ${baseButtonStyle};
 
   &:hover {
-    background-color: ${primaryButtonColor};
+    background-color: ${lightBlueColor};
   }
 `;
 
@@ -68,7 +68,7 @@ export const PrimaryAsyncButton = styled(BaseAsyncButton)`
   ${baseButtonStyle};
 
   &:hover {
-    background-color: ${primaryButtonColor};
+    background-color: ${lightBlueColor};
   }
 
   & .progressWheel {

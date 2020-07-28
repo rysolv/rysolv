@@ -8,6 +8,7 @@ import {
   defaultFontSize,
   dividerBorder,
   hoverLinkColor,
+  lightBlueColor,
   successGreen,
   textColor,
 } from 'defaultStyleHelper';
@@ -112,8 +113,8 @@ export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
 
 export const StyledSecondayButton = styled(SecondaryButton)`
   background-color: white;
-  border: 0.1rem solid #1e88e5;
-  color: #1e88e5;
+  border: 0.1rem solid ${lightBlueColor};
+  color: ${lightBlueColor};
 
   &:hover {
     background-color: white;

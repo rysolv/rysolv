@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 
 import {
-  headerFontSize,
   borderColor,
   defaultFontSize,
   detailFontSize,
-  subHeaderColor,
-  hyperlinkColor,
+  headerFontSize,
   hoverLinkColor,
+  lightBlueColor,
+  subHeaderColor,
   textColor,
 } from 'defaultStyleHelper';
 
 export const DataWrapper = styled.div`
+  color: ${textColor};
   display: flex;
   flex-direction: column;
   font-size: ${defaultFontSize};
-  color: ${textColor};
   margin: 0 0 10rem 0;
 `;
 
@@ -25,11 +25,11 @@ export const IconWrapper = styled.div`
 `;
 
 export const LabelWrapper = styled.h3`
-  font-size: ${detailFontSize};
+  align-items: center;
   color: ${subHeaderColor};
   display: inline-flex;
+  font-size: ${detailFontSize};
   margin: 0;
-  align-items: center;
 `;
 
 export const LabelText = styled.div`
@@ -43,6 +43,7 @@ export const LanguageContainer = styled.div`
 export const NameWrapper = styled.div`
   font-size: ${headerFontSize};
 `;
+
 export const RowContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -54,10 +55,10 @@ export const StyledInlineBlock = styled.div`
 `;
 
 export const StyledLink = styled.a`
+  color: ${lightBlueColor};
   display: inline-block;
-  width: auto;
-  color: ${hyperlinkColor};
   margin: 0 1rem;
+  width: auto;
 
   &:hover {
     cursor: pointer;

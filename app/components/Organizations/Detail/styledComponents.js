@@ -16,6 +16,7 @@ import {
   dividerBorder,
   headerColor,
   hoverLinkColor,
+  lightBlueColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -115,9 +116,9 @@ export const Description = styled.div`
 `;
 
 export const DetailContainer = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 90%;
 `;
 
@@ -129,8 +130,8 @@ export const DetailViewContainer = styled.div`
 `;
 
 export const Divider = styled.div`
-  display: ${({ shouldHide }) => (shouldHide ? 'none' : 'inherit')};
   border-top: ${dividerBorder};
+  display: ${({ shouldHide }) => (shouldHide ? 'none' : 'inherit')};
   margin: 1rem auto;
   width: 90%;
 `;
@@ -186,9 +187,9 @@ export const IssueAttempts = styled.div`
 
 export const IssueContent = styled.div`
   display: flex;
-  width: 100%;
   height: 10rem;
   margin: 1rem 0;
+  width: 100%;
 
   ${mobile} {
     height: auto;
@@ -404,8 +405,8 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
 
 export const StyledSecondayButton = styled(SecondaryButton)`
   background-color: white;
-  border: 0.1rem solid #1e88e5;
-  color: #1e88e5;
+  border: 0.1rem solid ${lightBlueColor};
+  color: ${lightBlueColor};
 
   &:hover {
     background-color: white;
