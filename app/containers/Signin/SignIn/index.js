@@ -44,6 +44,7 @@ const SigninContainer = ({
 }) => {
   const [viewToRender, setViewToRender] = useState(null);
   const { current: prevIsSignedIn } = useRef(isSignedIn);
+  const form = 'signIn';
   useEffect(() => {
     if (isSignedIn !== prevIsSignedIn) {
       setViewToRender(<Redirect to="/issues" />);
@@ -74,6 +75,7 @@ const SigninContainer = ({
 
   const handleSignIn = () => {
     const { isValidated, validationErrors } = validateFields({
+      form,
       values: data,
     });
     if (isValidated) {
@@ -82,17 +84,18 @@ const SigninContainer = ({
         username: email.value,
       });
     } else {
-      dispatchInputError({ errors: validationErrors, form: 'signIn' });
+      dispatchInputError({ errors: validationErrors, form });
     }
   };
 
   const handleValidateInput = ({ field }) => {
-    const validationError = validateOneField({ field, values: data }) || '';
+    const validationError =
+      validateOneField({ field, form, values: data }) || '';
     dispatchInputError({
       errors: {
         [field]: validationError,
       },
-      form: 'signIn',
+      form,
     });
   };
   return (

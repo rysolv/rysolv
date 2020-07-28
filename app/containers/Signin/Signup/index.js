@@ -56,6 +56,7 @@ const SignUpContainer = ({
 }) => {
   const [viewToRender, setViewToRender] = useState(null);
   const { current: prevIsSignedIn } = useRef(isSignedIn);
+  const form = 'signUp';
   useEffect(() => {
     if (isSignedIn !== prevIsSignedIn) {
       setViewToRender(<Redirect to="/issues" />);
@@ -95,6 +96,7 @@ const SignUpContainer = ({
 
   const handleSignUp = () => {
     const { isValidated, validationErrors } = validateFields({
+      form,
       values: data,
       verifyField: { field: 'password', verifyValue: password.value },
     });
@@ -107,7 +109,7 @@ const SignUpContainer = ({
         username: username.value,
       });
     } else {
-      dispatchInputError({ errors: validationErrors, form: 'signUp' });
+      dispatchInputError({ errors: validationErrors, form });
     }
   };
 
@@ -122,12 +124,12 @@ const SignUpContainer = ({
 
   const handleValidateInput = ({ field, verifyField }) => {
     const validationError =
-      validateOneField({ field, values: data, verifyField }) || '';
+      validateOneField({ field, form, values: data, verifyField }) || '';
     dispatchInputError({
       errors: {
         [field]: validationError,
       },
-      form: 'signUp',
+      form,
     });
   };
 
