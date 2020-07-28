@@ -1,4 +1,3 @@
-/* eslint-disable react/no-did-update-set-state */
 import React, { useEffect, useRef, useState } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
@@ -24,7 +23,6 @@ import { validateFields, validateOneField } from '../helpers';
 import reducer from '../reducer';
 import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const SigninContainer = ({
   activeUser,
   activeUserLoading,

@@ -29,7 +29,6 @@ import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
 import reducer from '../reducer';
 import { signUpDictionary } from '../stepDictionary';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const SignUpContainer = ({
   activeUser,
   activeUserLoading,
