@@ -1,5 +1,5 @@
 import produce from 'immer';
-
+import { remove } from 'lodash';
 import { isBlank } from 'utils/validate';
 
 import {
@@ -200,8 +200,7 @@ const authReducer = produce((draft, { payload, type }) => {
         draft.activeUser.profilePic = profilePic;
       }
       if (removeUpvote && rep) {
-        const i = draft.activeUser.upvotes.indexOf(removeUpvote);
-        if (i > -1) draft.activeUser.upvotes.splice(i, 1);
+        remove(draft.activeUser.upvotes, id => id === removeUpvote);
         draft.activeUser.rep = rep;
       }
       break;
@@ -213,8 +212,7 @@ const authReducer = produce((draft, { payload, type }) => {
         draft.activeUser.upvotes.push(issueId);
       } else {
         draft.activeUser.rep += 1;
-        const i = draft.activeUser.upvotes.indexOf(issueId);
-        if (i > -1) draft.activeUser.upvotes.splice(i, 1);
+        remove(draft.activeUser.upvotes, id => id === issueId);
       }
       break;
     }

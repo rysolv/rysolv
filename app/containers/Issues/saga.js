@@ -496,7 +496,7 @@ export function* upvoteIssuesSaga({ payload }) {
 
   const upvoteIssueQuery = `
     mutation {
-      upvoteIssue(issueId: "${issueId}", userId: "${userId}", upvote: ${upvote} ) {
+      upvoteIssue(issueId: "${issueId}", upvote: ${upvote}, userId: "${userId}") {
         __typename
         ... on Upvote {
           issueRep,

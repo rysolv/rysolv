@@ -55,19 +55,19 @@ export class OrganizationsDetail extends React.PureComponent {
       deviceView,
       dispatchEditOrganization,
       dispatchOpenModal,
+      dispatchUpvote,
       error,
       filterValues,
       handleClearAlerts,
       handleInputChange,
       handleNav,
-      dispatchUpvote,
       isSignedIn,
       loading,
       upvoteLoading,
     } = this.props;
 
-    const handleUpvote = payload => {
-      if (!upvoteLoading) dispatchUpvote(payload);
+    const handleUpvote = ({ issueId, upvote, userId }) => {
+      if (!upvoteLoading) dispatchUpvote({ issueId, upvote, userId });
     };
 
     return (
@@ -130,7 +130,6 @@ const mapStateToProps = createStructuredSelector({
   filterValues: makeSelectOrganizations('filter'),
   loading: makeSelectOrganizationsLoading('fetchOrganization'),
   upvoteLoading: makeSelectOrganizationsLoading('upvoteIssue'),
-
   /**
    * Reducer : ViewSize
    */

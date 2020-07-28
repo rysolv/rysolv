@@ -414,8 +414,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case UPVOTE_ISSUE_SUCCESS: {
       const { issueId, issueRep } = payload;
-      draft.issues.map((issue, index) => {
-        if (issue.id === issueId) {
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
           draft.issues[index].rep = issueRep;
         }
       });
@@ -433,8 +433,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case UPVOTE_ISSUE_TEMP: {
       const { issueId, upvote } = payload;
-      draft.issues.map((issue, index) => {
-        if (issue.id === issueId) {
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
           // eslint-disable-next-line no-unused-expressions
           upvote
             ? (draft.issues[index].rep += 1)

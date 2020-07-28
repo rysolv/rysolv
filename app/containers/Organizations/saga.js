@@ -38,8 +38,8 @@ import {
   updateInfoFailure,
   updateInfoSuccess,
   upvoteIssueFailure,
-  upvoteIssueTemp,
   upvoteIssueSuccess,
+  upvoteIssueTemp,
 } from './actions';
 
 export function* deleteOrganizationSaga({ payload }) {
@@ -377,7 +377,7 @@ export function* upvoteIssueSaga({ payload }) {
 
   const upvoteIssueQuery = `
     mutation {
-      upvoteIssue(issueId: "${issueId}", userId: "${userId}", upvote: ${upvote} ) {
+      upvoteIssue(issueId: "${issueId}", upvote: ${upvote}, userId: "${userId}") {
         __typename
         ... on Upvote {
           issueRep,

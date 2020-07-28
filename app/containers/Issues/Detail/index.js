@@ -84,8 +84,8 @@ export class IssuesDetail extends React.PureComponent {
       upvoteLoading,
     } = this.props;
 
-    const handleUpvote = payload => {
-      if (!upvoteLoading) dispatchUpvote(payload);
+    const handleUpvote = ({ issueId, upvote, userId }) => {
+      if (!upvoteLoading) dispatchUpvote({ issueId, upvote, userId });
     };
 
     const modalPropsDictionary = {

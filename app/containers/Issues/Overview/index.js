@@ -65,8 +65,8 @@ const IssuesOverview = ({
     return handleClearAlerts;
   }, [searchValue]);
 
-  const handleUpvote = payload => {
-    if (!upvoteLoading) dispatchUpvote(payload);
+  const handleUpvote = ({ issueId, upvote, userId }) => {
+    if (!upvoteLoading) dispatchUpvote({ issueId, upvote, userId });
   };
 
   return (
@@ -135,8 +135,8 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectIssuesError('issues'),
   issues: makeSelectIssuesFiltered(),
   loading: makeSelectIssuesLoading('issues'),
-  upvoteLoading: makeSelectIssuesLoading('upvoteIssue'),
   search: makeSelectIssues('search'),
+  upvoteLoading: makeSelectIssuesLoading('upvoteIssue'),
   /**
    * Reducer : ViewSize
    */
