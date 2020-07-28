@@ -19,7 +19,8 @@ import {
 } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
-import { clearForm, inputChange } from '../actions';
+import { clearForm, inputChange, inputError } from '../actions';
+import { validateFields, validateOneField } from '../helpers';
 import reducer from '../reducer';
 import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
 
@@ -28,7 +29,9 @@ const SigninContainer = ({
   activeUser,
   activeUserLoading,
   data,
+  data: { email, password },
   dispatchClearForm,
+  dispatchInputError,
   dispatchSignIn,
   dispatchSignout,
   error,
@@ -59,6 +62,7 @@ const SigninContainer = ({
       );
     }
   }, [activeUserLoading, isSignedIn]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Sign In';
@@ -68,12 +72,27 @@ const SigninContainer = ({
     };
   }, []);
 
-  const { email, password } = data;
-
   const handleSignIn = () => {
-    dispatchSignIn({
-      username: email.value,
-      password: password.value,
+    const { isValidated, validationErrors } = validateFields({
+      values: data,
+    });
+    if (isValidated) {
+      dispatchSignIn({
+        password: password.value,
+        username: email.value,
+      });
+    } else {
+      dispatchInputError({ errors: validationErrors, form: 'signIn' });
+    }
+  };
+
+  const handleValidateInput = ({ field }) => {
+    const validationError = validateOneField({ field, values: data }) || '';
+    dispatchInputError({
+      errors: {
+        [field]: validationError,
+      },
+      form: 'signIn',
     });
   };
   return (
@@ -86,6 +105,7 @@ const SigninContainer = ({
         handleClearAuthAlerts,
         handleInputChange,
         handleSignIn,
+        handleValidateInput,
         isSignedIn,
         signInDisabled,
         signInLoading,
@@ -100,6 +120,7 @@ SigninContainer.propTypes = {
   activeUserLoading: T.bool,
   data: T.object,
   dispatchClearForm: T.func,
+  dispatchInputError: T.func,
   dispatchSignIn: T.func,
   dispatchSignout: T.func,
   error: T.object,
@@ -143,6 +164,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Signin
      */
     dispatchClearForm: () => dispatch(clearForm()),
+    dispatchInputError: payload => dispatch(inputError(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }

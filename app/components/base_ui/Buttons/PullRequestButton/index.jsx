@@ -13,7 +13,9 @@ import {
 const PullRequestIcon = iconDictionary('pullRequest');
 
 const PullRequestButton = ({
+  activeUserPullRequests,
   disabled,
+  dispatchFetchPullRequestList,
   dispatchOpenIssueModal,
   dispatchOpenModal,
   isSignedIn,
@@ -32,12 +34,24 @@ const PullRequestButton = ({
       {PullRequestIcon}
       <LabelWrapper>Submit PR</LabelWrapper>
     </StyledPullRequestButton>
-    <ValueWrapper>{pullRequests.length}</ValueWrapper>
+    <ValueWrapper
+      onClick={() =>
+        dispatchFetchPullRequestList({
+          activeUserPullRequests,
+          idArray: pullRequests,
+          modalState: 'pullRequestList',
+        })
+      }
+    >
+      {pullRequests.length}
+    </ValueWrapper>
   </PullRequestButtonContainer>
 );
 
 PullRequestButton.propTypes = {
+  activeUserPullRequests: T.array,
   disabled: T.bool,
+  dispatchFetchPullRequestList: T.func,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   isSignedIn: T.bool,

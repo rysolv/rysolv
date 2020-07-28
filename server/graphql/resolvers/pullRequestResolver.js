@@ -5,6 +5,7 @@ const {
   deletePullRequest,
   getOneIssue,
   getOnePullRequest,
+  getPullRequestList,
   getPullRequests,
   getUserPullRequests,
   updateIssueArray,
@@ -124,6 +125,27 @@ module.exports = {
       return {
         __typename: 'ImportPullRequest',
         ...result,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
+    }
+  },
+  getPullRequestList: async args => {
+    const { idArray } = args;
+    try {
+      const pullRequestList = await Promise.all(
+        idArray.map(async id => {
+          const [result] = await getPullRequestList(id);
+          return result;
+        }),
+      );
+      const result = pullRequestList;
+      return {
+        __typename: 'PullRequestList',
+        pullRequestList: result,
       };
     } catch (err) {
       return {

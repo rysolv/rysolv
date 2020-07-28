@@ -25,8 +25,6 @@ const {
   submitAccountPaymentUser,
   transformUser,
   updateUserArray,
-  userDownvote,
-  userUpvote,
 } = require('./users');
 const { createComment, getComments, getIssueComments } = require('./comments');
 const {
@@ -34,6 +32,7 @@ const {
   createPullRequest,
   deletePullRequest,
   getOnePullRequest,
+  getPullRequestList,
   getPullRequests,
   getUserPullRequests,
 } = require('./pullRequests');
@@ -82,6 +81,7 @@ module.exports = {
   getOneUser,
   getOrganizations,
   getOrganizationsWhere,
+  getPullRequestList,
   getPullRequests,
   getUserPullRequests,
   getUsers,
@@ -101,6 +101,4 @@ module.exports = {
   updateOrganizationArray,
   updateUserArray,
   upvoteIssue,
-  userDownvote,
-  userUpvote,
 };

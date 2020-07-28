@@ -21,7 +21,7 @@ const Signup = ({
   handleClearAuthAlerts,
   handleInputChange,
   handleSignUp,
-  handleVerifyPassword,
+  handleValidateInput,
   signUpDisabled,
   signUpLoading,
 }) => {
@@ -44,6 +44,7 @@ const Signup = ({
           error={!!username.error}
           helperText={username.error}
           label="Username"
+          onBlur={() => handleValidateInput({ field: 'username' })}
           onChange={e =>
             handleInputChange({
               field: 'username',
@@ -58,6 +59,7 @@ const Signup = ({
           error={!!email.error}
           helperText={email.error}
           label="Email"
+          onBlur={() => handleValidateInput({ field: 'email' })}
           onChange={e =>
             handleInputChange({
               field: 'email',
@@ -73,6 +75,7 @@ const Signup = ({
             error={!!firstName.error}
             helperText={firstName.error}
             label="First name"
+            onBlur={() => handleValidateInput({ field: 'firstName' })}
             onChange={e =>
               handleInputChange({
                 field: 'firstName',
@@ -86,6 +89,7 @@ const Signup = ({
             error={!!lastName.error}
             helperText={lastName.error}
             label="Last name"
+            onBlur={() => handleValidateInput({ field: 'lastName' })}
             onChange={e =>
               handleInputChange({
                 field: 'lastName',
@@ -101,6 +105,7 @@ const Signup = ({
           error={!!password.error}
           helperText={password.error}
           label="Password"
+          onBlur={() => handleValidateInput({ field: 'password' })}
           onChange={e =>
             handleInputChange({
               field: 'password',
@@ -121,7 +126,12 @@ const Signup = ({
           error={!!verifyPassword.error}
           helperText={verifyPassword.error}
           label="Confirm password"
-          onBlur={() => handleVerifyPassword()}
+          onBlur={() =>
+            handleValidateInput({
+              field: 'verifyPassword',
+              verifyField: { field: 'password', verifyValue: password.value },
+            })
+          }
           onChange={e =>
             handleInputChange({
               field: 'verifyPassword',
@@ -151,7 +161,7 @@ Signup.propTypes = {
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignUp: T.func.isRequired,
-  handleVerifyPassword: T.func,
+  handleValidateInput: T.func,
   signUpDisabled: T.bool,
   signUpLoading: T.bool,
 };

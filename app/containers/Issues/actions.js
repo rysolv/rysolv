@@ -16,6 +16,9 @@ import {
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
   CLOSE_MODAL_STATE,
+  DELETE_PULL_REQUEST_FAILURE,
+  DELETE_PULL_REQUEST_SUCCESS,
+  DELETE_PULL_REQUEST,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -45,6 +48,7 @@ import {
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
   VERIFY_INFO,
 } from './constants';
@@ -162,6 +166,27 @@ export function closeIssue(payload) {
 export function closeIssueModalState() {
   return {
     type: CLOSE_MODAL_STATE,
+  };
+}
+
+export function deletePullRequestFailure(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_FAILURE,
+  };
+}
+
+export function deletePullRequestSuccess(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_SUCCESS,
+  };
+}
+
+export function deletePullRequest(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST,
   };
 }
 
@@ -353,13 +378,6 @@ export function updateOrganization(payload) {
   };
 }
 
-export function upvoteIssue(payload) {
-  return {
-    payload,
-    type: UPVOTE_ISSUE,
-  };
-}
-
 export function upvoteIssueFailure(payload) {
   return {
     payload,
@@ -371,6 +389,20 @@ export function upvoteIssueSuccess(payload) {
   return {
     payload,
     type: UPVOTE_ISSUE_SUCCESS,
+  };
+}
+
+export function upvoteIssueTemp(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE_TEMP,
+  };
+}
+
+export function upvoteIssue(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE,
   };
 }
 

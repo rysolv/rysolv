@@ -95,7 +95,7 @@ const getSingleRepo = async ({ organization, repo }) => {
       organizationInput.organizationName = parentName || login; // Preferred name or login name
       organizationInput.organizationRepo = parentRepo; // Required
       organizationInput.organizationUrl = blog || ''; // Optional
-      // Only replace repo bio if Parent bio exists
+      // Only replace repo bio if parent bio exists
       if (bio) organizationInput.organizationDescription = bio;
     }
 
