@@ -1,5 +1,6 @@
 import produce from 'immer';
-import { remove } from 'lodash';
+import remove from 'lodash/remove';
+
 import { isBlank } from 'utils/validate';
 
 import {
