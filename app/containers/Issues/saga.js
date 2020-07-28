@@ -1,7 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { fetchActiveUser, updateActiveUser } from 'containers/Auth/actions';
+import {
+  fetchActiveUser,
+  updateActiveUser,
+  upvoteUserTemp,
+} from 'containers/Auth/actions';
 import { updatePaymentModal } from 'containers/Main/actions';
 import { post } from 'utils/request';
 
@@ -33,6 +37,7 @@ import {
   submitAccountPaymentSuccess,
   upvoteIssueFailure,
   upvoteIssueSuccess,
+  upvoteIssueTemp,
 } from './actions';
 import {
   ADD_ATTEMPT,
@@ -526,22 +531,25 @@ export function* submitAccountPaymentSaga({ payload }) {
 
 export function* upvoteIssuesSaga({ payload }) {
   const { issueId, upvote, userId } = payload;
+
+  // Update front end upvote. Reduce percieved loading time.
+  yield put(upvoteIssueTemp({ issueId, upvote }));
+  yield put(upvoteUserTemp({ issueId, upvote }));
+
   const upvoteIssueQuery = `
-      mutation {
-        upvoteIssue(id: "${issueId}", upvote: ${upvote} ) {
-          id,
-          rep
+    mutation {
+      upvoteIssue(issueId: "${issueId}", upvote: ${upvote}, userId: "${userId}") {
+        __typename
+        ... on Upvote {
+          issueRep,
+          userRep
         }
-        userUpvote(id: "${userId}", upvote: ${upvote} ) {
-          id,
-          rep
-        }
-        updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: ${!upvote} ) {
-          attempting,
-          watching
+        ... on Error {
+          message
         }
       }
-    `;
+    }
+  `;
   try {
     const upvoteIssue = JSON.stringify({
       query: upvoteIssueQuery,
@@ -549,12 +557,18 @@ export function* upvoteIssuesSaga({ payload }) {
     });
     const {
       data: {
-        upvoteIssue: { id, rep },
+        upvoteIssue: { __typename, issueRep, message, userRep },
       },
     } = yield call(post, '/graphql', upvoteIssue);
+    if (__typename === 'Error') throw new Error(message);
 
-    yield put(upvoteIssueSuccess({ id, rep }));
-    yield put(fetchActiveUser({ userId }));
+    yield put(upvoteIssueSuccess({ issueId, issueRep }));
+
+    if (upvote) {
+      yield put(updateActiveUser({ rep: userRep, addUpvote: issueId }));
+    } else {
+      yield put(updateActiveUser({ rep: userRep, removeUpvote: issueId }));
+    }
   } catch (error) {
     yield put(upvoteIssueFailure({ error }));
   }

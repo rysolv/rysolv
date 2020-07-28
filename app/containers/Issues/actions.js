@@ -48,6 +48,7 @@ import {
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
   VERIFY_INFO,
 } from './constants';
@@ -377,13 +378,6 @@ export function updateOrganization(payload) {
   };
 }
 
-export function upvoteIssue(payload) {
-  return {
-    payload,
-    type: UPVOTE_ISSUE,
-  };
-}
-
 export function upvoteIssueFailure(payload) {
   return {
     payload,
@@ -395,6 +389,20 @@ export function upvoteIssueSuccess(payload) {
   return {
     payload,
     type: UPVOTE_ISSUE_SUCCESS,
+  };
+}
+
+export function upvoteIssueTemp(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE_TEMP,
+  };
+}
+
+export function upvoteIssue(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE,
   };
 }
 

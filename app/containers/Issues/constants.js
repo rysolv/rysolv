@@ -78,6 +78,7 @@ export const UPDATE_ORGANIZATION = 'app/Issues/UPDATE_ORGANIZATION';
 export const UPVOTE_ISSUE = 'app/Issues/UPVOTE_ISSUE';
 export const UPVOTE_ISSUE_FAILURE = 'app/Issues/UPVOTE_ISSUE_FAILURE';
 export const UPVOTE_ISSUE_SUCCESS = 'app/Issues/UPVOTE_ISSUE_SUCCESS';
+export const UPVOTE_ISSUE_TEMP = 'app/Issues/UPVOTE_ISSUE_TEMP';
 
 export const VERIFY_INFO = 'app/Issues/VERIFY_INFO';
 

@@ -23,7 +23,7 @@ app.use(
   graphQlHttp({
     schema: graphQlSchema,
     rootValue: graphQlResolvers,
-    graphiql: true,
+    graphiql: false,
   }),
 );
 
