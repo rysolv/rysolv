@@ -13,6 +13,7 @@ import {
   detailFontSize,
   hoverLinkColor,
   lightBlueColor,
+  lightGreyColor,
   subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
@@ -77,7 +78,7 @@ export const SigninWrapper = styled.div`
 `;
 
 export const StyledButton = styled(Button)`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
   font-family: ${defaultFontFamily};
   font-size: ${defaultFontSize};
   font-weight: 500;

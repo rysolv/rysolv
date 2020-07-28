@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 import { Star } from 'components/base_ui';
-
 import {
   buttonRed,
   defaultFontSize,
   detailFontSize,
   hoverLinkColor,
+  lightGreyColor,
   textColor,
 } from 'defaultStyleHelper';
 
@@ -130,7 +130,7 @@ export const StyledTitle = styled.h1`
 `;
 
 export const SubmittedWrapper = styled.div`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
   display: flex;
   font-size: ${detailFontSize};
   padding-top: 1rem;
