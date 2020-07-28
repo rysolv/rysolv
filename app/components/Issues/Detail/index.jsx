@@ -55,6 +55,7 @@ const IssueDetail = ({
   deviceView,
   dispatchCloseIssue,
   dispatchEditIssue,
+  dispatchFetchPullRequestList,
   dispatchFetchWatchList,
   dispatchOpenIssueModal,
   dispatchOpenModal,
@@ -203,7 +204,9 @@ const IssueDetail = ({
             success={success}
           />
         }
-        shouldRender={isSignedIn && !!issues.find(({ id }) => issueId === id)}
+        shouldRender={
+          isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
+        }
       />
       <DetailContainer>
         <IssueDetailWrapper>
@@ -224,6 +227,7 @@ const IssueDetail = ({
               <IssueTopBar
                 activeUser={activeUser}
                 data={data}
+                dispatchFetchPullRequestList={dispatchFetchPullRequestList}
                 dispatchFetchWatchList={dispatchFetchWatchList}
                 dispatchOpenIssueModal={dispatchOpenIssueModal}
                 dispatchOpenModal={dispatchOpenModal}
@@ -263,6 +267,7 @@ const IssueDetail = ({
                 shouldRender={
                   isMobileOrLaptop &&
                   isSignedIn &&
+                  issues &&
                   !!issues.find(({ id }) => issueId === id)
                 }
               />
@@ -293,7 +298,7 @@ const IssueDetail = ({
           <ConditionalRender
             Component={EditIssueComponent}
             shouldRender={
-              isSignedIn && !!issues.find(({ id }) => issueId === id)
+              isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
             }
           />
           <PaymentPortal
@@ -315,7 +320,7 @@ const IssueDetail = ({
           <ConditionalRender
             Component={CloseOpenIssueComponent}
             shouldRender={
-              isSignedIn && !!issues.find(({ id }) => issueId === id)
+              isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
             }
           />
         </SidebarContainer>
@@ -334,6 +339,7 @@ IssueDetail.propTypes = {
   deviceView: T.string,
   dispatchCloseIssue: T.func,
   dispatchEditIssue: T.func,
+  dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,

@@ -2,8 +2,10 @@ const { v4: uuidv4 } = require('uuid');
 const {
   checkDuplicatePullRequest,
   createPullRequest,
+  deletePullRequest,
   getOneIssue,
   getOnePullRequest,
+  getPullRequestList,
   getPullRequests,
   getUserPullRequests,
   updateIssueArray,
@@ -64,6 +66,35 @@ module.exports = {
       };
     }
   },
+  deletePullRequest: async args => {
+    const { id } = args;
+    try {
+      const result = await deletePullRequest(id);
+      await updateUserArray({
+        column: 'pull_requests',
+        data: id,
+        userId: result.user_id,
+        remove: true,
+      });
+
+      await updateIssueArray({
+        column: 'pull_requests',
+        data: id,
+        issueId: result.issue_id,
+        remove: true,
+      });
+
+      return {
+        __typename: 'Success',
+        message: `Pull request ${result.title} has successfully been deleted.`,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
+    }
+  },
   importPullRequest: async args => {
     const { url, issueId } = args;
     try {
@@ -94,6 +125,27 @@ module.exports = {
       return {
         __typename: 'ImportPullRequest',
         ...result,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
+    }
+  },
+  getPullRequestList: async args => {
+    const { idArray } = args;
+    try {
+      const pullRequestList = await Promise.all(
+        idArray.map(async id => {
+          const [result] = await getPullRequestList(id);
+          return result;
+        }),
+      );
+      const result = pullRequestList;
+      return {
+        __typename: 'PullRequestList',
+        pullRequestList: result,
       };
     } catch (err) {
       return {

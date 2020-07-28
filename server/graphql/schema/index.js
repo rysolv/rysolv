@@ -196,9 +196,28 @@ module.exports = buildSchema(`
     userId: ID!
   }
 
+  type PullRequestSubmissions {
+    htmlUrl: String
+    pullRequestId: ID
+    rep: Int
+    title: String
+    userId: ID
+    username: String
+  }
+
+  type PullRequestList {
+    pullRequestList: [PullRequestSubmissions]
+  }
+
   type Payment {
     balance: Float
     fundedAmount: Float
+  }
+
+  type Upvote {
+    issueRep: Int
+    upvotes: [ID]
+    userRep: Int
   }
 
   type User {
@@ -286,7 +305,9 @@ module.exports = buildSchema(`
   union OrganizationResult = Organization | Error
   union PaymentResult = Payment | Error
   union PullRequestArrayResult = PullRequestArray | Error
+  union PullRequestListResult = PullRequestList | Error
   union PullRequestResult = PullRequest | Error
+  union UpvoteResult = Upvote | Error
   union UserResult = User | Error
   union WithdrawalResult = Withdrawal | Error
 
@@ -304,6 +325,7 @@ module.exports = buildSchema(`
     getUserOrganizations(id: ID!): [Organization!]
     getUserPullRequests(id: ID!): PullRequestArrayResult
 
+    getPullRequestList(idArray: [ID!]): PullRequestListResult!
     getWatchList(idArray: [ID!], type: String!): [WatchList!]
 
     oneIssue(id: ID!): IssueResult
@@ -330,6 +352,7 @@ module.exports = buildSchema(`
     deleteIssue(id: ID!): String!
     deleteOrganization(id:ID!): String!
     deleteUser(id:ID!): String!
+    deletePullRequest(id:ID!): EventResponse!
 
     importIssue(url: String!): ImportResult
     importOrganization(url: String!): ImportResult
@@ -344,8 +367,7 @@ module.exports = buildSchema(`
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
 
-    upvoteIssue(id: ID, upvote: Boolean): Issue!
-    userUpvote(id: ID, upvote: Boolean): User!
+    upvoteIssue(issueId: ID, upvote: Boolean, userId: ID): UpvoteResult!
   }
 
   schema {

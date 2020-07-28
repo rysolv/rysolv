@@ -32,10 +32,10 @@ const getSingleIssue = async ({ issueNumber, organization, repo }) => {
     }
 
     const issueInput = {
-      issueBody: body,
-      issueName: title,
-      issueUrl: html_url,
-      organizationUrl: repository_url,
+      issueBody: body, // Required
+      issueName: title, // Required
+      issueUrl: html_url, // Required
+      organizationUrl: repository_url, // Required
     };
     return { issueInput };
   } catch (err) {
@@ -67,14 +67,14 @@ const getSingleRepo = async ({ organization, repo }) => {
     }
 
     const organizationInput = {
-      issueLanguages: [language],
-      organizationDescription: description || '',
-      organizationLanguages: [language],
+      issueLanguages: [language], // Optional - one entry
+      organizationDescription: description || '', // Optional
+      organizationLanguages: [language], // Optional - one entry
       organizationLogo:
         'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
-      organizationName: name,
-      organizationRepo: html_url,
-      organizationUrl: homepage,
+      organizationName: name, // Required
+      organizationRepo: html_url, // Required
+      organizationUrl: homepage || '', // Optional
     };
 
     if (parentOrganization) {
@@ -91,10 +91,11 @@ const getSingleRepo = async ({ organization, repo }) => {
         name: parentName,
       } = parentData;
 
-      organizationInput.organizationLogo = avatar_url;
-      organizationInput.organizationName = parentName || login;
-      organizationInput.organizationRepo = parentRepo;
-      organizationInput.organizationUrl = blog;
+      organizationInput.organizationLogo = avatar_url; // Required
+      organizationInput.organizationName = parentName || login; // Preferred name or login name
+      organizationInput.organizationRepo = parentRepo; // Required
+      organizationInput.organizationUrl = blog || ''; // Optional
+      // Only replace repo bio if parent bio exists
       if (bio) organizationInput.organizationDescription = bio;
     }
 
@@ -130,12 +131,12 @@ const getSingleOrganization = async organization => {
   }
 
   const organizationInput = {
-    organizationDescription: bio || '',
-    organizationLanguages: [],
-    organizationLogo: avatar_url,
-    organizationName: name || login,
-    organizationRepo: html_url,
-    organizationUrl: blog,
+    organizationDescription: bio || '', // Optional
+    organizationLanguages: [], // Optional
+    organizationLogo: avatar_url, // Required
+    organizationName: name || login, // Preferred name or login name
+    organizationRepo: html_url, // Required
+    organizationUrl: blog || '', // Optional
   };
   return { organizationInput };
 };

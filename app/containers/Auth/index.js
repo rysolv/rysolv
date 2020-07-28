@@ -9,10 +9,10 @@ import { ConditionalRender, LoadingIndicator } from 'components/base_ui';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
+import { fetchUserSession, signIn, signUp } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectAuth, makeSelectAuthLoading } from './selectors';
-import { fetchUserSession, signIn, signUp } from './actions';
 
 export default function withAuth(config, Component) {
   const Auth = ({
@@ -21,15 +21,16 @@ export default function withAuth(config, Component) {
     handleSignIn,
     handleSignUp,
     isSignedIn,
+    signOutLoading,
     ...restProps
   }) => {
     const { isPrivate } = config;
 
     useEffect(() => {
-      dispatchFetchUserSession();
+      if (!signOutLoading) dispatchFetchUserSession();
     }, []);
 
-    if (!isSignedIn && isPrivate && !authenticateLoading)
+    if (!authenticateLoading && isPrivate && !isSignedIn)
       return <Redirect to="/signin" />;
 
     return (
@@ -48,6 +49,7 @@ export default function withAuth(config, Component) {
     handleSignIn: T.func,
     handleSignUp: T.func,
     isSignedIn: T.bool,
+    signOutLoading: T.bool,
   };
 
   const mapStateToProps = createStructuredSelector({
@@ -56,6 +58,7 @@ export default function withAuth(config, Component) {
      */
     authenticateLoading: makeSelectAuthLoading('authenticateUser'),
     isSignedIn: makeSelectAuth('isSignedIn'),
+    signOutLoading: makeSelectAuthLoading('signOut'),
   });
 
   const mapDispatchToProps = dispatch => ({

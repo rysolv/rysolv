@@ -6,6 +6,8 @@ import { StyledStar } from './styledComponents';
 
 const starIcon = iconDictionary('star');
 
-const Star = () => <StyledStar>{starIcon}</StyledStar>;
+const Star = ({ ...restProps }) => (
+  <StyledStar {...restProps}>{starIcon}</StyledStar>
+);
 
 export default Star;

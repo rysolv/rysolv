@@ -55,15 +55,21 @@ export class OrganizationsDetail extends React.PureComponent {
       deviceView,
       dispatchEditOrganization,
       dispatchOpenModal,
+      dispatchUpvote,
       error,
       filterValues,
       handleClearAlerts,
       handleInputChange,
       handleNav,
-      handleUpvote,
       isSignedIn,
       loading,
+      upvoteLoading,
     } = this.props;
+
+    const handleUpvote = ({ issueId, upvote, userId }) => {
+      if (!upvoteLoading) dispatchUpvote({ issueId, upvote, userId });
+    };
+
     return (
       <AsyncRender
         asyncData={data}
@@ -97,15 +103,16 @@ OrganizationsDetail.propTypes = {
   dispatchEditOrganization: T.func.isRequired,
   dispatchFetchInfo: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
+  dispatchUpvote: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object.isRequired,
   handleClearAlerts: T.func.isRequired,
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
-  handleUpvote: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
+  upvoteLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -122,6 +129,7 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectOrganizationsError('fetchOrganization'),
   filterValues: makeSelectOrganizations('filter'),
   loading: makeSelectOrganizationsLoading('fetchOrganization'),
+  upvoteLoading: makeSelectOrganizationsLoading('upvoteIssue'),
   /**
    * Reducer : ViewSize
    */
@@ -133,7 +141,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
-    handleUpvote: payload => dispatch(upvoteIssue(payload)),
+    dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     /*
      * Reducer : Main
      */

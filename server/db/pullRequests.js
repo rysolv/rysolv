@@ -68,11 +68,11 @@ const createPullRequest = async data => {
 };
 
 const deletePullRequest = async id => {
-  const rows = await singleItem('pullRequests', id);
+  const [rows] = await singleItem('pullRequests', id, '*', 'pullrequest_id');
   if (rows) {
-    const queryText = `DELETE FROM pullRequests WHERE (id='${id}') RETURNING *`;
+    const queryText = `DELETE FROM pullrequests WHERE (pullrequest_id='${id}')`;
     await singleQuery(queryText);
-    return `ID ${id} successfully deleted from Pull Requests`;
+    return rows;
   }
   throw new Error(
     `Failed to delete pull request. ID not found in Pull Requests`,
@@ -88,6 +88,21 @@ const getOnePullRequest = async id => {
     return rows;
   }
   throw new Error('ID not found in Pull Requests');
+};
+
+const getPullRequestList = async id => {
+  const queryText = `
+    SELECT
+      pullRequests.html_url AS "htmlUrl",
+      pullRequests.title,
+      pullRequests.user_id AS "userId",
+      pullRequests.pullrequest_id AS "pullRequestId",
+      users.rep,
+      users.username FROM pullRequests
+    LEFT JOIN users ON (pullRequests.user_id = users.id)
+    WHERE (pullRequests.pullrequest_id='${id}')`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
 };
 
 const getPullRequests = async () => {
@@ -110,6 +125,7 @@ module.exports = {
   createPullRequest,
   deletePullRequest,
   getOnePullRequest,
+  getPullRequestList,
   getPullRequests,
   getUserPullRequests,
 };

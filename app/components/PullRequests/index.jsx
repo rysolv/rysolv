@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
-import { BaseInputWithAdornment } from 'components/base_ui';
+import { BaseDropDownMenu, BaseInputWithAdornment } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import EmptyCard from './EmptyCard';
@@ -9,12 +9,17 @@ import PullRequestsCard from './Card';
 import {
   BaseInputWrapper,
   SearchContainer,
-  StyledBaseDropDownMenu,
+  StyledErrorSuccessBanner,
 } from './styledComponents';
 
 const SearchIcon = iconDictionary('search');
 
-const PullRequests = ({ data }) => {
+const PullRequests = ({
+  alerts: { error, success },
+  data,
+  handleClearAlerts,
+  handleDelete,
+}) => {
   const [selectedValue, setSelectedValue] = useState('Newest');
   const [searchValue, setSearchValue] = useState('');
   const filterData = () => {
@@ -44,7 +49,7 @@ const PullRequests = ({ data }) => {
   const filteredData = filterData();
   const hasPullRequests =
     filteredData.length > 0 && !filteredData.includes(null);
-  const propsToPassDown = { data: filteredData };
+  const propsToPassDown = { data: filteredData, handleDelete };
   const viewToRender = hasPullRequests ? (
     <PullRequestsCard {...propsToPassDown} />
   ) : (
@@ -62,19 +67,27 @@ const PullRequests = ({ data }) => {
             renderIcon
           />
         </BaseInputWrapper>
-        <StyledBaseDropDownMenu
+        <BaseDropDownMenu
           handleChange={value => setSelectedValue(value)}
           selectedValue={selectedValue}
           values={['Newest', 'Merged', 'Open']}
         />
       </SearchContainer>
+      <StyledErrorSuccessBanner
+        error={error}
+        onClose={handleClearAlerts}
+        success={success}
+      />
       {viewToRender}
     </Fragment>
   );
 };
 
 PullRequests.propTypes = {
+  alerts: T.object.isRequired,
   data: T.array.isRequired,
+  handleClearAlerts: T.func.isRequired,
+  handleDelete: T.func.isRequired,
 };
 
 export default PullRequests;

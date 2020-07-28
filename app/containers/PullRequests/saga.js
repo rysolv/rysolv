@@ -7,6 +7,8 @@ import { updateIssueDetail } from 'containers/Issues/actions';
 import {
   createPullRequestFailure,
   createPullRequestSuccess,
+  deletePullRequestFailure,
+  deletePullRequestSuccess,
   fetchUserPullRequestsFailure,
   fetchUserPullRequestsSuccess,
   importPullRequestFailure,
@@ -14,6 +16,7 @@ import {
 } from './actions';
 import {
   CREATE_PULL_REQUEST,
+  DELETE_PULL_REQUEST,
   FETCH_USER_PULL_REQUESTS,
   IMPORT_PULL_REQUEST,
 } from './constants';
@@ -77,6 +80,45 @@ export function* createPullRequestSaga({ payload }) {
     yield put(updateIssueDetail({ pullRequestId }));
   } catch (error) {
     yield put(createPullRequestFailure({ error }));
+  }
+}
+
+export function* deletePullRequestSaga({ payload }) {
+  const { pullRequestId, userId } = payload;
+  const query = `
+    mutation {
+      deletePullRequest(id: "${pullRequestId}")
+        {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+
+  try {
+    const pullRequestQuery = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { deletePullRequest },
+    } = yield call(post, '/graphql', pullRequestQuery);
+    const { __typename, message } = deletePullRequest;
+    if (__typename === 'Error') throw new Error(message);
+    yield put(
+      deletePullRequestSuccess({
+        id: pullRequestId,
+        message,
+      }),
+    );
+    yield put(fetchActiveUser({ userId }));
+  } catch (error) {
+    yield put(deletePullRequestFailure({ error }));
   }
 }
 
@@ -173,6 +215,7 @@ export function* importPullRequestSaga({ payload }) {
 
 export default function* watcherSaga() {
   yield takeLatest(CREATE_PULL_REQUEST, createPullRequestSaga);
+  yield takeLatest(DELETE_PULL_REQUEST, deletePullRequestSaga);
   yield takeLatest(FETCH_USER_PULL_REQUESTS, fetchUserPullRequestsSaga);
   yield takeLatest(IMPORT_PULL_REQUEST, importPullRequestSaga);
 }

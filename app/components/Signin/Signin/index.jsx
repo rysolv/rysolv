@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { MainTextInput } from 'components/base_ui';
+import { MainTextInput, PasswordTextInput } from 'components/base_ui';
 
 import {
   InputFormWrapper,
@@ -19,6 +19,7 @@ const Signin = ({
   handleClearAuthAlerts,
   handleInputChange,
   handleSignIn,
+  handleValidateInput,
   signInDisabled,
   signInLoading,
 }) => {
@@ -43,6 +44,7 @@ const Signin = ({
           error={!!email.error}
           helperText={email.error}
           label="Email"
+          onBlur={() => handleValidateInput({ field: 'email' })}
           onChange={e =>
             handleInputChange({
               field: 'email',
@@ -53,11 +55,12 @@ const Signin = ({
           type="email"
           value={email.value}
         />
-        <MainTextInput
+        <PasswordTextInput
           autoComplete="current-password"
           error={!!password.error}
           helperText={password.error}
           label="Password"
+          onBlur={() => handleValidateInput({ field: 'password' })}
           onChange={e =>
             handleInputChange({
               field: 'password',
@@ -65,7 +68,6 @@ const Signin = ({
               value: e.target.value,
             })
           }
-          type="password"
           value={password.value}
         />
         <StyledPrimaryAsyncButton
@@ -88,6 +90,7 @@ Signin.propTypes = {
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignIn: T.func.isRequired,
+  handleValidateInput: T.func.isRequired,
   signInDisabled: T.bool,
   signInLoading: T.bool,
 };

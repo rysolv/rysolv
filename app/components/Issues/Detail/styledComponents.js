@@ -12,6 +12,7 @@ import {
   defaultFontSize,
   detailFontSize,
   fundingText,
+  lightGreyColor,
   styledScrollbar,
   textColor,
 } from 'defaultStyleHelper';
@@ -27,12 +28,12 @@ export const CommentWrapper = styled.div`
 `;
 
 export const DetailContainer = styled.div`
+  align-items: flex-start;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
   justify-content: center;
-  width: 100%;
   padding: 2.5rem 0;
+  width: 100%;
 
   ${tablet} {
     padding: 2.5rem 0;
@@ -60,7 +61,7 @@ export const EditIssueWrapper = styled.div`
 `;
 
 export const ExternalLinkWrapper = styled.a`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
   display: flex;
   font-size: 1.4rem;
   font-weight: 500;
@@ -85,6 +86,7 @@ export const IssueDetailColumn = styled.div`
   flex-direction: column;
   padding: 2rem;
   width: 100%;
+
   ${tablet} {
     padding: 1rem;
   }

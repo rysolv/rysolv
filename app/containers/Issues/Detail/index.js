@@ -9,7 +9,11 @@ import AddPullRequestModal from 'components/AddPullRequestModal';
 import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
 import IssueDetail from 'components/Issues/Detail';
-import { fetchWatchList, openModalState } from 'containers/Main/actions';
+import {
+  fetchPullRequestList,
+  fetchWatchList,
+  openModalState,
+} from 'containers/Main/actions';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectSaga from 'utils/injectSaga';
@@ -32,8 +36,8 @@ import saga from '../saga';
 import {
   makeSelectIssueDetail,
   makeSelectIssueDetailError,
-  makeSelectIssueDetailLoading,
   makeSelectIssues,
+  makeSelectIssuesLoading,
 } from '../selectors';
 
 export class IssuesDetail extends React.PureComponent {
@@ -62,16 +66,17 @@ export class IssuesDetail extends React.PureComponent {
       dispatchCloseIssue,
       dispatchCloseIssueModal,
       dispatchEditIssue,
+      dispatchFetchPullRequestList,
       dispatchFetchWatchList,
       dispatchOpenIssueModal,
       dispatchOpenModal,
+      dispatchUpvote,
       error,
       handleClearAlerts,
       handleComment,
       handleIncrement,
       handleNav,
       handleSubmitAccountPayment,
-      handleUpvote,
       isModalOpen,
       isSignedIn,
       issueDetail,
@@ -81,7 +86,12 @@ export class IssuesDetail extends React.PureComponent {
       },
       modal,
       paymentAlerts,
+      upvoteLoading,
     } = this.props;
+
+    const handleUpvote = ({ issueId, upvote, userId }) => {
+      if (!upvoteLoading) dispatchUpvote({ issueId, upvote, userId });
+    };
 
     const modalPropsDictionary = {
       addPullRequest: {
@@ -109,6 +119,7 @@ export class IssuesDetail extends React.PureComponent {
             deviceView,
             dispatchCloseIssue,
             dispatchEditIssue,
+            dispatchFetchPullRequestList,
             dispatchFetchWatchList,
             dispatchOpenIssueModal,
             dispatchOpenModal,
@@ -136,16 +147,17 @@ IssuesDetail.propTypes = {
   dispatchCloseIssueModal: T.func,
   dispatchEditIssue: T.func,
   dispatchFetchIssueDetail: T.func,
+  dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
+  dispatchUpvote: T.func,
   error: T.oneOfType([T.bool, T.object]),
   handleClearAlerts: T.func,
   handleComment: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
   handleSubmitAccountPayment: T.func,
-  handleUpvote: T.func,
   isModalOpen: T.bool,
   isSignedIn: T.bool,
   issueDetail: T.object,
@@ -153,6 +165,7 @@ IssuesDetail.propTypes = {
   match: T.object,
   modal: T.string,
   paymentAlerts: T.object,
+  upvoteLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -168,9 +181,10 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectIssueDetailError('issueDetail'),
   isModalOpen: makeSelectIssues('isModalOpen'),
   issueDetail: makeSelectIssueDetail('issueDetail'),
-  loading: makeSelectIssueDetailLoading('issueDetail'),
+  loading: makeSelectIssuesLoading('issueDetail'),
   modal: makeSelectIssues('modal'),
   paymentAlerts: makeSelectIssues('paymentAlerts'),
+  upvoteLoading: makeSelectIssuesLoading('upvoteIssue'),
   /**
    * Reducer : ViewSize
    */
@@ -187,15 +201,17 @@ function mapDispatchToProps(dispatch) {
     dispatchEditIssue: payload => dispatch(editIssue(payload)),
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
     dispatchOpenIssueModal: payload => dispatch(openIssueModalState(payload)),
+    dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleComment: payload => dispatch(addComment(payload)),
     handleIncrement: payload => dispatch(addAttempt(payload)),
     handleSubmitAccountPayment: payload =>
       dispatch(submitAccountPayment(payload)),
-    handleUpvote: payload => dispatch(upvoteIssue(payload)),
     /*
      * Reducer : Main
      */
+    dispatchFetchPullRequestList: payload =>
+      dispatch(fetchPullRequestList(payload)),
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     /**

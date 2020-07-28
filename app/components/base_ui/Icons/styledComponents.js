@@ -4,7 +4,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import {
   defaultFontSize,
   detailFontSize,
-  hyperlinkColor,
+  lightBlueColor,
   selectedColor,
 } from 'defaultStyleHelper';
 
@@ -49,6 +49,7 @@ export const StyledMonocleIcon = styled.div`
   color: inherit;
   display: inline-block;
   text-align: center;
+
   * {
     fill: inherit;
     stroke: inherit;
@@ -103,7 +104,7 @@ export const StyledSettings = styled.div`
   text-align: center;
 
   &:hover {
-    color: ${hyperlinkColor};
+    color: ${lightBlueColor};
     cursor: pointer;
   }
 `;
@@ -129,6 +130,7 @@ export const StyledUpvote = styled.div`
   color: #37474f;
   display: inline-block;
   text-align: center;
+
   * {
     font-size: large;
   }

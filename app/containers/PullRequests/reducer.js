@@ -1,12 +1,17 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
+import remove from 'lodash/remove';
 
 import {
+  CLEAR_ALERTS,
   CLEAR_ERROR,
   CLEAR_FORM,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
   CREATE_PULL_REQUEST,
+  DELETE_PULL_REQUEST_FAILURE,
+  DELETE_PULL_REQUEST_SUCCESS,
+  DELETE_PULL_REQUEST,
   FETCH_USER_PULL_REQUESTS_FAILURE,
   FETCH_USER_PULL_REQUESTS_SUCCESS,
   FETCH_USER_PULL_REQUESTS,
@@ -19,6 +24,7 @@ import {
 } from './constants';
 
 export const initialState = {
+  alerts: { error: false, success: false },
   createSuccess: false,
   error: null,
   importData: {
@@ -43,6 +49,10 @@ export const initialState = {
 // eslint-disable-next-line consistent-return
 const pullRequestReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case CLEAR_ALERTS: {
+      draft.alerts = initialState.alerts;
+      break;
+    }
     case CLEAR_ERROR: {
       draft.error = initialState.error;
       break;
@@ -63,6 +73,23 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
       break;
     }
     case CREATE_PULL_REQUEST: {
+      draft.loading = true;
+      break;
+    }
+    case DELETE_PULL_REQUEST_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case DELETE_PULL_REQUEST_SUCCESS: {
+      const { id, message } = payload;
+      draft.alerts.success = { message };
+      remove(draft.pullRequests, ({ pullRequestId }) => pullRequestId === id);
+      draft.loading = false;
+      break;
+    }
+    case DELETE_PULL_REQUEST: {
       draft.loading = true;
       break;
     }

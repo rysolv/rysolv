@@ -1,7 +1,8 @@
 import {
   CLOSE_MODAL_STATE,
-  FETCH_WATCH_LIST_FAILURE,
-  FETCH_WATCH_LIST_SUCCESS,
+  FETCH_PULL_REQUEST_LIST_RESPONSE,
+  FETCH_PULL_REQUEST_LIST,
+  FETCH_WATCH_LIST_RESPONSE,
   FETCH_WATCH_LIST,
   OPEN_MODAL_STATE,
   UPDATE_PAYMENT_MODAL,
@@ -13,15 +14,22 @@ export function closeModalState() {
   };
 }
 
-export function fetchWatchListFailure() {
+export function fetchPullRequestListResponse() {
   return {
-    type: FETCH_WATCH_LIST_FAILURE,
+    type: FETCH_PULL_REQUEST_LIST_RESPONSE,
   };
 }
 
-export function fetchWatchListSuccess() {
+export function fetchPullRequestList(payload) {
   return {
-    type: FETCH_WATCH_LIST_SUCCESS,
+    payload,
+    type: FETCH_PULL_REQUEST_LIST,
+  };
+}
+
+export function fetchWatchListResponse() {
+  return {
+    type: FETCH_WATCH_LIST_RESPONSE,
   };
 }
 

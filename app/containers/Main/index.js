@@ -20,6 +20,7 @@ import { signIn, signOut } from 'containers/Auth/actions';
 import {
   clearAlerts,
   closeIssue,
+  deletePullRequest,
   submitAccountPayment,
 } from 'containers/Issues/actions';
 import { makeSelectIssues } from 'containers/Issues/selectors';
@@ -44,6 +45,7 @@ export const Main = ({
   dispatchCloseModal,
   error,
   handleClearAlerts,
+  handleDelete,
   handleNav,
   handleSignin,
   handleSignout,
@@ -59,6 +61,10 @@ export const Main = ({
   const handleCloseIssue = ({ issueId, shouldClose }) => {
     dispatchCloseModal();
     dispatchCloseIssue({ issueId, shouldClose });
+  };
+  const handleDeletePullRequest = ({ pullRequestId, userId }) => {
+    dispatchCloseModal();
+    handleDelete({ pullRequestId, userId });
   };
   const handleRedirect = route => {
     dispatchCloseModal();
@@ -94,7 +100,6 @@ export const Main = ({
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         handleRedirect,
-        modalState: 'issueAttemptList',
         route: '/users/detail',
         tableData,
         title: 'Attempt List',
@@ -107,11 +112,24 @@ export const Main = ({
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         handleRedirect,
-        modalState: 'issueWatchList',
         route: '/users/detail',
         tableData,
         title: 'Watch List',
         type: 'issueWatchList',
+      },
+    },
+    pullRequestList: {
+      Component: WatchList,
+      open: isModalOpen,
+      propsToPassDown: {
+        handleClose: dispatchCloseModal,
+        handleDeletePullRequest,
+        handleRedirect,
+        isSignedIn,
+        route: '/users/detail',
+        tableData,
+        title: 'Pull Requests',
+        type: 'pullRequestList',
       },
     },
     signIn: {
@@ -154,6 +172,7 @@ Main.propTypes = {
   dispatchCloseModal: T.func.isRequired,
   error: T.object,
   handleClearAlerts: T.func,
+  handleDelete: T.func,
   handleNav: T.func,
   handleSignin: T.func,
   handleSignout: T.func,
@@ -194,7 +213,7 @@ const mapDispatchToProps = dispatch => ({
    * Auth
    */
   handleSignin: payload => dispatch(signIn(payload)),
-  handleSignout: payload => dispatch(signOut(payload)),
+  handleSignout: () => dispatch(signOut()),
   /**
    * Issues
    */
@@ -207,6 +226,10 @@ const mapDispatchToProps = dispatch => ({
    */
   dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
   dispatchCloseModal: () => dispatch(closeModalState()),
+  /*
+   * Reducer : PullRequests
+   */
+  handleDelete: payload => dispatch(deletePullRequest(payload)),
   /*
    * Reducer : Router
    */

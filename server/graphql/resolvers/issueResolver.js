@@ -369,16 +369,34 @@ module.exports = {
     return result;
   },
   upvoteIssue: async args => {
-    const { id, upvote } = args;
+    const { issueId, upvote, userId } = args;
     try {
       if (upvote) {
-        const result = await upvoteIssue(id);
-        return result;
+        const { issueRep, userRep } = await upvoteIssue({
+          issueId,
+          userId,
+        });
+        const result = { issueRep, userRep };
+        return {
+          __typename: 'Upvote',
+          ...result,
+        };
       }
-      const result = await downvoteIssue(id);
-      return result;
-    } catch (error) {
-      throw error;
+      const { issueRep, userRep } = await downvoteIssue({
+        issueId,
+        userId,
+      });
+
+      const result = { issueRep, userRep };
+      return {
+        __typename: 'Upvote',
+        ...result,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
 };

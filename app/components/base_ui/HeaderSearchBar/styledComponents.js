@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { textColor } from 'defaultStyleHelper';
+import { lightBlueColor, textColor } from 'defaultStyleHelper';
 
 import { BaseInputWithAdornment } from '../Inputs';
 
@@ -37,13 +37,13 @@ export const RedirectIcon = styled.span`
 `;
 
 export const SearchItemContainer = styled.div`
+  border-bottom: 0.1rem solid #d5d5d5;
   display: flex;
   height: 4rem;
   padding: 1rem;
-  border-bottom: 0.1rem solid #d5d5d5;
 
   &:hover {
-    background-color: #1e88e5;
+    background-color: ${lightBlueColor};
     color: white;
     cursor: pointer;
   }

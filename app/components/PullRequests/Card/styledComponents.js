@@ -1,16 +1,41 @@
 import styled from 'styled-components';
 
-import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import {
+  buttonRed,
+  defaultFontSize,
+  lightGreyColor,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptopS, mobile, mobileXS } = mediaQueriesByDevice;
+
+export const ButtomBarContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-right: -43%;
+`;
 
 export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
-  width: 100%;
+  width: 70%;
+`;
+
+export const DeleteButton = styled.div`
+  color: ${buttonRed};
+  display: flex;
+  font-size: 1.4rem;
+  font-weight: 500;
+  white-space: nowrap;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const Icon = styled.span`
@@ -94,6 +119,7 @@ export const StyledLabel = styled.span`
 export const TestIconContainer = styled.div`
   align-items: center;
   display: flex;
+  white-space: nowrap;
 `;
 
 export const TestIconWrapper = styled.div`
@@ -131,7 +157,7 @@ export const UrlContainer = styled.div`
 `;
 
 export const UrlWrapper = styled.a`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
   display: flex;
   font-size: 1.4rem;
   font-weight: 500;

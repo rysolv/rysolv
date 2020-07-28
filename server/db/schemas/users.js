@@ -20,7 +20,7 @@ users(
   organizations UUID [] DEFAULT '{}',
   personal_link VARCHAR(128),
   preferred_languages VARCHAR(128) [] DEFAULT '{}',
-  profile_pic VARCHAR(255),
+  profile_pic VARCHAR(256),
   pull_requests UUID [] DEFAULT '{}',
   rejected_pull_requests SMALLINT DEFAULT 0,
   rep SMALLINT NOT NULL DEFAULT 25,

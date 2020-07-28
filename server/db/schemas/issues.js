@@ -9,7 +9,7 @@ issues(
   id UUID PRIMARY KEY,
   language VARCHAR(128) [],
   modified_date TIMESTAMP,
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(256) NOT NULL,
   open BOOLEAN DEFAULT true,
   organization_id UUID REFERENCES organizations(id),
   pull_requests UUID [] DEFAULT '{}',

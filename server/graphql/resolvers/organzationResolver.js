@@ -202,7 +202,7 @@ module.exports = {
         logo: organizationInput.logo,
         modified_date: new Date(), // update modified date
         name: organizationInput.organizationName,
-        organizationUrl: organizationInput.organizationUrl,
+        organization_url: organizationInput.organizationUrl,
         owner_id: organizationInput.ownerId,
         preferred_languages: organizationInput.organizationPreferredLanguages,
         repo_url: organizationInput.organizationRepo,

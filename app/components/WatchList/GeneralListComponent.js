@@ -4,17 +4,17 @@ import T from 'prop-types';
 import { ProfileImage } from 'components/base_ui';
 
 import {
+  ListContainer,
+  ListDetail,
+  ListItemWrapper,
   Username,
-  WatchList,
-  WatchListDetail,
-  WatchListItem,
 } from './styledComponents';
 
-const ListComponent = ({ handleRedirect, route, tableData }) => (
-  <WatchList>
+const GeneralListComponent = ({ handleRedirect, route, tableData }) => (
+  <ListContainer>
     {tableData.map(({ id, username, profilePic }) => (
-      <WatchListItem key={`list-item-${id}`}>
-        <WatchListDetail>
+      <ListItemWrapper key={`list-item-${id}`}>
+        <ListDetail>
           <ProfileImage
             alt={username}
             detailRoute={`${route}/${id}`}
@@ -28,16 +28,16 @@ const ListComponent = ({ handleRedirect, route, tableData }) => (
           >
             {username}
           </Username>
-        </WatchListDetail>
-      </WatchListItem>
+        </ListDetail>
+      </ListItemWrapper>
     ))}
-  </WatchList>
+  </ListContainer>
 );
 
-ListComponent.propTypes = {
+GeneralListComponent.propTypes = {
   handleRedirect: T.func.isRequired,
   route: T.string.isRequired,
   tableData: T.array.isRequired,
 };
 
-export default ListComponent;
+export default GeneralListComponent;
