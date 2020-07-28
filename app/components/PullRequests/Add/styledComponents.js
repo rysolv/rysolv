@@ -8,6 +8,8 @@ import {
   defaultFontSize,
   dividerBorder,
   hoverLinkColor,
+  lightBlueColor,
+  lightGreyColor,
   successGreen,
   textColor,
 } from 'defaultStyleHelper';
@@ -60,7 +62,7 @@ export const PullRequestInfo = styled.div`
 `;
 
 export const PullNumberWrapper = styled.span`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
 `;
 
 export const StatusWrapper = styled.span`
@@ -82,15 +84,15 @@ export const StyledHeader = styled.h1`
 `;
 
 export const StyledItem = styled.div`
+  color: ${textColor};
   display: flex;
   font-size: 1.2rem;
   margin: 1rem 0;
-  color: ${textColor};
 `;
 
 export const StyledLabel = styled.div`
   align-self: center;
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
   font-size: 1.2rem;
   font-weight: 400;
   min-width: 10rem;
@@ -112,8 +114,8 @@ export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
 
 export const StyledSecondayButton = styled(SecondaryButton)`
   background-color: white;
-  border: 0.1rem solid #1e88e5;
-  color: #1e88e5;
+  border: 0.1rem solid ${lightBlueColor};
+  color: ${lightBlueColor};
 
   &:hover {
     background-color: white;
@@ -121,7 +123,7 @@ export const StyledSecondayButton = styled(SecondaryButton)`
 `;
 
 export const StyledSubHeader = styled.div`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
   font-size: 1.2rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -135,9 +137,9 @@ export const StyledSuccessContent = styled.div`
 `;
 
 export const StyledTextareaAutosize = styled(TextareaAutosize)`
+  color: ${textColor};
   height: auto !important;
   width: 100%;
-  color: ${textColor};
 `;
 
 export const TextareaWrapper = styled.div`

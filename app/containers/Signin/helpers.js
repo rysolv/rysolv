@@ -1,16 +1,21 @@
 import { validate } from 'utils/validate';
 
 const validationPropsByField = {
-  email: { type: 'emailInput' },
-  password: { type: 'passwordInput' },
-  verifyPassword: { type: 'verifyInput' },
+  signIn: {
+    email: { type: 'emailInput' },
+  },
+  signUp: {
+    email: { type: 'emailInput' },
+    password: { type: 'passwordInput' },
+    verifyPassword: { type: 'verifyInput' },
+  },
 };
 
-export const validateFields = ({ values, verifyField }) =>
+export const validateFields = ({ form, values, verifyField }) =>
   Object.keys(values).reduce(
     (acc, field) => {
       const validatedValue =
-        validateOneField({ field, values, verifyField }) || '';
+        validateOneField({ field, form, values, verifyField }) || '';
       if (validatedValue) {
         acc.isValidated = false;
       }
@@ -20,12 +25,12 @@ export const validateFields = ({ values, verifyField }) =>
     { isValidated: true, validationErrors: {} },
   );
 
-export const validateOneField = ({ field, values, verifyField }) => {
+export const validateOneField = ({ field, form, values, verifyField }) => {
   const { value } = values[field];
   return validate({
     required: true,
     value,
-    ...validationPropsByField[field],
+    ...validationPropsByField[form][field],
     ...verifyField,
   });
 };

@@ -143,7 +143,7 @@ const UserDropDownMenu = ({
         </MenuItemLabel>
       </StyledMenuItem>
 
-      <StyledMenuItem onClick={() => handleSignout({ userId: id })}>
+      <StyledMenuItem onClick={handleSignout}>
         <MenuItemLabel>
           <IconWrapper>{ExitIcon}</IconWrapper>
           Sign out

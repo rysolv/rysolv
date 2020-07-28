@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { buttonRed, defaultFontSize, textColor } from 'defaultStyleHelper';
+import {
+  buttonRed,
+  defaultFontSize,
+  lightGreyColor,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptopS, mobile, mobileXS } = mediaQueriesByDevice;
@@ -152,7 +157,7 @@ export const UrlContainer = styled.div`
 `;
 
 export const UrlWrapper = styled.a`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
   display: flex;
   font-size: 1.4rem;
   font-weight: 500;
