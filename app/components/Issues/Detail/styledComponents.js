@@ -22,8 +22,6 @@ const { laptop, mobile, mobileS, tablet } = mediaQueriesByDevice;
 
 export const CommentWrapper = styled.div`
   ${styledScrollbar}
-  max-height: 150rem;
-  overflow-y: auto;
   padding: 0 1rem 0 0;
 `;
 
