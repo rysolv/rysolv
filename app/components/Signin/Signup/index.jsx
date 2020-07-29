@@ -41,6 +41,7 @@ const Signup = ({
           />
         )}
         <MainTextInput
+          autoComplete="nickname"
           error={!!username.error}
           helperText={username.error}
           label="Username"
@@ -72,6 +73,7 @@ const Signup = ({
         />
         <HorizontalWrapper>
           <MainTextInput
+            autoComplete="given-name"
             error={!!firstName.error}
             helperText={firstName.error}
             label="First name"
@@ -86,6 +88,7 @@ const Signup = ({
             value={firstName.value}
           />
           <MainTextInput
+            autoComplete="family-name"
             error={!!lastName.error}
             helperText={lastName.error}
             label="Last name"
