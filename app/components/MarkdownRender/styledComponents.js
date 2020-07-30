@@ -162,6 +162,7 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
 
   &:hover {
     background-color: white;
+    box-shadow: none;
   }
 `;
 

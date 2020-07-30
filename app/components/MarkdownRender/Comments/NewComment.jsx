@@ -46,14 +46,14 @@ const NewComment = ({ activeUser, handleComment, handleNav, issueId }) => {
       </ProfileImageContainer>
       <NewCommentContainer onKeyDown={e => handleKeydown(e)}>
         <Markdown body={body} comment handleInput={setBody} preview={preview} />
-        {body.length !== 0 && (
+        {body.length > 0 && (
           <StyledSecondaryButton
             label={preview ? 'Edit' : 'Preview'}
-            onClick={() => handlePreview()}
+            onClick={handlePreview}
           />
         )}
         <StyledPrimaryButton
-          disabled={body.length < 1}
+          disabled={body.length === 0}
           label="Comment"
           onClick={handleSubmit}
         />
