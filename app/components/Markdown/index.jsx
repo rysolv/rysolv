@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import SimpleMDE from 'simplemde';
 import T from 'prop-types';
-
+import SimpleMDE from 'simplemde';
 import 'simplemde/dist/simplemde.min.css';
 
-import { MarkdownContainer, EditContainer } from './styledComponents';
+import { EditContainer, MarkdownContainer } from './styledComponents';
 
 const Markdown = ({
   body,
