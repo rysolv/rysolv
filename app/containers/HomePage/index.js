@@ -1,6 +1,5 @@
 import React from 'react';
 import T from 'prop-types';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
@@ -30,7 +29,10 @@ const HomePage = ({ handleNav, isSignedIn }) => {
   );
 };
 
-HomePage.propTypes = { handleNav: T.func.isRequired, isSignedIn: T.bool };
+HomePage.propTypes = {
+  handleNav: T.func.isRequired,
+  isSignedIn: T.bool.isRequired,
+};
 
 const mapStateToProps = createStructuredSelector({
   /**
@@ -46,9 +48,7 @@ const mapDispatchToProps = dispatch => ({
   handleNav: route => dispatch(push(route)),
 });
 
-const withConnect = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-);
-
-export default compose(withConnect)(HomePage);
+)(HomePage);
