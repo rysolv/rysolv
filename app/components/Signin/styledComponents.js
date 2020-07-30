@@ -34,7 +34,7 @@ export const HorizontalWrapper = styled.div`
   }
 `;
 
-export const InputFormWrapper = styled.div`
+export const InputFormWrapper = styled.form`
   align-self: center;
   background-color: white;
   border-radius: 0.2rem;

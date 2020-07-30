@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
-import { PrimaryButton } from 'components/base_ui';
+import { PrimaryButton, SecondaryButton } from 'components/base_ui';
 import {
   borderColor,
   codeGrey,
   commentHeaderColor,
   defaultFontSize,
+  lightBlueColor,
   styledScrollbar,
   subheaderFontSize,
   textColor,
@@ -16,6 +17,7 @@ export const Body = styled.div`
   font-size: ${defaultFontSize};
   max-height: 150rem;
   min-height: 4rem;
+  overflow-x: hidden;
   overflow-y: auto;
   padding: 0 1rem;
   width: 100%;
@@ -150,6 +152,18 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   display: inline-block;
   margin: 1rem 0 0 0;
   width: auto;
+`;
+
+export const StyledSecondaryButton = styled(SecondaryButton)`
+  background-color: white;
+  color: ${lightBlueColor};
+  margin: 1rem 0.5rem 0 0;
+  width: 9rem;
+
+  &:hover {
+    background-color: white;
+    box-shadow: none;
+  }
 `;
 
 export const UsernameLink = styled.a`
