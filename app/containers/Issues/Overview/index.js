@@ -56,7 +56,7 @@ const IssuesOverview = ({
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Issues Overview';
+    document.title = 'Issues';
     if (searchValue) {
       handleSearchIssues({ value: searchValue });
     } else {
