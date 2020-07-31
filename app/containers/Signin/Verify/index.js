@@ -4,8 +4,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import Signup from 'components/Signin/Signup';
-import { clearAlerts, signUp } from 'containers/Auth/actions';
+import VerifyEmail from 'components/Signin/VerifyEmail';
+import { clearAlerts, verifyEmail } from 'containers/Auth/actions';
 import {
   makeSelectAuth,
   makeSelectAuthLoading,
@@ -17,50 +17,52 @@ import { validateFields, validateOneField } from '../helpers';
 import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
 import reducer from '../reducer';
 
-const SignUpContainer = ({
+const VerifyContainer = ({
+  activeUser,
   alerts: { error },
-  data,
   dispatchInputError,
-  dispatchSignUp,
+  dispatchVerifyEmail,
   handleClearAuthAlerts,
   handleInputChange,
-  signUpDisabled,
-  signUpLoading,
+  signInData: { password: signInPassword },
+  signUpData: { password: signUpPassword },
+  verify,
+  verifyDisabled,
+  verifyEmailLoading,
 }) => {
-  const form = 'signUp';
-
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Create Account';
+    document.title = 'Verify E-mail';
     return () => {
       handleClearAuthAlerts();
     };
   }, []);
 
-  const { email, firstName, lastName, password, username } = data;
+  const { email: userEmail, id: userId } = activeUser;
+  const form = 'verify';
+  const { verificationCode } = verify;
 
-  const handleSignUp = () => {
+  const password = signInPassword.value || signUpPassword.value;
+  const handleVerifyEmail = () => {
     const { isValidated, validationErrors } = validateFields({
       form,
-      values: data,
-      verifyField: { field: 'password', verifyValue: password.value },
+      values: verify,
     });
     if (isValidated) {
-      dispatchSignUp({
-        email: email.value,
-        firstName: firstName.value,
-        lastName: lastName.value,
-        password: password.value,
-        username: username.value,
+      dispatchVerifyEmail({
+        password,
+        userEmail,
+        userId,
+        verificationCode,
       });
     } else {
       dispatchInputError({ errors: validationErrors, form });
     }
   };
 
-  const handleValidateInput = ({ field, verifyField }) => {
+  const handleValidateInput = ({ field }) => {
     const validationError =
-      validateOneField({ field, form, values: data, verifyField }) || '';
+      validateOneField({ field, form, values: verify }) || '';
     dispatchInputError({
       errors: {
         [field]: validationError,
@@ -69,42 +71,49 @@ const SignUpContainer = ({
     });
   };
   return (
-    <Signup
-      data={data}
+    <VerifyEmail
+      activeUser={activeUser}
       error={error}
       handleClearAuthAlerts={handleClearAuthAlerts}
       handleInputChange={handleInputChange}
-      handleSignUp={handleSignUp}
       handleValidateInput={handleValidateInput}
-      loading={signUpLoading}
-      signUpDisabled={signUpDisabled}
+      handleVerifyEmail={handleVerifyEmail}
+      loading={verifyEmailLoading}
+      verify={verify}
+      verifyDisabled={verifyDisabled}
     />
   );
 };
 
-SignUpContainer.propTypes = {
+VerifyContainer.propTypes = {
+  activeUser: T.object,
   alerts: T.object,
-  data: T.object,
   dispatchInputError: T.func,
-  dispatchSignUp: T.func,
+  dispatchVerifyEmail: T.func,
   handleClearAuthAlerts: T.func,
   handleInputChange: T.func,
-  signUpDisabled: T.bool,
-  signUpLoading: T.bool,
+  signInData: T.object,
+  signUpData: T.object,
+  verify: T.object,
+  verifyDisabled: T.bool,
+  verifyEmailLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : Auth
    */
+  activeUser: makeSelectAuth('activeUser'),
   alerts: makeSelectAuth('alerts'),
-  signUpLoading: makeSelectAuthLoading('signUp'),
+  loading: makeSelectAuth('loading'),
   verifyEmailLoading: makeSelectAuthLoading('verifyEmail'),
   /*
    * Reducer : Signin
    */
-  data: makeSelectSignIn('signUp'),
-  signUpDisabled: makeSelectDisabled('signUp'),
+  signInData: makeSelectSignIn('signIn'),
+  signUpData: makeSelectSignIn('signUp'),
+  verify: makeSelectSignIn('verify'),
+  verifyDisabled: makeSelectDisabled('verify'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -112,7 +121,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Auth
      */
-    dispatchSignUp: payload => dispatch(signUp(payload)),
+    dispatchVerifyEmail: payload => dispatch(verifyEmail(payload)),
     handleClearAuthAlerts: () => dispatch(clearAlerts()),
     /*
      * Reducer : Signin
@@ -132,4 +141,4 @@ const withReducer = injectReducer({ key: 'signin', reducer });
 export default compose(
   withReducer,
   withConnect,
-)(SignUpContainer);
+)(VerifyContainer);

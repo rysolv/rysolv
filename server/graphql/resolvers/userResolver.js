@@ -9,6 +9,7 @@ const {
   getUsers,
   getWatchList,
   searchUsers,
+  getOneUserSignUp,
   transformUser,
   updateUserArray,
 } = require('../../db');
@@ -171,6 +172,15 @@ module.exports = {
       );
       result.watching = watchingListResult;
 
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  },
+  oneUserSignUp: async args => {
+    const { email } = args;
+    try {
+      const [result] = await getOneUserSignUp(email);
       return result;
     } catch (err) {
       throw err;

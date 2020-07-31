@@ -114,6 +114,13 @@ const getOneUser = async userId => {
   throw new Error(`User does not exist`);
 };
 
+// GET single user in the process of signing up
+const getOneUserSignUp = async email => {
+  const queryText = `SELECT id, email, username FROM users WHERE is_deleted = false AND email = '${email}'`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
 // GET all users
 const getUsers = async () => {
   const queryText = `SELECT ${userReturnValues} FROM users WHERE is_deleted = false AND email_verified = true`;
@@ -205,6 +212,7 @@ module.exports = {
   checkDuplicateUsername,
   createUser,
   getOneUser,
+  getOneUserSignUp,
   getUsers,
   getWatchList,
   searchUsers,

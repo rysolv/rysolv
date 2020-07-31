@@ -331,6 +331,7 @@ module.exports = buildSchema(`
     oneIssue(id: ID!): IssueResult
     oneOrganization(id: ID!): OrganizationResult
     oneUser(id: ID!): User!
+    oneUserSignUp(email: String!): User!
     onePullRequest(id: ID!): PullRequestResult
 
     searchIssues(value: String!): [Issue!]!

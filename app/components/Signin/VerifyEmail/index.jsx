@@ -18,20 +18,21 @@ import {
 
 const VerifyEmail = ({
   activeUser: { email },
-  error: { verifyEmail: verifyEmailError },
+  error,
   handleClearAuthAlerts,
   handleInputChange,
+  handleValidateInput,
   handleVerifyEmail,
+  loading,
   verify: { verificationCode },
   verifyDisabled,
-  verifyEmailLoading,
 }) => (
   <SigninWrapper>
     <InputFormWrapper>
       <Title>Confirm your email</Title>
-      {verifyEmailError.error && (
+      {error && (
         <StyledErrorSuccessBanner
-          error={verifyEmailError}
+          error={error}
           onClose={handleClearAuthAlerts}
         />
       )}
@@ -44,6 +45,7 @@ const VerifyEmail = ({
           error={!!verificationCode.error}
           helperText={verificationCode.error}
           label="Verification code"
+          onBlur={() => handleValidateInput({ field: 'verificationCode' })}
           onChange={e =>
             handleInputChange({
               field: 'verificationCode',
@@ -55,7 +57,7 @@ const VerifyEmail = ({
         />
       </VerificationWrapper>
       <StyledPrimaryAsyncButton
-        loading={verifyEmailLoading}
+        loading={loading}
         disabled={verifyDisabled}
         label="Verify email"
         onClick={() => handleVerifyEmail()}
@@ -69,13 +71,14 @@ const VerifyEmail = ({
 
 VerifyEmail.propTypes = {
   activeUser: T.object,
-  error: T.object,
+  error: T.oneOfType([T.bool, T.object]),
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
+  handleValidateInput: T.func.isRequired,
   handleVerifyEmail: T.func.isRequired,
+  loading: T.bool,
   verify: T.object.isRequired,
   verifyDisabled: T.bool,
-  verifyEmailLoading: T.bool,
 };
 
 export default VerifyEmail;

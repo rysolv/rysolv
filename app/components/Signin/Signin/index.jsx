@@ -20,8 +20,8 @@ const Signin = ({
   handleInputChange,
   handleSignIn,
   handleValidateInput,
+  loading,
   signInDisabled,
-  signInLoading,
 }) => {
   const handleKeypress = e => {
     if (e.keyCode === 13 && !signInDisabled) {
@@ -33,7 +33,7 @@ const Signin = ({
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
         <Title>Sign in</Title>
-        {error.error && (
+        {error && (
           <StyledErrorSuccessBanner
             error={error}
             onClose={handleClearAuthAlerts}
@@ -73,7 +73,7 @@ const Signin = ({
         <StyledPrimaryAsyncButton
           disabled={signInDisabled}
           label="Sign in"
-          loading={signInLoading}
+          loading={loading}
           onClick={() => handleSignIn()}
         />
       </InputFormWrapper>
@@ -86,13 +86,13 @@ const Signin = ({
 
 Signin.propTypes = {
   data: T.object.isRequired,
-  error: T.object,
+  error: T.oneOfType([T.bool, T.object]),
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignIn: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
+  loading: T.bool,
   signInDisabled: T.bool,
-  signInLoading: T.bool,
 };
 
 export default Signin;
