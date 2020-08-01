@@ -74,7 +74,7 @@ const Signin = ({
           disabled={signInDisabled}
           label="Sign in"
           loading={loading}
-          onClick={() => handleSignIn()}
+          onClick={handleSignIn}
         />
       </InputFormWrapper>
       <SubText>
