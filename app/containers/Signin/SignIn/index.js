@@ -25,9 +25,8 @@ const SigninContainer = ({
   dispatchSignIn,
   handleClearAuthAlerts,
   handleInputChange,
-  isSignedIn,
+  loading,
   signInDisabled,
-  signInLoading,
 }) => {
   const form = 'signIn';
 
@@ -72,8 +71,7 @@ const SigninContainer = ({
       handleInputChange={handleInputChange}
       handleSignIn={handleSignIn}
       handleValidateInput={handleValidateInput}
-      isSignedIn={isSignedIn}
-      loading={signInLoading}
+      loading={loading}
       signInDisabled={signInDisabled}
     />
   );
@@ -86,9 +84,8 @@ SigninContainer.propTypes = {
   dispatchSignIn: T.func,
   handleClearAuthAlerts: T.func,
   handleInputChange: T.func,
-  isSignedIn: T.bool,
+  loading: T.bool,
   signInDisabled: T.bool,
-  signInLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -96,8 +93,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Auth
    */
   alerts: makeSelectAuth('alerts'),
-  isSignedIn: makeSelectAuth('isSignedIn'),
-  signInLoading: makeSelectAuthLoading('signIn'),
+  loading: makeSelectAuthLoading('auth'),
   /*
    * Reducer : Signin
    */

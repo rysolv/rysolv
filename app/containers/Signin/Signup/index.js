@@ -24,8 +24,8 @@ const SignUpContainer = ({
   dispatchSignUp,
   handleClearAuthAlerts,
   handleInputChange,
+  loading,
   signUpDisabled,
-  signUpLoading,
 }) => {
   const form = 'signUp';
 
@@ -76,7 +76,7 @@ const SignUpContainer = ({
       handleInputChange={handleInputChange}
       handleSignUp={handleSignUp}
       handleValidateInput={handleValidateInput}
-      loading={signUpLoading}
+      loading={loading}
       signUpDisabled={signUpDisabled}
     />
   );
@@ -89,8 +89,8 @@ SignUpContainer.propTypes = {
   dispatchSignUp: T.func,
   handleClearAuthAlerts: T.func,
   handleInputChange: T.func,
+  loading: T.bool,
   signUpDisabled: T.bool,
-  signUpLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -98,8 +98,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Auth
    */
   alerts: makeSelectAuth('alerts'),
-  signUpLoading: makeSelectAuthLoading('signUp'),
-  verifyEmailLoading: makeSelectAuthLoading('verifyEmail'),
+  loading: makeSelectAuthLoading('auth'),
   /*
    * Reducer : Signin
    */

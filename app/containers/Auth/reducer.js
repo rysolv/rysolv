@@ -36,14 +36,8 @@ export const initialState = {
   alerts: { error: false, success: false },
   isSignedIn: false,
   loading: {
+    auth: false,
     authenticateUser: true,
-    fetchActiveUser: false,
-    resendSignUp: false,
-    searchOrganizations: false,
-    signIn: false,
-    signOut: false,
-    signUp: false,
-    verifyEmail: false,
   },
   verifyUserId: '',
 };
@@ -56,21 +50,21 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ACTIVE_USER: {
-      draft.loading.fetchActiveUser = true;
+      draft.loading.auth = true;
       break;
     }
     case FETCH_ACTIVE_USER_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
       draft.isSignedIn = false;
-      draft.loading.fetchActiveUser = false;
+      draft.loading.auth = false;
       break;
     }
     case FETCH_ACTIVE_USER_SUCCESS: {
       const { oneUser } = payload;
       draft.activeUser = oneUser;
       draft.isSignedIn = true;
-      draft.loading.fetchActiveUser = false;
+      draft.loading.auth = false;
       break;
     }
     case FETCH_USER_SESSION: {
@@ -90,48 +84,46 @@ const authReducer = produce((draft, { payload, type }) => {
     case RESEND_SIGN_UP: {
       draft.alerts = initialState.alerts;
       draft.isSignedIn = false;
-      draft.loading.resendSignUp = true;
-      draft.loading.signIn = false;
+      draft.loading.auth = true;
       break;
     }
     case SEARCH_ORGANIZATIONS: {
-      draft.loading.searchOrganizations = true;
+      draft.loading.auth = true;
       break;
     }
     case SEARCH_ORGANIZATIONS_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.searchOrganizations = false;
+      draft.loading.auth = false;
       break;
     }
     case SEARCH_ORGANIZATIONS_SUCCESS: {
       const { organizations } = payload;
       draft.activeUser.organizations = organizations;
-      draft.loading.searchOrganizations = false;
+      draft.loading.auth = false;
       break;
     }
     case SIGN_IN: {
       draft.isSignedIn = false;
-      draft.loading.signIn = true;
+      draft.loading.auth = true;
       break;
     }
     case SIGN_IN_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
       draft.isSignedIn = false;
-      draft.loading.signIn = false;
-      draft.loading.resendSignUp = false;
+      draft.loading.auth = false;
       break;
     }
     case SIGN_IN_SUCCESS: {
       const { oneUser } = payload;
       draft.activeUser = oneUser;
       draft.isSignedIn = true;
-      draft.loading.signIn = false;
+      draft.loading.auth = false;
       break;
     }
     case SIGN_OUT: {
-      draft.loading.signOut = true;
+      draft.loading.auth = true;
       draft.loading.authenticateUser = true;
       break;
     }
@@ -148,21 +140,20 @@ const authReducer = produce((draft, { payload, type }) => {
     case SIGN_UP: {
       draft.alerts = initialState.alerts;
       draft.isSignedIn = false;
-      draft.loading.signUp = true;
+      draft.loading.auth = true;
       break;
     }
     case SIGN_UP_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
       draft.isSignedIn = false;
-      draft.loading.signUp = false;
+      draft.loading.auth = false;
       break;
     }
     case SIGN_UP_SUCCESS: {
       const { createUser } = payload;
       draft.activeUser = createUser;
-      draft.loading.signUp = false;
-      draft.loading.resendSignUp = false;
+      draft.loading.auth = false;
       break;
     }
     case UPDATE_ACTIVE_USER: {
@@ -206,18 +197,18 @@ const authReducer = produce((draft, { payload, type }) => {
     }
     case VERIFY_EMAIL: {
       draft.alerts = initialState.alerts;
-      draft.loading.verifyEmail = true;
+      draft.loading.auth = true;
       break;
     }
     case VERIFY_EMAIL_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
       draft.isSignedIn = false;
-      draft.loading.verifyEmail = false;
+      draft.loading.auth = false;
       break;
     }
     case VERIFY_EMAIL_SUCCESS: {
-      draft.loading.verifyEmail = false;
+      draft.loading.auth = false;
       break;
     }
     default: {

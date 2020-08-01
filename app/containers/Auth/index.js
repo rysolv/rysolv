@@ -21,13 +21,13 @@ export default function withAuth(config, Component) {
     handleSignIn,
     handleSignUp,
     isSignedIn,
-    signOutLoading,
+    loading,
     ...restProps
   }) => {
     const { isPrivate } = config;
 
     useEffect(() => {
-      if (!signOutLoading) dispatchFetchUserSession();
+      if (!loading) dispatchFetchUserSession();
     }, []);
 
     if (!authenticateLoading && isPrivate && !isSignedIn)
@@ -49,7 +49,7 @@ export default function withAuth(config, Component) {
     handleSignIn: T.func,
     handleSignUp: T.func,
     isSignedIn: T.bool,
-    signOutLoading: T.bool,
+    loading: T.bool,
   };
 
   const mapStateToProps = createStructuredSelector({
@@ -58,7 +58,7 @@ export default function withAuth(config, Component) {
      */
     authenticateLoading: makeSelectAuthLoading('authenticateUser'),
     isSignedIn: makeSelectAuth('isSignedIn'),
-    signOutLoading: makeSelectAuthLoading('signOut'),
+    loading: makeSelectAuthLoading('auth'),
   });
 
   const mapDispatchToProps = dispatch => ({

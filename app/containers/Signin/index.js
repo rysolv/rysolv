@@ -24,11 +24,11 @@ import { signInDictionary, signUpDictionary } from './stepDictionary';
 // eslint-disable-next-line react/prefer-stateless-function
 const Signin = ({
   activeUser,
-  activeUserLoading,
   dispatchClearForm,
   dispatchSignout,
   handleNav,
   isSignedIn,
+  loading,
   match,
   step,
 }) => {
@@ -49,7 +49,7 @@ const Signin = ({
           asyncData={activeUser}
           component={RedirectComponent}
           isRequiredData
-          loading={activeUserLoading}
+          loading={loading}
           propsToPassDown={{
             dispatchSignout,
             handleNav,
@@ -57,7 +57,7 @@ const Signin = ({
         />,
       );
     }
-  }, [activeUserLoading, isSignedIn]);
+  }, [isSignedIn, loading]);
   const view = match.path.substr(1);
   const dictionaryToUse =
     view === 'signin' ? signInDictionary : signUpDictionary;
@@ -73,11 +73,11 @@ const Signin = ({
 
 Signin.propTypes = {
   activeUser: T.object.isRequired,
-  activeUserLoading: T.bool.isRequired,
   dispatchClearForm: T.func.isRequired,
   dispatchSignout: T.func.isRequired,
   handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
+  loading: T.bool.isRequired,
   match: T.object.isRequired,
   step: T.number.isRequired,
 };
@@ -87,8 +87,8 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Auth
    */
   activeUser: makeSelectAuth('activeUser'),
-  activeUserLoading: makeSelectAuthLoading('fetchActiveUser'),
   isSignedIn: makeSelectAuth('isSignedIn'),
+  loading: makeSelectAuthLoading('auth'),
   /**
    * Reducer : Signin
    */

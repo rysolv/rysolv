@@ -72,11 +72,18 @@ const userReturnValues = `
 // Check duplicate user email
 const checkDuplicateUserEmail = async email => {
   const queryText = `
-    SELECT id FROM users WHERE (email='${email}')
+    SELECT email_verified, id FROM users WHERE email='${email}'
   `;
   const { rows } = await singleQuery(queryText);
-  if (rows.length > 0) {
-    throw new Error(`User at email already exists`);
+  const [result] = rows;
+  const { email_verified } = result || {};
+  if (rows.length > 0 && email_verified) {
+    throw new Error(`E-mail already exists`);
+  }
+  if (rows.length > 0 && !email_verified) {
+    throw new Error(
+      `E-mail has not been verified. <a href="/signin" style="text-decoration: underline">Sign in</a> to verify.`,
+    );
   }
 };
 
