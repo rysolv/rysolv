@@ -28,8 +28,6 @@ const SigninContainer = ({
   loading,
   signInDisabled,
 }) => {
-  const form = 'signIn';
-
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Sign In';
@@ -37,6 +35,8 @@ const SigninContainer = ({
       handleClearAuthAlerts();
     };
   }, []);
+
+  const form = 'signIn';
 
   const handleSignIn = () => {
     const { isValidated, validationErrors } = validateFields({

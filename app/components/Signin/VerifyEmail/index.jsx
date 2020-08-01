@@ -71,12 +71,12 @@ const VerifyEmail = ({
 
 VerifyEmail.propTypes = {
   activeUser: T.object,
-  error: T.oneOfType([T.bool, T.object]),
+  error: T.oneOfType([T.bool, T.object]).isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   handleVerifyEmail: T.func.isRequired,
-  loading: T.bool,
+  loading: T.bool.isRequired,
   verify: T.object.isRequired,
   verifyDisabled: T.bool,
 };

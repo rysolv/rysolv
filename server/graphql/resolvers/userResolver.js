@@ -5,11 +5,11 @@ const {
   getOneIssue,
   getOneOrganization,
   getOneUser,
+  getOneUserSignUp,
   getOrganizationsWhere,
   getUsers,
   getWatchList,
   searchUsers,
-  getOneUserSignUp,
   transformUser,
   updateUserArray,
 } = require('../../db');

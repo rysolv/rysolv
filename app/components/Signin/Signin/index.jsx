@@ -86,12 +86,12 @@ const Signin = ({
 
 Signin.propTypes = {
   data: T.object.isRequired,
-  error: T.oneOfType([T.bool, T.object]),
+  error: T.oneOfType([T.bool, T.object]).isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignIn: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
-  loading: T.bool,
+  loading: T.bool.isRequired,
   signInDisabled: T.bool,
 };
 

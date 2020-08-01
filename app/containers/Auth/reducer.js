@@ -151,8 +151,8 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SIGN_UP_SUCCESS: {
-      const { createUser } = payload;
-      draft.activeUser = createUser;
+      const { activeUser } = payload;
+      draft.activeUser = activeUser;
       draft.loading.auth = false;
       break;
     }

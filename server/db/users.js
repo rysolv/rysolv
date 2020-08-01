@@ -72,7 +72,7 @@ const userReturnValues = `
 // Check duplicate user email
 const checkDuplicateUserEmail = async email => {
   const queryText = `
-    SELECT email_verified, id FROM users WHERE email='${email}'
+    SELECT id, email_verified FROM users WHERE email='${email}'
   `;
   const { rows } = await singleQuery(queryText);
   const [result] = rows;

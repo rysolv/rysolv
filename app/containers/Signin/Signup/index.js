@@ -27,8 +27,6 @@ const SignUpContainer = ({
   loading,
   signUpDisabled,
 }) => {
-  const form = 'signUp';
-
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Create Account';
@@ -38,6 +36,7 @@ const SignUpContainer = ({
   }, []);
 
   const { email, firstName, lastName, password, username } = data;
+  const form = 'signUp';
 
   const handleSignUp = () => {
     const { isValidated, validationErrors } = validateFields({

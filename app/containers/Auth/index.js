@@ -82,7 +82,6 @@ export default function withAuth(config, Component) {
     compose(
       withReducer,
       withSaga,
-      withRouter,
       withConnect,
     )(Auth),
   );

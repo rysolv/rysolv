@@ -129,7 +129,7 @@ export function* resendSignUpSaga({ payload }) {
 
   try {
     yield call(cognitoResendSignUp);
-    // Create User account with Cognito id
+    // Get user account that has been signed up but not email verified
     const query = `
     query {
       oneUserSignUp(email: "${username}") {
@@ -146,8 +146,8 @@ export function* resendSignUpSaga({ payload }) {
     const {
       data: { oneUserSignUp },
     } = yield call(post, '/graphql', graphql);
-    yield put(signUpSuccess({ createUser: oneUserSignUp }));
     yield put(incrementStep({ step: 2 }));
+    yield put(signUpSuccess({ activeUser: oneUserSignUp }));
   } catch (error) {
     yield put(signInFailure({ error }));
   }
@@ -160,6 +160,7 @@ export function* signInSaga({ payload }) {
     const user = await Auth.signIn(username, password);
     return user;
   };
+
   const cognitoSignOut = async () => {
     await Auth.signOut();
   };
@@ -286,9 +287,8 @@ export function* signUpSaga({ payload }) {
     const {
       data: { createUser },
     } = yield call(post, '/graphql', graphql);
-
-    yield put(signUpSuccess({ createUser }));
     yield put(incrementStep({ step: 2 }));
+    yield put(signUpSuccess({ activeUser: createUser }));
   } catch (error) {
     yield put(signUpFailure({ error }));
   }
@@ -332,8 +332,7 @@ export function* verifyEmailSaga({ payload }) {
       variables: {},
     });
     yield call(post, '/graphql', graphql);
-
-    yield put(signIn({ username: userEmail, password }));
+    yield put(signIn({ password, username: userEmail }));
   } catch (error) {
     yield put(verifyEmailFailure({ error }));
   }

@@ -32,7 +32,6 @@ const VerifyContainer = ({
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Verify E-mail';
     return () => {
       handleClearAuthAlerts();
     };
@@ -41,8 +40,8 @@ const VerifyContainer = ({
   const { email: userEmail, id: userId } = activeUser;
   const form = 'verify';
   const { verificationCode } = verify;
-
   const password = signInPassword.value || signUpPassword.value;
+
   const handleVerifyEmail = () => {
     const { isValidated, validationErrors } = validateFields({
       form,

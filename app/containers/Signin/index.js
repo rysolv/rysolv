@@ -21,7 +21,6 @@ import reducer from './reducer';
 import { makeSelectSignIn } from './selectors';
 import { signInDictionary, signUpDictionary } from './stepDictionary';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const Signin = ({
   activeUser,
   dispatchClearForm,

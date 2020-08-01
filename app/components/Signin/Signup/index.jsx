@@ -160,12 +160,12 @@ const Signup = ({
 
 Signup.propTypes = {
   data: T.object.isRequired,
-  error: T.oneOfType([T.bool, T.object]),
+  error: T.oneOfType([T.bool, T.object]).isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignUp: T.func.isRequired,
   handleValidateInput: T.func,
-  loading: T.bool,
+  loading: T.bool.isRequired,
   signUpDisabled: T.bool,
 };
 
