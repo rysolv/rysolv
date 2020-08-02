@@ -3,8 +3,8 @@ import T from 'prop-types';
 
 import { BackNav, ConditionalRender } from 'components/base_ui';
 import { CommentCard, NewComment, NoComment } from 'components/MarkdownRender';
-import PaymentPortal from 'components/Payments';
 import UpvotePanel from 'components/Upvote';
+import PaymentPortal from 'containers/Payments';
 import iconDictionary from 'utils/iconDictionary';
 
 import IssueDetailBody from './IssueDetailBody';
@@ -63,10 +63,8 @@ const IssueDetail = ({
   handleComment,
   handleIncrement,
   handleNav,
-  handleSubmitAccountPayment,
   handleUpvote,
   isSignedIn,
-  paymentAlerts,
 }) => {
   const [displayEditView, setDisplayEditView] = useState(false);
   const [bodyChange, setBodyChange] = useState(body);
@@ -306,15 +304,12 @@ const IssueDetail = ({
             email={email}
             firstName={firstName}
             fundedAmount={fundedAmount}
-            handleClearAlerts={handleClearAlerts}
             handleNav={handleNav}
-            handleSubmitAccountPayment={handleSubmitAccountPayment}
             isSignedIn={isSignedIn}
             issueId={issueId}
             lastName={lastName}
             open={open}
             organizationId={organizationId}
-            paymentAlerts={paymentAlerts}
             userId={activeUserId}
           />
           <ConditionalRender
@@ -347,10 +342,8 @@ IssueDetail.propTypes = {
   handleComment: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
-  handleSubmitAccountPayment: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
-  paymentAlerts: T.object,
 };
 
 export default IssueDetail;

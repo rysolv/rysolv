@@ -22,6 +22,7 @@ const YourAccountView = ({
   firstNameValue,
   fundValue,
   handleSubmitAccountPayment,
+  hasError,
   issueId,
   lastNameValue,
   organizationId,
@@ -72,6 +73,7 @@ const YourAccountView = ({
           balance <= 0 ||
           fundValue <= 0 ||
           fundValue === '.' ||
+          hasError ||
           !isPersonalInfoComplete
         }
         label="Confirm"
@@ -93,6 +95,7 @@ YourAccountView.propTypes = {
   firstNameValue: T.string,
   fundValue: T.oneOfType([T.number, T.string]),
   handleSubmitAccountPayment: T.func,
+  hasError: T.bool,
   issueId: T.string,
   lastNameValue: T.string,
   organizationId: T.string,

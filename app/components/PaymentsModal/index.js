@@ -17,16 +17,13 @@ const PaymentPortalModal = ({
   email,
   firstName,
   fundedAmount,
-  handleClearAlerts,
   handleClose,
   handleNav,
-  handleSubmitAccountPayment,
   isSignedIn,
   issueId,
   lastName,
   open,
   organizationId,
-  paymentAlerts,
   userId,
 }) => (
   <PaymentPortalContainer>
@@ -42,15 +39,12 @@ const PaymentPortalModal = ({
       email={email}
       firstName={firstName}
       fundedAmount={fundedAmount}
-      handleClearAlerts={handleClearAlerts}
       handleNav={handleNav}
-      handleSubmitAccountPayment={handleSubmitAccountPayment}
       isSignedIn={isSignedIn}
       issueId={issueId}
       lastName={lastName}
       open={open}
       organizationId={organizationId}
-      paymentAlerts={paymentAlerts}
       removeBorder
       userId={userId}
     />
@@ -62,16 +56,13 @@ PaymentPortalModal.propTypes = {
   email: T.string,
   firstName: T.string,
   fundedAmount: T.number,
-  handleClearAlerts: T.func,
   handleClose: T.func,
   handleNav: T.func,
-  handleSubmitAccountPayment: T.func,
   isSignedIn: T.bool,
   issueId: T.string,
   lastName: T.string,
   open: T.bool,
   organizationId: T.string,
-  paymentAlerts: T.object,
   userId: T.string,
 };
 

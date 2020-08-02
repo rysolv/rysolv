@@ -157,15 +157,6 @@ const searchUsers = async (table, value) => {
   return rows;
 };
 
-// UPDATE balance of user for payment
-const submitAccountPaymentUser = async (userId, fundValue) => {
-  const { balance } = await getOneUser(userId);
-  const adjustedBalanceValue = balance - fundValue;
-  const queryText = `UPDATE users SET balance=${adjustedBalanceValue} WHERE (id = '${userId}') RETURNING *`;
-  const { rows } = await singleQuery(queryText);
-  return rows;
-};
-
 // PATCH single user
 const transformUser = async (id, data) => {
   const [rows] = await singleItem('users', id, userValues);
@@ -209,7 +200,6 @@ module.exports = {
   getWatchList,
   searchUsers,
   singleSearch,
-  submitAccountPaymentUser,
   transformUser,
   updateUserArray,
 };

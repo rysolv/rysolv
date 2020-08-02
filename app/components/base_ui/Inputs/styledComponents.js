@@ -5,6 +5,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import TextField from '@material-ui/core/TextField';
 
 import {
+  borderColor,
   defaultFontSize,
   errorBorder,
   inputBorder,
@@ -133,4 +134,38 @@ export const StyledModalIcon = styled.div`
   padding: 2rem 0;
   text-align: center;
   width: 10rem;
+`;
+
+export const StyledStripeFormControl = styled(StyledFormControl)`
+  color: ${textColor};
+  margin-bottom: 0;
+
+  .MuiFormHelperText-contained {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .MuiOutlinedInput-adornedStart,
+  .MuiOutlinedInput-adornedStart:hover {
+    border: 0.1rem solid ${borderColor};
+    padding: 0;
+  }
+
+  .MuiOutlinedInput-input {
+    padding: 0 0 0 1rem;
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
+
+  .MuiOutlinedInput-root:hover {
+    border: 0.1rem solid ${borderColor};
+  }
+`;
+
+export const StyledStripeModalIcon = styled(StyledModalIcon)`
+  border-bottom-left-radius: 0.3rem;
+  border-top-left-radius: 0.3rem;
+  padding: 1rem 0;
 `;

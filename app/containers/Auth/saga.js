@@ -1,16 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import Auth from '@aws-amplify/auth';
-import { post } from 'utils/request';
 
-import {
-  FETCH_ACTIVE_USER,
-  FETCH_USER_SESSION,
-  SEARCH_ORGANIZATIONS,
-  SIGN_IN,
-  SIGN_OUT,
-  SIGN_UP,
-  VERIFY_EMAIL,
-} from './constants';
+import { post } from 'utils/request';
 
 import {
   fetchActiveUser,
@@ -30,6 +21,15 @@ import {
   signUpSuccess,
   verifyEmailFailure,
 } from './actions';
+import {
+  FETCH_ACTIVE_USER,
+  FETCH_USER_SESSION,
+  SEARCH_ORGANIZATIONS,
+  SIGN_IN,
+  SIGN_OUT,
+  SIGN_UP,
+  VERIFY_EMAIL,
+} from './constants';
 
 export function* fetchActiveUserSaga({ payload }) {
   const { userId } = payload;

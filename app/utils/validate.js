@@ -89,6 +89,13 @@ const validatePassword = value => {
   return false;
 };
 
+const validateString = value => {
+  if (typeof value !== 'string') {
+    return 'Invalid value';
+  }
+  return false;
+};
+
 const validateVerifyInput = (value, { field, verifyValue }) => {
   if (value !== verifyValue) {
     return `${capitalize(field)}s do not match`;
@@ -99,6 +106,7 @@ const validateVerifyInput = (value, { field, verifyValue }) => {
 export const validationDictionary = {
   emailInput: validateEmail,
   passwordInput: validatePassword,
+  stringInput: validateString,
   verifyInput: validateVerifyInput,
 };
 

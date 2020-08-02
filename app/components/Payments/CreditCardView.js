@@ -1,85 +1,102 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
+import {
+  CardCvcElement,
+  CardExpiryElement,
+  CardNumberElement,
+  useElements,
+  useStripe,
+} from '@stripe/react-stripe-js';
 
-import { ConditionalRender } from 'components/base_ui';
+import { ConditionalRender, StripeInput } from 'components/base_ui';
 
 import {
   CreditCardViewContainer,
   HorizontalInputWrapper,
   InputWrapper,
-  StyledBaseInputWithAdornment,
+  StyledPaymentTextInput,
   StyledPrimaryAsyncButton,
-  StyledReCAPTCHA,
 } from './styledComponents';
 
 const CreditCardView = ({
-  creditCardNumber,
-  cvcValue,
-  dateValue,
-  dispatchVerifyRecaptcha,
-  dispatchVerifyRecaptchaFailure,
   emailValue,
   firstNameValue,
-  handleCreditCardNumberChange,
-  handleCvcChange,
-  handleDateChange,
+  fundValue,
+  handleStripeToken,
   handleZipChange,
+  hasError,
   isCreditPaymentOpen,
+  issueId,
   lastNameValue,
-  setCreditCardNumber,
-  setCvcValue,
-  setDateValue,
+  organizationId,
   setZipValue,
+  userId,
   zipValue,
 }) => {
-  const recaptchaRef = useRef(null);
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+    if (!stripe || !elements) {
+      return;
+    }
+
+    const card = elements.getElement(CardNumberElement);
+    const result = await stripe.createToken(card, zipValue);
+
+    if (result.error) {
+      console.log(result.error.message);
+    } else {
+      handleStripeToken({
+        amount: fundValue,
+        issueId,
+        organizationId,
+        token: result.token,
+        userId,
+      });
+    }
+  };
   const isCreditComplete =
-    !!creditCardNumber &&
-    !!cvcValue &&
-    !!dateValue &&
-    !!emailValue &&
-    !!firstNameValue &&
-    !!lastNameValue &&
-    !!zipValue;
+    !!emailValue && !!firstNameValue && !!lastNameValue && !!zipValue;
   return (
     <ConditionalRender
       Component={
         <Fragment>
           <CreditCardViewContainer>
             <InputWrapper>
-              <StyledBaseInputWithAdornment
+              <StyledPaymentTextInput
                 adornmentComponent="Number"
+                InputProps={{
+                  inputComponent: StripeInput,
+                  inputProps: {
+                    component: CardNumberElement,
+                  },
+                }}
                 fontSize="1rem"
-                inputProps={{ maxLength: 19 }}
-                onChange={e =>
-                  handleCreditCardNumberChange(
-                    e,
-                    e.target.value,
-                    setCreditCardNumber,
-                  )
-                }
-                value={creditCardNumber}
               />
-              <StyledBaseInputWithAdornment
-                adornmentComponent="MM/YYYY"
+              <StyledPaymentTextInput
+                adornmentComponent="MM/YY"
+                InputProps={{
+                  inputComponent: StripeInput,
+                  inputProps: {
+                    component: CardExpiryElement,
+                  },
+                }}
                 fontSize="1rem"
-                inputProps={{ maxLength: 7 }}
-                onChange={e =>
-                  handleDateChange(e, e.target.value, setDateValue)
-                }
-                value={dateValue}
               />
               <HorizontalInputWrapper>
-                <StyledBaseInputWithAdornment
+                <StyledPaymentTextInput
                   adornmentComponent="CVC"
+                  InputProps={{
+                    inputComponent: StripeInput,
+                    inputProps: {
+                      component: CardCvcElement,
+                    },
+                  }}
                   fontSize="1rem"
-                  inputProps={{ maxLength: 3 }}
-                  onChange={e =>
-                    handleCvcChange(e, e.target.value, setCvcValue)
-                  }
-                  value={cvcValue}
                 />
-                <StyledBaseInputWithAdornment
+                <StyledPaymentTextInput
                   adornmentComponent="Zip"
                   fontSize="1rem"
                   inputProps={{ maxLength: 5 }}
@@ -89,22 +106,11 @@ const CreditCardView = ({
                   value={zipValue}
                 />
               </HorizontalInputWrapper>
-              <StyledReCAPTCHA
-                ref={recaptchaRef}
-                onChange={response =>
-                  dispatchVerifyRecaptcha({
-                    resetRecaptcha: () => recaptchaRef.current.reset(),
-                    response,
-                  })
-                }
-                onExpired={dispatchVerifyRecaptchaFailure}
-                sitekey={process.env.RECAPTCHA_SITE_KEY}
-              />
             </InputWrapper>
             <StyledPrimaryAsyncButton
-              disabled={!isCreditComplete}
+              disabled={hasError || !isCreditComplete}
               label="Confirm"
-              onClick={() => {}}
+              onClick={handleSubmit}
             />
           </CreditCardViewContainer>
         </Fragment>
@@ -115,23 +121,18 @@ const CreditCardView = ({
 };
 
 CreditCardView.propTypes = {
-  creditCardNumber: T.string,
-  cvcValue: T.string,
-  dateValue: T.string,
-  dispatchVerifyRecaptcha: T.func,
-  dispatchVerifyRecaptchaFailure: T.func,
   emailValue: T.string,
   firstNameValue: T.string,
-  handleCreditCardNumberChange: T.func,
-  handleCvcChange: T.func,
-  handleDateChange: T.func,
+  fundValue: T.oneOfType([T.number, T.string]),
+  handleStripeToken: T.func,
   handleZipChange: T.func,
+  hasError: T.bool,
   isCreditPaymentOpen: T.bool,
+  issueId: T.string,
   lastNameValue: T.string,
-  setCreditCardNumber: T.func,
-  setCvcValue: T.func,
-  setDateValue: T.func,
+  organizationId: T.string,
   setZipValue: T.func,
+  userId: T.string,
   zipValue: T.string,
 };
 

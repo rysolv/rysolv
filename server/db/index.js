@@ -1,5 +1,5 @@
 const { createActivity, getActivity } = require('./activity');
-
+const { createComment, getComments, getIssueComments } = require('./comments');
 const {
   checkDuplicateIssue,
   closeIssue,
@@ -9,24 +9,26 @@ const {
   getIssues,
   getOneIssue,
   searchIssues,
-  submitAccountPaymentIssue,
   transformIssue,
   updateIssueArray,
   upvoteIssue,
 } = require('./issues');
 const {
-  checkDuplicateUserEmail,
-  checkDuplicateUsername,
-  createUser,
-  getOneUser,
-  getUsers,
-  getWatchList,
-  searchUsers,
+  checkDuplicateOrganization,
+  createOrganization,
+  deleteOrganization,
+  getOneOrganization,
+  getOrganizations,
+  getOrganizationsWhere,
+  searchOrganizations,
+  transformOrganization,
+  updateOrganizationArray,
+} = require('./organizations');
+const {
+  submitAccountPaymentIssue,
+  submitAccountPaymentOrganization,
   submitAccountPaymentUser,
-  transformUser,
-  updateUserArray,
-} = require('./users');
-const { createComment, getComments, getIssueComments } = require('./comments');
+} = require('./payments');
 const {
   checkDuplicatePullRequest,
   createPullRequest,
@@ -36,19 +38,18 @@ const {
   getPullRequests,
   getUserPullRequests,
 } = require('./pullRequests');
-const {
-  checkDuplicateOrganization,
-  createOrganization,
-  deleteOrganization,
-  getOneOrganization,
-  getOrganizations,
-  submitAccountPaymentOrganization,
-  getOrganizationsWhere,
-  searchOrganizations,
-  transformOrganization,
-  updateOrganizationArray,
-} = require('./organizations');
 const { createTables, dropAllTables, printTables } = require('./tables');
+const {
+  checkDuplicateUserEmail,
+  checkDuplicateUsername,
+  createUser,
+  getOneUser,
+  getUsers,
+  getWatchList,
+  searchUsers,
+  transformUser,
+  updateUserArray,
+} = require('./users');
 const { createWithdrawal, transformUserBalance } = require('./withdrawal');
 
 module.exports = {
