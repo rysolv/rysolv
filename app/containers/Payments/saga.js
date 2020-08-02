@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { post } from 'utils/request';
@@ -17,15 +18,12 @@ export function* stripeTokenSaga({ payload }) {
   try {
     const { amount, issueId, organizationId, token, userId } = payload;
     const isFundedFromOverview = window.location.pathname === '/issues';
+    const valuesToSend = userId
+      ? `amount: ${amount}, issueId: "${issueId}", organizationId: "${organizationId}", token: "${token.id}", userId: "${userId}"`
+      : `amount: ${amount}, issueId: "${issueId}", organizationId: "${organizationId}", token: "${token.id}"`;
     const query = `
     mutation {
-      createStripeCharge(
-        amount: ${amount},
-        issueId: "${issueId}",
-        organizationId: "${organizationId}",
-        token: "${token.id}",
-        userId: "${userId}"
-      ) {
+      createStripeCharge(${valuesToSend}) {
         __typename
         ... on Payment {
           fundedAmount,
@@ -53,6 +51,7 @@ export function* stripeTokenSaga({ payload }) {
     yield put(
       updateFundedIssue({ fundedAmount, isFundedFromOverview, issueId }),
     );
+    yield put(updatePaymentModal({ fundedAmount }));
   } catch (error) {
     yield put(stripeTokenFailure({ error }));
   }

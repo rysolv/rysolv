@@ -145,6 +145,11 @@ export const StyledStripeFormControl = styled(StyledFormControl)`
     margin-right: 0;
   }
 
+  .MuiFormHelperText-root {
+    font-size: 1.1rem;
+    line-height: normal;
+  }
+
   .MuiOutlinedInput-adornedStart,
   .MuiOutlinedInput-adornedStart:hover {
     border: 0.1rem solid ${borderColor};
