@@ -18,33 +18,17 @@ import {
 
 const YourAccountView = ({
   balance,
-  emailValue,
-  firstNameValue,
   fundValue,
   handleSubmitAccountPayment,
-  hasError,
-  issueId,
-  lastNameValue,
-  organizationId,
+  isPersonalInfoComplete,
   setFundValue,
-  userId,
 }) => {
-  const handleSubmit = ({
-    fundedIssueId,
-    fundedOrganizationId,
-    fundingUserId,
-    value,
-  }) => {
+  const handleSubmit = ({ value }) => {
     handleSubmitAccountPayment({
       fundValue: value,
-      issueId: fundedIssueId,
-      organizationId: fundedOrganizationId,
-      userId: fundingUserId,
     });
     setFundValue(0);
   };
-  const isPersonalInfoComplete =
-    !!emailValue && !!firstNameValue && !!lastNameValue;
   return (
     <YourAccountContainer>
       <BalanceWrapper>
@@ -73,15 +57,11 @@ const YourAccountView = ({
           balance <= 0 ||
           fundValue <= 0 ||
           fundValue === '.' ||
-          hasError ||
           !isPersonalInfoComplete
         }
         label="Confirm"
         onClick={() =>
           handleSubmit({
-            fundedIssueId: issueId,
-            fundedOrganizationId: organizationId,
-            fundingUserId: userId,
             value: fundValue,
           })
         }
@@ -91,16 +71,10 @@ const YourAccountView = ({
 };
 YourAccountView.propTypes = {
   balance: T.number,
-  emailValue: T.string,
-  firstNameValue: T.string,
   fundValue: T.oneOfType([T.number, T.string]),
   handleSubmitAccountPayment: T.func,
-  hasError: T.bool,
-  issueId: T.string,
-  lastNameValue: T.string,
-  organizationId: T.string,
+  isPersonalInfoComplete: T.bool,
   setFundValue: T.func,
-  userId: T.string,
 };
 
 export default YourAccountView;

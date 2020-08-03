@@ -19,18 +19,15 @@ import {
 } from './styledComponents';
 
 const CreditCardView = ({
-  emailValue,
-  firstNameValue,
   fundValue,
+  handleClearAlerts,
   handleStripeToken,
   handleZipChange,
-  hasError,
   isCreditPaymentOpen,
-  issueId,
-  lastNameValue,
-  organizationId,
+  isPersonalInfoComplete,
+  setStripeError,
   setZipValue,
-  userId,
+  values,
   zipValue,
 }) => {
   const stripe = useStripe();
@@ -44,21 +41,19 @@ const CreditCardView = ({
 
     const card = elements.getElement(CardNumberElement);
     const result = await stripe.createToken(card, zipValue);
+    handleClearAlerts();
 
     if (result.error) {
-      console.log(result.error.message);
+      setStripeError({ message: result.error.message });
     } else {
       handleStripeToken({
         amount: fundValue,
-        issueId,
-        organizationId,
         token: result.token,
-        userId,
+        values,
       });
     }
   };
-  const isCreditComplete =
-    !!emailValue && !!firstNameValue && !!lastNameValue && !!zipValue;
+
   return (
     <ConditionalRender
       Component={
@@ -108,7 +103,7 @@ const CreditCardView = ({
               </HorizontalInputWrapper>
             </InputWrapper>
             <StyledPrimaryAsyncButton
-              disabled={hasError || !isCreditComplete}
+              disabled={!isPersonalInfoComplete || !stripe}
               label="Confirm"
               onClick={handleSubmit}
             />
@@ -121,18 +116,15 @@ const CreditCardView = ({
 };
 
 CreditCardView.propTypes = {
-  emailValue: T.string,
-  firstNameValue: T.string,
   fundValue: T.oneOfType([T.number, T.string]),
+  handleClearAlerts: T.func,
   handleStripeToken: T.func,
   handleZipChange: T.func,
-  hasError: T.bool,
   isCreditPaymentOpen: T.bool,
-  issueId: T.string,
-  lastNameValue: T.string,
-  organizationId: T.string,
+  isPersonalInfoComplete: T.bool,
+  setStripeError: T.func,
   setZipValue: T.func,
-  userId: T.string,
+  values: T.object,
   zipValue: T.string,
 };
 

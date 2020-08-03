@@ -63,9 +63,12 @@ const PaymentPortal = ({
   const [isPaypalPaymentOpen, setIsPaypalPaymentOpen] = useState(false);
   const [firstNameValue, setFirstNameValue] = useState(firstName || '');
   const [lastNameValue, setLastNameValue] = useState(lastName || '');
+  const [stripeError, setStripeError] = useState('');
   const [zipValue, setZipValue] = useState('');
 
-  const hasError = !!emailError || !!firstNameError || !!fundValueError || !!lastNameError;
+  const isPersonalInfoComplete =
+  !!emailValue && !!firstNameValue && !!lastNameValue;
+
   const values = {
     email: emailValue,
     firstName: firstNameValue,
@@ -136,6 +139,11 @@ const PaymentPortal = ({
     }
   };
 
+  const handleClearAlerts = () => {
+    setStripeError('');
+    handleClearPaymentAlerts();
+  }
+
   const handleEmailValueChange = (event, newEmail) => {
     setEmailValue(newEmail);
   };
@@ -148,18 +156,15 @@ const PaymentPortal = ({
     setLastNameValue(newName);
   };
   const propsToPassDown = {
-    emailValue,
-    firstNameValue,
     fundValue,
+    handleClearAlerts,
     handleStripeToken,
     handleZipChange,
-    hasError,
     isCreditPaymentOpen,
-    issueId,
-    lastNameValue,
-    organizationId,
+    isPersonalInfoComplete,
+    setStripeError,
     setZipValue,
-    userId,
+    values,
     zipValue,
   };
   return (
@@ -218,8 +223,8 @@ const PaymentPortal = ({
         </PaymentInformationWrapper>
         <StyledLabel>Payment Methods</StyledLabel>
         <StyledErrorSuccessBanner
-          error={error}
-          onClose={handleClearPaymentAlerts}
+          error={stripeError || error}
+          onClose={handleClearAlerts}
           success={success}
         />
         <ConditionalRender
@@ -231,16 +236,10 @@ const PaymentPortal = ({
               Icon={AccountIcon}
               propsToPassDown={{
                 balance,
-                emailValue,
-                firstNameValue,
                 fundValue,
                 handleSubmitAccountPayment,
-                hasError,
-                issueId,
-                lastNameValue,
-                organizationId,
+                isPersonalInfoComplete,
                 setFundValue,
-                userId,
               }}
               title="Your Account"
             />

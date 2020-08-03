@@ -14,7 +14,7 @@ import {
   stripeToken,
   submitAccountPayment,
 } from './actions';
-import { validateOneField } from './helpers';
+import { validateFields, validateOneField } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectPayments } from './selectors';
@@ -23,14 +23,14 @@ const PaymentsContainer = ({
   alerts,
   balance,
   dispatchInputError,
+  dispatchStripeToken,
+  dispatchSubmitAccountPayment,
   email,
   errors,
   firstName,
   fundedAmount,
   handleClearPaymentAlerts,
   handleNav,
-  handleStripeToken,
-  handleSubmitAccountPayment,
   isSignedIn,
   issueId,
   lastName,
@@ -39,6 +39,36 @@ const PaymentsContainer = ({
   userId,
   ...restProps
 }) => {
+  const handleStripeToken = ({ amount, token, values }) => {
+    const { isValidated, validationErrors } = validateFields({ values });
+    if (isValidated) {
+      dispatchStripeToken({
+        amount,
+        issueId,
+        organizationId,
+        token,
+        userId,
+        values,
+      });
+    } else {
+      dispatchInputError({ errors: validationErrors });
+    }
+  };
+
+  const handleSubmitAccountPayment = ({ fundValue, values }) => {
+    const { isValidated, validationErrors } = validateFields({ values });
+    if (isValidated) {
+      dispatchSubmitAccountPayment({
+        fundValue,
+        issueId,
+        organizationId,
+        userId,
+      });
+    } else {
+      dispatchInputError({ errors: validationErrors });
+    }
+  };
+
   const handleValidateInput = ({ field, values }) => {
     const validationError = validateOneField({ field, values }) || '';
     dispatchInputError({
@@ -75,14 +105,14 @@ PaymentsContainer.propTypes = {
   alerts: T.object,
   balance: T.number,
   dispatchInputError: T.func,
+  dispatchStripeToken: T.func,
+  dispatchSubmitAccountPayment: T.func,
   email: T.string,
   errors: T.object,
   firstName: T.string,
   fundedAmount: T.number,
   handleClearPaymentAlerts: T.func,
   handleNav: T.func,
-  handleStripeToken: T.func,
-  handleSubmitAccountPayment: T.func,
   isSignedIn: T.bool,
   issueId: T.string,
   lastName: T.string,
@@ -104,10 +134,10 @@ const mapDispatchToProps = dispatch => ({
    * Reducer: Payments
    */
   dispatchInputError: payload => dispatch(inputError(payload)),
-  handleClearPaymentAlerts: () => dispatch(clearAlerts()),
-  handleStripeToken: payload => dispatch(stripeToken(payload)),
-  handleSubmitAccountPayment: payload =>
+  dispatchStripeToken: payload => dispatch(stripeToken(payload)),
+  dispatchSubmitAccountPayment: payload =>
     dispatch(submitAccountPayment(payload)),
+  handleClearPaymentAlerts: () => dispatch(clearAlerts()),
 });
 
 const withConnect = connect(
