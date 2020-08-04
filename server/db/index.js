@@ -25,6 +25,7 @@ const {
   updateOrganizationArray,
 } = require('./organizations');
 const {
+  submitAccountDepositUser,
   submitAccountPaymentIssue,
   submitAccountPaymentOrganization,
   submitAccountPaymentUser,
@@ -91,6 +92,7 @@ module.exports = {
   searchIssues,
   searchOrganizations,
   searchUsers,
+  submitAccountDepositUser,
   submitAccountPaymentIssue,
   submitAccountPaymentOrganization,
   submitAccountPaymentUser,

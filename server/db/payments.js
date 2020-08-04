@@ -22,6 +22,15 @@ const submitAccountPaymentOrganization = async (organizationId, fundValue) => {
   return rows;
 };
 
+// UPDATE balance of user for deposit
+const submitAccountDepositUser = async (userId, amount) => {
+  const { balance } = await getOneUser(userId);
+  const adjustedBalanceValue = amount + balance;
+  const queryText = `UPDATE users SET balance=${adjustedBalanceValue} WHERE (id = '${userId}') RETURNING *`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
 // UPDATE balance of user for payment
 const submitAccountPaymentUser = async (userId, fundValue) => {
   const { balance } = await getOneUser(userId);
@@ -32,6 +41,7 @@ const submitAccountPaymentUser = async (userId, fundValue) => {
 };
 
 module.exports = {
+  submitAccountDepositUser,
   submitAccountPaymentIssue,
   submitAccountPaymentOrganization,
   submitAccountPaymentUser,

@@ -2,6 +2,7 @@ import produce from 'immer';
 
 import {
   CLEAR_ALERTS,
+  CLEAR_ERRORS,
   CLOSE_MODAL_STATE,
   DELETE_USER_FAILURE,
   DELETE_USER_SUCCESS,
@@ -18,7 +19,9 @@ import {
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
-  SUBMIT_PAYMENT,
+  STRIPE_TOKEN_FAILURE,
+  STRIPE_TOKEN_SUCCESS,
+  STRIPE_TOKEN,
   WITHDRAW_FUNDS_FAILURE,
   WITHDRAW_FUNDS_SUCCESS,
   WITHDRAW_FUNDS,
@@ -34,7 +37,8 @@ export const initialState = {
     users: 'All',
   },
   inputErrors: {
-    transferValue: false,
+    depositValue: '',
+    transferValue: '',
   },
   isModalOpen: false,
   loading: false,
@@ -46,6 +50,11 @@ const settingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
+      draft.inputErrors = initialState.inputErrors;
+      break;
+    }
+    case CLEAR_ERRORS: {
+      draft.inputErrors = initialState.inputErrors;
       break;
     }
     case CLOSE_MODAL_STATE: {
@@ -97,8 +106,11 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case INPUT_ERROR: {
-      const { field, message } = payload;
-      draft.inputErrors[field] = message;
+      const { errors } = payload;
+      const fields = Object.keys(errors);
+      fields.forEach(field => {
+        draft.inputErrors[field] = errors[field] || '';
+      });
       break;
     }
     case OPEN_MODAL_STATE: {
@@ -149,7 +161,21 @@ const settingsReducer = produce((draft, { payload, type }) => {
       draft.loading = true;
       break;
     }
-    case SUBMIT_PAYMENT: {
+    case STRIPE_TOKEN_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = { message: error };
+      draft.loading = false;
+      break;
+    }
+    case STRIPE_TOKEN_SUCCESS: {
+      const { balance, message } = payload;
+      draft.account.balance = balance;
+      draft.alerts.success = { message };
+      draft.loading = false;
+      break;
+    }
+    case STRIPE_TOKEN: {
+      draft.alerts = initialState.alerts;
       draft.loading = true;
       break;
     }

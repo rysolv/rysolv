@@ -53,7 +53,6 @@ const CreditCardView = ({
       });
     }
   };
-
   return (
     <ConditionalRender
       Component={

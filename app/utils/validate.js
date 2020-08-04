@@ -24,7 +24,7 @@ export const validateEmail = value => {
 
 export const validateFundValue = value => {
   if (value < 1) {
-    return `Funding must be greater than $0.99`;
+    return `Amount must be greater than $0.99`;
   }
   return false;
 };

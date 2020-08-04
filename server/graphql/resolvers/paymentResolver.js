@@ -1,6 +1,8 @@
+/* eslint-disable consistent-return */
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const {
+  submitAccountDepositUser,
   submitAccountPaymentIssue,
   submitAccountPaymentOrganization,
   submitAccountPaymentUser,
@@ -10,35 +12,49 @@ const { createActivity } = require('./activityResolver');
 module.exports = {
   createStripeCharge: async args => {
     const { amount, issueId, organizationId, token, userId } = args;
+    const totalAmount = (amount * 103.6).toFixed();
     try {
       await stripe.charges.create({
-        amount: amount * 100,
+        amount: totalAmount,
         currency: 'usd',
         description: 'Customer charge',
         source: token,
       });
 
-      const [issueResult] = await submitAccountPaymentIssue(issueId, amount);
-      await submitAccountPaymentOrganization(organizationId, amount);
+      if (issueId && organizationId) {
+        const [issueResult] = await submitAccountPaymentIssue(issueId, amount);
+        await submitAccountPaymentOrganization(organizationId, amount);
 
-      const activityInput = {
-        actionType: 'fund',
-        fundedValue: amount,
-        issueId,
-        organizationId,
-        userId,
-      };
-      await createActivity({ activityInput });
+        const activityInput = {
+          actionType: 'fund',
+          fundedValue: amount,
+          issueId,
+          organizationId,
+        };
+        await createActivity({ activityInput });
 
-      const result = {
-        fundedAmount: issueResult.funded_amount,
-      };
+        return {
+          __typename: 'Payment',
+          fundedAmount: issueResult.funded_amount,
+          message: 'Thank you for funding!',
+        };
+      }
+      if (userId) {
+        const [userResult] = await submitAccountDepositUser(userId, amount);
 
-      return {
-        __typename: 'Payment',
-        message: 'Thank you for funding!',
-        ...result,
-      };
+        const activityInput = {
+          actionType: 'fund',
+          fundedValue: amount,
+          userId,
+        };
+        await createActivity({ activityInput });
+
+        return {
+          __typename: 'Payment',
+          balance: userResult.balance,
+          message: 'You have successfully deposited money into your account!',
+        };
+      }
     } catch (err) {
       return {
         __typename: 'Error',

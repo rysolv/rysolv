@@ -1,5 +1,6 @@
 import {
   CLEAR_ALERTS,
+  CLEAR_ERRORS,
   CLOSE_MODAL_STATE,
   DELETE_USER_FAILURE,
   DELETE_USER_SUCCESS,
@@ -16,7 +17,9 @@ import {
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
-  SUBMIT_PAYMENT,
+  STRIPE_TOKEN_FAILURE,
+  STRIPE_TOKEN_SUCCESS,
+  STRIPE_TOKEN,
   WITHDRAW_FUNDS_FAILURE,
   WITHDRAW_FUNDS_SUCCESS,
   WITHDRAW_FUNDS,
@@ -25,6 +28,12 @@ import {
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
+  };
+}
+
+export function clearErrors() {
+  return {
+    type: CLEAR_ERRORS,
   };
 }
 
@@ -139,10 +148,24 @@ export function saveChange(payload) {
   };
 }
 
-export function submitPayment(payload) {
+export function stripeTokenFailure(payload) {
   return {
     payload,
-    type: SUBMIT_PAYMENT,
+    type: STRIPE_TOKEN_FAILURE,
+  };
+}
+
+export function stripeTokenSuccess(payload) {
+  return {
+    payload,
+    type: STRIPE_TOKEN_SUCCESS,
+  };
+}
+
+export function stripeToken(payload) {
+  return {
+    payload,
+    type: STRIPE_TOKEN,
   };
 }
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import FormControl from '@material-ui/core/FormControl';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -52,9 +51,7 @@ export const Spacer = styled.div`
   height: 1.5rem;
 `;
 
-export const StyledBaseInput = styled(({ textAlign, ...restProps }) => (
-  <OutlinedInput {...restProps} />
-))`
+export const StyledBaseInput = styled(OutlinedInput)`
   background: white;
   border-radius: 0.5rem;
   color: rgba(0, 0, 0, 0.7);
@@ -68,8 +65,7 @@ export const StyledBaseInput = styled(({ textAlign, ...restProps }) => (
   }
 
   .input {
-    padding: 0 2rem;
-    text-align: ${({ textAlign }) => textAlign || 'start'};
+    padding: 0 1rem;
   }
 `;
 
@@ -157,7 +153,7 @@ export const StyledStripeFormControl = styled(StyledFormControl)`
   }
 
   .MuiOutlinedInput-input {
-    padding: 0 0 0 1rem;
+    padding: 0 1rem;
   }
 
   .MuiOutlinedInput-notchedOutline {

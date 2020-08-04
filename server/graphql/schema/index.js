@@ -348,7 +348,7 @@ module.exports = buildSchema(`
     createOrganization(organizationInput: OrganizationInput): OrganizationResult
     createUser(userInput: UserInput): User!
     createPullRequest(pullRequestInput: PullRequestInput!): PullRequestResult!
-    createStripeCharge(amount: Float!, issueId: ID!, organizationId: ID!, token: String!, userId: ID): PaymentResult!
+    createStripeCharge(amount: Float!, issueId: ID, organizationId: ID, token: String!, userId: ID): PaymentResult!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
     deleteIssue(id: ID!): String!

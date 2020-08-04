@@ -48,7 +48,6 @@ const PaymentsContainer = ({
         organizationId,
         token,
         userId,
-        values,
       });
     } else {
       dispatchInputError({ errors: validationErrors });

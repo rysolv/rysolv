@@ -13,7 +13,7 @@ import {
   FETCH_INFO,
   REMOVE_ISSUE,
   SAVE_CHANGE,
-  SUBMIT_PAYMENT,
+  STRIPE_TOKEN,
   WITHDRAW_FUNDS,
 } from './constants';
 import {
@@ -25,6 +25,8 @@ import {
   removeIssueSuccess,
   saveChangeFailure,
   saveChangeSuccess,
+  stripeTokenFailure,
+  stripeTokenSuccess,
   withdrawFundsFailure,
   withdrawFundsSuccess,
 } from './actions';
@@ -50,10 +52,10 @@ export function* deleteUserSaga({ payload }) {
 }
 
 export function* fetchInfoSaga({ payload }) {
-  const { itemId } = payload;
+  const { userId } = payload;
   const query = `
     query {
-      oneUser(id: "${itemId}") {
+      oneUser(id: "${userId}") {
         id,
         activePullRequests,
         attempting,
@@ -76,7 +78,7 @@ export function* fetchInfoSaga({ payload }) {
         username,
         watching,
       }
-      getActivity(column: "user_id", id: "${itemId}") {
+      getActivity(column: "user_id", id: "${userId}") {
         __typename
         ... on ActivityArray {
           activityArray {
@@ -195,11 +197,43 @@ export function* saveChangeSaga({ payload }) {
   }
 }
 
-export function* submitPaymentSaga({ payload }) {
+export function* stripeTokenSaga({ payload }) {
   try {
-    console.log('Success', payload);
+    const { amount, token, userId } = payload;
+    const query = `
+    mutation {
+      createStripeCharge(
+        amount: ${amount},
+        token: "${token.id}",
+        userId: "${userId}"
+      ) {
+        __typename
+        ... on Payment {
+          balance,
+          message,
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+    const request = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: {
+        createStripeCharge: { __typename, balance, message },
+      },
+    } = yield call(post, '/graphql', request);
+    if (__typename === 'Error') {
+      throw message;
+    }
+    yield put(stripeTokenSuccess({ balance, message }));
+    yield put(updateActiveUser({ balance }));
   } catch (error) {
-    console.log('Error');
+    yield put(stripeTokenFailure({ error }));
   }
 }
 
@@ -247,6 +281,6 @@ export default function* watcherSaga() {
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
-  yield takeLatest(SUBMIT_PAYMENT, submitPaymentSaga);
+  yield takeLatest(STRIPE_TOKEN, stripeTokenSaga);
   yield takeLatest(WITHDRAW_FUNDS, withdrawFundsSaga);
 }
