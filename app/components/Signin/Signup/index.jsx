@@ -164,9 +164,9 @@ Signup.propTypes = {
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignUp: T.func.isRequired,
-  handleValidateInput: T.func,
+  handleValidateInput: T.func.isRequired,
   loading: T.bool.isRequired,
-  signUpDisabled: T.bool,
+  signUpDisabled: T.bool.isRequired,
 };
 
 export default Signup;

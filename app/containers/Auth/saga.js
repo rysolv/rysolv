@@ -90,17 +90,17 @@ export function* getUserOrganizationsSaga({ payload }) {
   const query = `
     query {
       getUserOrganizations(id: "${id}") {
-        id,
         createdDate,
-        modifiedDate,
-        name,
         description,
-        repoUrl,
-        organizationUrl,
+        id,
         issues,
         logo,
-        verified,
+        modifiedDate,
+        name,
+        organizationUrl,
+        repoUrl,
         totalFunded,
+        verified,
       }
     }
   `;
@@ -131,14 +131,14 @@ export function* resendSignUpSaga({ payload }) {
     yield call(cognitoResendSignUp);
     // Get user account that has been signed up but not email verified
     const query = `
-    query {
-      oneUserSignUp(email: "${username}") {
-        email,
-        id,
-        username,
+      query {
+        oneUserSignUp(email: "${username}") {
+          email,
+          id,
+          username,
+        }
       }
-    }
-  `;
+    `;
     const graphql = JSON.stringify({
       query,
       variables: {},

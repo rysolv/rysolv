@@ -27,8 +27,8 @@ const VerifyEmail = ({
   verify: { verificationCode },
   verifyDisabled,
 }) => {
-  const handleKeypress = e => {
-    if (e.keyCode === 13 && !verifyDisabled) {
+  const handleKeypress = ({ e: { keyCode } }) => {
+    if (keyCode === 13 && !verifyDisabled) {
       handleVerifyEmail();
     }
   };
@@ -63,9 +63,9 @@ const VerifyEmail = ({
           />
         </VerificationWrapper>
         <StyledPrimaryAsyncButton
-          loading={loading}
           disabled={verifyDisabled}
           label="Verify email"
+          loading={loading}
           onClick={handleVerifyEmail}
         />
       </InputFormWrapper>
@@ -77,7 +77,7 @@ const VerifyEmail = ({
 };
 
 VerifyEmail.propTypes = {
-  activeUser: T.object,
+  activeUser: T.object.isRequired,
   error: T.oneOfType([T.bool, T.object]).isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
@@ -85,7 +85,7 @@ VerifyEmail.propTypes = {
   handleVerifyEmail: T.func.isRequired,
   loading: T.bool.isRequired,
   verify: T.object.isRequired,
-  verifyDisabled: T.bool,
+  verifyDisabled: T.bool.isRequired,
 };
 
 export default VerifyEmail;

@@ -78,14 +78,14 @@ const SigninContainer = ({
 };
 
 SigninContainer.propTypes = {
-  alerts: T.object,
-  data: T.object,
-  dispatchInputError: T.func,
-  dispatchSignIn: T.func,
-  handleClearAuthAlerts: T.func,
-  handleInputChange: T.func,
-  loading: T.bool,
-  signInDisabled: T.bool,
+  alerts: T.object.isRequired,
+  data: T.object.isRequired,
+  dispatchInputError: T.func.isRequired,
+  dispatchSignIn: T.func.isRequired,
+  handleClearAuthAlerts: T.func.isRequired,
+  handleInputChange: T.func.isRequired,
+  loading: T.bool.isRequired,
+  signInDisabled: T.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -180,7 +180,7 @@ module.exports = {
   oneUserSignUp: async args => {
     const { email } = args;
     try {
-      const [result] = await getOneUserSignUp(email);
+      const result = await getOneUserSignUp(email);
       return result;
     } catch (err) {
       throw err;

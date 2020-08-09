@@ -125,7 +125,8 @@ const getOneUser = async userId => {
 const getOneUserSignUp = async email => {
   const queryText = `SELECT id, email, username FROM users WHERE is_deleted = false AND email = '${email}'`;
   const { rows } = await singleQuery(queryText);
-  return rows;
+  const [oneRow] = rows;
+  return oneRow;
 };
 
 // GET all users

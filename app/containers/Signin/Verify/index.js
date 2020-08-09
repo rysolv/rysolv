@@ -85,17 +85,17 @@ const VerifyContainer = ({
 };
 
 VerifyContainer.propTypes = {
-  activeUser: T.object,
-  alerts: T.object,
-  dispatchInputError: T.func,
-  dispatchVerifyEmail: T.func,
-  handleClearAuthAlerts: T.func,
-  handleInputChange: T.func,
-  loading: T.bool,
-  signInData: T.object,
-  signUpData: T.object,
-  verify: T.object,
-  verifyDisabled: T.bool,
+  activeUser: T.object.isRequired,
+  alerts: T.object.isRequired,
+  dispatchInputError: T.func.isRequired,
+  dispatchVerifyEmail: T.func.isRequired,
+  handleClearAuthAlerts: T.func.isRequired,
+  handleInputChange: T.func.isRequired,
+  loading: T.bool.isRequired,
+  signInData: T.object.isRequired,
+  signUpData: T.object.isRequired,
+  verify: T.object.isRequired,
+  verifyDisabled: T.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

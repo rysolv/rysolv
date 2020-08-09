@@ -24,7 +24,7 @@ import { signInDictionary, signUpDictionary } from './stepDictionary';
 const Signin = ({
   activeUser,
   dispatchClearForm,
-  dispatchSignout,
+  dispatchSignOut,
   handleNav,
   isSignedIn,
   loading,
@@ -50,7 +50,7 @@ const Signin = ({
           isRequiredData
           loading={loading}
           propsToPassDown={{
-            dispatchSignout,
+            dispatchSignOut,
             handleNav,
           }}
         />,
@@ -73,7 +73,7 @@ const Signin = ({
 Signin.propTypes = {
   activeUser: T.object.isRequired,
   dispatchClearForm: T.func.isRequired,
-  dispatchSignout: T.func.isRequired,
+  dispatchSignOut: T.func.isRequired,
   handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
   loading: T.bool.isRequired,
@@ -99,7 +99,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Auth
      */
-    dispatchSignout: () => dispatch(signOut()),
+    dispatchSignOut: () => dispatch(signOut()),
     /*
      * Reducer : Router
      */

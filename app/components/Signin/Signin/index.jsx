@@ -92,7 +92,7 @@ Signin.propTypes = {
   handleSignIn: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   loading: T.bool.isRequired,
-  signInDisabled: T.bool,
+  signInDisabled: T.bool.isRequired,
 };
 
 export default Signin;
