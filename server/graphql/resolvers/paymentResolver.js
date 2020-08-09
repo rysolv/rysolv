@@ -10,6 +10,50 @@ const {
 const { createActivity } = require('./activityResolver');
 
 module.exports = {
+  createPaypalPayment: async args => {
+    const { amount, issueId, organizationId, userId } = args;
+    try {
+      if (issueId && organizationId) {
+        const [issueResult] = await submitAccountPaymentIssue(issueId, amount);
+        await submitAccountPaymentOrganization(organizationId, amount);
+
+        const activityInput = {
+          actionType: 'fund',
+          fundedValue: amount,
+          issueId,
+          organizationId,
+        };
+        await createActivity({ activityInput });
+
+        return {
+          __typename: 'Payment',
+          fundedAmount: issueResult.funded_amount,
+          message: 'Your Paypal payment has been successful!',
+        };
+      }
+      if (userId) {
+        const [userResult] = await submitAccountDepositUser(userId, amount);
+
+        const activityInput = {
+          actionType: 'fund',
+          fundedValue: amount,
+          userId,
+        };
+        await createActivity({ activityInput });
+
+        return {
+          __typename: 'Payment',
+          balance: userResult.balance,
+          message: 'You have successfully deposited money into your account!',
+        };
+      }
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
+    }
+  },
   createStripeCharge: async args => {
     const { amount, issueId, organizationId, token, userId } = args;
     const totalAmount = (amount * 103.6).toFixed();

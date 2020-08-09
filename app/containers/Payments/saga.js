@@ -7,12 +7,60 @@ import { updateFundedIssue } from 'containers/Issues/actions';
 import { updatePaymentModal } from 'containers/Main/actions';
 
 import {
+  paypalPaymentFailure,
+  paypalPaymentSuccess,
   stripeTokenFailure,
   stripeTokenSuccess,
   submitAccountPaymentFailure,
   submitAccountPaymentSuccess,
 } from './actions';
-import { STRIPE_TOKEN, SUBMIT_ACCOUNT_PAYMENT } from './constants';
+import { PAYPAL_PAYMENT, STRIPE_TOKEN, SUBMIT_ACCOUNT_PAYMENT } from './constants';
+
+export function* paypalPaymentSaga({ payload }) {
+  try {
+    const { amount, error, issueId, organizationId, userId } = payload;
+    const isFundedFromOverview = window.location.pathname === '/issues';
+    const valuesToSend = userId
+      ? `amount: ${amount}, issueId: "${issueId}", organizationId: "${organizationId}", userId: "${userId}"`
+      : `amount: ${amount}, issueId: "${issueId}", organizationId: "${organizationId}"`;
+    const query = `
+      mutation {
+        createPaypalPayment(${valuesToSend}) {
+          __typename
+          ... on Payment {
+            fundedAmount,
+            message,
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    `;
+    if (error) {
+      throw new Error(error);
+    }
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: {
+        createPaypalPayment: { __typename, fundedAmount, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') {
+      throw message;
+    }
+    yield put(paypalPaymentSuccess({ message }));
+    yield put(
+      updateFundedIssue({ fundedAmount, isFundedFromOverview, issueId }),
+    );
+    yield put(updatePaymentModal({ fundedAmount }));
+  } catch (error) {
+    yield put(paypalPaymentFailure({ error }));
+  }
+}
 
 export function* stripeTokenSaga({ payload }) {
   try {
@@ -96,6 +144,7 @@ export function* submitAccountPaymentSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(PAYPAL_PAYMENT, paypalPaymentSaga);
   yield takeLatest(STRIPE_TOKEN, stripeTokenSaga);
   yield takeLatest(SUBMIT_ACCOUNT_PAYMENT, submitAccountPaymentSaga);
 }

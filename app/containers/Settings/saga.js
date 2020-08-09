@@ -11,6 +11,7 @@ import { post } from 'utils/request';
 import {
   DELETE_USER,
   FETCH_INFO,
+  PAYPAL_PAYMENT,
   REMOVE_ISSUE,
   SAVE_CHANGE,
   STRIPE_TOKEN,
@@ -21,6 +22,8 @@ import {
   deleteUserSuccess,
   fetchInfoFailure,
   fetchInfoSuccess,
+  paypalPaymentFailure,
+  paypalPaymentSuccess,
   removeIssueFailure,
   removeIssueSuccess,
   saveChangeFailure,
@@ -116,6 +119,45 @@ export function* fetchInfoSaga({ payload }) {
     yield put(fetchInfoSuccess({ oneUser }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
+  }
+}
+
+export function* paypalPaymentSaga({ payload }) {
+  try {
+    const { amount, error, userId } = payload;
+    if (error) {
+      throw new Error(error);
+    }
+    const query = `
+    mutation {
+      createPaypalPayment(amount: ${amount}, userId: "${userId}") {
+        __typename
+        ... on Payment {
+          balance,
+          message,
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+    const request = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: {
+        createPaypalPayment: { __typename, balance, message },
+      },
+    } = yield call(post, '/graphql', request);
+    if (__typename === 'Error') {
+      throw message;
+    }
+    yield put(paypalPaymentSuccess({ balance, message }));
+    yield put(updateActiveUser({ balance }));
+  } catch (error) {
+    yield put(paypalPaymentFailure({ error }));
   }
 }
 
@@ -279,6 +321,7 @@ export function* withdrawFundsSaga({ payload }) {
 export default function* watcherSaga() {
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
+  yield takeLatest(PAYPAL_PAYMENT, paypalPaymentSaga);
   yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
   yield takeLatest(STRIPE_TOKEN, stripeTokenSaga);

@@ -28,6 +28,7 @@ import { StyledH3 } from '../../styledComponents';
 const DepositFormComponent = ({
   creditCardProps,
   creditCardProps: { setZipValue },
+  dispatchPaypalPayment,
   handleClearAllAlerts,
   handleClearErrors,
   handleNav,
@@ -35,6 +36,7 @@ const DepositFormComponent = ({
   inputErrors: { depositValue: depositValueError },
   setDisplayBottom,
   setStripeError,
+  userId,
 }) => {
   const [dollarValue, setDollarValue] = useState('0');
   const [feeValue, setFeeValue] = useState('0');
@@ -141,7 +143,11 @@ const DepositFormComponent = ({
             {...creditCardProps}
           />
         }
-        FallbackComponent={PaypalPaymentComponent}
+        FallbackComponent={<PaypalPaymentComponent
+          dispatchPaypalPayment={dispatchPaypalPayment}
+          total={totalValue}
+          userId={userId}
+        />}
         shouldRender={paymentType === 'Credit card'}
       />
     </Fragment>
@@ -150,6 +156,7 @@ const DepositFormComponent = ({
 
 DepositFormComponent.propTypes = {
   creditCardProps: T.object.isRequired,
+  dispatchPaypalPayment: T.func.isRequired,
   handleClearAllAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
   handleNav: T.func.isRequired,
@@ -157,6 +164,7 @@ DepositFormComponent.propTypes = {
   inputErrors: T.object.isRequired,
   setDisplayBottom: T.func.isRequired,
   setStripeError: T.func.isRequired,
+  userId: T.string.isRequired,
 };
 
 export default DepositFormComponent;

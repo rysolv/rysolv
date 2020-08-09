@@ -11,6 +11,7 @@ import injectSaga from 'utils/injectSaga';
 import {
   clearAlerts,
   inputError,
+  paypalPayment,
   stripeToken,
   submitAccountPayment,
 } from './actions';
@@ -23,6 +24,7 @@ const PaymentsContainer = ({
   alerts,
   balance,
   dispatchInputError,
+  dispatchPaypalPayment,
   dispatchStripeToken,
   dispatchSubmitAccountPayment,
   email,
@@ -80,6 +82,7 @@ const PaymentsContainer = ({
     <PaymentPortal
       alerts={alerts}
       balance={balance}
+      dispatchPaypalPayment={dispatchPaypalPayment}
       email={email}
       errors={errors}
       firstName={firstName}
@@ -104,6 +107,7 @@ PaymentsContainer.propTypes = {
   alerts: T.object,
   balance: T.number,
   dispatchInputError: T.func,
+  dispatchPaypalPayment: T.func,
   dispatchStripeToken: T.func,
   dispatchSubmitAccountPayment: T.func,
   email: T.string,
@@ -133,6 +137,7 @@ const mapDispatchToProps = dispatch => ({
    * Reducer: Payments
    */
   dispatchInputError: payload => dispatch(inputError(payload)),
+  dispatchPaypalPayment: payload => dispatch(paypalPayment(payload)),
   dispatchStripeToken: payload => dispatch(stripeToken(payload)),
   dispatchSubmitAccountPayment: payload =>
     dispatch(submitAccountPayment(payload)),

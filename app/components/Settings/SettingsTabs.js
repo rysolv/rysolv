@@ -34,6 +34,7 @@ const SettingsTabs = ({
   currentTab,
   deviceView,
   dispatchOpenModal,
+  dispatchPaypalPayment,
   displayBottom,
   dollarsEarned,
   email,
@@ -131,6 +132,7 @@ const SettingsTabs = ({
       Component={
         <DepositFormComponent
           creditCardProps={creditCardProps}
+          dispatchPaypalPayment={dispatchPaypalPayment}
           handleClearAllAlerts={handleClearAllAlerts}
           handleClearErrors={handleClearErrors}
           handleNav={handleNav}
@@ -138,6 +140,7 @@ const SettingsTabs = ({
           inputErrors={inputErrors}
           setDisplayBottom={setDisplayBottom}
           setStripeError={setStripeError}
+          userId={userId}
         />
       }
       FallbackComponent={
@@ -334,6 +337,7 @@ SettingsTabs.propTypes = {
   currentTab: T.number,
   deviceView: T.string,
   dispatchOpenModal: T.func,
+  dispatchPaypalPayment: T.func,
   displayBottom: T.bool,
   dollarsEarned: T.number,
   email: T.string,

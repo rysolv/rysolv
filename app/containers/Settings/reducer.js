@@ -13,6 +13,9 @@ import {
   INPUT_CHANGE,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  PAYPAL_PAYMENT_FAILURE,
+  PAYPAL_PAYMENT_SUCCESS,
+  PAYPAL_PAYMENT,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
   REMOVE_ISSUE,
@@ -117,6 +120,24 @@ const settingsReducer = produce((draft, { payload, type }) => {
       const { modalState } = payload;
       draft.isModalOpen = true;
       draft.modal = modalState;
+      break;
+    }
+    case PAYPAL_PAYMENT_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = { message: error };
+      draft.loading = false;
+      break;
+    }
+    case PAYPAL_PAYMENT_SUCCESS: {
+      const { balance, message } = payload;
+      draft.account.balance = balance;
+      draft.alerts.success = { message };
+      draft.loading = false;
+      break;
+    }
+    case PAYPAL_PAYMENT: {
+      draft.alerts = initialState.alerts;
+      draft.loading = true;
       break;
     }
     case REMOVE_ISSUE_FAILURE: {

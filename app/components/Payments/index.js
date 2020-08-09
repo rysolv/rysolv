@@ -34,6 +34,7 @@ const PaypalIcon = iconDictionary('paypal');
 const PaymentPortal = ({
   alerts: { error, success },
   balance,
+  dispatchPaypalPayment,
   email,
   errors: {
     email: emailError,
@@ -259,7 +260,7 @@ const PaymentPortal = ({
           expanded={isPaypalPaymentOpen}
           handleLabelClick={() => handleChangePaymentPanel('paypal')}
           Icon={PaypalIcon}
-          propsToPassDown={{ isPaypalPaymentOpen }}
+          propsToPassDown={{ dispatchPaypalPayment, isPaypalPaymentOpen, issueId, organizationId, total: fundValue, userId }}
           title="Paypal"
         />
       </FundingContainer>
@@ -270,6 +271,7 @@ const PaymentPortal = ({
 PaymentPortal.propTypes = {
   alerts: T.object,
   balance: T.number,
+  dispatchPaypalPayment: T.func,
   email: T.string,
   errors: T.object,
   firstName: T.string,

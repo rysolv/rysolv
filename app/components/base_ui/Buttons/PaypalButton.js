@@ -3,6 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import scriptLoader from 'react-async-script-loader';
 
+const CLIENT = {
+  sandbox: process.env.PAYPAY_CLIENT_ID,
+  production: process.env.PAYPAY_CLIENT_ID,
+};
+
+const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox';
+
 class PaypalButton extends React.Component {
   constructor(props) {
     super(props);
@@ -33,23 +40,21 @@ class PaypalButton extends React.Component {
 
   render() {
     const {
+      dispatchPaypalPayment,
+      issueId,
+      organizationId,
       total,
-      currency,
-      env,
-      commit,
-      client,
-      onSuccess,
-      onError,
-      onCancel,
+      userId,
     } = this.props;
     const { showButton } = this.state;
+    const formattedTotal = Number(total).toFixed(2);
     const payment = () =>
-      paypal.rest.payment.create(env, client, {
+      paypal.rest.payment.create(ENV, CLIENT, {
         transactions: [
           {
             amount: {
-              total,
-              currency,
+              total: formattedTotal,
+              currency: 'USD',
             },
           },
         ],
@@ -57,25 +62,26 @@ class PaypalButton extends React.Component {
     const onAuthorize = (data, actions) =>
       actions.payment.execute().then(() => {
         const paymentObj = {
-          paid: true,
-          cancelled: false,
-          payerID: data.payerID,
-          paymentID: data.paymentID,
-          paymentToken: data.paymentToken,
-          returnUrl: data.returnUrl,
+          amount: formattedTotal,
+          issueId,
+          organizationId,
+          userId,
         };
-        onSuccess(paymentObj);
+        dispatchPaypalPayment(paymentObj);
       });
     return (
       <div>
         {showButton && (
           <paypal.Button.react
-            client={client}
-            commit={commit}
-            env={env}
+            client={CLIENT}
+            commit
+            env={ENV}
             onAuthorize={onAuthorize}
-            onCancel={onCancel}
-            onError={onError}
+            onError={() =>
+              dispatchPaypalPayment({
+                error: 'There was an error with your Paypal payment.',
+              })
+            }
             payment={payment}
             style={{ tagline: false }}
           />

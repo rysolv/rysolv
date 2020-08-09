@@ -1,6 +1,9 @@
 import {
   CLEAR_ALERTS,
   INPUT_ERROR,
+  PAYPAL_PAYMENT_FAILURE,
+  PAYPAL_PAYMENT_SUCCESS,
+  PAYPAL_PAYMENT,
   STRIPE_TOKEN_FAILURE,
   STRIPE_TOKEN_SUCCESS,
   STRIPE_TOKEN,
@@ -19,6 +22,27 @@ export function inputError(payload) {
   return {
     payload,
     type: INPUT_ERROR,
+  };
+}
+
+export function paypalPaymentFailure(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT_FAILURE,
+  };
+}
+
+export function paypalPaymentSuccess(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT_SUCCESS,
+  };
+}
+
+export function paypalPayment(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT,
   };
 }
 

@@ -11,6 +11,9 @@ import {
   INPUT_CHANGE,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  PAYPAL_PAYMENT_FAILURE,
+  PAYPAL_PAYMENT_SUCCESS,
+  PAYPAL_PAYMENT,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
   REMOVE_ISSUE,
@@ -103,6 +106,27 @@ export function openModalState(payload) {
   return {
     payload,
     type: OPEN_MODAL_STATE,
+  };
+}
+
+export function paypalPaymentFailure(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT_FAILURE,
+  };
+}
+
+export function paypalPaymentSuccess(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT_SUCCESS,
+  };
+}
+
+export function paypalPayment(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT,
   };
 }
 

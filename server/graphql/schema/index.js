@@ -347,6 +347,7 @@ module.exports = buildSchema(`
     createIssue(issueInput: IssueInput): IssueResult
     createOrganization(organizationInput: OrganizationInput): OrganizationResult
     createUser(userInput: UserInput): User!
+    createPaypalPayment(amount: Float!, issueId: ID, organizationId: ID, userId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): PullRequestResult!
     createStripeCharge(amount: Float!, issueId: ID, organizationId: ID, token: String!, userId: ID): PaymentResult!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!

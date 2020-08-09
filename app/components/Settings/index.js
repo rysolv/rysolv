@@ -76,6 +76,7 @@ const SettingsView = ({
   },
   deviceView,
   dispatchOpenModal,
+  dispatchPaypalPayment,
   dispatchSaveChange,
   filterValues,
   handleClearAlerts,
@@ -296,6 +297,7 @@ const SettingsView = ({
             currentTab={currentTab}
             deviceView={deviceView}
             dispatchOpenModal={dispatchOpenModal}
+            dispatchPaypalPayment={dispatchPaypalPayment}
             displayBottom={displayBottom}
             dollarsEarned={dollarsEarned}
             email={email}
@@ -343,6 +345,7 @@ SettingsView.propTypes = {
   data: T.object.isRequired,
   deviceView: T.string.isRequired,
   dispatchOpenModal: T.func.isRequired,
+  dispatchPaypalPayment: T.func.isRequired,
   dispatchSaveChange: T.func.isRequired,
   filterValues: T.object.isRequired,
   handleClearAlerts: T.func.isRequired,
