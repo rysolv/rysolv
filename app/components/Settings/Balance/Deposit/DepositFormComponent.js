@@ -108,7 +108,7 @@ const DepositFormComponent = ({
       <Divider />
       <StyledH3>Your funding amount</StyledH3>
       <StyledText>
-        Rysolv has a 3.6% standard transaction fee to cover credit card
+        Rysolv has a 3.6% standard transaction fee to cover credit card / Paypal
         processing and the safe transfer of funds.
       </StyledText>
       <ChargeBreakdownWrapper>
@@ -145,7 +145,8 @@ const DepositFormComponent = ({
         }
         FallbackComponent={<PaypalPaymentComponent
           dispatchPaypalPayment={dispatchPaypalPayment}
-          total={totalValue}
+          dollarValue={dollarValue}
+          handleValidateInput={handleValidateInput}
           userId={userId}
         />}
         shouldRender={paymentType === 'Credit card'}

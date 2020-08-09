@@ -13,6 +13,9 @@ module.exports = {
   createPaypalPayment: async args => {
     const { amount, issueId, organizationId, userId } = args;
     try {
+      if (amount < 1) {
+        throw new Error('Amount must be greater than $0.99');
+      }
       if (issueId && organizationId) {
         const [issueResult] = await submitAccountPaymentIssue(issueId, amount);
         await submitAccountPaymentOrganization(organizationId, amount);
@@ -58,6 +61,9 @@ module.exports = {
     const { amount, issueId, organizationId, token, userId } = args;
     const totalAmount = (amount * 103.6).toFixed();
     try {
+      if (amount < 1) {
+        throw new Error('Amount must be greater than $0.99');
+      }
       await stripe.charges.create({
         amount: totalAmount,
         currency: 'usd',

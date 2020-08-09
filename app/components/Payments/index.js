@@ -3,10 +3,7 @@ import React, { useState } from 'react';
 import T from 'prop-types';
 
 import { BaseExpansionPanel, ConditionalRender } from 'components/base_ui';
-import {
-  formatDollarAmount,
-  handleZipChange,
-} from 'utils/globalHelpers';
+import { formatDollarAmount, handleZipChange } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import CreditCardView from './CreditCardView';
@@ -68,15 +65,15 @@ const PaymentPortal = ({
   const [zipValue, setZipValue] = useState('');
 
   const isPersonalInfoComplete =
-  !!emailValue && !!firstNameValue && !!lastNameValue;
+    !!emailValue && !!firstNameValue && !!lastNameValue;
 
   const values = {
     email: emailValue,
     firstName: firstNameValue,
     fundValue,
     lastName: lastNameValue,
-  }
- 
+  };
+
   const handleChangeDollarValue = (e, valuePassedIn) => {
     const { value: valueFromTarget } = e.target;
     const value = valuePassedIn || valueFromTarget;
@@ -100,7 +97,8 @@ const PaymentPortal = ({
         setFundValue(formattedValue);
       }
       if (formattedString.length === 2) {
-        formattedString[0] = formattedString[0] === '' ? '0' : formattedString[0];
+        formattedString[0] =
+          formattedString[0] === '' ? '0' : formattedString[0];
         formattedString[1] = formattedString[1]
           ? formattedString[1].slice(0, 2)
           : '';
@@ -110,7 +108,7 @@ const PaymentPortal = ({
     }
   };
 
-  const handleChangePaymentPanel = (type) => {
+  const handleChangePaymentPanel = type => {
     if (type === 'account') {
       if (isAccountPaymentOpen) {
         setIsAccountPaymentOpen(false);
@@ -143,7 +141,7 @@ const PaymentPortal = ({
   const handleClearAlerts = () => {
     setStripeError('');
     handleClearPaymentAlerts();
-  }
+  };
 
   const handleEmailValueChange = (event, newEmail) => {
     setEmailValue(newEmail);
@@ -172,7 +170,9 @@ const PaymentPortal = ({
     <PaymentContainer {...restProps}>
       <OverviewWrapper>
         <Amount>{formatDollarAmount(fundedAmount)}</Amount>
-        <Funded isFunded={!fundedAmount || !open}>{fundedAmount ? 'Funded' : 'Unfunded'}</Funded>
+        <Funded isFunded={!fundedAmount || !open}>
+          {fundedAmount ? 'Funded' : 'Unfunded'}
+        </Funded>
       </OverviewWrapper>
       <FundingContainer open={open}>
         <DollarValueWrapper>
@@ -180,7 +180,7 @@ const PaymentPortal = ({
             fundValue={fundValue}
             handleChange={handleChangeDollarValue}
           />
-        - or -
+          - or -
           <StyledPaymentTextInput
             adornmentComponent="$"
             error={!!fundValueError}
@@ -260,7 +260,15 @@ const PaymentPortal = ({
           expanded={isPaypalPaymentOpen}
           handleLabelClick={() => handleChangePaymentPanel('paypal')}
           Icon={PaypalIcon}
-          propsToPassDown={{ dispatchPaypalPayment, isPaypalPaymentOpen, issueId, organizationId, total: fundValue, userId }}
+          propsToPassDown={{
+            dispatchPaypalPayment,
+            dollarValue: fundValue,
+            handleValidateInput: () => handleValidateInput({ field: 'fundValue', values }),
+            isPaypalPaymentOpen,
+            issueId,
+            organizationId,
+            userId,
+          }}
           title="Paypal"
         />
       </FundingContainer>

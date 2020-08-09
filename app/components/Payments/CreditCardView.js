@@ -16,6 +16,7 @@ import {
   InputWrapper,
   StyledPaymentTextInput,
   StyledPrimaryAsyncButton,
+  TextWrapper,
 } from './styledComponents';
 
 const CreditCardView = ({
@@ -58,6 +59,10 @@ const CreditCardView = ({
       Component={
         <Fragment>
           <CreditCardViewContainer>
+            <TextWrapper>
+              A 3.6% standard transaction fee will be added to cover credit card
+              processing and the safe transfer of funds.
+            </TextWrapper>
             <InputWrapper>
               <StyledPaymentTextInput
                 adornmentComponent="Number"
