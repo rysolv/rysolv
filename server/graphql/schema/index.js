@@ -318,8 +318,8 @@ module.exports = buildSchema(`
     getComments: [Comment]!
     getIssues: [Issue!]!
     getOrganizations: [Organization!]!
-    getUsers: [User!]!
     getPullRequests: PullRequestArrayResult
+    getUsers: [User!]!
 
     getIssueComments(id: ID!): [Comment]
     getUserOrganizations(id: ID!): [Organization!]
@@ -330,8 +330,9 @@ module.exports = buildSchema(`
 
     oneIssue(id: ID!): IssueResult
     oneOrganization(id: ID!): OrganizationResult
-    oneUser(id: ID!): User!
     onePullRequest(id: ID!): PullRequestResult
+    oneUser(id: ID!): User!
+    oneUserSignUp(email: String!): User!
 
     searchIssues(value: String!): [Issue!]!
     searchOrganizations(value: String!): OrganizationArrayResult

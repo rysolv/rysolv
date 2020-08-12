@@ -17,13 +17,13 @@ import {
 
 const Signup = ({
   data: { email, firstName, lastName, password, username, verifyPassword },
-  error: { signUp: signUpError },
+  error,
   handleClearAuthAlerts,
   handleInputChange,
   handleSignUp,
   handleValidateInput,
+  loading,
   signUpDisabled,
-  signUpLoading,
 }) => {
   const handleKeypress = e => {
     if (e.keyCode === 13 && !signUpDisabled) {
@@ -34,9 +34,9 @@ const Signup = ({
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
         <Title>Create account</Title>
-        {signUpError.error && (
+        {error && (
           <StyledErrorSuccessBanner
-            error={signUpError}
+            error={error}
             onClose={handleClearAuthAlerts}
           />
         )}
@@ -147,8 +147,8 @@ const Signup = ({
         <StyledPrimaryAsyncButton
           disabled={signUpDisabled}
           label="Sign up"
-          loading={signUpLoading}
-          onClick={() => handleSignUp()}
+          loading={loading}
+          onClick={handleSignUp}
         />
       </InputFormWrapper>
       <SubText>
@@ -160,13 +160,13 @@ const Signup = ({
 
 Signup.propTypes = {
   data: T.object.isRequired,
-  error: T.object,
+  error: T.oneOfType([T.bool, T.object]).isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignUp: T.func.isRequired,
-  handleValidateInput: T.func,
-  signUpDisabled: T.bool,
-  signUpLoading: T.bool,
+  handleValidateInput: T.func.isRequired,
+  loading: T.bool.isRequired,
+  signUpDisabled: T.bool.isRequired,
 };
 
 export default Signup;

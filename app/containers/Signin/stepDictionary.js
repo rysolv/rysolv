@@ -1,7 +1,13 @@
-import Signup from 'components/Signin/Signup';
-import VerifyEmail from 'components/Signin/VerifyEmail';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+import Verify from './Verify';
+
+export const signInDictionary = {
+  1: SignIn,
+  2: Verify,
+};
 
 export const signUpDictionary = {
-  1: Signup,
-  2: VerifyEmail,
+  1: SignUp,
+  2: Verify,
 };
