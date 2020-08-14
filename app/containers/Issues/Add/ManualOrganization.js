@@ -39,7 +39,7 @@ const ManualOrganization = ({
   const idSelected = organizationData.organizationId.value !== '';
 
   const handleKeypress = e => {
-    if (e.which === 13 && isDisabled && idSelected) {
+    if (e.which === 13 && idSelected) {
       handleIncrementStep({ step: 3, view: 'addIssue' });
     }
   };

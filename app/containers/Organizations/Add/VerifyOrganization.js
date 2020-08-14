@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import { PrimaryAsyncButton } from 'components/base_ui';
 import VerifyForm from 'components/Organizations/Add/VerifyForm';
@@ -28,7 +27,6 @@ const VerifyOrganization = ({
   dispatchIncrementStep,
   dispatchSaveInfo,
   dispatchVerifyInfo,
-  handleNav,
   importSuccess,
   isVerified,
   organizationData,
@@ -42,8 +40,7 @@ const VerifyOrganization = ({
     }
   };
   const handleSaveInfo = () => {
-    dispatchSaveInfo({ requestBody, activeUser });
-    handleNav('/organizations');
+    dispatchSaveInfo({ activeUser, requestBody });
   };
   const cancelImport = () => {
     dispatchClearForm();
@@ -92,7 +89,6 @@ VerifyOrganization.propTypes = {
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
   dispatchVerifyInfo: T.func,
-  handleNav: T.func,
   importSuccess: T.bool,
   isVerified: T.bool,
   organizationData: T.object,
@@ -117,10 +113,6 @@ function mapDispatchToProps(dispatch) {
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
     dispatchVerifyInfo: () => dispatch(verifyInfo()),
-    /**
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 

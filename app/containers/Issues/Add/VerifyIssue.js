@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import { PrimaryAsyncButton } from 'components/base_ui';
 import VerifyForm from 'components/Issues/Add/Verify';
@@ -26,7 +25,6 @@ const VerifyIssue = ({
   dispatchClearForm,
   dispatchIncrementStep,
   dispatchSaveInfo,
-  handleNav,
   importSuccess,
   issueData,
   organizationData,
@@ -41,7 +39,6 @@ const VerifyIssue = ({
   };
   const handleSaveInfo = () => {
     dispatchSaveInfo({ requestBody, activeUser });
-    handleNav('/issues');
   };
   const cancelImport = () => {
     dispatchClearForm();
@@ -101,7 +98,6 @@ VerifyIssue.propTypes = {
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
-  handleNav: T.func,
   importSuccess: T.bool,
   issueData: T.object,
   organizationData: T.object,
@@ -126,10 +122,6 @@ function mapDispatchToProps(dispatch) {
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
     dispatchVerifyInfo: () => dispatch(verifyInfo()),
-    /**
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 
