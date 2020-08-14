@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -17,53 +17,67 @@ import {
   makeSelectIssues,
   makeSelectOrganizationsDisabled,
 } from '../selectors';
-import { BackLink, ButtonGroup, StyledH3 } from './styledComponents';
+import {
+  BackLink,
+  ButtonGroup,
+  StyledFocusDiv,
+  StyledH3,
+} from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class ManualOrganization extends React.PureComponent {
-  render() {
-    const {
-      activeUser,
-      handleClearOrganization,
-      handleIncrementStep,
-      handleInputChange,
-      handleUpdateOrganization,
-      isDisabled,
-      organizationData,
-    } = this.props;
-    const idSelected = organizationData.organizationId.value !== '';
-    return (
-      <Fragment>
-        <StyledH3>Select an Organization</StyledH3>
-        <ExistingOrganizations
-          activeUser={activeUser}
-          organizationData={organizationData}
-          handleInputChange={handleInputChange}
-          handleUpdateOrganization={handleUpdateOrganization}
-          handleClearOrganization={handleClearOrganization}
-        />
-        <StyledH3>Or create a new Organization</StyledH3>
+const ManualOrganization = ({
+  activeUser,
+  handleClearOrganization,
+  handleIncrementStep,
+  handleInputChange,
+  handleUpdateOrganization,
+  isDisabled,
+  organizationData,
+}) => {
+  useEffect(() => document.getElementById('issue-org-manual').focus(), []);
 
-        <OrganizationForm
-          organizationData={organizationData}
-          handleInputChange={handleInputChange}
+  const idSelected = organizationData.organizationId.value !== '';
+
+  const handleKeypress = e => {
+    if (e.which === 13 && isDisabled && idSelected) {
+      handleIncrementStep({ step: 3, view: 'addIssue' });
+    }
+  };
+  return (
+    <StyledFocusDiv
+      id="issue-org-manual"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
+      <StyledH3>Select an Organization</StyledH3>
+      <ExistingOrganizations
+        activeUser={activeUser}
+        handleClearOrganization={handleClearOrganization}
+        handleInputChange={handleInputChange}
+        handleUpdateOrganization={handleUpdateOrganization}
+        organizationData={organizationData}
+      />
+      <StyledH3>Or create a new Organization</StyledH3>
+
+      <OrganizationForm
+        handleInputChange={handleInputChange}
+        organizationData={organizationData}
+      />
+      <ButtonGroup>
+        <BackLink
+          onClick={() => handleIncrementStep({ step: 1, view: 'addIssue' })}
+        >
+          Back
+        </BackLink>
+        <PrimaryButton
+          disabled={!isDisabled && !idSelected}
+          label="Next"
+          onClick={() => handleIncrementStep({ step: 3, view: 'addIssue' })}
         />
-        <ButtonGroup>
-          <BackLink
-            onClick={() => handleIncrementStep({ step: 1, view: 'addIssue' })}
-          >
-            Back
-          </BackLink>
-          <PrimaryButton
-            disabled={!isDisabled && !idSelected}
-            label="Next"
-            onClick={() => handleIncrementStep({ step: 3, view: 'addIssue' })}
-          />
-        </ButtonGroup>
-      </Fragment>
-    );
-  }
-}
+      </ButtonGroup>
+    </StyledFocusDiv>
+  );
+};
 
 ManualOrganization.propTypes = {
   activeUser: T.object,
@@ -79,8 +93,8 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
-  organizationData: makeSelectIssues('organizationData'),
   isDisabled: makeSelectOrganizationsDisabled(),
+  organizationData: makeSelectIssues('organizationData'),
 });
 
 function mapDispatchToProps(dispatch) {

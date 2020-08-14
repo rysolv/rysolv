@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -11,44 +11,57 @@ import {
   makeSelectOrganizations,
   makeSelectOrganizationsDisabled,
 } from '../selectors';
-import { BackLink, ButtonGroup, StyledH3 } from './styledComponents';
+import {
+  BackLink,
+  ButtonGroup,
+  StyledFocusDiv,
+  StyledH3,
+} from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
-export class ManualOrganization extends React.PureComponent {
-  render() {
-    const {
-      organizationData,
-      handleIncrementStep,
-      handleInputChange,
-      isDisabled,
-    } = this.props;
-    return (
-      <Fragment>
-        <StyledH3>Add Organization</StyledH3>
-        <ManualForm
-          organizationData={organizationData}
-          handleInputChange={handleInputChange}
+const ManualOrganization = ({
+  handleIncrementStep,
+  handleInputChange,
+  isDisabled,
+  organizationData,
+}) => {
+  useEffect(() => document.getElementById('organization-manual').focus(), []);
+
+  const handleKeypress = e => {
+    if (e.which === 13 && isDisabled) {
+      handleIncrementStep({ step: 3, view: 'addOrganization' });
+    }
+  };
+  return (
+    <StyledFocusDiv
+      id="organization-manual"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
+      <StyledH3>Add Organization</StyledH3>
+      <ManualForm
+        handleInputChange={handleInputChange}
+        organizationData={organizationData}
+      />
+      <ButtonGroup>
+        <BackLink
+          onClick={() =>
+            handleIncrementStep({ step: 1, view: 'addOrganization' })
+          }
+        >
+          Back
+        </BackLink>
+        <PrimaryButton
+          disabled={!isDisabled}
+          label="Next"
+          onClick={() =>
+            handleIncrementStep({ step: 3, view: 'addOrganization' })
+          }
         />
-        <ButtonGroup>
-          <BackLink
-            onClick={() =>
-              handleIncrementStep({ step: 1, view: 'addOrganization' })
-            }
-          >
-            Back
-          </BackLink>
-          <PrimaryButton
-            disabled={!isDisabled}
-            label="Next"
-            onClick={() =>
-              handleIncrementStep({ step: 3, view: 'addOrganization' })
-            }
-          />
-        </ButtonGroup>
-      </Fragment>
-    );
-  }
-}
+      </ButtonGroup>
+    </StyledFocusDiv>
+  );
+};
 
 ManualOrganization.propTypes = {
   handleIncrementStep: T.func,

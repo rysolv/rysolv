@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
-import iconDictionary from 'utils/iconDictionary';
+
 import { BaseTextInputWithAdornment } from 'components/base_ui';
+import iconDictionary from 'utils/iconDictionary';
+
 import {
   ImportFormContainer,
   StyledImportError,
@@ -16,9 +18,15 @@ const ImportForm = ({
   handleSubmit,
   importError,
   importOrganizationLoading,
-  organizationData,
+  organizationData: { importUrl },
 }) => {
-  const { importUrl } = organizationData;
+  useEffect(() => document.getElementById('organization-import').focus(), []);
+
+  const handleKeypress = e => {
+    if (e.which === 13) {
+      handleSubmit();
+    }
+  };
   const onChangeHandler = e => {
     handleInputChange({
       field: 'importUrl',
@@ -26,19 +34,22 @@ const ImportForm = ({
       value: e.target.value,
     });
   };
-
   return (
-    <ImportFormContainer>
+    <ImportFormContainer
+      id="organization-import"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
       Import GitHub Organization
       <br />
       <BaseTextInputWithAdornment
-        disabled={importOrganizationLoading}
         adornmentComponent={SearchIcon}
+        disabled={importOrganizationLoading}
         error={!!importUrl.error}
         helperText={importUrl.error || ''}
         name="url"
-        onClick={handleSubmit}
         onChange={onChangeHandler}
+        onClick={handleSubmit}
         position="end"
         value={importUrl.value}
       />

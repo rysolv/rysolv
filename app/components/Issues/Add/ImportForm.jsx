@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
-import iconDictionary from 'utils/iconDictionary';
+
 import { BaseTextInputWithAdornment } from 'components/base_ui';
+import iconDictionary from 'utils/iconDictionary';
+
 import {
   ImportFormContainer,
   StyledImportError,
@@ -11,14 +13,20 @@ import {
 const SearchIcon = iconDictionary('search');
 
 const ImportForm = ({
-  issueData,
-  importIssueLoading,
   handleIncrementStep,
   handleInputChange,
   handleSubmit,
   importError,
+  importIssueLoading,
+  issueData: { importUrl },
 }) => {
-  const { importUrl } = issueData;
+  useEffect(() => document.getElementById('issue-import').focus(), []);
+
+  const handleKeypress = e => {
+    if (e.which === 13) {
+      handleSubmit();
+    }
+  };
   const onChangeHandler = e => {
     handleInputChange({
       field: 'importUrl',
@@ -26,19 +34,22 @@ const ImportForm = ({
       value: e.target.value,
     });
   };
-
   return (
-    <ImportFormContainer>
+    <ImportFormContainer
+      id="issue-import"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
       Import GitHub Issue
       <br />
       <BaseTextInputWithAdornment
-        disabled={importIssueLoading}
         adornmentComponent={SearchIcon}
+        disabled={importIssueLoading}
         error={!!importUrl.error}
         helperText={importUrl.error || ''}
         name="url"
-        onClick={handleSubmit}
         onChange={onChangeHandler}
+        onClick={handleSubmit}
         position="end"
         value={importUrl.value}
       />

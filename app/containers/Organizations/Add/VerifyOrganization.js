@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -17,66 +17,74 @@ import {
   BackLink,
   ButtonGroup,
   StyledCheckboxWithLabel,
+  StyledFocusDiv,
   StyledH3,
   Wrapper,
 } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
-export class VerifyOrganization extends React.PureComponent {
-  render() {
-    const {
-      activeUser,
-      dispatchClearForm,
-      dispatchIncrementStep,
-      dispatchSaveInfo,
-      dispatchVerifyInfo,
-      handleNav,
-      importSuccess,
-      isVerified,
-      organizationData,
-      requestBody,
-    } = this.props;
-    const handleSaveInfo = () => {
-      dispatchSaveInfo({ requestBody, activeUser });
-      handleNav('/organizations');
-    };
-    const cancelImport = () => {
-      dispatchClearForm();
-      dispatchIncrementStep({ step: 1, view: 'addOrganization' });
-    };
-    return (
-      <Fragment>
-        <StyledH3>Verify Organization Information</StyledH3>
-        <Wrapper>
-          <VerifyForm organizationData={organizationData} />
-          <StyledCheckboxWithLabel
-            checked={isVerified}
-            label={verifyMessage}
-            onChange={dispatchVerifyInfo}
-          />
-        </Wrapper>
-        <ButtonGroup>
-          {importSuccess ? (
-            <BackLink onClick={() => cancelImport()}>Cancel</BackLink>
-          ) : (
-            <BackLink
-              onClick={() =>
-                dispatchIncrementStep({ step: 2, view: 'addOrganization' })
-              }
-            >
-              Edit Org
-            </BackLink>
-          )}
-          <PrimaryAsyncButton
-            disabled={!isVerified}
-            label="Submit"
-            onClick={handleSaveInfo}
-          />
-        </ButtonGroup>
-      </Fragment>
-    );
-  }
-}
+const VerifyOrganization = ({
+  activeUser,
+  dispatchClearForm,
+  dispatchIncrementStep,
+  dispatchSaveInfo,
+  dispatchVerifyInfo,
+  handleNav,
+  importSuccess,
+  isVerified,
+  organizationData,
+  requestBody,
+}) => {
+  useEffect(() => document.getElementById('organization-add').focus(), []);
+
+  const handleKeypress = e => {
+    if (e.which === 13 && isVerified) {
+      handleSaveInfo();
+    }
+  };
+  const handleSaveInfo = () => {
+    dispatchSaveInfo({ requestBody, activeUser });
+    handleNav('/organizations');
+  };
+  const cancelImport = () => {
+    dispatchClearForm();
+    dispatchIncrementStep({ step: 1, view: 'addOrganization' });
+  };
+  return (
+    <StyledFocusDiv
+      id="organization-add"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
+      <StyledH3>Verify Organization Information</StyledH3>
+      <Wrapper>
+        <VerifyForm organizationData={organizationData} />
+        <StyledCheckboxWithLabel
+          checked={isVerified}
+          label={verifyMessage}
+          onChange={dispatchVerifyInfo}
+        />
+      </Wrapper>
+      <ButtonGroup>
+        {importSuccess ? (
+          <BackLink onClick={() => cancelImport()}>Cancel</BackLink>
+        ) : (
+          <BackLink
+            onClick={() =>
+              dispatchIncrementStep({ step: 2, view: 'addOrganization' })
+            }
+          >
+            Edit Org
+          </BackLink>
+        )}
+        <PrimaryAsyncButton
+          disabled={!isVerified}
+          label="Submit"
+          onClick={handleSaveInfo}
+        />
+      </ButtonGroup>
+    </StyledFocusDiv>
+  );
+};
 
 VerifyOrganization.propTypes = {
   activeUser: T.object,
