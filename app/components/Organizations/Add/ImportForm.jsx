@@ -22,8 +22,8 @@ const ImportForm = ({
 }) => {
   useEffect(() => document.getElementById('organization-import').focus(), []);
 
-  const handleKeypress = e => {
-    if (e.which === 13) {
+  const handleKeypress = ({ keyCode, which }) => {
+    if (keyCode === 13 || which === 13 || 0) {
       handleSubmit();
     }
   };

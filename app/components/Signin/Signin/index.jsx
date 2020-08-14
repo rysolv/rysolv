@@ -23,8 +23,8 @@ const Signin = ({
   loading,
   signInDisabled,
 }) => {
-  const handleKeypress = e => {
-    if (e.keyCode === 13 && !signInDisabled) {
+  const handleKeypress = ({ keyCode, which }) => {
+    if ((keyCode === 13 || which === 13 || 0) && !signInDisabled) {
       handleSignIn();
     }
   };

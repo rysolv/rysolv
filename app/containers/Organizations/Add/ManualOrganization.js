@@ -27,8 +27,8 @@ const ManualOrganization = ({
 }) => {
   useEffect(() => document.getElementById('organization-manual').focus(), []);
 
-  const handleKeypress = e => {
-    if (e.which === 13 && isDisabled) {
+  const handleKeypress = ({ keyCode, which }) => {
+    if ((keyCode === 13 || which === 13 || 0) && isDisabled) {
       handleIncrementStep({ step: 3, view: 'addOrganization' });
     }
   };

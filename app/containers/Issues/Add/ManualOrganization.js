@@ -38,8 +38,8 @@ const ManualOrganization = ({
 
   const idSelected = organizationData.organizationId.value !== '';
 
-  const handleKeypress = e => {
-    if (e.which === 13 && idSelected) {
+  const handleKeypress = ({ keyCode, which }) => {
+    if ((keyCode === 13 || which === 13 || 0) && idSelected) {
       handleIncrementStep({ step: 3, view: 'addIssue' });
     }
   };

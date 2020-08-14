@@ -28,8 +28,8 @@ const ManualIssue = ({
 }) => {
   useEffect(() => document.getElementById('issue-manual').focus(), []);
 
-  const handleKeypress = e => {
-    if (e.which === 13 && isDisabled) {
+  const handleKeypress = ({ keyCode, which }) => {
+    if ((keyCode === 13 || which === 13 || 0) && isDisabled) {
       handleIncrementStep({ step: 4, view: 'addIssue' });
     }
   };

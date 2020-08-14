@@ -27,8 +27,8 @@ const VerifyEmail = ({
   verify: { verificationCode },
   verifyDisabled,
 }) => {
-  const handleKeypress = ({ keyCode }) => {
-    if (keyCode === 13 && !verifyDisabled) {
+  const handleKeypress = ({ keyCode, which }) => {
+    if ((keyCode === 13 || which === 13 || 0) && !verifyDisabled) {
       handleVerifyEmail();
     }
   };
