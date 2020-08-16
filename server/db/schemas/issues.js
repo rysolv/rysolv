@@ -7,7 +7,7 @@ issues(
   created_date TIMESTAMP,
   funded_amount FLOAT DEFAULT 0,
   id UUID PRIMARY KEY,
-  is_funding_paid_out BOOLEAN DEFAULT false,
+  is_funding_paid_out UUID DEFAULT NULL,
   is_manual BOOLEAN,
   language VARCHAR(128) [],
   modified_date TIMESTAMP,
