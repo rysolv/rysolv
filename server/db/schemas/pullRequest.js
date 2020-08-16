@@ -1,6 +1,5 @@
 const pullRequests = `CREATE TABLE IF NOT EXISTS
   pullrequests(
-    api_url VARCHAR(128),
     created_date TIMESTAMP,
     github_username VARCHAR(128),
     html_url VARCHAR(128),

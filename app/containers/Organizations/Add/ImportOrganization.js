@@ -12,6 +12,7 @@ import {
   incrementStep,
   inputChange,
   inputError,
+  updateIsManual,
 } from '../actions';
 import {
   makeSelectOrganizations,
@@ -21,6 +22,11 @@ import {
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class ImportOrganization extends React.PureComponent {
+  componentDidMount() {
+    const { dispatchUpdateIsManual } = this.props;
+    dispatchUpdateIsManual({ value: false });
+  }
+
   render() {
     const {
       dispatchImportOrganization,
@@ -66,6 +72,7 @@ export class ImportOrganization extends React.PureComponent {
 ImportOrganization.propTypes = {
   dispatchImportOrganization: T.func,
   dispatchInputError: T.func,
+  dispatchUpdateIsManual: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   importError: T.object,
@@ -92,6 +99,7 @@ function mapDispatchToProps(dispatch) {
     dispatchImportOrganization: payload =>
       dispatch(importOrganization(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
+    dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };

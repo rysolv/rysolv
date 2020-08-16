@@ -31,6 +31,7 @@ import {
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
+  UPDATE_IS_MANUAL,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
@@ -40,7 +41,45 @@ import {
 
 export const initialState = {
   alerts: { error: false, success: false },
-  organizations: [],
+  editInfo: {
+    id: { error: '', value: '' },
+    createdDate: { error: '', value: '' },
+    description: { error: '', value: '' },
+    issues: { error: '', value: '' },
+    logo: { error: '', value: '' },
+    modifiedDate: { error: '', value: '' },
+    name: { error: '', value: '' },
+    organizationUrl: { error: '', value: '' },
+    repoUrl: { error: '', value: '' },
+    verified: { error: '', value: '' },
+  },
+  error: {
+    fetchOrganization: false,
+    importOrganization: { error: false, message: '' },
+    organizations: false,
+    searchOrganizations: false,
+  },
+  filter: {
+    issues: 'Newest',
+    language: [],
+    organization: [],
+    overview: 'Newest',
+    price: [0, 5000],
+  },
+  importSuccess: false,
+  isManual: false,
+  isVerified: false,
+  loading: {
+    addOrganization: false,
+    deleteOrganization: false,
+    fetchOrganization: false,
+    importOrganization: false,
+    organizations: false,
+    saveOrganization: false,
+    searchOrganizations: false,
+    updateOrganization: false,
+    upvoteIssue: false,
+  },
   organization: {},
   organizationData: {
     importUrl: { error: '', value: '' },
@@ -54,44 +93,7 @@ export const initialState = {
     organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
   },
-  editInfo: {
-    id: { error: '', value: '' },
-    createdDate: { error: '', value: '' },
-    description: { error: '', value: '' },
-    issues: { error: '', value: '' },
-    logo: { error: '', value: '' },
-    modifiedDate: { error: '', value: '' },
-    name: { error: '', value: '' },
-    organizationUrl: { error: '', value: '' },
-    repoUrl: { error: '', value: '' },
-    verified: { error: '', value: '' },
-  },
-  filter: {
-    issues: 'Newest',
-    language: [],
-    organization: [],
-    overview: 'Newest',
-    price: [0, 5000],
-  },
-  loading: {
-    addOrganization: false,
-    deleteOrganization: false,
-    fetchOrganization: false,
-    importOrganization: false,
-    organizations: false,
-    saveOrganization: false,
-    searchOrganizations: false,
-    updateOrganization: false,
-    upvoteIssue: false,
-  },
-  error: {
-    fetchOrganization: false,
-    importOrganization: { error: false, message: '' },
-    organizations: false,
-    searchOrganizations: false,
-  },
-  importSuccess: false,
-  isVerified: false,
+  organizations: [],
   search: {
     contributorInput: { error: '', value: '' },
     issueInput: { error: '', value: '' },
@@ -278,6 +280,11 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case UPDATE_INFO: {
       draft.loading.updateOrganization = true;
+      break;
+    }
+    case UPDATE_IS_MANUAL: {
+      const { value } = payload;
+      draft.isManual = value;
       break;
     }
     case UPVOTE_ISSUE_FAILURE: {

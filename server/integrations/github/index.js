@@ -159,7 +159,6 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
     number,
     state,
     title,
-    url: api_url,
     user: { login },
   } = pullRequestData;
 
@@ -171,7 +170,6 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
   }
 
   const pullData = {
-    apiUrl: api_url,
     githubUsername: login,
     htmlUrl: html_url,
     mergeable: !!mergeable,
