@@ -4,6 +4,7 @@ const { mapQueryPrint, singleQuery } = require('../db/query');
 const {
   activitySchema,
   commentSchema,
+  fundingSchema,
   issueSchema,
   organizationSchema,
   pullRequestSchema,
@@ -17,6 +18,7 @@ const createTables = async () => {
   await singleQuery(organizationSchema);
   await singleQuery(userSchema);
   await singleQuery(commentSchema);
+  await singleQuery(fundingSchema);
   await singleQuery(issueSchema);
   await singleQuery(pullRequestSchema);
   await singleQuery(activitySchema);

@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+const isNull = require('lodash/isNull');
+
 const { authenticate } = require('./auth');
 
 const getSingleIssue = async ({ issueNumber, organization, repo }) => {
@@ -169,12 +171,14 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
     throw new Error('Pull request has already been merged.');
   }
 
+  const isMergeable = isNull(mergeable) ? false : mergeable;
+  const isMerged = isNull(merged) ? false : merged;
   const pullData = {
     githubUsername: login,
     htmlUrl: html_url,
-    mergeable: !!mergeable,
+    mergeable: isMergeable,
     mergeableState: mergeable_state,
-    merged: !!merged,
+    merged: isMerged,
     open: state === 'open',
     pullNumber: number,
     status: state,
