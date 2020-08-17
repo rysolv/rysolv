@@ -42,6 +42,7 @@ import {
 import {
   ADD_ATTEMPT,
   ADD_COMMENT,
+  ADD_WATCH,
   CLOSE_ISSUE,
   DELETE_PULL_REQUEST,
   EDIT_ISSUE,
@@ -51,9 +52,9 @@ import {
   SAVE_INFO,
   SEARCH_ISSUES,
   SUBMIT_ACCOUNT_PAYMENT,
+  successAccountPaymentMessage,
   successCreateIssueMessage,
   successEditIssueMessage,
-  successAccountPaymentMessage,
   UPVOTE_ISSUE,
 } from './constants';
 
@@ -82,6 +83,47 @@ export function* addAttemptSaga({ payload }) {
     yield put(addAttemptSuccess(updateIssueArray));
     yield put(addWatchSuccess(updateIssueArray));
     yield put(fetchActiveUser({ userId }));
+  } catch (error) {
+    yield put(addAttemptFailure({ error }));
+    yield put(addWatchFailure({ error }));
+  }
+}
+
+export function* addWatchSaga({ payload }) {
+  const { issueId, userId } = payload;
+  const query = `
+  mutation {
+    toggleWatching(issueId: "${issueId}", userId: "${userId}") {
+      __typename
+      ... on WatchListArray {
+        issueArray {
+          fundedAmount
+          id
+          name
+        },
+        userArray
+      }
+      ... on Error {
+        message
+      }
+    }
+  }`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: {
+        toggleWatching: { __typename, issueArray, message, userArray },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') {
+      throw new Error(message);
+    }
+
+    yield put(addWatchSuccess({ issueId, userArray }));
+    yield put(updateActiveUser({ watching: issueArray }));
   } catch (error) {
     yield put(addAttemptFailure({ error }));
     yield put(addWatchFailure({ error }));
@@ -577,6 +619,7 @@ export function* upvoteIssuesSaga({ payload }) {
 export default function* watcherSaga() {
   yield takeLatest(ADD_ATTEMPT, addAttemptSaga);
   yield takeLatest(ADD_COMMENT, addCommentSaga);
+  yield takeLatest(ADD_WATCH, addWatchSaga);
   yield takeLatest(CLOSE_ISSUE, closeIssueSaga);
   yield takeLatest(DELETE_PULL_REQUEST, deletePullRequestSaga);
   yield takeLatest(EDIT_ISSUE, editIssueSaga);

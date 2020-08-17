@@ -22,6 +22,7 @@ import injectReducer from 'utils/injectReducer';
 import {
   addAttempt,
   addComment,
+  addWatch,
   clearAlerts,
   closeIssue,
   closeIssueModalState,
@@ -61,6 +62,7 @@ export class IssuesDetail extends React.PureComponent {
   render() {
     const {
       activeUser,
+      addWatching,
       alerts,
       deviceView,
       dispatchCloseIssue,
@@ -115,6 +117,7 @@ export class IssuesDetail extends React.PureComponent {
           isRequiredData
           propsToPassDown={{
             activeUser,
+            addWatching,
             alerts,
             deviceView,
             dispatchCloseIssue,
@@ -141,6 +144,7 @@ export class IssuesDetail extends React.PureComponent {
 
 IssuesDetail.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.object,
   deviceView: T.string,
   dispatchCloseIssue: T.func,
@@ -196,6 +200,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    addWatching: payload => dispatch(addWatch(payload)),
     dispatchCloseIssue: payload => dispatch(closeIssue(payload)),
     dispatchCloseIssueModal: () => dispatch(closeIssueModalState()),
     dispatchEditIssue: payload => dispatch(editIssue(payload)),

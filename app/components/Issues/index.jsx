@@ -7,6 +7,7 @@ import { StyledErrorSuccessBanner } from './styledComponents';
 
 const Issues = ({
   activeUser,
+  addWatching,
   alerts: { error, success },
   clearAlerts,
   data,
@@ -21,6 +22,7 @@ const Issues = ({
   const hasData = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
     activeUser,
+    addWatching,
     data,
     deviceView,
     dispatchFetchWatchList,
@@ -49,6 +51,7 @@ const Issues = ({
 
 Issues.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),

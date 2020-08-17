@@ -46,7 +46,6 @@ const newIssueObject = (issueId, issueInput) => ({
   rep: issueInput.rep || 25, // rep
   repo: issueInput.repo, // repo
   type: issueInput.type || 'bug', // bug
-  watching: issueInput.watching || [], // watching
 });
 
 const newOrganizationObject = organizationInput => ({
@@ -323,7 +322,6 @@ module.exports = {
         attempting: issueInput.attempting,
         contributor_id: issueInput.contributorId,
         rep: issueInput.rep,
-        watching: issueInput.watching,
         funded_amount: issueInput.fundedAmount,
         open: issueInput.open,
       };

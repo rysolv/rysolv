@@ -12,6 +12,7 @@ const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
 const { resolve } = require('path');
 const app = express();
+const PRODUCTION = process.env.NODE_ENV === 'production';
 
 // for those extra large issues
 app.use(express.json({ limit: '10mb' }));
@@ -23,7 +24,7 @@ app.use(
   graphQlHttp({
     schema: graphQlSchema,
     rootValue: graphQlResolvers,
-    graphiql: false,
+    graphiql: !PRODUCTION,
   }),
 );
 

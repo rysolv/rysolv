@@ -33,6 +33,7 @@ const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
+  addWatching,
   activeUser: { balance, email, firstName, id: activeUserId, issues, lastName },
   alerts: { error, success },
   data,
@@ -226,6 +227,7 @@ const IssueDetail = ({
             <TopBarWrapper>
               <IssueTopBar
                 activeUser={activeUser}
+                addWatching={addWatching}
                 data={data}
                 dispatchFetchPullRequestList={dispatchFetchPullRequestList}
                 dispatchFetchWatchList={dispatchFetchWatchList}
@@ -331,6 +333,7 @@ const IssueDetail = ({
 
 IssueDetail.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),

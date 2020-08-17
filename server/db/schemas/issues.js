@@ -15,8 +15,7 @@ issues(
   pull_requests UUID [] DEFAULT '{}',
   rep SMALLINT DEFAULT 25,
   repo VARCHAR(128) NOT NULL,
-  type VARCHAR(40) NOT NULL,
-  watching UUID []
+  type VARCHAR(40) NOT NULL
 )`;
 
 module.exports = issues;

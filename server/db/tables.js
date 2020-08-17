@@ -8,12 +8,14 @@ const {
   organizationSchema,
   pullRequestSchema,
   userSchema,
+  watchingSchema,
   withdrawalSchema,
 } = require('./schemas');
 
 // Create empty tables from schema
 const createTables = async () => {
   // TODO: figure out a way to await/map through this
+  // No alpha - follows correct order
   await singleQuery(organizationSchema);
   await singleQuery(userSchema);
   await singleQuery(commentSchema);
@@ -21,6 +23,7 @@ const createTables = async () => {
   await singleQuery(pullRequestSchema);
   await singleQuery(activitySchema);
   await singleQuery(withdrawalSchema);
+  await singleQuery(watchingSchema);
 };
 
 // Drop all tables
@@ -33,6 +36,7 @@ const dropAllTables = async () => {
   await singleQuery('DROP TABLE IF EXISTS organizations cascade');
   await singleQuery('DROP TABLE IF EXISTS pullRequests cascade');
   await singleQuery('DROP TABLE IF EXISTS withdrawal cascade');
+  await singleQuery('DROP TABLE IF EXISTS watching cascade');
 };
 
 // Print all rows in all tables
@@ -45,6 +49,7 @@ const printTables = async () => {
     'SELECT * FROM pullRequests',
     'SELECT * FROM users',
     'SELECT * FROM withdrawal',
+    'SELECT * FROM watching',
   ];
   await mapQueryPrint(queryArray);
 };

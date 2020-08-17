@@ -2,12 +2,13 @@ export const ADD_COMMENT = 'app/Issues/ADD_COMMENT';
 export const ADD_COMMENT_FAILURE = 'app/Issues/ADD_COMMENT_FAILURE';
 export const ADD_COMMENT_SUCCESS = 'app/Issues/ADD_COMMENT_SUCCESS';
 
-export const ADD_WATCH_FAILURE = 'app/Issues/ADD_WATCH_FAILURE';
-export const ADD_WATCH_SUCCESS = 'app/Issues/ADD_WATCH_SUCCESS';
-
 export const ADD_ATTEMPT = 'app/Issues/ADD_ATTEMPT';
 export const ADD_ATTEMPT_FAILURE = 'app/Issues/ADD_ATTEMPT_FAILURE';
 export const ADD_ATTEMPT_SUCCESS = 'app/Issues/ADD_ATTEMPT_SUCCESS';
+
+export const ADD_WATCH = 'app/Issues/ADD_WATCH';
+export const ADD_WATCH_FAILURE = 'app/Issues/ADD_WATCH_FAILURE';
+export const ADD_WATCH_SUCCESS = 'app/Issues/ADD_WATCH_SUCCESS';
 
 export const CHANGE_ISSUE_FILTER = 'app/Issues/CHANGE_ISSUE_FILTER';
 export const CHANGE_ISSUE_SEARCH = 'app/Issues/CHANGE_ISSUE_SEARCH';

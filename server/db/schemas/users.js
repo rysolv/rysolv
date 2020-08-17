@@ -26,8 +26,7 @@ users(
   rep SMALLINT NOT NULL DEFAULT 25,
   stackoverflow_link VARCHAR(128),
   upvotes UUID [] DEFAULT '{}',
-  username VARCHAR(40),
-  watching UUID [] DEFAULT '{}'
+  username VARCHAR(40)
 )`;
 
 module.exports = users;

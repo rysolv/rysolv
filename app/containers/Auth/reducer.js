@@ -186,6 +186,7 @@ const authReducer = produce((draft, { payload, type }) => {
         profilePic,
         removeUpvote,
         rep,
+        watching,
       } = payload;
       if (addUpvote && rep) {
         draft.activeUser.upvotes.push(addUpvote);
@@ -203,6 +204,9 @@ const authReducer = produce((draft, { payload, type }) => {
       if (removeUpvote && rep) {
         remove(draft.activeUser.upvotes, id => id === removeUpvote);
         draft.activeUser.rep = rep;
+      }
+      if (watching) {
+        draft.activeUser.watching = watching;
       }
       break;
     }

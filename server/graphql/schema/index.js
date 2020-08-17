@@ -284,6 +284,17 @@ module.exports = buildSchema(`
     username: String
   }
 
+  type WatchListArray {
+    issueArray: [WatchListDetail]
+    userArray: [ID]
+  }
+
+  type WatchListDetail {
+    fundedAmount: Float
+    id: ID
+    name: String
+  }
+
   type Withdrawal {
     balance: Float
   }
@@ -307,6 +318,7 @@ module.exports = buildSchema(`
   union PullRequestArrayResult = PullRequestArray | Error
   union PullRequestListResult = PullRequestList | Error
   union PullRequestResult = PullRequest | Error
+  union ToggleWatchingResult = WatchListArray | Error
   union UpvoteResult = Upvote | Error
   union UserResult = User | Error
   union WithdrawalResult = Withdrawal | Error
@@ -318,8 +330,8 @@ module.exports = buildSchema(`
     getComments: [Comment]!
     getIssues: [Issue!]!
     getOrganizations: [Organization!]!
-    getUsers: [User!]!
     getPullRequests: PullRequestArrayResult
+    getUsers: [User!]!
 
     getIssueComments(id: ID!): [Comment]
     getUserOrganizations(id: ID!): [Organization!]
@@ -359,6 +371,8 @@ module.exports = buildSchema(`
     importPullRequest(url: String!, issueId: ID!): ImportPullRequestResult
 
     submitAccountPayment(issueId: ID!, fundValue: Float!, organizationId: ID!, userId: ID!): PaymentResult!
+
+    toggleWatching(issueId: ID!, userId: ID!): ToggleWatchingResult
 
     transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!

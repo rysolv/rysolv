@@ -15,6 +15,7 @@ import injectReducer from 'utils/injectReducer';
 
 import {
   addAttempt,
+  addWatch,
   clearAlerts,
   fetchIssues,
   inputChange,
@@ -34,6 +35,7 @@ import {
 // eslint-disable-next-line react/prefer-stateless-function
 const IssuesOverview = ({
   activeUser,
+  addWatching,
   alerts,
   deviceView,
   disabled,
@@ -77,6 +79,7 @@ const IssuesOverview = ({
       loading={loading}
       propsToPassDown={{
         activeUser,
+        addWatching,
         alerts,
         deviceView,
         disabled,
@@ -97,6 +100,7 @@ const IssuesOverview = ({
 
 IssuesOverview.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
@@ -148,6 +152,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Issues
      */
+    addWatching: payload => dispatch(addWatch(payload)),
     dispatchFetchIssues: () => dispatch(fetchIssues()),
     dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
