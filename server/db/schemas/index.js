@@ -8,12 +8,12 @@ const userSchema = require('./users');
 const withdrawalSchema = require('./withdrawal');
 
 module.exports = {
-  activitySchema,
-  commentSchema,
-  fundingSchema,
-  issueSchema,
-  organizationSchema,
-  pullRequestSchema,
-  userSchema,
-  withdrawalSchema,
+  ...activitySchema,
+  ...commentSchema,
+  ...fundingSchema,
+  ...issueSchema,
+  ...organizationSchema,
+  ...pullRequestSchema,
+  ...userSchema,
+  ...withdrawalSchema,
 };

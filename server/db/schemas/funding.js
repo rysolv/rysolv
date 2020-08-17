@@ -1,11 +1,13 @@
-const funding = `CREATE TABLE IF NOT EXISTS
+const alterFundingTable = `ALTER TABLE funding
+ADD COLUMN funded_amount FLOAT,
+ADD COLUMN is_approved BOOLEAN DEFAULT false,
+ADD COLUMN issue_id UUID REFERENCES issues(id),
+ADD COLUMN pullrequest_id UUID REFERENCES pullrequests(pullrequest_id),
+ADD COLUMN user_id UUID REFERENCES users(id)`;
+
+const createFundingsTable = `CREATE TABLE IF NOT EXISTS
 funding(
-  funded_amount FLOAT,
-  id UUID PRIMARY KEY,
-  is_approved BOOLEAN DEFAULT false,
-  issue_id UUID,
-  pullrequest_id UUID,
-  user_id UUID REFERENCES users(id)
+  id UUID PRIMARY KEY
 )`;
 
-module.exports = funding;
+module.exports = { alterFundingTable, createFundingsTable };

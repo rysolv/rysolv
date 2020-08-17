@@ -1,20 +1,22 @@
-const organizations = `CREATE TABLE IF NOT EXISTS
+const alterOrganizationsTable = `ALTER TABLE organizations
+ADD COLUMN contributors UUID [],
+ADD COLUMN created_date TIMESTAMP,
+ADD COLUMN description VARCHAR(512) NOT NULL,
+ADD COLUMN is_manual BOOLEAN,
+ADD COLUMN issues UUID [],
+ADD COLUMN logo VARCHAR(256),
+ADD COLUMN modified_date TIMESTAMP,
+ADD COLUMN name VARCHAR(128) NOT NULL,
+ADD COLUMN organization_url VARCHAR(128),
+ADD COLUMN owner_id UUID,
+ADD COLUMN preferred_languages VARCHAR(128) [],
+ADD COLUMN repo_url VARCHAR(128) NOT NULL,
+ADD COLUMN total_funded FLOAT DEFAULT 0,
+ADD COLUMN verified BOOLEAN DEFAULT false`;
+
+const createOrganizationsTable = `CREATE TABLE IF NOT EXISTS
 organizations(
-  contributors UUID [],
-  created_date TIMESTAMP,
-  description VARCHAR(512) NOT NULL,
-  id UUID PRIMARY KEY,
-  is_manual BOOLEAN,
-  issues UUID [],
-  logo VARCHAR(256),
-  modified_date TIMESTAMP,
-  name VARCHAR(128) NOT NULL,
-  organization_url VARCHAR(128),
-  owner_id UUID,
-  preferred_languages VARCHAR(128) [],
-  repo_url VARCHAR(128) NOT NULL,
-  total_funded FLOAT DEFAULT 0,
-  verified BOOLEAN DEFAULT false
+  id UUID PRIMARY KEY
 )`;
 
-module.exports = organizations;
+module.exports = { alterOrganizationsTable, createOrganizationsTable };

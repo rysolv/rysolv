@@ -1,19 +1,21 @@
-const pullRequests = `CREATE TABLE IF NOT EXISTS
-  pullrequests(
-    created_date TIMESTAMP,
-    github_username VARCHAR(128),
-    html_url VARCHAR(128),
-    issue_id UUID REFERENCES issues(id),
-    mergeable BOOLEAN,
-    mergeable_state VARCHAR(128),
-    merged BOOLEAN,
-    modified_date TIMESTAMP,
-    open BOOLEAN DEFAULT true,
-    pull_number SMALLINT,
-    pullrequest_id UUID PRIMARY KEY,
-    status VARCHAR(128),
-    title VARCHAR(512),
-    user_id UUID REFERENCES users(id)
-  )`;
+const alterPullRequestsTable = `ALTER TABLE pullrequests
+ADD COLUMN created_date TIMESTAMP,
+ADD COLUMN github_username VARCHAR(128),
+ADD COLUMN html_url VARCHAR(128),
+ADD COLUMN issue_id UUID REFERENCES issues(id),
+ADD COLUMN mergeable BOOLEAN,
+ADD COLUMN mergeable_state VARCHAR(128),
+ADD COLUMN merged BOOLEAN,
+ADD COLUMN modified_date TIMESTAMP,
+ADD COLUMN open BOOLEAN DEFAULT true,
+ADD COLUMN pull_number SMALLINT,
+ADD COLUMN status VARCHAR(128),
+ADD COLUMN title VARCHAR(512),
+ADD COLUMN user_id UUID REFERENCES users(id)`;
 
-module.exports = pullRequests;
+const createPullRequestsTable = `CREATE TABLE IF NOT EXISTS
+pullrequests(
+  pullrequest_id UUID PRIMARY KEY
+)`;
+
+module.exports = { alterPullRequestsTable, createPullRequestsTable };
