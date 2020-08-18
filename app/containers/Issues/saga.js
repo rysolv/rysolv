@@ -411,9 +411,9 @@ export function* saveInfoSaga({ payload }) {
         issueInput: {
           body: ${JSON.stringify(issueBody)},
           contributor: "${userId}",
+          isManual: ${isManual},
           language:  ${JSON.stringify(issueLanguages)},
           name: ${JSON.stringify(issueName)},
-          isManual: ${isManual},
           organizationDescription:  "${organizationDescription}",
           organizationId:  ${JSON.stringify(organizationId)},
           organizationLogo:  ${JSON.stringify(organizationLogo)},
