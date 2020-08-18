@@ -21,8 +21,8 @@ const AdminSubHeader = ({
   search,
 }) => {
   const { searchInput } = { ...search };
-  const keyPress = ({ keyCode, which }) => {
-    if (keyCode === 13 || which === 13 || 0) {
+  const keyPress = ({ key }) => {
+    if (key === 'Enter') {
       handleSearch({ value: searchInput.value });
     }
   };

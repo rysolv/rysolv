@@ -37,19 +37,19 @@ const ManualOrganization = ({
 }) => {
   useEffect(() => {
     dispatchUpdateIsManual({ value: true });
-    document.getElementById('issue-org-manual').focus();
+    document.getElementById('issueOrgManual').focus();
   }, []);
 
   const idSelected = organizationData.organizationId.value !== '';
 
-  const handleKeypress = ({ keyCode, which }) => {
-    if ((keyCode === 13 || which === 13 || 0) && idSelected) {
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter' && idSelected) {
       handleIncrementStep({ step: 3, view: 'addIssue' });
     }
   };
   return (
     <StyledFocusDiv
-      id="issue-org-manual"
+      id="issueOrgManual"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >

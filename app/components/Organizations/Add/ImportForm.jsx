@@ -20,10 +20,10 @@ const ImportForm = ({
   importOrganizationLoading,
   organizationData: { importUrl },
 }) => {
-  useEffect(() => document.getElementById('organization-import').focus(), []);
+  useEffect(() => document.getElementById('organizationImport').focus(), []);
 
-  const handleKeypress = ({ keyCode, which }) => {
-    if (keyCode === 13 || which === 13 || 0) {
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter') {
       handleSubmit();
     }
   };
@@ -36,7 +36,7 @@ const ImportForm = ({
   };
   return (
     <ImportFormContainer
-      id="organization-import"
+      id="organizationImport"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >

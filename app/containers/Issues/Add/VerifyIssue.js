@@ -30,10 +30,10 @@ const VerifyIssue = ({
   organizationData,
   requestBody,
 }) => {
-  useEffect(() => document.getElementById('issue-add').focus(), []);
+  useEffect(() => document.getElementById('issueAdd').focus(), []);
 
-  const handleKeypress = ({ keyCode, which }) => {
-    if (keyCode === 13 || which === 13 || 0) {
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter') {
       dispatchSaveInfo({ requestBody, activeUser });
     }
   };
@@ -43,7 +43,7 @@ const VerifyIssue = ({
   };
   return (
     <StyledFocusDiv
-      id="issue-add"
+      id="issueAdd"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >

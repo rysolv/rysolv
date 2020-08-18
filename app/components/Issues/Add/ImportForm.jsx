@@ -20,10 +20,10 @@ const ImportForm = ({
   importIssueLoading,
   issueData: { importUrl },
 }) => {
-  useEffect(() => document.getElementById('issue-import').focus(), []);
+  useEffect(() => document.getElementById('issueImport').focus(), []);
 
-  const handleKeypress = ({ keyCode, which }) => {
-    if (keyCode === 13 || which === 13 || 0) {
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter') {
       handleSubmit();
     }
   };
@@ -36,7 +36,7 @@ const ImportForm = ({
   };
   return (
     <ImportFormContainer
-      id="issue-import"
+      id="issueImport"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >

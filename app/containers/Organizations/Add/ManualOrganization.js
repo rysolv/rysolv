@@ -27,17 +27,17 @@ const ManualOrganization = ({
 }) => {
   useEffect(() => {
     dispatchUpdateIsManual({ value: true });
-    document.getElementById('organization-manual').focus();
+    document.getElementById('organizationManual').focus();
   }, []);
 
-  const handleKeypress = ({ keyCode, which }) => {
-    if ((keyCode === 13 || which === 13 || 0) && isDisabled) {
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter' && isDisabled) {
       handleIncrementStep({ step: 3, view: 'addOrganization' });
     }
   };
   return (
     <StyledFocusDiv
-      id="organization-manual"
+      id="organizationManual"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >

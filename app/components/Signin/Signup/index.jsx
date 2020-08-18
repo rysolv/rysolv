@@ -25,8 +25,8 @@ const Signup = ({
   loading,
   signUpDisabled,
 }) => {
-  const handleKeypress = ({ keyCode, which }) => {
-    if ((keyCode === 13 || which === 13 || 0) && !signUpDisabled) {
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter' && !signUpDisabled) {
       handleSignUp();
     }
   };

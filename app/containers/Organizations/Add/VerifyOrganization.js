@@ -32,10 +32,10 @@ const VerifyOrganization = ({
   organizationData,
   requestBody,
 }) => {
-  useEffect(() => document.getElementById('organization-add').focus(), []);
+  useEffect(() => document.getElementById('organizationAdd').focus(), []);
 
-  const handleKeypress = ({ keyCode, which }) => {
-    if ((keyCode === 13 || which === 13 || 0) && isVerified) {
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter' && isVerified) {
       handleSaveInfo();
     }
   };
@@ -48,7 +48,7 @@ const VerifyOrganization = ({
   };
   return (
     <StyledFocusDiv
-      id="organization-add"
+      id="organizationAdd"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
