@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -11,62 +11,66 @@ import { makeSelectIssues, makeSelectIssuesDisabled } from '../selectors';
 import {
   BackLink,
   ButtonGroup,
-  StyledLink,
   SelectedOrganization,
+  StyledFocusDiv,
   StyledH3,
+  StyledLink,
   VerifyWrapper,
 } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
-export class ManualIssue extends React.PureComponent {
-  componentDidMount() {
-    const { dispatchUpdateIsManual } = this.props;
+const ManualIssue = ({
+  dispatchUpdateIsManual,
+  handleIncrementStep,
+  handleInputChange,
+  isDisabled,
+  issueData,
+  organizationData,
+}) => {
+  useEffect(() => {
     dispatchUpdateIsManual({ value: true });
-  }
+    document.getElementById('issueManual').focus();
+  }, []);
 
-  render() {
-    const {
-      issueData,
-      handleIncrementStep,
-      handleInputChange,
-      isDisabled,
-      organizationData,
-    } = this.props;
-    return (
-      <Fragment>
-        <StyledH3>Organization</StyledH3>
-        <VerifyWrapper>
-          <SelectedOrganization>
-            {organizationData.organizationName.value}
-          </SelectedOrganization>
-          <StyledLink
-            href={`//${organizationData.organizationRepo.value}`}
-            target="_blank"
-          >
-            {organizationData.organizationRepo.value}
-          </StyledLink>
-        </VerifyWrapper>
-        <StyledH3>Add Issue</StyledH3>
-        <ManualForm
-          issueData={issueData}
-          handleInputChange={handleInputChange}
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter' && isDisabled) {
+      handleIncrementStep({ step: 4, view: 'addIssue' });
+    }
+  };
+  return (
+    <StyledFocusDiv
+      id="issueManual"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
+      <StyledH3>Organization</StyledH3>
+      <VerifyWrapper>
+        <SelectedOrganization>
+          {organizationData.organizationName.value}
+        </SelectedOrganization>
+        <StyledLink
+          href={`//${organizationData.organizationRepo.value}`}
+          target="_blank"
+        >
+          {organizationData.organizationRepo.value}
+        </StyledLink>
+      </VerifyWrapper>
+      <StyledH3>Add Issue</StyledH3>
+      <ManualForm handleInputChange={handleInputChange} issueData={issueData} />
+      <ButtonGroup>
+        <BackLink
+          onClick={() => handleIncrementStep({ step: 2, view: 'addIssue' })}
+        >
+          Edit Org
+        </BackLink>
+        <PrimaryButton
+          disabled={!isDisabled}
+          label="Preview Issue"
+          onClick={() => handleIncrementStep({ step: 4, view: 'addIssue' })}
         />
-        <ButtonGroup>
-          <BackLink
-            onClick={() => handleIncrementStep({ step: 2, view: 'addIssue' })}
-          >
-            Edit Org
-          </BackLink>
-          <PrimaryButton
-            disabled={!isDisabled}
-            label="Preview Issue"
-            onClick={() => handleIncrementStep({ step: 4, view: 'addIssue' })}
-          />
-        </ButtonGroup>
-      </Fragment>
-    );
-  }
-}
+      </ButtonGroup>
+    </StyledFocusDiv>
+  );
+};
 
 ManualIssue.propTypes = {
   dispatchUpdateIsManual: T.func,
@@ -81,9 +85,9 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
+  isDisabled: makeSelectIssuesDisabled(),
   issueData: makeSelectIssues('issueData'),
   organizationData: makeSelectIssues('organizationData'),
-  isDisabled: makeSelectIssuesDisabled(),
 });
 
 function mapDispatchToProps(dispatch) {

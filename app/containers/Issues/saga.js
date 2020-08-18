@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 
 import {
   fetchActiveUser,
@@ -441,12 +442,14 @@ export function* saveInfoSaga({ payload }) {
     const {
       data: { createIssue },
     } = yield call(post, '/graphql', graphql);
-    const { __typename, message } = createIssue;
+    const { __typename, id, message } = createIssue;
     if (__typename === 'Error') throw new Error(message);
 
     yield put(fetchActiveUser({ userId }));
+    yield put(push(`/issues/detail/${id}`));
     yield put(saveInfoSuccess({ message: successCreateIssueMessage }));
   } catch (error) {
+    yield put(push('/issues'));
     yield put(saveInfoFailure({ error }));
   }
 }

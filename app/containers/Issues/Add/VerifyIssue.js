@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import { PrimaryAsyncButton } from 'components/base_ui';
 import VerifyForm from 'components/Issues/Add/Verify';
 
-import { incrementStep, saveInfo, verifyInfo, clearForm } from '../actions';
+import { clearForm, incrementStep, saveInfo, verifyInfo } from '../actions';
 import { makeSelectIssues, makeSelectIssuesRequestBody } from '../selectors';
 import {
   BackLink,
@@ -15,89 +14,89 @@ import {
   LogoContainer,
   OrganizationNameWrapper,
   SelectedOrganization,
+  StyledFocusDiv,
   StyledH3,
   StyledLink,
   VerifyWrapper,
 } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
-export class VerifyIssue extends React.PureComponent {
-  render() {
-    const {
-      activeUser,
-      dispatchClearForm,
-      importSuccess,
-      issueData,
-      dispatchIncrementStep,
-      dispatchSaveInfo,
-      handleNav,
-      organizationData,
-      requestBody,
-    } = this.props;
-    const handleSaveInfo = () => {
-      dispatchSaveInfo({ activeUser, requestBody });
-      handleNav('/issues');
-    };
-    const cancelImport = () => {
-      dispatchClearForm();
-      dispatchIncrementStep({ step: 1, view: 'addIssue' });
-    };
-    return (
-      <Fragment>
-        <StyledH3>Organization</StyledH3>
-        <VerifyWrapper>
-          <LogoContainer
-            src={organizationData.organizationLogo.value}
-            alt={organizationData.organizationName.value}
-          />
-          <OrganizationNameWrapper>
-            <SelectedOrganization>
-              {organizationData.organizationName.value}
-            </SelectedOrganization>
-            <StyledLink
-              href={organizationData.organizationRepo.value}
-              target="_blank"
-            >
-              {organizationData.organizationRepo.value}
-            </StyledLink>
-          </OrganizationNameWrapper>
-        </VerifyWrapper>
-        <StyledH3>Issue</StyledH3>
-        <VerifyWrapper>
-          <VerifyForm activeUser={activeUser} issueData={issueData} />
-        </VerifyWrapper>
-        <ButtonGroup>
-          {importSuccess ? (
-            <BackLink onClick={() => cancelImport()}>Cancel</BackLink>
-          ) : (
-            <BackLink
-              onClick={() =>
-                dispatchIncrementStep({ step: 3, view: 'addIssue' })
-              }
-            >
-              Edit Issue
-            </BackLink>
-          )}
+const VerifyIssue = ({
+  activeUser,
+  dispatchClearForm,
+  dispatchIncrementStep,
+  dispatchSaveInfo,
+  importSuccess,
+  issueData,
+  organizationData,
+  requestBody,
+}) => {
+  useEffect(() => document.getElementById('issueAdd').focus(), []);
 
-          <PrimaryAsyncButton
-            disabled={false}
-            label="Submit"
-            onClick={handleSaveInfo}
-          />
-        </ButtonGroup>
-      </Fragment>
-    );
-  }
-}
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter') {
+      dispatchSaveInfo({ requestBody, activeUser });
+    }
+  };
+  const cancelImport = () => {
+    dispatchClearForm();
+    dispatchIncrementStep({ step: 1, view: 'addIssue' });
+  };
+  return (
+    <StyledFocusDiv
+      id="issueAdd"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
+      <StyledH3>Organization</StyledH3>
+      <VerifyWrapper>
+        <LogoContainer
+          alt={organizationData.organizationName.value}
+          src={organizationData.organizationLogo.value}
+        />
+        <OrganizationNameWrapper>
+          <SelectedOrganization>
+            {organizationData.organizationName.value}
+          </SelectedOrganization>
+          <StyledLink
+            href={organizationData.organizationRepo.value}
+            target="_blank"
+          >
+            {organizationData.organizationRepo.value}
+          </StyledLink>
+        </OrganizationNameWrapper>
+      </VerifyWrapper>
+      <StyledH3>Issue</StyledH3>
+      <VerifyWrapper>
+        <VerifyForm activeUser={activeUser} issueData={issueData} />
+      </VerifyWrapper>
+      <ButtonGroup>
+        {importSuccess ? (
+          <BackLink onClick={() => cancelImport()}>Cancel</BackLink>
+        ) : (
+          <BackLink
+            onClick={() => dispatchIncrementStep({ step: 3, view: 'addIssue' })}
+          >
+            Edit Issue
+          </BackLink>
+        )}
+
+        <PrimaryAsyncButton
+          disabled={false}
+          label="Submit"
+          onClick={() => dispatchSaveInfo({ requestBody, activeUser })}
+        />
+      </ButtonGroup>
+    </StyledFocusDiv>
+  );
+};
 
 VerifyIssue.propTypes = {
   activeUser: T.object,
   dispatchClearForm: T.func,
-  importSuccess: T.bool,
-  issueData: T.object,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
-  handleNav: T.func,
+  importSuccess: T.bool,
+  issueData: T.object,
   organizationData: T.object,
   requestBody: T.object,
 };
@@ -120,10 +119,6 @@ function mapDispatchToProps(dispatch) {
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
     dispatchVerifyInfo: () => dispatch(verifyInfo()),
-    /**
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 
