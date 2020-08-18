@@ -157,7 +157,7 @@ const OrganizationDetailView = ({
         <Image src={logoChange} />
         <BaseFileInput
           accept="image/png, image/jpeg"
-          id="logo-file-input"
+          id="logoFileInput"
           onChange={handleUploadLogo}
         />
       </EditLogoWrapper>

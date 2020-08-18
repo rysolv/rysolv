@@ -84,14 +84,16 @@ export const SelectedOrganization = styled.div`
   font-size: ${headerFontSize};
 `;
 
+export const StyledFocusDiv = styled.div`
+  &:focus {
+    outline: none;
+  }
+`;
+
 export const StyledH3 = styled.h3`
   color: ${subHeaderColor};
   margin-bottom: 0;
   padding: 1rem 2rem;
-`;
-
-export const VerifyWrapper = styled.div`
-  padding: 0 2rem;
 `;
 
 export const StyledLink = styled.a`
@@ -102,4 +104,8 @@ export const StyledLink = styled.a`
     cursor: pointer;
     color: ${hoverLinkColor};
   }
+`;
+
+export const VerifyWrapper = styled.div`
+  padding: 0 2rem;
 `;

@@ -310,9 +310,10 @@ export const UserCardWrapper = styled.div`
 `;
 
 export const UserImage = styled.img`
+  height: 25rem;
   margin: 0.5rem;
-  max-height: 25rem;
-  max-width: 25rem;
+  object-fit: cover;
+  width: 25rem;
 
   ${mobile} {
     align-self: center;

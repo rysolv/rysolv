@@ -153,7 +153,7 @@ const SettingsView = ({
               Component={
                 <BaseFileInput
                   accept="image/png, image/jpeg"
-                  id="logo-file-input"
+                  id="logoFileInput"
                   onChange={handleUploadUserImage}
                 />
               }
