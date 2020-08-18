@@ -53,9 +53,10 @@ const PaymentPortal = ({
   userId,
   ...restProps
 }) => {
+  const initialValue = '2';
   const [emailValue, setEmailValue] = useState(email || '');
   const [firstNameValue, setFirstNameValue] = useState(firstName || '');
-  const [fundValue, setFundValue] = useState('2');
+  const [fundValue, setFundValue] = useState(initialValue);
   const [isAccountPaymentOpen, setIsAccountPaymentOpen] = useState(true);
   const [isCreditPaymentOpen, setIsCreditPaymentOpen] = useState(false);
   const [isPaypalPaymentOpen, setIsPaypalPaymentOpen] = useState(false);
@@ -268,6 +269,7 @@ const PaymentPortal = ({
             dispatchPaypalPayment,
             dollarValue: fundValue,
             handleValidateInput: () => handleValidateInput({ field: 'fundValue', values }),
+            initialValue,
             isPaypalPaymentOpen,
             issueId,
             setFundValue,

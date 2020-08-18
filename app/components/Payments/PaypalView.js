@@ -9,6 +9,7 @@ const PaypalView = ({
   dispatchPaypalPayment,
   dollarValue,
   handleValidateInput,
+  initialValue,
   isPaypalPaymentOpen,
   issueId,
   setFundValue,
@@ -25,6 +26,7 @@ const PaypalView = ({
           dispatchPaypalPayment={dispatchPaypalPayment}
           dollarValue={dollarValue}
           handleValidateInput={handleValidateInput}
+          initialValue={initialValue}
           issueId={issueId}
           setFundValue={setFundValue}
           userId={userId}
@@ -39,6 +41,7 @@ PaypalView.propTypes = {
   dispatchPaypalPayment: T.func.isRequired,
   dollarValue: T.string.isRequired,
   handleValidateInput: T.func.isRequired,
+  initialValue: T.string.isRequired,
   isPaypalPaymentOpen: T.bool.isRequired,
   issueId: T.string.isRequired,
   setFundValue: T.func.isRequired,

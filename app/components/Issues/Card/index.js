@@ -64,7 +64,6 @@ const IssueCard = ({
       rep,
       watching,
     }) => {
-      const { balance, email, firstName, id: userId, lastName } = activeUser;
       const isMobile =
         deviceView === 'laptopS' ||
         deviceView === 'tablet' ||
@@ -257,15 +256,10 @@ const IssueCard = ({
                 <ConditionalRender
                   Component={
                     <FundIssueButton
-                      balance={balance}
                       dispatchOpenModal={dispatchOpenModal}
-                      email={email}
-                      firstName={firstName}
                       fundedAmount={fundedAmount}
                       issueId={id}
-                      lastName={lastName}
                       open={open}
-                      userId={userId}
                     />
                   }
                   FallbackComponent={

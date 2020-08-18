@@ -49,7 +49,6 @@ export const Main = ({
   modal,
   tableData,
 }) => {
-  const { balance } = activeUser;
   const handleCloseIssue = ({ issueId, shouldClose }) => {
     dispatchCloseModal();
     dispatchCloseIssue({ issueId, shouldClose });
@@ -78,7 +77,6 @@ export const Main = ({
       open: isModalOpen,
       propsToPassDown: {
         ...tableData,
-        balance,
         handleClose: dispatchCloseModal,
         handleNav,
         isSignedIn,

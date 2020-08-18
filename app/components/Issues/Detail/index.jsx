@@ -299,16 +299,11 @@ const IssueDetail = ({
             }
           />
           <PaymentPortal
-            balance={balance}
-            email={email}
-            firstName={firstName}
             fundedAmount={fundedAmount}
             handleNav={handleNav}
             isSignedIn={isSignedIn}
             issueId={issueId}
-            lastName={lastName}
             open={open}
-            userId={activeUserId}
           />
           <ConditionalRender
             Component={CloseOpenIssueComponent}

@@ -14,16 +14,11 @@ import {
 const AddIcon = iconDictionary('add');
 
 const FundIssueButton = ({
-  balance,
   disabled,
   dispatchOpenModal,
-  email,
-  firstName,
   fundedAmount,
   issueId,
-  lastName,
   open,
-  userId,
 }) => (
   <FundIssueButtonContainer>
     <FundAmount open={open}>
@@ -39,14 +34,9 @@ const FundIssueButton = ({
         dispatchOpenModal({
           modalState: 'fundIssue',
           tableData: {
-            balance,
-            email,
-            firstName,
             fundedAmount,
             issueId,
-            lastName,
             open,
-            userId,
           },
         })
       }
@@ -56,17 +46,14 @@ const FundIssueButton = ({
   </FundIssueButtonContainer>
 );
 
+FundIssueButton.defaultProps = { disabled: false };
+
 FundIssueButton.propTypes = {
-  balance: T.number.isRequired,
   disabled: T.bool,
-  dispatchOpenModal: T.func,
-  email: T.string,
-  firstName: T.string,
-  fundedAmount: T.number,
-  issueId: T.string,
-  lastName: T.string,
-  open: T.bool,
-  userId: T.string,
+  dispatchOpenModal: T.func.isRequired,
+  fundedAmount: T.number.isRequired,
+  issueId: T.string.isRequired,
+  open: T.bool.isRequired,
 };
 
 export default FundIssueButton;

@@ -55,6 +55,7 @@ class PaypalButton extends React.Component {
       dispatchPaypalPayment,
       dollarValue,
       handleValidateInput,
+      initialValue,
       issueId,
       setFundValue,
       userId,
@@ -81,7 +82,7 @@ class PaypalButton extends React.Component {
           userId,
         };
         dispatchPaypalPayment(paymentObj);
-        setFundValue('2');
+        if (setFundValue) setFundValue(initialValue);
       });
     const onClick = () => {
       handleValidateInput({ values });

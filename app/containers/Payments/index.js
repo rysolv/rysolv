@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import PaymentPortal from 'components/Payments';
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -21,26 +22,22 @@ import saga from './saga';
 import { makeSelectPayments } from './selectors';
 
 const PaymentsContainer = ({
+  activeUser,
   alerts,
-  balance,
   dispatchInputError,
   dispatchPaypalPayment,
   dispatchStripeToken,
   dispatchSubmitAccountPayment,
-  email,
   errors,
-  firstName,
   fundedAmount,
   handleClearPaymentAlerts,
   handleNav,
   isSignedIn,
   issueId,
-  lastName,
   open,
-  organizationId,
-  userId,
   ...restProps
 }) => {
+  const { balance, email, firstName, lastName, id: userId } = activeUser;
   const handleStripeToken = ({ amount, token, values }) => {
     const { isValidated, validationErrors } = validateFields({ values });
     if (isValidated) {
@@ -101,27 +98,26 @@ const PaymentsContainer = ({
 };
 
 PaymentsContainer.propTypes = {
+  activeUser: T.object,
   alerts: T.object,
-  balance: T.number,
   dispatchInputError: T.func,
   dispatchPaypalPayment: T.func,
   dispatchStripeToken: T.func,
   dispatchSubmitAccountPayment: T.func,
-  email: T.string,
   errors: T.object,
-  firstName: T.string,
   fundedAmount: T.number,
   handleClearPaymentAlerts: T.func,
   handleNav: T.func,
   isSignedIn: T.bool,
   issueId: T.string,
-  lastName: T.string,
   open: T.bool,
-  organizationId: T.string,
-  userId: T.string,
 };
 
 const mapStateToProps = createStructuredSelector({
+  /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
   /**
    * Reducer: Payments
    */
