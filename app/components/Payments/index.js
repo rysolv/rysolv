@@ -50,23 +50,22 @@ const PaymentPortal = ({
   issueId,
   lastName,
   open,
-  organizationId,
   userId,
   ...restProps
 }) => {
   const [emailValue, setEmailValue] = useState(email || '');
+  const [firstNameValue, setFirstNameValue] = useState(firstName || '');
   const [fundValue, setFundValue] = useState('2');
   const [isAccountPaymentOpen, setIsAccountPaymentOpen] = useState(true);
   const [isCreditPaymentOpen, setIsCreditPaymentOpen] = useState(false);
   const [isPaypalPaymentOpen, setIsPaypalPaymentOpen] = useState(false);
-  const [firstNameValue, setFirstNameValue] = useState(firstName || '');
   const [lastNameValue, setLastNameValue] = useState(lastName || '');
   const [stripeError, setStripeError] = useState('');
   const [zipValue, setZipValue] = useState('');
 
   const isPersonalInfoComplete =
     !!emailValue && !!firstNameValue && !!lastNameValue;
-
+    
   const values = {
     email: emailValue,
     firstName: firstNameValue,
@@ -161,6 +160,7 @@ const PaymentPortal = ({
     handleZipChange,
     isCreditPaymentOpen,
     isPersonalInfoComplete,
+    setFundValue,
     setStripeError,
     setZipValue,
     values,
@@ -196,6 +196,7 @@ const PaymentPortal = ({
           <StyledLabel>Information</StyledLabel>
           <StyledPaymentTextInput
             adornmentComponent="First Name"
+            autoComplete="cc-given-name"
             error={!!firstNameError}
             fontSize="1rem"
             helperText={firstNameError}
@@ -205,6 +206,7 @@ const PaymentPortal = ({
           />
           <StyledPaymentTextInput
             adornmentComponent="Last Name"
+            autoComplete="cc-family-name"
             error={!!lastNameError}
             fontSize="1rem"
             helperText={lastNameError}
@@ -214,6 +216,7 @@ const PaymentPortal = ({
           />
           <StyledPaymentTextInput
             adornmentComponent="Email"
+            autoComplete="email"
             error={!!emailError}
             fontSize="1rem"
             helperText={emailError}
@@ -241,6 +244,7 @@ const PaymentPortal = ({
                 handleSubmitAccountPayment,
                 isPersonalInfoComplete,
                 setFundValue,
+                values,
               }}
               title="Your Account"
             />
@@ -266,7 +270,7 @@ const PaymentPortal = ({
             handleValidateInput: () => handleValidateInput({ field: 'fundValue', values }),
             isPaypalPaymentOpen,
             issueId,
-            organizationId,
+            setFundValue,
             userId,
           }}
           title="Paypal"
@@ -293,7 +297,6 @@ PaymentPortal.propTypes = {
   issueId: T.string,
   lastName: T.string,
   open: T.bool,
-  organizationId: T.string,
   userId: T.string,
 };
 

@@ -11,6 +11,8 @@ export const formatDollarAmount = (value, noDecimals = false) => {
   return `$${valueWithDecimals}`;
 };
 
+export const formatPaypalTotal = value => (Number(value) * 1.036).toFixed(2);
+
 export const formatUrlLinks = value => {
   const { githubLink, personalLink, stackoverflowLink } = value;
   if (githubLink) {

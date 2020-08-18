@@ -29,13 +29,13 @@ const PaymentTextInput = ({
       <BaseTextInput
         error={error}
         helperText={helperText}
-        onChange={onChange}
         InputProps={{
           ...InputProps,
           ...adornment,
         }}
-        variant="outlined"
+        onChange={onChange}
         value={value}
+        variant="outlined"
         {...restProps}
       />
     </StyledStripeFormControl>

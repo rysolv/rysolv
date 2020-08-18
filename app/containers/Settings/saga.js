@@ -59,7 +59,6 @@ export function* fetchInfoSaga({ payload }) {
   const query = `
     query {
       oneUser(id: "${userId}") {
-        id,
         activePullRequests,
         attempting,
         balance,
@@ -69,6 +68,7 @@ export function* fetchInfoSaga({ payload }) {
         email,
         firstName,
         githubLink,
+        id,
         issues,
         lastName,
         organizations,
@@ -151,9 +151,7 @@ export function* paypalPaymentSaga({ payload }) {
         createPaypalPayment: { __typename, balance, message },
       },
     } = yield call(post, '/graphql', request);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(paypalPaymentSuccess({ balance, message }));
     yield put(updateActiveUser({ balance }));
   } catch (error) {
@@ -241,12 +239,16 @@ export function* saveChangeSaga({ payload }) {
 
 export function* stripeTokenSaga({ payload }) {
   try {
-    const { amount, token, userId } = payload;
+    const {
+      amount,
+      token: { id },
+      userId,
+    } = payload;
     const query = `
     mutation {
       createStripeCharge(
         amount: ${amount},
-        token: "${token.id}",
+        token: "${id}",
         userId: "${userId}"
       ) {
         __typename
@@ -269,9 +271,7 @@ export function* stripeTokenSaga({ payload }) {
         createStripeCharge: { __typename, balance, message },
       },
     } = yield call(post, '/graphql', request);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(stripeTokenSuccess({ balance, message }));
     yield put(updateActiveUser({ balance }));
   } catch (error) {

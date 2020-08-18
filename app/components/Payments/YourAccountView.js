@@ -22,12 +22,14 @@ const YourAccountView = ({
   handleSubmitAccountPayment,
   isPersonalInfoComplete,
   setFundValue,
+  values,
 }) => {
   const handleSubmit = ({ value }) => {
     handleSubmitAccountPayment({
       fundValue: value,
+      values,
     });
-    setFundValue(0);
+    setFundValue('2');
   };
   return (
     <YourAccountContainer>
@@ -75,6 +77,7 @@ YourAccountView.propTypes = {
   handleSubmitAccountPayment: T.func,
   isPersonalInfoComplete: T.bool,
   setFundValue: T.func,
+  values: T.object,
 };
 
 export default YourAccountView;

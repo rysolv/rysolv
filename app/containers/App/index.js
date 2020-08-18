@@ -51,9 +51,7 @@ Amplify.configure({
   },
 });
 
-const stripePromise = loadStripe(
-  'pk_test_51HBCouGydTTVkgODtNtUVOzLtwZd159QwGYsaOXYZJGyflUqsLJas8yPbC0yOd9kackWTmV5u0fc9I9sg9SLZB2o00mnRBdjm0',
-);
+const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
 export function App() {
   return (

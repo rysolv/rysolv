@@ -3,6 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import scriptLoader from 'react-async-script-loader';
 
+import { formatPaypalTotal } from 'utils/globalHelpers';
+
 import { PaypalButtonWrapper } from './styledComponents';
 
 const CLIENT = {
@@ -54,12 +56,12 @@ class PaypalButton extends React.Component {
       dollarValue,
       handleValidateInput,
       issueId,
-      organizationId,
+      setFundValue,
       userId,
       values,
     } = this.props;
     const { disabled, showButton } = this.state;
-    const formattedTotal = (Number(dollarValue) * 1.036).toFixed(2);
+    const formattedTotal = formatPaypalTotal(dollarValue);
     const payment = () =>
       paypal.rest.payment.create(ENV, CLIENT, {
         transactions: [
@@ -76,10 +78,10 @@ class PaypalButton extends React.Component {
         const paymentObj = {
           amount: dollarValue,
           issueId,
-          organizationId,
           userId,
         };
         dispatchPaypalPayment(paymentObj);
+        setFundValue('2');
       });
     const onClick = () => {
       handleValidateInput({ values });

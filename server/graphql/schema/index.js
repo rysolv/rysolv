@@ -348,9 +348,9 @@ module.exports = buildSchema(`
     createIssue(issueInput: IssueInput): IssueResult
     createOrganization(organizationInput: OrganizationInput): OrganizationResult
     createUser(userInput: UserInput): User!
-    createPaypalPayment(amount: Float!, issueId: ID, organizationId: ID, userId: ID): PaymentResult!
+    createPaypalPayment(amount: Float!, issueId: ID, userId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): PullRequestResult!
-    createStripeCharge(amount: Float!, issueId: ID, organizationId: ID, token: String!, userId: ID): PaymentResult!
+    createStripeCharge(amount: Float!, issueId: ID, token: String!, userId: ID): PaymentResult!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
     deleteIssue(id: ID!): String!
@@ -362,7 +362,7 @@ module.exports = buildSchema(`
     importOrganization(url: String!): ImportResult
     importPullRequest(url: String!, issueId: ID!): ImportPullRequestResult
 
-    submitAccountPayment(issueId: ID!, fundValue: Float!, organizationId: ID!, userId: ID!): PaymentResult!
+    submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
 
     transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!

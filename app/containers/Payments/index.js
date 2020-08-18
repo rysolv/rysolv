@@ -47,7 +47,6 @@ const PaymentsContainer = ({
       dispatchStripeToken({
         amount,
         issueId,
-        organizationId,
         token,
         userId,
       });
@@ -62,7 +61,6 @@ const PaymentsContainer = ({
       dispatchSubmitAccountPayment({
         fundValue,
         issueId,
-        organizationId,
         userId,
       });
     } else {
@@ -96,7 +94,6 @@ const PaymentsContainer = ({
       issueId={issueId}
       lastName={lastName}
       open={open}
-      organizationId={organizationId}
       userId={userId}
       {...restProps}
     />

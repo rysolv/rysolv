@@ -160,9 +160,9 @@ export const StyledBaseTextInput = styled(BaseTextInput)`
   border-radius: 0.3rem;
   color: ${textColor};
   font-size: ${defaultFontSize};
+  height: 3.4rem;
   line-height: 2rem;
   margin: 0;
-  height: 3.4rem;
   width: 100%;
 
   .base-input {

@@ -18,11 +18,11 @@ import { PAYPAL_PAYMENT, STRIPE_TOKEN, SUBMIT_ACCOUNT_PAYMENT } from './constant
 
 export function* paypalPaymentSaga({ payload }) {
   try {
-    const { amount, error, issueId, organizationId, userId } = payload;
+    const { amount, error, issueId, userId } = payload;
     const isFundedFromOverview = window.location.pathname === '/issues';
     const valuesToSend = userId
-      ? `amount: ${amount}, issueId: "${issueId}", organizationId: "${organizationId}", userId: "${userId}"`
-      : `amount: ${amount}, issueId: "${issueId}", organizationId: "${organizationId}"`;
+      ? `amount: ${amount}, issueId: "${issueId}", userId: "${userId}"`
+      : `amount: ${amount}, issueId: "${issueId}"`;
     const query = `
       mutation {
         createPaypalPayment(${valuesToSend}) {
@@ -64,11 +64,11 @@ export function* paypalPaymentSaga({ payload }) {
 
 export function* stripeTokenSaga({ payload }) {
   try {
-    const { amount, issueId, organizationId, token, userId } = payload;
+    const { amount, issueId, token: { id }, userId } = payload;
     const isFundedFromOverview = window.location.pathname === '/issues';
     const valuesToSend = userId
-      ? `amount: ${amount}, issueId: "${issueId}", organizationId: "${organizationId}", token: "${token.id}", userId: "${userId}"`
-      : `amount: ${amount}, issueId: "${issueId}", organizationId: "${organizationId}", token: "${token.id}"`;
+      ? `amount: ${amount}, issueId: "${issueId}", token: "${id}", userId: "${userId}"`
+      : `amount: ${amount}, issueId: "${issueId}", token: "${id}"`;
     const query = `
     mutation {
       createStripeCharge(${valuesToSend}) {
@@ -106,11 +106,11 @@ export function* stripeTokenSaga({ payload }) {
 }
 
 export function* submitAccountPaymentSaga({ payload }) {
-  const { fundValue, issueId, organizationId, userId } = payload;
+  const { fundValue, issueId, userId } = payload;
   const isFundedFromOverview = window.location.pathname === '/issues';
   const submitAccountPaymentQuery = `
       mutation {
-        submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", organizationId: "${organizationId}", userId: "${userId}" ) {
+        submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", userId: "${userId}" ) {
           __typename
           ... on Payment {
             balance,

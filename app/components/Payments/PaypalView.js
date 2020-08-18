@@ -11,7 +11,7 @@ const PaypalView = ({
   handleValidateInput,
   isPaypalPaymentOpen,
   issueId,
-  organizationId,
+  setFundValue,
   userId,
 }) => (
   <ConditionalRender
@@ -26,7 +26,7 @@ const PaypalView = ({
           dollarValue={dollarValue}
           handleValidateInput={handleValidateInput}
           issueId={issueId}
-          organizationId={organizationId}
+          setFundValue={setFundValue}
           userId={userId}
         />
       </PaypalContainer>
@@ -41,7 +41,7 @@ PaypalView.propTypes = {
   handleValidateInput: T.func.isRequired,
   isPaypalPaymentOpen: T.bool.isRequired,
   issueId: T.string.isRequired,
-  organizationId: T.string.isRequired,
+  setFundValue: T.func.isRequired,
   userId: T.string,
 };
 

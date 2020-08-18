@@ -45,7 +45,6 @@ const IssueDetail = ({
     language,
     name,
     open,
-    organizationId,
     profilePic,
     rep,
     repo,
@@ -309,7 +308,6 @@ const IssueDetail = ({
             issueId={issueId}
             lastName={lastName}
             open={open}
-            organizationId={organizationId}
             userId={activeUserId}
           />
           <ConditionalRender

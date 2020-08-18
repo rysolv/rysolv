@@ -26,6 +26,7 @@ const CreditCardView = ({
   handleZipChange,
   isCreditPaymentOpen,
   isPersonalInfoComplete,
+  setFundValue,
   setStripeError,
   setZipValue,
   values,
@@ -52,6 +53,7 @@ const CreditCardView = ({
         token: result.token,
         values,
       });
+      setFundValue('2');
     }
   };
   return (
@@ -126,6 +128,7 @@ CreditCardView.propTypes = {
   handleZipChange: T.func,
   isCreditPaymentOpen: T.bool,
   isPersonalInfoComplete: T.bool,
+  setFundValue: T.func,
   setStripeError: T.func,
   setZipValue: T.func,
   values: T.object,

@@ -1,30 +1,37 @@
 /* eslint-disable consistent-return */
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+const { createActivity } = require('./activityResolver');
+const { calculateTotalAmount } = require('../../constants');
 const {
   submitAccountDepositUser,
   submitAccountPaymentIssue,
   submitAccountPaymentOrganization,
   submitAccountPaymentUser,
 } = require('../../db');
-const { createActivity } = require('./activityResolver');
 
 module.exports = {
   createPaypalPayment: async args => {
-    const { amount, issueId, organizationId, userId } = args;
+    const { amount, issueId, userId } = args;
     try {
       if (amount < 1) {
         throw new Error('Amount must be greater than $0.99');
       }
-      if (issueId && organizationId) {
-        const [issueResult] = await submitAccountPaymentIssue(issueId, amount);
-        await submitAccountPaymentOrganization(organizationId, amount);
+      if (issueId) {
+        const issueResult = await submitAccountPaymentIssue({
+          fundValue: amount,
+          issueId,
+        });
+        await submitAccountPaymentOrganization({
+          fundValue: amount,
+          organizationId: issueResult.organization_id,
+        });
 
         const activityInput = {
           actionType: 'fund',
           fundedValue: amount,
           issueId,
-          organizationId,
+          organizationId: issueResult.organization_id,
         };
         await createActivity({ activityInput });
 
@@ -35,7 +42,7 @@ module.exports = {
         };
       }
       if (userId) {
-        const [userResult] = await submitAccountDepositUser(userId, amount);
+        const userResult = await submitAccountDepositUser({ amount, userId });
 
         const activityInput = {
           actionType: 'fund',
@@ -58,8 +65,8 @@ module.exports = {
     }
   },
   createStripeCharge: async args => {
-    const { amount, issueId, organizationId, token, userId } = args;
-    const totalAmount = (amount * 103.6).toFixed();
+    const { amount, issueId, token, userId } = args;
+    const totalAmount = calculateTotalAmount(amount);
     try {
       if (amount < 1) {
         throw new Error('Amount must be greater than $0.99');
@@ -71,15 +78,21 @@ module.exports = {
         source: token,
       });
 
-      if (issueId && organizationId) {
-        const [issueResult] = await submitAccountPaymentIssue(issueId, amount);
-        await submitAccountPaymentOrganization(organizationId, amount);
+      if (issueId) {
+        const issueResult = await submitAccountPaymentIssue({
+          fundValue: amount,
+          issueId,
+        });
+        await submitAccountPaymentOrganization({
+          fundValue: amount,
+          organizationId: issueResult.organization_id,
+        });
 
         const activityInput = {
           actionType: 'fund',
           fundedValue: amount,
           issueId,
-          organizationId,
+          organizationId: issueResult.organization_id,
         };
         await createActivity({ activityInput });
 
@@ -90,7 +103,7 @@ module.exports = {
         };
       }
       if (userId) {
-        const [userResult] = await submitAccountDepositUser(userId, amount);
+        const userResult = await submitAccountDepositUser({ amount, userId });
 
         const activityInput = {
           actionType: 'fund',
@@ -113,30 +126,41 @@ module.exports = {
     }
   },
   submitAccountPayment: async args => {
+    const { fundValue, issueId, userId } = args;
     try {
-      const { issueId, fundValue, organizationId, userId } = args;
-      const [issueResult] = await submitAccountPaymentIssue(issueId, fundValue);
-      await submitAccountPaymentOrganization(organizationId, fundValue);
-      const [userResult] = await submitAccountPaymentUser(userId, fundValue);
+      if (issueId) {
+        const issueResult = await submitAccountPaymentIssue({
+          fundValue,
+          issueId,
+        });
+        await submitAccountPaymentOrganization({
+          fundValue,
+          organizationId: issueResult.organization_id,
+        });
+        const userResult = await submitAccountPaymentUser({
+          fundValue,
+          userId,
+        });
 
-      const activityInput = {
-        actionType: 'fund',
-        fundedValue: fundValue,
-        issueId,
-        organizationId,
-        userId,
-      };
-      await createActivity({ activityInput });
+        const activityInput = {
+          actionType: 'fund',
+          fundedValue: fundValue,
+          issueId,
+          organizationId: issueResult.organization_id,
+          userId,
+        };
+        await createActivity({ activityInput });
 
-      const result = {
-        balance: userResult.balance,
-        fundedAmount: issueResult.funded_amount,
-      };
-      return {
-        __typename: 'Payment',
-        message: 'Thank you for funding!',
-        ...result,
-      };
+        const result = {
+          balance: userResult.balance,
+          fundedAmount: issueResult.funded_amount,
+        };
+        return {
+          __typename: 'Payment',
+          message: 'Thank you for funding!',
+          ...result,
+        };
+      }
     } catch (err) {
       return {
         __typename: 'Error',
