@@ -159,7 +159,6 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
     number,
     state,
     title,
-    url: api_url,
     user: { login },
   } = pullRequestData;
 
@@ -170,13 +169,14 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
     throw new Error('Pull request has already been merged.');
   }
 
+  const isMergeable = mergeable === null ? false : mergeable;
+  const isMerged = merged === null ? false : merged;
   const pullData = {
-    apiUrl: api_url,
     githubUsername: login,
     htmlUrl: html_url,
-    mergeable: !!mergeable,
+    mergeable: isMergeable,
     mergeableState: mergeable_state,
-    merged: !!merged,
+    merged: isMerged,
     open: state === 'open',
     pullNumber: number,
     status: state,

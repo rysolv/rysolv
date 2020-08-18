@@ -1,10 +1,12 @@
-const withdrawal = `CREATE TABLE IF NOT EXISTS
-  withdrawal(
-    id UUID PRIMARY KEY,
-    created_date TIMESTAMP,
-    fee FLOAT,
-    transfer_value FLOAT,
-    user_id UUID REFERENCES users(id)
-  )`;
+const alterWithdrawalTable = `ALTER TABLE withdrawal
+ADD COLUMN created_date TIMESTAMP,
+ADD COLUMN fee FLOAT,
+ADD COLUMN transfer_value FLOAT,
+ADD COLUMN user_id UUID REFERENCES users(id)`;
 
-module.exports = withdrawal;
+const createWithdrawalTable = `CREATE TABLE IF NOT EXISTS
+withdrawal(
+  id UUID PRIMARY KEY
+)`;
+
+module.exports = { alterWithdrawalTable, createWithdrawalTable };

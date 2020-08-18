@@ -2,7 +2,6 @@ const { mapValues, singleItem, singleQuery } = require('./query');
 const { formatParamaters } = require('./helpers');
 
 const pullRequestValues = [
-  'api_url',
   'created_date',
   'github_username',
   'html_url',
@@ -20,7 +19,6 @@ const pullRequestValues = [
 ];
 
 const pullRequestReturnValues = `
-  pullRequests.api_url AS "apiUrl",
   pullRequests.created_date AS "createdDate",
   pullRequests.github_username AS "githubUsername",
   pullRequests.html_url AS "htmlUrl",

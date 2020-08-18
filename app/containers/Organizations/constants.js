@@ -49,6 +49,8 @@ export const UPDATE_INFO = 'app/Organizations/UPDATE_INFO';
 export const UPDATE_INFO_FAILURE = 'app/Organizations/UPDATE_INFO_FAILURE';
 export const UPDATE_INFO_SUCCESS = 'app/Organizations/UPDATE_INFO_SUCCESS';
 
+export const UPDATE_IS_MANUAL = 'app/Organizations/UPDATE_IS_MANUAL';
+
 export const UPVOTE_ISSUE = 'app/Organizations/UPVOTE_ISSUE';
 export const UPVOTE_ISSUE_FAILURE = 'app/Organizations/UPVOTE_ISSUE_FAILURE';
 export const UPVOTE_ISSUE_SUCCESS = 'app/Organizations/UPVOTE_ISSUE_SUCCESS';

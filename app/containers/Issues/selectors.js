@@ -80,14 +80,16 @@ const makeSelectIssueDetailLoading = prop =>
 
 const makeSelectIssuesRequestBody = () =>
   createSelector(
+    makeSelectIssues('isManual'),
     makeSelectIssues('issueData'),
     makeSelectIssues('organizationData'),
-    (issueData, organizationData) => {
+    (isManual, issueData, organizationData) => {
       const formData = { ...issueData, ...organizationData };
-      return Object.keys(formData).reduce((acc, field) => {
+      const requestBody = Object.keys(formData).reduce((acc, field) => {
         acc[field] = formData[field].value;
         return acc;
       }, {});
+      return { isManual, ...requestBody };
     },
   );
 

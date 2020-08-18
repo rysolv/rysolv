@@ -11,6 +11,7 @@ import {
   clearOrganization,
   incrementStep,
   inputChange,
+  updateIsManual,
   updateOrganization,
 } from '../actions';
 import {
@@ -24,9 +25,9 @@ import {
   StyledH3,
 } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const ManualOrganization = ({
   activeUser,
+  dispatchUpdateIsManual,
   handleClearOrganization,
   handleIncrementStep,
   handleInputChange,
@@ -34,7 +35,10 @@ const ManualOrganization = ({
   isDisabled,
   organizationData,
 }) => {
-  useEffect(() => document.getElementById('issue-org-manual').focus(), []);
+  useEffect(() => {
+    dispatchUpdateIsManual({ value: true });
+    document.getElementById('issue-org-manual').focus();
+  }, []);
 
   const idSelected = organizationData.organizationId.value !== '';
 
@@ -81,6 +85,7 @@ const ManualOrganization = ({
 
 ManualOrganization.propTypes = {
   activeUser: T.object,
+  dispatchUpdateIsManual: T.func,
   handleClearOrganization: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
@@ -102,6 +107,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
     handleClearOrganization: payload => dispatch(clearOrganization(payload)),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),

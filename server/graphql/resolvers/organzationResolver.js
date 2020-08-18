@@ -35,6 +35,7 @@ module.exports = {
       created_date: new Date(),
       description: organizationInput.organizationDescription,
       id: uuidv4(),
+      is_manual: organizationInput.isManual,
       issues: organizationInput.issues || [],
       logo: organizationInput.organizationLogo || defaultOrgLogo,
       modified_date: new Date(),

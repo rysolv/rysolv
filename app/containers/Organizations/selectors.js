@@ -131,12 +131,15 @@ const makeSelectOrganizationsLoading = prop =>
 
 const makeSelectOrganizationsRequestBody = () =>
   createSelector(
+    makeSelectOrganizations('isManual'),
     makeSelectOrganizations('organizationData'),
-    data =>
-      Object.keys(data).reduce((acc, field) => {
+    (isManual, data) => {
+      const requestBody = Object.keys(data).reduce((acc, field) => {
         acc[field] = data[field].value;
         return acc;
-      }, {}),
+      }, {});
+      return { isManual, ...requestBody };
+    },
   );
 
 const makeSelectOrganizationsSearchDisabled = prop =>

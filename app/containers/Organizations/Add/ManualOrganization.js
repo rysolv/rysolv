@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { PrimaryButton } from 'components/base_ui';
 import ManualForm from 'components/Organizations/Add/ManualForm';
 
-import { incrementStep, inputChange } from '../actions';
+import { incrementStep, inputChange, updateIsManual } from '../actions';
 import {
   makeSelectOrganizations,
   makeSelectOrganizationsDisabled,
@@ -18,14 +18,17 @@ import {
   StyledH3,
 } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const ManualOrganization = ({
+  dispatchUpdateIsManual,
   handleIncrementStep,
   handleInputChange,
   isDisabled,
   organizationData,
 }) => {
-  useEffect(() => document.getElementById('organization-manual').focus(), []);
+  useEffect(() => {
+    dispatchUpdateIsManual({ value: true });
+    document.getElementById('organization-manual').focus();
+  }, []);
 
   const handleKeypress = ({ keyCode, which }) => {
     if ((keyCode === 13 || which === 13 || 0) && isDisabled) {
@@ -64,6 +67,7 @@ const ManualOrganization = ({
 };
 
 ManualOrganization.propTypes = {
+  dispatchUpdateIsManual: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   isDisabled: T.bool,
@@ -83,6 +87,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Organizations
      */
+    dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };

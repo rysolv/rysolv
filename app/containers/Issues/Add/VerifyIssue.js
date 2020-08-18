@@ -34,11 +34,8 @@ const VerifyIssue = ({
 
   const handleKeypress = ({ keyCode, which }) => {
     if (keyCode === 13 || which === 13 || 0) {
-      handleSaveInfo();
+      dispatchSaveInfo({ requestBody, activeUser });
     }
-  };
-  const handleSaveInfo = () => {
-    dispatchSaveInfo({ requestBody, activeUser });
   };
   const cancelImport = () => {
     dispatchClearForm();
@@ -86,7 +83,7 @@ const VerifyIssue = ({
         <PrimaryAsyncButton
           disabled={false}
           label="Submit"
-          onClick={handleSaveInfo}
+          onClick={() => dispatchSaveInfo({ requestBody, activeUser })}
         />
       </ButtonGroup>
     </StyledFocusDiv>
