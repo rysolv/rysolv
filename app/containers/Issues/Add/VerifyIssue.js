@@ -35,7 +35,7 @@ export class VerifyIssue extends React.PureComponent {
       requestBody,
     } = this.props;
     const handleSaveInfo = () => {
-      dispatchSaveInfo({ requestBody, activeUser });
+      dispatchSaveInfo({ activeUser, requestBody });
       handleNav('/issues');
     };
     const cancelImport = () => {

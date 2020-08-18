@@ -46,6 +46,7 @@ import {
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
   UPDATE_FUNDED_ISSUE,
+  UPDATE_IS_MANUAL,
   UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
@@ -87,6 +88,7 @@ export const initialState = {
     },
   },
   importSuccess: false,
+  isManual: false,
   isModalOpen: false,
   issueDetail: {},
   issues: [],
@@ -405,6 +407,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
         const { id } = issue;
         if (id === issueId) issue.fundedAmount = fundedAmount;
       });
+      break;
+    }
+    case UPDATE_IS_MANUAL: {
+      const { value } = payload;
+      draft.isManual = value;
       break;
     }
     case UPDATE_ISSUE_DETAIL: {

@@ -39,21 +39,28 @@ const {
   getPullRequests,
   getUserPullRequests,
 } = require('./pullRequests');
-const { createTables, dropAllTables, printTables } = require('./tables');
 const {
   checkDuplicateUserEmail,
   checkDuplicateUsername,
   createUser,
   getOneUser,
+  getOneUserSignUp,
   getUsers,
   getWatchList,
   searchUsers,
   transformUser,
   updateUserArray,
 } = require('./users');
+const {
+  alterTables,
+  createTables,
+  dropAllTables,
+  printTables,
+} = require('./tables');
 const { createWithdrawal, transformUserBalance } = require('./withdrawal');
 
 module.exports = {
+  alterTables,
   checkDuplicateIssue,
   checkDuplicateOrganization,
   checkDuplicatePullRequest,
@@ -81,6 +88,7 @@ module.exports = {
   getOneOrganization,
   getOnePullRequest,
   getOneUser,
+  getOneUserSignUp,
   getOrganizations,
   getOrganizationsWhere,
   getPullRequestList,

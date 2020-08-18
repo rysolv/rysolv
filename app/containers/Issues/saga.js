@@ -386,6 +386,7 @@ export function* importIssueSaga({ payload }) {
 export function* saveInfoSaga({ payload }) {
   const {
     requestBody: {
+      isManual,
       issueBody,
       issueLanguages,
       issueName,
@@ -405,6 +406,7 @@ export function* saveInfoSaga({ payload }) {
         issueInput: {
           body: ${JSON.stringify(issueBody)},
           contributor: "${userId}",
+          isManual: ${isManual},
           language:  ${JSON.stringify(issueLanguages)},
           name: ${JSON.stringify(issueName)},
           organizationDescription:  "${organizationDescription}",

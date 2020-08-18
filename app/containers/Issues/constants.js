@@ -67,6 +67,8 @@ export const SEARCH_ISSUES_SUCCESS = 'app/Issues/SEARCH_ISSUES_SUCCESS';
 
 export const UPDATE_FUNDED_ISSUE = 'app/Issues/UPDATE_FUNDED_ISSUES';
 
+export const UPDATE_IS_MANUAL = 'app/Issues/UPDATE_IS_MANUAL';
+
 export const UPDATE_ISSUE_DETAIL = 'app/Issues/UPDATE_ISSUE_DETAIL';
 
 export const UPDATE_ORGANIZATION = 'app/Issues/UPDATE_ORGANIZATION';

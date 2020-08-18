@@ -27,6 +27,7 @@ import {
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
+  UPDATE_IS_MANUAL,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
@@ -224,6 +225,13 @@ export function updateInfo(payload) {
   return {
     payload,
     type: UPDATE_INFO,
+  };
+}
+
+export function updateIsManual(payload) {
+  return {
+    payload,
+    type: UPDATE_IS_MANUAL,
   };
 }
 

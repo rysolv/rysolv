@@ -35,6 +35,7 @@ const newIssueObject = (issueId, issueInput) => ({
   created_date: new Date(), // created_date
   funded_amount: issueInput.fundedAmount || 0, // funded_amount
   id: issueId, // id
+  is_manual: issueInput.isManual,
   language: issueInput.language || [], // language
   modified_date: new Date(), // modified_data
   name: issueInput.name, // name
@@ -51,6 +52,7 @@ const newOrganizationObject = organizationInput => ({
   created_date: new Date(), // created_date
   description: organizationInput.organizationDescription, // description
   id: uuidv4(), // id
+  is_manual: organizationInput.isManual,
   issues: organizationInput.issues || [], // issues
   logo: organizationInput.organizationLogo || defaultOrgImage, // logo
   modified_date: new Date(), // modified_date

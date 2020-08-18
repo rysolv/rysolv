@@ -6,6 +6,7 @@ const organizationValues = [
   'created_date',
   'description',
   'id',
+  'is_manual',
   'issues',
   'logo',
   'modified_date',
@@ -19,20 +20,21 @@ const organizationValues = [
 ];
 
 const organizationReturnValues = `
-  id,
+  contributors,
   created_date AS "createdDate",
-  modified_date AS "modifiedDate",
-  name,
   description,
-  repo_url AS "repoUrl",
-  organization_url AS "organizationUrl",
+  id,
+  is_manual AS "isManual",
   issues,
   logo,
-  verified,
-  contributors,
+  modified_date AS "modifiedDate",
+  name,
+  organization_url AS "organizationUrl",
   owner_id AS "ownerId",
+  preferred_languages AS "preferredLanguages",
+  repo_url AS "repoUrl",
   total_funded AS "totalFunded",
-  preferred_languages AS "preferredLanguages"
+  verified
 `;
 
 // Check duplicate organization

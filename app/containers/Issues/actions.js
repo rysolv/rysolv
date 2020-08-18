@@ -42,6 +42,7 @@ import {
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
   UPDATE_FUNDED_ISSUE,
+  UPDATE_IS_MANUAL,
   UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
@@ -345,6 +346,13 @@ export function updateFundedIssue(payload) {
   return {
     payload,
     type: UPDATE_FUNDED_ISSUE,
+  };
+}
+
+export function updateIsManual(payload) {
+  return {
+    payload,
+    type: UPDATE_IS_MANUAL,
   };
 }
 
