@@ -6,7 +6,12 @@ import { connect } from 'react-redux';
 import { PrimaryButton } from 'components/base_ui';
 import ManualForm from 'components/Organizations/Add/ManualForm';
 
-import { incrementStep, inputChange, updateIsManual } from '../actions';
+import {
+  generateIdenticon,
+  incrementStep,
+  inputChange,
+  updateIsManual,
+} from '../actions';
 import {
   makeSelectOrganizations,
   makeSelectOrganizationsDisabled,
@@ -20,6 +25,7 @@ import {
 
 const ManualOrganization = ({
   dispatchUpdateIsManual,
+  handleGenerateIdenticon,
   handleIncrementStep,
   handleInputChange,
   isDisabled,
@@ -30,11 +36,15 @@ const ManualOrganization = ({
     document.getElementById('organizationManual').focus();
   }, []);
 
-  const handleKeypress = ({ key }) => {
-    if (key === 'Enter' && isDisabled) {
-      handleIncrementStep({ step: 3, view: 'addOrganization' });
-    }
+  const handleNextStep = () => {
+    handleGenerateIdenticon();
+    handleIncrementStep({ step: 3, view: 'addOrganization' });
   };
+
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter' && isDisabled) handleNextStep();
+  };
+
   return (
     <StyledFocusDiv
       id="organizationManual"
@@ -57,9 +67,7 @@ const ManualOrganization = ({
         <PrimaryButton
           disabled={!isDisabled}
           label="Next"
-          onClick={() =>
-            handleIncrementStep({ step: 3, view: 'addOrganization' })
-          }
+          onClick={handleNextStep}
         />
       </ButtonGroup>
     </StyledFocusDiv>
@@ -68,6 +76,7 @@ const ManualOrganization = ({
 
 ManualOrganization.propTypes = {
   dispatchUpdateIsManual: T.func,
+  handleGenerateIdenticon: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   isDisabled: T.bool,
@@ -88,6 +97,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Organizations
      */
     dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
+    handleGenerateIdenticon: () => dispatch(generateIdenticon()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };

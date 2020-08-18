@@ -1,5 +1,7 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
+import { v4 as uuidv4 } from 'uuid';
+import Identicon from 'identicon.js';
 import remove from 'lodash/remove';
 
 import {
@@ -16,6 +18,7 @@ import {
   FETCH_ORGANIZATIONS_FAILURE,
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
+  GENERATE_IDENTICON,
   IMPORT_ORGANIZATION_FAILURE,
   IMPORT_ORGANIZATION_SUCCESS,
   IMPORT_ORGANIZATION,
@@ -85,10 +88,7 @@ export const initialState = {
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
     organizationId: { error: '', value: '' },
-    organizationLogo: {
-      error: '',
-      value: 'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
-    },
+    organizationLogo: { error: '', value: '' },
     organizationName: { error: '', value: '' },
     organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
@@ -189,6 +189,11 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_INFO: {
       draft.loading.fetchOrganization = true;
+      break;
+    }
+    case GENERATE_IDENTICON: {
+      const identicon = new Identicon(uuidv4(), 250).toString();
+      draft.organizationData.organizationLogo.value = `data:image/png;base64,${identicon}`;
       break;
     }
     case IMPORT_ORGANIZATION_FAILURE: {

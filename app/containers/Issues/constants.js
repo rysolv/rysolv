@@ -44,6 +44,8 @@ export const FETCH_ISSUE_DETAIL_FAILURE =
 export const FETCH_ISSUE_DETAIL_SUCCESS =
   'app/Issues/FETCH_ISSUE_DETAIL_SUCCESS';
 
+export const GENERATE_IDENTICON = 'app/Issues/GENERATE_IDENTICON';
+
 export const IMPORT_ISSUE = 'app/Issues/IMPORT_ISSUE';
 export const IMPORT_ISSUE_FAILURE = 'app/Issues/IMPORT_ISSUE_FAILURE';
 export const IMPORT_ISSUE_SUCCESS = 'app/Issues/IMPORT_ISSUE_SUCCESS';

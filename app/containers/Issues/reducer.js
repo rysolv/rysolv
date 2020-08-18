@@ -1,5 +1,7 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
+import { v4 as uuidv4 } from 'uuid';
+import Identicon from 'identicon.js';
 import remove from 'lodash/remove';
 
 import {
@@ -32,6 +34,7 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  GENERATE_IDENTICON,
   IMPORT_ISSUE_FAILURE,
   IMPORT_ISSUE_SUCCESS,
   IMPORT_ISSUE,
@@ -309,6 +312,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_ISSUE_DETAIL: {
       draft.loading.issueDetail = true;
+      break;
+    }
+    case GENERATE_IDENTICON: {
+      const identicon = new Identicon(uuidv4(), 250).toString();
+      draft.organizationData.organizationLogo.value = `data:image/png;base64,${identicon}`;
       break;
     }
     case IMPORT_ISSUE_FAILURE: {

@@ -1,3 +1,5 @@
+const Identicon = require('identicon.js');
+
 const {
   checkDuplicateUserEmail,
   checkDuplicateUsername,
@@ -15,8 +17,6 @@ const {
 } = require('../../db');
 const { uploadImage } = require('../../middlewares/imageUpload');
 
-const defaultUserImage =
-  'https://rysolv.s3.us-east-2.amazonaws.com/default-profile-picture.png';
 const deletedUserImage =
   'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTBvwAcytGFLkWO2eT-FCwE5z_mlQxBdI9uwbyeczCTVBci7Vrg&usqp=CAU';
 
@@ -39,22 +39,25 @@ module.exports = {
     }
   },
   createUser: async args => {
-    const { userInput } = args;
+    const {
+      userInput: { email, firstName, id, lastName, username },
+    } = args;
 
+    const { uploadUrl } = await uploadImage(new Identicon(id, 250).toString());
     const newUser = {
-      id: userInput.id,
       created_date: new Date(),
-      email: userInput.email,
-      first_name: userInput.firstName,
-      last_name: userInput.lastName,
+      email,
+      first_name: firstName,
+      id,
+      last_name: lastName,
       modified_date: new Date(),
-      profile_pic: defaultUserImage,
-      username: userInput.username,
+      profile_pic: uploadUrl,
+      username,
     };
 
     try {
-      await checkDuplicateUserEmail(userInput.email);
-      await checkDuplicateUsername(userInput.username);
+      await checkDuplicateUserEmail(email);
+      await checkDuplicateUsername(username);
 
       const result = await createUser(newUser);
 

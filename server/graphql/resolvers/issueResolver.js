@@ -1,8 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
 
-const defaultOrgImage =
-  'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png';
-
 const {
   checkDuplicateIssue,
   checkDuplicateOrganization,
@@ -24,11 +21,10 @@ const {
   updateUserArray,
   upvoteIssue,
 } = require('../../db');
-
 const { createActivity } = require('./activityResolver');
-
-const { getSingleIssue, getSingleRepo } = require('../../integrations');
 const { formatIssueUrl } = require('../../integrations/github/helpers');
+const { getSingleIssue, getSingleRepo } = require('../../integrations');
+const { uploadImage } = require('../../middlewares/imageUpload');
 
 const newIssueObject = (issueId, issueInput) => ({
   attempting: issueInput.attempting || [], // attempting
@@ -50,23 +46,28 @@ const newIssueObject = (issueId, issueInput) => ({
   watching: issueInput.watching || [], // watching
 });
 
-const newOrganizationObject = organizationInput => ({
-  contributors: [], // contributors
-  created_date: new Date(), // created_date
-  description: organizationInput.organizationDescription, // description
-  id: uuidv4(), // id
-  is_manual: organizationInput.isManual,
-  issues: organizationInput.issues || [], // issues
-  logo: organizationInput.organizationLogo || defaultOrgImage, // logo
-  modified_date: new Date(), // modified_date
-  name: organizationInput.organizationName, // name
-  organization_url: organizationInput.organizationUrl || '', // url
-  owner_id: organizationInput.contributor, // owner_id
-  preferred_languages: organizationInput.preferred_languages || [], // languages
-  repo_url: organizationInput.organizationRepo, // repo
-  total_funded: organizationInput.totalFunded || 0, // funded
-  verified: organizationInput.verified || false, // verified
-});
+const newOrganizationObject = async organizationInput => {
+  const organizationId = uuidv4();
+  const { uploadUrl } = await uploadImage(organizationInput.organizationLogo);
+
+  return {
+    contributors: [], // contributors
+    created_date: new Date(), // created_date
+    description: organizationInput.organizationDescription, // description
+    id: organizationId, // id
+    is_manual: organizationInput.isManual, // is_manual
+    issues: organizationInput.issues || [], // issues
+    logo: uploadUrl, // logo
+    modified_date: new Date(), // modified_date
+    name: organizationInput.organizationName, // name
+    organization_url: organizationInput.organizationUrl || '', // url
+    owner_id: organizationInput.contributor, // owner_id
+    preferred_languages: organizationInput.preferred_languages || [], // languages
+    repo_url: organizationInput.organizationRepo, // repo
+    total_funded: organizationInput.totalFunded || 0, // funded
+    verified: organizationInput.verified || false, // verified
+  };
+};
 
 module.exports = {
   closeIssue: async args => {
@@ -91,7 +92,7 @@ module.exports = {
   },
   createIssue: async args => {
     const { issueInput } = args;
-    const { organizationRepo, repo, organizationId } = issueInput;
+    const { organizationId, organizationRepo, repo } = issueInput;
     const newIssueId = uuidv4();
 
     // Populate issue object and create new issue
@@ -117,7 +118,7 @@ module.exports = {
         );
       }
 
-      const organizationObject = newOrganizationObject(issueInput);
+      const organizationObject = await newOrganizationObject(issueInput);
       try {
         const [result] = await createOrganization(organizationObject);
         return result;
@@ -239,8 +240,9 @@ module.exports = {
       );
 
       if (organizationData) {
-        const { id } = organizationData;
+        const { id, logo } = organizationData;
         issueInput.organizationId = id;
+        organizationInput.organizationLogo = logo;
       }
 
       const ImportData = { ...issueInput, ...organizationInput };

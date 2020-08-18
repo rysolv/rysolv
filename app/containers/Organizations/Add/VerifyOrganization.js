@@ -6,7 +6,13 @@ import { connect } from 'react-redux';
 import { PrimaryAsyncButton } from 'components/base_ui';
 import VerifyForm from 'components/Organizations/Add/VerifyForm';
 
-import { clearForm, incrementStep, saveInfo, verifyInfo } from '../actions';
+import {
+  clearForm,
+  generateIdenticon,
+  incrementStep,
+  saveInfo,
+  verifyInfo,
+} from '../actions';
 import { verifyMessage } from '../constants';
 import {
   makeSelectOrganizations,
@@ -27,12 +33,17 @@ const VerifyOrganization = ({
   dispatchIncrementStep,
   dispatchSaveInfo,
   dispatchVerifyInfo,
+  handleGenerateIdenticon,
   importSuccess,
   isVerified,
   organizationData,
+  organizationData: { organizationLogo },
   requestBody,
 }) => {
-  useEffect(() => document.getElementById('organizationAdd').focus(), []);
+  useEffect(() => {
+    if (!organizationLogo.value) handleGenerateIdenticon();
+    document.getElementById('organizationAdd').focus();
+  }, []);
 
   const handleKeypress = ({ key }) => {
     if (key === 'Enter' && isVerified) {
@@ -89,6 +100,7 @@ VerifyOrganization.propTypes = {
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
   dispatchVerifyInfo: T.func,
+  handleGenerateIdenticon: T.func,
   importSuccess: T.bool,
   isVerified: T.bool,
   organizationData: T.object,
@@ -113,6 +125,7 @@ function mapDispatchToProps(dispatch) {
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
     dispatchVerifyInfo: () => dispatch(verifyInfo()),
+    handleGenerateIdenticon: () => dispatch(generateIdenticon()),
   };
 }
 

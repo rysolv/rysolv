@@ -12,6 +12,7 @@ import {
   FETCH_ORGANIZATIONS_FAILURE,
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
+  GENERATE_IDENTICON,
   IMPORT_ORGANIZATION_FAILURE,
   IMPORT_ORGANIZATION_SUCCESS,
   IMPORT_ORGANIZATION,
@@ -121,6 +122,10 @@ export function fetchInfo(payload) {
     payload,
     type: FETCH_INFO,
   };
+}
+
+export function generateIdenticon() {
+  return { type: GENERATE_IDENTICON };
 }
 
 export function importOrganizationFailure(payload) {

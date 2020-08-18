@@ -27,7 +27,6 @@ import {
   fetchInfo,
   fetchInfoFailure,
   fetchInfoSuccess,
-  fetchOrganizations,
   fetchOrganizationsFailure,
   fetchOrganizationsSuccess,
   importOrganizationFailure,
@@ -260,7 +259,6 @@ export function* saveInfoSaga({ payload }) {
     if (__typename === 'Error') throw message;
 
     yield put(fetchActiveUser({ userId }));
-    yield put(fetchOrganizations());
     yield put(push(`/organizations/detail/${id}`));
     yield put(saveInfoSuccess({ message: successCreateOrganizationMessage }));
   } catch (error) {
