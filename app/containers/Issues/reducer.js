@@ -48,6 +48,7 @@ import {
   SUBMIT_ACCOUNT_PAYMENT_FAILURE,
   SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
   SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_IS_MANUAL,
   UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
@@ -89,6 +90,7 @@ export const initialState = {
     },
   },
   importSuccess: false,
+  isManual: false,
   isModalOpen: false,
   issueDetail: {},
   issues: [],
@@ -421,6 +423,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case SUBMIT_ACCOUNT_PAYMENT: {
       draft.loading.submitAccountPayment = true;
+      break;
+    }
+    case UPDATE_IS_MANUAL: {
+      const { value } = payload;
+      draft.isManual = value;
       break;
     }
     case UPDATE_ISSUE_DETAIL: {

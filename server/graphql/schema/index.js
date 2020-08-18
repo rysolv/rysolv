@@ -63,7 +63,6 @@ module.exports = buildSchema(`
   }
 
   type ImportPullRequest {
-    apiUrl: String,
     githubUsername: String,
     htmlUrl: String,
     mergeable: Boolean,
@@ -109,6 +108,7 @@ module.exports = buildSchema(`
     comments: [ID]
     contributor: String
     fundedAmount: Int
+    isManual: Boolean
     language: [String]
     name: String
     organizationDescription: String
@@ -144,6 +144,7 @@ module.exports = buildSchema(`
   }
 
   input OrganizationInput {
+    isManual: Boolean
     organizationDescription: String
     organizationLogo: String
     organizationName: String
@@ -155,7 +156,6 @@ module.exports = buildSchema(`
   }
 
   type PullRequest {
-    apiUrl: String
     createdDate: Object!
     githubUsername: String
     htmlUrl: String

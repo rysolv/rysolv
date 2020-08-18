@@ -49,10 +49,16 @@ const {
   transformOrganization,
   updateOrganizationArray,
 } = require('./organizations');
-const { createTables, dropAllTables, printTables } = require('./tables');
+const {
+  alterTables,
+  createTables,
+  dropAllTables,
+  printTables,
+} = require('./tables');
 const { createWithdrawal, transformUserBalance } = require('./withdrawal');
 
 module.exports = {
+  alterTables,
   checkDuplicateIssue,
   checkDuplicateOrganization,
   checkDuplicatePullRequest,

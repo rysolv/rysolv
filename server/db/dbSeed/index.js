@@ -2,7 +2,7 @@
 const pool = require('../connect');
 
 // Import db functions
-const { createTables, dropAllTables, printTables } = require('..');
+const { alterTables, createTables, dropAllTables, printTables } = require('..');
 
 // Seed function - run via 'npm run seed'
 const seed = async () => {
@@ -10,6 +10,7 @@ const seed = async () => {
   const t1 = Date.now();
   await dropAllTables();
   await createTables();
+  await alterTables();
 
   // Log results and end connection
   const t2 = Date.now();

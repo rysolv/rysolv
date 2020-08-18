@@ -11,6 +11,7 @@ import {
   clearOrganization,
   incrementStep,
   inputChange,
+  updateIsManual,
   updateOrganization,
 } from '../actions';
 import {
@@ -21,6 +22,11 @@ import { BackLink, ButtonGroup, StyledH3 } from './styledComponents';
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class ManualOrganization extends React.PureComponent {
+  componentDidMount() {
+    const { dispatchUpdateIsManual } = this.props;
+    dispatchUpdateIsManual({ value: true });
+  }
+
   render() {
     const {
       activeUser,
@@ -67,6 +73,7 @@ export class ManualOrganization extends React.PureComponent {
 
 ManualOrganization.propTypes = {
   activeUser: T.object,
+  dispatchUpdateIsManual: T.func,
   handleClearOrganization: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
@@ -88,6 +95,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
     handleClearOrganization: payload => dispatch(clearOrganization(payload)),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),

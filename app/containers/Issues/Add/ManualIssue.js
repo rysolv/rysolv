@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { PrimaryButton } from 'components/base_ui';
 import ManualForm from 'components/Issues/Add/ManualForm';
 
-import { incrementStep, inputChange } from '../actions';
+import { incrementStep, inputChange, updateIsManual } from '../actions';
 import { makeSelectIssues, makeSelectIssuesDisabled } from '../selectors';
 import {
   BackLink,
@@ -19,6 +19,11 @@ import {
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class ManualIssue extends React.PureComponent {
+  componentDidMount() {
+    const { dispatchUpdateIsManual } = this.props;
+    dispatchUpdateIsManual({ value: true });
+  }
+
   render() {
     const {
       issueData,
@@ -64,10 +69,11 @@ export class ManualIssue extends React.PureComponent {
 }
 
 ManualIssue.propTypes = {
-  issueData: T.object,
+  dispatchUpdateIsManual: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   isDisabled: T.bool,
+  issueData: T.object,
   organizationData: T.object,
 };
 
@@ -85,6 +91,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };

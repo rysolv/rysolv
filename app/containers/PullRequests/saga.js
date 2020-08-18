@@ -179,7 +179,6 @@ export function* importPullRequestSaga({ payload }) {
       importPullRequest(url: "${url}", issueId:"${issueId}") {
         __typename
         ... on ImportPullRequest {
-          apiUrl
           githubUsername
           htmlUrl
           mergeable
