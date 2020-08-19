@@ -33,8 +33,8 @@ const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
+  activeUser: { id: activeUserId, issues },
   addWatching,
-  activeUser: { balance, email, firstName, id: activeUserId, issues, lastName },
   alerts: { error, success },
   data,
   data: {

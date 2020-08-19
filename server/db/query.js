@@ -52,6 +52,19 @@ const mapValues = async (queryText, array) => {
   return results;
 };
 
+// Querytext should insert parameters using $1, $2, $3
+const parameterizedQuery = async ({ queryText, values }) => {
+  const client = await pool.connect();
+  try {
+    const result = await client.query(queryText, values);
+    client.release();
+    return result;
+  } catch (error) {
+    client.release();
+    throw error;
+  }
+};
+
 // single query (no data)
 const singleQuery = async queryText => {
   const client = await pool.connect();
@@ -93,6 +106,7 @@ module.exports = {
   mapQuery,
   mapQueryPrint,
   mapValues,
+  parameterizedQuery,
   sequentialQuery,
   singleItem,
   singleQuery,

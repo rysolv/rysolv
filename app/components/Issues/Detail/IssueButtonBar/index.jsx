@@ -11,13 +11,13 @@ import { ButtonBar } from './styledComponents';
 
 const IssueButtonBar = ({
   activeUser,
-  addWatching,
   activeUser: {
     id: userId,
     pullRequests: activeUserPullRequests,
     watching: activeUserWatching,
   },
-  data: { attempting, id, open, pullRequests, watching },
+  addWatching,
+  data: { attempting, id: issueId, open, pullRequests, watching },
   dispatchFetchPullRequestList,
   dispatchFetchWatchList,
   dispatchOpenIssueModal,
@@ -27,7 +27,7 @@ const IssueButtonBar = ({
   ...restProps
 }) => {
   const userWatching =
-    activeUserWatching && !!activeUserWatching.find(el => el.id === id);
+    activeUserWatching && !!activeUserWatching.find(el => el.id === issueId);
 
   return (
     <ButtonBar {...restProps}>
@@ -39,7 +39,7 @@ const IssueButtonBar = ({
         dispatchOpenModal={dispatchOpenModal}
         handleIncrement={handleIncrement}
         isSignedIn={isSignedIn}
-        issueId={id}
+        issueId={issueId}
         userId={userId}
       />
 
@@ -49,8 +49,8 @@ const IssueButtonBar = ({
         dispatchOpenModal={dispatchOpenModal}
         handleWatch={() =>
           addWatching({
-            issueId: id,
-            userId: activeUser.id,
+            issueId,
+            userId,
           })
         }
         isSignedIn={isSignedIn}

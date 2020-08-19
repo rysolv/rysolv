@@ -32,7 +32,6 @@ import {
   makeSelectIssuesSearchDisabled,
 } from '../selectors';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const IssuesOverview = ({
   activeUser,
   addWatching,

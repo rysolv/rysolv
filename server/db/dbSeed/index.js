@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
-const pool = require('../connect');
 const readline = require('readline');
+
+const pool = require('../connect');
 
 // Import db functions
 const { alterTables, createTables, dropAllTables, printTables } = require('..');

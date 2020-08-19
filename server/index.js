@@ -1,16 +1,16 @@
 /* eslint consistent-return:0 import/order:0 */
 require('dotenv').config();
 const express = require('express');
-const logger = require('./logger');
 const graphQlHttp = require('express-graphql');
-const graphQlSchema = require('./graphql/schema');
-const graphQlResolvers = require('./graphql/resolvers');
+const { resolve } = require('path');
 
 const argv = require('./argv');
+const graphQlResolvers = require('./graphql/resolvers');
+const graphQlSchema = require('./graphql/schema');
+const logger = require('./logger');
 const port = require('./port');
-// const router = require('./routes');
 const setup = require('./middlewares/frontendMiddleware');
-const { resolve } = require('path');
+
 const app = express();
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -22,9 +22,9 @@ app.use(express.urlencoded({ limit: '10mb' }));
 app.use(
   '/graphql',
   graphQlHttp({
-    schema: graphQlSchema,
-    rootValue: graphQlResolvers,
     graphiql: !PRODUCTION,
+    rootValue: graphQlResolvers,
+    schema: graphQlSchema,
   }),
 );
 

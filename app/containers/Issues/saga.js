@@ -77,11 +77,38 @@ export function* addAttemptSaga({ payload }) {
       data: { updateIssueArray },
     } = yield call(post, '/graphql', graphql);
     yield put(addAttemptSuccess(updateIssueArray));
-    yield put(addWatchSuccess(updateIssueArray));
     yield put(fetchActiveUser({ userId }));
   } catch (error) {
     yield put(addAttemptFailure({ error }));
-    yield put(addWatchFailure({ error }));
+  }
+}
+
+export function* addCommentSaga({ payload }) {
+  const { activeUser, body, issueId } = payload;
+  const query = `
+  mutation{
+    createComment(commentInput: {
+      body: ${JSON.stringify(body)},
+      target: "${issueId}",
+      user: "${activeUser.id}"
+    }) {
+      body,
+      commentId,
+      createdDate,
+      profilePic
+      target,
+      username,
+    }
+  }`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const { data: createComment } = yield call(post, '/graphql', graphql);
+    yield put(addCommentSuccess(createComment));
+  } catch (error) {
+    yield put(addCommentFailure({ error }));
   }
 }
 
@@ -121,37 +148,7 @@ export function* addWatchSaga({ payload }) {
     yield put(addWatchSuccess({ issueId, userArray }));
     yield put(updateActiveUser({ watching: issueArray }));
   } catch (error) {
-    yield put(addAttemptFailure({ error }));
     yield put(addWatchFailure({ error }));
-  }
-}
-
-export function* addCommentSaga({ payload }) {
-  const { activeUser, body, issueId } = payload;
-  const query = `
-  mutation{
-    createComment(commentInput: {
-      body: ${JSON.stringify(body)},
-      target: "${issueId}",
-      user: "${activeUser.id}"
-    }) {
-      body,
-      commentId,
-      createdDate,
-      profilePic
-      target,
-      username,
-    }
-  }`;
-  try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const { data: createComment } = yield call(post, '/graphql', graphql);
-    yield put(addCommentSuccess(createComment));
-  } catch (error) {
-    yield put(addCommentFailure({ error }));
   }
 }
 
