@@ -70,8 +70,6 @@ const getSingleRepo = async ({ organization, repo }) => {
       issueLanguages: [language], // Optional - one entry
       organizationDescription: description || '', // Optional
       organizationLanguages: [language], // Optional - one entry
-      organizationLogo:
-        'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
       organizationName: name, // Required
       organizationRepo: html_url, // Required
       organizationUrl: homepage || '', // Optional

@@ -23,6 +23,8 @@ export const FETCH_INFO = 'app/Organizations/FETCH_INFO';
 export const FETCH_INFO_FAILURE = 'app/Organizations/FETCH_INFO_FAILURE';
 export const FETCH_INFO_SUCCESS = 'app/Organizations/FETCH_INFO_SUCCESS';
 
+export const GENERATE_IDENTICON = 'app/Organizations/GENERATE_IDENTICON';
+
 export const IMPORT_ORGANIZATION = 'app/organizations/IMPORT_ORGANIZATION';
 export const IMPORT_ORGANIZATION_FAILURE =
   'app/organizations/IMPORT_ORGANIZATION_FAILURE';

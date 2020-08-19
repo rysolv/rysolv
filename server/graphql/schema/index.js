@@ -108,6 +108,7 @@ module.exports = buildSchema(`
     comments: [ID]
     contributor: String
     fundedAmount: Int
+    identiconId: ID
     isManual: Boolean
     language: [String]
     name: String
@@ -144,6 +145,7 @@ module.exports = buildSchema(`
   }
 
   input OrganizationInput {
+    identiconId: ID
     isManual: Boolean
     organizationDescription: String
     organizationLogo: String

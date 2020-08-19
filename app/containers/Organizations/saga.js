@@ -27,7 +27,6 @@ import {
   fetchInfo,
   fetchInfoFailure,
   fetchInfoSuccess,
-  fetchOrganizations,
   fetchOrganizationsFailure,
   fetchOrganizationsSuccess,
   importOrganizationFailure,
@@ -218,6 +217,7 @@ export function* importOrganizationSaga({ payload }) {
 export function* saveInfoSaga({ payload }) {
   const {
     requestBody: {
+      identiconId,
       isManual,
       organizationDescription,
       organizationLogo,
@@ -227,9 +227,11 @@ export function* saveInfoSaga({ payload }) {
     },
     activeUser: { id: userId },
   } = payload;
+
   const query = `
   mutation {
     createOrganization(organizationInput: {
+      identiconId: "${identiconId}",
       isManual: ${isManual},
       organizationDescription: "${organizationDescription}",
       organizationLogo: "${organizationLogo}",
@@ -260,7 +262,6 @@ export function* saveInfoSaga({ payload }) {
     if (__typename === 'Error') throw message;
 
     yield put(fetchActiveUser({ userId }));
-    yield put(fetchOrganizations());
     yield put(push(`/organizations/detail/${id}`));
     yield put(saveInfoSuccess({ message: successCreateOrganizationMessage }));
   } catch (error) {

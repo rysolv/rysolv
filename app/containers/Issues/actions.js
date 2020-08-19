@@ -28,6 +28,7 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  GENERATE_IDENTICON,
   IMPORT_ISSUE_FAILURE,
   IMPORT_ISSUE_SUCCESS,
   IMPORT_ISSUE,
@@ -251,6 +252,10 @@ export function fetchIssueDetail(payload) {
     payload,
     type: FETCH_ISSUE_DETAIL,
   };
+}
+
+export function generateIdenticon() {
+  return { type: GENERATE_IDENTICON };
 }
 
 export function importIssueFailure(payload) {

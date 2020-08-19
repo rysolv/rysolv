@@ -1,5 +1,7 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
+import { v4 as uuidv4 } from 'uuid';
+import Identicon from 'identicon.js';
 import remove from 'lodash/remove';
 
 import {
@@ -32,6 +34,7 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  GENERATE_IDENTICON,
   IMPORT_ISSUE_FAILURE,
   IMPORT_ISSUE_SUCCESS,
   IMPORT_ISSUE,
@@ -110,6 +113,7 @@ export const initialState = {
   },
   modal: '',
   organizationData: {
+    identiconId: { error: '', value: '' },
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
     organizationId: { error: '', value: '' },
@@ -311,6 +315,13 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.issueDetail = true;
       break;
     }
+    case GENERATE_IDENTICON: {
+      const identiconId = uuidv4();
+      const identicon = new Identicon(identiconId, 250).toString();
+      draft.organizationData.identiconId.value = identiconId;
+      draft.organizationData.organizationLogo.value = `data:image/png;base64,${identicon}`;
+      break;
+    }
     case IMPORT_ISSUE_FAILURE: {
       const { error } = payload;
       draft.error.importIssue = { error: true, message: error.message };
@@ -436,7 +447,12 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_ORGANIZATION: {
-      draft.organizationData = payload;
+      const { organizationData } = payload;
+      Object.keys(draft.organizationData).map(field => {
+        if (payload[field]) {
+          draft.organizationData[field].value = organizationData[field].value;
+        }
+      });
       break;
     }
     case UPVOTE_ISSUE: {
