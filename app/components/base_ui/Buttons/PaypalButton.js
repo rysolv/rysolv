@@ -34,9 +34,9 @@ class PaypalButton extends React.Component {
 
   componentWillReceiveProps(nextProps, prevState) {
     const { dollarValue, isScriptLoaded, isScriptLoadSucceed } = nextProps;
-    const isLoadedButWasntLoadedBefore =
+    const IsLoadedButWasNotLoadedBefore =
       !this.state.showButton && !this.props.isScriptLoaded && isScriptLoaded;
-    if (isLoadedButWasntLoadedBefore) {
+    if (IsLoadedButWasNotLoadedBefore) {
       if (isScriptLoadSucceed) {
         this.setState({ showButton: true });
       }

@@ -76,10 +76,10 @@ export const Main = ({
       Component: PaymentPortalModal,
       open: isModalOpen,
       propsToPassDown: {
-        ...tableData,
         handleClose: dispatchCloseModal,
         handleNav,
         isSignedIn,
+        ...tableData,
       },
     },
     issueAttemptList: {

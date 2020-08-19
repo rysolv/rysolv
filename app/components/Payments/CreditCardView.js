@@ -42,15 +42,15 @@ const CreditCardView = ({
     }
 
     const card = elements.getElement(CardNumberElement);
-    const result = await stripe.createToken(card, zipValue);
+    const { error, token } = await stripe.createToken(card, zipValue);
     handleClearAlerts();
 
-    if (result.error) {
-      setStripeError({ message: result.error.message });
+    if (error) {
+      setStripeError({ message: error.message });
     } else {
       handleStripeToken({
         amount: fundValue,
-        token: result.token,
+        token,
         values,
       });
       setFundValue('2');

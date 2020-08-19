@@ -37,7 +37,7 @@ const PaymentsContainer = ({
   open,
   ...restProps
 }) => {
-  const { balance, email, firstName, lastName, id: userId } = activeUser;
+  const { balance, email, firstName, id: userId, lastName } = activeUser;
   const handleStripeToken = ({ amount, token, values }) => {
     const { isValidated, validationErrors } = validateFields({ values });
     if (isValidated) {
