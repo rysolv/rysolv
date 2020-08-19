@@ -70,6 +70,12 @@ export const StyledCheckboxWithLabel = styled(CheckboxWithLabel)`
   padding: 0.9rem 0.9rem 0.9rem 0;
 `;
 
+export const StyledFocusDiv = styled.div`
+  &:focus {
+    outline: none;
+  }
+`;
+
 export const StyledH3 = styled.h3`
   color: ${subHeaderColor};
   padding: 1rem 2rem;

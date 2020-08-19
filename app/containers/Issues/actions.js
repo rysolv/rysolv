@@ -29,6 +29,7 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  GENERATE_IDENTICON,
   IMPORT_ISSUE_FAILURE,
   IMPORT_ISSUE_SUCCESS,
   IMPORT_ISSUE,
@@ -42,9 +43,8 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
-  SUBMIT_ACCOUNT_PAYMENT_FAILURE,
-  SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
-  SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_FUNDED_ISSUE,
+  UPDATE_IS_MANUAL,
   UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
@@ -260,6 +260,10 @@ export function fetchIssueDetail(payload) {
   };
 }
 
+export function generateIdenticon() {
+  return { type: GENERATE_IDENTICON };
+}
+
 export function importIssueFailure(payload) {
   return {
     payload,
@@ -351,24 +355,17 @@ export function searchIssues(payload) {
   };
 }
 
-export function submitAccountPaymentFailure(payload) {
+export function updateFundedIssue(payload) {
   return {
     payload,
-    type: SUBMIT_ACCOUNT_PAYMENT_FAILURE,
+    type: UPDATE_FUNDED_ISSUE,
   };
 }
 
-export function submitAccountPaymentSuccess(payload) {
+export function updateIsManual(payload) {
   return {
     payload,
-    type: SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
-  };
-}
-
-export function submitAccountPayment(payload) {
-  return {
-    payload,
-    type: SUBMIT_ACCOUNT_PAYMENT,
+    type: UPDATE_IS_MANUAL,
   };
 }
 

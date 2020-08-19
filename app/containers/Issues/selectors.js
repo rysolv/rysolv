@@ -16,7 +16,7 @@ const makeSelectIssuesDisabled = () =>
   createSelector(
     makeSelectIssues('issueData'),
     issueData => {
-      const tempData = omit(issueData, ['importUrl']);
+      const tempData = omit(issueData, ['identiconId', 'importUrl']);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );
@@ -38,6 +38,7 @@ const makeSelectOrganizationsDisabled = () =>
     makeSelectIssues('organizationData'),
     data => {
       const tempData = omit(data, [
+        'identiconId',
         'importUrl',
         'organizationId',
         'organizationLogo',
@@ -80,14 +81,17 @@ const makeSelectIssueDetailLoading = prop =>
 
 const makeSelectIssuesRequestBody = () =>
   createSelector(
+    makeSelectIssues('isManual'),
     makeSelectIssues('issueData'),
     makeSelectIssues('organizationData'),
-    (issueData, organizationData) => {
+    (isManual, issueData, organizationData) => {
       const formData = { ...issueData, ...organizationData };
-      return Object.keys(formData).reduce((acc, field) => {
+      const requestBody = Object.keys(formData).reduce((acc, field) => {
         acc[field] = formData[field].value;
         return acc;
       }, {});
+      if (requestBody.identiconId) requestBody.organizationLogo = '';
+      return { isManual, ...requestBody };
     },
   );
 

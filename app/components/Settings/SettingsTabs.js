@@ -33,19 +33,22 @@ const SettingsTabs = ({
   creditCardProps,
   currentTab,
   deviceView,
-  dispatchInputError,
   dispatchOpenModal,
+  dispatchPaypalPayment,
   displayBottom,
   dollarsEarned,
   email,
   filterValues,
   firstName,
+  handleClearAllAlerts,
+  handleClearErrors,
   handleClose,
   handleDone,
   handleEdit,
   handleInputChange,
   handleNav,
   handleRemoveIssue,
+  handleValidateInput,
   handleWithdrawFunds,
   inputErrors,
   isDisabled,
@@ -58,6 +61,7 @@ const SettingsTabs = ({
   setChangeLastName,
   setChangeUsername,
   setDisplayBottom,
+  setStripeError,
   setValue,
   userId,
   username,
@@ -128,15 +132,24 @@ const SettingsTabs = ({
       Component={
         <DepositFormComponent
           creditCardProps={creditCardProps}
+          dispatchPaypalPayment={dispatchPaypalPayment}
+          handleClearAllAlerts={handleClearAllAlerts}
+          handleClearErrors={handleClearErrors}
           handleNav={handleNav}
+          handleValidateInput={handleValidateInput}
+          inputErrors={inputErrors}
           setDisplayBottom={setDisplayBottom}
+          setStripeError={setStripeError}
+          userId={userId}
         />
       }
       FallbackComponent={
         <WithdrawalFormComponent
           balance={balance}
-          dispatchInputError={dispatchInputError}
+          handleClearAllAlerts={handleClearAllAlerts}
+          handleClearErrors={handleClearErrors}
           handleNav={handleNav}
+          handleValidateInput={handleValidateInput}
           handleWithdrawFunds={handleWithdrawFunds}
           inputErrors={inputErrors}
           setDisplayBottom={setDisplayBottom}
@@ -323,19 +336,22 @@ SettingsTabs.propTypes = {
   creditCardProps: T.object,
   currentTab: T.number,
   deviceView: T.string,
-  dispatchInputError: T.func,
   dispatchOpenModal: T.func,
+  dispatchPaypalPayment: T.func,
   displayBottom: T.bool,
   dollarsEarned: T.number,
   email: T.string,
   filterValues: T.object,
   firstName: T.string,
+  handleClearAllAlerts: T.func,
+  handleClearErrors: T.func,
   handleClose: T.func,
   handleDone: T.func,
   handleEdit: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleRemoveIssue: T.func,
+  handleValidateInput: T.func,
   handleWithdrawFunds: T.func,
   inputErrors: T.object,
   isDisabled: T.bool,
@@ -348,6 +364,7 @@ SettingsTabs.propTypes = {
   setChangeLastName: T.func,
   setChangeUsername: T.func,
   setDisplayBottom: T.func,
+  setStripeError: T.func,
   setValue: T.func,
   userId: T.string,
   username: T.string,

@@ -1,13 +1,13 @@
+import React from 'react';
 import styled from 'styled-components';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
 import {
   BaseDropDownMenu,
-  BaseInput,
-  PaymentModalInputWithAdornment,
+  BaseTextInput,
+  PaymentTextInput,
   PrimaryAsyncButton,
   SecondaryButton,
 } from 'components/base_ui';
@@ -113,6 +113,8 @@ export const FundingContainer = styled.div`
 
 export const HorizontalWrapper = styled.div`
   display: flex;
+  width: 50%;
+  justify-content: space-between;
 `;
 
 export const InputHeader = styled.div`
@@ -127,6 +129,7 @@ export const InputHeader = styled.div`
 
 export const InputWrapper = styled.div`
   margin-bottom: 1.5rem;
+  width: ${({ width }) => width || 'inherit'};
 `;
 
 export const PaymentOptionWrapper = styled.div`
@@ -152,19 +155,28 @@ export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   width: 100%;
 `;
 
-export const StyledBaseInput = styled(BaseInput)`
+export const StyledBaseTextInput = styled(BaseTextInput)`
   background-color: #fafbfc;
   border-radius: 0.3rem;
   color: ${textColor};
   font-size: ${defaultFontSize};
+  height: 3.4rem;
   line-height: 2rem;
-  margin-right: 0.5rem;
-  min-height: 34px;
-  width: ${({ width }) => width || '100%'};
-`;
+  margin: 0;
+  width: 100%;
 
-export const StyledFormHelperText = styled(FormHelperText)`
-  font-size: 1.2rem;
+  .base-input {
+    border-bottom: none;
+  }
+
+  .MuiOutlinedInput-root {
+    height: 100%;
+  }
+
+  .MuiFormHelperText-contained {
+    font-size: 1.1rem;
+    margin-left: 0;
+  }
 `;
 
 export const StyledPaper = styled(Paper)`
@@ -174,11 +186,16 @@ export const StyledPaper = styled(Paper)`
   width: 100%;
 `;
 
-export const StyledPaymentModalInputWithAdornment = styled(
-  PaymentModalInputWithAdornment,
-)`
+export const StyledPaymentTextInput = styled(({ textAlign, ...restProps }) => (
+  <PaymentTextInput {...restProps} />
+))`
   margin-bottom: 2rem;
   width: 50%;
+
+  .MuiOutlinedInput-input {
+    padding: 0 1rem;
+    text-align: ${({ textAlign }) => textAlign || 'start'};
+  }
 `;
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`

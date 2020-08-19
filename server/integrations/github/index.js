@@ -70,8 +70,6 @@ const getSingleRepo = async ({ organization, repo }) => {
       issueLanguages: [language], // Optional - one entry
       organizationDescription: description || '', // Optional
       organizationLanguages: [language], // Optional - one entry
-      organizationLogo:
-        'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
       organizationName: name, // Required
       organizationRepo: html_url, // Required
       organizationUrl: homepage || '', // Optional
@@ -159,7 +157,6 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
     number,
     state,
     title,
-    url: api_url,
     user: { login },
   } = pullRequestData;
 
@@ -170,13 +167,14 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
     throw new Error('Pull request has already been merged.');
   }
 
+  const isMergeable = mergeable === null ? false : mergeable;
+  const isMerged = merged === null ? false : merged;
   const pullData = {
-    apiUrl: api_url,
     githubUsername: login,
     htmlUrl: html_url,
-    mergeable: !!mergeable,
+    mergeable: isMergeable,
     mergeableState: mergeable_state,
-    merged: !!merged,
+    merged: isMerged,
     open: state === 'open',
     pullNumber: number,
     status: state,

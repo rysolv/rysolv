@@ -1,12 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 
 import {
   fetchActiveUser,
   updateActiveUser,
   upvoteUserTemp,
 } from 'containers/Auth/actions';
-import { updatePaymentModal } from 'containers/Main/actions';
 import { post } from 'utils/request';
 
 import {
@@ -33,8 +33,6 @@ import {
   saveInfoSuccess,
   searchIssuesFailure,
   searchIssuesSuccess,
-  submitAccountPaymentFailure,
-  submitAccountPaymentSuccess,
   upvoteIssueFailure,
   upvoteIssueSuccess,
   upvoteIssueTemp,
@@ -51,8 +49,6 @@ import {
   IMPORT_ISSUE,
   SAVE_INFO,
   SEARCH_ISSUES,
-  SUBMIT_ACCOUNT_PAYMENT,
-  successAccountPaymentMessage,
   successCreateIssueMessage,
   successEditIssueMessage,
   UPVOTE_ISSUE,
@@ -433,6 +429,8 @@ export function* importIssueSaga({ payload }) {
 export function* saveInfoSaga({ payload }) {
   const {
     requestBody: {
+      identiconId,
+      isManual,
       issueBody,
       issueLanguages,
       issueName,
@@ -452,6 +450,8 @@ export function* saveInfoSaga({ payload }) {
         issueInput: {
           body: ${JSON.stringify(issueBody)},
           contributor: "${userId}",
+          identiconId: "${identiconId}",
+          isManual: ${isManual},
           language:  ${JSON.stringify(issueLanguages)},
           name: ${JSON.stringify(issueName)},
           organizationDescription:  "${organizationDescription}",
@@ -481,12 +481,14 @@ export function* saveInfoSaga({ payload }) {
     const {
       data: { createIssue },
     } = yield call(post, '/graphql', graphql);
-    const { __typename, message } = createIssue;
+    const { __typename, id, message } = createIssue;
     if (__typename === 'Error') throw new Error(message);
 
     yield put(fetchActiveUser({ userId }));
+    yield put(push(`/issues/detail/${id}`));
     yield put(saveInfoSuccess({ message: successCreateIssueMessage }));
   } catch (error) {
+    yield put(push('/issues'));
     yield put(saveInfoFailure({ error }));
   }
 }
@@ -527,47 +529,6 @@ export function* searchIssuesSaga({ payload }) {
     yield put(searchIssuesSuccess({ issues: searchIssues }));
   } catch (error) {
     yield put(searchIssuesFailure({ error }));
-  }
-}
-
-export function* submitAccountPaymentSaga({ payload }) {
-  const { fundValue, issueId, organizationId, userId } = payload;
-  const isFundedFromOverview = window.location.pathname === '/issues';
-  const submitAccountPaymentQuery = `
-      mutation {
-        submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", organizationId: "${organizationId}", userId: "${userId}" ) {
-          __typename
-          ... on Payment {
-            balance,
-            fundedAmount
-          }
-          ... on Error {
-            message
-          }
-        }
-      }
-    `;
-  try {
-    const graphql = JSON.stringify({
-      query: submitAccountPaymentQuery,
-      variables: {},
-    });
-    const {
-      data: { submitAccountPayment },
-    } = yield call(post, '/graphql', graphql);
-    const { balance, fundedAmount } = submitAccountPayment;
-    yield put(
-      submitAccountPaymentSuccess({
-        fundedAmount,
-        isFundedFromOverview,
-        issueId,
-        message: successAccountPaymentMessage,
-      }),
-    );
-    yield put(updateActiveUser({ balance }));
-    yield put(updatePaymentModal({ balance, fundedAmount }));
-  } catch (error) {
-    yield put(submitAccountPaymentFailure({ error }));
   }
 }
 
@@ -628,6 +589,5 @@ export default function* watcherSaga() {
   yield takeLatest(IMPORT_ISSUE, importIssueSaga);
   yield takeLatest(SAVE_INFO, saveInfoSaga);
   yield takeLatest(SEARCH_ISSUES, searchIssuesSaga);
-  yield takeLatest(SUBMIT_ACCOUNT_PAYMENT, submitAccountPaymentSaga);
   yield takeLatest(UPVOTE_ISSUE, upvoteIssuesSaga);
 }

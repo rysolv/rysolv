@@ -1,5 +1,5 @@
 const { createActivity, getActivity } = require('./activity');
-
+const { createComment, getComments, getIssueComments } = require('./comments');
 const {
   checkDuplicateIssue,
   closeIssue,
@@ -9,25 +9,27 @@ const {
   getIssues,
   getOneIssue,
   searchIssues,
-  submitAccountPaymentIssue,
   transformIssue,
   updateIssueArray,
   upvoteIssue,
 } = require('./issues');
 const {
-  checkDuplicateUserEmail,
-  checkDuplicateUsername,
-  createUser,
-  getOneUser,
-  getUsers,
-  getUserWatchList,
-  getWatchList,
-  searchUsers,
+  checkDuplicateOrganization,
+  createOrganization,
+  deleteOrganization,
+  getOneOrganization,
+  getOrganizations,
+  getOrganizationsWhere,
+  searchOrganizations,
+  transformOrganization,
+  updateOrganizationArray,
+} = require('./organizations');
+const {
+  submitAccountDepositUser,
+  submitAccountPaymentIssue,
+  submitAccountPaymentOrganization,
   submitAccountPaymentUser,
-  transformUser,
-  updateUserArray,
-} = require('./users');
-const { createComment, getComments, getIssueComments } = require('./comments');
+} = require('./payments');
 const {
   checkDuplicatePullRequest,
   createPullRequest,
@@ -38,22 +40,29 @@ const {
   getUserPullRequests,
 } = require('./pullRequests');
 const {
-  checkDuplicateOrganization,
-  createOrganization,
-  deleteOrganization,
-  getOneOrganization,
-  getOrganizations,
-  submitAccountPaymentOrganization,
-  getOrganizationsWhere,
-  searchOrganizations,
-  transformOrganization,
-  updateOrganizationArray,
-} = require('./organizations');
-const { createTables, dropAllTables, printTables } = require('./tables');
+  checkDuplicateUserEmail,
+  checkDuplicateUsername,
+  createUser,
+  getOneUser,
+  getOneUserSignUp,
+  getUsers,
+  getUserWatchList,
+  getWatchList,
+  searchUsers,
+  transformUser,
+  updateUserArray,
+} = require('./users');
+const {
+  alterTables,
+  createTables,
+  dropAllTables,
+  printTables,
+} = require('./tables');
 const { toggleWatching } = require('./watching');
 const { createWithdrawal, transformUserBalance } = require('./withdrawal');
 
 module.exports = {
+  alterTables,
   checkDuplicateIssue,
   checkDuplicateOrganization,
   checkDuplicatePullRequest,
@@ -81,6 +90,7 @@ module.exports = {
   getOneOrganization,
   getOnePullRequest,
   getOneUser,
+  getOneUserSignUp,
   getOrganizations,
   getOrganizationsWhere,
   getPullRequestList,
@@ -93,6 +103,7 @@ module.exports = {
   searchIssues,
   searchOrganizations,
   searchUsers,
+  submitAccountDepositUser,
   submitAccountPaymentIssue,
   submitAccountPaymentOrganization,
   submitAccountPaymentUser,

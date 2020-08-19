@@ -73,11 +73,18 @@ const groupValues = userValues.join(',');
 // Check duplicate user email
 const checkDuplicateUserEmail = async email => {
   const queryText = `
-    SELECT id FROM users WHERE (email='${email}')
+    SELECT id, email_verified FROM users WHERE email='${email}'
   `;
   const { rows } = await singleQuery(queryText);
-  if (rows.length > 0) {
-    throw new Error(`User at email already exists`);
+  const [result] = rows;
+  const { email_verified } = result || {};
+  if (rows.length > 0 && email_verified) {
+    throw new Error(`E-mail already exists`);
+  }
+  if (rows.length > 0 && !email_verified) {
+    throw new Error(
+      `E-mail has not been verified. <a href="/signin" style="text-decoration: underline">Sign in</a> to verify.`,
+    );
   }
 };
 
@@ -113,6 +120,14 @@ const getOneUser = async userId => {
     return rows;
   }
   throw new Error(`User does not exist`);
+};
+
+// GET single user in the process of signing up
+const getOneUserSignUp = async email => {
+  const queryText = `SELECT id, email, username FROM users WHERE is_deleted = false AND email = '${email}'`;
+  const { rows } = await singleQuery(queryText);
+  const [oneRow] = rows;
+  return oneRow;
 };
 
 // GET all users
@@ -176,15 +191,6 @@ const searchUsers = async (table, value) => {
   return rows;
 };
 
-// UPDATE balance of user for payment
-const submitAccountPaymentUser = async (userId, fundValue) => {
-  const { balance } = await getOneUser(userId);
-  const adjustedBalanceValue = balance - fundValue;
-  const queryText = `UPDATE users SET balance=${adjustedBalanceValue} WHERE (id = '${userId}') RETURNING *`;
-  const { rows } = await singleQuery(queryText);
-  return rows;
-};
-
 // PATCH single user
 const transformUser = async (id, data) => {
   const [rows] = await singleItem('users', id, userValues);
@@ -224,12 +230,12 @@ module.exports = {
   checkDuplicateUsername,
   createUser,
   getOneUser,
+  getOneUserSignUp,
   getUsers,
   getUserWatchList,
   getWatchList,
   searchUsers,
   singleSearch,
-  submitAccountPaymentUser,
   transformUser,
   updateUserArray,
 };

@@ -2,6 +2,7 @@ const activityResolver = require('./activityResolver');
 const commentResolver = require('./commentResolver');
 const issueResolver = require('./issueResolver');
 const organizationResolver = require('./organzationResolver');
+const paymentResolver = require('./paymentResolver');
 const pullRequestResolver = require('./pullRequestResolver');
 const userResolver = require('./userResolver');
 const watchingResolver = require('./watchingResolver');
@@ -14,6 +15,7 @@ const rootResolver = {
   ...issueResolver,
   ...objectScalerType,
   ...organizationResolver,
+  ...paymentResolver,
   ...pullRequestResolver,
   ...userResolver,
   ...watchingResolver,

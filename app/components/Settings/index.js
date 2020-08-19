@@ -75,14 +75,16 @@ const SettingsView = ({
     watching,
   },
   deviceView,
-  dispatchInputError,
   dispatchOpenModal,
+  dispatchPaypalPayment,
   dispatchSaveChange,
   filterValues,
   handleClearAlerts,
+  handleClearErrors,
   handleInputChange,
   handleNav,
   handleRemoveIssue,
+  handleValidateInput,
   handleWithdrawFunds,
   inputErrors,
   PullRequestComponent,
@@ -101,7 +103,13 @@ const SettingsView = ({
   const [changeUserImage, setChangeUserImage] = useState(false);
   const [changeUsername, setChangeUsername] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [stripeError, setStripeError] = useState('');
   const [value, setValue] = useState('');
+
+  const handleClearAllAlerts = () => {
+    handleClearAlerts();
+    setStripeError('');
+  };
 
   const handleClose = ({ changeInputState }) => {
     changeInputState(false);
@@ -133,8 +141,8 @@ const SettingsView = ({
   return (
     <DetailContainer>
       <StyledErrorSuccessBanner
-        error={error}
-        onClose={handleClearAlerts}
+        error={stripeError || error}
+        onClose={handleClearAllAlerts}
         success={success}
       />
       <DetailViewContainer>
@@ -145,7 +153,7 @@ const SettingsView = ({
               Component={
                 <BaseFileInput
                   accept="image/png, image/jpeg"
-                  id="logo-file-input"
+                  id="logoFileInput"
                   onChange={handleUploadUserImage}
                 />
               }
@@ -288,19 +296,22 @@ const SettingsView = ({
             creditCardProps={creditCardProps}
             currentTab={currentTab}
             deviceView={deviceView}
-            dispatchInputError={dispatchInputError}
             dispatchOpenModal={dispatchOpenModal}
+            dispatchPaypalPayment={dispatchPaypalPayment}
             displayBottom={displayBottom}
             dollarsEarned={dollarsEarned}
             email={email}
             filterValues={filterValues}
             firstName={firstName}
+            handleClearAllAlerts={handleClearAllAlerts}
+            handleClearErrors={handleClearErrors}
             handleClose={handleClose}
             handleDone={handleDone}
             handleEdit={handleEdit}
             handleInputChange={handleInputChange}
             handleNav={handleNav}
             handleRemoveIssue={handleRemoveIssue}
+            handleValidateInput={handleValidateInput}
             handleWithdrawFunds={handleWithdrawFunds}
             inputErrors={inputErrors}
             isDisabled={isDisabled}
@@ -313,6 +324,7 @@ const SettingsView = ({
             setChangeLastName={setChangeLastName}
             setChangeUsername={setChangeUsername}
             setDisplayBottom={setDisplayBottom}
+            setStripeError={setStripeError}
             setValue={setValue}
             userId={id}
             username={username}
@@ -332,14 +344,16 @@ SettingsView.propTypes = {
   currentTab: T.number.isRequired,
   data: T.object.isRequired,
   deviceView: T.string.isRequired,
-  dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
+  dispatchPaypalPayment: T.func.isRequired,
   dispatchSaveChange: T.func.isRequired,
   filterValues: T.object.isRequired,
   handleClearAlerts: T.func.isRequired,
+  handleClearErrors: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
+  handleValidateInput: T.func.isRequired,
   handleWithdrawFunds: T.func.isRequired,
   inputErrors: T.object.isRequired,
   PullRequestComponent: T.oneOfType([T.func, T.node, T.object]),

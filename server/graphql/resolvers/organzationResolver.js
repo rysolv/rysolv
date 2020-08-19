@@ -1,6 +1,6 @@
+const Identicon = require('identicon.js');
 const { v4: uuidv4 } = require('uuid');
 
-const { createActivity } = require('./activityResolver');
 const {
   checkDuplicateOrganization,
   createOrganization,
@@ -13,12 +13,11 @@ const {
   transformOrganization,
   updateUserArray,
 } = require('../../db');
-const { getSingleRepo, getSingleOrganization } = require('../../integrations');
-const { uploadImage } = require('../../middlewares/imageUpload');
+const { createActivity } = require('./activityResolver');
 const { formatOrganizationUrl } = require('../../integrations/github/helpers');
-
-const defaultOrgLogo =
-  'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png';
+const { getSingleRepo, getSingleOrganization } = require('../../integrations');
+const { isUrl } = require('../../helpers');
+const { uploadImage } = require('../../middlewares/imageUpload');
 
 const checkDuplicate = async repo => {
   if (await checkDuplicateOrganization(repo)) {
@@ -28,25 +27,41 @@ const checkDuplicate = async repo => {
 
 module.exports = {
   createOrganization: async args => {
-    const { organizationInput } = args;
+    const {
+      organizationInput,
+      organizationInput: { identiconId },
+    } = args;
 
-    const organization = {
-      contributors: organizationInput.contributors || [],
-      created_date: new Date(),
-      description: organizationInput.organizationDescription,
-      id: uuidv4(),
-      issues: organizationInput.issues || [],
-      logo: organizationInput.organizationLogo || defaultOrgLogo,
-      modified_date: new Date(),
-      name: organizationInput.organizationName,
-      organization_url: organizationInput.organizationUrl || '',
-      owner_id: organizationInput.ownerId,
-      preferred_languages: organizationInput.preferredLanguages || [],
-      repo_url: organizationInput.organizationRepo,
-      total_funded: organizationInput.totalFunded || 0,
-      verified: organizationInput.verified || false,
-    };
+    if (identiconId && identiconId !== 'undefined') {
+      organizationInput.organizationLogo = new Identicon(
+        identiconId,
+        250,
+      ).toString();
+    }
+
     try {
+      const { uploadUrl } = await uploadImage(
+        organizationInput.organizationLogo,
+      );
+
+      const organization = {
+        contributors: organizationInput.contributors || [],
+        created_date: new Date(),
+        description: organizationInput.organizationDescription,
+        id: uuidv4(),
+        is_manual: organizationInput.isManual,
+        issues: organizationInput.issues || [],
+        logo: uploadUrl,
+        modified_date: new Date(),
+        name: organizationInput.organizationName,
+        organization_url: organizationInput.organizationUrl || '',
+        owner_id: organizationInput.ownerId,
+        preferred_languages: organizationInput.preferredLanguages || [],
+        repo_url: organizationInput.organizationRepo,
+        total_funded: organizationInput.totalFunded || 0,
+        verified: organizationInput.verified || false,
+      };
+
       await checkDuplicate(organization.repo_url);
 
       // create organization
@@ -188,9 +203,8 @@ module.exports = {
     const { id, organizationInput } = args;
     try {
       const logo = organizationInput.organizationLogo;
-      const protocol = logo.substring(0, 5);
 
-      if (logo && protocol !== 'https') {
+      if (logo && !isUrl(logo)) {
         const { uploadUrl } = await uploadImage(logo);
         organizationInput.logo = uploadUrl;
       }

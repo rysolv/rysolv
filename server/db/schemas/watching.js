@@ -1,8 +1,8 @@
-const watching = `CREATE TABLE IF NOT EXISTS
-watching(
-  issue_id UUID REFERENCES issues(id),
-  user_id UUID REFERENCES users(id),
-  PRIMARY KEY (issue_id, user_id)
-)`;
+const alterWatchingTable = `ALTER TABLE watching
+ADD COLUMN issue_id UUID REFERENCES issues(id),
+ADD COLUMN user_id UUID REFERENCES users(id),
+ADD PRIMARY KEY (issue_id, user_id)`;
 
-module.exports = watching;
+const createWatchingTable = `CREATE TABLE IF NOT EXISTS watching()`;
+
+module.exports = { alterWatchingTable, createWatchingTable };

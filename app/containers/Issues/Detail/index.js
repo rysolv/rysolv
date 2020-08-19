@@ -29,7 +29,6 @@ import {
   editIssue,
   fetchIssueDetail,
   openIssueModalState,
-  submitAccountPayment,
   upvoteIssue,
 } from '../actions';
 import reducer from '../reducer';
@@ -78,7 +77,6 @@ export class IssuesDetail extends React.PureComponent {
       handleComment,
       handleIncrement,
       handleNav,
-      handleSubmitAccountPayment,
       isModalOpen,
       isSignedIn,
       issueDetail,
@@ -87,7 +85,6 @@ export class IssuesDetail extends React.PureComponent {
         params: { id },
       },
       modal,
-      paymentAlerts,
       upvoteLoading,
     } = this.props;
 
@@ -130,10 +127,8 @@ export class IssuesDetail extends React.PureComponent {
             handleComment,
             handleIncrement,
             handleNav,
-            handleSubmitAccountPayment,
             handleUpvote,
             isSignedIn,
-            paymentAlerts,
           }}
         />
         {isModalOpen && <ModalDialog {...modalPropsDictionary[modal]} />}
@@ -161,14 +156,12 @@ IssuesDetail.propTypes = {
   handleComment: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
-  handleSubmitAccountPayment: T.func,
   isModalOpen: T.bool,
   isSignedIn: T.bool,
   issueDetail: T.object,
   loading: T.bool,
   match: T.object,
   modal: T.string,
-  paymentAlerts: T.object,
   upvoteLoading: T.bool,
 };
 
@@ -187,7 +180,6 @@ const mapStateToProps = createStructuredSelector({
   issueDetail: makeSelectIssueDetail('issueDetail'),
   loading: makeSelectIssuesLoading('issueDetail'),
   modal: makeSelectIssues('modal'),
-  paymentAlerts: makeSelectIssues('paymentAlerts'),
   upvoteLoading: makeSelectIssuesLoading('upvoteIssue'),
   /**
    * Reducer : ViewSize
@@ -210,8 +202,6 @@ function mapDispatchToProps(dispatch) {
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleComment: payload => dispatch(addComment(payload)),
     handleIncrement: payload => dispatch(addAttempt(payload)),
-    handleSubmitAccountPayment: payload =>
-      dispatch(submitAccountPayment(payload)),
     /*
      * Reducer : Main
      */

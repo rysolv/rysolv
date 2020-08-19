@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import ReCAPTCHA from 'react-google-recaptcha';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import {
   ErrorSuccessBanner,
-  PaymentModalInputWithAdornment,
+  PaymentTextInput,
   PrimaryAsyncButton,
 } from 'components/base_ui';
 
@@ -128,7 +127,9 @@ export const PaymentInformationWrapper = styled.div`
 `;
 
 export const PaypalContainer = styled.div`
+  align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 0 2rem 2rem 2rem;
   width: 100%;
@@ -138,20 +139,6 @@ export const OverviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 3rem;
-`;
-
-export const StyledBaseInputWithAdornment = styled(
-  PaymentModalInputWithAdornment,
-)`
-  align-self: center;
-  border: 0.1rem solid #e0e0e0;
-  font-size: 1.4rem;
-  margin: 0.5rem;
-  width: 80%;
-
-  .MuiOutlinedInput-notchedOutline {
-    border: none;
-  }
 `;
 
 export const StyledLabel = styled.div`
@@ -166,16 +153,14 @@ export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   width: auto;
 `;
 
-export const StyledReCAPTCHA = styled(ReCAPTCHA)`
-  align-tems: center;
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-  transform: scale(0.8);
-`;
-
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   margin: 1rem;
+`;
+
+export const StyledPaymentTextInput = styled(PaymentTextInput)`
+  align-self: center;
+  margin: 0.5rem 0.5rem 1rem;
+  width: 80%;
 `;
 
 export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`

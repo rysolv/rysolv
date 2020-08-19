@@ -9,6 +9,7 @@ const validationPropsByField = {
     password: { type: 'passwordInput' },
     verifyPassword: { type: 'verifyInput' },
   },
+  verify: {},
 };
 
 export const validateFields = ({ form, values, verifyField }) =>

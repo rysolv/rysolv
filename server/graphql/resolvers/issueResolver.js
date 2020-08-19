@@ -1,7 +1,5 @@
+const Identicon = require('identicon.js');
 const { v4: uuidv4 } = require('uuid');
-
-const defaultOrgImage =
-  'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png';
 
 const {
   checkDuplicateIssue,
@@ -15,20 +13,16 @@ const {
   getOneIssue,
   getOrganizationsWhere,
   searchIssues,
-  submitAccountPaymentIssue,
-  submitAccountPaymentOrganization,
-  submitAccountPaymentUser,
   transformIssue,
   updateIssueArray,
   updateOrganizationArray,
   updateUserArray,
   upvoteIssue,
 } = require('../../db');
-
 const { createActivity } = require('./activityResolver');
-
-const { getSingleIssue, getSingleRepo } = require('../../integrations');
 const { formatIssueUrl } = require('../../integrations/github/helpers');
+const { getSingleIssue, getSingleRepo } = require('../../integrations');
+const { uploadImage } = require('../../middlewares/imageUpload');
 
 const newIssueObject = (issueId, issueInput) => ({
   attempting: issueInput.attempting || [], // attempting
@@ -38,6 +32,7 @@ const newIssueObject = (issueId, issueInput) => ({
   created_date: new Date(), // created_date
   funded_amount: issueInput.fundedAmount || 0, // funded_amount
   id: issueId, // id
+  is_manual: issueInput.isManual,
   language: issueInput.language || [], // language
   modified_date: new Date(), // modified_data
   name: issueInput.name, // name
@@ -48,22 +43,28 @@ const newIssueObject = (issueId, issueInput) => ({
   type: issueInput.type || 'bug', // bug
 });
 
-const newOrganizationObject = organizationInput => ({
-  contributors: [], // contributors
-  created_date: new Date(), // created_date
-  description: organizationInput.organizationDescription, // description
-  id: uuidv4(), // id
-  issues: organizationInput.issues || [], // issues
-  logo: organizationInput.organizationLogo || defaultOrgImage, // logo
-  modified_date: new Date(), // modified_date
-  name: organizationInput.organizationName, // name
-  organization_url: organizationInput.organizationUrl || '', // url
-  owner_id: organizationInput.contributor, // owner_id
-  preferred_languages: organizationInput.preferred_languages || [], // languages
-  repo_url: organizationInput.organizationRepo, // repo
-  total_funded: organizationInput.totalFunded || 0, // funded
-  verified: organizationInput.verified || false, // verified
-});
+const newOrganizationObject = async organizationInput => {
+  const organizationId = uuidv4();
+  const { uploadUrl } = await uploadImage(organizationInput.organizationLogo);
+
+  return {
+    contributors: [], // contributors
+    created_date: new Date(), // created_date
+    description: organizationInput.organizationDescription, // description
+    id: organizationId, // id
+    is_manual: organizationInput.isManual, // is_manual
+    issues: organizationInput.issues || [], // issues
+    logo: uploadUrl, // logo
+    modified_date: new Date(), // modified_date
+    name: organizationInput.organizationName, // name
+    organization_url: organizationInput.organizationUrl || '', // url
+    owner_id: organizationInput.contributor, // owner_id
+    preferred_languages: organizationInput.preferred_languages || [], // languages
+    repo_url: organizationInput.organizationRepo, // repo
+    total_funded: organizationInput.totalFunded || 0, // funded
+    verified: organizationInput.verified || false, // verified
+  };
+};
 
 module.exports = {
   closeIssue: async args => {
@@ -88,8 +89,12 @@ module.exports = {
   },
   createIssue: async args => {
     const { issueInput } = args;
-    const { organizationRepo, repo, organizationId } = issueInput;
+    const { identiconId, organizationId, organizationRepo, repo } = issueInput;
     const newIssueId = uuidv4();
+
+    if (identiconId && identiconId !== 'undefined') {
+      issueInput.organizationLogo = new Identicon(identiconId, 250).toString();
+    }
 
     // Populate issue object and create new issue
     const createNewIssue = async () => {
@@ -114,7 +119,7 @@ module.exports = {
         );
       }
 
-      const organizationObject = newOrganizationObject(issueInput);
+      const organizationObject = await newOrganizationObject(issueInput);
       try {
         const [result] = await createOrganization(organizationObject);
         return result;
@@ -236,8 +241,9 @@ module.exports = {
       );
 
       if (organizationData) {
-        const { id } = organizationData;
+        const { id, logo } = organizationData;
         issueInput.organizationId = id;
+        organizationInput.organizationLogo = logo;
       }
 
       const ImportData = { ...issueInput, ...organizationInput };
@@ -275,37 +281,6 @@ module.exports = {
       return result;
     } catch (err) {
       throw err;
-    }
-  },
-  submitAccountPayment: async args => {
-    try {
-      const { issueId, fundValue, organizationId, userId } = args;
-      const [issueResult] = await submitAccountPaymentIssue(issueId, fundValue);
-      await submitAccountPaymentOrganization(organizationId, fundValue);
-      const [userResult] = await submitAccountPaymentUser(userId, fundValue);
-
-      const activityInput = {
-        actionType: 'fund',
-        fundedValue: fundValue,
-        issueId,
-        organizationId,
-        userId,
-      };
-      await createActivity({ activityInput });
-
-      const result = {
-        balance: userResult.balance,
-        fundedAmount: issueResult.funded_amount,
-      };
-      return {
-        __typename: 'Payment',
-        ...result,
-      };
-    } catch (err) {
-      return {
-        __typename: 'Error',
-        message: err.message,
-      };
     }
   },
   transformIssue: async args => {

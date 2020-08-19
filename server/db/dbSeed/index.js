@@ -3,7 +3,7 @@ const pool = require('../connect');
 const readline = require('readline');
 
 // Import db functions
-const { createTables, dropAllTables, printTables } = require('..');
+const { alterTables, createTables, dropAllTables, printTables } = require('..');
 
 const prompt = readline.createInterface({
   input: process.stdin,
@@ -21,6 +21,7 @@ const seed = async () => {
     const t1 = Date.now();
     await dropAllTables();
     await createTables();
+    await alterTables();
 
     // Log results and end connection
     const t2 = Date.now();
