@@ -24,6 +24,7 @@ export const PAYPAL_PAYMENT_SUCCESS = 'app/Settings/PAYPAL_PAYMENT_SUCCESS';
 export const REMOVE_ISSUE = 'app/Settings/REMOVE_ISSUE';
 export const REMOVE_ISSUE_FAILURE = 'app/Settings/REMOVE_ISSUE_FAILURE';
 export const REMOVE_ISSUE_SUCCESS = 'app/Settings/REMOVE_ISSUE_SUCCESS';
+export const REMOVE_ISSUE_WATCHING = 'app/Settings/REMOVE_ISSUE_WATCHING';
 
 export const SAVE_CHANGE = 'app/Settings/SAVE_CHANGE';
 export const SAVE_CHANGE_FAILURE = 'app/Settings/SAVE_CHANGE_FAILURE';

@@ -6,6 +6,7 @@ import {
   fetchActiveUser,
   updateActiveUser,
   upvoteUserTemp,
+  userWatchingTemp,
 } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
@@ -114,6 +115,8 @@ export function* addCommentSaga({ payload }) {
 
 export function* addWatchSaga({ payload }) {
   const { issueId, userId } = payload;
+  yield put(userWatchingTemp({ issueId }));
+
   const query = `
   mutation {
     toggleWatching(issueId: "${issueId}", userId: "${userId}") {

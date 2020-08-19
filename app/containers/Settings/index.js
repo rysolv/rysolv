@@ -27,6 +27,7 @@ import {
   openModalState,
   paypalPayment,
   removeIssue,
+  removeIssueWatching,
   saveChange,
   stripeToken,
   withdrawFunds,
@@ -59,6 +60,7 @@ const Settings = ({
   handleInputChange,
   handleNav,
   handleRemoveIssue,
+  handleRemoveIssueWatching,
   inputErrors,
   isModalOpen,
   loading,
@@ -146,6 +148,7 @@ const Settings = ({
           handleInputChange,
           handleNav,
           handleRemoveIssue,
+          handleRemoveIssueWatching,
           handleValidateInput,
           handleWithdrawFunds,
           inputErrors,
@@ -176,9 +179,10 @@ Settings.propTypes = {
   handleClearAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
   handleDeleteUser: T.func.isRequired,
-  handleInputChange: T.func,
+  handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
+  handleRemoveIssueWatching: T.func.isRequired,
   inputErrors: T.object.isRequired,
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
@@ -226,6 +230,8 @@ function mapDispatchToProps(dispatch) {
     handleDeleteUser: payload => dispatch(deleteUser(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleRemoveIssue: payload => dispatch(removeIssue(payload)),
+    handleRemoveIssueWatching: payload =>
+      dispatch(removeIssueWatching(payload)),
     /**
      * Reducer : Router
      */

@@ -12,6 +12,7 @@ import {
   DELETE_USER,
   FETCH_INFO,
   PAYPAL_PAYMENT,
+  REMOVE_ISSUE_WATCHING,
   REMOVE_ISSUE,
   SAVE_CHANGE,
   STRIPE_TOKEN,
@@ -160,7 +161,7 @@ export function* paypalPaymentSaga({ payload }) {
 }
 
 export function* removeIssueSaga({ payload }) {
-  const { id: issueId, userId, column, remove } = payload;
+  const { column, id: issueId, remove, userId } = payload;
   const query = `
   mutation {
     updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}", remove: ${remove}) {
@@ -181,6 +182,44 @@ export function* removeIssueSaga({ payload }) {
     yield call(post, '/graphql', graphql);
     yield put(removeIssueSuccess({ column, issueId }));
     yield put(fetchActiveUser({ userId }));
+  } catch (error) {
+    yield put(removeIssueFailure({ error }));
+  }
+}
+
+export function* removeWatchingSaga({ payload }) {
+  const { id: issueId, userId } = payload;
+  const query = `
+  mutation {
+    toggleWatching(issueId: "${issueId}", userId: "${userId}") {
+      __typename
+      ... on WatchListArray {
+        issueArray {
+          fundedAmount
+          id
+          name
+        }
+      }
+      ... on Error {
+        message
+      }
+    }
+  }`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: {
+        toggleWatching: { __typename, issueArray, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') {
+      throw new Error(message);
+    }
+    yield put(removeIssueSuccess({ column: 'watching', issueId }));
+    yield put(updateActiveUser({ watching: issueArray }));
   } catch (error) {
     yield put(removeIssueFailure({ error }));
   }
@@ -322,6 +361,7 @@ export default function* watcherSaga() {
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(PAYPAL_PAYMENT, paypalPaymentSaga);
+  yield takeLatest(REMOVE_ISSUE_WATCHING, removeWatchingSaga);
   yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
   yield takeLatest(STRIPE_TOKEN, stripeTokenSaga);

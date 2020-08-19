@@ -186,6 +186,25 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case ADD_WATCH: {
+      const { issueId, userId } = payload;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          const userIdIndex = draft.issues[index].watching.indexOf(userId);
+          if (userIdIndex > -1) {
+            draft.issues[index].watching.splice(userIdIndex, 1);
+          } else {
+            draft.issues[index].watching.push(userId);
+          }
+        }
+      });
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.watching.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.watching.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.watching.push(userId);
+        }
+      }
       draft.loading.addWatch = true;
       break;
     }

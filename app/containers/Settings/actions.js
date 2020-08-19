@@ -16,6 +16,7 @@ import {
   PAYPAL_PAYMENT,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
+  REMOVE_ISSUE_WATCHING,
   REMOVE_ISSUE,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
@@ -148,6 +149,13 @@ export function removeIssue(payload) {
   return {
     payload,
     type: REMOVE_ISSUE,
+  };
+}
+
+export function removeIssueWatching(payload) {
+  return {
+    payload,
+    type: REMOVE_ISSUE_WATCHING,
   };
 }
 
