@@ -39,8 +39,7 @@ const ExistingOrganziations = ({
           organizationRepo: { error: '', value: el.repoUrl },
           organizationUrl: { error: '', value: el.organizationUrl },
         };
-
-        handleUpdateOrganization(selectedOrganization);
+        handleUpdateOrganization({ organizationData: selectedOrganization });
       }
     });
 

@@ -1,6 +1,6 @@
 const Identicon = require('identicon.js');
-
 const { v4: uuidv4 } = require('uuid');
+
 const {
   checkDuplicateOrganization,
   createOrganization,

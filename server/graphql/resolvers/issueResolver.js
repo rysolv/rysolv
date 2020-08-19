@@ -93,9 +93,8 @@ module.exports = {
   },
   createIssue: async args => {
     const { issueInput } = args;
-    const { organizationId, organizationRepo, repo, identiconId } = issueInput;
+    const { identiconId, organizationId, organizationRepo, repo } = issueInput;
     const newIssueId = uuidv4();
-    console.log(issueInput);
 
     if (identiconId && identiconId !== 'undefined') {
       issueInput.organizationLogo = new Identicon(identiconId, 250).toString();

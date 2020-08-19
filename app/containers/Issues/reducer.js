@@ -447,9 +447,10 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_ORGANIZATION: {
+      const { organizationData } = payload;
       Object.keys(draft.organizationData).map(field => {
         if (payload[field]) {
-          draft.organizationData[field].value = payload[field].value;
+          draft.organizationData[field].value = organizationData[field].value;
         }
       });
       break;
