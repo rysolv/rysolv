@@ -113,6 +113,7 @@ export const initialState = {
   },
   modal: '',
   organizationData: {
+    identiconId: { error: '', value: '' },
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
     organizationId: { error: '', value: '' },
@@ -315,7 +316,9 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case GENERATE_IDENTICON: {
-      const identicon = new Identicon(uuidv4(), 250).toString();
+      const identiconId = uuidv4();
+      const identicon = new Identicon(identiconId, 250).toString();
+      draft.organizationData.identiconId.value = identiconId;
       draft.organizationData.organizationLogo.value = `data:image/png;base64,${identicon}`;
       break;
     }
@@ -444,7 +447,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_ORGANIZATION: {
-      draft.organizationData = payload;
+      Object.keys(draft.organizationData).map(field => {
+        if (payload[field]) {
+          draft.organizationData[field].value = payload[field].value;
+        }
+      });
       break;
     }
     case UPVOTE_ISSUE: {

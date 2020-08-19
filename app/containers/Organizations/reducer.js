@@ -45,9 +45,9 @@ import {
 export const initialState = {
   alerts: { error: false, success: false },
   editInfo: {
-    id: { error: '', value: '' },
     createdDate: { error: '', value: '' },
     description: { error: '', value: '' },
+    id: { error: '', value: '' },
     issues: { error: '', value: '' },
     logo: { error: '', value: '' },
     modifiedDate: { error: '', value: '' },
@@ -85,6 +85,7 @@ export const initialState = {
   },
   organization: {},
   organizationData: {
+    identiconId: { error: '', value: '' },
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
     organizationId: { error: '', value: '' },
@@ -192,7 +193,9 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case GENERATE_IDENTICON: {
-      const identicon = new Identicon(uuidv4(), 250).toString();
+      const identiconId = uuidv4();
+      const identicon = new Identicon(identiconId, 250).toString();
+      draft.organizationData.identiconId.value = identiconId;
       draft.organizationData.organizationLogo.value = `data:image/png;base64,${identicon}`;
       break;
     }
@@ -205,8 +208,10 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     case IMPORT_ORGANIZATION_SUCCESS: {
       const { importOrganization } = payload;
       draft.loading.importOrganization = false;
-      Object.keys(draft.organizationData).map(field => {
-        draft.organizationData[field].value = importOrganization[field];
+      Object.keys(importOrganization).map(field => {
+        if (draft.organizationData[field]) {
+          draft.organizationData[field].value = importOrganization[field];
+        }
       });
       draft.importSuccess = true;
       break;

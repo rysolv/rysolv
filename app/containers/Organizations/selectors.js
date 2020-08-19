@@ -25,6 +25,7 @@ const makeSelectOrganizationsDisabled = () =>
     makeSelectOrganizations('organizationData'),
     data => {
       const tempData = omit(data, [
+        'identiconId',
         'importUrl',
         'organizationId',
         'organizationLogo',
@@ -138,6 +139,7 @@ const makeSelectOrganizationsRequestBody = () =>
         acc[field] = data[field].value;
         return acc;
       }, {});
+      if (requestBody.identiconId) requestBody.organizationLogo = '';
       return { isManual, ...requestBody };
     },
   );

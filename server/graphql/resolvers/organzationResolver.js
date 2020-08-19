@@ -1,3 +1,5 @@
+const Identicon = require('identicon.js');
+
 const { v4: uuidv4 } = require('uuid');
 const {
   checkDuplicateOrganization,
@@ -25,7 +27,18 @@ const checkDuplicate = async repo => {
 
 module.exports = {
   createOrganization: async args => {
-    const { organizationInput } = args;
+    const {
+      organizationInput,
+      organizationInput: { identiconId },
+    } = args;
+
+    if (identiconId && identiconId !== 'undefined') {
+      organizationInput.organizationLogo = new Identicon(
+        identiconId,
+        250,
+      ).toString();
+    }
+
     try {
       const { uploadUrl } = await uploadImage(
         organizationInput.organizationLogo,

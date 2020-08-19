@@ -217,6 +217,7 @@ export function* importOrganizationSaga({ payload }) {
 export function* saveInfoSaga({ payload }) {
   const {
     requestBody: {
+      identiconId,
       isManual,
       organizationDescription,
       organizationLogo,
@@ -226,9 +227,11 @@ export function* saveInfoSaga({ payload }) {
     },
     activeUser: { id: userId },
   } = payload;
+
   const query = `
   mutation {
     createOrganization(organizationInput: {
+      identiconId: "${identiconId}",
       isManual: ${isManual},
       organizationDescription: "${organizationDescription}",
       organizationLogo: "${organizationLogo}",

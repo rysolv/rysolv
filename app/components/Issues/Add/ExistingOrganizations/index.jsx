@@ -34,7 +34,7 @@ const ExistingOrganziations = ({
           importUrl: { error: '', value: '' },
           organizationDescription: { error: '', value: el.description },
           organizationId: { error: '', value: el.id },
-          organizationLogo: { error: '', value: el.organizationUrl },
+          organizationLogo: { error: '', value: el.logo },
           organizationName: { error: '', value: el.name },
           organizationRepo: { error: '', value: el.repoUrl },
           organizationUrl: { error: '', value: el.organizationUrl },

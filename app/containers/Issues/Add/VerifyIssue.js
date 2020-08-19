@@ -131,9 +131,6 @@ function mapDispatchToProps(dispatch) {
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
     dispatchVerifyInfo: () => dispatch(verifyInfo()),
-    /**
-     * Reducer : Organizations
-     */
     handleGenerateIdenticon: () => dispatch(generateIdenticon()),
   };
 }

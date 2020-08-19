@@ -1,3 +1,4 @@
+const Identicon = require('identicon.js');
 const { v4: uuidv4 } = require('uuid');
 
 const {
@@ -92,8 +93,13 @@ module.exports = {
   },
   createIssue: async args => {
     const { issueInput } = args;
-    const { organizationId, organizationRepo, repo } = issueInput;
+    const { organizationId, organizationRepo, repo, identiconId } = issueInput;
     const newIssueId = uuidv4();
+    console.log(issueInput);
+
+    if (identiconId && identiconId !== 'undefined') {
+      issueInput.organizationLogo = new Identicon(identiconId, 250).toString();
+    }
 
     // Populate issue object and create new issue
     const createNewIssue = async () => {
