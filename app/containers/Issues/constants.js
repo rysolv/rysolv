@@ -67,11 +67,7 @@ export const SEARCH_ISSUES = 'app/Issues/SEARCH_ISSUES';
 export const SEARCH_ISSUES_FAILURE = 'app/Issues/SEARCH_ISSUES_FAILURE';
 export const SEARCH_ISSUES_SUCCESS = 'app/Issues/SEARCH_ISSUES_SUCCESS';
 
-export const SUBMIT_ACCOUNT_PAYMENT = 'app/Issues/SUBMIT_ACCOUNT_PAYMENT';
-export const SUBMIT_ACCOUNT_PAYMENT_FAILURE =
-  'app/Issues/SUBMIT_ACCOUNT_PAYMENT_FAILURE';
-export const SUBMIT_ACCOUNT_PAYMENT_SUCCESS =
-  'app/Issues/SUBMIT_ACCOUNT_PAYMENT_SUCCESS';
+export const UPDATE_FUNDED_ISSUE = 'app/Issues/UPDATE_FUNDED_ISSUES';
 
 export const UPDATE_IS_MANUAL = 'app/Issues/UPDATE_IS_MANUAL';
 
@@ -97,8 +93,6 @@ export const issueDataDictionary = {
 
 export const emptyCardMessage =
   'There are no issues matching the search terms.';
-
-export const successAccountPaymentMessage = 'Thank you for funding!';
 
 export const successCreateIssueMessage = 'Issue was successfully created.';
 

@@ -11,9 +11,10 @@ import { post } from 'utils/request';
 import {
   DELETE_USER,
   FETCH_INFO,
+  PAYPAL_PAYMENT,
   REMOVE_ISSUE,
   SAVE_CHANGE,
-  SUBMIT_PAYMENT,
+  STRIPE_TOKEN,
   WITHDRAW_FUNDS,
 } from './constants';
 import {
@@ -21,10 +22,14 @@ import {
   deleteUserSuccess,
   fetchInfoFailure,
   fetchInfoSuccess,
+  paypalPaymentFailure,
+  paypalPaymentSuccess,
   removeIssueFailure,
   removeIssueSuccess,
   saveChangeFailure,
   saveChangeSuccess,
+  stripeTokenFailure,
+  stripeTokenSuccess,
   withdrawFundsFailure,
   withdrawFundsSuccess,
 } from './actions';
@@ -50,11 +55,10 @@ export function* deleteUserSaga({ payload }) {
 }
 
 export function* fetchInfoSaga({ payload }) {
-  const { itemId } = payload;
+  const { userId } = payload;
   const query = `
     query {
-      oneUser(id: "${itemId}") {
-        id,
+      oneUser(id: "${userId}") {
         activePullRequests,
         attempting,
         balance,
@@ -64,6 +68,7 @@ export function* fetchInfoSaga({ payload }) {
         email,
         firstName,
         githubLink,
+        id,
         issues,
         lastName,
         organizations,
@@ -76,7 +81,7 @@ export function* fetchInfoSaga({ payload }) {
         username,
         watching,
       }
-      getActivity(column: "user_id", id: "${itemId}") {
+      getActivity(column: "user_id", id: "${userId}") {
         __typename
         ... on ActivityArray {
           activityArray {
@@ -114,6 +119,43 @@ export function* fetchInfoSaga({ payload }) {
     yield put(fetchInfoSuccess({ oneUser }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
+  }
+}
+
+export function* paypalPaymentSaga({ payload }) {
+  try {
+    const { amount, error, userId } = payload;
+    if (error) {
+      throw new Error(error);
+    }
+    const query = `
+    mutation {
+      createPaypalPayment(amount: ${amount}, userId: "${userId}") {
+        __typename
+        ... on Payment {
+          balance,
+          message,
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+    const request = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: {
+        createPaypalPayment: { __typename, balance, message },
+      },
+    } = yield call(post, '/graphql', request);
+    if (__typename === 'Error') throw message;
+    yield put(paypalPaymentSuccess({ balance, message }));
+    yield put(updateActiveUser({ balance }));
+  } catch (error) {
+    yield put(paypalPaymentFailure({ error }));
   }
 }
 
@@ -195,11 +237,45 @@ export function* saveChangeSaga({ payload }) {
   }
 }
 
-export function* submitPaymentSaga({ payload }) {
+export function* stripeTokenSaga({ payload }) {
   try {
-    console.log('Success', payload);
+    const {
+      amount,
+      token: { id },
+      userId,
+    } = payload;
+    const query = `
+    mutation {
+      createStripeCharge(
+        amount: ${amount},
+        token: "${id}",
+        userId: "${userId}"
+      ) {
+        __typename
+        ... on Payment {
+          balance,
+          message,
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+    const request = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: {
+        createStripeCharge: { __typename, balance, message },
+      },
+    } = yield call(post, '/graphql', request);
+    if (__typename === 'Error') throw message;
+    yield put(stripeTokenSuccess({ balance, message }));
+    yield put(updateActiveUser({ balance }));
   } catch (error) {
-    console.log('Error');
+    yield put(stripeTokenFailure({ error }));
   }
 }
 
@@ -245,8 +321,9 @@ export function* withdrawFundsSaga({ payload }) {
 export default function* watcherSaga() {
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
+  yield takeLatest(PAYPAL_PAYMENT, paypalPaymentSaga);
   yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
-  yield takeLatest(SUBMIT_PAYMENT, submitPaymentSaga);
+  yield takeLatest(STRIPE_TOKEN, stripeTokenSaga);
   yield takeLatest(WITHDRAW_FUNDS, withdrawFundsSaga);
 }

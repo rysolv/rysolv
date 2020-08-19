@@ -48,9 +48,7 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
-  SUBMIT_ACCOUNT_PAYMENT_FAILURE,
-  SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
-  SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_FUNDED_ISSUE,
   UPDATE_IS_MANUAL,
   UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
@@ -122,7 +120,6 @@ export const initialState = {
     organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
   },
-  paymentAlerts: { error: false, success: false },
   search: {
     overviewInput: { error: '', value: '' },
     searchInput: { error: '', value: '' },
@@ -210,7 +207,6 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       draft.filter = initialState.filter;
-      draft.paymentAlerts = initialState.paymentAlerts;
       draft.search = initialState.search;
       break;
     }
@@ -413,14 +409,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.searchIssues = true;
       break;
     }
-    case SUBMIT_ACCOUNT_PAYMENT_FAILURE: {
-      const { error } = payload;
-      draft.loading.submitAccountPayment = false;
-      draft.paymentAlerts.submitAccountPayment = error;
-      break;
-    }
-    case SUBMIT_ACCOUNT_PAYMENT_SUCCESS: {
-      const { fundedAmount, isFundedFromOverview, issueId, message } = payload;
+    case UPDATE_FUNDED_ISSUE: {
+      const { fundedAmount, isFundedFromOverview, issueId } = payload;
       if (!isFundedFromOverview) {
         draft.issueDetail.fundedAmount = fundedAmount;
       }
@@ -428,12 +418,6 @@ const issuesReducer = produce((draft, { payload, type }) => {
         const { id } = issue;
         if (id === issueId) issue.fundedAmount = fundedAmount;
       });
-      draft.loading.submitAccountPayment = false;
-      draft.paymentAlerts.success = { message };
-      break;
-    }
-    case SUBMIT_ACCOUNT_PAYMENT: {
-      draft.loading.submitAccountPayment = true;
       break;
     }
     case UPDATE_IS_MANUAL: {

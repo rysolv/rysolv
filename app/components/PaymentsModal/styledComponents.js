@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import PaymentPortal from 'components/Payments';
+import PaymentPortal from 'containers/Payments';
 
 export const IconWrapper = styled.div`
   float: right;

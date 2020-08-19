@@ -42,9 +42,7 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
-  SUBMIT_ACCOUNT_PAYMENT_FAILURE,
-  SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
-  SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_FUNDED_ISSUE,
   UPDATE_IS_MANUAL,
   UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
@@ -349,24 +347,10 @@ export function searchIssues(payload) {
   };
 }
 
-export function submitAccountPaymentFailure(payload) {
+export function updateFundedIssue(payload) {
   return {
     payload,
-    type: SUBMIT_ACCOUNT_PAYMENT_FAILURE,
-  };
-}
-
-export function submitAccountPaymentSuccess(payload) {
-  return {
-    payload,
-    type: SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
-  };
-}
-
-export function submitAccountPayment(payload) {
-  return {
-    payload,
-    type: SUBMIT_ACCOUNT_PAYMENT,
+    type: UPDATE_FUNDED_ISSUE,
   };
 }
 

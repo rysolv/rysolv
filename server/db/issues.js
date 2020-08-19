@@ -197,16 +197,6 @@ const transformIssue = async (id, data) => {
   throw new Error(`Failed to update. ID not found in issues`);
 };
 
-// UPDATE fund_value of issue for payment
-const submitAccountPaymentIssue = async (issueId, fundValue) => {
-  const [issueData] = await getOneIssue(issueId);
-  const { fundedAmount } = issueData;
-  const adjustedFundValue = fundValue + fundedAmount;
-  const queryText = `UPDATE issues SET funded_amount=${adjustedFundValue} WHERE (id = '${issueId}') RETURNING *`;
-  const { rows } = await singleQuery(queryText);
-  return rows;
-};
-
 const updateIssueArray = async ({ column, issueId, data, remove }) => {
   const [issueData] = await singleItem('issues', issueId);
   // Only add unique values to array
@@ -283,7 +273,6 @@ module.exports = {
   getIssues,
   getOneIssue,
   searchIssues,
-  submitAccountPaymentIssue,
   transformIssue,
   updateIssueArray,
   upvoteIssue,

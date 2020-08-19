@@ -90,14 +90,20 @@ IssuesAdd.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
+  /**
    * Reducer : Issues
    */
   importSuccess: makeSelectIssues('importSuccess'),
   issueData: makeSelectIssues('issueData'),
-  organizationData: makeSelectOrganizations('organizationData'),
-  activeUser: makeSelectAuth('activeUser'),
   loading: makeSelectIssuesLoading('addIssue'),
   step: makeSelectIssuesStep('addIssue'),
+  /**
+   * Reducer : Organizations
+   */
+  organizationData: makeSelectOrganizations('organizationData'),
 });
 
 function mapDispatchToProps(dispatch) {
