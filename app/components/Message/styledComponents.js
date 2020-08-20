@@ -23,6 +23,7 @@ export const MainText = styled.p`
 `;
 
 export const MessageContainer = styled.section`
+  align-self: center;
   background: white;
   color: ${textColor};
   display: flex;
