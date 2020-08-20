@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Pagination from '@material-ui/lab/Pagination';
 
 import {
   borderColor,
@@ -108,21 +107,6 @@ export const StyledListItem = styled.li`
 export const StyledOrganizationCard = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-export const StyledPagination = styled(Pagination)`
-  .MuiPagination-ul {
-    justify-content: center;
-  }
-
-  .MuiPaginationItem-rounded {
-    color: ${textColor};
-    font-size: ${defaultFontSize};
-  }
-
-  .MuiPaginationItem-icon {
-    font-size: ${defaultFontSize};
-  }
 `;
 
 export const TextContainer = styled.div`

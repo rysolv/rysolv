@@ -13,7 +13,6 @@ import injectReducer from 'utils/injectReducer';
 import {
   clearAlerts,
   fetchOrganizations,
-  inputChange,
   searchOrganizations,
 } from '../actions';
 import reducer from '../reducer';
@@ -23,23 +22,19 @@ import {
   makeSelectOrganizationsError,
   makeSelectOrganizationsFiltered,
   makeSelectOrganizationsLoading,
-  makeSelectOrganizationsSearchDisabled,
 } from '../selectors';
 
 // eslint-disable-next-line react/prefer-stateless-function
 const OrganizationsOverview = ({
   alerts,
   organizations,
-  disabled,
   error,
   handleClearAlerts,
   dispatchFetchOrganizations,
-  handleInputChange,
   handleNav,
   handleSearchOrganizations,
   loading,
   params: { searchValue },
-  search,
 }) => {
   useEffect(() => {
     if (searchValue) {
@@ -58,12 +53,8 @@ const OrganizationsOverview = ({
       loading={loading}
       propsToPassDown={{
         alerts,
-        disabled,
         handleClearAlerts,
-        handleInputChange,
         handleNav,
-        handleSearchOrganizations,
-        search,
       }}
     />
   );
@@ -74,17 +65,14 @@ OrganizationsOverview.propTypes = {
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
-  organizations: T.array,
-  disabled: T.bool.isRequired,
   dispatchFetchOrganizations: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
-  handleInputChange: T.func,
   handleNav: T.func,
   handleSearchOrganizations: T.func,
   loading: T.bool,
+  organizations: T.array,
   params: T.object,
-  search: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -92,11 +80,9 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Organizations
    */
   alerts: makeSelectOrganizations('alerts'),
-  organizations: makeSelectOrganizationsFiltered(),
-  disabled: makeSelectOrganizationsSearchDisabled('searchInput'),
   error: makeSelectOrganizationsError('organizations'),
   loading: makeSelectOrganizationsLoading('organizations'),
-  search: makeSelectOrganizations('search'),
+  organizations: makeSelectOrganizationsFiltered(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -106,7 +92,6 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchOrganizations: () => dispatch(fetchOrganizations()),
     handleClearAlerts: () => dispatch(clearAlerts()),
-    handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchOrganizations: payload =>
       dispatch(searchOrganizations(payload)),
     /**

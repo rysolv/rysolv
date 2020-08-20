@@ -9,6 +9,7 @@ export { default as ConditionalRender } from './ConditionalRender';
 export { default as ErrorSuccessBanner } from './Banner';
 export { default as HeaderSearchBar } from './HeaderSearchBar';
 export { default as ModalDialog } from './ModalDialog';
+export { default as Pagination } from './Pagination';
 export { default as ProfileImage } from './ProfileImage';
 export { default as TooltipIcon } from './TooltipIcon';
 export { default as UserNavBar } from './UserNavBar';
