@@ -38,7 +38,7 @@ export const EmptyOverviewListComponent = ({ handleNav, type }) => (
 export const OverviewListComponent = ({
   handleNav,
   handleRemoveIssue,
-  handleRemoveIssueWatching,
+  handleRemoveWatching,
   list,
   type,
   userId,
@@ -56,7 +56,7 @@ export const OverviewListComponent = ({
   const { icon, label } = listIconDictionary[type];
   const handleRemove = ({ id, column }) => {
     if (column === 'watching') {
-      handleRemoveIssueWatching({
+      handleRemoveWatching({
         id,
         userId,
       });
@@ -109,7 +109,7 @@ EmptyOverviewListComponent.propTypes = {
 OverviewListComponent.propTypes = {
   handleNav: T.func,
   handleRemoveIssue: T.func,
-  handleRemoveIssueWatching: T.func,
+  handleRemoveWatching: T.func,
   list: T.array,
   type: T.string,
   userId: T.string,

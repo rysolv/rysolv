@@ -48,7 +48,7 @@ const SettingsTabs = ({
   handleInputChange,
   handleNav,
   handleRemoveIssue,
-  handleRemoveIssueWatching,
+  handleRemoveWatching,
   handleValidateInput,
   handleWithdrawFunds,
   inputErrors,
@@ -173,7 +173,7 @@ const SettingsTabs = ({
       FallbackComponent={
         <UserWatching
           handleNav={handleNav}
-          handleRemoveIssueWatching={handleRemoveIssueWatching}
+          handleRemoveWatching={handleRemoveWatching}
           userId={userId}
           watching={watching}
         />
@@ -197,7 +197,7 @@ const SettingsTabs = ({
         handleInputChange={handleInputChange}
         handleNav={handleNav}
         handleRemoveIssue={handleRemoveIssue}
-        handleRemoveIssueWatching={handleRemoveIssueWatching}
+        handleRemoveWatching={handleRemoveWatching}
         userId={userId}
         watching={watching}
       />
@@ -353,7 +353,7 @@ SettingsTabs.propTypes = {
   handleInputChange: T.func,
   handleNav: T.func,
   handleRemoveIssue: T.func,
-  handleRemoveIssueWatching: T.func,
+  handleRemoveWatching: T.func,
   handleValidateInput: T.func,
   handleWithdrawFunds: T.func,
   inputErrors: T.object,

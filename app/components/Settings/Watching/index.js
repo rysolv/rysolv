@@ -24,7 +24,7 @@ const SearchIcon = iconDictionary('search');
 
 const UserWatching = ({
   handleNav,
-  handleRemoveIssueWatching,
+  handleRemoveWatching,
   userId,
   watching,
 }) => {
@@ -88,7 +88,7 @@ const UserWatching = ({
         }
         propsToPassDown={{
           handleNav,
-          handleRemoveIssueWatching,
+          handleRemoveWatching,
           list: filteredWatching,
           type: 'watching',
           userId,
@@ -101,7 +101,7 @@ const UserWatching = ({
 
 UserWatching.propTypes = {
   handleNav: T.func.isRequired,
-  handleRemoveIssueWatching: T.func.isRequired,
+  handleRemoveWatching: T.func.isRequired,
   userId: T.string.isRequired,
   watching: T.array.isRequired,
 };

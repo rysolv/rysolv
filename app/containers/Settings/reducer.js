@@ -18,8 +18,8 @@ import {
   PAYPAL_PAYMENT,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
-  REMOVE_ISSUE_WATCHING,
   REMOVE_ISSUE,
+  REMOVE_WATCHING,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
@@ -166,7 +166,7 @@ const settingsReducer = produce((draft, { payload, type }) => {
       draft.loading = true;
       break;
     }
-    case REMOVE_ISSUE_WATCHING: {
+    case REMOVE_WATCHING: {
       draft.loading = true;
       break;
     }

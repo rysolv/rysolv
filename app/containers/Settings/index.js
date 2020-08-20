@@ -60,7 +60,7 @@ const Settings = ({
   handleInputChange,
   handleNav,
   handleRemoveIssue,
-  handleRemoveIssueWatching,
+  handleRemoveWatching,
   inputErrors,
   isModalOpen,
   loading,
@@ -148,7 +148,7 @@ const Settings = ({
           handleInputChange,
           handleNav,
           handleRemoveIssue,
-          handleRemoveIssueWatching,
+          handleRemoveWatching,
           handleValidateInput,
           handleWithdrawFunds,
           inputErrors,
@@ -182,7 +182,7 @@ Settings.propTypes = {
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
-  handleRemoveIssueWatching: T.func.isRequired,
+  handleRemoveWatching: T.func.isRequired,
   inputErrors: T.object.isRequired,
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
@@ -230,8 +230,7 @@ function mapDispatchToProps(dispatch) {
     handleDeleteUser: payload => dispatch(deleteUser(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleRemoveIssue: payload => dispatch(removeIssue(payload)),
-    handleRemoveIssueWatching: payload =>
-      dispatch(removeIssueWatching(payload)),
+    handleRemoveWatching: payload => dispatch(removeIssueWatching(payload)),
     /**
      * Reducer : Router
      */

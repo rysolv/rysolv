@@ -12,8 +12,8 @@ import {
   DELETE_USER,
   FETCH_INFO,
   PAYPAL_PAYMENT,
-  REMOVE_ISSUE_WATCHING,
   REMOVE_ISSUE,
+  REMOVE_WATCHING,
   SAVE_CHANGE,
   STRIPE_TOKEN,
   WITHDRAW_FUNDS,
@@ -361,7 +361,7 @@ export default function* watcherSaga() {
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(PAYPAL_PAYMENT, paypalPaymentSaga);
-  yield takeLatest(REMOVE_ISSUE_WATCHING, removeWatchingSaga);
+  yield takeLatest(REMOVE_WATCHING, removeWatchingSaga);
   yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
   yield takeLatest(STRIPE_TOKEN, stripeTokenSaga);

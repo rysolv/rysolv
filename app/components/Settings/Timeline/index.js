@@ -44,7 +44,7 @@ const UserTimelineView = ({
   handleInputChange,
   handleNav,
   handleRemoveIssue,
-  handleRemoveIssueWatching,
+  handleRemoveWatching,
   userId,
   watching,
 }) => {
@@ -73,7 +73,7 @@ const UserTimelineView = ({
       propsToPassDown={{
         handleNav,
         handleRemoveIssue,
-        handleRemoveIssueWatching,
+        handleRemoveWatching,
         list: watching.slice(0, 5),
         type: 'watching',
         userId,
@@ -209,7 +209,7 @@ UserTimelineView.propTypes = {
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
-  handleRemoveIssueWatching: T.func.isRequired,
+  handleRemoveWatching: T.func.isRequired,
   userId: T.string.isRequired,
   watching: T.array.isRequired,
 };
