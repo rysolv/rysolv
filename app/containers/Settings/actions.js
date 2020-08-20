@@ -152,7 +152,7 @@ export function removeIssue(payload) {
   };
 }
 
-export function removeIssueWatching(payload) {
+export function removeWatching(payload) {
   return {
     payload,
     type: REMOVE_WATCHING,

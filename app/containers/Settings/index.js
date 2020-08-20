@@ -27,7 +27,7 @@ import {
   openModalState,
   paypalPayment,
   removeIssue,
-  removeIssueWatching,
+  removeWatching,
   saveChange,
   stripeToken,
   withdrawFunds,
@@ -230,7 +230,7 @@ function mapDispatchToProps(dispatch) {
     handleDeleteUser: payload => dispatch(deleteUser(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleRemoveIssue: payload => dispatch(removeIssue(payload)),
-    handleRemoveWatching: payload => dispatch(removeIssueWatching(payload)),
+    handleRemoveWatching: payload => dispatch(removeWatching(payload)),
     /**
      * Reducer : Router
      */
