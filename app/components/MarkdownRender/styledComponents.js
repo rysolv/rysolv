@@ -15,7 +15,6 @@ import {
 export const Body = styled.div`
   ${styledScrollbar}
   font-size: ${defaultFontSize};
-  max-height: 150rem;
   min-height: 4rem;
   overflow-x: hidden;
   overflow-y: auto;
