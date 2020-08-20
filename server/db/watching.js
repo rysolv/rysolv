@@ -1,4 +1,5 @@
 const { parameterizedQuery } = require('../db/query');
+
 const toggleWatching = async ({ issueId, userId }) => {
   let remove = false;
 

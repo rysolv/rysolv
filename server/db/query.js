@@ -65,6 +65,11 @@ const parameterizedQuery = async ({ queryText, values }) => {
   }
 };
 
+// Sequential query for table creations
+const sequentialQuery = async () => {
+  // TODO: use this for DeleteTable and CreateTable
+};
+
 // single query (no data)
 const singleQuery = async queryText => {
   const client = await pool.connect();
@@ -95,11 +100,6 @@ const singleSearch = async (queryText, fields, value, param) => {
   const searchQuery = `${queryText} WHERE ${searchParam}(${formattedSearchString})`;
   const { rows } = await singleQuery(searchQuery);
   return rows;
-};
-
-// Sequential query for table creations
-const sequentialQuery = async () => {
-  // TODO: use this for DeleteTable and CreateTable
 };
 
 module.exports = {

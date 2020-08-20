@@ -19,7 +19,6 @@ const issueValues = [
   'rep',
   'repo',
   'type',
-  'watching',
 ];
 
 const issueReturnValues = `

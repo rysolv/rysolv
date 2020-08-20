@@ -57,15 +57,11 @@ Issues.propTypes = {
   clearAlerts: T.func,
   data: T.array,
   deviceView: T.string.isRequired,
-  disabled: T.bool.isRequired,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
-  handleInputChange: T.func,
   handleNav: T.func,
-  handleSearchIssues: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
-  search: T.object,
 };
 
 export default Issues;

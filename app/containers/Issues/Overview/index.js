@@ -14,11 +14,9 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
 import {
-  addAttempt,
   addWatch,
   clearAlerts,
   fetchIssues,
-  inputChange,
   searchIssues,
   upvoteIssue,
 } from '../actions';
@@ -29,7 +27,6 @@ import {
   makeSelectIssuesError,
   makeSelectIssuesFiltered,
   makeSelectIssuesLoading,
-  makeSelectIssuesSearchDisabled,
 } from '../selectors';
 
 const IssuesOverview = ({
@@ -37,22 +34,18 @@ const IssuesOverview = ({
   addWatching,
   alerts,
   deviceView,
-  disabled,
   dispatchFetchIssues,
   dispatchFetchWatchList,
   dispatchOpenModal,
   dispatchUpvote,
   error,
   handleClearAlerts,
-  handleIncrement,
-  handleInputChange,
   handleNav,
   handleSearchIssues,
   isSignedIn,
   issues,
   loading,
   params: { searchValue },
-  search,
   upvoteLoading,
 }) => {
   useEffect(() => {
@@ -81,17 +74,13 @@ const IssuesOverview = ({
         addWatching,
         alerts,
         deviceView,
-        disabled,
         dispatchFetchWatchList,
         dispatchOpenModal,
         handleClearAlerts,
-        handleIncrement,
-        handleInputChange,
         handleNav,
         handleSearchIssues,
         handleUpvote,
         isSignedIn,
-        search,
       }}
     />
   );
@@ -105,22 +94,18 @@ IssuesOverview.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   deviceView: T.string,
-  disabled: T.bool,
   dispatchFetchIssues: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
   dispatchUpvote: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
-  handleIncrement: T.func,
-  handleInputChange: T.func,
   handleNav: T.func,
   handleSearchIssues: T.func,
   isSignedIn: T.bool,
   issues: T.array,
   loading: T.bool,
   params: T.object,
-  search: T.object,
   upvoteLoading: T.bool,
 };
 
@@ -134,11 +119,9 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   alerts: makeSelectIssues('alerts'),
-  disabled: makeSelectIssuesSearchDisabled(),
   error: makeSelectIssuesError('issues'),
   issues: makeSelectIssuesFiltered(),
   loading: makeSelectIssuesLoading('issues'),
-  search: makeSelectIssues('search'),
   upvoteLoading: makeSelectIssuesLoading('upvoteIssue'),
   /**
    * Reducer : ViewSize
@@ -155,8 +138,6 @@ function mapDispatchToProps(dispatch) {
     dispatchFetchIssues: () => dispatch(fetchIssues()),
     dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
-    handleIncrement: payload => dispatch(addAttempt(payload)),
-    handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
     /*
      * Reducer : Main

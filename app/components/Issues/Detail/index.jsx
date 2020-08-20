@@ -240,7 +240,6 @@ const IssueDetail = ({
                 data={data}
                 displayEditView={displayEditView}
                 handleNav={handleNav}
-                isSignedIn={isSignedIn}
                 nameChange={nameChange}
                 setNameChange={setNameChange}
               />
