@@ -9,8 +9,8 @@ import { StyledErrorSuccessBanner } from './styledComponents';
 
 const Organizations = ({
   alerts: { error, success },
-  clearAlerts,
   data,
+  handleClearAlerts,
   handleNav,
 }) => {
   const hasOrganizations = data.length > 0 && !data.includes(null);
@@ -30,7 +30,7 @@ const Organizations = ({
     <Fragment>
       <StyledErrorSuccessBanner
         error={error}
-        onClose={clearAlerts}
+        onClose={handleClearAlerts}
         success={success}
       />
       {viewToRender}
@@ -43,8 +43,8 @@ Organizations.propTypes = {
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }).isRequired,
-  clearAlerts: T.func.isRequired,
   data: T.array.isRequired,
+  handleClearAlerts: T.func.isRequired,
   handleNav: T.func.isRequired,
 };
 

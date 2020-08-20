@@ -105,8 +105,7 @@ export const StyledListItem = styled.li`
 `;
 
 export const StyledOrganizationCard = styled.div`
-  display: flex;
-  flex-direction: column;
+  min-height: 50rem;
 `;
 
 export const TextContainer = styled.div`

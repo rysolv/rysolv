@@ -1,18 +1,23 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
-import { StyledPagination } from './styledComponents';
+import {
+  PaginationWrapper,
+  Results,
+  StyledPagination,
+} from './styledComponents';
 
 const Pagination = ({ Component, propsToPassDown }) => {
   const { data, ...restProps } = propsToPassDown;
-  const perPage = 5;
+  const perPage = 10;
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
-  const count = Math.ceil(data.length / perPage);
+  const { length } = data;
+  const count = Math.ceil(length / perPage);
   const slice = data.slice(
     currentPage * perPage,
     currentPage * perPage + perPage,
@@ -20,11 +25,16 @@ const Pagination = ({ Component, propsToPassDown }) => {
   return (
     <Fragment>
       <Component data={slice} {...restProps} />
-      <StyledPagination
-        count={count}
-        shape="rounded"
-        onChange={(e, value) => setCurrentPage(value - 1)}
-      />
+      <PaginationWrapper>
+        <StyledPagination
+          count={count}
+          shape="rounded"
+          onChange={(e, value) => setCurrentPage(value - 1)}
+        />
+        <Results>
+          {length} {length === 1 ? 'Result' : 'Results'}
+        </Results>
+      </PaginationWrapper>
     </Fragment>
   );
 };

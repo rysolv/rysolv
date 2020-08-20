@@ -88,6 +88,10 @@ export const StyledIconButton = styled(
   stroke: ${({ shouldBold }) => (shouldBold ? 'currentColor' : 'none')};
 `;
 
+export const StyledIssueCard = styled.div`
+  min-height: 50rem;
+`;
+
 export const StyledIssueContent = styled.div`
   background-color: white;
   border-bottom-right-radius: 0.2rem;
