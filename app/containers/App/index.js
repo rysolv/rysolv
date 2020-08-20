@@ -14,6 +14,10 @@ import {
   StylesProvider,
 } from '@material-ui/styles';
 
+// Stripe
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
 import Main from 'containers/Main/Loadable';
 import ViewSize from 'containers/ViewSize';
 
@@ -47,16 +51,20 @@ Amplify.configure({
   },
 });
 
+const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+
 export function App() {
   return (
-    <StylesProvider generateClassName={generateClassName} jss={jss}>
-      <MuiThemeProvider theme={muiTheme}>
-        <ViewSize>
-          <Main />
-          <GlobalStyles />
-        </ViewSize>
-      </MuiThemeProvider>
-    </StylesProvider>
+    <Elements stripe={stripePromise}>
+      <StylesProvider generateClassName={generateClassName} jss={jss}>
+        <MuiThemeProvider theme={muiTheme}>
+          <ViewSize>
+            <Main />
+            <GlobalStyles />
+          </ViewSize>
+        </MuiThemeProvider>
+      </StylesProvider>
+    </Elements>
   );
 }
 

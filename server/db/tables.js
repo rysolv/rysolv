@@ -9,6 +9,7 @@ const {
   alterOrganizationsTable,
   alterPullRequestsTable,
   alterUsersTable,
+  alterWatchingTable,
   alterWithdrawalTable,
   createActivityTable,
   createCommentsTable,
@@ -17,6 +18,7 @@ const {
   createOrganizationsTable,
   createPullRequestsTable,
   createUsersTable,
+  createWatchingTable,
   createWithdrawalTable,
 } = require('./schemas');
 
@@ -29,6 +31,7 @@ const alterTables = async () => {
   await singleQuery(alterOrganizationsTable);
   await singleQuery(alterPullRequestsTable);
   await singleQuery(alterUsersTable);
+  await singleQuery(alterWatchingTable);
   await singleQuery(alterWithdrawalTable);
 };
 
@@ -41,6 +44,7 @@ const createTables = async () => {
   await singleQuery(createOrganizationsTable);
   await singleQuery(createPullRequestsTable);
   await singleQuery(createUsersTable);
+  await singleQuery(createWatchingTable);
   await singleQuery(createWithdrawalTable);
 };
 
@@ -54,6 +58,7 @@ const dropAllTables = async () => {
   await singleQuery('DROP TABLE IF EXISTS organizations cascade');
   await singleQuery('DROP TABLE IF EXISTS pullRequests cascade');
   await singleQuery('DROP TABLE IF EXISTS users cascade');
+  await singleQuery('DROP TABLE IF EXISTS watching cascade');
   await singleQuery('DROP TABLE IF EXISTS withdrawal cascade');
 };
 
@@ -67,6 +72,7 @@ const printTables = async () => {
     'SELECT * FROM organizations',
     'SELECT * FROM pullRequests',
     'SELECT * FROM users',
+    'SELECT * FROM watching',
     'SELECT * FROM withdrawal',
   ];
   await mapQueryPrint(queryArray);

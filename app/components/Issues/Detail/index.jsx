@@ -3,8 +3,8 @@ import T from 'prop-types';
 
 import { BackNav, ConditionalRender } from 'components/base_ui';
 import { CommentCard, NewComment, NoComment } from 'components/MarkdownRender';
-import PaymentPortal from 'components/Payments';
 import UpvotePanel from 'components/Upvote';
+import PaymentPortal from 'containers/Payments';
 import iconDictionary from 'utils/iconDictionary';
 
 import IssueDetailBody from './IssueDetailBody';
@@ -33,7 +33,8 @@ const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
-  activeUser: { balance, email, firstName, id: activeUserId, issues, lastName },
+  activeUser: { id: activeUserId, issues },
+  addWatching,
   alerts: { error, success },
   data,
   data: {
@@ -45,7 +46,6 @@ const IssueDetail = ({
     language,
     name,
     open,
-    organizationId,
     profilePic,
     rep,
     repo,
@@ -63,10 +63,8 @@ const IssueDetail = ({
   handleComment,
   handleIncrement,
   handleNav,
-  handleSubmitAccountPayment,
   handleUpvote,
   isSignedIn,
-  paymentAlerts,
 }) => {
   const [displayEditView, setDisplayEditView] = useState(false);
   const [bodyChange, setBodyChange] = useState(body);
@@ -226,6 +224,7 @@ const IssueDetail = ({
             <TopBarWrapper>
               <IssueTopBar
                 activeUser={activeUser}
+                addWatching={addWatching}
                 data={data}
                 dispatchFetchPullRequestList={dispatchFetchPullRequestList}
                 dispatchFetchWatchList={dispatchFetchWatchList}
@@ -241,7 +240,6 @@ const IssueDetail = ({
                 data={data}
                 displayEditView={displayEditView}
                 handleNav={handleNav}
-                isSignedIn={isSignedIn}
                 nameChange={nameChange}
                 setNameChange={setNameChange}
               />
@@ -302,20 +300,11 @@ const IssueDetail = ({
             }
           />
           <PaymentPortal
-            balance={balance}
-            email={email}
-            firstName={firstName}
             fundedAmount={fundedAmount}
-            handleClearAlerts={handleClearAlerts}
             handleNav={handleNav}
-            handleSubmitAccountPayment={handleSubmitAccountPayment}
             isSignedIn={isSignedIn}
             issueId={issueId}
-            lastName={lastName}
             open={open}
-            organizationId={organizationId}
-            paymentAlerts={paymentAlerts}
-            userId={activeUserId}
           />
           <ConditionalRender
             Component={CloseOpenIssueComponent}
@@ -331,6 +320,7 @@ const IssueDetail = ({
 
 IssueDetail.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
@@ -347,10 +337,8 @@ IssueDetail.propTypes = {
   handleComment: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
-  handleSubmitAccountPayment: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
-  paymentAlerts: T.object,
 };
 
 export default IssueDetail;

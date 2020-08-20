@@ -21,6 +21,7 @@ import {
   SIGN_UP,
   UPDATE_ACTIVE_USER,
   UPVOTE_USER_TEMP,
+  USER_WATCHING_TEMP,
   VERIFY_EMAIL_FAILURE,
   VERIFY_EMAIL_SUCCESS,
   VERIFY_EMAIL,
@@ -172,6 +173,13 @@ export function upvoteUserTemp(payload) {
   return {
     payload,
     type: UPVOTE_USER_TEMP,
+  };
+}
+
+export function userWatchingTemp(payload) {
+  return {
+    payload,
+    type: USER_WATCHING_TEMP,
   };
 }
 

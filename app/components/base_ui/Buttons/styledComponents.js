@@ -47,6 +47,12 @@ export const FlatIconButton = styled(({ disabled, ...restProps }) => (
   box-shadow: none;
 `;
 
+export const PaypalButtonWrapper = styled.div`
+  filter: ${({ disabled }) => (disabled ? 'grayscale(1)' : 'grayscale(0)')};
+  opacity: ${({ disabled }) => (disabled ? '0.7' : '1')};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'inherit')};
+`;
+
 export const PrimaryButton = styled(BaseButton)`
   ${baseButtonStyle};
 

@@ -11,30 +11,30 @@ import {
 } from './styledComponents';
 
 const AddIcon = iconDictionary('addCircle');
-const CancelIcon = iconDictionary('cancel');
-const SuccessIcon = iconDictionary('successOutline');
-const CommentIcon = iconDictionary('comments');
-const FundedIcon = iconDictionary('funded');
-const Edit = iconDictionary('edit');
-const GiftIcon = iconDictionary('gift');
 const AttemptIcon = iconDictionary('attempt');
+const CancelIcon = iconDictionary('cancel');
+const CommentIcon = iconDictionary('comments');
+const Edit = iconDictionary('edit');
+const FundedIcon = iconDictionary('funded');
+const GiftIcon = iconDictionary('gift');
 const PullRequestIcon = iconDictionary('pullRequest');
+const SuccessIcon = iconDictionary('successOutline');
 const WatchIcon = iconDictionary('monocle');
 
-const AddWatching = <StyledAddIcon>{WatchIcon}</StyledAddIcon>;
-const RemoveWatching = <StyledRemoveIcon>{WatchIcon}</StyledRemoveIcon>;
 const AddAttempting = <StyledAddIcon>{AttemptIcon}</StyledAddIcon>;
-const RemoveAttempting = <StyledRemoveIcon>{AttemptIcon}</StyledRemoveIcon>;
+const AddComment = <StyledCommentIcon>{CommentIcon}</StyledCommentIcon>;
+const AddWatching = <StyledAddIcon>{WatchIcon}</StyledAddIcon>;
 const Created = <StyledAddIcon>{AddIcon}</StyledAddIcon>;
 const Deleted = <StyledRemoveIcon>{CancelIcon}</StyledRemoveIcon>;
-const AddComment = <StyledCommentIcon>{CommentIcon}</StyledCommentIcon>;
+const Earned = <StyledAddIcon>{GiftIcon}</StyledAddIcon>;
 const Edited = <StyledAddIcon>{Edit}</StyledAddIcon>;
-const Resolved = <StyledAddIcon>{SuccessIcon}</StyledAddIcon>;
+const Funded = <StyledAddIcon>{FundedIcon}</StyledAddIcon>;
 const PullRequest = (
   <StyledPullRequestIcon>{PullRequestIcon}</StyledPullRequestIcon>
 );
-const Funded = <StyledAddIcon>{FundedIcon}</StyledAddIcon>;
-const Earned = <StyledAddIcon>{GiftIcon}</StyledAddIcon>;
+const RemoveAttempting = <StyledRemoveIcon>{AttemptIcon}</StyledRemoveIcon>;
+const RemoveWatching = <StyledRemoveIcon>{WatchIcon}</StyledRemoveIcon>;
+const Resolved = <StyledAddIcon>{SuccessIcon}</StyledAddIcon>;
 
 export const formatActivity = data => {
   const {

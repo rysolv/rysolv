@@ -26,6 +26,7 @@ import {
   SIGN_UP,
   UPDATE_ACTIVE_USER,
   UPVOTE_USER_TEMP,
+  USER_WATCHING_TEMP,
   VERIFY_EMAIL_FAILURE,
   VERIFY_EMAIL_SUCCESS,
   VERIFY_EMAIL,
@@ -164,6 +165,7 @@ const authReducer = produce((draft, { payload, type }) => {
         profilePic,
         removeUpvote,
         rep,
+        watching,
       } = payload;
       if (addUpvote && rep) {
         draft.activeUser.upvotes.push(addUpvote);
@@ -182,6 +184,9 @@ const authReducer = produce((draft, { payload, type }) => {
         remove(draft.activeUser.upvotes, id => id === removeUpvote);
         draft.activeUser.rep = rep;
       }
+      if (watching) {
+        draft.activeUser.watching = watching;
+      }
       break;
     }
     case UPVOTE_USER_TEMP: {
@@ -192,6 +197,18 @@ const authReducer = produce((draft, { payload, type }) => {
       } else {
         draft.activeUser.rep += 1;
         remove(draft.activeUser.upvotes, id => id === issueId);
+      }
+      break;
+    }
+    case USER_WATCHING_TEMP: {
+      const { issueId } = payload;
+      const issueIndex = draft.activeUser.watching
+        .map(el => el.id)
+        .indexOf(issueId);
+      if (issueIndex > -1) {
+        draft.activeUser.watching.splice(issueIndex, 1);
+      } else {
+        draft.activeUser.watching.push({ id: issueId });
       }
       break;
     }

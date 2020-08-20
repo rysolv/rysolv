@@ -16,7 +16,7 @@ const makeSelectIssuesDisabled = () =>
   createSelector(
     makeSelectIssues('issueData'),
     issueData => {
-      const tempData = omit(issueData, ['importUrl']);
+      const tempData = omit(issueData, ['identiconId', 'importUrl']);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );
@@ -38,6 +38,7 @@ const makeSelectOrganizationsDisabled = () =>
     makeSelectIssues('organizationData'),
     data => {
       const tempData = omit(data, [
+        'identiconId',
         'importUrl',
         'organizationId',
         'organizationLogo',
@@ -89,6 +90,7 @@ const makeSelectIssuesRequestBody = () =>
         acc[field] = formData[field].value;
         return acc;
       }, {});
+      if (requestBody.identiconId) requestBody.organizationLogo = '';
       return { isManual, ...requestBody };
     },
   );

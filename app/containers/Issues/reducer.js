@@ -1,5 +1,7 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
+import { v4 as uuidv4 } from 'uuid';
+import Identicon from 'identicon.js';
 import remove from 'lodash/remove';
 
 import {
@@ -11,6 +13,7 @@ import {
   ADD_COMMENT,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
+  ADD_WATCH,
   CHANGE_ISSUE_FILTER,
   CHANGE_ISSUE_SEARCH,
   CLEAR_ALERTS,
@@ -32,6 +35,7 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  GENERATE_IDENTICON,
   IMPORT_ISSUE_FAILURE,
   IMPORT_ISSUE_SUCCESS,
   IMPORT_ISSUE,
@@ -45,9 +49,7 @@ import {
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
-  SUBMIT_ACCOUNT_PAYMENT_FAILURE,
-  SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
-  SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_FUNDED_ISSUE,
   UPDATE_IS_MANUAL,
   UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
@@ -110,6 +112,7 @@ export const initialState = {
   },
   modal: '',
   organizationData: {
+    identiconId: { error: '', value: '' },
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
     organizationId: { error: '', value: '' },
@@ -118,7 +121,6 @@ export const initialState = {
     organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
   },
-  paymentAlerts: { error: false, success: false },
   search: {
     overviewInput: { error: '', value: '' },
     searchInput: { error: '', value: '' },
@@ -160,6 +162,10 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.addComment = false;
       break;
     }
+    case ADD_COMMENT: {
+      draft.loading.addComment = true;
+      break;
+    }
     case ADD_WATCH_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
@@ -167,20 +173,39 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case ADD_WATCH_SUCCESS: {
-      const { id, watching } = payload;
+      const { issueId, userArray } = payload;
       draft.issues.map((issue, index) => {
-        if (issue.id === id) {
-          draft.issues[index].watching = watching;
+        if (issue.id === issueId) {
+          draft.issues[index].watching = userArray;
         }
       });
-      if (draft.issueDetail) {
-        draft.issueDetail.watching = watching;
+      if (draft.issueDetail.id) {
+        draft.issueDetail.watching = userArray;
       }
       draft.loading.addWatch = false;
       break;
     }
-    case ADD_COMMENT: {
-      draft.loading.addComment = true;
+    case ADD_WATCH: {
+      const { issueId, userId } = payload;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          const userIdIndex = draft.issues[index].watching.indexOf(userId);
+          if (userIdIndex > -1) {
+            draft.issues[index].watching.splice(userIdIndex, 1);
+          } else {
+            draft.issues[index].watching.push(userId);
+          }
+        }
+      });
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.watching.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.watching.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.watching.push(userId);
+        }
+      }
+      draft.loading.addWatch = true;
       break;
     }
     case CHANGE_ISSUE_FILTER: {
@@ -206,7 +231,6 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       draft.filter = initialState.filter;
-      draft.paymentAlerts = initialState.paymentAlerts;
       draft.search = initialState.search;
       break;
     }
@@ -311,6 +335,13 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.issueDetail = true;
       break;
     }
+    case GENERATE_IDENTICON: {
+      const identiconId = uuidv4();
+      const identicon = new Identicon(identiconId, 250).toString();
+      draft.organizationData.identiconId.value = identiconId;
+      draft.organizationData.organizationLogo.value = `data:image/png;base64,${identicon}`;
+      break;
+    }
     case IMPORT_ISSUE_FAILURE: {
       const { error } = payload;
       draft.error.importIssue = { error: true, message: error.message };
@@ -402,14 +433,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.searchIssues = true;
       break;
     }
-    case SUBMIT_ACCOUNT_PAYMENT_FAILURE: {
-      const { error } = payload;
-      draft.loading.submitAccountPayment = false;
-      draft.paymentAlerts.submitAccountPayment = error;
-      break;
-    }
-    case SUBMIT_ACCOUNT_PAYMENT_SUCCESS: {
-      const { fundedAmount, isFundedFromOverview, issueId, message } = payload;
+    case UPDATE_FUNDED_ISSUE: {
+      const { fundedAmount, isFundedFromOverview, issueId } = payload;
       if (!isFundedFromOverview) {
         draft.issueDetail.fundedAmount = fundedAmount;
       }
@@ -417,12 +442,6 @@ const issuesReducer = produce((draft, { payload, type }) => {
         const { id } = issue;
         if (id === issueId) issue.fundedAmount = fundedAmount;
       });
-      draft.loading.submitAccountPayment = false;
-      draft.paymentAlerts.success = { message };
-      break;
-    }
-    case SUBMIT_ACCOUNT_PAYMENT: {
-      draft.loading.submitAccountPayment = true;
       break;
     }
     case UPDATE_IS_MANUAL: {
@@ -436,7 +455,12 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_ORGANIZATION: {
-      draft.organizationData = payload;
+      const { organizationData } = payload;
+      Object.keys(draft.organizationData).map(field => {
+        if (payload[field]) {
+          draft.organizationData[field].value = organizationData[field].value;
+        }
+      });
       break;
     }
     case UPVOTE_ISSUE: {

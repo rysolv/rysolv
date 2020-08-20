@@ -52,6 +52,24 @@ const mapValues = async (queryText, array) => {
   return results;
 };
 
+// Querytext should insert parameters using $1, $2, $3
+const parameterizedQuery = async ({ queryText, values }) => {
+  const client = await pool.connect();
+  try {
+    const result = await client.query(queryText, values);
+    client.release();
+    return result;
+  } catch (error) {
+    client.release();
+    throw error;
+  }
+};
+
+// Sequential query for table creations
+const sequentialQuery = async () => {
+  // TODO: use this for DeleteTable and CreateTable
+};
+
 // single query (no data)
 const singleQuery = async queryText => {
   const client = await pool.connect();
@@ -84,15 +102,11 @@ const singleSearch = async (queryText, fields, value, param) => {
   return rows;
 };
 
-// Sequential query for table creations
-const sequentialQuery = async () => {
-  // TODO: use this for DeleteTable and CreateTable
-};
-
 module.exports = {
   mapQuery,
   mapQueryPrint,
   mapValues,
+  parameterizedQuery,
   sequentialQuery,
   singleItem,
   singleQuery,

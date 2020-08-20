@@ -35,7 +35,6 @@ const userValues = [
   'stackoverflow_link',
   'upvotes',
   'username',
-  'watching',
 ];
 
 const userReturnValues = `
@@ -65,9 +64,11 @@ const userReturnValues = `
   rep,
   stackoverflow_link AS "stackoverflowLink",
   upvotes,
-  username,
-  watching
+  username
 `;
+
+// TODO: refactor SQL query to not require group values
+const groupValues = userValues.join(',');
 
 // Check duplicate user email
 const checkDuplicateUserEmail = async email => {
@@ -131,7 +132,25 @@ const getOneUserSignUp = async email => {
 
 // GET all users
 const getUsers = async () => {
-  const queryText = `SELECT ${userReturnValues} FROM users WHERE is_deleted = false AND email_verified = true`;
+  const queryText = `
+    SELECT ${userReturnValues}, ARRAY_AGG(watching.issue_id) AS watching FROM users
+    LEFT JOIN watching on watching.user_id = users.id
+    WHERE is_deleted = false AND email_verified = true
+    GROUP BY ${groupValues}`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
+const getUserWatchList = async ({ userId }) => {
+  const queryText = `
+    SELECT
+      issues.id,
+      issues.modified_date AS "modifiedDate",
+      issues.name,
+      issues.funded_amount AS "fundedAmount"
+    FROM watching
+    JOIN issues on watching.issue_id = issues.id
+    WHERE watching.user_id = '${userId}'`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
@@ -169,15 +188,6 @@ const searchUsers = async (table, value) => {
   const queryText = `SELECT ${userReturnValues} FROM ${table}`;
   const param = 'is_deleted = false';
   const rows = await singleSearch(queryText, fields, value, param);
-  return rows;
-};
-
-// UPDATE balance of user for payment
-const submitAccountPaymentUser = async (userId, fundValue) => {
-  const { balance } = await getOneUser(userId);
-  const adjustedBalanceValue = balance - fundValue;
-  const queryText = `UPDATE users SET balance=${adjustedBalanceValue} WHERE (id = '${userId}') RETURNING *`;
-  const { rows } = await singleQuery(queryText);
   return rows;
 };
 
@@ -222,10 +232,10 @@ module.exports = {
   getOneUser,
   getOneUserSignUp,
   getUsers,
+  getUserWatchList,
   getWatchList,
   searchUsers,
   singleSearch,
-  submitAccountPaymentUser,
   transformUser,
   updateUserArray,
 };

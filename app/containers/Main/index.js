@@ -17,13 +17,7 @@ import WatchList from 'components/WatchList';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { signIn, signOut } from 'containers/Auth/actions';
-import {
-  clearAlerts,
-  closeIssue,
-  deletePullRequest,
-  submitAccountPayment,
-} from 'containers/Issues/actions';
-import { makeSelectIssues } from 'containers/Issues/selectors';
+import { closeIssue, deletePullRequest } from 'containers/Issues/actions';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -44,18 +38,15 @@ export const Main = ({
   dispatchCloseIssue,
   dispatchCloseModal,
   error,
-  handleClearAlerts,
   handleDelete,
   handleNav,
   handleSignin,
   handleSignout,
-  handleSubmitAccountPayment,
   isModalOpen,
   isSignedIn,
   loading,
   match,
   modal,
-  paymentAlerts,
   tableData,
 }) => {
   const handleCloseIssue = ({ issueId, shouldClose }) => {
@@ -85,12 +76,9 @@ export const Main = ({
       Component: PaymentPortalModal,
       open: isModalOpen,
       propsToPassDown: {
-        handleClearAlerts,
         handleClose: dispatchCloseModal,
         handleNav,
-        handleSubmitAccountPayment,
         isSignedIn,
-        paymentAlerts,
         ...tableData,
       },
     },
@@ -176,13 +164,11 @@ Main.propTypes = {
   handleNav: T.func,
   handleSignin: T.func,
   handleSignout: T.func,
-  handleSubmitAccountPayment: T.func,
   isModalOpen: T.bool,
   isSignedIn: T.bool,
   loading: T.bool,
   match: T.object,
   modal: T.string,
-  paymentAlerts: T.object,
   tableData: T.oneOfType([T.array, T.object, T.number]),
 };
 
@@ -192,10 +178,6 @@ const mapStateToProps = createStructuredSelector({
    */
   activeUser: makeSelectAuth('activeUser'),
   isSignedIn: makeSelectAuth('isSignedIn'),
-  /**
-   * Reducer: Issues
-   */
-  paymentAlerts: makeSelectIssues('paymentAlerts'),
   /**
    * Reducer: Main
    */
@@ -218,9 +200,6 @@ const mapDispatchToProps = dispatch => ({
    * Issues
    */
   dispatchCloseIssue: payload => dispatch(closeIssue(payload)),
-  handleClearAlerts: () => dispatch(clearAlerts()),
-  handleSubmitAccountPayment: payload =>
-    dispatch(submitAccountPayment(payload)),
   /**
    * Main
    */

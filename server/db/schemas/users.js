@@ -25,7 +25,7 @@ ADD COLUMN rep SMALLINT NOT NULL DEFAULT 25,
 ADD COLUMN stackoverflow_link VARCHAR(128),
 ADD COLUMN upvotes UUID [] DEFAULT '{}',
 ADD COLUMN username VARCHAR(40),
-ADD COLUMN watching UUID [] DEFAULT '{}'`;
+ADD CONSTRAINT chkBalance CHECK (balance >= 0)`;
 
 const createUsersTable = `CREATE TABLE IF NOT EXISTS
 users(

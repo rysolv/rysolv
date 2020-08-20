@@ -1,5 +1,7 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
+import { v4 as uuidv4 } from 'uuid';
+import Identicon from 'identicon.js';
 import remove from 'lodash/remove';
 
 import {
@@ -16,6 +18,7 @@ import {
   FETCH_ORGANIZATIONS_FAILURE,
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
+  GENERATE_IDENTICON,
   IMPORT_ORGANIZATION_FAILURE,
   IMPORT_ORGANIZATION_SUCCESS,
   IMPORT_ORGANIZATION,
@@ -42,9 +45,9 @@ import {
 export const initialState = {
   alerts: { error: false, success: false },
   editInfo: {
-    id: { error: '', value: '' },
     createdDate: { error: '', value: '' },
     description: { error: '', value: '' },
+    id: { error: '', value: '' },
     issues: { error: '', value: '' },
     logo: { error: '', value: '' },
     modifiedDate: { error: '', value: '' },
@@ -82,13 +85,11 @@ export const initialState = {
   },
   organization: {},
   organizationData: {
+    identiconId: { error: '', value: '' },
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
     organizationId: { error: '', value: '' },
-    organizationLogo: {
-      error: '',
-      value: 'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
-    },
+    organizationLogo: { error: '', value: '' },
     organizationName: { error: '', value: '' },
     organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
@@ -191,6 +192,13 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       draft.loading.fetchOrganization = true;
       break;
     }
+    case GENERATE_IDENTICON: {
+      const identiconId = uuidv4();
+      const identicon = new Identicon(identiconId, 250).toString();
+      draft.organizationData.identiconId.value = identiconId;
+      draft.organizationData.organizationLogo.value = `data:image/png;base64,${identicon}`;
+      break;
+    }
     case IMPORT_ORGANIZATION_FAILURE: {
       const { error } = payload;
       draft.error.importOrganization = { error: true, message: error.message };
@@ -200,8 +208,10 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     case IMPORT_ORGANIZATION_SUCCESS: {
       const { importOrganization } = payload;
       draft.loading.importOrganization = false;
-      Object.keys(draft.organizationData).map(field => {
-        draft.organizationData[field].value = importOrganization[field];
+      Object.keys(importOrganization).map(field => {
+        if (draft.organizationData[field]) {
+          draft.organizationData[field].value = importOrganization[field];
+        }
       });
       draft.importSuccess = true;
       break;

@@ -1,5 +1,7 @@
 export const CLEAR_ALERTS = 'app/Settings/CLEAR_ALERTS';
 
+export const CLEAR_ERRORS = 'app/Settings/CLEAR_ERRORS';
+
 export const CLOSE_MODAL_STATE = 'app/Settings/CLOSE_MODAL_STATE';
 export const OPEN_MODAL_STATE = 'app/Settings/OPEN_MODAL_STATE';
 
@@ -15,22 +17,26 @@ export const INPUT_CHANGE = 'app/Settings/INPUT_CHANGE';
 
 export const INPUT_ERROR = 'app/Settings/INPUT_ERROR';
 
+export const PAYPAL_PAYMENT = 'app/Settings/PAYPAL_PAYMENT';
+export const PAYPAL_PAYMENT_FAILURE = 'app/Settings/PAYPAL_PAYMENT_FAILURE';
+export const PAYPAL_PAYMENT_SUCCESS = 'app/Settings/PAYPAL_PAYMENT_SUCCESS';
+
 export const REMOVE_ISSUE = 'app/Settings/REMOVE_ISSUE';
 export const REMOVE_ISSUE_FAILURE = 'app/Settings/REMOVE_ISSUE_FAILURE';
 export const REMOVE_ISSUE_SUCCESS = 'app/Settings/REMOVE_ISSUE_SUCCESS';
+export const REMOVE_WATCHING = 'app/Settings/REMOVE_WATCHING';
 
 export const SAVE_CHANGE = 'app/Settings/SAVE_CHANGE';
 export const SAVE_CHANGE_FAILURE = 'app/Settings/SAVE_CHANGE_FAILURE';
 export const SAVE_CHANGE_SUCCESS = 'app/Settings/SAVE_CHANGE_SUCCESS';
 
-export const SUBMIT_PAYMENT = 'app/Settings/SUBMIT_PAYMENT';
+export const STRIPE_TOKEN = 'app/Settings/STRIPE_TOKEN';
+export const STRIPE_TOKEN_FAILURE = 'app/Settings/STRIPE_TOKEN_FAILURE';
+export const STRIPE_TOKEN_SUCCESS = 'app/Settings/STRIPE_TOKEN_SUCCESS';
 
 export const WITHDRAW_FUNDS = 'app/Settings/WITHDRAW_FUNDS';
 export const WITHDRAW_FUNDS_FAILURE = 'app/Settings/WITHDRAW_FUNDS_FAILURE';
 export const WITHDRAW_FUNDS_SUCCESS = 'app/Settings/WITHDRAW_FUNDS_SUCCESS';
-
-export const transferValueLowErrorMessage =
-  'Transfer amount must be greater than $0.00.';
 
 export const settingViewDictionary = {
   account: 1,

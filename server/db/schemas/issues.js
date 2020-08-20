@@ -15,8 +15,7 @@ ADD COLUMN organization_id UUID REFERENCES organizations(id),
 ADD COLUMN pull_requests UUID [] DEFAULT '{}',
 ADD COLUMN rep SMALLINT DEFAULT 25,
 ADD COLUMN repo VARCHAR(128) NOT NULL,
-ADD COLUMN type VARCHAR(40) NOT NULL,
-ADD COLUMN watching UUID []`;
+ADD COLUMN type VARCHAR(40) NOT NULL`;
 
 const createIssuesTable = `CREATE TABLE IF NOT EXISTS
 issues(

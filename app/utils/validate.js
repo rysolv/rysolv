@@ -22,6 +22,13 @@ export const validateEmail = value => {
   return false;
 };
 
+export const validateFundValue = value => {
+  if (value < 1) {
+    return `Amount must be greater than $0.99`;
+  }
+  return false;
+};
+
 export const validateIssueUrl = value => {
   const url = value.split('/');
   const issueNumber = url[url.length - 1];
@@ -89,6 +96,13 @@ const validatePassword = value => {
   return false;
 };
 
+const validateString = value => {
+  if (typeof value !== 'string') {
+    return 'Invalid value';
+  }
+  return false;
+};
+
 const validateVerifyInput = (value, { field, verifyValue }) => {
   if (value !== verifyValue) {
     return `${capitalize(field)}s do not match`;
@@ -98,7 +112,9 @@ const validateVerifyInput = (value, { field, verifyValue }) => {
 
 export const validationDictionary = {
   emailInput: validateEmail,
+  fundInput: validateFundValue,
   passwordInput: validatePassword,
+  stringInput: validateString,
   verifyInput: validateVerifyInput,
 };
 

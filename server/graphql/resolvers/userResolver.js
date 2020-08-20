@@ -1,3 +1,5 @@
+const Identicon = require('identicon.js');
+
 const {
   checkDuplicateUserEmail,
   checkDuplicateUsername,
@@ -8,6 +10,7 @@ const {
   getOneUserSignUp,
   getOrganizationsWhere,
   getUsers,
+  getUserWatchList,
   getWatchList,
   searchUsers,
   transformUser,
@@ -15,8 +18,6 @@ const {
 } = require('../../db');
 const { uploadImage } = require('../../middlewares/imageUpload');
 
-const defaultUserImage =
-  'https://rysolv.s3.us-east-2.amazonaws.com/default-profile-picture.png';
 const deletedUserImage =
   'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTBvwAcytGFLkWO2eT-FCwE5z_mlQxBdI9uwbyeczCTVBci7Vrg&usqp=CAU';
 
@@ -39,22 +40,25 @@ module.exports = {
     }
   },
   createUser: async args => {
-    const { userInput } = args;
+    const {
+      userInput: { email, firstName, id, lastName, username },
+    } = args;
 
+    const { uploadUrl } = await uploadImage(new Identicon(id, 250).toString());
     const newUser = {
-      id: userInput.id,
       created_date: new Date(),
-      email: userInput.email,
-      first_name: userInput.firstName,
-      last_name: userInput.lastName,
+      email,
+      first_name: firstName,
+      id,
+      last_name: lastName,
       modified_date: new Date(),
-      profile_pic: defaultUserImage,
-      username: userInput.username,
+      profile_pic: uploadUrl,
+      username,
     };
 
     try {
-      await checkDuplicateUserEmail(userInput.email);
-      await checkDuplicateUsername(userInput.username);
+      await checkDuplicateUserEmail(email);
+      await checkDuplicateUsername(username);
 
       const result = await createUser(newUser);
 
@@ -90,7 +94,6 @@ module.exports = {
         rep: 0,
         stackoverflow_link: '',
         username: '[deleted]',
-        watching: [],
       };
       await transformUser(id, data);
       return 'User successfully deleted';
@@ -134,8 +137,9 @@ module.exports = {
     const { id: userId } = args;
     try {
       const result = await getOneUser(userId);
-      const { attempting, issues, organizations, watching } = result;
+      const { attempting, issues, organizations } = result;
 
+      // Pull user attempting detail
       const attemptingListResult = await Promise.all(
         attempting.map(async issueId => {
           const type = 'userAttemptList';
@@ -145,6 +149,7 @@ module.exports = {
       );
       result.attempting = attemptingListResult;
 
+      // Pull user issue detail
       const issuesListResult = await Promise.all(
         issues.map(async issueId => {
           const [issuesResult] = await getOneIssue(issueId);
@@ -153,6 +158,7 @@ module.exports = {
       );
       result.issues = issuesListResult;
 
+      // Pull user organization detail
       const organizationsListResult = await Promise.all(
         organizations.map(async organizationId => {
           const [organizationsResult] = await getOneOrganization(
@@ -163,13 +169,8 @@ module.exports = {
       );
       result.organizations = organizationsListResult;
 
-      const watchingListResult = await Promise.all(
-        watching.map(async issueId => {
-          const type = 'userWatchList';
-          const [watchingResult] = await getWatchList(issueId, type);
-          return watchingResult;
-        }),
-      );
+      // Pull watch-list detail
+      const watchingListResult = await getUserWatchList({ userId });
       result.watching = watchingListResult;
 
       return result;
@@ -226,7 +227,6 @@ module.exports = {
         rep: userInput.rep,
         stackoverflow_link: userInput.stackoverflowLink,
         username: userInput.username,
-        watching: userInput.watching,
       };
       const result = await transformUser(id, data);
 

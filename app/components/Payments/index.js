@@ -3,13 +3,7 @@ import React, { useState } from 'react';
 import T from 'prop-types';
 
 import { BaseExpansionPanel, ConditionalRender } from 'components/base_ui';
-import {
-  formatDollarAmount,
-  handleCreditCardNumberChange,
-  handleCvcChange,
-  handleDateChange,
-  handleZipChange,
-} from 'utils/globalHelpers';
+import { formatDollarAmount, handleZipChange } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import CreditCardView from './CreditCardView';
@@ -25,9 +19,9 @@ import {
   OverviewWrapper,
   PaymentContainer,
   PaymentInformationWrapper,
-  StyledBaseInputWithAdornment,
   StyledErrorSuccessBanner,
   StyledLabel,
+  StyledPaymentTextInput,
 } from './styledComponents';
 
 const AccountIcon = iconDictionary('user');
@@ -35,35 +29,50 @@ const CreditCardIcon = iconDictionary('creditCard');
 const PaypalIcon = iconDictionary('paypal');
 
 const PaymentPortal = ({
+  alerts: { error, success },
   balance,
-  dispatchVerifyRecaptcha,
-  dispatchVerifyRecaptchaFailure,
+  dispatchPaypalPayment,
   email,
+  errors: {
+    email: emailError,
+    firstName: firstNameError,
+    fundValue: fundValueError,
+    lastName: lastNameError,
+  },
   firstName,
   fundedAmount,
-  handleClearAlerts,
+  handleClearPaymentAlerts,
   handleNav,
+  handleStripeToken,
   handleSubmitAccountPayment,
+  handleValidateInput,
   isSignedIn,
   issueId,
   lastName,
   open,
-  organizationId,
-  paymentAlerts: { error, success },
   userId,
   ...restProps
 }) => {
-  const [creditCardNumber, setCreditCardNumber] = useState('');
-  const [cvcValue, setCvcValue] = useState('');
-  const [dateValue, setDateValue] = useState('');
+  const initialValue = '2';
   const [emailValue, setEmailValue] = useState(email || '');
-  const [fundValue, setFundValue] = useState('2');
+  const [firstNameValue, setFirstNameValue] = useState(firstName || '');
+  const [fundValue, setFundValue] = useState(initialValue);
   const [isAccountPaymentOpen, setIsAccountPaymentOpen] = useState(true);
   const [isCreditPaymentOpen, setIsCreditPaymentOpen] = useState(false);
   const [isPaypalPaymentOpen, setIsPaypalPaymentOpen] = useState(false);
-  const [firstNameValue, setFirstNameValue] = useState(firstName || '');
   const [lastNameValue, setLastNameValue] = useState(lastName || '');
+  const [stripeError, setStripeError] = useState('');
   const [zipValue, setZipValue] = useState('');
+
+  const isPersonalInfoComplete =
+    !!emailValue && !!firstNameValue && !!lastNameValue;
+    
+  const values = {
+    email: emailValue,
+    firstName: firstNameValue,
+    fundValue,
+    lastName: lastNameValue,
+  };
 
   const handleChangeDollarValue = (e, valuePassedIn) => {
     const { value: valueFromTarget } = e.target;
@@ -88,7 +97,8 @@ const PaymentPortal = ({
         setFundValue(formattedValue);
       }
       if (formattedString.length === 2) {
-        formattedString[0] = formattedString[0] === '' ? '0' : formattedString[0];
+        formattedString[0] =
+          formattedString[0] === '' ? '0' : formattedString[0];
         formattedString[1] = formattedString[1]
           ? formattedString[1].slice(0, 2)
           : '';
@@ -98,7 +108,7 @@ const PaymentPortal = ({
     }
   };
 
-  const handleChangePaymentPanel = (type) => {
+  const handleChangePaymentPanel = type => {
     if (type === 'account') {
       if (isAccountPaymentOpen) {
         setIsAccountPaymentOpen(false);
@@ -128,6 +138,11 @@ const PaymentPortal = ({
     }
   };
 
+  const handleClearAlerts = () => {
+    setStripeError('');
+    handleClearPaymentAlerts();
+  };
+
   const handleEmailValueChange = (event, newEmail) => {
     setEmailValue(newEmail);
   };
@@ -140,30 +155,25 @@ const PaymentPortal = ({
     setLastNameValue(newName);
   };
   const propsToPassDown = {
-    creditCardNumber,
-    cvcValue,
-    dateValue,
-    dispatchVerifyRecaptcha,
-    dispatchVerifyRecaptchaFailure,
-    emailValue,
-    firstNameValue,
-    handleCreditCardNumberChange,
-    handleCvcChange,
-    handleDateChange,
+    fundValue,
+    handleClearAlerts,
+    handleStripeToken,
     handleZipChange,
     isCreditPaymentOpen,
-    lastNameValue,
-    setCreditCardNumber,
-    setCvcValue,
-    setDateValue,
+    isPersonalInfoComplete,
+    setFundValue,
+    setStripeError,
     setZipValue,
+    values,
     zipValue,
   };
   return (
     <PaymentContainer {...restProps}>
       <OverviewWrapper>
         <Amount>{formatDollarAmount(fundedAmount)}</Amount>
-        <Funded isFunded={!fundedAmount || !open}>{fundedAmount ? 'Funded' : 'Unfunded'}</Funded>
+        <Funded isFunded={!fundedAmount || !open}>
+          {fundedAmount ? 'Funded' : 'Unfunded'}
+        </Funded>
       </OverviewWrapper>
       <FundingContainer open={open}>
         <DollarValueWrapper>
@@ -171,10 +181,13 @@ const PaymentPortal = ({
             fundValue={fundValue}
             handleChange={handleChangeDollarValue}
           />
-        - or -
-          <StyledBaseInputWithAdornment
+          - or -
+          <StyledPaymentTextInput
             adornmentComponent="$"
+            error={!!fundValueError}
             fontSize="1.4rem"
+            helperText={fundValueError}
+            onBlur={() => handleValidateInput({ field: 'fundValue', values })}
             onChange={e => handleChangeDollarValue(e, e.target.value)}
             value={fundValue}
           />
@@ -182,28 +195,40 @@ const PaymentPortal = ({
         <Divider />
         <PaymentInformationWrapper>
           <StyledLabel>Information</StyledLabel>
-          <StyledBaseInputWithAdornment
+          <StyledPaymentTextInput
             adornmentComponent="First Name"
+            autoComplete="cc-given-name"
+            error={!!firstNameError}
             fontSize="1rem"
+            helperText={firstNameError}
+            onBlur={() => handleValidateInput({ field: 'firstName', values })}
             onChange={e => handleFirstNameValueChange(e, e.target.value)}
             value={firstNameValue}
           />
-          <StyledBaseInputWithAdornment
+          <StyledPaymentTextInput
             adornmentComponent="Last Name"
+            autoComplete="cc-family-name"
+            error={!!lastNameError}
             fontSize="1rem"
+            helperText={lastNameError}
+            onBlur={() => handleValidateInput({ field: 'lastName', values })}
             onChange={e => handleLastNameValueChange(e, e.target.value)}
             value={lastNameValue}
           />
-          <StyledBaseInputWithAdornment
+          <StyledPaymentTextInput
             adornmentComponent="Email"
+            autoComplete="email"
+            error={!!emailError}
             fontSize="1rem"
+            helperText={emailError}
+            onBlur={() => handleValidateInput({ field: 'email', values })}
             onChange={e => handleEmailValueChange(e, e.target.value)}
             value={emailValue}
           />
         </PaymentInformationWrapper>
         <StyledLabel>Payment Methods</StyledLabel>
         <StyledErrorSuccessBanner
-          error={error}
+          error={stripeError || error}
           onClose={handleClearAlerts}
           success={success}
         />
@@ -216,15 +241,11 @@ const PaymentPortal = ({
               Icon={AccountIcon}
               propsToPassDown={{
                 balance,
-                emailValue,
-                firstNameValue,
                 fundValue,
                 handleSubmitAccountPayment,
-                issueId,
-                lastNameValue,
-                organizationId,
+                isPersonalInfoComplete,
                 setFundValue,
-                userId,
+                values,
               }}
               title="Your Account"
             />
@@ -244,7 +265,16 @@ const PaymentPortal = ({
           expanded={isPaypalPaymentOpen}
           handleLabelClick={() => handleChangePaymentPanel('paypal')}
           Icon={PaypalIcon}
-          propsToPassDown={{ isPaypalPaymentOpen }}
+          propsToPassDown={{
+            dispatchPaypalPayment,
+            dollarValue: fundValue,
+            handleValidateInput: () => handleValidateInput({ field: 'fundValue', values }),
+            initialValue,
+            isPaypalPaymentOpen,
+            issueId,
+            setFundValue,
+            userId,
+          }}
           title="Paypal"
         />
       </FundingContainer>
@@ -253,21 +283,22 @@ const PaymentPortal = ({
 };
 
 PaymentPortal.propTypes = {
+  alerts: T.object,
   balance: T.number,
-  dispatchVerifyRecaptcha: T.func,
-  dispatchVerifyRecaptchaFailure: T.func,
+  dispatchPaypalPayment: T.func,
   email: T.string,
+  errors: T.object,
   firstName: T.string,
   fundedAmount: T.number,
-  handleClearAlerts: T.func,
+  handleClearPaymentAlerts: T.func,
   handleNav: T.func,
+  handleStripeToken: T.func,
   handleSubmitAccountPayment: T.func,
+  handleValidateInput: T.func,
   isSignedIn: T.bool,
   issueId: T.string,
   lastName: T.string,
   open: T.bool,
-  organizationId: T.string,
-  paymentAlerts: T.object,
   userId: T.string,
 };
 

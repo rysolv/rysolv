@@ -27,8 +27,10 @@ const VerifyEmail = ({
   verify: { verificationCode },
   verifyDisabled,
 }) => {
-  const handleKeypress = ({ key }) => {
+  const handleKeypress = e => {
+    const { key } = e;
     if (key === 'Enter' && !verifyDisabled) {
+      e.preventDefault();
       handleVerifyEmail();
     }
   };

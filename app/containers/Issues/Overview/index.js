@@ -14,7 +14,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
 import {
-  addAttempt,
+  addWatch,
   clearAlerts,
   fetchIssues,
   searchIssues,
@@ -29,9 +29,9 @@ import {
   makeSelectIssuesLoading,
 } from '../selectors';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const IssuesOverview = ({
   activeUser,
+  addWatching,
   alerts,
   deviceView,
   dispatchFetchIssues,
@@ -40,7 +40,6 @@ const IssuesOverview = ({
   dispatchUpvote,
   error,
   handleClearAlerts,
-  handleIncrement,
   handleNav,
   handleSearchIssues,
   isSignedIn,
@@ -72,12 +71,12 @@ const IssuesOverview = ({
       loading={loading}
       propsToPassDown={{
         activeUser,
+        addWatching,
         alerts,
         deviceView,
         dispatchFetchWatchList,
         dispatchOpenModal,
         handleClearAlerts,
-        handleIncrement,
         handleNav,
         handleUpvote,
         isSignedIn,
@@ -88,6 +87,7 @@ const IssuesOverview = ({
 
 IssuesOverview.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
@@ -99,7 +99,6 @@ IssuesOverview.propTypes = {
   dispatchUpvote: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
-  handleIncrement: T.func,
   handleNav: T.func,
   handleSearchIssues: T.func,
   isSignedIn: T.bool,
@@ -134,10 +133,10 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Issues
      */
+    addWatching: payload => dispatch(addWatch(payload)),
     dispatchFetchIssues: () => dispatch(fetchIssues()),
     dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
-    handleIncrement: payload => dispatch(addAttempt(payload)),
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
     /*
      * Reducer : Main

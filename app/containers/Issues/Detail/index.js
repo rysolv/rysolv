@@ -22,13 +22,13 @@ import injectReducer from 'utils/injectReducer';
 import {
   addAttempt,
   addComment,
+  addWatch,
   clearAlerts,
   closeIssue,
   closeIssueModalState,
   editIssue,
   fetchIssueDetail,
   openIssueModalState,
-  submitAccountPayment,
   upvoteIssue,
 } from '../actions';
 import reducer from '../reducer';
@@ -61,6 +61,7 @@ export class IssuesDetail extends React.PureComponent {
   render() {
     const {
       activeUser,
+      addWatching,
       alerts,
       deviceView,
       dispatchCloseIssue,
@@ -76,7 +77,6 @@ export class IssuesDetail extends React.PureComponent {
       handleComment,
       handleIncrement,
       handleNav,
-      handleSubmitAccountPayment,
       isModalOpen,
       isSignedIn,
       issueDetail,
@@ -85,7 +85,6 @@ export class IssuesDetail extends React.PureComponent {
         params: { id },
       },
       modal,
-      paymentAlerts,
       upvoteLoading,
     } = this.props;
 
@@ -115,6 +114,7 @@ export class IssuesDetail extends React.PureComponent {
           isRequiredData
           propsToPassDown={{
             activeUser,
+            addWatching,
             alerts,
             deviceView,
             dispatchCloseIssue,
@@ -127,10 +127,8 @@ export class IssuesDetail extends React.PureComponent {
             handleComment,
             handleIncrement,
             handleNav,
-            handleSubmitAccountPayment,
             handleUpvote,
             isSignedIn,
-            paymentAlerts,
           }}
         />
         {isModalOpen && <ModalDialog {...modalPropsDictionary[modal]} />}
@@ -141,6 +139,7 @@ export class IssuesDetail extends React.PureComponent {
 
 IssuesDetail.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.object,
   deviceView: T.string,
   dispatchCloseIssue: T.func,
@@ -157,14 +156,12 @@ IssuesDetail.propTypes = {
   handleComment: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
-  handleSubmitAccountPayment: T.func,
   isModalOpen: T.bool,
   isSignedIn: T.bool,
   issueDetail: T.object,
   loading: T.bool,
   match: T.object,
   modal: T.string,
-  paymentAlerts: T.object,
   upvoteLoading: T.bool,
 };
 
@@ -183,7 +180,6 @@ const mapStateToProps = createStructuredSelector({
   issueDetail: makeSelectIssueDetail('issueDetail'),
   loading: makeSelectIssuesLoading('issueDetail'),
   modal: makeSelectIssues('modal'),
-  paymentAlerts: makeSelectIssues('paymentAlerts'),
   upvoteLoading: makeSelectIssuesLoading('upvoteIssue'),
   /**
    * Reducer : ViewSize
@@ -196,6 +192,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    addWatching: payload => dispatch(addWatch(payload)),
     dispatchCloseIssue: payload => dispatch(closeIssue(payload)),
     dispatchCloseIssueModal: () => dispatch(closeIssueModalState()),
     dispatchEditIssue: payload => dispatch(editIssue(payload)),
@@ -205,8 +202,6 @@ function mapDispatchToProps(dispatch) {
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleComment: payload => dispatch(addComment(payload)),
     handleIncrement: payload => dispatch(addAttempt(payload)),
-    handleSubmitAccountPayment: payload =>
-      dispatch(submitAccountPayment(payload)),
     /*
      * Reducer : Main
      */
