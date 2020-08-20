@@ -17,6 +17,7 @@ import {
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
   REMOVE_ISSUE,
+  REMOVE_WATCHING,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
@@ -148,6 +149,13 @@ export function removeIssue(payload) {
   return {
     payload,
     type: REMOVE_ISSUE,
+  };
+}
+
+export function removeWatching(payload) {
+  return {
+    payload,
+    type: REMOVE_WATCHING,
   };
 }
 

@@ -19,7 +19,6 @@ const issueValues = [
   'rep',
   'repo',
   'type',
-  'watching',
 ];
 
 const issueReturnValues = `
@@ -39,12 +38,12 @@ const issueReturnValues = `
   issues.pull_requests AS "pullRequests",
   issues.rep,
   issues.repo,
-  issues.type,
-  issues.watching
+  issues.type
 `;
 
 const issueCardValues = `
   ${issueReturnValues},
+  ARRAY_REMOVE(ARRAY_AGG(watching.user_id), NULL) AS watching,
   organizations.name AS "organizationName",
   organizations.verified AS "organizationVerified"
 `;
@@ -56,7 +55,29 @@ const issueDetailValues = `
   users.profile_pic AS "profilePic"
 `;
 
-// CLOSE single issue
+// TODO: refactor SQL query to not require group values
+const groupValues = `
+  issues.attempting,
+  issues.body,
+  issues.comments,
+  issues.contributor_id,
+  issues.created_date,
+  issues.funded_amount,
+  issues.id,
+  issues.language,
+  issues.modified_date,
+  issues.name,
+  issues.open,
+  issues.organization_id,
+  issues.pull_requests,
+  issues.rep,
+  issues.repo,
+  issues.type,
+  organizations.name,
+  organizations.verified
+`;
+
+// Close single issue
 const closeIssue = async (id, shouldClose) => {
   const rows = await singleItem('issues', id);
   if (rows) {
@@ -150,7 +171,10 @@ const downvoteIssue = async ({ issueId, userId }) => {
 
 // GET all issues
 const getIssues = async () => {
-  const queryText = `SELECT ${issueCardValues} FROM issues JOIN organizations ON (issues.organization_id = organizations.id)`;
+  const queryText = `SELECT ${issueCardValues} FROM issues
+    LEFT JOIN organizations ON (issues.organization_id = organizations.id)
+    LEFT JOIN watching ON watching.issue_id = issues.id
+    GROUP BY ${groupValues}`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
@@ -161,7 +185,9 @@ const getOneIssue = async id => {
     SELECT ${issueDetailValues} FROM issues
     JOIN organizations ON (issues.organization_id = organizations.id)
     JOIN users ON (issues.contributor_id = users.id)
+    LEFT JOIN watching ON watching.issue_id = issues.id
     WHERE (issues.id='${id}')
+    GROUP BY ${groupValues}, users.id, users.username, users.profile_pic
   `;
   const { rows } = await singleQuery(queryText);
   if (rows.length > 0) {
@@ -222,6 +248,7 @@ const updateIssueArray = async ({ column, issueId, data, remove }) => {
 };
 
 const upvoteIssue = async ({ issueId, userId }) => {
+  // Pulling in Client to use transaction
   const client = await pool.connect();
   try {
     // Validate user has rep and has not upvoted

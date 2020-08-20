@@ -95,12 +95,6 @@ const makeSelectIssuesRequestBody = () =>
     },
   );
 
-const makeSelectIssuesSearchDisabled = () =>
-  createSelector(
-    makeSelectIssues('search'),
-    ({ searchInput }) => searchInput.value === '',
-  );
-
 const makeSelectIssuesStep = prop =>
   createSelector(
     makeSelectIssues('step'),
@@ -118,7 +112,6 @@ export {
   makeSelectIssuesFiltered,
   makeSelectIssuesLoading,
   makeSelectIssuesRequestBody,
-  makeSelectIssuesSearchDisabled,
   makeSelectIssuesStep,
   makeSelectOrganizationsDisabled,
 };

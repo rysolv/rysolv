@@ -7,6 +7,7 @@ import {
   ADD_COMMENT,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
+  ADD_WATCH,
   CHANGE_ISSUE_FILTER,
   CHANGE_ISSUE_SEARCH,
   CLEAR_ALERTS,
@@ -106,6 +107,13 @@ export function addWatchSuccess(payload) {
   return {
     payload,
     type: ADD_WATCH_SUCCESS,
+  };
+}
+
+export function addWatch(payload) {
+  return {
+    payload,
+    type: ADD_WATCH,
   };
 }
 

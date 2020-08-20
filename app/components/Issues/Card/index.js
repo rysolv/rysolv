@@ -39,11 +39,11 @@ const AttemptingIcon = IconDictionary('attempt');
 
 const IssueCard = ({
   activeUser,
+  addWatching,
   data,
   deviceView,
   dispatchFetchWatchList,
   dispatchOpenModal,
-  handleIncrement,
   handleNav,
   handleUpvote,
   isSignedIn,
@@ -64,6 +64,8 @@ const IssueCard = ({
       rep,
       watching,
     }) => {
+      const { id: userId, watching: userWatchList } = activeUser;
+
       const isMobile =
         deviceView === 'laptopS' ||
         deviceView === 'tablet' ||
@@ -71,8 +73,9 @@ const IssueCard = ({
         deviceView === 'mobileS' ||
         deviceView === 'mobileXS' ||
         deviceView === 'mobileXXS';
+
       const userWatching =
-        activeUser.watching && !!activeUser.watching.find(el => el.id === id);
+        userWatchList && userWatchList.find(el => el.id === id);
       const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
 
       const DesktopButtonBar = (
@@ -111,14 +114,7 @@ const IssueCard = ({
               <WatchButton
                 dispatchFetchWatchList={dispatchFetchWatchList}
                 dispatchOpenModal={dispatchOpenModal}
-                handleWatch={() =>
-                  handleIncrement({
-                    userId: activeUser.id,
-                    id,
-                    column: 'watching',
-                    remove: userWatching,
-                  })
-                }
+                handleWatch={() => addWatching({ issueId: id, userId })}
                 isSignedIn={isSignedIn}
                 label={userWatching ? 'Watching' : 'Watch'}
                 value={watching.length}
@@ -173,12 +169,7 @@ const IssueCard = ({
                 if (!isSignedIn) {
                   return dispatchOpenModal({ modalState: 'signIn' });
                 }
-                return handleIncrement({
-                  userId: activeUser.id,
-                  id,
-                  column: 'watching',
-                  remove: userWatching,
-                });
+                return addWatching({ issueId: id, userId });
               }}
               icon={<MonocleIcon />}
               isWatching={userWatching}
@@ -280,7 +271,6 @@ IssueCard.propTypes = {
   deviceView: T.string.isRequired,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
-  handleIncrement: T.func,
   handleNav: T.func.isRequired,
   handleUpvote: T.func.isRequired,
 };

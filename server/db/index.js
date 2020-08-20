@@ -46,6 +46,7 @@ const {
   getOneUser,
   getOneUserSignUp,
   getUsers,
+  getUserWatchList,
   getWatchList,
   searchUsers,
   transformUser,
@@ -57,6 +58,7 @@ const {
   dropAllTables,
   printTables,
 } = require('./tables');
+const { toggleWatching } = require('./watching');
 const { createWithdrawal, transformUserBalance } = require('./withdrawal');
 
 module.exports = {
@@ -95,6 +97,7 @@ module.exports = {
   getPullRequests,
   getUserPullRequests,
   getUsers,
+  getUserWatchList,
   getWatchList,
   printTables,
   searchIssues,
@@ -104,6 +107,7 @@ module.exports = {
   submitAccountPaymentIssue,
   submitAccountPaymentOrganization,
   submitAccountPaymentUser,
+  toggleWatching,
   transformIssue,
   transformOrganization,
   transformUser,

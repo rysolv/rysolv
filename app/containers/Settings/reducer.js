@@ -19,6 +19,7 @@ import {
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
   REMOVE_ISSUE,
+  REMOVE_WATCHING,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
@@ -162,6 +163,10 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case REMOVE_ISSUE: {
+      draft.loading = true;
+      break;
+    }
+    case REMOVE_WATCHING: {
       draft.loading = true;
       break;
     }

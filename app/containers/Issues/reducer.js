@@ -13,6 +13,7 @@ import {
   ADD_COMMENT,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
+  ADD_WATCH,
   CHANGE_ISSUE_FILTER,
   CHANGE_ISSUE_SEARCH,
   CLEAR_ALERTS,
@@ -161,6 +162,10 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.addComment = false;
       break;
     }
+    case ADD_COMMENT: {
+      draft.loading.addComment = true;
+      break;
+    }
     case ADD_WATCH_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
@@ -168,20 +173,39 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case ADD_WATCH_SUCCESS: {
-      const { id, watching } = payload;
+      const { issueId, userArray } = payload;
       draft.issues.map((issue, index) => {
-        if (issue.id === id) {
-          draft.issues[index].watching = watching;
+        if (issue.id === issueId) {
+          draft.issues[index].watching = userArray;
         }
       });
-      if (draft.issueDetail) {
-        draft.issueDetail.watching = watching;
+      if (draft.issueDetail.id) {
+        draft.issueDetail.watching = userArray;
       }
       draft.loading.addWatch = false;
       break;
     }
-    case ADD_COMMENT: {
-      draft.loading.addComment = true;
+    case ADD_WATCH: {
+      const { issueId, userId } = payload;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          const userIdIndex = draft.issues[index].watching.indexOf(userId);
+          if (userIdIndex > -1) {
+            draft.issues[index].watching.splice(userIdIndex, 1);
+          } else {
+            draft.issues[index].watching.push(userId);
+          }
+        }
+      });
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.watching.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.watching.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.watching.push(userId);
+        }
+      }
+      draft.loading.addWatch = true;
       break;
     }
     case CHANGE_ISSUE_FILTER: {

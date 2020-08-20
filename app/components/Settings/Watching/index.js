@@ -22,7 +22,12 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const UserWatching = ({ handleNav, handleRemoveIssue, userId, watching }) => {
+const UserWatching = ({
+  handleNav,
+  handleRemoveWatching,
+  userId,
+  watching,
+}) => {
   const [selectedValue, setSelectedValue] = useState('Newest');
   const [searchValue, setSearchValue] = useState('');
   const filterWatching = () => {
@@ -83,7 +88,7 @@ const UserWatching = ({ handleNav, handleRemoveIssue, userId, watching }) => {
         }
         propsToPassDown={{
           handleNav,
-          handleRemoveIssue,
+          handleRemoveWatching,
           list: filteredWatching,
           type: 'watching',
           userId,
@@ -96,7 +101,7 @@ const UserWatching = ({ handleNav, handleRemoveIssue, userId, watching }) => {
 
 UserWatching.propTypes = {
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
+  handleRemoveWatching: T.func.isRequired,
   userId: T.string.isRequired,
   watching: T.array.isRequired,
 };

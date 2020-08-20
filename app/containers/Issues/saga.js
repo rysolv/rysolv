@@ -6,6 +6,7 @@ import {
   fetchActiveUser,
   updateActiveUser,
   upvoteUserTemp,
+  userWatchingTemp,
 } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
@@ -40,6 +41,7 @@ import {
 import {
   ADD_ATTEMPT,
   ADD_COMMENT,
+  ADD_WATCH,
   CLOSE_ISSUE,
   DELETE_PULL_REQUEST,
   EDIT_ISSUE,
@@ -76,11 +78,9 @@ export function* addAttemptSaga({ payload }) {
       data: { updateIssueArray },
     } = yield call(post, '/graphql', graphql);
     yield put(addAttemptSuccess(updateIssueArray));
-    yield put(addWatchSuccess(updateIssueArray));
     yield put(fetchActiveUser({ userId }));
   } catch (error) {
     yield put(addAttemptFailure({ error }));
-    yield put(addWatchFailure({ error }));
   }
 }
 
@@ -110,6 +110,48 @@ export function* addCommentSaga({ payload }) {
     yield put(addCommentSuccess(createComment));
   } catch (error) {
     yield put(addCommentFailure({ error }));
+  }
+}
+
+export function* addWatchSaga({ payload }) {
+  const { issueId, userId } = payload;
+  yield put(userWatchingTemp({ issueId }));
+
+  const query = `
+  mutation {
+    toggleWatching(issueId: "${issueId}", userId: "${userId}") {
+      __typename
+      ... on WatchListArray {
+        issueArray {
+          fundedAmount
+          id
+          name
+        },
+        userArray
+      }
+      ... on Error {
+        message
+      }
+    }
+  }`;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: {
+        toggleWatching: { __typename, issueArray, message, userArray },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') {
+      throw new Error(message);
+    }
+
+    yield put(addWatchSuccess({ issueId, userArray }));
+    yield put(updateActiveUser({ watching: issueArray }));
+  } catch (error) {
+    yield put(addWatchFailure({ error }));
   }
 }
 
@@ -538,6 +580,7 @@ export function* upvoteIssuesSaga({ payload }) {
 export default function* watcherSaga() {
   yield takeLatest(ADD_ATTEMPT, addAttemptSaga);
   yield takeLatest(ADD_COMMENT, addCommentSaga);
+  yield takeLatest(ADD_WATCH, addWatchSaga);
   yield takeLatest(CLOSE_ISSUE, closeIssueSaga);
   yield takeLatest(DELETE_PULL_REQUEST, deletePullRequestSaga);
   yield takeLatest(EDIT_ISSUE, editIssueSaga);

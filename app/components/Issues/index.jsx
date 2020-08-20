@@ -7,13 +7,13 @@ import { StyledErrorSuccessBanner } from './styledComponents';
 
 const Issues = ({
   activeUser,
+  addWatching,
   alerts: { error, success },
   clearAlerts,
   data,
   deviceView,
   dispatchFetchWatchList,
   dispatchOpenModal,
-  handleIncrement,
   handleNav,
   handleUpvote,
   isSignedIn,
@@ -21,11 +21,11 @@ const Issues = ({
   const hasData = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
     activeUser,
+    addWatching,
     data,
     deviceView,
     dispatchFetchWatchList,
     dispatchOpenModal,
-    handleIncrement,
     handleNav,
     handleUpvote,
     isSignedIn,
@@ -49,6 +49,7 @@ const Issues = ({
 
 Issues.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
@@ -56,16 +57,11 @@ Issues.propTypes = {
   clearAlerts: T.func,
   data: T.array,
   deviceView: T.string.isRequired,
-  disabled: T.bool.isRequired,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
-  handleIncrement: T.func,
-  handleInputChange: T.func,
   handleNav: T.func,
-  handleSearchIssues: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
-  search: T.object,
 };
 
 export default Issues;

@@ -12,6 +12,7 @@ import {
 
 const IssueTopBar = ({
   activeUser,
+  addWatching,
   data,
   dispatchFetchPullRequestList,
   dispatchFetchWatchList,
@@ -45,6 +46,7 @@ const IssueTopBar = ({
         <IssueBarBottomRow>
           <StyledIssueButtonBar
             activeUser={activeUser}
+            addWatching={addWatching}
             data={data}
             dispatchFetchPullRequestList={dispatchFetchPullRequestList}
             dispatchFetchWatchList={dispatchFetchWatchList}
@@ -61,6 +63,7 @@ const IssueTopBar = ({
 
 IssueTopBar.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   data: T.object,
   dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,

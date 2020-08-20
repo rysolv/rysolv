@@ -41,7 +41,6 @@ const newIssueObject = (issueId, issueInput) => ({
   rep: issueInput.rep || 25, // rep
   repo: issueInput.repo, // repo
   type: issueInput.type || 'bug', // bug
-  watching: issueInput.watching || [], // watching
 });
 
 const newOrganizationObject = async organizationInput => {
@@ -288,19 +287,18 @@ module.exports = {
     const { id, issueInput } = args;
     try {
       const data = {
-        modified_date: new Date(), // update modified date
-        organization_id: issueInput.organizationId,
-        name: issueInput.name,
-        body: issueInput.body,
-        repo: issueInput.repo,
-        language: issueInput.language,
-        comments: issueInput.comments,
         attempting: issueInput.attempting,
+        body: issueInput.body,
+        comments: issueInput.comments,
         contributor_id: issueInput.contributorId,
-        rep: issueInput.rep,
-        watching: issueInput.watching,
         funded_amount: issueInput.fundedAmount,
+        language: issueInput.language,
+        modified_date: new Date(), // update modified date
+        name: issueInput.name,
         open: issueInput.open,
+        organization_id: issueInput.organizationId,
+        rep: issueInput.rep,
+        repo: issueInput.repo,
       };
       const result = await transformIssue(id, data);
 
