@@ -138,7 +138,7 @@ export const SplashBackground = styled.div`
     background-color: #37474f;
     clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
     content: '';
-    height: 60rem;
+    height: 70rem;
     left: 0;
     padding: 2rem;
     position: absolute;
