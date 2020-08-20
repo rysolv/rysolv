@@ -2,18 +2,20 @@ import styled from 'styled-components';
 import Pagination from '@material-ui/lab/Pagination';
 
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-export const PaginationWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  position: relative;
-`;
+const { mobile } = mediaQueriesByDevice;
 
 export const Results = styled.div`
   color: ${textColor};
   font-size: ${defaultFontSize};
-  position: absolute;
-  right: 0;
+  padding: 0 1rem 1rem;
+  text-align: end;
+  width: 100%;
+
+  ${mobile} {
+    padding: 0 0 1rem;
+  }
 `;
 
 export const StyledPagination = styled(Pagination)`

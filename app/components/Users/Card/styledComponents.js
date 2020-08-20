@@ -131,3 +131,15 @@ export const TextContainer = styled.div`
     width: 70%;
   }
 `;
+
+export const Users = styled.div`
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  padding: 0 1rem 1rem;
+  text-align: end;
+  width: 100%;
+
+  ${mobile} {
+    padding: 0 0 1rem;
+  }
+`;

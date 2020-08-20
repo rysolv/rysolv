@@ -1,11 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
-import {
-  PaginationWrapper,
-  Results,
-  StyledPagination,
-} from './styledComponents';
+import { Results, StyledPagination } from './styledComponents';
 
 const Pagination = ({ Component, propsToPassDown }) => {
   const { data, ...restProps } = propsToPassDown;
@@ -24,17 +20,15 @@ const Pagination = ({ Component, propsToPassDown }) => {
   );
   return (
     <Fragment>
+      <Results>
+        {length} {length === 1 ? 'Result' : 'Results'}
+      </Results>
       <Component data={slice} {...restProps} />
-      <PaginationWrapper>
-        <StyledPagination
-          count={count}
-          shape="rounded"
-          onChange={(e, value) => setCurrentPage(value - 1)}
-        />
-        <Results>
-          {length} {length === 1 ? 'Result' : 'Results'}
-        </Results>
-      </PaginationWrapper>
+      <StyledPagination
+        count={count}
+        shape="rounded"
+        onChange={(e, value) => setCurrentPage(value - 1)}
+      />
     </Fragment>
   );
 };
