@@ -33,7 +33,7 @@ const MobileHeader = ({
       <StyledAppBar
         color="default"
         isLandingPage={isLandingPage}
-        position="relative"
+        position="fixed"
       >
         <Container>
           <TopBarWrapper isSignedIn={isSignedIn}>
