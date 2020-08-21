@@ -3,7 +3,6 @@ import React from 'react';
 import T from 'prop-types';
 
 import { Star, ProfileImage } from 'components/base_ui';
-import { navHelper } from 'utils/globalHelpers';
 
 import {
   ActiveContainer,
@@ -14,7 +13,7 @@ import {
   IssuesWrapper,
   MemberInfoContainer,
   MemberWrapper,
-  NameWrapper,
+  NameLink,
   NumberContainer,
   OverviewWrapper,
   StyledListSquare,
@@ -63,14 +62,7 @@ const MobileUserCard = ({ data, deviceView, handleNav }) => {
               <TextContainer>
                 <StyledSettingWrapper>
                   <MemberWrapper>
-                    <NameWrapper
-                      onClick={e =>
-                        navHelper(e, handleNav, `/users/detail/${id}`)
-                      }
-                      href={`/users/detail/${id}`}
-                    >
-                      {username}
-                    </NameWrapper>
+                    <NameLink to={`/users/detail/${id}`}>{username}</NameLink>
                     <MemberInfoContainer>
                       Member since {createdDate}
                     </MemberInfoContainer>

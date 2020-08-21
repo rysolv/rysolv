@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import {
   borderColor,
@@ -56,13 +57,12 @@ export const IssuesWrapper = styled.div`
   font-weight: 500;
 `;
 
-export const NameWrapper = styled.div`
+export const NameLink = styled(Link)`
   color: ${headerColor};
   font-size: ${subheaderFontSize};
   margin: 1rem;
 
   &:hover {
-    cursor: pointer;
     color: ${hoverLinkColor};
   }
 `;

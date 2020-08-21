@@ -3,7 +3,6 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import Organizations from 'components/Organizations';
@@ -31,7 +30,6 @@ const OrganizationsOverview = ({
   error,
   handleClearAlerts,
   dispatchFetchOrganizations,
-  handleNav,
   handleSearchOrganizations,
   loading,
   params: { searchValue },
@@ -54,7 +52,6 @@ const OrganizationsOverview = ({
       propsToPassDown={{
         alerts,
         handleClearAlerts,
-        handleNav,
       }}
     />
   );
@@ -68,7 +65,6 @@ OrganizationsOverview.propTypes = {
   dispatchFetchOrganizations: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
-  handleNav: T.func,
   handleSearchOrganizations: T.func,
   loading: T.bool,
   organizations: T.array,
@@ -94,10 +90,6 @@ function mapDispatchToProps(dispatch) {
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleSearchOrganizations: payload =>
       dispatch(searchOrganizations(payload)),
-    /**
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 

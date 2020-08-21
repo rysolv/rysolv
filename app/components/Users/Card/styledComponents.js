@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import {
   defaultFontSize,
@@ -55,12 +56,11 @@ export const MemberWrapper = styled.div`
   align-self: center;
 `;
 
-export const NameWrapper = styled.a`
+export const NameLink = styled(Link)`
   font-size: ${subheaderFontSize};
 
   &:hover {
     color: ${hoverLinkColor};
-    cursor: pointer;
   }
 `;
 

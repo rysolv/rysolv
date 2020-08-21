@@ -14,7 +14,7 @@ import {
   Issues,
   IssuesIcon,
   IssuesWrapper,
-  NameWrapper,
+  NameLink,
   OrganizationCardItem,
   SettingsContainer,
   StatsWrapper,
@@ -27,17 +27,13 @@ import {
 
 const issueIcon = iconDictionary('issue');
 
-const OrganizationCard = ({ data, handleNav }) => (
+const OrganizationCard = ({ data }) => (
   <StyledOrganizationCard>
     {data.map(
       ({ description, id, issues, logo, modifiedDate, name, totalFunded }) => (
         <StyledListItem key={id}>
           <TitleContainer>
-            <NameWrapper
-              onClick={() => handleNav(`/organizations/detail/${id}`)}
-            >
-              {name}
-            </NameWrapper>
+            <NameLink to={`/organizations/detail/${id}`}>{name}</NameLink>
             <SettingsContainer>
               <DateWrapper>
                 Last post {moment(modifiedDate).format('M/D/YYYY')}
@@ -75,9 +71,6 @@ const OrganizationCard = ({ data, handleNav }) => (
   </StyledOrganizationCard>
 );
 
-OrganizationCard.propTypes = {
-  data: T.array.isRequired,
-  handleNav: T.func.isRequired,
-};
+OrganizationCard.propTypes = { data: T.array.isRequired };
 
 export default OrganizationCard;

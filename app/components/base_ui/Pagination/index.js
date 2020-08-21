@@ -12,6 +12,10 @@ const Pagination = ({ Component, propsToPassDown }) => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [data]);
+
   const { length } = data;
   const count = Math.ceil(length / perPage);
   const slice = data.slice(
