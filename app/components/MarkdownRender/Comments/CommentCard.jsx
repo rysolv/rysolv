@@ -3,7 +3,7 @@ import T from 'prop-types';
 import marked from 'marked';
 import moment from 'moment';
 
-import { LinkWrapper } from 'components/base_ui';
+import { ImageLinkWrapper } from 'components/base_ui';
 import { navHelper } from 'utils/globalHelpers';
 
 import {
@@ -19,26 +19,20 @@ const CommentCard = ({
   body,
   date,
   handleNav,
-  userProfile: { alt, detailRoute, profilePic, username },
+  userProfile: { alt, image, route, username },
 }) => {
   const html = marked(body);
   return (
     <FlexContainer>
       <ProfileImageContainer>
-        <LinkWrapper
-          alt={alt}
-          detailRoute={detailRoute}
-          profilePic={profilePic}
-          size="4rem"
-          type="image"
-        />
+        <ImageLinkWrapper alt={alt} image={image} route={route} />
       </ProfileImageContainer>
       <CommentContainer>
         <CommentHeader>
           Posted by{' '}
           <UsernameLink
-            href={detailRoute}
-            onClick={e => navHelper(e, handleNav, detailRoute)}
+            href={route}
+            onClick={e => navHelper(e, handleNav, route)}
           >
             {username}
           </UsernameLink>{' '}

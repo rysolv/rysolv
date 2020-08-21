@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { LinkWrapper } from 'components/base_ui';
+import { ImageLinkWrapper } from 'components/base_ui';
 
 import {
   ContributorContent,
@@ -19,12 +19,11 @@ const OrganizationContributorsTab = ({ contributors, handleNav }) => (
         <ContributorListItem key={username}>
           <ContributorContent>
             <ContributorImageWrapper>
-              <LinkWrapper
+              <ImageLinkWrapper
                 alt={username}
-                detailRoute={`/users/detail/${id}`}
-                profilePic={profilePic}
+                image={profilePic}
+                route={`/users/detail/${id}`}
                 size="4.8rem"
-                type="image"
               />
             </ContributorImageWrapper>
             <ContributorDetails>

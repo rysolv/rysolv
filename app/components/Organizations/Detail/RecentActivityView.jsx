@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import moment from 'moment';
 import T from 'prop-types';
 
-import { ConditionalRender, LinkWrapper } from 'components/base_ui';
+import { ConditionalRender, ImageLinkWrapper } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
@@ -38,12 +38,10 @@ export class RecentActivityView extends React.PureComponent {
             <ActivityWrapper key={activityId}>
               <div style={{ display: 'flex' }}>
                 <ProfileImageWrapper>
-                  <LinkWrapper
+                  <ImageLinkWrapper
                     alt={username}
-                    detailRoute={`/users/detail/${userId}`}
-                    profilePic={profilePic}
-                    size="4rem"
-                    type="image"
+                    image={profilePic}
+                    route={`/users/detail/${userId}`}
                   />
                 </ProfileImageWrapper>
                 <FundContent>

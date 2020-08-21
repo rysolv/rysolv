@@ -32,7 +32,7 @@ const IssueDetailBody = ({
   repo,
   setBodyChange,
   setLanguageChange,
-  userProfile: { detailRoute, username },
+  userProfile: { route, username },
 }) => {
   const EditIssueBodyComponent = (
     <StyledMarkdown edit body={bodyChange} handleInput={setBodyChange} />
@@ -63,8 +63,8 @@ const IssueDetailBody = ({
         <div>
           Opened by{' '}
           <UsernameLink
-            onClick={e => navHelper(e, handleNav, detailRoute)}
-            href={detailRoute}
+            onClick={e => navHelper(e, handleNav, route)}
+            href={route}
           >
             {username}
           </UsernameLink>{' '}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
 
-import { LinkWrapper } from 'components/base_ui';
+import { ImageLinkWrapper } from 'components/base_ui';
 import Markdown from 'components/Markdown';
 
 import {
@@ -36,12 +36,10 @@ const NewComment = ({ activeUser, handleComment, issueId }) => {
   return (
     <FlexContainer>
       <ProfileImageContainer addMargin>
-        <LinkWrapper
+        <ImageLinkWrapper
           alt={username}
-          detailRoute={`/users/detail/${id}`}
-          profilePic={profilePic}
-          size="4rem"
-          type="image"
+          image={profilePic}
+          route={`/users/detail/${id}`}
         />
       </ProfileImageContainer>
       <NewCommentContainer onKeyDown={e => handleKeydown(e)}>

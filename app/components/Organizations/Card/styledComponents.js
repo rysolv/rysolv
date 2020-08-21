@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { ImageLinkWrapper } from 'components/base_ui';
 import {
   borderColor,
   defaultFontSize,
@@ -83,10 +84,8 @@ export const StatsWrapper = styled.div`
   padding: 1rem 0;
 `;
 
-export const StyledImage = styled.img`
-  height: 5rem;
+export const StyledImageLinkWrapper = styled(ImageLinkWrapper)`
   margin: 1rem;
-  width: 5rem;
 `;
 
 export const StyledListItem = styled.li`

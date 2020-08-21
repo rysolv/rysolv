@@ -2,7 +2,7 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { LinkWrapper, Star } from 'components/base_ui';
+import { ImageLinkWrapper, Star } from 'components/base_ui';
 
 import {
   ActiveContainer,
@@ -57,12 +57,11 @@ const UserCard = ({ data, deviceView }) => {
                 </StyledSettingWrapper>
                 <ContentWrapper>
                   <ImageContainer>
-                    <LinkWrapper
+                    <ImageLinkWrapper
                       alt="Profile Image"
-                      detailRoute={`/users/detail/${id}`}
-                      profilePic={profilePic}
+                      image={profilePic}
+                      route={`/users/detail/${id}`}
                       size={isMobile ? '4.75rem' : '7.5rem'}
-                      type="image"
                     />
                     <IconWrapper>
                       <div>

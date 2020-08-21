@@ -8,7 +8,7 @@ export { default as BaseSlider } from './Slider';
 export { default as ConditionalRender } from './ConditionalRender';
 export { default as ErrorSuccessBanner } from './Banner';
 export { default as HeaderSearchBar } from './HeaderSearchBar';
-export { default as LinkWrapper } from './LinkWrapper';
+export { default as ImageLinkWrapper } from './ImageLinkWrapper';
 export { default as ModalDialog } from './ModalDialog';
 export { default as Pagination } from './Pagination';
 export { default as TooltipIcon } from './TooltipIcon';

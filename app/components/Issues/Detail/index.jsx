@@ -46,7 +46,6 @@ const IssueDetail = ({
     language,
     name,
     open,
-    profilePic,
     rep,
     repo,
     userId,
@@ -136,10 +135,7 @@ const IssueDetail = ({
   );
 
   const primaryUser = {
-    alt: username,
-    detailRoute: `/users/detail/${userId}`,
-    profilePic,
-    small: true,
+    route: `/users/detail/${userId}`,
     username,
   };
 
@@ -147,9 +143,8 @@ const IssueDetail = ({
     comments.map(comment => {
       const user = {
         alt: comment.username,
-        detailRoute: `/users/detail/${comment.userId}`,
-        profilePic: comment.profilePic,
-        size: '4rem',
+        image: comment.profilePic,
+        route: `/users/detail/${comment.userId}`,
         username: comment.username,
       };
       return (

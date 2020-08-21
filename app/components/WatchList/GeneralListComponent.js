@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { LinkWrapper } from 'components/base_ui';
+import { ImageLinkWrapper } from 'components/base_ui';
 
 import {
   ListContainer,
@@ -15,12 +15,11 @@ const GeneralListComponent = ({ handleRedirect, route, tableData }) => (
     {tableData.map(({ id, username, profilePic }) => (
       <ListItemWrapper key={`list-item-${id}`}>
         <ListDetail>
-          <LinkWrapper
+          <ImageLinkWrapper
             alt={username}
-            detailRoute={`${route}/${id}`}
-            profilePic={profilePic}
+            image={profilePic}
+            route={`${route}/${id}`}
             size="3.5rem"
-            type="image"
           />
           <Username
             href={`${route}/${id}`}
