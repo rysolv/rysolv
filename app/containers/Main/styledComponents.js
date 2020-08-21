@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { tablet } = mediaQueriesByDevice;
+const { mobile, tablet } = mediaQueriesByDevice;
 
 export const AppBodyWrapper = styled.div`
   padding-bottom: 16rem;
@@ -19,5 +19,9 @@ export const RoutesWrapper = styled.section`
 
   ${tablet} {
     padding: 0 1rem 3.6rem 1rem;
+  }
+
+  ${mobile} {
+    padding-top: 10rem;
   }
 `;
