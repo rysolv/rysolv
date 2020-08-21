@@ -2,7 +2,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { Star, ProfileImage } from 'components/base_ui';
+import { LinkWrapper, Star } from 'components/base_ui';
 
 import {
   ActiveContainer,
@@ -22,7 +22,7 @@ import {
   TextContainer,
 } from './styledComponents';
 
-const MobileUserCard = ({ data, deviceView, handleNav }) => {
+const MobileUserCard = ({ data, deviceView }) => {
   const isMobile = deviceView === 'mobile';
 
   return (
@@ -44,12 +44,12 @@ const MobileUserCard = ({ data, deviceView, handleNav }) => {
             <StyledSquare>
               <ContentWrapper>
                 <ImageContainer>
-                  <ProfileImage
+                  <LinkWrapper
                     alt="Profile Image"
                     detailRoute={`/users/detail/${id}`}
-                    handleNav={handleNav}
                     profilePic={profilePic}
                     size={isMobile ? '4.75rem' : '7.5rem'}
+                    type="image"
                   />
                   <IconWrapper>
                     <div>
@@ -88,7 +88,6 @@ const MobileUserCard = ({ data, deviceView, handleNav }) => {
 MobileUserCard.propTypes = {
   data: T.array.isRequired,
   deviceView: T.string.isRequired,
-  handleNav: T.func.isRequired,
 };
 
 export default MobileUserCard;

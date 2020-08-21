@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import moment from 'moment';
 import T from 'prop-types';
 
-import { ConditionalRender, ProfileImage } from 'components/base_ui';
+import { ConditionalRender, LinkWrapper } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
@@ -22,7 +22,7 @@ import {
 
 export class RecentActivityView extends React.PureComponent {
   render() {
-    const { activity, handleNav } = this.props;
+    const { activity } = this.props;
     const ActivityComponent = (
       <ActivityContainer>
         {activity.map(
@@ -38,12 +38,12 @@ export class RecentActivityView extends React.PureComponent {
             <ActivityWrapper key={activityId}>
               <div style={{ display: 'flex' }}>
                 <ProfileImageWrapper>
-                  <ProfileImage
+                  <LinkWrapper
                     alt={username}
                     detailRoute={`/users/detail/${userId}`}
-                    handleNav={handleNav}
                     profilePic={profilePic}
                     size="4rem"
+                    type="image"
                   />
                 </ProfileImageWrapper>
                 <FundContent>
@@ -85,9 +85,6 @@ export class RecentActivityView extends React.PureComponent {
   }
 }
 
-RecentActivityView.propTypes = {
-  activity: T.array,
-  handleNav: T.func.isRequired,
-};
+RecentActivityView.propTypes = { activity: T.array };
 
 export default RecentActivityView;

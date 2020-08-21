@@ -281,7 +281,6 @@ const IssueDetail = ({
                       <NewComment
                         activeUser={activeUser}
                         handleComment={handleComment}
-                        handleNav={handleNav}
                         issueId={issueId}
                       />
                     </CommentWrapper>

@@ -3,7 +3,7 @@ import T from 'prop-types';
 import marked from 'marked';
 import moment from 'moment';
 
-import { ProfileImage } from 'components/base_ui';
+import { LinkWrapper } from 'components/base_ui';
 import { navHelper } from 'utils/globalHelpers';
 
 import {
@@ -25,12 +25,12 @@ const CommentCard = ({
   return (
     <FlexContainer>
       <ProfileImageContainer>
-        <ProfileImage
+        <LinkWrapper
           alt={alt}
           detailRoute={detailRoute}
-          handleNav={handleNav}
           profilePic={profilePic}
           size="4rem"
+          type="image"
         />
       </ProfileImageContainer>
       <CommentContainer>

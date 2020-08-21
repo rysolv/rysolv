@@ -261,7 +261,7 @@ const OrganizationDetailView = ({
             setLanguagesChange={setLanguagesChange}
           />
           <Divider />
-          <RecentActivityView activity={activity} handleNav={handleNav} />
+          <RecentActivityView activity={activity} />
           <Divider shouldHide={!isMobileOrTable} />
         </SidebarTabs>
       </TabsContainer>
