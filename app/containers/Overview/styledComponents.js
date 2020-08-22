@@ -52,6 +52,6 @@ export const OverviewHeader = styled.div`
   width: 100%;
 
   ${mobile} {
-    margin: 2rem 0 2rem -1rem;
+    margin: 2rem 0;
   }
 `;
