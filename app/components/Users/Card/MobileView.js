@@ -16,7 +16,7 @@ import {
   MemberWrapper,
   NameWrapper,
   NumberContainer,
-  OverviewWrapper,
+  RowSection,
   StyledListSquare,
   StyledSettingWrapper,
   StyledSquare,
@@ -27,7 +27,7 @@ const MobileUserCard = ({ data, deviceView, handleNav }) => {
   const isMobile = deviceView === 'mobile';
 
   return (
-    <OverviewWrapper>
+    <RowSection>
       {data.map(
         (
           {
@@ -89,7 +89,7 @@ const MobileUserCard = ({ data, deviceView, handleNav }) => {
           </StyledListSquare>
         ),
       )}
-    </OverviewWrapper>
+    </RowSection>
   );
 };
 

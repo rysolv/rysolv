@@ -70,7 +70,13 @@ export const NumberContainer = styled.div`
   font-weight: 500;
 `;
 
-export const OverviewWrapper = styled.div`
+export const OuterWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const RowSection = styled.div`
   display: flex;
   flex-direction: row;
   flex-flow: wrap;
@@ -83,6 +89,18 @@ export const OverviewWrapper = styled.div`
 
   ${mobileS} {
     margin-left: 0;
+  }
+`;
+
+export const RowSectionWrapper = styled.div`
+  @media (max-width: 769px) {
+    width: ${({ hasLessItems }) => (hasLessItems ? '19.5rem' : '38rem')};
+  }
+  @media (max-width: 584px) {
+    width: ${({ hasLessItems }) => (hasLessItems ? '19rem' : '36rem')};
+  }
+  @media (max-width: 408px) {
+    width: 19rem;
   }
 `;
 
