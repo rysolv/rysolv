@@ -15,6 +15,7 @@ import {
   WatchButton,
 } from 'components/base_ui';
 import UpvotePanel from 'components/Upvote';
+import { navHelper } from 'utils/globalHelpers';
 import IconDictionary from 'utils/iconDictionary';
 
 import {
@@ -28,7 +29,6 @@ import {
   NameWrapper,
   OrganizationNameWrapper,
   StyledIconButton,
-  StyledIconLink,
   StyledIssueCard,
   StyledIssueContent,
   StyledIssueFooter,
@@ -46,6 +46,7 @@ const IssueCard = ({
   deviceView,
   dispatchFetchWatchList,
   dispatchOpenModal,
+  handleNav,
   handleUpvote,
   isSignedIn,
 }) => (
@@ -130,21 +131,22 @@ const IssueCard = ({
         const MobileButtonBar = (
           <Fragment>
             {open ? (
-              <StyledIconLink to={`/issues/detail/${id}`}>
-                <CommentIcon />
-                <MobileIconDescription>{comments.length}</MobileIconDescription>
-              </StyledIconLink>
+              <StyledIconButton
+                icon={
+                  <Fragment>
+                    <CommentIcon />{' '}
+                    <MobileIconDescription>
+                      {comments.length}
+                    </MobileIconDescription>
+                  </Fragment>
+                }
+                label="Comments"
+                onClick={e => navHelper(e, handleNav, `/issues/detail/${id}`)}
+              />
             ) : null}
 
             {open ? (
               <StyledIconButton
-                label="Attempting"
-                onClick={() =>
-                  dispatchFetchWatchList({
-                    idArray: attempting,
-                    modalState: 'issueAttemptList',
-                  })
-                }
                 icon={
                   <Fragment>
                     {AttemptingIcon}{' '}
@@ -153,11 +155,20 @@ const IssueCard = ({
                     </MobileIconDescription>
                   </Fragment>
                 }
+                label="Attempting"
+                onClick={() =>
+                  dispatchFetchWatchList({
+                    idArray: attempting,
+                    modalState: 'issueAttemptList',
+                  })
+                }
               />
             ) : null}
 
             {open ? (
               <StyledIconButton
+                icon={<MonocleIcon />}
+                isWatching={userWatching}
                 label={userWatching ? 'Watching' : 'Watch'}
                 onClick={() => {
                   if (!isSignedIn) {
@@ -165,8 +176,6 @@ const IssueCard = ({
                   }
                   return addWatching({ issueId: id, userId });
                 }}
-                icon={<MonocleIcon />}
-                isWatching={userWatching}
                 shouldBold
               />
             ) : null}
@@ -255,6 +264,7 @@ IssueCard.propTypes = {
   deviceView: T.string.isRequired,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
+  handleNav: T.func.isRequired,
   handleUpvote: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
 };

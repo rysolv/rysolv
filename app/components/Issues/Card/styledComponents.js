@@ -51,7 +51,6 @@ export const IssueLanguageContainer = styled.div`
 `;
 
 export const MobileIconDescription = styled.div`
-  display: inline-block;
   padding-left: 0.25rem;
 `;
 
@@ -90,13 +89,6 @@ export const StyledIconButton = styled(
   stroke: ${({ shouldBold }) => (shouldBold ? 'currentColor' : 'none')};
 `;
 
-export const StyledIconLink = styled(Link)`
-  color: ${subTextColor};
-  display: inline-block;
-  font-weight: 700;
-  padding: 0.3rem 1rem 0 0;
-`;
-
 export const StyledIssueCard = styled.div`
   min-height: 50rem;
 `;
@@ -111,6 +103,7 @@ export const StyledIssueContent = styled.div`
 `;
 
 export const StyledIssueFooter = styled.div`
+  align-items: center;
   color: ${textColor};
   display: flex;
   font-size: ${detailFontSize};

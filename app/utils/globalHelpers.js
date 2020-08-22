@@ -47,3 +47,10 @@ export const handleZipChange = (event, newZip, setZipValue) => {
   const formattedZip = newZip.replace(/[^0-9]/g, '');
   setZipValue(formattedZip);
 };
+
+export const navHelper = (e, handleNav, route) => {
+  if (!e.ctrlKey) {
+    e.preventDefault();
+    handleNav(route);
+  }
+};

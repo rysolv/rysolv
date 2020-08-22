@@ -16,6 +16,7 @@ const Issues = ({
   dispatchFetchWatchList,
   dispatchOpenModal,
   handleClearAlerts,
+  handleNav,
   handleUpvote,
   isSignedIn,
 }) => {
@@ -27,6 +28,7 @@ const Issues = ({
     deviceView,
     dispatchFetchWatchList,
     dispatchOpenModal,
+    handleNav,
     handleUpvote,
     isSignedIn,
   };
@@ -59,6 +61,7 @@ Issues.propTypes = {
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
   handleClearAlerts: T.func,
+  handleNav: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
 };

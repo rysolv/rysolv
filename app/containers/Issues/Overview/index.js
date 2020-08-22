@@ -3,6 +3,7 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
@@ -39,6 +40,7 @@ const IssuesOverview = ({
   dispatchUpvote,
   error,
   handleClearAlerts,
+  handleNav,
   handleSearchIssues,
   isSignedIn,
   issues,
@@ -75,6 +77,7 @@ const IssuesOverview = ({
         dispatchFetchWatchList,
         dispatchOpenModal,
         handleClearAlerts,
+        handleNav,
         handleUpvote,
         isSignedIn,
       }}
@@ -96,6 +99,7 @@ IssuesOverview.propTypes = {
   dispatchUpvote: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
+  handleNav: T.func,
   handleSearchIssues: T.func,
   isSignedIn: T.bool,
   issues: T.array,
@@ -139,6 +143,10 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
+    /**
+     * Reducer : Router
+     */
+    handleNav: route => dispatch(push(route)),
   };
 }
 
