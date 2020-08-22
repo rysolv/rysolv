@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { PrimaryButton, SecondaryButton } from 'components/base_ui';
 import {
@@ -9,6 +10,7 @@ import {
   lightBlueColor,
   styledScrollbar,
   subheaderFontSize,
+  hoverLinkColor,
   textColor,
 } from 'defaultStyleHelper';
 
@@ -165,11 +167,11 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
   }
 `;
 
-export const UsernameLink = styled.a`
+export const UsernameLink = styled(Link)`
   display: inline;
   font-weight: bold;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
   }
 `;

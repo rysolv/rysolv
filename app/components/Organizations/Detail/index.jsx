@@ -215,11 +215,7 @@ const OrganizationDetailView = ({
 
   return (
     <DetailContainer>
-      <BackNav
-        label="Back to Organizations"
-        handleNav={handleNav}
-        path="/organizations"
-      />
+      <BackNav label="Back to Organizations" path="/organizations" />
       <ConditionalRender
         Component={
           <StyledErrorSuccessBanner

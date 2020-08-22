@@ -52,7 +52,7 @@ export class UserDetailView extends React.PureComponent {
     } = this.props;
     return (
       <DetailContainer>
-        <BackNav label="Back to Users" handleNav={handleNav} path="/users" />
+        <BackNav label="Back to Users" path="/users" />
         <DetailViewContainer>
           <UserCardWrapper>
             <UserImage src={profilePic} />

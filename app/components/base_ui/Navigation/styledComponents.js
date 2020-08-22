@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { defaultFontSize, textColor } from 'defaultStyleHelper';
 
-export const StyledBackNav = styled.a`
+export const StyledBackNav = styled(Link)`
   align-self: flex-start;
   color: grey;
   display: inline-flex;

@@ -53,11 +53,7 @@ export class OrganizationsAdd extends React.PureComponent {
     }
     return (
       <AddWrapper>
-        <BackNav
-          label="Back to Organizations"
-          handleNav={handleNav}
-          path="/organizations"
-        />
+        <BackNav label="Back to Organizations" path="/organizations" />
         <AddForm>
           <AsyncRender
             asyncData={{ organizationData }}

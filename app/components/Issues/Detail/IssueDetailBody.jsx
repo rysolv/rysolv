@@ -4,7 +4,6 @@ import moment from 'moment';
 
 import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
 import { BodyCard } from 'components/MarkdownRender';
-import { navHelper } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
@@ -26,7 +25,6 @@ const IssueDetailBody = ({
   bodyChange,
   date,
   displayEditView,
-  handleNav,
   language,
   languageChange,
   repo,
@@ -61,14 +59,7 @@ const IssueDetailBody = ({
     <Fragment>
       <PostingInfoWrapper>
         <div>
-          Opened by{' '}
-          <UsernameLink
-            onClick={e => navHelper(e, handleNav, route)}
-            href={route}
-          >
-            {username}
-          </UsernameLink>{' '}
-          on{' '}
+          Opened by <UsernameLink to={route}>{username}</UsernameLink> on{' '}
           {moment(date)
             .utc()
             .format('M/D/YYYY')}
@@ -102,7 +93,6 @@ IssueDetailBody.propTypes = {
   bodyChange: T.string,
   date: T.string,
   displayEditView: T.bool,
-  handleNav: T.func,
   language: T.array,
   languageChange: T.array,
   repo: T.string,
