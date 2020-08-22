@@ -36,17 +36,14 @@ const WatchList = ({
   return (
     <WatchListContainer>
       <IconWrapper>
-        <IconButton
-          icon={closeIcon}
-          label="Close"
-          onClick={() => handleClose()}
-        />
+        <IconButton icon={closeIcon} label="Close" onClick={handleClose} />
       </IconWrapper>
       <StyledTitle>{title}</StyledTitle>
       <ConditionalRender
         Component={ListComponentToRender}
         FallbackComponent={<EmptyList type={type} />}
         propsToPassDown={{
+          handleClose,
           handleDeletePullRequest,
           handleRedirect,
           isSignedIn,

@@ -8,14 +8,15 @@ const ImageLinkWrapper = ({
   alt,
   image,
   isSquare,
+  onClick,
   route,
   size,
   ...restProps
 }) => (
-  <Link to={route}>
+  <Link onClick={onClick} to={route}>
     <StyledImage
       alt={alt}
-      isSquare={isSquare}
+      isSquare={isSquare || false}
       size={size}
       src={image}
       {...restProps}
@@ -23,12 +24,11 @@ const ImageLinkWrapper = ({
   </Link>
 );
 
-ImageLinkWrapper.defaultProps = { isSquare: false };
-
 ImageLinkWrapper.propTypes = {
   alt: T.string.isRequired,
   image: T.string.isRequired,
   isSquare: T.bool,
+  onClick: T.func,
   route: T.string.isRequired,
   size: T.string,
 };
