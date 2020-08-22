@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
 import { BaseTextInput, Verified } from 'components/base_ui';
-import { defaultFontSize, detailFontSize, textColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  detailFontSize,
+  hoverLinkColor,
+  textColor,
+} from 'defaultStyleHelper';
 
 export const IssueDetailContainer = styled.div`
   margin-bottom: 2rem;
@@ -22,7 +27,7 @@ export const OrganizationNameContainer = styled.div`
   font-weight: bold;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
   }
 `;
 

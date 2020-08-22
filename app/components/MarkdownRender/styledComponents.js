@@ -7,10 +7,10 @@ import {
   codeGrey,
   commentHeaderColor,
   defaultFontSize,
+  hoverLinkColor,
   lightBlueColor,
   styledScrollbar,
   subheaderFontSize,
-  hoverLinkColor,
   textColor,
 } from 'defaultStyleHelper';
 

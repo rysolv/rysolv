@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import AsyncRender from 'components/AsyncRender';
-import { fetchWatchList, openModalState } from 'containers/Main/actions';
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
 import IssueCard from 'components/Issues';
 import { makeSelectAuth } from 'containers/Auth/selectors';
+import { fetchWatchList, openModalState } from 'containers/Main/actions';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
 
 import {
   addWatch,

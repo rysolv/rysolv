@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
+import T from 'prop-types';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import T from 'prop-types';
 
 import {
   CommentIcon,

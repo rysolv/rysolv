@@ -12,6 +12,5 @@ export const StyledBackNav = styled(Link)`
 
   &:hover {
     color: ${textColor};
-    cursor: pointer;
   }
 `;

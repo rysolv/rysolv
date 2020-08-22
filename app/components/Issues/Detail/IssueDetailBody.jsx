@@ -59,7 +59,7 @@ const IssueDetailBody = ({
     <Fragment>
       <PostingInfoWrapper>
         <div>
-          Opened by <UsernameLink to={route}>{username}</UsernameLink> on{' '}
+          Opened by <UsernameLink to={route}>{username}</UsernameLink> on&nbsp;
           {moment(date)
             .utc()
             .format('M/D/YYYY')}

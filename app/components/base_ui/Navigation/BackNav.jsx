@@ -1,5 +1,6 @@
 import React from 'react';
 import T from 'prop-types';
+
 import { BackIcon } from '../Icons';
 import { StyledBackNav } from './styledComponents';
 
@@ -10,8 +11,8 @@ const BackNav = ({ label, path }) => (
 );
 
 BackNav.propTypes = {
-  label: T.string,
-  path: T.string,
+  label: T.string.isRequired,
+  path: T.string.isRequired,
 };
 
 export default BackNav;

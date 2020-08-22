@@ -10,10 +10,10 @@ import UserTimelineView from './Timeline';
 import {
   DetailContainer,
   DetailViewContainer,
-  OneLinkWrapper,
   LinkIcon,
   LinksWrapper,
   Name,
+  OneLinkWrapper,
   Rep,
   StyledA,
   UserCardWrapper,
@@ -29,8 +29,8 @@ export class UserDetailView extends React.PureComponent {
   render() {
     const {
       data: {
-        activity,
         activePullRequests,
+        activity,
         completedPullRequests,
         createdDate,
         dollarsEarned,
