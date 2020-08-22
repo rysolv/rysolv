@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import T from 'prop-types';
 
@@ -14,7 +15,6 @@ import {
   WatchButton,
 } from 'components/base_ui';
 import UpvotePanel from 'components/Upvote';
-import { navHelper } from 'utils/globalHelpers';
 import IconDictionary from 'utils/iconDictionary';
 
 import {
@@ -24,10 +24,11 @@ import {
   IssueFooterIconWrapper,
   IssueLanguageContainer,
   MobileIconDescription,
-  Name,
+  NameLink,
   NameWrapper,
   OrganizationNameWrapper,
   StyledIconButton,
+  StyledIconLink,
   StyledIssueCard,
   StyledIssueContent,
   StyledIssueFooter,
@@ -45,7 +46,6 @@ const IssueCard = ({
   deviceView,
   dispatchFetchWatchList,
   dispatchOpenModal,
-  handleNav,
   handleUpvote,
   isSignedIn,
 }) => (
@@ -83,14 +83,14 @@ const IssueCard = ({
         const DesktopButtonBar = (
           <Fragment>
             {open ? (
-              <IssueCardItem
-                onClick={e => navHelper(e, handleNav, `/issues/detail/${id}`)}
-              >
+              <IssueCardItem>
                 <IssueCardIconWrapper>
                   <CommentIcon />
                 </IssueCardIconWrapper>
                 <IssueCardLabelWrapper>
-                  {comments.length} Comments
+                  <Link to={`/issues/detail/${id}`}>
+                    {comments.length} Comments
+                  </Link>
                 </IssueCardLabelWrapper>
               </IssueCardItem>
             ) : null}
@@ -130,18 +130,10 @@ const IssueCard = ({
         const MobileButtonBar = (
           <Fragment>
             {open ? (
-              <StyledIconButton
-                label="Comments"
-                onClick={e => navHelper(e, handleNav, `/issues/detail/${id}`)}
-                icon={
-                  <Fragment>
-                    <CommentIcon />{' '}
-                    <MobileIconDescription>
-                      {comments.length}
-                    </MobileIconDescription>
-                  </Fragment>
-                }
-              />
+              <StyledIconLink to={`/issues/detail/${id}`}>
+                <CommentIcon />
+                <MobileIconDescription>{comments.length}</MobileIconDescription>
+              </StyledIconLink>
             ) : null}
 
             {open ? (
@@ -195,17 +187,10 @@ const IssueCard = ({
               />
               <StyledIssueContent>
                 <StyledIssueHeader>
-                  <OrganizationNameWrapper
-                    href={`/organizations/detail/${organizationId}`}
-                    onClick={e =>
-                      navHelper(
-                        e,
-                        handleNav,
-                        `/organizations/detail/${organizationId}`,
-                      )
-                    }
-                  >
-                    {organizationName}
+                  <OrganizationNameWrapper>
+                    <Link to={`/organizations/detail/${organizationId}`}>
+                      {organizationName}
+                    </Link>
 
                     {organizationVerified ? (
                       <IconToolTip toolTipText="Verified Contributor">
@@ -221,14 +206,7 @@ const IssueCard = ({
                 </StyledIssueHeader>
                 <StyledIssueText>
                   <NameWrapper>
-                    <Name
-                      href={`/issues/detail/${id}`}
-                      onClick={e =>
-                        navHelper(e, handleNav, `/issues/detail/${id}`)
-                      }
-                    >
-                      {name}
-                    </Name>
+                    <NameLink to={`/issues/detail/${id}`}>{name}</NameLink>
                   </NameWrapper>
                   <IssueLanguageContainer>
                     {language.map(el => (
@@ -277,7 +255,6 @@ IssueCard.propTypes = {
   deviceView: T.string.isRequired,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
-  handleNav: T.func.isRequired,
   handleUpvote: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
 };

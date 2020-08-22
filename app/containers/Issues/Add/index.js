@@ -58,7 +58,7 @@ export class IssuesAdd extends React.PureComponent {
 
     return (
       <AddWrapper>
-        <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
+        <BackNav label="Back to Issues" path="/issues" />
         <AddForm>
           <AsyncRender
             asyncData={{ issueData, organization }}

@@ -31,7 +31,6 @@ const DepositFormComponent = ({
   dispatchPaypalPayment,
   handleClearAllAlerts,
   handleClearErrors,
-  handleNav,
   handleValidateInput,
   inputErrors: { depositValue: depositValueError },
   setDisplayBottom,
@@ -49,7 +48,7 @@ const DepositFormComponent = ({
       handleClearErrors();
       setDisplayBottom(false);
       setZipValue('');
-    }
+    };
   }, []);
 
   const handleChangeDollarValue = e => {
@@ -89,17 +88,18 @@ const DepositFormComponent = ({
   };
   return (
     <Fragment>
-      <BackNav
-        label="Back to Account"
-        handleNav={handleNav}
-        path="/settings/account"
-      />
+      <BackNav label="Back to Account" path="/settings/account" />
       <StyledH3>Enter your funding amount</StyledH3>
       <StyledPaymentTextInput
         adornmentComponent="$"
         error={!!depositValueError}
         helperText={depositValueError}
-        onBlur={() => handleValidateInput({ field: 'depositValue', values: { depositValue: dollarValue } })}
+        onBlur={() =>
+          handleValidateInput({
+            field: 'depositValue',
+            values: { depositValue: dollarValue },
+          })
+        }
         onChange={e => handleChangeDollarValue(e)}
         textAlign="end"
         type="text"
@@ -143,12 +143,14 @@ const DepositFormComponent = ({
             {...creditCardProps}
           />
         }
-        FallbackComponent={<PaypalPaymentComponent
-          dispatchPaypalPayment={dispatchPaypalPayment}
-          dollarValue={dollarValue}
-          handleValidateInput={handleValidateInput}
-          userId={userId}
-        />}
+        FallbackComponent={
+          <PaypalPaymentComponent
+            dispatchPaypalPayment={dispatchPaypalPayment}
+            dollarValue={dollarValue}
+            handleValidateInput={handleValidateInput}
+            userId={userId}
+          />
+        }
         shouldRender={paymentType === 'Credit card'}
       />
     </Fragment>
@@ -160,7 +162,6 @@ DepositFormComponent.propTypes = {
   dispatchPaypalPayment: T.func.isRequired,
   handleClearAllAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
-  handleNav: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   inputErrors: T.object.isRequired,
   setDisplayBottom: T.func.isRequired,

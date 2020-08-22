@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { IconButton } from 'components/base_ui';
@@ -50,13 +51,14 @@ export const IssueLanguageContainer = styled.div`
 `;
 
 export const MobileIconDescription = styled.div`
+  display: inline-block;
   padding-left: 0.25rem;
 `;
 
-export const Name = styled.a`
+export const NameLink = styled(Link)`
+  color: ${textColor};
   font-size: ${subheaderFontSize};
   overflow: hidden;
-  color: ${textColor};
 
   &:hover {
     cursor: pointer;
@@ -72,7 +74,7 @@ export const NameWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-export const OrganizationNameWrapper = styled.a`
+export const OrganizationNameWrapper = styled.div`
   align-items: center;
   color: ${textColor};
   display: flex;
@@ -86,6 +88,13 @@ export const StyledIconButton = styled(
   font-weight: 700;
   padding-right: 1rem;
   stroke: ${({ shouldBold }) => (shouldBold ? 'currentColor' : 'none')};
+`;
+
+export const StyledIconLink = styled(Link)`
+  color: ${subTextColor};
+  display: inline-block;
+  font-weight: 700;
+  padding: 0.3rem 1rem 0 0;
 `;
 
 export const StyledIssueCard = styled.div`

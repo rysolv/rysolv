@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 import { ErrorSuccessBanner } from 'components/base_ui';
 import IssueAccountManager from 'components/IssueAccountManager';
@@ -12,6 +13,7 @@ import {
   defaultFontSize,
   detailFontSize,
   fundingText,
+  hoverLinkColor,
   lightGreyColor,
   styledScrollbar,
   textColor,
@@ -216,11 +218,11 @@ export const TopBarWrapper = styled.div`
   height: 10rem;
 `;
 
-export const UsernameLink = styled.a`
+export const UsernameLink = styled(Link)`
   display: inline;
   font-weight: bold;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
   }
 `;
