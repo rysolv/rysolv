@@ -35,6 +35,13 @@ export const UPDATE_INFO_SUCCESS = 'app/Users/UPDATE_INFO_SUCCESS';
 
 export const VERIFY_INFO = 'app/Users/VERIFY_INFO';
 
+export const actionDictionary = {
+  Commented: 'commented on',
+  Earned: 'earned a bounty',
+  Funded: 'funded',
+  Submitted: 'opened pull request',
+};
+
 export const emptyCardMessage = 'There are no users matching the search terms.';
 
 export const userDataDictionary = {
