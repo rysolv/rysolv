@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { Star } from 'components/base_ui';
 import {
@@ -103,7 +104,7 @@ export const PullRequestListDetail = styled.div`
   width: 70%;
 `;
 
-export const PullRequestUsername = styled.a`
+export const PullRequestUsername = styled(Link)`
   display: flex;
   padding: 0 0.5rem;
 
@@ -136,7 +137,7 @@ export const SubmittedWrapper = styled.div`
   padding-top: 1rem;
 `;
 
-export const Username = styled.a`
+export const Username = styled(Link)`
   font-size: ${defaultFontSize};
   font-weight: 500;
   padding-left: 2rem;
