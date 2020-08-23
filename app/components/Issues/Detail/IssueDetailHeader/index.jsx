@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import { ConditionalRender, IconToolTip } from 'components/base_ui';
-import { navHelper } from 'utils/globalHelpers';
 
 import {
   IssueDetailContainer,
@@ -23,7 +23,6 @@ const IssueDetailHeader = ({
     organizationVerified,
   },
   displayEditView,
-  handleNav,
   nameChange,
   setNameChange,
 }) => {
@@ -41,13 +40,10 @@ const IssueDetailHeader = ({
     <Fragment>
       <IssueDetailContainer>
         <StyledIssueDetail>
-          <OrganizationNameContainer
-            href={`/organizations/detail/${organizationId}`}
-            onClick={e =>
-              navHelper(e, handleNav, `/organizations/detail/${organizationId}`)
-            }
-          >
-            {organizationName}
+          <OrganizationNameContainer>
+            <Link to={`/organizations/detail/${organizationId}`}>
+              {organizationName}
+            </Link>
             {organizationVerified ? (
               <IconToolTip toolTipText="Verified Contributor">
                 <StyledVerified />
@@ -78,7 +74,6 @@ const IssueDetailHeader = ({
 IssueDetailHeader.propTypes = {
   data: T.object,
   displayEditView: T.bool,
-  handleNav: T.func,
   nameChange: T.string,
   setNameChange: T.func,
 };

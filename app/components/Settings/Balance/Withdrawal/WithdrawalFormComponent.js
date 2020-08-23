@@ -25,7 +25,6 @@ const WithdrawalFormComponent = ({
   balance,
   handleClearAllAlerts,
   handleClearErrors,
-  handleNav,
   handleValidateInput,
   handleWithdrawFunds,
   inputErrors: { transferValue: transferValueError },
@@ -78,7 +77,6 @@ const WithdrawalFormComponent = ({
     <Fragment>
       <BackNav
         label="Back to Account"
-        handleNav={handleNav}
         path="/settings/account"
       />
       <StyledH3>Withdraw funds</StyledH3>
@@ -146,7 +144,6 @@ WithdrawalFormComponent.propTypes = {
   balance: T.number.isRequired,
   handleClearAllAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
-  handleNav: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   handleWithdrawFunds: T.func.isRequired,
   inputErrors: T.object.isRequired,

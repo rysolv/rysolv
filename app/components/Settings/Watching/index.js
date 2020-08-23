@@ -57,11 +57,7 @@ const UserWatching = ({
   const filteredWatching = filterWatching();
   return (
     <Fragment>
-      <BackNav
-        label="Back to Overview"
-        handleNav={handleNav}
-        path="/settings"
-      />
+      <BackNav label="Back to Overview" path="/settings" />
       <HeaderWrapper>
         <StyledH3>All Watching</StyledH3>
       </HeaderWrapper>

@@ -144,12 +144,6 @@ const makeSelectOrganizationsRequestBody = () =>
     },
   );
 
-const makeSelectOrganizationsSearchDisabled = prop =>
-  createSelector(
-    makeSelectOrganizations('search'),
-    search => search[prop].value === '',
-  );
-
 const makeSelectOrganizationsStep = prop =>
   createSelector(
     makeSelectOrganizations('step'),
@@ -166,6 +160,5 @@ export {
   makeSelectOrganizationsFormattedData,
   makeSelectOrganizationsLoading,
   makeSelectOrganizationsRequestBody,
-  makeSelectOrganizationsSearchDisabled,
   makeSelectOrganizationsStep,
 };

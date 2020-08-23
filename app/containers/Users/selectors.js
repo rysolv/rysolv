@@ -114,12 +114,6 @@ const makeSelectUsersRequestBody = () =>
       }, {}),
   );
 
-const makeSelectUsersSearchDisabled = () =>
-  createSelector(
-    makeSelectUsers('search'),
-    ({ searchInput }) => searchInput.value === '',
-  );
-
 const makeSelectUsersStep = prop =>
   createSelector(
     makeSelectUsers('step'),
@@ -136,6 +130,5 @@ export {
   makeSelectUsersFormatted,
   makeSelectUsersLoading,
   makeSelectUsersRequestBody,
-  makeSelectUsersSearchDisabled,
   makeSelectUsersStep,
 };

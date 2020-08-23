@@ -46,7 +46,6 @@ const IssueDetail = ({
     language,
     name,
     open,
-    profilePic,
     rep,
     repo,
     userId,
@@ -136,10 +135,7 @@ const IssueDetail = ({
   );
 
   const primaryUser = {
-    alt: username,
-    detailRoute: `/users/detail/${userId}`,
-    profilePic,
-    small: true,
+    route: `/users/detail/${userId}`,
     username,
   };
 
@@ -147,9 +143,8 @@ const IssueDetail = ({
     comments.map(comment => {
       const user = {
         alt: comment.username,
-        detailRoute: `/users/detail/${comment.userId}`,
-        profilePic: comment.profilePic,
-        size: '4rem',
+        image: comment.profilePic,
+        route: `/users/detail/${comment.userId}`,
         username: comment.username,
       };
       return (
@@ -157,7 +152,6 @@ const IssueDetail = ({
           key={`${comment.username}-${comment.createdDate}`}
           body={comment.body}
           date={comment.createdDate}
-          handleNav={handleNav}
           userProfile={user}
         />
       );
@@ -193,7 +187,7 @@ const IssueDetail = ({
   );
   return (
     <IssueDetailContainer>
-      <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
+      <BackNav label="Back to Issues" path="/issues" />
       <ConditionalRender
         Component={
           <StyledErrorSuccessBanner
@@ -239,7 +233,6 @@ const IssueDetail = ({
               <IssueDetailHeader
                 data={data}
                 displayEditView={displayEditView}
-                handleNav={handleNav}
                 nameChange={nameChange}
                 setNameChange={setNameChange}
               />
@@ -250,7 +243,6 @@ const IssueDetail = ({
                   bodyChange={bodyChange}
                   date={createdDate}
                   displayEditView={displayEditView}
-                  handleNav={handleNav}
                   language={language}
                   languageChange={languageChange}
                   repo={repo}
@@ -281,7 +273,6 @@ const IssueDetail = ({
                       <NewComment
                         activeUser={activeUser}
                         handleComment={handleComment}
-                        handleNav={handleNav}
                         issueId={issueId}
                       />
                     </CommentWrapper>
