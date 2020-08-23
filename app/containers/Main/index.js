@@ -87,7 +87,6 @@ export const Main = ({
       open: isModalOpen,
       propsToPassDown: {
         handleClose: dispatchCloseModal,
-        handleRedirect,
         route: '/users/detail',
         tableData,
         title: 'Attempt List',
@@ -99,7 +98,6 @@ export const Main = ({
       open: isModalOpen,
       propsToPassDown: {
         handleClose: dispatchCloseModal,
-        handleRedirect,
         route: '/users/detail',
         tableData,
         title: 'Watch List',
@@ -112,7 +110,6 @@ export const Main = ({
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         handleDeletePullRequest,
-        handleRedirect,
         isSignedIn,
         route: '/users/detail',
         tableData,

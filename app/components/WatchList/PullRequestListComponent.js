@@ -19,8 +19,8 @@ import {
 const CloseCircleIcon = iconDictionary('closeCircle');
 
 const PullRequestListComponent = ({
+  handleClose,
   handleDeletePullRequest,
-  handleRedirect,
   isSignedIn,
   route,
   tableData: { activeUserPullRequests, pullRequests },
@@ -36,8 +36,8 @@ const PullRequestListComponent = ({
             <SubmittedWrapper>
               submitted by{' '}
               <PullRequestUsername
-                href={`${route}/${userId}`}
-                onClick={() => handleRedirect(`${route}/${userId}`)}
+                onClick={handleClose}
+                to={`${route}/${userId}`}
               >
                 {username} ( <StyledStar /> {rep})
               </PullRequestUsername>
@@ -66,8 +66,8 @@ const PullRequestListComponent = ({
 );
 
 PullRequestListComponent.propTypes = {
+  handleClose: T.func.isRequired,
   handleDeletePullRequest: T.func.isRequired,
-  handleRedirect: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
   route: T.string.isRequired,
   tableData: T.object.isRequired,

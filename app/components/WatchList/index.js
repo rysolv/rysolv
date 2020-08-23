@@ -18,7 +18,6 @@ const closeIcon = iconDictionary('close');
 const WatchList = ({
   handleClose,
   handleDeletePullRequest,
-  handleRedirect,
   isSignedIn,
   route,
   tableData,
@@ -45,7 +44,6 @@ const WatchList = ({
         propsToPassDown={{
           handleClose,
           handleDeletePullRequest,
-          handleRedirect,
           isSignedIn,
           route,
           tableData,
@@ -59,7 +57,6 @@ const WatchList = ({
 WatchList.propTypes = {
   handleClose: T.func,
   handleDeletePullRequest: T.func,
-  handleRedirect: T.func,
   isSignedIn: T.bool,
   route: T.string,
   tableData: T.oneOfType([T.array, T.object]),

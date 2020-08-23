@@ -10,12 +10,7 @@ import {
   Username,
 } from './styledComponents';
 
-const GeneralListComponent = ({
-  handleClose,
-  handleRedirect,
-  route,
-  tableData,
-}) => (
+const GeneralListComponent = ({ handleClose, route, tableData }) => (
   <ListContainer>
     {tableData.map(({ id, username, profilePic }) => (
       <ListItemWrapper key={`list-item-${id}`}>
@@ -27,10 +22,7 @@ const GeneralListComponent = ({
             route={`${route}/${id}`}
             size="3.5rem"
           />
-          <Username
-            href={`${route}/${id}`}
-            onClick={() => handleRedirect(`${route}/${id}`)}
-          >
+          <Username onClick={handleClose} to={`${route}/${id}`}>
             {username}
           </Username>
         </ListDetail>
@@ -41,7 +33,6 @@ const GeneralListComponent = ({
 
 GeneralListComponent.propTypes = {
   handleClose: T.func.isRequired,
-  handleRedirect: T.func.isRequired,
   route: T.string.isRequired,
   tableData: T.array.isRequired,
 };
