@@ -10,8 +10,8 @@ import IssueCard from 'components/Issues';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { fetchWatchList, openModalState } from 'containers/Main/actions';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
-import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
 
 import {
   addWatch,
@@ -78,7 +78,6 @@ const IssuesOverview = ({
         dispatchOpenModal,
         handleClearAlerts,
         handleNav,
-        handleSearchIssues,
         handleUpvote,
         isSignedIn,
       }}
@@ -144,7 +143,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
-    /*
+    /**
      * Reducer : Router
      */
     handleNav: route => dispatch(push(route)),

@@ -57,11 +57,7 @@ const UserAttempting = ({
   const filteredAttempting = filterAttempting();
   return (
     <Fragment>
-      <BackNav
-        label="Back to Overview"
-        handleNav={handleNav}
-        path="/settings"
-      />
+      <BackNav label="Back to Overview" path="/settings" />
       <HeaderWrapper>
         <StyledH3>All Attempting</StyledH3>
       </HeaderWrapper>

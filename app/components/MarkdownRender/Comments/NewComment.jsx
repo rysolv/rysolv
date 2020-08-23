@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
 
-import { ProfileImage } from 'components/base_ui';
+import { ImageLinkWrapper } from 'components/base_ui';
 import Markdown from 'components/Markdown';
 
 import {
@@ -12,7 +12,7 @@ import {
   StyledSecondaryButton,
 } from '../styledComponents';
 
-const NewComment = ({ activeUser, handleComment, handleNav, issueId }) => {
+const NewComment = ({ activeUser, handleComment, issueId }) => {
   const [body, setBody] = useState('');
   const [preview, setPreview] = useState(false);
   const { id, profilePic, username } = activeUser;
@@ -36,12 +36,10 @@ const NewComment = ({ activeUser, handleComment, handleNav, issueId }) => {
   return (
     <FlexContainer>
       <ProfileImageContainer addMargin>
-        <ProfileImage
+        <ImageLinkWrapper
           alt={username}
-          detailRoute={`/users/detail/${id}`}
-          handleNav={handleNav}
-          profilePic={profilePic}
-          size="4rem"
+          image={profilePic}
+          route={`/users/detail/${id}`}
         />
       </ProfileImageContainer>
       <NewCommentContainer onKeyDown={e => handleKeydown(e)}>
@@ -65,7 +63,6 @@ const NewComment = ({ activeUser, handleComment, handleNav, issueId }) => {
 NewComment.propTypes = {
   activeUser: T.object.isRequired,
   handleComment: T.func.isRequired,
-  handleNav: T.func.isRequired,
   issueId: T.string.isRequired,
 };
 

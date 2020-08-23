@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { ProfileImage } from 'components/base_ui';
+import { ImageLinkWrapper } from 'components/base_ui';
 
 import {
   ListContainer,
@@ -10,16 +10,21 @@ import {
   Username,
 } from './styledComponents';
 
-const GeneralListComponent = ({ handleRedirect, route, tableData }) => (
+const GeneralListComponent = ({
+  handleClose,
+  handleRedirect,
+  route,
+  tableData,
+}) => (
   <ListContainer>
     {tableData.map(({ id, username, profilePic }) => (
       <ListItemWrapper key={`list-item-${id}`}>
         <ListDetail>
-          <ProfileImage
+          <ImageLinkWrapper
             alt={username}
-            detailRoute={`${route}/${id}`}
-            handleNav={handleRedirect}
-            profilePic={profilePic}
+            image={profilePic}
+            onClick={handleClose}
+            route={`${route}/${id}`}
             size="3.5rem"
           />
           <Username
@@ -35,6 +40,7 @@ const GeneralListComponent = ({ handleRedirect, route, tableData }) => (
 );
 
 GeneralListComponent.propTypes = {
+  handleClose: T.func.isRequired,
   handleRedirect: T.func.isRequired,
   route: T.string.isRequired,
   tableData: T.array.isRequired,

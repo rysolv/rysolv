@@ -3,7 +3,6 @@ import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import { BackNav } from 'components/base_ui';
@@ -42,10 +41,9 @@ export class IssuesAdd extends React.PureComponent {
 
     const {
       activeUser,
+      handleIncrementStep,
       importSuccess,
       issueData,
-      handleNav,
-      handleIncrementStep,
       loading,
       organization,
       step,
@@ -58,7 +56,7 @@ export class IssuesAdd extends React.PureComponent {
 
     return (
       <AddWrapper>
-        <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
+        <BackNav label="Back to Issues" path="/issues" />
         <AddForm>
           <AsyncRender
             asyncData={{ issueData, organization }}
@@ -66,7 +64,6 @@ export class IssuesAdd extends React.PureComponent {
             loading={loading}
             propsToPassDown={{
               activeUser,
-              handleNav,
               importSuccess,
             }}
           />
@@ -77,12 +74,11 @@ export class IssuesAdd extends React.PureComponent {
 }
 
 IssuesAdd.propTypes = {
-  importSuccess: T.bool,
   activeUser: T.object,
-  issueData: T.object,
   dispatchClearForm: T.func,
   handleIncrementStep: T.func,
-  handleNav: T.func,
+  importSuccess: T.bool,
+  issueData: T.object,
   loading: T.bool.isRequired,
   organization: T.object,
   step: T.number.isRequired,
@@ -113,7 +109,6 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchClearForm: () => dispatch(clearForm()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
-    handleNav: route => dispatch(push(route)),
     handleSearchOrganizations: payload =>
       dispatch(searchOrganizations(payload)),
   };

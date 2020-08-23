@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import {
   defaultFontSize,
@@ -55,12 +56,11 @@ export const MemberWrapper = styled.div`
   align-self: center;
 `;
 
-export const NameWrapper = styled.a`
+export const NameLink = styled(Link)`
   font-size: ${subheaderFontSize};
 
   &:hover {
     color: ${hoverLinkColor};
-    cursor: pointer;
   }
 `;
 
@@ -94,10 +94,10 @@ export const RowSection = styled.div`
 
 export const RowSectionWrapper = styled.div`
   @media (max-width: 769px) {
-    width: ${({ hasLessItems }) => (hasLessItems ? '19.5rem' : '38rem')};
+    width: ${({ hasOneItem }) => (hasOneItem ? '19.5rem' : '38rem')};
   }
   @media (max-width: 584px) {
-    width: ${({ hasLessItems }) => (hasLessItems ? '19rem' : '36rem')};
+    width: ${({ hasOneItem }) => (hasOneItem ? '19rem' : '36rem')};
   }
   @media (max-width: 408px) {
     width: 19rem;
@@ -147,5 +147,17 @@ export const TextContainer = styled.div`
     flex-direction: column;
     justify-content: space-around;
     width: 70%;
+  }
+`;
+
+export const Users = styled.div`
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  padding: 0 1rem 1rem;
+  text-align: end;
+  width: 100%;
+
+  ${mobile} {
+    padding: 0 0 1rem;
   }
 `;

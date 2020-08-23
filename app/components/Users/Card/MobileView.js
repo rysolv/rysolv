@@ -2,8 +2,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { Star, ProfileImage } from 'components/base_ui';
-import { navHelper } from 'utils/globalHelpers';
+import { ImageLinkWrapper, Star } from 'components/base_ui';
 
 import {
   ActiveContainer,
@@ -14,7 +13,7 @@ import {
   IssuesWrapper,
   MemberInfoContainer,
   MemberWrapper,
-  NameWrapper,
+  NameLink,
   NumberContainer,
   RowSection,
   StyledListSquare,
@@ -23,7 +22,7 @@ import {
   TextContainer,
 } from './styledComponents';
 
-const MobileUserCard = ({ data, deviceView, handleNav }) => {
+const MobileUserCard = ({ data, deviceView }) => {
   const isMobile = deviceView === 'mobile';
 
   return (
@@ -45,11 +44,10 @@ const MobileUserCard = ({ data, deviceView, handleNav }) => {
             <StyledSquare>
               <ContentWrapper>
                 <ImageContainer>
-                  <ProfileImage
+                  <ImageLinkWrapper
                     alt="Profile Image"
-                    detailRoute={`/users/detail/${id}`}
-                    handleNav={handleNav}
-                    profilePic={profilePic}
+                    image={profilePic}
+                    route={`/users/detail/${id}`}
                     size={isMobile ? '4.75rem' : '7.5rem'}
                   />
                   <IconWrapper>
@@ -63,14 +61,7 @@ const MobileUserCard = ({ data, deviceView, handleNav }) => {
               <TextContainer>
                 <StyledSettingWrapper>
                   <MemberWrapper>
-                    <NameWrapper
-                      onClick={e =>
-                        navHelper(e, handleNav, `/users/detail/${id}`)
-                      }
-                      href={`/users/detail/${id}`}
-                    >
-                      {username}
-                    </NameWrapper>
+                    <NameLink to={`/users/detail/${id}`}>{username}</NameLink>
                     <MemberInfoContainer>
                       Member since {createdDate}
                     </MemberInfoContainer>
@@ -96,7 +87,6 @@ const MobileUserCard = ({ data, deviceView, handleNav }) => {
 MobileUserCard.propTypes = {
   data: T.array.isRequired,
   deviceView: T.string.isRequired,
-  handleNav: T.func.isRequired,
 };
 
 export default MobileUserCard;

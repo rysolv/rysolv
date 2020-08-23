@@ -3,7 +3,6 @@ import T from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import UserCard from 'components/Users';
@@ -11,13 +10,11 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 
-import { fetchUsers, inputChange, searchUsers } from '../actions';
+import { fetchUsers, searchUsers } from '../actions';
 import {
-  makeSelectUsers,
   makeSelectUsersError,
   makeSelectUsersFormatted,
   makeSelectUsersLoading,
-  makeSelectUsersSearchDisabled,
 } from '../selectors';
 import reducer from '../reducer';
 import saga from '../saga';
@@ -25,15 +22,11 @@ import saga from '../saga';
 // eslint-disable-next-line react/prefer-stateless-function
 const UsersOverview = ({
   deviceView,
-  disabled,
   dispatchFetchUsers,
   error,
-  handleInputChange,
-  handleNav,
   handleSearchUsers,
   loading,
   params: { searchValue },
-  search,
   users,
 }) => {
   useEffect(() => {
@@ -53,11 +46,6 @@ const UsersOverview = ({
       loading={loading}
       propsToPassDown={{
         deviceView,
-        disabled,
-        handleInputChange,
-        handleNav,
-        handleSearchUsers,
-        search,
       }}
     />
   );
@@ -65,15 +53,11 @@ const UsersOverview = ({
 
 UsersOverview.propTypes = {
   deviceView: T.string,
-  disabled: T.bool,
   dispatchFetchUsers: T.func,
   error: T.oneOfType([T.object, T.bool]),
-  handleInputChange: T.func,
-  handleNav: T.func,
   handleSearchUsers: T.func,
   loading: T.bool,
   params: T.object,
-  search: T.object,
   users: T.array,
 };
 
@@ -81,10 +65,8 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Users
    */
-  disabled: makeSelectUsersSearchDisabled(),
   error: makeSelectUsersError('users'),
   loading: makeSelectUsersLoading('users'),
-  search: makeSelectUsers('search'),
   users: makeSelectUsersFormatted('users'),
   /**
    * Reducer : ViewSize
@@ -98,12 +80,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Users
      */
     dispatchFetchUsers: () => dispatch(fetchUsers()),
-    handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchUsers: payload => dispatch(searchUsers(payload)),
-    /**
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 
