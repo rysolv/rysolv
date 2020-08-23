@@ -48,7 +48,7 @@ BaseExpansionPanel.propTypes = {
   Icon: T.node,
   open: T.bool,
   propsToPassDown: T.object,
-  title: T.string,
+  title: T.oneOfType([T.object, T.string]),
 };
 
 export default BaseExpansionPanel;
