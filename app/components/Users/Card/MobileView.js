@@ -23,8 +23,11 @@ import {
 } from './styledComponents';
 
 const MobileUserCard = ({ data, deviceView }) => {
-  const isMobile = deviceView === 'mobile';
-
+  const isMobile =
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
   return (
     <RowSection>
       {data.map(

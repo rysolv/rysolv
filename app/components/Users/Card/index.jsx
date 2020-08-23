@@ -26,7 +26,11 @@ import {
 
 const UserCard = ({ data, deviceView }) => {
   const { length } = data;
-  const isMobile = deviceView === 'mobile';
+  const isMobile =
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
   const hasOneItem = data.length === 1;
   return (
     <Fragment>
