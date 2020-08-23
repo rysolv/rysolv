@@ -43,17 +43,18 @@ export const StyledBaseExpansionPanel = styled(BaseExpansionPanel)`
 `;
 
 export const StyledLabel = styled.h4`
-  color: #6a737d;
+  color: ${textColor};
   font-size: 1.6rem;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.2;
   margin: 0 0 0.5rem 0;
 `;
 
-export const StyledTitle = styled.h2`
+export const StyledTitle = styled.span`
   color: ${textColor};
-  font-size: 2.4rem;
-  font-weight: 500;
+  display: block;
+  font-size: 2rem;
+  font-weight: 400;
   line-height: 1.2;
   margin: 1rem 0;
 `;
