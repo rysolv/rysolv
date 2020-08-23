@@ -15,7 +15,9 @@ import {
   MemberWrapper,
   NameLink,
   NumberContainer,
-  OverviewWrapper,
+  OuterWrapper,
+  RowSection,
+  RowSectionWrapper,
   StyledListSquare,
   StyledSettingWrapper,
   StyledSquare,
@@ -24,66 +26,77 @@ import {
 
 const UserCard = ({ data, deviceView }) => {
   const { length } = data;
-  const isMobile = deviceView === 'mobile';
-
+  const isMobile =
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
+  const hasOneItem = data.length === 1;
   return (
     <Fragment>
       <Users>
         {length} {length === 1 ? 'User' : 'Users'}
       </Users>
-      <OverviewWrapper>
-        {data.map(
-          (
-            {
-              attempting,
-              createdDate,
-              id,
-              issues,
-              pointsNumber,
-              profilePic,
-              username,
-            },
-            index,
-          ) => (
-            <StyledListSquare key={`${username}-${index}`}>
-              <StyledSquare>
-                <StyledSettingWrapper>
-                  <MemberWrapper>
-                    <NameLink to={`/users/detail/${id}`}>{username}</NameLink>
-                    <MemberInfoContainer>
-                      Member since {createdDate}
-                    </MemberInfoContainer>
-                  </MemberWrapper>
-                </StyledSettingWrapper>
-                <ContentWrapper>
-                  <ImageContainer>
-                    <ImageLinkWrapper
-                      alt="Profile Image"
-                      image={profilePic}
-                      route={`/users/detail/${id}`}
-                      size={isMobile ? '4.75rem' : '7.5rem'}
-                    />
-                    <IconWrapper>
-                      <div>
-                        <Star />
-                      </div>
-                      <NumberContainer>{pointsNumber}</NumberContainer>
-                    </IconWrapper>
-                  </ImageContainer>
-                </ContentWrapper>
-                <IssuesWrapper>
-                  <IssuesContainer>
-                    {issues.length} {issues.length === 1 ? `Issue` : `Issues`}
-                  </IssuesContainer>
-                  <ActiveContainer>
-                    {attempting.length} Attempting
-                  </ActiveContainer>
-                </IssuesWrapper>
-              </StyledSquare>
-            </StyledListSquare>
-          ),
-        )}
-      </OverviewWrapper>
+      <OuterWrapper>
+        <RowSectionWrapper hasOneItem={hasOneItem}>
+          <RowSection>
+            {data.map(
+              (
+                {
+                  attempting,
+                  createdDate,
+                  id,
+                  issues,
+                  pointsNumber,
+                  profilePic,
+                  username,
+                },
+                index,
+              ) => (
+                <StyledListSquare key={`${username}-${index}`}>
+                  <StyledSquare>
+                    <StyledSettingWrapper>
+                      <MemberWrapper>
+                        <NameLink to={`/users/detail/${id}`}>
+                          {username}
+                        </NameLink>
+                        <MemberInfoContainer>
+                          Member since {createdDate}
+                        </MemberInfoContainer>
+                      </MemberWrapper>
+                    </StyledSettingWrapper>
+                    <ContentWrapper>
+                      <ImageContainer>
+                        <ImageLinkWrapper
+                          alt="Profile Image"
+                          image={profilePic}
+                          route={`/users/detail/${id}`}
+                          size={isMobile ? '4.75rem' : '7.5rem'}
+                        />
+                        <IconWrapper>
+                          <div>
+                            <Star />
+                          </div>
+                          <NumberContainer>{pointsNumber}</NumberContainer>
+                        </IconWrapper>
+                      </ImageContainer>
+                    </ContentWrapper>
+                    <IssuesWrapper>
+                      <IssuesContainer>
+                        {issues.length}{' '}
+                        {issues.length === 1 ? `Issue` : `Issues`}
+                      </IssuesContainer>
+                      <ActiveContainer>
+                        {attempting.length} Attempting
+                      </ActiveContainer>
+                    </IssuesWrapper>
+                  </StyledSquare>
+                </StyledListSquare>
+              ),
+            )}
+          </RowSection>
+        </RowSectionWrapper>
+      </OuterWrapper>
     </Fragment>
   );
 };

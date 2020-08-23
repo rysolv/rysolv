@@ -28,7 +28,7 @@ export const DateWrapper = styled.div`
 
 export const DescriptionWrapper = styled.div`
   font-size: ${defaultFontSize};
-  padding: 1rem 1rem 1rem 0;
+  padding: 1rem;
   width: 100%;
 
   ${mobile} {

@@ -38,6 +38,13 @@ export const WITHDRAW_FUNDS = 'app/Settings/WITHDRAW_FUNDS';
 export const WITHDRAW_FUNDS_FAILURE = 'app/Settings/WITHDRAW_FUNDS_FAILURE';
 export const WITHDRAW_FUNDS_SUCCESS = 'app/Settings/WITHDRAW_FUNDS_SUCCESS';
 
+export const actionDictionary = {
+  Commented: 'commented on',
+  Earned: 'earned a bounty',
+  Funded: 'funded',
+  Submitted: 'opened pull request',
+};
+
 export const settingViewDictionary = {
   account: 1,
   attempting: 0,

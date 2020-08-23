@@ -4,6 +4,7 @@ import T from 'prop-types';
 import moment from 'moment';
 
 import { ConditionalRender } from 'components/base_ui';
+import { actionDictionary } from 'containers/Settings/constants';
 import { formatDollarAmount, formatWordString } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -48,6 +49,17 @@ const UserTimelineView = ({
   userId,
   watching,
 }) => {
+  const filterActivity = () => {
+    const filteredArray = activity.filter(({ action }) => {
+      if (usersFilter === 'All' || actionDictionary[usersFilter] === action) {
+        return true;
+      }
+      return false;
+    });
+    return filteredArray;
+  };
+  const filteredActivity = filterActivity();
+
   const AttemptingComponent = () => (
     <ConditionalRender
       Component={OverviewListComponent}
@@ -83,7 +95,7 @@ const UserTimelineView = ({
   );
 
   const ActivityComponent = () =>
-    activity.map((el, index) => {
+    filteredActivity.map((el, index) => {
       const {
         action,
         activityId,
@@ -128,7 +140,7 @@ const UserTimelineView = ({
       if (
         index === 0 ||
         moment(date).format('YYYY/MM/DD') !==
-          moment(activity[index - 1].date).format('YYYY/MM/DD')
+          moment(filteredActivity[index - 1].date).format('YYYY/MM/DD')
       ) {
         return (
           <Fragment key={`list-item-${index}`}>
@@ -188,7 +200,7 @@ const UserTimelineView = ({
             handleInputChange({ field: 'users', form: 'filter', value })
           }
           selectedValue={usersFilter}
-          values={['All', 'Earned', 'Funded', 'Submitted', 'Withdrew']}
+          values={['All', 'Commented', 'Earned', 'Funded', 'Submitted']}
         />
       </HeaderWrapper>
       <ConditionalRender
@@ -196,7 +208,7 @@ const UserTimelineView = ({
         FallbackComponent={
           <EmptyComponentContainer>No recent activity.</EmptyComponentContainer>
         }
-        shouldRender={activity.length > 0}
+        shouldRender={filteredActivity.length > 0}
       />
     </TimelineContainer>
   );
