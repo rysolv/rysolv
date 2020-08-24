@@ -110,13 +110,12 @@ export const StyledSettings = styled.div`
 `;
 
 export const StyledStar = styled.div`
-  color: #ffd600;
   display: inline-block;
   text-align: center;
 
   svg {
-    height: 2rem;
-    width: 2rem;
+    height: 1.75rem;
+    width: 1.75rem;
   }
 `;
 
@@ -138,6 +137,11 @@ export const StyledUpvote = styled.div`
   &:hover {
     color: ${selectedColor};
     cursor: pointer;
+  }
+
+  svg {
+    height: 1.75rem;
+    width: 1.75rem;
   }
 `;
 

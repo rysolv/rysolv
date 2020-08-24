@@ -38,7 +38,6 @@ import PublishIcon from '@material-ui/icons/Publish';
 import PullRequest from '@material-ui/icons/AccountTree';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
-import Star from '@material-ui/icons/Star';
 import Three from '@material-ui/icons/Looks3Outlined';
 import Twitter from '@material-ui/icons/Twitter';
 import Two from '@material-ui/icons/LooksTwoOutlined';
@@ -54,6 +53,7 @@ import CloseMenu from './svg/CloseMenu';
 import Gitlab from './svg/Gitlab';
 import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
+import RysolvCoin from './svg/RysolvCoin';
 import SiteLogo from './svg/SiteLogo';
 import Stackoverflow from './svg/Stackoverflow';
 
@@ -100,7 +100,7 @@ export default (name, options) => {
     settings: Settings,
     siteLogo: SiteLogo,
     stackoverflow: Stackoverflow,
-    star: Star,
+    star: RysolvCoin,
     successOutline: CheckCircleOutline,
     three: Three,
     twitter: Twitter,

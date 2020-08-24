@@ -2,7 +2,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { ImageLinkWrapper, Star } from 'components/base_ui';
+import { ImageLinkWrapper } from 'components/base_ui';
 
 import {
   ActiveContainer,
@@ -19,6 +19,7 @@ import {
   StyledListSquare,
   StyledSettingWrapper,
   StyledSquare,
+  StyledStar,
   TextContainer,
 } from './styledComponents';
 
@@ -54,9 +55,7 @@ const MobileUserCard = ({ data, deviceView }) => {
                     size={isMobile ? '4.75rem' : '7.5rem'}
                   />
                   <IconWrapper>
-                    <div>
-                      <Star />
-                    </div>
+                    <StyledStar />
                     <NumberContainer>{pointsNumber}</NumberContainer>
                   </IconWrapper>
                 </ImageContainer>

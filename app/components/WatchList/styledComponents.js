@@ -116,6 +116,7 @@ export const PullRequestUsername = styled(Link)`
 export const StyledStar = styled(Star)`
   svg {
     height: 1.2rem;
+    margin: 0 0.25rem;
     width: 1.2rem;
   }
 `;

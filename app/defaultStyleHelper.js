@@ -25,7 +25,6 @@ export const subHeaderColor = '#0d47a1';
 export const subTextColor = '#878a8c';
 export const successGreen = '#31b589';
 export const textColor = 'rgba(0,0,0,0.7)';
-export const upvoteColor = '#ff5722';
 
 // Font Family
 export const defaultFontFamily = `'Helvetica Neue', Helvetica, Arial, sans-serif`;

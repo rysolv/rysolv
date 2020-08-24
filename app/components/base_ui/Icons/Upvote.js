@@ -4,8 +4,10 @@ import iconDictionary from 'utils/iconDictionary';
 
 import { StyledUpvote } from './styledComponents';
 
-const defaultVerified = iconDictionary('upvote');
+const defaultVerified = iconDictionary('star');
 
-const Upvote = () => <StyledUpvote>{defaultVerified}</StyledUpvote>;
+const Upvote = ({ ...restProps }) => (
+  <StyledUpvote {...restProps}>{defaultVerified}</StyledUpvote>
+);
 
 export default Upvote;
