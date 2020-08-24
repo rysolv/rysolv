@@ -1,3 +1,12 @@
+const commentValues = [
+  'body',
+  'created_date',
+  'id',
+  'modified_date',
+  'target',
+  'user_id',
+];
+
 const commentReturnValues = `
   comments.body,
   comments.created_date AS "createdDate",
@@ -9,4 +18,4 @@ const commentReturnValues = `
   users.username
 `;
 
-module.exports = { commentReturnValues };
+module.exports = { commentReturnValues, commentValues };

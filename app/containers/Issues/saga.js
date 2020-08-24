@@ -306,12 +306,12 @@ export function* fetchIssueDetailSaga({ payload }) {
           message
         }
       }
-      getIssueComments(id: "${id}") {
+      getIssueComments(issueId: "${id}") {
         body
-        userId
-        username
         createdDate
         profilePic
+        userId
+        username
       }
     }
   `;

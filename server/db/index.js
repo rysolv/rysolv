@@ -3,11 +3,7 @@ const {
   getOrganizationActivity,
   getUserActivity,
 } = require('./queries/activity');
-const {
-  createComment,
-  getComments,
-  getIssueComments,
-} = require('./queries/comments');
+const { createComment, getIssueComments } = require('./queries/comments');
 const {
   checkDuplicateIssue,
   closeIssue,
@@ -84,7 +80,6 @@ module.exports = {
   deleteOrganization,
   deletePullRequest,
   downvoteIssue,
-  getComments,
   getIssueComments,
   getIssues,
   getOneIssue,

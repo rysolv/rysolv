@@ -331,13 +331,12 @@ module.exports = buildSchema(`
     getActivity(column: String!, id: ID): ActivityResult!
     getOrganizationActivity(organizationId: ID): ActivityResult!
     getUserActivity(userId: ID): ActivityResult!
-    getComments: [Comment]!
     getIssues: [Issue!]!
     getOrganizations: [Organization!]!
     getPullRequests: PullRequestArrayResult
     getUsers: [User!]!
 
-    getIssueComments(id: ID!): [Comment]
+    getIssueComments(issueId: ID!): [Comment]
     getUserOrganizations(id: ID!): [Organization!]
     getUserPullRequests(id: ID!): PullRequestArrayResult
 

@@ -1,12 +1,20 @@
-const { mapValues } = require('../../baseQueries');
+const { commentValues } = require('./constants');
+const { formatParamaters } = require('../../helpers');
+const { singleQuery } = require('../../baseQueries');
 
 // Create new Comments from seed
 const createComment = async data => {
+  const { parameters, substitution, values } = formatParamaters(
+    commentValues,
+    data,
+  );
+
   const queryText = `INSERT INTO
-    comments(id, created_date, modified_date, target, body, user_id)
-    VALUES($1, $2, $3, $4, $5, $6)
-    returning *`;
-  const result = await mapValues(queryText, data);
+  comments(${parameters})
+  VALUES(${substitution})
+  RETURNING *`;
+  const { rows } = await singleQuery({ queryText, values });
+  const [result] = rows;
   return result;
 };
 
