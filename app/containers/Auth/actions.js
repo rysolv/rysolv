@@ -1,12 +1,12 @@
 import {
   CLEAR_ALERTS,
-  CLEAR_STATE,
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
   FETCH_ACTIVE_USER,
   FETCH_USER_SESSION_FAILURE,
   FETCH_USER_SESSION_SUCCESS,
   FETCH_USER_SESSION,
+  RESEND_SIGN_UP,
   SEARCH_ORGANIZATIONS_FAILURE,
   SEARCH_ORGANIZATIONS_SUCCESS,
   SEARCH_ORGANIZATIONS,
@@ -21,6 +21,7 @@ import {
   SIGN_UP,
   UPDATE_ACTIVE_USER,
   UPVOTE_USER_TEMP,
+  USER_WATCHING_TEMP,
   VERIFY_EMAIL_FAILURE,
   VERIFY_EMAIL_SUCCESS,
   VERIFY_EMAIL,
@@ -29,13 +30,6 @@ import {
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
-  };
-}
-
-export function clearState(payload) {
-  return {
-    payload,
-    type: CLEAR_STATE,
   };
 }
 
@@ -77,6 +71,13 @@ export function fetchUserSessionSuccess(payload) {
 export function fetchUserSession() {
   return {
     type: FETCH_USER_SESSION,
+  };
+}
+
+export function resendSignUp(payload) {
+  return {
+    payload,
+    type: RESEND_SIGN_UP,
   };
 }
 
@@ -172,6 +173,13 @@ export function upvoteUserTemp(payload) {
   return {
     payload,
     type: UPVOTE_USER_TEMP,
+  };
+}
+
+export function userWatchingTemp(payload) {
+  return {
+    payload,
+    type: USER_WATCHING_TEMP,
   };
 }
 

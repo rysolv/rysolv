@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
+import { ImageLinkWrapper } from 'components/base_ui';
 import {
   borderColor,
   defaultFontSize,
@@ -26,7 +28,7 @@ export const DateWrapper = styled.div`
 
 export const DescriptionWrapper = styled.div`
   font-size: ${defaultFontSize};
-  padding: 1rem 1rem 1rem 0;
+  padding: 1rem;
   width: 100%;
 
   ${mobile} {
@@ -56,13 +58,12 @@ export const IssuesWrapper = styled.div`
   font-weight: 500;
 `;
 
-export const NameWrapper = styled.div`
+export const NameLink = styled(Link)`
   color: ${headerColor};
   font-size: ${subheaderFontSize};
   margin: 1rem;
 
   &:hover {
-    cursor: pointer;
     color: ${hoverLinkColor};
   }
 `;
@@ -83,10 +84,8 @@ export const StatsWrapper = styled.div`
   padding: 1rem 0;
 `;
 
-export const StyledImage = styled.img`
-  height: 5rem;
+export const StyledImageLinkWrapper = styled(ImageLinkWrapper)`
   margin: 1rem;
-  width: 5rem;
 `;
 
 export const StyledListItem = styled.li`
@@ -105,8 +104,7 @@ export const StyledListItem = styled.li`
 `;
 
 export const StyledOrganizationCard = styled.div`
-  display: flex;
-  flex-direction: column;
+  min-height: 50rem;
 `;
 
 export const TextContainer = styled.div`

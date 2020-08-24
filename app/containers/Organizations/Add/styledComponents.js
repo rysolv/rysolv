@@ -9,14 +9,7 @@ import {
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
-const {
-  desktop,
-  desktopL,
-  desktopS,
-  laptop,
-  mobile,
-  tablet,
-} = mediaQueriesByDevice;
+const { desktop, desktopL, laptop, mobile, tablet } = mediaQueriesByDevice;
 
 export const AddWrapper = styled.div`
   align-items: center;
@@ -37,9 +30,6 @@ export const AddForm = styled.div`
     width: 70%;
   }
   ${desktop} {
-    width: 70%;
-  }
-  ${desktopS} {
     width: 70%;
   }
   ${laptop} {
@@ -78,6 +68,12 @@ export const ButtonGroup = styled.div`
 export const StyledCheckboxWithLabel = styled(CheckboxWithLabel)`
   color: ${textColor};
   padding: 0.9rem 0.9rem 0.9rem 0;
+`;
+
+export const StyledFocusDiv = styled.div`
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const StyledH3 = styled.h3`

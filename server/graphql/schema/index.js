@@ -63,7 +63,6 @@ module.exports = buildSchema(`
   }
 
   type ImportPullRequest {
-    apiUrl: String,
     githubUsername: String,
     htmlUrl: String,
     mergeable: Boolean,
@@ -109,6 +108,8 @@ module.exports = buildSchema(`
     comments: [ID]
     contributor: String
     fundedAmount: Int
+    identiconId: ID
+    isManual: Boolean
     language: [String]
     name: String
     organizationDescription: String
@@ -144,6 +145,8 @@ module.exports = buildSchema(`
   }
 
   input OrganizationInput {
+    identiconId: ID
+    isManual: Boolean
     organizationDescription: String
     organizationLogo: String
     organizationName: String
@@ -155,7 +158,6 @@ module.exports = buildSchema(`
   }
 
   type PullRequest {
-    apiUrl: String
     createdDate: Object!
     githubUsername: String
     htmlUrl: String
@@ -212,6 +214,7 @@ module.exports = buildSchema(`
   type Payment {
     balance: Float
     fundedAmount: Float
+    message: String
   }
 
   type Upvote {
@@ -284,6 +287,17 @@ module.exports = buildSchema(`
     username: String
   }
 
+  type WatchListArray {
+    issueArray: [WatchListDetail]
+    userArray: [ID]
+  }
+
+  type WatchListDetail {
+    fundedAmount: Float
+    id: ID
+    name: String
+  }
+
   type Withdrawal {
     balance: Float
   }
@@ -307,6 +321,7 @@ module.exports = buildSchema(`
   union PullRequestArrayResult = PullRequestArray | Error
   union PullRequestListResult = PullRequestList | Error
   union PullRequestResult = PullRequest | Error
+  union ToggleWatchingResult = WatchListArray | Error
   union UpvoteResult = Upvote | Error
   union UserResult = User | Error
   union WithdrawalResult = Withdrawal | Error
@@ -318,8 +333,8 @@ module.exports = buildSchema(`
     getComments: [Comment]!
     getIssues: [Issue!]!
     getOrganizations: [Organization!]!
-    getUsers: [User!]!
     getPullRequests: PullRequestArrayResult
+    getUsers: [User!]!
 
     getIssueComments(id: ID!): [Comment]
     getUserOrganizations(id: ID!): [Organization!]
@@ -330,8 +345,9 @@ module.exports = buildSchema(`
 
     oneIssue(id: ID!): IssueResult
     oneOrganization(id: ID!): OrganizationResult
-    oneUser(id: ID!): User!
     onePullRequest(id: ID!): PullRequestResult
+    oneUser(id: ID!): User!
+    oneUserSignUp(email: String!): User!
 
     searchIssues(value: String!): [Issue!]!
     searchOrganizations(value: String!): OrganizationArrayResult
@@ -346,7 +362,9 @@ module.exports = buildSchema(`
     createIssue(issueInput: IssueInput): IssueResult
     createOrganization(organizationInput: OrganizationInput): OrganizationResult
     createUser(userInput: UserInput): User!
+    createPaypalPayment(amount: Float!, issueId: ID, userId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): PullRequestResult!
+    createStripeCharge(amount: Float!, issueId: ID, token: String!, userId: ID): PaymentResult!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
     deleteIssue(id: ID!): String!
@@ -358,7 +376,9 @@ module.exports = buildSchema(`
     importOrganization(url: String!): ImportResult
     importPullRequest(url: String!, issueId: ID!): ImportPullRequestResult
 
-    submitAccountPayment(issueId: ID!, fundValue: Float!, organizationId: ID!, userId: ID!): PaymentResult!
+    submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
+
+    toggleWatching(issueId: ID!, userId: ID!): ToggleWatchingResult
 
     transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
     transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!

@@ -3,19 +3,49 @@ import T from 'prop-types';
 
 import { ConditionalRender, PaypalButton } from 'components/base_ui';
 
-import { PaypalContainer } from './styledComponents';
+import { PaypalContainer, TextWrapper } from './styledComponents';
 
-const PaypalView = ({ isPaypalPaymentOpen }) => (
+const PaypalView = ({
+  dispatchPaypalPayment,
+  dollarValue,
+  handleValidateInput,
+  initialValue,
+  isPaypalPaymentOpen,
+  issueId,
+  setFundValue,
+  userId,
+}) => (
   <ConditionalRender
     Component={
       <PaypalContainer>
-        <PaypalButton />
+        <TextWrapper>
+          A 3.6% standard transaction fee will be added to cover paypal
+          processing and the safe transfer of funds.
+        </TextWrapper>
+        <PaypalButton
+          dispatchPaypalPayment={dispatchPaypalPayment}
+          dollarValue={dollarValue}
+          handleValidateInput={handleValidateInput}
+          initialValue={initialValue}
+          issueId={issueId}
+          setFundValue={setFundValue}
+          userId={userId}
+        />
       </PaypalContainer>
     }
     shouldRender={isPaypalPaymentOpen}
   />
 );
 
-PaypalView.propTypes = { isPaypalPaymentOpen: T.bool.isRequired };
+PaypalView.propTypes = {
+  dispatchPaypalPayment: T.func.isRequired,
+  dollarValue: T.string.isRequired,
+  handleValidateInput: T.func.isRequired,
+  initialValue: T.string.isRequired,
+  isPaypalPaymentOpen: T.bool.isRequired,
+  issueId: T.string.isRequired,
+  setFundValue: T.func.isRequired,
+  userId: T.string,
+};
 
 export default PaypalView;

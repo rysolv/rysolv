@@ -1,5 +1,6 @@
 import {
   CLEAR_ALERTS,
+  CLEAR_ERRORS,
   CLOSE_MODAL_STATE,
   DELETE_USER_FAILURE,
   DELETE_USER_SUCCESS,
@@ -10,13 +11,19 @@ import {
   INPUT_CHANGE,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  PAYPAL_PAYMENT_FAILURE,
+  PAYPAL_PAYMENT_SUCCESS,
+  PAYPAL_PAYMENT,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
   REMOVE_ISSUE,
+  REMOVE_WATCHING,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
-  SUBMIT_PAYMENT,
+  STRIPE_TOKEN_FAILURE,
+  STRIPE_TOKEN_SUCCESS,
+  STRIPE_TOKEN,
   WITHDRAW_FUNDS_FAILURE,
   WITHDRAW_FUNDS_SUCCESS,
   WITHDRAW_FUNDS,
@@ -25,6 +32,12 @@ import {
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
+  };
+}
+
+export function clearErrors() {
+  return {
+    type: CLEAR_ERRORS,
   };
 }
 
@@ -97,6 +110,27 @@ export function openModalState(payload) {
   };
 }
 
+export function paypalPaymentFailure(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT_FAILURE,
+  };
+}
+
+export function paypalPaymentSuccess(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT_SUCCESS,
+  };
+}
+
+export function paypalPayment(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT,
+  };
+}
+
 export function removeIssueFailure(payload) {
   return {
     payload,
@@ -115,6 +149,13 @@ export function removeIssue(payload) {
   return {
     payload,
     type: REMOVE_ISSUE,
+  };
+}
+
+export function removeWatching(payload) {
+  return {
+    payload,
+    type: REMOVE_WATCHING,
   };
 }
 
@@ -139,10 +180,24 @@ export function saveChange(payload) {
   };
 }
 
-export function submitPayment(payload) {
+export function stripeTokenFailure(payload) {
   return {
     payload,
-    type: SUBMIT_PAYMENT,
+    type: STRIPE_TOKEN_FAILURE,
+  };
+}
+
+export function stripeTokenSuccess(payload) {
+  return {
+    payload,
+    type: STRIPE_TOKEN_SUCCESS,
+  };
+}
+
+export function stripeToken(payload) {
+  return {
+    payload,
+    type: STRIPE_TOKEN,
   };
 }
 

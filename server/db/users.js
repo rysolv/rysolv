@@ -35,7 +35,6 @@ const userValues = [
   'stackoverflow_link',
   'upvotes',
   'username',
-  'watching',
 ];
 
 const userReturnValues = `
@@ -65,18 +64,27 @@ const userReturnValues = `
   rep,
   stackoverflow_link AS "stackoverflowLink",
   upvotes,
-  username,
-  watching
+  username
 `;
+
+// TODO: refactor SQL query to not require group values
+const groupValues = userValues.join(',');
 
 // Check duplicate user email
 const checkDuplicateUserEmail = async email => {
   const queryText = `
-    SELECT id FROM users WHERE (email='${email}')
+    SELECT id, email_verified FROM users WHERE email='${email}'
   `;
   const { rows } = await singleQuery(queryText);
-  if (rows.length > 0) {
-    throw new Error(`User at email already exists`);
+  const [result] = rows;
+  const { email_verified } = result || {};
+  if (rows.length > 0 && email_verified) {
+    throw new Error(`E-mail already exists`);
+  }
+  if (rows.length > 0 && !email_verified) {
+    throw new Error(
+      `E-mail has not been verified. <a href="/signin" style="text-decoration: underline">Sign in</a> to verify.`,
+    );
   }
 };
 
@@ -114,9 +122,35 @@ const getOneUser = async userId => {
   throw new Error(`User does not exist`);
 };
 
+// GET single user in the process of signing up
+const getOneUserSignUp = async email => {
+  const queryText = `SELECT id, email, username FROM users WHERE is_deleted = false AND email = '${email}'`;
+  const { rows } = await singleQuery(queryText);
+  const [oneRow] = rows;
+  return oneRow;
+};
+
 // GET all users
 const getUsers = async () => {
-  const queryText = `SELECT ${userReturnValues} FROM users WHERE is_deleted = false AND email_verified = true`;
+  const queryText = `
+    SELECT ${userReturnValues}, ARRAY_AGG(watching.issue_id) AS watching FROM users
+    LEFT JOIN watching on watching.user_id = users.id
+    WHERE is_deleted = false AND email_verified = true
+    GROUP BY ${groupValues}`;
+  const { rows } = await singleQuery(queryText);
+  return rows;
+};
+
+const getUserWatchList = async ({ userId }) => {
+  const queryText = `
+    SELECT
+      issues.id,
+      issues.modified_date AS "modifiedDate",
+      issues.name,
+      issues.funded_amount AS "fundedAmount"
+    FROM watching
+    JOIN issues on watching.issue_id = issues.id
+    WHERE watching.user_id = '${userId}'`;
   const { rows } = await singleQuery(queryText);
   return rows;
 };
@@ -154,15 +188,6 @@ const searchUsers = async (table, value) => {
   const queryText = `SELECT ${userReturnValues} FROM ${table}`;
   const param = 'is_deleted = false';
   const rows = await singleSearch(queryText, fields, value, param);
-  return rows;
-};
-
-// UPDATE balance of user for payment
-const submitAccountPaymentUser = async (userId, fundValue) => {
-  const { balance } = await getOneUser(userId);
-  const adjustedBalanceValue = balance - fundValue;
-  const queryText = `UPDATE users SET balance=${adjustedBalanceValue} WHERE (id = '${userId}') RETURNING *`;
-  const { rows } = await singleQuery(queryText);
   return rows;
 };
 
@@ -205,11 +230,12 @@ module.exports = {
   checkDuplicateUsername,
   createUser,
   getOneUser,
+  getOneUserSignUp,
   getUsers,
+  getUserWatchList,
   getWatchList,
   searchUsers,
   singleSearch,
-  submitAccountPaymentUser,
   transformUser,
   updateUserArray,
 };

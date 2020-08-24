@@ -12,6 +12,7 @@ import {
   FETCH_ORGANIZATIONS_FAILURE,
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
+  GENERATE_IDENTICON,
   IMPORT_ORGANIZATION_FAILURE,
   IMPORT_ORGANIZATION_SUCCESS,
   IMPORT_ORGANIZATION,
@@ -27,6 +28,7 @@ import {
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
+  UPDATE_IS_MANUAL,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
@@ -120,6 +122,10 @@ export function fetchInfo(payload) {
     payload,
     type: FETCH_INFO,
   };
+}
+
+export function generateIdenticon() {
+  return { type: GENERATE_IDENTICON };
 }
 
 export function importOrganizationFailure(payload) {
@@ -224,6 +230,13 @@ export function updateInfo(payload) {
   return {
     payload,
     type: UPDATE_INFO,
+  };
+}
+
+export function updateIsManual(payload) {
+  return {
+    payload,
+    type: UPDATE_IS_MANUAL,
   };
 }
 

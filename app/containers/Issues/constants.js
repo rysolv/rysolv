@@ -1,13 +1,14 @@
+export const ADD_ATTEMPT = 'app/Issues/ADD_ATTEMPT';
+export const ADD_ATTEMPT_FAILURE = 'app/Issues/ADD_ATTEMPT_FAILURE';
+export const ADD_ATTEMPT_SUCCESS = 'app/Issues/ADD_ATTEMPT_SUCCESS';
+
 export const ADD_COMMENT = 'app/Issues/ADD_COMMENT';
 export const ADD_COMMENT_FAILURE = 'app/Issues/ADD_COMMENT_FAILURE';
 export const ADD_COMMENT_SUCCESS = 'app/Issues/ADD_COMMENT_SUCCESS';
 
+export const ADD_WATCH = 'app/Issues/ADD_WATCH';
 export const ADD_WATCH_FAILURE = 'app/Issues/ADD_WATCH_FAILURE';
 export const ADD_WATCH_SUCCESS = 'app/Issues/ADD_WATCH_SUCCESS';
-
-export const ADD_ATTEMPT = 'app/Issues/ADD_ATTEMPT';
-export const ADD_ATTEMPT_FAILURE = 'app/Issues/ADD_ATTEMPT_FAILURE';
-export const ADD_ATTEMPT_SUCCESS = 'app/Issues/ADD_ATTEMPT_SUCCESS';
 
 export const CHANGE_ISSUE_FILTER = 'app/Issues/CHANGE_ISSUE_FILTER';
 export const CHANGE_ISSUE_SEARCH = 'app/Issues/CHANGE_ISSUE_SEARCH';
@@ -44,6 +45,8 @@ export const FETCH_ISSUE_DETAIL_FAILURE =
 export const FETCH_ISSUE_DETAIL_SUCCESS =
   'app/Issues/FETCH_ISSUE_DETAIL_SUCCESS';
 
+export const GENERATE_IDENTICON = 'app/Issues/GENERATE_IDENTICON';
+
 export const IMPORT_ISSUE = 'app/Issues/IMPORT_ISSUE';
 export const IMPORT_ISSUE_FAILURE = 'app/Issues/IMPORT_ISSUE_FAILURE';
 export const IMPORT_ISSUE_SUCCESS = 'app/Issues/IMPORT_ISSUE_SUCCESS';
@@ -65,11 +68,9 @@ export const SEARCH_ISSUES = 'app/Issues/SEARCH_ISSUES';
 export const SEARCH_ISSUES_FAILURE = 'app/Issues/SEARCH_ISSUES_FAILURE';
 export const SEARCH_ISSUES_SUCCESS = 'app/Issues/SEARCH_ISSUES_SUCCESS';
 
-export const SUBMIT_ACCOUNT_PAYMENT = 'app/Issues/SUBMIT_ACCOUNT_PAYMENT';
-export const SUBMIT_ACCOUNT_PAYMENT_FAILURE =
-  'app/Issues/SUBMIT_ACCOUNT_PAYMENT_FAILURE';
-export const SUBMIT_ACCOUNT_PAYMENT_SUCCESS =
-  'app/Issues/SUBMIT_ACCOUNT_PAYMENT_SUCCESS';
+export const UPDATE_FUNDED_ISSUE = 'app/Issues/UPDATE_FUNDED_ISSUES';
+
+export const UPDATE_IS_MANUAL = 'app/Issues/UPDATE_IS_MANUAL';
 
 export const UPDATE_ISSUE_DETAIL = 'app/Issues/UPDATE_ISSUE_DETAIL';
 
@@ -83,18 +84,16 @@ export const UPVOTE_ISSUE_TEMP = 'app/Issues/UPVOTE_ISSUE_TEMP';
 export const VERIFY_INFO = 'app/Issues/VERIFY_INFO';
 
 export const issueDataDictionary = {
-  issueUrl: 'Issue Url',
   external: 'External Link',
-  issueBody: 'Detailed Description of Issue',
-  languages: 'Languages',
   fundedAmount: 'Funded Amount',
+  issueBody: 'Detailed Description of Issue',
+  issueUrl: 'Issue Url',
+  languages: 'Languages',
   name: 'Title',
 };
 
 export const emptyCardMessage =
   'There are no issues matching the search terms.';
-
-export const successAccountPaymentMessage = 'Thank you for funding!';
 
 export const successCreateIssueMessage = 'Issue was successfully created.';
 

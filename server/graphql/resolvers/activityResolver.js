@@ -5,9 +5,9 @@ module.exports = {
   createActivity: async args => {
     const { activityInput } = args;
     const activity = {
+      action_type: activityInput.actionType || null,
       activity_id: uuidv4(),
       created_date: activityInput.createdDate || new Date(),
-      action_type: activityInput.actionType || null,
       funded_value: activityInput.fundedValue || null,
       is_private: activityInput.isPrivate || false,
       issue_id: activityInput.issueId || null,

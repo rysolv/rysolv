@@ -1,11 +1,14 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-import { PrimaryButton } from 'components/base_ui';
+import { PrimaryButton, SecondaryButton } from 'components/base_ui';
 import {
   borderColor,
   codeGrey,
   commentHeaderColor,
   defaultFontSize,
+  hoverLinkColor,
+  lightBlueColor,
   styledScrollbar,
   subheaderFontSize,
   textColor,
@@ -14,8 +17,8 @@ import {
 export const Body = styled.div`
   ${styledScrollbar}
   font-size: ${defaultFontSize};
-  max-height: 150rem;
   min-height: 4rem;
+  overflow-x: hidden;
   overflow-y: auto;
   padding: 0 1rem;
   width: 100%;
@@ -152,11 +155,23 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   width: auto;
 `;
 
-export const UsernameLink = styled.a`
+export const StyledSecondaryButton = styled(SecondaryButton)`
+  background-color: white;
+  color: ${lightBlueColor};
+  margin: 1rem 0.5rem 0 0;
+  width: 9rem;
+
+  &:hover {
+    background-color: white;
+    box-shadow: none;
+  }
+`;
+
+export const UsernameLink = styled(Link)`
   display: inline;
   font-weight: bold;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
   }
 `;

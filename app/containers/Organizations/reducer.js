@@ -1,5 +1,7 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
+import { v4 as uuidv4 } from 'uuid';
+import Identicon from 'identicon.js';
 import remove from 'lodash/remove';
 
 import {
@@ -16,6 +18,7 @@ import {
   FETCH_ORGANIZATIONS_FAILURE,
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
+  GENERATE_IDENTICON,
   IMPORT_ORGANIZATION_FAILURE,
   IMPORT_ORGANIZATION_SUCCESS,
   IMPORT_ORGANIZATION,
@@ -31,6 +34,7 @@ import {
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
+  UPDATE_IS_MANUAL,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
@@ -40,24 +44,10 @@ import {
 
 export const initialState = {
   alerts: { error: false, success: false },
-  organizations: [],
-  organization: {},
-  organizationData: {
-    importUrl: { error: '', value: '' },
-    organizationDescription: { error: '', value: '' },
-    organizationId: { error: '', value: '' },
-    organizationLogo: {
-      error: '',
-      value: 'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
-    },
-    organizationName: { error: '', value: '' },
-    organizationRepo: { error: '', value: '' },
-    organizationUrl: { error: '', value: '' },
-  },
   editInfo: {
-    id: { error: '', value: '' },
     createdDate: { error: '', value: '' },
     description: { error: '', value: '' },
+    id: { error: '', value: '' },
     issues: { error: '', value: '' },
     logo: { error: '', value: '' },
     modifiedDate: { error: '', value: '' },
@@ -66,6 +56,12 @@ export const initialState = {
     repoUrl: { error: '', value: '' },
     verified: { error: '', value: '' },
   },
+  error: {
+    fetchOrganization: false,
+    importOrganization: { error: false, message: '' },
+    organizations: false,
+    searchOrganizations: false,
+  },
   filter: {
     issues: 'Newest',
     language: [],
@@ -73,6 +69,9 @@ export const initialState = {
     overview: 'Newest',
     price: [0, 5000],
   },
+  importSuccess: false,
+  isManual: false,
+  isVerified: false,
   loading: {
     addOrganization: false,
     deleteOrganization: false,
@@ -84,14 +83,18 @@ export const initialState = {
     updateOrganization: false,
     upvoteIssue: false,
   },
-  error: {
-    fetchOrganization: false,
-    importOrganization: { error: false, message: '' },
-    organizations: false,
-    searchOrganizations: false,
+  organization: {},
+  organizationData: {
+    identiconId: { error: '', value: '' },
+    importUrl: { error: '', value: '' },
+    organizationDescription: { error: '', value: '' },
+    organizationId: { error: '', value: '' },
+    organizationLogo: { error: '', value: '' },
+    organizationName: { error: '', value: '' },
+    organizationRepo: { error: '', value: '' },
+    organizationUrl: { error: '', value: '' },
   },
-  importSuccess: false,
-  isVerified: false,
+  organizations: [],
   search: {
     contributorInput: { error: '', value: '' },
     issueInput: { error: '', value: '' },
@@ -189,6 +192,13 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       draft.loading.fetchOrganization = true;
       break;
     }
+    case GENERATE_IDENTICON: {
+      const identiconId = uuidv4();
+      const identicon = new Identicon(identiconId, 250).toString();
+      draft.organizationData.identiconId.value = identiconId;
+      draft.organizationData.organizationLogo.value = `data:image/png;base64,${identicon}`;
+      break;
+    }
     case IMPORT_ORGANIZATION_FAILURE: {
       const { error } = payload;
       draft.error.importOrganization = { error: true, message: error.message };
@@ -198,8 +208,10 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     case IMPORT_ORGANIZATION_SUCCESS: {
       const { importOrganization } = payload;
       draft.loading.importOrganization = false;
-      Object.keys(draft.organizationData).map(field => {
-        draft.organizationData[field].value = importOrganization[field];
+      Object.keys(importOrganization).map(field => {
+        if (draft.organizationData[field]) {
+          draft.organizationData[field].value = importOrganization[field];
+        }
       });
       draft.importSuccess = true;
       break;
@@ -278,6 +290,11 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case UPDATE_INFO: {
       draft.loading.updateOrganization = true;
+      break;
+    }
+    case UPDATE_IS_MANUAL: {
+      const { value } = payload;
+      draft.isManual = value;
       break;
     }
     case UPVOTE_ISSUE_FAILURE: {

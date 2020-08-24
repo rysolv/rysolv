@@ -18,7 +18,6 @@ const closeIcon = iconDictionary('close');
 const WatchList = ({
   handleClose,
   handleDeletePullRequest,
-  handleRedirect,
   isSignedIn,
   route,
   tableData,
@@ -36,19 +35,15 @@ const WatchList = ({
   return (
     <WatchListContainer>
       <IconWrapper>
-        <IconButton
-          icon={closeIcon}
-          label="Close"
-          onClick={() => handleClose()}
-        />
+        <IconButton icon={closeIcon} label="Close" onClick={handleClose} />
       </IconWrapper>
       <StyledTitle>{title}</StyledTitle>
       <ConditionalRender
         Component={ListComponentToRender}
         FallbackComponent={<EmptyList type={type} />}
         propsToPassDown={{
+          handleClose,
           handleDeletePullRequest,
-          handleRedirect,
           isSignedIn,
           route,
           tableData,
@@ -62,7 +57,6 @@ const WatchList = ({
 WatchList.propTypes = {
   handleClose: T.func,
   handleDeletePullRequest: T.func,
-  handleRedirect: T.func,
   isSignedIn: T.bool,
   route: T.string,
   tableData: T.oneOfType([T.array, T.object]),

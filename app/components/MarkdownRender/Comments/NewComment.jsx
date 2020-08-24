@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
 
-import { ProfileImage } from 'components/base_ui';
+import { ImageLinkWrapper } from 'components/base_ui';
 import Markdown from 'components/Markdown';
 
 import {
@@ -9,39 +9,51 @@ import {
   NewCommentContainer,
   ProfileImageContainer,
   StyledPrimaryButton,
+  StyledSecondaryButton,
 } from '../styledComponents';
 
-const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
+const NewComment = ({ activeUser, handleComment, issueId }) => {
   const [body, setBody] = useState('');
+  const [preview, setPreview] = useState(false);
   const { id, profilePic, username } = activeUser;
 
-  const handleClick = () => {
-    handleComment({ activeUser, body, issueId });
-    setBody('');
+  const handlePreview = () => setPreview(!preview);
+
+  const handleSubmit = () => {
+    if (body.length > 0) {
+      handleComment({ activeUser, body, issueId });
+      setBody('');
+      setPreview(false);
+    }
+  };
+
+  const handleKeydown = ({ ctrlKey, key }) => {
+    if (ctrlKey && key === 'Enter') {
+      handleSubmit();
+    }
   };
 
   return (
     <FlexContainer>
       <ProfileImageContainer addMargin>
-        <ProfileImage
+        <ImageLinkWrapper
           alt={username}
-          detailRoute={`/users/detail/${id}`}
-          handleNav={handleNav}
-          profilePic={profilePic}
-          size="4rem"
+          image={profilePic}
+          route={`/users/detail/${id}`}
         />
       </ProfileImageContainer>
-      <NewCommentContainer>
-        <Markdown
-          comment
-          body={body}
-          handleInput={setBody}
-          handleEnter={handleClick}
-        />
+      <NewCommentContainer onKeyDown={e => handleKeydown(e)}>
+        <Markdown body={body} comment handleInput={setBody} preview={preview} />
+        {body.length > 0 && (
+          <StyledSecondaryButton
+            label={preview ? 'Edit' : 'Preview'}
+            onClick={handlePreview}
+          />
+        )}
         <StyledPrimaryButton
           disabled={body.length === 0}
           label="Comment"
-          onClick={() => handleClick()}
+          onClick={handleSubmit}
         />
       </NewCommentContainer>
     </FlexContainer>
@@ -51,7 +63,6 @@ const NewComment = ({ activeUser, handleNav, handleComment, issueId }) => {
 NewComment.propTypes = {
   activeUser: T.object.isRequired,
   handleComment: T.func.isRequired,
-  handleNav: T.func.isRequired,
   issueId: T.string.isRequired,
 };
 

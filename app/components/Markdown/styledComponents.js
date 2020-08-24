@@ -7,8 +7,6 @@ import {
   textColor,
 } from 'defaultStyleHelper';
 
-import { SecondaryButton } from '../base_ui';
-
 export const MarkdownContainer = styled.div`
   font-size: ${defaultFontSize};
   margin: 0;
@@ -51,10 +49,6 @@ export const MarkdownContainer = styled.div`
       min-height: ${props => (props.comment ? '5.5rem' : '20rem')};
     }
   }
-`;
-
-export const StyledSecondaryButton = styled(SecondaryButton)`
-  width: auto;
 `;
 
 export const EditContainer = styled.div`

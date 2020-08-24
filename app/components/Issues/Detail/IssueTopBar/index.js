@@ -12,6 +12,7 @@ import {
 
 const IssueTopBar = ({
   activeUser,
+  addWatching,
   data,
   dispatchFetchPullRequestList,
   dispatchFetchWatchList,
@@ -21,8 +22,7 @@ const IssueTopBar = ({
   isDesktop,
   isSignedIn,
 }) => {
-  const { balance, email, firstName, id: userId, lastName } = activeUser;
-  const { fundedAmount, id: issueId, open, organizationId } = data;
+  const { fundedAmount, id: issueId, open } = data;
   return (
     <Fragment>
       <StyledIssueHeader>
@@ -34,17 +34,11 @@ const IssueTopBar = ({
           />
           {!isDesktop && (
             <FundIssueButton
-              balance={balance}
               disabled={!open}
               dispatchOpenModal={dispatchOpenModal}
-              email={email}
-              firstName={firstName}
               fundedAmount={fundedAmount}
               issueId={issueId}
-              lastName={lastName}
               open={open}
-              organizationId={organizationId}
-              userId={userId}
             />
           )}
         </IssueBarTopRow>
@@ -52,6 +46,7 @@ const IssueTopBar = ({
         <IssueBarBottomRow>
           <StyledIssueButtonBar
             activeUser={activeUser}
+            addWatching={addWatching}
             data={data}
             dispatchFetchPullRequestList={dispatchFetchPullRequestList}
             dispatchFetchWatchList={dispatchFetchWatchList}
@@ -68,6 +63,7 @@ const IssueTopBar = ({
 
 IssueTopBar.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   data: T.object,
   dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,

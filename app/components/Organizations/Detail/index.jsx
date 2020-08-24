@@ -157,7 +157,7 @@ const OrganizationDetailView = ({
         <Image src={logoChange} />
         <BaseFileInput
           accept="image/png, image/jpeg"
-          id="logo-file-input"
+          id="logoFileInput"
           onChange={handleUploadLogo}
         />
       </EditLogoWrapper>
@@ -215,11 +215,7 @@ const OrganizationDetailView = ({
 
   return (
     <DetailContainer>
-      <BackNav
-        label="Back to Organizations"
-        handleNav={handleNav}
-        path="/organizations"
-      />
+      <BackNav label="Back to Organizations" path="/organizations" />
       <ConditionalRender
         Component={
           <StyledErrorSuccessBanner
@@ -261,7 +257,7 @@ const OrganizationDetailView = ({
             setLanguagesChange={setLanguagesChange}
           />
           <Divider />
-          <RecentActivityView activity={activity} handleNav={handleNav} />
+          <RecentActivityView activity={activity} />
           <Divider shouldHide={!isMobileOrTable} />
         </SidebarTabs>
       </TabsContainer>

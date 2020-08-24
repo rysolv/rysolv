@@ -13,8 +13,7 @@ import OrganizationsDetail from 'containers/Organizations/Detail';
 import OrganizationsEdit from 'containers/Organizations/Edit';
 import Overview from 'containers/Overview';
 import Settings from 'containers/Settings';
-import SignIn from 'containers/Signin/SignIn';
-import SignUp from 'containers/Signin/Signup';
+import SignIn from 'containers/Signin';
 import UsersAdd from 'containers/Users/Add';
 import UsersDetail from 'containers/Users/Detail';
 import UsersEdit from 'containers/Users/Edit';
@@ -36,7 +35,6 @@ const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
 const PublicOrganizationsDetail = withAuth(publicConfig, OrganizationsDetail);
 const PublicOverview = withAuth(publicConfig, Overview);
 const PublicSignIn = withAuth(publicConfig, SignIn);
-const PublicSignUp = withAuth(publicConfig, SignUp);
 const PublicUsersDetail = withAuth(publicConfig, UsersDetail);
 
 // prettier-ignore
@@ -56,7 +54,7 @@ const Routes = () => (
     <Route exact path="/organizations/search/:searchValue?" component={PublicOverview} />
     <Route exact path="/settings/:view?" component={PrivateSettings} />
     <Route exact path="/signin" component={PublicSignIn} />
-    <Route exact path="/signup" component={PublicSignUp} />
+    <Route exact path="/signup" component={PublicSignIn} />
     <Route exact path="/users" component={PublicOverview} />
     <Route exact path="/users/add" component={PrivateUsersAdd} />
     <Route exact path="/users/detail/:id?" component={PublicUsersDetail} />

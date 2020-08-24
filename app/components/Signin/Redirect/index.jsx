@@ -11,9 +11,9 @@ import {
   UsernameWrapper,
 } from '../styledComponents';
 
-const Redirect = ({ data: { username }, dispatchSignout, handleNav }) => {
+const Redirect = ({ data: { username }, dispatchSignOut, handleNav }) => {
   const handleSignout = () => {
-    dispatchSignout();
+    dispatchSignOut();
     handleNav('/signin');
   };
   return (
@@ -40,7 +40,7 @@ const Redirect = ({ data: { username }, dispatchSignout, handleNav }) => {
 
 Redirect.propTypes = {
   data: T.object.isRequired,
-  dispatchSignout: T.func.isRequired,
+  dispatchSignOut: T.func.isRequired,
   handleNav: T.func.isRequired,
 };
 

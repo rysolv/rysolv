@@ -4,7 +4,6 @@ import { BackNav } from 'components/base_ui';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import injectSaga from 'utils/injectSaga';
@@ -36,12 +35,12 @@ export class UsersAdd extends React.PureComponent {
   }
 
   render() {
-    const { data, loading, step, handleNav } = this.props;
+    const { data, loading, step } = this.props;
 
     const StepToRender = addUserDictionary[step];
     return (
       <AddWrapper>
-        <BackNav label="Back to Users" handleNav={handleNav} path="/users" />
+        <BackNav label="Back to Users" path="/users" />
         <AddForm>
           <AsyncRender
             asyncData={{ data }}
@@ -58,7 +57,6 @@ UsersAdd.propTypes = {
   data: T.object,
   dispatchClearForm: T.func,
   handleIncrementStep: T.func,
-  handleNav: T.func,
   loading: T.bool.isRequired,
   step: T.number.isRequired,
 };
@@ -79,7 +77,6 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchClearForm: () => dispatch(clearForm()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
-    handleNav: route => dispatch(push(route)),
   };
 }
 

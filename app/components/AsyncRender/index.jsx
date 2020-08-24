@@ -21,7 +21,7 @@ const AsyncRender = ({
   const FootnoteComponent = (
     <Fragment>
       <span>You can</span>
-      {<LinkWrapper to="/contact-us"> contact us </LinkWrapper>}
+      <LinkWrapper to="/contact-us"> contact us </LinkWrapper>
       <span>if the problem persists</span>.
     </Fragment>
   );

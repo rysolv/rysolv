@@ -43,6 +43,10 @@ export const ImportFormContainer = styled.section`
   .MuiFormHelperText-root {
     font-size: ${detailFontSize};
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const InputFormWrapper = styled.div`
