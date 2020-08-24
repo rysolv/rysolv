@@ -11,7 +11,7 @@ const createPullRequest = async data => {
     pullRequests(${parameters})
     VALUES(${substitution})
     returning ${pullRequestReturnValues}`;
-  const [result] = await mapValues(queryText, values);
+  const [result] = await mapValues(queryText, [values]);
   return result;
 };
 

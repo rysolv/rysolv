@@ -24,42 +24,44 @@ const {
 
 // Alter existing tables
 const alterTables = async () => {
-  await singleQuery(alterActivityTable);
-  await singleQuery(alterCommentsTable);
-  await singleQuery(alterFundingTable);
-  await singleQuery(alterIssuesTable);
-  await singleQuery(alterOrganizationsTable);
-  await singleQuery(alterPullRequestsTable);
-  await singleQuery(alterUsersTable);
-  await singleQuery(alterWatchingTable);
-  await singleQuery(alterWithdrawalTable);
+  await singleQuery({ queryText: alterActivityTable });
+  await singleQuery({ queryText: alterCommentsTable });
+  await singleQuery({ queryText: alterFundingTable });
+  await singleQuery({ queryText: alterIssuesTable });
+  await singleQuery({ queryText: alterOrganizationsTable });
+  await singleQuery({ queryText: alterPullRequestsTable });
+  await singleQuery({ queryText: alterUsersTable });
+  await singleQuery({ queryText: alterWatchingTable });
+  await singleQuery({ queryText: alterWithdrawalTable });
 };
 
 // Create empty tables
 const createTables = async () => {
-  await singleQuery(createActivityTable);
-  await singleQuery(createCommentsTable);
-  await singleQuery(createFundingsTable);
-  await singleQuery(createIssuesTable);
-  await singleQuery(createOrganizationsTable);
-  await singleQuery(createPullRequestsTable);
-  await singleQuery(createUsersTable);
-  await singleQuery(createWatchingTable);
-  await singleQuery(createWithdrawalTable);
+  await singleQuery({ queryText: createActivityTable });
+  await singleQuery({ queryText: createCommentsTable });
+  await singleQuery({ queryText: createFundingsTable });
+  await singleQuery({ queryText: createIssuesTable });
+  await singleQuery({ queryText: createOrganizationsTable });
+  await singleQuery({ queryText: createPullRequestsTable });
+  await singleQuery({ queryText: createUsersTable });
+  await singleQuery({ queryText: createWatchingTable });
+  await singleQuery({ queryText: createWithdrawalTable });
 };
 
 // Drop all tables
 const dropAllTables = async () => {
   // TODO: figure out a way to await/map through this
-  await singleQuery('DROP TABLE IF EXISTS activity cascade');
-  await singleQuery('DROP TABLE IF EXISTS comments cascade');
-  await singleQuery('DROP TABLE IF EXISTS funding cascade');
-  await singleQuery('DROP TABLE IF EXISTS issues cascade');
-  await singleQuery('DROP TABLE IF EXISTS organizations cascade');
-  await singleQuery('DROP TABLE IF EXISTS pullRequests cascade');
-  await singleQuery('DROP TABLE IF EXISTS users cascade');
-  await singleQuery('DROP TABLE IF EXISTS watching cascade');
-  await singleQuery('DROP TABLE IF EXISTS withdrawal cascade');
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS activity cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS comments cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS funding cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS issues cascade' });
+  await singleQuery({
+    queryText: 'DROP TABLE IF EXISTS organizations cascade',
+  });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS pullRequests cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS users cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS watching cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS withdrawal cascade' });
 };
 
 // Print all rows in all tables

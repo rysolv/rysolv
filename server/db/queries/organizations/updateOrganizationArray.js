@@ -7,7 +7,7 @@ const updateOrganizationArray = async (column, id, data, remove) => {
     SET ${column} = ${action}(${column}, '${data}')
     WHERE (id = '${id}')
     RETURNING *`;
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText });
   return rows;
 };
 

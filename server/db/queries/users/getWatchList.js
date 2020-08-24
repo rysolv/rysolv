@@ -23,7 +23,7 @@ const getWatchList = async (id, type) => {
   };
   const { values, table } = paramsDictionary[type];
   const queryText = `SELECT ${values} FROM ${table} WHERE (id = '${id}')`;
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText });
   return rows;
 };
 

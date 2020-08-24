@@ -65,16 +65,11 @@ const parameterizedQuery = async ({ queryText, values }) => {
   }
 };
 
-// Sequential query for table creations
-const sequentialQuery = async () => {
-  // TODO: use this for DeleteTable and CreateTable
-};
-
-// single query (no data)
-const singleQuery = async queryText => {
+// Single Query. Accepts array of values for parameterized queries
+const singleQuery = async ({ queryText, values }) => {
   const client = await pool.connect();
   try {
-    const result = await client.query(queryText);
+    const result = await client.query(queryText, values);
     client.release();
     return result;
   } catch (error) {
@@ -86,7 +81,7 @@ const singleQuery = async queryText => {
 const singleItem = async (table, id, values, column = 'id') => {
   const queryValues = values || '*';
   const queryText = `SELECT ${queryValues} FROM ${table} WHERE (${column}='${id}')`;
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText });
   return rows;
 };
 
@@ -98,7 +93,7 @@ const singleSearch = async (queryText, fields, value, param) => {
   const formattedSearchString = searchString.join(' OR ');
   const searchParam = param ? `${param} AND ` : '';
   const searchQuery = `${queryText} WHERE ${searchParam}(${formattedSearchString})`;
-  const { rows } = await singleQuery(searchQuery);
+  const { rows } = await singleQuery({ searchQuery });
   return rows;
 };
 
@@ -107,7 +102,6 @@ module.exports = {
   mapQueryPrint,
   mapValues,
   parameterizedQuery,
-  sequentialQuery,
   singleItem,
   singleQuery,
   singleSearch,

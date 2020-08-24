@@ -9,7 +9,7 @@ const updateUserArray = async ({ column, data, remove, userId }) => {
       SET ${column} = ${action}(${column}, '${data}')
       WHERE (id = '${userId}')
       RETURNING *`;
-    const { rows } = await singleQuery(queryText);
+    const { rows } = await singleQuery({ queryText });
     return rows;
   }
   return false;

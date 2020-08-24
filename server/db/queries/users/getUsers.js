@@ -8,7 +8,7 @@ const getUsers = async () => {
     LEFT JOIN watching on watching.user_id = users.id
     WHERE is_deleted = false AND email_verified = true
     GROUP BY ${groupValues}`;
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText });
   return rows;
 };
 

@@ -125,7 +125,7 @@ export function* fetchInfoSaga({ payload }) {
         message
       }
     }
-    getActivity(column: "activity.organization_id", id: "${itemId}") {
+    getOrganizationActivity(organizationId: "${itemId}") {
       __typename
       ... on ActivityArray {
         activityArray {
@@ -157,7 +157,7 @@ export function* fetchInfoSaga({ payload }) {
     const {
       data: {
         oneOrganization,
-        getActivity: { activityArray },
+        getOrganizationActivity: { activityArray },
       },
     } = yield call(post, '/graphql', graphql);
     oneOrganization.activity = activityArray;

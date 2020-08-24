@@ -5,7 +5,7 @@ const checkDuplicateUserEmail = async email => {
   const queryText = `
     SELECT id, email_verified AS "emailVerified" FROM users WHERE email='${email}'
   `;
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText });
   const [result] = rows;
   const { emailVerified } = result || {};
   if (rows.length > 0 && emailVerified) {

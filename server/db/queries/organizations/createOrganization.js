@@ -12,7 +12,7 @@ const createOrganization = async data => {
     organizations(${parameters})
     VALUES(${substitution})
     returning ${organizationReturnValues}`;
-  const result = await mapValues(queryText, values);
+  const result = await mapValues(queryText, [values]);
   return result;
 };
 

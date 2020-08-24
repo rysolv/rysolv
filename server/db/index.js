@@ -1,4 +1,8 @@
-const { createActivity, getActivity } = require('./queries/activity');
+const {
+  createActivity,
+  getOrganizationActivity,
+  getUserActivity,
+} = require('./queries/activity');
 const {
   createComment,
   getComments,
@@ -80,7 +84,6 @@ module.exports = {
   deleteOrganization,
   deletePullRequest,
   downvoteIssue,
-  getActivity,
   getComments,
   getIssueComments,
   getIssues,
@@ -89,10 +92,12 @@ module.exports = {
   getOnePullRequest,
   getOneUser,
   getOneUserSignUp,
+  getOrganizationActivity,
   getOrganizations,
   getOrganizationsWhere,
   getPullRequestList,
   getPullRequests,
+  getUserActivity,
   getUserPullRequests,
   getUsers,
   getUserWatchList,

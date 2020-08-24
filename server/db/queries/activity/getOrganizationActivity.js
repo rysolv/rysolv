@@ -2,19 +2,15 @@ const { activityReturnValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
 // GET activity for a specific id
-const getActivity = async (table, column, id) => {
-  const selection = column
-    ? `WHERE ${column} = '${id}' AND activity.is_private = false`
-    : 'WHERE activity.is_private = false';
-
-  const queryText = `SELECT ${activityReturnValues} FROM ${table}
+const getOrganizationActivity = async ({ organizationId }) => {
+  const queryText = `SELECT ${activityReturnValues} FROM activity
     LEFT JOIN issues on (activity.issue_id = issues.id)
     LEFT JOIN organizations on (activity.organization_id = organizations.id)
     LEFT JOIN users on (activity.user_id = users.id)
-    ${selection}
+    WHERE activity.organization_id = $1
     ORDER BY activity.created_date DESC`;
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText, values: [organizationId] });
   return rows;
 };
 
-module.exports = getActivity;
+module.exports = getOrganizationActivity;

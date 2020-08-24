@@ -6,7 +6,7 @@ const getUserPullRequests = async id => {
     LEFT JOIN issues ON (pullRequests.issue_id = issues.id)
     WHERE (pullRequests.user_id='${id}')`;
 
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText });
   return rows;
 };
 

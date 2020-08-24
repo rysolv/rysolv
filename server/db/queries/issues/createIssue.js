@@ -13,7 +13,7 @@ const createIssue = async data => {
     issues(${parameters})
     VALUES(${substitution})
     returning *`;
-  const result = await mapValues(queryText, values);
+  const result = await mapValues(queryText, [values]);
   return result;
 };
 

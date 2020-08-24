@@ -5,7 +5,7 @@ const closeIssue = async (id, shouldClose) => {
   const rows = await singleItem('issues', id);
   if (rows) {
     const queryText = `UPDATE issues SET open=${!shouldClose} WHERE (id='${id}')`;
-    await singleQuery(queryText);
+    await singleQuery({ queryText });
     return `Issue ${id} has been successfully ${
       shouldClose ? 'closed' : 'reopened'
     }.`;

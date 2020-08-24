@@ -1,6 +1,6 @@
 const { activityValues } = require('./constants');
 const { formatParamaters } = require('../../helpers');
-const { mapValues } = require('../../baseQueries');
+const { singleQuery } = require('../../baseQueries');
 
 // Record a new activity
 const createActivity = async data => {
@@ -11,7 +11,7 @@ const createActivity = async data => {
   const queryText = `INSERT INTO
     activity(${parameters})
     VALUES(${substitution})`;
-  await mapValues(queryText, values);
+  await singleQuery({ queryText, values });
   return 'Successfully logged activity';
 };
 

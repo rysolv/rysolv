@@ -1,7 +1,9 @@
 const createActivity = require('./createActivity');
-const getActivity = require('./getActivity');
+const getOrganizationActivity = require('./getOrganizationActivity');
+const getUserActivity = require('./getUserActivity');
 
 module.exports = {
   createActivity,
-  getActivity,
+  getOrganizationActivity,
+  getUserActivity,
 };

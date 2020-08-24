@@ -7,7 +7,7 @@ const getIssues = async () => {
     LEFT JOIN organizations ON (issues.organization_id = organizations.id)
     LEFT JOIN watching ON watching.issue_id = issues.id
     GROUP BY ${groupValues}`;
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText });
   return rows;
 };
 

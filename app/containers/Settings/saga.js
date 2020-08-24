@@ -82,7 +82,7 @@ export function* fetchInfoSaga({ payload }) {
         username,
         watching,
       }
-      getActivity(column: "user_id", id: "${userId}") {
+      getUserActivity(userId: "${userId}") {
         __typename
         ... on ActivityArray {
           activityArray {
@@ -113,7 +113,7 @@ export function* fetchInfoSaga({ payload }) {
     const {
       data: {
         oneUser,
-        getActivity: { activityArray },
+        getUserActivity: { activityArray },
       },
     } = yield call(post, '/graphql', graphql);
     oneUser.activity = activityArray;

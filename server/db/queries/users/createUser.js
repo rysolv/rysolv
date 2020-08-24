@@ -12,7 +12,7 @@ const createUser = async data => {
     users( ${parameters} )
     VALUES(${substitution})
     returning *`;
-  const [result] = await mapValues(queryText, values);
+  const [result] = await mapValues(queryText, [values]);
   return result;
 };
 

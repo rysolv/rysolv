@@ -7,7 +7,7 @@ const deleteOrganization = async id => {
     const queryText = `DELETE FROM organizations WHERE (id='${id}') RETURNING *`;
     const {
       rows: [resultRow],
-    } = await singleQuery(queryText);
+    } = await singleQuery({ queryText });
     const { name } = resultRow;
     return `${name} was successfully deleted from organizations.`;
   }

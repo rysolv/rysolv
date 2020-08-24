@@ -11,7 +11,7 @@ const getOneIssue = async id => {
     WHERE (issues.id='${id}')
     GROUP BY ${groupValues}, users.id, users.username, users.profile_pic
   `;
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText });
   if (rows.length > 0) {
     return rows;
   }

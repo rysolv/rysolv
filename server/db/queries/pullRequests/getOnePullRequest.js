@@ -5,7 +5,7 @@ const getOnePullRequest = async id => {
   const queryText = `SELECT ${pullRequestDetailValues} FROM pullRequests
     LEFT JOIN issues ON (pullRequests.issue_id = issues.id)
     WHERE (pullRequests.pullrequest_id='${id}')`;
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText });
   if (rows.length > 0) {
     return rows;
   }

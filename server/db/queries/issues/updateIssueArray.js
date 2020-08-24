@@ -9,7 +9,7 @@ const updateIssueArray = async ({ column, issueId, data, remove }) => {
       SET ${column} = array_remove(${column}, '${data}')
       WHERE (id = '${issueId}')
       RETURNING *`;
-      const { rows } = await singleQuery(queryText);
+      const { rows } = await singleQuery({ queryText });
       const [oneRow] = rows;
       return oneRow;
     }
@@ -17,7 +17,7 @@ const updateIssueArray = async ({ column, issueId, data, remove }) => {
       SET ${column} = array_append(${column}, '${data}')
       WHERE (id = '${issueId}')
       RETURNING *`;
-    const { rows } = await singleQuery(queryText);
+    const { rows } = await singleQuery({ queryText });
     const [oneRow] = rows;
     return oneRow;
   }

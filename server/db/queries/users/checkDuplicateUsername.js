@@ -5,7 +5,7 @@ const checkDuplicateUsername = async username => {
   const queryText = `
     SELECT id FROM users WHERE (username='${username}')
   `;
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText });
   if (rows.length > 0) {
     throw new Error(`Username ${username} already exists`);
   }

@@ -51,7 +51,7 @@ const formatParamaters = (array, obj) => {
   return {
     parameters: parameters.join(),
     substitution: substitution.join(),
-    values: [values],
+    values,
   };
 };
 

@@ -11,7 +11,7 @@ const getPullRequestList = async id => {
       users.username FROM pullRequests
     LEFT JOIN users ON (pullRequests.user_id = users.id)
     WHERE (pullRequests.pullrequest_id='${id}')`;
-  const { rows } = await singleQuery(queryText);
+  const { rows } = await singleQuery({ queryText });
   return rows;
 };
 
