@@ -12,7 +12,7 @@ const createIssue = async data => {
   const queryText = `INSERT INTO
     issues(${parameters})
     VALUES(${substitution})
-    returning *`;
+    RETURNING *`;
   const result = await mapValues(queryText, [values]);
   return result;
 };

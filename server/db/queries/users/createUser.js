@@ -11,7 +11,7 @@ const createUser = async data => {
   const queryText = `INSERT INTO
     users( ${parameters} )
     VALUES(${substitution})
-    returning *`;
+    RETURNING *`;
   const [result] = await mapValues(queryText, [values]);
   return result;
 };

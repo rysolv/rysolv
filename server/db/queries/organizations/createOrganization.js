@@ -11,7 +11,7 @@ const createOrganization = async data => {
   const queryText = `INSERT INTO
     organizations(${parameters})
     VALUES(${substitution})
-    returning ${organizationReturnValues}`;
+    RETURNING ${organizationReturnValues}`;
   const result = await mapValues(queryText, [values]);
   return result;
 };

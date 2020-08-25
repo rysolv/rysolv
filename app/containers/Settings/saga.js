@@ -86,17 +86,17 @@ export function* fetchInfoSaga({ payload }) {
         __typename
         ... on ActivityArray {
           activityArray {
-            activityId
-            createdDate
-            actionType
-            issueId
-            organizationId
-            organizationName
-            pullRequestId
-            userId
-            fundedValue
-            issueName
-            username
+            activityId,
+            createdDate,
+            actionType,
+            issueId,
+            organizationId,
+            organizationName,
+            pullRequestId,
+            userId,
+            fundedValue,
+            issueName,
+            username,
           }
         }
         ... on Error {
@@ -112,8 +112,8 @@ export function* fetchInfoSaga({ payload }) {
     });
     const {
       data: {
-        oneUser,
         getUserActivity: { activityArray },
+        oneUser,
       },
     } = yield call(post, '/graphql', graphql);
     oneUser.activity = activityArray;

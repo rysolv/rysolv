@@ -307,11 +307,11 @@ export function* fetchIssueDetailSaga({ payload }) {
         }
       }
       getIssueComments(issueId: "${id}") {
-        body
-        createdDate
-        profilePic
-        userId
-        username
+        body,
+        createdDate,
+        profilePic,
+        userId,
+        username,
       }
     }
   `;

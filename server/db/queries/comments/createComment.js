@@ -2,7 +2,7 @@ const { commentValues } = require('./constants');
 const { formatParamaters } = require('../../helpers');
 const { singleQuery } = require('../../baseQueries');
 
-// Create new Comments from seed
+// Create new Comment
 const createComment = async data => {
   const { parameters, substitution, values } = formatParamaters(
     commentValues,
@@ -14,8 +14,8 @@ const createComment = async data => {
   VALUES(${substitution})
   RETURNING *`;
   const { rows } = await singleQuery({ queryText, values });
-  const [result] = rows;
-  return result;
+  const [oneRow] = rows;
+  return oneRow;
 };
 
 module.exports = createComment;

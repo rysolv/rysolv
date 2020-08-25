@@ -6,10 +6,7 @@ const checkDuplicateIssue = async repo => {
     SELECT id FROM issues WHERE (repo='${repo}')
   `;
   const { rows } = await singleQuery({ queryText });
-  if (rows.length > 0) {
-    return true;
-  }
-  return false;
+  return rows.length > 0;
 };
 
 module.exports = checkDuplicateIssue;

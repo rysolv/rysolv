@@ -11,12 +11,13 @@ const {
 module.exports = {
   createComment: async args => {
     const { commentInput } = args;
+    const date = new Date();
     try {
       const comment = {
         body: commentInput.body || '',
-        created_date: new Date(),
+        created_date: date,
         id: uuidv4(),
-        modified_date: new Date(),
+        modified_date: date,
         target: commentInput.target,
         user_id: commentInput.user,
       };

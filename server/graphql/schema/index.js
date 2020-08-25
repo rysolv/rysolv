@@ -336,7 +336,7 @@ module.exports = buildSchema(`
     getPullRequests: PullRequestArrayResult
     getUsers: [User!]!
 
-    getIssueComments(issueId: ID!): [Comment]
+    getIssueComments(issueId: ID!): [Comment]!
     getUserOrganizations(id: ID!): [Organization!]
     getUserPullRequests(id: ID!): PullRequestArrayResult
 

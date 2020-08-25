@@ -1,7 +1,7 @@
 const { activityReturnValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
-// GET activity for a specific id
+// GET Organization Activity for a specific id
 const getOrganizationActivity = async ({ organizationId }) => {
   const queryText = `SELECT ${activityReturnValues} FROM activity
     LEFT JOIN issues on (activity.issue_id = issues.id)
