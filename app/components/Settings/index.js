@@ -3,9 +3,9 @@ import T from 'prop-types';
 
 import {
   BaseFileInput,
+  Coin,
   ConditionalRender,
   IconButton,
-  Star,
 } from 'components/base_ui';
 import { getBase64 } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
@@ -263,7 +263,7 @@ const SettingsView = ({
             />
           </LinksWrapper>
           <Rep>
-            <Star />
+            <Coin />
             &nbsp;<b> {rep}</b>&nbsp;credits
           </Rep>
           <UserMetricsView

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { Star } from 'components/base_ui';
+import { Coin } from 'components/base_ui';
 import {
   defaultFontSize,
   detailFontSize,
@@ -28,7 +28,7 @@ export const IconWrapper = styled.div`
   display: flex;
   font-size: ${defaultFontSize};
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 `;
 
 export const ImageContainer = styled.div`
@@ -82,11 +82,7 @@ export const RowSection = styled.div`
   flex-direction: row;
   flex-flow: wrap;
   justify-content: start;
-  margin-left: 1rem;
-
-  ${mobile} {
-    margin-left: 2rem;
-  }
+  margin-left: 2rem;
 
   ${mobileS} {
     margin-left: 0;
@@ -105,19 +101,19 @@ export const RowSectionWrapper = styled.div`
   }
 `;
 
+export const StyledCoin = styled(Coin)`
+  margin: 0.5rem;
+`;
+
 export const StyledListSquare = styled.div`
   background-color: white;
   border-radius: 0.2rem;
   border: 0.1rem solid #e0e0e0;
   color: ${textColor};
   height: 17.5rem;
-  margin: 0 1rem 1rem 0;
+  margin: 0 2rem 2rem 0;
   padding: 0.5rem;
   width: 17.5rem;
-
-  ${mobile} {
-    margin: 0 2rem 2rem 0;
-  }
 
   ${mobileS} {
     height: auto;
@@ -142,10 +138,6 @@ export const StyledSquare = styled.div`
     flex-direction: row;
     justify-content: space-between;
   }
-`;
-
-export const StyledStar = styled(Star)`
-  margin: 0.5rem;
 `;
 
 export const TextContainer = styled.div`

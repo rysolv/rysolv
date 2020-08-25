@@ -41,7 +41,6 @@ import Settings from '@material-ui/icons/Settings';
 import Three from '@material-ui/icons/Looks3Outlined';
 import Twitter from '@material-ui/icons/Twitter';
 import Two from '@material-ui/icons/LooksTwoOutlined';
-import Upvote from '@material-ui/icons/ArrowUpward';
 import Verified from '@material-ui/icons/VerifiedUser';
 import ViewAll from '@material-ui/icons/NavigateNext';
 import Visibility from '@material-ui/icons/Visibility';
@@ -50,10 +49,10 @@ import Warning from '@material-ui/icons/Warning';
 import WebIcon from '@material-ui/icons/Web';
 
 import CloseMenu from './svg/CloseMenu';
+import Coin from './svg/RysolvCoin';
 import Gitlab from './svg/Gitlab';
 import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
-import RysolvCoin from './svg/RysolvCoin';
 import SiteLogo from './svg/SiteLogo';
 import Stackoverflow from './svg/Stackoverflow';
 
@@ -71,6 +70,7 @@ export default (name, options) => {
     closeCircle: CloseCircle,
     closeMenu: CloseMenu,
     code: Code,
+    coin: Coin,
     comments: Comments,
     computer: Computer,
     creditCard: CreditCard,
@@ -100,13 +100,11 @@ export default (name, options) => {
     settings: Settings,
     siteLogo: SiteLogo,
     stackoverflow: Stackoverflow,
-    star: RysolvCoin,
     successOutline: CheckCircleOutline,
     three: Three,
     twitter: Twitter,
     two: Two,
     upload: PublishIcon,
-    upvote: Upvote,
     user: AccountCircleIcon,
     verified: Verified,
     viewAll: ViewAll,

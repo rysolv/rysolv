@@ -5,7 +5,6 @@ import {
   defaultFontSize,
   detailFontSize,
   lightBlueColor,
-  selectedColor,
 } from 'defaultStyleHelper';
 
 export const StyledBack = styled.div`
@@ -17,6 +16,15 @@ export const StyledBack = styled.div`
 
 export const StyledCode = styled.div`
   color: white;
+`;
+
+export const StyledCoin = styled.div`
+  display: flex;
+
+  svg {
+    height: 1.75rem;
+    width: 1.75rem;
+  }
 `;
 
 export const StyledComment = styled.div`
@@ -109,42 +117,12 @@ export const StyledSettings = styled.div`
   }
 `;
 
-export const StyledStar = styled.div`
-  display: inline-block;
-  text-align: center;
-
-  svg {
-    height: 1.75rem;
-    width: 1.75rem;
-  }
+export const StyledTooltipLabel = styled.span`
+  font-size: ${detailFontSize};
 `;
 
 export const StyledVerified = styled.div`
   color: rgb(8, 178, 110);
   display: inline-block;
   text-align: center;
-`;
-
-export const StyledUpvote = styled.div`
-  color: #37474f;
-  display: inline-block;
-  text-align: center;
-
-  * {
-    font-size: large;
-  }
-
-  &:hover {
-    color: ${selectedColor};
-    cursor: pointer;
-  }
-
-  svg {
-    height: 1.75rem;
-    width: 1.75rem;
-  }
-`;
-
-export const StyledTooltipLabel = styled.span`
-  font-size: ${detailFontSize};
 `;

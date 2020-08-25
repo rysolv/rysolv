@@ -16,10 +16,10 @@ import {
   NameLink,
   NumberContainer,
   RowSection,
+  StyledCoin,
   StyledListSquare,
   StyledSettingWrapper,
   StyledSquare,
-  StyledStar,
   TextContainer,
 } from './styledComponents';
 
@@ -55,7 +55,7 @@ const MobileUserCard = ({ data, deviceView }) => {
                     size={isMobile ? '4.75rem' : '7.5rem'}
                   />
                   <IconWrapper>
-                    <StyledStar />
+                    <StyledCoin />
                     <NumberContainer>{pointsNumber}</NumberContainer>
                   </IconWrapper>
                 </ImageContainer>

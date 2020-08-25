@@ -3,8 +3,8 @@ import T from 'prop-types';
 
 import {
   Rep,
+  StyledCoin,
   StyledFlatIconButton,
-  StyledUpvote,
   UpvoteContainer,
 } from './styledComponents';
 
@@ -20,7 +20,8 @@ const UpvotePanel = ({
 }) => (
   <UpvoteContainer isIssueDetail={isIssueDetail}>
     <StyledFlatIconButton
-      Icon={<StyledUpvote upvoted={upvoted} />}
+      disableRipple
+      Icon={<StyledCoin upvoted={upvoted} />}
       onClick={() => {
         if (!isSignedIn) {
           return dispatchOpenModal({ modalState: 'signIn' });
