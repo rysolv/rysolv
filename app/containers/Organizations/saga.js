@@ -125,22 +125,22 @@ export function* fetchInfoSaga({ payload }) {
         message
       }
     }
-    getActivity(column: "activity.organization_id", id: "${itemId}") {
+    getOrganizationActivity(organizationId: "${itemId}") {
       __typename
       ... on ActivityArray {
         activityArray {
-          actionType
-          activityId
-          createdDate
-          fundedValue
-          issueId
-          issueName
-          organizationId
-          organizationName
-          profilePic
-          pullRequestId
-          userId
-          username
+          actionType,
+          activityId,
+          createdDate,
+          fundedValue,
+          issueId,
+          issueName,
+          organizationId,
+          organizationName,
+          profilePic,
+          pullRequestId,
+          userId,
+          username,
         }
       }
       ... on Error {
@@ -156,8 +156,8 @@ export function* fetchInfoSaga({ payload }) {
     });
     const {
       data: {
+        getOrganizationActivity: { activityArray },
         oneOrganization,
-        getActivity: { activityArray },
       },
     } = yield call(post, '/graphql', graphql);
     oneOrganization.activity = activityArray;

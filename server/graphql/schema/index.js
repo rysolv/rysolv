@@ -329,14 +329,14 @@ module.exports = buildSchema(`
   type RootQuery {
     checkDuplicateUser(email: String, username: String): EventResponse!
     getActivity(column: String!, id: ID): ActivityResult!
-    getAllActivity: ActivityResult!
-    getComments: [Comment]!
+    getOrganizationActivity(organizationId: ID): ActivityResult!
+    getUserActivity(userId: ID): ActivityResult!
     getIssues: [Issue!]!
     getOrganizations: [Organization!]!
     getPullRequests: PullRequestArrayResult
     getUsers: [User!]!
 
-    getIssueComments(id: ID!): [Comment]
+    getIssueComments(issueId: ID!): [Comment]!
     getUserOrganizations(id: ID!): [Organization!]
     getUserPullRequests(id: ID!): PullRequestArrayResult
 

@@ -1,5 +1,9 @@
 const { v4: uuidv4 } = require('uuid');
-const { createActivity, getActivity } = require('../../db');
+const {
+  createActivity,
+  getOrganizationActivity,
+  getUserActivity,
+} = require('../../db');
 
 module.exports = {
   createActivity: async args => {
@@ -19,9 +23,10 @@ module.exports = {
     const message = await createActivity(activity);
     return message;
   },
-  getAllActivity: async () => {
+  getOrganizationActivity: async args => {
+    const { organizationId } = args;
     try {
-      const result = await getActivity('activity');
+      const result = await getOrganizationActivity({ organizationId });
       return {
         __typename: 'ActivityArray',
         activityArray: result,
@@ -33,10 +38,10 @@ module.exports = {
       };
     }
   },
-  getActivity: async args => {
-    const { column, id } = args;
+  getUserActivity: async args => {
+    const { userId } = args;
     try {
-      const result = await getActivity('activity', column, id);
+      const result = await getUserActivity({ userId });
       return {
         __typename: 'ActivityArray',
         activityArray: result,
