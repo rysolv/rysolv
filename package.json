@@ -96,7 +96,7 @@
     "minimist": "^1.2.5",
     "moment": "^2.24.0",
     "node-fetch": "^2.6.0",
-    "pg": "^7.18.2",
+    "pg": "8.3.2",
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-async-script-loader": "^0.3.0",
