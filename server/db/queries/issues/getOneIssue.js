@@ -5,11 +5,11 @@ const { singleQuery } = require('../../baseQueries');
 const getOneIssue = async id => {
   const queryText = `
     SELECT ${issueDetailValues} FROM issues
-    JOIN organizations ON (issues.organization_id = organizations.id)
-    JOIN users ON (issues.contributor_id = users.id)
+    JOIN organizations ON issues.organization_id = organizations.id
+    JOIN users ON issues.contributor_id = users.id
     LEFT JOIN watching ON watching.issue_id = issues.id
-    WHERE (issues.id='${id}')
-    GROUP BY ${groupValues}, users.id, users.username, users.profile_pic
+    WHERE issues.id='${id}'
+    GROUP BY ${groupValues}, users.id, users.profile_pic, users.username
   `;
   const { rows } = await singleQuery({ queryText });
   if (rows.length > 0) {

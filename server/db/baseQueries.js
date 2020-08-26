@@ -93,7 +93,7 @@ const singleSearch = async (queryText, fields, value, param) => {
   const formattedSearchString = searchString.join(' OR ');
   const searchParam = param ? `${param} AND ` : '';
   const searchQuery = `${queryText} WHERE ${searchParam}(${formattedSearchString})`;
-  const { rows } = await singleQuery({ searchQuery });
+  const { rows } = await singleQuery({ queryText: searchQuery });
   return rows;
 };
 

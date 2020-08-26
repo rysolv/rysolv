@@ -5,9 +5,9 @@ const { singleItem } = require('../../baseQueries');
 const downvoteIssue = async ({ issueId, userId }) => {
   const client = await pool.connect();
   try {
+    // TODO: evaluate the need for this query. May be good to remove.
     const [userData] = await singleItem('users', userId);
     const { upvotes } = userData;
-
     if (!upvotes.includes(issueId)) throw new Error('Downvote failed');
 
     // Open transaction

@@ -1,13 +1,14 @@
 const pool = require('../../connect');
-const { singleItem } = require('../../baseQueries');
 
 const upvoteIssue = async ({ issueId, userId }) => {
   // Pulling in Client to use transaction
   const client = await pool.connect();
   try {
     // Validate user has rep and has not upvoted
-    const [userData] = await singleItem('users', userId);
-    const { rep, upvotes } = userData;
+    const queryText = 'SELECT rep, upvotes FROM users WHERE id = $1';
+    const { rows: userRows } = await client.query(queryText, [userId]);
+    const [oneUser] = userRows;
+    const { rep, upvotes } = oneUser;
 
     if (rep - 1 < 0) throw new Error('Not enough points to upvote');
     if (upvotes.includes(issueId))

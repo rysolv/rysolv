@@ -3,7 +3,10 @@ const { isNull, isUndefined } = require('lodash');
 
 const isDefined = value => !(isNull(value) || isUndefined(value));
 
-// compare two objects and return a new combined object
+// Compare two objects and create a new object with the changes from obj2
+//    obj1={first: "Taylor", last: "Maran"};
+//    obj2={name: "Tyler"};
+//    result = {first: "Tyler", last: "Maran"}
 const diff = (obj1, obj2) => {
   const newObject = { ...obj1 };
   const newObjectArray = [];
@@ -17,25 +20,11 @@ const diff = (obj1, obj2) => {
   return { newObject, newObjectArray };
 };
 
-const testDiff = () => {
-  const test1 = {
-    first_name: 'Taylor',
-    last_name: 'Marafsdffaan',
-    email: 'tyler.maran@gmail.com',
-    username: 'themanmaran',
-  };
-  const test2 = {
-    first_name: 'Tyler',
-    last_name: 'Maran',
-    email: 'tyler.maran@gmail.com',
-  };
-  diff(test1, test2);
-};
-
+// Format Parameters for node-pg parameterized queries. Returning:
+//    parameters: array of parameters (ex: "id, created_date, modified_date")
+//    substitution: string (ex: "$1, $2, $3")
+//    values: array of values (ex: [12345, 1/1/2020, 1/1/2020])
 const formatParamaters = (array, obj) => {
-  // return array of parameters (ex: "id, created_date, modified_date")
-  // return substitution string (ex: "$1, $2, $3")
-  // return array of values (ex: [12345, 1/1/2020, 1/1/2020])
   const parameters = [];
   const substitution = [];
 
@@ -55,5 +44,4 @@ const formatParamaters = (array, obj) => {
   };
 };
 
-module.exports = { diff, testDiff, formatParamaters };
-// require('make-runnable');
+module.exports = { diff, formatParamaters };

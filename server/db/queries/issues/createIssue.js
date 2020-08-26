@@ -1,6 +1,6 @@
 const { formatParamaters } = require('../../helpers');
 const { issueValues } = require('./constants');
-const { mapValues } = require('../../baseQueries');
+const { singleQuery } = require('../../baseQueries');
 
 // Create new Issue
 const createIssue = async data => {
@@ -13,8 +13,9 @@ const createIssue = async data => {
     issues(${parameters})
     VALUES(${substitution})
     RETURNING *`;
-  const result = await mapValues(queryText, [values]);
-  return result;
+  const { rows } = await singleQuery({ queryText, values });
+  const [oneRow] = rows;
+  return oneRow;
 };
 
 module.exports = createIssue;

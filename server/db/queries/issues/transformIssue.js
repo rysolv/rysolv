@@ -1,11 +1,10 @@
 const { formatParamaters } = require('../../helpers');
 const { issueReturnValues, issueValues } = require('./constants');
-const { singleItem, mapValues } = require('../../baseQueries');
+const { singleQuery } = require('../../baseQueries');
 
 // TRANSFORM single issue
 const transformIssue = async (id, data) => {
-  const [rows] = await singleItem('issues', id, issueValues);
-  if (rows) {
+  try {
     const { parameters, substitution, values } = formatParamaters(
       issueValues,
       data,
@@ -13,12 +12,14 @@ const transformIssue = async (id, data) => {
     const queryText = `UPDATE issues
       SET (${parameters})
       = (${substitution})
-      WHERE (id = '${id}')
+      WHERE id = '${id}'
       RETURNING ${issueReturnValues}`;
-    const [result] = await mapValues(queryText, [values]);
-    return result;
+    const { rows } = await singleQuery({ queryText, values });
+    const [oneRow] = rows;
+    return oneRow;
+  } catch (error) {
+    throw new Error(`Failed to update issue.`);
   }
-  throw new Error(`Failed to update. ID not found in issues`);
 };
 
 module.exports = transformIssue;

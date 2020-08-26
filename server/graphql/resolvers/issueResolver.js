@@ -7,7 +7,6 @@ const {
   closeIssue,
   createIssue,
   createOrganization,
-  deleteIssue,
   downvoteIssue,
   getIssues,
   getOneIssue,
@@ -70,7 +69,7 @@ module.exports = {
   closeIssue: async args => {
     const { id, shouldClose } = args;
     try {
-      const response = await closeIssue(id, shouldClose);
+      const response = await closeIssue({ issueId: id, shouldClose });
 
       const [result] = await getOneIssue(id);
 
@@ -150,7 +149,7 @@ module.exports = {
       }
 
       // Create new issue
-      const [issueResult] = await createNewIssue();
+      const issueResult = await createNewIssue();
 
       const activityInput = {
         actionType: 'create',
@@ -191,15 +190,6 @@ module.exports = {
         __typename: 'Error',
         message: err.message,
       };
-    }
-  },
-  deleteIssue: async args => {
-    const { id } = args;
-    try {
-      const issues = await deleteIssue(id);
-      return issues;
-    } catch (err) {
-      throw err;
     }
   },
   getIssues: async () => {
@@ -277,7 +267,7 @@ module.exports = {
   searchIssues: async args => {
     const { value } = args;
     try {
-      const result = await searchIssues(value);
+      const result = await searchIssues({ value });
       return result;
     } catch (err) {
       throw err;
