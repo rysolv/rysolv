@@ -11,7 +11,6 @@ export const fundingClosedBackground = '#edeef0';
 export const fundingOpenBackground = '#e5fbf2';
 export const fundingText = '#08b26e';
 export const headerColor = '#37474f';
-export const headerOutlineColor = '#cfd8dc';
 export const hoverLinkColor = '#007bff';
 export const inputFieldColor = '#cfd8dc';
 export const languageBackground = '#e8f0fa';

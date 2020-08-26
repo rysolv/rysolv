@@ -9,6 +9,7 @@ import {
 import iconDictionary from 'utils/iconDictionary';
 
 import AccountBalance from '../Balance';
+import VerifiedAccountsView from '../VerifiedAccounts';
 import {
   AccountContainer,
   DeleteText,
@@ -240,6 +241,7 @@ const UserAccount = ({
         />
       </IconButtonWrapper>
     </InputWrapper>
+    <VerifiedAccountsView />
     <HeaderWrapper>
       <StyledH3>Balance</StyledH3>
     </HeaderWrapper>
