@@ -1,12 +1,15 @@
 const { organizationReturnValues } = require('./constants');
-const { singleSearch } = require('../../baseQueries');
+const { singleQuery } = require('../../baseQueries');
 
 // SEARCH organizations
-const searchOrganizations = async value => {
-  const fields = ['name'];
+const searchOrganizations = async ({ value }) => {
+  const queryText = `
+    SELECT ${organizationReturnValues} FROM organizations
+    WHERE
+    LOWER(organizations.name) LIKE LOWER('%'||$1||'%') OR
+    LOWER(organizations.description) LIKE LOWER('%'||$1||'%')`;
 
-  const queryText = `SELECT ${organizationReturnValues} FROM organizations`;
-  const rows = await singleSearch(queryText, fields, value);
+  const { rows } = await singleQuery({ queryText, values: [value] });
   return rows;
 };
 

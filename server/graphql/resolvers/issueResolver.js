@@ -71,7 +71,7 @@ module.exports = {
     try {
       const response = await closeIssue({ issueId: id, shouldClose });
 
-      const [result] = await getOneIssue(id);
+      const result = await getOneIssue({ issueId: id });
 
       const activityInput = {
         actionType: shouldClose ? 'close' : 'reopen',
@@ -110,17 +110,15 @@ module.exports = {
     // Populate organization object and create new organization
     const createNewOrganization = async () => {
       // backup check
-      if (await checkDuplicateOrganization(organizationRepo)) {
+      if (await checkDuplicateOrganization({ repo: organizationRepo })) {
         throw new Error(
-          `Error: Organization at ${
-            issueInput.organizationRepo
-          } already exists`,
+          `Organization at ${issueInput.organizationRepo} already exists`,
         );
       }
 
       const organizationObject = await newOrganizationObject(issueInput);
       try {
-        const [result] = await createOrganization(organizationObject);
+        const result = await createOrganization({ data: organizationObject });
         return result;
       } catch (err) {
         throw err;
@@ -130,7 +128,7 @@ module.exports = {
 
     try {
       // Check for duplicate issue
-      if (await checkDuplicateIssue(repo)) {
+      if (await checkDuplicateIssue({ repo })) {
         throw new Error(`Issue at ${repo} already exists`);
       }
 
@@ -160,12 +158,12 @@ module.exports = {
       await createActivity({ activityInput });
 
       // add issue to organization issue list
-      await updateOrganizationArray(
-        'issues',
-        issueInput.organizationId,
-        newIssueId,
-        false,
-      );
+      await updateOrganizationArray({
+        column: 'issues',
+        data: newIssueId,
+        id: issueInput.organizationId,
+        remove: false,
+      });
 
       // add issue to user issue list
       await updateUserArray({
@@ -214,7 +212,7 @@ module.exports = {
       });
 
       // Check issue repo for duplicate
-      if (await checkDuplicateIssue(issueInput.issueUrl)) {
+      if (await checkDuplicateIssue({ repo: issueInput.issueUrl })) {
         throw new Error(`Issue at ${issueInput.issueUrl} already exists`);
       }
 
@@ -225,10 +223,10 @@ module.exports = {
       });
 
       // Return organizaiton ID if exists in db
-      const [organizationData] = await getOrganizationsWhere(
-        'repo_url',
-        organizationInput.organizationRepo,
-      );
+      const [organizationData] = await getOrganizationsWhere({
+        column: 'repo_url',
+        value: organizationInput.organizationRepo,
+      });
 
       if (organizationData) {
         const { id, logo } = organizationData;
@@ -252,7 +250,7 @@ module.exports = {
   oneIssue: async args => {
     const { id } = args;
     try {
-      const [result] = await getOneIssue(id);
+      const result = await getOneIssue({ issueId: id });
       return {
         __typename: 'Issue',
         ...result,

@@ -1,25 +1,26 @@
 const { formatParamaters } = require('../../helpers');
 const { organizationReturnValues, organizationValues } = require('./constants');
-const { mapValues, singleItem } = require('../../baseQueries');
+const { singleQuery } = require('../../baseQueries');
 
 // TRANSFORM single Organization
 const transformOrganization = async (id, data) => {
-  const [rows] = await singleItem('organizations', id, organizationValues);
-  if (rows) {
-    const { parameters, substitution, values } = formatParamaters(
-      organizationValues,
-      data,
-    );
-
-    const queryText = `UPDATE organizations
+  try {
+    const { parameters, substitution, values } = formatParamaters({
+      tableParameters: organizationValues,
+      tableObject: data,
+    });
+    const queryText = `
+      UPDATE organizations
       SET (${parameters})
       = (${substitution})
-      WHERE (id = '${id}')
+      WHERE id = '${id}'
       RETURNING ${organizationReturnValues}`;
-    const [result] = await mapValues(queryText, [values]);
-    return result;
+    const { rows } = await singleQuery({ queryText, values });
+    const [oneRow] = rows;
+    return oneRow;
+  } catch (error) {
+    throw new Error(`Failed to update issue.`);
   }
-  throw new Error(`Failed to update. ID not found in organizations`);
 };
 
 module.exports = transformOrganization;

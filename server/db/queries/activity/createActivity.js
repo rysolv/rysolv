@@ -4,10 +4,10 @@ const { singleQuery } = require('../../baseQueries');
 
 // Record a new activity
 const createActivity = async data => {
-  const { parameters, substitution, values } = formatParamaters(
-    activityValues,
-    data,
-  );
+  const { parameters, substitution, values } = formatParamaters({
+    tableParameters: activityValues,
+    tableObject: data,
+  });
   const queryText = `INSERT INTO
     activity(${parameters})
     VALUES(${substitution})`;

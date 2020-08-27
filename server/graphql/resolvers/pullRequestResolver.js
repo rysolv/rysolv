@@ -99,7 +99,7 @@ module.exports = {
     const { url, issueId } = args;
     try {
       const { organization, repo, pullNumber } = formatPullRequestUrl(url);
-      const [{ repo: issueRepo }] = await getOneIssue(issueId);
+      const { repo: issueRepo } = await getOneIssue({ issueId });
 
       // TODO: add org_displayname to issues schema to avoid this url parsing
       const { pathname } = new URL(issueRepo);
@@ -190,7 +190,7 @@ module.exports = {
       const formattedResult = await Promise.all(
         result.map(async pullRequest => {
           const { issueId } = pullRequest;
-          const [{ fundedAmount }] = await getOneIssue(issueId);
+          const { fundedAmount } = await getOneIssue({ issueId });
           // eslint-disable-next-line no-param-reassign
           pullRequest.fundedAmount = fundedAmount;
           return pullRequest;

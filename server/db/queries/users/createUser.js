@@ -4,10 +4,10 @@ const { userValues } = require('./constants');
 
 // Create new User
 const createUser = async data => {
-  const { parameters, substitution, values } = formatParamaters(
-    userValues,
-    data,
-  );
+  const { parameters, substitution, values } = formatParamaters({
+    tableParameters: userValues,
+    tableObject: data,
+  });
   const queryText = `INSERT INTO
     users( ${parameters} )
     VALUES(${substitution})

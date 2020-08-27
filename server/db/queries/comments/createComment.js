@@ -4,10 +4,10 @@ const { singleQuery } = require('../../baseQueries');
 
 // Create new Comment
 const createComment = async data => {
-  const { parameters, substitution, values } = formatParamaters(
-    commentValues,
-    data,
-  );
+  const { parameters, substitution, values } = formatParamaters({
+    tableParameters: commentValues,
+    tableObject: data,
+  });
 
   const queryText = `INSERT INTO
   comments(${parameters})

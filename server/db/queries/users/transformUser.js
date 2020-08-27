@@ -6,10 +6,10 @@ const { userValues, userReturnValues } = require('./constants');
 const transformUser = async (id, data) => {
   const [rows] = await singleItem('users', id, userValues);
   if (rows) {
-    const { parameters, substitution, values } = formatParamaters(
-      userValues,
-      data,
-    );
+    const { parameters, substitution, values } = formatParamaters({
+      tableParameters: userValues,
+      tableObject: data,
+    });
     const queryText = `UPDATE users
       SET (${parameters})
       = (${substitution})

@@ -4,10 +4,10 @@ const { mapValues } = require('../../baseQueries');
 
 // CREATE single withdrawal
 const createWithdrawal = async data => {
-  const { parameters, substitution, values } = formatParamaters(
-    withdrawalValues,
-    data,
-  );
+  const { parameters, substitution, values } = formatParamaters({
+    tableParameters: withdrawalValues,
+    tableObject: data,
+  });
 
   const queryText = `
     INSERT INTO withdrawal(${parameters})

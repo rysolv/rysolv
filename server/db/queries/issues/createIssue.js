@@ -4,10 +4,10 @@ const { singleQuery } = require('../../baseQueries');
 
 // Create new Issue
 const createIssue = async data => {
-  const { parameters, substitution, values } = formatParamaters(
-    issueValues,
-    data,
-  );
+  const { parameters, substitution, values } = formatParamaters({
+    tableParameters: issueValues,
+    tableObject: data,
+  });
 
   const queryText = `INSERT INTO
     issues(${parameters})

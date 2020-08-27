@@ -24,15 +24,15 @@ const diff = (obj1, obj2) => {
 //    parameters: array of parameters (ex: "id, created_date, modified_date")
 //    substitution: string (ex: "$1, $2, $3")
 //    values: array of values (ex: [12345, 1/1/2020, 1/1/2020])
-const formatParamaters = (array, obj) => {
+const formatParamaters = ({ tableParameters, tableObject }) => {
   const parameters = [];
   const substitution = [];
 
-  const values = array.reduce((acc, key) => {
-    if (obj[key] !== undefined) {
+  const values = tableParameters.reduce((acc, key) => {
+    if (tableObject[key] !== undefined) {
       parameters.push(key);
       substitution.push(`$${acc.length + 1}`);
-      acc.push(obj[key]);
+      acc.push(tableObject[key]);
     }
     return acc;
   }, []);

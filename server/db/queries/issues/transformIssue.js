@@ -5,10 +5,10 @@ const { singleQuery } = require('../../baseQueries');
 // TRANSFORM single issue
 const transformIssue = async (id, data) => {
   try {
-    const { parameters, substitution, values } = formatParamaters(
-      issueValues,
-      data,
-    );
+    const { parameters, substitution, values } = formatParamaters({
+      tableParameters: issueValues,
+      tableObject: data,
+    });
     const queryText = `UPDATE issues
       SET (${parameters})
       = (${substitution})
