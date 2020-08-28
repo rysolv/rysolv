@@ -24,15 +24,15 @@ const diff = (obj1, obj2) => {
 //    parameters: array of parameters (ex: "id, created_date, modified_date")
 //    substitution: string (ex: "$1, $2, $3")
 //    values: array of values (ex: [12345, 1/1/2020, 1/1/2020])
-const formatParamaters = ({ tableParameters, tableObject }) => {
+const formatParameters = ({ newObject, tableParameters }) => {
   const parameters = [];
   const substitution = [];
 
   const values = tableParameters.reduce((acc, key) => {
-    if (tableObject[key] !== undefined) {
+    if (newObject[key] !== undefined) {
       parameters.push(key);
       substitution.push(`$${acc.length + 1}`);
-      acc.push(tableObject[key]);
+      acc.push(newObject[key]);
     }
     return acc;
   }, []);
@@ -44,4 +44,4 @@ const formatParamaters = ({ tableParameters, tableObject }) => {
   };
 };
 
-module.exports = { diff, formatParamaters };
+module.exports = { diff, formatParameters };

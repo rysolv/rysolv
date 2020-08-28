@@ -1,11 +1,13 @@
 const { singleQuery } = require('../../baseQueries');
 
 // Check duplicate organization
-const checkDuplicatePullRequest = async repo => {
+const checkDuplicatePullRequest = async ({ repo }) => {
   const queryText = `
-    SELECT pullrequest_id FROM pullrequests WHERE (html_url='${repo}')
+    SELECT pullrequest_id
+    FROM pullrequests
+    WHERE html_url = $1
   `;
-  const { rows } = await singleQuery({ queryText });
+  const { rows } = await singleQuery({ queryText, values: [repo] });
   return rows.length > 0;
 };
 

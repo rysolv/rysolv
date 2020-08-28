@@ -1,13 +1,13 @@
-const { formatParamaters } = require('../../helpers');
+const { formatParameters } = require('../../helpers');
 const { organizationReturnValues, organizationValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
 // TRANSFORM single Organization
 const transformOrganization = async (id, data) => {
   try {
-    const { parameters, substitution, values } = formatParamaters({
+    const { parameters, substitution, values } = formatParameters({
+      newObject: data,
       tableParameters: organizationValues,
-      tableObject: data,
     });
     const queryText = `
       UPDATE organizations

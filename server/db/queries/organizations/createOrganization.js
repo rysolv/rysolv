@@ -1,12 +1,12 @@
-const { formatParamaters } = require('../../helpers');
+const { formatParameters } = require('../../helpers');
 const { organizationReturnValues, organizationValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
 // Create new organization
 const createOrganization = async ({ data }) => {
-  const { parameters, substitution, values } = formatParamaters({
+  const { parameters, substitution, values } = formatParameters({
+    newObject: data,
     tableParameters: organizationValues,
-    tableObject: data,
   });
   const queryText = `INSERT INTO
     organizations(${parameters})

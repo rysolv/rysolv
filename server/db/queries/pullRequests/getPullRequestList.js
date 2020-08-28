@@ -1,6 +1,6 @@
 const { singleQuery } = require('../../baseQueries');
 
-const getPullRequestList = async id => {
+const getPullRequestList = async ({ pullRequestId }) => {
   const queryText = `
     SELECT
       pullRequests.html_url AS "htmlUrl",
@@ -10,8 +10,8 @@ const getPullRequestList = async id => {
       users.rep,
       users.username FROM pullRequests
     LEFT JOIN users ON (pullRequests.user_id = users.id)
-    WHERE (pullRequests.pullrequest_id='${id}')`;
-  const { rows } = await singleQuery({ queryText });
+    WHERE pullRequests.pullrequest_id = $1`;
+  const { rows } = await singleQuery({ queryText, values: [pullRequestId] });
   return rows;
 };
 

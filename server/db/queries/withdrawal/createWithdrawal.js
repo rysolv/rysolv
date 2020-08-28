@@ -1,12 +1,12 @@
-const { formatParamaters } = require('../../helpers');
+const { formatParameters } = require('../../helpers');
 const { withdrawalValues } = require('./constants');
 const { mapValues } = require('../../baseQueries');
 
 // CREATE single withdrawal
 const createWithdrawal = async data => {
-  const { parameters, substitution, values } = formatParamaters({
+  const { parameters, substitution, values } = formatParameters({
+    newObject: data,
     tableParameters: withdrawalValues,
-    tableObject: data,
   });
 
   const queryText = `

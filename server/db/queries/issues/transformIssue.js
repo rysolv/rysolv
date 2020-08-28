@@ -1,13 +1,13 @@
-const { formatParamaters } = require('../../helpers');
+const { formatParameters } = require('../../helpers');
 const { issueReturnValues, issueValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
 // TRANSFORM single issue
 const transformIssue = async (id, data) => {
   try {
-    const { parameters, substitution, values } = formatParamaters({
+    const { parameters, substitution, values } = formatParameters({
+      newObject: data,
       tableParameters: issueValues,
-      tableObject: data,
     });
     const queryText = `UPDATE issues
       SET (${parameters})

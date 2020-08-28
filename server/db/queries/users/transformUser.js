@@ -1,4 +1,4 @@
-const { formatParamaters } = require('../../helpers');
+const { formatParameters } = require('../../helpers');
 const { singleItem, mapValues } = require('../../baseQueries');
 const { userValues, userReturnValues } = require('./constants');
 
@@ -6,9 +6,9 @@ const { userValues, userReturnValues } = require('./constants');
 const transformUser = async (id, data) => {
   const [rows] = await singleItem('users', id, userValues);
   if (rows) {
-    const { parameters, substitution, values } = formatParamaters({
+    const { parameters, substitution, values } = formatParameters({
+      newObject: data,
       tableParameters: userValues,
-      tableObject: data,
     });
     const queryText = `UPDATE users
       SET (${parameters})

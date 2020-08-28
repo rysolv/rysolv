@@ -5,8 +5,12 @@ const submitAccountPaymentOrganization = async ({
   fundValue,
   organizationId,
 }) => {
-  const queryText = `UPDATE organizations SET total_funded=total_funded+${fundValue} WHERE (id = '${organizationId}')`;
-  await singleQuery({ queryText });
+  const queryText = `
+    UPDATE organizations
+    SET total_funded = total_funded + $1
+    WHERE id = $2
+  `;
+  await singleQuery({ queryText, values: [fundValue, organizationId] });
 };
 
 module.exports = submitAccountPaymentOrganization;

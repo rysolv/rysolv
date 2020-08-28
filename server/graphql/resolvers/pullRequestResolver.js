@@ -6,7 +6,6 @@ const {
   getOneIssue,
   getOnePullRequest,
   getPullRequestList,
-  getPullRequests,
   getUserPullRequests,
   updateIssueArray,
   updateUserArray,
@@ -35,7 +34,7 @@ module.exports = {
       user_id: pullRequestInput.userId,
     };
     try {
-      if (await checkDuplicatePullRequest(newPullRequest.html_url)) {
+      if (await checkDuplicatePullRequest({ repo: newPullRequest.html_url })) {
         throw new Error(
           `Pull request at ${newPullRequest.html_url} already exists`,
         );
@@ -69,7 +68,7 @@ module.exports = {
   deletePullRequest: async args => {
     const { id } = args;
     try {
-      const result = await deletePullRequest(id);
+      const result = await deletePullRequest({ pullRequestId: id });
       await updateUserArray({
         column: 'pull_requests',
         data: id,
@@ -116,7 +115,7 @@ module.exports = {
         pullNumber,
       });
 
-      if (await checkDuplicatePullRequest(result.htmlUrl)) {
+      if (await checkDuplicatePullRequest({ repo: result.htmlUrl })) {
         throw new Error(
           `Pull request at ${result.htmlUrl} has already been submitted`,
         );
@@ -138,7 +137,7 @@ module.exports = {
     try {
       const pullRequestList = await Promise.all(
         idArray.map(async id => {
-          const [result] = await getPullRequestList(id);
+          const result = await getPullRequestList({ pullRequestId: id });
           return result;
         }),
       );
@@ -154,24 +153,10 @@ module.exports = {
       };
     }
   },
-  getPullRequests: async () => {
-    try {
-      const result = await getPullRequests();
-      return {
-        __typename: 'PullRequestArray',
-        pullRequestArray: result,
-      };
-    } catch (err) {
-      return {
-        __typename: 'Error',
-        message: err.message,
-      };
-    }
-  },
   onePullRequest: async args => {
     const { id } = args;
     try {
-      const [result] = await getOnePullRequest(id);
+      const result = await getOnePullRequest({ pullRequestId: id });
       return {
         __typename: 'PullRequest',
         ...result,
@@ -186,19 +171,10 @@ module.exports = {
   getUserPullRequests: async args => {
     const { id } = args;
     try {
-      const result = await getUserPullRequests(id);
-      const formattedResult = await Promise.all(
-        result.map(async pullRequest => {
-          const { issueId } = pullRequest;
-          const { fundedAmount } = await getOneIssue({ issueId });
-          // eslint-disable-next-line no-param-reassign
-          pullRequest.fundedAmount = fundedAmount;
-          return pullRequest;
-        }),
-      );
+      const result = await getUserPullRequests({ pullRequestId: id });
       return {
         __typename: 'PullRequestArray',
-        pullRequestArray: formattedResult,
+        pullRequestArray: result,
       };
     } catch (err) {
       return {

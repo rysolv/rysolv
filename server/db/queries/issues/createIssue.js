@@ -1,12 +1,12 @@
-const { formatParamaters } = require('../../helpers');
+const { formatParameters } = require('../../helpers');
 const { issueValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
 // Create new Issue
 const createIssue = async data => {
-  const { parameters, substitution, values } = formatParamaters({
+  const { parameters, substitution, values } = formatParameters({
+    newObject: data,
     tableParameters: issueValues,
-    tableObject: data,
   });
 
   const queryText = `INSERT INTO

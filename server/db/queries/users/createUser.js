@@ -1,12 +1,12 @@
-const { formatParamaters } = require('../../helpers');
+const { formatParameters } = require('../../helpers');
 const { mapValues } = require('../../baseQueries');
 const { userValues } = require('./constants');
 
 // Create new User
 const createUser = async data => {
-  const { parameters, substitution, values } = formatParamaters({
+  const { parameters, substitution, values } = formatParameters({
+    newObject: data,
     tableParameters: userValues,
-    tableObject: data,
   });
   const queryText = `INSERT INTO
     users( ${parameters} )

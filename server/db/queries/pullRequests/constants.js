@@ -3,8 +3,8 @@ const pullRequestValues = [
   'github_username',
   'html_url',
   'issue_id',
-  'mergeable',
   'mergeable_state',
+  'mergeable',
   'merged',
   'modified_date',
   'open',
@@ -34,11 +34,12 @@ const pullRequestReturnValues = `
 
 const pullRequestDetailValues = `
   ${pullRequestReturnValues},
+  issues.funded_amount AS "fundedAmount",
   issues.name AS "issueName"
 `;
 
 module.exports = {
-  pullRequestValues,
-  pullRequestReturnValues,
   pullRequestDetailValues,
+  pullRequestReturnValues,
+  pullRequestValues,
 };

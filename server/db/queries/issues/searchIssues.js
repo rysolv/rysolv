@@ -11,7 +11,8 @@ const searchIssues = async ({ value }) => {
       LOWER(issues.body) LIKE LOWER('%'||$1||'%') OR
       LOWER(issues.name) LIKE LOWER('%'||$1||'%') OR
       LOWER(organizations.name) LIKE LOWER('%'||$1||'%')
-    GROUP BY ${groupValues}`;
+    GROUP BY ${groupValues}
+  `;
 
   const { rows } = await singleQuery({ queryText, values: [value] });
   return rows;
