@@ -9,7 +9,7 @@ import {
   AccountWrapper,
   VerifiedText,
   VerifiedWrapper,
-  VerifyButton,
+  VerifyLink,
 } from './styledComponents';
 import { HeaderWrapper, StyledH3 } from '../styledComponents';
 
@@ -27,9 +27,13 @@ const VerifiedAccountsView = ({ isGithubVerified }) => (
         <Account>Github</Account>
         <ConditionalRender
           Component={
-            <VerifyButton disableRipple onClick={() => {}}>
+            <VerifyLink
+              href={`https://github.com/login/oauth/authorize?scope=user&client_id=${
+                process.env.GITHUB_CLIENT_ID
+              }`}
+            >
               Connect
-            </VerifyButton>
+            </VerifyLink>
           }
           shouldRender={!isGithubVerified}
         />
@@ -48,8 +52,6 @@ const VerifiedAccountsView = ({ isGithubVerified }) => (
   </div>
 );
 
-VerifiedAccountsView.defaultProps = { isGithubVerified: false };
-
-VerifiedAccountsView.propTypes = { isGithubVerified: T.bool };
+VerifiedAccountsView.propTypes = { isGithubVerified: T.bool.isRequired };
 
 export default VerifiedAccountsView;

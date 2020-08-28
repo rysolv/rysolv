@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+const fetch = require('node-fetch');
+
 const { authenticate } = require('./auth');
 
 const getSingleIssue = async ({ issueNumber, organization, repo }) => {
@@ -38,66 +40,6 @@ const getSingleIssue = async ({ issueNumber, organization, repo }) => {
       organizationUrl: repository_url, // Required
     };
     return { issueInput };
-  } catch (err) {
-    throw err;
-  }
-};
-
-const getSingleRepo = async ({ organization, repo }) => {
-  try {
-    // Authenticate with oktokit API - TODO: create better auth middleware
-    const { GITHUB } = await authenticate();
-
-    const { data: repoData } = await GITHUB.repos.get({
-      owner: organization,
-      repo,
-    });
-
-    const {
-      description,
-      homepage,
-      html_url,
-      language,
-      name,
-      organization: parentOrganization,
-    } = repoData;
-
-    if (!html_url) {
-      throw new Error(`Unable to import organization.`);
-    }
-
-    const organizationInput = {
-      issueLanguages: [language], // Optional - one entry
-      organizationDescription: description || '', // Optional
-      organizationLanguages: [language], // Optional - one entry
-      organizationName: name, // Required
-      organizationRepo: html_url, // Required
-      organizationUrl: homepage || '', // Optional
-    };
-
-    if (parentOrganization) {
-      const { data: parentData } = await GITHUB.orgs.get({
-        org: parentOrganization.login,
-      });
-
-      const {
-        avatar_url,
-        bio,
-        blog,
-        html_url: parentRepo,
-        login,
-        name: parentName,
-      } = parentData;
-
-      organizationInput.organizationLogo = avatar_url; // Required
-      organizationInput.organizationName = parentName || login; // Preferred name or login name
-      organizationInput.organizationRepo = parentRepo; // Required
-      organizationInput.organizationUrl = blog || ''; // Optional
-      // Only replace repo bio if parent bio exists
-      if (bio) organizationInput.organizationDescription = bio;
-    }
-
-    return { organizationInput };
   } catch (err) {
     throw err;
   }
@@ -183,9 +125,95 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
   return pullData;
 };
 
+const getSingleRepo = async ({ organization, repo }) => {
+  try {
+    // Authenticate with oktokit API - TODO: create better auth middleware
+    const { GITHUB } = await authenticate();
+
+    const { data: repoData } = await GITHUB.repos.get({
+      owner: organization,
+      repo,
+    });
+
+    const {
+      description,
+      homepage,
+      html_url,
+      language,
+      name,
+      organization: parentOrganization,
+    } = repoData;
+
+    if (!html_url) {
+      throw new Error(`Unable to import organization.`);
+    }
+
+    const organizationInput = {
+      issueLanguages: [language], // Optional - one entry
+      organizationDescription: description || '', // Optional
+      organizationLanguages: [language], // Optional - one entry
+      organizationName: name, // Required
+      organizationRepo: html_url, // Required
+      organizationUrl: homepage || '', // Optional
+    };
+
+    if (parentOrganization) {
+      const { data: parentData } = await GITHUB.orgs.get({
+        org: parentOrganization.login,
+      });
+
+      const {
+        avatar_url,
+        bio,
+        blog,
+        html_url: parentRepo,
+        login,
+        name: parentName,
+      } = parentData;
+
+      organizationInput.organizationLogo = avatar_url; // Required
+      organizationInput.organizationName = parentName || login; // Preferred name or login name
+      organizationInput.organizationRepo = parentRepo; // Required
+      organizationInput.organizationUrl = blog || ''; // Optional
+      // Only replace repo bio if parent bio exists
+      if (bio) organizationInput.organizationDescription = bio;
+    }
+
+    return { organizationInput };
+  } catch (err) {
+    throw err;
+  }
+};
+
+const requestGithubToken = credentials =>
+  fetch('https://github.com/login/oauth/access_token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  })
+    .then(res => res.json())
+    .catch(error => {
+      throw new Error(JSON.stringify(error));
+    });
+
+const requestGithubUserAccount = token =>
+  fetch(`https://api.github.com/user?access_token=${token}`).then(res =>
+    res.json(),
+  );
+
+const requestGithubUser = async credentials => {
+  const { access_token } = await requestGithubToken(credentials);
+  const { id } = await requestGithubUserAccount(access_token);
+  return { github_id: id };
+};
+
 module.exports = {
   getSingleIssue,
   getSingleOrganization,
   getSinglePullRequest,
   getSingleRepo,
+  requestGithubUser,
 };

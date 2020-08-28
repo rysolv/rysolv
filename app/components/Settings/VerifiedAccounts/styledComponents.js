@@ -1,12 +1,6 @@
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
 
-import {
-  defaultFontFamily,
-  defaultFontSize,
-  hoverLinkColor,
-  textColor,
-} from 'defaultStyleHelper';
+import { defaultFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
 
 export const Account = styled.span`
   color: ${textColor};
@@ -48,14 +42,12 @@ export const VerifiedWrapper = styled.div`
   width: fit-content;
 `;
 
-export const VerifyButton = styled(Button)`
+export const VerifyLink = styled.a`
   color: ${hoverLinkColor};
-  font-family: ${defaultFontFamily};
   font-size: ${defaultFontSize};
-  padding: 0;
-  text-transform: none;
+  font-weight: 500;
 
   &:hover {
-    background-color: transparent;
+    color: ${hoverLinkColor};
   }
 `;

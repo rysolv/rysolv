@@ -236,6 +236,7 @@ module.exports = buildSchema(`
     firstName: String!
     githubLink: String
     id: ID!
+    isGithubVerified: Boolean
     isOnline: Boolean
     issues: [Object]
     lastName: String!
@@ -335,23 +336,25 @@ module.exports = buildSchema(`
     getOrganizations: [Organization!]!
     getPullRequests: PullRequestArrayResult
     getUsers: [User!]!
-
+    
     getIssueComments(id: ID!): [Comment]
     getUserOrganizations(id: ID!): [Organization!]
     getUserPullRequests(id: ID!): PullRequestArrayResult
-
+    
     getPullRequestList(idArray: [ID!]): PullRequestListResult!
     getWatchList(idArray: [ID!], type: String!): [WatchList!]
-
+    
     oneIssue(id: ID!): IssueResult
     oneOrganization(id: ID!): OrganizationResult
     onePullRequest(id: ID!): PullRequestResult
     oneUser(id: ID!): User!
     oneUserSignUp(email: String!): User!
-
+    
     searchIssues(value: String!): [Issue!]!
     searchOrganizations(value: String!): OrganizationArrayResult
     searchUsers(value: String!): [User!]!
+
+    verifyUserAccount(code: String!, userId: ID!): EventResponse!
   }
 
   type RootMutation {

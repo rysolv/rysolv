@@ -60,6 +60,7 @@ const SettingsView = ({
     firstName,
     githubLink,
     id,
+    isGithubVerified,
     isOnline,
     issues,
     lastName,
@@ -317,6 +318,7 @@ const SettingsView = ({
             handleWithdrawFunds={handleWithdrawFunds}
             inputErrors={inputErrors}
             isDisabled={isDisabled}
+            isGithubVerified={isGithubVerified}
             issues={issues}
             lastName={lastName}
             organizations={organizations}

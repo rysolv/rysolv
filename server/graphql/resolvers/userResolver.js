@@ -16,6 +16,7 @@ const {
   transformUser,
   updateUserArray,
 } = require('../../db');
+const { requestGithubUser } = require('../../integrations/github');
 const { uploadImage } = require('../../middlewares/imageUpload');
 
 const deletedUserImage =
@@ -253,6 +254,29 @@ module.exports = {
       return result;
     } catch (error) {
       throw new Error('Too many requests.');
+    }
+  },
+  verifyUserAccount: async args => {
+    const { code, userId } = args;
+    try {
+      const data = await requestGithubUser({
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_SECRET,
+        code,
+      });
+      await transformUser(userId, {
+        modified_date: new Date(),
+        ...data,
+      });
+      return {
+        __typename: 'Success',
+        message: `Your Github account has been successfully verified.`,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
 };

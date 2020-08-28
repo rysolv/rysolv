@@ -53,6 +53,7 @@ const SettingsTabs = ({
   handleWithdrawFunds,
   inputErrors,
   isDisabled,
+  isGithubVerified,
   issues,
   lastName,
   organizations,
@@ -216,6 +217,7 @@ const SettingsTabs = ({
         handleEdit={handleEdit}
         handleNav={handleNav}
         isDisabled={isDisabled}
+        isGithubVerified={isGithubVerified}
         lastName={lastName}
         setChangeEmail={setChangeEmail}
         setChangeFirstName={setChangeFirstName}
@@ -356,6 +358,7 @@ SettingsTabs.propTypes = {
   handleWithdrawFunds: T.func,
   inputErrors: T.object,
   isDisabled: T.bool,
+  isGithubVerified: T.bool,
   issues: T.array,
   lastName: T.string,
   organizations: T.array,

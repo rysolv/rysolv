@@ -19,6 +19,7 @@ const userValues = [
   'email_verified',
   'email',
   'first_name',
+  'github_id',
   'github_link',
   'is_deleted',
   'is_online',
@@ -65,6 +66,11 @@ const userReturnValues = `
   stackoverflow_link AS "stackoverflowLink",
   upvotes,
   username
+`;
+
+const userSettingsReturnValues = `
+  CASE WHEN github_id IS NOT NULL THEN true ELSE false END AS "isGithubVerified",
+  ${userReturnValues}
 `;
 
 // TODO: refactor SQL query to not require group values
@@ -115,7 +121,7 @@ const createUser = async data => {
 
 // GET single user
 const getOneUser = async userId => {
-  const [rows] = await singleItem('users', userId, userReturnValues);
+  const [rows] = await singleItem('users', userId, userSettingsReturnValues);
   if (rows && !rows.isDeleted) {
     return rows;
   }
@@ -203,7 +209,7 @@ const transformUser = async (id, data) => {
       SET (${parameters})
       = (${substitution})
       WHERE (id = '${id}')
-      RETURNING ${userReturnValues}`;
+      RETURNING ${userSettingsReturnValues}`;
     const [result] = await mapValues(queryText, values);
     return result;
   }
