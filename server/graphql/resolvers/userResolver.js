@@ -264,12 +264,13 @@ module.exports = {
         client_secret: process.env.GITHUB_SECRET,
         code,
       });
-      await transformUser(userId, {
+      const { isGithubVerified } = await transformUser(userId, {
         modified_date: new Date(),
         ...data,
       });
       return {
-        __typename: 'Success',
+        __typename: 'Verification',
+        isGithubVerified,
         message: `Your Github account has been successfully verified.`,
       };
     } catch (err) {

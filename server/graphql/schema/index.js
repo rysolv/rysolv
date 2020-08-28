@@ -282,6 +282,11 @@ module.exports = buildSchema(`
     watching: [String]
   }
 
+  type Verification {
+    isGithubVerified: Boolean
+    message: String
+  }
+
   type WatchList {
     id: ID
     profilePic: String
@@ -325,10 +330,12 @@ module.exports = buildSchema(`
   union ToggleWatchingResult = WatchListArray | Error
   union UpvoteResult = Upvote | Error
   union UserResult = User | Error
+  union VerificationResult = Verification | Error
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
     checkDuplicateUser(email: String, username: String): EventResponse!
+    
     getActivity(column: String!, id: ID): ActivityResult!
     getAllActivity: ActivityResult!
     getComments: [Comment]!
@@ -354,7 +361,7 @@ module.exports = buildSchema(`
     searchOrganizations(value: String!): OrganizationArrayResult
     searchUsers(value: String!): [User!]!
 
-    verifyUserAccount(code: String!, userId: ID!): EventResponse!
+    verifyUserAccount(code: String!, userId: ID!): VerificationResult!
   }
 
   type RootMutation {
@@ -364,20 +371,20 @@ module.exports = buildSchema(`
     createComment(commentInput: CommentInput): Comment
     createIssue(issueInput: IssueInput): IssueResult
     createOrganization(organizationInput: OrganizationInput): OrganizationResult
-    createUser(userInput: UserInput): User!
     createPaypalPayment(amount: Float!, issueId: ID, userId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): PullRequestResult!
     createStripeCharge(amount: Float!, issueId: ID, token: String!, userId: ID): PaymentResult!
+    createUser(userInput: UserInput): User!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
     deleteIssue(id: ID!): String!
     deleteOrganization(id:ID!): String!
-    deleteUser(id:ID!): String!
     deletePullRequest(id:ID!): EventResponse!
+    deleteUser(id:ID!): String!
 
     importIssue(url: String!): ImportResult
     importOrganization(url: String!): ImportResult
-    importPullRequest(url: String!, issueId: ID!): ImportPullRequestResult
+    importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult
 
     submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
 

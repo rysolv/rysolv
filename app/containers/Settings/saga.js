@@ -328,7 +328,7 @@ export function* verifyAccountSaga({ payload }) {
     query {
       verifyUserAccount(code: "${code}", userId: "${userId}") {
         __typename
-        ... on Success {
+        ... on Verification {
           message
         }
         ... on Error {
@@ -345,11 +345,12 @@ export function* verifyAccountSaga({ payload }) {
     const {
       data: { verifyUserAccount },
     } = yield call(post, '/graphql', graphql);
-    const { __typename, message } = verifyUserAccount;
+    const { __typename, isGithubVerified, message } = verifyUserAccount;
     if (__typename === 'Error') {
       throw new Error(message);
     }
     yield put(verifyAccountSuccess({ message }));
+    yield put(updateActiveUser({ isGithubVerified }));
   } catch (error) {
     yield put(verifyAccountFailure({ error }));
   }

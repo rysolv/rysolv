@@ -99,7 +99,7 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
     number,
     state,
     title,
-    user: { login },
+    user: { id, login },
   } = pullRequestData;
 
   if (state !== 'open') {
@@ -112,6 +112,7 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
   const isMergeable = mergeable === null ? false : mergeable;
   const isMerged = merged === null ? false : merged;
   const pullData = {
+    githubId: id,
     githubUsername: login,
     htmlUrl: html_url,
     mergeable: isMergeable,

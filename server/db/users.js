@@ -6,6 +6,8 @@ const {
   singleSearch,
 } = require('../db/query');
 const { formatParamaters } = require('./helpers');
+const { formatPullRequestUrl } = require('../integrations/github/helpers');
+const { getSinglePullRequest } = require('../integrations');
 
 const userValues = [
   'id',
@@ -105,7 +107,22 @@ const checkDuplicateUsername = async username => {
   }
 };
 
-// Create new User
+// Check user's github id
+const checkUserGithubId = async (url, userId) => {
+  const { organization, repo, pullNumber } = formatPullRequestUrl(url);
+  const { githubId: id } = await getSinglePullRequest({
+    organization,
+    pullNumber,
+    repo,
+  });
+  const queryText = `SELECT github_id AS "githubId" FROM users WHERE id = '${userId}'`;
+  const { rows } = await singleQuery(queryText);
+  const [oneRow] = rows;
+  const { githubId } = oneRow;
+  return !(githubId === id);
+};
+
+// Create new user
 const createUser = async data => {
   const { parameters, substitution, values } = formatParamaters(
     userValues,
@@ -234,6 +251,7 @@ const updateUserArray = async ({ column, data, remove, userId }) => {
 module.exports = {
   checkDuplicateUserEmail,
   checkDuplicateUsername,
+  checkUserGithubId,
   createUser,
   getOneUser,
   getOneUserSignUp,

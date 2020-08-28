@@ -18,6 +18,7 @@ const PullRequestButton = ({
   dispatchFetchPullRequestList,
   dispatchOpenIssueModal,
   dispatchOpenModal,
+  isGithubVerified,
   isSignedIn,
   pullRequests,
 }) => (
@@ -27,6 +28,9 @@ const PullRequestButton = ({
       onClick={() => {
         if (!isSignedIn) {
           return dispatchOpenModal({ modalState: 'signIn' });
+        }
+        if (!isGithubVerified) {
+          return dispatchOpenModal({ modalState: 'verifyAccount' });
         }
         return dispatchOpenIssueModal({ modalState: 'addPullRequest' });
       }}
@@ -54,6 +58,7 @@ PullRequestButton.propTypes = {
   dispatchFetchPullRequestList: T.func,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
+  isGithubVerified: T.bool.isRequired,
   isSignedIn: T.bool,
   pullRequests: T.array,
 };

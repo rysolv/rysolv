@@ -13,6 +13,7 @@ import Footer from 'components/Footer';
 import PaymentPortalModal from 'components/PaymentsModal';
 import SideNav from 'components/SideNav';
 import SigninModal from 'components/SigninModal';
+import VerifyAccountModal from 'components/VerifyAccountModal';
 import WatchList from 'components/WatchList';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
@@ -119,6 +120,14 @@ export const Main = ({
     },
     signIn: {
       Component: SigninModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        handleClose: dispatchCloseModal,
+        handleRedirect,
+      },
+    },
+    verifyAccount: {
+      Component: VerifyAccountModal,
       open: isModalOpen,
       propsToPassDown: {
         handleClose: dispatchCloseModal,

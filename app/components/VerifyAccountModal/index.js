@@ -5,31 +5,32 @@ import { PrimaryButton } from 'components/base_ui';
 
 import {
   ButtonGroup,
-  SigninContainer,
   StyledBodyMessage,
   StyledPrimaryButton,
   StyledTitle,
+  VerifyAccountContainer,
 } from './styledComponents';
 
-const SigninModal = ({ handleClose, handleRedirect }) => (
-  <SigninContainer>
-    <StyledTitle>Sign in to continue...</StyledTitle>
+const VerifyAccountModal = ({ handleClose, handleRedirect }) => (
+  <VerifyAccountContainer>
+    <StyledTitle>Verify your account...</StyledTitle>
     <StyledBodyMessage>
-      You must be signed in your Rysolv account to use this feature.
+      Your account must be verified with Github before you can submit a pull
+      request.
     </StyledBodyMessage>
     <ButtonGroup>
       <StyledPrimaryButton label="Cancel" onClick={handleClose} />
       <PrimaryButton
-        label="Sign In"
-        onClick={() => handleRedirect('/signin')}
+        label="Verify"
+        onClick={() => handleRedirect('/settings/account')}
       />
     </ButtonGroup>
-  </SigninContainer>
+  </VerifyAccountContainer>
 );
 
-SigninModal.propTypes = {
+VerifyAccountModal.propTypes = {
   handleClose: T.func.isRequired,
   handleRedirect: T.func.isRequired,
 };
 
-export default SigninModal;
+export default VerifyAccountModal;

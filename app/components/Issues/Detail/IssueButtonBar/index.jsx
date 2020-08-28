@@ -13,6 +13,7 @@ const IssueButtonBar = ({
   activeUser,
   activeUser: {
     id: userId,
+    isGithubVerified,
     pullRequests: activeUserPullRequests,
     watching: activeUserWatching,
   },
@@ -64,6 +65,7 @@ const IssueButtonBar = ({
         dispatchFetchPullRequestList={dispatchFetchPullRequestList}
         dispatchOpenIssueModal={dispatchOpenIssueModal}
         dispatchOpenModal={dispatchOpenModal}
+        isGithubVerified={isGithubVerified}
         isSignedIn={isSignedIn}
         pullRequests={pullRequests}
       />

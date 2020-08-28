@@ -42,6 +42,7 @@ const {
 const {
   checkDuplicateUserEmail,
   checkDuplicateUsername,
+  checkUserGithubId,
   createUser,
   getOneUser,
   getOneUserSignUp,
@@ -68,6 +69,7 @@ module.exports = {
   checkDuplicatePullRequest,
   checkDuplicateUserEmail,
   checkDuplicateUsername,
+  checkUserGithubId,
   closeIssue,
   createActivity,
   createComment,

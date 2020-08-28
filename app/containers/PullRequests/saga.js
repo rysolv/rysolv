@@ -176,7 +176,7 @@ export function* importPullRequestSaga({ payload }) {
   const { url, issueId } = payload;
   const query = `
     mutation {
-      importPullRequest(url: "${url}", issueId:"${issueId}") {
+      importPullRequest(issueId:"${issueId}", url: "${url}") {
         __typename
         ... on ImportPullRequest {
           githubUsername
