@@ -44,6 +44,7 @@ const Settings = ({
   activeUser: { id: userId },
   alerts,
   data,
+  data: { isGithubVerified },
   deviceView,
   dispatchCloseModal,
   dispatchFetchInfo,
@@ -74,17 +75,21 @@ const Settings = ({
   useEffect(() => {
     const url = window.location.href;
     const hasCode = url.includes('?code=');
-
-    if (hasCode && userId) {
+    if (
+      hasCode &&
+      isGithubVerified !== undefined &&
+      !isGithubVerified &&
+      userId
+    ) {
       const newUrl = url.split('?code=');
       dispatchVerifyAccount({ code: newUrl[1], userId });
     }
-  }, [userId]);
+  }, [userId, isGithubVerified]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'User Settings';
-    dispatchFetchInfo({ userId });
+    if (userId) dispatchFetchInfo({ userId });
   }, [userId]);
 
   const handleStripeToken = ({ amount, token, values }) => {

@@ -40,6 +40,7 @@ const SettingsTabs = ({
   email,
   filterValues,
   firstName,
+  githubUsername,
   handleClearAllAlerts,
   handleClearErrors,
   handleClose,
@@ -193,10 +194,12 @@ const SettingsTabs = ({
         activity={activity}
         attempting={attempting}
         filterValues={filterValues}
+        githubUsername={githubUsername}
         handleInputChange={handleInputChange}
         handleNav={handleNav}
         handleRemoveIssue={handleRemoveIssue}
         handleRemoveWatching={handleRemoveWatching}
+        isGithubVerified={isGithubVerified}
         userId={userId}
         watching={watching}
       />
@@ -217,7 +220,6 @@ const SettingsTabs = ({
         handleEdit={handleEdit}
         handleNav={handleNav}
         isDisabled={isDisabled}
-        isGithubVerified={isGithubVerified}
         lastName={lastName}
         setChangeEmail={setChangeEmail}
         setChangeFirstName={setChangeFirstName}
@@ -345,6 +347,7 @@ SettingsTabs.propTypes = {
   email: T.string,
   filterValues: T.object,
   firstName: T.string,
+  githubUsername: T.string,
   handleClearAllAlerts: T.func,
   handleClearErrors: T.func,
   handleClose: T.func,

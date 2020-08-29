@@ -215,7 +215,8 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case VERIFY_ACCOUNT_SUCCESS: {
-      const { message } = payload;
+      const { githubUsername, message } = payload;
+      draft.account.githubUsername = githubUsername;
       draft.account.isGithubVerified = true;
       draft.alerts.success = { message };
       draft.loading = false;

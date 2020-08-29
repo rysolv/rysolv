@@ -235,6 +235,7 @@ module.exports = buildSchema(`
     emailVerified: Boolean
     firstName: String!
     githubLink: String
+    githubUsername: String
     id: ID!
     isGithubVerified: Boolean
     isOnline: Boolean
@@ -283,6 +284,7 @@ module.exports = buildSchema(`
   }
 
   type Verification {
+    githubUsername: String
     isGithubVerified: Boolean
     message: String
   }

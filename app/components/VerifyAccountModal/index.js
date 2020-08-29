@@ -15,13 +15,13 @@ const VerifyAccountModal = ({ handleClose, handleRedirect }) => (
   <VerifyAccountContainer>
     <StyledTitle>Verify your account...</StyledTitle>
     <StyledBodyMessage>
-      Your account must be verified with Github before you can submit a pull
+      Your account must be connected with Github before you can submit a pull
       request.
     </StyledBodyMessage>
     <ButtonGroup>
       <StyledPrimaryButton label="Cancel" onClick={handleClose} />
       <PrimaryButton
-        label="Verify"
+        label="Connect"
         onClick={() => handleRedirect('/settings/account')}
       />
     </ButtonGroup>

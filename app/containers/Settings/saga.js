@@ -72,6 +72,7 @@ export function* fetchInfoSaga({ payload }) {
         email,
         firstName,
         githubLink,
+        githubUsername,
         id,
         isGithubVerified,
         issues,
@@ -329,6 +330,8 @@ export function* verifyAccountSaga({ payload }) {
       verifyUserAccount(code: "${code}", userId: "${userId}") {
         __typename
         ... on Verification {
+          githubUsername
+          isGithubVerified
           message
         }
         ... on Error {
@@ -345,11 +348,16 @@ export function* verifyAccountSaga({ payload }) {
     const {
       data: { verifyUserAccount },
     } = yield call(post, '/graphql', graphql);
-    const { __typename, isGithubVerified, message } = verifyUserAccount;
+    const {
+      __typename,
+      githubUsername,
+      isGithubVerified,
+      message,
+    } = verifyUserAccount;
     if (__typename === 'Error') {
       throw new Error(message);
     }
-    yield put(verifyAccountSuccess({ message }));
+    yield put(verifyAccountSuccess({ githubUsername, message }));
     yield put(updateActiveUser({ isGithubVerified }));
   } catch (error) {
     yield put(verifyAccountFailure({ error }));

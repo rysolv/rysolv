@@ -207,8 +207,8 @@ const requestGithubUserAccount = token =>
 
 const requestGithubUser = async credentials => {
   const { access_token } = await requestGithubToken(credentials);
-  const { id } = await requestGithubUserAccount(access_token);
-  return { github_id: id };
+  const { id, login } = await requestGithubUserAccount(access_token);
+  return { github_id: id, github_username: login };
 };
 
 module.exports = {

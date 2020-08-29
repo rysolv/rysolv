@@ -9,7 +9,6 @@ import {
 import iconDictionary from 'utils/iconDictionary';
 
 import AccountBalance from '../Balance';
-import VerifiedAccountsView from '../VerifiedAccounts';
 import {
   AccountContainer,
   DeleteText,
@@ -39,7 +38,6 @@ const UserAccount = ({
   handleEdit,
   handleNav,
   isDisabled,
-  isGithubVerified,
   lastName,
   setChangeEmail,
   setChangeFirstName,
@@ -242,7 +240,6 @@ const UserAccount = ({
         />
       </IconButtonWrapper>
     </InputWrapper>
-    <VerifiedAccountsView isGithubVerified={isGithubVerified} />
     <HeaderWrapper>
       <StyledH3>Balance</StyledH3>
     </HeaderWrapper>
@@ -280,7 +277,6 @@ UserAccount.propTypes = {
   handleEdit: T.func,
   handleNav: T.func,
   isDisabled: T.bool,
-  isGithubVerified: T.bool,
   lastName: T.string,
   setChangeEmail: T.func,
   setChangeFirstName: T.func,

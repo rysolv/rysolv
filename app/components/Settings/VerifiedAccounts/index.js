@@ -2,56 +2,59 @@ import React from 'react';
 import T from 'prop-types';
 
 import { ConditionalRender, Verified } from 'components/base_ui';
+import iconDictionary from 'utils/iconDictionary';
 
 import {
-  Account,
-  AccountListItem,
+  AccountIcon,
+  AccountSquare,
   AccountWrapper,
-  VerifiedText,
+  StyledText,
   VerifiedWrapper,
   VerifyLink,
 } from './styledComponents';
-import { HeaderWrapper, StyledH3 } from '../styledComponents';
 
-const VerifiedAccountsView = ({ isGithubVerified }) => (
-  <div>
-    <HeaderWrapper>
-      <StyledH3>Verified Accounts</StyledH3>
-    </HeaderWrapper>
-    <VerifiedText>
-      Please note that your account needs to be verified with Github before you
-      can submit pull requests.
-    </VerifiedText>
-    <AccountListItem>
-      <AccountWrapper>
-        <Account>Github</Account>
+const GithubIcon = iconDictionary('github');
+
+const VerifiedAccountsView = ({ githubUsername, isGithubVerified }) => {
+  const VerifyLinkComponent = () => (
+    <VerifyLink
+      href={`https://github.com/login/oauth/authorize?scope=user&client_id=${
+        process.env.GITHUB_CLIENT_ID
+      }`}
+    >
+      Connect Github
+    </VerifyLink>
+  );
+
+  const VerifiedComponent = () => (
+    <VerifiedWrapper>
+      <Verified />
+      Verified
+    </VerifiedWrapper>
+  );
+
+  const UsernameComponent = () => <StyledText>{githubUsername}</StyledText>;
+  return (
+    <AccountSquare>
+      <AccountWrapper isVerified={isGithubVerified}>
+        <AccountIcon isVerified={isGithubVerified}>{GithubIcon}</AccountIcon>
         <ConditionalRender
-          Component={
-            <VerifyLink
-              href={`https://github.com/login/oauth/authorize?scope=user&client_id=${
-                process.env.GITHUB_CLIENT_ID
-              }`}
-            >
-              Connect
-            </VerifyLink>
-          }
+          Component={VerifyLinkComponent}
+          FallbackComponent={VerifiedComponent}
           shouldRender={!isGithubVerified}
         />
       </AccountWrapper>
       <ConditionalRender
-        Component={<VerifiedWrapper>Not verified</VerifiedWrapper>}
-        FallbackComponent={
-          <VerifiedWrapper isVerified>
-            <Verified />
-            Verified
-          </VerifiedWrapper>
-        }
-        shouldRender={!isGithubVerified}
+        Component={UsernameComponent}
+        shouldRender={isGithubVerified}
       />
-    </AccountListItem>
-  </div>
-);
+    </AccountSquare>
+  );
+};
 
-VerifiedAccountsView.propTypes = { isGithubVerified: T.bool.isRequired };
+VerifiedAccountsView.propTypes = {
+  githubUsername: T.string,
+  isGithubVerified: T.bool.isRequired,
+};
 
 export default VerifiedAccountsView;

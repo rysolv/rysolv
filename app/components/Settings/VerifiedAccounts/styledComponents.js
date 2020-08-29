@@ -1,45 +1,56 @@
 import styled from 'styled-components';
 
 import { defaultFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-export const Account = styled.span`
-  color: ${textColor};
-  flex-grow: 1;
-  font-size: 1.6rem;
-  font-weight: 500;
+const { mobileS } = mediaQueriesByDevice;
+
+export const AccountIcon = styled.div`
+  margin-bottom: 2rem;
+
+  svg {
+    color: ${({ isVerified }) => (isVerified ? 'rgb(8,178,110)' : textColor)};
+    height: 7.5rem;
+    opacity: 0.8;
+    width: 7.5rem;
+  }
 `;
 
-export const AccountListItem = styled.li`
-  border-top: 0.1rem solid #d5d5d5;
-  list-style: none;
-  margin: 0 1rem 2.2rem;
-  padding: 2rem 1rem;
+export const AccountSquare = styled.div`
+  background-color: #f6f8fa;
+  border-radius: 0.3rem;
+  height: 16.2rem;
+  margin-top: 3rem;
+  padding: 1.6rem 2.4rem;
+  width: 15rem;
 
-  & :last-child {
-    border-bottom: 0.1rem solid #d5d5d5;
+  ${mobileS} {
+    margin: 3rem auto 0;
   }
 `;
 
 export const AccountWrapper = styled.div`
   align-items: center;
   display: flex;
-  margin-bottom: 0.5rem;
+  flex-direction: column;
+  height: ${({ isVerified }) => (isVerified ? 'auto' : '100%')};
+  justify-content: space-evenly;
 `;
 
-export const VerifiedText = styled.div`
-  color: ${textColor};
+export const StyledText = styled.div`
+  color: rgba(0, 0, 0, 0.4);
   font-size: ${defaultFontSize};
-  padding: 0 1rem 2rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+  text-align: center;
 `;
 
 export const VerifiedWrapper = styled.div`
-  background: ${({ isVerified }) =>
-    isVerified ? 'rgb(229, 251, 242)' : '#f6f8fa'};
+  background: rgb(229, 251, 242);
   border-radius: 0.25rem;
-  color: ${({ isVerified }) => (isVerified ? 'rgb(8, 178, 110)' : '#586069')};
+  color: rgb(8, 178, 110);
   font-size: ${defaultFontSize};
   padding: 0.5rem;
-  width: fit-content;
 `;
 
 export const VerifyLink = styled.a`

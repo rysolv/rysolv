@@ -23,6 +23,7 @@ const userValues = [
   'first_name',
   'github_id',
   'github_link',
+  'github_username',
   'is_deleted',
   'is_online',
   'issues',
@@ -72,6 +73,7 @@ const userReturnValues = `
 
 const userSettingsReturnValues = `
   CASE WHEN github_id IS NOT NULL THEN true ELSE false END AS "isGithubVerified",
+  github_username AS "githubUsername",
   ${userReturnValues}
 `;
 
