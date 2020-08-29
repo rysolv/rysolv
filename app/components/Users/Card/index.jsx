@@ -2,7 +2,7 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { ImageLinkWrapper, Star } from 'components/base_ui';
+import { Coin, ImageLinkWrapper } from 'components/base_ui';
 
 import {
   ActiveContainer,
@@ -75,7 +75,7 @@ const UserCard = ({ data, deviceView }) => {
                         />
                         <IconWrapper>
                           <div>
-                            <Star />
+                            <Coin />
                           </div>
                           <NumberContainer>{pointsNumber}</NumberContainer>
                         </IconWrapper>
