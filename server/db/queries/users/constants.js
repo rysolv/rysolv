@@ -1,5 +1,4 @@
 const userValues = [
-  'id',
   'active_pull_requests',
   'attempting',
   'balance',
@@ -11,6 +10,7 @@ const userValues = [
   'email',
   'first_name',
   'github_link',
+  'id',
   'is_deleted',
   'is_online',
   'issues',
@@ -29,7 +29,6 @@ const userValues = [
 ];
 
 const userReturnValues = `
-  id,
   active_pull_requests AS "activePullRequests",
   attempting,
   balance,
@@ -41,6 +40,7 @@ const userReturnValues = `
   email,
   first_name AS "firstName",
   github_link AS "githubLink",
+  id,
   is_deleted AS "isDeleted",
   is_online AS "isOnline",
   issues,
@@ -58,7 +58,7 @@ const userReturnValues = `
   username
 `;
 
-// TODO: refactor SQL query to not require group values
+// @TODO: refactor SQL query to not require group values
 const groupValues = userValues.join(',');
 
 module.exports = { groupValues, userReturnValues, userValues };

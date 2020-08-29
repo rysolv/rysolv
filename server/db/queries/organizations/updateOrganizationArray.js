@@ -1,6 +1,6 @@
 const { singleQuery } = require('../../baseQueries');
 
-// TODO: remove this query entirely. Refactor getOrganizations to join issues
+// @TODO: remove this query entirely. Refactor getOrganizations to join issues
 // ADD to organization array
 const updateOrganizationArray = async ({ column, id, data, remove }) => {
   const action = remove ? 'array_remove' : 'array_append';

@@ -50,7 +50,7 @@ const createTables = async () => {
 
 // Drop all tables
 const dropAllTables = async () => {
-  // TODO: figure out a way to await/map through this
+  // @TODO: figure out a way to await/map through this
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS activity cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS comments cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS funding cascade' });

@@ -1,13 +1,16 @@
-const { singleItem } = require('../../baseQueries');
+const { singleQuery } = require('../../baseQueries');
 const { userReturnValues } = require('./constants');
 
 // GET single user
-const getOneUser = async userId => {
-  const [rows] = await singleItem('users', userId, userReturnValues);
-  if (rows && !rows.isDeleted) {
-    return rows;
-  }
-  throw new Error(`User does not exist`);
+const getOneUser = async ({ userId }) => {
+  const queryText = `
+    SELECT ${userReturnValues} from users
+    WHERE id = $1
+  `;
+  const { rows } = await singleQuery({ queryText, values: [userId] });
+  const [oneRow] = rows;
+  if (oneRow) return oneRow;
+  throw new Error(`User not found`);
 };
 
 module.exports = getOneUser;

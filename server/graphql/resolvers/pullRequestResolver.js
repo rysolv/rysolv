@@ -100,7 +100,7 @@ module.exports = {
       const { organization, repo, pullNumber } = formatPullRequestUrl(url);
       const { repo: issueRepo } = await getOneIssue({ issueId });
 
-      // TODO: add org_displayname to issues schema to avoid this url parsing
+      // @TODO: add org_displayname to issues schema to avoid this url parsing
       const { pathname } = new URL(issueRepo);
       const issueUrl = pathname.split('/');
 

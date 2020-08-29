@@ -1,6 +1,6 @@
 const { singleQuery } = require('../../baseQueries');
 
-// TODO: Break out into seperate close issue / open issue queries
+// @TODO: Break out into seperate close issue / open issue queries
 
 // Close single issue
 const closeIssue = async ({ issueId, shouldClose }) => {

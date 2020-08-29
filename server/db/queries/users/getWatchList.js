@@ -1,5 +1,6 @@
 const { singleQuery } = require('../../baseQueries');
 
+// @TODO: remove this query in favor of getUserAttemptingList
 const getWatchList = async (id, type) => {
   const paramsDictionary = {
     issueAttemptList: {

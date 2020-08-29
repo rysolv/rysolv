@@ -162,7 +162,7 @@ module.exports = {
 
       const contributorsResult = await Promise.all(
         contributors.map(async contributorId => {
-          const userResult = await getOneUser(contributorId);
+          const userResult = await getOneUser({ userId: contributorId });
           return userResult;
         }),
       );

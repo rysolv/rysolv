@@ -51,7 +51,7 @@ const issueDetailValues = `
   users.profile_pic AS "profilePic"
 `;
 
-// TODO: refactor SQL query to not require group values
+// @TODO: refactor SQL query to not require group values
 const groupValues = `
   issues.attempting,
   issues.body,

@@ -8,12 +8,11 @@ const createWithdrawal = async data => {
     newObject: data,
     tableParameters: withdrawalValues,
   });
-
   const queryText = `
     INSERT INTO withdrawal(${parameters})
-    VALUES(${substitution})`;
-
-  await mapValues(queryText, [values]);
+    VALUES(${substitution})
+  `;
+  await mapValues({ queryText, values });
   return 'Successfully created withdrawal';
 };
 

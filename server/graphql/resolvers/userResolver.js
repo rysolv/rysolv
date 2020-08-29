@@ -25,8 +25,8 @@ module.exports = {
   checkDuplicateUser: async args => {
     const { username, email } = args;
     try {
-      await checkDuplicateUserEmail(email);
-      await checkDuplicateUsername(username);
+      await checkDuplicateUserEmail({ email });
+      await checkDuplicateUsername({ username });
 
       return {
         __typename: 'Success',
@@ -57,10 +57,10 @@ module.exports = {
     };
 
     try {
-      await checkDuplicateUserEmail(email);
-      await checkDuplicateUsername(username);
+      await checkDuplicateUserEmail({ email });
+      await checkDuplicateUsername({ username });
 
-      const result = await createUser(newUser);
+      const result = await createUser({ data: newUser });
 
       return result;
     } catch (err) {
@@ -139,7 +139,7 @@ module.exports = {
   oneUser: async args => {
     const { id: userId } = args;
     try {
-      const result = await getOneUser(userId);
+      const result = await getOneUser({ userId });
       const { attempting, issues, organizations } = result;
 
       // Pull user attempting detail
@@ -184,7 +184,7 @@ module.exports = {
   oneUserSignUp: async args => {
     const { email } = args;
     try {
-      const result = await getOneUserSignUp(email);
+      const result = await getOneUserSignUp({ email });
       return result;
     } catch (err) {
       throw err;
@@ -193,7 +193,7 @@ module.exports = {
   searchUsers: async args => {
     const { value } = args;
     try {
-      const result = await searchUsers('users', value);
+      const result = await searchUsers({ value });
       return result;
     } catch (err) {
       throw err;
@@ -231,7 +231,7 @@ module.exports = {
         stackoverflow_link: userInput.stackoverflowLink,
         username: userInput.username,
       };
-      const result = await transformUser(id, data);
+      const result = await transformUser({ userId: id, data });
 
       return {
         __typename: 'User',
