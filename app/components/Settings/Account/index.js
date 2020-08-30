@@ -36,6 +36,7 @@ const UserAccount = ({
   handleClose,
   handleDone,
   handleEdit,
+  handleEmailDone,
   handleNav,
   isDisabled,
   lastName,
@@ -227,12 +228,7 @@ const UserAccount = ({
               <IconButton
                 icon={DoneIcon}
                 label="Save"
-                onClick={() =>
-                  handleDone({
-                    changeInputState: setChangeEmail,
-                    field: 'email',
-                  })
-                }
+                onClick={handleEmailDone}
               />
             </Fragment>
           }
@@ -275,6 +271,7 @@ UserAccount.propTypes = {
   handleClose: T.func,
   handleDone: T.func,
   handleEdit: T.func,
+  handleEmailDone: T.func,
   handleNav: T.func,
   isDisabled: T.bool,
   lastName: T.string,

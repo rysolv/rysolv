@@ -79,6 +79,7 @@ const SettingsView = ({
   dispatchPaypalPayment,
   dispatchSaveChange,
   filterValues,
+  handleChangeEmail,
   handleClearAlerts,
   handleClearErrors,
   handleInputChange,
@@ -120,7 +121,7 @@ const SettingsView = ({
 
   const handleDone = ({ changeInputState, field }) => {
     changeInputState(false);
-    dispatchSaveChange({ field, itemId: id, value });
+    dispatchSaveChange({ field, id, value });
     setIsDisabled(false);
   };
 
@@ -128,6 +129,12 @@ const SettingsView = ({
     setIsDisabled(true);
     changeInputState(true);
     setValue(currentValue);
+  };
+
+  const handleEmailDone = () => {
+    handleChangeEmail({ email: value, id });
+    setChangeEmail(false);
+    setIsDisabled(false);
   };
 
   const handleUploadUserImage = async e => {
@@ -309,6 +316,7 @@ const SettingsView = ({
             handleClose={handleClose}
             handleDone={handleDone}
             handleEdit={handleEdit}
+            handleEmailDone={handleEmailDone}
             handleInputChange={handleInputChange}
             handleNav={handleNav}
             handleRemoveIssue={handleRemoveIssue}
@@ -350,6 +358,7 @@ SettingsView.propTypes = {
   dispatchPaypalPayment: T.func.isRequired,
   dispatchSaveChange: T.func.isRequired,
   filterValues: T.object.isRequired,
+  handleChangeEmail: T.func.isRequired,
   handleClearAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
   handleInputChange: T.func.isRequired,

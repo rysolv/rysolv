@@ -45,6 +45,7 @@ const SettingsTabs = ({
   handleClose,
   handleDone,
   handleEdit,
+  handleEmailDone,
   handleInputChange,
   handleNav,
   handleRemoveIssue,
@@ -214,6 +215,7 @@ const SettingsTabs = ({
         handleClose={handleClose}
         handleDone={handleDone}
         handleEdit={handleEdit}
+        handleEmailDone={handleEmailDone}
         handleNav={handleNav}
         isDisabled={isDisabled}
         lastName={lastName}
@@ -348,6 +350,7 @@ SettingsTabs.propTypes = {
   handleClose: T.func,
   handleDone: T.func,
   handleEdit: T.func,
+  handleEmailDone: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleRemoveIssue: T.func,

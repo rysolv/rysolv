@@ -1,4 +1,7 @@
 import {
+  CHANGE_EMAIL_FAILURE,
+  CHANGE_EMAIL_SUCCESS,
+  CHANGE_EMAIL,
   CLEAR_ALERTS,
   CLEAR_ERRORS,
   CLOSE_MODAL_STATE,
@@ -28,6 +31,24 @@ import {
   WITHDRAW_FUNDS_SUCCESS,
   WITHDRAW_FUNDS,
 } from './constants';
+
+export function changeEmailFailure(payload) {
+  return {
+    payload,
+    type: CHANGE_EMAIL_FAILURE,
+  };
+}
+
+export function changeEmailSuccess() {
+  return { type: CHANGE_EMAIL_SUCCESS };
+}
+
+export function changeEmail(payload) {
+  return {
+    payload,
+    type: CHANGE_EMAIL,
+  };
+}
 
 export function clearAlerts() {
   return {

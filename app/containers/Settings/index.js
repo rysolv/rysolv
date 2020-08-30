@@ -17,6 +17,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
 import {
+  changeEmail,
   clearAlerts,
   clearErrors,
   closeModalState,
@@ -54,6 +55,7 @@ const Settings = ({
   dispatchWithdrawFunds,
   error,
   filterValues,
+  handleChangeEmail,
   handleClearAlerts,
   handleClearErrors,
   handleDeleteUser,
@@ -143,6 +145,7 @@ const Settings = ({
           dispatchPaypalPayment,
           dispatchSaveChange,
           filterValues,
+          handleChangeEmail,
           handleClearAlerts,
           handleClearErrors,
           handleInputChange,
@@ -176,6 +179,7 @@ Settings.propTypes = {
   dispatchWithdrawFunds: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object,
+  handleChangeEmail: T.func.isRequired,
   handleClearAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
   handleDeleteUser: T.func.isRequired,
@@ -214,6 +218,10 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    /**
+     * Reducer : Auth
+     */
+    handleChangeEmail: payload => dispatch(changeEmail(payload)),
     /**
      * Reducer : Settings
      */
