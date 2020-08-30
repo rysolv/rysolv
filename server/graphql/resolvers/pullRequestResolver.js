@@ -13,8 +13,8 @@ const {
   updateIssueArray,
   updateUserArray,
 } = require('../../db');
-const { getSinglePullRequest } = require('../../integrations');
 const { formatPullRequestUrl } = require('../../integrations/github/helpers');
+const { getSinglePullRequest } = require('../../integrations');
 
 module.exports = {
   createPullRequest: async args => {

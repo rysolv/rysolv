@@ -22,7 +22,7 @@ const VerifyAccountModal = ({ handleClose, handleRedirect }) => (
       <StyledPrimaryButton label="Cancel" onClick={handleClose} />
       <PrimaryButton
         label="Connect"
-        onClick={() => handleRedirect('/settings/account')}
+        onClick={() => handleRedirect('/settings')}
       />
     </ButtonGroup>
   </VerifyAccountContainer>

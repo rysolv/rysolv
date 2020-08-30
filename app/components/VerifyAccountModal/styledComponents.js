@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import { defaultFontSize, textColor } from 'defaultStyleHelper';
 import { PrimaryButton } from 'components/base_ui';
+import { defaultFontSize, textColor } from 'defaultStyleHelper';
 
 export const ButtonGroup = styled.div`
   text-align: center;

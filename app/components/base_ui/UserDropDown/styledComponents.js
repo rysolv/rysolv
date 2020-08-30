@@ -14,6 +14,7 @@ export const MenuItemLabel = styled.div`
   align-items: center;
   display: inline-flex;
 `;
+
 export const MenuItemValue = styled.div`
   display: inline-flex;
 `;
@@ -36,6 +37,7 @@ export const StyledMenu = styled(Menu)`
     font-size: 1.4rem;
     overflow: hidden;
   }
+
   .MuiList-root {
     padding: 0;
   }

@@ -84,7 +84,7 @@ const Settings = ({
       const newUrl = url.split('?code=');
       dispatchVerifyAccount({ code: newUrl[1], userId });
     }
-  }, [userId, isGithubVerified]);
+  }, [isGithubVerified, userId]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
