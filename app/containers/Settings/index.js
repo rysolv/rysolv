@@ -219,10 +219,6 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     /**
-     * Reducer : Auth
-     */
-    handleChangeEmail: payload => dispatch(changeEmail(payload)),
-    /**
      * Reducer : Settings
      */
     dispatchCloseModal: () => dispatch(closeModalState()),
@@ -233,6 +229,7 @@ function mapDispatchToProps(dispatch) {
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
     dispatchStripeToken: payload => dispatch(stripeToken(payload)),
     dispatchWithdrawFunds: payload => dispatch(withdrawFunds(payload)),
+    handleChangeEmail: payload => dispatch(changeEmail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleClearErrors: () => dispatch(clearErrors()),
     handleDeleteUser: payload => dispatch(deleteUser(payload)),
