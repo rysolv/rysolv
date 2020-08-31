@@ -18,6 +18,7 @@ import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { signIn, signOut } from 'containers/Auth/actions';
 import { closeIssue, deletePullRequest } from 'containers/Issues/actions';
+import { clearForm } from 'containers/Signin/actions';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -40,6 +41,7 @@ export const Main = ({
   error,
   handleDelete,
   handleNav,
+  handleResetForm,
   handleSignin,
   handleSignout,
   isModalOpen,
@@ -133,6 +135,7 @@ export const Main = ({
           activeUser={activeUser}
           deviceView={deviceView}
           handleNav={handleNav}
+          handleResetForm={handleResetForm}
           handleSignin={handleSignin}
           handleSignout={handleSignout}
           isSignedIn={isSignedIn}
@@ -159,6 +162,7 @@ Main.propTypes = {
   handleClearAlerts: T.func,
   handleDelete: T.func,
   handleNav: T.func,
+  handleResetForm: T.func.isRequired,
   handleSignin: T.func,
   handleSignout: T.func,
   isModalOpen: T.bool,
@@ -210,6 +214,10 @@ const mapDispatchToProps = dispatch => ({
    * Reducer : Router
    */
   handleNav: route => dispatch(push(route)),
+  /*
+   * Reducer : Signin
+   */
+  handleResetForm: () => dispatch(clearForm()),
 });
 
 const withConnect = connect(

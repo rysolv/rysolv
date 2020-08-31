@@ -21,6 +21,7 @@ const MobileHeader = ({
   activeUser,
   deviceView,
   handleNav,
+  handleResetForm,
   handleSignout,
   isDrawerOpen,
   isLandingPage,
@@ -55,8 +56,16 @@ const MobileHeader = ({
                 />
               ) : (
                 <Fragment>
-                  <StyledHeaderLink label="Sign Up" path="/signup" />
-                  <StyledHeaderLink label="Sign In" path="/signin" />
+                  <StyledHeaderLink
+                    label="Sign Up"
+                    onClick={handleResetForm}
+                    path="/signup"
+                  />
+                  <StyledHeaderLink
+                    label="Sign In"
+                    onClick={handleResetForm}
+                    path="/signin"
+                  />
                 </Fragment>
               )}
             </ButtonsWrapper>
@@ -80,6 +89,7 @@ MobileHeader.propTypes = {
   activeUser: T.object,
   deviceView: T.string,
   handleNav: T.func,
+  handleResetForm: T.func.isRequired,
   handleSignout: T.func,
   isDrawerOpen: T.bool,
   isLandingPage: T.bool.isRequired,
