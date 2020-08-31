@@ -48,7 +48,7 @@ export const initialState = {
     transferValue: '',
   },
   isModalOpen: false,
-  loading: false,
+  loading: true,
   modal: '',
 };
 

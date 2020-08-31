@@ -73,7 +73,7 @@ const Settings = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'User Settings';
-    dispatchFetchInfo({ userId });
+    if (userId) dispatchFetchInfo({ userId });
   }, [userId]);
 
   const handleStripeToken = ({ amount, token, values }) => {
@@ -167,7 +167,7 @@ const Settings = ({
 Settings.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
-  data: T.object,
+  data: T.object.isRequired,
   deviceView: T.string.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchInfo: T.func,

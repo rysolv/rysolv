@@ -1,12 +1,13 @@
 import React from 'react';
 
-const RysolvCoin = () => (
+const RysolvCoin = props => (
   <svg
-    width="121.70833mm"
     height="121.70834mm"
-    viewBox="0 0 121.70833 121.70834"
-    version="1.1"
     id="svg8"
+    version="1.1"
+    viewBox="0 0 121.70833 121.70834"
+    width="121.70833mm"
+    {...props}
   >
     <defs id="defs2">
       <linearGradient id="linearGradient1026">
