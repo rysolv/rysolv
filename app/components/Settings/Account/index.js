@@ -34,10 +34,10 @@ const UserAccount = ({
   email,
   firstName,
   handleClose,
-  handleDone,
   handleEdit,
-  handleEmailDone,
   handleNav,
+  handleSubmitEmailChange,
+  handleSubmitInputChange,
   isDisabled,
   lastName,
   setChangeEmail,
@@ -88,7 +88,7 @@ const UserAccount = ({
                 icon={DoneIcon}
                 label="Save"
                 onClick={() =>
-                  handleDone({
+                  handleSubmitInputChange({
                     changeInputState: setChangeFirstName,
                     field: 'firstName',
                   })
@@ -135,7 +135,7 @@ const UserAccount = ({
                 icon={DoneIcon}
                 label="Save"
                 onClick={() =>
-                  handleDone({
+                  handleSubmitInputChange({
                     changeInputState: setChangeLastName,
                     field: 'lastName',
                   })
@@ -182,7 +182,7 @@ const UserAccount = ({
                 icon={DoneIcon}
                 label="Save"
                 onClick={() =>
-                  handleDone({
+                  handleSubmitInputChange({
                     changeInputState: setChangeUsername,
                     field: 'username',
                   })
@@ -228,7 +228,7 @@ const UserAccount = ({
               <IconButton
                 icon={DoneIcon}
                 label="Save"
-                onClick={handleEmailDone}
+                onClick={handleSubmitEmailChange}
               />
             </Fragment>
           }
@@ -269,10 +269,10 @@ UserAccount.propTypes = {
   email: T.string,
   firstName: T.string,
   handleClose: T.func,
-  handleDone: T.func,
   handleEdit: T.func,
-  handleEmailDone: T.func,
   handleNav: T.func,
+  handleSubmitEmailChange: T.func,
+  handleSubmitInputChange: T.func,
   isDisabled: T.bool,
   lastName: T.string,
   setChangeEmail: T.func,

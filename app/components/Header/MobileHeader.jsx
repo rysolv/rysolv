@@ -86,16 +86,16 @@ const MobileHeader = ({
 );
 
 MobileHeader.propTypes = {
-  activeUser: T.object,
-  deviceView: T.string,
-  handleNav: T.func,
+  activeUser: T.object.isRequired,
+  deviceView: T.string.isRequired,
+  handleNav: T.func.isRequired,
   handleResetForm: T.func.isRequired,
-  handleSignout: T.func,
-  isDrawerOpen: T.bool,
+  handleSignout: T.func.isRequired,
+  isDrawerOpen: T.bool.isRequired,
   isLandingPage: T.bool.isRequired,
-  isMobile: T.bool,
-  isSignedIn: T.bool,
-  setIsDrawerOpen: T.func,
+  isMobile: T.bool.isRequired,
+  isSignedIn: T.bool.isRequired,
+  setIsDrawerOpen: T.func.isRequired,
 };
 
 export default MobileHeader;

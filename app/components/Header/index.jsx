@@ -46,13 +46,13 @@ const Header = ({
 };
 
 Header.propTypes = {
-  activeUser: T.object,
-  deviceView: T.string,
-  handleNav: T.func,
+  activeUser: T.object.isRequired,
+  deviceView: T.string.isRequired,
+  handleNav: T.func.isRequired,
   handleResetForm: T.func.isRequired,
-  handleSignin: T.func,
-  handleSignout: T.func,
-  isSignedIn: T.bool,
+  handleSignin: T.func.isRequired,
+  handleSignout: T.func.isRequired,
+  isSignedIn: T.bool.isRequired,
 };
 
 export default Header;

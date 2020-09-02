@@ -119,21 +119,21 @@ const SettingsView = ({
     setValue('');
   };
 
-  const handleDone = ({ changeInputState, field }) => {
-    changeInputState(false);
-    dispatchSaveChange({ field, id, value });
-    setIsDisabled(false);
-  };
-
   const handleEdit = ({ changeInputState, currentValue = '' }) => {
     setIsDisabled(true);
     changeInputState(true);
     setValue(currentValue);
   };
 
-  const handleEmailDone = () => {
+  const handleSubmitEmailChange = () => {
     handleChangeEmail({ email: value, id });
     setChangeEmail(false);
+    setIsDisabled(false);
+  };
+
+  const handleSubmitInputChange = ({ changeInputState, field }) => {
+    changeInputState(false);
+    dispatchSaveChange({ field, id, value });
     setIsDisabled(false);
   };
 
@@ -178,7 +178,7 @@ const SettingsView = ({
                     icon={DoneIcon}
                     label="Save"
                     onClick={() =>
-                      handleDone({
+                      handleSubmitInputChange({
                         changeInputState: setChangeUserImage,
                         field: 'profilePic',
                       })
@@ -210,7 +210,7 @@ const SettingsView = ({
               FallbackComponent={
                 <GithubEditComponent
                   handleClose={handleClose}
-                  handleDone={handleDone}
+                  handleSubmitInputChange={handleSubmitInputChange}
                   setChangeGithub={setChangeGithub}
                   setValue={setValue}
                   value={value}
@@ -235,7 +235,7 @@ const SettingsView = ({
               FallbackComponent={
                 <PersonalEditComponent
                   handleClose={handleClose}
-                  handleDone={handleDone}
+                  handleSubmitInputChange={handleSubmitInputChange}
                   setChangePersonal={setChangePersonal}
                   setValue={setValue}
                   value={value}
@@ -260,7 +260,7 @@ const SettingsView = ({
               FallbackComponent={
                 <StackoverflowEditComponent
                   handleClose={handleClose}
-                  handleDone={handleDone}
+                  handleSubmitInputChange={handleSubmitInputChange}
                   setChangeStackoverflow={setChangeStackoverflow}
                   setValue={setValue}
                   value={value}
@@ -280,8 +280,8 @@ const SettingsView = ({
             createdDate={createdDate}
             dollarsEarned={dollarsEarned}
             handleClose={handleClose}
-            handleDone={handleDone}
             handleEdit={handleEdit}
+            handleSubmitInputChange={handleSubmitInputChange}
             isDisabled={isDisabled}
             isOnline={isOnline}
             modifiedDate={modifiedDate}
@@ -314,13 +314,13 @@ const SettingsView = ({
             handleClearAllAlerts={handleClearAllAlerts}
             handleClearErrors={handleClearErrors}
             handleClose={handleClose}
-            handleDone={handleDone}
             handleEdit={handleEdit}
-            handleEmailDone={handleEmailDone}
             handleInputChange={handleInputChange}
             handleNav={handleNav}
             handleRemoveIssue={handleRemoveIssue}
             handleRemoveWatching={handleRemoveWatching}
+            handleSubmitEmailChange={handleSubmitEmailChange}
+            handleSubmitInputChange={handleSubmitInputChange}
             handleValidateInput={handleValidateInput}
             handleWithdrawFunds={handleWithdrawFunds}
             inputErrors={inputErrors}
