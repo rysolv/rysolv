@@ -4,7 +4,6 @@ const { v4: uuidv4 } = require('uuid');
 const {
   checkDuplicateOrganization,
   createOrganization,
-  deleteOrganization,
   getOneIssue,
   getOneOrganization,
   getOneUser,
@@ -85,21 +84,6 @@ module.exports = {
       return {
         __typename: 'Organization',
         ...result,
-      };
-    } catch (err) {
-      return {
-        __typename: 'Error',
-        message: err.message,
-      };
-    }
-  },
-  deleteOrganization: async args => {
-    const { id } = args;
-    try {
-      const result = await deleteOrganization(id);
-      return {
-        __typename: 'Success',
-        message: result,
       };
     } catch (err) {
       return {

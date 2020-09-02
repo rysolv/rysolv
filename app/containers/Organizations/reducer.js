@@ -2,16 +2,12 @@
 import produce from 'immer';
 import { v4 as uuidv4 } from 'uuid';
 import Identicon from 'identicon.js';
-import remove from 'lodash/remove';
 
 import {
   CHANGE_ORGANIZATION_FILTER,
   CHANGE_ORGANIZATION_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
-  DELETE_ORGANIZATION_FAILURE,
-  DELETE_ORGANIZATION_SUCCESS,
-  DELETE_ORGANIZATION,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
@@ -74,7 +70,6 @@ export const initialState = {
   isVerified: false,
   loading: {
     addOrganization: false,
-    deleteOrganization: false,
     fetchOrganization: false,
     importOrganization: false,
     organizations: false,
@@ -136,23 +131,6 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       draft.importSuccess = initialState.importSuccess;
       draft.isVerified = initialState.isVerified;
       draft.organizationData = initialState.organizationData;
-      break;
-    }
-    case DELETE_ORGANIZATION_FAILURE: {
-      const { error } = payload;
-      draft.alerts.error = error;
-      draft.loading.deleteOrganization = false;
-      break;
-    }
-    case DELETE_ORGANIZATION_SUCCESS: {
-      const { itemId, message } = payload;
-      draft.alerts.success = { message };
-      draft.loading.deleteOrganization = false;
-      remove(draft.organizations, ({ id }) => id === itemId);
-      break;
-    }
-    case DELETE_ORGANIZATION: {
-      draft.loading.deleteOrganization = true;
       break;
     }
     case FETCH_ORGANIZATIONS_FAILURE: {

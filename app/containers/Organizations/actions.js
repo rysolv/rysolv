@@ -3,9 +3,6 @@ import {
   CHANGE_ORGANIZATION_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
-  DELETE_ORGANIZATION_FAILURE,
-  DELETE_ORGANIZATION_SUCCESS,
-  DELETE_ORGANIZATION,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
@@ -59,27 +56,6 @@ export function clearAlerts() {
 export function clearForm() {
   return {
     type: CLEAR_FORM,
-  };
-}
-
-export function deleteOrganizationFailure(payload) {
-  return {
-    payload,
-    type: DELETE_ORGANIZATION_FAILURE,
-  };
-}
-
-export function deleteOrganizationSuccess(payload) {
-  return {
-    payload,
-    type: DELETE_ORGANIZATION_SUCCESS,
-  };
-}
-
-export function deleteOrganization(payload) {
-  return {
-    payload,
-    type: DELETE_ORGANIZATION,
   };
 }
 

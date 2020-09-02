@@ -366,7 +366,6 @@ module.exports = buildSchema(`
     createStripeCharge(amount: Float!, issueId: ID, token: String!, userId: ID): PaymentResult!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
-    deleteOrganization(id:ID!): String!
     deleteUser(id:ID!): String!
     deletePullRequest(id:ID!): EventResponse!
 

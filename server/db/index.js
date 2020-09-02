@@ -19,7 +19,6 @@ const {
 const {
   checkDuplicateOrganization,
   createOrganization,
-  deleteOrganization,
   getOneOrganization,
   getOrganizations,
   getOrganizationsWhere,
@@ -74,7 +73,6 @@ module.exports = {
   createPullRequest,
   createUser,
   createWithdrawal,
-  deleteOrganization,
   deletePullRequest,
   downvoteIssue,
   getIssueComments,
