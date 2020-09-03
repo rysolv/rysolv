@@ -13,4 +13,5 @@ const getOnePullRequest = async ({ pullRequestId }) => {
   if (oneRow) return oneRow;
   throw new Error('Pull Request not found');
 };
+
 module.exports = getOnePullRequest;
