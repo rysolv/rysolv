@@ -1,6 +1,6 @@
 const { formatParameters } = require('../../helpers');
+const { singleQuery } = require('../../baseQueries');
 const { withdrawalValues } = require('./constants');
-const { mapValues } = require('../../baseQueries');
 
 // CREATE single withdrawal
 const createWithdrawal = async data => {
@@ -12,7 +12,7 @@ const createWithdrawal = async data => {
     INSERT INTO withdrawal(${parameters})
     VALUES(${substitution})
   `;
-  await mapValues({ queryText, values });
+  await singleQuery({ queryText, values });
   return 'Successfully created withdrawal';
 };
 

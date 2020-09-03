@@ -32,39 +32,6 @@ const mapQueryPrint = async array => {
   client.release();
 };
 
-// map array of values to a query
-const mapValues = async (queryText, array) => {
-  const client = await pool.connect();
-  const results = [];
-  const queryDB = async value => {
-    try {
-      const { rows } = await client.query(queryText, value);
-      if (rows.length > 0) {
-        results.push(rows[0]);
-      }
-    } catch (error) {
-      client.release();
-      throw error;
-    }
-  };
-  await Promise.all(array.map(value => queryDB(value)));
-  client.release();
-  return results;
-};
-
-// Querytext should insert parameters using $1, $2, $3
-const parameterizedQuery = async ({ queryText, values }) => {
-  const client = await pool.connect();
-  try {
-    const result = await client.query(queryText, values);
-    client.release();
-    return result;
-  } catch (error) {
-    client.release();
-    throw error;
-  }
-};
-
 // Single Query. Accepts array of values for parameterized queries
 const singleQuery = async ({ queryText, values }) => {
   const client = await pool.connect();
@@ -100,8 +67,6 @@ const singleSearch = async (queryText, fields, value, param) => {
 module.exports = {
   mapQuery,
   mapQueryPrint,
-  mapValues,
-  parameterizedQuery,
   singleItem,
   singleQuery,
   singleSearch,
