@@ -15,7 +15,7 @@ const downvoteIssue = async ({ issueId, userId }) => {
 
     // Increment issue rep
     const issueQuery =
-      'UPDATE issues SET rep = rep - 1 WHERE (id = $1) RETURNING rep';
+      'UPDATE issues SET rep = rep - 1 WHERE id = $1 RETURNING rep';
     const {
       rows: [issueResult],
     } = await client.query(issueQuery, [issueId]);
@@ -25,7 +25,7 @@ const downvoteIssue = async ({ issueId, userId }) => {
     const userQuery = `UPDATE users
         SET rep = rep + 1,
         upvotes = array_remove(upvotes, $1)
-        WHERE (id = $2) RETURNING rep`;
+        WHERE id = $2 RETURNING rep`;
     const {
       rows: [userResult],
     } = await client.query(userQuery, [issueId, userId]);
