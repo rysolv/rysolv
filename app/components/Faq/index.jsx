@@ -147,6 +147,23 @@ const Faq = () => {
                 title="How do I receive payment?"
               />
             </ExpansionPanel>
+            <ExpansionPanel>
+              <StyledBaseExpansionPanel
+                Component={() => (
+                  <AnswerWrapper>
+                    Sometimes an issue may never get solved, or remain
+                    outstanding for years at a time. These will remain
+                    outstanding on rysolv as long as the source issue remains
+                    open.
+                    <br />
+                    <br />
+                    Any funding on an issue that is not resolved after 12 months
+                    will be returned to the user who contributed it.
+                  </AnswerWrapper>
+                )}
+                title="What happens if an issue never gets solved?"
+              />
+            </ExpansionPanel>
           </QuestionGroup>
         </QuestionWrapper>
       </StyledQuestionContainer>
