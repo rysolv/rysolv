@@ -26,7 +26,6 @@ import {
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
-  VERIFY_INFO,
 } from './constants';
 
 export const initialState = {
@@ -63,7 +62,6 @@ export const initialState = {
     overview: 'Newest',
     users: 'All',
   },
-  isVerified: false,
   loading: {
     addUser: false,
     deleteUser: false,
@@ -110,7 +108,6 @@ const usersReducer = produce((draft, { payload, type }) => {
     }
     case CLEAR_FORM: {
       draft.data = initialState.data;
-      draft.isVerified = initialState.isVerified;
       break;
     }
     case DELETE_USER_FAILURE: {
@@ -230,10 +227,6 @@ const usersReducer = produce((draft, { payload, type }) => {
     }
     case UPDATE_INFO: {
       draft.loading.updateUser = true;
-      break;
-    }
-    case VERIFY_INFO: {
-      draft.isVerified = !draft.isVerified;
       break;
     }
   }

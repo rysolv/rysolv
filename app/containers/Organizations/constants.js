@@ -52,8 +52,6 @@ export const UPVOTE_ISSUE_FAILURE = 'app/Organizations/UPVOTE_ISSUE_FAILURE';
 export const UPVOTE_ISSUE_SUCCESS = 'app/Organizations/UPVOTE_ISSUE_SUCCESS';
 export const UPVOTE_ISSUE_TEMP = 'app/Organizations/UPVOTE_ISSUE_TEMP';
 
-export const VERIFY_INFO = 'app/Organizations/VERIFY_INFO';
-
 export const organizationDataDictionary = {
   organizationUrl: 'Organization URL (optional)',
   description: 'Organization Description',
@@ -71,5 +69,3 @@ export const successCreateOrganizationMessage =
 
 export const successEditOrganizationMessage =
   'Organization was successfully edited.';
-
-export const verifyMessage = 'I agree that this information is correct.';

@@ -23,7 +23,6 @@ import {
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
-  VERIFY_INFO,
 } from './constants';
 
 export function changeUserFilter(payload) {
@@ -187,11 +186,5 @@ export function updateInfo(payload) {
   return {
     payload,
     type: UPDATE_INFO,
-  };
-}
-
-export function verifyInfo() {
-  return {
-    type: VERIFY_INFO,
   };
 }

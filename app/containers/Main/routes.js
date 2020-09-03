@@ -13,7 +13,6 @@ import OrganizationsDetail from 'containers/Organizations/Detail';
 import Overview from 'containers/Overview';
 import Settings from 'containers/Settings';
 import SignIn from 'containers/Signin';
-import UsersAdd from 'containers/Users/Add';
 import UsersDetail from 'containers/Users/Detail';
 
 const privateConfig = { isAdmin: false, isPrivate: true };
@@ -22,7 +21,6 @@ const publicConfig = { isAdmin: false, isPrivate: false };
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateOrganizationsAdd = withAuth(privateConfig, OrganizationsAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
-const PrivateUsersAdd = withAuth(privateConfig, UsersAdd);
 const PublicContact = withAuth(publicConfig, Contact);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicIssuesDetail = withAuth(publicConfig, IssuesDetail);
@@ -51,7 +49,6 @@ const Routes = () => (
     <Route exact path="/signin" component={PublicSignIn} />
     <Route exact path="/signup" component={PublicSignIn} />
     <Route exact path="/users" component={PublicOverview} />
-    <Route exact path="/users/add" component={PrivateUsersAdd} />
     <Route exact path="/users/detail/:id" component={PublicUsersDetail} />
     <Route exact path="/users/search/:searchValue" component={PublicOverview} />
     <Route component={PublicNotFoundPage} />

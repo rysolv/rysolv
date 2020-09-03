@@ -33,8 +33,6 @@ export const UPDATE_INFO = 'app/Users/UPDATE_INFO';
 export const UPDATE_INFO_FAILURE = 'app/Users/UPDATE_INFO_FAILURE';
 export const UPDATE_INFO_SUCCESS = 'app/Users/UPDATE_INFO_SUCCESS';
 
-export const VERIFY_INFO = 'app/Users/VERIFY_INFO';
-
 export const actionDictionary = {
   Commented: 'commented on',
   Earned: 'earned a bounty',
@@ -43,21 +41,3 @@ export const actionDictionary = {
 };
 
 export const emptyCardMessage = 'There are no users matching the search terms.';
-
-export const userDataDictionary = {
-  email: 'E-mail',
-  firstName: 'First Name',
-  githubLink: 'GitHub Link',
-  profilePic: 'Profile Picture',
-  lastName: 'Last Name',
-  personalLink: 'Personal Link',
-  preferredLanguages: 'Preferred Languages',
-  stackoverflowLink: 'StackOverflow Link',
-  username: 'Username',
-  attempting: 'Number of Attempting Issues',
-  issues: 'Number of Issues',
-  name: 'Full Name',
-  rep: 'Number of Points',
-};
-
-export const verifyMessage = 'Looks good to me!';

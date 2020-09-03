@@ -30,7 +30,6 @@ import {
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export function changeOrganizationFilter(payload) {
@@ -242,8 +241,4 @@ export function upvoteIssue(payload) {
     payload,
     type: UPVOTE_ISSUE,
   };
-}
-
-export function verifyInfo() {
-  return { type: VERIFY_INFO };
 }

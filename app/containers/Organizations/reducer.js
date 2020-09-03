@@ -35,7 +35,6 @@ import {
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export const initialState = {
@@ -67,7 +66,6 @@ export const initialState = {
   },
   importSuccess: false,
   isManual: false,
-  isVerified: false,
   loading: {
     addOrganization: false,
     fetchOrganization: false,
@@ -98,7 +96,6 @@ export const initialState = {
   },
   step: {
     addOrganization: 1,
-    editOrganization: 1,
   },
 };
 
@@ -129,7 +126,6 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     case CLEAR_FORM: {
       draft.error = initialState.error;
       draft.importSuccess = initialState.importSuccess;
-      draft.isVerified = initialState.isVerified;
       draft.organizationData = initialState.organizationData;
       break;
     }
@@ -305,10 +301,6 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case UPVOTE_ISSUE: {
       draft.loading.upvoteIssue = true;
-      break;
-    }
-    case VERIFY_INFO: {
-      draft.isVerified = !draft.isVerified;
       break;
     }
   }
