@@ -5,7 +5,7 @@ const { singleQuery } = require('../../baseQueries');
 const getUsers = async () => {
   const queryText = `
     SELECT ${userReturnValues}, ARRAY_AGG(watching.issue_id) AS watching FROM users
-    LEFT JOIN watching on watching.user_id = users.id
+    LEFT JOIN watching ON watching.user_id = users.id
     WHERE is_deleted = false AND email_verified = true
     GROUP BY ${groupValues}`;
   const { rows } = await singleQuery({ queryText });

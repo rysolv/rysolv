@@ -231,7 +231,7 @@ module.exports = {
         stackoverflow_link: userInput.stackoverflowLink,
         username: userInput.username,
       };
-      const result = await transformUser({ userId: id, data });
+      const result = await transformUser({ data, userId: id });
 
       return {
         __typename: 'User',

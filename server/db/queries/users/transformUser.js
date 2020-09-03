@@ -3,7 +3,7 @@ const { singleQuery } = require('../../baseQueries');
 const { userValues, userReturnValues } = require('./constants');
 
 // Transform single user
-const transformUser = async ({ userId, data }) => {
+const transformUser = async ({ data, userId }) => {
   try {
     const { parameters, substitution, values } = formatParameters({
       newObject: data,

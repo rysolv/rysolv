@@ -8,7 +8,7 @@ const getUserWatchList = async ({ userId }) => {
       issues.name,
       issues.funded_amount AS "fundedAmount"
     FROM watching
-    JOIN issues on watching.issue_id = issues.id
+    JOIN issues ON watching.issue_id = issues.id
     WHERE watching.user_id = $1`;
   const { rows } = await singleQuery({ queryText, values: [userId] });
   return rows;

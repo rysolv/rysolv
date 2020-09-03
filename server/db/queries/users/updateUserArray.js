@@ -8,7 +8,7 @@ const updateUserArray = async ({ column, data, remove, userId }) => {
     const action = remove ? 'array_remove' : 'array_append';
     const queryText = `UPDATE users
       SET ${column} = ${action}(${column}, '${data}')
-      WHERE (id = '${userId}')
+      WHERE id = '${userId}'
       RETURNING *`;
     const { rows } = await singleQuery({ queryText });
     const [oneRow] = rows;
