@@ -4,7 +4,7 @@ const { singleQuery } = require('../../baseQueries');
 const submitAccountPaymentIssue = async ({ fundValue, issueId }) => {
   const queryText = `
     UPDATE issues
-    SET funded_amount=funded_amount+$1
+    SET funded_amount = funded_amount + $1
     WHERE id = $2
     RETURNING *
   `;
