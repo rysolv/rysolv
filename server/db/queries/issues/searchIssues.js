@@ -5,7 +5,7 @@ const { singleQuery } = require('../../baseQueries');
 const searchIssues = async ({ value }) => {
   const queryText = `
     SELECT ${issueCardValues} FROM issues
-      LEFT JOIN organizations ON (issues.organization_id = organizations.id)
+      LEFT JOIN organizations ON issues.organization_id = organizations.id
       LEFT JOIN watching ON watching.issue_id = issues.id
     WHERE
       LOWER(issues.body) LIKE LOWER('%'||$1||'%') OR
