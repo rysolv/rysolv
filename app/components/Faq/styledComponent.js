@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
 import { BaseExpansionPanel } from 'components/base_ui';
-import { defaultFontSize, headerFontSize, textColor } from 'defaultStyleHelper';
+import {
+  commentHeaderColor,
+  defaultFontSize,
+  headerFontSize,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -42,7 +47,7 @@ export const QuestionGroup = styled.div`
 `;
 
 export const QuestionIntroWrapper = styled.div`
-  background: #f6f8fa;
+  background: ${commentHeaderColor};
   height: auto;
   min-height: 10rem;
 `;

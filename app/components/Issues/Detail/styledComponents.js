@@ -9,6 +9,7 @@ import Markdown from 'components/Markdown';
 import {
   borderColor,
   buttonRed,
+  commentHeaderColor,
   defaultFontFamily,
   defaultFontSize,
   detailFontSize,
@@ -214,7 +215,7 @@ export const StyledMarkdown = styled(Markdown)`
 `;
 
 export const TopBarWrapper = styled.div`
-  background-color: #f6f8fa;
+  background: ${commentHeaderColor};
   height: 10rem;
 `;
 

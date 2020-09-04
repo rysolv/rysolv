@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import T from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -8,6 +8,7 @@ import { push } from 'connected-react-router';
 
 import { ModalDialog } from 'components/base_ui';
 import CloseIssueModal from 'components/CloseIssueModal';
+import ProgressModal from 'components/ProgressModal';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import PaymentPortalModal from 'components/PaymentsModal';
@@ -18,10 +19,11 @@ import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { signIn, signOut } from 'containers/Auth/actions';
 import { closeIssue, deletePullRequest } from 'containers/Issues/actions';
+import { getCookie, setCookie } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { closeModalState, fetchWatchList } from './actions';
+import { closeModalState, fetchWatchList, openModalState } from './actions';
 import reducer from './reducer';
 import Routes from './routes';
 import saga from './saga';
@@ -37,6 +39,7 @@ export const Main = ({
   deviceView,
   dispatchCloseIssue,
   dispatchCloseModal,
+  dispatchOpenModal,
   error,
   handleDelete,
   handleNav,
@@ -49,6 +52,13 @@ export const Main = ({
   modal,
   tableData,
 }) => {
+  useEffect(() => {
+    if (!getCookie('firsttime')) {
+      dispatchOpenModal({ modalState: 'developmentProgress' });
+      setCookie('firsttime', true);
+    }
+  }, []);
+
   const handleCloseIssue = ({ issueId, shouldClose }) => {
     dispatchCloseModal();
     dispatchCloseIssue({ issueId, shouldClose });
@@ -70,6 +80,13 @@ export const Main = ({
         handleClose: dispatchCloseModal,
         handleCloseIssue,
         tableData,
+      },
+    },
+    developmentProgress: {
+      Component: ProgressModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        handleClose: dispatchCloseModal,
       },
     },
     fundIssue: {
@@ -155,6 +172,7 @@ Main.propTypes = {
   deviceView: T.string,
   dispatchCloseIssue: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
+  dispatchOpenModal: T.func.isRequired,
   error: T.object,
   handleClearAlerts: T.func,
   handleDelete: T.func,
@@ -200,8 +218,9 @@ const mapDispatchToProps = dispatch => ({
   /**
    * Main
    */
-  dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
   dispatchCloseModal: () => dispatch(closeModalState()),
+  dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
+  dispatchOpenModal: payload => dispatch(openModalState(payload)),
   /*
    * Reducer : PullRequests
    */

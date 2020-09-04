@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-import { lightBlueColor, textColor } from 'defaultStyleHelper';
+import {
+  commentHeaderColor,
+  lightBlueColor,
+  textColor,
+} from 'defaultStyleHelper';
 
 import { BaseInputWithAdornment } from '../Inputs';
 
@@ -11,7 +15,7 @@ export const HeaderSearchBarContainer = styled.div`
 
 export const OptionTitle = styled.button`
   align-items: center;
-  background-color: #f6f8fa;
+  background-color: ${commentHeaderColor};
   border-radius: 0.3rem;
   border: 0.1rem solid #cfd8dc;
   color: #6a737d;
