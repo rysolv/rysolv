@@ -54,7 +54,7 @@ export const Main = ({
 }) => {
   useEffect(() => {
     if (!getCookie('firsttime')) {
-      dispatchOpenModal({ modalState: 'developmentProgress' });
+      dispatchOpenModal({ modalState: 'progress' });
       setCookie('firsttime', true);
     }
   }, []);
@@ -80,13 +80,6 @@ export const Main = ({
         handleClose: dispatchCloseModal,
         handleCloseIssue,
         tableData,
-      },
-    },
-    developmentProgress: {
-      Component: ProgressModal,
-      open: isModalOpen,
-      propsToPassDown: {
-        handleClose: dispatchCloseModal,
       },
     },
     fundIssue: {
@@ -119,6 +112,13 @@ export const Main = ({
         tableData,
         title: 'Watch List',
         type: 'issueWatchList',
+      },
+    },
+    progress: {
+      Component: ProgressModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        handleClose: dispatchCloseModal,
       },
     },
     pullRequestList: {
