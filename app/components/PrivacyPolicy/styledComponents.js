@@ -16,7 +16,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   font-size: ${defaultFontSize};
-  padding: 2.6rem;
+  padding: 2.6rem 3.8rem;
   width: 100%;
 `;
 
