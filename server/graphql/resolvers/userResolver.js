@@ -26,8 +26,8 @@ module.exports = {
   checkDuplicateUser: async args => {
     const { username, email } = args;
     try {
-      await checkDuplicateUserEmail(email);
-      await checkDuplicateUsername(username);
+      await checkDuplicateUserEmail({ email });
+      await checkDuplicateUsername({ username });
 
       return {
         __typename: 'Success',
@@ -58,10 +58,10 @@ module.exports = {
     };
 
     try {
-      await checkDuplicateUserEmail(email);
-      await checkDuplicateUsername(username);
+      await checkDuplicateUserEmail({ email });
+      await checkDuplicateUsername({ username });
 
-      const result = await createUser(newUser);
+      const result = await createUser({ data: newUser });
 
       return result;
     } catch (err) {
@@ -69,7 +69,7 @@ module.exports = {
     }
   },
   deleteUser: async args => {
-    const { id } = args;
+    const { userId } = args;
     try {
       const data = {
         activePullRequests: 0,
@@ -96,7 +96,7 @@ module.exports = {
         stackoverflow_link: '',
         username: '[deleted]',
       };
-      await transformUser(id, data);
+      await transformUser({ data, userId });
       return 'User successfully deleted';
     } catch (err) {
       throw err;
@@ -113,7 +113,10 @@ module.exports = {
   getUserOrganizations: async args => {
     const { id } = args;
     try {
-      const result = await getOrganizationsWhere('owner_id', id);
+      const result = await getOrganizationsWhere({
+        column: 'owner_id',
+        value: id,
+      });
       return result;
     } catch (err) {
       throw err;
@@ -137,7 +140,7 @@ module.exports = {
   oneUser: async args => {
     const { id: userId } = args;
     try {
-      const result = await getOneUser(userId);
+      const result = await getOneUser({ userId });
       const { attempting, issues, organizations } = result;
 
       // Pull user attempting detail
@@ -153,7 +156,7 @@ module.exports = {
       // Pull user issue detail
       const issuesListResult = await Promise.all(
         issues.map(async issueId => {
-          const [issuesResult] = await getOneIssue(issueId);
+          const issuesResult = await getOneIssue({ issueId });
           return issuesResult;
         }),
       );
@@ -162,9 +165,9 @@ module.exports = {
       // Pull user organization detail
       const organizationsListResult = await Promise.all(
         organizations.map(async organizationId => {
-          const [organizationsResult] = await getOneOrganization(
+          const organizationsResult = await getOneOrganization({
             organizationId,
-          );
+          });
           return organizationsResult;
         }),
       );
@@ -182,7 +185,7 @@ module.exports = {
   oneUserSignUp: async args => {
     const { email } = args;
     try {
-      const result = await getOneUserSignUp(email);
+      const result = await getOneUserSignUp({ email });
       return result;
     } catch (err) {
       throw err;
@@ -191,14 +194,14 @@ module.exports = {
   searchUsers: async args => {
     const { value } = args;
     try {
-      const result = await searchUsers('users', value);
+      const result = await searchUsers({ value });
       return result;
     } catch (err) {
       throw err;
     }
   },
   transformUser: async args => {
-    const { id, userInput } = args;
+    const { userId, userInput } = args;
     try {
       if (userInput.profilePic) {
         const formattedProfilePic = userInput.profilePic;
@@ -229,7 +232,7 @@ module.exports = {
         stackoverflow_link: userInput.stackoverflowLink,
         username: userInput.username,
       };
-      const result = await transformUser(id, data);
+      const result = await transformUser({ data, userId });
 
       return {
         __typename: 'User',

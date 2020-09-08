@@ -339,13 +339,11 @@ module.exports = buildSchema(`
     checkDuplicateUser(email: String, username: String): EventResponse!
     
     getActivity(column: String!, id: ID): ActivityResult!
-    getAllActivity: ActivityResult!
-    getComments: [Comment]!
-    getIssueComments(id: ID!): [Comment]
+    getIssueComments(issueId: ID!): [Comment]!
     getIssues: [Issue!]!
+    getOrganizationActivity(organizationId: ID): ActivityResult!
     getOrganizations: [Organization!]!
-    getPullRequestList(idArray: [ID!]): PullRequestListResult!
-    getPullRequests: PullRequestArrayResult
+    getUserActivity(userId: ID): ActivityResult!
     getUserOrganizations(id: ID!): [Organization!]
     getUserPullRequests(id: ID!): PullRequestArrayResult  
     getUsers: [User!]!
@@ -365,7 +363,7 @@ module.exports = buildSchema(`
   }
 
   type RootMutation {
-    closeIssue(id: ID!, shouldClose: Boolean): String!
+    closeIssue(issueId: ID!, shouldClose: Boolean): String!
 
     createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): Comment
@@ -377,10 +375,8 @@ module.exports = buildSchema(`
     createUser(userInput: UserInput): User!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
-    deleteIssue(id: ID!): String!
-    deleteOrganization(id:ID!): String!
     deletePullRequest(id:ID!): EventResponse!
-    deleteUser(id:ID!): String!
+    deleteUser(userId:ID!): String!
 
     importIssue(url: String!): ImportResult
     importOrganization(url: String!): ImportResult
@@ -390,9 +386,9 @@ module.exports = buildSchema(`
 
     toggleWatching(issueId: ID!, userId: ID!): ToggleWatchingResult
 
-    transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
-    transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!
-    transformUser(id: ID!, userInput: UserInput): UserResult!
+    transformIssue(issueId: ID!, issueInput: IssueInput): IssueResult!
+    transformOrganization(organizationId: ID!, organizationInput: OrganizationInput): OrganizationResult!
+    transformUser(userId: ID!, userInput: UserInput): UserResult!
 
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
