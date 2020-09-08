@@ -312,7 +312,7 @@ export function* verifyEmailSaga({ payload }) {
     // Update email to be verified
     const query = `
       mutation {
-        transformUser( id: "${userId}",
+        transformUser( userId: "${userId}",
           userInput: {
             emailVerified: true,
           }

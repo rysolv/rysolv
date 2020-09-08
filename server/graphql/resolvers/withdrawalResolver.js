@@ -11,7 +11,7 @@ module.exports = {
   createWithdrawal: async args => {
     const { transferValue, userId } = args;
     try {
-      const { balance } = await getOneUser(userId);
+      const { balance } = await getOneUser({ userId });
       const createdDate = new Date();
       const lessThanBalance = balance >= transferValue;
       const greaterThanZero = transferValue > 0;
@@ -25,14 +25,14 @@ module.exports = {
         });
 
         // Record new withdrawal
-        const withdrawal = {
+        const data = {
           created_date: createdDate,
           fee: transferValue * 0.15,
           id: uuidv4(),
           transfer_value: transferValue,
           user_id: userId,
         };
-        await createWithdrawal(withdrawal);
+        await createWithdrawal({ data });
 
         // Record withdrawal activity
         const activityInput = {

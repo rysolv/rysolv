@@ -3,7 +3,7 @@ const { authenticate } = require('./auth');
 
 const getSingleIssue = async ({ issueNumber, organization, repo }) => {
   try {
-    // Authenticate with oktokit API - TODO: create better auth middleware
+    // Authenticate with oktokit API - @TODO: create better auth middleware
     const { GITHUB } = await authenticate();
 
     const { data: issueData } = await GITHUB.issues.get({
@@ -45,7 +45,7 @@ const getSingleIssue = async ({ issueNumber, organization, repo }) => {
 
 const getSingleRepo = async ({ organization, repo }) => {
   try {
-    // Authenticate with oktokit API - TODO: create better auth middleware
+    // Authenticate with oktokit API - @TODO: create better auth middleware
     const { GITHUB } = await authenticate();
 
     const { data: repoData } = await GITHUB.repos.get({
@@ -104,7 +104,7 @@ const getSingleRepo = async ({ organization, repo }) => {
 };
 
 const getSingleOrganization = async organization => {
-  // Authenticate with oktokit API - TODO: create better auth middleware
+  // Authenticate with oktokit API - @TODO: create better auth middleware
   const { GITHUB } = await authenticate();
 
   const { data: organizationData } = await GITHUB.orgs.get({
@@ -140,7 +140,7 @@ const getSingleOrganization = async organization => {
 };
 
 const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
-  // Authenticate with oktokit API - TODO: create better auth middleware
+  // Authenticate with oktokit API - @TODO: create better auth middleware
   const { GITHUB } = await authenticate();
 
   const { data: pullRequestData } = await GITHUB.pulls.get({

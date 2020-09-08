@@ -57,7 +57,6 @@ import {
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export const initialState = {
@@ -96,7 +95,6 @@ export const initialState = {
   isModalOpen: false,
   issueDetail: {},
   issues: [],
-  isVerified: false,
   loading: {
     addAttempt: false,
     addComment: false,
@@ -236,10 +234,9 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case CLEAR_FORM: {
       draft.error = initialState.error;
-      draft.issueData = initialState.issueData;
       draft.importSuccess = initialState.importSuccess;
+      draft.issueData = initialState.issueData;
       draft.organizationData = initialState.organizationData;
-      draft.isVerified = initialState.isVerified;
       break;
     }
     case CLEAR_ORGANIZATION: {
@@ -500,10 +497,6 @@ const issuesReducer = produce((draft, { payload, type }) => {
         // eslint-disable-next-line no-unused-expressions
         upvote ? (draft.issueDetail.rep += 1) : (draft.issueDetail.rep -= 1);
       }
-      break;
-    }
-    case VERIFY_INFO: {
-      draft.isVerified = !draft.isVerified;
       break;
     }
   }

@@ -4,7 +4,6 @@ const { v4: uuidv4 } = require('uuid');
 const {
   checkDuplicateOrganization,
   createOrganization,
-  deleteOrganization,
   getOneIssue,
   getOneOrganization,
   getOneUser,
@@ -20,7 +19,7 @@ const { isUrl } = require('../../helpers');
 const { uploadImage } = require('../../middlewares/imageUpload');
 
 const checkDuplicate = async repo => {
-  if (await checkDuplicateOrganization(repo)) {
+  if (await checkDuplicateOrganization({ repo })) {
     throw new Error(`An organization at ${repo} already exists`);
   }
 };
@@ -65,7 +64,7 @@ module.exports = {
       await checkDuplicate(organization.repo_url);
 
       // create organization
-      const [result] = await createOrganization(organization);
+      const result = await createOrganization({ data: organization });
 
       // add organization to user
       await updateUserArray({
@@ -85,21 +84,6 @@ module.exports = {
       return {
         __typename: 'Organization',
         ...result,
-      };
-    } catch (err) {
-      return {
-        __typename: 'Error',
-        message: err.message,
-      };
-    }
-  },
-  deleteOrganization: async args => {
-    const { id } = args;
-    try {
-      const result = await deleteOrganization(id);
-      return {
-        __typename: 'Success',
-        message: result,
       };
     } catch (err) {
       return {
@@ -157,18 +141,20 @@ module.exports = {
   oneOrganization: async args => {
     const { id } = args;
     try {
-      const [result] = await getOneOrganization(id);
+      const result = await getOneOrganization({ organizationId: id });
       const { contributors, issues } = result;
+
       const contributorsResult = await Promise.all(
         contributors.map(async contributorId => {
-          const userResult = await getOneUser(contributorId);
+          const userResult = await getOneUser({ userId: contributorId });
           return userResult;
         }),
       );
       result.contributors = contributorsResult;
+
       const issuesResult = await Promise.all(
         issues.map(async issueId => {
-          const [issueResult] = await getOneIssue(issueId);
+          const issueResult = await getOneIssue({ issueId });
           return issueResult;
         }),
       );
@@ -187,7 +173,7 @@ module.exports = {
   searchOrganizations: async args => {
     const { value } = args;
     try {
-      const result = await searchOrganizations(value);
+      const result = await searchOrganizations({ value });
       return {
         __typename: 'OrganizationArray',
         organizationArray: result,
@@ -200,7 +186,7 @@ module.exports = {
     }
   },
   transformOrganization: async args => {
-    const { id, organizationInput } = args;
+    const { organizationId, organizationInput } = args;
     try {
       const logo = organizationInput.organizationLogo;
 
@@ -223,7 +209,7 @@ module.exports = {
         total_funded: organizationInput.totalFunded,
         verified: organizationInput.organizationVerified,
       };
-      const result = await transformOrganization(id, data);
+      const result = await transformOrganization({ data, organizationId });
 
       const activityInput = {
         actionType: 'update',
