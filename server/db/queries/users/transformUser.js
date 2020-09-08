@@ -1,24 +1,25 @@
-const { formatParamaters } = require('../../helpers');
-const { singleItem, mapValues } = require('../../baseQueries');
+const { formatParameters } = require('../../helpers');
+const { singleQuery } = require('../../baseQueries');
 const { userValues, userReturnValues } = require('./constants');
 
 // Transform single user
-const transformUser = async (id, data) => {
-  const [rows] = await singleItem('users', id, userValues);
-  if (rows) {
-    const { parameters, substitution, values } = formatParamaters(
-      userValues,
-      data,
-    );
-    const queryText = `UPDATE users
-      SET (${parameters})
-      = (${substitution})
-      WHERE (id = '${id}')
+const transformUser = async ({ data, userId }) => {
+  try {
+    const { parameters, substitution, values } = formatParameters({
+      newObject: data,
+      tableParameters: userValues,
+    });
+    const queryText = `
+      UPDATE users
+      SET (${parameters}) = (${substitution})
+      WHERE id = '${userId}'
       RETURNING ${userReturnValues}`;
-    const [result] = await mapValues(queryText, [values]);
-    return result;
+    const { rows } = await singleQuery({ queryText, values });
+    const [oneRow] = rows;
+    return oneRow;
+  } catch (error) {
+    throw new Error(`Failed to update users.`);
   }
-  throw new Error(`Failed to update users. ID not found in users`);
 };
 
 module.exports = transformUser;

@@ -130,7 +130,7 @@ module.exports = {
     const { fundValue, issueId, userId } = args;
     try {
       if (issueId) {
-        const { balance } = await getOneUser(userId);
+        const { balance } = await getOneUser({ userId });
         const adjustedBalance = balance - fundValue;
         if (adjustedBalance >= 0) {
           const issueResult = await submitAccountPaymentIssue({

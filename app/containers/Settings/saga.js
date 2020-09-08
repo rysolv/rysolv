@@ -39,7 +39,7 @@ export function* deleteUserSaga({ payload }) {
   const { userId } = payload;
   const query = `
   mutation{
-    deleteUser(id: "${userId}")
+    deleteUser(userId: "${userId}")
   }`;
   try {
     const graphql = JSON.stringify({
@@ -226,12 +226,12 @@ export function* removeWatchingSaga({ payload }) {
 }
 
 export function* saveChangeSaga({ payload }) {
-  const { field, itemId, value } = payload;
+  const { field, userId, value } = payload;
   const formattedValue =
     field === 'preferredLanguages' ? JSON.stringify(value) : `"${value}"`;
   const query = `
     mutation {
-      transformUser(id: "${itemId}", userInput: {
+      transformUser(userId: "${userId}", userInput: {
         ${field}: ${formattedValue},
       }) {
       __typename

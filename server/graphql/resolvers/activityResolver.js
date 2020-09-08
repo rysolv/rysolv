@@ -8,7 +8,7 @@ const {
 module.exports = {
   createActivity: async args => {
     const { activityInput } = args;
-    const activity = {
+    const data = {
       action_type: activityInput.actionType || null,
       activity_id: uuidv4(),
       created_date: activityInput.createdDate || new Date(),
@@ -20,7 +20,7 @@ module.exports = {
       user_id: activityInput.userId || null,
     };
 
-    const message = await createActivity(activity);
+    const message = await createActivity({ data });
     return message;
   },
   getOrganizationActivity: async args => {

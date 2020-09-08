@@ -8,7 +8,6 @@ const {
   checkDuplicateIssue,
   closeIssue,
   createIssue,
-  deleteIssue,
   downvoteIssue,
   getIssues,
   getOneIssue,
@@ -20,7 +19,6 @@ const {
 const {
   checkDuplicateOrganization,
   createOrganization,
-  deleteOrganization,
   getOneOrganization,
   getOrganizations,
   getOrganizationsWhere,
@@ -40,7 +38,6 @@ const {
   deletePullRequest,
   getOnePullRequest,
   getPullRequestList,
-  getPullRequests,
   getUserPullRequests,
 } = require('./queries/pullRequests');
 const {
@@ -76,8 +73,6 @@ module.exports = {
   createPullRequest,
   createUser,
   createWithdrawal,
-  deleteIssue,
-  deleteOrganization,
   deletePullRequest,
   downvoteIssue,
   getIssueComments,
@@ -91,7 +86,6 @@ module.exports = {
   getOrganizations,
   getOrganizationsWhere,
   getPullRequestList,
-  getPullRequests,
   getUserActivity,
   getUserPullRequests,
   getUsers,

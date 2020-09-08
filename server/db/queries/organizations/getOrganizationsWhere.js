@@ -1,10 +1,13 @@
 const { organizationReturnValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
-// GET all organizations
-const getOrganizationsWhere = async (column, value) => {
-  const queryText = `SELECT ${organizationReturnValues} FROM organizations WHERE (${column}='${value}')`;
-  const { rows } = await singleQuery({ queryText });
+// Search organizations by a single column
+const getOrganizationsWhere = async ({ column, value }) => {
+  const queryText = `SELECT ${organizationReturnValues} FROM organizations WHERE ${column} = $1`;
+  const { rows } = await singleQuery({
+    queryText,
+    values: [value],
+  });
   return rows;
 };
 

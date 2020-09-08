@@ -1,6 +1,5 @@
 const checkDuplicateOrganization = require('./checkDuplicateOrganization');
 const createOrganization = require('./createOrganization');
-const deleteOrganization = require('./deleteOrganization');
 const getOneOrganization = require('./getOneOrganization');
 const getOrganizations = require('./getOrganizations');
 const getOrganizationsWhere = require('./getOrganizationsWhere');
@@ -11,7 +10,6 @@ const updateOrganizationArray = require('./updateOrganizationArray');
 module.exports = {
   checkDuplicateOrganization,
   createOrganization,
-  deleteOrganization,
   getOneOrganization,
   getOrganizations,
   getOrganizationsWhere,

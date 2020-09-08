@@ -7,7 +7,6 @@ const {
   closeIssue,
   createIssue,
   createOrganization,
-  deleteIssue,
   downvoteIssue,
   getIssues,
   getOneIssue,
@@ -68,11 +67,11 @@ const newOrganizationObject = async organizationInput => {
 
 module.exports = {
   closeIssue: async args => {
-    const { id, shouldClose } = args;
+    const { issueId, shouldClose } = args;
     try {
-      const response = await closeIssue(id, shouldClose);
+      const response = await closeIssue({ issueId, shouldClose });
 
-      const [result] = await getOneIssue(id);
+      const result = await getOneIssue({ issueId });
 
       const activityInput = {
         actionType: shouldClose ? 'close' : 'reopen',
@@ -100,38 +99,34 @@ module.exports = {
     const createNewIssue = async () => {
       const issueObject = newIssueObject(newIssueId, issueInput);
       try {
-        const result = await createIssue(issueObject);
+        const result = await createIssue({ data: issueObject });
         return result;
       } catch (err) {
         throw err;
       }
     };
-    // **********
 
     // Populate organization object and create new organization
     const createNewOrganization = async () => {
       // backup check
-      if (await checkDuplicateOrganization(organizationRepo)) {
+      if (await checkDuplicateOrganization({ repo: organizationRepo })) {
         throw new Error(
-          `Error: Organization at ${
-            issueInput.organizationRepo
-          } already exists`,
+          `Organization at ${issueInput.organizationRepo} already exists`,
         );
       }
 
       const organizationObject = await newOrganizationObject(issueInput);
       try {
-        const [result] = await createOrganization(organizationObject);
+        const result = await createOrganization({ data: organizationObject });
         return result;
       } catch (err) {
         throw err;
       }
     };
-    // **********
 
     try {
       // Check for duplicate issue
-      if (await checkDuplicateIssue(repo)) {
+      if (await checkDuplicateIssue({ repo })) {
         throw new Error(`Issue at ${repo} already exists`);
       }
 
@@ -150,7 +145,7 @@ module.exports = {
       }
 
       // Create new issue
-      const [issueResult] = await createNewIssue();
+      const issueResult = await createNewIssue();
 
       const activityInput = {
         actionType: 'create',
@@ -161,12 +156,12 @@ module.exports = {
       await createActivity({ activityInput });
 
       // add issue to organization issue list
-      await updateOrganizationArray(
-        'issues',
-        issueInput.organizationId,
-        newIssueId,
-        false,
-      );
+      await updateOrganizationArray({
+        column: 'issues',
+        data: newIssueId,
+        id: issueInput.organizationId,
+        remove: false,
+      });
 
       // add issue to user issue list
       await updateUserArray({
@@ -193,15 +188,6 @@ module.exports = {
       };
     }
   },
-  deleteIssue: async args => {
-    const { id } = args;
-    try {
-      const issues = await deleteIssue(id);
-      return issues;
-    } catch (err) {
-      throw err;
-    }
-  },
   getIssues: async () => {
     try {
       const issues = await getIssues();
@@ -224,7 +210,7 @@ module.exports = {
       });
 
       // Check issue repo for duplicate
-      if (await checkDuplicateIssue(issueInput.issueUrl)) {
+      if (await checkDuplicateIssue({ repo: issueInput.issueUrl })) {
         throw new Error(`Issue at ${issueInput.issueUrl} already exists`);
       }
 
@@ -235,10 +221,10 @@ module.exports = {
       });
 
       // Return organizaiton ID if exists in db
-      const [organizationData] = await getOrganizationsWhere(
-        'repo_url',
-        organizationInput.organizationRepo,
-      );
+      const [organizationData] = await getOrganizationsWhere({
+        column: 'repo_url',
+        value: organizationInput.organizationRepo,
+      });
 
       if (organizationData) {
         const { id, logo } = organizationData;
@@ -262,7 +248,7 @@ module.exports = {
   oneIssue: async args => {
     const { id } = args;
     try {
-      const [result] = await getOneIssue(id);
+      const result = await getOneIssue({ issueId: id });
       return {
         __typename: 'Issue',
         ...result,
@@ -277,14 +263,14 @@ module.exports = {
   searchIssues: async args => {
     const { value } = args;
     try {
-      const result = await searchIssues(value);
+      const result = await searchIssues({ value });
       return result;
     } catch (err) {
       throw err;
     }
   },
   transformIssue: async args => {
-    const { id, issueInput } = args;
+    const { issueId, issueInput } = args;
     try {
       const data = {
         attempting: issueInput.attempting,
@@ -300,7 +286,7 @@ module.exports = {
         rep: issueInput.rep,
         repo: issueInput.repo,
       };
-      const result = await transformIssue(id, data);
+      const result = await transformIssue({ data, issueId });
 
       const activityInput = {
         actionType: 'update',

@@ -1,13 +1,13 @@
 const { commentValues } = require('./constants');
-const { formatParamaters } = require('../../helpers');
+const { formatParameters } = require('../../helpers');
 const { singleQuery } = require('../../baseQueries');
 
 // Create new Comment
-const createComment = async data => {
-  const { parameters, substitution, values } = formatParamaters(
-    commentValues,
-    data,
-  );
+const createComment = async ({ data }) => {
+  const { parameters, substitution, values } = formatParameters({
+    newObject: data,
+    tableParameters: commentValues,
+  });
 
   const queryText = `INSERT INTO
   comments(${parameters})

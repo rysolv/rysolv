@@ -10,7 +10,6 @@ import {
 import { post } from 'utils/request';
 
 import {
-  DELETE_ORGANIZATION,
   FETCH_INFO,
   FETCH_ORGANIZATIONS,
   IMPORT_ORGANIZATION,
@@ -22,8 +21,6 @@ import {
   UPVOTE_ISSUE,
 } from './constants';
 import {
-  deleteOrganizationFailure,
-  deleteOrganizationSuccess,
   fetchInfo,
   fetchInfoFailure,
   fetchInfoSuccess,
@@ -41,28 +38,6 @@ import {
   upvoteIssueSuccess,
   upvoteIssueTemp,
 } from './actions';
-
-export function* deleteOrganizationSaga({ payload }) {
-  const { itemId } = payload;
-  try {
-    const query = `
-    mutation{
-      deleteOrganization(id: "${itemId}")
-    }`;
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: { deleteOrganization },
-    } = yield call(post, '/graphql', graphql);
-    yield put(
-      deleteOrganizationSuccess({ itemId, message: deleteOrganization }),
-    );
-  } catch (error) {
-    yield put(deleteOrganizationFailure({ error }));
-  }
-}
 
 export function* fetchOrganizationsSaga() {
   const query = `
@@ -328,7 +303,7 @@ export function* updateInfoSaga({ payload }) {
   } = editRequest;
   const query = `
     mutation {
-      transformOrganization(id: "${itemId}", organizationInput: {
+      transformOrganization(organizationId: "${itemId}", organizationInput: {
         organizationDescription: "${description}",
         organizationLogo: "${logo}",
         organizationName: "${name}",
@@ -420,7 +395,6 @@ export function* upvoteIssueSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
-  yield takeLatest(DELETE_ORGANIZATION, deleteOrganizationSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(FETCH_ORGANIZATIONS, fetchOrganizationsSaga);
   yield takeLatest(IMPORT_ORGANIZATION, importOrganizationSaga);

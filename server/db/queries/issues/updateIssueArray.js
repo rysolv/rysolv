@@ -1,6 +1,6 @@
 const { singleItem, singleQuery } = require('../../baseQueries');
 
-const updateIssueArray = async ({ column, issueId, data, remove }) => {
+const updateIssueArray = async ({ column, data, issueId, remove }) => {
   const [issueData] = await singleItem('issues', issueId);
   // Only add unique values to array
   if (!issueData[column].includes(data) || remove) {

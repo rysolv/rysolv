@@ -1,7 +1,6 @@
 const checkDuplicateIssue = require('./checkDuplicateIssue');
 const closeIssue = require('./closeIssue');
 const createIssue = require('./createIssue');
-const deleteIssue = require('./deleteIssue');
 const downvoteIssue = require('./downvoteIssue');
 const getIssues = require('./getIssues');
 const getOneIssue = require('./getOneIssue');
@@ -14,7 +13,6 @@ module.exports = {
   checkDuplicateIssue,
   closeIssue,
   createIssue,
-  deleteIssue,
   downvoteIssue,
   getIssues,
   getOneIssue,

@@ -34,26 +34,6 @@ const makeSelectUserDetail = () =>
     },
   );
 
-const makeSelectUsersDisabled = () =>
-  createSelector(
-    makeSelectUsers('data'),
-    data => {
-      const tempData = { ...data };
-      delete tempData.importUrl;
-      return Object.keys(tempData).every(item => tempData[item].value !== '');
-    },
-  );
-
-const makeSelectUsersEditRequest = () =>
-  createSelector(
-    makeSelectUsers('editInfo'),
-    editInfo =>
-      Object.keys(editInfo).reduce((acc, field) => {
-        acc[field] = editInfo[field].value;
-        return acc;
-      }, {}),
-  );
-
 const makeSelectUsersError = prop =>
   createSelector(
     makeSelectUsers('error'),
@@ -104,31 +84,11 @@ const makeSelectUsersLoading = prop =>
     loading => loading[prop],
   );
 
-const makeSelectUsersRequestBody = () =>
-  createSelector(
-    makeSelectUsers('data'),
-    data =>
-      Object.keys(data).reduce((acc, field) => {
-        acc[field] = data[field].value;
-        return acc;
-      }, {}),
-  );
-
-const makeSelectUsersStep = prop =>
-  createSelector(
-    makeSelectUsers('step'),
-    step => step[prop],
-  );
-
 export default selectUsersDomain;
 export {
   makeSelectUserDetail,
   makeSelectUsers,
-  makeSelectUsersDisabled,
-  makeSelectUsersEditRequest,
   makeSelectUsersError,
   makeSelectUsersFormatted,
   makeSelectUsersLoading,
-  makeSelectUsersRequestBody,
-  makeSelectUsersStep,
 };

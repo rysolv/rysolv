@@ -1,7 +1,8 @@
 const { singleQuery } = require('../../baseQueries');
 
-// ADD to array
-const updateOrganizationArray = async (column, id, data, remove) => {
+// @TODO: remove this query entirely. Refactor getOrganizations to join issues
+// ADD to organization array
+const updateOrganizationArray = async ({ column, data, id, remove }) => {
   const action = remove ? 'array_remove' : 'array_append';
   const queryText = `UPDATE organizations
     SET ${column} = ${action}(${column}, '${data}')

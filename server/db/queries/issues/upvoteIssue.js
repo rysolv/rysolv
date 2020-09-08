@@ -1,13 +1,14 @@
 const pool = require('../../connect');
-const { singleItem } = require('../../baseQueries');
 
 const upvoteIssue = async ({ issueId, userId }) => {
   // Pulling in Client to use transaction
   const client = await pool.connect();
   try {
     // Validate user has rep and has not upvoted
-    const [userData] = await singleItem('users', userId);
-    const { rep, upvotes } = userData;
+    const queryText = 'SELECT rep, upvotes FROM users WHERE id = $1';
+    const { rows: userRows } = await client.query(queryText, [userId]);
+    const [oneUser] = userRows;
+    const { rep, upvotes } = oneUser;
 
     if (rep - 1 < 0) throw new Error('Not enough points to upvote');
     if (upvotes.includes(issueId))
@@ -18,7 +19,7 @@ const upvoteIssue = async ({ issueId, userId }) => {
 
     // Increment issue rep
     const issueQuery =
-      'UPDATE issues SET rep = rep + 1 WHERE (id = $1) RETURNING rep';
+      'UPDATE issues SET rep = rep + 1 WHERE id = $1 RETURNING rep';
     const {
       rows: [issueResult],
     } = await client.query(issueQuery, [issueId]);
@@ -28,7 +29,7 @@ const upvoteIssue = async ({ issueId, userId }) => {
     const userQuery = `UPDATE users
         SET rep = rep - 1,
         upvotes = array_append(upvotes, $1)
-        WHERE (id = $2) RETURNING rep`;
+        WHERE id = $2 RETURNING rep`;
     const {
       rows: [userResult],
     } = await client.query(userQuery, [issueId, userId]);

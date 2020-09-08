@@ -1,5 +1,6 @@
 const { singleQuery } = require('../../baseQueries');
 
+// @TODO: remove this query in favor of getUserAttemptingList
 const getWatchList = async (id, type) => {
   const paramsDictionary = {
     issueAttemptList: {
@@ -22,7 +23,7 @@ const getWatchList = async (id, type) => {
     },
   };
   const { values, table } = paramsDictionary[type];
-  const queryText = `SELECT ${values} FROM ${table} WHERE (id = '${id}')`;
+  const queryText = `SELECT ${values} FROM ${table} WHERE id = '${id}'`;
   const { rows } = await singleQuery({ queryText });
   return rows;
 };
