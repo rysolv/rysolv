@@ -18,7 +18,7 @@ const transformUser = async ({ data, userId }) => {
     const [oneRow] = rows;
     return oneRow;
   } catch (error) {
-    throw new Error(`Failed to update users.`);
+    throw new Error(`Failed to update user.`);
   }
 };
 

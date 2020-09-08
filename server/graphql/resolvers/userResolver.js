@@ -267,9 +267,12 @@ module.exports = {
         client_secret: process.env.GITHUB_SECRET,
         code,
       });
-      const { githubUsername, isGithubVerified } = await transformUser(userId, {
-        modified_date: new Date(),
-        ...data,
+      const { githubUsername, isGithubVerified } = await transformUser({
+        data: {
+          modified_date: new Date(),
+          ...data,
+        },
+        userId,
       });
       return {
         __typename: 'Verification',

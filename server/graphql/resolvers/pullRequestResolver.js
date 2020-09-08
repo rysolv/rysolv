@@ -50,7 +50,7 @@ module.exports = {
       user_id: userId,
     };
     try {
-      if (await checkUserGithubId(htmlUrl, userId)) {
+      if (await checkUserGithubId({ htmlUrl, userId })) {
         throw new Error(
           `Github account does not match the account associated with the pull request`,
         );
