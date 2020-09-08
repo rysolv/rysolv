@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { hoverLinkColor } from 'defaultStyleHelper';
+
 export const LinkWrapper = styled(Link)`
-  color: #007bff;
+  color: ${hoverLinkColor};
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
     text-decoration: underline;
   }
 `;

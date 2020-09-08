@@ -24,7 +24,7 @@ export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
 `;
 
 export const StyledButton = styled(Button)`
-  color: #007bff;
+  color: ${hoverLinkColor};
   font-family: ${defaultFontFamily};
   font-size: ${defaultFontSize};
   font-weight: 500;
@@ -42,7 +42,7 @@ export const StyledButton = styled(Button)`
 `;
 
 export const TimelineActivity = styled.span`
-  color: #007bff;
+  color: ${hoverLinkColor};
 
   &:hover {
     color: ${hoverLinkColor};

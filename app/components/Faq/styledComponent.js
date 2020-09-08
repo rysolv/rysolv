@@ -5,6 +5,7 @@ import {
   commentHeaderColor,
   defaultFontSize,
   headerFontSize,
+  hoverLinkColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -57,10 +58,10 @@ export const QuestionWrapper = styled.div`
 `;
 
 export const StyledA = styled.a`
-  color: #007bff;
+  color: ${hoverLinkColor};
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
     text-decoration: underline;
   }
 `;

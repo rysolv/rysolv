@@ -68,7 +68,7 @@ export const ExternalLinkWrapper = styled.a`
   font-weight: 500;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
     cursor: pointer;
   }
 
