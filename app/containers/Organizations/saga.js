@@ -303,7 +303,7 @@ export function* updateInfoSaga({ payload }) {
   } = editRequest;
   const query = `
     mutation {
-      transformOrganization(id: "${itemId}", organizationInput: {
+      transformOrganization(organizationId: "${itemId}", organizationInput: {
         organizationDescription: "${description}",
         organizationLogo: "${logo}",
         organizationName: "${name}",

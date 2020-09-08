@@ -25,14 +25,14 @@ module.exports = {
         });
 
         // Record new withdrawal
-        const withdrawal = {
+        const data = {
           created_date: createdDate,
           fee: transferValue * 0.15,
           id: uuidv4(),
           transfer_value: transferValue,
           user_id: userId,
         };
-        await createWithdrawal(withdrawal);
+        await createWithdrawal({ data });
 
         // Record withdrawal activity
         const activityInput = {

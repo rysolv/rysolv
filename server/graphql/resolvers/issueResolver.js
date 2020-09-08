@@ -67,11 +67,11 @@ const newOrganizationObject = async organizationInput => {
 
 module.exports = {
   closeIssue: async args => {
-    const { id, shouldClose } = args;
+    const { issueId, shouldClose } = args;
     try {
-      const response = await closeIssue({ issueId: id, shouldClose });
+      const response = await closeIssue({ issueId, shouldClose });
 
-      const result = await getOneIssue({ issueId: id });
+      const result = await getOneIssue({ issueId });
 
       const activityInput = {
         actionType: shouldClose ? 'close' : 'reopen',
@@ -99,13 +99,12 @@ module.exports = {
     const createNewIssue = async () => {
       const issueObject = newIssueObject(newIssueId, issueInput);
       try {
-        const result = await createIssue(issueObject);
+        const result = await createIssue({ data: issueObject });
         return result;
       } catch (err) {
         throw err;
       }
     };
-    // **********
 
     // Populate organization object and create new organization
     const createNewOrganization = async () => {
@@ -124,7 +123,6 @@ module.exports = {
         throw err;
       }
     };
-    // **********
 
     try {
       // Check for duplicate issue
@@ -272,7 +270,7 @@ module.exports = {
     }
   },
   transformIssue: async args => {
-    const { id, issueInput } = args;
+    const { issueId, issueInput } = args;
     try {
       const data = {
         attempting: issueInput.attempting,
@@ -288,7 +286,7 @@ module.exports = {
         rep: issueInput.rep,
         repo: issueInput.repo,
       };
-      const result = await transformIssue(id, data);
+      const result = await transformIssue({ issueId, data });
 
       const activityInput = {
         actionType: 'update',

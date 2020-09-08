@@ -354,7 +354,7 @@ module.exports = buildSchema(`
   }
 
   type RootMutation {
-    closeIssue(id: ID!, shouldClose: Boolean): String!
+    closeIssue(issueId: ID!, shouldClose: Boolean): String!
 
     createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): Comment
@@ -366,7 +366,7 @@ module.exports = buildSchema(`
     createStripeCharge(amount: Float!, issueId: ID, token: String!, userId: ID): PaymentResult!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
-    deleteUser(id:ID!): String!
+    deleteUser(userId:ID!): String!
     deletePullRequest(id:ID!): EventResponse!
 
     importIssue(url: String!): ImportResult
@@ -377,9 +377,9 @@ module.exports = buildSchema(`
 
     toggleWatching(issueId: ID!, userId: ID!): ToggleWatchingResult
 
-    transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
-    transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!
-    transformUser(id: ID!, userInput: UserInput): UserResult!
+    transformIssue(issueId: ID!, issueInput: IssueInput): IssueResult!
+    transformOrganization(organizationId: ID!, organizationInput: OrganizationInput): OrganizationResult!
+    transformUser(userId: ID!, userInput: UserInput): UserResult!
 
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!

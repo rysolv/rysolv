@@ -3,7 +3,7 @@ const { organizationReturnValues, organizationValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
 // TRANSFORM single Organization
-const transformOrganization = async (id, data) => {
+const transformOrganization = async ({ data, organizationId }) => {
   try {
     const { parameters, substitution, values } = formatParameters({
       newObject: data,
@@ -13,7 +13,7 @@ const transformOrganization = async (id, data) => {
       UPDATE organizations
       SET (${parameters})
       = (${substitution})
-      WHERE id = '${id}'
+      WHERE id = '${organizationId}'
       RETURNING ${organizationReturnValues}`;
     const { rows } = await singleQuery({ queryText, values });
     const [oneRow] = rows;

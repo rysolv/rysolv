@@ -3,7 +3,7 @@ const { formatParameters } = require('../../helpers');
 const { singleQuery } = require('../../baseQueries');
 
 // Create new Comment
-const createComment = async data => {
+const createComment = async ({ data }) => {
   const { parameters, substitution, values } = formatParameters({
     newObject: data,
     tableParameters: commentValues,

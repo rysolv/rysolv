@@ -186,7 +186,7 @@ module.exports = {
     }
   },
   transformOrganization: async args => {
-    const { id, organizationInput } = args;
+    const { organizationId, organizationInput } = args;
     try {
       const logo = organizationInput.organizationLogo;
 
@@ -209,7 +209,7 @@ module.exports = {
         total_funded: organizationInput.totalFunded,
         verified: organizationInput.organizationVerified,
       };
-      const result = await transformOrganization(id, data);
+      const result = await transformOrganization({ organizationId, data });
 
       const activityInput = {
         actionType: 'update',

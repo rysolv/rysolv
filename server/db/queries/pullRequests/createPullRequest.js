@@ -2,7 +2,7 @@ const { formatParameters } = require('../../helpers');
 const { pullRequestReturnValues, pullRequestValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
-const createPullRequest = async data => {
+const createPullRequest = async ({ data }) => {
   const { parameters, substitution, values } = formatParameters({
     newObject: data,
     tableParameters: pullRequestValues,

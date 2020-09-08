@@ -13,7 +13,7 @@ module.exports = {
     const { commentInput } = args;
     const date = new Date();
     try {
-      const comment = {
+      const data = {
         body: commentInput.body || '',
         created_date: date,
         id: uuidv4(),
@@ -21,7 +21,7 @@ module.exports = {
         target: commentInput.target,
         user_id: commentInput.user,
       };
-      const result = await createComment(comment);
+      const result = await createComment({ data });
 
       const activityInput = {
         actionType: 'comment',
@@ -30,11 +30,12 @@ module.exports = {
       };
       await createActivity({ activityInput });
 
-      const [user] = await updateUserArray({
+      const user = await updateUserArray({
         column: 'comments',
         data: result.id,
         userId: commentInput.user,
       });
+
       await updateIssueArray({
         column: 'comments',
         data: result.id,

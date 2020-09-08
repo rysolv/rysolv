@@ -3,7 +3,7 @@ const { issueValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
 // Create new Issue
-const createIssue = async data => {
+const createIssue = async ({ data }) => {
   const { parameters, substitution, values } = formatParameters({
     newObject: data,
     tableParameters: issueValues,

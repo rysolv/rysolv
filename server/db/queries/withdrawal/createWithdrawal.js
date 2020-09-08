@@ -3,7 +3,7 @@ const { singleQuery } = require('../../baseQueries');
 const { withdrawalValues } = require('./constants');
 
 // CREATE single withdrawal
-const createWithdrawal = async data => {
+const createWithdrawal = async ({ data }) => {
   const { parameters, substitution, values } = formatParameters({
     newObject: data,
     tableParameters: withdrawalValues,

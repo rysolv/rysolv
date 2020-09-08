@@ -5,13 +5,17 @@ const { singleQuery } = require('../../baseQueries');
 // Close single issue
 const closeIssue = async ({ issueId, shouldClose }) => {
   try {
-    const queryText = `UPDATE issues SET open=${!shouldClose} WHERE id='${issueId}'`;
-    await singleQuery({ queryText });
-    return `Issue ${issueId} has been successfully ${
+    const queryText = `
+      UPDATE issues
+      SET open = $1
+      WHERE id = $2
+    `;
+    await singleQuery({ queryText, values: [!shouldClose, issueId] });
+    return `Issue has been successfully ${
       shouldClose ? 'closed' : 'reopened'
     }.`;
   } catch (error) {
-    throw new Error(`Failed to close issue. ID not found in issues`);
+    throw new Error(`Failed to close issue.`);
   }
 };
 

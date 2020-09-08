@@ -5,7 +5,7 @@ const { userReturnValues } = require('./constants');
 const getOneUser = async ({ userId }) => {
   const queryText = `
     SELECT ${userReturnValues} from users
-    WHERE id = $1
+    WHERE id = $1 AND is_deleted = false
   `;
   const { rows } = await singleQuery({ queryText, values: [userId] });
   const [oneRow] = rows;

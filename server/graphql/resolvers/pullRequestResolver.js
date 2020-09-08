@@ -17,7 +17,7 @@ const { formatPullRequestUrl } = require('../../integrations/github/helpers');
 module.exports = {
   createPullRequest: async args => {
     const { pullRequestInput } = args;
-    const newPullRequest = {
+    const data = {
       created_date: new Date(),
       github_username: pullRequestInput.githubUsername,
       html_url: pullRequestInput.htmlUrl,
@@ -34,12 +34,10 @@ module.exports = {
       user_id: pullRequestInput.userId,
     };
     try {
-      if (await checkDuplicatePullRequest({ repo: newPullRequest.html_url })) {
-        throw new Error(
-          `Pull request at ${newPullRequest.html_url} already exists`,
-        );
+      if (await checkDuplicatePullRequest({ repo: data.html_url })) {
+        throw new Error(`Pull request at ${data.html_url} already exists`);
       }
-      const result = await createPullRequest(newPullRequest);
+      const result = await createPullRequest({ data });
 
       // add issue to user issue list
       await updateUserArray({

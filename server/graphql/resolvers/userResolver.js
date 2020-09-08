@@ -68,7 +68,7 @@ module.exports = {
     }
   },
   deleteUser: async args => {
-    const { id } = args;
+    const { userId } = args;
     try {
       const data = {
         activePullRequests: 0,
@@ -95,7 +95,7 @@ module.exports = {
         stackoverflow_link: '',
         username: '[deleted]',
       };
-      await transformUser(id, data);
+      await transformUser({ data, userId });
       return 'User successfully deleted';
     } catch (err) {
       throw err;
@@ -200,7 +200,7 @@ module.exports = {
     }
   },
   transformUser: async args => {
-    const { id, userInput } = args;
+    const { userId, userInput } = args;
     try {
       if (userInput.profilePic) {
         const formattedProfilePic = userInput.profilePic;
@@ -231,7 +231,7 @@ module.exports = {
         stackoverflow_link: userInput.stackoverflowLink,
         username: userInput.username,
       };
-      const result = await transformUser({ data, userId: id });
+      const result = await transformUser({ data, userId });
 
       return {
         __typename: 'User',
