@@ -286,7 +286,7 @@ module.exports = {
         rep: issueInput.rep,
         repo: issueInput.repo,
       };
-      const result = await transformIssue({ issueId, data });
+      const result = await transformIssue({ data, issueId });
 
       const activityInput = {
         actionType: 'update',

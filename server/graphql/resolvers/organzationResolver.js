@@ -209,7 +209,7 @@ module.exports = {
         total_funded: organizationInput.totalFunded,
         verified: organizationInput.organizationVerified,
       };
-      const result = await transformOrganization({ organizationId, data });
+      const result = await transformOrganization({ data, organizationId });
 
       const activityInput = {
         actionType: 'update',
