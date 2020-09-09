@@ -120,7 +120,7 @@ const SettingsView = ({
 
   const handleDone = ({ changeInputState, field }) => {
     changeInputState(false);
-    dispatchSaveChange({ field, itemId: id, value });
+    dispatchSaveChange({ field, userId: id, value });
     setIsDisabled(false);
   };
 
