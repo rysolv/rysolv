@@ -59,7 +59,9 @@ const SettingsView = ({
     email,
     firstName,
     githubLink,
+    githubUsername,
     id,
+    isGithubVerified,
     isOnline,
     issues,
     lastName,
@@ -304,6 +306,7 @@ const SettingsView = ({
             email={email}
             filterValues={filterValues}
             firstName={firstName}
+            githubUsername={githubUsername}
             handleClearAllAlerts={handleClearAllAlerts}
             handleClearErrors={handleClearErrors}
             handleClose={handleClose}
@@ -317,6 +320,7 @@ const SettingsView = ({
             handleWithdrawFunds={handleWithdrawFunds}
             inputErrors={inputErrors}
             isDisabled={isDisabled}
+            isGithubVerified={isGithubVerified}
             issues={issues}
             lastName={lastName}
             organizations={organizations}

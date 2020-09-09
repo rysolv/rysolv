@@ -30,6 +30,7 @@ import {
   removeWatching,
   saveChange,
   stripeToken,
+  verifyAccount,
   withdrawFunds,
 } from './actions';
 import { settingViewDictionary } from './constants';
@@ -43,6 +44,7 @@ const Settings = ({
   activeUser: { id: userId },
   alerts,
   data,
+  data: { isGithubVerified },
   deviceView,
   dispatchCloseModal,
   dispatchFetchInfo,
@@ -51,6 +53,7 @@ const Settings = ({
   dispatchPaypalPayment,
   dispatchSaveChange,
   dispatchStripeToken,
+  dispatchVerifyAccount,
   dispatchWithdrawFunds,
   error,
   filterValues,
@@ -68,10 +71,25 @@ const Settings = ({
   modal,
 }) => {
   const [zipValue, setZipValue] = useState('');
+
+  useEffect(() => {
+    const url = window.location.href;
+    const hasCode = url.includes('?code=');
+    if (
+      hasCode &&
+      isGithubVerified !== undefined &&
+      !isGithubVerified &&
+      userId
+    ) {
+      const newUrl = url.split('?code=');
+      dispatchVerifyAccount({ code: newUrl[1], userId });
+    }
+  }, [isGithubVerified, userId]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'User Settings';
-    dispatchFetchInfo({ userId });
+    if (userId) dispatchFetchInfo({ userId });
   }, [userId]);
 
   const handleStripeToken = ({ amount, token, values }) => {
@@ -173,6 +191,7 @@ Settings.propTypes = {
   dispatchPaypalPayment: T.func.isRequired,
   dispatchSaveChange: T.func,
   dispatchStripeToken: T.func.isRequired,
+  dispatchVerifyAccount: T.func.isRequired,
   dispatchWithdrawFunds: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object,
@@ -224,6 +243,7 @@ function mapDispatchToProps(dispatch) {
     dispatchPaypalPayment: payload => dispatch(paypalPayment(payload)),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
     dispatchStripeToken: payload => dispatch(stripeToken(payload)),
+    dispatchVerifyAccount: payload => dispatch(verifyAccount(payload)),
     dispatchWithdrawFunds: payload => dispatch(withdrawFunds(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleClearErrors: () => dispatch(clearErrors()),

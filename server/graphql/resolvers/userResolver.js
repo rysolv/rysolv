@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const Identicon = require('identicon.js');
 
 const {
@@ -16,6 +17,7 @@ const {
   transformUser,
   updateUserArray,
 } = require('../../db');
+const { requestGithubUser } = require('../../integrations/github');
 const { uploadImage } = require('../../middlewares/imageUpload');
 
 const deletedUserImage =
@@ -256,6 +258,35 @@ module.exports = {
       return result;
     } catch (error) {
       throw new Error('Too many requests.');
+    }
+  },
+  verifyUserAccount: async args => {
+    const { code, userId } = args;
+    try {
+      const { github_id, github_username } = await requestGithubUser({
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_SECRET,
+        code,
+      });
+      const { githubUsername, isGithubVerified } = await transformUser({
+        data: {
+          github_id,
+          github_username,
+          modified_date: new Date(),
+        },
+        userId,
+      });
+      return {
+        __typename: 'Verification',
+        githubUsername,
+        isGithubVerified,
+        message: `Your Github account has been successfully verified.`,
+      };
+    } catch (err) {
+      return {
+        __typename: 'Error',
+        message: err.message,
+      };
     }
   },
 };

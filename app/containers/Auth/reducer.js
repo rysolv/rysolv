@@ -162,6 +162,7 @@ const authReducer = produce((draft, { payload, type }) => {
         addUpvote,
         attempting,
         balance,
+        isGithubVerified,
         profilePic,
         removeUpvote,
         rep,
@@ -176,6 +177,9 @@ const authReducer = produce((draft, { payload, type }) => {
       }
       if (!isBlank(balance)) {
         draft.activeUser.balance = balance;
+      }
+      if (isGithubVerified) {
+        draft.activeUser.isGithubVerified = isGithubVerified;
       }
       if (profilePic) {
         draft.activeUser.profilePic = profilePic;

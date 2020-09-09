@@ -34,6 +34,10 @@ export const STRIPE_TOKEN = 'app/Settings/STRIPE_TOKEN';
 export const STRIPE_TOKEN_FAILURE = 'app/Settings/STRIPE_TOKEN_FAILURE';
 export const STRIPE_TOKEN_SUCCESS = 'app/Settings/STRIPE_TOKEN_SUCCESS';
 
+export const VERIFY_ACCOUNT = 'app/Settings/VERIFY_ACCOUNT';
+export const VERIFY_ACCOUNT_FAILURE = 'app/Settings/VERIFY_ACCOUNT_FAILURE';
+export const VERIFY_ACCOUNT_SUCCESS = 'app/Settings/VERIFY_ACCOUNT_SUCCESS';
+
 export const WITHDRAW_FUNDS = 'app/Settings/WITHDRAW_FUNDS';
 export const WITHDRAW_FUNDS_FAILURE = 'app/Settings/WITHDRAW_FUNDS_FAILURE';
 export const WITHDRAW_FUNDS_SUCCESS = 'app/Settings/WITHDRAW_FUNDS_SUCCESS';

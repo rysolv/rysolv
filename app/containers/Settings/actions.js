@@ -24,6 +24,9 @@ import {
   STRIPE_TOKEN_FAILURE,
   STRIPE_TOKEN_SUCCESS,
   STRIPE_TOKEN,
+  VERIFY_ACCOUNT_FAILURE,
+  VERIFY_ACCOUNT_SUCCESS,
+  VERIFY_ACCOUNT,
   WITHDRAW_FUNDS_FAILURE,
   WITHDRAW_FUNDS_SUCCESS,
   WITHDRAW_FUNDS,
@@ -198,6 +201,27 @@ export function stripeToken(payload) {
   return {
     payload,
     type: STRIPE_TOKEN,
+  };
+}
+
+export function verifyAccountFailure(payload) {
+  return {
+    payload,
+    type: VERIFY_ACCOUNT_FAILURE,
+  };
+}
+
+export function verifyAccountSuccess(payload) {
+  return {
+    payload,
+    type: VERIFY_ACCOUNT_SUCCESS,
+  };
+}
+
+export function verifyAccount(payload) {
+  return {
+    payload,
+    type: VERIFY_ACCOUNT,
   };
 }
 

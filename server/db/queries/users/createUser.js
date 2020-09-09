@@ -2,7 +2,7 @@ const { formatParameters } = require('../../helpers');
 const { singleQuery } = require('../../baseQueries');
 const { userValues } = require('./constants');
 
-// Create new User
+// Create new user
 const createUser = async ({ data }) => {
   const { parameters, substitution, values } = formatParameters({
     newObject: data,

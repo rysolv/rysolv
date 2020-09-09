@@ -16,6 +16,7 @@ import {
   REMOVE_WATCHING,
   SAVE_CHANGE,
   STRIPE_TOKEN,
+  VERIFY_ACCOUNT,
   WITHDRAW_FUNDS,
 } from './constants';
 import {
@@ -31,6 +32,8 @@ import {
   saveChangeSuccess,
   stripeTokenFailure,
   stripeTokenSuccess,
+  verifyAccountFailure,
+  verifyAccountSuccess,
   withdrawFundsFailure,
   withdrawFundsSuccess,
 } from './actions';
@@ -69,7 +72,9 @@ export function* fetchInfoSaga({ payload }) {
         email,
         firstName,
         githubLink,
+        githubUsername,
         id,
+        isGithubVerified,
         issues,
         lastName,
         organizations,
@@ -318,6 +323,47 @@ export function* stripeTokenSaga({ payload }) {
   }
 }
 
+export function* verifyAccountSaga({ payload }) {
+  const { code, userId } = payload;
+  const query = `
+    query {
+      verifyUserAccount(code: "${code}", userId: "${userId}") {
+        __typename
+        ... on Verification {
+          githubUsername
+          isGithubVerified
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { verifyUserAccount },
+    } = yield call(post, '/graphql', graphql);
+    const {
+      __typename,
+      githubUsername,
+      isGithubVerified,
+      message,
+    } = verifyUserAccount;
+    if (__typename === 'Error') {
+      throw new Error(message);
+    }
+    yield put(verifyAccountSuccess({ githubUsername, message }));
+    yield put(updateActiveUser({ isGithubVerified }));
+  } catch (error) {
+    yield put(verifyAccountFailure({ error }));
+  }
+}
+
 export function* withdrawFundsSaga({ payload }) {
   const { transferValue, userId } = payload;
   const query = `
@@ -361,9 +407,10 @@ export default function* watcherSaga() {
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(PAYPAL_PAYMENT, paypalPaymentSaga);
-  yield takeLatest(REMOVE_WATCHING, removeWatchingSaga);
   yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
+  yield takeLatest(REMOVE_WATCHING, removeWatchingSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
   yield takeLatest(STRIPE_TOKEN, stripeTokenSaga);
+  yield takeLatest(VERIFY_ACCOUNT, verifyAccountSaga);
   yield takeLatest(WITHDRAW_FUNDS, withdrawFundsSaga);
 }

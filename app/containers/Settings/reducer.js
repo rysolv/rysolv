@@ -26,6 +26,9 @@ import {
   STRIPE_TOKEN_FAILURE,
   STRIPE_TOKEN_SUCCESS,
   STRIPE_TOKEN,
+  VERIFY_ACCOUNT_FAILURE,
+  VERIFY_ACCOUNT_SUCCESS,
+  VERIFY_ACCOUNT,
   WITHDRAW_FUNDS_FAILURE,
   WITHDRAW_FUNDS_SUCCESS,
   WITHDRAW_FUNDS,
@@ -202,6 +205,24 @@ const settingsReducer = produce((draft, { payload, type }) => {
     }
     case STRIPE_TOKEN: {
       draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
+    case VERIFY_ACCOUNT_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case VERIFY_ACCOUNT_SUCCESS: {
+      const { githubUsername, message } = payload;
+      draft.account.githubUsername = githubUsername;
+      draft.account.isGithubVerified = true;
+      draft.alerts.success = { message };
+      draft.loading = false;
+      break;
+    }
+    case VERIFY_ACCOUNT: {
       draft.loading = true;
       break;
     }
