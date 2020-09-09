@@ -7,12 +7,6 @@ export const CLEAR_ALERTS = 'app/Organizations/CLEAR_ALERTS';
 
 export const CLEAR_FORM = 'app/Organizations/CLEAR_FORM';
 
-export const DELETE_ORGANIZATION = 'app/Organizations/DELETE_ORGANIZATION';
-export const DELETE_ORGANIZATION_FAILURE =
-  'app/Organizations/DELETE_ORGANIZATION_FAILURE';
-export const DELETE_ORGANIZATION_SUCCESS =
-  'app/Organizations/DELETE_ORGANIZATION_SUCCESS';
-
 export const FETCH_ORGANIZATIONS = 'app/Organizations/FETCH_ORGANIZATIONS';
 export const FETCH_ORGANIZATIONS_FAILURE =
   'app/Organizations/FETCH_ORGANIZATIONS_FAILURE';
@@ -58,8 +52,6 @@ export const UPVOTE_ISSUE_FAILURE = 'app/Organizations/UPVOTE_ISSUE_FAILURE';
 export const UPVOTE_ISSUE_SUCCESS = 'app/Organizations/UPVOTE_ISSUE_SUCCESS';
 export const UPVOTE_ISSUE_TEMP = 'app/Organizations/UPVOTE_ISSUE_TEMP';
 
-export const VERIFY_INFO = 'app/Organizations/VERIFY_INFO';
-
 export const organizationDataDictionary = {
   organizationUrl: 'Organization URL (optional)',
   description: 'Organization Description',
@@ -77,5 +69,3 @@ export const successCreateOrganizationMessage =
 
 export const successEditOrganizationMessage =
   'Organization was successfully edited.';
-
-export const verifyMessage = 'I agree that this information is correct.';

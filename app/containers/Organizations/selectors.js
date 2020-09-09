@@ -35,16 +35,6 @@ const makeSelectOrganizationsDisabled = () =>
     },
   );
 
-const makeSelectOrganizationsEditRequest = () =>
-  createSelector(
-    makeSelectOrganizations('editInfo'),
-    editInfo =>
-      Object.keys(editInfo).reduce((acc, field) => {
-        acc[field] = editInfo[field].value;
-        return acc;
-      }, {}),
-  );
-
 const makeSelectOrganizationsError = prop =>
   createSelector(
     makeSelectOrganizations('error'),
@@ -154,7 +144,6 @@ export default selectOrganizationsDomain;
 export {
   makeSelectOrganizations,
   makeSelectOrganizationsDisabled,
-  makeSelectOrganizationsEditRequest,
   makeSelectOrganizationsError,
   makeSelectOrganizationsFiltered,
   makeSelectOrganizationsFormattedData,

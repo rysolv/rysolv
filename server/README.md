@@ -38,9 +38,7 @@ Set `graphiql: true,` in `/index.js` // will make .env for this later
   * `transformIssue` - requires `id: <type ID>, issueInput: <type IssueInput>`- returns transformed issue
   * `transformUser` - requires `id: <type ID>, userInput: <type UserInput>`- returns transformed issue
   * `transformOrganization` - requires `id: <type ID>, organizationInput: <type OrganizationInput>`- returns transformed organization
-  * `deleteIssue` - required `id: <type ID>` - returns success or failure string
   * `deleteUser` - required `id: <type ID>` - returns success or failure string
-  * `deleteOrganization` - required `id: <type ID>` - returns success or failure string
 
 ### GraphQL Types
 
