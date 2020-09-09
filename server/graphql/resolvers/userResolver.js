@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const Identicon = require('identicon.js');
 
 const {
@@ -262,15 +263,16 @@ module.exports = {
   verifyUserAccount: async args => {
     const { code, userId } = args;
     try {
-      const data = await requestGithubUser({
+      const { github_id, github_username } = await requestGithubUser({
         client_id: process.env.GITHUB_CLIENT_ID,
         client_secret: process.env.GITHUB_SECRET,
         code,
       });
       const { githubUsername, isGithubVerified } = await transformUser({
         data: {
+          github_id,
+          github_username,
           modified_date: new Date(),
-          ...data,
         },
         userId,
       });

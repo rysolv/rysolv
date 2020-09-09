@@ -50,7 +50,13 @@ module.exports = {
       user_id: userId,
     };
     try {
-      if (await checkUserGithubId({ htmlUrl, userId })) {
+      const { organization, repo } = formatPullRequestUrl(htmlUrl);
+      const { githubId: id } = await getSinglePullRequest({
+        organization,
+        pullNumber,
+        repo,
+      });
+      if (await checkUserGithubId({ id, userId })) {
         throw new Error(
           `Github account does not match the account associated with the pull request`,
         );

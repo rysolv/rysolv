@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-import { defaultFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  hoverLinkColor,
+  textColor,
+  verifyBackgroundColor,
+  verifyColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobileS } = mediaQueriesByDevice;
@@ -46,9 +52,9 @@ export const StyledText = styled.div`
 `;
 
 export const VerifiedWrapper = styled.div`
-  background: rgb(229, 251, 242);
+  background: ${verifyBackgroundColor};
   border-radius: 0.25rem;
-  color: rgb(8, 178, 110);
+  color: ${verifyColor};
   font-size: ${defaultFontSize};
   padding: 0.5rem;
 `;

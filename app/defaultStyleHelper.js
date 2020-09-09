@@ -24,6 +24,8 @@ export const subHeaderColor = '#0d47a1';
 export const subTextColor = '#878a8c';
 export const successGreen = '#31b589';
 export const textColor = 'rgba(0,0,0,0.7)';
+export const verifyBackgroundColor = 'rgb(229, 251, 242)';
+export const verifyColor = 'rgb(8, 178, 110)';
 
 // Font Family
 export const defaultFontFamily = `'Helvetica Neue', Helvetica, Arial, sans-serif`;
