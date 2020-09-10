@@ -47,7 +47,7 @@ export const StyledFundedIcon = styled.div`
 `;
 
 export const TimelineActivity = styled.span`
-  color: #007bff;
+  color: ${hoverLinkColor};
 
   &:hover {
     color: ${hoverLinkColor};

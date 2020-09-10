@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { borderColor, textColor } from 'defaultStyleHelper';
+import { borderColor, hoverLinkColor, textColor } from 'defaultStyleHelper';
 
 export const AttemptButtonContainer = styled.div`
   border-radius: 0.3rem;
@@ -63,7 +63,7 @@ export const ValueWrapper = styled.div`
   padding: 0.3rem 1rem;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
     cursor: pointer;
   }
 `;

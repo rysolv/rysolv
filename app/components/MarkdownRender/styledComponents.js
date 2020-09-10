@@ -51,7 +51,7 @@ export const CommentContainer = styled.div`
   }
 
   &:after {
-    border-color: transparent #f6f8fa transparent transparent;
+    border-color: transparent ${commentHeaderColor} transparent transparent;
     border-width: 9px;
     left: -18px;
     top: 8px;

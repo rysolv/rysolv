@@ -5,6 +5,8 @@ import withAuth from 'containers/Auth';
 import Contact from 'components/Contact';
 import Faq from 'components/Faq';
 import NotFoundPage from 'components/NotFoundPage';
+import PrivacyPolicy from 'components/PrivacyPolicy';
+import TermsOfService from 'components/TermsOfService';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
 import Main from 'containers/HomePage/Loadable';
@@ -28,7 +30,9 @@ const PublicMain = withAuth(publicConfig, Main);
 const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
 const PublicOrganizationsDetail = withAuth(publicConfig, OrganizationsDetail);
 const PublicOverview = withAuth(publicConfig, Overview);
+const PublicPrivacyPolicy = withAuth(publicConfig, PrivacyPolicy);
 const PublicSignIn = withAuth(publicConfig, SignIn);
+const PublicTermsOfService = withAuth(publicConfig, TermsOfService);
 const PublicUsersDetail = withAuth(publicConfig, UsersDetail);
 
 // prettier-ignore
@@ -45,9 +49,11 @@ const Routes = () => (
     <Route exact path="/organizations/add" component={PrivateOrganizationsAdd} />
     <Route exact path="/organizations/detail/:id" component={PublicOrganizationsDetail} />
     <Route exact path="/organizations/search/:searchValue" component={PublicOverview} />
+    <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
     <Route exact path="/settings/:view?" component={PrivateSettings} />
     <Route exact path="/signin" component={PublicSignIn} />
     <Route exact path="/signup" component={PublicSignIn} />
+    <Route exact path="/terms-of-service" component={PublicTermsOfService} />
     <Route exact path="/users" component={PublicOverview} />
     <Route exact path="/users/detail/:id" component={PublicUsersDetail} />
     <Route exact path="/users/search/:searchValue" component={PublicOverview} />
