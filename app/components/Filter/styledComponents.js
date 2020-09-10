@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { BaseExpansionPanel } from 'components/base_ui';
-import { textColor } from 'defaultStyleHelper';
+import { inputFieldColor, textColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -9,7 +9,7 @@ const { mobile } = mediaQueriesByDevice;
 export const FilterContainer = styled.div`
   background-color: white;
   border-radius: 0.2rem;
-  border: 0.1rem solid #cfd8dc;
+  border: 0.1rem solid ${inputFieldColor};
   display: flex;
   flex-direction: column;
   padding: 1rem;

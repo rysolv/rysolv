@@ -5,6 +5,7 @@ import {
   defaultFontSize,
   detailFontSize,
   lightBlueColor,
+  verifyColor,
 } from 'defaultStyleHelper';
 
 export const StyledBack = styled.div`
@@ -122,7 +123,7 @@ export const StyledTooltipLabel = styled.span`
 `;
 
 export const StyledVerified = styled.div`
-  color: rgb(8, 178, 110);
+  color: ${verifyColor};
   display: inline-block;
   text-align: center;
 `;

@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Chip from '@material-ui/core/Chip';
 
+import { inputFieldColor } from 'defaultStyleHelper';
+
 export const StyledAutocomplete = styled(Autocomplete)`
   padding-right: 2rem;
 
@@ -10,7 +12,7 @@ export const StyledAutocomplete = styled(Autocomplete)`
     &:before {
       border-bottom: none;
     }
-    border-bottom: 0.1rem solid #cfd8dc;
+    border-bottom: 0.1rem solid ${inputFieldColor};
   }
 
   label {

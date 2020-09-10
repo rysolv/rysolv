@@ -9,7 +9,9 @@ const userValues = [
   'email_verified',
   'email',
   'first_name',
+  'github_id',
   'github_link',
+  'github_username',
   'id',
   'is_deleted',
   'is_online',
@@ -58,7 +60,18 @@ const userReturnValues = `
   username
 `;
 
+const userSettingsReturnValues = `
+  CASE WHEN github_id IS NOT NULL THEN true ELSE false END AS "isGithubVerified",
+  github_username AS "githubUsername",
+  ${userReturnValues}
+`;
+
 // @TODO: refactor SQL query to not require group values
 const groupValues = userValues.join(',');
 
-module.exports = { groupValues, userReturnValues, userValues };
+module.exports = {
+  groupValues,
+  userReturnValues,
+  userSettingsReturnValues,
+  userValues,
+};
