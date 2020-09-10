@@ -42,7 +42,6 @@ export const Main = ({
   dispatchCloseIssue,
   dispatchCloseModal,
   dispatchOpenModal,
-  error,
   handleDelete,
   handleNav,
   handleResetForm,
@@ -50,8 +49,6 @@ export const Main = ({
   handleSignout,
   isModalOpen,
   isSignedIn,
-  loading,
-  match,
   modal,
   tableData,
 }) => {
@@ -169,7 +166,7 @@ export const Main = ({
         <AppContentWrapper>
           <SideNav deviceView={deviceView} handleNav={handleNav} />
           <RoutesWrapper>
-            <Routes error={error} loading={loading} match={match} />
+            <Routes />
           </RoutesWrapper>
         </AppContentWrapper>
       </AppBodyWrapper>
@@ -180,23 +177,19 @@ export const Main = ({
 };
 
 Main.propTypes = {
-  activeUser: T.object,
-  deviceView: T.string,
+  activeUser: T.object.isRequired,
+  deviceView: T.string.isRequired,
   dispatchCloseIssue: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
-  error: T.object,
-  handleClearAlerts: T.func,
-  handleDelete: T.func,
-  handleNav: T.func,
+  handleDelete: T.func.isRequired,
+  handleNav: T.func.isRequired,
   handleResetForm: T.func.isRequired,
-  handleSignin: T.func,
-  handleSignout: T.func,
-  isModalOpen: T.bool,
-  isSignedIn: T.bool,
-  loading: T.bool,
-  match: T.object,
-  modal: T.string,
+  handleSignin: T.func.isRequired,
+  handleSignout: T.func.isRequired,
+  isModalOpen: T.bool.isRequired,
+  isSignedIn: T.bool.isRequired,
+  modal: T.string.isRequired,
   tableData: T.oneOfType([T.array, T.object, T.number]),
 };
 

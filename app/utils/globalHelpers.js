@@ -51,7 +51,7 @@ export const getCookie = cookie => {
   );
   const cookieValue = document.cookie.replace(regexStr, '$1');
   if (cookieValue) return cookieValue;
-  return false;
+  return '';
 };
 
 export const handleZipChange = (event, newZip, setZipValue) => {

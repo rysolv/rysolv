@@ -20,9 +20,9 @@ const ProgressModal = ({ handleClose }) => (
     <ContentWrapper>
       <ModalTitle>Welcome to Rysolv Beta!</ModalTitle>
       <ModalBody>
-        Help us build a better experience for millions of developers like you.
-        Try it out, tell us what you think, and come back often as we make
-        improvements based on your feedback.
+        Help us build a better experience for developers like you. Try it out,
+        tell us what you think, and come back often as we make improvements
+        based on your feedback.
       </ModalBody>
       <PrimaryButton label="Try it out" onClick={handleClose} />
     </ContentWrapper>
