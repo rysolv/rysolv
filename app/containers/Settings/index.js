@@ -17,6 +17,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
 import {
+  changeEmail,
   clearAlerts,
   clearErrors,
   closeModalState,
@@ -57,6 +58,7 @@ const Settings = ({
   dispatchWithdrawFunds,
   error,
   filterValues,
+  handleChangeEmail,
   handleClearAlerts,
   handleClearErrors,
   handleDeleteUser,
@@ -161,6 +163,7 @@ const Settings = ({
           dispatchPaypalPayment,
           dispatchSaveChange,
           filterValues,
+          handleChangeEmail,
           handleClearAlerts,
           handleClearErrors,
           handleInputChange,
@@ -182,7 +185,7 @@ const Settings = ({
 Settings.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
-  data: T.object,
+  data: T.object.isRequired,
   deviceView: T.string.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchInfo: T.func,
@@ -195,6 +198,7 @@ Settings.propTypes = {
   dispatchWithdrawFunds: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object,
+  handleChangeEmail: T.func.isRequired,
   handleClearAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
   handleDeleteUser: T.func.isRequired,
@@ -245,6 +249,7 @@ function mapDispatchToProps(dispatch) {
     dispatchStripeToken: payload => dispatch(stripeToken(payload)),
     dispatchVerifyAccount: payload => dispatch(verifyAccount(payload)),
     dispatchWithdrawFunds: payload => dispatch(withdrawFunds(payload)),
+    handleChangeEmail: payload => dispatch(changeEmail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleClearErrors: () => dispatch(clearErrors()),
     handleDeleteUser: payload => dispatch(deleteUser(payload)),

@@ -1,6 +1,9 @@
 import produce from 'immer';
 
 import {
+  CHANGE_EMAIL_FAILURE,
+  CHANGE_EMAIL_SUCCESS,
+  CHANGE_EMAIL,
   CLEAR_ALERTS,
   CLEAR_ERRORS,
   CLOSE_MODAL_STATE,
@@ -48,13 +51,28 @@ export const initialState = {
     transferValue: '',
   },
   isModalOpen: false,
-  loading: false,
+  loading: true,
   modal: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const settingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case CHANGE_EMAIL_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case CHANGE_EMAIL_SUCCESS: {
+      draft.loading = false;
+      break;
+    }
+    case CHANGE_EMAIL: {
+      draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       draft.inputErrors = initialState.inputErrors;
@@ -187,6 +205,7 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SAVE_CHANGE: {
+      draft.alerts = initialState.alerts;
       draft.loading = true;
       break;
     }

@@ -1,3 +1,7 @@
+export const CHANGE_EMAIL = 'app/Settings/CHANGE_EMAIL';
+export const CHANGE_EMAIL_FAILURE = 'app/Settings/CHANGE_EMAIL_FAILURE';
+export const CHANGE_EMAIL_SUCCESS = 'app/Settings/CHANGE_EMAIL_SUCCESS';
+
 export const CLEAR_ALERTS = 'app/Settings/CLEAR_ALERTS';
 
 export const CLEAR_ERRORS = 'app/Settings/CLEAR_ERRORS';
