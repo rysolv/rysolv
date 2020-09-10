@@ -151,14 +151,14 @@ const Faq = () => {
               <StyledBaseExpansionPanel
                 Component={() => (
                   <AnswerWrapper>
-                    Sometimes an issue may never get solved, or remain
+                    Sometimes an issue may never get resolved, or remain
                     outstanding for years at a time. These will remain
-                    outstanding on rysolv as long as the source issue remains
+                    outstanding on Rysolv as long as the source issue remains
                     open.
                     <br />
                     <br />
-                    Any funding on an issue that is not resolved after 12 months
-                    will be returned to the user who contributed it.
+                    If an issue remains open for more than 6 months, a user may
+                    request their contributions be refunded to their account.
                   </AnswerWrapper>
                 )}
                 title="What happens if an issue never gets solved?"
