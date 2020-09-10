@@ -9,6 +9,7 @@ import {
 
 import {
   borderColor,
+  commentHeaderColor,
   defaultFontSize,
   dividerBorder,
   fundingText,
@@ -37,7 +38,7 @@ export const BalanceTitle = styled.span`
 `;
 
 export const BalanceWrapper = styled.div`
-  background-color: #f6f8fa;
+  background-color: ${commentHeaderColor};
   border-radius: 0.3rem;
   display: flex;
   justify-content: space-between;

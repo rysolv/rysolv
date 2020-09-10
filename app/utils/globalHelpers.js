@@ -43,6 +43,17 @@ export const getBase64 = file =>
     reader.onerror = error => reject(error);
   });
 
+export const getCookie = cookie => {
+  // eslint-disable-next-line no-useless-escape
+  const regexStr = new RegExp(
+    `(?:(?:^|.*;\\s*)${cookie}\\s*\\=\\s*([^;]*).*$)|^.*$`,
+    'g',
+  );
+  const cookieValue = document.cookie.replace(regexStr, '$1');
+  if (cookieValue) return cookieValue;
+  return '';
+};
+
 export const handleZipChange = (event, newZip, setZipValue) => {
   const formattedZip = newZip.replace(/[^0-9]/g, '');
   setZipValue(formattedZip);
@@ -53,4 +64,17 @@ export const navHelper = (e, handleNav, route) => {
     e.preventDefault();
     handleNav(route);
   }
+};
+
+export const setCookie = (name, value, options = {}) => {
+  const baseCookie = `${name}=${JSON.stringify(value)}`;
+  const cookieWithOptions = Object.keys(options).reduce((acc, option) => {
+    const cookieOption = `; ${option}=${options[option]}`;
+    return acc + cookieOption;
+  }, baseCookie);
+  document.cookie = `${cookieWithOptions};`;
+};
+
+export const removeCookie = cookie => {
+  document.cookie = `${cookie}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
 };

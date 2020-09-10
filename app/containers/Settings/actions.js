@@ -1,4 +1,7 @@
 import {
+  CHANGE_EMAIL_FAILURE,
+  CHANGE_EMAIL_SUCCESS,
+  CHANGE_EMAIL,
   CLEAR_ALERTS,
   CLEAR_ERRORS,
   CLOSE_MODAL_STATE,
@@ -24,10 +27,31 @@ import {
   STRIPE_TOKEN_FAILURE,
   STRIPE_TOKEN_SUCCESS,
   STRIPE_TOKEN,
+  VERIFY_ACCOUNT_FAILURE,
+  VERIFY_ACCOUNT_SUCCESS,
+  VERIFY_ACCOUNT,
   WITHDRAW_FUNDS_FAILURE,
   WITHDRAW_FUNDS_SUCCESS,
   WITHDRAW_FUNDS,
 } from './constants';
+
+export function changeEmailFailure(payload) {
+  return {
+    payload,
+    type: CHANGE_EMAIL_FAILURE,
+  };
+}
+
+export function changeEmailSuccess() {
+  return { type: CHANGE_EMAIL_SUCCESS };
+}
+
+export function changeEmail(payload) {
+  return {
+    payload,
+    type: CHANGE_EMAIL,
+  };
+}
 
 export function clearAlerts() {
   return {
@@ -198,6 +222,27 @@ export function stripeToken(payload) {
   return {
     payload,
     type: STRIPE_TOKEN,
+  };
+}
+
+export function verifyAccountFailure(payload) {
+  return {
+    payload,
+    type: VERIFY_ACCOUNT_FAILURE,
+  };
+}
+
+export function verifyAccountSuccess(payload) {
+  return {
+    payload,
+    type: VERIFY_ACCOUNT_SUCCESS,
+  };
+}
+
+export function verifyAccount(payload) {
+  return {
+    payload,
+    type: VERIFY_ACCOUNT,
   };
 }
 

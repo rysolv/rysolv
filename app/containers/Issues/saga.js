@@ -159,7 +159,7 @@ export function* closeIssueSaga({ payload }) {
   const { issueId, shouldClose } = payload;
   const query = `
   mutation{
-    closeIssue(id: "${issueId}", shouldClose: ${shouldClose})
+    closeIssue(issueId: "${issueId}", shouldClose: ${shouldClose})
   }`;
   try {
     const graphql = JSON.stringify({
@@ -219,7 +219,7 @@ export function* editIssueSaga({ payload }) {
   const { body, language, name } = editRequest;
   const query = `
     mutation {
-      transformIssue(id: "${issueId}", issueInput: {
+      transformIssue(issueId: "${issueId}", issueInput: {
         body: ${JSON.stringify(body)},
         language: ${JSON.stringify(language)},
         name: "${name}",
@@ -306,12 +306,12 @@ export function* fetchIssueDetailSaga({ payload }) {
           message
         }
       }
-      getIssueComments(id: "${id}") {
-        body
-        userId
-        username
-        createdDate
-        profilePic
+      getIssueComments(issueId: "${id}") {
+        body,
+        createdDate,
+        profilePic,
+        userId,
+        username,
       }
     }
   `;

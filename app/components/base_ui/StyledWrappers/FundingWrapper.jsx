@@ -11,7 +11,7 @@ const FundingWrapper = ({ medium, open, value, ...restProps }) => (
 FundingWrapper.propTypes = {
   medium: T.bool,
   open: T.bool,
-  value: T.string || T.number,
+  value: T.oneOfType([T.number, T.string]),
 };
 
-export { FundingWrapper };
+export default FundingWrapper;

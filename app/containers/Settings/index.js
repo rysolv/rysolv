@@ -17,6 +17,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
 import {
+  changeEmail,
   clearAlerts,
   clearErrors,
   closeModalState,
@@ -30,6 +31,7 @@ import {
   removeWatching,
   saveChange,
   stripeToken,
+  verifyAccount,
   withdrawFunds,
 } from './actions';
 import { settingViewDictionary } from './constants';
@@ -43,6 +45,7 @@ const Settings = ({
   activeUser: { id: userId },
   alerts,
   data,
+  data: { isGithubVerified },
   deviceView,
   dispatchCloseModal,
   dispatchFetchInfo,
@@ -51,9 +54,11 @@ const Settings = ({
   dispatchPaypalPayment,
   dispatchSaveChange,
   dispatchStripeToken,
+  dispatchVerifyAccount,
   dispatchWithdrawFunds,
   error,
   filterValues,
+  handleChangeEmail,
   handleClearAlerts,
   handleClearErrors,
   handleDeleteUser,
@@ -68,10 +73,25 @@ const Settings = ({
   modal,
 }) => {
   const [zipValue, setZipValue] = useState('');
+
+  useEffect(() => {
+    const url = window.location.href;
+    const hasCode = url.includes('?code=');
+    if (
+      hasCode &&
+      isGithubVerified !== undefined &&
+      !isGithubVerified &&
+      userId
+    ) {
+      const newUrl = url.split('?code=');
+      dispatchVerifyAccount({ code: newUrl[1], userId });
+    }
+  }, [isGithubVerified, userId]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'User Settings';
-    dispatchFetchInfo({ userId });
+    if (userId) dispatchFetchInfo({ userId });
   }, [userId]);
 
   const handleStripeToken = ({ amount, token, values }) => {
@@ -143,6 +163,7 @@ const Settings = ({
           dispatchPaypalPayment,
           dispatchSaveChange,
           filterValues,
+          handleChangeEmail,
           handleClearAlerts,
           handleClearErrors,
           handleInputChange,
@@ -164,7 +185,7 @@ const Settings = ({
 Settings.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
-  data: T.object,
+  data: T.object.isRequired,
   deviceView: T.string.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchInfo: T.func,
@@ -173,9 +194,11 @@ Settings.propTypes = {
   dispatchPaypalPayment: T.func.isRequired,
   dispatchSaveChange: T.func,
   dispatchStripeToken: T.func.isRequired,
+  dispatchVerifyAccount: T.func.isRequired,
   dispatchWithdrawFunds: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object,
+  handleChangeEmail: T.func.isRequired,
   handleClearAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
   handleDeleteUser: T.func.isRequired,
@@ -224,7 +247,9 @@ function mapDispatchToProps(dispatch) {
     dispatchPaypalPayment: payload => dispatch(paypalPayment(payload)),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
     dispatchStripeToken: payload => dispatch(stripeToken(payload)),
+    dispatchVerifyAccount: payload => dispatch(verifyAccount(payload)),
     dispatchWithdrawFunds: payload => dispatch(withdrawFunds(payload)),
+    handleChangeEmail: payload => dispatch(changeEmail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleClearErrors: () => dispatch(clearErrors()),
     handleDeleteUser: payload => dispatch(deleteUser(payload)),

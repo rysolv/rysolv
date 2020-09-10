@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import Auth from '@aws-amplify/auth';
 import { push } from 'connected-react-router';
 
 import {
@@ -9,6 +10,7 @@ import {
 import { post } from 'utils/request';
 
 import {
+  CHANGE_EMAIL,
   DELETE_USER,
   FETCH_INFO,
   PAYPAL_PAYMENT,
@@ -16,9 +18,12 @@ import {
   REMOVE_WATCHING,
   SAVE_CHANGE,
   STRIPE_TOKEN,
+  VERIFY_ACCOUNT,
   WITHDRAW_FUNDS,
 } from './constants';
 import {
+  changeEmailFailure,
+  changeEmailSuccess,
   deleteUserFailure,
   deleteUserSuccess,
   fetchInfoFailure,
@@ -27,19 +32,37 @@ import {
   paypalPaymentSuccess,
   removeIssueFailure,
   removeIssueSuccess,
+  saveChange,
   saveChangeFailure,
   saveChangeSuccess,
   stripeTokenFailure,
   stripeTokenSuccess,
+  verifyAccountFailure,
+  verifyAccountSuccess,
   withdrawFundsFailure,
   withdrawFundsSuccess,
 } from './actions';
+
+export function* changeEmailSaga({ payload }) {
+  const { email, userId } = payload;
+  try {
+    const changeCognitoEmail = async () => {
+      const user = await Auth.currentAuthenticatedUser();
+      await Auth.updateUserAttributes(user, { email });
+    };
+    yield call(changeCognitoEmail);
+    yield put(changeEmailSuccess());
+    yield put(saveChange({ field: 'email', userId, value: email }));
+  } catch (error) {
+    yield put(changeEmailFailure({ error }));
+  }
+}
 
 export function* deleteUserSaga({ payload }) {
   const { userId } = payload;
   const query = `
   mutation{
-    deleteUser(id: "${userId}")
+    deleteUser(userId: "${userId}")
   }`;
   try {
     const graphql = JSON.stringify({
@@ -69,7 +92,9 @@ export function* fetchInfoSaga({ payload }) {
         email,
         firstName,
         githubLink,
+        githubUsername,
         id,
+        isGithubVerified,
         issues,
         lastName,
         organizations,
@@ -82,21 +107,21 @@ export function* fetchInfoSaga({ payload }) {
         username,
         watching,
       }
-      getActivity(column: "user_id", id: "${userId}") {
+      getUserActivity(userId: "${userId}") {
         __typename
         ... on ActivityArray {
           activityArray {
-            activityId
-            createdDate
-            actionType
-            issueId
-            organizationId
-            organizationName
-            pullRequestId
-            userId
-            fundedValue
-            issueName
-            username
+            activityId,
+            createdDate,
+            actionType,
+            issueId,
+            organizationId,
+            organizationName,
+            pullRequestId,
+            userId,
+            fundedValue,
+            issueName,
+            username,
           }
         }
         ... on Error {
@@ -112,8 +137,8 @@ export function* fetchInfoSaga({ payload }) {
     });
     const {
       data: {
+        getUserActivity: { activityArray },
         oneUser,
-        getActivity: { activityArray },
       },
     } = yield call(post, '/graphql', graphql);
     oneUser.activity = activityArray;
@@ -226,18 +251,18 @@ export function* removeWatchingSaga({ payload }) {
 }
 
 export function* saveChangeSaga({ payload }) {
-  const { field, itemId, value } = payload;
+  const { field, userId, value } = payload;
   const formattedValue =
     field === 'preferredLanguages' ? JSON.stringify(value) : `"${value}"`;
   const query = `
     mutation {
-      transformUser(id: "${itemId}", userInput: {
+      transformUser(userId: "${userId}", userInput: {
         ${field}: ${formattedValue},
       }) {
       __typename
       ... on User {
-        id,
         githubLink,
+        id,
         personalLink,
         preferredLanguages,
         stackoverflowLink,
@@ -318,6 +343,47 @@ export function* stripeTokenSaga({ payload }) {
   }
 }
 
+export function* verifyAccountSaga({ payload }) {
+  const { code, userId } = payload;
+  const query = `
+    query {
+      verifyUserAccount(code: "${code}", userId: "${userId}") {
+        __typename
+        ... on Verification {
+          githubUsername
+          isGithubVerified
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { verifyUserAccount },
+    } = yield call(post, '/graphql', graphql);
+    const {
+      __typename,
+      githubUsername,
+      isGithubVerified,
+      message,
+    } = verifyUserAccount;
+    if (__typename === 'Error') {
+      throw new Error(message);
+    }
+    yield put(verifyAccountSuccess({ githubUsername, message }));
+    yield put(updateActiveUser({ isGithubVerified }));
+  } catch (error) {
+    yield put(verifyAccountFailure({ error }));
+  }
+}
+
 export function* withdrawFundsSaga({ payload }) {
   const { transferValue, userId } = payload;
   const query = `
@@ -358,12 +424,14 @@ export function* withdrawFundsSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(CHANGE_EMAIL, changeEmailSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(PAYPAL_PAYMENT, paypalPaymentSaga);
-  yield takeLatest(REMOVE_WATCHING, removeWatchingSaga);
   yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
+  yield takeLatest(REMOVE_WATCHING, removeWatchingSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
   yield takeLatest(STRIPE_TOKEN, stripeTokenSaga);
+  yield takeLatest(VERIFY_ACCOUNT, verifyAccountSaga);
   yield takeLatest(WITHDRAW_FUNDS, withdrawFundsSaga);
 }

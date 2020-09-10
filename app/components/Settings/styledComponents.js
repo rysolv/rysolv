@@ -9,6 +9,7 @@ import Tabs from '@material-ui/core/Tabs';
 
 import { BaseDropDownMenu, ErrorSuccessBanner } from 'components/base_ui';
 import {
+  commentHeaderColor,
   defaultFontSize,
   headerColor,
   lightBlueColor,
@@ -279,18 +280,18 @@ export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
 `;
 
 export const TabItem = styled.div`
-  color: #f6f8fa;
+  color: ${commentHeaderColor};
   font-size: 1.4rem;
   padding: 0.5rem 0;
 `;
 
 export const TabItemBorder = styled.div`
   border-bottom: ${({ isActive }) =>
-    isActive ? '0.2rem solid #f6f8fa' : 'none'};
+    isActive ? `0.2rem solid ${commentHeaderColor}` : 'none'};
 
   &:hover {
     cursor: pointer;
-    border-bottom: 0.2rem solid #f6f8fa;
+    border-bottom: 0.2rem solid ${commentHeaderColor};
   }
 `;
 

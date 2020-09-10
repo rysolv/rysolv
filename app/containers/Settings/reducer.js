@@ -1,6 +1,9 @@
 import produce from 'immer';
 
 import {
+  CHANGE_EMAIL_FAILURE,
+  CHANGE_EMAIL_SUCCESS,
+  CHANGE_EMAIL,
   CLEAR_ALERTS,
   CLEAR_ERRORS,
   CLOSE_MODAL_STATE,
@@ -26,6 +29,9 @@ import {
   STRIPE_TOKEN_FAILURE,
   STRIPE_TOKEN_SUCCESS,
   STRIPE_TOKEN,
+  VERIFY_ACCOUNT_FAILURE,
+  VERIFY_ACCOUNT_SUCCESS,
+  VERIFY_ACCOUNT,
   WITHDRAW_FUNDS_FAILURE,
   WITHDRAW_FUNDS_SUCCESS,
   WITHDRAW_FUNDS,
@@ -45,13 +51,28 @@ export const initialState = {
     transferValue: '',
   },
   isModalOpen: false,
-  loading: false,
+  loading: true,
   modal: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const settingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case CHANGE_EMAIL_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case CHANGE_EMAIL_SUCCESS: {
+      draft.loading = false;
+      break;
+    }
+    case CHANGE_EMAIL: {
+      draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       draft.inputErrors = initialState.inputErrors;
@@ -184,6 +205,7 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SAVE_CHANGE: {
+      draft.alerts = initialState.alerts;
       draft.loading = true;
       break;
     }
@@ -202,6 +224,24 @@ const settingsReducer = produce((draft, { payload, type }) => {
     }
     case STRIPE_TOKEN: {
       draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
+    case VERIFY_ACCOUNT_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case VERIFY_ACCOUNT_SUCCESS: {
+      const { githubUsername, message } = payload;
+      draft.account.githubUsername = githubUsername;
+      draft.account.isGithubVerified = true;
+      draft.alerts.success = { message };
+      draft.loading = false;
+      break;
+    }
+    case VERIFY_ACCOUNT: {
       draft.loading = true;
       break;
     }

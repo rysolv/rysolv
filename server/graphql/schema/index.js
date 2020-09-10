@@ -235,7 +235,9 @@ module.exports = buildSchema(`
     emailVerified: Boolean
     firstName: String!
     githubLink: String
+    githubUsername: String
     id: ID!
+    isGithubVerified: Boolean
     isOnline: Boolean
     issues: [Object]
     lastName: String!
@@ -281,6 +283,12 @@ module.exports = buildSchema(`
     watching: [String]
   }
 
+  type Verification {
+    githubUsername: String
+    isGithubVerified: Boolean
+    message: String
+  }
+
   type WatchList {
     id: ID
     profilePic: String
@@ -324,65 +332,63 @@ module.exports = buildSchema(`
   union ToggleWatchingResult = WatchListArray | Error
   union UpvoteResult = Upvote | Error
   union UserResult = User | Error
+  union VerificationResult = Verification | Error
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
     checkDuplicateUser(email: String, username: String): EventResponse!
+    
     getActivity(column: String!, id: ID): ActivityResult!
-    getAllActivity: ActivityResult!
-    getComments: [Comment]!
+    getIssueComments(issueId: ID!): [Comment]!
     getIssues: [Issue!]!
+    getOrganizationActivity(organizationId: ID): ActivityResult!
     getOrganizations: [Organization!]!
-    getPullRequests: PullRequestArrayResult
-    getUsers: [User!]!
-
-    getIssueComments(id: ID!): [Comment]
+    getUserActivity(userId: ID): ActivityResult!
     getUserOrganizations(id: ID!): [Organization!]
-    getUserPullRequests(id: ID!): PullRequestArrayResult
-
-    getPullRequestList(idArray: [ID!]): PullRequestListResult!
+    getUserPullRequests(id: ID!): PullRequestArrayResult  
+    getUsers: [User!]!
     getWatchList(idArray: [ID!], type: String!): [WatchList!]
-
+    
     oneIssue(id: ID!): IssueResult
     oneOrganization(id: ID!): OrganizationResult
     onePullRequest(id: ID!): PullRequestResult
     oneUser(id: ID!): User!
     oneUserSignUp(email: String!): User!
-
+    
     searchIssues(value: String!): [Issue!]!
     searchOrganizations(value: String!): OrganizationArrayResult
     searchUsers(value: String!): [User!]!
+
+    verifyUserAccount(code: String!, userId: ID!): VerificationResult!
   }
 
   type RootMutation {
-    closeIssue(id: ID!, shouldClose: Boolean): String!
+    closeIssue(issueId: ID!, shouldClose: Boolean): String!
 
     createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): Comment
     createIssue(issueInput: IssueInput): IssueResult
     createOrganization(organizationInput: OrganizationInput): OrganizationResult
-    createUser(userInput: UserInput): User!
     createPaypalPayment(amount: Float!, issueId: ID, userId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): PullRequestResult!
     createStripeCharge(amount: Float!, issueId: ID, token: String!, userId: ID): PaymentResult!
+    createUser(userInput: UserInput): User!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
-    deleteIssue(id: ID!): String!
-    deleteOrganization(id:ID!): String!
-    deleteUser(id:ID!): String!
     deletePullRequest(id:ID!): EventResponse!
+    deleteUser(userId:ID!): String!
 
     importIssue(url: String!): ImportResult
     importOrganization(url: String!): ImportResult
-    importPullRequest(url: String!, issueId: ID!): ImportPullRequestResult
+    importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult
 
     submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
 
     toggleWatching(issueId: ID!, userId: ID!): ToggleWatchingResult
 
-    transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
-    transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!
-    transformUser(id: ID!, userInput: UserInput): UserResult!
+    transformIssue(issueId: ID!, issueInput: IssueInput): IssueResult!
+    transformOrganization(organizationId: ID!, organizationInput: OrganizationInput): OrganizationResult!
+    transformUser(userId: ID!, userInput: UserInput): UserResult!
 
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!

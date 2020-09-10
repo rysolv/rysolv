@@ -1,46 +1,70 @@
 const { v4: uuidv4 } = require('uuid');
+
 const {
   checkDuplicatePullRequest,
+  checkUserGithubId,
   createPullRequest,
   deletePullRequest,
   getOneIssue,
   getOnePullRequest,
   getPullRequestList,
-  getPullRequests,
   getUserPullRequests,
   updateIssueArray,
   updateUserArray,
 } = require('../../db');
-
-const { getSinglePullRequest } = require('../../integrations');
 const { formatPullRequestUrl } = require('../../integrations/github/helpers');
+const { getSinglePullRequest } = require('../../integrations');
 
 module.exports = {
   createPullRequest: async args => {
-    const { pullRequestInput } = args;
-    const newPullRequest = {
-      created_date: new Date(),
-      github_username: pullRequestInput.githubUsername,
-      html_url: pullRequestInput.htmlUrl,
-      issue_id: pullRequestInput.issueId,
-      mergeable_state: pullRequestInput.mergeableState,
-      mergeable: pullRequestInput.mergeable,
-      merged: pullRequestInput.merged,
-      modified_date: new Date(),
-      open: pullRequestInput.open,
-      pull_number: pullRequestInput.pullNumber,
+    const {
+      pullRequestInput: {
+        githubUsername,
+        htmlUrl,
+        issueId,
+        mergeable,
+        mergeableState,
+        merged,
+        open,
+        pullNumber,
+        status,
+        title,
+        userId,
+      },
+    } = args;
+    const date = new Date();
+    const data = {
+      created_date: date,
+      github_username: githubUsername,
+      html_url: htmlUrl,
+      issue_id: issueId,
+      mergeable_state: mergeableState,
+      mergeable,
+      merged,
+      modified_date: date,
+      open,
+      pull_number: pullNumber,
       pullrequest_id: uuidv4(),
-      status: pullRequestInput.status,
-      title: pullRequestInput.title,
-      user_id: pullRequestInput.userId,
+      status,
+      title,
+      user_id: userId,
     };
     try {
-      if (await checkDuplicatePullRequest(newPullRequest.html_url)) {
+      const { organization, repo } = formatPullRequestUrl(htmlUrl);
+      const { githubId } = await getSinglePullRequest({
+        organization,
+        pullNumber,
+        repo,
+      });
+      if (await checkUserGithubId({ githubId, userId })) {
         throw new Error(
-          `Pull request at ${newPullRequest.html_url} already exists`,
+          `Github account does not match the account associated with the pull request`,
         );
       }
-      const result = await createPullRequest(newPullRequest);
+      if (await checkDuplicatePullRequest({ repo: htmlUrl })) {
+        throw new Error(`Pull request at ${htmlUrl} already exists`);
+      }
+      const result = await createPullRequest({ data });
 
       // add issue to user issue list
       await updateUserArray({
@@ -69,7 +93,7 @@ module.exports = {
   deletePullRequest: async args => {
     const { id } = args;
     try {
-      const result = await deletePullRequest(id);
+      const result = await deletePullRequest({ pullRequestId: id });
       await updateUserArray({
         column: 'pull_requests',
         data: id,
@@ -99,9 +123,9 @@ module.exports = {
     const { url, issueId } = args;
     try {
       const { organization, repo, pullNumber } = formatPullRequestUrl(url);
-      const [{ repo: issueRepo }] = await getOneIssue(issueId);
+      const { repo: issueRepo } = await getOneIssue({ issueId });
 
-      // TODO: add org_displayname to issues schema to avoid this url parsing
+      // @TODO: add org_displayname to issues schema to avoid this url parsing
       const { pathname } = new URL(issueRepo);
       const issueUrl = pathname.split('/');
 
@@ -116,7 +140,7 @@ module.exports = {
         pullNumber,
       });
 
-      if (await checkDuplicatePullRequest(result.htmlUrl)) {
+      if (await checkDuplicatePullRequest({ repo: result.htmlUrl })) {
         throw new Error(
           `Pull request at ${result.htmlUrl} has already been submitted`,
         );
@@ -138,7 +162,7 @@ module.exports = {
     try {
       const pullRequestList = await Promise.all(
         idArray.map(async id => {
-          const [result] = await getPullRequestList(id);
+          const result = await getPullRequestList({ pullRequestId: id });
           return result;
         }),
       );
@@ -154,24 +178,10 @@ module.exports = {
       };
     }
   },
-  getPullRequests: async () => {
-    try {
-      const result = await getPullRequests();
-      return {
-        __typename: 'PullRequestArray',
-        pullRequestArray: result,
-      };
-    } catch (err) {
-      return {
-        __typename: 'Error',
-        message: err.message,
-      };
-    }
-  },
   onePullRequest: async args => {
     const { id } = args;
     try {
-      const [result] = await getOnePullRequest(id);
+      const result = await getOnePullRequest({ pullRequestId: id });
       return {
         __typename: 'PullRequest',
         ...result,
@@ -186,19 +196,10 @@ module.exports = {
   getUserPullRequests: async args => {
     const { id } = args;
     try {
-      const result = await getUserPullRequests(id);
-      const formattedResult = await Promise.all(
-        result.map(async pullRequest => {
-          const { issueId } = pullRequest;
-          const [{ fundedAmount }] = await getOneIssue(issueId);
-          // eslint-disable-next-line no-param-reassign
-          pullRequest.fundedAmount = fundedAmount;
-          return pullRequest;
-        }),
-      );
+      const result = await getUserPullRequests({ pullRequestId: id });
       return {
         __typename: 'PullRequestArray',
-        pullRequestArray: formattedResult,
+        pullRequestArray: result,
       };
     } catch (err) {
       return {

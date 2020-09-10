@@ -35,6 +35,7 @@ import {
   HeaderWrapper,
   StyledH3,
 } from '../styledComponents';
+import VerifiedAccountsView from '../VerifiedAccounts';
 
 const ViewAllIcon = iconDictionary('viewAll');
 
@@ -42,10 +43,12 @@ const UserTimelineView = ({
   activity,
   attempting,
   filterValues: { users: usersFilter },
+  githubUsername,
   handleInputChange,
   handleNav,
   handleRemoveIssue,
   handleRemoveWatching,
+  isGithubVerified,
   userId,
   watching,
 }) => {
@@ -157,6 +160,10 @@ const UserTimelineView = ({
 
   return (
     <TimelineContainer>
+      <VerifiedAccountsView
+        githubUsername={githubUsername}
+        isGithubVerified={isGithubVerified}
+      />
       <div>
         <HeaderContainer>
           <StyledH3>Your Attempting</StyledH3>
@@ -218,10 +225,12 @@ UserTimelineView.propTypes = {
   activity: T.array,
   attempting: T.array.isRequired,
   filterValues: T.object.isRequired,
+  githubUsername: T.string,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveIssue: T.func.isRequired,
   handleRemoveWatching: T.func.isRequired,
+  isGithubVerified: T.bool.isRequired,
   userId: T.string.isRequired,
   watching: T.array.isRequired,
 };

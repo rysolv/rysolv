@@ -11,7 +11,6 @@ import {
   generateIdenticon,
   incrementStep,
   saveInfo,
-  verifyInfo,
 } from '../actions';
 import { makeSelectIssues, makeSelectIssuesRequestBody } from '../selectors';
 import {
@@ -130,7 +129,6 @@ function mapDispatchToProps(dispatch) {
     dispatchClearForm: () => dispatch(clearForm()),
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
-    dispatchVerifyInfo: () => dispatch(verifyInfo()),
     handleGenerateIdenticon: () => dispatch(generateIdenticon()),
   };
 }
