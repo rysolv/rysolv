@@ -41,7 +41,7 @@ import {
 } from './actions';
 
 export function* changeEmailSaga({ payload }) {
-  const { email, id } = payload;
+  const { email, userId } = payload;
   try {
     const changeCognitoEmail = async () => {
       const user = await Auth.currentAuthenticatedUser();
@@ -49,7 +49,7 @@ export function* changeEmailSaga({ payload }) {
     };
     yield call(changeCognitoEmail);
     yield put(changeEmailSuccess());
-    yield put(saveChange({ field: 'email', id, value: email }));
+    yield put(saveChange({ field: 'email', userId, value: email }));
   } catch (error) {
     yield put(changeEmailFailure({ error }));
   }

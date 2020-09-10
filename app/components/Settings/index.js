@@ -126,7 +126,7 @@ const SettingsView = ({
   };
 
   const handleSubmitEmailChange = () => {
-    handleChangeEmail({ email: value, id });
+    handleChangeEmail({ email: value, userId: id });
     setChangeEmail(false);
     setIsDisabled(false);
   };
