@@ -56,9 +56,9 @@ export const Main = ({
   tableData,
 }) => {
   useEffect(() => {
-    if (!getCookie('firsttime')) {
+    if (!getCookie('returnUser')) {
       dispatchOpenModal({ modalState: 'progress' });
-      setCookie('firsttime', true);
+      setCookie('returnUser', true);
     }
   }, []);
 
