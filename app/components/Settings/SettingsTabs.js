@@ -44,12 +44,13 @@ const SettingsTabs = ({
   handleClearAllAlerts,
   handleClearErrors,
   handleClose,
-  handleDone,
   handleEdit,
   handleInputChange,
   handleNav,
   handleRemoveIssue,
   handleRemoveWatching,
+  handleSubmitEmailChange,
+  handleSubmitInputChange,
   handleValidateInput,
   handleWithdrawFunds,
   inputErrors,
@@ -216,9 +217,10 @@ const SettingsTabs = ({
         email={email}
         firstName={firstName}
         handleClose={handleClose}
-        handleDone={handleDone}
         handleEdit={handleEdit}
         handleNav={handleNav}
+        handleSubmitEmailChange={handleSubmitEmailChange}
+        handleSubmitInputChange={handleSubmitInputChange}
         isDisabled={isDisabled}
         lastName={lastName}
         setChangeEmail={setChangeEmail}
@@ -351,12 +353,13 @@ SettingsTabs.propTypes = {
   handleClearAllAlerts: T.func,
   handleClearErrors: T.func,
   handleClose: T.func,
-  handleDone: T.func,
   handleEdit: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
   handleRemoveIssue: T.func,
   handleRemoveWatching: T.func,
+  handleSubmitEmailChange: T.func,
+  handleSubmitInputChange: T.func,
   handleValidateInput: T.func,
   handleWithdrawFunds: T.func,
   inputErrors: T.object,

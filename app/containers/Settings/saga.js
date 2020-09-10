@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import Auth from '@aws-amplify/auth';
 import { push } from 'connected-react-router';
 
 import {
@@ -9,6 +10,7 @@ import {
 import { post } from 'utils/request';
 
 import {
+  CHANGE_EMAIL,
   DELETE_USER,
   FETCH_INFO,
   PAYPAL_PAYMENT,
@@ -20,6 +22,8 @@ import {
   WITHDRAW_FUNDS,
 } from './constants';
 import {
+  changeEmailFailure,
+  changeEmailSuccess,
   deleteUserFailure,
   deleteUserSuccess,
   fetchInfoFailure,
@@ -28,6 +32,7 @@ import {
   paypalPaymentSuccess,
   removeIssueFailure,
   removeIssueSuccess,
+  saveChange,
   saveChangeFailure,
   saveChangeSuccess,
   stripeTokenFailure,
@@ -37,6 +42,21 @@ import {
   withdrawFundsFailure,
   withdrawFundsSuccess,
 } from './actions';
+
+export function* changeEmailSaga({ payload }) {
+  const { email, userId } = payload;
+  try {
+    const changeCognitoEmail = async () => {
+      const user = await Auth.currentAuthenticatedUser();
+      await Auth.updateUserAttributes(user, { email });
+    };
+    yield call(changeCognitoEmail);
+    yield put(changeEmailSuccess());
+    yield put(saveChange({ field: 'email', userId, value: email }));
+  } catch (error) {
+    yield put(changeEmailFailure({ error }));
+  }
+}
 
 export function* deleteUserSaga({ payload }) {
   const { userId } = payload;
@@ -241,8 +261,8 @@ export function* saveChangeSaga({ payload }) {
       }) {
       __typename
       ... on User {
-        id,
         githubLink,
+        id,
         personalLink,
         preferredLanguages,
         stackoverflowLink,
@@ -404,6 +424,7 @@ export function* withdrawFundsSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(CHANGE_EMAIL, changeEmailSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(PAYPAL_PAYMENT, paypalPaymentSaga);

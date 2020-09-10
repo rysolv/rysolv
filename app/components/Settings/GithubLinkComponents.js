@@ -43,7 +43,7 @@ export const EmptyGithubLinkComponent = ({
 
 export const GithubEditComponent = ({
   handleClose,
-  handleDone,
+  handleSubmitInputChange,
   setChangeGithub,
   setValue,
   value,
@@ -63,7 +63,10 @@ export const GithubEditComponent = ({
         icon={DoneIcon}
         label="Save"
         onClick={() =>
-          handleDone({ changeInputState: setChangeGithub, field: 'githubLink' })
+          handleSubmitInputChange({
+            changeInputState: setChangeGithub,
+            field: 'githubLink',
+          })
         }
       />
     </IconButtonGroup>
@@ -105,7 +108,7 @@ EmptyGithubLinkComponent.propTypes = {
 
 GithubEditComponent.propTypes = {
   handleClose: T.func,
-  handleDone: T.func,
+  handleSubmitInputChange: T.func,
   setChangeGithub: T.func,
   setValue: T.func,
   value: T.oneOfType([T.array, T.number, T.string]),

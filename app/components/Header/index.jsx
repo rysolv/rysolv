@@ -10,6 +10,7 @@ const Header = ({
   activeUser,
   deviceView,
   handleNav,
+  handleResetForm,
   handleSignin,
   handleSignout,
   isSignedIn,
@@ -30,6 +31,7 @@ const Header = ({
         activeUser,
         deviceView,
         handleNav,
+        handleResetForm,
         handleSignin,
         handleSignout,
         isDrawerOpen,
@@ -44,12 +46,13 @@ const Header = ({
 };
 
 Header.propTypes = {
-  activeUser: T.object,
-  deviceView: T.string,
-  handleNav: T.func,
-  handleSignin: T.func,
-  handleSignout: T.func,
-  isSignedIn: T.bool,
+  activeUser: T.object.isRequired,
+  deviceView: T.string.isRequired,
+  handleNav: T.func.isRequired,
+  handleResetForm: T.func.isRequired,
+  handleSignin: T.func.isRequired,
+  handleSignout: T.func.isRequired,
+  isSignedIn: T.bool.isRequired,
 };
 
 export default Header;
