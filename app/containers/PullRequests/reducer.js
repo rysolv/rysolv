@@ -139,9 +139,8 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
       draft.error = initialState.error;
-
       draft[form][field].error = '';
-      draft[form][field].value = value;
+      draft[form][field].value = value.trim();
       break;
     }
     case INPUT_ERROR: {

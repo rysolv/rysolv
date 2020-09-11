@@ -54,7 +54,7 @@ const PullRequestButton = ({
 );
 
 PullRequestButton.propTypes = {
-  activeUserPullRequests: T.array.isRequired,
+  activeUserPullRequests: T.array,
   disabled: T.bool.isRequired,
   dispatchFetchPullRequestList: T.func.isRequired,
   dispatchOpenIssueModal: T.func.isRequired,

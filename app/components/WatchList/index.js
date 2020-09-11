@@ -29,7 +29,9 @@ const WatchList = ({
       ? GeneralListComponent
       : PullRequestListComponent;
   const shouldRender =
-    type !== 'pullRequestList' ? !!tableData.length : !!tableData.pullRequests;
+    type !== 'pullRequestList'
+      ? !!tableData.length
+      : !!tableData.pullRequests.length;
   return (
     <WatchListContainer>
       <IconWrapper>

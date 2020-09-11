@@ -100,6 +100,7 @@ export const initialState = {
     addIssue: false,
     addWatch: false,
     closeIssue: false,
+    deletePullRequest: false,
     importIssue: false,
     issueDetail: false,
     issues: false,
@@ -267,18 +268,18 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case DELETE_PULL_REQUEST_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading = false;
+      draft.loading.deletePullRequest = false;
       break;
     }
     case DELETE_PULL_REQUEST_SUCCESS: {
       const { message } = payload;
       draft.alerts.success = { message };
       draft.issueDetail.pullRequests -= 1;
-      draft.loading = false;
+      draft.loading.deletePullRequest = false;
       break;
     }
     case DELETE_PULL_REQUEST: {
-      draft.loading = true;
+      draft.loading.deletePullRequest = true;
       break;
     }
     case EDIT_ISSUE_FAILURE: {
