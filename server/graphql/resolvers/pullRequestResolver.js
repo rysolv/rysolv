@@ -9,7 +9,6 @@ const {
   getOnePullRequest,
   getPullRequestList,
   getUserPullRequests,
-  updateIssueArray,
   updateUserArray,
 } = require('../../db');
 const { formatPullRequestUrl } = require('../../integrations/github/helpers');
@@ -73,12 +72,6 @@ module.exports = {
         userId: result.userId,
       });
 
-      await updateIssueArray({
-        column: 'pull_requests',
-        data: result.pullRequestId,
-        issueId: result.issueId,
-      });
-
       return {
         __typename: 'PullRequest',
         ...result,
@@ -98,13 +91,6 @@ module.exports = {
         column: 'pull_requests',
         data: id,
         userId: result.user_id,
-        remove: true,
-      });
-
-      await updateIssueArray({
-        column: 'pull_requests',
-        data: id,
-        issueId: result.issue_id,
         remove: true,
       });
 
@@ -157,16 +143,9 @@ module.exports = {
       };
     }
   },
-  getPullRequestList: async args => {
-    const { idArray } = args;
+  getPullRequestList: async ({ issueId }) => {
     try {
-      const pullRequestList = await Promise.all(
-        idArray.map(async id => {
-          const result = await getPullRequestList({ pullRequestId: id });
-          return result;
-        }),
-      );
-      const result = pullRequestList;
+      const result = await getPullRequestList({ issueId });
       return {
         __typename: 'PullRequestList',
         pullRequestList: result,

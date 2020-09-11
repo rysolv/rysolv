@@ -20,6 +20,7 @@ const PullRequestButton = ({
   dispatchOpenModal,
   isGithubVerified,
   isSignedIn,
+  issueId,
   pullRequests,
 }) => (
   <PullRequestButtonContainer>
@@ -42,25 +43,26 @@ const PullRequestButton = ({
       onClick={() =>
         dispatchFetchPullRequestList({
           activeUserPullRequests,
-          idArray: pullRequests,
+          issueId,
           modalState: 'pullRequestList',
         })
       }
     >
-      {pullRequests.length}
+      {pullRequests}
     </ValueWrapper>
   </PullRequestButtonContainer>
 );
 
 PullRequestButton.propTypes = {
-  activeUserPullRequests: T.array,
-  disabled: T.bool,
-  dispatchFetchPullRequestList: T.func,
-  dispatchOpenIssueModal: T.func,
-  dispatchOpenModal: T.func,
-  isGithubVerified: T.bool.isRequired,
-  isSignedIn: T.bool,
-  pullRequests: T.array,
+  activeUserPullRequests: T.array.isRequired,
+  disabled: T.bool.isRequired,
+  dispatchFetchPullRequestList: T.func.isRequired,
+  dispatchOpenIssueModal: T.func.isRequired,
+  dispatchOpenModal: T.func.isRequired,
+  isGithubVerified: T.bool,
+  isSignedIn: T.bool.isRequired,
+  issueId: T.string.isRequired,
+  pullRequests: T.number.isRequired,
 };
 
 export default PullRequestButton;

@@ -67,6 +67,7 @@ const IssueButtonBar = ({
         dispatchOpenModal={dispatchOpenModal}
         isGithubVerified={isGithubVerified}
         isSignedIn={isSignedIn}
+        issueId={issueId}
         pullRequests={pullRequests}
       />
     </ButtonBar>

@@ -2,7 +2,6 @@
 import produce from 'immer';
 import { v4 as uuidv4 } from 'uuid';
 import Identicon from 'identicon.js';
-import remove from 'lodash/remove';
 
 import {
   ADD_ATTEMPT_FAILURE,
@@ -272,12 +271,9 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case DELETE_PULL_REQUEST_SUCCESS: {
-      const { id, message } = payload;
+      const { message } = payload;
       draft.alerts.success = { message };
-      remove(
-        draft.issueDetail.pullRequests,
-        pullRequestId => pullRequestId === id,
-      );
+      draft.issueDetail.pullRequests -= 1;
       draft.loading = false;
       break;
     }
@@ -447,8 +443,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_ISSUE_DETAIL: {
-      const { pullRequestId } = payload;
-      draft.issueDetail.pullRequests.push(pullRequestId);
+      draft.issueDetail.pullRequests += 1;
       break;
     }
     case UPDATE_ORGANIZATION: {

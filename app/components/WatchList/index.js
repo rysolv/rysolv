@@ -29,9 +29,7 @@ const WatchList = ({
       ? GeneralListComponent
       : PullRequestListComponent;
   const shouldRender =
-    type !== 'pullRequestList'
-      ? !!tableData.length
-      : !!tableData.pullRequests.length;
+    type !== 'pullRequestList' ? !!tableData.length : !!tableData.pullRequests;
   return (
     <WatchListContainer>
       <IconWrapper>
@@ -59,7 +57,7 @@ WatchList.propTypes = {
   handleDeletePullRequest: T.func,
   isSignedIn: T.bool,
   route: T.string,
-  tableData: T.oneOfType([T.array, T.object]),
+  tableData: T.oneOfType([T.array, T.number, T.object]),
   title: T.string,
   type: T.string,
 };

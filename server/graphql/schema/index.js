@@ -92,7 +92,7 @@ module.exports = buildSchema(`
     organizationName: String
     organizationVerified: Boolean
     profilePic: String
-    pullRequests: [ID]
+    pullRequests: Int
     rep: Int
     repo: String
     type: String
@@ -343,7 +343,7 @@ module.exports = buildSchema(`
     getIssues: [Issue!]!
     getOrganizationActivity(organizationId: ID): ActivityResult!
     getOrganizations: [Organization!]!
-    getPullRequestList(idArray: [ID!]): PullRequestListResult!
+    getPullRequestList(issueId: ID): PullRequestListResult!
     getUserActivity(userId: ID): ActivityResult!
     getUserOrganizations(id: ID!): [Organization!]
     getUserPullRequests(id: ID!): PullRequestArrayResult  

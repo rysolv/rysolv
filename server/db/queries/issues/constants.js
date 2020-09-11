@@ -31,7 +31,6 @@ const issueReturnValues = `
   issues.name,
   issues.open,
   issues.organization_id AS "organizationId",
-  issues.pull_requests AS "pullRequests",
   issues.rep,
   issues.repo,
   issues.type
@@ -46,6 +45,7 @@ const issueCardValues = `
 
 const issueDetailValues = `
   ${issueCardValues},
+  COUNT(pullrequests.pullrequest_id) AS "pullRequests",
   users.id AS "userId",
   users.username,
   users.profile_pic AS "profilePic"
@@ -65,7 +65,6 @@ const groupValues = `
   issues.name,
   issues.open,
   issues.organization_id,
-  issues.pull_requests,
   issues.rep,
   issues.repo,
   issues.type,

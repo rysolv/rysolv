@@ -55,9 +55,6 @@ export function* createPullRequestSaga({ payload }) {
         })
         {
         __typename
-        ... on PullRequest {
-          pullRequestId
-        }
         ... on Error {
           message
         }
@@ -73,11 +70,11 @@ export function* createPullRequestSaga({ payload }) {
     const {
       data: { createPullRequest },
     } = yield call(post, '/graphql', pullRequestQuery);
-    const { __typename, message, pullRequestId } = createPullRequest;
+    const { __typename, message } = createPullRequest;
     if (__typename === 'Error') throw message;
-    yield put(createPullRequestSuccess({ message: 'Pull Request created' }));
+    yield put(createPullRequestSuccess({ message: 'Pull request created' }));
     yield put(fetchActiveUser({ userId }));
-    yield put(updateIssueDetail({ pullRequestId }));
+    yield put(updateIssueDetail());
   } catch (error) {
     yield put(createPullRequestFailure({ error }));
   }
@@ -110,12 +107,7 @@ export function* deletePullRequestSaga({ payload }) {
     } = yield call(post, '/graphql', pullRequestQuery);
     const { __typename, message } = deletePullRequest;
     if (__typename === 'Error') throw new Error(message);
-    yield put(
-      deletePullRequestSuccess({
-        id: pullRequestId,
-        message,
-      }),
-    );
+    yield put(deletePullRequestSuccess({ message }));
     yield put(fetchActiveUser({ userId }));
   } catch (error) {
     yield put(deletePullRequestFailure({ error }));
