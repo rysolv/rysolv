@@ -343,6 +343,7 @@ module.exports = buildSchema(`
     getIssues: [Issue!]!
     getOrganizationActivity(organizationId: ID): ActivityResult!
     getOrganizations: [Organization!]!
+    getPullRequestList(idArray: [ID!]): PullRequestListResult!
     getUserActivity(userId: ID): ActivityResult!
     getUserOrganizations(id: ID!): [Organization!]
     getUserPullRequests(id: ID!): PullRequestArrayResult  

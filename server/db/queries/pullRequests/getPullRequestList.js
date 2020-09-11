@@ -12,7 +12,8 @@ const getPullRequestList = async ({ pullRequestId }) => {
     LEFT JOIN users ON pullRequests.user_id = users.id
     WHERE pullRequests.pullrequest_id = $1`;
   const { rows } = await singleQuery({ queryText, values: [pullRequestId] });
-  return rows;
+  const [oneRow] = rows;
+  return oneRow;
 };
 
 module.exports = getPullRequestList;
