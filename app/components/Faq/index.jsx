@@ -152,16 +152,15 @@ const Faq = () => {
                 Component={() => (
                   <AnswerWrapper>
                     Sometimes an issue may never get resolved, or remain
-                    outstanding for years at a time. These will remain
-                    outstanding on Rysolv as long as the source issue remains
-                    open.
+                    outstanding for years. These will remain outstanding on
+                    Rysolv as long as the source issue remains open.
                     <br />
                     <br />
                     If an issue remains open for more than 6 months, a user may
                     request their contributions be refunded to their account.
                   </AnswerWrapper>
                 )}
-                title="What happens if an issue never gets solved?"
+                title="What happens if an issue never gets resolved?"
               />
             </ExpansionPanel>
           </QuestionGroup>
