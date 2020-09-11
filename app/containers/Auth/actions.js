@@ -7,6 +7,7 @@ import {
   FETCH_USER_SESSION_SUCCESS,
   FETCH_USER_SESSION,
   RESEND_SIGN_UP,
+  RESET_ROUTE,
   SEARCH_ORGANIZATIONS_FAILURE,
   SEARCH_ORGANIZATIONS_SUCCESS,
   SEARCH_ORGANIZATIONS,
@@ -79,6 +80,10 @@ export function resendSignUp(payload) {
     payload,
     type: RESEND_SIGN_UP,
   };
+}
+
+export function resetRoute() {
+  return { type: RESET_ROUTE };
 }
 
 export function searchOrganizationsFailure(payload) {
@@ -190,11 +195,8 @@ export function verifyEmailFailure(payload) {
   };
 }
 
-export function verifyEmailSuccess(payload) {
-  return {
-    payload,
-    type: VERIFY_EMAIL_SUCCESS,
-  };
+export function verifyEmailSuccess() {
+  return { type: VERIFY_EMAIL_SUCCESS };
 }
 
 export function verifyEmail(payload) {

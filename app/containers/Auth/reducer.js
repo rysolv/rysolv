@@ -12,6 +12,7 @@ import {
   FETCH_USER_SESSION_SUCCESS,
   FETCH_USER_SESSION,
   RESEND_SIGN_UP,
+  RESET_ROUTE,
   SEARCH_ORGANIZATIONS_FAILURE,
   SEARCH_ORGANIZATIONS_SUCCESS,
   SEARCH_ORGANIZATIONS,
@@ -36,6 +37,7 @@ export const initialState = {
   activeUser: {},
   alerts: { error: false, success: false },
   isSignedIn: false,
+  isVerifyRoute: false,
   loading: {
     auth: false,
     authenticateUser: true,
@@ -86,6 +88,10 @@ const authReducer = produce((draft, { payload, type }) => {
       draft.alerts = initialState.alerts;
       draft.isSignedIn = false;
       draft.loading.auth = true;
+      break;
+    }
+    case RESET_ROUTE: {
+      draft.isVerifyRoute = initialState.isVerifyRoute;
       break;
     }
     case SEARCH_ORGANIZATIONS: {
@@ -229,7 +235,7 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case VERIFY_EMAIL_SUCCESS: {
-      draft.loading.auth = false;
+      draft.isVerifyRoute = true;
       break;
     }
     default: {
