@@ -26,6 +26,7 @@ import {
   SIGN_UP,
   UPDATE_ACTIVE_USER,
   UPVOTE_USER_TEMP,
+  USER_ATTEMPTING_TEMP,
   USER_WATCHING_TEMP,
   VERIFY_EMAIL_FAILURE,
   VERIFY_EMAIL_SUCCESS,
@@ -201,6 +202,18 @@ const authReducer = produce((draft, { payload, type }) => {
       } else {
         draft.activeUser.rep += 1;
         remove(draft.activeUser.upvotes, id => id === issueId);
+      }
+      break;
+    }
+    case USER_ATTEMPTING_TEMP: {
+      const { issueId } = payload;
+      const issueIndex = draft.activeUser.attempting
+        .map(el => el.id)
+        .indexOf(issueId);
+      if (issueIndex > -1) {
+        draft.activeUser.attempting.splice(issueIndex, 1);
+      } else {
+        draft.activeUser.attempting.push({ id: issueId });
       }
       break;
     }

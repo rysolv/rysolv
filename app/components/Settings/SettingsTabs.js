@@ -47,7 +47,7 @@ const SettingsTabs = ({
   handleEdit,
   handleInputChange,
   handleNav,
-  handleRemoveIssue,
+  handleRemoveAttempting,
   handleRemoveWatching,
   handleSubmitEmailChange,
   handleSubmitInputChange,
@@ -167,7 +167,7 @@ const SettingsTabs = ({
         <UserAttempting
           attempting={attempting}
           handleNav={handleNav}
-          handleRemoveIssue={handleRemoveIssue}
+          handleRemoveAttempting={handleRemoveAttempting}
           userId={userId}
         />
       }
@@ -198,7 +198,7 @@ const SettingsTabs = ({
         githubUsername={githubUsername}
         handleInputChange={handleInputChange}
         handleNav={handleNav}
-        handleRemoveIssue={handleRemoveIssue}
+        handleRemoveAttempting={handleRemoveAttempting}
         handleRemoveWatching={handleRemoveWatching}
         isGithubVerified={isGithubVerified}
         userId={userId}
@@ -356,7 +356,7 @@ SettingsTabs.propTypes = {
   handleEdit: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
-  handleRemoveIssue: T.func,
+  handleRemoveAttempting: T.func,
   handleRemoveWatching: T.func,
   handleSubmitEmailChange: T.func,
   handleSubmitInputChange: T.func,

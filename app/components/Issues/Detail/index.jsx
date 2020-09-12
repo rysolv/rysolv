@@ -54,6 +54,7 @@ const IssueDetail = ({
   deviceView,
   dispatchCloseIssue,
   dispatchEditIssue,
+  dispatchFetchAttemptList,
   dispatchFetchPullRequestList,
   dispatchFetchWatchList,
   dispatchOpenIssueModal,
@@ -220,6 +221,7 @@ const IssueDetail = ({
                 activeUser={activeUser}
                 addWatching={addWatching}
                 data={data}
+                dispatchFetchAttemptList={dispatchFetchAttemptList}
                 dispatchFetchPullRequestList={dispatchFetchPullRequestList}
                 dispatchFetchWatchList={dispatchFetchWatchList}
                 dispatchOpenIssueModal={dispatchOpenIssueModal}
@@ -320,6 +322,7 @@ IssueDetail.propTypes = {
   deviceView: T.string,
   dispatchCloseIssue: T.func,
   dispatchEditIssue: T.func,
+  dispatchFetchAttemptList: T.func,
   dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenIssueModal: T.func,

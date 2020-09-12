@@ -8,7 +8,9 @@ const {
   createIssue,
   createOrganization,
   downvoteIssue,
+  getIssueAttemptList,
   getIssues,
+  getIssueWatchList,
   getOneIssue,
   getOrganizationsWhere,
   searchIssues,
@@ -192,6 +194,24 @@ module.exports = {
     try {
       const issues = await getIssues();
       return issues;
+    } catch (err) {
+      throw err;
+    }
+  },
+  getIssueAttemptList: async args => {
+    const { issueId } = args;
+    try {
+      const attemptList = await getIssueAttemptList({ issueId });
+      return attemptList;
+    } catch (err) {
+      throw err;
+    }
+  },
+  getIssueWatchList: async args => {
+    const { issueId } = args;
+    try {
+      const watchList = await getIssueWatchList({ issueId });
+      return watchList;
     } catch (err) {
       throw err;
     }

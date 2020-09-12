@@ -1,17 +1,17 @@
 const { createActivity } = require('./activityResolver');
-const { toggleWatching } = require('../../db');
+const { toggleAttempting } = require('../../db');
 
 module.exports = {
-  toggleWatching: async args => {
+  toggleAttempting: async args => {
     const { issueId, userId } = args;
     try {
-      const { issueArray, remove, userArray } = await toggleWatching({
+      const { issueArray, remove, userArray } = await toggleAttempting({
         issueId,
         userId,
       });
 
       const activityInput = {
-        actionType: remove ? 'remove_watching' : 'add_watching',
+        actionType: remove ? 'remove_attempting' : 'add_attempting',
         issueId,
         userId,
       };
@@ -20,7 +20,7 @@ module.exports = {
       const result = { issueArray, userArray };
 
       return {
-        __typename: 'WatchListArray',
+        __typename: 'AttemptingArray',
         ...result,
       };
     } catch (err) {

@@ -8,7 +8,11 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { fetchWatchList, openModalState } from 'containers/Main/actions';
+import {
+  fetchAttemptList,
+  fetchWatchList,
+  openModalState,
+} from 'containers/Main/actions';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -34,6 +38,7 @@ const IssuesOverview = ({
   addWatching,
   alerts,
   deviceView,
+  dispatchFetchAttemptList,
   dispatchFetchIssues,
   dispatchFetchWatchList,
   dispatchOpenModal,
@@ -74,6 +79,7 @@ const IssuesOverview = ({
         addWatching,
         alerts,
         deviceView,
+        dispatchFetchAttemptList,
         dispatchFetchWatchList,
         dispatchOpenModal,
         handleClearAlerts,
@@ -93,8 +99,9 @@ IssuesOverview.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   deviceView: T.string,
+  dispatchFetchAttemptList: T.func.isRequired,
   dispatchFetchIssues: T.func,
-  dispatchFetchWatchList: T.func,
+  dispatchFetchWatchList: T.func.isRequired,
   dispatchOpenModal: T.func,
   dispatchUpvote: T.func,
   error: T.oneOfType([T.object, T.bool]),
@@ -141,6 +148,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Main
      */
+    dispatchFetchAttemptList: payload => dispatch(fetchAttemptList(payload)),
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     /**

@@ -10,9 +10,9 @@ const {
   getOneUser,
   getOneUserSignUp,
   getOrganizationsWhere,
+  getUserAttemptList,
   getUsers,
   getUserWatchList,
-  getWatchList,
   searchUsers,
   transformUser,
   updateUserArray,
@@ -123,35 +123,14 @@ module.exports = {
       throw err;
     }
   },
-  getWatchList: async args => {
-    const { idArray, type } = args;
-    try {
-      const watchListResult = await Promise.all(
-        idArray.map(async issueId => {
-          const [result] = await getWatchList(issueId, type);
-          return result;
-        }),
-      );
-      const result = watchListResult;
-      return result;
-    } catch (err) {
-      throw err;
-    }
-  },
   oneUser: async args => {
     const { id: userId } = args;
     try {
       const result = await getOneUser({ userId });
-      const { attempting, issues, organizations } = result;
+      const { issues, organizations } = result;
 
       // Pull user attempting detail
-      const attemptingListResult = await Promise.all(
-        attempting.map(async issueId => {
-          const type = 'userAttemptList';
-          const [attemptingResult] = await getWatchList(issueId, type);
-          return attemptingResult;
-        }),
-      );
+      const attemptingListResult = await getUserAttemptList({ userId });
       result.attempting = attemptingListResult;
 
       // Pull user issue detail

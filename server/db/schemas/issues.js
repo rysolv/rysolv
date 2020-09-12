@@ -1,5 +1,4 @@
 const alterIssuesTable = `ALTER TABLE issues
-ADD COLUMN attempting UUID [],
 ADD COLUMN body TEXT NOT NULL,
 ADD COLUMN comments UUID [],
 ADD COLUMN contributor_id UUID REFERENCES users(id),
