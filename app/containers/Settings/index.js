@@ -29,6 +29,7 @@ import {
   paypalPayment,
   removeIssue,
   removeWatching,
+  resetState,
   saveChange,
   stripeToken,
   verifyAccount,
@@ -52,6 +53,7 @@ const Settings = ({
   dispatchInputError,
   dispatchOpenModal,
   dispatchPaypalPayment,
+  dispatchResetState,
   dispatchSaveChange,
   dispatchStripeToken,
   dispatchVerifyAccount,
@@ -73,6 +75,8 @@ const Settings = ({
   modal,
 }) => {
   const [zipValue, setZipValue] = useState('');
+
+  useEffect(() => dispatchResetState, []);
 
   useEffect(() => {
     const url = window.location.href;
@@ -192,6 +196,7 @@ Settings.propTypes = {
   dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchPaypalPayment: T.func.isRequired,
+  dispatchResetState: T.func.isRequired,
   dispatchSaveChange: T.func,
   dispatchStripeToken: T.func.isRequired,
   dispatchVerifyAccount: T.func.isRequired,
@@ -245,6 +250,7 @@ function mapDispatchToProps(dispatch) {
     dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     dispatchPaypalPayment: payload => dispatch(paypalPayment(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
     dispatchStripeToken: payload => dispatch(stripeToken(payload)),
     dispatchVerifyAccount: payload => dispatch(verifyAccount(payload)),

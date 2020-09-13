@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
 import {
@@ -10,6 +11,7 @@ import {
   FETCH_USERS_SUCCESS,
   FETCH_USERS,
   INPUT_CHANGE,
+  RESET_STATE,
   SEARCH_USERS_FAILURE,
   SEARCH_USERS_SUCCESS,
   SEARCH_USERS,
@@ -39,7 +41,6 @@ export const initialState = {
   user: {},
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const usersReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_USER_FILTER: {
@@ -100,6 +101,9 @@ const usersReducer = produce((draft, { payload, type }) => {
         draft[form][field].value = value;
       }
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
     case SEARCH_USERS_FAILURE: {
       const { error } = payload;

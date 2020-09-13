@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import produce from 'immer';
 
 import {
@@ -23,6 +24,7 @@ import {
   REMOVE_ISSUE_SUCCESS,
   REMOVE_ISSUE,
   REMOVE_WATCHING,
+  RESET_STATE,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
@@ -190,6 +192,9 @@ const settingsReducer = produce((draft, { payload, type }) => {
     case REMOVE_WATCHING: {
       draft.loading = true;
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
     case SAVE_CHANGE_FAILURE: {
       const { error } = payload;
