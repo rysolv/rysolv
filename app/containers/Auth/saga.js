@@ -32,6 +32,7 @@ import {
   signUpFailure,
   signUpSuccess,
   verifyEmailFailure,
+  verifyEmailSuccess,
 } from './actions';
 
 export function* fetchActiveUserSaga({ payload }) {
@@ -335,6 +336,7 @@ export function* verifyEmailSaga({ payload }) {
     });
     yield call(post, '/graphql', graphql);
     yield put(signIn({ password, username: userEmail }));
+    yield put(verifyEmailSuccess());
   } catch (error) {
     yield put(verifyEmailFailure({ error }));
   }

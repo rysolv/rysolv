@@ -9,7 +9,7 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import { ConditionalRender } from 'components/base_ui';
 import RedirectComponent from 'components/Signin/Redirect';
-import { signOut } from 'containers/Auth/actions';
+import { resetRoute, signOut } from 'containers/Auth/actions';
 import {
   makeSelectAuth,
   makeSelectAuthLoading,
@@ -23,10 +23,12 @@ import { signInDictionary, signUpDictionary } from './stepDictionary';
 
 const Signin = ({
   activeUser,
+  dispatchResetRoute,
   dispatchResetState,
   dispatchSignOut,
   handleNav,
   isSignedIn,
+  isVerifyRoute,
   loading,
   match,
   step,
@@ -34,9 +36,13 @@ const Signin = ({
   const [viewToRender, setViewToRender] = useState(null);
   const { current: prevIsSignedIn } = useRef(isSignedIn);
   useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
-    if (isSignedIn !== prevIsSignedIn) {
+    if (!isVerifyRoute && isSignedIn !== prevIsSignedIn) {
       setViewToRender(<Redirect to="/issues" />);
+    } else if (isVerifyRoute && isSignedIn !== prevIsSignedIn) {
+      dispatchResetRoute();
+      setViewToRender(<Redirect to="/settings" />);
     } else {
       setViewToRender(
         <AsyncRender
@@ -67,10 +73,12 @@ const Signin = ({
 
 Signin.propTypes = {
   activeUser: T.object.isRequired,
+  dispatchResetRoute: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
   dispatchSignOut: T.func.isRequired,
   handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
+  isVerifyRoute: T.bool.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
   step: T.number.isRequired,
@@ -82,6 +90,7 @@ const mapStateToProps = createStructuredSelector({
    */
   activeUser: makeSelectAuth('activeUser'),
   isSignedIn: makeSelectAuth('isSignedIn'),
+  isVerifyRoute: makeSelectAuth('isVerifyRoute'),
   loading: makeSelectAuthLoading('auth'),
   /**
    * Reducer : Signin
@@ -94,6 +103,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Auth
      */
+    dispatchResetRoute: () => dispatch(resetRoute()),
     dispatchSignOut: () => dispatch(signOut()),
     /*
      * Reducer : Router
