@@ -123,7 +123,6 @@ const IssueCard = ({
                   issueId={id}
                   label={userWatching ? 'Watching' : 'Watch'}
                   value={watching.length}
-                  watching={watching}
                 />
               </IssueCardItem>
             ) : null}

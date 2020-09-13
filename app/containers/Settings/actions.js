@@ -155,6 +155,13 @@ export function paypalPayment(payload) {
   };
 }
 
+export function removeAttempting(payload) {
+  return {
+    payload,
+    type: REMOVE_ATTEMPTING,
+  };
+}
+
 export function removeIssueFailure(payload) {
   return {
     payload,
@@ -166,13 +173,6 @@ export function removeIssueSuccess(payload) {
   return {
     payload,
     type: REMOVE_ISSUE_SUCCESS,
-  };
-}
-
-export function removeAttempting(payload) {
-  return {
-    payload,
-    type: REMOVE_ATTEMPTING,
   };
 }
 

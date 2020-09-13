@@ -3,6 +3,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { post } from 'utils/request';
 
 import {
+  fetchAttemptListResponse,
   fetchPullRequestListResponse,
   fetchWatchListResponse,
   openModalState,
@@ -12,6 +13,32 @@ import {
   FETCH_PULL_REQUEST_LIST,
   FETCH_WATCH_LIST,
 } from './constants';
+
+export function* fetchAttemptListSaga({ payload }) {
+  const { issueId, modalState } = payload;
+  const query = `
+    query {
+      getIssueAttemptList(issueId: "${issueId}") {
+        id,
+        profilePic,
+        username,
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { getIssueAttemptList },
+    } = yield call(post, '/graphql', graphql);
+    yield put(fetchAttemptListResponse());
+    yield put(openModalState({ modalState, tableData: getIssueAttemptList }));
+  } catch (error) {
+    yield put(fetchAttemptListResponse());
+  }
+}
 
 export function* fetchPullRequestListSaga({ payload }) {
   const { activeUserPullRequests, idArray, modalState } = payload;
@@ -57,32 +84,6 @@ export function* fetchPullRequestListSaga({ payload }) {
     );
   } catch (error) {
     yield put(fetchPullRequestListResponse());
-  }
-}
-
-export function* fetchAttemptListSaga({ payload }) {
-  const { issueId, modalState } = payload;
-  const query = `
-    query {
-      getIssueAttemptList(issueId: "${issueId}") {
-        id,
-        profilePic,
-        username,
-      }
-    }
-  `;
-  try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: { getIssueAttemptList },
-    } = yield call(post, '/graphql', graphql);
-    yield put(fetchWatchListResponse());
-    yield put(openModalState({ modalState, tableData: getIssueAttemptList }));
-  } catch (error) {
-    yield put(fetchWatchListResponse());
   }
 }
 
