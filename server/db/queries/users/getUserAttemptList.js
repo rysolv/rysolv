@@ -4,7 +4,6 @@ const getUserAttemptList = async ({ userId }) => {
   const queryText = `
     SELECT
       issues.id,
-      issues.modified_date AS "modifiedDate",
       issues.name,
       issues.funded_amount AS "fundedAmount"
     FROM attempting

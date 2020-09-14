@@ -107,13 +107,11 @@ module.exports = buildSchema(`
     type: String
     userId: ID
     username: String
-    watching: [String]
+    watching: [ID]
   }
 
   input IssueInput {
-    attempting: [ID]
     body: String
-    comments: [ID]
     contributor: String
     fundedAmount: Int
     identiconId: ID
@@ -128,7 +126,6 @@ module.exports = buildSchema(`
     organizationUrl: String
     rep: Int
     repo: String
-    watching: [String]
   }
 
   type Organization {

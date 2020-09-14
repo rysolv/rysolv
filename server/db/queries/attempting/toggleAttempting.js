@@ -29,7 +29,6 @@ const toggleAttempting = async ({ issueId, userId }) => {
     SELECT
       issues.funded_amount AS "fundedAmount",
       issues.id,
-      issues.modified_date AS "modifiedDate",
       issues.name
     FROM attempting
     JOIN issues on attempting.issue_id = issues.id
