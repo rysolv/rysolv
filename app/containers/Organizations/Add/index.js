@@ -10,7 +10,7 @@ import AsyncRender from 'components/AsyncRender';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { clearForm, incrementStep } from '../actions';
+import { incrementStep, resetState } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -28,8 +28,8 @@ export class OrganizationsAdd extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { dispatchClearForm } = this.props;
-    dispatchClearForm();
+    const { dispatchResetState } = this.props;
+    dispatchResetState();
   }
 
   render() {
@@ -69,7 +69,7 @@ export class OrganizationsAdd extends React.PureComponent {
 
 OrganizationsAdd.propTypes = {
   activeUser: T.object,
-  dispatchClearForm: T.func,
+  dispatchResetState: T.func.isRequired,
   handleIncrementStep: T.func,
   importSuccess: T.bool,
   loading: T.bool.isRequired,
@@ -96,7 +96,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Organizations
      */
-    dispatchClearForm: () => dispatch(clearForm()),
+    dispatchResetState: () => dispatch(resetState()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
   };
 }

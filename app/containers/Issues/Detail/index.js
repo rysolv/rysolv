@@ -29,6 +29,7 @@ import {
   editIssue,
   fetchIssueDetail,
   openIssueModalState,
+  resetState,
   upvoteIssue,
 } from '../actions';
 import reducer from '../reducer';
@@ -54,8 +55,8 @@ export class IssuesDetail extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { handleClearAlerts } = this.props;
-    handleClearAlerts();
+    const { dispatchResetState } = this.props;
+    dispatchResetState();
   }
 
   render() {
@@ -150,6 +151,7 @@ IssuesDetail.propTypes = {
   dispatchFetchWatchList: T.func,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
+  dispatchResetState: T.func.isRequired,
   dispatchUpvote: T.func,
   error: T.oneOfType([T.bool, T.object]),
   handleClearAlerts: T.func,
@@ -198,6 +200,7 @@ function mapDispatchToProps(dispatch) {
     dispatchEditIssue: payload => dispatch(editIssue(payload)),
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
     dispatchOpenIssueModal: payload => dispatch(openIssueModalState(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleComment: payload => dispatch(addComment(payload)),

@@ -7,12 +7,12 @@ import { connect } from 'react-redux';
 import AsyncRender from 'components/AsyncRender';
 import { BackNav } from 'components/base_ui';
 import { makeSelectAuth } from 'containers/Auth/selectors';
+import { makeSelectOrganizations } from 'containers/Organizations/selectors';
+import { searchOrganizations } from 'containers/Auth/actions';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { makeSelectOrganizations } from 'containers/Organizations/selectors';
-import { searchOrganizations } from 'containers/Auth/actions';
-import { incrementStep, clearForm } from '../actions';
+import { incrementStep, resetState } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -21,7 +21,7 @@ import {
   makeSelectIssuesStep,
 } from '../selectors';
 import { addIssueDictionary } from '../stepDictionary';
-import { AddWrapper, AddForm } from './styledComponents';
+import { AddForm, AddWrapper } from './styledComponents';
 
 export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
@@ -31,8 +31,8 @@ export class IssuesAdd extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { dispatchClearForm } = this.props;
-    dispatchClearForm();
+    const { dispatchResetState } = this.props;
+    dispatchResetState();
   }
 
   render() {
@@ -74,7 +74,7 @@ export class IssuesAdd extends React.PureComponent {
 
 IssuesAdd.propTypes = {
   activeUser: T.object,
-  dispatchClearForm: T.func,
+  dispatchResetState: T.func.isRequired,
   handleIncrementStep: T.func,
   importSuccess: T.bool,
   issueData: T.object,
@@ -106,7 +106,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
-    dispatchClearForm: () => dispatch(clearForm()),
+    dispatchResetState: () => dispatch(resetState()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleSearchOrganizations: payload =>
       dispatch(searchOrganizations(payload)),
