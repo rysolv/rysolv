@@ -21,7 +21,6 @@ import {
 import { addOrganizationDictionary } from '../stepDictionary';
 import { AddWrapper, AddForm } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export class OrganizationsAdd extends React.PureComponent {
   componentDidMount() {
     const { handleIncrementStep } = this.props;

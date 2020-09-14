@@ -16,6 +16,7 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -143,6 +144,10 @@ export function inputError(payload) {
     payload,
     type: INPUT_ERROR,
   };
+}
+
+export function resetState() {
+  return { type: RESET_STATE };
 }
 
 export function saveInfoFailure(payload) {

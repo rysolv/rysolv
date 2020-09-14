@@ -23,7 +23,6 @@ import {
 import { addIssueDictionary } from '../stepDictionary';
 import { AddWrapper, AddForm } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
     document.title = 'Add Issue';

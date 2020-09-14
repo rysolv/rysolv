@@ -12,6 +12,7 @@ import injectReducer from 'utils/injectReducer';
 import {
   clearAlerts,
   fetchOrganizations,
+  resetState,
   searchOrganizations,
 } from '../actions';
 import reducer from '../reducer';
@@ -23,17 +24,19 @@ import {
   makeSelectOrganizationsLoading,
 } from '../selectors';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const OrganizationsOverview = ({
   alerts,
-  organizations,
+  dispatchFetchOrganizations,
+  dispatchResetState,
   error,
   handleClearAlerts,
-  dispatchFetchOrganizations,
   handleSearchOrganizations,
   loading,
+  organizations,
   params: { searchValue },
 }) => {
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
     if (searchValue) {
       handleSearchOrganizations({ value: searchValue });
@@ -63,6 +66,7 @@ OrganizationsOverview.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   dispatchFetchOrganizations: T.func,
+  dispatchResetState: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
   handleSearchOrganizations: T.func,
@@ -87,6 +91,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Organizations
      */
     dispatchFetchOrganizations: () => dispatch(fetchOrganizations()),
+    dispatchResetState: () => dispatch(resetState()),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleSearchOrganizations: payload =>
       dispatch(searchOrganizations(payload)),

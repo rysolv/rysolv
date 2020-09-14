@@ -1,4 +1,4 @@
-/* eslint-disable default-case, no-param-reassign */
+/* eslint-disable consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
 import {
@@ -8,6 +8,7 @@ import {
   FETCH_WATCH_LIST_RESPONSE,
   FETCH_WATCH_LIST,
   OPEN_MODAL_STATE,
+  RESET_STATE,
   UPDATE_PAYMENT_MODAL,
 } from './constants';
 
@@ -49,6 +50,9 @@ const mainReducer = produce((draft, { payload, type }) => {
       draft.modal = modalState;
       draft.tableData = tableData || [];
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
     case UPDATE_PAYMENT_MODAL: {
       const { balance, fundedAmount } = payload;

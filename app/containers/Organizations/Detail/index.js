@@ -30,7 +30,6 @@ import {
   makeSelectOrganizationsLoading,
 } from '../selectors';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export class OrganizationsDetail extends React.PureComponent {
   componentDidMount() {
     const {

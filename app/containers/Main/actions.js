@@ -5,6 +5,7 @@ import {
   FETCH_WATCH_LIST_RESPONSE,
   FETCH_WATCH_LIST,
   OPEN_MODAL_STATE,
+  RESET_STATE,
   UPDATE_PAYMENT_MODAL,
 } from './constants';
 
@@ -45,6 +46,10 @@ export function openModalState(payload) {
     payload,
     type: OPEN_MODAL_STATE,
   };
+}
+
+export function resetState() {
+  return { type: RESET_STATE };
 }
 
 export function updatePaymentModal(payload) {

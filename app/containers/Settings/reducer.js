@@ -1,4 +1,4 @@
-/* eslint-disable consistent-return */
+/* eslint-disable consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
 import {
@@ -57,7 +57,6 @@ export const initialState = {
   modal: '',
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const settingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_EMAIL_FAILURE: {

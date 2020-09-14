@@ -1,3 +1,4 @@
+/* eslint-disable default-case, no-param-reassign, consistent-return */
 import produce from 'immer';
 import remove from 'lodash/remove';
 
@@ -45,7 +46,6 @@ export const initialState = {
   verifyUserId: '',
 };
 
-/* eslint-disable default-case, no-param-reassign, consistent-return */
 const authReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_ALERTS: {

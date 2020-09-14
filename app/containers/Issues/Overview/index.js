@@ -17,6 +17,7 @@ import {
   addWatch,
   clearAlerts,
   fetchIssues,
+  resetState,
   searchIssues,
   upvoteIssue,
 } from '../actions';
@@ -37,6 +38,7 @@ const IssuesOverview = ({
   dispatchFetchIssues,
   dispatchFetchWatchList,
   dispatchOpenModal,
+  dispatchResetState,
   dispatchUpvote,
   error,
   handleClearAlerts,
@@ -48,6 +50,8 @@ const IssuesOverview = ({
   params: { searchValue },
   upvoteLoading,
 }) => {
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Issues';
@@ -96,6 +100,7 @@ IssuesOverview.propTypes = {
   dispatchFetchIssues: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
+  dispatchResetState: T.func.isRequired,
   dispatchUpvote: T.func,
   error: T.oneOfType([T.object, T.bool]),
   handleClearAlerts: T.func,
@@ -135,6 +140,7 @@ function mapDispatchToProps(dispatch) {
      */
     addWatching: payload => dispatch(addWatch(payload)),
     dispatchFetchIssues: () => dispatch(fetchIssues()),
+    dispatchResetState: () => dispatch(resetState()),
     dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
