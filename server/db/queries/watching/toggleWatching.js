@@ -29,7 +29,6 @@ const toggleWatching = async ({ issueId, userId }) => {
     SELECT
       issues.funded_amount AS "fundedAmount",
       issues.id,
-      issues.modified_date AS "modifiedDate",
       issues.name
     FROM watching
     JOIN issues on watching.issue_id = issues.id
