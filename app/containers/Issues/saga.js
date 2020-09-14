@@ -6,6 +6,7 @@ import {
   fetchActiveUser,
   updateActiveUser,
   upvoteUserTemp,
+  userAttemptingTemp,
   userWatchingTemp,
 } from 'containers/Auth/actions';
 import { post } from 'utils/request';
@@ -56,17 +57,23 @@ import {
 } from './constants';
 
 export function* addAttemptSaga({ payload }) {
-  const { id: issueId, userId, column, remove } = payload;
+  const { issueId, userId } = payload;
+  yield put(userAttemptingTemp({ issueId }));
   const query = `
   mutation {
-    updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}", remove: ${remove}) {
-      id,
-      attempting,
-      watching
-    }
-    updateUserArray(id: "${userId}", column: "${column}", data: "${issueId}", remove: ${remove}) {
-      attempting,
-      watching
+    toggleAttempting(issueId: "${issueId}", userId: "${userId}") {
+      __typename
+      ... on AttemptingArray {
+        issueArray {
+          fundedAmount
+          id
+          name
+        },
+        userArray
+      }
+      ... on Error {
+        message
+      }
     }
   }`;
   try {
@@ -75,10 +82,16 @@ export function* addAttemptSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { updateIssueArray },
+      data: {
+        toggleAttempting: { __typename, issueArray, message, userArray },
+      },
     } = yield call(post, '/graphql', graphql);
-    yield put(addAttemptSuccess(updateIssueArray));
-    yield put(fetchActiveUser({ userId }));
+    if (__typename === 'Error') {
+      throw new Error(message);
+    }
+
+    yield put(addAttemptSuccess({ issueId, userArray }));
+    yield put(updateActiveUser({ attempting: issueArray }));
   } catch (error) {
     yield put(addAttemptFailure({ error }));
   }
@@ -226,14 +239,12 @@ export function* editIssueSaga({ payload }) {
       }) {
         __typename
         ... on Issue {
-          id,
-          attempting,
-          attempts,
           body,
           comments,
           contributor,
           createdDate,
           fundedAmount,
+          id,
           language,
           modifiedDate,
           name,
@@ -246,7 +257,6 @@ export function* editIssueSaga({ payload }) {
           repo,
           userId,
           username,
-          watching
         }
         ... on Error {
           message
@@ -280,7 +290,6 @@ export function* fetchIssueDetailSaga({ payload }) {
         __typename
         ... on Issue {
           attempting,
-          attempts,
           body,
           comments,
           contributor,

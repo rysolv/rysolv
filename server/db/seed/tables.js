@@ -3,6 +3,7 @@ const { mapQueryPrint, singleQuery } = require('../baseQueries');
 // Import schemas
 const {
   alterActivityTable,
+  alterAttemptingTable,
   alterCommentsTable,
   alterFundingTable,
   alterIssuesTable,
@@ -12,6 +13,7 @@ const {
   alterWatchingTable,
   alterWithdrawalTable,
   createActivityTable,
+  createAttemptingTable,
   createCommentsTable,
   createFundingsTable,
   createIssuesTable,
@@ -25,6 +27,7 @@ const {
 // Alter existing tables
 const alterTables = async () => {
   await singleQuery({ queryText: alterActivityTable });
+  await singleQuery({ queryText: alterAttemptingTable });
   await singleQuery({ queryText: alterCommentsTable });
   await singleQuery({ queryText: alterFundingTable });
   await singleQuery({ queryText: alterIssuesTable });
@@ -38,6 +41,7 @@ const alterTables = async () => {
 // Create empty tables
 const createTables = async () => {
   await singleQuery({ queryText: createActivityTable });
+  await singleQuery({ queryText: createAttemptingTable });
   await singleQuery({ queryText: createCommentsTable });
   await singleQuery({ queryText: createFundingsTable });
   await singleQuery({ queryText: createIssuesTable });
@@ -50,8 +54,8 @@ const createTables = async () => {
 
 // Drop all tables
 const dropAllTables = async () => {
-  // @TODO: figure out a way to await/map through this
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS activity cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS attempting cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS comments cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS funding cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS issues cascade' });
@@ -68,6 +72,7 @@ const dropAllTables = async () => {
 const printTables = async () => {
   const queryArray = [
     'SELECT * FROM activity',
+    'SELECT * FROM attempting',
     'SELECT * FROM comments',
     'SELECT * FROM funding',
     'SELECT * FROM issues',

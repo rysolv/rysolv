@@ -4,9 +4,9 @@ const checkUserGithubId = require('./checkUserGithubId');
 const createUser = require('./createUser');
 const getOneUser = require('./getOneUser');
 const getOneUserSignUp = require('./getOneUserSignUp');
+const getUserAttemptList = require('./getUserAttemptList');
 const getUsers = require('./getUsers');
 const getUserWatchList = require('./getUserWatchList');
-const getWatchList = require('./getWatchList');
 const searchUsers = require('./searchUsers');
 const transformUser = require('./transformUser');
 const updateUserArray = require('./updateUserArray');
@@ -18,9 +18,9 @@ module.exports = {
   createUser,
   getOneUser,
   getOneUserSignUp,
+  getUserAttemptList,
   getUsers,
   getUserWatchList,
-  getWatchList,
   searchUsers,
   transformUser,
   updateUserArray,

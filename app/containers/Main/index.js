@@ -25,7 +25,7 @@ import { getCookie, setCookie } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { closeModalState, fetchWatchList, openModalState } from './actions';
+import { closeModalState, openModalState } from './actions';
 import reducer from './reducer';
 import Routes from './routes';
 import saga from './saga';
@@ -225,7 +225,6 @@ const mapDispatchToProps = dispatch => ({
    * Main
    */
   dispatchCloseModal: () => dispatch(closeModalState()),
-  dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
   dispatchOpenModal: payload => dispatch(openModalState(payload)),
   /*
    * Reducer : PullRequests

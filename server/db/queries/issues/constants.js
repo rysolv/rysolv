@@ -1,5 +1,4 @@
 const issueValues = [
-  'attempting',
   'body',
   'comments',
   'contributor_id',
@@ -18,7 +17,6 @@ const issueValues = [
 ];
 
 const issueReturnValues = `
-  issues.attempting,
   issues.body,
   issues.comments,
   issues.contributor_id AS "contributorId",
@@ -40,6 +38,7 @@ const issueReturnValues = `
 const issueCardValues = `
   ${issueReturnValues},
   ARRAY_REMOVE(ARRAY_AGG(watching.user_id), NULL) AS watching,
+  ARRAY_REMOVE(ARRAY_AGG(attempting.user_id), NULL) AS attempting,
   organizations.name AS "organizationName",
   organizations.verified AS "organizationVerified"
 `;
@@ -51,9 +50,7 @@ const issueDetailValues = `
   users.profile_pic AS "profilePic"
 `;
 
-// @TODO: refactor SQL query to not require group values
 const groupValues = `
-  issues.attempting,
   issues.body,
   issues.comments,
   issues.contributor_id,

@@ -16,7 +16,7 @@ const AttemptButton = ({
   activeUser,
   attempting,
   disabled,
-  dispatchFetchWatchList,
+  dispatchFetchAttemptList,
   dispatchOpenModal,
   handleIncrement,
   isSignedIn,
@@ -35,10 +35,8 @@ const AttemptButton = ({
             return dispatchOpenModal({ modalState: 'signIn' });
           }
           return handleIncrement({
+            issueId,
             userId,
-            id: issueId,
-            column: 'attempting',
-            remove: hasAttempting,
           });
         }}
       >
@@ -47,8 +45,8 @@ const AttemptButton = ({
       </StyledAttemptButton>
       <ValueWrapper
         onClick={() =>
-          dispatchFetchWatchList({
-            idArray: attempting,
+          dispatchFetchAttemptList({
+            issueId,
             modalState: 'issueAttemptList',
           })
         }
@@ -63,7 +61,7 @@ AttemptButton.propTypes = {
   activeUser: T.object,
   attempting: T.array,
   disabled: T.bool,
-  dispatchFetchWatchList: T.func,
+  dispatchFetchAttemptList: T.func.isRequired,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,
   isSignedIn: T.bool,

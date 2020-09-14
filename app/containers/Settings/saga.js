@@ -2,11 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import Auth from '@aws-amplify/auth';
 import { push } from 'connected-react-router';
 
-import {
-  fetchActiveUser,
-  signOut,
-  updateActiveUser,
-} from 'containers/Auth/actions';
+import { signOut, updateActiveUser } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
@@ -14,7 +10,7 @@ import {
   DELETE_USER,
   FETCH_INFO,
   PAYPAL_PAYMENT,
-  REMOVE_ISSUE,
+  REMOVE_ATTEMPTING,
   REMOVE_WATCHING,
   SAVE_CHANGE,
   STRIPE_TOKEN,
@@ -111,16 +107,16 @@ export function* fetchInfoSaga({ payload }) {
         __typename
         ... on ActivityArray {
           activityArray {
+            actionType,
             activityId,
             createdDate,
-            actionType,
+            fundedValue,
             issueId,
+            issueName,
             organizationId,
             organizationName,
             pullRequestId,
             userId,
-            fundedValue,
-            issueName,
             username,
           }
         }
@@ -185,18 +181,22 @@ export function* paypalPaymentSaga({ payload }) {
   }
 }
 
-export function* removeIssueSaga({ payload }) {
-  const { column, id: issueId, remove, userId } = payload;
+export function* removeAttemptingSaga({ payload }) {
+  const { issueId, userId } = payload;
   const query = `
   mutation {
-    updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}", remove: ${remove}) {
-      id,
-      attempting,
-      watching
-    }
-    updateUserArray(id: "${userId}", column: "${column}", data: "${issueId}", remove: ${remove}) {
-      attempting,
-      watching
+    toggleAttempting(issueId: "${issueId}", userId: "${userId}") {
+      __typename
+      ... on AttemptingArray {
+        issueArray {
+          fundedAmount
+          id
+          name
+        }
+      }
+      ... on Error {
+        message
+      }
     }
   }`;
   try {
@@ -204,16 +204,23 @@ export function* removeIssueSaga({ payload }) {
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
-    yield put(removeIssueSuccess({ column, issueId }));
-    yield put(fetchActiveUser({ userId }));
+    const {
+      data: {
+        toggleAttempting: { __typename, issueArray, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') {
+      throw new Error(message);
+    }
+    yield put(removeIssueSuccess({ column: 'attempting', issueId }));
+    yield put(updateActiveUser({ attempting: issueArray }));
   } catch (error) {
     yield put(removeIssueFailure({ error }));
   }
 }
 
 export function* removeWatchingSaga({ payload }) {
-  const { id: issueId, userId } = payload;
+  const { issueId, userId } = payload;
   const query = `
   mutation {
     toggleWatching(issueId: "${issueId}", userId: "${userId}") {
@@ -428,7 +435,7 @@ export default function* watcherSaga() {
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(PAYPAL_PAYMENT, paypalPaymentSaga);
-  yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
+  yield takeLatest(REMOVE_ATTEMPTING, removeAttemptingSaga);
   yield takeLatest(REMOVE_WATCHING, removeWatchingSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
   yield takeLatest(STRIPE_TOKEN, stripeTokenSaga);

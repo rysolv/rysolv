@@ -46,7 +46,7 @@ const UserTimelineView = ({
   githubUsername,
   handleInputChange,
   handleNav,
-  handleRemoveIssue,
+  handleRemoveAttempting,
   handleRemoveWatching,
   isGithubVerified,
   userId,
@@ -71,7 +71,7 @@ const UserTimelineView = ({
       }
       propsToPassDown={{
         handleNav,
-        handleRemoveIssue,
+        handleRemoveAttempting,
         list: attempting.slice(0, 5),
         type: 'attempting',
         userId,
@@ -87,7 +87,7 @@ const UserTimelineView = ({
       }
       propsToPassDown={{
         handleNav,
-        handleRemoveIssue,
+        handleRemoveAttempting,
         handleRemoveWatching,
         list: watching.slice(0, 5),
         type: 'watching',
@@ -228,7 +228,7 @@ UserTimelineView.propTypes = {
   githubUsername: T.string,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
+  handleRemoveAttempting: T.func.isRequired,
   handleRemoveWatching: T.func.isRequired,
   isGithubVerified: T.bool.isRequired,
   userId: T.string.isRequired,

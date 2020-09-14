@@ -1,4 +1,5 @@
 const activitySchema = require('./activity');
+const attemptingSchema = require('./attempting');
 const commentSchema = require('./comments');
 const fundingSchema = require('./funding');
 const issueSchema = require('./issues');
@@ -10,6 +11,7 @@ const withdrawalSchema = require('./withdrawal');
 
 module.exports = {
   ...activitySchema,
+  ...attemptingSchema,
   ...commentSchema,
   ...fundingSchema,
   ...issueSchema,
