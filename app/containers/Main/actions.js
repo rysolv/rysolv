@@ -1,5 +1,7 @@
 import {
   CLOSE_MODAL_STATE,
+  FETCH_ATTEMPT_LIST_RESPONSE,
+  FETCH_ATTEMPT_LIST,
   FETCH_PULL_REQUEST_LIST_RESPONSE,
   FETCH_PULL_REQUEST_LIST,
   FETCH_WATCH_LIST_RESPONSE,
@@ -12,6 +14,19 @@ import {
 export function closeModalState() {
   return {
     type: CLOSE_MODAL_STATE,
+  };
+}
+
+export function fetchAttemptListResponse() {
+  return {
+    type: FETCH_ATTEMPT_LIST_RESPONSE,
+  };
+}
+
+export function fetchAttemptList(payload) {
+  return {
+    payload,
+    type: FETCH_ATTEMPT_LIST,
   };
 }
 

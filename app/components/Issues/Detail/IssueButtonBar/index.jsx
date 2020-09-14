@@ -19,6 +19,7 @@ const IssueButtonBar = ({
   },
   addWatching,
   data: { attempting, id: issueId, open, pullRequests, watching },
+  dispatchFetchAttemptList,
   dispatchFetchPullRequestList,
   dispatchFetchWatchList,
   dispatchOpenIssueModal,
@@ -36,7 +37,7 @@ const IssueButtonBar = ({
         activeUser={activeUser}
         attempting={attempting}
         disabled={!open}
-        dispatchFetchWatchList={dispatchFetchWatchList}
+        dispatchFetchAttemptList={dispatchFetchAttemptList}
         dispatchOpenModal={dispatchOpenModal}
         handleIncrement={handleIncrement}
         isSignedIn={isSignedIn}
@@ -55,9 +56,9 @@ const IssueButtonBar = ({
           })
         }
         isSignedIn={isSignedIn}
+        issueId={issueId}
         label={userWatching ? 'Watching' : 'Watch'}
         value={watching.length}
-        watching={watching}
       />
       <PullRequestButton
         activeUserPullRequests={activeUserPullRequests}
@@ -77,8 +78,9 @@ IssueButtonBar.propTypes = {
   activeUser: T.object,
   addWatching: T.func,
   data: T.object,
+  dispatchFetchAttemptList: T.func.isRequired,
   dispatchFetchPullRequestList: T.func,
-  dispatchFetchWatchList: T.func,
+  dispatchFetchWatchList: T.func.isRequired,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,

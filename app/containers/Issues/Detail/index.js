@@ -10,6 +10,7 @@ import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
 import IssueDetail from 'components/Issues/Detail';
 import {
+  fetchAttemptList,
   fetchPullRequestList,
   fetchWatchList,
   openModalState,
@@ -68,6 +69,7 @@ export class IssuesDetail extends React.PureComponent {
       dispatchCloseIssue,
       dispatchCloseIssueModal,
       dispatchEditIssue,
+      dispatchFetchAttemptList,
       dispatchFetchPullRequestList,
       dispatchFetchWatchList,
       dispatchOpenIssueModal,
@@ -120,6 +122,7 @@ export class IssuesDetail extends React.PureComponent {
             deviceView,
             dispatchCloseIssue,
             dispatchEditIssue,
+            dispatchFetchAttemptList,
             dispatchFetchPullRequestList,
             dispatchFetchWatchList,
             dispatchOpenIssueModal,
@@ -146,6 +149,7 @@ IssuesDetail.propTypes = {
   dispatchCloseIssue: T.func,
   dispatchCloseIssueModal: T.func,
   dispatchEditIssue: T.func,
+  dispatchFetchAttemptList: T.func,
   dispatchFetchIssueDetail: T.func,
   dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
@@ -208,6 +212,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Main
      */
+    dispatchFetchAttemptList: payload => dispatch(fetchAttemptList(payload)),
     dispatchFetchPullRequestList: payload =>
       dispatch(fetchPullRequestList(payload)),
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),

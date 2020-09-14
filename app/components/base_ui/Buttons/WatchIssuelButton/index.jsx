@@ -15,9 +15,9 @@ const WatchIssueButton = ({
   dispatchOpenModal,
   handleWatch,
   isSignedIn,
+  issueId,
   label,
   value,
-  watching,
 }) => (
   <WatchIssueButtonContainer>
     <StyledWatchIssueButton
@@ -34,7 +34,7 @@ const WatchIssueButton = ({
     <ValueWrapper
       onClick={() =>
         dispatchFetchWatchList({
-          idArray: watching,
+          issueId,
           modalState: 'issueWatchList',
         })
       }
@@ -50,9 +50,9 @@ WatchIssueButton.propTypes = {
   dispatchOpenModal: T.func,
   handleWatch: T.func,
   isSignedIn: T.bool,
+  issueId: T.string,
   label: T.string,
   value: T.number,
-  watching: T.array,
 };
 
 export default WatchIssueButton;

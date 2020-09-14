@@ -3,6 +3,8 @@ import produce from 'immer';
 
 import {
   CLOSE_MODAL_STATE,
+  FETCH_ATTEMPT_LIST_RESPONSE,
+  FETCH_ATTEMPT_LIST,
   FETCH_PULL_REQUEST_LIST_RESPONSE,
   FETCH_PULL_REQUEST_LIST,
   FETCH_WATCH_LIST_RESPONSE,
@@ -26,6 +28,14 @@ const mainReducer = produce((draft, { payload, type }) => {
       draft.isModalOpen = initialState.isModalOpen;
       draft.modal = initialState.modal;
       draft.tableData = initialState.tableData;
+      break;
+    }
+    case FETCH_ATTEMPT_LIST_RESPONSE: {
+      draft.loading = false;
+      break;
+    }
+    case FETCH_ATTEMPT_LIST: {
+      draft.loading = true;
       break;
     }
     case FETCH_PULL_REQUEST_LIST_RESPONSE: {

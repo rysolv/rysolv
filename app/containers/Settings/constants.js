@@ -25,7 +25,7 @@ export const PAYPAL_PAYMENT = 'app/Settings/PAYPAL_PAYMENT';
 export const PAYPAL_PAYMENT_FAILURE = 'app/Settings/PAYPAL_PAYMENT_FAILURE';
 export const PAYPAL_PAYMENT_SUCCESS = 'app/Settings/PAYPAL_PAYMENT_SUCCESS';
 
-export const REMOVE_ISSUE = 'app/Settings/REMOVE_ISSUE';
+export const REMOVE_ATTEMPTING = 'app/Settings/REMOVE_ATTEMPTING';
 export const REMOVE_ISSUE_FAILURE = 'app/Settings/REMOVE_ISSUE_FAILURE';
 export const REMOVE_ISSUE_SUCCESS = 'app/Settings/REMOVE_ISSUE_SUCCESS';
 export const REMOVE_WATCHING = 'app/Settings/REMOVE_WATCHING';

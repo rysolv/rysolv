@@ -25,7 +25,7 @@ const SearchIcon = iconDictionary('search');
 const UserAttempting = ({
   attempting,
   handleNav,
-  handleRemoveIssue,
+  handleRemoveAttempting,
   userId,
 }) => {
   const [selectedValue, setSelectedValue] = useState('Newest');
@@ -84,7 +84,7 @@ const UserAttempting = ({
         }
         propsToPassDown={{
           handleNav,
-          handleRemoveIssue,
+          handleRemoveAttempting,
           list: filteredAttempting,
           type: 'attempting',
           userId,
@@ -98,7 +98,7 @@ const UserAttempting = ({
 UserAttempting.propTypes = {
   attempting: T.array.isRequired,
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
+  handleRemoveAttempting: T.func.isRequired,
   userId: T.string.isRequired,
 };
 

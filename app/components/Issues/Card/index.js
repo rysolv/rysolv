@@ -44,6 +44,7 @@ const IssueCard = ({
   addWatching,
   data,
   deviceView,
+  dispatchFetchAttemptList,
   dispatchFetchWatchList,
   dispatchOpenModal,
   handleNav,
@@ -99,8 +100,8 @@ const IssueCard = ({
             {open ? (
               <IssueCardItem
                 onClick={() =>
-                  dispatchFetchWatchList({
-                    idArray: attempting,
+                  dispatchFetchAttemptList({
+                    issueId: id,
                     modalState: 'issueAttemptList',
                   })
                 }
@@ -119,9 +120,9 @@ const IssueCard = ({
                   dispatchOpenModal={dispatchOpenModal}
                   handleWatch={() => addWatching({ issueId: id, userId })}
                   isSignedIn={isSignedIn}
+                  issueId={id}
                   label={userWatching ? 'Watching' : 'Watch'}
                   value={watching.length}
-                  watching={watching}
                 />
               </IssueCardItem>
             ) : null}
@@ -157,8 +158,8 @@ const IssueCard = ({
                 }
                 label="Attempting"
                 onClick={() =>
-                  dispatchFetchWatchList({
-                    idArray: attempting,
+                  dispatchFetchAttemptList({
+                    issueId: id,
                     modalState: 'issueAttemptList',
                   })
                 }
@@ -262,6 +263,7 @@ IssueCard.propTypes = {
   addWatching: T.func.isRequired,
   data: T.array.isRequired,
   deviceView: T.string.isRequired,
+  dispatchFetchAttemptList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
   handleNav: T.func.isRequired,

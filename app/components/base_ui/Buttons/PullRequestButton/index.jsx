@@ -58,7 +58,7 @@ PullRequestButton.propTypes = {
   dispatchFetchPullRequestList: T.func,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
-  isGithubVerified: T.bool.isRequired,
+  isGithubVerified: T.bool,
   isSignedIn: T.bool,
   pullRequests: T.array,
 };

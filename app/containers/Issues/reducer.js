@@ -139,12 +139,38 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case ADD_ATTEMPT_SUCCESS: {
-      const { attempting } = payload;
-      draft.issueDetail.attempting = attempting;
+      const { issueId, userArray } = payload;
+      draft.issues.map((issue, index) => {
+        if (issue.id === issueId) {
+          draft.issues[index].attempting = userArray;
+        }
+      });
+      if (draft.issueDetail.id) {
+        draft.issueDetail.attempting = userArray;
+      }
       draft.loading.addAttempt = false;
       break;
     }
     case ADD_ATTEMPT: {
+      const { issueId, userId } = payload;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          const userIdIndex = draft.issues[index].attempting.indexOf(userId);
+          if (userIdIndex > -1) {
+            draft.issues[index].attempting.splice(userIdIndex, 1);
+          } else {
+            draft.issues[index].attempting.push(userId);
+          }
+        }
+      });
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.attempting.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.attempting.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.attempting.push(userId);
+        }
+      }
       draft.loading.addAttempt = true;
       break;
     }

@@ -17,9 +17,9 @@ import {
   PAYPAL_PAYMENT_FAILURE,
   PAYPAL_PAYMENT_SUCCESS,
   PAYPAL_PAYMENT,
+  REMOVE_ATTEMPTING,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
-  REMOVE_ISSUE,
   REMOVE_WATCHING,
   RESET_STATE,
   SAVE_CHANGE_FAILURE,
@@ -156,6 +156,13 @@ export function paypalPayment(payload) {
   };
 }
 
+export function removeAttempting(payload) {
+  return {
+    payload,
+    type: REMOVE_ATTEMPTING,
+  };
+}
+
 export function removeIssueFailure(payload) {
   return {
     payload,
@@ -167,13 +174,6 @@ export function removeIssueSuccess(payload) {
   return {
     payload,
     type: REMOVE_ISSUE_SUCCESS,
-  };
-}
-
-export function removeIssue(payload) {
-  return {
-    payload,
-    type: REMOVE_ISSUE,
   };
 }
 
