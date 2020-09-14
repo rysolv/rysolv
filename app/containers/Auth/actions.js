@@ -7,6 +7,7 @@ import {
   FETCH_USER_SESSION_SUCCESS,
   FETCH_USER_SESSION,
   RESEND_SIGN_UP,
+  RESET_ROUTE,
   SEARCH_ORGANIZATIONS_FAILURE,
   SEARCH_ORGANIZATIONS_SUCCESS,
   SEARCH_ORGANIZATIONS,
@@ -21,6 +22,7 @@ import {
   SIGN_UP,
   UPDATE_ACTIVE_USER,
   UPVOTE_USER_TEMP,
+  USER_ATTEMPTING_TEMP,
   USER_WATCHING_TEMP,
   VERIFY_EMAIL_FAILURE,
   VERIFY_EMAIL_SUCCESS,
@@ -79,6 +81,10 @@ export function resendSignUp(payload) {
     payload,
     type: RESEND_SIGN_UP,
   };
+}
+
+export function resetRoute() {
+  return { type: RESET_ROUTE };
 }
 
 export function searchOrganizationsFailure(payload) {
@@ -176,6 +182,13 @@ export function upvoteUserTemp(payload) {
   };
 }
 
+export function userAttemptingTemp(payload) {
+  return {
+    payload,
+    type: USER_ATTEMPTING_TEMP,
+  };
+}
+
 export function userWatchingTemp(payload) {
   return {
     payload,
@@ -190,11 +203,8 @@ export function verifyEmailFailure(payload) {
   };
 }
 
-export function verifyEmailSuccess(payload) {
-  return {
-    payload,
-    type: VERIFY_EMAIL_SUCCESS,
-  };
+export function verifyEmailSuccess() {
+  return { type: VERIFY_EMAIL_SUCCESS };
 }
 
 export function verifyEmail(payload) {

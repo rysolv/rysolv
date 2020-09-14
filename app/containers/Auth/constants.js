@@ -10,6 +10,8 @@ export const FETCH_USER_SESSION_SUCCESS = 'app/Auth/FETCH_USER_SESSION_SUCCESS';
 
 export const RESEND_SIGN_UP = 'app/Auth/RESEND_SIGN_UP';
 
+export const RESET_ROUTE = 'app/Auth/RESET_ROUTE';
+
 export const SEARCH_ORGANIZATIONS = 'app/Auth/SEARCH_ORGANIZATIONS';
 export const SEARCH_ORGANIZATIONS_FAILURE =
   'app/Auth/SEARCH_ORGANIZATIONS_FAILURE';
@@ -32,6 +34,7 @@ export const UPDATE_ACTIVE_USER = 'app/Auth/UPDATE_ACTIVE_USER';
 
 export const UPVOTE_USER_TEMP = 'app/Auth/UPVOTE_USER_TEMP';
 
+export const USER_ATTEMPTING_TEMP = 'app/Auth/USER_ATTEMPTING_TEMP';
 export const USER_WATCHING_TEMP = 'app/Auth/USER_WATCHING_TEMP';
 
 export const VERIFY_EMAIL = 'app/Auth/VERIFY_EMAIL';

@@ -86,7 +86,7 @@ const SettingsView = ({
   handleClearErrors,
   handleInputChange,
   handleNav,
-  handleRemoveIssue,
+  handleRemoveAttempting,
   handleRemoveWatching,
   handleValidateInput,
   handleWithdrawFunds,
@@ -320,7 +320,7 @@ const SettingsView = ({
             handleEdit={handleEdit}
             handleInputChange={handleInputChange}
             handleNav={handleNav}
-            handleRemoveIssue={handleRemoveIssue}
+            handleRemoveAttempting={handleRemoveAttempting}
             handleRemoveWatching={handleRemoveWatching}
             handleSubmitEmailChange={handleSubmitEmailChange}
             handleSubmitInputChange={handleSubmitInputChange}
@@ -367,7 +367,7 @@ SettingsView.propTypes = {
   handleClearErrors: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
+  handleRemoveAttempting: T.func.isRequired,
   handleRemoveWatching: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   handleWithdrawFunds: T.func.isRequired,

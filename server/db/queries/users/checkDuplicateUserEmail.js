@@ -13,7 +13,7 @@ const checkDuplicateUserEmail = async ({ email }) => {
   if (oneRow && emailVerified) {
     throw new Error(`E-mail already exists`);
   }
-  if (oneRow > 0 && !emailVerified) {
+  if (oneRow && !emailVerified) {
     throw new Error(
       `E-mail has not been verified. <a href="/signin" style="text-decoration: underline">Sign in</a> to verify.`,
     );

@@ -12,6 +12,7 @@ import {
   FETCH_USER_SESSION_SUCCESS,
   FETCH_USER_SESSION,
   RESEND_SIGN_UP,
+  RESET_ROUTE,
   SEARCH_ORGANIZATIONS_FAILURE,
   SEARCH_ORGANIZATIONS_SUCCESS,
   SEARCH_ORGANIZATIONS,
@@ -26,6 +27,7 @@ import {
   SIGN_UP,
   UPDATE_ACTIVE_USER,
   UPVOTE_USER_TEMP,
+  USER_ATTEMPTING_TEMP,
   USER_WATCHING_TEMP,
   VERIFY_EMAIL_FAILURE,
   VERIFY_EMAIL_SUCCESS,
@@ -36,6 +38,7 @@ export const initialState = {
   activeUser: {},
   alerts: { error: false, success: false },
   isSignedIn: false,
+  isVerifyRoute: false,
   loading: {
     auth: false,
     authenticateUser: true,
@@ -86,6 +89,10 @@ const authReducer = produce((draft, { payload, type }) => {
       draft.alerts = initialState.alerts;
       draft.isSignedIn = false;
       draft.loading.auth = true;
+      break;
+    }
+    case RESET_ROUTE: {
+      draft.isVerifyRoute = initialState.isVerifyRoute;
       break;
     }
     case SEARCH_ORGANIZATIONS: {
@@ -204,6 +211,18 @@ const authReducer = produce((draft, { payload, type }) => {
       }
       break;
     }
+    case USER_ATTEMPTING_TEMP: {
+      const { issueId } = payload;
+      const issueIndex = draft.activeUser.attempting
+        .map(el => el.id)
+        .indexOf(issueId);
+      if (issueIndex > -1) {
+        draft.activeUser.attempting.splice(issueIndex, 1);
+      } else {
+        draft.activeUser.attempting.push({ id: issueId });
+      }
+      break;
+    }
     case USER_WATCHING_TEMP: {
       const { issueId } = payload;
       const issueIndex = draft.activeUser.watching
@@ -229,7 +248,7 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case VERIFY_EMAIL_SUCCESS: {
-      draft.loading.auth = false;
+      draft.isVerifyRoute = true;
       break;
     }
     default: {

@@ -31,6 +31,17 @@ module.exports = buildSchema(`
     userId: ID
   }
 
+  type AttemptingArray {
+    issueArray: [AttemptingDetail]
+    userArray: [ID]
+  }
+
+  type AttemptingDetail {
+    fundedAmount: Float
+    id: ID
+    name: String
+  }
+
   type Comment {
     body: String
     commentId: ID
@@ -75,9 +86,7 @@ module.exports = buildSchema(`
   }
 
   type Issue {
-    activeAttempts: Int
     attempting: [ID]
-    attempts: Int
     body: String
     comments: [ID]
     contributor: [String]
@@ -98,14 +107,11 @@ module.exports = buildSchema(`
     type: String
     userId: ID
     username: String
-    watching: [String]
+    watching: [ID]
   }
 
   input IssueInput {
-    attempting: [ID]
-    attempts: Int
     body: String
-    comments: [ID]
     contributor: String
     fundedAmount: Int
     identiconId: ID
@@ -120,7 +126,6 @@ module.exports = buildSchema(`
     organizationUrl: String
     rep: Int
     repo: String
-    watching: [String]
   }
 
   type Organization {
@@ -329,6 +334,7 @@ module.exports = buildSchema(`
   union PullRequestArrayResult = PullRequestArray | Error
   union PullRequestListResult = PullRequestList | Error
   union PullRequestResult = PullRequest | Error
+  union ToggleAttemptingResult = AttemptingArray | Error
   union ToggleWatchingResult = WatchListArray | Error
   union UpvoteResult = Upvote | Error
   union UserResult = User | Error
@@ -337,25 +343,26 @@ module.exports = buildSchema(`
 
   type RootQuery {
     checkDuplicateUser(email: String, username: String): EventResponse!
-    
+
     getActivity(column: String!, id: ID): ActivityResult!
+    getIssueAttemptList(issueId: ID!): [WatchList!]
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: [Issue!]!
+    getIssueWatchList(issueId: ID!): [WatchList!]
     getOrganizationActivity(organizationId: ID): ActivityResult!
     getOrganizations: [Organization!]!
     getPullRequestList(issueId: ID): PullRequestListResult!
     getUserActivity(userId: ID): ActivityResult!
     getUserOrganizations(id: ID!): [Organization!]
-    getUserPullRequests(id: ID!): PullRequestArrayResult  
+    getUserPullRequests(id: ID!): PullRequestArrayResult
     getUsers: [User!]!
-    getWatchList(idArray: [ID!], type: String!): [WatchList!]
-    
+
     oneIssue(id: ID!): IssueResult
     oneOrganization(id: ID!): OrganizationResult
     onePullRequest(id: ID!): PullRequestResult
     oneUser(id: ID!): User!
     oneUserSignUp(email: String!): User!
-    
+
     searchIssues(value: String!): [Issue!]!
     searchOrganizations(value: String!): OrganizationArrayResult
     searchUsers(value: String!): [User!]!
@@ -385,6 +392,7 @@ module.exports = buildSchema(`
 
     submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
 
+    toggleAttempting(issueId: ID!, userId: ID!): ToggleAttemptingResult
     toggleWatching(issueId: ID!, userId: ID!): ToggleWatchingResult
 
     transformIssue(issueId: ID!, issueInput: IssueInput): IssueResult!

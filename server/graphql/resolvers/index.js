@@ -1,4 +1,5 @@
 const activityResolver = require('./activityResolver');
+const attemptingResolver = require('./attemptingResolver');
 const commentResolver = require('./commentResolver');
 const issueResolver = require('./issueResolver');
 const organizationResolver = require('./organzationResolver');
@@ -11,6 +12,7 @@ const { objectScalerType } = require('./scalers');
 
 const rootResolver = {
   ...activityResolver,
+  ...attemptingResolver,
   ...commentResolver,
   ...issueResolver,
   ...objectScalerType,
