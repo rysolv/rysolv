@@ -20,7 +20,7 @@ const {
   updateUserArray,
   upvoteIssue,
 } = require('../../db');
-const { createActivity } = require('./activityResolver');
+const { createActivity } = require('./activity');
 const { formatIssueUrl } = require('../../integrations/github/helpers');
 const { getSingleIssue, getSingleRepo } = require('../../integrations');
 const { uploadImage } = require('../../middlewares/imageUpload');

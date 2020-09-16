@@ -1,4 +1,4 @@
-const { createActivity } = require('./activityResolver');
+const { createActivity } = require('./activity');
 const { toggleWatching } = require('../../db');
 
 module.exports = {

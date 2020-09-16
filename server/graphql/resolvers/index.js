@@ -1,4 +1,4 @@
-const activityResolver = require('./activityResolver');
+const activityResolver = require('./activity');
 const attemptingResolver = require('./attemptingResolver');
 const commentResolver = require('./commentResolver');
 const issueResolver = require('./issueResolver');

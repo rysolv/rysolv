@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-const { createActivity } = require('./activityResolver');
+const { createActivity } = require('./activity');
 const { calculateTotalAmount } = require('../../constants');
 const {
   getOneUser,

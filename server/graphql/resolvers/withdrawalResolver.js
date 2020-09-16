@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 
-const { createActivity } = require('./activityResolver');
+const { createActivity } = require('./activity');
 const {
   createWithdrawal,
   getOneUser,

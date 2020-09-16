@@ -12,7 +12,7 @@ const {
   transformOrganization,
   updateUserArray,
 } = require('../../db');
-const { createActivity } = require('./activityResolver');
+const { createActivity } = require('./activity');
 const { formatOrganizationUrl } = require('../../integrations/github/helpers');
 const { getSingleRepo, getSingleOrganization } = require('../../integrations');
 const { isUrl } = require('../../helpers');
