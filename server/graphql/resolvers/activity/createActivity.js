@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+
 const { createActivity: createActivityQuery } = require('../../../db');
 
 const createActivity = async args => {
