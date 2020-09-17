@@ -12,4 +12,6 @@ export const FETCH_WATCH_LIST_RESPONSE = 'app/Main/FETCH_WATCH_LIST_RESPONSE';
 export const CLOSE_MODAL_STATE = 'app/Main/CLOSE_MODAL_STATE';
 export const OPEN_MODAL_STATE = 'app/Main/OPEN_MODAL_STATE';
 
+export const RESET_STATE = 'app/Main/RESET_STATE';
+
 export const UPDATE_PAYMENT_MODAL = 'app/Main/UPDATE_PAYMENT_MODAL';

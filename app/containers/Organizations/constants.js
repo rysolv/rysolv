@@ -31,6 +31,8 @@ export const INPUT_CHANGE = 'app/Organizations/INPUT_CHANGE';
 
 export const INPUT_ERROR = 'app/Organizations/INPUT_ERROR';
 
+export const RESET_STATE = 'app/Organizations/RESET_STATE';
+
 export const SAVE_INFO = 'app/Organizations/SAVE_INFO';
 export const SAVE_INFO_FAILURE = 'app/Organizations/SAVE_INFO_FAILURE';
 export const SAVE_INFO_SUCCESS = 'app/Organizations/SAVE_INFO_SUCCESS';

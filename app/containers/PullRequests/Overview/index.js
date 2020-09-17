@@ -14,6 +14,7 @@ import {
   clearAlerts,
   deletePullRequest,
   fetchUserPullRequests,
+  resetState,
 } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
@@ -23,6 +24,7 @@ const PullRequestOverview = ({
   alerts,
   createSuccess,
   dispatchFetchUserPullRequests,
+  dispatchResetState,
   error,
   handleClearAlerts,
   handleDelete,
@@ -30,6 +32,8 @@ const PullRequestOverview = ({
   pullRequests,
   userId,
 }) => {
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
     dispatchFetchUserPullRequests({ userId });
   }, [createSuccess]);
@@ -50,6 +54,7 @@ PullRequestOverview.propTypes = {
   alerts: T.object,
   createSuccess: T.bool,
   dispatchFetchUserPullRequests: T.func,
+  dispatchResetState: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
   handleClearAlerts: T.func,
   handleDelete: T.func,
@@ -76,6 +81,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchUserPullRequests: payload =>
       dispatch(fetchUserPullRequests(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleDelete: payload => dispatch(deletePullRequest(payload)),
   };

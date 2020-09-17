@@ -1,11 +1,10 @@
-/* eslint-disable array-callback-return */
+/* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 import remove from 'lodash/remove';
 
 import {
   CLEAR_ALERTS,
   CLEAR_ERROR,
-  CLEAR_FORM,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
   CREATE_PULL_REQUEST,
@@ -21,6 +20,7 @@ import {
   IMPORT_PULL_REQUEST,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
 } from './constants';
 
 export const initialState = {
@@ -45,8 +45,6 @@ export const initialState = {
   step: 1,
 };
 
-/* eslint-disable default-case, no-param-reassign */
-// eslint-disable-next-line consistent-return
 const pullRequestReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_ALERTS: {
@@ -56,9 +54,6 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
     case CLEAR_ERROR: {
       draft.error = initialState.error;
       break;
-    }
-    case CLEAR_FORM: {
-      return initialState;
     }
     case CREATE_PULL_REQUEST_FAILURE: {
       const { error } = payload;
@@ -150,6 +145,9 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
         draft.importData[field].error = error[field] || '';
       });
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
   }
 }, initialState);

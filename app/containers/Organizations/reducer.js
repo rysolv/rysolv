@@ -1,4 +1,4 @@
-/* eslint-disable array-callback-return */
+/* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 import { v4 as uuidv4 } from 'uuid';
 import Identicon from 'identicon.js';
@@ -21,6 +21,7 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -99,7 +100,6 @@ export const initialState = {
   },
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const organizationsReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_ORGANIZATION_FILTER: {
@@ -217,6 +217,9 @@ const organizationsReducer = produce((draft, { payload, type }) => {
         draft.organizationData[field].error = errors[field] || '';
       });
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;

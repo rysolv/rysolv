@@ -18,6 +18,7 @@ import {
   clearAlerts,
   fetchInfo,
   inputChange,
+  resetState,
   updateInfo,
   upvoteIssue,
 } from '../actions';
@@ -30,7 +31,6 @@ import {
   makeSelectOrganizationsLoading,
 } from '../selectors';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export class OrganizationsDetail extends React.PureComponent {
   componentDidMount() {
     const {
@@ -43,8 +43,8 @@ export class OrganizationsDetail extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { handleClearAlerts } = this.props;
-    handleClearAlerts();
+    const { dispatchResetState } = this.props;
+    dispatchResetState();
   }
 
   render() {
@@ -103,6 +103,7 @@ OrganizationsDetail.propTypes = {
   dispatchEditOrganization: T.func.isRequired,
   dispatchFetchInfo: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
+  dispatchResetState: T.func.isRequired,
   dispatchUpvote: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object.isRequired,
@@ -151,6 +152,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchEditOrganization: payload => dispatch(updateInfo(payload)),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleInputChange: payload => dispatch(inputChange(payload)),
     /**

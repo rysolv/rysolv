@@ -37,6 +37,7 @@ import {
   INPUT_CHANGE,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -309,6 +310,13 @@ export function openIssueModalState(payload) {
   return {
     payload,
     type: OPEN_MODAL_STATE,
+  };
+}
+
+export function resetState(payload) {
+  return {
+    payload,
+    type: RESET_STATE,
   };
 }
 
