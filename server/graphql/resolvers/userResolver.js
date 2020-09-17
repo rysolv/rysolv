@@ -5,7 +5,7 @@ const {
   checkDuplicateUserEmail,
   checkDuplicateUsername,
   createUser,
-  deletePullRequests,
+  deleteUserPullRequests,
   getOneIssue,
   getOneOrganization,
   getOneUser,
@@ -102,7 +102,7 @@ module.exports = {
         upvotes: [],
         username: '[deleted]',
       };
-      await deletePullRequests({ userId });
+      await deleteUserPullRequests({ userId });
       await transformUser({ data, userId });
       return 'User successfully deleted';
     } catch (err) {
