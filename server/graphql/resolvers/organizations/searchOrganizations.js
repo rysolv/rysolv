@@ -1,5 +1,5 @@
 const {
-  nsearchOrganizations: searchOrganizationsQuery,
+  searchOrganizations: searchOrganizationsQuery,
 } = require('../../../db');
 
 const searchOrganizations = async args => {

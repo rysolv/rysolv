@@ -1,5 +1,5 @@
-const { transformIssue: transformIssueQuery } = require('../../../db');
 const { createActivity } = require('../activity');
+const { transformIssue: transformIssueQuery } = require('../../../db');
 
 const transformIssue = async args => {
   const { issueId, issueInput } = args;
