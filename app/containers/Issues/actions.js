@@ -376,11 +376,8 @@ export function updateIsManual(payload) {
   };
 }
 
-export function updateIssueDetail(payload) {
-  return {
-    payload,
-    type: UPDATE_ISSUE_DETAIL,
-  };
+export function updateIssueDetail() {
+  return { type: UPDATE_ISSUE_DETAIL };
 }
 
 export function updateOrganization(payload) {

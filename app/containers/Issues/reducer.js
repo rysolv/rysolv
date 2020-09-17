@@ -2,7 +2,6 @@
 import produce from 'immer';
 import { v4 as uuidv4 } from 'uuid';
 import Identicon from 'identicon.js';
-import remove from 'lodash/remove';
 
 import {
   ADD_ATTEMPT_FAILURE,
@@ -102,6 +101,7 @@ export const initialState = {
     addIssue: false,
     addWatch: false,
     closeIssue: false,
+    deletePullRequest: false,
     importIssue: false,
     issueDetail: false,
     issues: false,
@@ -294,21 +294,18 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case DELETE_PULL_REQUEST_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading = false;
+      draft.loading.deletePullRequest = false;
       break;
     }
     case DELETE_PULL_REQUEST_SUCCESS: {
-      const { id, message } = payload;
+      const { message } = payload;
       draft.alerts.success = { message };
-      remove(
-        draft.issueDetail.pullRequests,
-        pullRequestId => pullRequestId === id,
-      );
-      draft.loading = false;
+      draft.issueDetail.pullRequests -= 1;
+      draft.loading.deletePullRequest = false;
       break;
     }
     case DELETE_PULL_REQUEST: {
-      draft.loading = true;
+      draft.loading.deletePullRequest = true;
       break;
     }
     case EDIT_ISSUE_FAILURE: {
@@ -476,8 +473,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_ISSUE_DETAIL: {
-      const { pullRequestId } = payload;
-      draft.issueDetail.pullRequests.push(pullRequestId);
+      draft.issueDetail.pullRequests += 1;
       break;
     }
     case UPDATE_ORGANIZATION: {

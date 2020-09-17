@@ -59,7 +59,7 @@ WatchList.propTypes = {
   handleDeletePullRequest: T.func,
   isSignedIn: T.bool,
   route: T.string,
-  tableData: T.oneOfType([T.array, T.object]),
+  tableData: T.oneOfType([T.array, T.number, T.object]),
   title: T.string,
   type: T.string,
 };

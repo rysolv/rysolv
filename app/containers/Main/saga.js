@@ -41,10 +41,10 @@ export function* fetchAttemptListSaga({ payload }) {
 }
 
 export function* fetchPullRequestListSaga({ payload }) {
-  const { activeUserPullRequests, idArray, modalState } = payload;
+  const { activeUserPullRequests, issueId, modalState } = payload;
   const query = `
     query {
-      getPullRequestList(idArray: ${JSON.stringify(idArray)}) {
+      getPullRequestList(issueId: "${issueId}") {
         __typename
         ... on PullRequestList {
           pullRequestList {

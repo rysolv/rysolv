@@ -4,7 +4,6 @@ const {
   checkDuplicatePullRequest,
   checkUserGithubId,
   createPullRequest: createPullRequestQuery,
-  updateIssueArray,
   updateUserArray,
 } = require('../../../db');
 const {
@@ -67,12 +66,6 @@ const createPullRequest = async args => {
       column: 'pull_requests',
       data: result.pullRequestId,
       userId: result.userId,
-    });
-
-    await updateIssueArray({
-      column: 'pull_requests',
-      data: result.pullRequestId,
-      issueId: result.issueId,
     });
 
     return {

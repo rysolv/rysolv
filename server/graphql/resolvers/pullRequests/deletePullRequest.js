@@ -1,6 +1,5 @@
 const {
   deletePullRequest: deletePullRequestQuery,
-  updateIssueArray,
   updateUserArray,
 } = require('../../../db');
 
@@ -12,13 +11,6 @@ const deletePullRequest = async args => {
       column: 'pull_requests',
       data: id,
       userId: result.user_id,
-      remove: true,
-    });
-
-    await updateIssueArray({
-      column: 'pull_requests',
-      data: id,
-      issueId: result.issue_id,
       remove: true,
     });
 
