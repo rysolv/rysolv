@@ -20,7 +20,7 @@ const DesktopHeader = ({
   activeUser,
   deviceView,
   handleNav,
-  handleResetForm,
+  handleResetState,
   handleSignout,
   isDrawerOpen,
   isLandingPage,
@@ -58,12 +58,12 @@ const DesktopHeader = ({
             <Fragment>
               <StyledHeaderLink
                 label="Sign Up"
-                onClick={handleResetForm}
+                onClick={handleResetState}
                 path="/signup"
               />
               <StyledHeaderLink
                 label="Sign In"
-                onClick={handleResetForm}
+                onClick={handleResetState}
                 path="/signin"
               />
             </Fragment>
@@ -84,7 +84,7 @@ DesktopHeader.propTypes = {
   activeUser: T.object.isRequired,
   deviceView: T.string.isRequired,
   handleNav: T.func.isRequired,
-  handleResetForm: T.func.isRequired,
+  handleResetState: T.func.isRequired,
   handleSignout: T.func.isRequired,
   isDrawerOpen: T.bool.isRequired,
   isLandingPage: T.bool.isRequired,

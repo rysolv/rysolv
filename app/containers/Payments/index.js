@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ import {
   clearAlerts,
   inputError,
   paypalPayment,
+  resetState,
   stripeToken,
   submitAccountPayment,
 } from './actions';
@@ -26,6 +27,7 @@ const PaymentsContainer = ({
   alerts,
   dispatchInputError,
   dispatchPaypalPayment,
+  dispatchResetState,
   dispatchStripeToken,
   dispatchSubmitAccountPayment,
   errors,
@@ -38,6 +40,8 @@ const PaymentsContainer = ({
   ...restProps
 }) => {
   const { balance, email, firstName, id: userId, lastName } = activeUser;
+  useEffect(() => dispatchResetState, []);
+
   const handleStripeToken = ({ amount, token, values }) => {
     const { isValidated, validationErrors } = validateFields({ values });
     if (isValidated) {
@@ -102,6 +106,7 @@ PaymentsContainer.propTypes = {
   alerts: T.object,
   dispatchInputError: T.func,
   dispatchPaypalPayment: T.func,
+  dispatchResetState: T.func,
   dispatchStripeToken: T.func,
   dispatchSubmitAccountPayment: T.func,
   errors: T.object,
@@ -131,6 +136,7 @@ const mapDispatchToProps = dispatch => ({
    */
   dispatchInputError: payload => dispatch(inputError(payload)),
   dispatchPaypalPayment: payload => dispatch(paypalPayment(payload)),
+  dispatchResetState: () => dispatch(resetState()),
   dispatchStripeToken: payload => dispatch(stripeToken(payload)),
   dispatchSubmitAccountPayment: payload =>
     dispatch(submitAccountPayment(payload)),

@@ -60,6 +60,8 @@ export const CLOSE_MODAL_STATE = 'app/Issues/CLOSE_MODAL_STATE';
 
 export const REMOVE_ATTEMPT = 'app/Issues/REMOVE_ATTEMPT';
 
+export const RESET_STATE = 'app/Issues/RESET_STATE';
+
 export const SAVE_INFO = 'app/Issues/SAVE_INFO';
 export const SAVE_INFO_FAILURE = 'app/Issues/SAVE_INFO_FAILURE';
 export const SAVE_INFO_SUCCESS = 'app/Issues/SAVE_INFO_SUCCESS';

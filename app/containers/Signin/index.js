@@ -16,15 +16,15 @@ import {
 } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
-import { clearForm } from './actions';
+import { resetState } from './actions';
 import reducer from './reducer';
 import { makeSelectSignIn } from './selectors';
 import { signInDictionary, signUpDictionary } from './stepDictionary';
 
 const Signin = ({
   activeUser,
-  dispatchClearForm,
   dispatchResetRoute,
+  dispatchResetState,
   dispatchSignOut,
   handleNav,
   isSignedIn,
@@ -35,12 +35,7 @@ const Signin = ({
 }) => {
   const [viewToRender, setViewToRender] = useState(null);
   const { current: prevIsSignedIn } = useRef(isSignedIn);
-  useEffect(
-    () => () => {
-      dispatchClearForm();
-    },
-    [],
-  );
+  useEffect(() => dispatchResetState, []);
 
   useEffect(() => {
     if (!isVerifyRoute && isSignedIn !== prevIsSignedIn) {
@@ -78,8 +73,8 @@ const Signin = ({
 
 Signin.propTypes = {
   activeUser: T.object.isRequired,
-  dispatchClearForm: T.func.isRequired,
   dispatchResetRoute: T.func.isRequired,
+  dispatchResetState: T.func.isRequired,
   dispatchSignOut: T.func.isRequired,
   handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
@@ -117,7 +112,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Signin
      */
-    dispatchClearForm: () => dispatch(clearForm()),
+    dispatchResetState: () => dispatch(resetState()),
   };
 }
 

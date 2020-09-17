@@ -2,8 +2,6 @@ export const CLEAR_ALERTS = 'app/PullRequests/CLEAR_ALERTS';
 
 export const CLEAR_ERROR = 'app/PullRequests/CLEAR_ERROR';
 
-export const CLEAR_FORM = 'app/PullRequests/CLEAR_FORM';
-
 export const CREATE_PULL_REQUEST = 'app/PullRequests/CREATE_PULL_REQUEST';
 export const CREATE_PULL_REQUEST_FAILURE =
   'app/PullRequests/CREATE_PULL_REQUEST_FAILURE';
@@ -34,3 +32,5 @@ export const IMPORT_PULL_REQUEST_SUCCESS =
 export const INPUT_CHANGE = 'app/PullRequests/INPUT_CHANGE';
 
 export const INPUT_ERROR = 'app/PullRequests/INPUT_ERROR';
+
+export const RESET_STATE = 'app/PullRequests/RESET_STATE';

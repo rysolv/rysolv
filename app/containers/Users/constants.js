@@ -11,6 +11,8 @@ export const FETCH_USERS_SUCCESS = 'app/Users/FETCH_USERS_SUCCESS';
 
 export const INPUT_CHANGE = 'app/Users/INPUT_CHANGE';
 
+export const RESET_STATE = 'app/Users/RESET_STATE';
+
 export const SEARCH_USERS = 'app/Users/SEARCH_USERS';
 export const SEARCH_USERS_FAILURE = 'app/Users/SEARCH_USERS_FAILURE';
 export const SEARCH_USERS_SUCCESS = 'app/Users/SEARCH_USERS_SUCCESS';

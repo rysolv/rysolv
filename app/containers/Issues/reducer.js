@@ -1,4 +1,4 @@
-/* eslint-disable array-callback-return */
+/* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 import { v4 as uuidv4 } from 'uuid';
 import Identicon from 'identicon.js';
@@ -43,6 +43,7 @@ import {
   INPUT_CHANGE,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -129,7 +130,6 @@ export const initialState = {
   },
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const issuesReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case ADD_ATTEMPT_FAILURE: {
@@ -420,6 +420,9 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.isModalOpen = true;
       draft.modal = modalState;
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
