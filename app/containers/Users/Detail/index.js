@@ -10,7 +10,7 @@ import UserDetailView from 'components/Users/Detail/UserDetailView';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { fetchInfo, inputChange } from '../actions';
+import { fetchInfo, inputChange, resetState } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -24,6 +24,7 @@ import { DetailWrapper } from './styledComponents';
 const UsersDetail = ({
   data,
   dispatchFetchInfo,
+  dispatchResetState,
   error,
   filterValues,
   handleInputChange,
@@ -33,6 +34,8 @@ const UsersDetail = ({
     params: { id },
   },
 }) => {
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'User Detail';
@@ -60,6 +63,7 @@ const UsersDetail = ({
 UsersDetail.propTypes = {
   data: T.object,
   dispatchFetchInfo: T.func,
+  dispatchResetState: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
@@ -84,6 +88,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Users
      */
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     handleInputChange: payload => dispatch(inputChange(payload)),
     /**
      * Reducer : Router

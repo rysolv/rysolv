@@ -8,6 +8,7 @@ import {
   FETCH_USERS_SUCCESS,
   FETCH_USERS,
   INPUT_CHANGE,
+  RESET_STATE,
   SEARCH_USERS_FAILURE,
   SEARCH_USERS_SUCCESS,
   SEARCH_USERS,
@@ -72,6 +73,12 @@ export function inputChange(payload) {
   return {
     payload,
     type: INPUT_CHANGE,
+  };
+}
+
+export function resetState() {
+  return {
+    type: RESET_STATE,
   };
 }
 

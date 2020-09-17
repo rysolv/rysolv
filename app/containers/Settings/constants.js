@@ -30,6 +30,8 @@ export const REMOVE_ISSUE_FAILURE = 'app/Settings/REMOVE_ISSUE_FAILURE';
 export const REMOVE_ISSUE_SUCCESS = 'app/Settings/REMOVE_ISSUE_SUCCESS';
 export const REMOVE_WATCHING = 'app/Settings/REMOVE_WATCHING';
 
+export const RESET_STATE = 'app/Settings/RESET_STATE';
+
 export const SAVE_CHANGE = 'app/Settings/SAVE_CHANGE';
 export const SAVE_CHANGE_FAILURE = 'app/Settings/SAVE_CHANGE_FAILURE';
 export const SAVE_CHANGE_SUCCESS = 'app/Settings/SAVE_CHANGE_SUCCESS';

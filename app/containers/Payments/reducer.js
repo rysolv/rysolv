@@ -1,4 +1,4 @@
-/* eslint-disable default-case, no-param-reassign */
+/* eslint-disable consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
 import {
@@ -7,6 +7,7 @@ import {
   PAYPAL_PAYMENT_FAILURE,
   PAYPAL_PAYMENT_SUCCESS,
   PAYPAL_PAYMENT,
+  RESET_STATE,
   STRIPE_TOKEN_FAILURE,
   STRIPE_TOKEN_SUCCESS,
   STRIPE_TOKEN,
@@ -56,6 +57,9 @@ const paymentReducer = produce((draft, { payload, type }) => {
       draft.alerts = initialState.alerts;
       draft.loading = true;
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
     case STRIPE_TOKEN_FAILURE: {
       const { error } = payload;

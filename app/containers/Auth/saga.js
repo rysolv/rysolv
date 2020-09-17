@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import Auth from '@aws-amplify/auth';
 
+import { resetState } from 'containers/Main/actions';
 import { incrementStep } from 'containers/Signin/actions';
 import { post } from 'utils/request';
 
@@ -122,6 +123,10 @@ export function* getUserOrganizationsSaga({ payload }) {
   }
 }
 
+export function* removeUserData() {
+  yield put(resetState());
+}
+
 export function* resendSignUpSaga({ payload }) {
   const { username } = payload;
 
@@ -217,8 +222,10 @@ export function* signOutSaga() {
   };
   try {
     yield call(cognitoSignOut);
+    yield call(removeUserData);
     yield put(signOutSuccess());
   } catch (error) {
+    yield call(removeUserData);
     yield put(signOutFailure());
   }
 }

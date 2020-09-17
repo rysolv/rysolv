@@ -1,7 +1,6 @@
 import {
   CLEAR_ALERTS,
   CLEAR_ERROR,
-  CLEAR_FORM,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
   CREATE_PULL_REQUEST,
@@ -17,6 +16,7 @@ import {
   IMPORT_PULL_REQUEST,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
 } from './constants';
 
 export function clearAlerts() {
@@ -28,12 +28,6 @@ export function clearAlerts() {
 export function clearError() {
   return {
     type: CLEAR_ERROR,
-  };
-}
-
-export function clearForm() {
-  return {
-    type: CLEAR_FORM,
   };
 }
 
@@ -139,5 +133,11 @@ export function inputError(payload) {
   return {
     payload,
     type: INPUT_ERROR,
+  };
+}
+
+export function resetState() {
+  return {
+    type: RESET_STATE,
   };
 }

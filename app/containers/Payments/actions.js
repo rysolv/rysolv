@@ -4,6 +4,7 @@ import {
   PAYPAL_PAYMENT_FAILURE,
   PAYPAL_PAYMENT_SUCCESS,
   PAYPAL_PAYMENT,
+  RESET_STATE,
   STRIPE_TOKEN_FAILURE,
   STRIPE_TOKEN_SUCCESS,
   STRIPE_TOKEN,
@@ -44,6 +45,10 @@ export function paypalPayment(payload) {
     payload,
     type: PAYPAL_PAYMENT,
   };
+}
+
+export function resetState() {
+  return { type: RESET_STATE };
 }
 
 export function stripeTokenFailure(payload) {

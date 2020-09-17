@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
 import {
@@ -21,6 +22,7 @@ import {
   PAYPAL_PAYMENT,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
+  RESET_STATE,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
@@ -53,7 +55,6 @@ export const initialState = {
   modal: '',
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const settingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_EMAIL_FAILURE: {
@@ -180,6 +181,9 @@ const settingsReducer = produce((draft, { payload, type }) => {
       }
       draft.loading = false;
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
     case SAVE_CHANGE_FAILURE: {
       const { error } = payload;

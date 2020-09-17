@@ -23,7 +23,7 @@ import autocompleteDictionary from 'utils/autocompleteDictionary';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { fetchOrganizationOptions } from './actions';
+import { fetchOrganizationOptions, resetState } from './actions';
 import { overviewDirectory } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
@@ -41,6 +41,7 @@ const languageOptions = autocompleteDictionary.language;
 const Overview = ({
   deviceView,
   dispatchFetchOrganizationOptions,
+  dispatchResetState,
   filterIssueValues,
   filterOrganizationValues,
   filterUserValues,
@@ -55,6 +56,7 @@ const Overview = ({
 }) => {
   useEffect(() => {
     dispatchFetchOrganizationOptions();
+    return dispatchResetState;
   }, []);
   const formattedPath = path.split('/')[1];
   const { Component, title } = overviewDirectory[formattedPath];
@@ -127,6 +129,7 @@ const Overview = ({
 Overview.propTypes = {
   deviceView: T.string.isRequired,
   dispatchFetchOrganizationOptions: T.func,
+  dispatchResetState: T.func.isRequired,
   filterIssueValues: T.object,
   filterOrganizationValues: T.object,
   filterUserValues: T.object,
@@ -182,6 +185,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchOrganizationOptions: () =>
       dispatch(fetchOrganizationOptions()),
+    dispatchResetState: () => dispatch(resetState()),
     /*
      * Reducer : Users
      */

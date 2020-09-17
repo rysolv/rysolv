@@ -9,12 +9,12 @@ import injectSaga from 'utils/injectSaga';
 
 import {
   clearError,
-  clearForm,
   createPullRequest,
   handleStep,
   importPullRequest,
   inputChange,
   inputError,
+  resetState,
 } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
@@ -22,10 +22,10 @@ import { makeSelectPullRequests } from '../selectors';
 import { importPullRequestDictionary } from '../stepDictionary';
 
 const AddPullRequest = ({
-  dispatchClearForm,
   dispatchCreatePullRequest,
   dispatchHandleStep,
   dispatchImportPullRequest,
+  dispatchResetState,
   error,
   handleClearError,
   handleClose,
@@ -36,7 +36,8 @@ const AddPullRequest = ({
   step,
   userId,
 }) => {
-  useEffect(() => dispatchClearForm, []);
+  useEffect(() => dispatchResetState, []);
+
   const ComponentToRender = importPullRequestDictionary[step];
 
   const handleImport = () => {
@@ -66,10 +67,10 @@ const AddPullRequest = ({
 };
 
 AddPullRequest.propTypes = {
-  dispatchClearForm: T.func,
   dispatchCreatePullRequest: T.func,
   dispatchHandleStep: T.func,
   dispatchImportPullRequest: T.func,
+  dispatchResetState: T.func.isRequired,
   error: T.oneOfType([T.bool, T.string]),
   handleClearError: T.func,
   handleClose: T.func,
@@ -96,11 +97,11 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : PullRequests
      */
-    dispatchClearForm: () => dispatch(clearForm()),
     dispatchCreatePullRequest: payload => dispatch(createPullRequest(payload)),
     dispatchHandleStep: payload => dispatch(handleStep(payload)),
     dispatchImportPullRequest: payload => dispatch(importPullRequest(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     handleClearError: () => dispatch(clearError()),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
