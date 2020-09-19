@@ -1,16 +1,16 @@
 const { v4: uuidv4 } = require('uuid');
 
 const { createActivity } = require('../activity');
+const { createCommentError } = require('./constants');
 const {
   createComment: createCommentQuery,
   updateIssueArray,
   updateUserArray,
 } = require('../../../db');
 
-const createComment = async args => {
-  const { commentInput } = args;
-  const date = new Date();
+const createComment = async ({ commentInput }) => {
   try {
+    const date = new Date();
     const data = {
       body: commentInput.body || '',
       created_date: date,
@@ -19,39 +19,46 @@ const createComment = async args => {
       target: commentInput.target,
       user_id: commentInput.user,
     };
-    const result = await createCommentQuery({ data });
+    const comment = await createCommentQuery({ data });
 
     const activityInput = {
       actionType: 'comment',
-      issueId: result.target,
-      userId: result.user_id,
+      issueId: comment.target,
+      userId: comment.user_id,
     };
     await createActivity({ activityInput });
 
     const user = await updateUserArray({
       column: 'comments',
-      data: result.id,
+      data: comment.id,
       userId: commentInput.user,
     });
 
     await updateIssueArray({
       column: 'comments',
-      data: result.id,
-      issueId: result.target,
+      data: comment.id,
+      issueId: comment.target,
     });
 
-    return {
-      body: result.body,
-      commentId: result.id,
-      createdDate: result.created_date,
-      modifiedDate: result.modified_date,
+    const result = {
+      body: comment.body,
+      commentId: comment.id,
+      createdDate: comment.created_date,
+      modifiedDate: comment.modified_date,
       profilePic: user.profile_pic,
-      target: result.target,
-      userId: result.user_id,
+      target: comment.target,
+      userId: comment.user_id,
       username: user.username,
     };
+    return {
+      __typename: 'Comment',
+      ...result,
+    };
   } catch (err) {
-    throw err;
+    return {
+      __typename: 'Error',
+      message: createCommentError,
+    };
   }
 };
 

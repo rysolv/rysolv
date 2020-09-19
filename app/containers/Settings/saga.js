@@ -104,25 +104,17 @@ export function* fetchInfoSaga({ payload }) {
         watching,
       }
       getUserActivity(userId: "${userId}") {
-        __typename
-        ... on ActivityArray {
-          activityArray {
-            actionType,
-            activityId,
-            createdDate,
-            fundedValue,
-            issueId,
-            issueName,
-            organizationId,
-            organizationName,
-            pullRequestId,
-            userId,
-            username,
-          }
-        }
-        ... on Error {
-          message
-        }
+        actionType,
+        activityId,
+        createdDate,
+        fundedValue,
+        issueId,
+        issueName,
+        organizationId,
+        organizationName,
+        pullRequestId,
+        userId,
+        username,
       }
     }
 `;
@@ -132,12 +124,9 @@ export function* fetchInfoSaga({ payload }) {
       variables: {},
     });
     const {
-      data: {
-        getUserActivity: { activityArray },
-        oneUser,
-      },
+      data: { getUserActivity, oneUser },
     } = yield call(post, '/graphql', graphql);
-    oneUser.activity = activityArray;
+    oneUser.activity = getUserActivity;
     yield put(fetchInfoSuccess({ oneUser }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
@@ -210,12 +199,12 @@ export function* removeAttemptingSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') {
-      throw new Error(message);
+      throw message;
     }
     yield put(removeIssueSuccess({ column: 'attempting', issueId }));
     yield put(updateActiveUser({ attempting: issueArray }));
   } catch (error) {
-    yield put(removeIssueFailure({ error }));
+    yield put(removeIssueFailure({ error: { message: error } }));
   }
 }
 

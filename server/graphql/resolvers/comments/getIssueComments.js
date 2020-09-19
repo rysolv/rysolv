@@ -1,15 +1,11 @@
 const { getIssueComments: getIssueCommentsQuery } = require('../../../db');
 
-const getIssueComments = async args => {
-  const { issueId } = args;
+const getIssueComments = async ({ issueId }) => {
   try {
-    const result = await getIssueCommentsQuery({ issueId });
-    return result;
-  } catch (err) {
-    return {
-      __typename: 'Error',
-      message: err.message,
-    };
+    const comments = await getIssueCommentsQuery({ issueId });
+    return comments;
+  } catch (error) {
+    return [];
   }
 };
 

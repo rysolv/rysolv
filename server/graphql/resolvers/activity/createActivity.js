@@ -2,8 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const { createActivity: createActivityQuery } = require('../../../db');
 
-const createActivity = async args => {
-  const { activityInput } = args;
+const createActivity = async ({ activityInput }) => {
   const data = {
     action_type: activityInput.actionType || null,
     activity_id: uuidv4(),
@@ -15,9 +14,7 @@ const createActivity = async args => {
     pullrequest_id: activityInput.pullRequestId || null,
     user_id: activityInput.userId || null,
   };
-
-  const message = await createActivityQuery({ data });
-  return message;
+  await createActivityQuery({ data });
 };
 
 module.exports = createActivity;

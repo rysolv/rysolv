@@ -87,13 +87,16 @@ export function* addAttemptSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') {
-      throw new Error(message);
+      throw message;
     }
 
     yield put(addAttemptSuccess({ issueId, userArray }));
     yield put(updateActiveUser({ attempting: issueArray }));
   } catch (error) {
-    yield put(addAttemptFailure({ error }));
+    yield put(
+      addAttemptFailure({ error: { message: error }, issueId, userId }),
+    );
+    yield put(userAttemptingTemp({ issueId }));
   }
 }
 
@@ -106,12 +109,18 @@ export function* addCommentSaga({ payload }) {
       target: "${issueId}",
       user: "${activeUser.id}"
     }) {
-      body,
-      commentId,
-      createdDate,
-      profilePic
-      target,
-      username,
+      __typename
+      ... on Comment {
+        body,
+        commentId,
+        createdDate,
+        profilePic
+        target,
+        username,
+      }
+      ... on Error {
+        message
+      }
     }
   }`;
   try {
@@ -119,10 +128,17 @@ export function* addCommentSaga({ payload }) {
       query,
       variables: {},
     });
-    const { data: createComment } = yield call(post, '/graphql', graphql);
-    yield put(addCommentSuccess(createComment));
+    const {
+      data: {
+        createComment: { __typename, message, ...restProps },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') {
+      throw message;
+    }
+    yield put(addCommentSuccess({ createComment: restProps }));
   } catch (error) {
-    yield put(addCommentFailure({ error }));
+    yield put(addCommentFailure({ error: { message: error } }));
   }
 }
 
@@ -291,7 +307,6 @@ export function* fetchIssueDetailSaga({ payload }) {
         ... on Issue {
           attempting,
           body,
-          comments,
           contributor,
           createdDate,
           fundedAmount,
@@ -332,19 +347,17 @@ export function* fetchIssueDetailSaga({ payload }) {
     });
     const {
       data: {
-        oneIssue,
-        oneIssue: { __typename },
         getIssueComments,
+        oneIssue: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', issueQuery);
-
     if (__typename === 'Error') {
-      throw new Error(oneIssue.message);
+      throw message;
     }
 
-    oneIssue.comments = getIssueComments;
+    restProps.comments = getIssueComments;
 
-    yield put(fetchIssueDetailSuccess({ oneIssue }));
+    yield put(fetchIssueDetailSuccess({ issueDetail: restProps }));
   } catch (error) {
     yield put(fetchIssueDetailFailure({ error }));
   }

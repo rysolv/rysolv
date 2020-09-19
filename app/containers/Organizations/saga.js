@@ -101,26 +101,19 @@ export function* fetchInfoSaga({ payload }) {
       }
     }
     getOrganizationActivity(organizationId: "${itemId}") {
-      __typename
-      ... on ActivityArray {
-        activityArray {
-          actionType,
-          activityId,
-          createdDate,
-          fundedValue,
-          issueId,
-          issueName,
-          organizationId,
-          organizationName,
-          profilePic,
-          pullRequestId,
-          userId,
-          username,
-        }
-      }
-      ... on Error {
-        message
-      }
+
+      actionType,
+      activityId,
+      createdDate,
+      fundedValue,
+      issueId,
+      issueName,
+      organizationId,
+      organizationName,
+      profilePic,
+      pullRequestId,
+      userId,
+      username,
     }
   }
 `;
@@ -131,17 +124,16 @@ export function* fetchInfoSaga({ payload }) {
     });
     const {
       data: {
-        getOrganizationActivity: { activityArray },
-        oneOrganization,
+        getOrganizationActivity,
+        oneOrganization: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-    oneOrganization.activity = activityArray;
-
-    if (oneOrganization.__typename === 'Error') {
-      throw new Error(oneOrganization.message);
+    if (__typename === 'Error') {
+      throw new Error(message);
     }
+    restProps.activity = getOrganizationActivity;
 
-    yield put(fetchInfoSuccess({ organization: oneOrganization }));
+    yield put(fetchInfoSuccess({ organization: restProps }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
   }

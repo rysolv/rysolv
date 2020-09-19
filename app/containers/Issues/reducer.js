@@ -133,8 +133,26 @@ export const initialState = {
 const issuesReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case ADD_ATTEMPT_FAILURE: {
-      const { error } = payload;
+      const { error, issueId, userId } = payload;
       draft.alerts.error = error;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          const userIdIndex = draft.issues[index].attempting.indexOf(userId);
+          if (userIdIndex > -1) {
+            draft.issues[index].attempting.splice(userIdIndex, 1);
+          } else {
+            draft.issues[index].attempting.push(userId);
+          }
+        }
+      });
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.attempting.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.attempting.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.attempting.push(userId);
+        }
+      }
       draft.loading.addAttempt = false;
       break;
     }
@@ -341,13 +359,13 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_ISSUE_DETAIL_FAILURE: {
       const { error } = payload;
-      draft.error.issueDetail = error;
+      draft.alerts.error = error;
       draft.loading.issueDetail = false;
       break;
     }
     case FETCH_ISSUE_DETAIL_SUCCESS: {
-      const { oneIssue } = payload;
-      draft.issueDetail = oneIssue;
+      const { issueDetail } = payload;
+      draft.issueDetail = issueDetail;
       draft.loading.issueDetail = false;
       break;
     }

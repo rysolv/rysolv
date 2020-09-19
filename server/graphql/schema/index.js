@@ -324,6 +324,7 @@ module.exports = buildSchema(`
   }
 
   union ActivityResult = ActivityArray | Error
+  union CommentResult = Comment | Error
   union EventResponse = Success | Error
   union ImportPullRequestResult = ImportPullRequest | Error
   union ImportResult = ImportData | Error
@@ -349,10 +350,10 @@ module.exports = buildSchema(`
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: [Issue!]!
     getIssueWatchList(issueId: ID!): [WatchList!]
-    getOrganizationActivity(organizationId: ID): ActivityResult!
+    getOrganizationActivity(organizationId: ID): [Activity]!
     getOrganizations: [Organization!]!
     getPullRequestList(issueId: ID): PullRequestListResult!
-    getUserActivity(userId: ID): ActivityResult!
+    getUserActivity(userId: ID): [Activity]!
     getUserOrganizations(id: ID!): [Organization!]
     getUserPullRequests(id: ID!): PullRequestArrayResult
     getUsers: [User!]!
@@ -374,7 +375,7 @@ module.exports = buildSchema(`
     closeIssue(issueId: ID!, shouldClose: Boolean): String!
 
     createActivity(activityInput: ActivityInput): Activity
-    createComment(commentInput: CommentInput): Comment
+    createComment(commentInput: CommentInput): CommentResult!
     createIssue(issueInput: IssueInput): IssueResult
     createOrganization(organizationInput: OrganizationInput): OrganizationResult
     createPaypalPayment(amount: Float!, issueId: ID, userId: ID): PaymentResult!
