@@ -1,8 +1,8 @@
 const { createActivity } = require('../activity');
 const { toggleWatching: toggleWatchingQuery } = require('../../../db');
+const { toggleWatchingError } = require('./constants');
 
-const toggleWatching = async args => {
-  const { issueId, userId } = args;
+const toggleWatching = async ({ issueId, userId }) => {
   try {
     const { issueArray, remove, userArray } = await toggleWatchingQuery({
       issueId,
@@ -25,7 +25,7 @@ const toggleWatching = async args => {
   } catch (err) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: toggleWatchingError,
     };
   }
 };

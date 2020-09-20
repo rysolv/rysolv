@@ -372,7 +372,7 @@ module.exports = buildSchema(`
   }
 
   type RootMutation {
-    closeIssue(issueId: ID!, shouldClose: Boolean): String!
+    closeIssue(issueId: ID!, shouldClose: Boolean): EventResponse!
 
     createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): CommentResult!

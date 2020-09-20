@@ -44,4 +44,17 @@ const newOrganizationObject = async organizationInput => {
   };
 };
 
-module.exports = { newIssueObject, newOrganizationObject };
+const closeIssueError = ({ shouldClose }) =>
+  `Something went wrong when ${
+    shouldClose ? 'closing' : 'reopening'
+  } your issue.`;
+
+const closeIssueSuccess = ({ shouldClose }) =>
+  `Your issue has been successfully ${shouldClose ? 'closed' : 'reopened'}.`;
+
+module.exports = {
+  closeIssueError,
+  closeIssueSuccess,
+  newIssueObject,
+  newOrganizationObject,
+};

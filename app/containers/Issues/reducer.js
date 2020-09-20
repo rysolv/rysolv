@@ -133,18 +133,8 @@ export const initialState = {
 const issuesReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case ADD_ATTEMPT_FAILURE: {
-      const { error, issueId, userId } = payload;
+      const { error, userId } = payload;
       draft.alerts.error = error;
-      draft.issues.map(({ id }, index) => {
-        if (id === issueId) {
-          const userIdIndex = draft.issues[index].attempting.indexOf(userId);
-          if (userIdIndex > -1) {
-            draft.issues[index].attempting.splice(userIdIndex, 1);
-          } else {
-            draft.issues[index].attempting.push(userId);
-          }
-        }
-      });
       if (draft.issueDetail.id) {
         const userIdIndex = draft.issueDetail.attempting.indexOf(userId);
         if (userIdIndex > -1) {
@@ -170,17 +160,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case ADD_ATTEMPT: {
-      const { issueId, userId } = payload;
-      draft.issues.map(({ id }, index) => {
-        if (id === issueId) {
-          const userIdIndex = draft.issues[index].attempting.indexOf(userId);
-          if (userIdIndex > -1) {
-            draft.issues[index].attempting.splice(userIdIndex, 1);
-          } else {
-            draft.issues[index].attempting.push(userId);
-          }
-        }
-      });
+      const { userId } = payload;
       if (draft.issueDetail.id) {
         const userIdIndex = draft.issueDetail.attempting.indexOf(userId);
         if (userIdIndex > -1) {
@@ -209,8 +189,26 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case ADD_WATCH_FAILURE: {
-      const { error } = payload;
+      const { error, issueId, userId } = payload;
       draft.alerts.error = error;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          const userIdIndex = draft.issues[index].watching.indexOf(userId);
+          if (userIdIndex > -1) {
+            draft.issues[index].watching.splice(userIdIndex, 1);
+          } else {
+            draft.issues[index].watching.push(userId);
+          }
+        }
+      });
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.watching.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.watching.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.watching.push(userId);
+        }
+      }
       draft.loading.addWatch = false;
       break;
     }

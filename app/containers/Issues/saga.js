@@ -89,13 +89,10 @@ export function* addAttemptSaga({ payload }) {
     if (__typename === 'Error') {
       throw message;
     }
-
     yield put(addAttemptSuccess({ issueId, userArray }));
     yield put(updateActiveUser({ attempting: issueArray }));
   } catch (error) {
-    yield put(
-      addAttemptFailure({ error: { message: error }, issueId, userId }),
-    );
+    yield put(addAttemptFailure({ error: { message: error }, userId }));
     yield put(userAttemptingTemp({ issueId }));
   }
 }
@@ -145,7 +142,6 @@ export function* addCommentSaga({ payload }) {
 export function* addWatchSaga({ payload }) {
   const { issueId, userId } = payload;
   yield put(userWatchingTemp({ issueId }));
-
   const query = `
   mutation {
     toggleWatching(issueId: "${issueId}", userId: "${userId}") {
@@ -174,13 +170,13 @@ export function* addWatchSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') {
-      throw new Error(message);
+      throw message;
     }
-
     yield put(addWatchSuccess({ issueId, userArray }));
     yield put(updateActiveUser({ watching: issueArray }));
   } catch (error) {
-    yield put(addWatchFailure({ error }));
+    yield put(addWatchFailure({ error: { message: error }, userId }));
+    yield put(userWatchingTemp({ issueId }));
   }
 }
 
@@ -188,7 +184,15 @@ export function* closeIssueSaga({ payload }) {
   const { issueId, shouldClose } = payload;
   const query = `
   mutation{
-    closeIssue(issueId: "${issueId}", shouldClose: ${shouldClose})
+    closeIssue(issueId: "${issueId}", shouldClose: ${shouldClose}) {
+      __typename
+      ... on Success {
+        message
+      }
+      ... on Error {
+        message
+      }
+    }
   }`;
   try {
     const graphql = JSON.stringify({
@@ -196,11 +200,16 @@ export function* closeIssueSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { closeIssue },
+      data: {
+        closeIssue: { __typename, message },
+      },
     } = yield call(post, '/graphql', graphql);
-    yield put(closeIssueSuccess({ issueId, message: closeIssue }));
+    if (__typename === 'Error') {
+      throw message;
+    }
+    yield put(closeIssueSuccess({ issueId, message }));
   } catch (error) {
-    yield put(closeIssueFailure({ error }));
+    yield put(closeIssueFailure({ error: { message: error } }));
   }
 }
 
