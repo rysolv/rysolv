@@ -52,9 +52,24 @@ const closeIssueError = ({ shouldClose }) =>
 const closeIssueSuccess = ({ shouldClose }) =>
   `Your issue has been successfully ${shouldClose ? 'closed' : 'reopened'}.`;
 
+const createIssueError = `Something went wrong when creating the issue.`;
+
+const createIssueSuccess = `Issue was successfully created.`;
+
+const createOrganizationError = `Something went wrong when creating the organization for the issue.`;
+
+const existingIssueError = `This issue already exists.`;
+
+const existingOrganizationError = `This organization already exists.`;
+
 module.exports = {
   closeIssueError,
   closeIssueSuccess,
+  createIssueError,
+  createIssueSuccess,
+  createOrganizationError,
+  existingIssueError,
+  existingOrganizationError,
   newIssueObject,
   newOrganizationObject,
 };

@@ -51,7 +51,6 @@ import {
   IMPORT_ISSUE,
   SAVE_INFO,
   SEARCH_ISSUES,
-  successCreateIssueMessage,
   successEditIssueMessage,
   UPVOTE_ISSUE,
 } from './constants';
@@ -497,6 +496,7 @@ export function* saveInfoSaga({ payload }) {
         __typename
         ... on Issue {
           id
+          message
         }
         ... on Error {
           message
@@ -510,14 +510,16 @@ export function* saveInfoSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { createIssue },
+      data: {
+        createIssue: { __typename, id, message },
+      },
     } = yield call(post, '/graphql', graphql);
-    const { __typename, id, message } = createIssue;
-    if (__typename === 'Error') throw new Error(message);
-
+    if (__typename === 'Error') {
+      throw message;
+    }
     yield put(fetchActiveUser({ userId }));
     yield put(push(`/issues/detail/${id}`));
-    yield put(saveInfoSuccess({ message: successCreateIssueMessage }));
+    yield put(saveInfoSuccess({ message }));
   } catch (error) {
     yield put(push('/issues'));
     yield put(saveInfoFailure({ error }));

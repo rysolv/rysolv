@@ -94,6 +94,7 @@ module.exports = buildSchema(`
     fundedAmount: Float
     id: ID!
     language: [String]
+    message: String
     modifiedDate: Object
     name: String
     open: Boolean
@@ -359,7 +360,7 @@ module.exports = buildSchema(`
     getUserPullRequests(id: ID!): PullRequestArrayResult
     getUsers: [User!]!
 
-    oneIssue(id: ID!): IssueResult
+    oneIssue(id: ID!): IssueResult!
     oneOrganization(id: ID!): OrganizationResult
     onePullRequest(id: ID!): PullRequestResult
     oneUser(id: ID!): User!
