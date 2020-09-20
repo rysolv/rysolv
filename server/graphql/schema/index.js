@@ -313,6 +313,7 @@ module.exports = buildSchema(`
 
   type Withdrawal {
     balance: Float
+    message: String
   }
 
   type Error {

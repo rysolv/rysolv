@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const { v4: uuidv4 } = require('uuid');
 
 const { createActivity } = require('../activity');
@@ -6,9 +7,14 @@ const {
   getOneUser,
   transformUserBalance,
 } = require('../../../db');
+const {
+  createWithdrawalError,
+  createWithdrawalSuccess,
+  greaterThanZeroError,
+  lessThanBalanceError,
+} = require('./constants');
 
-const createWithdrawal = async args => {
-  const { transferValue, userId } = args;
+const createWithdrawal = async ({ transferValue, userId }) => {
   try {
     const { balance } = await getOneUser({ userId });
     const createdDate = new Date();
@@ -45,19 +51,25 @@ const createWithdrawal = async args => {
 
       return {
         __typename: 'Withdrawal',
+        message: createWithdrawalSuccess,
         ...result,
       };
     }
-
-    throw new Error(
-      lessThanBalance
-        ? 'Transfer amount is greater than balance.'
-        : 'Transfer amount must be greater than $0.00.',
-    );
-  } catch (err) {
+    if (!lessThanBalance && greaterThanZero) {
+      const error = new Error();
+      error.message = greaterThanZeroError;
+      throw error;
+    }
+    if (lessThanBalance && !greaterThanZero) {
+      const error = new Error();
+      error.message = lessThanBalanceError;
+      throw error;
+    }
+  } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: err.message,
+      message: message || createWithdrawalError,
     };
   }
 };

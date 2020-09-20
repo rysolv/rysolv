@@ -388,6 +388,7 @@ export function* withdrawFundsSaga({ payload }) {
         __typename
         ... on Withdrawal {
           balance
+          message
         }
         ... on Error {
           message
@@ -401,21 +402,22 @@ export function* withdrawFundsSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { createWithdrawal },
+      data: {
+        createWithdrawal: { __typename, balance, message },
+      },
     } = yield call(post, '/graphql', graphql);
-    const { balance, message, __typename } = createWithdrawal;
     if (__typename === 'Error') {
-      throw new Error(message);
+      throw message;
     }
     yield put(updateActiveUser({ balance }));
     yield put(
       withdrawFundsSuccess({
         balance,
-        message: 'Withdrawal request has been successfully submitted.',
+        message,
       }),
     );
   } catch (error) {
-    yield put(withdrawFundsFailure({ error }));
+    yield put(withdrawFundsFailure({ error: { message: error } }));
   }
 }
 
