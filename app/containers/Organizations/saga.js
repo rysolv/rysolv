@@ -15,7 +15,6 @@ import {
   IMPORT_ORGANIZATION,
   SAVE_INFO,
   SEARCH_ORGANIZATIONS,
-  successEditOrganizationMessage,
   UPDATE_INFO,
   UPVOTE_ISSUE,
 } from './constants';
@@ -91,39 +90,38 @@ export function* fetchInfoSaga({ payload }) {
     oneOrganization(id: "${itemId}") {
       __typename
       ... on Organization {
-        contributors,
-        createdDate,
-        description,
-        id,
-        issues,
-        logo,
-        modifiedDate,
-        name,
-        organizationUrl,
-        ownerId,
+        contributors
+        createdDate
+        description
+        id
+        issues
+        logo
+        modifiedDate
+        name
+        organizationUrl
+        ownerId
         preferredLanguages
-        repoUrl,
-        totalFunded,
-        verified,
+        repoUrl
+        totalFunded
+        verified
       }
       ... on Error {
         message
       }
     }
     getOrganizationActivity(organizationId: "${itemId}") {
-
-      actionType,
-      activityId,
-      createdDate,
-      fundedValue,
-      issueId,
-      issueName,
-      organizationId,
-      organizationName,
-      profilePic,
-      pullRequestId,
-      userId,
-      username,
+      actionType
+      activityId
+      createdDate
+      fundedValue
+      issueId
+      issueName
+      organizationId
+      organizationName
+      profilePic
+      pullRequestId
+      userId
+      username
     }
   }
 `;
@@ -139,10 +137,9 @@ export function* fetchInfoSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') {
-      throw new Error(message);
+      throw message;
     }
     restProps.activity = getOrganizationActivity;
-
     yield put(fetchInfoSuccess({ organization: restProps }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
@@ -251,25 +248,17 @@ export function* searchOrganizationsSaga({ payload }) {
   const query = `
   query {
     searchOrganizations(value: "${value}") {
-    __typename
-      ... on OrganizationArray {
-        organizations {
-          createdDate
-          description
-          id
-          issues
-          logo
-          modifiedDate
-          name
-          organizationUrl
-          repoUrl
-          totalFunded
-          verified
-        }
-      }
-      ... on Error {
-        message
-      }
+      createdDate
+      description
+      id
+      issues
+      logo
+      modifiedDate
+      name
+      organizationUrl
+      repoUrl
+      totalFunded
+      verified
     }
   }
 `;
@@ -279,13 +268,11 @@ export function* searchOrganizationsSaga({ payload }) {
       variables: {},
     });
     const {
-      data: {
-        searchOrganizations: { __typename, message, organizations },
-      },
+      data: { searchOrganizations },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') throw message;
-
-    yield put(searchOrganizationsSuccess({ organizations }));
+    yield put(
+      searchOrganizationsSuccess({ organizations: searchOrganizations }),
+    );
   } catch (error) {
     yield put(searchOrganizationsFailure({ error }));
   }
@@ -314,17 +301,8 @@ export function* updateInfoSaga({ payload }) {
         organizationVerified: ${verified},
       }) {
         __typename
-        ... on Organization {
-          id,
-          createdDate,
-          modifiedDate,
-          name,
-          description,
-          repoUrl,
-          organizationUrl,
-          issues,
-          logo,
-          verified,
+        ... on Success {
+          message
         }
         ... on Error {
           message
@@ -338,15 +316,17 @@ export function* updateInfoSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { transformOrganization },
+      data: {
+        transformOrganization: { __typename, message },
+      },
     } = yield call(post, '/graphql', graphql);
-    if (transformOrganization.__typename === 'Error') {
-      throw transformOrganization;
+    if (__typename === 'Error') {
+      throw message;
     }
     yield put(fetchInfo({ itemId }));
-    yield put(updateInfoSuccess({ message: successEditOrganizationMessage }));
+    yield put(updateInfoSuccess({ message }));
   } catch (error) {
-    yield put(updateInfoFailure({ error }));
+    yield put(updateInfoFailure({ error: { message: error } }));
   }
 }
 

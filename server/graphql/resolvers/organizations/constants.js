@@ -18,10 +18,19 @@ const getOrganizationsError = `Something went wrong when getting organizations.`
 
 const importOrganizationError = `Something went wrong when importing this organization.`;
 
+const oneOrganizationError = `Something went wrong when getting this organization.`;
+
+const transformOrganizationError = `Something went wrong when editing this organization.`;
+
+const transformOrganizationSuccess = `Your organization was successfully edited.`;
+
 module.exports = {
   checkDuplicate,
   createOrganizationError,
   createOrganizationSuccess,
   getOrganizationsError,
   importOrganizationError,
+  oneOrganizationError,
+  transformOrganizationError,
+  transformOrganizationSuccess,
 };

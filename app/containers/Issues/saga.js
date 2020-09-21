@@ -351,7 +351,7 @@ export function* fetchIssueDetailSaga({ payload }) {
 
     yield put(fetchIssueDetailSuccess({ issueDetail: restProps }));
   } catch (error) {
-    yield put(fetchIssueDetailFailure({ error: { message: error } }));
+    yield put(fetchIssueDetailFailure({ error }));
   }
 }
 
@@ -524,22 +524,22 @@ export function* searchIssuesSaga({ payload }) {
   const query = `
   query {
     searchIssues(value: "${value}") {
-      id,
-      createdDate,
-      modifiedDate,
-      attempting,
-      body,
-      comments,
-      language,
-      name,
-      organizationId,
-      organizationName,
-      organizationVerified,
-      rep,
-      repo,
-      fundedAmount,
-      watching,
-      open,
+      attempting
+      body
+      comments
+      createdDate
+      fundedAmount
+      id
+      language
+      modifiedDate
+      name
+      open
+      organizationId
+      organizationName
+      organizationVerified
+      rep
+      repo
+      watching
     }
   }
 `;

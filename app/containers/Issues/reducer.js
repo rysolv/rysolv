@@ -358,7 +358,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_ISSUE_DETAIL_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = error;
+      draft.error.issueDetail = error;
       draft.loading.issueDetail = false;
       break;
     }

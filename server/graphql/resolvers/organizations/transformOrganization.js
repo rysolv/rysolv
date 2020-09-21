@@ -1,12 +1,16 @@
+/* eslint-disable no-param-reassign */
 const { createActivity } = require('../activity');
 const { isUrl } = require('../../../helpers');
 const {
   transformOrganization: transformOrganizationQuery,
 } = require('../../../db');
+const {
+  transformOrganizationError,
+  transformOrganizationSuccess,
+} = require('./constants');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
-const transformOrganization = async args => {
-  const { organizationId, organizationInput } = args;
+const transformOrganization = async ({ organizationId, organizationInput }) => {
   try {
     const logo = organizationInput.organizationLogo;
 
@@ -40,13 +44,13 @@ const transformOrganization = async args => {
     await createActivity({ activityInput });
 
     return {
-      __typename: 'Organization',
-      ...result,
+      __typename: 'Success',
+      message: transformOrganizationSuccess,
     };
   } catch (err) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: transformOrganizationError,
     };
   }
 };

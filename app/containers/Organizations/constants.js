@@ -65,6 +65,3 @@ export const organizationDataDictionary = {
 
 export const emptyCardMessage =
   'There are no organizations matching the search terms.';
-
-export const successEditOrganizationMessage =
-  'Organization was successfully edited.';
