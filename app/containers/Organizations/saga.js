@@ -7,19 +7,9 @@ import {
   updateActiveUser,
   upvoteUserTemp,
 } from 'containers/Auth/actions';
+import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
-import {
-  FETCH_INFO,
-  FETCH_ORGANIZATIONS,
-  IMPORT_ORGANIZATION,
-  SAVE_INFO,
-  SEARCH_ORGANIZATIONS,
-  successCreateOrganizationMessage,
-  successEditOrganizationMessage,
-  UPDATE_INFO,
-  UPVOTE_ISSUE,
-} from './constants';
 import {
   fetchInfo,
   fetchInfoFailure,
@@ -38,23 +28,34 @@ import {
   upvoteIssueSuccess,
   upvoteIssueTemp,
 } from './actions';
+import {
+  FETCH_INFO,
+  FETCH_ORGANIZATIONS,
+  IMPORT_ORGANIZATION,
+  SAVE_INFO,
+  SEARCH_ORGANIZATIONS,
+  successCreateOrganizationMessage,
+  successEditOrganizationMessage,
+  UPDATE_INFO,
+  UPVOTE_ISSUE,
+} from './constants';
 
 export function* fetchOrganizationsSaga() {
   const query = `
   query {
     getOrganizations {
-      id,
       createdDate,
-      modifiedDate,
-      name,
       description,
-      repoUrl,
-      organizationUrl,
+      id,
       issues,
       logo,
-      verified,
-      totalFunded,
+      modifiedDate,
+      name,
+      organizationUrl,
       preferredLanguages
+      repoUrl,
+      totalFunded,
+      verified,
     }
   }
 `;
@@ -350,7 +351,7 @@ export function* updateInfoSaga({ payload }) {
 }
 
 export function* upvoteIssueSaga({ payload }) {
-  const { issueId, upvote, userId } = payload;
+  const { issueId, upvote } = payload;
 
   // Update front end upvote. Reduce percieved loading time.
   yield put(upvoteIssueTemp({ issueId, upvote }));
@@ -358,7 +359,7 @@ export function* upvoteIssueSaga({ payload }) {
 
   const upvoteIssueQuery = `
     mutation {
-      upvoteIssue(issueId: "${issueId}", upvote: ${upvote}, userId: "${userId}") {
+      upvoteIssue(issueId: "${issueId}", upvote: ${upvote}) {
         __typename
         ... on Upvote {
           issueRep,
@@ -371,9 +372,11 @@ export function* upvoteIssueSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const upvoteIssue = JSON.stringify({
       query: upvoteIssueQuery,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {

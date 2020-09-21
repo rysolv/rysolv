@@ -10,6 +10,7 @@ const graphQlSchema = require('./graphql/schema');
 const logger = require('./logger');
 const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
+const validateToken = require('./middlewares/validateToken');
 
 const app = express();
 const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -21,11 +22,13 @@ app.use(express.urlencoded({ limit: '10mb' }));
 // route requests through GraphQL
 app.use(
   '/graphql',
-  graphQlHttp({
+  validateToken,
+  graphQlHttp(req => ({
+    context: { userId: req.body.userId },
     graphiql: !PRODUCTION,
     rootValue: graphQlResolvers,
     schema: graphQlSchema,
-  }),
+  })),
 );
 
 // In production we need to pass these values in instead of relying on webpack

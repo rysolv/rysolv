@@ -3,8 +3,8 @@ const {
   upvoteIssue: upvoteIssueQuery,
 } = require('../../../db');
 
-const upvoteIssue = async args => {
-  const { issueId, upvote, userId } = args;
+const upvoteIssue = async (args, { userId }) => {
+  const { issueId, upvote } = args;
   try {
     if (upvote) {
       const { issueRep, userRep } = await upvoteIssueQuery({

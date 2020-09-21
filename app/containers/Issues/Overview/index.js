@@ -68,8 +68,8 @@ const IssuesOverview = ({
     return handleClearAlerts;
   }, [searchValue]);
 
-  const handleUpvote = ({ issueId, upvote, userId }) => {
-    if (!upvoteLoading) dispatchUpvote({ issueId, upvote, userId });
+  const handleUpvote = ({ issueId, upvote }) => {
+    if (!upvoteLoading) dispatchUpvote({ issueId, upvote });
   };
 
   return (

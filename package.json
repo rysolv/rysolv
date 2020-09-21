@@ -76,6 +76,7 @@
     "aws-amplify": "^3.0.20",
     "aws-sdk": "^2.691.0",
     "chalk": "^2.4.2",
+    "cognito-express": "^2.0.18",
     "compression": "1.7.4",
     "connected-react-router": "6.4.0",
     "cross-env": "5.2.0",

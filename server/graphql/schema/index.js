@@ -402,7 +402,7 @@ module.exports = buildSchema(`
     updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
 
-    upvoteIssue(issueId: ID, upvote: Boolean, userId: ID): UpvoteResult!
+    upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
   }
 
   schema {
