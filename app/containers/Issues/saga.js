@@ -570,7 +570,7 @@ export function* upvoteIssuesSaga({ payload }) {
       upvoteIssue(issueId: "${issueId}", upvote: ${upvote}, userId: "${userId}") {
         __typename
         ... on Upvote {
-          issueRep,
+          issueRep
           userRep
         }
         ... on Error {
@@ -589,8 +589,9 @@ export function* upvoteIssuesSaga({ payload }) {
         upvoteIssue: { __typename, issueRep, message, userRep },
       },
     } = yield call(post, '/graphql', upvoteIssue);
-    if (__typename === 'Error') throw new Error(message);
-
+    if (__typename === 'Error') {
+      throw message;
+    }
     yield put(upvoteIssueSuccess({ issueId, issueRep }));
 
     if (upvote) {
@@ -599,7 +600,9 @@ export function* upvoteIssuesSaga({ payload }) {
       yield put(updateActiveUser({ rep: userRep, removeUpvote: issueId }));
     }
   } catch (error) {
-    yield put(upvoteIssueFailure({ error }));
+    yield put(upvoteIssueFailure({ error: { message: error } }));
+    yield put(upvoteIssueTemp({ issueId, upvote: !upvote }));
+    yield put(upvoteUserTemp({ issueId, upvote: !upvote }));
   }
 }
 

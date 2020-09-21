@@ -16,8 +16,7 @@ const getOneIssue = async ({ issueId }) => {
   `;
   const { rows } = await singleQuery({ queryText, values: [issueId] });
   const [oneRow] = rows;
-  if (oneRow) return oneRow;
-  throw new Error(`ID not found in issues`);
+  return oneRow;
 };
 
 module.exports = getOneIssue;

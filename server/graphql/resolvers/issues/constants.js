@@ -72,6 +72,9 @@ const transformIssueError = `Something went wrong when editing this issue.`;
 
 const transformIssueSuccess = `Your issue was successfully edited.`;
 
+const upvoteIssueError = ({ upvote }) =>
+  `Something went wrong when ${upvote ? 'upvoting' : 'downvoting'} the issue.`;
+
 module.exports = {
   closeIssueError,
   closeIssueSuccess,
@@ -87,4 +90,5 @@ module.exports = {
   oneIssueError,
   transformIssueError,
   transformIssueSuccess,
+  upvoteIssueError,
 };
