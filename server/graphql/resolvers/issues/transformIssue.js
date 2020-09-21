@@ -7,7 +7,6 @@ const transformIssue = async ({ issueId, issueInput }) => {
     const data = {
       attempting: issueInput.attempting,
       body: issueInput.body,
-      comments: issueInput.comments,
       contributor_id: issueInput.contributorId,
       funded_amount: issueInput.fundedAmount,
       language: issueInput.language,

@@ -8,7 +8,6 @@ const getIssueWatchList = require('./getIssueWatchList');
 const getOneIssue = require('./getOneIssue');
 const searchIssues = require('./searchIssues');
 const transformIssue = require('./transformIssue');
-const updateIssueArray = require('./updateIssueArray');
 const upvoteIssue = require('./upvoteIssue');
 
 module.exports = {
@@ -22,6 +21,5 @@ module.exports = {
   getOneIssue,
   searchIssues,
   transformIssue,
-  updateIssueArray,
   upvoteIssue,
 };

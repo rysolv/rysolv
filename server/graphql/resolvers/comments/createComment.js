@@ -4,7 +4,6 @@ const { createActivity } = require('../activity');
 const { createCommentError } = require('./constants');
 const {
   createComment: createCommentQuery,
-  updateIssueArray,
   updateUserArray,
 } = require('../../../db');
 
@@ -32,12 +31,6 @@ const createComment = async ({ commentInput }) => {
       column: 'comments',
       data: comment.id,
       userId: commentInput.user,
-    });
-
-    await updateIssueArray({
-      column: 'comments',
-      data: comment.id,
-      issueId: comment.target,
     });
 
     const result = {

@@ -1,6 +1,5 @@
 const issueValues = [
   'body',
-  'comments',
   'contributor_id',
   'created_date',
   'funded_amount',
@@ -18,7 +17,6 @@ const issueValues = [
 
 const issueReturnValues = `
   issues.body,
-  issues.comments,
   issues.contributor_id AS "contributorId",
   issues.created_date AS "createdDate",
   issues.funded_amount AS "fundedAmount",
@@ -38,6 +36,7 @@ const issueCardValues = `
   ${issueReturnValues},
   ARRAY_REMOVE(ARRAY_AGG(watching.user_id), NULL) AS watching,
   ARRAY_REMOVE(ARRAY_AGG(attempting.user_id), NULL) AS attempting,
+  COUNT(comments.id) AS comments,
   organizations.name AS "organizationName",
   organizations.verified AS "organizationVerified"
 `;
@@ -52,7 +51,6 @@ const issueDetailValues = `
 
 const groupValues = `
   issues.body,
-  issues.comments,
   issues.contributor_id,
   issues.created_date,
   issues.funded_amount,

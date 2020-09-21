@@ -16,7 +16,6 @@ const {
   getOneIssue,
   searchIssues,
   transformIssue,
-  updateIssueArray,
   upvoteIssue,
 } = require('./queries/issues');
 const {
@@ -113,7 +112,6 @@ module.exports = {
   transformOrganization,
   transformUser,
   transformUserBalance,
-  updateIssueArray,
   updateOrganizationArray,
   updateUserArray,
   upvoteIssue,

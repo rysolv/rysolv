@@ -88,7 +88,7 @@ module.exports = buildSchema(`
   type Issue {
     attempting: [ID]
     body: String
-    comments: [ID]
+    comments: Int
     contributor: [String]
     createdDate: Object
     fundedAmount: Float
