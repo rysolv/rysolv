@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { post } from 'utils/request';
@@ -14,7 +13,11 @@ import {
   submitAccountPaymentFailure,
   submitAccountPaymentSuccess,
 } from './actions';
-import { PAYPAL_PAYMENT, STRIPE_TOKEN, SUBMIT_ACCOUNT_PAYMENT } from './constants';
+import {
+  PAYPAL_PAYMENT,
+  STRIPE_TOKEN,
+  SUBMIT_ACCOUNT_PAYMENT,
+} from './constants';
 
 export function* paypalPaymentSaga({ payload }) {
   try {
@@ -64,7 +67,12 @@ export function* paypalPaymentSaga({ payload }) {
 
 export function* stripeTokenSaga({ payload }) {
   try {
-    const { amount, issueId, token: { id }, userId } = payload;
+    const {
+      amount,
+      issueId,
+      token: { id },
+      userId,
+    } = payload;
     const isFundedFromOverview = window.location.pathname === '/issues';
     const valuesToSend = userId
       ? `amount: ${amount}, issueId: "${issueId}", token: "${id}", userId: "${userId}"`
@@ -109,29 +117,33 @@ export function* submitAccountPaymentSaga({ payload }) {
   const { fundValue, issueId, userId } = payload;
   const isFundedFromOverview = window.location.pathname === '/issues';
   const submitAccountPaymentQuery = `
-      mutation {
-        submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", userId: "${userId}" ) {
-          __typename
-          ... on Payment {
-            balance,
-            fundedAmount,
-            message,
-          }
-          ... on Error {
-            message
-          }
+    mutation {
+      submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", userId: "${userId}" ) {
+        __typename
+        ... on Payment {
+          balance
+          fundedAmount
+          message
+        }
+        ... on Error {
+          message
         }
       }
-    `;
+    }
+  `;
   try {
     const graphql = JSON.stringify({
       query: submitAccountPaymentQuery,
       variables: {},
     });
     const {
-      data: { submitAccountPayment },
+      data: {
+        submitAccountPayment: { __typename, balance, fundedAmount, message },
+      },
     } = yield call(post, '/graphql', graphql);
-    const { balance, fundedAmount, message } = submitAccountPayment;
+    if (__typename === 'Error') {
+      throw message;
+    }
     yield put(submitAccountPaymentSuccess({ message }));
     yield put(updateActiveUser({ balance }));
     yield put(
@@ -139,7 +151,7 @@ export function* submitAccountPaymentSaga({ payload }) {
     );
     yield put(updatePaymentModal({ balance, fundedAmount }));
   } catch (error) {
-    yield put(submitAccountPaymentFailure({ error }));
+    yield put(submitAccountPaymentFailure({ error: { message: error } }));
   }
 }
 

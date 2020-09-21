@@ -1,6 +1,11 @@
 /* eslint-disable consistent-return */
 const { createActivity } = require('../activity');
 const {
+  accountPaymentSuccess,
+  lowBalanceError,
+  submitAccountPaymentError,
+} = require('./constants');
+const {
   getOneUser,
   submitAccountPaymentIssue,
   submitAccountPaymentOrganization,
@@ -41,18 +46,19 @@ const submitAccountPayment = async ({ fundValue, issueId, userId }) => {
         };
         return {
           __typename: 'Payment',
-          message: 'Thank you for funding!',
+          message: accountPaymentSuccess,
           ...result,
         };
       }
-    } else {
-      const error = new Error('Balance is too low');
+      const error = new Error();
+      error.message = lowBalanceError;
       throw error;
     }
-  } catch (err) {
+  } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: err.message,
+      message: message || submitAccountPaymentError,
     };
   }
 };
