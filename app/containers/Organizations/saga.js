@@ -15,7 +15,6 @@ import {
   IMPORT_ORGANIZATION,
   SAVE_INFO,
   SEARCH_ORGANIZATIONS,
-  successCreateOrganizationMessage,
   successEditOrganizationMessage,
   UPDATE_INFO,
   UPVOTE_ISSUE,
@@ -43,18 +42,26 @@ export function* fetchOrganizationsSaga() {
   const query = `
   query {
     getOrganizations {
-      id,
-      createdDate,
-      modifiedDate,
-      name,
-      description,
-      repoUrl,
-      organizationUrl,
-      issues,
-      logo,
-      verified,
-      totalFunded,
-      preferredLanguages
+      __typename
+      ... on OrganizationArray {
+        organizations {
+          createdDate
+          description
+          id
+          issues
+          logo
+          modifiedDate
+          name
+          organizationUrl
+          preferredLanguages
+          repoUrl
+          totalFunded
+          verified
+        }
+      }
+      ... on Error {
+        message
+      }
     }
   }
 `;
@@ -63,12 +70,15 @@ export function* fetchOrganizationsSaga() {
       query,
       variables: {},
     });
-    const { data: getOrganizations } = yield call(
-      post,
-      '/graphql',
-      organizationsQuery,
-    );
-    yield put(fetchOrganizationsSuccess(getOrganizations));
+    const {
+      data: {
+        getOrganizations: { __typename, message, organizations },
+      },
+    } = yield call(post, '/graphql', organizationsQuery);
+    if (__typename === 'Error') {
+      throw message;
+    }
+    yield put(fetchOrganizationsSuccess({ organizations }));
   } catch (error) {
     yield put(fetchOrganizationsFailure({ error }));
   }
@@ -146,13 +156,13 @@ export function* importOrganizationSaga({ payload }) {
     importOrganization(url: "${validatedUrl}") {
       __typename
       ... on ImportData {
-        organizationDescription,
-        organizationId,
-        organizationLanguages,
-        organizationLogo,
-        organizationName,
-        organizationRepo,
-        organizationUrl,
+        organizationDescription
+        organizationId
+        organizationLanguages
+        organizationLogo
+        organizationName
+        organizationRepo
+        organizationUrl
       }
       ... on Error {
         message
@@ -166,18 +176,15 @@ export function* importOrganizationSaga({ payload }) {
     });
     const {
       data: {
-        importOrganization,
-        importOrganization: { __typename },
+        importOrganization: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-
     if (__typename === 'Error') {
-      throw new Error(importOrganization.message);
+      throw message;
     }
-
-    yield put(importOrganizationSuccess({ importOrganization }));
+    yield put(importOrganizationSuccess({ importOrganization: restProps }));
   } catch (error) {
-    yield put(importOrganizationFailure({ error }));
+    yield put(importOrganizationFailure({ error: { message: error } }));
   }
 }
 
@@ -210,7 +217,7 @@ export function* saveInfoSaga({ payload }) {
       __typename
       ... on Organization {
         id
-        name
+        message
       }
       ... on Error {
         message
@@ -223,17 +230,19 @@ export function* saveInfoSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { createOrganization },
+      data: {
+        createOrganization: { __typename, id, message },
+      },
     } = yield call(post, '/graphql', graphql);
-    const { __typename, id, message } = createOrganization;
-    if (__typename === 'Error') throw message;
-
+    if (__typename === 'Error') {
+      throw message;
+    }
     yield put(fetchActiveUser({ userId }));
     yield put(push(`/organizations/detail/${id}`));
-    yield put(saveInfoSuccess({ message: successCreateOrganizationMessage }));
+    yield put(saveInfoSuccess({ message }));
   } catch (error) {
     yield put(push('/organizations'));
-    yield put(saveInfoFailure({ error }));
+    yield put(saveInfoFailure({ error: { message: error } }));
   }
 }
 
@@ -244,7 +253,7 @@ export function* searchOrganizationsSaga({ payload }) {
     searchOrganizations(value: "${value}") {
     __typename
       ... on OrganizationArray {
-        organizationArray {
+        organizations {
           createdDate
           description
           id
@@ -271,12 +280,12 @@ export function* searchOrganizationsSaga({ payload }) {
     });
     const {
       data: {
-        searchOrganizations: { __typename, message, organizationArray },
+        searchOrganizations: { __typename, message, organizations },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
 
-    yield put(searchOrganizationsSuccess({ organizations: organizationArray }));
+    yield put(searchOrganizationsSuccess({ organizations }));
   } catch (error) {
     yield put(searchOrganizationsFailure({ error }));
   }

@@ -2,18 +2,17 @@ const {
   searchOrganizations: searchOrganizationsQuery,
 } = require('../../../db');
 
-const searchOrganizations = async args => {
-  const { value } = args;
+const searchOrganizations = async ({ value }) => {
   try {
-    const result = await searchOrganizationsQuery({ value });
+    const organizations = await searchOrganizationsQuery({ value });
     return {
       __typename: 'OrganizationArray',
-      organizationArray: result,
+      organizations,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: error.message,
     };
   }
 };

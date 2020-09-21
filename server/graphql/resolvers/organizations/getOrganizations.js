@@ -1,11 +1,18 @@
 const { getOrganizations: getOrganizationsQuery } = require('../../../db');
+const { getOrganizationsError } = require('./constants');
 
 const getOrganizations = async () => {
   try {
-    const result = await getOrganizationsQuery();
-    return result;
-  } catch (err) {
-    throw err;
+    const organizations = await getOrganizationsQuery();
+    return {
+      __typename: 'OrganizationArray',
+      organizations,
+    };
+  } catch (error) {
+    return {
+      __typename: 'Error',
+      message: getOrganizationsError,
+    };
   }
 };
 

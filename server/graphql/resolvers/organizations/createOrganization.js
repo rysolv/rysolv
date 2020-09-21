@@ -1,7 +1,12 @@
+/* eslint-disable no-param-reassign */
 const Identicon = require('identicon.js');
 const { v4: uuidv4 } = require('uuid');
 
-const { checkDuplicate } = require('./constants');
+const {
+  checkDuplicate,
+  createOrganizationError,
+  createOrganizationSuccess,
+} = require('./constants');
 const { createActivity } = require('../activity');
 const {
   createOrganization: createOrganizationQuery,
@@ -9,20 +14,15 @@ const {
 } = require('../../../db');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
-const createOrganization = async args => {
-  const {
-    organizationInput,
-    organizationInput: { identiconId },
-  } = args;
-
-  if (identiconId && identiconId !== 'undefined') {
-    organizationInput.organizationLogo = new Identicon(
-      identiconId,
-      250,
-    ).toString();
-  }
-
+const createOrganization = async ({ organizationInput }) => {
   try {
+    const { identiconId } = organizationInput;
+    if (identiconId && identiconId !== 'undefined') {
+      organizationInput.organizationLogo = new Identicon(
+        identiconId,
+        250,
+      ).toString();
+    }
     const { uploadUrl } = await uploadImage(organizationInput.organizationLogo);
 
     const organization = {
@@ -65,12 +65,14 @@ const createOrganization = async args => {
 
     return {
       __typename: 'Organization',
+      message: createOrganizationSuccess,
       ...result,
     };
-  } catch (err) {
+  } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: err.message,
+      message: message || createOrganizationError,
     };
   }
 };

@@ -132,22 +132,23 @@ module.exports = buildSchema(`
   type Organization {
     contributors: [Object]
     createdDate: Object
-    description: String!
+    description: String
     id: ID!
     issues: [Object]
     logo: String
+    message: String
     modifiedDate: Object
-    name: String!
+    name: String
     organizationUrl: String
     ownerId: ID
     preferredLanguages: [String]
-    repoUrl: String!
+    repoUrl: String
     totalFunded: Float
     verified: Boolean
   }
 
   type OrganizationArray {
-    organizationArray: [Organization]
+    organizations: [Organization]
   }
 
   input OrganizationInput {
@@ -358,7 +359,7 @@ module.exports = buildSchema(`
     getIssues: IssueArrayResult!
     getIssueWatchList(issueId: ID!): [WatchList]!
     getOrganizationActivity(organizationId: ID): [Activity]!
-    getOrganizations: [Organization!]!
+    getOrganizations: OrganizationArrayResult!
     getPullRequestList(issueId: ID): PullRequestListResult!
     getUserActivity(userId: ID): [Activity]!
     getUserOrganizations(id: ID!): [Organization!]
@@ -372,7 +373,7 @@ module.exports = buildSchema(`
     oneUserSignUp(email: String!): User!
 
     searchIssues(value: String!): [Issue]!
-    searchOrganizations(value: String!): OrganizationArrayResult
+    searchOrganizations(value: String!): OrganizationArrayResult!
     searchUsers(value: String!): [User!]!
 
     verifyUserAccount(code: String!, userId: ID!): VerificationResult!
@@ -384,7 +385,7 @@ module.exports = buildSchema(`
     createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): CommentResult!
     createIssue(issueInput: IssueInput): IssueResult
-    createOrganization(organizationInput: OrganizationInput): OrganizationResult
+    createOrganization(organizationInput: OrganizationInput): OrganizationResult!
     createPaypalPayment(amount: Float!, issueId: ID, userId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): PullRequestResult!
     createStripeCharge(amount: Float!, issueId: ID, token: String!, userId: ID): PaymentResult!
@@ -394,8 +395,8 @@ module.exports = buildSchema(`
     deletePullRequest(id:ID!): EventResponse!
     deleteUser(userId:ID!): String!
 
-    importIssue(url: String!): ImportResult
-    importOrganization(url: String!): ImportResult
+    importIssue(url: String!): ImportResult!
+    importOrganization(url: String!): ImportResult!
     importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult
 
     submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!

@@ -1,4 +1,4 @@
-const { checkDuplicate } = require('./constants');
+const { checkDuplicate, importOrganizationError } = require('./constants');
 const {
   formatOrganizationUrl,
 } = require('../../../integrations/github/helpers');
@@ -7,41 +7,40 @@ const {
   getSingleOrganization,
 } = require('../../../integrations');
 
-const importOrganization = async args => {
-  const { url } = args;
+const importOrganization = async ({ url }) => {
   try {
     // Parse organization url
     const { organization, repo, type } = formatOrganizationUrl(url);
 
     // If user supplied an organization : pull organization data
     if (type === 'organization') {
-      const { organizationInput: ImportData } = await getSingleOrganization(
+      const { organizationInput: importData } = await getSingleOrganization(
         organization,
       );
-      await checkDuplicate(ImportData.organizationRepo);
+      await checkDuplicate(importData.organizationRepo);
 
       return {
         __typename: 'ImportData',
-        ...ImportData,
+        ...importData,
       };
     }
 
     // Else pull repo data
-    const { organizationInput: ImportData } = await getSingleRepo({
+    const { organizationInput: importData } = await getSingleRepo({
       organization,
       repo,
     });
 
-    await checkDuplicate(ImportData.organizationRepo);
+    await checkDuplicate(importData.organizationRepo);
 
     return {
       __typename: 'ImportData',
-      ...ImportData,
+      ...importData,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: importOrganizationError,
     };
   }
 };
