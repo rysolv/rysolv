@@ -313,37 +313,37 @@ export function* fetchIssueDetailSaga({ payload }) {
       oneIssue(id: "${id}") {
         __typename
         ... on Issue {
-          attempting,
-          body,
-          contributor,
-          createdDate,
-          fundedAmount,
-          id,
-          language,
-          modifiedDate,
-          name,
-          open,
-          organizationId,
-          organizationName,
-          organizationVerified,
+          attempting
+          body
+          contributor
+          createdDate
+          fundedAmount
+          id
+          language
+          modifiedDate
+          name
+          open
+          organizationId
+          organizationName
+          organizationVerified
           profilePic
-          pullRequests,
-          rep,
-          repo,
-          userId,
-          username,
-          watching,
+          pullRequests
+          rep
+          repo
+          userId
+          username
+          watching
         }
         ... on Error {
           message
         }
       }
       getIssueComments(issueId: "${id}") {
-        body,
-        createdDate,
-        profilePic,
-        userId,
-        username,
+        body
+        createdDate
+        profilePic
+        userId
+        username
       }
     }
   `;
@@ -367,44 +367,56 @@ export function* fetchIssueDetailSaga({ payload }) {
 
     yield put(fetchIssueDetailSuccess({ issueDetail: restProps }));
   } catch (error) {
-    yield put(fetchIssueDetailFailure({ error }));
+    yield put(fetchIssueDetailFailure({ error: { message: error } }));
   }
 }
 
 export function* fetchIssuesSaga() {
-  const issues = `
+  const query = `
   query {
     getIssues {
-      id,
-      createdDate,
-      modifiedDate,
-      attempting,
-      body,
-      comments,
-      language,
-      name,
-      organizationId,
-      organizationName,
-      organizationVerified,
-      rep,
-      repo,
-      fundedAmount,
-      watching,
-      open,
-      type,
+      __typename
+      ... on IssueArray {
+        issues {
+          attempting
+          body
+          comments
+          createdDate
+          fundedAmount
+          id
+          language
+          modifiedDate
+          name
+          open
+          organizationId
+          organizationName
+          organizationVerified
+          rep
+          repo
+          type
+          watching
+        }
+      }
+      ... on Error {
+        message
+      }
     }
   }
 `;
   try {
     const issueQuery = JSON.stringify({
-      query: issues,
+      query,
       variables: {},
     });
     const {
-      data: { getIssues },
+      data: {
+        getIssues: { __typename, issues, message },
+      },
     } = yield call(post, '/graphql', issueQuery);
-
-    yield put(fetchIssuesSuccess(getIssues));
+    if (__typename === 'Error') {
+      throw message;
+    }
+    yield put(fetchIssuesSuccess({ issues }));
   } catch (error) {
     yield put(fetchIssuesFailure({ error }));
   }
@@ -417,17 +429,17 @@ export function* importIssueSaga({ payload }) {
     importIssue(url: "${validatedUrl}") {
       __typename
       ... on ImportData {
-        issueBody,
-        issueLanguages,
-        issueName,
-        issueUrl,
-        organizationDescription,
-        organizationId,
-        organizationLanguages,
-        organizationLogo,
-        organizationName,
-        organizationRepo,
-        organizationUrl,
+        issueBody
+        issueLanguages
+        issueName
+        issueUrl
+        organizationDescription
+        organizationId
+        organizationLanguages
+        organizationLogo
+        organizationName
+        organizationRepo
+        organizationUrl
       }
       ... on Error {
         message
@@ -441,18 +453,15 @@ export function* importIssueSaga({ payload }) {
     });
     const {
       data: {
-        importIssue,
-        importIssue: { __typename },
+        importIssue: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-
     if (__typename === 'Error') {
-      throw new Error(importIssue.message);
+      throw message;
     }
-
-    yield put(importIssueSuccess({ importIssue }));
+    yield put(importIssueSuccess({ importIssue: restProps }));
   } catch (error) {
-    yield put(importIssueFailure({ error }));
+    yield put(importIssueFailure({ error: { message: error } }));
   }
 }
 

@@ -1,12 +1,11 @@
 const { getIssueWatchList: getIssueWatchListQuery } = require('../../../db');
 
-const getIssueWatchList = async args => {
-  const { issueId } = args;
+const getIssueWatchList = async ({ issueId }) => {
   try {
     const watchList = await getIssueWatchListQuery({ issueId });
     return watchList;
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    return [];
   }
 };
 

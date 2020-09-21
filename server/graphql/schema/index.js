@@ -325,12 +325,17 @@ module.exports = buildSchema(`
     message: String
   }
 
+  type IssueArray {
+    issues: [Issue]
+  }
+
   union ActivityResult = ActivityArray | Error
   union CommentResult = Comment | Error
   union EventResponse = Success | Error
   union ImportPullRequestResult = ImportPullRequest | Error
   union ImportResult = ImportData | Error
   union IssueResult = Issue | Error
+  union IssueArrayResult = IssueArray | Error
   union OrganizationArrayResult = OrganizationArray | Error
   union OrganizationResult = Organization | Error
   union PaymentResult = Payment | Error
@@ -348,10 +353,10 @@ module.exports = buildSchema(`
     checkDuplicateUser(email: String, username: String): EventResponse!
 
     getActivity(column: String!, id: ID): ActivityResult!
-    getIssueAttemptList(issueId: ID!): [WatchList!]
+    getIssueAttemptList(issueId: ID!): [WatchList]!
     getIssueComments(issueId: ID!): [Comment]!
-    getIssues: [Issue!]!
-    getIssueWatchList(issueId: ID!): [WatchList!]
+    getIssues: IssueArrayResult!
+    getIssueWatchList(issueId: ID!): [WatchList]!
     getOrganizationActivity(organizationId: ID): [Activity]!
     getOrganizations: [Organization!]!
     getPullRequestList(issueId: ID): PullRequestListResult!

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { ErrorSuccessBanner } from 'components/base_ui';
 import {
   borderColor,
   defaultFontSize,
@@ -82,6 +83,11 @@ export const OrganizationNameWrapper = styled.div`
 export const SelectedOrganization = styled.div`
   margin: 0.5rem 0;
   font-size: ${headerFontSize};
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin-bottom: 1rem;
+  width: 90%;
 `;
 
 export const StyledFocusDiv = styled.div`

@@ -347,7 +347,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ISSUES_SUCCESS: {
-      draft.issues = payload;
+      const { issues } = payload;
+      draft.issues = issues;
       draft.loading.issues = false;
       break;
     }
@@ -380,7 +381,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case IMPORT_ISSUE_FAILURE: {
       const { error } = payload;
-      draft.error.importIssue = { error: true, message: error.message };
+      draft.alerts.error = error;
       draft.loading.importIssue = false;
       break;
     }

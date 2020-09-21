@@ -1,4 +1,5 @@
 const { getOneIssue: getOneIssueQuery } = require('../../../db');
+const { oneIssueError } = require('./constants');
 
 const oneIssue = async ({ id }) => {
   try {
@@ -7,10 +8,10 @@ const oneIssue = async ({ id }) => {
       __typename: 'Issue',
       ...issueDetail,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: oneIssueError,
     };
   }
 };

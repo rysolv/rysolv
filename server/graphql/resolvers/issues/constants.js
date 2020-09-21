@@ -62,6 +62,12 @@ const existingIssueError = `This issue already exists.`;
 
 const existingOrganizationError = `This organization already exists.`;
 
+const getIssuesError = `Something went wrong when getting issues.`;
+
+const importIssueError = `Something went wrong when importing this issue.`;
+
+const oneIssueError = `Something went wrong when getting this issue.`;
+
 module.exports = {
   closeIssueError,
   closeIssueSuccess,
@@ -70,6 +76,9 @@ module.exports = {
   createOrganizationError,
   existingIssueError,
   existingOrganizationError,
+  getIssuesError,
+  importIssueError,
   newIssueObject,
   newOrganizationObject,
+  oneIssueError,
 };
