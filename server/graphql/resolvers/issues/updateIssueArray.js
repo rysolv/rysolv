@@ -1,9 +1,12 @@
 const { createActivity } = require('../activity');
 const { updateIssueArray: updateIssueArrayQuery } = require('../../../db');
 
-const updateIssueArray = async args => {
-  const { id: issueId, column, data: userId, remove } = args;
-
+const updateIssueArray = async ({
+  id: issueId,
+  column,
+  data: userId,
+  remove,
+}) => {
   const result = await updateIssueArrayQuery({
     column,
     data: userId,

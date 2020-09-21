@@ -371,7 +371,7 @@ module.exports = buildSchema(`
     oneUser(id: ID!): User!
     oneUserSignUp(email: String!): User!
 
-    searchIssues(value: String!): [Issue!]!
+    searchIssues(value: String!): [Issue]!
     searchOrganizations(value: String!): OrganizationArrayResult
     searchUsers(value: String!): [User!]!
 
@@ -403,11 +403,10 @@ module.exports = buildSchema(`
     toggleAttempting(issueId: ID!, userId: ID!): ToggleAttemptingResult
     toggleWatching(issueId: ID!, userId: ID!): ToggleWatchingResult
 
-    transformIssue(issueId: ID!, issueInput: IssueInput): IssueResult!
+    transformIssue(issueId: ID!, issueInput: IssueInput): EventResponse!
     transformOrganization(organizationId: ID!, organizationInput: OrganizationInput): OrganizationResult!
     transformUser(userId: ID!, userInput: UserInput): UserResult!
 
-    updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
     updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
 
     upvoteIssue(issueId: ID, upvote: Boolean, userId: ID): UpvoteResult!

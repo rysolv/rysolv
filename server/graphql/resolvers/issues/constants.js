@@ -68,6 +68,10 @@ const importIssueError = `Something went wrong when importing this issue.`;
 
 const oneIssueError = `Something went wrong when getting this issue.`;
 
+const transformIssueError = `Something went wrong when editing this issue.`;
+
+const transformIssueSuccess = `Your issue was successfully edited.`;
+
 module.exports = {
   closeIssueError,
   closeIssueSuccess,
@@ -81,4 +85,6 @@ module.exports = {
   newIssueObject,
   newOrganizationObject,
   oneIssueError,
+  transformIssueError,
+  transformIssueSuccess,
 };

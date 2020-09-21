@@ -51,7 +51,6 @@ import {
   IMPORT_ISSUE,
   SAVE_INFO,
   SEARCH_ISSUES,
-  successEditIssueMessage,
   UPVOTE_ISSUE,
 } from './constants';
 
@@ -262,25 +261,8 @@ export function* editIssueSaga({ payload }) {
         name: "${name}",
       }) {
         __typename
-        ... on Issue {
-          body,
-          comments,
-          contributor,
-          createdDate,
-          fundedAmount,
-          id,
-          language,
-          modifiedDate,
-          name,
-          open,
-          organizationId,
-          organizationName,
-          organizationVerified,
-          profilePic,
-          rep,
-          repo,
-          userId,
-          username,
+        ... on Success {
+          message
         }
         ... on Error {
           message
@@ -294,15 +276,17 @@ export function* editIssueSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { transformIssue },
+      data: {
+        transformIssue: { __typename, message },
+      },
     } = yield call(post, '/graphql', graphql);
-    if (transformIssue.__typename === 'Error') {
-      throw transformIssue;
+    if (__typename === 'Error') {
+      throw message;
     }
     yield put(fetchIssueDetail({ id: issueId }));
-    yield put(editIssueSuccess({ message: successEditIssueMessage }));
+    yield put(editIssueSuccess({ message }));
   } catch (error) {
-    yield put(editIssueFailure({ error }));
+    yield put(editIssueFailure({ error: { message: error } }));
   }
 }
 
@@ -570,7 +554,7 @@ export function* searchIssuesSaga({ payload }) {
 
     yield put(searchIssuesSuccess({ issues: searchIssues }));
   } catch (error) {
-    yield put(searchIssuesFailure({ error }));
+    yield put(searchIssuesFailure());
   }
 }
 

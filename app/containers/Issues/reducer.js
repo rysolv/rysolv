@@ -448,8 +448,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case SAVE_INFO_SUCCESS: {
       const { message } = payload;
       draft.alerts.success = { message };
-      draft.loading.addIssue = false;
       draft.importSuccess = false;
+      draft.loading.addIssue = false;
       break;
     }
     case SAVE_INFO: {
@@ -457,10 +457,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ISSUES_FAILURE: {
-      const { error } = payload;
-      draft.error.searchIssues = error;
       draft.loading.searchIssues = false;
-      draft.importSuccess = false;
       break;
     }
     case SEARCH_ISSUES_SUCCESS: {

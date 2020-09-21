@@ -94,5 +94,3 @@ export const issueDataDictionary = {
 
 export const emptyCardMessage =
   'There are no issues matching the search terms.';
-
-export const successEditIssueMessage = 'Issue was successfully edited.';
