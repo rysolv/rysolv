@@ -9,8 +9,7 @@ const getOneUser = async ({ userId }) => {
   `;
   const { rows } = await singleQuery({ queryText, values: [userId] });
   const [oneRow] = rows;
-  if (oneRow) return oneRow;
-  throw new Error(`User not found`);
+  return oneRow;
 };
 
 module.exports = getOneUser;

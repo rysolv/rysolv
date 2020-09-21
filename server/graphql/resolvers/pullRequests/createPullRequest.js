@@ -6,45 +6,45 @@ const {
   createPullRequest: createPullRequestQuery,
   updateUserArray,
 } = require('../../../db');
+const { createPullRequestError } = require('./constants');
 const {
   formatPullRequestUrl,
 } = require('../../../integrations/github/helpers');
 const { getSinglePullRequest } = require('../../../integrations');
 
-const createPullRequest = async args => {
-  const {
-    pullRequestInput: {
-      githubUsername,
-      htmlUrl,
-      issueId,
-      mergeable,
-      mergeableState,
-      merged,
-      open,
-      pullNumber,
-      status,
-      title,
-      userId,
-    },
-  } = args;
-  const date = new Date();
-  const data = {
-    created_date: date,
-    github_username: githubUsername,
-    html_url: htmlUrl,
-    issue_id: issueId,
-    mergeable_state: mergeableState,
+const createPullRequest = async ({
+  pullRequestInput: {
+    githubUsername,
+    htmlUrl,
+    issueId,
     mergeable,
+    mergeableState,
     merged,
-    modified_date: date,
     open,
-    pull_number: pullNumber,
-    pullrequest_id: uuidv4(),
+    pullNumber,
     status,
     title,
-    user_id: userId,
-  };
+    userId,
+  },
+}) => {
   try {
+    const date = new Date();
+    const data = {
+      created_date: date,
+      github_username: githubUsername,
+      html_url: htmlUrl,
+      issue_id: issueId,
+      mergeable_state: mergeableState,
+      mergeable,
+      merged,
+      modified_date: date,
+      open,
+      pull_number: pullNumber,
+      pullrequest_id: uuidv4(),
+      status,
+      title,
+      user_id: userId,
+    };
     const { organization, repo } = formatPullRequestUrl(htmlUrl);
     const { githubId } = await getSinglePullRequest({
       organization,
@@ -72,10 +72,11 @@ const createPullRequest = async args => {
       __typename: 'PullRequest',
       ...result,
     };
-  } catch (err) {
+  } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: err.message,
+      message: message || createPullRequestError,
     };
   }
 };

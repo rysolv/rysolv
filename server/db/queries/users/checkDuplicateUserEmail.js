@@ -11,7 +11,7 @@ const checkDuplicateUserEmail = async ({ email }) => {
   const [oneRow] = rows;
   const { emailVerified } = oneRow || {};
   if (oneRow && emailVerified) {
-    throw new Error(`E-mail already exists`);
+    throw new Error(`E-mail already exists.`);
   }
   if (oneRow && !emailVerified) {
     throw new Error(

@@ -10,8 +10,7 @@ const getOnePullRequest = async ({ pullRequestId }) => {
   `;
   const { rows } = await singleQuery({ queryText, values: [pullRequestId] });
   const [oneRow] = rows;
-  if (oneRow) return oneRow;
-  throw new Error('Pull Request not found');
+  return oneRow;
 };
 
 module.exports = getOnePullRequest;

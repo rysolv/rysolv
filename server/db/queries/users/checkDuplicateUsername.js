@@ -8,7 +8,7 @@ const checkDuplicateUsername = async ({ username }) => {
   `;
   const { rows } = await singleQuery({ queryText, values: [username] });
   if (rows.length > 0) {
-    throw new Error(`Username ${username} already exists`);
+    throw new Error(`Username ${username} already exists.`);
   }
 };
 
