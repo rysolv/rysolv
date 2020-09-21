@@ -28,8 +28,8 @@ export function* paypalPaymentSaga({ payload }) {
         createPaypalPayment(${valuesToSend}) {
           __typename
           ... on Payment {
-            fundedAmount,
-            message,
+            fundedAmount
+            message
           }
           ... on Error {
             message
@@ -58,7 +58,7 @@ export function* paypalPaymentSaga({ payload }) {
     );
     yield put(updatePaymentModal({ fundedAmount }));
   } catch (error) {
-    yield put(paypalPaymentFailure({ error }));
+    yield put(paypalPaymentFailure({ error: { message: error } }));
   }
 }
 
@@ -101,7 +101,7 @@ export function* stripeTokenSaga({ payload }) {
     );
     yield put(updatePaymentModal({ fundedAmount }));
   } catch (error) {
-    yield put(stripeTokenFailure({ error }));
+    yield put(stripeTokenFailure({ error: { message: error } }));
   }
 }
 

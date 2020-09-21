@@ -7,8 +7,7 @@ const {
   submitAccountPaymentUser,
 } = require('../../../db');
 
-const submitAccountPayment = async args => {
-  const { fundValue, issueId, userId } = args;
+const submitAccountPayment = async ({ fundValue, issueId, userId }) => {
   try {
     if (issueId) {
       const { balance } = await getOneUser({ userId });

@@ -144,8 +144,8 @@ export function* paypalPaymentSaga({ payload }) {
       createPaypalPayment(amount: ${amount}, userId: "${userId}") {
         __typename
         ... on Payment {
-          balance,
-          message,
+          balance
+          message
         }
         ... on Error {
           message
@@ -162,11 +162,13 @@ export function* paypalPaymentSaga({ payload }) {
         createPaypalPayment: { __typename, balance, message },
       },
     } = yield call(post, '/graphql', request);
-    if (__typename === 'Error') throw message;
+    if (__typename === 'Error') {
+      throw message;
+    }
     yield put(paypalPaymentSuccess({ balance, message }));
     yield put(updateActiveUser({ balance }));
   } catch (error) {
-    yield put(paypalPaymentFailure({ error }));
+    yield put(paypalPaymentFailure({ error: { message: error } }));
   }
 }
 
@@ -335,7 +337,7 @@ export function* stripeTokenSaga({ payload }) {
     yield put(stripeTokenSuccess({ balance, message }));
     yield put(updateActiveUser({ balance }));
   } catch (error) {
-    yield put(stripeTokenFailure({ error }));
+    yield put(stripeTokenFailure({ error: { message: error } }));
   }
 }
 
