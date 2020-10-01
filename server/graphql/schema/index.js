@@ -205,17 +205,13 @@ module.exports = buildSchema(`
     userId: ID!
   }
 
-  type PullRequestSubmissions {
+  type PullRequestList {
     htmlUrl: String
     pullRequestId: ID
     rep: Int
     title: String
     userId: ID
     username: String
-  }
-
-  type PullRequestList {
-    pullRequestList: [PullRequestSubmissions]
   }
 
   type Payment {
@@ -341,7 +337,6 @@ module.exports = buildSchema(`
   union OrganizationResult = Organization | Error
   union PaymentResult = Payment | Error
   union PullRequestArrayResult = PullRequestArray | Error
-  union PullRequestListResult = PullRequestList | Error
   union PullRequestResult = PullRequest | Error
   union ToggleAttemptingResult = AttemptingArray | Error
   union ToggleWatchingResult = WatchListArray | Error
@@ -360,15 +355,14 @@ module.exports = buildSchema(`
     getIssueWatchList(issueId: ID!): [WatchList]!
     getOrganizationActivity(organizationId: ID): [Activity]!
     getOrganizations: OrganizationArrayResult!
-    getPullRequestList(issueId: ID): PullRequestListResult!
+    getPullRequestList(issueId: ID): [PullRequestList]!
     getUserActivity(userId: ID): [Activity]!
     getUserOrganizations(id: ID!): [Organization!]
-    getUserPullRequests(id: ID!): PullRequestArrayResult
+    getUserPullRequests(id: ID!): PullRequestArrayResult!
     getUsers: [User!]!
 
     oneIssue(id: ID!): IssueResult!
     oneOrganization(id: ID!): OrganizationResult
-    onePullRequest(id: ID!): PullRequestResult
     oneUser(id: ID!): User!
     oneUserSignUp(email: String!): User!
 
@@ -387,7 +381,7 @@ module.exports = buildSchema(`
     createIssue(issueInput: IssueInput): IssueResult
     createOrganization(organizationInput: OrganizationInput): OrganizationResult!
     createPaypalPayment(amount: Float!, issueId: ID, userId: ID): PaymentResult!
-    createPullRequest(pullRequestInput: PullRequestInput!): PullRequestResult!
+    createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
     createStripeCharge(amount: Float!, issueId: ID, token: String!, userId: ID): PaymentResult!
     createUser(userInput: UserInput): User!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!

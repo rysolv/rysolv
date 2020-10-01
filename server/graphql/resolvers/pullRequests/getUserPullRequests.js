@@ -1,19 +1,19 @@
 const {
   getUserPullRequests: getUserPullRequestsQuery,
 } = require('../../../db');
+const { getUserPullRequestsError } = require('./constants');
 
-const getUserPullRequests = async args => {
-  const { id } = args;
+const getUserPullRequests = async ({ id }) => {
   try {
     const result = await getUserPullRequestsQuery({ pullRequestId: id });
     return {
       __typename: 'PullRequestArray',
       pullRequestArray: result,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: getUserPullRequestsError,
     };
   }
 };

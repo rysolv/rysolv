@@ -1,13 +1,17 @@
 const { checkDuplicatePullRequest, getOneIssue } = require('../../../db');
 const {
+  diffRepoError,
+  existingPullRequestError,
+  importPullRequestError,
+} = require('./constants');
+const {
   formatPullRequestUrl,
 } = require('../../../integrations/github/helpers');
 const { getSinglePullRequest } = require('../../../integrations');
 
-const importPullRequest = async args => {
-  const { url, issueId } = args;
+const importPullRequest = async ({ issueId, url }) => {
   try {
-    const { organization, repo, pullNumber } = formatPullRequestUrl(url);
+    const { organization, pullNumber, repo } = formatPullRequestUrl(url);
     const { repo: issueRepo } = await getOneIssue({ issueId });
 
     // @TODO: add org_displayname to issues schema to avoid this url parsing
@@ -16,29 +20,32 @@ const importPullRequest = async args => {
 
     // Check PR organization against issue organization
     if (issueUrl[1] !== organization && issueUrl[2] !== repo) {
-      throw new Error('Pull request does not match issue repo');
+      const error = new Error();
+      error.message = diffRepoError;
+      throw error;
     }
 
     const result = await getSinglePullRequest({
       organization,
-      repo,
       pullNumber,
+      repo,
     });
 
     if (await checkDuplicatePullRequest({ repo: result.htmlUrl })) {
-      throw new Error(
-        `Pull request at ${result.htmlUrl} has already been submitted`,
-      );
+      const error = new Error();
+      error.message = existingPullRequestError;
+      throw error;
     }
 
     return {
       __typename: 'ImportPullRequest',
       ...result,
     };
-  } catch (err) {
+  } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: err.message,
+      message: message || importPullRequestError,
     };
   }
 };

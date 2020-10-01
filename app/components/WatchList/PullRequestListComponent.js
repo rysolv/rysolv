@@ -46,9 +46,7 @@ const PullRequestListComponent = ({
           <ConditionalRender
             Component={
               <DeleteButton
-                onClick={() =>
-                  handleDeletePullRequest({ pullRequestId, userId })
-                }
+                onClick={() => handleDeletePullRequest({ pullRequestId })}
               >
                 <Icon>{CloseCircleIcon}</Icon>Cancel
               </DeleteButton>

@@ -57,17 +57,18 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
     }
     case CREATE_PULL_REQUEST_FAILURE: {
       const { error } = payload;
-      draft.error = error;
+      draft.alerts.error = error;
       draft.loading = false;
       break;
     }
     case CREATE_PULL_REQUEST_SUCCESS: {
-      draft.loading = false;
       draft.createSuccess = true;
+      draft.loading = false;
       draft.step = 3;
       break;
     }
     case CREATE_PULL_REQUEST: {
+      draft.alerts = initialState.alerts;
       draft.loading = true;
       break;
     }
@@ -95,9 +96,9 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_USER_PULL_REQUESTS_SUCCESS: {
-      const data = payload;
+      const { pullRequestArray } = payload;
       draft.loading = false;
-      draft.pullRequests = data;
+      draft.pullRequests = pullRequestArray;
       break;
     }
     case FETCH_USER_PULL_REQUESTS: {
@@ -116,13 +117,13 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
       break;
     }
     case IMPORT_PULL_REQUEST_SUCCESS: {
-      const { importPullRequest } = payload;
+      const { pullRequest } = payload;
       draft.importSuccess = true;
-      draft.step = 2;
       draft.loading = false;
+      draft.step = 2;
 
       Object.keys(draft.importData).map(field => {
-        draft.importData[field].value = importPullRequest[field];
+        draft.importData[field].value = pullRequest[field];
       });
 
       break;

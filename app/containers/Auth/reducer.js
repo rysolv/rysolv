@@ -171,6 +171,7 @@ const authReducer = produce((draft, { payload, type }) => {
         balance,
         isGithubVerified,
         profilePic,
+        pullRequestId,
         removeUpvote,
         rep,
         watching,
@@ -190,6 +191,9 @@ const authReducer = produce((draft, { payload, type }) => {
       }
       if (profilePic) {
         draft.activeUser.profilePic = profilePic;
+      }
+      if (pullRequestId) {
+        remove(draft.activeUser.pullRequests, id => id === pullRequestId);
       }
       if (removeUpvote && rep) {
         remove(draft.activeUser.upvotes, id => id === removeUpvote);

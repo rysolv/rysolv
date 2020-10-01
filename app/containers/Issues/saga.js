@@ -234,10 +234,13 @@ export function* deletePullRequestSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { deletePullRequest },
+      data: {
+        deletePullRequest: { __typename, message },
+      },
     } = yield call(post, '/graphql', pullRequestQuery);
-    const { __typename, message } = deletePullRequest;
-    if (__typename === 'Error') throw new Error(message);
+    if (__typename === 'Error') {
+      throw message;
+    }
     yield put(
       deletePullRequestSuccess({
         id: pullRequestId,
@@ -246,7 +249,7 @@ export function* deletePullRequestSaga({ payload }) {
     );
     yield put(fetchActiveUser({ userId }));
   } catch (error) {
-    yield put(deletePullRequestFailure({ error }));
+    yield put(deletePullRequestFailure({ error: { message: error } }));
   }
 }
 

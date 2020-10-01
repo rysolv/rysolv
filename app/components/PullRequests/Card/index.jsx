@@ -44,7 +44,6 @@ const PullRequestCard = ({ data, handleDelete }) => (
           merged,
           pullRequestId,
           title,
-          userId,
         },
         index,
       ) => {
@@ -81,9 +80,7 @@ const PullRequestCard = ({ data, handleDelete }) => (
                   <UrlWrapper href={htmlUrl} target="_blank">
                     <Icon>{GithubIcon}</Icon> View on Github
                   </UrlWrapper>
-                  <DeleteButton
-                    onClick={() => handleDelete({ pullRequestId, userId })}
-                  >
+                  <DeleteButton onClick={() => handleDelete({ pullRequestId })}>
                     <Icon>{CloseCircleIcon}</Icon>Cancel
                   </DeleteButton>
                 </ButtomBarContainer>

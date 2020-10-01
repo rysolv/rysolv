@@ -45,20 +45,12 @@ export function* fetchPullRequestListSaga({ payload }) {
   const query = `
     query {
       getPullRequestList(issueId: "${issueId}") {
-        __typename
-        ... on PullRequestList {
-          pullRequestList {
-            htmlUrl,
-            pullRequestId,
-            rep,
-            title,
-            userId,
-            username,
-          }
-        }
-        ... on Error {
-          message
-        }
+        htmlUrl
+        pullRequestId
+        rep
+        title
+        userId
+        username
       }
     }
   `;
@@ -70,15 +62,13 @@ export function* fetchPullRequestListSaga({ payload }) {
     const {
       data: { getPullRequestList },
     } = yield call(post, '/graphql', graphql);
-    const { __typename, message, pullRequestList } = getPullRequestList;
-    if (__typename === 'Error') throw new Error(message);
     yield put(fetchPullRequestListResponse());
     yield put(
       openModalState({
         modalState,
         tableData: {
           activeUserPullRequests,
-          pullRequests: pullRequestList,
+          pullRequests: getPullRequestList,
         },
       }),
     );

@@ -6,7 +6,12 @@ const {
   createPullRequest: createPullRequestQuery,
   updateUserArray,
 } = require('../../../db');
-const { createPullRequestError } = require('./constants');
+const {
+  createPullRequestError,
+  createPullRequestSuccess,
+  diffGithubAccountError,
+  existingPullRequestError,
+} = require('./constants');
 const {
   formatPullRequestUrl,
 } = require('../../../integrations/github/helpers');
@@ -52,16 +57,18 @@ const createPullRequest = async ({
       repo,
     });
     if (await checkUserGithubId({ githubId, userId })) {
-      throw new Error(
-        `Github account does not match the account associated with the pull request`,
-      );
+      const error = new Error();
+      error.message = diffGithubAccountError;
+      throw error;
     }
     if (await checkDuplicatePullRequest({ repo: htmlUrl })) {
-      throw new Error(`Pull request at ${htmlUrl} already exists`);
+      const error = new Error();
+      error.message = existingPullRequestError;
+      throw error;
     }
     const result = await createPullRequestQuery({ data });
 
-    // add issue to user issue list
+    // Add issue to user issue list
     await updateUserArray({
       column: 'pull_requests',
       data: result.pullRequestId,
@@ -69,8 +76,8 @@ const createPullRequest = async ({
     });
 
     return {
-      __typename: 'PullRequest',
-      ...result,
+      __typename: 'Success',
+      message: createPullRequestSuccess,
     };
   } catch (error) {
     const { message } = error;
