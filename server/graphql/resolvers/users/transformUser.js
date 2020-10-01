@@ -39,10 +39,10 @@ const transformUser = async args => {
       __typename: 'User',
       ...result,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: error.message,
     };
   }
 };

@@ -383,11 +383,11 @@ module.exports = buildSchema(`
     createPaypalPayment(amount: Float!, issueId: ID, userId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
     createStripeCharge(amount: Float!, issueId: ID, token: String!, userId: ID): PaymentResult!
-    createUser(userInput: UserInput): User!
+    createUser(userInput: UserInput): UserResult!
     createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
 
     deletePullRequest(id:ID!): EventResponse!
-    deleteUser(userId:ID!): String!
+    deleteUser(userId:ID!): EventResponse!
 
     importIssue(url: String!): ImportResult!
     importOrganization(url: String!): ImportResult!

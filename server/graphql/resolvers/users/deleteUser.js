@@ -1,8 +1,11 @@
-const { deletedUserImage } = require('./constants');
+const {
+  deletedUserImage,
+  deleteUserError,
+  deleteUserSuccess,
+} = require('./constants');
 const { deleteUserPullRequests, transformUser } = require('../../../db');
 
-const deleteUser = async args => {
-  const { userId } = args;
+const deleteUser = async ({ userId }) => {
   try {
     const data = {
       active_pull_requests: 0,
@@ -35,9 +38,15 @@ const deleteUser = async args => {
     };
     await deleteUserPullRequests({ userId });
     await transformUser({ data, userId });
-    return 'User successfully deleted';
-  } catch (err) {
-    throw err;
+    return {
+      __typename: 'Success',
+      message: deleteUserSuccess,
+    };
+  } catch (error) {
+    return {
+      __typename: 'Error',
+      message: deleteUserError,
+    };
   }
 };
 

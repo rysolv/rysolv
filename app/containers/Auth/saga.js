@@ -93,17 +93,17 @@ export function* getUserOrganizationsSaga({ payload }) {
   const query = `
     query {
       getUserOrganizations(id: "${id}") {
-        createdDate,
-        description,
-        id,
-        issues,
-        logo,
-        modifiedDate,
-        name,
-        organizationUrl,
-        repoUrl,
-        totalFunded,
-        verified,
+        createdDate
+        description
+        id
+        issues
+        logo
+        modifiedDate
+        name
+        organizationUrl
+        repoUrl
+        totalFunded
+        verified
       }
     }
   `;
@@ -262,11 +262,14 @@ export function* signUpSaga({ payload }) {
     });
     const {
       data: {
-        checkDuplicateUser: { __typename, message },
+        checkDuplicateUser: {
+          __typename: checkDuplicateUserTypename,
+          message: checkDuplicateUserMessage,
+        },
       },
     } = yield call(post, '/graphql', request);
-    if (__typename === 'Error') {
-      throw new Error(message);
+    if (checkDuplicateUserTypename === 'Error') {
+      throw checkDuplicateUserMessage;
     }
 
     // Register email / pasword with Cognito
@@ -284,9 +287,15 @@ export function* signUpSaga({ payload }) {
             username: "${username}"
           }
         ) {
-          email,
-          id,
-          username,
+          __typename
+          ... on User {
+            email
+            id
+            username
+          }
+          ... on Error {
+            message
+          }
         }
       }
     `;
@@ -295,12 +304,21 @@ export function* signUpSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { createUser },
+      data: {
+        createUser: {
+          __typename: createUserTypename,
+          message: createUserMessage,
+          ...restProps
+        },
+      },
     } = yield call(post, '/graphql', graphql);
+    if (createUserTypename === 'Error') {
+      throw createUserMessage;
+    }
     yield put(incrementStep({ step: 2 }));
-    yield put(signUpSuccess({ activeUser: createUser }));
+    yield put(signUpSuccess({ activeUser: restProps }));
   } catch (error) {
-    yield put(signUpFailure({ error }));
+    yield put(signUpFailure({ error: { message: error } }));
   }
 }
 

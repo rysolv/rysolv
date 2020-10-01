@@ -20,6 +20,7 @@ import {
 import {
   changeEmailFailure,
   changeEmailSuccess,
+  closeModalState,
   deleteUserFailure,
   deleteUserSuccess,
   fetchInfoFailure,
@@ -57,20 +58,37 @@ export function* changeEmailSaga({ payload }) {
 export function* deleteUserSaga({ payload }) {
   const { userId } = payload;
   const query = `
-  mutation{
-    deleteUser(userId: "${userId}")
-  }`;
+    mutation{
+      deleteUser(userId: "${userId}") {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
   try {
     const graphql = JSON.stringify({
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
+    const {
+      data: {
+        deleteUser: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') {
+      throw message;
+    }
     yield put(deleteUserSuccess());
-    yield put(signOut());
     yield put(push('/issues'));
+    yield put(signOut());
   } catch (error) {
-    yield put(deleteUserFailure({ error }));
+    yield put(closeModalState());
+    yield put(deleteUserFailure({ error: { message: error } }));
   }
 }
 
