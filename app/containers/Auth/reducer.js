@@ -14,9 +14,6 @@ import {
   FETCH_USER_SESSION,
   RESEND_SIGN_UP,
   RESET_ROUTE,
-  SEARCH_ORGANIZATIONS_FAILURE,
-  SEARCH_ORGANIZATIONS_SUCCESS,
-  SEARCH_ORGANIZATIONS,
   SIGN_IN_FAILURE,
   SIGN_IN_SUCCESS,
   SIGN_IN,
@@ -65,8 +62,8 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ACTIVE_USER_SUCCESS: {
-      const { oneUser } = payload;
-      draft.activeUser = oneUser;
+      const { user } = payload;
+      draft.activeUser = user;
       draft.isSignedIn = true;
       draft.loading.auth = false;
       break;
@@ -95,22 +92,6 @@ const authReducer = produce((draft, { payload, type }) => {
       draft.isVerifyRoute = initialState.isVerifyRoute;
       break;
     }
-    case SEARCH_ORGANIZATIONS: {
-      draft.loading.auth = true;
-      break;
-    }
-    case SEARCH_ORGANIZATIONS_FAILURE: {
-      const { error } = payload;
-      draft.alerts.error = error;
-      draft.loading.auth = false;
-      break;
-    }
-    case SEARCH_ORGANIZATIONS_SUCCESS: {
-      const { organizations } = payload;
-      draft.activeUser.organizations = organizations;
-      draft.loading.auth = false;
-      break;
-    }
     case SIGN_IN: {
       draft.isSignedIn = false;
       draft.loading.auth = true;
@@ -124,8 +105,8 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SIGN_IN_SUCCESS: {
-      const { oneUser } = payload;
-      draft.activeUser = oneUser;
+      const { user } = payload;
+      draft.activeUser = user;
       draft.isSignedIn = true;
       draft.loading.auth = false;
       break;

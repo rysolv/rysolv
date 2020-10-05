@@ -8,7 +8,6 @@ import AsyncRender from 'components/AsyncRender';
 import { BackNav } from 'components/base_ui';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { makeSelectOrganizations } from 'containers/Organizations/selectors';
-import { searchOrganizations } from 'containers/Auth/actions';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -123,8 +122,6 @@ function mapDispatchToProps(dispatch) {
     dispatchResetState: () => dispatch(resetState()),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
-    handleSearchOrganizations: payload =>
-      dispatch(searchOrganizations(payload)),
   };
 }
 

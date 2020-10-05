@@ -238,8 +238,6 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ORGANIZATIONS_FAILURE: {
-      const { error } = payload;
-      draft.error.searchOrganizations = error;
       draft.loading.searchOrganizations = false;
       break;
     }
@@ -250,7 +248,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ORGANIZATIONS: {
-      draft.shouldSearch = true;
+      draft.loading.searchOrganizations = true;
       break;
     }
     case UPDATE_INFO_FAILURE: {

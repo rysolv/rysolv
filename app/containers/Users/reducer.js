@@ -81,8 +81,8 @@ const usersReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_USERS_SUCCESS: {
-      const { getUsers } = payload;
-      draft.users = getUsers;
+      const { users } = payload;
+      draft.users = users;
       draft.loading.users = false;
       break;
     }
@@ -106,15 +106,13 @@ const usersReducer = produce((draft, { payload, type }) => {
       return initialState;
     }
     case SEARCH_USERS_FAILURE: {
-      const { error } = payload;
-      draft.error.searchUsers = error;
       draft.loading.searchUsers = false;
       break;
     }
     case SEARCH_USERS_SUCCESS: {
       const { searchUsers } = payload;
-      draft.users = searchUsers;
       draft.loading.searchUsers = false;
+      draft.users = searchUsers;
       break;
     }
     case SEARCH_USERS: {

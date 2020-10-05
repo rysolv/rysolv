@@ -97,42 +97,48 @@ export function* fetchInfoSaga({ payload }) {
   const query = `
     query {
       oneUser(id: "${userId}") {
-        activePullRequests,
-        attempting,
-        balance,
-        completedPullRequests,
-        createdDate,
-        dollarsEarned,
-        email,
-        firstName,
-        githubLink,
-        githubUsername,
-        id,
-        isGithubVerified,
-        issues,
-        lastName,
-        organizations,
-        personalLink,
-        preferredLanguages,
-        profilePic,
-        rejectedPullRequests,
-        rep,
-        stackoverflowLink,
-        username,
-        watching,
+        __typename
+        ... on User {
+          activePullRequests
+          attempting
+          balance
+          completedPullRequests
+          createdDate
+          dollarsEarned
+          email
+          firstName
+          githubLink
+          githubUsername
+          id
+          isGithubVerified
+          issues
+          lastName
+          organizations
+          personalLink
+          preferredLanguages
+          profilePic
+          rejectedPullRequests
+          rep
+          stackoverflowLink
+          username
+          watching
+        }
+        ... on Error {
+          message
+        }
       }
       getUserActivity(userId: "${userId}") {
-        actionType,
-        activityId,
-        createdDate,
-        fundedValue,
-        issueId,
-        issueName,
-        organizationId,
-        organizationName,
-        pullRequestId,
-        userId,
-        username,
+        actionType
+        activityId
+        createdDate
+        fundedValue
+        issueId
+        issueName
+        organizationId
+        organizationName
+        pullRequestId
+        userId
+        username
       }
     }
 `;
@@ -142,12 +148,18 @@ export function* fetchInfoSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { getUserActivity, oneUser },
+      data: {
+        getUserActivity,
+        oneUser: { __typename, message, ...restProps },
+      },
     } = yield call(post, '/graphql', graphql);
-    oneUser.activity = getUserActivity;
-    yield put(fetchInfoSuccess({ oneUser }));
+    if (__typename === 'Error') {
+      throw message;
+    }
+    restProps.activity = getUserActivity;
+    yield put(fetchInfoSuccess({ user: restProps }));
   } catch (error) {
-    yield put(fetchInfoFailure({ error }));
+    yield put(fetchInfoFailure({ error: { message: error } }));
   }
 }
 
@@ -276,12 +288,8 @@ export function* saveChangeSaga({ payload }) {
         ${field}: ${formattedValue},
       }) {
       __typename
-      ... on User {
-        githubLink,
-        id,
-        personalLink,
-        preferredLanguages,
-        stackoverflowLink,
+      ... on Success {
+        message
       }
       ... on Error {
         message
@@ -295,17 +303,16 @@ export function* saveChangeSaga({ payload }) {
     });
     const {
       data: {
-        transformUser,
-        transformUser: { __typename },
+        transformUser: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') {
-      throw new Error(transformUser.message);
+      throw message;
     }
     yield put(
       saveChangeSuccess({
         field,
-        message: 'User account has been successfully updated.',
+        message,
         value,
       }),
     );
@@ -313,7 +320,7 @@ export function* saveChangeSaga({ payload }) {
       yield put(updateActiveUser({ profilePic: value }));
     }
   } catch (error) {
-    yield put(saveChangeFailure({ error }));
+    yield put(saveChangeFailure({ error: { message: error } }));
   }
 }
 
@@ -382,21 +389,22 @@ export function* verifyAccountSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { verifyUserAccount },
+      data: {
+        verifyUserAccount: {
+          __typename,
+          githubUsername,
+          isGithubVerified,
+          message,
+        },
+      },
     } = yield call(post, '/graphql', graphql);
-    const {
-      __typename,
-      githubUsername,
-      isGithubVerified,
-      message,
-    } = verifyUserAccount;
     if (__typename === 'Error') {
-      throw new Error(message);
+      throw message;
     }
     yield put(verifyAccountSuccess({ githubUsername, message }));
     yield put(updateActiveUser({ isGithubVerified }));
   } catch (error) {
-    yield put(verifyAccountFailure({ error }));
+    yield put(verifyAccountFailure({ error: { message: error } }));
   }
 }
 

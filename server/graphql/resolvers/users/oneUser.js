@@ -5,9 +5,9 @@ const {
   getUserAttemptList,
   getUserWatchList,
 } = require('../../../db');
+const { oneUserError } = require('./constants');
 
-const oneUser = async args => {
-  const { id: userId } = args;
+const oneUser = async ({ id: userId }) => {
   try {
     const result = await getOneUser({ userId });
     const { issues, organizations } = result;
@@ -40,9 +40,15 @@ const oneUser = async args => {
     const watchingListResult = await getUserWatchList({ userId });
     result.watching = watchingListResult;
 
-    return result;
-  } catch (err) {
-    throw err;
+    return {
+      __typename: 'User',
+      ...result,
+    };
+  } catch (error) {
+    return {
+      __typename: 'Error',
+      message: oneUserError,
+    };
   }
 };
 

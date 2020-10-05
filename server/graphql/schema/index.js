@@ -286,6 +286,10 @@ module.exports = buildSchema(`
     watching: [String]
   }
 
+  type UserArray {
+    users: [User]
+  }
+
   type Verification {
     githubUsername: String
     isGithubVerified: Boolean
@@ -331,8 +335,8 @@ module.exports = buildSchema(`
   union EventResponse = Success | Error
   union ImportPullRequestResult = ImportPullRequest | Error
   union ImportResult = ImportData | Error
-  union IssueResult = Issue | Error
   union IssueArrayResult = IssueArray | Error
+  union IssueResult = Issue | Error
   union OrganizationArrayResult = OrganizationArray | Error
   union OrganizationResult = Organization | Error
   union PaymentResult = Payment | Error
@@ -341,6 +345,7 @@ module.exports = buildSchema(`
   union ToggleAttemptingResult = AttemptingArray | Error
   union ToggleWatchingResult = WatchListArray | Error
   union UpvoteResult = Upvote | Error
+  union UserArrayResult = UserArray | Error
   union UserResult = User | Error
   union VerificationResult = Verification | Error
   union WithdrawalResult = Withdrawal | Error
@@ -357,18 +362,17 @@ module.exports = buildSchema(`
     getOrganizations: OrganizationArrayResult!
     getPullRequestList(issueId: ID): [PullRequestList]!
     getUserActivity(userId: ID): [Activity]!
-    getUserOrganizations(id: ID!): [Organization!]
     getUserPullRequests(id: ID!): PullRequestArrayResult!
-    getUsers: [User!]!
+    getUsers: UserArrayResult!
 
     oneIssue(id: ID!): IssueResult!
-    oneOrganization(id: ID!): OrganizationResult
-    oneUser(id: ID!): User!
-    oneUserSignUp(email: String!): User!
+    oneOrganization(id: ID!): OrganizationResult!
+    oneUser(id: ID!): UserResult!
+    oneUserSignUp(email: String!): UserResult!
 
     searchIssues(value: String!): [Issue]!
     searchOrganizations(value: String!): [Organization]!
-    searchUsers(value: String!): [User!]!
+    searchUsers(value: String!): [User]!
 
     verifyUserAccount(code: String!, userId: ID!): VerificationResult!
   }
@@ -400,9 +404,7 @@ module.exports = buildSchema(`
 
     transformIssue(issueId: ID!, issueInput: IssueInput): EventResponse!
     transformOrganization(organizationId: ID!, organizationInput: OrganizationInput): EventResponse!
-    transformUser(userId: ID!, userInput: UserInput): UserResult!
-
-    updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
+    transformUser(userId: ID!, userInput: UserInput): EventResponse!
 
     upvoteIssue(issueId: ID, upvote: Boolean, userId: ID): UpvoteResult!
   }

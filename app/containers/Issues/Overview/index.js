@@ -109,7 +109,7 @@ IssuesOverview.propTypes = {
   dispatchOpenModal: T.func,
   dispatchResetState: T.func.isRequired,
   dispatchUpvote: T.func,
-  error: T.oneOfType([T.object, T.bool]),
+  error: T.oneOfType([T.bool, T.string]),
   handleClearAlerts: T.func,
   handleNav: T.func,
   handleSearchIssues: T.func,

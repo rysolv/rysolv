@@ -246,22 +246,22 @@ export function* saveInfoSaga({ payload }) {
 export function* searchOrganizationsSaga({ payload }) {
   const { value } = payload;
   const query = `
-  query {
-    searchOrganizations(value: "${value}") {
-      createdDate
-      description
-      id
-      issues
-      logo
-      modifiedDate
-      name
-      organizationUrl
-      repoUrl
-      totalFunded
-      verified
+    query {
+      searchOrganizations(value: "${value}") {
+        createdDate
+        description
+        id
+        issues
+        logo
+        modifiedDate
+        name
+        organizationUrl
+        repoUrl
+        totalFunded
+        verified
+      }
     }
-  }
-`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,
@@ -274,7 +274,7 @@ export function* searchOrganizationsSaga({ payload }) {
       searchOrganizationsSuccess({ organizations: searchOrganizations }),
     );
   } catch (error) {
-    yield put(searchOrganizationsFailure({ error }));
+    yield put(searchOrganizationsFailure());
   }
 }
 

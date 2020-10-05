@@ -57,7 +57,7 @@ UsersOverview.propTypes = {
   deviceView: T.string,
   dispatchFetchUsers: T.func,
   dispatchResetState: T.func.isRequired,
-  error: T.oneOfType([T.bool, T.object]),
+  error: T.oneOfType([T.bool, T.string]),
   handleSearchUsers: T.func,
   loading: T.bool,
   params: T.object,

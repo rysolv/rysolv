@@ -8,9 +8,6 @@ import {
   FETCH_USER_SESSION,
   RESEND_SIGN_UP,
   RESET_ROUTE,
-  SEARCH_ORGANIZATIONS_FAILURE,
-  SEARCH_ORGANIZATIONS_SUCCESS,
-  SEARCH_ORGANIZATIONS,
   SIGN_IN_FAILURE,
   SIGN_IN_SUCCESS,
   SIGN_IN,
@@ -85,27 +82,6 @@ export function resendSignUp(payload) {
 
 export function resetRoute() {
   return { type: RESET_ROUTE };
-}
-
-export function searchOrganizationsFailure(payload) {
-  return {
-    payload,
-    type: SEARCH_ORGANIZATIONS_FAILURE,
-  };
-}
-
-export function searchOrganizationsSuccess(payload) {
-  return {
-    payload,
-    type: SEARCH_ORGANIZATIONS_SUCCESS,
-  };
-}
-
-export function searchOrganizations(payload) {
-  return {
-    payload,
-    type: SEARCH_ORGANIZATIONS,
-  };
 }
 
 export function signInFailure(payload) {
