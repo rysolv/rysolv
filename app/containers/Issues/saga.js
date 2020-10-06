@@ -58,22 +58,23 @@ export function* addAttemptSaga({ payload }) {
   const { issueId, userId } = payload;
   yield put(userAttemptingTemp({ issueId }));
   const query = `
-  mutation {
-    toggleAttempting(issueId: "${issueId}", userId: "${userId}") {
-      __typename
-      ... on AttemptingArray {
-        issueArray {
-          fundedAmount
-          id
-          name
-        },
-        userArray
-      }
-      ... on Error {
-        message
+    mutation {
+      toggleAttempting(issueId: "${issueId}", userId: "${userId}") {
+        __typename
+        ... on AttemptingArray {
+          issueArray {
+            fundedAmount
+            id
+            name
+          },
+          userArray
+        }
+        ... on Error {
+          message
+        }
       }
     }
-  }`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,
@@ -84,9 +85,7 @@ export function* addAttemptSaga({ payload }) {
         toggleAttempting: { __typename, issueArray, message, userArray },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(addAttemptSuccess({ issueId, userArray }));
     yield put(updateActiveUser({ attempting: issueArray }));
   } catch (error) {
@@ -98,26 +97,27 @@ export function* addAttemptSaga({ payload }) {
 export function* addCommentSaga({ payload }) {
   const { activeUser, body, issueId } = payload;
   const query = `
-  mutation{
-    createComment(commentInput: {
-      body: ${JSON.stringify(body)},
-      target: "${issueId}",
-      user: "${activeUser.id}"
-    }) {
-      __typename
-      ... on Comment {
-        body,
-        commentId,
-        createdDate,
-        profilePic
-        target,
-        username,
-      }
-      ... on Error {
-        message
+    mutation{
+      createComment(commentInput: {
+        body: ${JSON.stringify(body)},
+        target: "${issueId}",
+        user: "${activeUser.id}"
+      }) {
+        __typename
+        ... on Comment {
+          body
+          commentId
+          createdDate
+          profilePic
+          target
+          username
+        }
+        ... on Error {
+          message
+        }
       }
     }
-  }`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,
@@ -128,9 +128,7 @@ export function* addCommentSaga({ payload }) {
         createComment: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(addCommentSuccess({ createComment: restProps }));
   } catch (error) {
     yield put(addCommentFailure({ error: { message: error } }));
@@ -141,22 +139,23 @@ export function* addWatchSaga({ payload }) {
   const { issueId, userId } = payload;
   yield put(userWatchingTemp({ issueId }));
   const query = `
-  mutation {
-    toggleWatching(issueId: "${issueId}", userId: "${userId}") {
-      __typename
-      ... on WatchListArray {
-        issueArray {
-          fundedAmount
-          id
-          name
-        },
-        userArray
-      }
-      ... on Error {
-        message
+    mutation {
+      toggleWatching(issueId: "${issueId}", userId: "${userId}") {
+        __typename
+        ... on WatchListArray {
+          issueArray {
+            fundedAmount
+            id
+            name
+          },
+          userArray
+        }
+        ... on Error {
+          message
+        }
       }
     }
-  }`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,
@@ -167,13 +166,11 @@ export function* addWatchSaga({ payload }) {
         toggleWatching: { __typename, issueArray, message, userArray },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(addWatchSuccess({ issueId, userArray }));
     yield put(updateActiveUser({ watching: issueArray }));
   } catch (error) {
-    yield put(addWatchFailure({ error: { message: error }, userId }));
+    yield put(addWatchFailure({ error: { message: error }, issueId, userId }));
     yield put(userWatchingTemp({ issueId }));
   }
 }
@@ -181,17 +178,18 @@ export function* addWatchSaga({ payload }) {
 export function* closeIssueSaga({ payload }) {
   const { issueId, shouldClose } = payload;
   const query = `
-  mutation{
-    closeIssue(issueId: "${issueId}", shouldClose: ${shouldClose}) {
-      __typename
-      ... on Success {
-        message
-      }
-      ... on Error {
-        message
+    mutation{
+      closeIssue(issueId: "${issueId}", shouldClose: ${shouldClose}) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
       }
     }
-  }`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,
@@ -202,10 +200,8 @@ export function* closeIssueSaga({ payload }) {
         closeIssue: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
-    yield put(closeIssueSuccess({ issueId, message }));
+    if (__typename === 'Error') throw message;
+    yield put(closeIssueSuccess({ message }));
   } catch (error) {
     yield put(closeIssueFailure({ error: { message: error } }));
   }
@@ -238,15 +234,8 @@ export function* deletePullRequestSaga({ payload }) {
         deletePullRequest: { __typename, message },
       },
     } = yield call(post, '/graphql', pullRequestQuery);
-    if (__typename === 'Error') {
-      throw message;
-    }
-    yield put(
-      deletePullRequestSuccess({
-        id: pullRequestId,
-        message,
-      }),
-    );
+    if (__typename === 'Error') throw message;
+    yield put(deletePullRequestSuccess({ message }));
     yield put(fetchActiveUser({ userId }));
   } catch (error) {
     yield put(deletePullRequestFailure({ error: { message: error } }));
@@ -283,9 +272,7 @@ export function* editIssueSaga({ payload }) {
         transformIssue: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(fetchIssueDetail({ id: issueId }));
     yield put(editIssueSuccess({ message }));
   } catch (error) {
@@ -335,7 +322,6 @@ export function* fetchIssueDetailSaga({ payload }) {
     }
   `;
   try {
-    // Query Issue Detail
     const issueQuery = JSON.stringify({
       query,
       variables: {},
@@ -346,9 +332,7 @@ export function* fetchIssueDetailSaga({ payload }) {
         oneIssue: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', issueQuery);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
 
     restProps.comments = getIssueComments;
 
@@ -360,36 +344,36 @@ export function* fetchIssueDetailSaga({ payload }) {
 
 export function* fetchIssuesSaga() {
   const query = `
-  query {
-    getIssues {
-      __typename
-      ... on IssueArray {
-        issues {
-          attempting
-          body
-          comments
-          createdDate
-          fundedAmount
-          id
-          language
-          modifiedDate
-          name
-          open
-          organizationId
-          organizationName
-          organizationVerified
-          rep
-          repo
-          type
-          watching
+    query {
+      getIssues {
+        __typename
+        ... on IssueArray {
+          issues {
+            attempting
+            body
+            comments
+            createdDate
+            fundedAmount
+            id
+            language
+            modifiedDate
+            name
+            open
+            organizationId
+            organizationName
+            organizationVerified
+            rep
+            repo
+            type
+            watching
+          }
+        }
+        ... on Error {
+          message
         }
       }
-      ... on Error {
-        message
-      }
     }
-  }
-`;
+  `;
   try {
     const issueQuery = JSON.stringify({
       query,
@@ -400,9 +384,7 @@ export function* fetchIssuesSaga() {
         getIssues: { __typename, issues, message },
       },
     } = yield call(post, '/graphql', issueQuery);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(fetchIssuesSuccess({ issues }));
   } catch (error) {
     yield put(fetchIssuesFailure({ error }));
@@ -412,27 +394,28 @@ export function* fetchIssuesSaga() {
 export function* importIssueSaga({ payload }) {
   const { validatedUrl } = payload;
   const query = `
-  mutation{
-    importIssue(url: "${validatedUrl}") {
-      __typename
-      ... on ImportData {
-        issueBody
-        issueLanguages
-        issueName
-        issueUrl
-        organizationDescription
-        organizationId
-        organizationLanguages
-        organizationLogo
-        organizationName
-        organizationRepo
-        organizationUrl
-      }
-      ... on Error {
-        message
+    mutation{
+      importIssue(url: "${validatedUrl}") {
+        __typename
+        ... on ImportData {
+          issueBody
+          issueLanguages
+          issueName
+          issueUrl
+          organizationDescription
+          organizationId
+          organizationLanguages
+          organizationLogo
+          organizationName
+          organizationRepo
+          organizationUrl
+        }
+        ... on Error {
+          message
+        }
       }
     }
-  }`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,
@@ -443,9 +426,7 @@ export function* importIssueSaga({ payload }) {
         importIssue: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(importIssueSuccess({ importIssue: restProps }));
   } catch (error) {
     yield put(importIssueFailure({ error: { message: error } }));
@@ -510,42 +491,40 @@ export function* saveInfoSaga({ payload }) {
         createIssue: { __typename, id, message },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(fetchActiveUser({ userId }));
     yield put(push(`/issues/detail/${id}`));
     yield put(saveInfoSuccess({ message }));
   } catch (error) {
     yield put(push('/issues'));
-    yield put(saveInfoFailure({ error }));
+    yield put(saveInfoFailure({ error: { message: error } }));
   }
 }
 
 export function* searchIssuesSaga({ payload }) {
   const { value } = payload;
   const query = `
-  query {
-    searchIssues(value: "${value}") {
-      attempting
-      body
-      comments
-      createdDate
-      fundedAmount
-      id
-      language
-      modifiedDate
-      name
-      open
-      organizationId
-      organizationName
-      organizationVerified
-      rep
-      repo
-      watching
+    query {
+      searchIssues(value: "${value}") {
+        attempting
+        body
+        comments
+        createdDate
+        fundedAmount
+        id
+        language
+        modifiedDate
+        name
+        open
+        organizationId
+        organizationName
+        organizationVerified
+        rep
+        repo
+        watching
+      }
     }
-  }
-`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,
@@ -554,7 +533,6 @@ export function* searchIssuesSaga({ payload }) {
     const {
       data: { searchIssues },
     } = yield call(post, '/graphql', graphql);
-
     yield put(searchIssuesSuccess({ issues: searchIssues }));
   } catch (error) {
     yield put(searchIssuesFailure());
@@ -592,11 +570,8 @@ export function* upvoteIssuesSaga({ payload }) {
         upvoteIssue: { __typename, issueRep, message, userRep },
       },
     } = yield call(post, '/graphql', upvoteIssue);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(upvoteIssueSuccess({ issueId, issueRep }));
-
     if (upvote) {
       yield put(updateActiveUser({ rep: userRep, addUpvote: issueId }));
     } else {

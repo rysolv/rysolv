@@ -40,9 +40,9 @@ export function* paypalPaymentSaga({ payload }) {
         }
       }
     `;
-    if (error) {
-      throw new Error(error);
-    }
+
+    if (error) throw error;
+
     const graphql = JSON.stringify({
       query,
       variables: {},
@@ -52,9 +52,7 @@ export function* paypalPaymentSaga({ payload }) {
         createPaypalPayment: { __typename, fundedAmount, message },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(paypalPaymentSuccess({ message }));
     yield put(
       updateFundedIssue({ fundedAmount, isFundedFromOverview, issueId }),
@@ -78,19 +76,19 @@ export function* stripeTokenSaga({ payload }) {
       ? `amount: ${amount}, issueId: "${issueId}", token: "${id}", userId: "${userId}"`
       : `amount: ${amount}, issueId: "${issueId}", token: "${id}"`;
     const query = `
-    mutation {
-      createStripeCharge(${valuesToSend}) {
-        __typename
-        ... on Payment {
-          fundedAmount,
-          message,
-        }
-        ... on Error {
-          message
+      mutation {
+        createStripeCharge(${valuesToSend}) {
+          __typename
+          ... on Payment {
+            fundedAmount
+            message
+          }
+          ... on Error {
+            message
+          }
         }
       }
-    }
-  `;
+    `;
     const request = JSON.stringify({
       query,
       variables: {},
@@ -100,9 +98,7 @@ export function* stripeTokenSaga({ payload }) {
         createStripeCharge: { __typename, fundedAmount, message },
       },
     } = yield call(post, '/graphql', request);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(stripeTokenSuccess({ message }));
     yield put(
       updateFundedIssue({ fundedAmount, isFundedFromOverview, issueId }),
@@ -141,9 +137,7 @@ export function* submitAccountPaymentSaga({ payload }) {
         submitAccountPayment: { __typename, balance, fundedAmount, message },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(submitAccountPaymentSuccess({ message }));
     yield put(updateActiveUser({ balance }));
     yield put(

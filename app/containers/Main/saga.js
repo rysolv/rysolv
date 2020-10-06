@@ -19,9 +19,9 @@ export function* fetchAttemptListSaga({ payload }) {
   const query = `
     query {
       getIssueAttemptList(issueId: "${issueId}") {
-        id,
-        profilePic,
-        username,
+        id
+        profilePic
+        username
       }
     }
   `;
@@ -82,9 +82,9 @@ export function* fetchWatchListSaga({ payload }) {
   const query = `
     query {
       getIssueWatchList(issueId: "${issueId}") {
-        id,
-        profilePic,
-        username,
+        id
+        profilePic
+        username
       }
     }
   `;

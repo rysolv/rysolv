@@ -11,8 +11,7 @@ import {
   SIGN_IN_FAILURE,
   SIGN_IN_SUCCESS,
   SIGN_IN,
-  SIGN_OUT_FAILURE,
-  SIGN_OUT_SUCCESS,
+  SIGN_OUT_RESPONSE,
   SIGN_OUT,
   SIGN_UP_FAILURE,
   SIGN_UP_SUCCESS,
@@ -53,18 +52,12 @@ export function fetchActiveUser(payload) {
   };
 }
 
-export function fetchUserSessionFailure(payload) {
-  return {
-    payload,
-    type: FETCH_USER_SESSION_FAILURE,
-  };
+export function fetchUserSessionFailure() {
+  return { type: FETCH_USER_SESSION_FAILURE };
 }
 
-export function fetchUserSessionSuccess(payload) {
-  return {
-    payload,
-    type: FETCH_USER_SESSION_SUCCESS,
-  };
+export function fetchUserSessionSuccess() {
+  return { type: FETCH_USER_SESSION_SUCCESS };
 }
 
 export function fetchUserSession() {
@@ -105,15 +98,9 @@ export function signIn(payload) {
   };
 }
 
-export function signOutFailure() {
+export function signOutResponse() {
   return {
-    type: SIGN_OUT_FAILURE,
-  };
-}
-
-export function signOutSuccess() {
-  return {
-    type: SIGN_OUT_SUCCESS,
+    type: SIGN_OUT_RESPONSE,
   };
 }
 

@@ -17,8 +17,7 @@ export const SIGN_IN_FAILURE = 'app/Auth/SIGN_IN_FAILURE';
 export const SIGN_IN_SUCCESS = 'app/Auth/SIGN_IN_SUCCESS';
 
 export const SIGN_OUT = 'app/Auth/SIGN_OUT';
-export const SIGN_OUT_FAILURE = 'app/Auth/SIGN_OUT_FAILURE';
-export const SIGN_OUT_SUCCESS = 'app/Auth/SIGN_OUT_SUCCESS';
+export const SIGN_OUT_RESPONSE = 'app/Auth/SIGN_OUT_RESPONSE';
 
 export const SIGN_UP = 'app/Auth/SIGN_UP';
 export const SIGN_UP_FAILURE = 'app/Auth/SIGN_UP_FAILURE';
@@ -39,3 +38,5 @@ export const VERIFY_EMAIL_SUCCESS = 'app/Auth/VERIFY_EMAIL_SUCCESS';
 export const signInError = `Something went wrong when signing you in. Please try again later.`;
 
 export const signUpError = `Something went wrong when signing you up. Please try again later.`;
+
+export const verifyEmailError = `Something went wrong when verifying your email. Please try again later.`;

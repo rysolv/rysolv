@@ -1,9 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { post } from 'utils/request';
-
 import { fetchActiveUser, updateActiveUser } from 'containers/Auth/actions';
 import { updateIssueDetail } from 'containers/Issues/actions';
+import { post } from 'utils/request';
+
 import {
   createPullRequestFailure,
   createPullRequestSuccess,
@@ -75,9 +75,7 @@ export function* createPullRequestSaga({ payload }) {
         createPullRequest: { __typename, message },
       },
     } = yield call(post, '/graphql', pullRequestQuery);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(createPullRequestSuccess());
     yield put(fetchActiveUser({ userId }));
     yield put(updateIssueDetail());
@@ -113,10 +111,8 @@ export function* deletePullRequestSaga({ payload }) {
         deletePullRequest: { __typename, message },
       },
     } = yield call(post, '/graphql', pullRequestQuery);
-    if (__typename === 'Error') {
-      throw message;
-    }
-    yield put(deletePullRequestSuccess({ message }));
+    if (__typename === 'Error') throw message;
+    yield put(deletePullRequestSuccess({ id: pullRequestId, message }));
     yield put(updateActiveUser({ pullRequestId }));
   } catch (error) {
     yield put(deletePullRequestFailure({ error: { message: error } }));
@@ -165,9 +161,7 @@ export function* fetchUserPullRequestsSaga({ payload }) {
         getUserPullRequests: { __typename, message, pullRequestArray },
       },
     } = yield call(post, '/graphql', pullRequestQuery);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(fetchUserPullRequestsSuccess({ pullRequestArray }));
   } catch (error) {
     yield put(fetchUserPullRequestsFailure({ error }));
@@ -207,9 +201,7 @@ export function* importPullRequestSaga({ payload }) {
         importPullRequest: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', pullRequestQuery);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(importPullRequestSuccess({ pullRequest: restProps }));
   } catch (error) {
     yield put(importPullRequestFailure({ error }));

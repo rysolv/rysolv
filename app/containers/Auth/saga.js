@@ -15,6 +15,7 @@ import {
   signInError,
   signUpError,
   VERIFY_EMAIL,
+  verifyEmailError,
 } from './constants';
 import {
   fetchActiveUser,
@@ -27,8 +28,7 @@ import {
   signInFailure,
   signInSuccess,
   signOut,
-  signOutFailure,
-  signOutSuccess,
+  signOutResponse,
   signUpFailure,
   signUpSuccess,
   verifyEmailFailure,
@@ -74,9 +74,7 @@ export function* fetchActiveUserSaga({ payload }) {
         oneUser: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(fetchActiveUserSuccess({ user: restProps }));
   } catch (error) {
     yield put(signOut());
@@ -95,7 +93,7 @@ export function* fetchUserSessionSaga() {
     yield put(fetchActiveUser({ userId }));
     yield put(fetchUserSessionSuccess());
   } catch (error) {
-    yield put(fetchUserSessionFailure({ error }));
+    yield put(fetchUserSessionFailure());
   }
 }
 
@@ -137,13 +135,13 @@ export function* resendSignUpSaga({ payload }) {
         oneUserSignUp: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(incrementStep({ step: 2 }));
     yield put(signUpSuccess({ activeUser: restProps }));
   } catch (error) {
-    yield put(signInFailure({ error: { message: error } }));
+    const { message } = error;
+    const messageToRender = message || signInError;
+    yield put(signInFailure({ error: { message: messageToRender } }));
   }
 }
 
@@ -200,9 +198,7 @@ export function* signInSaga({ payload }) {
         oneUser: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(signInSuccess({ user: restProps }));
   } catch (error) {
     const { code, message } = error;
@@ -223,20 +219,20 @@ export function* signOutSaga() {
   try {
     yield call(cognitoSignOut);
     yield call(removeUserData);
-    yield put(signOutSuccess());
+    yield put(signOutResponse());
   } catch (error) {
     yield call(removeUserData);
-    yield put(signOutFailure());
+    yield put(signOutResponse());
   }
 }
 
 export function* signUpSaga({ payload }) {
-  const { username, password, firstName, lastName, email } = payload;
+  const { email, firstName, lastName, password, username } = payload;
 
   const cognitoSignUp = async () => {
     const signUpResponse = await Auth.signUp({
-      username: email,
       password,
+      username: email,
     });
     return signUpResponse;
   };
@@ -312,9 +308,7 @@ export function* signUpSaga({ payload }) {
         },
       },
     } = yield call(post, '/graphql', graphql);
-    if (createUserTypename === 'Error') {
-      throw createUserMessage;
-    }
+    if (createUserTypename === 'Error') throw createUserMessage;
     yield put(incrementStep({ step: 2 }));
     yield put(signUpSuccess({ activeUser: restProps }));
   } catch (error) {
@@ -325,7 +319,7 @@ export function* signUpSaga({ payload }) {
 }
 
 export function* verifyEmailSaga({ payload }) {
-  const { userEmail, password, userId, verificationCode } = payload;
+  const { password, userEmail, userId, verificationCode } = payload;
 
   const cognitoSignUp = async () => {
     const signUpResponse = await Auth.confirmSignUp(
@@ -347,14 +341,14 @@ export function* verifyEmailSaga({ payload }) {
             emailVerified: true,
           }
         ){
-           __typename
-          ... on Success {
-            message
-          }
-          ... on Error {
-            message
-          }
-        }
+          __typename
+         ... on Success {
+           message
+         }
+         ... on Error {
+           message
+         }
+       }
       }
     `;
     const graphql = JSON.stringify({
@@ -365,7 +359,7 @@ export function* verifyEmailSaga({ payload }) {
     yield put(signIn({ password, username: userEmail }));
     yield put(verifyEmailSuccess());
   } catch (error) {
-    yield put(verifyEmailFailure({ error }));
+    yield put(verifyEmailFailure({ error: { message: verifyEmailError } }));
   }
 }
 

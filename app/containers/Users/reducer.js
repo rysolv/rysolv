@@ -65,9 +65,9 @@ const usersReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_INFO_SUCCESS: {
-      const { oneUser } = payload;
+      const { user } = payload;
       draft.loading.fetchUser = false;
-      draft.user = oneUser;
+      draft.user = user;
       break;
     }
     case FETCH_INFO: {

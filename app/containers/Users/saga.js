@@ -69,10 +69,11 @@ export function* fetchInfoSaga({ payload }) {
         oneUser: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
     restProps.activity = getUserActivity;
     yield put(fetchInfoSuccess({ user: restProps }));
   } catch (error) {
-    yield put(fetchInfoFailure({ error: { message: error } }));
+    yield put(fetchInfoFailure({ error }));
   }
 }
 
@@ -111,9 +112,7 @@ export function* fetchUsersSaga() {
         getUsers: { __typename, message, users },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw message;
-    }
+    if (__typename === 'Error') throw message;
     yield put(fetchUsersSuccess({ users }));
   } catch (error) {
     yield put(fetchUsersFailure({ error }));

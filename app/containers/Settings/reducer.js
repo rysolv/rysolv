@@ -108,8 +108,8 @@ const settingsReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_INFO_SUCCESS: {
       const { user } = payload;
-      draft.loading = false;
       draft.account = user;
+      draft.loading = false;
       break;
     }
     case FETCH_INFO: {

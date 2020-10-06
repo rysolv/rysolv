@@ -55,6 +55,8 @@ export const actionDictionary = {
   Submitted: 'opened pull request',
 };
 
+export const changeEmailError = `Something went wrong when changing your email.`;
+
 export const settingViewDictionary = {
   account: 1,
   attempting: 0,

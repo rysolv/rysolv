@@ -440,7 +440,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = { message: error };
+      draft.alerts.error = error;
       draft.importSuccess = false;
       draft.loading.addIssue = false;
       break;
@@ -462,7 +462,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case SEARCH_ISSUES_SUCCESS: {
       const { issues } = payload;
-      draft.issues = issues || null;
+      draft.issues = issues;
       draft.loading.searchIssues = false;
       break;
     }
@@ -499,8 +499,10 @@ const issuesReducer = produce((draft, { payload, type }) => {
       });
       break;
     }
-    case UPVOTE_ISSUE: {
-      draft.loading.upvoteIssue = true;
+    case UPVOTE_ISSUE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.upvoteIssue = false;
       break;
     }
     case UPVOTE_ISSUE_SUCCESS: {
@@ -516,10 +518,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.upvoteIssue = false;
       break;
     }
-    case UPVOTE_ISSUE_FAILURE: {
-      const { error } = payload;
-      draft.alerts.error = error;
-      draft.loading.upvoteIssue = false;
+    case UPVOTE_ISSUE: {
+      draft.loading.upvoteIssue = true;
       break;
     }
     case UPVOTE_ISSUE_TEMP: {
