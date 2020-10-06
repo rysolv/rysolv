@@ -18,19 +18,6 @@ module.exports = buildSchema(`
     username: String
   }
 
-  type ActivityArray {
-    activityArray: [Activity]
-  }
-
-  input ActivityInput {
-    actionType: String
-    fundedValue: Float
-    issueId: ID
-    organizationId: ID
-    pullRequestId: ID
-    userId: ID
-  }
-
   type AttemptingArray {
     issueArray: [AttemptingDetail]
     userArray: [ID]
@@ -59,6 +46,10 @@ module.exports = buildSchema(`
     user: ID!
   }
 
+  type Error {
+    message: String
+  }
+
   type ImportData {
     issueBody: String!
     issueLanguages: [String]
@@ -74,15 +65,15 @@ module.exports = buildSchema(`
   }
 
   type ImportPullRequest {
-    githubUsername: String,
-    htmlUrl: String,
-    mergeable: Boolean,
-    mergeableState: String,
-    merged: Boolean,
-    open: Boolean,
-    pullNumber: Int,
-    status: String,
-    title: String,
+    githubUsername: String
+    htmlUrl: String
+    mergeable: Boolean
+    mergeableState: String
+    merged: Boolean
+    open: Boolean
+    pullNumber: Int
+    status: String
+    title: String
   }
 
   type Issue {
@@ -109,6 +100,10 @@ module.exports = buildSchema(`
     userId: ID
     username: String
     watching: [ID]
+  }
+
+  type IssueArray {
+    issues: [Issue]
   }
 
   input IssueInput {
@@ -164,17 +159,23 @@ module.exports = buildSchema(`
     ownerId: ID
   }
 
+  type Payment {
+    balance: Float
+    fundedAmount: Float
+    message: String
+  }
+
   type PullRequest {
     createdDate: Object!
+    fundedAmount: Float
     githubUsername: String
     htmlUrl: String
     issueId: ID!
-    fundedAmount: Float
+    issueName: String
     mergeable: Boolean
     mergeableState: String
     merged: Boolean
     modifiedDate: Object!
-    issueName: String
     open: Boolean!
     pullNumber: Int
     pullRequestId: ID!
@@ -183,18 +184,14 @@ module.exports = buildSchema(`
     userId: ID!
   }
 
-  type PullRequestImport {
-    status: String!
-  }
-
   type PullRequestArray {
     pullRequestArray: [PullRequest]
   }
 
   input PullRequestInput {
+    githubUsername: String
     htmlUrl: String
     issueId: ID!
-    githubUsername: String
     mergeable: Boolean
     mergeableState: String
     merged: Boolean
@@ -214,9 +211,7 @@ module.exports = buildSchema(`
     username: String
   }
 
-  type Payment {
-    balance: Float
-    fundedAmount: Float
+  type Success {
     message: String
   }
 
@@ -258,6 +253,10 @@ module.exports = buildSchema(`
     watching: [Object]
   }
 
+  type UserArray {
+    users: [User]
+  }
+
   input UserInput {
     activePullRequests: Int
     attempting: [ID]
@@ -284,10 +283,6 @@ module.exports = buildSchema(`
     upvotes: [ID]
     username: String
     watching: [String]
-  }
-
-  type UserArray {
-    users: [User]
   }
 
   type Verification {
@@ -318,19 +313,6 @@ module.exports = buildSchema(`
     message: String
   }
 
-  type Error {
-    message: String
-  }
-
-  type Success {
-    message: String
-  }
-
-  type IssueArray {
-    issues: [Issue]
-  }
-
-  union ActivityResult = ActivityArray | Error
   union CommentResult = Comment | Error
   union EventResponse = Success | Error
   union ImportPullRequestResult = ImportPullRequest | Error
@@ -341,7 +323,6 @@ module.exports = buildSchema(`
   union OrganizationResult = Organization | Error
   union PaymentResult = Payment | Error
   union PullRequestArrayResult = PullRequestArray | Error
-  union PullRequestResult = PullRequest | Error
   union ToggleAttemptingResult = AttemptingArray | Error
   union ToggleWatchingResult = WatchListArray | Error
   union UpvoteResult = Upvote | Error
@@ -353,7 +334,6 @@ module.exports = buildSchema(`
   type RootQuery {
     checkDuplicateUser(email: String, username: String): EventResponse!
 
-    getActivity(column: String!, id: ID): ActivityResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!
@@ -380,9 +360,8 @@ module.exports = buildSchema(`
   type RootMutation {
     closeIssue(issueId: ID!, shouldClose: Boolean): EventResponse!
 
-    createActivity(activityInput: ActivityInput): Activity
     createComment(commentInput: CommentInput): CommentResult!
-    createIssue(issueInput: IssueInput): IssueResult
+    createIssue(issueInput: IssueInput): IssueResult!
     createOrganization(organizationInput: OrganizationInput): OrganizationResult!
     createPaypalPayment(amount: Float!, issueId: ID, userId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
@@ -395,12 +374,12 @@ module.exports = buildSchema(`
 
     importIssue(url: String!): ImportResult!
     importOrganization(url: String!): ImportResult!
-    importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult
+    importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
 
     submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
 
-    toggleAttempting(issueId: ID!, userId: ID!): ToggleAttemptingResult
-    toggleWatching(issueId: ID!, userId: ID!): ToggleWatchingResult
+    toggleAttempting(issueId: ID!, userId: ID!): ToggleAttemptingResult!
+    toggleWatching(issueId: ID!, userId: ID!): ToggleWatchingResult!
 
     transformIssue(issueId: ID!, issueInput: IssueInput): EventResponse!
     transformOrganization(organizationId: ID!, organizationInput: OrganizationInput): EventResponse!
