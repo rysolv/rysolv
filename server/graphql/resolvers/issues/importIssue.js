@@ -1,9 +1,9 @@
 const { checkDuplicateIssue, getOrganizationsWhere } = require('../../../db');
+const { existingIssueError, importIssueError } = require('./constants');
 const { formatIssueUrl } = require('../../../integrations/github/helpers');
 const { getSingleIssue, getSingleRepo } = require('../../../integrations');
 
-const importIssue = async args => {
-  const { url } = args;
+const importIssue = async ({ url }) => {
   try {
     // Parse issue url
     const { issueNumber, organization, repo } = formatIssueUrl(url);
@@ -17,7 +17,9 @@ const importIssue = async args => {
 
     // Check issue repo for duplicate
     if (await checkDuplicateIssue({ repo: issueInput.issueUrl })) {
-      throw new Error(`Issue at ${issueInput.issueUrl} already exists`);
+      const error = new Error();
+      error.message = existingIssueError;
+      throw error;
     }
 
     // Get organization detail from github API
@@ -38,16 +40,15 @@ const importIssue = async args => {
       organizationInput.organizationLogo = logo;
     }
 
-    const ImportData = { ...issueInput, ...organizationInput };
-
+    const importData = { ...issueInput, ...organizationInput };
     return {
       __typename: 'ImportData',
-      ...ImportData,
+      ...importData,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: importIssueError,
     };
   }
 };

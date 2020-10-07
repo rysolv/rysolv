@@ -1,8 +1,9 @@
+/* eslint-disable no-param-reassign */
 const { transformUser: transformUserQuery } = require('../../../db');
+const { transformUserError, transformUserSuccess } = require('./constants');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
-const transformUser = async args => {
-  const { userId, userInput } = args;
+const transformUser = async ({ userId, userInput }) => {
   try {
     if (userInput.profilePic) {
       const formattedProfilePic = userInput.profilePic;
@@ -33,16 +34,15 @@ const transformUser = async args => {
       stackoverflow_link: userInput.stackoverflowLink,
       username: userInput.username,
     };
-    const result = await transformUserQuery({ data, userId });
-
+    await transformUserQuery({ data, userId });
     return {
-      __typename: 'User',
-      ...result,
+      __typename: 'Success',
+      message: transformUserSuccess,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: transformUserError,
     };
   }
 };

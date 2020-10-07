@@ -1,17 +1,25 @@
 /* eslint-disable consistent-return */
 const { createActivity } = require('../activity');
 const {
+  createPaypalPaymentError,
+  depositSuccess,
+  greaterThanError,
+  paypalPaymentSuccess,
+} = require('./constants');
+const {
   submitAccountDepositUser,
   submitAccountPaymentIssue,
   submitAccountPaymentOrganization,
 } = require('../../../db');
 
-const createPaypalPayment = async args => {
-  const { amount, issueId, userId } = args;
+const createPaypalPayment = async ({ amount, issueId, userId }) => {
   try {
     if (amount < 1) {
-      throw new Error('Amount must be greater than $0.99');
+      const error = new Error();
+      error.message = greaterThanError;
+      throw error;
     }
+
     if (issueId) {
       const issueResult = await submitAccountPaymentIssue({
         fundValue: amount,
@@ -33,9 +41,10 @@ const createPaypalPayment = async args => {
       return {
         __typename: 'Payment',
         fundedAmount: issueResult.funded_amount,
-        message: 'Your Paypal payment has been successful!',
+        message: paypalPaymentSuccess,
       };
     }
+
     if (userId) {
       const userResult = await submitAccountDepositUser({ amount, userId });
 
@@ -49,13 +58,14 @@ const createPaypalPayment = async args => {
       return {
         __typename: 'Payment',
         balance: userResult.balance,
-        message: 'You have successfully deposited money into your account!',
+        message: depositSuccess,
       };
     }
-  } catch (err) {
+  } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: err.message,
+      message: message || createPaypalPaymentError({ issueId }),
     };
   }
 };

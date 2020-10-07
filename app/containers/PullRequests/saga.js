@@ -1,9 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
+import { fetchActiveUser, updateActiveUser } from 'containers/Auth/actions';
+import { updateIssueDetail } from 'containers/Issues/actions';
 import { post } from 'utils/request';
 
-import { fetchActiveUser } from 'containers/Auth/actions';
-import { updateIssueDetail } from 'containers/Issues/actions';
 import {
   createPullRequestFailure,
   createPullRequestSuccess,
@@ -25,12 +25,12 @@ export function* createPullRequestSaga({ payload }) {
   const {
     issueId,
     importData: {
+      githubUsername,
       htmlUrl,
       mergeable,
-      merged,
       mergeableState,
+      merged,
       open,
-      githubUsername,
       pullNumber,
       status,
       title,
@@ -55,6 +55,9 @@ export function* createPullRequestSaga({ payload }) {
         })
         {
         __typename
+        ... on Success {
+          message
+        }
         ... on Error {
           message
         }
@@ -68,20 +71,21 @@ export function* createPullRequestSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { createPullRequest },
+      data: {
+        createPullRequest: { __typename, message },
+      },
     } = yield call(post, '/graphql', pullRequestQuery);
-    const { __typename, message } = createPullRequest;
     if (__typename === 'Error') throw message;
-    yield put(createPullRequestSuccess({ message: 'Pull request created' }));
+    yield put(createPullRequestSuccess());
     yield put(fetchActiveUser({ userId }));
     yield put(updateIssueDetail());
   } catch (error) {
-    yield put(createPullRequestFailure({ error }));
+    yield put(createPullRequestFailure({ error: { message: error } }));
   }
 }
 
 export function* deletePullRequestSaga({ payload }) {
-  const { pullRequestId, userId } = payload;
+  const { pullRequestId } = payload;
   const query = `
     mutation {
       deletePullRequest(id: "${pullRequestId}")
@@ -103,14 +107,15 @@ export function* deletePullRequestSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { deletePullRequest },
+      data: {
+        deletePullRequest: { __typename, message },
+      },
     } = yield call(post, '/graphql', pullRequestQuery);
-    const { __typename, message } = deletePullRequest;
-    if (__typename === 'Error') throw new Error(message);
-    yield put(deletePullRequestSuccess({ message }));
-    yield put(fetchActiveUser({ userId }));
+    if (__typename === 'Error') throw message;
+    yield put(deletePullRequestSuccess({ id: pullRequestId, message }));
+    yield put(updateActiveUser({ pullRequestId }));
   } catch (error) {
-    yield put(deletePullRequestFailure({ error }));
+    yield put(deletePullRequestFailure({ error: { message: error } }));
   }
 }
 
@@ -157,15 +162,14 @@ export function* fetchUserPullRequestsSaga({ payload }) {
       },
     } = yield call(post, '/graphql', pullRequestQuery);
     if (__typename === 'Error') throw message;
-
-    yield put(fetchUserPullRequestsSuccess(pullRequestArray));
+    yield put(fetchUserPullRequestsSuccess({ pullRequestArray }));
   } catch (error) {
     yield put(fetchUserPullRequestsFailure({ error }));
   }
 }
 
 export function* importPullRequestSaga({ payload }) {
-  const { url, issueId } = payload;
+  const { issueId, url } = payload;
   const query = `
     mutation {
       importPullRequest(issueId:"${issueId}", url: "${url}") {
@@ -193,12 +197,12 @@ export function* importPullRequestSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { importPullRequest },
+      data: {
+        importPullRequest: { __typename, message, ...restProps },
+      },
     } = yield call(post, '/graphql', pullRequestQuery);
-    const { __typename, message } = importPullRequest;
     if (__typename === 'Error') throw message;
-
-    yield put(importPullRequestSuccess({ importPullRequest }));
+    yield put(importPullRequestSuccess({ pullRequest: restProps }));
   } catch (error) {
     yield put(importPullRequestFailure({ error }));
   }

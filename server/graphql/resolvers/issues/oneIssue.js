@@ -1,17 +1,17 @@
 const { getOneIssue: getOneIssueQuery } = require('../../../db');
+const { oneIssueError } = require('./constants');
 
-const oneIssue = async args => {
-  const { id } = args;
+const oneIssue = async ({ id }) => {
   try {
-    const result = await getOneIssueQuery({ issueId: id });
+    const issueDetail = await getOneIssueQuery({ issueId: id });
     return {
       __typename: 'Issue',
-      ...result,
+      ...issueDetail,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: oneIssueError,
     };
   }
 };

@@ -24,8 +24,8 @@ const CheckIcon = iconDictionary('check');
 const CloseIcon = iconDictionary('close');
 
 const VerifyForm = ({
+  alerts: { error },
   dispatchHandleStep,
-  error,
   handleClearError,
   handleSubmit,
   importData: {
@@ -39,7 +39,6 @@ const VerifyForm = ({
   },
   loading,
 }) => {
-  const errorToDisplay = error ? { message: error } : false;
   const handleBack = () => {
     dispatchHandleStep({ step: 1 });
     handleClearError();
@@ -49,10 +48,7 @@ const VerifyForm = ({
   return (
     <Fragment>
       <StyledHeader>Verify</StyledHeader>
-      <StyledErrorSuccessBanner
-        error={errorToDisplay}
-        onClose={handleClearError}
-      />
+      <StyledErrorSuccessBanner error={error} onClose={handleClearError} />
       <PullRequestContainer>
         <StyledSubHeader>General</StyledSubHeader>
         <Divider />
@@ -107,8 +103,8 @@ const VerifyForm = ({
 };
 
 VerifyForm.propTypes = {
+  alerts: T.object,
   dispatchHandleStep: T.func,
-  error: T.string,
   handleClearError: T.func,
   handleSubmit: T.func,
   importData: T.object,

@@ -44,7 +44,7 @@ const AsyncRender = ({
   }
   return (
     <Message
-      body="Please try reloading the page to see if this rysolves the problem."
+      body="Please try reloading the page to see if this resolves the problem."
       footnote={FootnoteComponent}
       icon={<IconWrapper>{WarningIcon}</IconWrapper>}
       title="Sorry, something went wrong."

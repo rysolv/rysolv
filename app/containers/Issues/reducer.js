@@ -133,8 +133,16 @@ export const initialState = {
 const issuesReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case ADD_ATTEMPT_FAILURE: {
-      const { error } = payload;
+      const { error, userId } = payload;
       draft.alerts.error = error;
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.attempting.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.attempting.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.attempting.push(userId);
+        }
+      }
       draft.loading.addAttempt = false;
       break;
     }
@@ -152,17 +160,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case ADD_ATTEMPT: {
-      const { issueId, userId } = payload;
-      draft.issues.map(({ id }, index) => {
-        if (id === issueId) {
-          const userIdIndex = draft.issues[index].attempting.indexOf(userId);
-          if (userIdIndex > -1) {
-            draft.issues[index].attempting.splice(userIdIndex, 1);
-          } else {
-            draft.issues[index].attempting.push(userId);
-          }
-        }
-      });
+      const { userId } = payload;
       if (draft.issueDetail.id) {
         const userIdIndex = draft.issueDetail.attempting.indexOf(userId);
         if (userIdIndex > -1) {
@@ -191,8 +189,26 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case ADD_WATCH_FAILURE: {
-      const { error } = payload;
+      const { error, issueId, userId } = payload;
       draft.alerts.error = error;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          const userIdIndex = draft.issues[index].watching.indexOf(userId);
+          if (userIdIndex > -1) {
+            draft.issues[index].watching.splice(userIdIndex, 1);
+          } else {
+            draft.issues[index].watching.push(userId);
+          }
+        }
+      });
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.watching.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.watching.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.watching.push(userId);
+        }
+      }
       draft.loading.addWatch = false;
       break;
     }
@@ -331,7 +347,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ISSUES_SUCCESS: {
-      draft.issues = payload;
+      const { issues } = payload;
+      draft.issues = issues;
       draft.loading.issues = false;
       break;
     }
@@ -346,8 +363,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ISSUE_DETAIL_SUCCESS: {
-      const { oneIssue } = payload;
-      draft.issueDetail = oneIssue;
+      const { issueDetail } = payload;
+      draft.issueDetail = issueDetail;
       draft.loading.issueDetail = false;
       break;
     }
@@ -364,7 +381,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case IMPORT_ISSUE_FAILURE: {
       const { error } = payload;
-      draft.error.importIssue = { error: true, message: error.message };
+      draft.alerts.error = error;
       draft.loading.importIssue = false;
       break;
     }
@@ -423,7 +440,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = { message: error };
+      draft.alerts.error = error;
       draft.importSuccess = false;
       draft.loading.addIssue = false;
       break;
@@ -431,8 +448,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case SAVE_INFO_SUCCESS: {
       const { message } = payload;
       draft.alerts.success = { message };
-      draft.loading.addIssue = false;
       draft.importSuccess = false;
+      draft.loading.addIssue = false;
       break;
     }
     case SAVE_INFO: {
@@ -440,15 +457,12 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ISSUES_FAILURE: {
-      const { error } = payload;
-      draft.error.searchIssues = error;
       draft.loading.searchIssues = false;
-      draft.importSuccess = false;
       break;
     }
     case SEARCH_ISSUES_SUCCESS: {
       const { issues } = payload;
-      draft.issues = issues || null;
+      draft.issues = issues;
       draft.loading.searchIssues = false;
       break;
     }
@@ -485,8 +499,10 @@ const issuesReducer = produce((draft, { payload, type }) => {
       });
       break;
     }
-    case UPVOTE_ISSUE: {
-      draft.loading.upvoteIssue = true;
+    case UPVOTE_ISSUE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.upvoteIssue = false;
       break;
     }
     case UPVOTE_ISSUE_SUCCESS: {
@@ -502,10 +518,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.upvoteIssue = false;
       break;
     }
-    case UPVOTE_ISSUE_FAILURE: {
-      const { error } = payload;
-      draft.alerts.error = error;
-      draft.loading.upvoteIssue = false;
+    case UPVOTE_ISSUE: {
+      draft.loading.upvoteIssue = true;
       break;
     }
     case UPVOTE_ISSUE_TEMP: {

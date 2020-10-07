@@ -14,14 +14,10 @@ import {
   FETCH_USER_SESSION,
   RESEND_SIGN_UP,
   RESET_ROUTE,
-  SEARCH_ORGANIZATIONS_FAILURE,
-  SEARCH_ORGANIZATIONS_SUCCESS,
-  SEARCH_ORGANIZATIONS,
   SIGN_IN_FAILURE,
   SIGN_IN_SUCCESS,
   SIGN_IN,
-  SIGN_OUT_FAILURE,
-  SIGN_OUT_SUCCESS,
+  SIGN_OUT_RESPONSE,
   SIGN_OUT,
   SIGN_UP_FAILURE,
   SIGN_UP_SUCCESS,
@@ -53,10 +49,6 @@ const authReducer = produce((draft, { payload, type }) => {
       draft.alerts = initialState.alerts;
       break;
     }
-    case FETCH_ACTIVE_USER: {
-      draft.loading.auth = true;
-      break;
-    }
     case FETCH_ACTIVE_USER_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
@@ -65,14 +57,14 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ACTIVE_USER_SUCCESS: {
-      const { oneUser } = payload;
-      draft.activeUser = oneUser;
+      const { user } = payload;
+      draft.activeUser = user;
       draft.isSignedIn = true;
       draft.loading.auth = false;
       break;
     }
-    case FETCH_USER_SESSION: {
-      draft.loading.authenticateUser = true;
+    case FETCH_ACTIVE_USER: {
+      draft.loading.auth = true;
       break;
     }
     case FETCH_USER_SESSION_FAILURE: {
@@ -85,6 +77,10 @@ const authReducer = produce((draft, { payload, type }) => {
       draft.loading.authenticateUser = false;
       break;
     }
+    case FETCH_USER_SESSION: {
+      draft.loading.authenticateUser = true;
+      break;
+    }
     case RESEND_SIGN_UP: {
       draft.alerts = initialState.alerts;
       draft.isSignedIn = false;
@@ -95,27 +91,6 @@ const authReducer = produce((draft, { payload, type }) => {
       draft.isVerifyRoute = initialState.isVerifyRoute;
       break;
     }
-    case SEARCH_ORGANIZATIONS: {
-      draft.loading.auth = true;
-      break;
-    }
-    case SEARCH_ORGANIZATIONS_FAILURE: {
-      const { error } = payload;
-      draft.alerts.error = error;
-      draft.loading.auth = false;
-      break;
-    }
-    case SEARCH_ORGANIZATIONS_SUCCESS: {
-      const { organizations } = payload;
-      draft.activeUser.organizations = organizations;
-      draft.loading.auth = false;
-      break;
-    }
-    case SIGN_IN: {
-      draft.isSignedIn = false;
-      draft.loading.auth = true;
-      break;
-    }
     case SIGN_IN_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
@@ -124,31 +99,25 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SIGN_IN_SUCCESS: {
-      const { oneUser } = payload;
-      draft.activeUser = oneUser;
+      const { user } = payload;
+      draft.activeUser = user;
       draft.isSignedIn = true;
       draft.loading.auth = false;
       break;
     }
+    case SIGN_IN: {
+      draft.isSignedIn = false;
+      draft.loading.auth = true;
+      break;
+    }
+    case SIGN_OUT_RESPONSE: {
+      const tempState = { ...initialState };
+      tempState.loading.authenticateUser = false;
+      return tempState;
+    }
     case SIGN_OUT: {
       draft.loading.auth = true;
       draft.loading.authenticateUser = true;
-      break;
-    }
-    case SIGN_OUT_FAILURE: {
-      const tempState = { ...initialState };
-      tempState.loading.authenticateUser = false;
-      return tempState;
-    }
-    case SIGN_OUT_SUCCESS: {
-      const tempState = { ...initialState };
-      tempState.loading.authenticateUser = false;
-      return tempState;
-    }
-    case SIGN_UP: {
-      draft.alerts = initialState.alerts;
-      draft.isSignedIn = false;
-      draft.loading.auth = true;
       break;
     }
     case SIGN_UP_FAILURE: {
@@ -164,6 +133,12 @@ const authReducer = produce((draft, { payload, type }) => {
       draft.loading.auth = false;
       break;
     }
+    case SIGN_UP: {
+      draft.alerts = initialState.alerts;
+      draft.isSignedIn = false;
+      draft.loading.auth = true;
+      break;
+    }
     case UPDATE_ACTIVE_USER: {
       const {
         addUpvote,
@@ -171,6 +146,7 @@ const authReducer = produce((draft, { payload, type }) => {
         balance,
         isGithubVerified,
         profilePic,
+        pullRequestId,
         removeUpvote,
         rep,
         watching,
@@ -190,6 +166,9 @@ const authReducer = produce((draft, { payload, type }) => {
       }
       if (profilePic) {
         draft.activeUser.profilePic = profilePic;
+      }
+      if (pullRequestId) {
+        remove(draft.activeUser.pullRequests, id => id === pullRequestId);
       }
       if (removeUpvote && rep) {
         remove(draft.activeUser.upvotes, id => id === removeUpvote);
@@ -235,11 +214,6 @@ const authReducer = produce((draft, { payload, type }) => {
       }
       break;
     }
-    case VERIFY_EMAIL: {
-      draft.alerts = initialState.alerts;
-      draft.loading.auth = true;
-      break;
-    }
     case VERIFY_EMAIL_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
@@ -249,6 +223,11 @@ const authReducer = produce((draft, { payload, type }) => {
     }
     case VERIFY_EMAIL_SUCCESS: {
       draft.isVerifyRoute = true;
+      break;
+    }
+    case VERIFY_EMAIL: {
+      draft.alerts = initialState.alerts;
+      draft.loading.auth = true;
       break;
     }
     default: {

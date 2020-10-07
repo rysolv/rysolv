@@ -8,6 +8,7 @@ import ImportForm from 'components/Organizations/Add/ImportForm';
 
 import { validateOrganizationUrl } from 'utils/validate';
 import {
+  clearAlerts,
   importOrganization,
   incrementStep,
   inputChange,
@@ -25,6 +26,11 @@ export class ImportOrganization extends React.PureComponent {
   componentDidMount() {
     const { dispatchUpdateIsManual } = this.props;
     dispatchUpdateIsManual({ value: false });
+  }
+
+  componentWillUnmount() {
+    const { handleClearAlerts } = this.props;
+    handleClearAlerts();
   }
 
   render() {
@@ -73,6 +79,7 @@ ImportOrganization.propTypes = {
   dispatchImportOrganization: T.func,
   dispatchInputError: T.func,
   dispatchUpdateIsManual: T.func,
+  handleClearAlerts: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   importError: T.object,
@@ -100,6 +107,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(importOrganization(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };

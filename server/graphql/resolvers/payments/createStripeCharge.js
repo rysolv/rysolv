@@ -4,17 +4,24 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { calculateTotalAmount } = require('../../../constants');
 const { createActivity } = require('../activity');
 const {
+  createStripePaymentError,
+  depositSuccess,
+  greaterThanError,
+  stripePaymentSuccess,
+} = require('./constants');
+const {
   submitAccountDepositUser,
   submitAccountPaymentIssue,
   submitAccountPaymentOrganization,
 } = require('../../../db');
 
-const createStripeCharge = async args => {
-  const { amount, issueId, token, userId } = args;
-  const totalAmount = calculateTotalAmount(amount);
+const createStripeCharge = async ({ amount, issueId, token, userId }) => {
   try {
-    if (amount < 1) {
-      throw new Error('Amount must be greater than $0.99');
+    const totalAmount = calculateTotalAmount(amount);
+    if (amount < 100) {
+      const error = new Error();
+      error.message = greaterThanError;
+      throw error;
     }
     await stripe.charges.create({
       amount: totalAmount,
@@ -44,7 +51,7 @@ const createStripeCharge = async args => {
       return {
         __typename: 'Payment',
         fundedAmount: issueResult.funded_amount,
-        message: 'Thank you for funding!',
+        message: stripePaymentSuccess,
       };
     }
     if (userId) {
@@ -60,13 +67,14 @@ const createStripeCharge = async args => {
       return {
         __typename: 'Payment',
         balance: userResult.balance,
-        message: 'You have successfully deposited money into your account!',
+        message: depositSuccess,
       };
     }
-  } catch (err) {
+  } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: err.message,
+      message: message || createStripePaymentError({ issueId }),
     };
   }
 };

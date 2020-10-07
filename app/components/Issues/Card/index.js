@@ -90,9 +90,7 @@ const IssueCard = ({
                   <CommentIcon />
                 </IssueCardIconWrapper>
                 <IssueCardLabelWrapper>
-                  <Link to={`/issues/detail/${id}`}>
-                    {comments.length} Comments
-                  </Link>
+                  <Link to={`/issues/detail/${id}`}>{comments} Comments</Link>
                 </IssueCardLabelWrapper>
               </IssueCardItem>
             ) : null}
@@ -136,9 +134,7 @@ const IssueCard = ({
                 icon={
                   <Fragment>
                     <CommentIcon />{' '}
-                    <MobileIconDescription>
-                      {comments.length}
-                    </MobileIconDescription>
+                    <MobileIconDescription>{comments}</MobileIconDescription>
                   </Fragment>
                 }
                 label="Comments"

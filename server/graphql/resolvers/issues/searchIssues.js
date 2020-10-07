@@ -1,12 +1,11 @@
 const { searchIssues: searchIssuesQuery } = require('../../../db');
 
-const searchIssues = async args => {
-  const { value } = args;
+const searchIssues = async ({ value }) => {
   try {
-    const result = await searchIssuesQuery({ value });
-    return result;
-  } catch (err) {
-    throw err;
+    const issues = await searchIssuesQuery({ value });
+    return issues;
+  } catch (error) {
+    return [];
   }
 };
 

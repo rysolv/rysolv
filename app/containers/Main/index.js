@@ -63,9 +63,9 @@ export const Main = ({
     dispatchCloseModal();
     dispatchCloseIssue({ issueId, shouldClose });
   };
-  const handleDeletePullRequest = ({ pullRequestId, userId }) => {
+  const handleDeletePullRequest = ({ pullRequestId }) => {
     dispatchCloseModal();
-    handleDelete({ pullRequestId, userId });
+    handleDelete({ pullRequestId });
   };
   const handleRedirect = route => {
     dispatchCloseModal();

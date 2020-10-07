@@ -2,9 +2,9 @@ const {
   downvoteIssue: downvoteIssueQuery,
   upvoteIssue: upvoteIssueQuery,
 } = require('../../../db');
+const { upvoteIssueError } = require('./constants');
 
-const upvoteIssue = async args => {
-  const { issueId, upvote, userId } = args;
+const upvoteIssue = async ({ issueId, upvote, userId }) => {
   try {
     if (upvote) {
       const { issueRep, userRep } = await upvoteIssueQuery({
@@ -27,10 +27,10 @@ const upvoteIssue = async args => {
       __typename: 'Upvote',
       ...result,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: upvoteIssueError({ upvote }),
     };
   }
 };

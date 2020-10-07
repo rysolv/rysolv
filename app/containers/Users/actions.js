@@ -82,11 +82,8 @@ export function resetState() {
   };
 }
 
-export function searchUsersFailure(payload) {
-  return {
-    payload,
-    type: SEARCH_USERS_FAILURE,
-  };
+export function searchUsersFailure() {
+  return { type: SEARCH_USERS_FAILURE };
 }
 
 export function searchUsersSuccess(payload) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const Identicon = require('identicon.js');
 const { v4: uuidv4 } = require('uuid');
 
@@ -10,50 +11,49 @@ const {
   updateUserArray,
 } = require('../../../db');
 const { createActivity } = require('../activity');
-const { newIssueObject, newOrganizationObject } = require('./constants');
+const {
+  createIssueError,
+  createIssueSuccess,
+  createOrganizationError,
+  existingIssueError,
+  existingOrganizationError,
+  newIssueObject,
+  newOrganizationObject,
+} = require('./constants');
 
-const createIssue = async args => {
-  const { issueInput } = args;
-  const { identiconId, organizationId, organizationRepo, repo } = issueInput;
-  const newIssueId = uuidv4();
-
-  if (identiconId && identiconId !== 'undefined') {
-    issueInput.organizationLogo = new Identicon(identiconId, 250).toString();
-  }
-
-  // Populate issue object and create new issue
-  const createNewIssue = async () => {
-    const issueObject = newIssueObject(newIssueId, issueInput);
-    try {
-      const result = await createIssueQuery({ data: issueObject });
-      return result;
-    } catch (err) {
-      throw err;
-    }
-  };
-
-  // Populate organization object and create new organization
-  const createNewOrganization = async () => {
-    // backup check
-    if (await checkDuplicateOrganization({ repo: organizationRepo })) {
-      throw new Error(
-        `Organization at ${issueInput.organizationRepo} already exists`,
-      );
-    }
-
-    const organizationObject = await newOrganizationObject(issueInput);
-    try {
-      const result = await createOrganization({ data: organizationObject });
-      return result;
-    } catch (err) {
-      throw err;
-    }
-  };
-
+const createIssue = async ({ issueInput }) => {
   try {
+    const { identiconId, organizationId, organizationRepo, repo } = issueInput;
+    const newIssueId = uuidv4();
+
+    if (identiconId && identiconId !== 'undefined') {
+      issueInput.organizationLogo = new Identicon(identiconId, 250).toString();
+    }
+
+    // Populate organization object and create new organization
+    const createNewOrganization = async () => {
+      // backup check
+      if (await checkDuplicateOrganization({ repo: organizationRepo })) {
+        const error = new Error();
+        error.message = existingOrganizationError;
+        throw error;
+      }
+
+      const organizationObject = await newOrganizationObject(issueInput);
+      try {
+        const result = await createOrganization({ data: organizationObject });
+        return result;
+      } catch (error) {
+        error.message = createOrganizationError;
+        throw error;
+      }
+    };
+
     // Check for duplicate issue
     if (await checkDuplicateIssue({ repo })) {
-      throw new Error(`Issue at ${repo} already exists`);
+      const error = new Error();
+      error.message = existingIssueError;
+      throw error;
     }
 
     // Check for existing organization. If not: create organization
@@ -71,7 +71,8 @@ const createIssue = async args => {
     }
 
     // Create new issue
-    const issueResult = await createNewIssue();
+    const issueObject = newIssueObject(newIssueId, issueInput);
+    const issueResult = await createIssueQuery({ data: issueObject });
 
     const activityInput = {
       actionType: 'create',
@@ -105,12 +106,14 @@ const createIssue = async args => {
 
     return {
       __typename: 'Issue',
+      message: createIssueSuccess,
       ...issueResult,
     };
-  } catch (err) {
+  } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: err.message,
+      message: message || createIssueError,
     };
   }
 };

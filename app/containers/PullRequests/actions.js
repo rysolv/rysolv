@@ -38,11 +38,8 @@ export function createPullRequestFailure(payload) {
   };
 }
 
-export function createPullRequestSuccess(payload) {
-  return {
-    payload,
-    type: CREATE_PULL_REQUEST_SUCCESS,
-  };
+export function createPullRequestSuccess() {
+  return { type: CREATE_PULL_REQUEST_SUCCESS };
 }
 
 export function createPullRequest(payload) {

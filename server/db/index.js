@@ -16,7 +16,6 @@ const {
   getOneIssue,
   searchIssues,
   transformIssue,
-  updateIssueArray,
   upvoteIssue,
 } = require('./queries/issues');
 const {
@@ -40,7 +39,6 @@ const {
   createPullRequest,
   deletePullRequest,
   deleteUserPullRequests,
-  getOnePullRequest,
   getPullRequestList,
   getUserPullRequests,
 } = require('./queries/pullRequests');
@@ -88,7 +86,6 @@ module.exports = {
   getIssueWatchList,
   getOneIssue,
   getOneOrganization,
-  getOnePullRequest,
   getOneUser,
   getOneUserSignUp,
   getOrganizationActivity,
@@ -113,7 +110,6 @@ module.exports = {
   transformOrganization,
   transformUser,
   transformUserBalance,
-  updateIssueArray,
   updateOrganizationArray,
   updateUserArray,
   upvoteIssue,

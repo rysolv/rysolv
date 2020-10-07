@@ -8,6 +8,7 @@ import ImportForm from 'components/Issues/Add/ImportForm';
 
 import { validateIssueUrl } from 'utils/validate';
 import {
+  clearAlerts,
   importIssue,
   incrementStep,
   inputChange,
@@ -27,6 +28,11 @@ export class ImportIssue extends React.PureComponent {
     dispatchUpdateIsManual({ value: false });
   }
 
+  componentWillUnmount() {
+    const { handleClearAlerts } = this.props;
+    handleClearAlerts();
+  }
+
   render() {
     const {
       dispatchImportIssue,
@@ -41,7 +47,7 @@ export class ImportIssue extends React.PureComponent {
       const {
         importUrl: { value: url },
       } = issueData;
-      const { error, validatedUrl, message } = validateIssueUrl(url);
+      const { error, message, validatedUrl } = validateIssueUrl(url);
 
       if (error) {
         dispatchInputError({ errors: { importUrl: message } });
@@ -74,6 +80,7 @@ ImportIssue.propTypes = {
   dispatchImportIssue: T.func,
   dispatchInputError: T.func,
   dispatchUpdateIsManual: T.func,
+  handleClearAlerts: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   importError: T.object,
@@ -98,6 +105,7 @@ function mapDispatchToProps(dispatch) {
     dispatchImportIssue: payload => dispatch(importIssue(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };

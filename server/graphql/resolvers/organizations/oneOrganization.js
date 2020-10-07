@@ -1,7 +1,7 @@
 const { getOneIssue, getOneOrganization, getOneUser } = require('../../../db');
+const { oneOrganizationError } = require('./constants');
 
-const oneOrganization = async args => {
-  const { id } = args;
+const oneOrganization = async ({ id }) => {
   try {
     const result = await getOneOrganization({ organizationId: id });
     const { contributors, issues } = result;
@@ -25,10 +25,10 @@ const oneOrganization = async args => {
       __typename: 'Organization',
       ...result,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: oneOrganizationError,
     };
   }
 };

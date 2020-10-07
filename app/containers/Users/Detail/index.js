@@ -64,7 +64,7 @@ UsersDetail.propTypes = {
   data: T.object,
   dispatchFetchInfo: T.func,
   dispatchResetState: T.func.isRequired,
-  error: T.oneOfType([T.object, T.bool]).isRequired,
+  error: T.oneOfType([T.bool, T.string]).isRequired,
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
   handleNav: T.func.isRequired,

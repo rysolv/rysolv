@@ -107,9 +107,9 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_INFO_SUCCESS: {
-      const { oneUser } = payload;
+      const { user } = payload;
+      draft.account = user;
       draft.loading = false;
-      draft.account = oneUser;
       break;
     }
     case FETCH_INFO: {
@@ -145,7 +145,7 @@ const settingsReducer = produce((draft, { payload, type }) => {
     }
     case PAYPAL_PAYMENT_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = { message: error };
+      draft.alerts.error = error;
       draft.loading = false;
       break;
     }
@@ -205,7 +205,7 @@ const settingsReducer = produce((draft, { payload, type }) => {
     }
     case STRIPE_TOKEN_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = { message: error };
+      draft.alerts.error = error;
       draft.loading = false;
       break;
     }

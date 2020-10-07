@@ -8,11 +8,10 @@ import AsyncRender from 'components/AsyncRender';
 import { BackNav } from 'components/base_ui';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { makeSelectOrganizations } from 'containers/Organizations/selectors';
-import { searchOrganizations } from 'containers/Auth/actions';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { incrementStep, resetState } from '../actions';
+import { clearAlerts, incrementStep, resetState } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -21,7 +20,11 @@ import {
   makeSelectIssuesStep,
 } from '../selectors';
 import { addIssueDictionary } from '../stepDictionary';
-import { AddForm, AddWrapper } from './styledComponents';
+import {
+  AddForm,
+  AddWrapper,
+  StyledErrorSuccessBanner,
+} from './styledComponents';
 
 export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
@@ -40,6 +43,8 @@ export class IssuesAdd extends React.PureComponent {
 
     const {
       activeUser,
+      alerts: { error, success },
+      handleClearAlerts,
       handleIncrementStep,
       importSuccess,
       issueData,
@@ -56,6 +61,11 @@ export class IssuesAdd extends React.PureComponent {
     return (
       <AddWrapper>
         <BackNav label="Back to Issues" path="/issues" />
+        <StyledErrorSuccessBanner
+          error={error}
+          onClose={handleClearAlerts}
+          success={success}
+        />
         <AddForm>
           <AsyncRender
             asyncData={{ issueData, organization }}
@@ -74,7 +84,9 @@ export class IssuesAdd extends React.PureComponent {
 
 IssuesAdd.propTypes = {
   activeUser: T.object,
+  alerts: T.object,
   dispatchResetState: T.func.isRequired,
+  handleClearAlerts: T.func,
   handleIncrementStep: T.func,
   importSuccess: T.bool,
   issueData: T.object,
@@ -91,6 +103,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
+  alerts: makeSelectIssues('alerts'),
   importSuccess: makeSelectIssues('importSuccess'),
   issueData: makeSelectIssues('issueData'),
   loading: makeSelectIssuesLoading('addIssue'),
@@ -107,9 +120,8 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Issues
      */
     dispatchResetState: () => dispatch(resetState()),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
-    handleSearchOrganizations: payload =>
-      dispatch(searchOrganizations(payload)),
   };
 }
 

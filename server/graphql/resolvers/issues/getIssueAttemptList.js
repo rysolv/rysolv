@@ -2,13 +2,12 @@ const {
   getIssueAttemptList: getIssueAttemptListQuery,
 } = require('../../../db');
 
-const getIssueAttemptList = async args => {
-  const { issueId } = args;
+const getIssueAttemptList = async ({ issueId }) => {
   try {
     const attemptList = await getIssueAttemptListQuery({ issueId });
     return attemptList;
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    return [];
   }
 };
 

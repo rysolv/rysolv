@@ -7,6 +7,7 @@ import { post } from 'utils/request';
 
 import {
   CHANGE_EMAIL,
+  changeEmailError,
   DELETE_USER,
   FETCH_INFO,
   PAYPAL_PAYMENT,
@@ -20,6 +21,7 @@ import {
 import {
   changeEmailFailure,
   changeEmailSuccess,
+  closeModalState,
   deleteUserFailure,
   deleteUserSuccess,
   fetchInfoFailure,
@@ -50,27 +52,44 @@ export function* changeEmailSaga({ payload }) {
     yield put(changeEmailSuccess());
     yield put(saveChange({ field: 'email', userId, value: email }));
   } catch (error) {
-    yield put(changeEmailFailure({ error }));
+    const { message } = error;
+    const messageToRender = message || changeEmailError;
+    yield put(changeEmailFailure({ error: { message: messageToRender } }));
   }
 }
 
 export function* deleteUserSaga({ payload }) {
   const { userId } = payload;
   const query = `
-  mutation{
-    deleteUser(userId: "${userId}")
-  }`;
+    mutation{
+      deleteUser(userId: "${userId}") {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
   try {
     const graphql = JSON.stringify({
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
+    const {
+      data: {
+        deleteUser: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
     yield put(deleteUserSuccess());
-    yield put(signOut());
     yield put(push('/issues'));
+    yield put(signOut());
   } catch (error) {
-    yield put(deleteUserFailure({ error }));
+    yield put(closeModalState());
+    yield put(deleteUserFailure({ error: { message: error } }));
   }
 }
 
@@ -79,50 +98,48 @@ export function* fetchInfoSaga({ payload }) {
   const query = `
     query {
       oneUser(id: "${userId}") {
-        activePullRequests,
-        attempting,
-        balance,
-        completedPullRequests,
-        createdDate,
-        dollarsEarned,
-        email,
-        firstName,
-        githubLink,
-        githubUsername,
-        id,
-        isGithubVerified,
-        issues,
-        lastName,
-        organizations,
-        personalLink,
-        preferredLanguages,
-        profilePic,
-        rejectedPullRequests,
-        rep,
-        stackoverflowLink,
-        username,
-        watching,
-      }
-      getUserActivity(userId: "${userId}") {
         __typename
-        ... on ActivityArray {
-          activityArray {
-            actionType,
-            activityId,
-            createdDate,
-            fundedValue,
-            issueId,
-            issueName,
-            organizationId,
-            organizationName,
-            pullRequestId,
-            userId,
-            username,
-          }
+        ... on User {
+          activePullRequests
+          attempting
+          balance
+          completedPullRequests
+          createdDate
+          dollarsEarned
+          email
+          firstName
+          githubLink
+          githubUsername
+          id
+          isGithubVerified
+          issues
+          lastName
+          organizations
+          personalLink
+          preferredLanguages
+          profilePic
+          rejectedPullRequests
+          rep
+          stackoverflowLink
+          username
+          watching
         }
         ... on Error {
           message
         }
+      }
+      getUserActivity(userId: "${userId}") {
+        actionType
+        activityId
+        createdDate
+        fundedValue
+        issueId
+        issueName
+        organizationId
+        organizationName
+        pullRequestId
+        userId
+        username
       }
     }
 `;
@@ -133,14 +150,15 @@ export function* fetchInfoSaga({ payload }) {
     });
     const {
       data: {
-        getUserActivity: { activityArray },
-        oneUser,
+        getUserActivity,
+        oneUser: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-    oneUser.activity = activityArray;
-    yield put(fetchInfoSuccess({ oneUser }));
+    if (__typename === 'Error') throw message;
+    restProps.activity = getUserActivity;
+    yield put(fetchInfoSuccess({ user: restProps }));
   } catch (error) {
-    yield put(fetchInfoFailure({ error }));
+    yield put(fetchInfoFailure({ error: { message: error } }));
   }
 }
 
@@ -151,19 +169,19 @@ export function* paypalPaymentSaga({ payload }) {
       throw new Error(error);
     }
     const query = `
-    mutation {
-      createPaypalPayment(amount: ${amount}, userId: "${userId}") {
-        __typename
-        ... on Payment {
-          balance,
-          message,
-        }
-        ... on Error {
-          message
+      mutation {
+        createPaypalPayment(amount: ${amount}, userId: "${userId}") {
+          __typename
+          ... on Payment {
+            balance
+            message
+          }
+          ... on Error {
+            message
+          }
         }
       }
-    }
-  `;
+    `;
     const request = JSON.stringify({
       query,
       variables: {},
@@ -177,28 +195,29 @@ export function* paypalPaymentSaga({ payload }) {
     yield put(paypalPaymentSuccess({ balance, message }));
     yield put(updateActiveUser({ balance }));
   } catch (error) {
-    yield put(paypalPaymentFailure({ error }));
+    yield put(paypalPaymentFailure({ error: { message: error } }));
   }
 }
 
 export function* removeAttemptingSaga({ payload }) {
   const { issueId, userId } = payload;
   const query = `
-  mutation {
-    toggleAttempting(issueId: "${issueId}", userId: "${userId}") {
-      __typename
-      ... on AttemptingArray {
-        issueArray {
-          fundedAmount
-          id
-          name
+    mutation {
+      toggleAttempting(issueId: "${issueId}", userId: "${userId}") {
+        __typename
+        ... on AttemptingArray {
+          issueArray {
+            fundedAmount
+            id
+            name
+          }
+        }
+        ... on Error {
+          message
         }
       }
-      ... on Error {
-        message
-      }
     }
-  }`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,
@@ -209,34 +228,33 @@ export function* removeAttemptingSaga({ payload }) {
         toggleAttempting: { __typename, issueArray, message },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw new Error(message);
-    }
+    if (__typename === 'Error') throw message;
     yield put(removeIssueSuccess({ column: 'attempting', issueId }));
     yield put(updateActiveUser({ attempting: issueArray }));
   } catch (error) {
-    yield put(removeIssueFailure({ error }));
+    yield put(removeIssueFailure({ error: { message: error } }));
   }
 }
 
 export function* removeWatchingSaga({ payload }) {
   const { issueId, userId } = payload;
   const query = `
-  mutation {
-    toggleWatching(issueId: "${issueId}", userId: "${userId}") {
-      __typename
-      ... on WatchListArray {
-        issueArray {
-          fundedAmount
-          id
-          name
+    mutation {
+      toggleWatching(issueId: "${issueId}", userId: "${userId}") {
+        __typename
+        ... on WatchListArray {
+          issueArray {
+            fundedAmount
+            id
+            name
+          }
+        }
+        ... on Error {
+          message
         }
       }
-      ... on Error {
-        message
-      }
     }
-  }`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,
@@ -247,13 +265,11 @@ export function* removeWatchingSaga({ payload }) {
         toggleWatching: { __typename, issueArray, message },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw new Error(message);
-    }
+    if (__typename === 'Error') throw message;
     yield put(removeIssueSuccess({ column: 'watching', issueId }));
     yield put(updateActiveUser({ watching: issueArray }));
   } catch (error) {
-    yield put(removeIssueFailure({ error }));
+    yield put(removeIssueFailure({ error: { message: error } }));
   }
 }
 
@@ -267,12 +283,8 @@ export function* saveChangeSaga({ payload }) {
         ${field}: ${formattedValue},
       }) {
       __typename
-      ... on User {
-        githubLink,
-        id,
-        personalLink,
-        preferredLanguages,
-        stackoverflowLink,
+      ... on Success {
+        message
       }
       ... on Error {
         message
@@ -286,17 +298,14 @@ export function* saveChangeSaga({ payload }) {
     });
     const {
       data: {
-        transformUser,
-        transformUser: { __typename },
+        transformUser: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw new Error(transformUser.message);
-    }
+    if (__typename === 'Error') throw message;
     yield put(
       saveChangeSuccess({
         field,
-        message: 'User account has been successfully updated.',
+        message,
         value,
       }),
     );
@@ -304,7 +313,7 @@ export function* saveChangeSaga({ payload }) {
       yield put(updateActiveUser({ profilePic: value }));
     }
   } catch (error) {
-    yield put(saveChangeFailure({ error }));
+    yield put(saveChangeFailure({ error: { message: error } }));
   }
 }
 
@@ -316,23 +325,23 @@ export function* stripeTokenSaga({ payload }) {
       userId,
     } = payload;
     const query = `
-    mutation {
-      createStripeCharge(
-        amount: ${amount},
-        token: "${id}",
-        userId: "${userId}"
-      ) {
-        __typename
-        ... on Payment {
-          balance,
-          message,
-        }
-        ... on Error {
-          message
+      mutation {
+        createStripeCharge(
+          amount: ${amount},
+          token: "${id}",
+          userId: "${userId}"
+        ) {
+          __typename
+          ... on Payment {
+            balance
+            message
+          }
+          ... on Error {
+            message
+          }
         }
       }
-    }
-  `;
+    `;
     const request = JSON.stringify({
       query,
       variables: {},
@@ -346,7 +355,7 @@ export function* stripeTokenSaga({ payload }) {
     yield put(stripeTokenSuccess({ balance, message }));
     yield put(updateActiveUser({ balance }));
   } catch (error) {
-    yield put(stripeTokenFailure({ error }));
+    yield put(stripeTokenFailure({ error: { message: error } }));
   }
 }
 
@@ -373,21 +382,20 @@ export function* verifyAccountSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { verifyUserAccount },
+      data: {
+        verifyUserAccount: {
+          __typename,
+          githubUsername,
+          isGithubVerified,
+          message,
+        },
+      },
     } = yield call(post, '/graphql', graphql);
-    const {
-      __typename,
-      githubUsername,
-      isGithubVerified,
-      message,
-    } = verifyUserAccount;
-    if (__typename === 'Error') {
-      throw new Error(message);
-    }
+    if (__typename === 'Error') throw message;
     yield put(verifyAccountSuccess({ githubUsername, message }));
     yield put(updateActiveUser({ isGithubVerified }));
   } catch (error) {
-    yield put(verifyAccountFailure({ error }));
+    yield put(verifyAccountFailure({ error: { message: error } }));
   }
 }
 
@@ -399,6 +407,7 @@ export function* withdrawFundsSaga({ payload }) {
         __typename
         ... on Withdrawal {
           balance
+          message
         }
         ... on Error {
           message
@@ -412,21 +421,20 @@ export function* withdrawFundsSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { createWithdrawal },
+      data: {
+        createWithdrawal: { __typename, balance, message },
+      },
     } = yield call(post, '/graphql', graphql);
-    const { balance, message, __typename } = createWithdrawal;
-    if (__typename === 'Error') {
-      throw new Error(message);
-    }
+    if (__typename === 'Error') throw message;
     yield put(updateActiveUser({ balance }));
     yield put(
       withdrawFundsSuccess({
         balance,
-        message: 'Withdrawal request has been successfully submitted.',
+        message,
       }),
     );
   } catch (error) {
-    yield put(withdrawFundsFailure({ error }));
+    yield put(withdrawFundsFailure({ error: { message: error } }));
   }
 }
 

@@ -22,6 +22,7 @@ import { makeSelectPullRequests } from '../selectors';
 import { importPullRequestDictionary } from '../stepDictionary';
 
 const AddPullRequest = ({
+  alerts,
   dispatchCreatePullRequest,
   dispatchHandleStep,
   dispatchImportPullRequest,
@@ -52,6 +53,7 @@ const AddPullRequest = ({
   };
 
   const propsToPassDown = {
+    alerts,
     dispatchHandleStep,
     error,
     handleClearError,
@@ -67,6 +69,7 @@ const AddPullRequest = ({
 };
 
 AddPullRequest.propTypes = {
+  alerts: T.object,
   dispatchCreatePullRequest: T.func,
   dispatchHandleStep: T.func,
   dispatchImportPullRequest: T.func,
@@ -86,6 +89,7 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : PullRequests
    */
+  alerts: makeSelectPullRequests('alerts'),
   error: makeSelectPullRequests('error'),
   importData: makeSelectPullRequests('importData'),
   loading: makeSelectPullRequests('loading'),

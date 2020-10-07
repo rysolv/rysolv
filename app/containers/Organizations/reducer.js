@@ -136,9 +136,9 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ORGANIZATIONS_SUCCESS: {
-      const { getOrganizations } = payload;
-      draft.organizations = getOrganizations;
+      const { organizations } = payload;
       draft.loading.organizations = false;
+      draft.organizations = organizations;
       break;
     }
     case FETCH_ORGANIZATIONS: {
@@ -175,7 +175,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case IMPORT_ORGANIZATION_FAILURE: {
       const { error } = payload;
-      draft.error.importOrganization = { error: true, message: error.message };
+      draft.alerts.error = error;
       draft.loading.importOrganization = false;
       break;
     }
@@ -223,7 +223,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = { message: error };
+      draft.alerts.error = error;
       draft.loading.addOrganization = false;
       break;
     }
@@ -238,8 +238,6 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ORGANIZATIONS_FAILURE: {
-      const { error } = payload;
-      draft.error.searchOrganizations = error;
       draft.loading.searchOrganizations = false;
       break;
     }
@@ -250,7 +248,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ORGANIZATIONS: {
-      draft.shouldSearch = true;
+      draft.loading.searchOrganizations = true;
       break;
     }
     case UPDATE_INFO_FAILURE: {

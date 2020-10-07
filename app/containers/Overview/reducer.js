@@ -17,15 +17,13 @@ export const initialState = {
 const overviewReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case FETCH_ORGANIZATION_OPTIONS_FAILURE: {
-      const { error } = payload;
-      draft.error = error;
       draft.loading = false;
       break;
     }
     case FETCH_ORGANIZATION_OPTIONS_SUCCESS: {
-      const { getOrganizations } = payload;
+      const { organizations } = payload;
       draft.loading = false;
-      draft.organizationOptions = getOrganizations;
+      draft.organizationOptions = organizations;
       break;
     }
     case FETCH_ORGANIZATION_OPTIONS: {

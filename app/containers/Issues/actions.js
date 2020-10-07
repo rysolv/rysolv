@@ -341,11 +341,8 @@ export function saveInfo(payload) {
   };
 }
 
-export function searchIssuesFailure(payload) {
-  return {
-    payload,
-    type: SEARCH_ISSUES_FAILURE,
-  };
+export function searchIssuesFailure() {
+  return { type: SEARCH_ISSUES_FAILURE };
 }
 
 export function searchIssuesSuccess(payload) {
