@@ -4,8 +4,10 @@ const {
 } = require('../../../db');
 const { upvoteIssueError } = require('./constants');
 
-const upvoteIssue = async ({ issueId, upvote, userId }) => {
+const upvoteIssue = async (args, { authError, userId }) => {
+  const { issueId, upvote } = args;
   try {
+    if (authError) throw new Error(authError);
     if (upvote) {
       const { issueRep, userRep } = await upvoteIssueQuery({
         issueId,

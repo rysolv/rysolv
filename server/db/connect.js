@@ -7,11 +7,11 @@ console.log('Connected to DB');
 const production = process.env.NODE_ENV === 'production';
 
 const pool = new Pool({
-  database: production ? process.env.DB_NAME : process.env.DB_NAME_LOCAL,
-  host: production ? process.env.DB_HOST : process.env.DB_HOST_LOCAL,
-  password: production ? process.env.DB_PASSWORD : process.env.DB_PASSWORD_LOCAL,
-  port: production ? process.env.DB_PORT : process.env.DB_PORT_LOCAL,
-  user: production ? process.env.DB_USER : process.env.DB_USER_LOCAL,
+  database: production ? process.env.DB_NAME : process.env.DB_NAME_DEV,
+  host: production ? process.env.DB_HOST : process.env.DB_HOST_DEV,
+  password: production ? process.env.DB_PASSWORD : process.env.DB_PASSWORD_DEV,
+  port: production ? process.env.DB_PORT : process.env.DB_PORT_DEV,
+  user: production ? process.env.DB_USER : process.env.DB_USER_DEV,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
   max: 20,

@@ -385,7 +385,7 @@ module.exports = buildSchema(`
     transformOrganization(organizationId: ID!, organizationInput: OrganizationInput): EventResponse!
     transformUser(userId: ID!, userInput: UserInput): EventResponse!
 
-    upvoteIssue(issueId: ID, upvote: Boolean, userId: ID): UpvoteResult!
+    upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
   }
 
   schema {

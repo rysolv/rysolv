@@ -7,6 +7,7 @@ import {
   updateActiveUser,
   upvoteUserTemp,
 } from 'containers/Auth/actions';
+import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
@@ -323,7 +324,7 @@ export function* updateInfoSaga({ payload }) {
 }
 
 export function* upvoteIssueSaga({ payload }) {
-  const { issueId, upvote, userId } = payload;
+  const { issueId, upvote } = payload;
 
   // Update front end upvote. Reduce percieved loading time.
   yield put(upvoteIssueTemp({ issueId, upvote }));
@@ -331,7 +332,7 @@ export function* upvoteIssueSaga({ payload }) {
 
   const upvoteIssueQuery = `
     mutation {
-      upvoteIssue(issueId: "${issueId}", upvote: ${upvote}, userId: "${userId}") {
+      upvoteIssue(issueId: "${issueId}", upvote: ${upvote}) {
         __typename
         ... on Upvote {
           issueRep
@@ -344,9 +345,11 @@ export function* upvoteIssueSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const upvoteIssue = JSON.stringify({
       query: upvoteIssueQuery,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
