@@ -10,7 +10,7 @@ import AsyncRender from 'components/AsyncRender';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { incrementStep, resetState } from '../actions';
+import { clearAlerts, incrementStep, resetState } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -19,7 +19,11 @@ import {
   makeSelectOrganizationsStep,
 } from '../selectors';
 import { addOrganizationDictionary } from '../stepDictionary';
-import { AddWrapper, AddForm } from './styledComponents';
+import {
+  AddWrapper,
+  AddForm,
+  StyledErrorSuccessBanner,
+} from './styledComponents';
 
 export class OrganizationsAdd extends React.PureComponent {
   componentDidMount() {
@@ -37,6 +41,8 @@ export class OrganizationsAdd extends React.PureComponent {
 
     const {
       activeUser,
+      alerts: { error, success },
+      handleClearAlerts,
       handleIncrementStep,
       importSuccess,
       loading,
@@ -51,6 +57,11 @@ export class OrganizationsAdd extends React.PureComponent {
     return (
       <AddWrapper>
         <BackNav label="Back to Organizations" path="/organizations" />
+        <StyledErrorSuccessBanner
+          error={error}
+          onClose={handleClearAlerts}
+          success={success}
+        />
         <AddForm>
           <AsyncRender
             asyncData={{ organizationData }}
@@ -69,7 +80,9 @@ export class OrganizationsAdd extends React.PureComponent {
 
 OrganizationsAdd.propTypes = {
   activeUser: T.object,
+  alerts: T.object,
   dispatchResetState: T.func.isRequired,
+  handleClearAlerts: T.func,
   handleIncrementStep: T.func,
   importSuccess: T.bool,
   loading: T.bool.isRequired,
@@ -85,6 +98,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
+  alerts: makeSelectOrganizations('alerts'),
   importSuccess: makeSelectOrganizations('importSuccess'),
   loading: makeSelectOrganizationsLoading('addOrganization'),
   organizationData: makeSelectOrganizations('organizationData'),
@@ -97,6 +111,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Organizations
      */
     dispatchResetState: () => dispatch(resetState()),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
   };
 }

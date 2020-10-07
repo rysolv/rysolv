@@ -197,9 +197,7 @@ const IssueDetail = ({
             success={success}
           />
         }
-        shouldRender={
-          isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
-        }
+        shouldRender={isSignedIn}
       />
       <DetailContainer>
         <IssueDetailWrapper>

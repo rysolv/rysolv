@@ -17,46 +17,44 @@ export function* fetchInfoSaga({ payload }) {
   const query = `
     query {
       oneUser(id: "${userId}") {
-        id,
-        createdDate,
-        firstName,
-        lastName,
-        rep,
-        profilePic,
-        attempting,
-        issues,
-        username,
-        githubLink,
-        personalLink,
-        preferredLanguages,
-        stackoverflowLink,
-        activePullRequests,
-        completedPullRequests,
-        dollarsEarned,
-        isOnline,
-        modifiedDate,
-        rejectedPullRequests,
-      }
-      getUserActivity(userId: "${userId}") {
         __typename
-        ... on ActivityArray {
-          activityArray {
-            activityId,
-            createdDate,
-            actionType,
-            issueId,
-            organizationId,
-            organizationName,
-            pullRequestId,
-            userId,
-            fundedValue,
-            issueName,
-            username,
-          }
+        ... on User {
+          activePullRequests
+          attempting
+          completedPullRequests
+          createdDate
+          dollarsEarned
+          firstName
+          githubLink
+          id
+          isOnline
+          issues
+          lastName
+          modifiedDate
+          personalLink
+          preferredLanguages
+          profilePic
+          rejectedPullRequests
+          rep
+          stackoverflowLink
+          username
         }
         ... on Error {
           message
         }
+      }
+      getUserActivity(userId: "${userId}") {
+        actionType
+        activityId
+        createdDate
+        fundedValue
+        issueId
+        issueName
+        organizationId
+        organizationName
+        pullRequestId
+        userId
+        username
       }
     }
 `;
@@ -67,12 +65,13 @@ export function* fetchInfoSaga({ payload }) {
     });
     const {
       data: {
-        getUserActivity: { activityArray },
-        oneUser,
+        getUserActivity,
+        oneUser: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-    oneUser.activity = activityArray;
-    yield put(fetchInfoSuccess({ oneUser }));
+    if (__typename === 'Error') throw message;
+    restProps.activity = getUserActivity;
+    yield put(fetchInfoSuccess({ user: restProps }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
   }
@@ -82,16 +81,24 @@ export function* fetchUsersSaga() {
   const query = `
     query {
       getUsers {
-        id,
-        createdDate,
-        firstName,
-        lastName,
-        rep,
-        profilePic,
-        attempting,
-        issues,
-        username,
-        preferredLanguages
+        __typename
+        ... on UserArray {
+          users {
+            attempting
+            createdDate
+            firstName
+            id
+            issues
+            lastName
+            preferredLanguages
+            profilePic
+            rep
+            username
+          }
+        }
+        ... on Error {
+          message
+        }
       }
     }
   `;
@@ -101,9 +108,12 @@ export function* fetchUsersSaga() {
       variables: {},
     });
     const {
-      data: { getUsers },
+      data: {
+        getUsers: { __typename, message, users },
+      },
     } = yield call(post, '/graphql', graphql);
-    yield put(fetchUsersSuccess({ getUsers }));
+    if (__typename === 'Error') throw message;
+    yield put(fetchUsersSuccess({ users }));
   } catch (error) {
     yield put(fetchUsersFailure({ error }));
   }
@@ -112,19 +122,19 @@ export function* fetchUsersSaga() {
 export function* searchUsersSaga({ payload }) {
   const { value } = payload;
   const query = `
-  query {
-    searchUsers(value: "${value}") {
-      id,
-      createdDate,
-      firstName,
-      lastName,
-      rep,
-      profilePic,
-      attempting,
-      issues,
-      username,
+    query {
+      searchUsers(value: "${value}") {
+        attempting
+        createdDate
+        firstName
+        id
+        issues
+        lastName
+        profilePic
+        rep
+        username
+      }
     }
-  }
 `;
   try {
     const graphql = JSON.stringify({
@@ -136,7 +146,7 @@ export function* searchUsersSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     yield put(searchUsersSuccess({ searchUsers }));
   } catch (error) {
-    yield put(searchUsersFailure({ error }));
+    yield put(searchUsersFailure());
   }
 }
 

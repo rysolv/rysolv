@@ -105,7 +105,7 @@ OrganizationsDetail.propTypes = {
   dispatchOpenModal: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
   dispatchUpvote: T.func.isRequired,
-  error: T.oneOfType([T.object, T.bool]).isRequired,
+  error: T.oneOfType([T.bool, T.string]).isRequired,
   filterValues: T.object.isRequired,
   handleClearAlerts: T.func.isRequired,
   handleInputChange: T.func,

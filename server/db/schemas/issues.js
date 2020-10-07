@@ -1,6 +1,5 @@
 const alterIssuesTable = `ALTER TABLE issues
 ADD COLUMN body TEXT NOT NULL,
-ADD COLUMN comments UUID [],
 ADD COLUMN contributor_id UUID REFERENCES users(id),
 ADD COLUMN created_date TIMESTAMP,
 ADD COLUMN funded_amount FLOAT DEFAULT 0,

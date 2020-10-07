@@ -2,19 +2,14 @@ const {
   getOrganizationActivity: getOrganizationActivityQuery,
 } = require('../../../db');
 
-const getOrganizationActivity = async args => {
-  const { organizationId } = args;
+const getOrganizationActivity = async ({ organizationId }) => {
   try {
-    const result = await getOrganizationActivityQuery({ organizationId });
-    return {
-      __typename: 'ActivityArray',
-      activityArray: result,
-    };
-  } catch (err) {
-    return {
-      __typename: 'Error',
-      message: err.message,
-    };
+    const activityArray = await getOrganizationActivityQuery({
+      organizationId,
+    });
+    return activityArray;
+  } catch (error) {
+    return [];
   }
 };
 

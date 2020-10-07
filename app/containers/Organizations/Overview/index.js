@@ -67,7 +67,7 @@ OrganizationsOverview.propTypes = {
   }),
   dispatchFetchOrganizations: T.func,
   dispatchResetState: T.func.isRequired,
-  error: T.oneOfType([T.object, T.bool]),
+  error: T.oneOfType([T.bool, T.string]),
   handleClearAlerts: T.func,
   handleSearchOrganizations: T.func,
   loading: T.bool,

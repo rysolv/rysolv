@@ -1,11 +1,18 @@
 const { getIssues: getIssuesQuery } = require('../../../db');
+const { getIssuesError } = require('./constants');
 
 const getIssues = async () => {
   try {
     const issues = await getIssuesQuery();
-    return issues;
-  } catch (err) {
-    throw err;
+    return {
+      __typename: 'IssueArray',
+      issues,
+    };
+  } catch (error) {
+    return {
+      __typename: 'Error',
+      message: getIssuesError,
+    };
   }
 };
 

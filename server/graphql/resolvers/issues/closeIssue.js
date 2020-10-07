@@ -1,24 +1,30 @@
 const { closeIssue: closeIssueQuery, getOneIssue } = require('../../../db');
+const { closeIssueError, closeIssueSuccess } = require('./constants');
 const { createActivity } = require('../activity');
 
-const closeIssue = async args => {
-  const { issueId, shouldClose } = args;
+const closeIssue = async ({ issueId, shouldClose }) => {
   try {
-    const response = await closeIssueQuery({ issueId, shouldClose });
+    await closeIssueQuery({ issueId, shouldClose });
 
-    const result = await getOneIssue({ issueId });
+    const issue = await getOneIssue({ issueId });
 
     const activityInput = {
       actionType: shouldClose ? 'close' : 'reopen',
-      issueId: result.id,
-      organizationId: result.organizationId,
-      userId: result.userId,
+      issueId: issue.id,
+      organizationId: issue.organizationId,
+      userId: issue.userId,
     };
     await createActivity({ activityInput });
 
-    return response;
-  } catch (err) {
-    throw err;
+    return {
+      __typename: 'Success',
+      message: closeIssueSuccess({ shouldClose }),
+    };
+  } catch (error) {
+    return {
+      __typename: 'Error',
+      message: closeIssueError({ shouldClose }),
+    };
   }
 };
 

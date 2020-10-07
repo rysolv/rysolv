@@ -171,11 +171,8 @@ export function saveInfo(payload) {
   };
 }
 
-export function searchOrganizationsFailure(payload) {
-  return {
-    payload,
-    type: SEARCH_ORGANIZATIONS_FAILURE,
-  };
+export function searchOrganizationsFailure() {
+  return { type: SEARCH_ORGANIZATIONS_FAILURE };
 }
 
 export function searchOrganizationsSuccess(payload) {

@@ -12,7 +12,6 @@ const createActivity = async ({ data }) => {
     activity(${parameters})
     VALUES(${substitution})`;
   await singleQuery({ queryText, values });
-  return 'Successfully logged activity';
 };
 
 module.exports = createActivity;

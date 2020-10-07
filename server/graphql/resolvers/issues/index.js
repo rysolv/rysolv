@@ -7,7 +7,6 @@ const importIssue = require('./importIssue');
 const oneIssue = require('./oneIssue');
 const searchIssues = require('./searchIssues');
 const transformIssue = require('./transformIssue');
-const updateIssueArray = require('./updateIssueArray');
 const upvoteIssue = require('./upvoteIssue');
 
 module.exports = {
@@ -20,6 +19,5 @@ module.exports = {
   oneIssue,
   searchIssues,
   transformIssue,
-  updateIssueArray,
   upvoteIssue,
 };

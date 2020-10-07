@@ -2,26 +2,29 @@ const {
   deletePullRequest: deletePullRequestQuery,
   updateUserArray,
 } = require('../../../db');
+const {
+  deletePullRequestError,
+  deletePullRequestSuccess,
+} = require('./constants');
 
-const deletePullRequest = async args => {
-  const { id } = args;
+const deletePullRequest = async ({ id }) => {
   try {
     const result = await deletePullRequestQuery({ pullRequestId: id });
     await updateUserArray({
       column: 'pull_requests',
       data: id,
-      userId: result.user_id,
       remove: true,
+      userId: result.user_id,
     });
 
     return {
       __typename: 'Success',
-      message: `Pull request ${result.title} has successfully been deleted.`,
+      message: deletePullRequestSuccess,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: deletePullRequestError,
     };
   }
 };

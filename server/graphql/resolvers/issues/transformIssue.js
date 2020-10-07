@@ -1,13 +1,12 @@
 const { createActivity } = require('../activity');
 const { transformIssue: transformIssueQuery } = require('../../../db');
+const { transformIssueError, transformIssueSuccess } = require('./constants');
 
-const transformIssue = async args => {
-  const { issueId, issueInput } = args;
+const transformIssue = async ({ issueId, issueInput }) => {
   try {
     const data = {
       attempting: issueInput.attempting,
       body: issueInput.body,
-      comments: issueInput.comments,
       contributor_id: issueInput.contributorId,
       funded_amount: issueInput.fundedAmount,
       language: issueInput.language,
@@ -22,20 +21,20 @@ const transformIssue = async args => {
 
     const activityInput = {
       actionType: 'update',
-      queryResult: result.organizationId,
       issueId: result.id,
+      queryResult: result.organizationId,
       userId: result.contributorId,
     };
     await createActivity({ activityInput });
 
     return {
-      __typename: 'Issue',
-      ...result,
+      __typename: 'Success',
+      message: transformIssueSuccess,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: transformIssueError,
     };
   }
 };

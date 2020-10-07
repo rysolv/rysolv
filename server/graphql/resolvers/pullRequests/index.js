@@ -3,7 +3,6 @@ const deletePullRequest = require('./deletePullRequest');
 const getPullRequestList = require('./getPullRequestList');
 const getUserPullRequests = require('./getUserPullRequests');
 const importPullRequest = require('./importPullRequest');
-const onePullRequest = require('./onePullRequest');
 
 module.exports = {
   createPullRequest,
@@ -11,5 +10,4 @@ module.exports = {
   getPullRequestList,
   getUserPullRequests,
   importPullRequest,
-  onePullRequest,
 };

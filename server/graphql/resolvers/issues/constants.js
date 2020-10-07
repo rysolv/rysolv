@@ -44,4 +44,51 @@ const newOrganizationObject = async organizationInput => {
   };
 };
 
-module.exports = { newIssueObject, newOrganizationObject };
+const closeIssueError = ({ shouldClose }) =>
+  `Something went wrong when ${
+    shouldClose ? 'closing' : 'reopening'
+  } your issue.`;
+
+const closeIssueSuccess = ({ shouldClose }) =>
+  `Your issue has been successfully ${shouldClose ? 'closed' : 'reopened'}.`;
+
+const createIssueError = `Something went wrong when creating the issue.`;
+
+const createIssueSuccess = `Issue was successfully created.`;
+
+const createOrganizationError = `Something went wrong when creating the organization for the issue.`;
+
+const existingIssueError = `This issue already exists.`;
+
+const existingOrganizationError = `This organization already exists.`;
+
+const getIssuesError = `Something went wrong when getting issues.`;
+
+const importIssueError = `Something went wrong when importing this issue.`;
+
+const oneIssueError = `Something went wrong when getting this issue.`;
+
+const transformIssueError = `Something went wrong when editing this issue.`;
+
+const transformIssueSuccess = `Your issue was successfully edited.`;
+
+const upvoteIssueError = ({ upvote }) =>
+  `Something went wrong when ${upvote ? 'upvoting' : 'downvoting'} the issue.`;
+
+module.exports = {
+  closeIssueError,
+  closeIssueSuccess,
+  createIssueError,
+  createIssueSuccess,
+  createOrganizationError,
+  existingIssueError,
+  existingOrganizationError,
+  getIssuesError,
+  importIssueError,
+  newIssueObject,
+  newOrganizationObject,
+  oneIssueError,
+  transformIssueError,
+  transformIssueSuccess,
+  upvoteIssueError,
+};

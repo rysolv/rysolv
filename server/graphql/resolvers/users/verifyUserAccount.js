@@ -1,16 +1,19 @@
 /* eslint-disable camelcase */
+const { getOneUser, transformUser } = require('../../../db');
 const { requestGithubUser } = require('../../../integrations/github');
-const { transformUser } = require('../../../db');
+const {
+  verifyUserAccountError,
+  verifyUserAccountSuccess,
+} = require('./constants');
 
-const verifyUserAccount = async args => {
-  const { code, userId } = args;
+const verifyUserAccount = async ({ code, userId }) => {
   try {
     const { github_id, github_username } = await requestGithubUser({
       client_id: process.env.GITHUB_CLIENT_ID,
       client_secret: process.env.GITHUB_SECRET,
       code,
     });
-    const { githubUsername, isGithubVerified } = await transformUser({
+    await transformUser({
       data: {
         github_id,
         github_username,
@@ -18,16 +21,17 @@ const verifyUserAccount = async args => {
       },
       userId,
     });
+    const { githubUsername, isGithubVerified } = await getOneUser({ userId });
     return {
       __typename: 'Verification',
       githubUsername,
       isGithubVerified,
-      message: `Your Github account has been successfully verified.`,
+      message: verifyUserAccountSuccess,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
-      message: err.message,
+      message: verifyUserAccountError,
     };
   }
 };
