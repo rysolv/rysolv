@@ -25,7 +25,7 @@ const oneOrganization = async ({ id }) => {
       __typename: 'Organization',
       ...result,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
       message: oneOrganizationError,

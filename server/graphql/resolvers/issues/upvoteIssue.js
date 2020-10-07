@@ -27,7 +27,7 @@ const upvoteIssue = async ({ issueId, upvote, userId }) => {
       __typename: 'Upvote',
       ...result,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
       message: upvoteIssueError({ upvote }),

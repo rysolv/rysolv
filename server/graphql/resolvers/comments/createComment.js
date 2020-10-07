@@ -47,7 +47,7 @@ const createComment = async ({ commentInput }) => {
       __typename: 'Comment',
       ...result,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
       message: createCommentError,

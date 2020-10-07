@@ -22,7 +22,7 @@ const toggleWatching = async ({ issueId, userId }) => {
       __typename: 'WatchListArray',
       ...result,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
       message: toggleWatchingError,

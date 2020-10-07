@@ -47,7 +47,7 @@ const transformOrganization = async ({ organizationId, organizationInput }) => {
       __typename: 'Success',
       message: transformOrganizationSuccess,
     };
-  } catch (err) {
+  } catch (error) {
     return {
       __typename: 'Error',
       message: transformOrganizationError,

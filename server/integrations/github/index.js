@@ -40,8 +40,8 @@ const getSingleIssue = async ({ issueNumber, organization, repo }) => {
       organizationUrl: repository_url, // Required
     };
     return { issueInput };
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -181,8 +181,8 @@ const getSingleRepo = async ({ organization, repo }) => {
     }
 
     return { organizationInput };
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    throw error;
   }
 };
 
