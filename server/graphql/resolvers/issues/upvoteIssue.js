@@ -3,9 +3,10 @@ const {
   upvoteIssue: upvoteIssueQuery,
 } = require('../../../db');
 
-const upvoteIssue = async (args, { userId }) => {
+const upvoteIssue = async (args, { authError, userId }) => {
   const { issueId, upvote } = args;
   try {
+    if (authError) throw new Error(authError);
     if (upvote) {
       const { issueRep, userRep } = await upvoteIssueQuery({
         issueId,

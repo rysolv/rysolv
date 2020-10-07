@@ -2,10 +2,10 @@ const CognitoExpress = require('cognito-express');
 
 // Initializing CognitoExpress constructor
 const cognitoExpress = new CognitoExpress({
-  region: process.env.AWS_DEFAULT_REGION,
   cognitoUserPoolId: process.env.USER_POOL_ID,
-  tokenUse: 'access',
+  region: process.env.AWS_DEFAULT_REGION,
   tokenExpiration: 3600000,
+  tokenUse: 'access',
 });
 
 // Extract userId from JWT
@@ -18,8 +18,8 @@ const validateToken = async (req, res, next) => {
     try {
       const { username: userId } = await cognitoExpress.validate(token);
       req.body.userId = userId;
-    } catch (err) {
-      // Log error
+    } catch (error) {
+      req.body.authError = 'You must be signed in to access this feature.';
     }
   }
   next();

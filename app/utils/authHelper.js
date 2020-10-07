@@ -7,6 +7,6 @@ export const fetchCurrentSession = async () => {
     } = await Auth.currentSession();
     return jwtToken;
   } catch (error) {
-    throw new Error('You must be logged in to do that');
+    throw new Error('You must be signed in to access this feature.');
   }
 };

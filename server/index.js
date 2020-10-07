@@ -24,7 +24,7 @@ app.use(
   '/graphql',
   validateToken,
   graphQlHttp(req => ({
-    context: { userId: req.body.userId },
+    context: { authError: req.body.authError, userId: req.body.userId },
     graphiql: !PRODUCTION,
     rootValue: graphQlResolvers,
     schema: graphQlSchema,
