@@ -5,12 +5,7 @@ const {
   lowBalanceError,
   submitAccountPaymentError,
 } = require('./constants');
-const {
-  getOneUser,
-  submitAccountPaymentIssue,
-  submitAccountPaymentOrganization,
-  submitAccountPaymentUser,
-} = require('../../../db');
+const { getOneUser, submitInternalPayment } = require('../../../db');
 
 const submitAccountPayment = async ({ fundValue, issueId, userId }) => {
   try {
@@ -18,16 +13,13 @@ const submitAccountPayment = async ({ fundValue, issueId, userId }) => {
       const { balance } = await getOneUser({ userId });
       const adjustedBalance = balance - fundValue;
       if (adjustedBalance >= 0) {
-        const issueResult = await submitAccountPaymentIssue({
+        const {
+          balance: newBalance,
+          organizationId,
+          fundedAmount,
+        } = await submitInternalPayment({
           fundValue,
           issueId,
-        });
-        await submitAccountPaymentOrganization({
-          fundValue,
-          organizationId: issueResult.organization_id,
-        });
-        const userResult = await submitAccountPaymentUser({
-          fundValue,
           userId,
         });
 
@@ -35,14 +27,14 @@ const submitAccountPayment = async ({ fundValue, issueId, userId }) => {
           actionType: 'fund',
           fundedValue: fundValue,
           issueId,
-          organizationId: issueResult.organization_id,
+          organizationId,
           userId,
         };
         await createActivity({ activityInput });
 
         const result = {
-          balance: userResult.balance,
-          fundedAmount: issueResult.funded_amount,
+          balance: newBalance,
+          fundedAmount,
         };
         return {
           __typename: 'Payment',

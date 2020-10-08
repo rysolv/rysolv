@@ -30,9 +30,9 @@ const {
 } = require('./queries/organizations');
 const {
   submitAccountDepositUser,
-  submitAccountPaymentIssue,
-  submitAccountPaymentOrganization,
   submitAccountPaymentUser,
+  submitExternalPayment,
+  submitInternalPayment,
 } = require('./queries/payments');
 const {
   checkDuplicatePullRequest,
@@ -101,9 +101,9 @@ module.exports = {
   searchOrganizations,
   searchUsers,
   submitAccountDepositUser,
-  submitAccountPaymentIssue,
-  submitAccountPaymentOrganization,
   submitAccountPaymentUser,
+  submitExternalPayment,
+  submitInternalPayment,
   toggleAttempting,
   toggleWatching,
   transformIssue,
