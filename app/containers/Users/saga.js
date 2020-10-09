@@ -130,6 +130,7 @@ export function* searchUsersSaga({ payload }) {
         id
         issues
         lastName
+        preferredLanguages
         profilePic
         rep
         username

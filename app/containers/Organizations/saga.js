@@ -251,6 +251,7 @@ export function* searchOrganizationsSaga({ payload }) {
         modifiedDate
         name
         organizationUrl
+        preferredLanguages
         repoUrl
         totalFunded
         verified
