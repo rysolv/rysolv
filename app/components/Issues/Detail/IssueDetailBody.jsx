@@ -64,7 +64,7 @@ const IssueDetailBody = ({
       <TypeTitle>Type:</TypeTitle>
       <StyledLanguageAutocomplete
         multiple={false}
-        onChange={(e, value) => setTypeChange(value.value)}
+        onChange={(e, { value }) => setTypeChange(value)}
         type="type"
         value={{ value: typeChange }}
       />
