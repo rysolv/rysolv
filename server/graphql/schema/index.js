@@ -122,6 +122,7 @@ module.exports = buildSchema(`
     organizationUrl: String
     rep: Int
     repo: String
+    type: String
   }
 
   type Organization {

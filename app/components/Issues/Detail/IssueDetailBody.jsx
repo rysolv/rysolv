@@ -15,6 +15,8 @@ import {
   PostingInfoWrapper,
   StyledLanguageAutocomplete,
   StyledMarkdown,
+  TypeTitle,
+  TypeWrapper,
   UsernameLink,
 } from './styledComponents';
 
@@ -30,6 +32,8 @@ const IssueDetailBody = ({
   repo,
   setBodyChange,
   setLanguageChange,
+  setTypeChange,
+  typeChange,
   userProfile: { route, username },
 }) => {
   const EditIssueBodyComponent = (
@@ -55,6 +59,18 @@ const IssueDetailBody = ({
     </Fragment>
   );
 
+  const EditTypeComponent = (
+    <TypeWrapper>
+      <TypeTitle>Type:</TypeTitle>
+      <StyledLanguageAutocomplete
+        multiple={false}
+        onChange={(e, value) => setTypeChange(value.value)}
+        type="type"
+        value={{ value: typeChange }}
+      />
+    </TypeWrapper>
+  );
+
   return (
     <Fragment>
       <PostingInfoWrapper>
@@ -78,6 +94,10 @@ const IssueDetailBody = ({
           />
         </LanguagesWrapper>
         <ConditionalRender
+          Component={EditTypeComponent}
+          shouldRender={displayEditView}
+        />
+        <ConditionalRender
           Component={BodyCard}
           FallbackComponent={EditIssueBodyComponent}
           propsToPassDown={{ body }}
@@ -98,6 +118,8 @@ IssueDetailBody.propTypes = {
   repo: T.string,
   setBodyChange: T.func,
   setLanguageChange: T.func,
+  setTypeChange: T.func,
+  typeChange: T.string,
   userProfile: T.object,
 };
 

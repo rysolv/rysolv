@@ -16,6 +16,7 @@ const transformIssue = async ({ issueId, issueInput }) => {
       organization_id: issueInput.organizationId,
       rep: issueInput.rep,
       repo: issueInput.repo,
+      type: issueInput.type,
     };
     const result = await transformIssueQuery({ data, issueId });
 

@@ -64,7 +64,7 @@ export const EditIssueWrapper = styled.div`
 export const ExternalLinkWrapper = styled.a`
   color: ${lightGreyColor};
   display: flex;
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   font-weight: 500;
 
   &:hover {
@@ -112,21 +112,21 @@ export const IssueDetailWrapper = styled.div`
   width: 100%;
 `;
 
-export const LanguagesWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: 1.4rem;
-  margin: 1rem 0;
-`;
-
 export const LanguagesTitle = styled.div`
   color: ${textColor};
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   font-weight: 500;
   letter-spacing: 0.02rem;
   line-height: 1.5;
   padding-right: 1rem;
   white-space: nowrap;
+`;
+
+export const LanguagesWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  font-size: ${defaultFontSize};
+  margin: 1rem 0;
 `;
 
 export const LeftPanel = styled.div`
@@ -217,6 +217,23 @@ export const StyledMarkdown = styled(Markdown)`
 export const TopBarWrapper = styled.div`
   background: ${commentHeaderColor};
   height: 10rem;
+`;
+
+export const TypeTitle = styled.div`
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  font-weight: 500;
+  letter-spacing: 0.02rem;
+  line-height: 1.5;
+  padding-right: 1rem;
+  white-space: nowrap;
+`;
+
+export const TypeWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  font-size: ${defaultFontSize};
+  margin: 1rem 0;
 `;
 
 export const UsernameLink = styled(Link)`
