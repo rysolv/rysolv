@@ -37,7 +37,7 @@ const submitInternalPayment = async ({ fundValue, issueId, userId }) => {
       RETURNING balance
     `;
     const { rows: userRows } = await singleQuery({
-      userQueryText,
+      queryText: userQueryText,
       values: [fundValue, userId],
     });
     const [oneUserRow] = userRows;

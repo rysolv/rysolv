@@ -17,7 +17,7 @@ const {
 const createStripeCharge = async ({ amount, issueId, token, userId }) => {
   try {
     const totalAmount = calculateTotalAmount(amount);
-    if (amount < 100) {
+    if (amount < 1) {
       const error = new Error();
       error.message = greaterThanError;
       throw error;
