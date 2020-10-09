@@ -2,7 +2,6 @@ const pool = require('../../connect');
 const { singleQuery } = require('../../baseQueries');
 
 const submitExternalPayment = async ({ fundValue, issueId }) => {
-  // Pulling in Client to use transaction
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
@@ -30,7 +29,6 @@ const submitExternalPayment = async ({ fundValue, issueId }) => {
       values: [fundValue, organizationId],
     });
 
-    // Commit transaction
     await client.query('COMMIT');
     return { fundedAmount, organizationId };
   } catch (error) {
