@@ -32,9 +32,10 @@ const transformIssue = async ({ issueId, issueInput }) => {
       message: transformIssueSuccess,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: transformIssueError,
+      message: message || transformIssueError,
     };
   }
 };

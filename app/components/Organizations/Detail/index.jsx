@@ -86,6 +86,11 @@ const OrganizationDetailView = ({
   const [languagesChange, setLanguagesChange] = useState(preferredLanguages);
   const [repoUrlChange, setRepoUrlChange] = useState(repoUrl);
 
+  const handleCancel = () => {
+    setDisplayEditView(false);
+    setLogoChange(logo);
+  };
+
   const handleSave = () => {
     dispatchEditOrganization({
       editRequest: {
@@ -176,10 +181,7 @@ const OrganizationDetailView = ({
             />
           </NameWrapper>
           <ButtonGroup>
-            <StyledSecondayButton
-              label="Cancel"
-              onClick={() => setDisplayEditView(false)}
-            />
+            <StyledSecondayButton label="Cancel" onClick={handleCancel} />
             <StyledPrimaryButton label="Save" onClick={() => handleSave()} />
           </ButtonGroup>
         </HeaderWrapper>

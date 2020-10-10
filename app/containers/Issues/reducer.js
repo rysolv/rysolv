@@ -337,6 +337,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case EDIT_ISSUE: {
+      draft.alerts = initialState.alerts;
       draft.loading.editIssue = true;
       break;
     }

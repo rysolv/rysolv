@@ -40,9 +40,10 @@ const transformUser = async ({ userId, userInput }) => {
       message: transformUserSuccess,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: transformUserError,
+      message: message || transformUserError,
     };
   }
 };

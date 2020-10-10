@@ -8,8 +8,7 @@ const {
 } = require('./constants');
 const {
   submitAccountDepositUser,
-  submitAccountPaymentIssue,
-  submitAccountPaymentOrganization,
+  submitExternalPayment,
 } = require('../../../db');
 
 const createPaypalPayment = async ({ amount, issueId, userId }) => {
@@ -21,26 +20,22 @@ const createPaypalPayment = async ({ amount, issueId, userId }) => {
     }
 
     if (issueId) {
-      const issueResult = await submitAccountPaymentIssue({
+      const { fundedAmount, organizationId } = await submitExternalPayment({
         fundValue: amount,
         issueId,
-      });
-      await submitAccountPaymentOrganization({
-        fundValue: amount,
-        organizationId: issueResult.organization_id,
       });
 
       const activityInput = {
         actionType: 'fund',
         fundedValue: amount,
         issueId,
-        organizationId: issueResult.organization_id,
+        organizationId,
       };
       await createActivity({ activityInput });
 
       return {
         __typename: 'Payment',
-        fundedAmount: issueResult.funded_amount,
+        fundedAmount,
         message: paypalPaymentSuccess,
       };
     }
