@@ -83,13 +83,13 @@ export function* fetchActiveUserSaga({ payload }) {
 }
 
 export function* fetchUserSessionSaga() {
-  const fetchCurrentSession = async () => {
+  const fetchActiveUserSession = async () => {
     const { username } = await Auth.currentAuthenticatedUser();
     return { username };
   };
 
   try {
-    const { username: userId } = yield call(fetchCurrentSession);
+    const { username: userId } = yield call(fetchActiveUserSession);
     yield put(fetchActiveUser({ userId }));
     yield put(fetchUserSessionSuccess());
   } catch (error) {
@@ -264,9 +264,8 @@ export function* signUpSaga({ payload }) {
         },
       },
     } = yield call(post, '/graphql', request);
-    if (checkDuplicateUserTypename === 'Error') {
-      throw checkDuplicateUserMessage;
-    }
+    if (checkDuplicateUserTypename === 'Error')
+      throw new Error(checkDuplicateUserMessage);
 
     // Register email / pasword with Cognito
     const { userSub } = yield call(cognitoSignUp);
@@ -308,7 +307,7 @@ export function* signUpSaga({ payload }) {
         },
       },
     } = yield call(post, '/graphql', graphql);
-    if (createUserTypename === 'Error') throw createUserMessage;
+    if (createUserTypename === 'Error') throw new Error(createUserMessage);
     yield put(incrementStep({ step: 2 }));
     yield put(signUpSuccess({ activeUser: restProps }));
   } catch (error) {
@@ -336,30 +335,34 @@ export function* verifyEmailSaga({ payload }) {
     // Update email to be verified
     const query = `
       mutation {
-        transformUser( userId: "${userId}",
-          userInput: {
-            emailVerified: true,
-          }
-        ){
+        verifyUserEmail( userId: "${userId}")
+          {
           __typename
-         ... on Success {
-           message
-         }
-         ... on Error {
-           message
-         }
-       }
+          ... on Success {
+            message
+          }
+          ... on Error {
+            message
+          }
+        }
       }
     `;
     const graphql = JSON.stringify({
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
+    const {
+      data: {
+        verifyUserEmail: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw new Error(message);
     yield put(signIn({ password, username: userEmail }));
     yield put(verifyEmailSuccess());
   } catch (error) {
-    yield put(verifyEmailFailure({ error: { message: verifyEmailError } }));
+    const { message } = error;
+    const messageToRender = message || verifyEmailError;
+    yield put(verifyEmailFailure({ error: { message: messageToRender } }));
   }
 }
 

@@ -11,8 +11,13 @@ const {
   submitExternalPayment,
 } = require('../../../db');
 
-const createPaypalPayment = async ({ amount, issueId, userId }) => {
+const createPaypalPayment = async (
+  { amount, issueId },
+  { authError, userId },
+) => {
   try {
+    if (authError) throw new Error(authError);
+
     if (amount < 1) {
       const error = new Error();
       error.message = greaterThanError;

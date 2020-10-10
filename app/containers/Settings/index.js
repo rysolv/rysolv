@@ -88,7 +88,7 @@ const Settings = ({
       userId
     ) {
       const newUrl = url.split('?code=');
-      dispatchVerifyAccount({ code: newUrl[1], userId });
+      dispatchVerifyAccount({ code: newUrl[1] });
     }
   }, [isGithubVerified, userId]);
 
@@ -104,7 +104,6 @@ const Settings = ({
       dispatchStripeToken({
         amount,
         token,
-        userId,
       });
     } else {
       dispatchInputError({ errors: validationErrors });
@@ -120,10 +119,10 @@ const Settings = ({
     });
   };
 
-  const handleWithdrawFunds = ({ id, transferValue, values }) => {
+  const handleWithdrawFunds = ({ transferValue, values }) => {
     const { isValidated, validationErrors } = validateFields({ values });
     if (isValidated) {
-      dispatchWithdrawFunds({ transferValue, userId: id });
+      dispatchWithdrawFunds({ transferValue });
     } else {
       dispatchInputError({ errors: validationErrors });
     }
@@ -145,11 +144,10 @@ const Settings = ({
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         handleDeleteUser,
-        userId,
       },
     },
   };
-  const PullRequestComponent = () => <PullRequestOverview userId={userId} />;
+  const PullRequestComponent = () => <PullRequestOverview />;
   return (
     <SettingsWrapper>
       <AsyncRender
@@ -258,7 +256,7 @@ function mapDispatchToProps(dispatch) {
     handleChangeEmail: payload => dispatch(changeEmail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleClearErrors: () => dispatch(clearErrors()),
-    handleDeleteUser: payload => dispatch(deleteUser(payload)),
+    handleDeleteUser: () => dispatch(deleteUser()),
     handleInputChange: payload => dispatch(inputChange(payload)),
     handleRemoveAttempting: payload => dispatch(removeAttempting(payload)),
     handleRemoveWatching: payload => dispatch(removeWatching(payload)),

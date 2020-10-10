@@ -2,20 +2,18 @@ const { createActivity } = require('../activity');
 const { transformIssue: transformIssueQuery } = require('../../../db');
 const { transformIssueError, transformIssueSuccess } = require('./constants');
 
-const transformIssue = async ({ issueId, issueInput }) => {
+const transformIssue = async (
+  { issueId, issueInput },
+  { authError, userId },
+) => {
   try {
+    if (authError || !userId) throw new Error(authError);
+
     const data = {
-      attempting: issueInput.attempting,
       body: issueInput.body,
-      contributor_id: issueInput.contributorId,
-      funded_amount: issueInput.fundedAmount,
       language: issueInput.language,
       modified_date: new Date(), // update modified date
       name: issueInput.name,
-      open: issueInput.open,
-      organization_id: issueInput.organizationId,
-      rep: issueInput.rep,
-      repo: issueInput.repo,
       type: issueInput.type,
     };
     const result = await transformIssueQuery({ data, issueId });

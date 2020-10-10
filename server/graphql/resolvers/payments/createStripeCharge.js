@@ -14,8 +14,13 @@ const {
   submitExternalPayment,
 } = require('../../../db');
 
-const createStripeCharge = async ({ amount, issueId, token, userId }) => {
+const createStripeCharge = async (
+  { amount, issueId, token },
+  { authError, userId },
+) => {
   try {
+    if (authError) throw new Error(authError);
+
     const totalAmount = calculateTotalAmount(amount);
     if (amount < 1) {
       const error = new Error();

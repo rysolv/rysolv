@@ -22,12 +22,7 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const UserAttempting = ({
-  attempting,
-  handleNav,
-  handleRemoveAttempting,
-  userId,
-}) => {
+const UserAttempting = ({ attempting, handleNav, handleRemoveAttempting }) => {
   const [selectedValue, setSelectedValue] = useState('Newest');
   const [searchValue, setSearchValue] = useState('');
   const filterAttempting = () => {
@@ -87,7 +82,6 @@ const UserAttempting = ({
           handleRemoveAttempting,
           list: filteredAttempting,
           type: 'attempting',
-          userId,
         }}
         shouldRender={!!filteredAttempting.length}
       />
@@ -99,7 +93,6 @@ UserAttempting.propTypes = {
   attempting: T.array.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveAttempting: T.func.isRequired,
-  userId: T.string.isRequired,
 };
 
 export default UserAttempting;

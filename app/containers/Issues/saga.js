@@ -60,7 +60,7 @@ export function* addAttemptSaga({ payload }) {
   yield put(userAttemptingTemp({ issueId }));
   const query = `
     mutation {
-      toggleAttempting(issueId: "${issueId}", userId: "${userId}") {
+      toggleAttempting(issueId: "${issueId}") {
         __typename
         ... on AttemptingArray {
           issueArray {
@@ -77,9 +77,11 @@ export function* addAttemptSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -96,13 +98,12 @@ export function* addAttemptSaga({ payload }) {
 }
 
 export function* addCommentSaga({ payload }) {
-  const { activeUser, body, issueId } = payload;
+  const { body, issueId } = payload;
   const query = `
     mutation{
       createComment(commentInput: {
         body: ${JSON.stringify(body)},
         target: "${issueId}",
-        user: "${activeUser.id}"
       }) {
         __typename
         ... on Comment {
@@ -120,9 +121,11 @@ export function* addCommentSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -141,7 +144,7 @@ export function* addWatchSaga({ payload }) {
   yield put(userWatchingTemp({ issueId }));
   const query = `
     mutation {
-      toggleWatching(issueId: "${issueId}", userId: "${userId}") {
+      toggleWatching(issueId: "${issueId}") {
         __typename
         ... on WatchListArray {
           issueArray {
@@ -158,9 +161,11 @@ export function* addWatchSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -192,9 +197,11 @@ export function* closeIssueSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -224,11 +231,12 @@ export function* deletePullRequestSaga({ payload }) {
       }
     }
   `;
-
   try {
+    const token = yield call(fetchCurrentSession);
+
     const pullRequestQuery = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -265,9 +273,11 @@ export function* editIssueSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -485,9 +495,11 @@ export function* saveInfoSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {

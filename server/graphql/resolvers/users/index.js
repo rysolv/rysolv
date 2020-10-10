@@ -7,6 +7,7 @@ const oneUserSignUp = require('./oneUserSignUp');
 const searchUsers = require('./searchUsers');
 const transformUser = require('./transformUser');
 const verifyUserAccount = require('./verifyUserAccount');
+const verifyUserEmail = require('./verifyUserEmail');
 
 module.exports = {
   checkDuplicateUser,
@@ -18,4 +19,5 @@ module.exports = {
   searchUsers,
   transformUser,
   verifyUserAccount,
+  verifyUserEmail,
 };
