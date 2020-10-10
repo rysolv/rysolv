@@ -4,7 +4,6 @@ import moment from 'moment';
 
 import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
-import iconDictionary from 'utils/iconDictionary';
 
 import {
   ActivityContainer,
@@ -12,23 +11,17 @@ import {
   DetailsPanel,
   DetailsPanelWrapper,
   Divider,
-  OnlineIcon,
-  OnlineWrapper,
   RankingContainer,
   StyledUserBarTitle,
   UserDetails,
   UserMetricsContainer,
 } from './styledComponents';
 
-const CircleIcon = iconDictionary('circle');
-
 const UserMetricsView = ({
   activePullRequests,
   completedPullRequests,
   createdDate,
   dollarsEarned,
-  isOnline,
-  modifiedDate,
   preferredLanguages,
   rejectedPullRequests,
 }) => {
@@ -49,12 +42,6 @@ const UserMetricsView = ({
     </DetailsPanelWrapper>
   );
 
-  const OnlineComponent = (
-    <OnlineWrapper>
-      <OnlineIcon>{CircleIcon}</OnlineIcon>
-      <b>Online Now</b>
-    </OnlineWrapper>
-  );
   return (
     <UserMetricsContainer>
       <RankingContainer>
@@ -98,14 +85,6 @@ const UserMetricsView = ({
           <StyledUserBarTitle>Activity</StyledUserBarTitle>
           <Divider />
         </div>
-        <DetailListItem>
-          Last seen&nbsp;
-          <ConditionalRender
-            Component={<b>{moment(modifiedDate).fromNow()}</b>}
-            FallbackComponent={OnlineComponent}
-            shouldRender={!isOnline}
-          />
-        </DetailListItem>
         <DetailListItem>Joined {moment(createdDate).fromNow()}</DetailListItem>
       </ActivityContainer>
     </UserMetricsContainer>
@@ -117,8 +96,6 @@ UserMetricsView.propTypes = {
   completedPullRequests: T.number,
   createdDate: T.string,
   dollarsEarned: T.number,
-  isOnline: T.bool,
-  modifiedDate: T.string,
   preferredLanguages: T.array,
   rejectedPullRequests: T.number,
 };

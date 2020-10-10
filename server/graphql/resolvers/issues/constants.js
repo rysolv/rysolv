@@ -18,7 +18,7 @@ const newIssueObject = (issueId, issueInput) => ({
   organization_id: issueInput.organizationId, // organization_id
   rep: issueInput.rep || 25, // rep
   repo: issueInput.repo, // repo
-  type: issueInput.type || 'bug', // bug
+  type: issueInput.type || 'Bug', // bug
 });
 
 const newOrganizationObject = async organizationInput => {

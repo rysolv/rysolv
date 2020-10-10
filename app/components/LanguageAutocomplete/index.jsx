@@ -9,6 +9,7 @@ const LanguageAutocomplete = ({
   helperText,
   label,
   onChange,
+  type,
   ...restProps
 }) => (
   <BaseAutocomplete
@@ -16,16 +17,19 @@ const LanguageAutocomplete = ({
     helperText={helperText}
     label={label}
     onChange={onChange}
-    options={autocompleteDictionary.language}
+    options={autocompleteDictionary[type]}
     {...restProps}
   />
 );
+
+LanguageAutocomplete.defaultProps = { type: 'language' };
 
 LanguageAutocomplete.propTypes = {
   error: T.bool,
   helperText: T.string,
   label: T.string,
   onChange: T.func.isRequired,
+  type: T.string,
 };
 
 export default LanguageAutocomplete;

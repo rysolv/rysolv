@@ -64,7 +64,7 @@ export const EditIssueWrapper = styled.div`
 export const ExternalLinkWrapper = styled.a`
   color: ${lightGreyColor};
   display: flex;
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   font-weight: 500;
 
   &:hover {
@@ -81,6 +81,23 @@ export const Icon = styled.span`
   align-items: center;
   display: flex;
   margin-right: 0.5rem;
+`;
+
+export const InfoItemTitle = styled.div`
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  font-weight: 500;
+  letter-spacing: 0.02rem;
+  line-height: 1.5;
+  padding-right: 1rem;
+  white-space: nowrap;
+`;
+
+export const InfoItemWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  font-size: ${defaultFontSize};
+  margin: 1rem 0;
 `;
 
 export const IssueDetailColumn = styled.div`
@@ -110,23 +127,6 @@ export const IssueDetailWrapper = styled.div`
   overflow: hidden;
   padding: 0 0 3rem 0;
   width: 100%;
-`;
-
-export const LanguagesWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: 1.4rem;
-  margin: 1rem 0;
-`;
-
-export const LanguagesTitle = styled.div`
-  color: ${textColor};
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.02rem;
-  line-height: 1.5;
-  padding-right: 1rem;
-  white-space: nowrap;
 `;
 
 export const LeftPanel = styled.div`

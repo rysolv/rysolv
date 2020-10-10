@@ -16,7 +16,6 @@ export const AnswerWrapper = styled.div`
   display: flex;
   font-size: ${defaultFontSize};
   line-height: 1.5;
-  opacity: 0.5;
   padding-bottom: 2.5rem;
   text-align: start;
 `;
