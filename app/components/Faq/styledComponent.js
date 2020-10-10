@@ -16,7 +16,7 @@ export const AnswerWrapper = styled.div`
   display: flex;
   font-size: ${defaultFontSize};
   line-height: 1.5;
-  padding: 0 2.5rem 2.5rem 0;
+  padding-bottom: 2.5rem;
   text-align: start;
 `;
 
