@@ -1,9 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { post } from 'utils/request';
 import { updateActiveUser } from 'containers/Auth/actions';
 import { updateFundedIssue } from 'containers/Issues/actions';
 import { updatePaymentModal } from 'containers/Main/actions';
+
+import { fetchCurrentSession } from 'utils/authHelper';
+import { post } from 'utils/request';
 
 import {
   paypalPaymentFailure,
@@ -20,32 +22,31 @@ import {
 } from './constants';
 
 export function* paypalPaymentSaga({ payload }) {
-  try {
-    const { amount, error, issueId, userId } = payload;
-    const isFundedFromOverview = window.location.pathname === '/issues';
-    const valuesToSend = userId
-      ? `amount: ${amount}, issueId: "${issueId}", userId: "${userId}"`
-      : `amount: ${amount}, issueId: "${issueId}"`;
-    const query = `
-      mutation {
-        createPaypalPayment(${valuesToSend}) {
-          __typename
-          ... on Payment {
-            fundedAmount
-            message
-          }
-          ... on Error {
-            message
-          }
+  const { amount, error: paypalError, issueId } = payload;
+  const isFundedFromOverview = window.location.pathname === '/issues';
+  const query = `
+    mutation {
+      createPaypalPayment(amount: ${amount}, issueId: "${issueId}") {
+        __typename
+        ... on Payment {
+          fundedAmount
+          message
+        }
+        ... on Error {
+          message
         }
       }
-    `;
+    }
+  `;
 
-    if (error) throw error;
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    if (paypalError) throw paypalError;
 
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -64,20 +65,16 @@ export function* paypalPaymentSaga({ payload }) {
 }
 
 export function* stripeTokenSaga({ payload }) {
-  try {
-    const {
-      amount,
-      issueId,
-      token: { id },
-      userId,
-    } = payload;
-    const isFundedFromOverview = window.location.pathname === '/issues';
-    const valuesToSend = userId
-      ? `amount: ${amount}, issueId: "${issueId}", token: "${id}", userId: "${userId}"`
-      : `amount: ${amount}, issueId: "${issueId}", token: "${id}"`;
-    const query = `
+  const {
+    amount,
+    issueId,
+    token: { id },
+  } = payload;
+  const isFundedFromOverview = window.location.pathname === '/issues';
+
+  const query = `
       mutation {
-        createStripeCharge(${valuesToSend}) {
+        createStripeCharge(amount: ${amount}, issueId: "${issueId}", token: "${id}") {
           __typename
           ... on Payment {
             fundedAmount
@@ -89,9 +86,13 @@ export function* stripeTokenSaga({ payload }) {
         }
       }
     `;
+
+  try {
+    const token = yield call(fetchCurrentSession);
+
     const request = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -110,11 +111,11 @@ export function* stripeTokenSaga({ payload }) {
 }
 
 export function* submitAccountPaymentSaga({ payload }) {
-  const { fundValue, issueId, userId } = payload;
+  const { fundValue, issueId } = payload;
   const isFundedFromOverview = window.location.pathname === '/issues';
   const submitAccountPaymentQuery = `
     mutation {
-      submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}", userId: "${userId}" ) {
+      submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}") {
         __typename
         ... on Payment {
           balance
@@ -128,9 +129,11 @@ export function* submitAccountPaymentSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query: submitAccountPaymentQuery,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {

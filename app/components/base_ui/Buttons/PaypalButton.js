@@ -58,7 +58,6 @@ class PaypalButton extends React.Component {
       initialValue,
       issueId,
       setFundValue,
-      userId,
       values,
     } = this.props;
     const { disabled, showButton } = this.state;
@@ -79,7 +78,6 @@ class PaypalButton extends React.Component {
         const paymentObj = {
           amount: dollarValue,
           issueId,
-          userId,
         };
         dispatchPaypalPayment(paymentObj);
         if (setFundValue) setFundValue(initialValue);

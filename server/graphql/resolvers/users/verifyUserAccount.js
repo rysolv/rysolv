@@ -6,8 +6,10 @@ const {
   verifyUserAccountSuccess,
 } = require('./constants');
 
-const verifyUserAccount = async ({ code, userId }) => {
+const verifyUserAccount = async ({ code }, { authError, userId }) => {
   try {
+    if (authError || !userId) throw new Error(authError);
+
     const { github_id, github_username } = await requestGithubUser({
       client_id: process.env.GITHUB_CLIENT_ID,
       client_secret: process.env.GITHUB_SECRET,

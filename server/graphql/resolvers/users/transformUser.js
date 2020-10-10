@@ -3,8 +3,10 @@ const { transformUser: transformUserQuery } = require('../../../db');
 const { transformUserError, transformUserSuccess } = require('./constants');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
-const transformUser = async ({ userId, userInput }) => {
+const transformUser = async ({ userInput }, { authError, userId }) => {
   try {
+    if (authError || !userId) throw new Error(authError);
+
     if (userInput.profilePic) {
       const formattedProfilePic = userInput.profilePic;
       const protocol = formattedProfilePic.substring(0, 5);
@@ -15,9 +17,7 @@ const transformUser = async ({ userId, userInput }) => {
       }
     }
     const data = {
-      attempting: userInput.attempting,
       balance: userInput.balance,
-      comments: userInput.comments,
       email_verified: userInput.emailVerified,
       email: userInput.email,
       first_name: userInput.firstName,
@@ -25,12 +25,9 @@ const transformUser = async ({ userId, userInput }) => {
       issues: userInput.issues,
       last_name: userInput.lastName,
       modified_date: new Date(), // update modified date
-      organizations: userInput.organizations,
       personal_link: userInput.personalLink,
       preferred_languages: userInput.preferredLanguages,
       profile_pic: userInput.profilePic,
-      pull_requests: userInput.pullRequests,
-      rep: userInput.rep,
       stackoverflow_link: userInput.stackoverflowLink,
       username: userInput.username,
     };

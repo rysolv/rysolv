@@ -3,9 +3,11 @@ const {
 } = require('../../../db');
 const { getUserPullRequestsError } = require('./constants');
 
-const getUserPullRequests = async ({ id }) => {
+const getUserPullRequests = async (_, { authError, userId }) => {
   try {
-    const result = await getUserPullRequestsQuery({ pullRequestId: id });
+    if (authError || !userId) throw new Error(authError);
+
+    const result = await getUserPullRequestsQuery({ pullRequestId: userId });
     return {
       __typename: 'PullRequestArray',
       pullRequestArray: result,

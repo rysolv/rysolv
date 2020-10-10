@@ -4,8 +4,7 @@ const {
 } = require('../../../db');
 const { upvoteIssueError } = require('./constants');
 
-const upvoteIssue = async (args, { authError, userId }) => {
-  const { issueId, upvote } = args;
+const upvoteIssue = async ({ issueId, upvote }, { authError, userId }) => {
   try {
     if (authError) throw new Error(authError);
     if (upvote) {

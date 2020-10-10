@@ -83,13 +83,13 @@ export function* fetchActiveUserSaga({ payload }) {
 }
 
 export function* fetchUserSessionSaga() {
-  const fetchCurrentSession = async () => {
+  const fetchActiveUserSession = async () => {
     const { username } = await Auth.currentAuthenticatedUser();
     return { username };
   };
 
   try {
-    const { username: userId } = yield call(fetchCurrentSession);
+    const { username: userId } = yield call(fetchActiveUserSession);
     yield put(fetchActiveUser({ userId }));
     yield put(fetchUserSessionSuccess());
   } catch (error) {
@@ -265,7 +265,7 @@ export function* signUpSaga({ payload }) {
       },
     } = yield call(post, '/graphql', request);
     if (checkDuplicateUserTypename === 'Error') {
-      throw checkDuplicateUserMessage;
+      throw new Error(checkDuplicateUserMessage);
     }
 
     // Register email / pasword with Cognito
@@ -329,28 +329,26 @@ export function* verifyEmailSaga({ payload }) {
     return signUpResponse;
   };
 
+  // Set user email = verified
+  const query = `
+    mutation {
+      verifyUserEmail( userId: "${userId}")
+        {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+
   try {
     // Register email / pasword with Cognito
     yield call(cognitoSignUp);
 
-    // Update email to be verified
-    const query = `
-      mutation {
-        transformUser( userId: "${userId}",
-          userInput: {
-            emailVerified: true,
-          }
-        ){
-          __typename
-         ... on Success {
-           message
-         }
-         ... on Error {
-           message
-         }
-       }
-      }
-    `;
     const graphql = JSON.stringify({
       query,
       variables: {},

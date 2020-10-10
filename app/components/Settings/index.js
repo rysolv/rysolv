@@ -135,7 +135,7 @@ const SettingsView = ({
 
   const handleSubmitInputChange = ({ changeInputState, field }) => {
     changeInputState(false);
-    dispatchSaveChange({ field, userId: id, value });
+    dispatchSaveChange({ field, value });
     setIsDisabled(false);
   };
 

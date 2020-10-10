@@ -15,10 +15,15 @@ const {
   submitAccountPaymentOrganization,
 } = require('../../../db');
 
-const createStripeCharge = async ({ amount, issueId, token, userId }) => {
+const createStripeCharge = async (
+  { amount, issueId, token },
+  { authError, userId },
+) => {
   try {
+    if (authError) throw new Error(authError);
+
     const totalAmount = calculateTotalAmount(amount);
-    if (amount < 100) {
+    if (amount < 1) {
       const error = new Error();
       error.message = greaterThanError;
       throw error;

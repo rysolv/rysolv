@@ -21,7 +21,7 @@ const NewComment = ({ activeUser, handleComment, issueId }) => {
 
   const handleSubmit = () => {
     if (body.length > 0) {
-      handleComment({ activeUser, body, issueId });
+      handleComment({ body, issueId });
       setBody('');
       setPreview(false);
     }

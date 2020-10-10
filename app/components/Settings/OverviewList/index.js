@@ -41,7 +41,6 @@ export const OverviewListComponent = ({
   handleRemoveWatching,
   list,
   type,
-  userId,
 }) => {
   const listIconDictionary = {
     attempting: {
@@ -58,12 +57,10 @@ export const OverviewListComponent = ({
     if (column === 'watching') {
       handleRemoveWatching({
         issueId,
-        userId,
       });
     } else {
       handleRemoveAttempting({
         issueId,
-        userId,
       });
     }
   };
@@ -110,5 +107,4 @@ OverviewListComponent.propTypes = {
   handleRemoveWatching: T.func,
   list: T.array,
   type: T.string,
-  userId: T.string,
 };

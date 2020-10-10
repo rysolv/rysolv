@@ -10,7 +10,7 @@ import {
   StyledTitle,
 } from './styledComponents';
 
-const DeleteUserModal = ({ handleClose, handleDeleteUser, userId }) => (
+const DeleteUserModal = ({ handleClose, handleDeleteUser }) => (
   <DeleteUserContainer>
     <StyledTitle>Account Removal</StyledTitle>
     <StyledBodyMessage>
@@ -21,7 +21,7 @@ const DeleteUserModal = ({ handleClose, handleDeleteUser, userId }) => (
       <StyledPrimaryButton label="Cancel" onClick={handleClose} />
       <StyledPrimaryAsyncButton
         label="Confirm"
-        onClick={() => handleDeleteUser({ userId })}
+        onClick={() => handleDeleteUser()}
       />
     </ButtonGroup>
   </DeleteUserContainer>
@@ -30,7 +30,6 @@ const DeleteUserModal = ({ handleClose, handleDeleteUser, userId }) => (
 DeleteUserModal.propTypes = {
   handleClose: T.func.isRequired,
   handleDeleteUser: T.func.isRequired,
-  userId: T.string.isRequired,
 };
 
 export default DeleteUserModal;

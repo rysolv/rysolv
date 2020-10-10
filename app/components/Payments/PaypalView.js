@@ -13,7 +13,6 @@ const PaypalView = ({
   isPaypalPaymentOpen,
   issueId,
   setFundValue,
-  userId,
 }) => (
   <ConditionalRender
     Component={
@@ -29,7 +28,6 @@ const PaypalView = ({
           initialValue={initialValue}
           issueId={issueId}
           setFundValue={setFundValue}
-          userId={userId}
         />
       </PaypalContainer>
     }
@@ -45,7 +43,6 @@ PaypalView.propTypes = {
   isPaypalPaymentOpen: T.bool.isRequired,
   issueId: T.string.isRequired,
   setFundValue: T.func.isRequired,
-  userId: T.string,
 };
 
 export default PaypalView;

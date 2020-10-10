@@ -30,12 +30,11 @@ const PullRequestOverview = ({
   handleDelete,
   loading,
   pullRequests,
-  userId,
 }) => {
   useEffect(() => dispatchResetState, []);
 
   useEffect(() => {
-    dispatchFetchUserPullRequests({ userId });
+    dispatchFetchUserPullRequests();
   }, [createSuccess]);
 
   return (
@@ -60,7 +59,6 @@ PullRequestOverview.propTypes = {
   handleDelete: T.func,
   loading: T.bool,
   pullRequests: T.array,
-  userId: T.string,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -79,8 +77,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : PullRequests
      */
-    dispatchFetchUserPullRequests: payload =>
-      dispatch(fetchUserPullRequests(payload)),
+    dispatchFetchUserPullRequests: () => dispatch(fetchUserPullRequests()),
     dispatchResetState: () => dispatch(resetState()),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleDelete: payload => dispatch(deletePullRequest(payload)),

@@ -10,27 +10,27 @@ const {
 } = require('./constants');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
-const transformOrganization = async ({ organizationId, organizationInput }) => {
+const transformOrganization = async (
+  { organizationId, organizationInput },
+  { authError, userId },
+) => {
   try {
-    const logo = organizationInput.organizationLogo;
+    if (authError || !userId) throw new Error(authError);
 
+    const logo = organizationInput.organizationLogo;
     if (logo && !isUrl(logo)) {
       const { uploadUrl } = await uploadImage(logo);
       organizationInput.logo = uploadUrl;
     }
 
     const data = {
-      contributors: organizationInput.contributors,
       description: organizationInput.organizationDescription,
-      issues: organizationInput.issues,
       logo: organizationInput.logo,
       modified_date: new Date(), // update modified date
       name: organizationInput.organizationName,
       organization_url: organizationInput.organizationUrl,
-      owner_id: organizationInput.ownerId,
       preferred_languages: organizationInput.organizationPreferredLanguages,
       repo_url: organizationInput.organizationRepo,
-      total_funded: organizationInput.totalFunded,
       verified: organizationInput.organizationVerified,
     };
     const result = await transformOrganizationQuery({ data, organizationId });

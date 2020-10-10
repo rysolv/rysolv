@@ -219,9 +219,11 @@ export function* saveInfoSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -306,9 +308,11 @@ export function* updateInfoSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {

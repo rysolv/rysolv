@@ -7,8 +7,10 @@ const {
   updateUserArray,
 } = require('../../../db');
 
-const createComment = async ({ commentInput }) => {
+const createComment = async ({ commentInput }, { authError, userId }) => {
   try {
+    if (authError || !userId) throw new Error(authError);
+
     const date = new Date();
     const data = {
       body: commentInput.body || '',
@@ -16,7 +18,7 @@ const createComment = async ({ commentInput }) => {
       id: uuidv4(),
       modified_date: date,
       target: commentInput.target,
-      user_id: commentInput.user,
+      user_id: userId,
     };
     const comment = await createCommentQuery({ data });
 
@@ -30,7 +32,7 @@ const createComment = async ({ commentInput }) => {
     const user = await updateUserArray({
       column: 'comments',
       data: comment.id,
-      userId: commentInput.user,
+      userId: comment.user_id,
     });
 
     const result = {

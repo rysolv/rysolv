@@ -49,7 +49,6 @@ const UserTimelineView = ({
   handleRemoveAttempting,
   handleRemoveWatching,
   isGithubVerified,
-  userId,
   watching,
 }) => {
   const filterActivity = () => {
@@ -74,7 +73,6 @@ const UserTimelineView = ({
         handleRemoveAttempting,
         list: attempting.slice(0, 5),
         type: 'attempting',
-        userId,
       }}
       shouldRender={!!attempting.length}
     />
@@ -91,7 +89,6 @@ const UserTimelineView = ({
         handleRemoveWatching,
         list: watching.slice(0, 5),
         type: 'watching',
-        userId,
       }}
       shouldRender={!!watching.length}
     />
@@ -231,7 +228,6 @@ UserTimelineView.propTypes = {
   handleRemoveAttempting: T.func.isRequired,
   handleRemoveWatching: T.func.isRequired,
   isGithubVerified: T.bool.isRequired,
-  userId: T.string.isRequired,
   watching: T.array.isRequired,
 };
 

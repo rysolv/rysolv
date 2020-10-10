@@ -155,7 +155,6 @@ const SettingsTabs = ({
           handleWithdrawFunds={handleWithdrawFunds}
           inputErrors={inputErrors}
           setDisplayBottom={setDisplayBottom}
-          userId={userId}
         />
       }
       shouldRender={view === 'deposit'}
