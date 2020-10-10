@@ -10,11 +10,9 @@ const deleteUser = async (_, { authError, userId }) => {
     if (authError || !userId) throw new Error(authError);
 
     const data = {
-      active_pull_requests: 0,
       attempting: [],
       balance: 0,
       comments: [],
-      completed_pull_requests: 0,
       dollars_earned: 0,
       email_verified: false,
       email: '',
@@ -23,7 +21,6 @@ const deleteUser = async (_, { authError, userId }) => {
       github_link: '',
       github_username: null,
       is_deleted: true,
-      is_online: false,
       issues: [],
       last_name: 'User',
       modified_date: new Date(), // update modified date
@@ -32,7 +29,6 @@ const deleteUser = async (_, { authError, userId }) => {
       preferred_languages: [],
       profile_pic: deletedUserImage,
       pull_requests: [],
-      rejected_pull_requests: 0,
       rep: 0,
       stackoverflow_link: '',
       upvotes: [],

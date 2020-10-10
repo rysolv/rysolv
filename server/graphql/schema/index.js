@@ -121,6 +121,7 @@ module.exports = buildSchema(`
     organizationUrl: String
     rep: Int
     repo: String
+    type: String
   }
 
   type Organization {
@@ -233,7 +234,6 @@ module.exports = buildSchema(`
     githubUsername: String
     id: ID!
     isGithubVerified: Boolean
-    isOnline: Boolean
     issues: [Object]
     lastName: String!
     modifiedDate: Object
@@ -255,18 +255,15 @@ module.exports = buildSchema(`
   }
 
   input UserInput {
-    activePullRequests: Int
     attempting: [ID]
     balance: Float
     comments: [String]
-    completedPullRequests: Int
     dollarsEarned: Int
     email: String
     emailVerified: Boolean
     firstName: String
     githubLink: String
     id: ID
-    isOnline: Boolean
     issues: [String]
     lastName: String
     organizations: [String]
@@ -274,7 +271,6 @@ module.exports = buildSchema(`
     preferredLanguages: [String]
     profilePic: String
     pullRequests: [String]
-    rejectedPullRequests: Int
     rep: Int
     stackoverflowLink: String
     upvotes: [ID]

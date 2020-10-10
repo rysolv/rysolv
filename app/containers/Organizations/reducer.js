@@ -264,6 +264,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_INFO: {
+      draft.alerts = initialState.alerts;
       draft.loading.updateOrganization = true;
       break;
     }

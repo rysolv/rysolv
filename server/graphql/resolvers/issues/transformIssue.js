@@ -14,6 +14,7 @@ const transformIssue = async (
       language: issueInput.language,
       modified_date: new Date(), // update modified date
       name: issueInput.name,
+      type: issueInput.type,
     };
     const result = await transformIssueQuery({ data, issueId });
 

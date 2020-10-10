@@ -440,6 +440,7 @@ export const StyledTitled = styled.div`
 
 export const StyledWordLink = styled(Link)`
   font-weight: 700;
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 
   &:hover {
     cursor: pointer;

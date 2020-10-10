@@ -253,13 +253,14 @@ export function* deletePullRequestSaga({ payload }) {
 
 export function* editIssueSaga({ payload }) {
   const { editRequest, issueId } = payload;
-  const { body, language, name } = editRequest;
+  const { body, language, name, type } = editRequest;
   const query = `
     mutation {
       transformIssue(issueId: "${issueId}", issueInput: {
         body: ${JSON.stringify(body)},
         language: ${JSON.stringify(language)},
         name: "${name}",
+        type: "${type}"
       }) {
         __typename
         ... on Success {
@@ -315,6 +316,7 @@ export function* fetchIssueDetailSaga({ payload }) {
           pullRequests
           rep
           repo
+          type
           userId
           username
           watching

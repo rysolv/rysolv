@@ -48,6 +48,7 @@ const IssueDetail = ({
     open,
     rep,
     repo,
+    type,
     userId,
     username,
   },
@@ -70,19 +71,22 @@ const IssueDetail = ({
   const [bodyChange, setBodyChange] = useState(body);
   const [languageChange, setLanguageChange] = useState(language);
   const [nameChange, setNameChange] = useState(name);
+  const [typeChange, setTypeChange] = useState(type);
   const handleClose = () => {
     setDisplayEditView(false);
     setBodyChange(body);
     setLanguageChange(language);
     setNameChange(name);
+    setTypeChange(type);
   };
 
   const handleSave = () => {
     dispatchEditIssue({
       editRequest: {
         body: bodyChange,
-        name: nameChange,
         language: languageChange,
+        name: nameChange,
+        type: typeChange,
       },
       issueId,
     });
@@ -248,6 +252,8 @@ const IssueDetail = ({
                   repo={repo}
                   setBodyChange={setBodyChange}
                   setLanguageChange={setLanguageChange}
+                  setTypeChange={setTypeChange}
+                  typeChange={typeChange}
                   userProfile={primaryUser}
                 />
               </div>

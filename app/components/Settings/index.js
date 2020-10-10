@@ -61,10 +61,8 @@ const SettingsView = ({
     githubLink,
     githubUsername,
     isGithubVerified,
-    isOnline,
     issues,
     lastName,
-    modifiedDate,
     organizations,
     personalLink,
     preferredLanguages,
@@ -284,8 +282,6 @@ const SettingsView = ({
             handleEdit={handleEdit}
             handleSubmitInputChange={handleSubmitInputChange}
             isDisabled={isDisabled}
-            isOnline={isOnline}
-            modifiedDate={modifiedDate}
             preferredLanguages={preferredLanguages}
             rejectedPullRequests={rejectedPullRequests}
             setChangePreferredLanguages={setChangePreferredLanguages}

@@ -27,10 +27,8 @@ export function* fetchInfoSaga({ payload }) {
           firstName
           githubLink
           id
-          isOnline
           issues
           lastName
-          modifiedDate
           personalLink
           preferredLanguages
           profilePic
@@ -130,6 +128,7 @@ export function* searchUsersSaga({ payload }) {
         id
         issues
         lastName
+        preferredLanguages
         profilePic
         rep
         username

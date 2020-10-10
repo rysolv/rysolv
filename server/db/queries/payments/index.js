@@ -1,11 +1,11 @@
 const submitAccountDepositUser = require('./submitAccountDepositUser');
-const submitAccountPaymentIssue = require('./submitAccountPaymentIssue');
-const submitAccountPaymentOrganization = require('./submitAccountPaymentOrganization');
 const submitAccountPaymentUser = require('./submitAccountPaymentUser');
+const submitExternalPayment = require('./submitExternalPayment');
+const submitInternalPayment = require('./submitInternalPayment');
 
 module.exports = {
   submitAccountDepositUser,
-  submitAccountPaymentIssue,
-  submitAccountPaymentOrganization,
   submitAccountPaymentUser,
+  submitExternalPayment,
+  submitInternalPayment,
 };
