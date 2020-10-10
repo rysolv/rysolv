@@ -17,6 +17,8 @@ const transformUserError = `Something went wrong when updating your account.`;
 
 const transformUserSuccess = `Your account has been successfully updated.`;
 
+const userOverviewError = `Something went wrong when getting this user.`;
+
 const verifyUserAccountError = `Something went wrong when verifying your Github account.`;
 
 const verifyUserAccountSuccess = `Your Github account has been successfully verified.`;
@@ -35,6 +37,7 @@ module.exports = {
   oneUserError,
   transformUserError,
   transformUserSuccess,
+  userOverviewError,
   verifyUserAccountError,
   verifyUserAccountSuccess,
   verifyUserEmailError,

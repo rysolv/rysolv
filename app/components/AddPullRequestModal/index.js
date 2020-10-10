@@ -9,7 +9,7 @@ import { IconWrapper, AddPullRequesContainer } from './styledComponents';
 
 const closeIcon = iconDictionary('close');
 
-const AddPullRequestModal = ({ handleClose, issueId, userId }) => (
+const AddPullRequestModal = ({ handleClose, issueId }) => (
   <AddPullRequesContainer>
     <IconWrapper>
       <IconButton
@@ -18,18 +18,13 @@ const AddPullRequestModal = ({ handleClose, issueId, userId }) => (
         onClick={() => handleClose()}
       />
     </IconWrapper>
-    <AddPullRequest
-      handleClose={handleClose}
-      issueId={issueId}
-      userId={userId}
-    />
+    <AddPullRequest handleClose={handleClose} issueId={issueId} />
   </AddPullRequesContainer>
 );
 
 AddPullRequestModal.propTypes = {
   handleClose: T.func.isRequired,
   issueId: T.string.isRequired,
-  userId: T.string.isRequired,
 };
 
 export default AddPullRequestModal;

@@ -216,7 +216,7 @@ export function* closeIssueSaga({ payload }) {
 }
 
 export function* deletePullRequestSaga({ payload }) {
-  const { pullRequestId, userId } = payload;
+  const { pullRequestId } = payload;
   const query = `
     mutation {
       deletePullRequest(id: "${pullRequestId}")
@@ -245,7 +245,7 @@ export function* deletePullRequestSaga({ payload }) {
     } = yield call(post, '/graphql', pullRequestQuery);
     if (__typename === 'Error') throw message;
     yield put(deletePullRequestSuccess({ message }));
-    yield put(fetchActiveUser({ userId }));
+    yield put(fetchActiveUser());
   } catch (error) {
     yield put(deletePullRequestFailure({ error: { message: error } }));
   }
@@ -462,14 +462,12 @@ export function* saveInfoSaga({ payload }) {
       organizationRepo,
       organizationUrl,
     },
-    activeUser: { id: userId },
   } = payload;
   const query = `
     mutation{
       createIssue(
         issueInput: {
           body: ${JSON.stringify(issueBody)},
-          contributor: "${userId}",
           identiconId: "${identiconId}",
           isManual: ${isManual},
           language:  ${JSON.stringify(issueLanguages)},
@@ -507,7 +505,7 @@ export function* saveInfoSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(fetchActiveUser({ userId }));
+    yield put(fetchActiveUser());
     yield put(push(`/issues/detail/${id}`));
     yield put(saveInfoSuccess({ message }));
   } catch (error) {

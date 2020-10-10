@@ -32,6 +32,9 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
       issueInput.organizationLogo = new Identicon(identiconId, 250).toString();
     }
 
+    // Add contributor ID from token
+    issueInput.contributor = userId;
+
     // Populate organization object and create new organization
     const createNewOrganization = async () => {
       if (await checkDuplicateOrganization({ repo: organizationRepo })) {

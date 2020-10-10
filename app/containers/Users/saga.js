@@ -16,18 +16,16 @@ export function* fetchInfoSaga({ payload }) {
   const { userId } = payload;
   const query = `
     query {
-      oneUser(id: "${userId}") {
+      userOverview(userId: "${userId}") {
         __typename
         ... on User {
           activePullRequests
-          attempting
           completedPullRequests
           createdDate
           dollarsEarned
           firstName
           githubLink
           id
-          issues
           lastName
           personalLink
           preferredLanguages
@@ -64,7 +62,7 @@ export function* fetchInfoSaga({ payload }) {
     const {
       data: {
         getUserActivity,
-        oneUser: { __typename, message, ...restProps },
+        userOverview: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;

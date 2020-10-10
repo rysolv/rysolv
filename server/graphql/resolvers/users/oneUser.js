@@ -8,7 +8,9 @@ const {
 } = require('../../../db');
 const { oneUserError } = require('./constants');
 
-const oneUser = async ({ id: userId }) => {
+const oneUser = async (_, { authError, userId }) => {
+  if (authError || !userId) throw new Error(authError);
+
   try {
     const result = await getOneUser({ userId });
     const { issues, organizations } = result;

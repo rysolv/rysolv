@@ -35,7 +35,6 @@ const AddPullRequest = ({
   issueId,
   loading,
   step,
-  userId,
 }) => {
   useEffect(() => dispatchResetState, []);
 
@@ -49,7 +48,7 @@ const AddPullRequest = ({
     });
   };
   const handleSubmit = () => {
-    dispatchCreatePullRequest({ issueId, userId, importData });
+    dispatchCreatePullRequest({ issueId, importData });
   };
 
   const propsToPassDown = {
@@ -82,7 +81,6 @@ AddPullRequest.propTypes = {
   issueId: T.string,
   loading: T.bool,
   step: T.number,
-  userId: T.string,
 };
 
 const mapStateToProps = createStructuredSelector({

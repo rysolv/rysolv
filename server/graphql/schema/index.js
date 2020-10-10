@@ -107,7 +107,6 @@ module.exports = buildSchema(`
 
   input IssueInput {
     body: String
-    contributor: String
     fundedAmount: Int
     identiconId: ID
     isManual: Boolean
@@ -340,12 +339,14 @@ module.exports = buildSchema(`
 
     oneIssue(id: ID!): IssueResult!
     oneOrganization(id: ID!): OrganizationResult!
-    oneUser(id: ID!): UserResult!
+    oneUser: UserResult!
     oneUserSignUp(email: String!): UserResult!
 
     searchIssues(value: String!): [Issue]!
     searchOrganizations(value: String!): [Organization]!
     searchUsers(value: String!): [User]!
+
+    userOverview(userId: ID!): UserResult!
   }
 
   type RootMutation {

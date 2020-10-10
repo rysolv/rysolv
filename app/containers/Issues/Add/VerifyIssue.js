@@ -44,7 +44,7 @@ const VerifyIssue = ({
 
   const handleKeypress = ({ key }) => {
     if (key === 'Enter') {
-      dispatchSaveInfo({ requestBody, activeUser });
+      dispatchSaveInfo({ requestBody });
     }
   };
   const cancelImport = () => {
@@ -93,7 +93,7 @@ const VerifyIssue = ({
         <PrimaryAsyncButton
           disabled={false}
           label="Submit"
-          onClick={() => dispatchSaveInfo({ requestBody, activeUser })}
+          onClick={() => dispatchSaveInfo({ requestBody })}
         />
       </ButtonGroup>
     </StyledFocusDiv>

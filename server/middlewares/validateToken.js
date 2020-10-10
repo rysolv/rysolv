@@ -10,16 +10,18 @@ const cognitoExpress = new CognitoExpress({
 
 // Extract userId from JWT
 const validateToken = async (req, res, next) => {
-  const {
-    variables: { token },
-  } = req.body;
+  if (req.body.variables) {
+    const {
+      variables: { token },
+    } = req.body;
 
-  if (token) {
-    try {
-      const { username: userId } = await cognitoExpress.validate(token);
-      req.body.userId = userId;
-    } catch (error) {
-      req.body.authError = 'You must be signed in to access this feature.';
+    if (token) {
+      try {
+        const { username: userId } = await cognitoExpress.validate(token);
+        req.body.userId = userId;
+      } catch (error) {
+        req.body.authError = 'You must be signed in to access this feature.';
+      }
     }
   }
   next();

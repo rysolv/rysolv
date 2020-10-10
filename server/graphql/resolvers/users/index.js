@@ -6,6 +6,7 @@ const oneUser = require('./oneUser');
 const oneUserSignUp = require('./oneUserSignUp');
 const searchUsers = require('./searchUsers');
 const transformUser = require('./transformUser');
+const userOverview = require('./userOverview');
 const verifyUserAccount = require('./verifyUserAccount');
 const verifyUserEmail = require('./verifyUserEmail');
 
@@ -18,6 +19,7 @@ module.exports = {
   oneUserSignUp,
   searchUsers,
   transformUser,
+  userOverview,
   verifyUserAccount,
   verifyUserEmail,
 };
