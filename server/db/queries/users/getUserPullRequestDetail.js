@@ -33,7 +33,7 @@ const getUserPullRequestDetail = async ({ userId }) => {
 
   const rejectedQueryText = `
   SELECT
-    COUNT(pullrequests.pullrequest_id) AS "rejectedQueryText"
+    COUNT(pullrequests.pullrequest_id) AS "rejectedPullRequests"
   FROM pullrequests
   WHERE
     merged = false AND
