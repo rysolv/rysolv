@@ -10,9 +10,10 @@ const upvoteIssue = async ({ issueId, userId }) => {
     const [oneUser] = userRows;
     const { rep, upvotes } = oneUser;
 
-    if (rep - 1 < 0) throw new Error('Not enough points to upvote');
+    if (rep - 1 < 0)
+      throw new Error('You do not have enough points to upvote this issue.');
     if (upvotes.includes(issueId))
-      throw new Error('Already upvoted this issue');
+      throw new Error('You have already upvoted this issue.');
 
     // Open transaction
     await client.query('BEGIN');
