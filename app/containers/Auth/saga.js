@@ -264,9 +264,8 @@ export function* signUpSaga({ payload }) {
         },
       },
     } = yield call(post, '/graphql', request);
-    if (checkDuplicateUserTypename === 'Error') {
+    if (checkDuplicateUserTypename === 'Error')
       throw new Error(checkDuplicateUserMessage);
-    }
 
     // Register email / pasword with Cognito
     const { userSub } = yield call(cognitoSignUp);
@@ -308,7 +307,7 @@ export function* signUpSaga({ payload }) {
         },
       },
     } = yield call(post, '/graphql', graphql);
-    if (createUserTypename === 'Error') throw createUserMessage;
+    if (createUserTypename === 'Error') throw new Error(createUserMessage);
     yield put(incrementStep({ step: 2 }));
     yield put(signUpSuccess({ activeUser: restProps }));
   } catch (error) {
@@ -329,35 +328,41 @@ export function* verifyEmailSaga({ payload }) {
     return signUpResponse;
   };
 
-  // Set user email = verified
-  const query = `
-    mutation {
-      verifyUserEmail( userId: "${userId}")
-        {
-        __typename
-        ... on Success {
-          message
-        }
-        ... on Error {
-          message
-        }
-      }
-    }
-  `;
-
   try {
     // Register email / pasword with Cognito
     yield call(cognitoSignUp);
 
+    // Update email to be verified
+    const query = `
+      mutation {
+        verifyUserEmail( userId: "${userId}")
+          {
+          __typename
+          ... on Success {
+            message
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    `;
     const graphql = JSON.stringify({
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
+    const {
+      data: {
+        verifyUserEmail: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw new Error(message);
     yield put(signIn({ password, username: userEmail }));
     yield put(verifyEmailSuccess());
   } catch (error) {
-    yield put(verifyEmailFailure({ error: { message: verifyEmailError } }));
+    const { message } = error;
+    const messageToRender = message || verifyEmailError;
+    yield put(verifyEmailFailure({ error: { message: messageToRender } }));
   }
 }
 

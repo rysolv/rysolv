@@ -13,9 +13,10 @@ const getUserPullRequests = async (_, { authError, userId }) => {
       pullRequestArray: result,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: getUserPullRequestsError,
+      message: message || getUserPullRequestsError,
     };
   }
 };

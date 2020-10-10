@@ -2,9 +2,9 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import Auth from '@aws-amplify/auth';
 import { push } from 'connected-react-router';
 
+import { signOut, updateActiveUser } from 'containers/Auth/actions';
 import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
-import { signOut, updateActiveUser } from 'containers/Auth/actions';
 
 import {
   CHANGE_EMAIL,
@@ -165,14 +165,10 @@ export function* fetchInfoSaga({ payload }) {
 }
 
 export function* paypalPaymentSaga({ payload }) {
-  try {
-    const { amount, error, userId } = payload;
-    if (error) {
-      throw new Error(error);
-    }
-    const query = `
+  const { amount, error: paypalError } = payload;
+  const query = `
       mutation {
-        createPaypalPayment(amount: ${amount}, userId: "${userId}") {
+        createPaypalPayment(amount: ${amount}) {
           __typename
           ... on Payment {
             balance
@@ -184,9 +180,14 @@ export function* paypalPaymentSaga({ payload }) {
         }
       }
     `;
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    if (paypalError) throw paypalError;
+
     const request = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -330,7 +331,6 @@ export function* stripeTokenSaga({ payload }) {
     amount,
     token: { id },
   } = payload;
-
   const query = `
     mutation {
       createStripeCharge(amount: ${amount}, token: "${id}")

@@ -25,9 +25,10 @@ const toggleWatching = async ({ issueId }, { authError, userId }) => {
       ...result,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: toggleWatchingError,
+      message: message || toggleWatchingError,
     };
   }
 };

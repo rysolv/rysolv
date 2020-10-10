@@ -37,9 +37,10 @@ const transformUser = async ({ userInput }, { authError, userId }) => {
       message: transformUserSuccess,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: transformUserError,
+      message: message || transformUserError,
     };
   }
 };

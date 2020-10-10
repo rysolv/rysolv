@@ -45,9 +45,10 @@ const deleteUser = async (_, { authError, userId }) => {
       message: deleteUserSuccess,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: deleteUserError,
+      message: message || deleteUserError,
     };
   }
 };

@@ -41,7 +41,7 @@ const createOrganization = async (
       modified_date: new Date(),
       name: organizationInput.organizationName,
       organization_url: organizationInput.organizationUrl || '',
-      owner_id: organizationInput.ownerId,
+      owner_id: userId,
       preferred_languages: organizationInput.preferredLanguages || [],
       repo_url: organizationInput.organizationRepo,
       total_funded: organizationInput.totalFunded || 0,

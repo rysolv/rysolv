@@ -50,9 +50,10 @@ const createComment = async ({ commentInput }, { authError, userId }) => {
       ...result,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: createCommentError,
+      message: message || createCommentError,
     };
   }
 };

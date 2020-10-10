@@ -48,9 +48,10 @@ const transformOrganization = async (
       message: transformOrganizationSuccess,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: transformOrganizationError,
+      message: message || transformOrganizationError,
     };
   }
 };

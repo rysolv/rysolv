@@ -25,9 +25,10 @@ const toggleAttempting = async ({ issueId }, { authError, userId }) => {
       ...result,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: toggleAttemptingError,
+      message: message || toggleAttemptingError,
     };
   }
 };

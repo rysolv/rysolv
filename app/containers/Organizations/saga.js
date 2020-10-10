@@ -204,8 +204,7 @@ export function* saveInfoSaga({ payload }) {
         organizationLogo: "${organizationLogo}",
         organizationName: "${organizationName}",
         organizationRepo: "${organizationRepo}",
-        organizationUrl: "${organizationUrl}",
-        ownerId: "${userId}"
+        organizationUrl: "${organizationUrl}"
       }) {
         __typename
         ... on Organization {
@@ -295,7 +294,7 @@ export function* updateInfoSaga({ payload }) {
         organizationPreferredLanguages: ${JSON.stringify(preferredLanguages)},
         organizationRepo: "${repoUrl}",
         organizationUrl: "${organizationUrl}",
-        organizationVerified: ${verified},
+        organizationVerified: ${verified}
       }) {
         __typename
         ... on Success {

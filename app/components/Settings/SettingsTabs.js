@@ -67,7 +67,6 @@ const SettingsTabs = ({
   setDisplayBottom,
   setStripeError,
   setValue,
-  userId,
   username,
   value,
   view,
@@ -143,7 +142,6 @@ const SettingsTabs = ({
           inputErrors={inputErrors}
           setDisplayBottom={setDisplayBottom}
           setStripeError={setStripeError}
-          userId={userId}
         />
       }
       FallbackComponent={
@@ -167,14 +165,12 @@ const SettingsTabs = ({
           attempting={attempting}
           handleNav={handleNav}
           handleRemoveAttempting={handleRemoveAttempting}
-          userId={userId}
         />
       }
       FallbackComponent={
         <UserWatching
           handleNav={handleNav}
           handleRemoveWatching={handleRemoveWatching}
-          userId={userId}
           watching={watching}
         />
       }
@@ -200,7 +196,6 @@ const SettingsTabs = ({
         handleRemoveAttempting={handleRemoveAttempting}
         handleRemoveWatching={handleRemoveWatching}
         isGithubVerified={isGithubVerified}
-        userId={userId}
         watching={watching}
       />
     ),
@@ -375,7 +370,6 @@ SettingsTabs.propTypes = {
   setDisplayBottom: T.func,
   setStripeError: T.func,
   setValue: T.func,
-  userId: T.string,
   username: T.string,
   value: T.oneOfType([T.array, T.number, T.string]),
   view: T.string,

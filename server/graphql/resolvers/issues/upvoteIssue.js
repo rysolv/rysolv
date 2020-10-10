@@ -7,6 +7,7 @@ const { upvoteIssueError } = require('./constants');
 const upvoteIssue = async ({ issueId, upvote }, { authError, userId }) => {
   try {
     if (authError) throw new Error(authError);
+
     if (upvote) {
       const { issueRep, userRep } = await upvoteIssueQuery({
         issueId,
@@ -29,9 +30,10 @@ const upvoteIssue = async ({ issueId, upvote }, { authError, userId }) => {
       ...result,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: upvoteIssueError({ upvote }),
+      message: message || upvoteIssueError({ upvote }),
     };
   }
 };

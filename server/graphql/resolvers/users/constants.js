@@ -21,6 +21,10 @@ const verifyUserAccountError = `Something went wrong when verifying your Github 
 
 const verifyUserAccountSuccess = `Your Github account has been successfully verified.`;
 
+const verifyUserEmailError = `Something went wrong when verifying your email.`;
+
+const verifyUserEmailSuccess = `Your email has been successfully verified.`;
+
 module.exports = {
   checkDuplicateUserSuccess,
   createUserError,
@@ -33,4 +37,6 @@ module.exports = {
   transformUserSuccess,
   verifyUserAccountError,
   verifyUserAccountSuccess,
+  verifyUserEmailError,
+  verifyUserEmailSuccess,
 };

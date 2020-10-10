@@ -1,5 +1,5 @@
 const { transformUser: transformUserQuery } = require('../../../db');
-const { transformUserError, transformUserSuccess } = require('./constants');
+const { verifyUserEmailError, verifyUserEmailSuccess } = require('./constants');
 
 const verifyUserEmail = async ({ userId }) => {
   try {
@@ -10,12 +10,12 @@ const verifyUserEmail = async ({ userId }) => {
     await transformUserQuery({ data, userId });
     return {
       __typename: 'Success',
-      message: transformUserSuccess,
+      message: verifyUserEmailSuccess,
     };
   } catch (error) {
     return {
       __typename: 'Error',
-      message: transformUserError,
+      message: verifyUserEmailError,
     };
   }
 };

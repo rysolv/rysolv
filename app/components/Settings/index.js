@@ -60,7 +60,6 @@ const SettingsView = ({
     firstName,
     githubLink,
     githubUsername,
-    id,
     isGithubVerified,
     isOnline,
     issues,
@@ -128,7 +127,7 @@ const SettingsView = ({
   };
 
   const handleSubmitEmailChange = () => {
-    handleChangeEmail({ email: value, userId: id });
+    handleChangeEmail({ email: value });
     setChangeEmail(false);
     setIsDisabled(false);
   };
@@ -340,7 +339,6 @@ const SettingsView = ({
             setDisplayBottom={setDisplayBottom}
             setStripeError={setStripeError}
             setValue={setValue}
-            userId={id}
             username={username}
             value={value}
             view={view}

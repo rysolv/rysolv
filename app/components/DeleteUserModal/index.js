@@ -19,10 +19,7 @@ const DeleteUserModal = ({ handleClose, handleDeleteUser }) => (
     </StyledBodyMessage>
     <ButtonGroup>
       <StyledPrimaryButton label="Cancel" onClick={handleClose} />
-      <StyledPrimaryAsyncButton
-        label="Confirm"
-        onClick={() => handleDeleteUser()}
-      />
+      <StyledPrimaryAsyncButton label="Confirm" onClick={handleDeleteUser} />
     </ButtonGroup>
   </DeleteUserContainer>
 );

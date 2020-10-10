@@ -23,9 +23,10 @@ const closeIssue = async ({ issueId, shouldClose }, { authError, userId }) => {
       message: closeIssueSuccess({ shouldClose }),
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: closeIssueError({ shouldClose }),
+      message: message || closeIssueError({ shouldClose }),
     };
   }
 };

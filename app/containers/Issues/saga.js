@@ -231,11 +231,12 @@ export function* deletePullRequestSaga({ payload }) {
       }
     }
   `;
-
   try {
+    const token = yield call(fetchCurrentSession);
+
     const pullRequestQuery = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {

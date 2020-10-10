@@ -155,7 +155,6 @@ module.exports = buildSchema(`
     organizationRepo: String
     organizationUrl: String
     organizationVerified: Boolean
-    ownerId: ID
   }
 
   type Payment {

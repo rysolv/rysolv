@@ -3,7 +3,6 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { updateActiveUser } from 'containers/Auth/actions';
 import { updateFundedIssue } from 'containers/Issues/actions';
 import { updatePaymentModal } from 'containers/Main/actions';
-
 import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
@@ -25,19 +24,19 @@ export function* paypalPaymentSaga({ payload }) {
   const { amount, error: paypalError, issueId } = payload;
   const isFundedFromOverview = window.location.pathname === '/issues';
   const query = `
-    mutation {
-      createPaypalPayment(amount: ${amount}, issueId: "${issueId}") {
-        __typename
-        ... on Payment {
-          fundedAmount
-          message
-        }
-        ... on Error {
-          message
+      mutation {
+        createPaypalPayment(amount: ${amount}, issueId: "${issueId}") {
+          __typename
+          ... on Payment {
+            fundedAmount
+            message
+          }
+          ... on Error {
+            message
+          }
         }
       }
-    }
-  `;
+    `;
 
   try {
     const token = yield call(fetchCurrentSession);
@@ -128,6 +127,7 @@ export function* submitAccountPaymentSaga({ payload }) {
       }
     }
   `;
+
   try {
     const token = yield call(fetchCurrentSession);
 

@@ -12,10 +12,13 @@ import {
   StyledSecondaryButton,
 } from '../styledComponents';
 
-const NewComment = ({ activeUser, handleComment, issueId }) => {
+const NewComment = ({
+  activeUser: { id, profilePic, username },
+  handleComment,
+  issueId,
+}) => {
   const [body, setBody] = useState('');
   const [preview, setPreview] = useState(false);
-  const { id, profilePic, username } = activeUser;
 
   const handlePreview = () => setPreview(!preview);
 

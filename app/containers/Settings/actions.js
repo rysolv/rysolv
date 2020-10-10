@@ -84,9 +84,7 @@ export function deleteUserSuccess() {
 }
 
 export function deleteUser() {
-  return {
-    type: DELETE_USER,
-  };
+  return { type: DELETE_USER };
 }
 
 export function fetchInfoFailure(payload) {

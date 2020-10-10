@@ -24,9 +24,10 @@ const deletePullRequest = async ({ id }, { authError, userId }) => {
       message: deletePullRequestSuccess,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: deletePullRequestError,
+      message: message || deletePullRequestError,
     };
   }
 };

@@ -154,6 +154,7 @@ export function* fetchUserPullRequestsSaga() {
       }
     }
   `;
+
   try {
     const token = yield call(fetchCurrentSession);
 
@@ -196,6 +197,7 @@ export function* importPullRequestSaga({ payload }) {
       }
     }
   `;
+
   try {
     const pullRequestQuery = JSON.stringify({
       query,

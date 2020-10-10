@@ -31,9 +31,10 @@ const verifyUserAccount = async ({ code }, { authError, userId }) => {
       message: verifyUserAccountSuccess,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: verifyUserAccountError,
+      message: message || verifyUserAccountError,
     };
   }
 };
