@@ -3,6 +3,7 @@ const {
   getOneOrganization,
   getOneUser,
   getUserAttemptList,
+  getUserPullRequestDetail,
   getUserWatchList,
 } = require('../../../db');
 const { oneUserError } = require('./constants');
@@ -36,7 +37,17 @@ const oneUser = async ({ id: userId }) => {
     );
     result.organizations = organizationsListResult;
 
-    // Pull watch-list detail
+    // Pull user pull request detail
+    const {
+      activePullRequests,
+      completedPullRequests,
+      rejectedPullRequests,
+    } = await getUserPullRequestDetail({ userId });
+    result.activePullRequests = activePullRequests;
+    result.completedPullRequests = completedPullRequests;
+    result.rejectedPullRequests = rejectedPullRequests;
+
+    // Pull user watching detail
     const watchingListResult = await getUserWatchList({ userId });
     result.watching = watchingListResult;
 

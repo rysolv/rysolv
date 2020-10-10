@@ -36,9 +36,7 @@ export class UserDetailView extends React.PureComponent {
         dollarsEarned,
         firstName,
         githubLink,
-        isOnline,
         lastName,
-        modifiedDate,
         personalLink,
         preferredLanguages,
         profilePic,
@@ -96,8 +94,6 @@ export class UserDetailView extends React.PureComponent {
               completedPullRequests={completedPullRequests}
               createdDate={createdDate}
               dollarsEarned={dollarsEarned}
-              isOnline={isOnline}
-              modifiedDate={modifiedDate}
               preferredLanguages={preferredLanguages}
               rejectedPullRequests={rejectedPullRequests}
             />

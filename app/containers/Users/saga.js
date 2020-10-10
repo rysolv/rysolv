@@ -27,10 +27,8 @@ export function* fetchInfoSaga({ payload }) {
           firstName
           githubLink
           id
-          isOnline
           issues
           lastName
-          modifiedDate
           personalLink
           preferredLanguages
           profilePic

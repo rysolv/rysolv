@@ -1,9 +1,7 @@
 const userValues = [
-  'active_pull_requests',
   'attempting',
   'balance',
   'comments',
-  'completed_pull_requests',
   'created_date',
   'dollars_earned',
   'email_verified',
@@ -14,7 +12,6 @@ const userValues = [
   'github_username',
   'id',
   'is_deleted',
-  'is_online',
   'issues',
   'last_name',
   'modified_date',
@@ -23,7 +20,6 @@ const userValues = [
   'preferred_languages',
   'profile_pic',
   'pull_requests',
-  'rejected_pull_requests',
   'rep',
   'stackoverflow_link',
   'upvotes',
@@ -31,11 +27,9 @@ const userValues = [
 ];
 
 const userReturnValues = `
-  active_pull_requests AS "activePullRequests",
   attempting,
   balance,
   comments,
-  completed_pull_requests AS "completedPullRequests",
   created_date AS "createdDate",
   dollars_earned AS "dollarsEarned",
   email_verified AS "emailVerified",
@@ -44,7 +38,6 @@ const userReturnValues = `
   github_link AS "githubLink",
   id,
   is_deleted AS "isDeleted",
-  is_online AS "isOnline",
   issues,
   last_name AS "lastName",
   modified_date AS "modifiedDate",
@@ -53,7 +46,6 @@ const userReturnValues = `
   preferred_languages AS "preferredLanguages",
   profile_pic AS "profilePic",
   pull_requests AS "pullRequests",
-  rejected_pull_requests AS "rejectedPullRequests",
   rep,
   stackoverflow_link AS "stackoverflowLink",
   upvotes,
