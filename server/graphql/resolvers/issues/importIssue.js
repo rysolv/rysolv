@@ -46,9 +46,10 @@ const importIssue = async ({ url }) => {
       ...importData,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: importIssueError,
+      message: message || importIssueError,
     };
   }
 };

@@ -8,6 +8,7 @@ const upvoteIssue = async (args, { authError, userId }) => {
   const { issueId, upvote } = args;
   try {
     if (authError) throw new Error(authError);
+
     if (upvote) {
       const { issueRep, userRep } = await upvoteIssueQuery({
         issueId,
@@ -30,9 +31,10 @@ const upvoteIssue = async (args, { authError, userId }) => {
       ...result,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: upvoteIssueError({ upvote }),
+      message: message || upvoteIssueError({ upvote }),
     };
   }
 };
