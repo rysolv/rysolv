@@ -83,6 +83,23 @@ export const Icon = styled.span`
   margin-right: 0.5rem;
 `;
 
+export const InfoItemTitle = styled.div`
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  font-weight: 500;
+  letter-spacing: 0.02rem;
+  line-height: 1.5;
+  padding-right: 1rem;
+  white-space: nowrap;
+`;
+
+export const InfoItemWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  font-size: ${defaultFontSize};
+  margin: 1rem 0;
+`;
+
 export const IssueDetailColumn = styled.div`
   flex-direction: column;
   padding: 2rem;
@@ -110,23 +127,6 @@ export const IssueDetailWrapper = styled.div`
   overflow: hidden;
   padding: 0 0 3rem 0;
   width: 100%;
-`;
-
-export const LanguagesTitle = styled.div`
-  color: ${textColor};
-  font-size: ${defaultFontSize};
-  font-weight: 500;
-  letter-spacing: 0.02rem;
-  line-height: 1.5;
-  padding-right: 1rem;
-  white-space: nowrap;
-`;
-
-export const LanguagesWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: ${defaultFontSize};
-  margin: 1rem 0;
 `;
 
 export const LeftPanel = styled.div`
@@ -217,23 +217,6 @@ export const StyledMarkdown = styled(Markdown)`
 export const TopBarWrapper = styled.div`
   background: ${commentHeaderColor};
   height: 10rem;
-`;
-
-export const TypeTitle = styled.div`
-  color: ${textColor};
-  font-size: ${defaultFontSize};
-  font-weight: 500;
-  letter-spacing: 0.02rem;
-  line-height: 1.5;
-  padding-right: 1rem;
-  white-space: nowrap;
-`;
-
-export const TypeWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: ${defaultFontSize};
-  margin: 1rem 0;
 `;
 
 export const UsernameLink = styled(Link)`

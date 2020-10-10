@@ -10,13 +10,11 @@ import {
   CommentWrapper,
   ExternalLinkWrapper,
   Icon,
-  LanguagesTitle,
-  LanguagesWrapper,
+  InfoItemTitle,
+  InfoItemWrapper,
   PostingInfoWrapper,
   StyledLanguageAutocomplete,
   StyledMarkdown,
-  TypeTitle,
-  TypeWrapper,
   UsernameLink,
 } from './styledComponents';
 
@@ -60,15 +58,15 @@ const IssueDetailBody = ({
   );
 
   const EditTypeComponent = (
-    <TypeWrapper>
-      <TypeTitle>Type:</TypeTitle>
+    <InfoItemWrapper>
+      <InfoItemTitle>Type:</InfoItemTitle>
       <StyledLanguageAutocomplete
         multiple={false}
         onChange={(e, { value }) => setTypeChange(value)}
         type="type"
         value={{ value: typeChange }}
       />
-    </TypeWrapper>
+    </InfoItemWrapper>
   );
 
   return (
@@ -85,14 +83,14 @@ const IssueDetailBody = ({
         </ExternalLinkWrapper>
       </PostingInfoWrapper>
       <CommentWrapper>
-        <LanguagesWrapper>
-          <LanguagesTitle>Languages:</LanguagesTitle>
+        <InfoItemWrapper>
+          <InfoItemTitle>Languages:</InfoItemTitle>
           <ConditionalRender
             Component={LanguagesComponent}
             FallbackComponent={EditLanguagesComponent}
             shouldRender={!displayEditView}
           />
-        </LanguagesWrapper>
+        </InfoItemWrapper>
         <ConditionalRender
           Component={EditTypeComponent}
           shouldRender={displayEditView}

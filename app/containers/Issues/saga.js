@@ -252,7 +252,7 @@ export function* editIssueSaga({ payload }) {
         body: ${JSON.stringify(body)},
         language: ${JSON.stringify(language)},
         name: "${name}",
-        type: "${type}",
+        type: "${type}"
       }) {
         __typename
         ... on Success {
