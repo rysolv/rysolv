@@ -37,14 +37,16 @@ export class RecentActivityView extends React.PureComponent {
             user: { userId, username, profilePic },
           }) => {
             const disabled = !userId;
+            const profilePicToRender = profilePic || anonymousUserImage;
+            const usernameToRender = username || 'anonymous';
             return (
               <ActivityWrapper key={activityId}>
                 <div style={{ display: 'flex' }}>
                   <ProfileImageWrapper>
                     <ImageLinkWrapper
-                      alt={username || 'anonymous'}
+                      alt={usernameToRender}
                       disabled={disabled}
-                      image={profilePic || anonymousUserImage}
+                      image={profilePicToRender}
                       route={`/users/detail/${userId}`}
                     />
                   </ProfileImageWrapper>
@@ -53,7 +55,7 @@ export class RecentActivityView extends React.PureComponent {
                       disabled={disabled}
                       to={`/users/detail/${userId}`}
                     >
-                      {username || 'anonymous'}
+                      {usernameToRender}
                     </StyledWordLink>
                     &nbsp;
                     <StyledAction>
