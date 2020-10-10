@@ -14,8 +14,13 @@ const {
 } = require('../../../db');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
-const createOrganization = async ({ organizationInput }) => {
+const createOrganization = async (
+  { organizationInput },
+  { authError, userId },
+) => {
   try {
+    if (authError || !userId) throw new Error(authError);
+
     const { identiconId } = organizationInput;
     if (identiconId && identiconId !== 'undefined') {
       organizationInput.organizationLogo = new Identicon(
@@ -36,7 +41,7 @@ const createOrganization = async ({ organizationInput }) => {
       modified_date: new Date(),
       name: organizationInput.organizationName,
       organization_url: organizationInput.organizationUrl || '',
-      owner_id: organizationInput.ownerId,
+      owner_id: userId,
       preferred_languages: organizationInput.preferredLanguages || [],
       repo_url: organizationInput.organizationRepo,
       total_funded: organizationInput.totalFunded || 0,

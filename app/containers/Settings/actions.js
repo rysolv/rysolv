@@ -83,11 +83,8 @@ export function deleteUserSuccess() {
   return { type: DELETE_USER_SUCCESS };
 }
 
-export function deleteUser(payload) {
-  return {
-    payload,
-    type: DELETE_USER,
-  };
+export function deleteUser() {
+  return { type: DELETE_USER };
 }
 
 export function fetchInfoFailure(payload) {

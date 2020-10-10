@@ -2,6 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { fetchActiveUser, updateActiveUser } from 'containers/Auth/actions';
 import { updateIssueDetail } from 'containers/Issues/actions';
+import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
@@ -51,7 +52,6 @@ export function* createPullRequestSaga({ payload }) {
           pullNumber: ${pullNumber.value},
           status: "${status.value}",
           title: "${title.value}"
-          userId: "${userId}",
         })
         {
         __typename
@@ -66,9 +66,11 @@ export function* createPullRequestSaga({ payload }) {
   `;
 
   try {
+    const token = yield call(fetchCurrentSession);
+
     const pullRequestQuery = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -102,9 +104,11 @@ export function* deletePullRequestSaga({ payload }) {
   `;
 
   try {
+    const token = yield call(fetchCurrentSession);
+
     const pullRequestQuery = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -119,11 +123,10 @@ export function* deletePullRequestSaga({ payload }) {
   }
 }
 
-export function* fetchUserPullRequestsSaga({ payload }) {
-  const { userId } = payload;
+export function* fetchUserPullRequestsSaga() {
   const query = `
     query {
-      getUserPullRequests(id: "${userId}") {
+      getUserPullRequests {
         __typename
         ... on PullRequestArray {
           pullRequestArray {
@@ -151,10 +154,13 @@ export function* fetchUserPullRequestsSaga({ payload }) {
       }
     }
   `;
+
   try {
+    const token = yield call(fetchCurrentSession);
+
     const pullRequestQuery = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -191,6 +197,7 @@ export function* importPullRequestSaga({ payload }) {
       }
     }
   `;
+
   try {
     const pullRequestQuery = JSON.stringify({
       query,

@@ -14,8 +14,10 @@ const {
   lessThanBalanceError,
 } = require('./constants');
 
-const createWithdrawal = async ({ transferValue, userId }) => {
+const createWithdrawal = async ({ transferValue }, { authError, userId }) => {
   try {
+    if (authError || !userId) throw new Error(authError);
+
     const { balance } = await getOneUser({ userId });
     const createdDate = new Date();
     const lessThanBalance = balance >= transferValue;

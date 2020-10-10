@@ -7,8 +7,13 @@ const {
 } = require('./constants');
 const { getOneUser, submitInternalPayment } = require('../../../db');
 
-const submitAccountPayment = async ({ fundValue, issueId, userId }) => {
+const submitAccountPayment = async (
+  { fundValue, issueId },
+  { authError, userId },
+) => {
   try {
+    if (authError) throw new Error(authError);
+
     if (issueId) {
       const { balance } = await getOneUser({ userId });
       const adjustedBalance = balance - fundValue;

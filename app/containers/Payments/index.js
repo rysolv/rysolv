@@ -39,7 +39,7 @@ const PaymentsContainer = ({
   open,
   ...restProps
 }) => {
-  const { balance, email, firstName, id: userId, lastName } = activeUser;
+  const { balance, email, firstName, lastName } = activeUser;
   useEffect(() => dispatchResetState, []);
 
   const handleStripeToken = ({ amount, token, values }) => {
@@ -49,7 +49,6 @@ const PaymentsContainer = ({
         amount,
         issueId,
         token,
-        userId,
       });
     } else {
       dispatchInputError({ errors: validationErrors });
@@ -62,7 +61,6 @@ const PaymentsContainer = ({
       dispatchSubmitAccountPayment({
         fundValue,
         issueId,
-        userId,
       });
     } else {
       dispatchInputError({ errors: validationErrors });
@@ -95,7 +93,6 @@ const PaymentsContainer = ({
       issueId={issueId}
       lastName={lastName}
       open={open}
-      userId={userId}
       {...restProps}
     />
   );

@@ -2,8 +2,10 @@ const { closeIssue: closeIssueQuery, getOneIssue } = require('../../../db');
 const { closeIssueError, closeIssueSuccess } = require('./constants');
 const { createActivity } = require('../activity');
 
-const closeIssue = async ({ issueId, shouldClose }) => {
+const closeIssue = async ({ issueId, shouldClose }, { authError, userId }) => {
   try {
+    if (authError || !userId) throw new Error(authError);
+
     await closeIssueQuery({ issueId, shouldClose });
 
     const issue = await getOneIssue({ issueId });
@@ -21,9 +23,10 @@ const closeIssue = async ({ issueId, shouldClose }) => {
       message: closeIssueSuccess({ shouldClose }),
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: closeIssueError({ shouldClose }),
+      message: message || closeIssueError({ shouldClose }),
     };
   }
 };

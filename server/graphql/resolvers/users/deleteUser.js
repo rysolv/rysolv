@@ -5,8 +5,10 @@ const {
 } = require('./constants');
 const { deleteUserPullRequests, transformUser } = require('../../../db');
 
-const deleteUser = async ({ userId }) => {
+const deleteUser = async (_, { authError, userId }) => {
   try {
+    if (authError || !userId) throw new Error(authError);
+
     const data = {
       attempting: [],
       balance: 0,
@@ -39,9 +41,10 @@ const deleteUser = async ({ userId }) => {
       message: deleteUserSuccess,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: deleteUserError,
+      message: message || deleteUserError,
     };
   }
 };

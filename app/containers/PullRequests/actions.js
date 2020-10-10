@@ -84,11 +84,8 @@ export function fetchUserPullRequestsSuccess(payload) {
   };
 }
 
-export function fetchUserPullRequests(payload) {
-  return {
-    payload,
-    type: FETCH_USER_PULL_REQUESTS,
-  };
+export function fetchUserPullRequests() {
+  return { type: FETCH_USER_PULL_REQUESTS };
 }
 
 export function handleStep(payload) {

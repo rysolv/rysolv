@@ -29,7 +29,6 @@ const WithdrawalFormComponent = ({
   handleWithdrawFunds,
   inputErrors: { transferValue: transferValueError },
   setDisplayBottom,
-  userId,
 }) => {
   const [transferLocation, setTransferLocation] = useState('PayPal');
   const [transferValue, setTransferValue] = useState('0');
@@ -133,7 +132,7 @@ const WithdrawalFormComponent = ({
         disabled={!!transferValueError || transferValue <= 0 || transferValue === '.'}
         label="Withdraw Funds"
         onClick={() =>
-          handleWithdrawFunds({ id: userId, transferValue, values: { transferValue } })
+          handleWithdrawFunds({ transferValue, values: { transferValue } })
         }
       />
     </Fragment>
@@ -148,7 +147,6 @@ WithdrawalFormComponent.propTypes = {
   handleWithdrawFunds: T.func.isRequired,
   inputErrors: T.object.isRequired,
   setDisplayBottom: T.func.isRequired,
-  userId: T.string.isRequired,
 };
 
 export default WithdrawalFormComponent;

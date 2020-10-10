@@ -3,6 +3,7 @@ import Auth from '@aws-amplify/auth';
 import { push } from 'connected-react-router';
 
 import { signOut, updateActiveUser } from 'containers/Auth/actions';
+import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
@@ -42,7 +43,7 @@ import {
 } from './actions';
 
 export function* changeEmailSaga({ payload }) {
-  const { email, userId } = payload;
+  const { email } = payload;
   try {
     const changeCognitoEmail = async () => {
       const user = await Auth.currentAuthenticatedUser();
@@ -50,7 +51,7 @@ export function* changeEmailSaga({ payload }) {
     };
     yield call(changeCognitoEmail);
     yield put(changeEmailSuccess());
-    yield put(saveChange({ field: 'email', userId, value: email }));
+    yield put(saveChange({ field: 'email', value: email }));
   } catch (error) {
     const { message } = error;
     const messageToRender = message || changeEmailError;
@@ -58,11 +59,10 @@ export function* changeEmailSaga({ payload }) {
   }
 }
 
-export function* deleteUserSaga({ payload }) {
-  const { userId } = payload;
+export function* deleteUserSaga() {
   const query = `
     mutation{
-      deleteUser(userId: "${userId}") {
+      deleteUser {
         __typename
         ... on Success {
           message
@@ -74,9 +74,11 @@ export function* deleteUserSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -163,14 +165,10 @@ export function* fetchInfoSaga({ payload }) {
 }
 
 export function* paypalPaymentSaga({ payload }) {
-  try {
-    const { amount, error, userId } = payload;
-    if (error) {
-      throw new Error(error);
-    }
-    const query = `
+  const { amount, error: paypalError } = payload;
+  const query = `
       mutation {
-        createPaypalPayment(amount: ${amount}, userId: "${userId}") {
+        createPaypalPayment(amount: ${amount}) {
           __typename
           ... on Payment {
             balance
@@ -182,9 +180,14 @@ export function* paypalPaymentSaga({ payload }) {
         }
       }
     `;
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    if (paypalError) throw paypalError;
+
     const request = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -200,10 +203,10 @@ export function* paypalPaymentSaga({ payload }) {
 }
 
 export function* removeAttemptingSaga({ payload }) {
-  const { issueId, userId } = payload;
+  const { issueId } = payload;
   const query = `
     mutation {
-      toggleAttempting(issueId: "${issueId}", userId: "${userId}") {
+      toggleAttempting(issueId: "${issueId}") {
         __typename
         ... on AttemptingArray {
           issueArray {
@@ -219,9 +222,11 @@ export function* removeAttemptingSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -237,10 +242,10 @@ export function* removeAttemptingSaga({ payload }) {
 }
 
 export function* removeWatchingSaga({ payload }) {
-  const { issueId, userId } = payload;
+  const { issueId } = payload;
   const query = `
     mutation {
-      toggleWatching(issueId: "${issueId}", userId: "${userId}") {
+      toggleWatching(issueId: "${issueId}") {
         __typename
         ... on WatchListArray {
           issueArray {
@@ -256,9 +261,11 @@ export function* removeWatchingSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -274,12 +281,12 @@ export function* removeWatchingSaga({ payload }) {
 }
 
 export function* saveChangeSaga({ payload }) {
-  const { field, userId, value } = payload;
+  const { field, value } = payload;
   const formattedValue =
     field === 'preferredLanguages' ? JSON.stringify(value) : `"${value}"`;
   const query = `
     mutation {
-      transformUser(userId: "${userId}", userInput: {
+      transformUser(userInput: {
         ${field}: ${formattedValue},
       }) {
       __typename
@@ -292,9 +299,11 @@ export function* saveChangeSaga({ payload }) {
     }
   }`;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -318,33 +327,31 @@ export function* saveChangeSaga({ payload }) {
 }
 
 export function* stripeTokenSaga({ payload }) {
-  try {
-    const {
-      amount,
-      token: { id },
-      userId,
-    } = payload;
-    const query = `
-      mutation {
-        createStripeCharge(
-          amount: ${amount},
-          token: "${id}",
-          userId: "${userId}"
-        ) {
-          __typename
-          ... on Payment {
-            balance
-            message
-          }
-          ... on Error {
-            message
-          }
+  const {
+    amount,
+    token: { id },
+  } = payload;
+  const query = `
+    mutation {
+      createStripeCharge(amount: ${amount}, token: "${id}")
+      {
+        __typename
+        ... on Payment {
+          balance
+          message
+        }
+        ... on Error {
+          message
         }
       }
-    `;
+    }
+  `;
+  try {
+    const token = yield call(fetchCurrentSession);
+
     const request = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -360,10 +367,10 @@ export function* stripeTokenSaga({ payload }) {
 }
 
 export function* verifyAccountSaga({ payload }) {
-  const { code, userId } = payload;
+  const { code } = payload;
   const query = `
-    query {
-      verifyUserAccount(code: "${code}", userId: "${userId}") {
+    mutation {
+      verifyUserAccount(code: "${code}") {
         __typename
         ... on Verification {
           githubUsername
@@ -377,9 +384,11 @@ export function* verifyAccountSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -400,10 +409,10 @@ export function* verifyAccountSaga({ payload }) {
 }
 
 export function* withdrawFundsSaga({ payload }) {
-  const { transferValue, userId } = payload;
+  const { transferValue } = payload;
   const query = `
     mutation {
-      createWithdrawal(transferValue: ${transferValue}, userId: "${userId}") {
+      createWithdrawal(transferValue: ${transferValue}) {
         __typename
         ... on Withdrawal {
           balance
@@ -416,9 +425,11 @@ export function* withdrawFundsSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {

@@ -17,22 +17,26 @@ const {
 } = require('../../../integrations/github/helpers');
 const { getSinglePullRequest } = require('../../../integrations');
 
-const createPullRequest = async ({
-  pullRequestInput: {
-    githubUsername,
-    htmlUrl,
-    issueId,
-    mergeable,
-    mergeableState,
-    merged,
-    open,
-    pullNumber,
-    status,
-    title,
-    userId,
+const createPullRequest = async (
+  {
+    pullRequestInput: {
+      githubUsername,
+      htmlUrl,
+      issueId,
+      mergeable,
+      mergeableState,
+      merged,
+      open,
+      pullNumber,
+      status,
+      title,
+    },
   },
-}) => {
+  { authError, userId },
+) => {
   try {
+    if (authError || !userId) throw new Error(authError);
+
     const date = new Date();
     const data = {
       created_date: date,

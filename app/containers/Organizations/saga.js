@@ -204,8 +204,7 @@ export function* saveInfoSaga({ payload }) {
         organizationLogo: "${organizationLogo}",
         organizationName: "${organizationName}",
         organizationRepo: "${organizationRepo}",
-        organizationUrl: "${organizationUrl}",
-        ownerId: "${userId}"
+        organizationUrl: "${organizationUrl}"
       }) {
         __typename
         ... on Organization {
@@ -219,9 +218,11 @@ export function* saveInfoSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -294,7 +295,7 @@ export function* updateInfoSaga({ payload }) {
         organizationPreferredLanguages: ${JSON.stringify(preferredLanguages)},
         organizationRepo: "${repoUrl}",
         organizationUrl: "${organizationUrl}",
-        organizationVerified: ${verified},
+        organizationVerified: ${verified}
       }) {
         __typename
         ... on Success {
@@ -307,9 +308,11 @@ export function* updateInfoSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {

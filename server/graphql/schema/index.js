@@ -43,7 +43,6 @@ module.exports = buildSchema(`
   input CommentInput {
     body: String!
     target: ID!
-    user: ID!
   }
 
   type Error {
@@ -157,7 +156,6 @@ module.exports = buildSchema(`
     organizationRepo: String
     organizationUrl: String
     organizationVerified: Boolean
-    ownerId: ID
   }
 
   type Payment {
@@ -200,7 +198,6 @@ module.exports = buildSchema(`
     pullNumber: Int
     status: String!
     title: String!
-    userId: ID!
   }
 
   type PullRequestList {
@@ -338,7 +335,7 @@ module.exports = buildSchema(`
     getOrganizations: OrganizationArrayResult!
     getPullRequestList(issueId: ID): [PullRequestList]!
     getUserActivity(userId: ID): [Activity]!
-    getUserPullRequests(id: ID!): PullRequestArrayResult!
+    getUserPullRequests: PullRequestArrayResult!
     getUsers: UserArrayResult!
 
     oneIssue(id: ID!): IssueResult!
@@ -349,8 +346,6 @@ module.exports = buildSchema(`
     searchIssues(value: String!): [Issue]!
     searchOrganizations(value: String!): [Organization]!
     searchUsers(value: String!): [User]!
-
-    verifyUserAccount(code: String!, userId: ID!): VerificationResult!
   }
 
   type RootMutation {
@@ -359,29 +354,32 @@ module.exports = buildSchema(`
     createComment(commentInput: CommentInput): CommentResult!
     createIssue(issueInput: IssueInput): IssueResult!
     createOrganization(organizationInput: OrganizationInput): OrganizationResult!
-    createPaypalPayment(amount: Float!, issueId: ID, userId: ID): PaymentResult!
+    createPaypalPayment(amount: Float!, issueId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
-    createStripeCharge(amount: Float!, issueId: ID, token: String!, userId: ID): PaymentResult!
+    createStripeCharge(amount: Float!, issueId: ID, token: String!): PaymentResult!
     createUser(userInput: UserInput): UserResult!
-    createWithdrawal(transferValue: Float!, userId: String!): WithdrawalResult!
+    createWithdrawal(transferValue: Float!): WithdrawalResult!
 
     deletePullRequest(id:ID!): EventResponse!
-    deleteUser(userId:ID!): EventResponse!
+    deleteUser: EventResponse!
 
     importIssue(url: String!): ImportResult!
     importOrganization(url: String!): ImportResult!
     importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
 
-    submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
+    submitAccountPayment(issueId: ID!, fundValue: Float!): PaymentResult!
 
-    toggleAttempting(issueId: ID!, userId: ID!): ToggleAttemptingResult!
-    toggleWatching(issueId: ID!, userId: ID!): ToggleWatchingResult!
+    toggleAttempting(issueId: ID!): ToggleAttemptingResult!
+    toggleWatching(issueId: ID!): ToggleWatchingResult!
 
     transformIssue(issueId: ID!, issueInput: IssueInput): EventResponse!
     transformOrganization(organizationId: ID!, organizationInput: OrganizationInput): EventResponse!
-    transformUser(userId: ID!, userInput: UserInput): EventResponse!
+    transformUser(userInput: UserInput): EventResponse!
 
     upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
+
+    verifyUserAccount(code: String!): VerificationResult!
+    verifyUserEmail(userId: ID!): EventResponse!
   }
 
   schema {

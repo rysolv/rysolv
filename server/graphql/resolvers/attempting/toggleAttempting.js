@@ -2,8 +2,10 @@ const { createActivity } = require('../activity');
 const { toggleAttempting: toggleAttemptingQuery } = require('../../../db');
 const { toggleAttemptingError } = require('./constants');
 
-const toggleAttempting = async ({ issueId, userId }) => {
+const toggleAttempting = async ({ issueId }, { authError, userId }) => {
   try {
+    if (authError || !userId) throw new Error(authError);
+
     const { issueArray, remove, userArray } = await toggleAttemptingQuery({
       issueId,
       userId,
@@ -23,9 +25,10 @@ const toggleAttempting = async ({ issueId, userId }) => {
       ...result,
     };
   } catch (error) {
+    const { message } = error;
     return {
       __typename: 'Error',
-      message: toggleAttemptingError,
+      message: message || toggleAttemptingError,
     };
   }
 };

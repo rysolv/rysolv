@@ -21,8 +21,10 @@ const {
   newOrganizationObject,
 } = require('./constants');
 
-const createIssue = async ({ issueInput }) => {
+const createIssue = async ({ issueInput }, { authError, userId }) => {
   try {
+    if (authError || !userId) throw new Error(authError);
+
     const { identiconId, organizationId, organizationRepo, repo } = issueInput;
     const newIssueId = uuidv4();
 
@@ -32,7 +34,6 @@ const createIssue = async ({ issueInput }) => {
 
     // Populate organization object and create new organization
     const createNewOrganization = async () => {
-      // backup check
       if (await checkDuplicateOrganization({ repo: organizationRepo })) {
         const error = new Error();
         error.message = existingOrganizationError;
