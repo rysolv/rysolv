@@ -1,9 +1,9 @@
 const {
   getOneIssue,
   getOneOrganization,
-  getOneUser,
   getUserAttemptList,
   getUserPullRequestDetail,
+  getUserSettings: getUserSettingsQuery,
   getUserWatchList,
 } = require('../../../db');
 const { getUserSettingsError } = require('./constants');
@@ -12,7 +12,7 @@ const getUserSettings = async (_, { authError, userId }) => {
   try {
     if (authError || !userId) throw new Error(authError);
 
-    const result = await getOneUser({ userId });
+    const result = await getUserSettingsQuery({ userId });
     const { issues, organizations } = result;
 
     // Pull user attempting detail

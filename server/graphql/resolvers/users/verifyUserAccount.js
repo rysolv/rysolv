@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { getOneUser, transformUser } = require('../../../db');
+const { getUserSettings, transformUser } = require('../../../db');
 const { requestGithubUser } = require('../../../integrations/github');
 const {
   verifyUserAccountError,
@@ -23,7 +23,9 @@ const verifyUserAccount = async ({ code }, { authError, userId }) => {
       },
       userId,
     });
-    const { githubUsername, isGithubVerified } = await getOneUser({ userId });
+    const { githubUsername, isGithubVerified } = await getUserSettings({
+      userId,
+    });
     return {
       __typename: 'Verification',
       githubUsername,

@@ -7,6 +7,7 @@ const getOneUserSignUp = require('./getOneUserSignUp');
 const getUserAttemptList = require('./getUserAttemptList');
 const getUserPullRequestDetail = require('./getUserPullRequestDetail');
 const getUsers = require('./getUsers');
+const getUserSettings = require('./getUserSettings');
 const getUserWatchList = require('./getUserWatchList');
 const searchUsers = require('./searchUsers');
 const transformUser = require('./transformUser');
@@ -22,6 +23,7 @@ module.exports = {
   getUserAttemptList,
   getUserPullRequestDetail,
   getUsers,
+  getUserSettings,
   getUserWatchList,
   searchUsers,
   transformUser,

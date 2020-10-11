@@ -11,7 +11,7 @@ const deleteUserSuccess = `Your account has been successfully deleted.`;
 
 const getUsersError = `Something went wrong when getting users.`;
 
-const getUserSettingsError = `Something went wrong when getting your settings.`;
+const getUserSettingsError = `Something went wrong when getting your account information.`;
 
 const oneUserError = `Something went wrong when getting this user.`;
 

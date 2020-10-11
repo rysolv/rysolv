@@ -40,7 +40,7 @@ export function* fetchActiveUserSaga() {
   try {
     const query = `
       query{
-        oneUser {
+        getUserSettings {
           __typename
           ... on User {
             attempting
@@ -73,7 +73,7 @@ export function* fetchActiveUserSaga() {
     });
     const {
       data: {
-        oneUser: { __typename, message, ...restProps },
+        getUserSettings: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
@@ -164,7 +164,7 @@ export function* signInSaga({ payload }) {
 
     const query = `
       query{
-        oneUser {
+        getUserSettings {
           __typename
           ... on User {
             attempting
@@ -197,7 +197,7 @@ export function* signInSaga({ payload }) {
     });
     const {
       data: {
-        oneUser: { __typename, message, ...restProps },
+        getUserSettings: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
