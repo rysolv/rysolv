@@ -102,7 +102,6 @@ export class IssuesDetail extends React.PureComponent {
         propsToPassDown: {
           handleClose: dispatchCloseIssueModal,
           issueId: id,
-          userId: activeUser.id,
         },
       },
     };

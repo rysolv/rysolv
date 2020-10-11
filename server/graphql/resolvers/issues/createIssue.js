@@ -32,6 +32,9 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
       issueInput.organizationLogo = new Identicon(identiconId, 250).toString();
     }
 
+    // Add userId from token
+    issueInput.contributor = userId;
+
     // Populate organization object and create new organization
     const createNewOrganization = async () => {
       if (await checkDuplicateOrganization({ repo: organizationRepo })) {
@@ -79,7 +82,7 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
       actionType: 'create',
       organizationId: issueResult.organization_id,
       issueId: issueResult.id,
-      userId: issueResult.contributor_id,
+      userId,
     };
     await createActivity({ activityInput });
 
@@ -95,14 +98,14 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
     await updateUserArray({
       column: 'issues',
       data: issueResult.id,
-      userId: issueInput.contributor,
+      userId,
     });
 
     // add organization to user list
     await updateUserArray({
       column: 'organizations',
       data: issueInput.organizationId,
-      userId: issueInput.contributor,
+      userId,
     });
 
     return {

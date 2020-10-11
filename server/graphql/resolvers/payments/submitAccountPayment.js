@@ -5,7 +5,7 @@ const {
   lowBalanceError,
   submitAccountPaymentError,
 } = require('./constants');
-const { getOneUser, submitInternalPayment } = require('../../../db');
+const { getUserSettings, submitInternalPayment } = require('../../../db');
 
 const submitAccountPayment = async (
   { fundValue, issueId },
@@ -15,7 +15,7 @@ const submitAccountPayment = async (
     if (authError) throw new Error(authError);
 
     if (issueId) {
-      const { balance } = await getOneUser({ userId });
+      const { balance } = await getUserSettings({ userId });
       const adjustedBalance = balance - fundValue;
       if (adjustedBalance >= 0) {
         const {

@@ -45,11 +45,8 @@ export function fetchActiveUserSuccess(payload) {
   };
 }
 
-export function fetchActiveUser(payload) {
-  return {
-    payload,
-    type: FETCH_ACTIVE_USER,
-  };
+export function fetchActiveUser() {
+  return { type: FETCH_ACTIVE_USER };
 }
 
 export function fetchUserSessionFailure() {

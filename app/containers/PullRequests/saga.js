@@ -36,7 +36,6 @@ export function* createPullRequestSaga({ payload }) {
       status,
       title,
     },
-    userId,
   } = payload;
   const query = `
     mutation {
@@ -79,7 +78,7 @@ export function* createPullRequestSaga({ payload }) {
     } = yield call(post, '/graphql', pullRequestQuery);
     if (__typename === 'Error') throw message;
     yield put(createPullRequestSuccess());
-    yield put(fetchActiveUser({ userId }));
+    yield put(fetchActiveUser());
     yield put(updateIssueDetail());
   } catch (error) {
     yield put(createPullRequestFailure({ error: { message: error } }));

@@ -2,13 +2,13 @@ const { singleQuery } = require('../../baseQueries');
 
 const getUserPullRequestDetail = async ({ userId }) => {
   const activeQueryText = `
-  SELECT
-    COUNT(pullrequests.pullrequest_id) AS "activePullRequests"
-  FROM pullrequests
-  WHERE
-    merged = false AND
-    open = true AND
-    pullrequests.user_id = $1
+    SELECT
+      COUNT(pullrequests.pullrequest_id) AS "activePullRequests"
+    FROM pullrequests
+    WHERE
+      merged = false AND
+      open = true AND
+      pullrequests.user_id = $1
   `;
   const { rows: activeRows } = await singleQuery({
     queryText: activeQueryText,
@@ -32,13 +32,13 @@ const getUserPullRequestDetail = async ({ userId }) => {
   const [{ completedPullRequests }] = completedRows;
 
   const rejectedQueryText = `
-  SELECT
-    COUNT(pullrequests.pullrequest_id) AS "rejectedPullRequests"
-  FROM pullrequests
-  WHERE
-    merged = false AND
-    open = false AND
-    pullrequests.user_id = $1
+    SELECT
+      COUNT(pullrequests.pullrequest_id) AS "rejectedPullRequests"
+    FROM pullrequests
+    WHERE
+      merged = false AND
+      open = false AND
+      pullrequests.user_id = $1
   `;
   const { rows: rejectedRows } = await singleQuery({
     queryText: rejectedQueryText,

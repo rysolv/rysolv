@@ -2,6 +2,7 @@ const checkDuplicateUser = require('./checkDuplicateUser');
 const createUser = require('./createUser');
 const deleteUser = require('./deleteUser');
 const getUsers = require('./getUsers');
+const getUserSettings = require('./getUserSettings');
 const oneUser = require('./oneUser');
 const oneUserSignUp = require('./oneUserSignUp');
 const searchUsers = require('./searchUsers');
@@ -14,6 +15,7 @@ module.exports = {
   createUser,
   deleteUser,
   getUsers,
+  getUserSettings,
   oneUser,
   oneUserSignUp,
   searchUsers,

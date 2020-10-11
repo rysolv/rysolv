@@ -107,7 +107,6 @@ module.exports = buildSchema(`
 
   input IssueInput {
     body: String
-    contributor: String
     fundedAmount: Int
     identiconId: ID
     isManual: Boolean
@@ -337,10 +336,11 @@ module.exports = buildSchema(`
     getUserActivity(userId: ID): [Activity]!
     getUserPullRequests: PullRequestArrayResult!
     getUsers: UserArrayResult!
+    getUserSettings: UserResult!
 
     oneIssue(id: ID!): IssueResult!
     oneOrganization(id: ID!): OrganizationResult!
-    oneUser(id: ID!): UserResult!
+    oneUser(userId: ID!): UserResult!
     oneUserSignUp(email: String!): UserResult!
 
     searchIssues(value: String!): [Issue]!

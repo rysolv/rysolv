@@ -3,6 +3,7 @@ import Auth from '@aws-amplify/auth';
 
 import { resetState } from 'containers/Main/actions';
 import { incrementStep } from 'containers/Signin/actions';
+import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
@@ -35,12 +36,11 @@ import {
   verifyEmailSuccess,
 } from './actions';
 
-export function* fetchActiveUserSaga({ payload }) {
-  const { userId } = payload;
+export function* fetchActiveUserSaga() {
   try {
     const query = `
       query{
-        oneUser(id: "${userId}") {
+        getUserSettings {
           __typename
           ... on User {
             attempting
@@ -65,13 +65,15 @@ export function* fetchActiveUserSaga({ payload }) {
         }
       }
     `;
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
-        oneUser: { __typename, message, ...restProps },
+        getUserSettings: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
@@ -158,13 +160,11 @@ export function* signInSaga({ payload }) {
   };
 
   try {
-    const {
-      attributes: { sub: userId },
-    } = yield call(cognitoSignIn);
+    yield call(cognitoSignIn);
 
     const query = `
       query{
-        oneUser(id: "${userId}") {
+        getUserSettings {
           __typename
           ... on User {
             attempting
@@ -189,13 +189,15 @@ export function* signInSaga({ payload }) {
         }
       }
     `;
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
-        oneUser: { __typename, message, ...restProps },
+        getUserSettings: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;

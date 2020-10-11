@@ -192,7 +192,6 @@ export function* saveInfoSaga({ payload }) {
       organizationRepo,
       organizationUrl,
     },
-    activeUser: { id: userId },
   } = payload;
 
   const query = `
@@ -230,7 +229,7 @@ export function* saveInfoSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(fetchActiveUser({ userId }));
+    yield put(fetchActiveUser());
     yield put(push(`/organizations/detail/${id}`));
     yield put(saveInfoSuccess({ message }));
   } catch (error) {

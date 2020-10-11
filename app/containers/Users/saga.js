@@ -16,18 +16,16 @@ export function* fetchInfoSaga({ payload }) {
   const { userId } = payload;
   const query = `
     query {
-      oneUser(id: "${userId}") {
+      oneUser(userId: "${userId}") {
         __typename
         ... on User {
           activePullRequests
-          attempting
           completedPullRequests
           createdDate
           dollarsEarned
           firstName
           githubLink
           id
-          issues
           lastName
           personalLink
           preferredLanguages

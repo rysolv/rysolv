@@ -11,6 +11,8 @@ const deleteUserSuccess = `Your account has been successfully deleted.`;
 
 const getUsersError = `Something went wrong when getting users.`;
 
+const getUserSettingsError = `Something went wrong when getting your account information.`;
+
 const oneUserError = `Something went wrong when getting this user.`;
 
 const transformUserError = `Something went wrong when updating your account.`;
@@ -32,6 +34,7 @@ module.exports = {
   deleteUserError,
   deleteUserSuccess,
   getUsersError,
+  getUserSettingsError,
   oneUserError,
   transformUserError,
   transformUserSuccess,

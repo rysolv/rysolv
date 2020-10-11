@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const { createActivity } = require('../activity');
 const {
   createWithdrawal: createWithdrawalQuery,
-  getOneUser,
+  getUserSettings,
   transformUserBalance,
 } = require('../../../db');
 const {
@@ -18,7 +18,7 @@ const createWithdrawal = async ({ transferValue }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new Error(authError);
 
-    const { balance } = await getOneUser({ userId });
+    const { balance } = await getUserSettings({ userId });
     const createdDate = new Date();
     const lessThanBalance = balance >= transferValue;
     const greaterThanZero = transferValue > 0;

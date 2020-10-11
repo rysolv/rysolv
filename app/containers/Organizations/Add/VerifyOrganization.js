@@ -25,7 +25,6 @@ import {
 } from './styledComponents';
 
 const VerifyOrganization = ({
-  activeUser,
   dispatchClearForm,
   dispatchIncrementStep,
   dispatchSaveInfo,
@@ -46,7 +45,7 @@ const VerifyOrganization = ({
     }
   };
   const handleSaveInfo = () => {
-    dispatchSaveInfo({ activeUser, requestBody });
+    dispatchSaveInfo({ requestBody });
   };
   const cancelImport = () => {
     dispatchClearForm();
@@ -81,7 +80,6 @@ const VerifyOrganization = ({
 };
 
 VerifyOrganization.propTypes = {
-  activeUser: T.object,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
