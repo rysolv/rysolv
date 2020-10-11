@@ -26,7 +26,6 @@ import {
 } from './styledComponents';
 
 const VerifyIssue = ({
-  activeUser,
   dispatchClearForm,
   dispatchIncrementStep,
   dispatchSaveInfo,
@@ -77,7 +76,7 @@ const VerifyIssue = ({
       </VerifyWrapper>
       <StyledH3>Issue</StyledH3>
       <VerifyWrapper>
-        <VerifyForm activeUser={activeUser} issueData={issueData} />
+        <VerifyForm issueData={issueData} />
       </VerifyWrapper>
       <ButtonGroup>
         {importSuccess ? (
@@ -101,7 +100,6 @@ const VerifyIssue = ({
 };
 
 VerifyIssue.propTypes = {
-  activeUser: T.object,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,

@@ -5,7 +5,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import { BackNav } from 'components/base_ui';
-import { makeSelectAuth } from 'containers/Auth/selectors';
 import AsyncRender from 'components/AsyncRender';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -40,7 +39,6 @@ export class OrganizationsAdd extends React.PureComponent {
     window.scrollTo(0, 0);
 
     const {
-      activeUser,
       alerts: { error, success },
       handleClearAlerts,
       handleIncrementStep,
@@ -67,10 +65,7 @@ export class OrganizationsAdd extends React.PureComponent {
             asyncData={{ organizationData }}
             component={StepToRender}
             loading={loading}
-            propsToPassDown={{
-              activeUser,
-              importSuccess,
-            }}
+            propsToPassDown={{ importSuccess }}
           />
         </AddForm>
       </AddWrapper>
@@ -79,7 +74,6 @@ export class OrganizationsAdd extends React.PureComponent {
 }
 
 OrganizationsAdd.propTypes = {
-  activeUser: T.object,
   alerts: T.object,
   dispatchResetState: T.func.isRequired,
   handleClearAlerts: T.func,
@@ -91,10 +85,6 @@ OrganizationsAdd.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  /**
-   * Reducer: Auth
-   */
-  activeUser: makeSelectAuth('activeUser'),
   /**
    * Reducer : Organizations
    */

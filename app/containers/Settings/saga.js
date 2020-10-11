@@ -147,6 +147,7 @@ export function* fetchInfoSaga({ payload }) {
 `;
   try {
     const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
       variables: { token },

@@ -12,11 +12,7 @@ const closeIcon = iconDictionary('close');
 const AddPullRequestModal = ({ handleClose, issueId }) => (
   <AddPullRequesContainer>
     <IconWrapper>
-      <IconButton
-        icon={closeIcon}
-        label="Close"
-        onClick={() => handleClose()}
-      />
+      <IconButton icon={closeIcon} label="Close" onClick={handleClose} />
     </IconWrapper>
     <AddPullRequest handleClose={handleClose} issueId={issueId} />
   </AddPullRequesContainer>
