@@ -11,13 +11,13 @@ const deleteUserSuccess = `Your account has been successfully deleted.`;
 
 const getUsersError = `Something went wrong when getting users.`;
 
+const getUserSettingsError = `Something went wrong when getting your settings.`;
+
 const oneUserError = `Something went wrong when getting this user.`;
 
 const transformUserError = `Something went wrong when updating your account.`;
 
 const transformUserSuccess = `Your account has been successfully updated.`;
-
-const userOverviewError = `Something went wrong when getting this user.`;
 
 const verifyUserAccountError = `Something went wrong when verifying your Github account.`;
 
@@ -34,10 +34,10 @@ module.exports = {
   deleteUserError,
   deleteUserSuccess,
   getUsersError,
+  getUserSettingsError,
   oneUserError,
   transformUserError,
   transformUserSuccess,
-  userOverviewError,
   verifyUserAccountError,
   verifyUserAccountSuccess,
   verifyUserEmailError,

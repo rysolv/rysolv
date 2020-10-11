@@ -336,17 +336,16 @@ module.exports = buildSchema(`
     getUserActivity(userId: ID): [Activity]!
     getUserPullRequests: PullRequestArrayResult!
     getUsers: UserArrayResult!
+    getUserSettings: UserResult!
 
     oneIssue(id: ID!): IssueResult!
     oneOrganization(id: ID!): OrganizationResult!
-    oneUser: UserResult!
+    oneUser(userId: ID!): UserResult!
     oneUserSignUp(email: String!): UserResult!
 
     searchIssues(value: String!): [Issue]!
     searchOrganizations(value: String!): [Organization]!
     searchUsers(value: String!): [User]!
-
-    userOverview(userId: ID!): UserResult!
   }
 
   type RootMutation {
