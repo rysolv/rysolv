@@ -6,7 +6,6 @@ import T from 'prop-types';
 import { ConditionalRender, ImageLinkWrapper } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
-import { anonymousUserImage } from './constants';
 import {
   ActivityContainer,
   ActivityDate,
@@ -37,7 +36,6 @@ export class RecentActivityView extends React.PureComponent {
             user: { userId, username, profilePic },
           }) => {
             const disabled = !userId;
-            const profilePicToRender = profilePic || anonymousUserImage;
             const usernameToRender = username || 'anonymous';
             return (
               <ActivityWrapper key={activityId}>
@@ -46,7 +44,7 @@ export class RecentActivityView extends React.PureComponent {
                     <ImageLinkWrapper
                       alt={usernameToRender}
                       disabled={disabled}
-                      image={profilePicToRender}
+                      image={profilePic}
                       route={`/users/detail/${userId}`}
                     />
                   </ProfileImageWrapper>
