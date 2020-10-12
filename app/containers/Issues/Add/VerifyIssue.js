@@ -11,7 +11,6 @@ import {
   generateIdenticon,
   incrementStep,
   saveInfo,
-  verifyInfo,
 } from '../actions';
 import { makeSelectIssues, makeSelectIssuesRequestBody } from '../selectors';
 import {
@@ -27,7 +26,6 @@ import {
 } from './styledComponents';
 
 const VerifyIssue = ({
-  activeUser,
   dispatchClearForm,
   dispatchIncrementStep,
   dispatchSaveInfo,
@@ -45,7 +43,7 @@ const VerifyIssue = ({
 
   const handleKeypress = ({ key }) => {
     if (key === 'Enter') {
-      dispatchSaveInfo({ requestBody, activeUser });
+      dispatchSaveInfo({ requestBody });
     }
   };
   const cancelImport = () => {
@@ -78,7 +76,7 @@ const VerifyIssue = ({
       </VerifyWrapper>
       <StyledH3>Issue</StyledH3>
       <VerifyWrapper>
-        <VerifyForm activeUser={activeUser} issueData={issueData} />
+        <VerifyForm issueData={issueData} />
       </VerifyWrapper>
       <ButtonGroup>
         {importSuccess ? (
@@ -94,7 +92,7 @@ const VerifyIssue = ({
         <PrimaryAsyncButton
           disabled={false}
           label="Submit"
-          onClick={() => dispatchSaveInfo({ requestBody, activeUser })}
+          onClick={() => dispatchSaveInfo({ requestBody })}
         />
       </ButtonGroup>
     </StyledFocusDiv>
@@ -102,7 +100,6 @@ const VerifyIssue = ({
 };
 
 VerifyIssue.propTypes = {
-  activeUser: T.object,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
@@ -130,7 +127,6 @@ function mapDispatchToProps(dispatch) {
     dispatchClearForm: () => dispatch(clearForm()),
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
-    dispatchVerifyInfo: () => dispatch(verifyInfo()),
     handleGenerateIdenticon: () => dispatch(generateIdenticon()),
   };
 }

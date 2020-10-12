@@ -1,15 +1,9 @@
 import {
-  CLEAR_FORM,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
 } from './constants';
-
-export function clearForm() {
-  return {
-    type: CLEAR_FORM,
-  };
-}
 
 export function incrementStep(payload) {
   return {
@@ -29,5 +23,11 @@ export function inputError(payload) {
   return {
     payload,
     type: INPUT_ERROR,
+  };
+}
+
+export function resetState() {
+  return {
+    type: RESET_STATE,
   };
 }

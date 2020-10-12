@@ -9,12 +9,12 @@ import injectSaga from 'utils/injectSaga';
 
 import {
   clearError,
-  clearForm,
   createPullRequest,
   handleStep,
   importPullRequest,
   inputChange,
   inputError,
+  resetState,
 } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
@@ -22,10 +22,11 @@ import { makeSelectPullRequests } from '../selectors';
 import { importPullRequestDictionary } from '../stepDictionary';
 
 const AddPullRequest = ({
-  dispatchClearForm,
+  alerts,
   dispatchCreatePullRequest,
   dispatchHandleStep,
   dispatchImportPullRequest,
+  dispatchResetState,
   error,
   handleClearError,
   handleClose,
@@ -34,9 +35,9 @@ const AddPullRequest = ({
   issueId,
   loading,
   step,
-  userId,
 }) => {
-  useEffect(() => dispatchClearForm, []);
+  useEffect(() => dispatchResetState, []);
+
   const ComponentToRender = importPullRequestDictionary[step];
 
   const handleImport = () => {
@@ -47,10 +48,11 @@ const AddPullRequest = ({
     });
   };
   const handleSubmit = () => {
-    dispatchCreatePullRequest({ issueId, userId, importData });
+    dispatchCreatePullRequest({ issueId, importData });
   };
 
   const propsToPassDown = {
+    alerts,
     dispatchHandleStep,
     error,
     handleClearError,
@@ -66,10 +68,11 @@ const AddPullRequest = ({
 };
 
 AddPullRequest.propTypes = {
-  dispatchClearForm: T.func,
+  alerts: T.object,
   dispatchCreatePullRequest: T.func,
   dispatchHandleStep: T.func,
   dispatchImportPullRequest: T.func,
+  dispatchResetState: T.func.isRequired,
   error: T.oneOfType([T.bool, T.string]),
   handleClearError: T.func,
   handleClose: T.func,
@@ -78,13 +81,13 @@ AddPullRequest.propTypes = {
   issueId: T.string,
   loading: T.bool,
   step: T.number,
-  userId: T.string,
 };
 
 const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : PullRequests
    */
+  alerts: makeSelectPullRequests('alerts'),
   error: makeSelectPullRequests('error'),
   importData: makeSelectPullRequests('importData'),
   loading: makeSelectPullRequests('loading'),
@@ -96,11 +99,11 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : PullRequests
      */
-    dispatchClearForm: () => dispatch(clearForm()),
     dispatchCreatePullRequest: payload => dispatch(createPullRequest(payload)),
     dispatchHandleStep: payload => dispatch(handleStep(payload)),
     dispatchImportPullRequest: payload => dispatch(importPullRequest(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     handleClearError: () => dispatch(clearError()),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };

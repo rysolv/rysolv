@@ -37,6 +37,7 @@ import {
   INPUT_CHANGE,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -51,7 +52,6 @@ import {
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export function addAttemptFailure(payload) {
@@ -313,6 +313,13 @@ export function openIssueModalState(payload) {
   };
 }
 
+export function resetState(payload) {
+  return {
+    payload,
+    type: RESET_STATE,
+  };
+}
+
 export function saveInfoFailure(payload) {
   return {
     payload,
@@ -334,11 +341,8 @@ export function saveInfo(payload) {
   };
 }
 
-export function searchIssuesFailure(payload) {
-  return {
-    payload,
-    type: SEARCH_ISSUES_FAILURE,
-  };
+export function searchIssuesFailure() {
+  return { type: SEARCH_ISSUES_FAILURE };
 }
 
 export function searchIssuesSuccess(payload) {
@@ -369,11 +373,8 @@ export function updateIsManual(payload) {
   };
 }
 
-export function updateIssueDetail(payload) {
-  return {
-    payload,
-    type: UPDATE_ISSUE_DETAIL,
-  };
+export function updateIssueDetail() {
+  return { type: UPDATE_ISSUE_DETAIL };
 }
 
 export function updateOrganization(payload) {
@@ -409,8 +410,4 @@ export function upvoteIssue(payload) {
     payload,
     type: UPVOTE_ISSUE,
   };
-}
-
-export function verifyInfo() {
-  return { type: VERIFY_INFO };
 }

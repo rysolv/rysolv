@@ -3,9 +3,6 @@ import {
   CHANGE_ORGANIZATION_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
-  DELETE_ORGANIZATION_FAILURE,
-  DELETE_ORGANIZATION_SUCCESS,
-  DELETE_ORGANIZATION,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
@@ -19,6 +16,7 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -33,7 +31,6 @@ import {
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export function changeOrganizationFilter(payload) {
@@ -59,27 +56,6 @@ export function clearAlerts() {
 export function clearForm() {
   return {
     type: CLEAR_FORM,
-  };
-}
-
-export function deleteOrganizationFailure(payload) {
-  return {
-    payload,
-    type: DELETE_ORGANIZATION_FAILURE,
-  };
-}
-
-export function deleteOrganizationSuccess(payload) {
-  return {
-    payload,
-    type: DELETE_ORGANIZATION_SUCCESS,
-  };
-}
-
-export function deleteOrganization(payload) {
-  return {
-    payload,
-    type: DELETE_ORGANIZATION,
   };
 }
 
@@ -170,6 +146,10 @@ export function inputError(payload) {
   };
 }
 
+export function resetState() {
+  return { type: RESET_STATE };
+}
+
 export function saveInfoFailure(payload) {
   return {
     payload,
@@ -191,11 +171,8 @@ export function saveInfo(payload) {
   };
 }
 
-export function searchOrganizationsFailure(payload) {
-  return {
-    payload,
-    type: SEARCH_ORGANIZATIONS_FAILURE,
-  };
+export function searchOrganizationsFailure() {
+  return { type: SEARCH_ORGANIZATIONS_FAILURE };
 }
 
 export function searchOrganizationsSuccess(payload) {
@@ -266,8 +243,4 @@ export function upvoteIssue(payload) {
     payload,
     type: UPVOTE_ISSUE,
   };
-}
-
-export function verifyInfo() {
-  return { type: VERIFY_INFO };
 }

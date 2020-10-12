@@ -11,9 +11,7 @@ import {
   generateIdenticon,
   incrementStep,
   saveInfo,
-  verifyInfo,
 } from '../actions';
-import { verifyMessage } from '../constants';
 import {
   makeSelectOrganizations,
   makeSelectOrganizationsRequestBody,
@@ -21,21 +19,17 @@ import {
 import {
   BackLink,
   ButtonGroup,
-  StyledCheckboxWithLabel,
   StyledFocusDiv,
   StyledH3,
   Wrapper,
 } from './styledComponents';
 
 const VerifyOrganization = ({
-  activeUser,
   dispatchClearForm,
   dispatchIncrementStep,
   dispatchSaveInfo,
-  dispatchVerifyInfo,
   handleGenerateIdenticon,
   importSuccess,
-  isVerified,
   organizationData,
   organizationData: { organizationLogo },
   requestBody,
@@ -46,12 +40,12 @@ const VerifyOrganization = ({
   }, []);
 
   const handleKeypress = ({ key }) => {
-    if (key === 'Enter' && isVerified) {
+    if (key === 'Enter') {
       handleSaveInfo();
     }
   };
   const handleSaveInfo = () => {
-    dispatchSaveInfo({ activeUser, requestBody });
+    dispatchSaveInfo({ requestBody });
   };
   const cancelImport = () => {
     dispatchClearForm();
@@ -66,11 +60,6 @@ const VerifyOrganization = ({
       <StyledH3>Verify Organization Information</StyledH3>
       <Wrapper>
         <VerifyForm organizationData={organizationData} />
-        <StyledCheckboxWithLabel
-          checked={isVerified}
-          label={verifyMessage}
-          onChange={dispatchVerifyInfo}
-        />
       </Wrapper>
       <ButtonGroup>
         {importSuccess ? (
@@ -84,25 +73,18 @@ const VerifyOrganization = ({
             Edit Org
           </BackLink>
         )}
-        <PrimaryAsyncButton
-          disabled={!isVerified}
-          label="Submit"
-          onClick={handleSaveInfo}
-        />
+        <PrimaryAsyncButton label="Submit" onClick={handleSaveInfo} />
       </ButtonGroup>
     </StyledFocusDiv>
   );
 };
 
 VerifyOrganization.propTypes = {
-  activeUser: T.object,
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
-  dispatchVerifyInfo: T.func,
   handleGenerateIdenticon: T.func,
   importSuccess: T.bool,
-  isVerified: T.bool,
   organizationData: T.object,
   requestBody: T.object,
 };
@@ -111,7 +93,6 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
-  isVerified: makeSelectOrganizations('isVerified'),
   organizationData: makeSelectOrganizations('organizationData'),
   requestBody: makeSelectOrganizationsRequestBody(),
 });
@@ -124,7 +105,6 @@ function mapDispatchToProps(dispatch) {
     dispatchClearForm: () => dispatch(clearForm()),
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
-    dispatchVerifyInfo: () => dispatch(verifyInfo()),
     handleGenerateIdenticon: () => dispatch(generateIdenticon()),
   };
 }

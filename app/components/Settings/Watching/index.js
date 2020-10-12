@@ -22,12 +22,7 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const UserWatching = ({
-  handleNav,
-  handleRemoveWatching,
-  userId,
-  watching,
-}) => {
+const UserWatching = ({ handleNav, handleRemoveWatching, watching }) => {
   const [selectedValue, setSelectedValue] = useState('Newest');
   const [searchValue, setSearchValue] = useState('');
   const filterWatching = () => {
@@ -87,7 +82,6 @@ const UserWatching = ({
           handleRemoveWatching,
           list: filteredWatching,
           type: 'watching',
-          userId,
         }}
         shouldRender={!!filteredWatching.length}
       />
@@ -98,7 +92,6 @@ const UserWatching = ({
 UserWatching.propTypes = {
   handleNav: T.func.isRequired,
   handleRemoveWatching: T.func.isRequired,
-  userId: T.string.isRequired,
   watching: T.array.isRequired,
 };
 

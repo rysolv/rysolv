@@ -33,6 +33,9 @@ export const FooterWrapper = styled.footer`
 `;
 
 export const LinkContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   padding: 1rem 1rem 2.4rem 1rem;
 `;
 
@@ -57,6 +60,7 @@ export const StyledTop = styled.div`
 
 export const StyledBottom = styled(StyledTop)`
   flex-direction: column;
+  padding-left: 0;
   place-content: center;
 
   ${mobile} {

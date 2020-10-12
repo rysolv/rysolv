@@ -18,6 +18,8 @@ import {
   hoverLinkColor,
   lightBlueColor,
   textColor,
+  verifyBackgroundColor,
+  verifyColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
@@ -257,9 +259,9 @@ export const IssueNameWrapper = styled.div`
 
 export const IssueOpen = styled.div`
   background-color: ${({ open }) =>
-    open ? 'rgb(229, 251, 242)' : 'rgb(237, 238, 240)'};
+    open ? verifyBackgroundColor : 'rgb(237, 238, 240)'};
   border-radius: 0.25rem;
-  color: ${({ open }) => (open ? 'rgb(8, 178, 110)' : '0')};
+  color: ${({ open }) => (open ? verifyColor : '0')};
   display: inline-block;
   font-weight: 700;
   line-height: 1.5;
@@ -438,6 +440,7 @@ export const StyledTitled = styled.div`
 
 export const StyledWordLink = styled(Link)`
   font-weight: 700;
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 
   &:hover {
     cursor: pointer;
@@ -474,10 +477,10 @@ export const TopLanguagesContainer = styled.div`
 `;
 
 export const VerifiedWrapper = styled.div`
-  background-color: rgb(229, 251, 242);
+  background-color: ${verifyBackgroundColor};
   border-radius: 0.5rem;
   border: 0.1rem solid rgba(27, 31, 35, 0.15);
-  color: rgb(8, 178, 110);
+  color: ${verifyColor};
   height: fit-content;
   padding: 0.5rem;
   margin: 0 2rem;

@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { hoverLinkColor, textColor } from 'defaultStyleHelper';
+import {
+  hoverLinkColor,
+  textColor,
+  verifyBackgroundColor,
+  verifyColor,
+} from 'defaultStyleHelper';
 
 export const IconButtonWrapper = styled.div`
   align-self: center;
@@ -40,9 +45,9 @@ export const OrganizationDetail = styled.div`
 
 export const OrganizationFundedAmount = styled.div`
   background-color: ${({ open }) =>
-    open ? 'rgb(229, 251, 242)' : 'rgb(237, 238, 240)'};
+    open ? verifyBackgroundColor : 'rgb(237, 238, 240)'};
   border-radius: 0.25rem;
-  color: ${({ open }) => (open ? 'rgb(8, 178, 110)' : '0')};
+  color: ${({ open }) => (open ? verifyColor : '0')};
   display: inline-block;
   font-weight: 700;
   line-height: 1.5;

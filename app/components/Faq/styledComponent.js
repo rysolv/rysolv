@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 
 import { BaseExpansionPanel } from 'components/base_ui';
-import { defaultFontSize, headerFontSize, textColor } from 'defaultStyleHelper';
+import {
+  commentHeaderColor,
+  defaultFontSize,
+  headerFontSize,
+  hoverLinkColor,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -10,7 +16,6 @@ export const AnswerWrapper = styled.div`
   display: flex;
   font-size: ${defaultFontSize};
   line-height: 1.5;
-  opacity: 0.5;
   padding-bottom: 2.5rem;
   text-align: start;
 `;
@@ -42,7 +47,7 @@ export const QuestionGroup = styled.div`
 `;
 
 export const QuestionIntroWrapper = styled.div`
-  background: #f6f8fa;
+  background: ${commentHeaderColor};
   height: auto;
   min-height: 10rem;
 `;
@@ -52,10 +57,10 @@ export const QuestionWrapper = styled.div`
 `;
 
 export const StyledA = styled.a`
-  color: #007bff;
+  color: ${hoverLinkColor};
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
     text-decoration: underline;
   }
 `;

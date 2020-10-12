@@ -9,6 +9,7 @@ const BaseAutocomplete = ({
   error,
   helperText,
   label,
+  multiple,
   onChange,
   options,
   value,
@@ -17,7 +18,8 @@ const BaseAutocomplete = ({
   <StyledAutocomplete
     classes={{ focused: 'focused', inputRoot: 'inputRoot' }}
     getOptionLabel={option => option.value}
-    multiple
+    getOptionSelected={(option1, option2) => option1.value === option2.value}
+    multiple={multiple}
     onChange={onChange}
     options={options}
     renderInput={params => (
@@ -38,13 +40,16 @@ const BaseAutocomplete = ({
   />
 );
 
+BaseAutocomplete.defaultProps = { multiple: true };
+
 BaseAutocomplete.propTypes = {
   error: T.bool,
   helperText: T.string,
   label: T.string,
+  multiple: T.bool,
   onChange: T.func.isRequired,
   options: T.array,
-  value: T.array,
+  value: T.oneOfType([T.array, T.object]),
 };
 
 export default BaseAutocomplete;

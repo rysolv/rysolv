@@ -43,7 +43,7 @@ export const EmptyStackoverflowLinkComponent = ({
 
 export const StackoverflowEditComponent = ({
   handleClose,
-  handleDone,
+  handleSubmitInputChange,
   setChangeStackoverflow,
   setValue,
   value,
@@ -65,7 +65,7 @@ export const StackoverflowEditComponent = ({
         icon={DoneIcon}
         label="Save"
         onClick={() =>
-          handleDone({
+          handleSubmitInputChange({
             changeInputState: setChangeStackoverflow,
             field: 'stackoverflowLink',
           })
@@ -110,7 +110,7 @@ EmptyStackoverflowLinkComponent.propTypes = {
 
 StackoverflowEditComponent.propTypes = {
   handleClose: T.func,
-  handleDone: T.func,
+  handleSubmitInputChange: T.func,
   setChangeStackoverflow: T.func,
   setValue: T.func,
   value: T.oneOfType([T.array, T.number, T.string]),

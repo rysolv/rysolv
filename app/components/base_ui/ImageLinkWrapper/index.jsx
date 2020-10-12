@@ -1,11 +1,12 @@
 import React from 'react';
 import T from 'prop-types';
-import { Link } from 'react-router-dom';
 
-import { StyledImage } from './styledComponents';
+import { anonymousUserImage } from './constants';
+import { StyledImage, StyledLink } from './styledComponents';
 
 const ImageLinkWrapper = ({
   alt,
+  disabled,
   image,
   isSquare,
   onClick,
@@ -13,7 +14,7 @@ const ImageLinkWrapper = ({
   size,
   ...restProps
 }) => (
-  <Link onClick={onClick} to={route}>
+  <StyledLink disabled={disabled} onClick={onClick} to={route}>
     <StyledImage
       alt={alt}
       isSquare={isSquare || false}
@@ -21,12 +22,19 @@ const ImageLinkWrapper = ({
       src={image}
       {...restProps}
     />
-  </Link>
+  </StyledLink>
 );
 
+ImageLinkWrapper.defaultProps = {
+  alt: 'anonymous',
+  disabled: false,
+  image: anonymousUserImage,
+};
+
 ImageLinkWrapper.propTypes = {
-  alt: T.string.isRequired,
-  image: T.string.isRequired,
+  alt: T.string,
+  disabled: T.bool,
+  image: T.string,
   isSquare: T.bool,
   onClick: T.func,
   route: T.string.isRequired,

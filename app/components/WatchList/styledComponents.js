@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { Star } from 'components/base_ui';
+import { Coin } from 'components/base_ui';
 import {
   buttonRed,
   defaultFontSize,
@@ -65,7 +65,7 @@ export const ListContainer = styled.ul`
 
 export const ListDetail = styled.div`
   align-items: center;
-  color: #007bff;
+  color: ${hoverLinkColor};
   display: flex;
   flex: 100%;
   height: 100%;
@@ -113,9 +113,10 @@ export const PullRequestUsername = styled(Link)`
   }
 `;
 
-export const StyledStar = styled(Star)`
+export const StyledCoin = styled(Coin)`
   svg {
     height: 1.2rem;
+    margin: 0 0.3rem;
     width: 1.2rem;
   }
 `;

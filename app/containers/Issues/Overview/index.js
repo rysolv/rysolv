@@ -8,7 +8,11 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { fetchWatchList, openModalState } from 'containers/Main/actions';
+import {
+  fetchAttemptList,
+  fetchWatchList,
+  openModalState,
+} from 'containers/Main/actions';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -17,6 +21,7 @@ import {
   addWatch,
   clearAlerts,
   fetchIssues,
+  resetState,
   searchIssues,
   upvoteIssue,
 } from '../actions';
@@ -34,9 +39,11 @@ const IssuesOverview = ({
   addWatching,
   alerts,
   deviceView,
+  dispatchFetchAttemptList,
   dispatchFetchIssues,
   dispatchFetchWatchList,
   dispatchOpenModal,
+  dispatchResetState,
   dispatchUpvote,
   error,
   handleClearAlerts,
@@ -48,6 +55,8 @@ const IssuesOverview = ({
   params: { searchValue },
   upvoteLoading,
 }) => {
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Issues';
@@ -59,8 +68,8 @@ const IssuesOverview = ({
     return handleClearAlerts;
   }, [searchValue]);
 
-  const handleUpvote = ({ issueId, upvote, userId }) => {
-    if (!upvoteLoading) dispatchUpvote({ issueId, upvote, userId });
+  const handleUpvote = ({ issueId, upvote }) => {
+    if (!upvoteLoading) dispatchUpvote({ issueId, upvote });
   };
 
   return (
@@ -74,6 +83,7 @@ const IssuesOverview = ({
         addWatching,
         alerts,
         deviceView,
+        dispatchFetchAttemptList,
         dispatchFetchWatchList,
         dispatchOpenModal,
         handleClearAlerts,
@@ -93,11 +103,13 @@ IssuesOverview.propTypes = {
     success: T.oneOfType([T.bool, T.object]),
   }),
   deviceView: T.string,
+  dispatchFetchAttemptList: T.func.isRequired,
   dispatchFetchIssues: T.func,
-  dispatchFetchWatchList: T.func,
+  dispatchFetchWatchList: T.func.isRequired,
   dispatchOpenModal: T.func,
+  dispatchResetState: T.func.isRequired,
   dispatchUpvote: T.func,
-  error: T.oneOfType([T.object, T.bool]),
+  error: T.oneOfType([T.bool, T.string]),
   handleClearAlerts: T.func,
   handleNav: T.func,
   handleSearchIssues: T.func,
@@ -135,12 +147,14 @@ function mapDispatchToProps(dispatch) {
      */
     addWatching: payload => dispatch(addWatch(payload)),
     dispatchFetchIssues: () => dispatch(fetchIssues()),
+    dispatchResetState: () => dispatch(resetState()),
     dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
     /*
      * Reducer : Main
      */
+    dispatchFetchAttemptList: payload => dispatch(fetchAttemptList(payload)),
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     /**

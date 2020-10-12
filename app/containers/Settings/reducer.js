@@ -1,6 +1,10 @@
+/* eslint-disable consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
 import {
+  CHANGE_EMAIL_FAILURE,
+  CHANGE_EMAIL_SUCCESS,
+  CHANGE_EMAIL,
   CLEAR_ALERTS,
   CLEAR_ERRORS,
   CLOSE_MODAL_STATE,
@@ -18,14 +22,16 @@ import {
   PAYPAL_PAYMENT,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
-  REMOVE_ISSUE,
-  REMOVE_WATCHING,
+  RESET_STATE,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
   STRIPE_TOKEN_FAILURE,
   STRIPE_TOKEN_SUCCESS,
   STRIPE_TOKEN,
+  VERIFY_ACCOUNT_FAILURE,
+  VERIFY_ACCOUNT_SUCCESS,
+  VERIFY_ACCOUNT,
   WITHDRAW_FUNDS_FAILURE,
   WITHDRAW_FUNDS_SUCCESS,
   WITHDRAW_FUNDS,
@@ -45,13 +51,27 @@ export const initialState = {
     transferValue: '',
   },
   isModalOpen: false,
-  loading: false,
+  loading: true,
   modal: '',
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const settingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case CHANGE_EMAIL_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case CHANGE_EMAIL_SUCCESS: {
+      draft.loading = false;
+      break;
+    }
+    case CHANGE_EMAIL: {
+      draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       draft.inputErrors = initialState.inputErrors;
@@ -87,9 +107,9 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_INFO_SUCCESS: {
-      const { oneUser } = payload;
+      const { user } = payload;
+      draft.account = user;
       draft.loading = false;
-      draft.account = oneUser;
       break;
     }
     case FETCH_INFO: {
@@ -125,7 +145,7 @@ const settingsReducer = produce((draft, { payload, type }) => {
     }
     case PAYPAL_PAYMENT_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = { message: error };
+      draft.alerts.error = error;
       draft.loading = false;
       break;
     }
@@ -162,13 +182,8 @@ const settingsReducer = produce((draft, { payload, type }) => {
       draft.loading = false;
       break;
     }
-    case REMOVE_ISSUE: {
-      draft.loading = true;
-      break;
-    }
-    case REMOVE_WATCHING: {
-      draft.loading = true;
-      break;
+    case RESET_STATE: {
+      return initialState;
     }
     case SAVE_CHANGE_FAILURE: {
       const { error } = payload;
@@ -184,12 +199,13 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SAVE_CHANGE: {
+      draft.alerts = initialState.alerts;
       draft.loading = true;
       break;
     }
     case STRIPE_TOKEN_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = { message: error };
+      draft.alerts.error = error;
       draft.loading = false;
       break;
     }
@@ -202,6 +218,24 @@ const settingsReducer = produce((draft, { payload, type }) => {
     }
     case STRIPE_TOKEN: {
       draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
+    case VERIFY_ACCOUNT_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case VERIFY_ACCOUNT_SUCCESS: {
+      const { githubUsername, message } = payload;
+      draft.account.githubUsername = githubUsername;
+      draft.account.isGithubVerified = true;
+      draft.alerts.success = { message };
+      draft.loading = false;
+      break;
+    }
+    case VERIFY_ACCOUNT: {
       draft.loading = true;
       break;
     }

@@ -1,8 +1,7 @@
-/* eslint-disable array-callback-return */
+/* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 import { v4 as uuidv4 } from 'uuid';
 import Identicon from 'identicon.js';
-import remove from 'lodash/remove';
 
 import {
   ADD_ATTEMPT_FAILURE,
@@ -43,6 +42,7 @@ import {
   INPUT_CHANGE,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -57,7 +57,6 @@ import {
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export const initialState = {
@@ -96,13 +95,13 @@ export const initialState = {
   isModalOpen: false,
   issueDetail: {},
   issues: [],
-  isVerified: false,
   loading: {
     addAttempt: false,
     addComment: false,
     addIssue: false,
     addWatch: false,
     closeIssue: false,
+    deletePullRequest: false,
     importIssue: false,
     issueDetail: false,
     issues: false,
@@ -131,22 +130,45 @@ export const initialState = {
   },
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const issuesReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case ADD_ATTEMPT_FAILURE: {
-      const { error } = payload;
+      const { error, userId } = payload;
       draft.alerts.error = error;
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.attempting.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.attempting.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.attempting.push(userId);
+        }
+      }
       draft.loading.addAttempt = false;
       break;
     }
     case ADD_ATTEMPT_SUCCESS: {
-      const { attempting } = payload;
-      draft.issueDetail.attempting = attempting;
+      const { issueId, userArray } = payload;
+      draft.issues.map((issue, index) => {
+        if (issue.id === issueId) {
+          draft.issues[index].attempting = userArray;
+        }
+      });
+      if (draft.issueDetail.id) {
+        draft.issueDetail.attempting = userArray;
+      }
       draft.loading.addAttempt = false;
       break;
     }
     case ADD_ATTEMPT: {
+      const { userId } = payload;
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.attempting.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.attempting.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.attempting.push(userId);
+        }
+      }
       draft.loading.addAttempt = true;
       break;
     }
@@ -167,8 +189,26 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case ADD_WATCH_FAILURE: {
-      const { error } = payload;
+      const { error, issueId, userId } = payload;
       draft.alerts.error = error;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          const userIdIndex = draft.issues[index].watching.indexOf(userId);
+          if (userIdIndex > -1) {
+            draft.issues[index].watching.splice(userIdIndex, 1);
+          } else {
+            draft.issues[index].watching.push(userId);
+          }
+        }
+      });
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.watching.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.watching.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.watching.push(userId);
+        }
+      }
       draft.loading.addWatch = false;
       break;
     }
@@ -236,10 +276,9 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case CLEAR_FORM: {
       draft.error = initialState.error;
-      draft.issueData = initialState.issueData;
       draft.importSuccess = initialState.importSuccess;
+      draft.issueData = initialState.issueData;
       draft.organizationData = initialState.organizationData;
-      draft.isVerified = initialState.isVerified;
       break;
     }
     case CLEAR_ORGANIZATION: {
@@ -271,21 +310,18 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case DELETE_PULL_REQUEST_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading = false;
+      draft.loading.deletePullRequest = false;
       break;
     }
     case DELETE_PULL_REQUEST_SUCCESS: {
-      const { id, message } = payload;
+      const { message } = payload;
       draft.alerts.success = { message };
-      remove(
-        draft.issueDetail.pullRequests,
-        pullRequestId => pullRequestId === id,
-      );
-      draft.loading = false;
+      draft.issueDetail.pullRequests -= 1;
+      draft.loading.deletePullRequest = false;
       break;
     }
     case DELETE_PULL_REQUEST: {
-      draft.loading = true;
+      draft.loading.deletePullRequest = true;
       break;
     }
     case EDIT_ISSUE_FAILURE: {
@@ -301,6 +337,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case EDIT_ISSUE: {
+      draft.alerts = initialState.alerts;
       draft.loading.editIssue = true;
       break;
     }
@@ -311,7 +348,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ISSUES_SUCCESS: {
-      draft.issues = payload;
+      const { issues } = payload;
+      draft.issues = issues;
       draft.loading.issues = false;
       break;
     }
@@ -326,8 +364,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ISSUE_DETAIL_SUCCESS: {
-      const { oneIssue } = payload;
-      draft.issueDetail = oneIssue;
+      const { issueDetail } = payload;
+      draft.issueDetail = issueDetail;
       draft.loading.issueDetail = false;
       break;
     }
@@ -344,7 +382,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case IMPORT_ISSUE_FAILURE: {
       const { error } = payload;
-      draft.error.importIssue = { error: true, message: error.message };
+      draft.alerts.error = error;
       draft.loading.importIssue = false;
       break;
     }
@@ -398,9 +436,12 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.modal = modalState;
       break;
     }
+    case RESET_STATE: {
+      return initialState;
+    }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = { message: error };
+      draft.alerts.error = error;
       draft.importSuccess = false;
       draft.loading.addIssue = false;
       break;
@@ -408,8 +449,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case SAVE_INFO_SUCCESS: {
       const { message } = payload;
       draft.alerts.success = { message };
-      draft.loading.addIssue = false;
       draft.importSuccess = false;
+      draft.loading.addIssue = false;
       break;
     }
     case SAVE_INFO: {
@@ -417,15 +458,12 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ISSUES_FAILURE: {
-      const { error } = payload;
-      draft.error.searchIssues = error;
       draft.loading.searchIssues = false;
-      draft.importSuccess = false;
       break;
     }
     case SEARCH_ISSUES_SUCCESS: {
       const { issues } = payload;
-      draft.issues = issues || null;
+      draft.issues = issues;
       draft.loading.searchIssues = false;
       break;
     }
@@ -450,8 +488,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_ISSUE_DETAIL: {
-      const { pullRequestId } = payload;
-      draft.issueDetail.pullRequests.push(pullRequestId);
+      draft.issueDetail.pullRequests += 1;
       break;
     }
     case UPDATE_ORGANIZATION: {
@@ -463,8 +500,10 @@ const issuesReducer = produce((draft, { payload, type }) => {
       });
       break;
     }
-    case UPVOTE_ISSUE: {
-      draft.loading.upvoteIssue = true;
+    case UPVOTE_ISSUE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.upvoteIssue = false;
       break;
     }
     case UPVOTE_ISSUE_SUCCESS: {
@@ -480,10 +519,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.upvoteIssue = false;
       break;
     }
-    case UPVOTE_ISSUE_FAILURE: {
-      const { error } = payload;
-      draft.alerts.error = error;
-      draft.loading.upvoteIssue = false;
+    case UPVOTE_ISSUE: {
+      draft.loading.upvoteIssue = true;
       break;
     }
     case UPVOTE_ISSUE_TEMP: {
@@ -500,10 +537,6 @@ const issuesReducer = produce((draft, { payload, type }) => {
         // eslint-disable-next-line no-unused-expressions
         upvote ? (draft.issueDetail.rep += 1) : (draft.issueDetail.rep -= 1);
       }
-      break;
-    }
-    case VERIFY_INFO: {
-      draft.isVerified = !draft.isVerified;
       break;
     }
   }

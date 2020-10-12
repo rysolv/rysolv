@@ -1,3 +1,7 @@
+export const CHANGE_EMAIL = 'app/Settings/CHANGE_EMAIL';
+export const CHANGE_EMAIL_FAILURE = 'app/Settings/CHANGE_EMAIL_FAILURE';
+export const CHANGE_EMAIL_SUCCESS = 'app/Settings/CHANGE_EMAIL_SUCCESS';
+
 export const CLEAR_ALERTS = 'app/Settings/CLEAR_ALERTS';
 
 export const CLEAR_ERRORS = 'app/Settings/CLEAR_ERRORS';
@@ -21,10 +25,12 @@ export const PAYPAL_PAYMENT = 'app/Settings/PAYPAL_PAYMENT';
 export const PAYPAL_PAYMENT_FAILURE = 'app/Settings/PAYPAL_PAYMENT_FAILURE';
 export const PAYPAL_PAYMENT_SUCCESS = 'app/Settings/PAYPAL_PAYMENT_SUCCESS';
 
-export const REMOVE_ISSUE = 'app/Settings/REMOVE_ISSUE';
+export const REMOVE_ATTEMPTING = 'app/Settings/REMOVE_ATTEMPTING';
 export const REMOVE_ISSUE_FAILURE = 'app/Settings/REMOVE_ISSUE_FAILURE';
 export const REMOVE_ISSUE_SUCCESS = 'app/Settings/REMOVE_ISSUE_SUCCESS';
 export const REMOVE_WATCHING = 'app/Settings/REMOVE_WATCHING';
+
+export const RESET_STATE = 'app/Settings/RESET_STATE';
 
 export const SAVE_CHANGE = 'app/Settings/SAVE_CHANGE';
 export const SAVE_CHANGE_FAILURE = 'app/Settings/SAVE_CHANGE_FAILURE';
@@ -33,6 +39,10 @@ export const SAVE_CHANGE_SUCCESS = 'app/Settings/SAVE_CHANGE_SUCCESS';
 export const STRIPE_TOKEN = 'app/Settings/STRIPE_TOKEN';
 export const STRIPE_TOKEN_FAILURE = 'app/Settings/STRIPE_TOKEN_FAILURE';
 export const STRIPE_TOKEN_SUCCESS = 'app/Settings/STRIPE_TOKEN_SUCCESS';
+
+export const VERIFY_ACCOUNT = 'app/Settings/VERIFY_ACCOUNT';
+export const VERIFY_ACCOUNT_FAILURE = 'app/Settings/VERIFY_ACCOUNT_FAILURE';
+export const VERIFY_ACCOUNT_SUCCESS = 'app/Settings/VERIFY_ACCOUNT_SUCCESS';
 
 export const WITHDRAW_FUNDS = 'app/Settings/WITHDRAW_FUNDS';
 export const WITHDRAW_FUNDS_FAILURE = 'app/Settings/WITHDRAW_FUNDS_FAILURE';
@@ -44,6 +54,8 @@ export const actionDictionary = {
   Funded: 'funded',
   Submitted: 'opened pull request',
 };
+
+export const changeEmailError = `Something went wrong when changing your email.`;
 
 export const settingViewDictionary = {
   account: 1,

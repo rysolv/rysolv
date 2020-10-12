@@ -5,12 +5,11 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import { BackNav } from 'components/base_ui';
-import { makeSelectAuth } from 'containers/Auth/selectors';
 import AsyncRender from 'components/AsyncRender';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { clearForm, incrementStep } from '../actions';
+import { clearAlerts, incrementStep, resetState } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -19,9 +18,12 @@ import {
   makeSelectOrganizationsStep,
 } from '../selectors';
 import { addOrganizationDictionary } from '../stepDictionary';
-import { AddWrapper, AddForm } from './styledComponents';
+import {
+  AddWrapper,
+  AddForm,
+  StyledErrorSuccessBanner,
+} from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export class OrganizationsAdd extends React.PureComponent {
   componentDidMount() {
     const { handleIncrementStep } = this.props;
@@ -29,15 +31,16 @@ export class OrganizationsAdd extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { dispatchClearForm } = this.props;
-    dispatchClearForm();
+    const { dispatchResetState } = this.props;
+    dispatchResetState();
   }
 
   render() {
     window.scrollTo(0, 0);
 
     const {
-      activeUser,
+      alerts: { error, success },
+      handleClearAlerts,
       handleIncrementStep,
       importSuccess,
       loading,
@@ -52,15 +55,17 @@ export class OrganizationsAdd extends React.PureComponent {
     return (
       <AddWrapper>
         <BackNav label="Back to Organizations" path="/organizations" />
+        <StyledErrorSuccessBanner
+          error={error}
+          onClose={handleClearAlerts}
+          success={success}
+        />
         <AddForm>
           <AsyncRender
             asyncData={{ organizationData }}
             component={StepToRender}
             loading={loading}
-            propsToPassDown={{
-              activeUser,
-              importSuccess,
-            }}
+            propsToPassDown={{ importSuccess }}
           />
         </AddForm>
       </AddWrapper>
@@ -69,8 +74,9 @@ export class OrganizationsAdd extends React.PureComponent {
 }
 
 OrganizationsAdd.propTypes = {
-  activeUser: T.object,
-  dispatchClearForm: T.func,
+  alerts: T.object,
+  dispatchResetState: T.func.isRequired,
+  handleClearAlerts: T.func,
   handleIncrementStep: T.func,
   importSuccess: T.bool,
   loading: T.bool.isRequired,
@@ -80,12 +86,9 @@ OrganizationsAdd.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   /**
-   * Reducer: Auth
-   */
-  activeUser: makeSelectAuth('activeUser'),
-  /**
    * Reducer : Organizations
    */
+  alerts: makeSelectOrganizations('alerts'),
   importSuccess: makeSelectOrganizations('importSuccess'),
   loading: makeSelectOrganizationsLoading('addOrganization'),
   organizationData: makeSelectOrganizations('organizationData'),
@@ -97,7 +100,8 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Organizations
      */
-    dispatchClearForm: () => dispatch(clearForm()),
+    dispatchResetState: () => dispatch(resetState()),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
   };
 }

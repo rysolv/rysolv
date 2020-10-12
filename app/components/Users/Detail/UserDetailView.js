@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { Star, BackNav } from 'components/base_ui';
+import { BackNav, Coin } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 import { formatUrlLinks } from 'utils/globalHelpers';
 
@@ -36,9 +36,7 @@ export class UserDetailView extends React.PureComponent {
         dollarsEarned,
         firstName,
         githubLink,
-        isOnline,
         lastName,
-        modifiedDate,
         personalLink,
         preferredLanguages,
         profilePic,
@@ -86,7 +84,7 @@ export class UserDetailView extends React.PureComponent {
               )}
             </LinksWrapper>
             <Rep>
-              <Star />
+              <Coin />
               &nbsp;<b> {rep}</b>&nbsp;credits
             </Rep>
           </UserCardWrapper>
@@ -96,8 +94,6 @@ export class UserDetailView extends React.PureComponent {
               completedPullRequests={completedPullRequests}
               createdDate={createdDate}
               dollarsEarned={dollarsEarned}
-              isOnline={isOnline}
-              modifiedDate={modifiedDate}
               preferredLanguages={preferredLanguages}
               rejectedPullRequests={rejectedPullRequests}
             />

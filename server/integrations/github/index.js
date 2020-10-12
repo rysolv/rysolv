@@ -1,9 +1,11 @@
 /* eslint-disable camelcase */
+const fetch = require('node-fetch');
+
 const { authenticate } = require('./auth');
 
 const getSingleIssue = async ({ issueNumber, organization, repo }) => {
   try {
-    // Authenticate with oktokit API - TODO: create better auth middleware
+    // Authenticate with oktokit API - @TODO: create better auth middleware
     const { GITHUB } = await authenticate();
 
     const { data: issueData } = await GITHUB.issues.get({
@@ -38,9 +40,90 @@ const getSingleIssue = async ({ issueNumber, organization, repo }) => {
       organizationUrl: repository_url, // Required
     };
     return { issueInput };
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    throw error;
   }
+};
+
+const getSingleOrganization = async organization => {
+  // Authenticate with oktokit API - @TODO: create better auth middleware
+  const { GITHUB } = await authenticate();
+
+  const { data: organizationData } = await GITHUB.orgs.get({
+    org: organization,
+  });
+
+  const {
+    avatar_url,
+    bio,
+    blog,
+    html_url,
+    login,
+    name,
+    type,
+  } = organizationData;
+
+  if (!html_url) {
+    throw new Error(`Unable to import organization from ${organization}.`);
+  }
+  if (type === 'User') {
+    throw new Error('Cannot import user account as organization.');
+  }
+
+  const organizationInput = {
+    organizationDescription: bio || '', // Optional
+    organizationLanguages: [], // Optional
+    organizationLogo: avatar_url, // Required
+    organizationName: name || login, // Preferred name or login name
+    organizationRepo: html_url, // Required
+    organizationUrl: blog || '', // Optional
+  };
+  return { organizationInput };
+};
+
+const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
+  // Authenticate with oktokit API - @TODO: create better auth middleware
+  const { GITHUB } = await authenticate();
+
+  const { data: pullRequestData } = await GITHUB.pulls.get({
+    owner: organization,
+    pull_number: pullNumber,
+    repo,
+  });
+
+  const {
+    html_url,
+    mergeable_state,
+    mergeable,
+    merged,
+    number,
+    state,
+    title,
+    user: { id, login },
+  } = pullRequestData;
+
+  if (state !== 'open') {
+    throw new Error('This pull request has been closed.');
+  }
+  if (merged) {
+    throw new Error('Pull request has already been merged.');
+  }
+
+  const isMergeable = mergeable === null ? false : mergeable;
+  const isMerged = merged === null ? false : merged;
+  const pullData = {
+    githubId: id,
+    githubUsername: login,
+    htmlUrl: html_url,
+    mergeable: isMergeable,
+    mergeableState: mergeable_state,
+    merged: isMerged,
+    open: state === 'open',
+    pullNumber: number,
+    status: state,
+    title,
+  };
+  return pullData;
 };
 
 const getSingleRepo = async ({ organization, repo }) => {
@@ -98,89 +181,34 @@ const getSingleRepo = async ({ organization, repo }) => {
     }
 
     return { organizationInput };
-  } catch (err) {
-    throw err;
+  } catch (error) {
+    throw error;
   }
 };
 
-const getSingleOrganization = async organization => {
-  // Authenticate with oktokit API - TODO: create better auth middleware
-  const { GITHUB } = await authenticate();
+const requestGithubToken = credentials =>
+  fetch('https://github.com/login/oauth/access_token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  })
+    .then(res => res.json())
+    .catch(error => {
+      throw new Error(JSON.stringify(error));
+    });
 
-  const { data: organizationData } = await GITHUB.orgs.get({
-    org: organization,
-  });
+const requestGithubUserAccount = token =>
+  fetch(`https://api.github.com/user?access_token=${token}`).then(res =>
+    res.json(),
+  );
 
-  const {
-    avatar_url,
-    bio,
-    blog,
-    html_url,
-    login,
-    name,
-    type,
-  } = organizationData;
-
-  if (!html_url) {
-    throw new Error(`Unable to import organization from ${organization}.`);
-  }
-  if (type === 'User') {
-    throw new Error('Cannot import user account as organization.');
-  }
-
-  const organizationInput = {
-    organizationDescription: bio || '', // Optional
-    organizationLanguages: [], // Optional
-    organizationLogo: avatar_url, // Required
-    organizationName: name || login, // Preferred name or login name
-    organizationRepo: html_url, // Required
-    organizationUrl: blog || '', // Optional
-  };
-  return { organizationInput };
-};
-
-const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
-  // Authenticate with oktokit API - TODO: create better auth middleware
-  const { GITHUB } = await authenticate();
-
-  const { data: pullRequestData } = await GITHUB.pulls.get({
-    owner: organization,
-    pull_number: pullNumber,
-    repo,
-  });
-
-  const {
-    html_url,
-    mergeable_state,
-    mergeable,
-    merged,
-    number,
-    state,
-    title,
-    user: { login },
-  } = pullRequestData;
-
-  if (state !== 'open') {
-    throw new Error('This pull request has been closed.');
-  }
-  if (merged) {
-    throw new Error('Pull request has already been merged.');
-  }
-
-  const isMergeable = mergeable === null ? false : mergeable;
-  const isMerged = merged === null ? false : merged;
-  const pullData = {
-    githubUsername: login,
-    htmlUrl: html_url,
-    mergeable: isMergeable,
-    mergeableState: mergeable_state,
-    merged: isMerged,
-    open: state === 'open',
-    pullNumber: number,
-    status: state,
-    title,
-  };
-  return pullData;
+const requestGithubUser = async credentials => {
+  const { access_token } = await requestGithubToken(credentials);
+  const { id, login } = await requestGithubUserAccount(access_token);
+  return { github_id: id, github_username: login };
 };
 
 module.exports = {
@@ -188,4 +216,5 @@ module.exports = {
   getSingleOrganization,
   getSinglePullRequest,
   getSingleRepo,
+  requestGithubUser,
 };

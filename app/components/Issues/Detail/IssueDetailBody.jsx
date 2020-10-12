@@ -10,8 +10,8 @@ import {
   CommentWrapper,
   ExternalLinkWrapper,
   Icon,
-  LanguagesTitle,
-  LanguagesWrapper,
+  InfoItemTitle,
+  InfoItemWrapper,
   PostingInfoWrapper,
   StyledLanguageAutocomplete,
   StyledMarkdown,
@@ -30,6 +30,8 @@ const IssueDetailBody = ({
   repo,
   setBodyChange,
   setLanguageChange,
+  setTypeChange,
+  typeChange,
   userProfile: { route, username },
 }) => {
   const EditIssueBodyComponent = (
@@ -55,6 +57,18 @@ const IssueDetailBody = ({
     </Fragment>
   );
 
+  const EditTypeComponent = (
+    <InfoItemWrapper>
+      <InfoItemTitle>Type:</InfoItemTitle>
+      <StyledLanguageAutocomplete
+        multiple={false}
+        onChange={(e, { value }) => setTypeChange(value)}
+        type="type"
+        value={{ value: typeChange }}
+      />
+    </InfoItemWrapper>
+  );
+
   return (
     <Fragment>
       <PostingInfoWrapper>
@@ -69,14 +83,18 @@ const IssueDetailBody = ({
         </ExternalLinkWrapper>
       </PostingInfoWrapper>
       <CommentWrapper>
-        <LanguagesWrapper>
-          <LanguagesTitle>Languages:</LanguagesTitle>
+        <InfoItemWrapper>
+          <InfoItemTitle>Languages:</InfoItemTitle>
           <ConditionalRender
             Component={LanguagesComponent}
             FallbackComponent={EditLanguagesComponent}
             shouldRender={!displayEditView}
           />
-        </LanguagesWrapper>
+        </InfoItemWrapper>
+        <ConditionalRender
+          Component={EditTypeComponent}
+          shouldRender={displayEditView}
+        />
         <ConditionalRender
           Component={BodyCard}
           FallbackComponent={EditIssueBodyComponent}
@@ -98,6 +116,8 @@ IssueDetailBody.propTypes = {
   repo: T.string,
   setBodyChange: T.func,
   setLanguageChange: T.func,
+  setTypeChange: T.func,
+  typeChange: T.string,
   userProfile: T.object,
 };
 

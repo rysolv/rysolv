@@ -34,34 +34,44 @@ export class RecentActivityView extends React.PureComponent {
             path,
             target: { targetName, targetType },
             user: { userId, username, profilePic },
-          }) => (
-            <ActivityWrapper key={activityId}>
-              <div style={{ display: 'flex' }}>
-                <ProfileImageWrapper>
-                  <ImageLinkWrapper
-                    alt={username}
-                    image={profilePic}
-                    route={`/users/detail/${userId}`}
-                  />
-                </ProfileImageWrapper>
-                <FundContent>
-                  <StyledWordLink to={`/users/detail/${userId}`}>
-                    {username}
-                  </StyledWordLink>
-                  &nbsp;
-                  <StyledAction>
-                    {action} {targetType.toLowerCase()}
-                  </StyledAction>
-                  &nbsp;
-                  {fundedValue ? `for ${formatDollarAmount(fundedValue)} ` : ''}
-                  <StyledExternalLink to={path}>
-                    {targetName}
-                  </StyledExternalLink>
-                  <ActivityDate>{moment(date).fromNow()}</ActivityDate>
-                </FundContent>
-              </div>
-            </ActivityWrapper>
-          ),
+          }) => {
+            const disabled = !userId;
+            const usernameToRender = username || 'anonymous';
+            return (
+              <ActivityWrapper key={activityId}>
+                <div style={{ display: 'flex' }}>
+                  <ProfileImageWrapper>
+                    <ImageLinkWrapper
+                      alt={usernameToRender}
+                      disabled={disabled}
+                      image={profilePic}
+                      route={`/users/detail/${userId}`}
+                    />
+                  </ProfileImageWrapper>
+                  <FundContent>
+                    <StyledWordLink
+                      disabled={disabled}
+                      to={`/users/detail/${userId}`}
+                    >
+                      {usernameToRender}
+                    </StyledWordLink>
+                    &nbsp;
+                    <StyledAction>
+                      {action} {targetType.toLowerCase()}
+                    </StyledAction>
+                    &nbsp;
+                    {fundedValue
+                      ? `for ${formatDollarAmount(fundedValue)} `
+                      : ''}
+                    <StyledExternalLink to={path}>
+                      {targetName}
+                    </StyledExternalLink>
+                    <ActivityDate>{moment(date).fromNow()}</ActivityDate>
+                  </FundContent>
+                </div>
+              </ActivityWrapper>
+            );
+          },
         )}
       </ActivityContainer>
     );

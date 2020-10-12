@@ -50,7 +50,6 @@ const PaymentPortal = ({
   issueId,
   lastName,
   open,
-  userId,
   ...restProps
 }) => {
   const initialValue = '2';
@@ -66,7 +65,7 @@ const PaymentPortal = ({
 
   const isPersonalInfoComplete =
     !!emailValue && !!firstNameValue && !!lastNameValue;
-    
+
   const values = {
     email: emailValue,
     firstName: firstNameValue,
@@ -268,12 +267,12 @@ const PaymentPortal = ({
           propsToPassDown={{
             dispatchPaypalPayment,
             dollarValue: fundValue,
-            handleValidateInput: () => handleValidateInput({ field: 'fundValue', values }),
+            handleValidateInput: () =>
+              handleValidateInput({ field: 'fundValue', values }),
             initialValue,
             isPaypalPaymentOpen,
             issueId,
             setFundValue,
-            userId,
           }}
           title="Paypal"
         />
@@ -299,7 +298,6 @@ PaymentPortal.propTypes = {
   issueId: T.string,
   lastName: T.string,
   open: T.bool,
-  userId: T.string,
 };
 
 export default PaymentPortal;

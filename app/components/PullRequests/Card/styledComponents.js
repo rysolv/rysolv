@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {
   buttonRed,
   defaultFontSize,
+  hoverLinkColor,
   lightGreyColor,
   textColor,
 } from 'defaultStyleHelper';
@@ -165,7 +166,7 @@ export const UrlWrapper = styled.a`
   white-space: nowrap;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
     cursor: pointer;
   }
 `;

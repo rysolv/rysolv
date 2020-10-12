@@ -6,7 +6,7 @@ const LanguageWrapper = ({ language }) => (
   <StyledLanguageWrapper>{language}</StyledLanguageWrapper>
 );
 LanguageWrapper.propTypes = {
-  language: T.string || T.number,
+  language: T.oneOfType([T.number, T.string]),
 };
 
-export { LanguageWrapper };
+export default LanguageWrapper;

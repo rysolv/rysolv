@@ -35,6 +35,7 @@ import {
   HeaderWrapper,
   StyledH3,
 } from '../styledComponents';
+import VerifiedAccountsView from '../VerifiedAccounts';
 
 const ViewAllIcon = iconDictionary('viewAll');
 
@@ -42,11 +43,12 @@ const UserTimelineView = ({
   activity,
   attempting,
   filterValues: { users: usersFilter },
+  githubUsername,
   handleInputChange,
   handleNav,
-  handleRemoveIssue,
+  handleRemoveAttempting,
   handleRemoveWatching,
-  userId,
+  isGithubVerified,
   watching,
 }) => {
   const filterActivity = () => {
@@ -68,10 +70,9 @@ const UserTimelineView = ({
       }
       propsToPassDown={{
         handleNav,
-        handleRemoveIssue,
+        handleRemoveAttempting,
         list: attempting.slice(0, 5),
         type: 'attempting',
-        userId,
       }}
       shouldRender={!!attempting.length}
     />
@@ -84,11 +85,10 @@ const UserTimelineView = ({
       }
       propsToPassDown={{
         handleNav,
-        handleRemoveIssue,
+        handleRemoveAttempting,
         handleRemoveWatching,
         list: watching.slice(0, 5),
         type: 'watching',
-        userId,
       }}
       shouldRender={!!watching.length}
     />
@@ -157,6 +157,10 @@ const UserTimelineView = ({
 
   return (
     <TimelineContainer>
+      <VerifiedAccountsView
+        githubUsername={githubUsername}
+        isGithubVerified={isGithubVerified}
+      />
       <div>
         <HeaderContainer>
           <StyledH3>Your Attempting</StyledH3>
@@ -218,11 +222,12 @@ UserTimelineView.propTypes = {
   activity: T.array,
   attempting: T.array.isRequired,
   filterValues: T.object.isRequired,
+  githubUsername: T.string,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
+  handleRemoveAttempting: T.func.isRequired,
   handleRemoveWatching: T.func.isRequired,
-  userId: T.string.isRequired,
+  isGithubVerified: T.bool.isRequired,
   watching: T.array.isRequired,
 };
 

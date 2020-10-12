@@ -10,6 +10,7 @@ import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
 import IssueDetail from 'components/Issues/Detail';
 import {
+  fetchAttemptList,
   fetchPullRequestList,
   fetchWatchList,
   openModalState,
@@ -29,6 +30,7 @@ import {
   editIssue,
   fetchIssueDetail,
   openIssueModalState,
+  resetState,
   upvoteIssue,
 } from '../actions';
 import reducer from '../reducer';
@@ -54,8 +56,8 @@ export class IssuesDetail extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { handleClearAlerts } = this.props;
-    handleClearAlerts();
+    const { dispatchResetState } = this.props;
+    dispatchResetState();
   }
 
   render() {
@@ -67,6 +69,7 @@ export class IssuesDetail extends React.PureComponent {
       dispatchCloseIssue,
       dispatchCloseIssueModal,
       dispatchEditIssue,
+      dispatchFetchAttemptList,
       dispatchFetchPullRequestList,
       dispatchFetchWatchList,
       dispatchOpenIssueModal,
@@ -88,8 +91,8 @@ export class IssuesDetail extends React.PureComponent {
       upvoteLoading,
     } = this.props;
 
-    const handleUpvote = ({ issueId, upvote, userId }) => {
-      if (!upvoteLoading) dispatchUpvote({ issueId, upvote, userId });
+    const handleUpvote = ({ issueId, upvote }) => {
+      if (!upvoteLoading) dispatchUpvote({ issueId, upvote });
     };
 
     const modalPropsDictionary = {
@@ -99,7 +102,6 @@ export class IssuesDetail extends React.PureComponent {
         propsToPassDown: {
           handleClose: dispatchCloseIssueModal,
           issueId: id,
-          userId: activeUser.id,
         },
       },
     };
@@ -119,6 +121,7 @@ export class IssuesDetail extends React.PureComponent {
             deviceView,
             dispatchCloseIssue,
             dispatchEditIssue,
+            dispatchFetchAttemptList,
             dispatchFetchPullRequestList,
             dispatchFetchWatchList,
             dispatchOpenIssueModal,
@@ -145,13 +148,15 @@ IssuesDetail.propTypes = {
   dispatchCloseIssue: T.func,
   dispatchCloseIssueModal: T.func,
   dispatchEditIssue: T.func,
+  dispatchFetchAttemptList: T.func,
   dispatchFetchIssueDetail: T.func,
   dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
+  dispatchResetState: T.func.isRequired,
   dispatchUpvote: T.func,
-  error: T.oneOfType([T.bool, T.object]),
+  error: T.oneOfType([T.bool, T.string]),
   handleClearAlerts: T.func,
   handleComment: T.func,
   handleIncrement: T.func,
@@ -198,6 +203,7 @@ function mapDispatchToProps(dispatch) {
     dispatchEditIssue: payload => dispatch(editIssue(payload)),
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
     dispatchOpenIssueModal: payload => dispatch(openIssueModalState(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleComment: payload => dispatch(addComment(payload)),
@@ -205,6 +211,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Main
      */
+    dispatchFetchAttemptList: payload => dispatch(fetchAttemptList(payload)),
     dispatchFetchPullRequestList: payload =>
       dispatch(fetchPullRequestList(payload)),
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),

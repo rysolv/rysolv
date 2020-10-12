@@ -14,6 +14,7 @@ import {
   clearAlerts,
   deletePullRequest,
   fetchUserPullRequests,
+  resetState,
 } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
@@ -23,15 +24,17 @@ const PullRequestOverview = ({
   alerts,
   createSuccess,
   dispatchFetchUserPullRequests,
+  dispatchResetState,
   error,
   handleClearAlerts,
   handleDelete,
   loading,
   pullRequests,
-  userId,
 }) => {
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
-    dispatchFetchUserPullRequests({ userId });
+    dispatchFetchUserPullRequests();
   }, [createSuccess]);
 
   return (
@@ -50,12 +53,12 @@ PullRequestOverview.propTypes = {
   alerts: T.object,
   createSuccess: T.bool,
   dispatchFetchUserPullRequests: T.func,
+  dispatchResetState: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
   handleClearAlerts: T.func,
   handleDelete: T.func,
   loading: T.bool,
   pullRequests: T.array,
-  userId: T.string,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -74,8 +77,8 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : PullRequests
      */
-    dispatchFetchUserPullRequests: payload =>
-      dispatch(fetchUserPullRequests(payload)),
+    dispatchFetchUserPullRequests: () => dispatch(fetchUserPullRequests()),
+    dispatchResetState: () => dispatch(resetState()),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleDelete: payload => dispatch(deletePullRequest(payload)),
   };

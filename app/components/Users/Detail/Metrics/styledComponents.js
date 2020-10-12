@@ -40,17 +40,6 @@ export const Divider = styled.div`
   width: 100%;
 `;
 
-export const OnlineIcon = styled.div`
-  align-items: center;
-  color: #0fce7c;
-  display: flex;
-  margin-right: 0.25rem;
-`;
-
-export const OnlineWrapper = styled.div`
-  display: flex;
-`;
-
 export const RankingContainer = styled.div`
   display: flex;
   flex-direction: column;

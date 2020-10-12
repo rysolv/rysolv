@@ -60,6 +60,8 @@ export const CLOSE_MODAL_STATE = 'app/Issues/CLOSE_MODAL_STATE';
 
 export const REMOVE_ATTEMPT = 'app/Issues/REMOVE_ATTEMPT';
 
+export const RESET_STATE = 'app/Issues/RESET_STATE';
+
 export const SAVE_INFO = 'app/Issues/SAVE_INFO';
 export const SAVE_INFO_FAILURE = 'app/Issues/SAVE_INFO_FAILURE';
 export const SAVE_INFO_SUCCESS = 'app/Issues/SAVE_INFO_SUCCESS';
@@ -81,8 +83,6 @@ export const UPVOTE_ISSUE_FAILURE = 'app/Issues/UPVOTE_ISSUE_FAILURE';
 export const UPVOTE_ISSUE_SUCCESS = 'app/Issues/UPVOTE_ISSUE_SUCCESS';
 export const UPVOTE_ISSUE_TEMP = 'app/Issues/UPVOTE_ISSUE_TEMP';
 
-export const VERIFY_INFO = 'app/Issues/VERIFY_INFO';
-
 export const issueDataDictionary = {
   external: 'External Link',
   fundedAmount: 'Funded Amount',
@@ -94,9 +94,3 @@ export const issueDataDictionary = {
 
 export const emptyCardMessage =
   'There are no issues matching the search terms.';
-
-export const successCreateIssueMessage = 'Issue was successfully created.';
-
-export const successEditIssueMessage = 'Issue was successfully edited.';
-
-export const verifyMessage = 'I agree that this information is correct.';

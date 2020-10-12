@@ -1,9 +1,12 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { Upvote } from 'components/base_ui';
-
-import { StyledFlatIconButton, UpvoteContainer } from './styledComponents';
+import {
+  Rep,
+  StyledCoin,
+  StyledFlatIconButton,
+  UpvoteContainer,
+} from './styledComponents';
 
 const UpvotePanel = ({
   dispatchOpenModal,
@@ -15,9 +18,10 @@ const UpvotePanel = ({
   upvoted,
   userId,
 }) => (
-  <UpvoteContainer isIssueDetail={isIssueDetail} upvoted={upvoted}>
+  <UpvoteContainer isIssueDetail={isIssueDetail}>
     <StyledFlatIconButton
-      Icon={<Upvote />}
+      disableRipple
+      Icon={<StyledCoin upvoted={upvoted} />}
       onClick={() => {
         if (!isSignedIn) {
           return dispatchOpenModal({ modalState: 'signIn' });
@@ -25,7 +29,7 @@ const UpvotePanel = ({
         return handleUpvote({ issueId, upvote: !upvoted, userId });
       }}
     />
-    {rep}
+    <Rep>{rep}</Rep>
   </UpvoteContainer>
 );
 

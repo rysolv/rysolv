@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import T from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -8,20 +8,24 @@ import { push } from 'connected-react-router';
 
 import { ModalDialog } from 'components/base_ui';
 import CloseIssueModal from 'components/CloseIssueModal';
+import ProgressModal from 'components/ProgressModal';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import PaymentPortalModal from 'components/PaymentsModal';
 import SideNav from 'components/SideNav';
 import SigninModal from 'components/SigninModal';
+import VerifyAccountModal from 'components/VerifyAccountModal';
 import WatchList from 'components/WatchList';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { signIn, signOut } from 'containers/Auth/actions';
 import { closeIssue, deletePullRequest } from 'containers/Issues/actions';
+import { resetState } from 'containers/Signin/actions';
+import { getCookie, setCookie } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { closeModalState, fetchWatchList } from './actions';
+import { closeModalState, openModalState } from './actions';
 import reducer from './reducer';
 import Routes from './routes';
 import saga from './saga';
@@ -37,25 +41,31 @@ export const Main = ({
   deviceView,
   dispatchCloseIssue,
   dispatchCloseModal,
-  error,
+  dispatchOpenModal,
   handleDelete,
   handleNav,
+  handleResetState,
   handleSignin,
   handleSignout,
   isModalOpen,
   isSignedIn,
-  loading,
-  match,
   modal,
   tableData,
 }) => {
+  useEffect(() => {
+    if (!getCookie('returnUser')) {
+      dispatchOpenModal({ modalState: 'progress' });
+      setCookie('returnUser', true);
+    }
+  }, []);
+
   const handleCloseIssue = ({ issueId, shouldClose }) => {
     dispatchCloseModal();
     dispatchCloseIssue({ issueId, shouldClose });
   };
-  const handleDeletePullRequest = ({ pullRequestId, userId }) => {
+  const handleDeletePullRequest = ({ pullRequestId }) => {
     dispatchCloseModal();
-    handleDelete({ pullRequestId, userId });
+    handleDelete({ pullRequestId });
   };
   const handleRedirect = route => {
     dispatchCloseModal();
@@ -104,6 +114,13 @@ export const Main = ({
         type: 'issueWatchList',
       },
     },
+    progress: {
+      Component: ProgressModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        handleClose: dispatchCloseModal,
+      },
+    },
     pullRequestList: {
       Component: WatchList,
       open: isModalOpen,
@@ -125,6 +142,14 @@ export const Main = ({
         handleRedirect,
       },
     },
+    verifyAccount: {
+      Component: VerifyAccountModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        handleClose: dispatchCloseModal,
+        handleRedirect,
+      },
+    },
   };
   return (
     <Fragment>
@@ -133,6 +158,7 @@ export const Main = ({
           activeUser={activeUser}
           deviceView={deviceView}
           handleNav={handleNav}
+          handleResetState={handleResetState}
           handleSignin={handleSignin}
           handleSignout={handleSignout}
           isSignedIn={isSignedIn}
@@ -140,7 +166,7 @@ export const Main = ({
         <AppContentWrapper>
           <SideNav deviceView={deviceView} handleNav={handleNav} />
           <RoutesWrapper>
-            <Routes error={error} loading={loading} match={match} />
+            <Routes />
           </RoutesWrapper>
         </AppContentWrapper>
       </AppBodyWrapper>
@@ -151,21 +177,19 @@ export const Main = ({
 };
 
 Main.propTypes = {
-  activeUser: T.object,
-  deviceView: T.string,
+  activeUser: T.object.isRequired,
+  deviceView: T.string.isRequired,
   dispatchCloseIssue: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
-  error: T.object,
-  handleClearAlerts: T.func,
-  handleDelete: T.func,
-  handleNav: T.func,
-  handleSignin: T.func,
-  handleSignout: T.func,
-  isModalOpen: T.bool,
-  isSignedIn: T.bool,
-  loading: T.bool,
-  match: T.object,
-  modal: T.string,
+  dispatchOpenModal: T.func.isRequired,
+  handleDelete: T.func.isRequired,
+  handleNav: T.func.isRequired,
+  handleResetState: T.func.isRequired,
+  handleSignin: T.func.isRequired,
+  handleSignout: T.func.isRequired,
+  isModalOpen: T.bool.isRequired,
+  isSignedIn: T.bool.isRequired,
+  modal: T.string.isRequired,
   tableData: T.oneOfType([T.array, T.object, T.number]),
 };
 
@@ -200,8 +224,8 @@ const mapDispatchToProps = dispatch => ({
   /**
    * Main
    */
-  dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
   dispatchCloseModal: () => dispatch(closeModalState()),
+  dispatchOpenModal: payload => dispatch(openModalState(payload)),
   /*
    * Reducer : PullRequests
    */
@@ -210,6 +234,10 @@ const mapDispatchToProps = dispatch => ({
    * Reducer : Router
    */
   handleNav: route => dispatch(push(route)),
+  /*
+   * Reducer : Signin
+   */
+  handleResetState: () => dispatch(resetState()),
 });
 
 const withConnect = connect(

@@ -10,7 +10,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 
-import { fetchUsers, searchUsers } from '../actions';
+import { fetchUsers, resetState, searchUsers } from '../actions';
 import {
   makeSelectUsersError,
   makeSelectUsersFormatted,
@@ -19,16 +19,18 @@ import {
 import reducer from '../reducer';
 import saga from '../saga';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const UsersOverview = ({
   deviceView,
   dispatchFetchUsers,
+  dispatchResetState,
   error,
   handleSearchUsers,
   loading,
   params: { searchValue },
   users,
 }) => {
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Users Overview';
@@ -54,7 +56,8 @@ const UsersOverview = ({
 UsersOverview.propTypes = {
   deviceView: T.string,
   dispatchFetchUsers: T.func,
-  error: T.oneOfType([T.object, T.bool]),
+  dispatchResetState: T.func.isRequired,
+  error: T.oneOfType([T.bool, T.string]),
   handleSearchUsers: T.func,
   loading: T.bool,
   params: T.object,
@@ -80,6 +83,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Users
      */
     dispatchFetchUsers: () => dispatch(fetchUsers()),
+    dispatchResetState: () => dispatch(resetState()),
     handleSearchUsers: payload => dispatch(searchUsers(payload)),
   };
 }

@@ -48,12 +48,14 @@ const IssueDetail = ({
     open,
     rep,
     repo,
+    type,
     userId,
     username,
   },
   deviceView,
   dispatchCloseIssue,
   dispatchEditIssue,
+  dispatchFetchAttemptList,
   dispatchFetchPullRequestList,
   dispatchFetchWatchList,
   dispatchOpenIssueModal,
@@ -69,19 +71,22 @@ const IssueDetail = ({
   const [bodyChange, setBodyChange] = useState(body);
   const [languageChange, setLanguageChange] = useState(language);
   const [nameChange, setNameChange] = useState(name);
+  const [typeChange, setTypeChange] = useState(type);
   const handleClose = () => {
     setDisplayEditView(false);
     setBodyChange(body);
     setLanguageChange(language);
     setNameChange(name);
+    setTypeChange(type);
   };
 
   const handleSave = () => {
     dispatchEditIssue({
       editRequest: {
         body: bodyChange,
-        name: nameChange,
         language: languageChange,
+        name: nameChange,
+        type: typeChange,
       },
       issueId,
     });
@@ -196,9 +201,7 @@ const IssueDetail = ({
             success={success}
           />
         }
-        shouldRender={
-          isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
-        }
+        shouldRender={isSignedIn}
       />
       <DetailContainer>
         <IssueDetailWrapper>
@@ -220,6 +223,7 @@ const IssueDetail = ({
                 activeUser={activeUser}
                 addWatching={addWatching}
                 data={data}
+                dispatchFetchAttemptList={dispatchFetchAttemptList}
                 dispatchFetchPullRequestList={dispatchFetchPullRequestList}
                 dispatchFetchWatchList={dispatchFetchWatchList}
                 dispatchOpenIssueModal={dispatchOpenIssueModal}
@@ -248,6 +252,8 @@ const IssueDetail = ({
                   repo={repo}
                   setBodyChange={setBodyChange}
                   setLanguageChange={setLanguageChange}
+                  setTypeChange={setTypeChange}
+                  typeChange={typeChange}
                   userProfile={primaryUser}
                 />
               </div>
@@ -320,6 +326,7 @@ IssueDetail.propTypes = {
   deviceView: T.string,
   dispatchCloseIssue: T.func,
   dispatchEditIssue: T.func,
+  dispatchFetchAttemptList: T.func,
   dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenIssueModal: T.func,

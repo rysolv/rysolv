@@ -1,7 +1,6 @@
 import {
   CLEAR_ALERTS,
   CLEAR_ERROR,
-  CLEAR_FORM,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
   CREATE_PULL_REQUEST,
@@ -17,6 +16,7 @@ import {
   IMPORT_PULL_REQUEST,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
 } from './constants';
 
 export function clearAlerts() {
@@ -31,12 +31,6 @@ export function clearError() {
   };
 }
 
-export function clearForm() {
-  return {
-    type: CLEAR_FORM,
-  };
-}
-
 export function createPullRequestFailure(payload) {
   return {
     payload,
@@ -44,11 +38,8 @@ export function createPullRequestFailure(payload) {
   };
 }
 
-export function createPullRequestSuccess(payload) {
-  return {
-    payload,
-    type: CREATE_PULL_REQUEST_SUCCESS,
-  };
+export function createPullRequestSuccess() {
+  return { type: CREATE_PULL_REQUEST_SUCCESS };
 }
 
 export function createPullRequest(payload) {
@@ -93,11 +84,8 @@ export function fetchUserPullRequestsSuccess(payload) {
   };
 }
 
-export function fetchUserPullRequests(payload) {
-  return {
-    payload,
-    type: FETCH_USER_PULL_REQUESTS,
-  };
+export function fetchUserPullRequests() {
+  return { type: FETCH_USER_PULL_REQUESTS };
 }
 
 export function handleStep(payload) {
@@ -139,5 +127,11 @@ export function inputError(payload) {
   return {
     payload,
     type: INPUT_ERROR,
+  };
+}
+
+export function resetState() {
+  return {
+    type: RESET_STATE,
   };
 }

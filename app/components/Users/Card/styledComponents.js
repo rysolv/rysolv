@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { Coin } from 'components/base_ui';
 import {
   defaultFontSize,
   detailFontSize,
@@ -27,7 +28,7 @@ export const IconWrapper = styled.div`
   display: flex;
   font-size: ${defaultFontSize};
   justify-content: center;
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
 `;
 
 export const ImageContainer = styled.div`
@@ -81,11 +82,7 @@ export const RowSection = styled.div`
   flex-direction: row;
   flex-flow: wrap;
   justify-content: start;
-  margin-left: 1rem;
-
-  ${mobile} {
-    margin-left: 2rem;
-  }
+  margin-left: 2rem;
 
   ${mobileS} {
     margin-left: 0;
@@ -94,14 +91,18 @@ export const RowSection = styled.div`
 
 export const RowSectionWrapper = styled.div`
   @media (max-width: 769px) {
-    width: ${({ hasOneItem }) => (hasOneItem ? '19.5rem' : '38rem')};
+    width: ${({ hasOneItem }) => (hasOneItem ? '21.5rem' : '41rem')};
   }
-  @media (max-width: 584px) {
-    width: ${({ hasOneItem }) => (hasOneItem ? '19rem' : '36rem')};
+  @media (max-width: 600px) {
+    width: ${({ hasOneItem }) => (hasOneItem ? '21.5rem' : '41rem')};
   }
-  @media (max-width: 408px) {
-    width: 19rem;
+  @media (max-width: 444px) {
+    width: 21.5rem;
   }
+`;
+
+export const StyledCoin = styled(Coin)`
+  margin: 0.5rem;
 `;
 
 export const StyledListSquare = styled.div`
@@ -109,16 +110,13 @@ export const StyledListSquare = styled.div`
   border-radius: 0.2rem;
   border: 0.1rem solid #e0e0e0;
   color: ${textColor};
-  margin: 0 1rem 1rem 0;
+  height: 17.5rem;
+  margin: 0 2rem 2rem 0;
   padding: 0.5rem;
   width: 17.5rem;
 
-  ${mobile} {
-    margin: 0 2rem 2rem 0;
-    width: auto;
-  }
-
   ${mobileS} {
+    height: auto;
     margin-right: 0;
     padding: 0 1rem;
     width: 100%;
@@ -133,7 +131,8 @@ export const StyledSettingWrapper = styled.div`
 export const StyledSquare = styled.div`
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: 100%;
+  justify-content: space-between;
 
   ${mobileS} {
     flex-direction: row;

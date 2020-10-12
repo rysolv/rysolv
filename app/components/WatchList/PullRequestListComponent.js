@@ -12,7 +12,7 @@ import {
   PullRequest,
   PullRequestListDetail,
   PullRequestUsername,
-  StyledStar,
+  StyledCoin,
   SubmittedWrapper,
 } from './styledComponents';
 
@@ -39,16 +39,14 @@ const PullRequestListComponent = ({
                 onClick={handleClose}
                 to={`${route}/${userId}`}
               >
-                {username} ( <StyledStar /> {rep})
+                {username} (<StyledCoin /> {rep})
               </PullRequestUsername>
             </SubmittedWrapper>
           </PullRequestListDetail>
           <ConditionalRender
             Component={
               <DeleteButton
-                onClick={() =>
-                  handleDeletePullRequest({ pullRequestId, userId })
-                }
+                onClick={() => handleDeletePullRequest({ pullRequestId })}
               >
                 <Icon>{CloseCircleIcon}</Icon>Cancel
               </DeleteButton>

@@ -11,7 +11,6 @@ export const fundingClosedBackground = '#edeef0';
 export const fundingOpenBackground = '#e5fbf2';
 export const fundingText = '#08b26e';
 export const headerColor = '#37474f';
-export const headerOutlineColor = '#cfd8dc';
 export const hoverLinkColor = '#007bff';
 export const inputFieldColor = '#cfd8dc';
 export const languageBackground = '#e8f0fa';
@@ -25,7 +24,8 @@ export const subHeaderColor = '#0d47a1';
 export const subTextColor = '#878a8c';
 export const successGreen = '#31b589';
 export const textColor = 'rgba(0,0,0,0.7)';
-export const upvoteColor = '#ff5722';
+export const verifyBackgroundColor = 'rgb(229, 251, 242)';
+export const verifyColor = 'rgb(8, 178, 110)';
 
 // Font Family
 export const defaultFontFamily = `'Helvetica Neue', Helvetica, Arial, sans-serif`;

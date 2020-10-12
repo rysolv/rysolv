@@ -17,6 +17,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
 import {
+  changeEmail,
   clearAlerts,
   clearErrors,
   closeModalState,
@@ -26,10 +27,12 @@ import {
   inputError,
   openModalState,
   paypalPayment,
-  removeIssue,
+  removeAttempting,
   removeWatching,
+  resetState,
   saveChange,
   stripeToken,
+  verifyAccount,
   withdrawFunds,
 } from './actions';
 import { settingViewDictionary } from './constants';
@@ -43,23 +46,27 @@ const Settings = ({
   activeUser: { id: userId },
   alerts,
   data,
+  data: { isGithubVerified },
   deviceView,
   dispatchCloseModal,
   dispatchFetchInfo,
   dispatchInputError,
   dispatchOpenModal,
   dispatchPaypalPayment,
+  dispatchResetState,
   dispatchSaveChange,
   dispatchStripeToken,
+  dispatchVerifyAccount,
   dispatchWithdrawFunds,
   error,
   filterValues,
+  handleChangeEmail,
   handleClearAlerts,
   handleClearErrors,
   handleDeleteUser,
   handleInputChange,
   handleNav,
-  handleRemoveIssue,
+  handleRemoveAttempting,
   handleRemoveWatching,
   inputErrors,
   isModalOpen,
@@ -68,10 +75,27 @@ const Settings = ({
   modal,
 }) => {
   const [zipValue, setZipValue] = useState('');
+
+  useEffect(() => dispatchResetState, []);
+
+  useEffect(() => {
+    const url = window.location.href;
+    const hasCode = url.includes('?code=');
+    if (
+      hasCode &&
+      isGithubVerified !== undefined &&
+      !isGithubVerified &&
+      userId
+    ) {
+      const newUrl = url.split('?code=');
+      dispatchVerifyAccount({ code: newUrl[1] });
+    }
+  }, [isGithubVerified, userId]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'User Settings';
-    dispatchFetchInfo({ userId });
+    if (userId) dispatchFetchInfo({ userId });
   }, [userId]);
 
   const handleStripeToken = ({ amount, token, values }) => {
@@ -80,7 +104,6 @@ const Settings = ({
       dispatchStripeToken({
         amount,
         token,
-        userId,
       });
     } else {
       dispatchInputError({ errors: validationErrors });
@@ -96,10 +119,10 @@ const Settings = ({
     });
   };
 
-  const handleWithdrawFunds = ({ id, transferValue, values }) => {
+  const handleWithdrawFunds = ({ transferValue, values }) => {
     const { isValidated, validationErrors } = validateFields({ values });
     if (isValidated) {
-      dispatchWithdrawFunds({ transferValue, userId: id });
+      dispatchWithdrawFunds({ transferValue });
     } else {
       dispatchInputError({ errors: validationErrors });
     }
@@ -121,11 +144,10 @@ const Settings = ({
       propsToPassDown: {
         handleClose: dispatchCloseModal,
         handleDeleteUser,
-        userId,
       },
     },
   };
-  const PullRequestComponent = () => <PullRequestOverview userId={userId} />;
+  const PullRequestComponent = () => <PullRequestOverview />;
   return (
     <SettingsWrapper>
       <AsyncRender
@@ -143,11 +165,12 @@ const Settings = ({
           dispatchPaypalPayment,
           dispatchSaveChange,
           filterValues,
+          handleChangeEmail,
           handleClearAlerts,
           handleClearErrors,
           handleInputChange,
           handleNav,
-          handleRemoveIssue,
+          handleRemoveAttempting,
           handleRemoveWatching,
           handleValidateInput,
           handleWithdrawFunds,
@@ -164,24 +187,27 @@ const Settings = ({
 Settings.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
-  data: T.object,
+  data: T.object.isRequired,
   deviceView: T.string.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchInfo: T.func,
   dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchPaypalPayment: T.func.isRequired,
+  dispatchResetState: T.func.isRequired,
   dispatchSaveChange: T.func,
   dispatchStripeToken: T.func.isRequired,
+  dispatchVerifyAccount: T.func.isRequired,
   dispatchWithdrawFunds: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object,
+  handleChangeEmail: T.func.isRequired,
   handleClearAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
   handleDeleteUser: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
+  handleRemoveAttempting: T.func.isRequired,
   handleRemoveWatching: T.func.isRequired,
   inputErrors: T.object.isRequired,
   isModalOpen: T.bool.isRequired,
@@ -222,14 +248,17 @@ function mapDispatchToProps(dispatch) {
     dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     dispatchPaypalPayment: payload => dispatch(paypalPayment(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
     dispatchStripeToken: payload => dispatch(stripeToken(payload)),
+    dispatchVerifyAccount: payload => dispatch(verifyAccount(payload)),
     dispatchWithdrawFunds: payload => dispatch(withdrawFunds(payload)),
+    handleChangeEmail: payload => dispatch(changeEmail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleClearErrors: () => dispatch(clearErrors()),
-    handleDeleteUser: payload => dispatch(deleteUser(payload)),
+    handleDeleteUser: () => dispatch(deleteUser()),
     handleInputChange: payload => dispatch(inputChange(payload)),
-    handleRemoveIssue: payload => dispatch(removeIssue(payload)),
+    handleRemoveAttempting: payload => dispatch(removeAttempting(payload)),
     handleRemoveWatching: payload => dispatch(removeWatching(payload)),
     /**
      * Reducer : Router

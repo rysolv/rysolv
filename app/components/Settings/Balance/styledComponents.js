@@ -11,7 +11,11 @@ import {
   PrimaryAsyncButton,
   SecondaryButton,
 } from 'components/base_ui';
-import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import {
+  commentHeaderColor,
+  defaultFontSize,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -30,7 +34,7 @@ export const BalanceAmount = styled.h3`
 `;
 
 export const BalanceSquare = styled.div`
-  background-color: #f6f8fa;
+  background-color: ${commentHeaderColor};
   border-radius: 0.3rem;
   padding: 1.6rem 2.4rem;
   text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};

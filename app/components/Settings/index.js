@@ -3,9 +3,9 @@ import T from 'prop-types';
 
 import {
   BaseFileInput,
+  Coin,
   ConditionalRender,
   IconButton,
-  Star,
 } from 'components/base_ui';
 import { getBase64 } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
@@ -59,11 +59,10 @@ const SettingsView = ({
     email,
     firstName,
     githubLink,
-    id,
-    isOnline,
+    githubUsername,
+    isGithubVerified,
     issues,
     lastName,
-    modifiedDate,
     organizations,
     personalLink,
     preferredLanguages,
@@ -79,11 +78,12 @@ const SettingsView = ({
   dispatchPaypalPayment,
   dispatchSaveChange,
   filterValues,
+  handleChangeEmail,
   handleClearAlerts,
   handleClearErrors,
   handleInputChange,
   handleNav,
-  handleRemoveIssue,
+  handleRemoveAttempting,
   handleRemoveWatching,
   handleValidateInput,
   handleWithdrawFunds,
@@ -118,16 +118,22 @@ const SettingsView = ({
     setValue('');
   };
 
-  const handleDone = ({ changeInputState, field }) => {
-    changeInputState(false);
-    dispatchSaveChange({ field, itemId: id, value });
-    setIsDisabled(false);
-  };
-
   const handleEdit = ({ changeInputState, currentValue = '' }) => {
     setIsDisabled(true);
     changeInputState(true);
     setValue(currentValue);
+  };
+
+  const handleSubmitEmailChange = () => {
+    handleChangeEmail({ email: value });
+    setChangeEmail(false);
+    setIsDisabled(false);
+  };
+
+  const handleSubmitInputChange = ({ changeInputState, field }) => {
+    changeInputState(false);
+    dispatchSaveChange({ field, value });
+    setIsDisabled(false);
   };
 
   const handleUploadUserImage = async e => {
@@ -171,7 +177,7 @@ const SettingsView = ({
                     icon={DoneIcon}
                     label="Save"
                     onClick={() =>
-                      handleDone({
+                      handleSubmitInputChange({
                         changeInputState: setChangeUserImage,
                         field: 'profilePic',
                       })
@@ -203,7 +209,7 @@ const SettingsView = ({
               FallbackComponent={
                 <GithubEditComponent
                   handleClose={handleClose}
-                  handleDone={handleDone}
+                  handleSubmitInputChange={handleSubmitInputChange}
                   setChangeGithub={setChangeGithub}
                   setValue={setValue}
                   value={value}
@@ -228,7 +234,7 @@ const SettingsView = ({
               FallbackComponent={
                 <PersonalEditComponent
                   handleClose={handleClose}
-                  handleDone={handleDone}
+                  handleSubmitInputChange={handleSubmitInputChange}
                   setChangePersonal={setChangePersonal}
                   setValue={setValue}
                   value={value}
@@ -253,7 +259,7 @@ const SettingsView = ({
               FallbackComponent={
                 <StackoverflowEditComponent
                   handleClose={handleClose}
-                  handleDone={handleDone}
+                  handleSubmitInputChange={handleSubmitInputChange}
                   setChangeStackoverflow={setChangeStackoverflow}
                   setValue={setValue}
                   value={value}
@@ -263,7 +269,7 @@ const SettingsView = ({
             />
           </LinksWrapper>
           <Rep>
-            <Star />
+            <Coin />
             &nbsp;<b> {rep}</b>&nbsp;credits
           </Rep>
           <UserMetricsView
@@ -273,11 +279,9 @@ const SettingsView = ({
             createdDate={createdDate}
             dollarsEarned={dollarsEarned}
             handleClose={handleClose}
-            handleDone={handleDone}
             handleEdit={handleEdit}
+            handleSubmitInputChange={handleSubmitInputChange}
             isDisabled={isDisabled}
-            isOnline={isOnline}
-            modifiedDate={modifiedDate}
             preferredLanguages={preferredLanguages}
             rejectedPullRequests={rejectedPullRequests}
             setChangePreferredLanguages={setChangePreferredLanguages}
@@ -304,19 +308,22 @@ const SettingsView = ({
             email={email}
             filterValues={filterValues}
             firstName={firstName}
+            githubUsername={githubUsername}
             handleClearAllAlerts={handleClearAllAlerts}
             handleClearErrors={handleClearErrors}
             handleClose={handleClose}
-            handleDone={handleDone}
             handleEdit={handleEdit}
             handleInputChange={handleInputChange}
             handleNav={handleNav}
-            handleRemoveIssue={handleRemoveIssue}
+            handleRemoveAttempting={handleRemoveAttempting}
             handleRemoveWatching={handleRemoveWatching}
+            handleSubmitEmailChange={handleSubmitEmailChange}
+            handleSubmitInputChange={handleSubmitInputChange}
             handleValidateInput={handleValidateInput}
             handleWithdrawFunds={handleWithdrawFunds}
             inputErrors={inputErrors}
             isDisabled={isDisabled}
+            isGithubVerified={isGithubVerified}
             issues={issues}
             lastName={lastName}
             organizations={organizations}
@@ -328,7 +335,6 @@ const SettingsView = ({
             setDisplayBottom={setDisplayBottom}
             setStripeError={setStripeError}
             setValue={setValue}
-            userId={id}
             username={username}
             value={value}
             view={view}
@@ -350,11 +356,12 @@ SettingsView.propTypes = {
   dispatchPaypalPayment: T.func.isRequired,
   dispatchSaveChange: T.func.isRequired,
   filterValues: T.object.isRequired,
+  handleChangeEmail: T.func.isRequired,
   handleClearAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
+  handleRemoveAttempting: T.func.isRequired,
   handleRemoveWatching: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   handleWithdrawFunds: T.func.isRequired,

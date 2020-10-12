@@ -51,7 +51,13 @@ Amplify.configure({
   },
 });
 
-const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+const production = process.env.NODE_ENV === 'production';
+
+const STRIPE_PUBLISHABLE_KEY = production
+  ? process.env.STRIPE_PUBLISHABLE_KEY
+  : process.env.STRIPE_PUBLISHABLE_KEY_TEST;
+
+const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 export function App() {
   return (

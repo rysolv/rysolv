@@ -9,7 +9,6 @@ const PaypalPaymentComponent = ({
   dispatchPaypalPayment,
   dollarValue,
   handleValidateInput,
-  userId,
 }) => (
   <InputWrapper>
     <InputHeader>Sign in to</InputHeader>
@@ -17,7 +16,6 @@ const PaypalPaymentComponent = ({
       dispatchPaypalPayment={dispatchPaypalPayment}
       dollarValue={dollarValue}
       handleValidateInput={handleValidateInput}
-      userId={userId}
       values={{
         field: 'depositValue',
         values: { depositValue: dollarValue },
@@ -30,7 +28,6 @@ PaypalPaymentComponent.propTypes = {
   dispatchPaypalPayment: T.func.isRequired,
   dollarValue: T.string.isRequired,
   handleValidateInput: T.func.isRequired,
-  userId: T.string.isRequired,
 };
 
 export default PaypalPaymentComponent;

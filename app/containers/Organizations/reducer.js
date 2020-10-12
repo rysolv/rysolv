@@ -1,17 +1,13 @@
-/* eslint-disable array-callback-return */
+/* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 import { v4 as uuidv4 } from 'uuid';
 import Identicon from 'identicon.js';
-import remove from 'lodash/remove';
 
 import {
   CHANGE_ORGANIZATION_FILTER,
   CHANGE_ORGANIZATION_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
-  DELETE_ORGANIZATION_FAILURE,
-  DELETE_ORGANIZATION_SUCCESS,
-  DELETE_ORGANIZATION,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
@@ -25,6 +21,7 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -39,7 +36,6 @@ import {
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export const initialState = {
@@ -71,10 +67,8 @@ export const initialState = {
   },
   importSuccess: false,
   isManual: false,
-  isVerified: false,
   loading: {
     addOrganization: false,
-    deleteOrganization: false,
     fetchOrganization: false,
     importOrganization: false,
     organizations: false,
@@ -103,11 +97,9 @@ export const initialState = {
   },
   step: {
     addOrganization: 1,
-    editOrganization: 1,
   },
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const organizationsReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_ORGANIZATION_FILTER: {
@@ -134,25 +126,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     case CLEAR_FORM: {
       draft.error = initialState.error;
       draft.importSuccess = initialState.importSuccess;
-      draft.isVerified = initialState.isVerified;
       draft.organizationData = initialState.organizationData;
-      break;
-    }
-    case DELETE_ORGANIZATION_FAILURE: {
-      const { error } = payload;
-      draft.alerts.error = error;
-      draft.loading.deleteOrganization = false;
-      break;
-    }
-    case DELETE_ORGANIZATION_SUCCESS: {
-      const { itemId, message } = payload;
-      draft.alerts.success = { message };
-      draft.loading.deleteOrganization = false;
-      remove(draft.organizations, ({ id }) => id === itemId);
-      break;
-    }
-    case DELETE_ORGANIZATION: {
-      draft.loading.deleteOrganization = true;
       break;
     }
     case FETCH_ORGANIZATIONS_FAILURE: {
@@ -162,9 +136,9 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ORGANIZATIONS_SUCCESS: {
-      const { getOrganizations } = payload;
-      draft.organizations = getOrganizations;
+      const { organizations } = payload;
       draft.loading.organizations = false;
+      draft.organizations = organizations;
       break;
     }
     case FETCH_ORGANIZATIONS: {
@@ -201,7 +175,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case IMPORT_ORGANIZATION_FAILURE: {
       const { error } = payload;
-      draft.error.importOrganization = { error: true, message: error.message };
+      draft.alerts.error = error;
       draft.loading.importOrganization = false;
       break;
     }
@@ -244,9 +218,12 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       });
       break;
     }
+    case RESET_STATE: {
+      return initialState;
+    }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = { message: error };
+      draft.alerts.error = error;
       draft.loading.addOrganization = false;
       break;
     }
@@ -261,8 +238,6 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ORGANIZATIONS_FAILURE: {
-      const { error } = payload;
-      draft.error.searchOrganizations = error;
       draft.loading.searchOrganizations = false;
       break;
     }
@@ -273,7 +248,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ORGANIZATIONS: {
-      draft.shouldSearch = true;
+      draft.loading.searchOrganizations = true;
       break;
     }
     case UPDATE_INFO_FAILURE: {
@@ -289,6 +264,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_INFO: {
+      draft.alerts = initialState.alerts;
       draft.loading.updateOrganization = true;
       break;
     }
@@ -327,10 +303,6 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case UPVOTE_ISSUE: {
       draft.loading.upvoteIssue = true;
-      break;
-    }
-    case VERIFY_INFO: {
-      draft.isVerified = !draft.isVerified;
       break;
     }
   }

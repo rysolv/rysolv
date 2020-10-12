@@ -35,7 +35,6 @@ const DepositFormComponent = ({
   inputErrors: { depositValue: depositValueError },
   setDisplayBottom,
   setStripeError,
-  userId,
 }) => {
   const [dollarValue, setDollarValue] = useState('0');
   const [feeValue, setFeeValue] = useState('0');
@@ -148,7 +147,6 @@ const DepositFormComponent = ({
             dispatchPaypalPayment={dispatchPaypalPayment}
             dollarValue={dollarValue}
             handleValidateInput={handleValidateInput}
-            userId={userId}
           />
         }
         shouldRender={paymentType === 'Credit card'}
@@ -166,7 +164,6 @@ DepositFormComponent.propTypes = {
   inputErrors: T.object.isRequired,
   setDisplayBottom: T.func.isRequired,
   setStripeError: T.func.isRequired,
-  userId: T.string.isRequired,
 };
 
 export default DepositFormComponent;

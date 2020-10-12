@@ -1,24 +1,28 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import Auth from '@aws-amplify/auth';
 import { push } from 'connected-react-router';
 
-import {
-  fetchActiveUser,
-  signOut,
-  updateActiveUser,
-} from 'containers/Auth/actions';
+import { signOut, updateActiveUser } from 'containers/Auth/actions';
+import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
+  CHANGE_EMAIL,
+  changeEmailError,
   DELETE_USER,
   FETCH_INFO,
   PAYPAL_PAYMENT,
-  REMOVE_ISSUE,
+  REMOVE_ATTEMPTING,
   REMOVE_WATCHING,
   SAVE_CHANGE,
   STRIPE_TOKEN,
+  VERIFY_ACCOUNT,
   WITHDRAW_FUNDS,
 } from './constants';
 import {
+  changeEmailFailure,
+  changeEmailSuccess,
+  closeModalState,
   deleteUserFailure,
   deleteUserSuccess,
   fetchInfoFailure,
@@ -27,115 +31,41 @@ import {
   paypalPaymentSuccess,
   removeIssueFailure,
   removeIssueSuccess,
+  saveChange,
   saveChangeFailure,
   saveChangeSuccess,
   stripeTokenFailure,
   stripeTokenSuccess,
+  verifyAccountFailure,
+  verifyAccountSuccess,
   withdrawFundsFailure,
   withdrawFundsSuccess,
 } from './actions';
 
-export function* deleteUserSaga({ payload }) {
-  const { userId } = payload;
-  const query = `
-  mutation{
-    deleteUser(id: "${userId}")
-  }`;
+export function* changeEmailSaga({ payload }) {
+  const { email } = payload;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    yield call(post, '/graphql', graphql);
-    yield put(deleteUserSuccess());
-    yield put(signOut());
-    yield put(push('/issues'));
+    const changeCognitoEmail = async () => {
+      const user = await Auth.currentAuthenticatedUser();
+      await Auth.updateUserAttributes(user, { email });
+    };
+    yield call(changeCognitoEmail);
+    yield put(changeEmailSuccess());
+    yield put(saveChange({ field: 'email', value: email }));
   } catch (error) {
-    yield put(deleteUserFailure({ error }));
+    const { message } = error;
+    const messageToRender = message || changeEmailError;
+    yield put(changeEmailFailure({ error: { message: messageToRender } }));
   }
 }
 
-export function* fetchInfoSaga({ payload }) {
-  const { userId } = payload;
+export function* deleteUserSaga() {
   const query = `
-    query {
-      oneUser(id: "${userId}") {
-        activePullRequests,
-        attempting,
-        balance,
-        completedPullRequests,
-        createdDate,
-        dollarsEarned,
-        email,
-        firstName,
-        githubLink,
-        id,
-        issues,
-        lastName,
-        organizations,
-        personalLink,
-        preferredLanguages,
-        profilePic,
-        rejectedPullRequests,
-        rep,
-        stackoverflowLink,
-        username,
-        watching,
-      }
-      getActivity(column: "user_id", id: "${userId}") {
+    mutation{
+      deleteUser {
         __typename
-        ... on ActivityArray {
-          activityArray {
-            activityId
-            createdDate
-            actionType
-            issueId
-            organizationId
-            organizationName
-            pullRequestId
-            userId
-            fundedValue
-            issueName
-            username
-          }
-        }
-        ... on Error {
+        ... on Success {
           message
-        }
-      }
-    }
-`;
-  try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: {
-        oneUser,
-        getActivity: { activityArray },
-      },
-    } = yield call(post, '/graphql', graphql);
-    oneUser.activity = activityArray;
-    yield put(fetchInfoSuccess({ oneUser }));
-  } catch (error) {
-    yield put(fetchInfoFailure({ error }));
-  }
-}
-
-export function* paypalPaymentSaga({ payload }) {
-  try {
-    const { amount, error, userId } = payload;
-    if (error) {
-      throw new Error(error);
-    }
-    const query = `
-    mutation {
-      createPaypalPayment(amount: ${amount}, userId: "${userId}") {
-        __typename
-        ... on Payment {
-          balance,
-          message,
         }
         ... on Error {
           message
@@ -143,9 +73,123 @@ export function* paypalPaymentSaga({ payload }) {
       }
     }
   `;
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    const graphql = JSON.stringify({
+      query,
+      variables: { token },
+    });
+    const {
+      data: {
+        deleteUser: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(deleteUserSuccess());
+    yield put(push('/issues'));
+    yield put(signOut());
+  } catch (error) {
+    yield put(closeModalState());
+    yield put(deleteUserFailure({ error: { message: error } }));
+  }
+}
+
+export function* fetchInfoSaga({ payload }) {
+  const { userId } = payload;
+  const query = `
+    query {
+      getUserSettings {
+        __typename
+        ... on User {
+          activePullRequests
+          attempting
+          balance
+          completedPullRequests
+          createdDate
+          dollarsEarned
+          email
+          firstName
+          githubLink
+          githubUsername
+          id
+          isGithubVerified
+          issues
+          lastName
+          organizations
+          personalLink
+          preferredLanguages
+          profilePic
+          rejectedPullRequests
+          rep
+          stackoverflowLink
+          username
+          watching
+        }
+        ... on Error {
+          message
+        }
+      }
+      getUserActivity(userId: "${userId}") {
+        actionType
+        activityId
+        createdDate
+        fundedValue
+        issueId
+        issueName
+        organizationId
+        organizationName
+        pullRequestId
+        userId
+        username
+      }
+    }
+`;
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    const graphql = JSON.stringify({
+      query,
+      variables: { token },
+    });
+    const {
+      data: {
+        getUserActivity,
+        getUserSettings: { __typename, message, ...restProps },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    restProps.activity = getUserActivity;
+    yield put(fetchInfoSuccess({ user: restProps }));
+  } catch (error) {
+    yield put(fetchInfoFailure({ error: { message: error } }));
+  }
+}
+
+export function* paypalPaymentSaga({ payload }) {
+  const { amount, error: paypalError } = payload;
+  const query = `
+      mutation {
+        createPaypalPayment(amount: ${amount}) {
+          __typename
+          ... on Payment {
+            balance
+            message
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    `;
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    if (paypalError) throw paypalError;
+
     const request = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -156,144 +200,22 @@ export function* paypalPaymentSaga({ payload }) {
     yield put(paypalPaymentSuccess({ balance, message }));
     yield put(updateActiveUser({ balance }));
   } catch (error) {
-    yield put(paypalPaymentFailure({ error }));
+    yield put(paypalPaymentFailure({ error: { message: error } }));
   }
 }
 
-export function* removeIssueSaga({ payload }) {
-  const { column, id: issueId, remove, userId } = payload;
-  const query = `
-  mutation {
-    updateIssueArray(id: "${issueId}", column: "${column}", data: "${userId}", remove: ${remove}) {
-      id,
-      attempting,
-      watching
-    }
-    updateUserArray(id: "${userId}", column: "${column}", data: "${issueId}", remove: ${remove}) {
-      attempting,
-      watching
-    }
-  }`;
-  try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    yield call(post, '/graphql', graphql);
-    yield put(removeIssueSuccess({ column, issueId }));
-    yield put(fetchActiveUser({ userId }));
-  } catch (error) {
-    yield put(removeIssueFailure({ error }));
-  }
-}
-
-export function* removeWatchingSaga({ payload }) {
-  const { id: issueId, userId } = payload;
-  const query = `
-  mutation {
-    toggleWatching(issueId: "${issueId}", userId: "${userId}") {
-      __typename
-      ... on WatchListArray {
-        issueArray {
-          fundedAmount
-          id
-          name
-        }
-      }
-      ... on Error {
-        message
-      }
-    }
-  }`;
-  try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: {
-        toggleWatching: { __typename, issueArray, message },
-      },
-    } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw new Error(message);
-    }
-    yield put(removeIssueSuccess({ column: 'watching', issueId }));
-    yield put(updateActiveUser({ watching: issueArray }));
-  } catch (error) {
-    yield put(removeIssueFailure({ error }));
-  }
-}
-
-export function* saveChangeSaga({ payload }) {
-  const { field, itemId, value } = payload;
-  const formattedValue =
-    field === 'preferredLanguages' ? JSON.stringify(value) : `"${value}"`;
+export function* removeAttemptingSaga({ payload }) {
+  const { issueId } = payload;
   const query = `
     mutation {
-      transformUser(id: "${itemId}", userInput: {
-        ${field}: ${formattedValue},
-      }) {
-      __typename
-      ... on User {
-        id,
-        githubLink,
-        personalLink,
-        preferredLanguages,
-        stackoverflowLink,
-      }
-      ... on Error {
-        message
-      }
-    }
-  }`;
-  try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: {
-        transformUser,
-        transformUser: { __typename },
-      },
-    } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') {
-      throw new Error(transformUser.message);
-    }
-    yield put(
-      saveChangeSuccess({
-        field,
-        message: 'User account has been successfully updated.',
-        value,
-      }),
-    );
-    if (field === 'profilePic') {
-      yield put(updateActiveUser({ profilePic: value }));
-    }
-  } catch (error) {
-    yield put(saveChangeFailure({ error }));
-  }
-}
-
-export function* stripeTokenSaga({ payload }) {
-  try {
-    const {
-      amount,
-      token: { id },
-      userId,
-    } = payload;
-    const query = `
-    mutation {
-      createStripeCharge(
-        amount: ${amount},
-        token: "${id}",
-        userId: "${userId}"
-      ) {
+      toggleAttempting(issueId: "${issueId}") {
         __typename
-        ... on Payment {
-          balance,
-          message,
+        ... on AttemptingArray {
+          issueArray {
+            fundedAmount
+            id
+            name
+          }
         }
         ... on Error {
           message
@@ -301,9 +223,137 @@ export function* stripeTokenSaga({ payload }) {
       }
     }
   `;
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    const graphql = JSON.stringify({
+      query,
+      variables: { token },
+    });
+    const {
+      data: {
+        toggleAttempting: { __typename, issueArray, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(removeIssueSuccess({ column: 'attempting', issueId }));
+    yield put(updateActiveUser({ attempting: issueArray }));
+  } catch (error) {
+    yield put(removeIssueFailure({ error: { message: error } }));
+  }
+}
+
+export function* removeWatchingSaga({ payload }) {
+  const { issueId } = payload;
+  const query = `
+    mutation {
+      toggleWatching(issueId: "${issueId}") {
+        __typename
+        ... on WatchListArray {
+          issueArray {
+            fundedAmount
+            id
+            name
+          }
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    const graphql = JSON.stringify({
+      query,
+      variables: { token },
+    });
+    const {
+      data: {
+        toggleWatching: { __typename, issueArray, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(removeIssueSuccess({ column: 'watching', issueId }));
+    yield put(updateActiveUser({ watching: issueArray }));
+  } catch (error) {
+    yield put(removeIssueFailure({ error: { message: error } }));
+  }
+}
+
+export function* saveChangeSaga({ payload }) {
+  const { field, value } = payload;
+  const formattedValue =
+    field === 'preferredLanguages' ? JSON.stringify(value) : `"${value}"`;
+  const query = `
+    mutation {
+      transformUser(userInput: {
+        ${field}: ${formattedValue},
+      }) {
+      __typename
+      ... on Success {
+        message
+      }
+      ... on Error {
+        message
+      }
+    }
+  }`;
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    const graphql = JSON.stringify({
+      query,
+      variables: { token },
+    });
+    const {
+      data: {
+        transformUser: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(
+      saveChangeSuccess({
+        field,
+        message,
+        value,
+      }),
+    );
+    if (field === 'profilePic') {
+      yield put(updateActiveUser({ profilePic: value }));
+    }
+  } catch (error) {
+    yield put(saveChangeFailure({ error: { message: error } }));
+  }
+}
+
+export function* stripeTokenSaga({ payload }) {
+  const {
+    amount,
+    token: { id },
+  } = payload;
+  const query = `
+    mutation {
+      createStripeCharge(amount: ${amount}, token: "${id}")
+      {
+        __typename
+        ... on Payment {
+          balance
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const token = yield call(fetchCurrentSession);
+
     const request = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -314,18 +364,20 @@ export function* stripeTokenSaga({ payload }) {
     yield put(stripeTokenSuccess({ balance, message }));
     yield put(updateActiveUser({ balance }));
   } catch (error) {
-    yield put(stripeTokenFailure({ error }));
+    yield put(stripeTokenFailure({ error: { message: error } }));
   }
 }
 
-export function* withdrawFundsSaga({ payload }) {
-  const { transferValue, userId } = payload;
+export function* verifyAccountSaga({ payload }) {
+  const { code } = payload;
   const query = `
     mutation {
-      createWithdrawal(transferValue: ${transferValue}, userId: "${userId}") {
+      verifyUserAccount(code: "${code}") {
         __typename
-        ... on Withdrawal {
-          balance
+        ... on Verification {
+          githubUsername
+          isGithubVerified
+          message
         }
         ... on Error {
           message
@@ -334,36 +386,80 @@ export function* withdrawFundsSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
-      data: { createWithdrawal },
+      data: {
+        verifyUserAccount: {
+          __typename,
+          githubUsername,
+          isGithubVerified,
+          message,
+        },
+      },
     } = yield call(post, '/graphql', graphql);
-    const { balance, message, __typename } = createWithdrawal;
-    if (__typename === 'Error') {
-      throw new Error(message);
+    if (__typename === 'Error') throw message;
+    yield put(verifyAccountSuccess({ githubUsername, message }));
+    yield put(updateActiveUser({ isGithubVerified }));
+  } catch (error) {
+    yield put(verifyAccountFailure({ error: { message: error } }));
+  }
+}
+
+export function* withdrawFundsSaga({ payload }) {
+  const { transferValue } = payload;
+  const query = `
+    mutation {
+      createWithdrawal(transferValue: ${transferValue}) {
+        __typename
+        ... on Withdrawal {
+          balance
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
     }
+  `;
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    const graphql = JSON.stringify({
+      query,
+      variables: { token },
+    });
+    const {
+      data: {
+        createWithdrawal: { __typename, balance, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
     yield put(updateActiveUser({ balance }));
     yield put(
       withdrawFundsSuccess({
         balance,
-        message: 'Withdrawal request has been successfully submitted.',
+        message,
       }),
     );
   } catch (error) {
-    yield put(withdrawFundsFailure({ error }));
+    yield put(withdrawFundsFailure({ error: { message: error } }));
   }
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(CHANGE_EMAIL, changeEmailSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(PAYPAL_PAYMENT, paypalPaymentSaga);
+  yield takeLatest(REMOVE_ATTEMPTING, removeAttemptingSaga);
   yield takeLatest(REMOVE_WATCHING, removeWatchingSaga);
-  yield takeLatest(REMOVE_ISSUE, removeIssueSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
   yield takeLatest(STRIPE_TOKEN, stripeTokenSaga);
+  yield takeLatest(VERIFY_ACCOUNT, verifyAccountSaga);
   yield takeLatest(WITHDRAW_FUNDS, withdrawFundsSaga);
 }

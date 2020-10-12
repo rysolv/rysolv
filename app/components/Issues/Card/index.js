@@ -44,6 +44,7 @@ const IssueCard = ({
   addWatching,
   data,
   deviceView,
+  dispatchFetchAttemptList,
   dispatchFetchWatchList,
   dispatchOpenModal,
   handleNav,
@@ -89,9 +90,7 @@ const IssueCard = ({
                   <CommentIcon />
                 </IssueCardIconWrapper>
                 <IssueCardLabelWrapper>
-                  <Link to={`/issues/detail/${id}`}>
-                    {comments.length} Comments
-                  </Link>
+                  <Link to={`/issues/detail/${id}`}>{comments} Comments</Link>
                 </IssueCardLabelWrapper>
               </IssueCardItem>
             ) : null}
@@ -99,8 +98,8 @@ const IssueCard = ({
             {open ? (
               <IssueCardItem
                 onClick={() =>
-                  dispatchFetchWatchList({
-                    idArray: attempting,
+                  dispatchFetchAttemptList({
+                    issueId: id,
                     modalState: 'issueAttemptList',
                   })
                 }
@@ -119,9 +118,9 @@ const IssueCard = ({
                   dispatchOpenModal={dispatchOpenModal}
                   handleWatch={() => addWatching({ issueId: id, userId })}
                   isSignedIn={isSignedIn}
+                  issueId={id}
                   label={userWatching ? 'Watching' : 'Watch'}
                   value={watching.length}
-                  watching={watching}
                 />
               </IssueCardItem>
             ) : null}
@@ -135,9 +134,7 @@ const IssueCard = ({
                 icon={
                   <Fragment>
                     <CommentIcon />{' '}
-                    <MobileIconDescription>
-                      {comments.length}
-                    </MobileIconDescription>
+                    <MobileIconDescription>{comments}</MobileIconDescription>
                   </Fragment>
                 }
                 label="Comments"
@@ -157,8 +154,8 @@ const IssueCard = ({
                 }
                 label="Attempting"
                 onClick={() =>
-                  dispatchFetchWatchList({
-                    idArray: attempting,
+                  dispatchFetchAttemptList({
+                    issueId: id,
                     modalState: 'issueAttemptList',
                   })
                 }
@@ -262,6 +259,7 @@ IssueCard.propTypes = {
   addWatching: T.func.isRequired,
   data: T.array.isRequired,
   deviceView: T.string.isRequired,
+  dispatchFetchAttemptList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
   handleNav: T.func.isRequired,

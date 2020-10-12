@@ -8,8 +8,8 @@ import { formatPaypalTotal } from 'utils/globalHelpers';
 import { PaypalButtonWrapper } from './styledComponents';
 
 const CLIENT = {
-  sandbox: process.env.PAYPAY_CLIENT_ID,
-  production: process.env.PAYPAY_CLIENT_ID,
+  sandbox: process.env.PAYPAL_CLIENT_ID_TEST,
+  production: process.env.PAYPAL_CLIENT_ID,
 };
 
 const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox';
@@ -58,7 +58,6 @@ class PaypalButton extends React.Component {
       initialValue,
       issueId,
       setFundValue,
-      userId,
       values,
     } = this.props;
     const { disabled, showButton } = this.state;
@@ -79,7 +78,6 @@ class PaypalButton extends React.Component {
         const paymentObj = {
           amount: dollarValue,
           issueId,
-          userId,
         };
         dispatchPaypalPayment(paymentObj);
         if (setFundValue) setFundValue(initialValue);

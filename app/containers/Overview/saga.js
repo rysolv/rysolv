@@ -12,7 +12,15 @@ export function* fetchOrganizationOptionsSaga() {
   const query = `
     query {
       getOrganizations {
-        name,
+        __typename
+        ... on OrganizationArray {
+          organizations {
+            name
+          }
+        }
+        ... on Error {
+          message
+        }
       }
     }
   `;
@@ -21,14 +29,14 @@ export function* fetchOrganizationOptionsSaga() {
       query,
       variables: {},
     });
-    const { data: getOrganizations } = yield call(
-      post,
-      '/graphql',
-      organizationsQuery,
-    );
-    yield put(fetchOrganizationOptionsSuccess(getOrganizations));
+    const {
+      data: {
+        getOrganizations: { organizations },
+      },
+    } = yield call(post, '/graphql', organizationsQuery);
+    yield put(fetchOrganizationOptionsSuccess({ organizations }));
   } catch (error) {
-    yield put(fetchOrganizationOptionsFailure({ error }));
+    yield put(fetchOrganizationOptionsFailure());
   }
 }
 
