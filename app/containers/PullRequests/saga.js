@@ -210,7 +210,7 @@ export function* importPullRequestSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(importPullRequestSuccess({ pullRequest: restProps }));
   } catch (error) {
-    yield put(importPullRequestFailure({ error }));
+    yield put(importPullRequestFailure({ error: { message: error } }));
   }
 }
 

@@ -17,6 +17,7 @@ import {
   SAVE_CHANGE,
   STRIPE_TOKEN,
   VERIFY_ACCOUNT,
+  verifyUserAccountError,
   WITHDRAW_FUNDS,
 } from './constants';
 import {
@@ -406,7 +407,9 @@ export function* verifyAccountSaga({ payload }) {
     yield put(verifyAccountSuccess({ githubUsername, message }));
     yield put(updateActiveUser({ isGithubVerified }));
   } catch (error) {
-    yield put(verifyAccountFailure({ error: { message: error } }));
+    const { message } = error;
+    const messageToRender = message || verifyUserAccountError;
+    yield put(verifyAccountFailure({ error: { message: messageToRender } }));
   }
 }
 

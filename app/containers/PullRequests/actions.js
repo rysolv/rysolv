@@ -1,6 +1,5 @@
 import {
   CLEAR_ALERTS,
-  CLEAR_ERROR,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
   CREATE_PULL_REQUEST,
@@ -22,12 +21,6 @@ import {
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
-  };
-}
-
-export function clearError() {
-  return {
-    type: CLEAR_ERROR,
   };
 }
 

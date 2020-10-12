@@ -8,7 +8,7 @@ import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import {
-  clearError,
+  clearAlerts,
   createPullRequest,
   handleStep,
   importPullRequest,
@@ -27,8 +27,7 @@ const AddPullRequest = ({
   dispatchHandleStep,
   dispatchImportPullRequest,
   dispatchResetState,
-  error,
-  handleClearError,
+  handleClearAlerts,
   handleClose,
   handleInputChange,
   importData,
@@ -54,8 +53,7 @@ const AddPullRequest = ({
   const propsToPassDown = {
     alerts,
     dispatchHandleStep,
-    error,
-    handleClearError,
+    handleClearAlerts,
     handleClose,
     handleImport,
     handleInputChange,
@@ -68,13 +66,12 @@ const AddPullRequest = ({
 };
 
 AddPullRequest.propTypes = {
-  alerts: T.object,
+  alerts: T.object.isRequired,
   dispatchCreatePullRequest: T.func,
   dispatchHandleStep: T.func,
   dispatchImportPullRequest: T.func,
   dispatchResetState: T.func.isRequired,
-  error: T.oneOfType([T.bool, T.string]),
-  handleClearError: T.func,
+  handleClearAlerts: T.func.isRequired,
   handleClose: T.func,
   handleInputChange: T.func,
   importData: T.object,
@@ -88,7 +85,6 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : PullRequests
    */
   alerts: makeSelectPullRequests('alerts'),
-  error: makeSelectPullRequests('error'),
   importData: makeSelectPullRequests('importData'),
   loading: makeSelectPullRequests('loading'),
   step: makeSelectPullRequests('step'),
@@ -104,7 +100,7 @@ function mapDispatchToProps(dispatch) {
     dispatchImportPullRequest: payload => dispatch(importPullRequest(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchResetState: () => dispatch(resetState()),
-    handleClearError: () => dispatch(clearError()),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }

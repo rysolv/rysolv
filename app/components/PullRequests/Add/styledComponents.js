@@ -1,9 +1,12 @@
 import styled from 'styled-components';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { Link } from 'react-router-dom';
 
-import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
+import {
+  ErrorSuccessBanner,
+  PrimaryAsyncButton,
+  SecondaryButton,
+} from 'components/base_ui';
 import {
   defaultFontSize,
   dividerBorder,
@@ -69,8 +72,8 @@ export const StatusWrapper = styled.span`
   text-transform: capitalize;
 `;
 
-export const StyledFormHelperText = styled(FormHelperText)`
-  font-size: 1.2rem;
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin: 0 2rem;
 `;
 
 export const StyledHeader = styled.h1`
