@@ -67,3 +67,5 @@ export const settingViewDictionary = {
   watching: 0,
   withdrawal: 1,
 };
+
+export const verifyUserAccountError = `Something went wrong when verifying your Github account.`;
