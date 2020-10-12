@@ -4,7 +4,6 @@ import remove from 'lodash/remove';
 
 import {
   CLEAR_ALERTS,
-  CLEAR_ERROR,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
   CREATE_PULL_REQUEST,
@@ -49,10 +48,6 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
-      break;
-    }
-    case CLEAR_ERROR: {
-      draft.error = initialState.error;
       break;
     }
     case CREATE_PULL_REQUEST_FAILURE: {
@@ -112,7 +107,7 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
     }
     case IMPORT_PULL_REQUEST_FAILURE: {
       const { error } = payload;
-      draft.error = error;
+      draft.alerts.error = error;
       draft.loading = false;
       break;
     }
@@ -129,12 +124,12 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
       break;
     }
     case IMPORT_PULL_REQUEST: {
+      draft.alerts = initialState.alerts;
       draft.loading = true;
       break;
     }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
-      draft.error = initialState.error;
       draft[form][field].error = '';
       draft[form][field].value = value.trim();
       break;

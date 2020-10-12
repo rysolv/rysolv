@@ -26,7 +26,7 @@ const CloseIcon = iconDictionary('close');
 const VerifyForm = ({
   alerts: { error },
   dispatchHandleStep,
-  handleClearError,
+  handleClearAlerts,
   handleSubmit,
   importData: {
     githubUsername,
@@ -41,14 +41,14 @@ const VerifyForm = ({
 }) => {
   const handleBack = () => {
     dispatchHandleStep({ step: 1 });
-    handleClearError();
+    handleClearAlerts();
   };
   const isMergeable = mergeable.value;
   const haveTestsPassed = mergeableState.value !== 'unstable';
   return (
     <Fragment>
       <StyledHeader>Verify</StyledHeader>
-      <StyledErrorSuccessBanner error={error} onClose={handleClearError} />
+      <StyledErrorSuccessBanner error={error} onClose={handleClearAlerts} />
       <PullRequestContainer>
         <StyledSubHeader>General</StyledSubHeader>
         <Divider />
@@ -105,7 +105,7 @@ const VerifyForm = ({
 VerifyForm.propTypes = {
   alerts: T.object,
   dispatchHandleStep: T.func,
-  handleClearError: T.func,
+  handleClearAlerts: T.func,
   handleSubmit: T.func,
   importData: T.object,
   loading: T.bool,

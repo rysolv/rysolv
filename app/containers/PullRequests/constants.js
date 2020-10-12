@@ -1,7 +1,5 @@
 export const CLEAR_ALERTS = 'app/PullRequests/CLEAR_ALERTS';
 
-export const CLEAR_ERROR = 'app/PullRequests/CLEAR_ERROR';
-
 export const CREATE_PULL_REQUEST = 'app/PullRequests/CREATE_PULL_REQUEST';
 export const CREATE_PULL_REQUEST_FAILURE =
   'app/PullRequests/CREATE_PULL_REQUEST_FAILURE';
