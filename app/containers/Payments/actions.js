@@ -1,5 +1,6 @@
 import {
   CLEAR_ALERTS,
+  INCREMENT_STEP,
   INPUT_ERROR,
   PAYPAL_PAYMENT_FAILURE,
   PAYPAL_PAYMENT_SUCCESS,
@@ -16,6 +17,13 @@ import {
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
+  };
+}
+
+export function incrementStep(payload) {
+  return {
+    payload,
+    type: INCREMENT_STEP,
   };
 }
 

@@ -37,6 +37,7 @@ const PaymentsContainer = ({
   isSignedIn,
   issueId,
   open,
+  step,
   ...restProps
 }) => {
   const { balance, email, firstName, lastName } = activeUser;
@@ -93,6 +94,7 @@ const PaymentsContainer = ({
       issueId={issueId}
       lastName={lastName}
       open={open}
+      step={step}
       {...restProps}
     />
   );
@@ -113,6 +115,7 @@ PaymentsContainer.propTypes = {
   isSignedIn: T.bool,
   issueId: T.string,
   open: T.bool,
+  step: T.number.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -125,6 +128,7 @@ const mapStateToProps = createStructuredSelector({
    */
   alerts: makeSelectPayments('alerts'),
   errors: makeSelectPayments('errors'),
+  step: makeSelectPayments('step'),
 });
 
 const mapDispatchToProps = dispatch => ({
