@@ -55,6 +55,7 @@ const Overview = ({
   organizationOptions,
 }) => {
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatchFetchOrganizationOptions();
     return dispatchResetState;
   }, []);
