@@ -14,8 +14,16 @@ import {
 
 const BackIcon = iconDictionary('backArrow');
 
-const PaymentSuccessView = ({ fundedAmount, handleIncrement }) => {
-  setTimeout(() => handleIncrement({ step: 1 }), 50000);
+const PaymentSuccessView = ({
+  fundedAmount,
+  handleClearPaymentAlerts,
+  handleIncrement,
+}) => {
+  const handleBack = () => {
+    handleClearPaymentAlerts();
+    handleIncrement({ step: 1 });
+  };
+  setTimeout(handleBack, 5000);
   return (
     <div>
       <SuccessIconWrapper>
@@ -27,7 +35,7 @@ const PaymentSuccessView = ({ fundedAmount, handleIncrement }) => {
         <StyledSecondaryButton
           Icon={BackIcon}
           label="Back"
-          onClick={() => handleIncrement({ step: 1 })}
+          onClick={handleBack}
         />
       </SuccessContentWrapper>
     </div>
@@ -36,6 +44,7 @@ const PaymentSuccessView = ({ fundedAmount, handleIncrement }) => {
 
 PaymentSuccessView.propTypes = {
   fundedAmount: T.number.isRequired,
+  handleClearPaymentAlerts: T.func.isRequired,
   handleIncrement: T.func.isRequired,
 };
 
