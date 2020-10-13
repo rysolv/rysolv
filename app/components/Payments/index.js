@@ -2,13 +2,23 @@ import React from 'react';
 import T from 'prop-types';
 
 import { paymentsStepDictionary } from './stepDictionary';
+import { PaymentContainer } from './styledComponents';
 
-const PaymentPortal = ({ step, ...restProps }) => {
+const PaymentPortal = ({ removeBorder, step, ...restProps }) => {
   const Component = paymentsStepDictionary[step];
 
-  return <Component {...restProps} />;
+  return (
+    <PaymentContainer removeBorder={removeBorder}>
+      <Component {...restProps} />
+    </PaymentContainer>
+  );
 };
 
-PaymentPortal.propTypes = { step: T.number.isRequired };
+PaymentPortal.defaultProps = { removeBorder: false };
+
+PaymentPortal.propTypes = {
+  removeBorder: T.bool,
+  step: T.number.isRequired,
+};
 
 export default PaymentPortal;

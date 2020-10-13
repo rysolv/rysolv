@@ -3,7 +3,6 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { push } from 'connected-react-router';
 
 import AddPullRequestModal from 'components/AddPullRequestModal';
 import AsyncRender from 'components/AsyncRender';
@@ -79,7 +78,6 @@ export class IssuesDetail extends React.PureComponent {
       handleClearAlerts,
       handleComment,
       handleIncrement,
-      handleNav,
       isModalOpen,
       isSignedIn,
       issueDetail,
@@ -129,7 +127,6 @@ export class IssuesDetail extends React.PureComponent {
             handleClearAlerts,
             handleComment,
             handleIncrement,
-            handleNav,
             handleUpvote,
             isSignedIn,
           }}
@@ -216,10 +213,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(fetchPullRequestList(payload)),
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
-    /**
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 

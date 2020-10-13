@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
 import { BaseExpansionPanel, ConditionalRender } from 'components/base_ui';
@@ -17,7 +17,6 @@ import {
   Funded,
   FundingContainer,
   OverviewWrapper,
-  PaymentContainer,
   PaymentInformationWrapper,
   StyledErrorSuccessBanner,
   StyledLabel,
@@ -42,7 +41,6 @@ const PaymentView = ({
   firstName,
   fundedAmount,
   handleClearPaymentAlerts,
-  handleNav,
   handleStripeToken,
   handleSubmitAccountPayment,
   handleValidateInput,
@@ -50,7 +48,6 @@ const PaymentView = ({
   issueId,
   lastName,
   open,
-  ...restProps
 }) => {
   const initialValue = '2';
   const [emailValue, setEmailValue] = useState(email || '');
@@ -167,7 +164,7 @@ const PaymentView = ({
     zipValue,
   };
   return (
-    <PaymentContainer {...restProps}>
+    <Fragment>
       <OverviewWrapper>
         <Amount>{formatDollarAmount(fundedAmount)}</Amount>
         <Funded isFunded={!fundedAmount || !open}>
@@ -277,7 +274,7 @@ const PaymentView = ({
           title="Paypal"
         />
       </FundingContainer>
-    </PaymentContainer>
+    </Fragment>
   );
 };
 
@@ -290,7 +287,6 @@ PaymentView.propTypes = {
   firstName: T.string,
   fundedAmount: T.number,
   handleClearPaymentAlerts: T.func,
-  handleNav: T.func,
   handleStripeToken: T.func,
   handleSubmitAccountPayment: T.func,
   handleValidateInput: T.func,

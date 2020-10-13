@@ -63,7 +63,6 @@ const IssueDetail = ({
   handleClearAlerts,
   handleComment,
   handleIncrement,
-  handleNav,
   handleUpvote,
   isSignedIn,
 }) => {
@@ -298,7 +297,6 @@ const IssueDetail = ({
           />
           <PaymentPortal
             fundedAmount={fundedAmount}
-            handleNav={handleNav}
             isSignedIn={isSignedIn}
             issueId={issueId}
             open={open}
@@ -334,7 +332,6 @@ IssueDetail.propTypes = {
   handleClearAlerts: T.func,
   handleComment: T.func,
   handleIncrement: T.func,
-  handleNav: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
 };
