@@ -13,7 +13,7 @@ export const StyledCoin = styled(Coin)`
   outline: none;
 
   &:hover {
-    cursor: ${({ disabled }) => (disabled ? 'initial' : 'pointer')};
+    cursor: ${({ disabled }) => (disabled ? 'auto' : 'pointer')};
   }
 `;
 

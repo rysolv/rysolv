@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import React from 'react';
 import T from 'prop-types';
 
@@ -31,6 +30,7 @@ const UpvotePanel = ({
         if (!disabled) {
           return handleUpvote({ issueId, upvote: !upvoted, userId });
         }
+        return null;
       }}
     />
     <Rep>{rep}</Rep>
@@ -38,7 +38,7 @@ const UpvotePanel = ({
 );
 
 UpvotePanel.propTypes = {
-  disabled: T.bool,
+  disabled: T.bool.isRequired,
   dispatchOpenModal: T.func,
   handleUpvote: T.func,
   isIssueDetail: T.bool,

@@ -191,4 +191,5 @@ const TermsOfService = () => {
     </TermsOfServiceContainer>
   );
 };
+
 export default TermsOfService;
