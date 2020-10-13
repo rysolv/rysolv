@@ -56,6 +56,7 @@ const Overview = ({
 }) => {
   useEffect(() => {
     dispatchFetchOrganizationOptions();
+    window.scrollTo(0, 0);
     return dispatchResetState;
   }, []);
   const formattedPath = path.split('/')[1];

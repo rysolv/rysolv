@@ -207,6 +207,7 @@ const IssueDetail = ({
         <IssueDetailWrapper>
           <LeftPanel>
             <UpvotePanel
+              disabled={!open}
               dispatchOpenModal={dispatchOpenModal}
               handleUpvote={handleUpvote}
               isIssueDetail

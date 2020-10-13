@@ -45,13 +45,14 @@ const OrganizationIssuesTab = ({
           <IssueListItem key={`list-item-${id}`}>
             <IssueContent>
               <UpvotePanel
+                disabled={!open}
                 dispatchOpenModal={dispatchOpenModal}
                 handleUpvote={handleUpvote}
                 isSignedIn={isSignedIn}
                 issueId={id}
                 rep={rep}
                 upvoted={upvoted}
-                userId={userId} // bug
+                userId={userId}
               />
               <IssueContentInfo>
                 <IssueModifiedDate>

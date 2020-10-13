@@ -520,6 +520,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPVOTE_ISSUE: {
+      draft.alerts = initialState.alerts;
       draft.loading.upvoteIssue = true;
       break;
     }
