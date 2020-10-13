@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import React from 'react';
 import T from 'prop-types';
 
@@ -9,6 +10,7 @@ import {
 } from './styledComponents';
 
 const UpvotePanel = ({
+  disabled,
   dispatchOpenModal,
   handleUpvote,
   isIssueDetail,
@@ -21,12 +23,14 @@ const UpvotePanel = ({
   <UpvoteContainer isIssueDetail={isIssueDetail}>
     <StyledFlatIconButton
       disableRipple
-      Icon={<StyledCoin upvoted={upvoted} />}
+      Icon={<StyledCoin disabled={disabled} upvoted={upvoted} />}
       onClick={() => {
         if (!isSignedIn) {
           return dispatchOpenModal({ modalState: 'signIn' });
         }
-        return handleUpvote({ issueId, upvote: !upvoted, userId });
+        if (!disabled) {
+          return handleUpvote({ issueId, upvote: !upvoted, userId });
+        }
       }}
     />
     <Rep>{rep}</Rep>
@@ -34,6 +38,7 @@ const UpvotePanel = ({
 );
 
 UpvotePanel.propTypes = {
+  disabled: T.bool,
   dispatchOpenModal: T.func,
   handleUpvote: T.func,
   isIssueDetail: T.bool,

@@ -183,6 +183,7 @@ const IssueCard = ({
           <Fragment key={id}>
             <StyledListItem>
               <UpvotePanel
+                disabled={!open}
                 dispatchOpenModal={dispatchOpenModal}
                 handleUpvote={handleUpvote}
                 isSignedIn={isSignedIn}
