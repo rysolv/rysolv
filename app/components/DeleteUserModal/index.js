@@ -1,6 +1,8 @@
 import React from 'react';
 import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
+
 import {
   ButtonGroup,
   DeleteUserContainer,
@@ -11,7 +13,7 @@ import {
 } from './styledComponents';
 
 const DeleteUserModal = ({ balance, handleClose, handleDeleteUser }) => {
-  const deleteUserMessage = (
+  const DeleteUserComponent = () => (
     <DeleteUserContainer>
       <StyledTitle>Account Removal</StyledTitle>
       <StyledBodyMessage>
@@ -25,7 +27,7 @@ const DeleteUserModal = ({ balance, handleClose, handleDeleteUser }) => {
     </DeleteUserContainer>
   );
 
-  const remainingBalanceMessage = (
+  const RemainingBalanceComponent = () => (
     <DeleteUserContainer>
       <StyledTitle>Outstanding Balance</StyledTitle>
       <StyledBodyMessage>
@@ -38,7 +40,13 @@ const DeleteUserModal = ({ balance, handleClose, handleDeleteUser }) => {
     </DeleteUserContainer>
   );
 
-  return balance ? remainingBalanceMessage : deleteUserMessage;
+  return (
+    <ConditionalRender
+      Component={RemainingBalanceComponent}
+      FallbackComponent={DeleteUserComponent}
+      shouldRender={!!balance}
+    />
+  );
 };
 
 DeleteUserModal.propTypes = {
