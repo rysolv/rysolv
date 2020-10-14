@@ -1,4 +1,7 @@
+import React from 'react';
 import styled from 'styled-components';
+
+import { ModalDialog } from 'components/base_ui';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile, tablet } = mediaQueriesByDevice;
@@ -23,5 +26,13 @@ export const RoutesWrapper = styled.section`
 
   ${mobile} {
     padding-top: 10rem;
+  }
+`;
+
+export const StyledModalDialog = styled(({ isPaymentModal, ...restProps }) => (
+  <ModalDialog {...restProps} />
+))`
+  .paper {
+    width: ${({ isPaymentModal }) => (isPaymentModal ? '40rem' : 'initial')};
   }
 `;

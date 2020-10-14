@@ -7,6 +7,7 @@ import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
+  incrementStep,
   paypalPaymentFailure,
   paypalPaymentSuccess,
   stripeTokenFailure,
@@ -53,6 +54,7 @@ export function* paypalPaymentSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
+    yield put(incrementStep({ step: 2 }));
     yield put(paypalPaymentSuccess({ message }));
     yield put(
       updateFundedIssue({ fundedAmount, isFundedFromOverview, issueId }),
@@ -99,6 +101,7 @@ export function* stripeTokenSaga({ payload }) {
       },
     } = yield call(post, '/graphql', request);
     if (__typename === 'Error') throw message;
+    yield put(incrementStep({ step: 2 }));
     yield put(stripeTokenSuccess({ message }));
     yield put(
       updateFundedIssue({ fundedAmount, isFundedFromOverview, issueId }),
@@ -141,6 +144,7 @@ export function* submitAccountPaymentSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
+    yield put(incrementStep({ step: 2 }));
     yield put(submitAccountPaymentSuccess({ message }));
     yield put(updateActiveUser({ balance }));
     yield put(

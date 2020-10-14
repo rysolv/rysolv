@@ -5,14 +5,16 @@ import {
   ErrorSuccessBanner,
   PaymentTextInput,
   PrimaryAsyncButton,
+  SecondaryButton,
 } from 'components/base_ui';
-
 import {
   borderColor,
   commentHeaderColor,
   defaultFontSize,
   dividerBorder,
   fundingText,
+  lightBlueColor,
+  successGreen,
 } from 'defaultStyleHelper';
 
 export const Amount = styled.div`
@@ -116,9 +118,11 @@ export const InputWrapper = styled.div`
 export const PaymentContainer = styled.div`
   background-color: white;
   border-radius: 0.2rem;
-  border: ${({ removeBorder }) =>
-    removeBorder ? 'none' : `0.1rem solid ${borderColor}`};
+  border: ${({ isModal }) =>
+    isModal ? 'none' : `0.1rem solid ${borderColor}`};
   color: rgba(0, 0, 0, 0.7);
+  min-height: 53rem;
+  width: 100%;
 `;
 
 export const PaymentInformationWrapper = styled.div`
@@ -149,11 +153,6 @@ export const StyledLabel = styled.div`
   text-align: left;
 `;
 
-export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
-  height: 3rem;
-  width: auto;
-`;
-
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   margin: 1rem;
 `;
@@ -162,6 +161,26 @@ export const StyledPaymentTextInput = styled(PaymentTextInput)`
   align-self: center;
   margin: 0.5rem 0.5rem 1rem;
   width: 80%;
+`;
+
+export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
+  height: 3rem;
+  width: auto;
+`;
+
+export const StyledSecondaryButton = styled(SecondaryButton)`
+  background-color: white;
+  border: 0.1rem solid ${lightBlueColor};
+  color: ${lightBlueColor};
+  margin-top: 19.6rem;
+
+  &:hover {
+    background-color: white;
+  }
+
+  svg {
+    margin-right: 0.5rem;
+  }
 `;
 
 export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
@@ -189,6 +208,34 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
     color: white;
     background: #31b589;
   }
+`;
+
+export const SuccessContentWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 6rem 1rem;
+  text-align: center;
+`;
+
+export const SuccessHeader = styled.span`
+  font-size: 2.4rem;
+  margin-bottom: 2.5rem;
+`;
+
+export const SuccessIconWrapper = styled.div`
+  align-items: center;
+  background-color: ${successGreen};
+  color: white;
+  display: flex;
+  font-size: 3rem;
+  height: 10rem;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const SuccessText = styled.span`
+  font-size: ${defaultFontSize};
 `;
 
 export const TextWrapper = styled.div`
