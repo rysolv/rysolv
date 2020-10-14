@@ -11,8 +11,16 @@ import { ButtonBar } from './styledComponents';
 
 const IssueButtonBar = ({
   activeUser,
-  activeUser: { id: userId },
-  data: { attempting, id, open, pullRequests, watching },
+  activeUser: {
+    id: userId,
+    isGithubVerified,
+    pullRequests: activeUserPullRequests,
+    watching: activeUserWatching,
+  },
+  addWatching,
+  data: { attempting, id: issueId, open, pullRequests, watching },
+  dispatchFetchAttemptList,
+  dispatchFetchPullRequestList,
   dispatchFetchWatchList,
   dispatchOpenIssueModal,
   dispatchOpenModal,
@@ -21,18 +29,19 @@ const IssueButtonBar = ({
   ...restProps
 }) => {
   const userWatching =
-    activeUser.watching && !!activeUser.watching.find(el => el.id === id);
+    activeUserWatching && !!activeUserWatching.find(el => el.id === issueId);
+
   return (
     <ButtonBar {...restProps}>
       <AttemptButton
         activeUser={activeUser}
         attempting={attempting}
         disabled={!open}
-        dispatchFetchWatchList={dispatchFetchWatchList}
+        dispatchFetchAttemptList={dispatchFetchAttemptList}
         dispatchOpenModal={dispatchOpenModal}
         handleIncrement={handleIncrement}
         isSignedIn={isSignedIn}
-        issueId={id}
+        issueId={issueId}
         userId={userId}
       />
 
@@ -41,23 +50,25 @@ const IssueButtonBar = ({
         dispatchFetchWatchList={dispatchFetchWatchList}
         dispatchOpenModal={dispatchOpenModal}
         handleWatch={() =>
-          handleIncrement({
-            userId: activeUser.id,
-            id,
-            column: 'watching',
-            remove: userWatching,
+          addWatching({
+            issueId,
+            userId,
           })
         }
         isSignedIn={isSignedIn}
+        issueId={issueId}
         label={userWatching ? 'Watching' : 'Watch'}
         value={watching.length}
-        watching={watching}
       />
       <PullRequestButton
+        activeUserPullRequests={activeUserPullRequests}
         disabled={!open}
+        dispatchFetchPullRequestList={dispatchFetchPullRequestList}
         dispatchOpenIssueModal={dispatchOpenIssueModal}
         dispatchOpenModal={dispatchOpenModal}
+        isGithubVerified={isGithubVerified}
         isSignedIn={isSignedIn}
+        issueId={issueId}
         pullRequests={pullRequests}
       />
     </ButtonBar>
@@ -66,8 +77,11 @@ const IssueButtonBar = ({
 
 IssueButtonBar.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   data: T.object,
-  dispatchFetchWatchList: T.func,
+  dispatchFetchAttemptList: T.func.isRequired,
+  dispatchFetchPullRequestList: T.func,
+  dispatchFetchWatchList: T.func.isRequired,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,

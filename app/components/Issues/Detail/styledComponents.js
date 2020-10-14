@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 import { ErrorSuccessBanner } from 'components/base_ui';
 import IssueAccountManager from 'components/IssueAccountManager';
@@ -8,10 +9,13 @@ import Markdown from 'components/Markdown';
 import {
   borderColor,
   buttonRed,
+  commentHeaderColor,
   defaultFontFamily,
   defaultFontSize,
   detailFontSize,
   fundingText,
+  hoverLinkColor,
+  lightGreyColor,
   styledScrollbar,
   textColor,
 } from 'defaultStyleHelper';
@@ -21,18 +25,16 @@ const { laptop, mobile, mobileS, tablet } = mediaQueriesByDevice;
 
 export const CommentWrapper = styled.div`
   ${styledScrollbar}
-  max-height: 150rem;
-  overflow-y: auto;
   padding: 0 1rem 0 0;
 `;
 
 export const DetailContainer = styled.div`
+  align-items: flex-start;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
   justify-content: center;
-  width: 100%;
   padding: 2.5rem 0;
+  width: 100%;
 
   ${tablet} {
     padding: 2.5rem 0;
@@ -60,13 +62,13 @@ export const EditIssueWrapper = styled.div`
 `;
 
 export const ExternalLinkWrapper = styled.a`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
   display: flex;
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   font-weight: 500;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
     cursor: pointer;
   }
 
@@ -81,10 +83,28 @@ export const Icon = styled.span`
   margin-right: 0.5rem;
 `;
 
+export const InfoItemTitle = styled.div`
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  font-weight: 500;
+  letter-spacing: 0.02rem;
+  line-height: 1.5;
+  padding-right: 1rem;
+  white-space: nowrap;
+`;
+
+export const InfoItemWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  font-size: ${defaultFontSize};
+  margin: 1rem 0;
+`;
+
 export const IssueDetailColumn = styled.div`
   flex-direction: column;
   padding: 2rem;
   width: 100%;
+
   ${tablet} {
     padding: 1rem;
   }
@@ -107,23 +127,6 @@ export const IssueDetailWrapper = styled.div`
   overflow: hidden;
   padding: 0 0 3rem 0;
   width: 100%;
-`;
-
-export const LanguagesWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: 1.4rem;
-  margin: 1rem 0;
-`;
-
-export const LanguagesTitle = styled.div`
-  color: ${textColor};
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.02rem;
-  line-height: 1.5;
-  padding-right: 1rem;
-  white-space: nowrap;
 `;
 
 export const LeftPanel = styled.div`
@@ -212,15 +215,15 @@ export const StyledMarkdown = styled(Markdown)`
 `;
 
 export const TopBarWrapper = styled.div`
-  background-color: #f6f8fa;
+  background: ${commentHeaderColor};
   height: 10rem;
 `;
 
-export const UsernameLink = styled.a`
+export const UsernameLink = styled(Link)`
   display: inline;
   font-weight: bold;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
   }
 `;

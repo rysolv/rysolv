@@ -1,7 +1,14 @@
 import React from 'react';
 import T from 'prop-types';
+import {
+  CardCvcElement,
+  CardExpiryElement,
+  CardNumberElement,
+  useElements,
+  useStripe,
+} from '@stripe/react-stripe-js';
 
-import { TooltipIcon } from 'components/base_ui';
+import { StripeInput, TooltipIcon } from 'components/base_ui';
 import { CvvTooltip } from 'components/Tooltips';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -9,7 +16,7 @@ import {
   HorizontalWrapper,
   InputHeader,
   InputWrapper,
-  StyledBaseInput,
+  StyledBaseTextInput,
   StyledPrimaryAsyncButton,
   TooltipIconWrapper,
 } from './styledComponents';
@@ -18,87 +25,105 @@ const InfoIcon = iconDictionary('info');
 
 const CreditCardPaymentComponent = ({
   amount,
-  creditCardNumber,
-  cvcValue,
-  dateValue,
-  handleCreditCardNumberChange,
-  handleCvcChange,
-  handleDateChange,
-  handleSubmitPayment,
+  handleClearAllAlerts,
+  handleStripeToken,
   handleZipChange,
-  setCreditCardNumber,
-  setCvcValue,
-  setDateValue,
+  setStripeError,
   setZipValue,
   zipValue,
-}) => (
-  <div>
-    <InputWrapper>
-      <InputHeader>Card Number</InputHeader>
-      <StyledBaseInput
-        inputProps={{ maxLength: 19 }}
-        onChange={e =>
-          handleCreditCardNumberChange(e, e.target.value, setCreditCardNumber)
-        }
-        value={creditCardNumber}
-        width="50%"
-      />
-    </InputWrapper>
-    <HorizontalWrapper>
-      <InputWrapper>
-        <InputHeader>Expiration Date</InputHeader>
-        <StyledBaseInput
-          inputProps={{ maxLength: 7 }}
-          onChange={e => handleDateChange(e, e.target.value, setDateValue)}
-          placeholder="MM/YYYY"
-          value={dateValue}
-          width="50%"
+}) => {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+    if (!stripe || !elements) {
+      return;
+    }
+
+    const card = elements.getElement(CardNumberElement);
+    const result = await stripe.createToken(card, zipValue);
+    handleClearAllAlerts();
+
+    if (result.error) {
+      setStripeError({ message: result.error.message });
+    } else {
+      handleStripeToken({
+        amount,
+        token: result.token,
+        values: { depositValue: amount },
+      });
+    }
+  };
+  return (
+    <div>
+      <InputWrapper width="50%">
+        <InputHeader>Card Number</InputHeader>
+        <StyledBaseTextInput
+          InputProps={{
+            inputComponent: StripeInput,
+            inputProps: {
+              component: CardNumberElement,
+            },
+          }}
+          variant="outlined"
         />
       </InputWrapper>
-      <InputWrapper>
-        <InputHeader>
-          CVV
-          <TooltipIconWrapper>
-            <TooltipIcon Icon={InfoIcon} Tooltip={CvvTooltip} />
-          </TooltipIconWrapper>
-        </InputHeader>
-        <StyledBaseInput
-          inputProps={{ maxLength: 3 }}
-          onChange={e => handleCvcChange(e, e.target.value, setCvcValue)}
-          value={cvcValue}
-          width="50%"
+      <HorizontalWrapper>
+        <InputWrapper width="50%">
+          <InputHeader>Expiration Date</InputHeader>
+          <StyledBaseTextInput
+            InputProps={{
+              inputComponent: StripeInput,
+              inputProps: {
+                component: CardExpiryElement,
+              },
+            }}
+            variant="outlined"
+          />
+        </InputWrapper>
+        <InputWrapper width="35%">
+          <InputHeader>
+            CVV
+            <TooltipIconWrapper>
+              <TooltipIcon Icon={InfoIcon} Tooltip={CvvTooltip} />
+            </TooltipIconWrapper>
+          </InputHeader>
+          <StyledBaseTextInput
+            InputProps={{
+              inputComponent: StripeInput,
+              inputProps: {
+                component: CardCvcElement,
+              },
+            }}
+            variant="outlined"
+          />
+        </InputWrapper>
+      </HorizontalWrapper>
+      <InputWrapper width="25%">
+        <InputHeader>Postal Code</InputHeader>
+        <StyledBaseTextInput
+          inputProps={{ maxLength: 5 }}
+          onChange={e => handleZipChange(e, e.target.value, setZipValue)}
+          value={zipValue}
+          variant="outlined"
         />
       </InputWrapper>
-    </HorizontalWrapper>
-    <InputWrapper>
-      <InputHeader>Postal Code</InputHeader>
-      <StyledBaseInput
-        inputProps={{ maxLength: 5 }}
-        onChange={e => handleZipChange(e, e.target.value, setZipValue)}
-        value={zipValue}
-        width="25%"
+      <StyledPrimaryAsyncButton
+        disabled={amount <= 0}
+        label="Confirm"
+        onClick={handleSubmit}
       />
-    </InputWrapper>
-    <StyledPrimaryAsyncButton
-      label="Confirm"
-      onClick={() => handleSubmitPayment({ amount })}
-    />
-  </div>
-);
+    </div>
+  );
+};
 
 CreditCardPaymentComponent.propTypes = {
   amount: T.string,
-  creditCardNumber: T.string,
-  cvcValue: T.string,
-  dateValue: T.string,
-  handleCreditCardNumberChange: T.func,
-  handleCvcChange: T.func,
-  handleDateChange: T.func,
-  handleSubmitPayment: T.func,
+  handleClearAllAlerts: T.func,
+  handleStripeToken: T.func,
   handleZipChange: T.func,
-  setCreditCardNumber: T.func,
-  setCvcValue: T.func,
-  setDateValue: T.func,
+  setStripeError: T.func,
   setZipValue: T.func,
   zipValue: T.string,
 };

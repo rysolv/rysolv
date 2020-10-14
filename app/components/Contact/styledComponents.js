@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { defaultFontSize, headerFontSize, textColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  headerFontSize,
+  hoverLinkColor,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -57,10 +62,10 @@ export const IconWrapper = styled.div`
 `;
 
 export const LinkWrapper = styled.a`
-  color: #007bff;
+  color: ${hoverLinkColor};
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
     text-decoration: underline;
   }
 `;

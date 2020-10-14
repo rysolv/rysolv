@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return, no-useless-escape */
+import capitalize from 'lodash/capitalize';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
@@ -7,6 +9,22 @@ export const isBlank = value =>
 const isEmptyString = str => {
   if (typeof str === 'string') {
     return /^\s*$/.test(str);
+  }
+  return false;
+};
+
+export const validateEmail = value => {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const isValidEmail = re.test(String(value).toLowerCase());
+  if (!isValidEmail) {
+    return `Must enter valid email address`;
+  }
+  return false;
+};
+
+export const validateFundValue = value => {
+  if (value < 1) {
+    return `Amount must be greater than $0.99`;
   }
   return false;
 };
@@ -69,23 +87,43 @@ export const validateOrganizationUrl = value => {
   };
 };
 
-export const validationDictionary = { urlInput: validateIssueUrl };
+const validatePassword = value => {
+  const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=])(?=.{8,})/;
+  const isValidPassword = re.test(value);
+  if (!isValidPassword) {
+    return 'Password must contain one lowercase letter, one uppercase letter, one number, one special character and be at least 8 characters long';
+  }
+  return false;
+};
+
+const validateString = value => {
+  if (typeof value !== 'string') {
+    return 'Invalid value';
+  }
+  return false;
+};
+
+const validateVerifyInput = (value, { field, verifyValue }) => {
+  if (value !== verifyValue) {
+    return `${capitalize(field)}s do not match`;
+  }
+  return false;
+};
+
+export const validationDictionary = {
+  emailInput: validateEmail,
+  fundInput: validateFundValue,
+  passwordInput: validatePassword,
+  stringInput: validateString,
+  verifyInput: validateVerifyInput,
+};
 
 export const validate = ({ required, type, value, ...validationProps }) => {
   if (required && isBlank(value)) {
-    return {
-      error: 'isRequired',
-      message: 'Required field',
-    };
+    return 'Required field';
   }
-  if (!Array.isArray(type)) {
-    const validationFunction = validationDictionary[type];
+  const validationFunction = validationDictionary[type];
+  if (validationFunction) {
     return validationFunction(value, validationProps);
   }
-  // If multiple validationTypes, return the first error encountered or false if no errors
-  return type.reduce((acc, validationType) => {
-    if (acc) return acc;
-    const validationFunction = validationDictionary[validationType];
-    return validationFunction(value, validationProps);
-  }, false);
 };

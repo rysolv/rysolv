@@ -7,6 +7,7 @@ import {
   ADD_COMMENT,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
+  ADD_WATCH,
   CHANGE_ISSUE_FILTER,
   CHANGE_ISSUE_SEARCH,
   CLEAR_ALERTS,
@@ -16,6 +17,9 @@ import {
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
   CLOSE_MODAL_STATE,
+  DELETE_PULL_REQUEST_FAILURE,
+  DELETE_PULL_REQUEST_SUCCESS,
+  DELETE_PULL_REQUEST,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -25,6 +29,7 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  GENERATE_IDENTICON,
   IMPORT_ISSUE_FAILURE,
   IMPORT_ISSUE_SUCCESS,
   IMPORT_ISSUE,
@@ -32,21 +37,21 @@ import {
   INPUT_CHANGE,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
-  SUBMIT_ACCOUNT_PAYMENT_FAILURE,
-  SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
-  SUBMIT_ACCOUNT_PAYMENT,
+  UPDATE_FUNDED_ISSUE,
+  UPDATE_IS_MANUAL,
   UPDATE_ISSUE_DETAIL,
   UPDATE_ORGANIZATION,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export function addAttemptFailure(payload) {
@@ -102,6 +107,13 @@ export function addWatchSuccess(payload) {
   return {
     payload,
     type: ADD_WATCH_SUCCESS,
+  };
+}
+
+export function addWatch(payload) {
+  return {
+    payload,
+    type: ADD_WATCH,
   };
 }
 
@@ -162,6 +174,27 @@ export function closeIssue(payload) {
 export function closeIssueModalState() {
   return {
     type: CLOSE_MODAL_STATE,
+  };
+}
+
+export function deletePullRequestFailure(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_FAILURE,
+  };
+}
+
+export function deletePullRequestSuccess(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_SUCCESS,
+  };
+}
+
+export function deletePullRequest(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST,
   };
 }
 
@@ -227,6 +260,10 @@ export function fetchIssueDetail(payload) {
   };
 }
 
+export function generateIdenticon() {
+  return { type: GENERATE_IDENTICON };
+}
+
 export function importIssueFailure(payload) {
   return {
     payload,
@@ -276,6 +313,13 @@ export function openIssueModalState(payload) {
   };
 }
 
+export function resetState(payload) {
+  return {
+    payload,
+    type: RESET_STATE,
+  };
+}
+
 export function saveInfoFailure(payload) {
   return {
     payload,
@@ -297,11 +341,8 @@ export function saveInfo(payload) {
   };
 }
 
-export function searchIssuesFailure(payload) {
-  return {
-    payload,
-    type: SEARCH_ISSUES_FAILURE,
-  };
+export function searchIssuesFailure() {
+  return { type: SEARCH_ISSUES_FAILURE };
 }
 
 export function searchIssuesSuccess(payload) {
@@ -318,45 +359,28 @@ export function searchIssues(payload) {
   };
 }
 
-export function submitAccountPaymentFailure(payload) {
+export function updateFundedIssue(payload) {
   return {
     payload,
-    type: SUBMIT_ACCOUNT_PAYMENT_FAILURE,
+    type: UPDATE_FUNDED_ISSUE,
   };
 }
 
-export function submitAccountPaymentSuccess(payload) {
+export function updateIsManual(payload) {
   return {
     payload,
-    type: SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
+    type: UPDATE_IS_MANUAL,
   };
 }
 
-export function submitAccountPayment(payload) {
-  return {
-    payload,
-    type: SUBMIT_ACCOUNT_PAYMENT,
-  };
-}
-
-export function updateIssueDetail(payload) {
-  return {
-    payload,
-    type: UPDATE_ISSUE_DETAIL,
-  };
+export function updateIssueDetail() {
+  return { type: UPDATE_ISSUE_DETAIL };
 }
 
 export function updateOrganization(payload) {
   return {
     payload,
     type: UPDATE_ORGANIZATION,
-  };
-}
-
-export function upvoteIssue(payload) {
-  return {
-    payload,
-    type: UPVOTE_ISSUE,
   };
 }
 
@@ -374,6 +398,16 @@ export function upvoteIssueSuccess(payload) {
   };
 }
 
-export function verifyInfo() {
-  return { type: VERIFY_INFO };
+export function upvoteIssueTemp(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE_TEMP,
+  };
+}
+
+export function upvoteIssue(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE,
+  };
 }

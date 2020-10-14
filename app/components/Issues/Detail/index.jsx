@@ -3,8 +3,8 @@ import T from 'prop-types';
 
 import { BackNav, ConditionalRender } from 'components/base_ui';
 import { CommentCard, NewComment, NoComment } from 'components/MarkdownRender';
-import PaymentPortal from 'components/Payments';
 import UpvotePanel from 'components/Upvote';
+import PaymentPortal from 'containers/Payments';
 import iconDictionary from 'utils/iconDictionary';
 
 import IssueDetailBody from './IssueDetailBody';
@@ -33,7 +33,8 @@ const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
-  activeUser: { balance, email, firstName, id: activeUserId, issues, lastName },
+  activeUser: { id: activeUserId, issues },
+  addWatching,
   alerts: { error, success },
   data,
   data: {
@@ -45,16 +46,17 @@ const IssueDetail = ({
     language,
     name,
     open,
-    organizationId,
-    profilePic,
     rep,
     repo,
+    type,
     userId,
     username,
   },
   deviceView,
   dispatchCloseIssue,
   dispatchEditIssue,
+  dispatchFetchAttemptList,
+  dispatchFetchPullRequestList,
   dispatchFetchWatchList,
   dispatchOpenIssueModal,
   dispatchOpenModal,
@@ -62,28 +64,29 @@ const IssueDetail = ({
   handleComment,
   handleIncrement,
   handleNav,
-  handleSubmitAccountPayment,
   handleUpvote,
   isSignedIn,
-  paymentAlerts,
 }) => {
   const [displayEditView, setDisplayEditView] = useState(false);
   const [bodyChange, setBodyChange] = useState(body);
   const [languageChange, setLanguageChange] = useState(language);
   const [nameChange, setNameChange] = useState(name);
+  const [typeChange, setTypeChange] = useState(type);
   const handleClose = () => {
     setDisplayEditView(false);
     setBodyChange(body);
     setLanguageChange(language);
     setNameChange(name);
+    setTypeChange(type);
   };
 
   const handleSave = () => {
     dispatchEditIssue({
       editRequest: {
         body: bodyChange,
-        name: nameChange,
         language: languageChange,
+        name: nameChange,
+        type: typeChange,
       },
       issueId,
     });
@@ -137,10 +140,7 @@ const IssueDetail = ({
   );
 
   const primaryUser = {
-    alt: username,
-    detailRoute: `/users/detail/${userId}`,
-    profilePic,
-    small: true,
+    route: `/users/detail/${userId}`,
     username,
   };
 
@@ -148,9 +148,8 @@ const IssueDetail = ({
     comments.map(comment => {
       const user = {
         alt: comment.username,
-        detailRoute: `/users/detail/${comment.userId}`,
-        profilePic: comment.profilePic,
-        size: '4rem',
+        image: comment.profilePic,
+        route: `/users/detail/${comment.userId}`,
         username: comment.username,
       };
       return (
@@ -158,7 +157,6 @@ const IssueDetail = ({
           key={`${comment.username}-${comment.createdDate}`}
           body={comment.body}
           date={comment.createdDate}
-          handleNav={handleNav}
           userProfile={user}
         />
       );
@@ -194,7 +192,7 @@ const IssueDetail = ({
   );
   return (
     <IssueDetailContainer>
-      <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
+      <BackNav label="Back to Issues" path="/issues" />
       <ConditionalRender
         Component={
           <StyledErrorSuccessBanner
@@ -203,12 +201,13 @@ const IssueDetail = ({
             success={success}
           />
         }
-        shouldRender={isSignedIn && !!issues.find(({ id }) => issueId === id)}
+        shouldRender={isSignedIn}
       />
       <DetailContainer>
         <IssueDetailWrapper>
           <LeftPanel>
             <UpvotePanel
+              disabled={!open}
               dispatchOpenModal={dispatchOpenModal}
               handleUpvote={handleUpvote}
               isIssueDetail
@@ -223,7 +222,10 @@ const IssueDetail = ({
             <TopBarWrapper>
               <IssueTopBar
                 activeUser={activeUser}
+                addWatching={addWatching}
                 data={data}
+                dispatchFetchAttemptList={dispatchFetchAttemptList}
+                dispatchFetchPullRequestList={dispatchFetchPullRequestList}
                 dispatchFetchWatchList={dispatchFetchWatchList}
                 dispatchOpenIssueModal={dispatchOpenIssueModal}
                 dispatchOpenModal={dispatchOpenModal}
@@ -236,8 +238,6 @@ const IssueDetail = ({
               <IssueDetailHeader
                 data={data}
                 displayEditView={displayEditView}
-                handleNav={handleNav}
-                isSignedIn={isSignedIn}
                 nameChange={nameChange}
                 setNameChange={setNameChange}
               />
@@ -248,12 +248,13 @@ const IssueDetail = ({
                   bodyChange={bodyChange}
                   date={createdDate}
                   displayEditView={displayEditView}
-                  handleNav={handleNav}
                   language={language}
                   languageChange={languageChange}
                   repo={repo}
                   setBodyChange={setBodyChange}
                   setLanguageChange={setLanguageChange}
+                  setTypeChange={setTypeChange}
+                  typeChange={typeChange}
                   userProfile={primaryUser}
                 />
               </div>
@@ -263,6 +264,7 @@ const IssueDetail = ({
                 shouldRender={
                   isMobileOrLaptop &&
                   isSignedIn &&
+                  issues &&
                   !!issues.find(({ id }) => issueId === id)
                 }
               />
@@ -278,7 +280,6 @@ const IssueDetail = ({
                       <NewComment
                         activeUser={activeUser}
                         handleComment={handleComment}
-                        handleNav={handleNav}
                         issueId={issueId}
                       />
                     </CommentWrapper>
@@ -293,29 +294,20 @@ const IssueDetail = ({
           <ConditionalRender
             Component={EditIssueComponent}
             shouldRender={
-              isSignedIn && !!issues.find(({ id }) => issueId === id)
+              isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
             }
           />
           <PaymentPortal
-            balance={balance}
-            email={email}
-            firstName={firstName}
             fundedAmount={fundedAmount}
-            handleClearAlerts={handleClearAlerts}
             handleNav={handleNav}
-            handleSubmitAccountPayment={handleSubmitAccountPayment}
             isSignedIn={isSignedIn}
             issueId={issueId}
-            lastName={lastName}
             open={open}
-            organizationId={organizationId}
-            paymentAlerts={paymentAlerts}
-            userId={activeUserId}
           />
           <ConditionalRender
             Component={CloseOpenIssueComponent}
             shouldRender={
-              isSignedIn && !!issues.find(({ id }) => issueId === id)
+              isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
             }
           />
         </SidebarContainer>
@@ -326,6 +318,7 @@ const IssueDetail = ({
 
 IssueDetail.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
@@ -334,6 +327,8 @@ IssueDetail.propTypes = {
   deviceView: T.string,
   dispatchCloseIssue: T.func,
   dispatchEditIssue: T.func,
+  dispatchFetchAttemptList: T.func,
+  dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
@@ -341,10 +336,8 @@ IssueDetail.propTypes = {
   handleComment: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
-  handleSubmitAccountPayment: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
-  paymentAlerts: T.object,
 };
 
 export default IssueDetail;

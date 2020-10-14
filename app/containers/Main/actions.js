@@ -1,9 +1,13 @@
 import {
   CLOSE_MODAL_STATE,
-  FETCH_WATCH_LIST_FAILURE,
-  FETCH_WATCH_LIST_SUCCESS,
+  FETCH_ATTEMPT_LIST_RESPONSE,
+  FETCH_ATTEMPT_LIST,
+  FETCH_PULL_REQUEST_LIST_RESPONSE,
+  FETCH_PULL_REQUEST_LIST,
+  FETCH_WATCH_LIST_RESPONSE,
   FETCH_WATCH_LIST,
   OPEN_MODAL_STATE,
+  RESET_STATE,
   UPDATE_PAYMENT_MODAL,
 } from './constants';
 
@@ -13,15 +17,35 @@ export function closeModalState() {
   };
 }
 
-export function fetchWatchListFailure() {
+export function fetchAttemptListResponse() {
   return {
-    type: FETCH_WATCH_LIST_FAILURE,
+    type: FETCH_ATTEMPT_LIST_RESPONSE,
   };
 }
 
-export function fetchWatchListSuccess() {
+export function fetchAttemptList(payload) {
   return {
-    type: FETCH_WATCH_LIST_SUCCESS,
+    payload,
+    type: FETCH_ATTEMPT_LIST,
+  };
+}
+
+export function fetchPullRequestListResponse() {
+  return {
+    type: FETCH_PULL_REQUEST_LIST_RESPONSE,
+  };
+}
+
+export function fetchPullRequestList(payload) {
+  return {
+    payload,
+    type: FETCH_PULL_REQUEST_LIST,
+  };
+}
+
+export function fetchWatchListResponse() {
+  return {
+    type: FETCH_WATCH_LIST_RESPONSE,
   };
 }
 
@@ -37,6 +61,10 @@ export function openModalState(payload) {
     payload,
     type: OPEN_MODAL_STATE,
   };
+}
+
+export function resetState() {
+  return { type: RESET_STATE };
 }
 
 export function updatePaymentModal(payload) {

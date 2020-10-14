@@ -1,6 +1,8 @@
+const calculateTotalAmount = amount => (amount * 103.6).toFixed();
+
 const responseMessages = {
   unreachable:
     "ERROR: you've reached an unreachable state. Anything is possible. The limits were in our heads all along. Follow your dreams.",
 };
 
-module.exports = { responseMessages };
+module.exports = { calculateTotalAmount, responseMessages };

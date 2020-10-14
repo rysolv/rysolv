@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
@@ -14,11 +14,11 @@ import {
   Issues,
   IssuesIcon,
   IssuesWrapper,
-  NameWrapper,
+  NameLink,
   OrganizationCardItem,
   SettingsContainer,
   StatsWrapper,
-  StyledImage,
+  StyledImageLinkWrapper,
   StyledListItem,
   StyledOrganizationCard,
   TextContainer,
@@ -27,68 +27,56 @@ import {
 
 const issueIcon = iconDictionary('issue');
 
-const OrganizationCard = ({ data, handleNav }) => (
-  <Fragment>
-    <StyledOrganizationCard>
-      {data.map(
-        ({
-          description,
-          id,
-          issues,
-          logo,
-          modifiedDate,
-          name,
-          totalFunded,
-        }) => (
-          <StyledListItem key={id}>
-            <TitleContainer>
-              <NameWrapper
-                onClick={() => handleNav(`/organizations/detail/${id}`)}
-              >
-                {name}
-              </NameWrapper>
-              <SettingsContainer>
-                <DateWrapper>
-                  Last post {moment(modifiedDate).format('M/D/YYYY')}
-                </DateWrapper>
-              </SettingsContainer>
-            </TitleContainer>
-            <ContentContainer>
-              <ImageContainer>
-                <StyledImage alt="Organization Image" src={logo} />
-              </ImageContainer>
-              <TextContainer>
-                <DescriptionWrapper>{description}</DescriptionWrapper>
-                <StatsWrapper>
-                  <OrganizationCardItem>
-                    <IssuesWrapper>
-                      <IssuesIcon>{issueIcon}</IssuesIcon>
-                      <Issues>
-                        {issues.length}{' '}
-                        {issues.length === 1 ? `Issue` : `Issues`}
-                      </Issues>
-                    </IssuesWrapper>
-                  </OrganizationCardItem>
-                  <OrganizationCardItem>
-                    <FundingWrapper
-                      medium
-                      open
-                      value={formatDollarAmount(totalFunded)}
-                    />
-                  </OrganizationCardItem>
-                </StatsWrapper>
-              </TextContainer>
-            </ContentContainer>
-          </StyledListItem>
-        ),
-      )}
-    </StyledOrganizationCard>
-  </Fragment>
+const OrganizationCard = ({ data }) => (
+  <StyledOrganizationCard>
+    {data.map(
+      ({ description, id, issues, logo, modifiedDate, name, totalFunded }) => (
+        <StyledListItem key={id}>
+          <TitleContainer>
+            <NameLink to={`/organizations/detail/${id}`}>{name}</NameLink>
+            <SettingsContainer>
+              <DateWrapper>
+                Last post {moment(modifiedDate).format('M/D/YYYY')}
+              </DateWrapper>
+            </SettingsContainer>
+          </TitleContainer>
+          <ContentContainer>
+            <ImageContainer>
+              <StyledImageLinkWrapper
+                alt="Organization Image"
+                image={logo}
+                isSquare
+                route={`/organizations/detail/${id}`}
+                size="5rem"
+              />
+            </ImageContainer>
+            <TextContainer>
+              <DescriptionWrapper>{description}</DescriptionWrapper>
+              <StatsWrapper>
+                <OrganizationCardItem>
+                  <IssuesWrapper>
+                    <IssuesIcon>{issueIcon}</IssuesIcon>
+                    <Issues>
+                      {issues.length} {issues.length === 1 ? `Issue` : `Issues`}
+                    </Issues>
+                  </IssuesWrapper>
+                </OrganizationCardItem>
+                <OrganizationCardItem>
+                  <FundingWrapper
+                    medium
+                    open
+                    value={formatDollarAmount(totalFunded)}
+                  />
+                </OrganizationCardItem>
+              </StatsWrapper>
+            </TextContainer>
+          </ContentContainer>
+        </StyledListItem>
+      ),
+    )}
+  </StyledOrganizationCard>
 );
 
-OrganizationCard.propTypes = {
-  data: T.array,
-  handleNav: T.func,
-};
+OrganizationCard.propTypes = { data: T.array.isRequired };
 
 export default OrganizationCard;

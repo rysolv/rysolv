@@ -43,7 +43,7 @@ export const EmptyPersonalLinkComponent = ({
 
 export const PersonalEditComponent = ({
   handleClose,
-  handleDone,
+  handleSubmitInputChange,
   setChangePersonal,
   setValue,
   value,
@@ -63,7 +63,7 @@ export const PersonalEditComponent = ({
         icon={DoneIcon}
         label="Save"
         onClick={() =>
-          handleDone({
+          handleSubmitInputChange({
             changeInputState: setChangePersonal,
             field: 'personalLink',
           })
@@ -108,7 +108,7 @@ EmptyPersonalLinkComponent.propTypes = {
 
 PersonalEditComponent.propTypes = {
   handleClose: T.func,
-  handleDone: T.func,
+  handleSubmitInputChange: T.func,
   setChangePersonal: T.func,
   setValue: T.func,
   value: T.oneOfType([T.array, T.number, T.string]),

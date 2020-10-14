@@ -8,16 +8,20 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import IssueCard from 'components/Issues';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { fetchWatchList, openModalState } from 'containers/Main/actions';
+import {
+  fetchAttemptList,
+  fetchWatchList,
+  openModalState,
+} from 'containers/Main/actions';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
-import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
 
 import {
-  addAttempt,
+  addWatch,
   clearAlerts,
   fetchIssues,
-  inputChange,
+  resetState,
   searchIssues,
   upvoteIssue,
 } from '../actions';
@@ -28,34 +32,34 @@ import {
   makeSelectIssuesError,
   makeSelectIssuesFiltered,
   makeSelectIssuesLoading,
-  makeSelectIssuesSearchDisabled,
 } from '../selectors';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const IssuesOverview = ({
   activeUser,
+  addWatching,
   alerts,
   deviceView,
-  disabled,
+  dispatchFetchAttemptList,
   dispatchFetchIssues,
   dispatchFetchWatchList,
   dispatchOpenModal,
+  dispatchResetState,
+  dispatchUpvote,
   error,
   handleClearAlerts,
-  handleIncrement,
-  handleInputChange,
   handleNav,
   handleSearchIssues,
-  handleUpvote,
   isSignedIn,
   issues,
   loading,
   params: { searchValue },
-  search,
+  upvoteLoading,
 }) => {
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Issues Overview';
+    document.title = 'Issues';
     if (searchValue) {
       handleSearchIssues({ value: searchValue });
     } else {
@@ -63,6 +67,11 @@ const IssuesOverview = ({
     }
     return handleClearAlerts;
   }, [searchValue]);
+
+  const handleUpvote = ({ issueId, upvote }) => {
+    if (!upvoteLoading) dispatchUpvote({ issueId, upvote });
+  };
+
   return (
     <AsyncRender
       asyncData={issues}
@@ -71,19 +80,16 @@ const IssuesOverview = ({
       loading={loading}
       propsToPassDown={{
         activeUser,
+        addWatching,
         alerts,
         deviceView,
-        disabled,
+        dispatchFetchAttemptList,
         dispatchFetchWatchList,
         dispatchOpenModal,
         handleClearAlerts,
-        handleIncrement,
-        handleInputChange,
         handleNav,
-        handleSearchIssues,
         handleUpvote,
         isSignedIn,
-        search,
       }}
     />
   );
@@ -91,27 +97,27 @@ const IssuesOverview = ({
 
 IssuesOverview.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
   deviceView: T.string,
-  disabled: T.bool,
+  dispatchFetchAttemptList: T.func.isRequired,
   dispatchFetchIssues: T.func,
-  dispatchFetchWatchList: T.func,
+  dispatchFetchWatchList: T.func.isRequired,
   dispatchOpenModal: T.func,
-  error: T.oneOfType([T.object, T.bool]),
+  dispatchResetState: T.func.isRequired,
+  dispatchUpvote: T.func,
+  error: T.oneOfType([T.bool, T.string]),
   handleClearAlerts: T.func,
-  handleIncrement: T.func,
-  handleInputChange: T.func,
   handleNav: T.func,
   handleSearchIssues: T.func,
-  handleUpvote: T.func,
   isSignedIn: T.bool,
   issues: T.array,
   loading: T.bool,
   params: T.object,
-  search: T.object,
+  upvoteLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -124,11 +130,10 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   alerts: makeSelectIssues('alerts'),
-  disabled: makeSelectIssuesSearchDisabled(),
   error: makeSelectIssuesError('issues'),
   issues: makeSelectIssuesFiltered(),
   loading: makeSelectIssuesLoading('issues'),
-  search: makeSelectIssues('search'),
+  upvoteLoading: makeSelectIssuesLoading('upvoteIssue'),
   /**
    * Reducer : ViewSize
    */
@@ -140,18 +145,19 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Issues
      */
+    addWatching: payload => dispatch(addWatch(payload)),
     dispatchFetchIssues: () => dispatch(fetchIssues()),
+    dispatchResetState: () => dispatch(resetState()),
+    dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
-    handleInputChange: payload => dispatch(inputChange(payload)),
     handleSearchIssues: payload => dispatch(searchIssues(payload)),
-    handleUpvote: payload => dispatch(upvoteIssue(payload)),
-    handleIncrement: payload => dispatch(addAttempt(payload)),
     /*
      * Reducer : Main
      */
+    dispatchFetchAttemptList: payload => dispatch(fetchAttemptList(payload)),
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
-    /*
+    /**
      * Reducer : Router
      */
     handleNav: route => dispatch(push(route)),

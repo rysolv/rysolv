@@ -141,8 +141,8 @@ export const UserContentsWrapper = styled.div`
 export const UserImage = styled.img`
   height: 25rem;
   margin: 0.5rem;
-  max-width: 25rem;
-  object-fit: contain;
+  object-fit: cover;
+  width: 25rem;
 
   ${mobile} {
     align-self: center;

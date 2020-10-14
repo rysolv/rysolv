@@ -10,21 +10,31 @@ import PullRequests from 'components/PullRequests';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { fetchUserPullRequests } from '../actions';
+import {
+  clearAlerts,
+  deletePullRequest,
+  fetchUserPullRequests,
+  resetState,
+} from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectPullRequests } from '../selectors';
 
 const PullRequestOverview = ({
+  alerts,
   createSuccess,
   dispatchFetchUserPullRequests,
+  dispatchResetState,
   error,
+  handleClearAlerts,
+  handleDelete,
   loading,
   pullRequests,
-  userId,
 }) => {
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
-    dispatchFetchUserPullRequests({ userId });
+    dispatchFetchUserPullRequests();
   }, [createSuccess]);
 
   return (
@@ -34,23 +44,28 @@ const PullRequestOverview = ({
       error={error}
       isRequiredData={false}
       loading={loading}
+      propsToPassDown={{ alerts, handleClearAlerts, handleDelete }}
     />
   );
 };
 
 PullRequestOverview.propTypes = {
+  alerts: T.object,
   createSuccess: T.bool,
   dispatchFetchUserPullRequests: T.func,
+  dispatchResetState: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
+  handleClearAlerts: T.func,
+  handleDelete: T.func,
   loading: T.bool,
   pullRequests: T.array,
-  userId: T.string,
 };
 
 const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : PullRequests
    */
+  alerts: makeSelectPullRequests('alerts'),
   createSuccess: makeSelectPullRequests('createSuccess'),
   error: makeSelectPullRequests('error'),
   loading: makeSelectPullRequests('loading'),
@@ -62,8 +77,10 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : PullRequests
      */
-    dispatchFetchUserPullRequests: payload =>
-      dispatch(fetchUserPullRequests(payload)),
+    dispatchFetchUserPullRequests: () => dispatch(fetchUserPullRequests()),
+    dispatchResetState: () => dispatch(resetState()),
+    handleClearAlerts: () => dispatch(clearAlerts()),
+    handleDelete: payload => dispatch(deletePullRequest(payload)),
   };
 }
 

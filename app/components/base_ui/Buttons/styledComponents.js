@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import {
   detailFontSize,
-  primaryButtonColor,
+  lightBlueColor,
   secondaryButtonColor,
 } from 'defaultStyleHelper';
 
@@ -14,7 +14,7 @@ const baseButtonStyle = css`
   &:active {
     box-shadow: none;
   }
-  background-color: ${primaryButtonColor};
+  background-color: ${lightBlueColor};
   box-shadow: none;
   color: white;
   font-size: ${detailFontSize};
@@ -47,11 +47,17 @@ export const FlatIconButton = styled(({ disabled, ...restProps }) => (
   box-shadow: none;
 `;
 
+export const PaypalButtonWrapper = styled.div`
+  filter: ${({ disabled }) => (disabled ? 'grayscale(1)' : 'grayscale(0)')};
+  opacity: ${({ disabled }) => (disabled ? '0.7' : '1')};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'inherit')};
+`;
+
 export const PrimaryButton = styled(BaseButton)`
   ${baseButtonStyle};
 
   &:hover {
-    background-color: ${primaryButtonColor};
+    background-color: ${lightBlueColor};
   }
 `;
 
@@ -68,7 +74,7 @@ export const PrimaryAsyncButton = styled(BaseAsyncButton)`
   ${baseButtonStyle};
 
   &:hover {
-    background-color: ${primaryButtonColor};
+    background-color: ${lightBlueColor};
   }
 
   & .progressWheel {

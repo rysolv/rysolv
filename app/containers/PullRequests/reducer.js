@@ -1,12 +1,15 @@
-/* eslint-disable array-callback-return */
+/* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
+import remove from 'lodash/remove';
 
 import {
-  CLEAR_ERROR,
-  CLEAR_FORM,
+  CLEAR_ALERTS,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
   CREATE_PULL_REQUEST,
+  DELETE_PULL_REQUEST_FAILURE,
+  DELETE_PULL_REQUEST_SUCCESS,
+  DELETE_PULL_REQUEST,
   FETCH_USER_PULL_REQUESTS_FAILURE,
   FETCH_USER_PULL_REQUESTS_SUCCESS,
   FETCH_USER_PULL_REQUESTS,
@@ -16,9 +19,11 @@ import {
   IMPORT_PULL_REQUEST,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
 } from './constants';
 
 export const initialState = {
+  alerts: { error: false, success: false },
   createSuccess: false,
   error: null,
   importData: {
@@ -39,30 +44,43 @@ export const initialState = {
   step: 1,
 };
 
-/* eslint-disable default-case, no-param-reassign */
-// eslint-disable-next-line consistent-return
 const pullRequestReducer = produce((draft, { payload, type }) => {
   switch (type) {
-    case CLEAR_ERROR: {
-      draft.error = initialState.error;
+    case CLEAR_ALERTS: {
+      draft.alerts = initialState.alerts;
       break;
-    }
-    case CLEAR_FORM: {
-      return initialState;
     }
     case CREATE_PULL_REQUEST_FAILURE: {
       const { error } = payload;
-      draft.error = error;
+      draft.alerts.error = error;
       draft.loading = false;
       break;
     }
     case CREATE_PULL_REQUEST_SUCCESS: {
-      draft.loading = false;
       draft.createSuccess = true;
+      draft.loading = false;
       draft.step = 3;
       break;
     }
     case CREATE_PULL_REQUEST: {
+      draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
+    case DELETE_PULL_REQUEST_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case DELETE_PULL_REQUEST_SUCCESS: {
+      const { id, message } = payload;
+      draft.alerts.success = { message };
+      remove(draft.pullRequests, ({ pullRequestId }) => pullRequestId === id);
+      draft.loading = false;
+      break;
+    }
+    case DELETE_PULL_REQUEST: {
       draft.loading = true;
       break;
     }
@@ -73,9 +91,9 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_USER_PULL_REQUESTS_SUCCESS: {
-      const data = payload;
+      const { pullRequestArray } = payload;
       draft.loading = false;
-      draft.pullRequests = data;
+      draft.pullRequests = pullRequestArray;
       break;
     }
     case FETCH_USER_PULL_REQUESTS: {
@@ -89,32 +107,31 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
     }
     case IMPORT_PULL_REQUEST_FAILURE: {
       const { error } = payload;
-      draft.error = error;
+      draft.alerts.error = error;
       draft.loading = false;
       break;
     }
     case IMPORT_PULL_REQUEST_SUCCESS: {
-      const { importPullRequest } = payload;
+      const { pullRequest } = payload;
       draft.importSuccess = true;
-      draft.step = 2;
       draft.loading = false;
+      draft.step = 2;
 
       Object.keys(draft.importData).map(field => {
-        draft.importData[field].value = importPullRequest[field];
+        draft.importData[field].value = pullRequest[field];
       });
 
       break;
     }
     case IMPORT_PULL_REQUEST: {
+      draft.alerts = initialState.alerts;
       draft.loading = true;
       break;
     }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
-      draft.error = initialState.error;
-
       draft[form][field].error = '';
-      draft[form][field].value = value;
+      draft[form][field].value = value.trim();
       break;
     }
     case INPUT_ERROR: {
@@ -124,6 +141,9 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
         draft.importData[field].error = error[field] || '';
       });
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
   }
 }, initialState);

@@ -2,7 +2,11 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
-import { BackNav, BaseRadioButtonGroup, ConditionalRender } from 'components/base_ui';
+import {
+  BackNav,
+  BaseRadioButtonGroup,
+  ConditionalRender,
+} from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import CreditCardPaymentComponent from '../CreditCardPaymentComponent';
@@ -14,21 +18,36 @@ import {
   Divider,
   PaymentOptionWrapper,
   PaymentTitle,
-  StyledPaymentModalInputWithAdornment,
+  StyledPaymentTextInput,
   StyledText,
   Title,
   Value,
 } from '../styledComponents';
 import { StyledH3 } from '../../styledComponents';
 
-const DepositFormComponent = ({ creditCardProps, handleNav, setDisplayBottom }) => {
+const DepositFormComponent = ({
+  creditCardProps,
+  creditCardProps: { setZipValue },
+  dispatchPaypalPayment,
+  handleClearAllAlerts,
+  handleClearErrors,
+  handleValidateInput,
+  inputErrors: { depositValue: depositValueError },
+  setDisplayBottom,
+  setStripeError,
+}) => {
   const [dollarValue, setDollarValue] = useState('0');
   const [feeValue, setFeeValue] = useState('0');
   const [totalValue, setTotalValue] = useState('0');
   const [paymentType, setPaymentType] = useState('Credit card');
   useEffect(() => {
     window.scrollTo(0, 0);
-    return () => setDisplayBottom(false);
+    return () => {
+      handleClearAllAlerts();
+      handleClearErrors();
+      setDisplayBottom(false);
+      setZipValue('');
+    };
   }, []);
 
   const handleChangeDollarValue = e => {
@@ -43,9 +62,9 @@ const DepositFormComponent = ({ creditCardProps, handleNav, setDisplayBottom }) 
           .replace(/x/, '.')
         : '0';
       const formattedString =
-      string.length === 1
-        ? string.split('.')
-        : string.replace(/^0+/, '').split('.');
+        string.length === 1
+          ? string.split('.')
+          : string.replace(/^0+/, '').split('.');
 
       if (formattedString.length === 1) {
         const formattedValue = formattedString.join('.');
@@ -54,7 +73,8 @@ const DepositFormComponent = ({ creditCardProps, handleNav, setDisplayBottom }) 
         setTotalValue((formattedValue * 1.036).toString());
       }
       if (formattedString.length === 2) {
-        formattedString[0] = formattedString[0] === '' ? '0' : formattedString[0];
+        formattedString[0] =
+          formattedString[0] === '' ? '0' : formattedString[0];
         formattedString[1] = formattedString[1]
           ? formattedString[1].slice(0, 2)
           : '';
@@ -67,14 +87,18 @@ const DepositFormComponent = ({ creditCardProps, handleNav, setDisplayBottom }) 
   };
   return (
     <Fragment>
-      <BackNav
-        label="Back to Account"
-        handleNav={handleNav}
-        path="/settings/account"
-      />
+      <BackNav label="Back to Account" path="/settings/account" />
       <StyledH3>Enter your funding amount</StyledH3>
-      <StyledPaymentModalInputWithAdornment
+      <StyledPaymentTextInput
         adornmentComponent="$"
+        error={!!depositValueError}
+        helperText={depositValueError}
+        onBlur={() =>
+          handleValidateInput({
+            field: 'depositValue',
+            values: { depositValue: dollarValue },
+          })
+        }
         onChange={e => handleChangeDollarValue(e)}
         textAlign="end"
         type="text"
@@ -82,7 +106,10 @@ const DepositFormComponent = ({ creditCardProps, handleNav, setDisplayBottom }) 
       />
       <Divider />
       <StyledH3>Your funding amount</StyledH3>
-      <StyledText>Rysolv has a 3.6% standard transaction fee to cover credit card processing and the safe transfer of funds.</StyledText>
+      <StyledText>
+        Rysolv has a 3.6% standard transaction fee to cover credit card / Paypal
+        processing and the safe transfer of funds.
+      </StyledText>
       <ChargeBreakdownWrapper>
         <ChargeTitle>
           <Title>Funding amount</Title>
@@ -109,11 +136,19 @@ const DepositFormComponent = ({ creditCardProps, handleNav, setDisplayBottom }) 
       <ConditionalRender
         Component={
           <CreditCardPaymentComponent
-            amount={totalValue}
+            amount={dollarValue}
+            handleClearAllAlerts={handleClearAllAlerts}
+            setStripeError={setStripeError}
             {...creditCardProps}
           />
         }
-        FallbackComponent={PaypalPaymentComponent}
+        FallbackComponent={
+          <PaypalPaymentComponent
+            dispatchPaypalPayment={dispatchPaypalPayment}
+            dollarValue={dollarValue}
+            handleValidateInput={handleValidateInput}
+          />
+        }
         shouldRender={paymentType === 'Credit card'}
       />
     </Fragment>
@@ -122,8 +157,13 @@ const DepositFormComponent = ({ creditCardProps, handleNav, setDisplayBottom }) 
 
 DepositFormComponent.propTypes = {
   creditCardProps: T.object.isRequired,
-  handleNav: T.func.isRequired,
+  dispatchPaypalPayment: T.func.isRequired,
+  handleClearAllAlerts: T.func.isRequired,
+  handleClearErrors: T.func.isRequired,
+  handleValidateInput: T.func.isRequired,
+  inputErrors: T.object.isRequired,
   setDisplayBottom: T.func.isRequired,
+  setStripeError: T.func.isRequired,
 };
 
 export default DepositFormComponent;

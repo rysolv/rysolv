@@ -90,7 +90,7 @@ function reportSuccess(message) {
  * @returns {Function}
  */
 function reportErrors(reason) {
-  // TODO Replace with our own helpers/log that is guaranteed to be blocking?
+  // @TODO Replace with our own helpers/log that is guaranteed to be blocking?
   xmark(() => console.error(chalk.red(` ${reason}`)));
   process.exit(1);
 }

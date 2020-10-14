@@ -6,7 +6,7 @@ import {
   detailFontSize,
   headerFontSize,
   hoverLinkColor,
-  hyperlinkColor,
+  lightBlueColor,
   subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
@@ -43,6 +43,10 @@ export const ImportFormContainer = styled.section`
   .MuiFormHelperText-root {
     font-size: ${detailFontSize};
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const InputFormWrapper = styled.div`
@@ -75,7 +79,7 @@ export const StyledImportError = styled.div`
 `;
 
 export const StyledLabel = styled.div`
-  color: ${hyperlinkColor};
+  color: ${lightBlueColor};
   font-size: ${subheaderFontSize};
 
   :hover {
@@ -84,8 +88,8 @@ export const StyledLabel = styled.div`
   }
 `;
 export const StyledLink = styled.a`
+  color: ${lightBlueColor};
   font-size: ${defaultFontSize};
-  color: ${hyperlinkColor};
 
   &:hover {
     cursor: pointer;

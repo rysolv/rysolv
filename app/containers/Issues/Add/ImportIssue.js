@@ -8,10 +8,12 @@ import ImportForm from 'components/Issues/Add/ImportForm';
 
 import { validateIssueUrl } from 'utils/validate';
 import {
+  clearAlerts,
   importIssue,
   incrementStep,
   inputChange,
   inputError,
+  updateIsManual,
 } from '../actions';
 import {
   makeSelectIssueDetailError,
@@ -21,6 +23,16 @@ import {
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class ImportIssue extends React.PureComponent {
+  componentDidMount() {
+    const { dispatchUpdateIsManual } = this.props;
+    dispatchUpdateIsManual({ value: false });
+  }
+
+  componentWillUnmount() {
+    const { handleClearAlerts } = this.props;
+    handleClearAlerts();
+  }
+
   render() {
     const {
       dispatchImportIssue,
@@ -35,7 +47,7 @@ export class ImportIssue extends React.PureComponent {
       const {
         importUrl: { value: url },
       } = issueData;
-      const { error, validatedUrl, message } = validateIssueUrl(url);
+      const { error, message, validatedUrl } = validateIssueUrl(url);
 
       if (error) {
         dispatchInputError({ errors: { importUrl: message } });
@@ -67,6 +79,8 @@ export class ImportIssue extends React.PureComponent {
 ImportIssue.propTypes = {
   dispatchImportIssue: T.func,
   dispatchInputError: T.func,
+  dispatchUpdateIsManual: T.func,
+  handleClearAlerts: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   importError: T.object,
@@ -90,6 +104,8 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchImportIssue: payload => dispatch(importIssue(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
+    dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };

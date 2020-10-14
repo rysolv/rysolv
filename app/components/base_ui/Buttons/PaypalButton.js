@@ -3,10 +3,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import scriptLoader from 'react-async-script-loader';
 
+import { formatPaypalTotal } from 'utils/globalHelpers';
+
+import { PaypalButtonWrapper } from './styledComponents';
+
+const CLIENT = {
+  sandbox: process.env.PAYPAL_CLIENT_ID_TEST,
+  production: process.env.PAYPAL_CLIENT_ID,
+};
+
+const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox';
+
 class PaypalButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      disabled: true,
       showButton: false,
     };
     window.React = React;
@@ -20,36 +32,43 @@ class PaypalButton extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { isScriptLoaded, isScriptLoadSucceed } = nextProps;
-    const isLoadedButWasntLoadedBefore =
+  componentWillReceiveProps(nextProps, prevState) {
+    const { dollarValue, isScriptLoaded, isScriptLoadSucceed } = nextProps;
+    const IsLoadedButWasNotLoadedBefore =
       !this.state.showButton && !this.props.isScriptLoaded && isScriptLoaded;
-    if (isLoadedButWasntLoadedBefore) {
+    if (IsLoadedButWasNotLoadedBefore) {
       if (isScriptLoadSucceed) {
         this.setState({ showButton: true });
+      }
+    }
+    if (prevState.dollarValue !== dollarValue) {
+      if (dollarValue > 0.99) {
+        this.setState({ disabled: false });
+      } else {
+        this.setState({ disabled: true });
       }
     }
   }
 
   render() {
     const {
-      total,
-      currency,
-      env,
-      commit,
-      client,
-      onSuccess,
-      onError,
-      onCancel,
+      dispatchPaypalPayment,
+      dollarValue,
+      handleValidateInput,
+      initialValue,
+      issueId,
+      setFundValue,
+      values,
     } = this.props;
-    const { showButton } = this.state;
+    const { disabled, showButton } = this.state;
+    const formattedTotal = formatPaypalTotal(dollarValue);
     const payment = () =>
-      paypal.rest.payment.create(env, client, {
+      paypal.rest.payment.create(ENV, CLIENT, {
         transactions: [
           {
             amount: {
-              total,
-              currency,
+              total: formattedTotal,
+              currency: 'USD',
             },
           },
         ],
@@ -57,30 +76,34 @@ class PaypalButton extends React.Component {
     const onAuthorize = (data, actions) =>
       actions.payment.execute().then(() => {
         const paymentObj = {
-          paid: true,
-          cancelled: false,
-          payerID: data.payerID,
-          paymentID: data.paymentID,
-          paymentToken: data.paymentToken,
-          returnUrl: data.returnUrl,
+          amount: dollarValue,
+          issueId,
         };
-        onSuccess(paymentObj);
+        dispatchPaypalPayment(paymentObj);
+        if (setFundValue) setFundValue(initialValue);
       });
+    const onClick = () => {
+      handleValidateInput({ values });
+    };
     return (
-      <div>
+      <PaypalButtonWrapper disabled={disabled}>
         {showButton && (
           <paypal.Button.react
-            client={client}
-            commit={commit}
-            env={env}
+            client={CLIENT}
+            commit
+            env={ENV}
             onAuthorize={onAuthorize}
-            onCancel={onCancel}
-            onError={onError}
+            onClick={onClick}
+            onError={() =>
+              dispatchPaypalPayment({
+                error: 'There was an error with your Paypal payment.',
+              })
+            }
             payment={payment}
             style={{ tagline: false }}
           />
         )}
-      </div>
+      </PaypalButtonWrapper>
     );
   }
 }

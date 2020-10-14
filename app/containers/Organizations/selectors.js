@@ -25,6 +25,7 @@ const makeSelectOrganizationsDisabled = () =>
     makeSelectOrganizations('organizationData'),
     data => {
       const tempData = omit(data, [
+        'identiconId',
         'importUrl',
         'organizationId',
         'organizationLogo',
@@ -32,16 +33,6 @@ const makeSelectOrganizationsDisabled = () =>
       ]);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
-  );
-
-const makeSelectOrganizationsEditRequest = () =>
-  createSelector(
-    makeSelectOrganizations('editInfo'),
-    editInfo =>
-      Object.keys(editInfo).reduce((acc, field) => {
-        acc[field] = editInfo[field].value;
-        return acc;
-      }, {}),
   );
 
 const makeSelectOrganizationsError = prop =>
@@ -131,18 +122,16 @@ const makeSelectOrganizationsLoading = prop =>
 
 const makeSelectOrganizationsRequestBody = () =>
   createSelector(
+    makeSelectOrganizations('isManual'),
     makeSelectOrganizations('organizationData'),
-    data =>
-      Object.keys(data).reduce((acc, field) => {
+    (isManual, data) => {
+      const requestBody = Object.keys(data).reduce((acc, field) => {
         acc[field] = data[field].value;
         return acc;
-      }, {}),
-  );
-
-const makeSelectOrganizationsSearchDisabled = prop =>
-  createSelector(
-    makeSelectOrganizations('search'),
-    search => search[prop].value === '',
+      }, {});
+      if (requestBody.identiconId) requestBody.organizationLogo = '';
+      return { isManual, ...requestBody };
+    },
   );
 
 const makeSelectOrganizationsStep = prop =>
@@ -155,12 +144,10 @@ export default selectOrganizationsDomain;
 export {
   makeSelectOrganizations,
   makeSelectOrganizationsDisabled,
-  makeSelectOrganizationsEditRequest,
   makeSelectOrganizationsError,
   makeSelectOrganizationsFiltered,
   makeSelectOrganizationsFormattedData,
   makeSelectOrganizationsLoading,
   makeSelectOrganizationsRequestBody,
-  makeSelectOrganizationsSearchDisabled,
   makeSelectOrganizationsStep,
 };

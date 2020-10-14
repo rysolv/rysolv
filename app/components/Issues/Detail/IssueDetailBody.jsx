@@ -4,15 +4,14 @@ import moment from 'moment';
 
 import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
 import { BodyCard } from 'components/MarkdownRender';
-import { navHelper } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
   CommentWrapper,
   ExternalLinkWrapper,
   Icon,
-  LanguagesTitle,
-  LanguagesWrapper,
+  InfoItemTitle,
+  InfoItemWrapper,
   PostingInfoWrapper,
   StyledLanguageAutocomplete,
   StyledMarkdown,
@@ -26,13 +25,14 @@ const IssueDetailBody = ({
   bodyChange,
   date,
   displayEditView,
-  handleNav,
   language,
   languageChange,
   repo,
   setBodyChange,
   setLanguageChange,
-  userProfile: { detailRoute, username },
+  setTypeChange,
+  typeChange,
+  userProfile: { route, username },
 }) => {
   const EditIssueBodyComponent = (
     <StyledMarkdown edit body={bodyChange} handleInput={setBodyChange} />
@@ -57,18 +57,23 @@ const IssueDetailBody = ({
     </Fragment>
   );
 
+  const EditTypeComponent = (
+    <InfoItemWrapper>
+      <InfoItemTitle>Type:</InfoItemTitle>
+      <StyledLanguageAutocomplete
+        multiple={false}
+        onChange={(e, { value }) => setTypeChange(value)}
+        type="type"
+        value={{ value: typeChange }}
+      />
+    </InfoItemWrapper>
+  );
+
   return (
     <Fragment>
       <PostingInfoWrapper>
         <div>
-          Opened by{' '}
-          <UsernameLink
-            onClick={e => navHelper(e, handleNav, detailRoute)}
-            href={detailRoute}
-          >
-            {username}
-          </UsernameLink>{' '}
-          on{' '}
+          Opened by <UsernameLink to={route}>{username}</UsernameLink> on&nbsp;
           {moment(date)
             .utc()
             .format('M/D/YYYY')}
@@ -78,14 +83,18 @@ const IssueDetailBody = ({
         </ExternalLinkWrapper>
       </PostingInfoWrapper>
       <CommentWrapper>
-        <LanguagesWrapper>
-          <LanguagesTitle>Languages:</LanguagesTitle>
+        <InfoItemWrapper>
+          <InfoItemTitle>Languages:</InfoItemTitle>
           <ConditionalRender
             Component={LanguagesComponent}
             FallbackComponent={EditLanguagesComponent}
             shouldRender={!displayEditView}
           />
-        </LanguagesWrapper>
+        </InfoItemWrapper>
+        <ConditionalRender
+          Component={EditTypeComponent}
+          shouldRender={displayEditView}
+        />
         <ConditionalRender
           Component={BodyCard}
           FallbackComponent={EditIssueBodyComponent}
@@ -102,12 +111,13 @@ IssueDetailBody.propTypes = {
   bodyChange: T.string,
   date: T.string,
   displayEditView: T.bool,
-  handleNav: T.func,
   language: T.array,
   languageChange: T.array,
   repo: T.string,
   setBodyChange: T.func,
   setLanguageChange: T.func,
+  setTypeChange: T.func,
+  typeChange: T.string,
   userProfile: T.object,
 };
 

@@ -4,15 +4,17 @@ require('dotenv').config();
 
 console.log('Connected to DB');
 
+const production = process.env.NODE_ENV === 'production';
+
 const pool = new Pool({
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'password',
-  port: process.env.DB_PORT || 5432,
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'rysolv',
+  database: production ? process.env.DB_NAME : process.env.DB_NAME_DEV,
+  host: production ? process.env.DB_HOST : process.env.DB_HOST_DEV,
+  password: production ? process.env.DB_PASSWORD : process.env.DB_PASSWORD_DEV,
+  port: production ? process.env.DB_PORT : process.env.DB_PORT_DEV,
+  user: production ? process.env.DB_USER : process.env.DB_USER_DEV,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
-  max: 10, // default 10 connections
+  max: 20,
 });
 
 pool.on('connect', () => {

@@ -1,11 +1,15 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { Upvote } from 'components/base_ui';
-
-import { StyledFlatIconButton, UpvoteContainer } from './styledComponents';
+import {
+  Rep,
+  StyledCoin,
+  StyledFlatIconButton,
+  UpvoteContainer,
+} from './styledComponents';
 
 const UpvotePanel = ({
+  disabled,
   dispatchOpenModal,
   handleUpvote,
   isIssueDetail,
@@ -15,21 +19,26 @@ const UpvotePanel = ({
   upvoted,
   userId,
 }) => (
-  <UpvoteContainer isIssueDetail={isIssueDetail} upvoted={upvoted}>
+  <UpvoteContainer isIssueDetail={isIssueDetail}>
     <StyledFlatIconButton
-      Icon={<Upvote />}
+      disableRipple
+      Icon={<StyledCoin disabled={disabled} upvoted={upvoted} />}
       onClick={() => {
         if (!isSignedIn) {
           return dispatchOpenModal({ modalState: 'signIn' });
         }
-        return handleUpvote({ issueId, upvote: !upvoted, userId });
+        if (!disabled) {
+          return handleUpvote({ issueId, upvote: !upvoted, userId });
+        }
+        return null;
       }}
     />
-    {rep}
+    <Rep>{rep}</Rep>
   </UpvoteContainer>
 );
 
 UpvotePanel.propTypes = {
+  disabled: T.bool.isRequired,
   dispatchOpenModal: T.func,
   handleUpvote: T.func,
   isIssueDetail: T.bool,

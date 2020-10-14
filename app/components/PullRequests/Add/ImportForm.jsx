@@ -6,7 +6,7 @@ import {
   ImportFormContainer,
   ImportUrlLabel,
   ImportUrlWrapper,
-  StyledFormHelperText,
+  StyledErrorSuccessBanner,
   StyledHeader,
   StyledPrimaryAsyncButton,
   StyledSecondayButton,
@@ -15,7 +15,8 @@ import {
 } from './styledComponents';
 
 const ImportForm = ({
-  error,
+  alerts: { error },
+  handleClearAlerts,
   handleClose,
   handleImport,
   handleInputChange,
@@ -33,6 +34,7 @@ const ImportForm = ({
   return (
     <ImportFormContainer>
       <StyledHeader>Import Pull Request</StyledHeader>
+      <StyledErrorSuccessBanner error={error} onClose={handleClearAlerts} />
       <ImportUrlWrapper>
         <ImportUrlLabel>Pull Request URL</ImportUrlLabel>
         <TextareaWrapper>
@@ -42,7 +44,6 @@ const ImportForm = ({
             rows={2}
             value={importUrl.value}
           />
-          <StyledFormHelperText error={!!error}>{error}</StyledFormHelperText>
         </TextareaWrapper>
       </ImportUrlWrapper>
       <ButtonGroup>
@@ -58,12 +59,13 @@ const ImportForm = ({
 };
 
 ImportForm.propTypes = {
-  error: T.string,
-  handleClose: T.func,
-  handleImport: T.func,
-  handleInputChange: T.func,
-  importData: T.object,
-  loading: T.bool,
+  alerts: T.object.isRequired,
+  handleClearAlerts: T.func.isRequired,
+  handleClose: T.func.isRequired,
+  handleImport: T.func.isRequired,
+  handleInputChange: T.func.isRequired,
+  importData: T.object.isRequired,
+  loading: T.bool.isRequired,
 };
 
 export default ImportForm;

@@ -1,28 +1,28 @@
 /* eslint-disable no-underscore-dangle */
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 
-import { fetchActiveUser } from 'containers/Auth/actions';
+import {
+  fetchActiveUser,
+  updateActiveUser,
+  upvoteUserTemp,
+} from 'containers/Auth/actions';
+import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
-  DELETE_ORGANIZATION,
   FETCH_INFO,
   FETCH_ORGANIZATIONS,
   IMPORT_ORGANIZATION,
   SAVE_INFO,
   SEARCH_ORGANIZATIONS,
-  successCreateOrganizationMessage,
-  successEditOrganizationMessage,
   UPDATE_INFO,
   UPVOTE_ISSUE,
 } from './constants';
 import {
-  deleteOrganizationFailure,
-  deleteOrganizationSuccess,
   fetchInfo,
   fetchInfoFailure,
   fetchInfoSuccess,
-  fetchOrganizations,
   fetchOrganizationsFailure,
   fetchOrganizationsSuccess,
   importOrganizationFailure,
@@ -35,60 +35,48 @@ import {
   updateInfoSuccess,
   upvoteIssueFailure,
   upvoteIssueSuccess,
+  upvoteIssueTemp,
 } from './actions';
-
-export function* deleteOrganizationSaga({ payload }) {
-  const { itemId } = payload;
-  try {
-    const query = `
-    mutation{
-      deleteOrganization(id: "${itemId}")
-    }`;
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: { deleteOrganization },
-    } = yield call(post, '/graphql', graphql);
-    yield put(
-      deleteOrganizationSuccess({ itemId, message: deleteOrganization }),
-    );
-  } catch (error) {
-    yield put(deleteOrganizationFailure({ error }));
-  }
-}
 
 export function* fetchOrganizationsSaga() {
   const query = `
-  query {
-    getOrganizations {
-      id,
-      createdDate,
-      modifiedDate,
-      name,
-      description,
-      repoUrl,
-      organizationUrl,
-      issues,
-      logo,
-      verified,
-      totalFunded,
-      preferredLanguages
+    query {
+      getOrganizations {
+        __typename
+        ... on OrganizationArray {
+          organizations {
+            createdDate
+            description
+            id
+            issues
+            logo
+            modifiedDate
+            name
+            organizationUrl
+            preferredLanguages
+            repoUrl
+            totalFunded
+            verified
+          }
+        }
+        ... on Error {
+          message
+        }
+      }
     }
-  }
-`;
+  `;
   try {
     const organizationsQuery = JSON.stringify({
       query,
       variables: {},
     });
-    const { data: getOrganizations } = yield call(
-      post,
-      '/graphql',
-      organizationsQuery,
-    );
-    yield put(fetchOrganizationsSuccess(getOrganizations));
+    const {
+      data: {
+        getOrganizations: { __typename, message, organizations },
+      },
+    } = yield call(post, '/graphql', organizationsQuery);
+    if (__typename === 'Error') throw message;
+    yield put(fetchOrganizationsSuccess({ organizations }));
   } catch (error) {
     yield put(fetchOrganizationsFailure({ error }));
   }
@@ -97,176 +85,11 @@ export function* fetchOrganizationsSaga() {
 export function* fetchInfoSaga({ payload }) {
   const { itemId } = payload;
   const query = `
-  query {
-    oneOrganization(id: "${itemId}") {
-      __typename
-      ... on Organization {
-        contributors,
-        createdDate,
-        description,
-        id,
-        issues,
-        logo,
-        modifiedDate,
-        name,
-        organizationUrl,
-        ownerId,
-        preferredLanguages
-        repoUrl,
-        totalFunded,
-        verified,
-      }
-      ... on Error {
-        message
-      }
-    }
-    getActivity(column: "activity.organization_id", id: "${itemId}") {
-      __typename
-      ... on ActivityArray {
-        activityArray {
-          actionType
-          activityId
-          createdDate
-          fundedValue
-          issueId
-          issueName
-          organizationId
-          organizationName
-          profilePic
-          pullRequestId
-          userId
-          username
-        }
-      }
-      ... on Error {
-        message
-      }
-    }
-  }
-`;
-  try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: {
-        oneOrganization,
-        getActivity: { activityArray },
-      },
-    } = yield call(post, '/graphql', graphql);
-    oneOrganization.activity = activityArray;
-
-    if (oneOrganization.__typename === 'Error') {
-      throw new Error(oneOrganization.message);
-    }
-
-    yield put(fetchInfoSuccess({ organization: oneOrganization }));
-  } catch (error) {
-    yield put(fetchInfoFailure({ error }));
-  }
-}
-
-export function* importOrganizationSaga({ payload }) {
-  const { validatedUrl } = payload;
-  const query = `
-  mutation{
-    importOrganization(url: "${validatedUrl}") {
-      __typename
-      ... on ImportData {
-        organizationDescription,
-        organizationId,
-        organizationLanguages,
-        organizationLogo,
-        organizationName,
-        organizationRepo,
-        organizationUrl,
-      }
-      ... on Error {
-        message
-      }
-    }
-  }`;
-  try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: {
-        importOrganization,
-        importOrganization: { __typename },
-      },
-    } = yield call(post, '/graphql', graphql);
-
-    if (__typename === 'Error') {
-      throw new Error(importOrganization.message);
-    }
-
-    yield put(importOrganizationSuccess({ importOrganization }));
-  } catch (error) {
-    yield put(importOrganizationFailure({ error }));
-  }
-}
-
-export function* saveInfoSaga({ payload }) {
-  const {
-    requestBody: {
-      organizationDescription,
-      organizationLogo,
-      organizationName,
-      organizationRepo,
-      organizationUrl,
-    },
-    activeUser: { id: userId },
-  } = payload;
-  const query = `
-  mutation {
-    createOrganization(organizationInput: {
-      organizationDescription: "${organizationDescription}",
-      organizationLogo: "${organizationLogo}",
-      organizationName: "${organizationName}",
-      organizationRepo: "${organizationRepo}",
-      organizationUrl: "${organizationUrl}",
-      ownerId: "${userId}"
-    }) {
-      __typename
-      ... on Organization {
-        id
-        name
-      }
-      ... on Error {
-        message
-      }
-    }
-  }`;
-  try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: { createOrganization },
-    } = yield call(post, '/graphql', graphql);
-    const { __typename, message } = createOrganization;
-    if (__typename === 'Error') throw message;
-
-    yield put(fetchActiveUser({ userId }));
-    yield put(fetchOrganizations());
-    yield put(saveInfoSuccess({ message: successCreateOrganizationMessage }));
-  } catch (error) {
-    yield put(saveInfoFailure({ error }));
-  }
-}
-
-export function* searchOrganizationsSaga({ payload }) {
-  const { value } = payload;
-  const query = `
-  query {
-    searchOrganizations(value: "${value}") {
-    __typename
-      ... on OrganizationArray {
-        organizationArray {
+    query {
+      oneOrganization(id: "${itemId}") {
+        __typename
+        ... on Organization {
+          contributors
           createdDate
           description
           id
@@ -275,17 +98,32 @@ export function* searchOrganizationsSaga({ payload }) {
           modifiedDate
           name
           organizationUrl
+          ownerId
+          preferredLanguages
           repoUrl
           totalFunded
           verified
         }
+        ... on Error {
+          message
+        }
       }
-      ... on Error {
-        message
+      getOrganizationActivity(organizationId: "${itemId}") {
+        actionType
+        activityId
+        createdDate
+        fundedValue
+        issueId
+        issueName
+        organizationId
+        organizationName
+        profilePic
+        pullRequestId
+        userId
+        username
       }
     }
-  }
-`;
+  `;
   try {
     const graphql = JSON.stringify({
       query,
@@ -293,14 +131,146 @@ export function* searchOrganizationsSaga({ payload }) {
     });
     const {
       data: {
-        searchOrganizations: { __typename, message, organizationArray },
+        getOrganizationActivity,
+        oneOrganization: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-
-    yield put(searchOrganizationsSuccess({ organizations: organizationArray }));
+    restProps.activity = getOrganizationActivity;
+    yield put(fetchInfoSuccess({ organization: restProps }));
   } catch (error) {
-    yield put(searchOrganizationsFailure({ error }));
+    yield put(fetchInfoFailure({ error }));
+  }
+}
+
+export function* importOrganizationSaga({ payload }) {
+  const { validatedUrl } = payload;
+  const query = `
+    mutation{
+      importOrganization(url: "${validatedUrl}") {
+        __typename
+        ... on ImportData {
+          organizationDescription
+          organizationId
+          organizationLanguages
+          organizationLogo
+          organizationName
+          organizationRepo
+          organizationUrl
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: {
+        importOrganization: { __typename, message, ...restProps },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(importOrganizationSuccess({ importOrganization: restProps }));
+  } catch (error) {
+    yield put(importOrganizationFailure({ error: { message: error } }));
+  }
+}
+
+export function* saveInfoSaga({ payload }) {
+  const {
+    requestBody: {
+      identiconId,
+      isManual,
+      organizationDescription,
+      organizationLogo,
+      organizationName,
+      organizationRepo,
+      organizationUrl,
+    },
+  } = payload;
+
+  const query = `
+    mutation {
+      createOrganization(organizationInput: {
+        identiconId: "${identiconId}",
+        isManual: ${isManual},
+        organizationDescription: "${organizationDescription}",
+        organizationLogo: "${organizationLogo}",
+        organizationName: "${organizationName}",
+        organizationRepo: "${organizationRepo}",
+        organizationUrl: "${organizationUrl}"
+      }) {
+        __typename
+        ... on Organization {
+          id
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    const graphql = JSON.stringify({
+      query,
+      variables: { token },
+    });
+    const {
+      data: {
+        createOrganization: { __typename, id, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchActiveUser());
+    yield put(push(`/organizations/detail/${id}`));
+    yield put(saveInfoSuccess({ message }));
+  } catch (error) {
+    yield put(push('/organizations'));
+    yield put(saveInfoFailure({ error: { message: error } }));
+  }
+}
+
+export function* searchOrganizationsSaga({ payload }) {
+  const { value } = payload;
+  const query = `
+    query {
+      searchOrganizations(value: "${value}") {
+        createdDate
+        description
+        id
+        issues
+        logo
+        modifiedDate
+        name
+        organizationUrl
+        preferredLanguages
+        repoUrl
+        totalFunded
+        verified
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({
+      query,
+      variables: {},
+    });
+    const {
+      data: { searchOrganizations },
+    } = yield call(post, '/graphql', graphql);
+    yield put(
+      searchOrganizationsSuccess({ organizations: searchOrganizations }),
+    );
+  } catch (error) {
+    yield put(searchOrganizationsFailure());
   }
 }
 
@@ -317,27 +287,18 @@ export function* updateInfoSaga({ payload }) {
   } = editRequest;
   const query = `
     mutation {
-      transformOrganization(id: "${itemId}", organizationInput: {
+      transformOrganization(organizationId: "${itemId}", organizationInput: {
         organizationDescription: "${description}",
         organizationLogo: "${logo}",
         organizationName: "${name}",
         organizationPreferredLanguages: ${JSON.stringify(preferredLanguages)},
         organizationRepo: "${repoUrl}",
         organizationUrl: "${organizationUrl}",
-        organizationVerified: ${verified},
+        organizationVerified: ${verified}
       }) {
         __typename
-        ... on Organization {
-          id,
-          createdDate,
-          modifiedDate,
-          name,
-          description,
-          repoUrl,
-          organizationUrl,
-          issues,
-          logo,
-          verified,
+        ... on Success {
+          message
         }
         ... on Error {
           message
@@ -346,60 +307,73 @@ export function* updateInfoSaga({ payload }) {
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
-      data: { transformOrganization },
+      data: {
+        transformOrganization: { __typename, message },
+      },
     } = yield call(post, '/graphql', graphql);
-    if (transformOrganization.__typename === 'Error') {
-      throw transformOrganization;
-    }
+    if (__typename === 'Error') throw message;
     yield put(fetchInfo({ itemId }));
-    yield put(updateInfoSuccess({ message: successEditOrganizationMessage }));
+    yield put(updateInfoSuccess({ message }));
   } catch (error) {
-    yield put(updateInfoFailure({ error }));
+    yield put(updateInfoFailure({ error: { message: error } }));
   }
 }
 
 export function* upvoteIssueSaga({ payload }) {
-  const { issueId, upvote, userId } = payload;
+  const { issueId, upvote } = payload;
+
+  // Update front end upvote. Reduce percieved loading time.
+  yield put(upvoteIssueTemp({ issueId, upvote }));
+  yield put(upvoteUserTemp({ issueId, upvote }));
+
   const upvoteIssueQuery = `
     mutation {
-      upvoteIssue(id: "${issueId}", upvote: ${upvote} ) {
-        id,
-        rep
-      }
-      userUpvote(id: "${userId}", upvote: ${upvote} ) {
-        id,
-        rep
-      }
-      updateUserArray(id: "${userId}", column: "upvotes", data: "${issueId}", remove: ${!upvote} ) {
-        attempting,
-        watching
+      upvoteIssue(issueId: "${issueId}", upvote: ${upvote}) {
+        __typename
+        ... on Upvote {
+          issueRep
+          userRep
+        }
+        ... on Error {
+          message
+        }
       }
     }
   `;
   try {
+    const token = yield call(fetchCurrentSession);
+
     const upvoteIssue = JSON.stringify({
       query: upvoteIssueQuery,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
-        upvoteIssue: { id, rep },
+        upvoteIssue: { __typename, issueRep, message, userRep },
       },
     } = yield call(post, '/graphql', upvoteIssue);
-    yield put(upvoteIssueSuccess({ id, rep }));
-    yield put(fetchActiveUser({ userId }));
+    if (__typename === 'Error') throw message;
+    yield put(upvoteIssueSuccess({ issueId, issueRep }));
+    if (upvote) {
+      yield put(updateActiveUser({ rep: userRep, addUpvote: issueId }));
+    } else {
+      yield put(updateActiveUser({ rep: userRep, removeUpvote: issueId }));
+    }
   } catch (error) {
-    yield put(upvoteIssueFailure({ error }));
+    yield put(upvoteIssueFailure({ error: { message: error } }));
+    yield put(upvoteIssueTemp({ issueId, upvote: !upvote }));
+    yield put(upvoteUserTemp({ issueId, upvote: !upvote }));
   }
 }
 
 export default function* watcherSaga() {
-  yield takeLatest(DELETE_ORGANIZATION, deleteOrganizationSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(FETCH_ORGANIZATIONS, fetchOrganizationsSaga);
   yield takeLatest(IMPORT_ORGANIZATION, importOrganizationSaga);

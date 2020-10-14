@@ -4,8 +4,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import {
   defaultFontSize,
   detailFontSize,
-  hyperlinkColor,
-  selectedColor,
+  lightBlueColor,
+  verifyColor,
 } from 'defaultStyleHelper';
 
 export const StyledBack = styled.div`
@@ -17,6 +17,15 @@ export const StyledBack = styled.div`
 
 export const StyledCode = styled.div`
   color: white;
+`;
+
+export const StyledCoin = styled.div`
+  display: flex;
+
+  svg {
+    height: 1.75rem;
+    width: 1.75rem;
+  }
 `;
 
 export const StyledComment = styled.div`
@@ -49,6 +58,7 @@ export const StyledMonocleIcon = styled.div`
   color: inherit;
   display: inline-block;
   text-align: center;
+
   * {
     fill: inherit;
     stroke: inherit;
@@ -103,42 +113,17 @@ export const StyledSettings = styled.div`
   text-align: center;
 
   &:hover {
-    color: ${hyperlinkColor};
-    cursor: pointer;
-  }
-`;
-
-export const StyledStar = styled.div`
-  color: #ffd600;
-  display: inline-block;
-  text-align: center;
-
-  svg {
-    height: 2rem;
-    width: 2rem;
-  }
-`;
-
-export const StyledVerified = styled.div`
-  color: rgb(8, 178, 110);
-  display: inline-block;
-  text-align: center;
-`;
-
-export const StyledUpvote = styled.div`
-  color: #37474f;
-  display: inline-block;
-  text-align: center;
-  * {
-    font-size: large;
-  }
-
-  &:hover {
-    color: ${selectedColor};
+    color: ${lightBlueColor};
     cursor: pointer;
   }
 `;
 
 export const StyledTooltipLabel = styled.span`
   font-size: ${detailFontSize};
+`;
+
+export const StyledVerified = styled.div`
+  color: ${verifyColor};
+  display: inline-block;
+  text-align: center;
 `;

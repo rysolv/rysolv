@@ -1,25 +1,25 @@
 import {
   CLEAR_ALERTS,
-  CLEAR_STATE,
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
   FETCH_ACTIVE_USER,
-  FETCH_USER_SESSION,
   FETCH_USER_SESSION_FAILURE,
   FETCH_USER_SESSION_SUCCESS,
-  SEARCH_ORGANIZATIONS_FAILURE,
-  SEARCH_ORGANIZATIONS_SUCCESS,
-  SEARCH_ORGANIZATIONS,
+  FETCH_USER_SESSION,
+  RESEND_SIGN_UP,
+  RESET_ROUTE,
   SIGN_IN_FAILURE,
   SIGN_IN_SUCCESS,
   SIGN_IN,
-  SIGN_OUT_FAILURE,
-  SIGN_OUT_SUCCESS,
+  SIGN_OUT_RESPONSE,
   SIGN_OUT,
   SIGN_UP_FAILURE,
   SIGN_UP_SUCCESS,
   SIGN_UP,
   UPDATE_ACTIVE_USER,
+  UPVOTE_USER_TEMP,
+  USER_ATTEMPTING_TEMP,
+  USER_WATCHING_TEMP,
   VERIFY_EMAIL_FAILURE,
   VERIFY_EMAIL_SUCCESS,
   VERIFY_EMAIL,
@@ -28,13 +28,6 @@ import {
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
-  };
-}
-
-export function clearState(payload) {
-  return {
-    payload,
-    type: CLEAR_STATE,
   };
 }
 
@@ -52,11 +45,16 @@ export function fetchActiveUserSuccess(payload) {
   };
 }
 
-export function fetchActiveUser(payload) {
-  return {
-    payload,
-    type: FETCH_ACTIVE_USER,
-  };
+export function fetchActiveUser() {
+  return { type: FETCH_ACTIVE_USER };
+}
+
+export function fetchUserSessionFailure() {
+  return { type: FETCH_USER_SESSION_FAILURE };
+}
+
+export function fetchUserSessionSuccess() {
+  return { type: FETCH_USER_SESSION_SUCCESS };
 }
 
 export function fetchUserSession() {
@@ -65,39 +63,15 @@ export function fetchUserSession() {
   };
 }
 
-export function fetchUserSessionFailure(payload) {
+export function resendSignUp(payload) {
   return {
     payload,
-    type: FETCH_USER_SESSION_FAILURE,
+    type: RESEND_SIGN_UP,
   };
 }
 
-export function fetchUserSessionSuccess(payload) {
-  return {
-    payload,
-    type: FETCH_USER_SESSION_SUCCESS,
-  };
-}
-
-export function searchOrganizationsFailure(payload) {
-  return {
-    payload,
-    type: SEARCH_ORGANIZATIONS_FAILURE,
-  };
-}
-
-export function searchOrganizationsSuccess(payload) {
-  return {
-    payload,
-    type: SEARCH_ORGANIZATIONS_SUCCESS,
-  };
-}
-
-export function searchOrganizations(payload) {
-  return {
-    payload,
-    type: SEARCH_ORGANIZATIONS,
-  };
+export function resetRoute() {
+  return { type: RESET_ROUTE };
 }
 
 export function signInFailure(payload) {
@@ -121,23 +95,14 @@ export function signIn(payload) {
   };
 }
 
-export function signOutFailure(payload) {
+export function signOutResponse() {
   return {
-    payload,
-    type: SIGN_OUT_FAILURE,
+    type: SIGN_OUT_RESPONSE,
   };
 }
 
-export function signOutSuccess(payload) {
+export function signOut() {
   return {
-    payload,
-    type: SIGN_OUT_SUCCESS,
-  };
-}
-
-export function signOut(payload) {
-  return {
-    payload,
     type: SIGN_OUT,
   };
 }
@@ -170,6 +135,27 @@ export function updateActiveUser(payload) {
   };
 }
 
+export function upvoteUserTemp(payload) {
+  return {
+    payload,
+    type: UPVOTE_USER_TEMP,
+  };
+}
+
+export function userAttemptingTemp(payload) {
+  return {
+    payload,
+    type: USER_ATTEMPTING_TEMP,
+  };
+}
+
+export function userWatchingTemp(payload) {
+  return {
+    payload,
+    type: USER_WATCHING_TEMP,
+  };
+}
+
 export function verifyEmailFailure(payload) {
   return {
     payload,
@@ -177,11 +163,8 @@ export function verifyEmailFailure(payload) {
   };
 }
 
-export function verifyEmailSuccess(payload) {
-  return {
-    payload,
-    type: VERIFY_EMAIL_SUCCESS,
-  };
+export function verifyEmailSuccess() {
+  return { type: VERIFY_EMAIL_SUCCESS };
 }
 
 export function verifyEmail(payload) {

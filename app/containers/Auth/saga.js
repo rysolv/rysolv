@@ -1,143 +1,240 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import Auth from '@aws-amplify/auth';
+
+import { resetState } from 'containers/Main/actions';
+import { incrementStep } from 'containers/Signin/actions';
+import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
   FETCH_ACTIVE_USER,
   FETCH_USER_SESSION,
-  SEARCH_ORGANIZATIONS,
+  RESEND_SIGN_UP,
   SIGN_IN,
   SIGN_OUT,
   SIGN_UP,
+  signInError,
+  signUpError,
   VERIFY_EMAIL,
+  verifyEmailError,
 } from './constants';
-
 import {
   fetchActiveUser,
   fetchActiveUserFailure,
   fetchActiveUserSuccess,
   fetchUserSessionFailure,
   fetchUserSessionSuccess,
-  searchOrganizationsFailure,
-  searchOrganizationsSuccess,
+  resendSignUp,
   signIn,
-  signOut,
   signInFailure,
   signInSuccess,
-  signOutFailure,
-  signOutSuccess,
+  signOut,
+  signOutResponse,
   signUpFailure,
   signUpSuccess,
   verifyEmailFailure,
+  verifyEmailSuccess,
 } from './actions';
 
-export function* fetchActiveUserSaga({ payload }) {
-  const { userId } = payload;
+export function* fetchActiveUserSaga() {
   try {
     const query = `
-    query{
-      oneUser(id: "${userId}") {
-        attempting,
-        balance,
-        email,
-        firstName,
-        id,
-        issues,
-        lastName,
-        organizations,
-        profilePic,
-        pullRequests,
-        rep,
-        upvotes,
-        username,
-        watching,
+      query{
+        getUserSettings {
+          __typename
+          ... on User {
+            attempting
+            balance
+            email
+            firstName
+            id
+            isGithubVerified
+            issues
+            lastName
+            organizations
+            profilePic
+            pullRequests
+            rep
+            upvotes
+            username
+            watching
+          }
+          ... on Error {
+            message
+          }
+        }
       }
-    }`;
+    `;
+    const token = yield call(fetchCurrentSession);
+
     const graphql = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
-      data: { oneUser },
+      data: {
+        getUserSettings: { __typename, message, ...restProps },
+      },
     } = yield call(post, '/graphql', graphql);
-    yield put(fetchActiveUserSuccess({ oneUser }));
+    if (__typename === 'Error') throw message;
+    yield put(fetchActiveUserSuccess({ user: restProps }));
   } catch (error) {
     yield put(signOut());
-    yield put(fetchActiveUserFailure({ error }));
+    yield put(fetchActiveUserFailure({ error: { message: error } }));
   }
 }
 
 export function* fetchUserSessionSaga() {
-  const fetchCurrentSession = async () => {
+  const fetchActiveUserSession = async () => {
     const { username } = await Auth.currentAuthenticatedUser();
     return { username };
   };
 
   try {
-    const { username: userId } = yield call(fetchCurrentSession);
+    const { username: userId } = yield call(fetchActiveUserSession);
     yield put(fetchActiveUser({ userId }));
     yield put(fetchUserSessionSuccess());
   } catch (error) {
-    yield put(fetchUserSessionFailure({ error }));
+    yield put(fetchUserSessionFailure());
   }
 }
 
-export function* signInSaga({ payload }) {
-  const { username, password } = payload;
+export function* removeUserData() {
+  yield put(resetState());
+}
 
-  const cognitoSignIn = async () => {
-    const user = await Auth.signIn(username, password);
-    return user;
-  };
-  const cognitoSignOut = async () => {
-    await Auth.signOut();
+export function* resendSignUpSaga({ payload }) {
+  const { username } = payload;
+
+  const cognitoResendSignUp = async () => {
+    await Auth.resendSignUp(username);
   };
 
   try {
-    const {
-      attributes: { sub: userId },
-    } = yield call(cognitoSignIn);
-
+    yield call(cognitoResendSignUp);
+    // Get user account that has been signed up but not email verified
     const query = `
-    query{
-      oneUser(id: "${userId}") {
-        attempting,
-        balance,
-        email,
-        firstName,
-        id,
-        issues,
-        lastName,
-        organizations,
-        profilePic,
-        pullRequests,
-        rep,
-        upvotes,
-        username,
-        watching,
+      query {
+        oneUserSignUp(email: "${username}") {
+          __typename
+          ... on User {
+            email
+            id
+            username
+          }
+          ... on Error {
+            message
+          }
+        }
       }
-    }`;
+    `;
     const graphql = JSON.stringify({
       query,
       variables: {},
     });
     const {
-      data: { oneUser },
+      data: {
+        oneUserSignUp: { __typename, message, ...restProps },
+      },
     } = yield call(post, '/graphql', graphql);
-    yield put(signInSuccess({ oneUser }));
+    if (__typename === 'Error') throw message;
+    yield put(incrementStep({ step: 2 }));
+    yield put(signUpSuccess({ activeUser: restProps }));
   } catch (error) {
+    const { message } = error;
+    const messageToRender = message || signInError;
+    yield put(signInFailure({ error: { message: messageToRender } }));
+  }
+}
+
+export function* signInSaga({ payload }) {
+  const { password, username } = payload;
+
+  const cognitoSignIn = async () => {
+    const user = await Auth.signIn(username, password);
+    return user;
+  };
+
+  const cognitoSignOut = async () => {
+    await Auth.signOut();
+  };
+
+  try {
+    yield call(cognitoSignIn);
+
+    const query = `
+      query{
+        getUserSettings {
+          __typename
+          ... on User {
+            attempting
+            balance
+            email
+            firstName
+            id
+            isGithubVerified
+            issues
+            lastName
+            organizations
+            profilePic
+            pullRequests
+            rep
+            upvotes
+            username
+            watching
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    `;
+    const token = yield call(fetchCurrentSession);
+
+    const graphql = JSON.stringify({
+      query,
+      variables: { token },
+    });
+    const {
+      data: {
+        getUserSettings: { __typename, message, ...restProps },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(signInSuccess({ user: restProps }));
+  } catch (error) {
+    const { code, message } = error;
+    if (code === 'UserNotConfirmedException') {
+      yield put(resendSignUp({ username }));
+    } else {
+      const messageToRender = message || signInError;
+      yield call(cognitoSignOut);
+      yield put(signInFailure({ error: { message: messageToRender } }));
+    }
+  }
+}
+
+export function* signOutSaga() {
+  const cognitoSignOut = async () => {
+    await Auth.signOut();
+  };
+  try {
     yield call(cognitoSignOut);
-    yield put(signInFailure({ error }));
+    yield call(removeUserData);
+    yield put(signOutResponse());
+  } catch (error) {
+    yield call(removeUserData);
+    yield put(signOutResponse());
   }
 }
 
 export function* signUpSaga({ payload }) {
-  const { username, password, firstName, lastName, email } = payload;
+  const { email, firstName, lastName, password, username } = payload;
 
   const cognitoSignUp = async () => {
     const signUpResponse = await Auth.signUp({
-      username: email,
       password,
+      username: email,
     });
     return signUpResponse;
   };
@@ -163,12 +260,14 @@ export function* signUpSaga({ payload }) {
     });
     const {
       data: {
-        checkDuplicateUser: { __typename, message },
+        checkDuplicateUser: {
+          __typename: checkDuplicateUserTypename,
+          message: checkDuplicateUserMessage,
+        },
       },
     } = yield call(post, '/graphql', request);
-    if (__typename === 'Error') {
-      throw new Error(message);
-    }
+    if (checkDuplicateUserTypename === 'Error')
+      throw new Error(checkDuplicateUserMessage);
 
     // Register email / pasword with Cognito
     const { userSub } = yield call(cognitoSignUp);
@@ -185,9 +284,15 @@ export function* signUpSaga({ payload }) {
             username: "${username}"
           }
         ) {
-          id,
-          username,
-          email
+          __typename
+          ... on User {
+            email
+            id
+            username
+          }
+          ... on Error {
+            message
+          }
         }
       }
     `;
@@ -196,64 +301,26 @@ export function* signUpSaga({ payload }) {
       variables: {},
     });
     const {
-      data: { createUser },
+      data: {
+        createUser: {
+          __typename: createUserTypename,
+          message: createUserMessage,
+          ...restProps
+        },
+      },
     } = yield call(post, '/graphql', graphql);
-
-    yield put(signUpSuccess({ createUser }));
+    if (createUserTypename === 'Error') throw new Error(createUserMessage);
+    yield put(incrementStep({ step: 2 }));
+    yield put(signUpSuccess({ activeUser: restProps }));
   } catch (error) {
-    yield put(signUpFailure({ error }));
-  }
-}
-
-export function* getUserOrganizationsSaga({ payload }) {
-  const { id } = payload;
-  const query = `
-    query {
-      getUserOrganizations(id: "${id}") {
-        id,
-        createdDate,
-        modifiedDate,
-        name,
-        description,
-        repoUrl,
-        organizationUrl,
-        issues,
-        logo,
-        verified,
-        totalFunded,
-      }
-    }
-  `;
-  try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: { getUserOrganizations },
-    } = yield call(post, '/graphql', graphql);
-    yield put(
-      searchOrganizationsSuccess({ organizations: getUserOrganizations }),
-    );
-  } catch (error) {
-    yield put(searchOrganizationsFailure({ error }));
-  }
-}
-
-export function* signOutSaga() {
-  const cognitoSignOut = async () => {
-    await Auth.signOut();
-  };
-  try {
-    yield call(cognitoSignOut);
-    yield put(signOutSuccess());
-  } catch (error) {
-    yield put(signOutFailure({ error }));
+    const { message } = error;
+    const messageToRender = message || signUpError;
+    yield put(signUpFailure({ error: { message: messageToRender } }));
   }
 }
 
 export function* verifyEmailSaga({ payload }) {
-  const { userEmail, password, userId, verificationCode } = payload;
+  const { password, userEmail, userId, verificationCode } = payload;
 
   const cognitoSignUp = async () => {
     const signUpResponse = await Auth.confirmSignUp(
@@ -270,14 +337,11 @@ export function* verifyEmailSaga({ payload }) {
     // Update email to be verified
     const query = `
       mutation {
-        transformUser( id: "${userId}",
-          userInput: {
-            emailVerified: true,
-          }
-        ){
-           __typename
-          ... on User {
-            id
+        verifyUserEmail( userId: "${userId}")
+          {
+          __typename
+          ... on Success {
+            message
           }
           ... on Error {
             message
@@ -289,18 +353,25 @@ export function* verifyEmailSaga({ payload }) {
       query,
       variables: {},
     });
-    yield call(post, '/graphql', graphql);
-
-    yield put(signIn({ username: userEmail, password }));
+    const {
+      data: {
+        verifyUserEmail: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw new Error(message);
+    yield put(signIn({ password, username: userEmail }));
+    yield put(verifyEmailSuccess());
   } catch (error) {
-    yield put(verifyEmailFailure({ error }));
+    const { message } = error;
+    const messageToRender = message || verifyEmailError;
+    yield put(verifyEmailFailure({ error: { message: messageToRender } }));
   }
 }
 
 export default function* watcherSaga() {
   yield takeLatest(FETCH_ACTIVE_USER, fetchActiveUserSaga);
   yield takeLatest(FETCH_USER_SESSION, fetchUserSessionSaga);
-  yield takeLatest(SEARCH_ORGANIZATIONS, getUserOrganizationsSaga);
+  yield takeLatest(RESEND_SIGN_UP, resendSignUpSaga);
   yield takeLatest(SIGN_IN, signInSaga);
   yield takeLatest(SIGN_OUT, signOutSaga);
   yield takeLatest(SIGN_UP, signUpSaga);

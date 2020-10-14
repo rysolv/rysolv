@@ -8,7 +8,13 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
 import { BaseDropDownMenu, ErrorSuccessBanner } from 'components/base_ui';
-import { defaultFontSize, headerColor, textColor } from 'defaultStyleHelper';
+import {
+  commentHeaderColor,
+  defaultFontSize,
+  headerColor,
+  lightBlueColor,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -69,9 +75,9 @@ export const InputIconGroup = styled.label`
   align-items: center;
   background-color: white;
   border-radius: 2rem;
-  border: 0.2rem solid #1e88e5;
+  border: 0.2rem solid ${lightBlueColor};
   bottom: -1rem;
-  color: #1e88e5;
+  color: ${lightBlueColor};
   display: flex;
   height: 4rem;
   justify-content: center;
@@ -274,18 +280,18 @@ export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
 `;
 
 export const TabItem = styled.div`
-  color: #f6f8fa;
+  color: ${commentHeaderColor};
   font-size: 1.4rem;
   padding: 0.5rem 0;
 `;
 
 export const TabItemBorder = styled.div`
   border-bottom: ${({ isActive }) =>
-    isActive ? '0.2rem solid #f6f8fa' : 'none'};
+    isActive ? `0.2rem solid ${commentHeaderColor}` : 'none'};
 
   &:hover {
     cursor: pointer;
-    border-bottom: 0.2rem solid #f6f8fa;
+    border-bottom: 0.2rem solid ${commentHeaderColor};
   }
 `;
 
@@ -305,9 +311,10 @@ export const UserCardWrapper = styled.div`
 `;
 
 export const UserImage = styled.img`
+  height: 25rem;
   margin: 0.5rem;
-  max-height: 25rem;
-  max-width: 25rem;
+  object-fit: cover;
+  width: 25rem;
 
   ${mobile} {
     align-self: center;

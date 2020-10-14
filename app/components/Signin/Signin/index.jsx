@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { MainTextInput } from 'components/base_ui';
+import { MainTextInput, PasswordTextInput } from 'components/base_ui';
 
 import {
   InputFormWrapper,
@@ -19,69 +19,80 @@ const Signin = ({
   handleClearAuthAlerts,
   handleInputChange,
   handleSignIn,
+  handleValidateInput,
+  loading,
   signInDisabled,
-  signInLoading,
-}) => (
-  <SigninWrapper>
-    <InputFormWrapper>
-      <Title>Sign in</Title>
-      {error.error && (
-        <StyledErrorSuccessBanner
-          error={error}
-          onClose={handleClearAuthAlerts}
+}) => {
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter' && !signInDisabled) {
+      handleSignIn();
+    }
+  };
+
+  return (
+    <SigninWrapper onKeyDown={e => handleKeypress(e)}>
+      <InputFormWrapper>
+        <Title>Sign in</Title>
+        {error && (
+          <StyledErrorSuccessBanner
+            error={error}
+            onClose={handleClearAuthAlerts}
+          />
+        )}
+        <MainTextInput
+          autoComplete="email"
+          error={!!email.error}
+          helperText={email.error}
+          label="Email"
+          onBlur={() => handleValidateInput({ field: 'email' })}
+          onChange={e =>
+            handleInputChange({
+              field: 'email',
+              form: 'signIn',
+              value: e.target.value,
+            })
+          }
+          type="email"
+          value={email.value}
         />
-      )}
-      <MainTextInput
-        autoComplete="email"
-        error={!!email.error}
-        helperText={email.error}
-        label="Email"
-        onChange={e =>
-          handleInputChange({
-            field: 'email',
-            form: 'signIn',
-            value: e.target.value,
-          })
-        }
-        type="email"
-        value={email.value}
-      />
-      <MainTextInput
-        autoComplete="current-password"
-        error={!!password.error}
-        helperText={password.error}
-        label="Password"
-        onChange={e =>
-          handleInputChange({
-            field: 'password',
-            form: 'signIn',
-            value: e.target.value,
-          })
-        }
-        type="password"
-        value={password.value}
-      />
-      <StyledPrimaryAsyncButton
-        disabled={!signInDisabled}
-        label="Sign in"
-        loading={signInLoading}
-        onClick={() => handleSignIn()}
-      />
-    </InputFormWrapper>
-    <SubText>
-      Don’t have an account? <Link to="/signup">Sign up</Link>
-    </SubText>
-  </SigninWrapper>
-);
+        <PasswordTextInput
+          autoComplete="current-password"
+          error={!!password.error}
+          helperText={password.error}
+          label="Password"
+          onBlur={() => handleValidateInput({ field: 'password' })}
+          onChange={e =>
+            handleInputChange({
+              field: 'password',
+              form: 'signIn',
+              value: e.target.value,
+            })
+          }
+          value={password.value}
+        />
+        <StyledPrimaryAsyncButton
+          disabled={signInDisabled}
+          label="Sign in"
+          loading={loading}
+          onClick={handleSignIn}
+        />
+      </InputFormWrapper>
+      <SubText>
+        Don’t have an account? <Link to="/signup">Sign up</Link>
+      </SubText>
+    </SigninWrapper>
+  );
+};
 
 Signin.propTypes = {
   data: T.object.isRequired,
-  error: T.object,
+  error: T.oneOfType([T.bool, T.object]).isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleSignIn: T.func.isRequired,
-  signInDisabled: T.bool,
-  signInLoading: T.bool,
+  handleValidateInput: T.func.isRequired,
+  loading: T.bool.isRequired,
+  signInDisabled: T.bool.isRequired,
 };
 
 export default Signin;

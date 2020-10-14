@@ -16,7 +16,10 @@ import {
   dividerBorder,
   headerColor,
   hoverLinkColor,
+  lightBlueColor,
   textColor,
+  verifyBackgroundColor,
+  verifyColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
@@ -115,9 +118,9 @@ export const Description = styled.div`
 `;
 
 export const DetailContainer = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 90%;
 `;
 
@@ -129,8 +132,8 @@ export const DetailViewContainer = styled.div`
 `;
 
 export const Divider = styled.div`
-  display: ${({ shouldHide }) => (shouldHide ? 'none' : 'inherit')};
   border-top: ${dividerBorder};
+  display: ${({ shouldHide }) => (shouldHide ? 'none' : 'inherit')};
   margin: 1rem auto;
   width: 90%;
 `;
@@ -186,9 +189,9 @@ export const IssueAttempts = styled.div`
 
 export const IssueContent = styled.div`
   display: flex;
-  width: 100%;
   height: 10rem;
   margin: 1rem 0;
+  width: 100%;
 
   ${mobile} {
     height: auto;
@@ -256,9 +259,9 @@ export const IssueNameWrapper = styled.div`
 
 export const IssueOpen = styled.div`
   background-color: ${({ open }) =>
-    open ? 'rgb(229, 251, 242)' : 'rgb(237, 238, 240)'};
+    open ? verifyBackgroundColor : 'rgb(237, 238, 240)'};
   border-radius: 0.25rem;
-  color: ${({ open }) => (open ? 'rgb(8, 178, 110)' : '0')};
+  color: ${({ open }) => (open ? verifyColor : '0')};
   display: inline-block;
   font-weight: 700;
   line-height: 1.5;
@@ -404,8 +407,8 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
 
 export const StyledSecondayButton = styled(SecondaryButton)`
   background-color: white;
-  border: 0.1rem solid #1e88e5;
-  color: #1e88e5;
+  border: 0.1rem solid ${lightBlueColor};
+  color: ${lightBlueColor};
 
   &:hover {
     background-color: white;
@@ -437,6 +440,7 @@ export const StyledTitled = styled.div`
 
 export const StyledWordLink = styled(Link)`
   font-weight: 700;
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 
   &:hover {
     cursor: pointer;
@@ -473,10 +477,10 @@ export const TopLanguagesContainer = styled.div`
 `;
 
 export const VerifiedWrapper = styled.div`
-  background-color: rgb(229, 251, 242);
+  background-color: ${verifyBackgroundColor};
   border-radius: 0.5rem;
   border: 0.1rem solid rgba(27, 31, 35, 0.15);
-  color: rgb(8, 178, 110);
+  color: ${verifyColor};
   height: fit-content;
   padding: 0.5rem;
   margin: 0 2rem;

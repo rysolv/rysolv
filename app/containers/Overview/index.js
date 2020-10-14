@@ -18,11 +18,12 @@ import { changeUserFilter, changeUserSearch } from 'containers/Users/actions';
 import { makeSelectIssues } from 'containers/Issues/selectors';
 import { makeSelectOrganizations } from 'containers/Organizations/selectors';
 import { makeSelectUsers } from 'containers/Users/selectors';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 import autocompleteDictionary from 'utils/autocompleteDictionary';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { fetchOrganizationOptions } from './actions';
+import { fetchOrganizationOptions, resetState } from './actions';
 import { overviewDirectory } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
@@ -38,7 +39,9 @@ import {
 const languageOptions = autocompleteDictionary.language;
 
 const Overview = ({
+  deviceView,
   dispatchFetchOrganizationOptions,
+  dispatchResetState,
   filterIssueValues,
   filterOrganizationValues,
   filterUserValues,
@@ -53,6 +56,8 @@ const Overview = ({
 }) => {
   useEffect(() => {
     dispatchFetchOrganizationOptions();
+    window.scrollTo(0, 0);
+    return dispatchResetState;
   }, []);
   const formattedPath = path.split('/')[1];
   const { Component, title } = overviewDirectory[formattedPath];
@@ -100,6 +105,11 @@ const Overview = ({
       values: ['Newest', 'Most Credit'],
     },
   };
+  const isMobile =
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
   return (
     <OverviewContainer>
       <OverviewHeader>{title}</OverviewHeader>
@@ -110,7 +120,7 @@ const Overview = ({
         </ComponentContainer>
 
         <FilterContainer>
-          <Filter {...filterProps[formattedPath]} />
+          <Filter isMobile={isMobile} {...filterProps[formattedPath]} />
         </FilterContainer>
       </ContentContainer>
     </OverviewContainer>
@@ -118,7 +128,9 @@ const Overview = ({
 };
 
 Overview.propTypes = {
+  deviceView: T.string.isRequired,
   dispatchFetchOrganizationOptions: T.func,
+  dispatchResetState: T.func.isRequired,
   filterIssueValues: T.object,
   filterOrganizationValues: T.object,
   filterUserValues: T.object,
@@ -149,6 +161,10 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Users
    */
   filterUserValues: makeSelectUsers('filter'),
+  /**
+   * Reducer : ViewSize
+   */
+  deviceView: makeSelectViewSize('deviceView'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -170,6 +186,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchFetchOrganizationOptions: () =>
       dispatch(fetchOrganizationOptions()),
+    dispatchResetState: () => dispatch(resetState()),
     /*
      * Reducer : Users
      */

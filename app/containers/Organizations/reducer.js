@@ -1,27 +1,27 @@
-/* eslint-disable array-callback-return */
+/* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
-import remove from 'lodash/remove';
+import { v4 as uuidv4 } from 'uuid';
+import Identicon from 'identicon.js';
 
 import {
   CHANGE_ORGANIZATION_FILTER,
   CHANGE_ORGANIZATION_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
-  DELETE_ORGANIZATION_FAILURE,
-  DELETE_ORGANIZATION_SUCCESS,
-  DELETE_ORGANIZATION,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
   FETCH_ORGANIZATIONS_FAILURE,
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
-  INCREMENT_STEP,
+  GENERATE_IDENTICON,
   IMPORT_ORGANIZATION_FAILURE,
   IMPORT_ORGANIZATION_SUCCESS,
   IMPORT_ORGANIZATION,
+  INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -31,32 +31,19 @@ import {
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
+  UPDATE_IS_MANUAL,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export const initialState = {
   alerts: { error: false, success: false },
-  organizations: [],
-  organization: {},
-  organizationData: {
-    importUrl: { error: '', value: '' },
-    organizationDescription: { error: '', value: '' },
-    organizationId: { error: '', value: '' },
-    organizationLogo: {
-      error: '',
-      value: 'https://rysolv.s3.us-east-2.amazonaws.com/defaultOrg.png',
-    },
-    organizationName: { error: '', value: '' },
-    organizationRepo: { error: '', value: '' },
-    organizationUrl: { error: '', value: '' },
-  },
   editInfo: {
-    id: { error: '', value: '' },
     createdDate: { error: '', value: '' },
     description: { error: '', value: '' },
+    id: { error: '', value: '' },
     issues: { error: '', value: '' },
     logo: { error: '', value: '' },
     modifiedDate: { error: '', value: '' },
@@ -65,6 +52,12 @@ export const initialState = {
     repoUrl: { error: '', value: '' },
     verified: { error: '', value: '' },
   },
+  error: {
+    fetchOrganization: false,
+    importOrganization: { error: false, message: '' },
+    organizations: false,
+    searchOrganizations: false,
+  },
   filter: {
     issues: 'Newest',
     language: [],
@@ -72,9 +65,10 @@ export const initialState = {
     overview: 'Newest',
     price: [0, 5000],
   },
+  importSuccess: false,
+  isManual: false,
   loading: {
     addOrganization: false,
-    deleteOrganization: false,
     fetchOrganization: false,
     importOrganization: false,
     organizations: false,
@@ -83,14 +77,18 @@ export const initialState = {
     updateOrganization: false,
     upvoteIssue: false,
   },
-  error: {
-    fetchOrganization: false,
-    importOrganization: { error: false, message: '' },
-    organizations: false,
-    searchOrganizations: false,
+  organization: {},
+  organizationData: {
+    identiconId: { error: '', value: '' },
+    importUrl: { error: '', value: '' },
+    organizationDescription: { error: '', value: '' },
+    organizationId: { error: '', value: '' },
+    organizationLogo: { error: '', value: '' },
+    organizationName: { error: '', value: '' },
+    organizationRepo: { error: '', value: '' },
+    organizationUrl: { error: '', value: '' },
   },
-  importSuccess: false,
-  isVerified: false,
+  organizations: [],
   search: {
     contributorInput: { error: '', value: '' },
     issueInput: { error: '', value: '' },
@@ -99,11 +97,9 @@ export const initialState = {
   },
   step: {
     addOrganization: 1,
-    editOrganization: 1,
   },
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const organizationsReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_ORGANIZATION_FILTER: {
@@ -130,25 +126,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     case CLEAR_FORM: {
       draft.error = initialState.error;
       draft.importSuccess = initialState.importSuccess;
-      draft.isVerified = initialState.isVerified;
       draft.organizationData = initialState.organizationData;
-      break;
-    }
-    case DELETE_ORGANIZATION_FAILURE: {
-      const { error } = payload;
-      draft.alerts.error = error;
-      draft.loading.deleteOrganization = false;
-      break;
-    }
-    case DELETE_ORGANIZATION_SUCCESS: {
-      const { itemId, message } = payload;
-      draft.alerts.success = { message };
-      draft.loading.deleteOrganization = false;
-      remove(draft.organizations, ({ id }) => id === itemId);
-      break;
-    }
-    case DELETE_ORGANIZATION: {
-      draft.loading.deleteOrganization = true;
       break;
     }
     case FETCH_ORGANIZATIONS_FAILURE: {
@@ -158,9 +136,9 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ORGANIZATIONS_SUCCESS: {
-      const { getOrganizations } = payload;
-      draft.organizations = getOrganizations;
+      const { organizations } = payload;
       draft.loading.organizations = false;
+      draft.organizations = organizations;
       break;
     }
     case FETCH_ORGANIZATIONS: {
@@ -188,17 +166,26 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       draft.loading.fetchOrganization = true;
       break;
     }
+    case GENERATE_IDENTICON: {
+      const identiconId = uuidv4();
+      const identicon = new Identicon(identiconId, 250).toString();
+      draft.organizationData.identiconId.value = identiconId;
+      draft.organizationData.organizationLogo.value = `data:image/png;base64,${identicon}`;
+      break;
+    }
     case IMPORT_ORGANIZATION_FAILURE: {
       const { error } = payload;
-      draft.error.importOrganization = { error: true, message: error.message };
+      draft.alerts.error = error;
       draft.loading.importOrganization = false;
       break;
     }
     case IMPORT_ORGANIZATION_SUCCESS: {
       const { importOrganization } = payload;
       draft.loading.importOrganization = false;
-      Object.keys(draft.organizationData).map(field => {
-        draft.organizationData[field].value = importOrganization[field];
+      Object.keys(importOrganization).map(field => {
+        if (draft.organizationData[field]) {
+          draft.organizationData[field].value = importOrganization[field];
+        }
       });
       draft.importSuccess = true;
       break;
@@ -231,9 +218,12 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       });
       break;
     }
+    case RESET_STATE: {
+      return initialState;
+    }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = { message: error };
+      draft.alerts.error = error;
       draft.loading.addOrganization = false;
       break;
     }
@@ -248,8 +238,6 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ORGANIZATIONS_FAILURE: {
-      const { error } = payload;
-      draft.error.searchOrganizations = error;
       draft.loading.searchOrganizations = false;
       break;
     }
@@ -260,7 +248,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ORGANIZATIONS: {
-      draft.shouldSearch = true;
+      draft.loading.searchOrganizations = true;
       break;
     }
     case UPDATE_INFO_FAILURE: {
@@ -276,7 +264,13 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPDATE_INFO: {
+      draft.alerts = initialState.alerts;
       draft.loading.updateOrganization = true;
+      break;
+    }
+    case UPDATE_IS_MANUAL: {
+      const { value } = payload;
+      draft.isManual = value;
       break;
     }
     case UPVOTE_ISSUE_FAILURE: {
@@ -286,21 +280,29 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case UPVOTE_ISSUE_SUCCESS: {
-      const { id, rep } = payload;
-      draft.organization.issues.map((issue, index) => {
-        if (issue.id === id) {
-          draft.organization.issues[index].rep = rep;
+      const { issueId, issueRep } = payload;
+      draft.organization.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          draft.organization.issues[index].rep = issueRep;
         }
       });
       draft.loading.upvoteIssue = false;
       break;
     }
-    case UPVOTE_ISSUE: {
-      draft.loading.upvoteIssue = true;
+    case UPVOTE_ISSUE_TEMP: {
+      const { issueId, upvote } = payload;
+      draft.organization.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          // eslint-disable-next-line no-unused-expressions
+          upvote
+            ? (draft.organization.issues[index].rep += 1)
+            : (draft.organization.issues[index].rep -= 1);
+        }
+      });
       break;
     }
-    case VERIFY_INFO: {
-      draft.isVerified = !draft.isVerified;
+    case UPVOTE_ISSUE: {
+      draft.loading.upvoteIssue = true;
       break;
     }
   }

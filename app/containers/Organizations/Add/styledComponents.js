@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { CheckboxWithLabel } from 'components/base_ui';
+import { ErrorSuccessBanner } from 'components/base_ui';
 import {
   borderColor,
   defaultFontSize,
@@ -9,14 +9,8 @@ import {
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
-const {
-  desktop,
-  desktopL,
-  desktopS,
-  laptop,
-  mobile,
-  tablet,
-} = mediaQueriesByDevice;
+
+const { desktop, desktopL, laptop, mobile, tablet } = mediaQueriesByDevice;
 
 export const AddWrapper = styled.div`
   align-items: center;
@@ -28,18 +22,15 @@ export const AddWrapper = styled.div`
 
 export const AddForm = styled.div`
   background-color: white;
-  border: 0.1rem solid ${borderColor};
-  width: 80%;
-  padding: 1rem;
   border-radius: 0.5rem;
+  border: 0.1rem solid ${borderColor};
+  padding: 1rem;
+  width: 80%;
 
   ${desktopL} {
     width: 70%;
   }
   ${desktop} {
-    width: 70%;
-  }
-  ${desktopS} {
     width: 70%;
   }
   ${laptop} {
@@ -66,8 +57,8 @@ export const BackLink = styled.div`
   vertical-align: middle;
 
   :hover {
-    cursor: pointer;
     color: ${hoverLinkColor};
+    cursor: pointer;
   }
 `;
 
@@ -75,9 +66,31 @@ export const ButtonGroup = styled.div`
   text-align: center;
 `;
 
-export const StyledCheckboxWithLabel = styled(CheckboxWithLabel)`
-  color: ${textColor};
-  padding: 0.9rem 0.9rem 0.9rem 0;
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin-bottom: 1rem;
+  width: 80%;
+
+  ${desktopL} {
+    width: 70%;
+  }
+  ${desktop} {
+    width: 70%;
+  }
+  ${laptop} {
+    width: 90%;
+  }
+  ${tablet} {
+    width: 90%;
+  }
+  ${mobile} {
+    width: 100%;
+  }
+`;
+
+export const StyledFocusDiv = styled.div`
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const StyledH3 = styled.h3`

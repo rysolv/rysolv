@@ -5,7 +5,12 @@ import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { defaultFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
+import {
+  commentHeaderColor,
+  defaultFontSize,
+  hoverLinkColor,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -22,7 +27,7 @@ export const StyledDrawer = styled(Drawer)`
   z-index: 0 !important;
 
   .MuiDrawer-paperAnchorLeft {
-    background-color: #f6f8fa;
+    background-color: ${commentHeaderColor};
   }
 `;
 

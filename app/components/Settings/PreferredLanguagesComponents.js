@@ -43,7 +43,7 @@ export const EmptyPreferredLanguagesComponent = ({
 
 export const PreferredLanguagesEditComponent = ({
   handleClose,
-  handleDone,
+  handleSubmitInputChange,
   preferredLanguages,
   setChangePreferredLanguages,
   setValue,
@@ -70,7 +70,7 @@ export const PreferredLanguagesEditComponent = ({
         icon={DoneIcon}
         label="Save"
         onClick={() =>
-          handleDone({
+          handleSubmitInputChange({
             changeInputState: setChangePreferredLanguages,
             field: 'preferredLanguages',
           })
@@ -116,7 +116,7 @@ EmptyPreferredLanguagesComponent.propTypes = {
 
 PreferredLanguagesEditComponent.propTypes = {
   handleClose: T.func,
-  handleDone: T.func,
+  handleSubmitInputChange: T.func,
   preferredLanguages: T.oneOfType([T.array, T.number, T.string]),
   setChangePreferredLanguages: T.func,
   setValue: T.func,

@@ -18,7 +18,7 @@ const NotFound = () => {
   const FootnoteComponent = (
     <Fragment>
       <span>If you feel something is missing that should be here, </span>
-      {<LinkWrapper to="/contactus">contact us</LinkWrapper>}.
+      <LinkWrapper to="/contact-us">contact us</LinkWrapper>.
     </Fragment>
   );
   return (

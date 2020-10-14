@@ -1,17 +1,19 @@
 /* eslint consistent-return:0 import/order:0 */
 require('dotenv').config();
 const express = require('express');
-const logger = require('./logger');
 const graphQlHttp = require('express-graphql');
-const graphQlSchema = require('./graphql/schema');
-const graphQlResolvers = require('./graphql/resolvers');
+const { resolve } = require('path');
 
 const argv = require('./argv');
+const graphQlResolvers = require('./graphql/resolvers');
+const graphQlSchema = require('./graphql/schema');
+const logger = require('./logger');
 const port = require('./port');
-// const router = require('./routes');
 const setup = require('./middlewares/frontendMiddleware');
-const { resolve } = require('path');
+const validateToken = require('./middlewares/validateToken');
+
 const app = express();
+const PRODUCTION = process.env.NODE_ENV === 'production';
 
 // for those extra large issues
 app.use(express.json({ limit: '10mb' }));
@@ -20,11 +22,13 @@ app.use(express.urlencoded({ limit: '10mb' }));
 // route requests through GraphQL
 app.use(
   '/graphql',
-  graphQlHttp({
-    schema: graphQlSchema,
+  validateToken,
+  graphQlHttp(req => ({
+    context: { authError: req.body.authError, userId: req.body.userId },
+    graphiql: !PRODUCTION,
     rootValue: graphQlResolvers,
-    graphiql: true,
-  }),
+    schema: graphQlSchema,
+  })),
 );
 
 // In production we need to pass these values in instead of relying on webpack

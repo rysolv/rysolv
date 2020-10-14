@@ -3,15 +3,13 @@ import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import { BackNav } from 'components/base_ui';
-import { makeSelectAuth } from 'containers/Auth/selectors';
 import AsyncRender from 'components/AsyncRender';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { incrementStep, clearForm } from '../actions';
+import { clearAlerts, incrementStep, resetState } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -20,9 +18,12 @@ import {
   makeSelectOrganizationsStep,
 } from '../selectors';
 import { addOrganizationDictionary } from '../stepDictionary';
-import { AddWrapper, AddForm } from './styledComponents';
+import {
+  AddWrapper,
+  AddForm,
+  StyledErrorSuccessBanner,
+} from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export class OrganizationsAdd extends React.PureComponent {
   componentDidMount() {
     const { handleIncrementStep } = this.props;
@@ -30,17 +31,17 @@ export class OrganizationsAdd extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { dispatchClearForm } = this.props;
-    dispatchClearForm();
+    const { dispatchResetState } = this.props;
+    dispatchResetState();
   }
 
   render() {
     window.scrollTo(0, 0);
 
     const {
-      activeUser,
+      alerts: { error, success },
+      handleClearAlerts,
       handleIncrementStep,
-      handleNav,
       importSuccess,
       loading,
       organizationData,
@@ -53,21 +54,18 @@ export class OrganizationsAdd extends React.PureComponent {
     }
     return (
       <AddWrapper>
-        <BackNav
-          label="Back to Organizations"
-          handleNav={handleNav}
-          path="/organizations"
+        <BackNav label="Back to Organizations" path="/organizations" />
+        <StyledErrorSuccessBanner
+          error={error}
+          onClose={handleClearAlerts}
+          success={success}
         />
         <AddForm>
           <AsyncRender
             asyncData={{ organizationData }}
             component={StepToRender}
             loading={loading}
-            propsToPassDown={{
-              activeUser,
-              handleNav,
-              importSuccess,
-            }}
+            propsToPassDown={{ importSuccess }}
           />
         </AddForm>
       </AddWrapper>
@@ -76,10 +74,10 @@ export class OrganizationsAdd extends React.PureComponent {
 }
 
 OrganizationsAdd.propTypes = {
-  activeUser: T.object,
-  dispatchClearForm: T.func,
+  alerts: T.object,
+  dispatchResetState: T.func.isRequired,
+  handleClearAlerts: T.func,
   handleIncrementStep: T.func,
-  handleNav: T.func,
   importSuccess: T.bool,
   loading: T.bool.isRequired,
   organizationData: T.object,
@@ -90,11 +88,11 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Organizations
    */
+  alerts: makeSelectOrganizations('alerts'),
+  importSuccess: makeSelectOrganizations('importSuccess'),
   loading: makeSelectOrganizationsLoading('addOrganization'),
   organizationData: makeSelectOrganizations('organizationData'),
   step: makeSelectOrganizationsStep('addOrganization'),
-  activeUser: makeSelectAuth('activeUser'),
-  importSuccess: makeSelectOrganizations('importSuccess'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -102,9 +100,9 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Organizations
      */
-    dispatchClearForm: () => dispatch(clearForm()),
+    dispatchResetState: () => dispatch(resetState()),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
-    handleNav: route => dispatch(push(route)),
   };
 }
 

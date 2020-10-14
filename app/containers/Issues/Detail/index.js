@@ -9,7 +9,12 @@ import AddPullRequestModal from 'components/AddPullRequestModal';
 import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
 import IssueDetail from 'components/Issues/Detail';
-import { fetchWatchList, openModalState } from 'containers/Main/actions';
+import {
+  fetchAttemptList,
+  fetchPullRequestList,
+  fetchWatchList,
+  openModalState,
+} from 'containers/Main/actions';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectSaga from 'utils/injectSaga';
@@ -18,13 +23,14 @@ import injectReducer from 'utils/injectReducer';
 import {
   addAttempt,
   addComment,
+  addWatch,
   clearAlerts,
   closeIssue,
   closeIssueModalState,
   editIssue,
   fetchIssueDetail,
   openIssueModalState,
-  submitAccountPayment,
+  resetState,
   upvoteIssue,
 } from '../actions';
 import reducer from '../reducer';
@@ -32,8 +38,8 @@ import saga from '../saga';
 import {
   makeSelectIssueDetail,
   makeSelectIssueDetailError,
-  makeSelectIssueDetailLoading,
   makeSelectIssues,
+  makeSelectIssuesLoading,
 } from '../selectors';
 
 export class IssuesDetail extends React.PureComponent {
@@ -50,28 +56,30 @@ export class IssuesDetail extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { handleClearAlerts } = this.props;
-    handleClearAlerts();
+    const { dispatchResetState } = this.props;
+    dispatchResetState();
   }
 
   render() {
     const {
       activeUser,
+      addWatching,
       alerts,
       deviceView,
       dispatchCloseIssue,
       dispatchCloseIssueModal,
       dispatchEditIssue,
+      dispatchFetchAttemptList,
+      dispatchFetchPullRequestList,
       dispatchFetchWatchList,
       dispatchOpenIssueModal,
       dispatchOpenModal,
+      dispatchUpvote,
       error,
       handleClearAlerts,
       handleComment,
       handleIncrement,
       handleNav,
-      handleSubmitAccountPayment,
-      handleUpvote,
       isModalOpen,
       isSignedIn,
       issueDetail,
@@ -80,8 +88,12 @@ export class IssuesDetail extends React.PureComponent {
         params: { id },
       },
       modal,
-      paymentAlerts,
+      upvoteLoading,
     } = this.props;
+
+    const handleUpvote = ({ issueId, upvote }) => {
+      if (!upvoteLoading) dispatchUpvote({ issueId, upvote });
+    };
 
     const modalPropsDictionary = {
       addPullRequest: {
@@ -90,7 +102,6 @@ export class IssuesDetail extends React.PureComponent {
         propsToPassDown: {
           handleClose: dispatchCloseIssueModal,
           issueId: id,
-          userId: activeUser.id,
         },
       },
     };
@@ -105,10 +116,13 @@ export class IssuesDetail extends React.PureComponent {
           isRequiredData
           propsToPassDown={{
             activeUser,
+            addWatching,
             alerts,
             deviceView,
             dispatchCloseIssue,
             dispatchEditIssue,
+            dispatchFetchAttemptList,
+            dispatchFetchPullRequestList,
             dispatchFetchWatchList,
             dispatchOpenIssueModal,
             dispatchOpenModal,
@@ -116,10 +130,8 @@ export class IssuesDetail extends React.PureComponent {
             handleComment,
             handleIncrement,
             handleNav,
-            handleSubmitAccountPayment,
             handleUpvote,
             isSignedIn,
-            paymentAlerts,
           }}
         />
         {isModalOpen && <ModalDialog {...modalPropsDictionary[modal]} />}
@@ -130,29 +142,32 @@ export class IssuesDetail extends React.PureComponent {
 
 IssuesDetail.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.object,
   deviceView: T.string,
   dispatchCloseIssue: T.func,
   dispatchCloseIssueModal: T.func,
   dispatchEditIssue: T.func,
+  dispatchFetchAttemptList: T.func,
   dispatchFetchIssueDetail: T.func,
+  dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
-  error: T.oneOfType([T.bool, T.object]),
+  dispatchResetState: T.func.isRequired,
+  dispatchUpvote: T.func,
+  error: T.oneOfType([T.bool, T.string]),
   handleClearAlerts: T.func,
   handleComment: T.func,
   handleIncrement: T.func,
   handleNav: T.func,
-  handleSubmitAccountPayment: T.func,
-  handleUpvote: T.func,
   isModalOpen: T.bool,
   isSignedIn: T.bool,
   issueDetail: T.object,
   loading: T.bool,
   match: T.object,
   modal: T.string,
-  paymentAlerts: T.object,
+  upvoteLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -168,9 +183,9 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectIssueDetailError('issueDetail'),
   isModalOpen: makeSelectIssues('isModalOpen'),
   issueDetail: makeSelectIssueDetail('issueDetail'),
-  loading: makeSelectIssueDetailLoading('issueDetail'),
+  loading: makeSelectIssuesLoading('issueDetail'),
   modal: makeSelectIssues('modal'),
-  paymentAlerts: makeSelectIssues('paymentAlerts'),
+  upvoteLoading: makeSelectIssuesLoading('upvoteIssue'),
   /**
    * Reducer : ViewSize
    */
@@ -182,20 +197,23 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    addWatching: payload => dispatch(addWatch(payload)),
     dispatchCloseIssue: payload => dispatch(closeIssue(payload)),
     dispatchCloseIssueModal: () => dispatch(closeIssueModalState()),
     dispatchEditIssue: payload => dispatch(editIssue(payload)),
     dispatchFetchIssueDetail: payload => dispatch(fetchIssueDetail(payload)),
     dispatchOpenIssueModal: payload => dispatch(openIssueModalState(payload)),
+    dispatchResetState: () => dispatch(resetState()),
+    dispatchUpvote: payload => dispatch(upvoteIssue(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleComment: payload => dispatch(addComment(payload)),
     handleIncrement: payload => dispatch(addAttempt(payload)),
-    handleSubmitAccountPayment: payload =>
-      dispatch(submitAccountPayment(payload)),
-    handleUpvote: payload => dispatch(upvoteIssue(payload)),
     /*
      * Reducer : Main
      */
+    dispatchFetchAttemptList: payload => dispatch(fetchAttemptList(payload)),
+    dispatchFetchPullRequestList: payload =>
+      dispatch(fetchPullRequestList(payload)),
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     /**

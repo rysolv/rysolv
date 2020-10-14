@@ -4,7 +4,7 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
-  CLEAR_FORM,
+  RESET_STATE,
 } from './constants';
 
 export const initialState = {
@@ -30,9 +30,6 @@ export const initialState = {
 /* eslint-disable consistent-return, default-case, no-param-reassign */
 const signinReducer = produce((draft, { payload, type }) => {
   switch (type) {
-    case CLEAR_FORM: {
-      return initialState;
-    }
     case INCREMENT_STEP: {
       const { step } = payload;
       draft.step = step;
@@ -51,6 +48,9 @@ const signinReducer = produce((draft, { payload, type }) => {
         draft[form][field].error = errors[field] || '';
       });
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
   }
 }, initialState);

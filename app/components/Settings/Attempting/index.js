@@ -22,12 +22,7 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const UserAttempting = ({
-  attempting,
-  handleNav,
-  handleRemoveIssue,
-  userId,
-}) => {
+const UserAttempting = ({ attempting, handleNav, handleRemoveAttempting }) => {
   const [selectedValue, setSelectedValue] = useState('Newest');
   const [searchValue, setSearchValue] = useState('');
   const filterAttempting = () => {
@@ -57,11 +52,7 @@ const UserAttempting = ({
   const filteredAttempting = filterAttempting();
   return (
     <Fragment>
-      <BackNav
-        label="Back to Overview"
-        handleNav={handleNav}
-        path="/settings"
-      />
+      <BackNav label="Back to Overview" path="/settings" />
       <HeaderWrapper>
         <StyledH3>All Attempting</StyledH3>
       </HeaderWrapper>
@@ -88,10 +79,9 @@ const UserAttempting = ({
         }
         propsToPassDown={{
           handleNav,
-          handleRemoveIssue,
+          handleRemoveAttempting,
           list: filteredAttempting,
           type: 'attempting',
-          userId,
         }}
         shouldRender={!!filteredAttempting.length}
       />
@@ -102,8 +92,7 @@ const UserAttempting = ({
 UserAttempting.propTypes = {
   attempting: T.array.isRequired,
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
-  userId: T.string.isRequired,
+  handleRemoveAttempting: T.func.isRequired,
 };
 
 export default UserAttempting;

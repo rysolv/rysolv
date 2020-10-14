@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -6,51 +6,77 @@ import { connect } from 'react-redux';
 import { PrimaryButton } from 'components/base_ui';
 import ManualForm from 'components/Organizations/Add/ManualForm';
 
-import { incrementStep, inputChange } from '../actions';
+import {
+  generateIdenticon,
+  incrementStep,
+  inputChange,
+  updateIsManual,
+} from '../actions';
 import {
   makeSelectOrganizations,
   makeSelectOrganizationsDisabled,
 } from '../selectors';
-import { BackLink, ButtonGroup, StyledH3 } from './styledComponents';
+import {
+  BackLink,
+  ButtonGroup,
+  StyledFocusDiv,
+  StyledH3,
+} from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
-export class ManualOrganization extends React.PureComponent {
-  render() {
-    const {
-      organizationData,
-      handleIncrementStep,
-      handleInputChange,
-      isDisabled,
-    } = this.props;
-    return (
-      <Fragment>
-        <StyledH3>Add Organization</StyledH3>
-        <ManualForm
-          organizationData={organizationData}
-          handleInputChange={handleInputChange}
+const ManualOrganization = ({
+  dispatchUpdateIsManual,
+  handleGenerateIdenticon,
+  handleIncrementStep,
+  handleInputChange,
+  isDisabled,
+  organizationData,
+}) => {
+  useEffect(() => {
+    dispatchUpdateIsManual({ value: true });
+    document.getElementById('organizationManual').focus();
+  }, []);
+
+  const handleNextStep = () => {
+    handleGenerateIdenticon();
+    handleIncrementStep({ step: 3, view: 'addOrganization' });
+  };
+
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter' && isDisabled) handleNextStep();
+  };
+
+  return (
+    <StyledFocusDiv
+      id="organizationManual"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
+      <StyledH3>Add Organization</StyledH3>
+      <ManualForm
+        handleInputChange={handleInputChange}
+        organizationData={organizationData}
+      />
+      <ButtonGroup>
+        <BackLink
+          onClick={() =>
+            handleIncrementStep({ step: 1, view: 'addOrganization' })
+          }
+        >
+          Back
+        </BackLink>
+        <PrimaryButton
+          disabled={!isDisabled}
+          label="Next"
+          onClick={handleNextStep}
         />
-        <ButtonGroup>
-          <BackLink
-            onClick={() =>
-              handleIncrementStep({ step: 1, view: 'addOrganization' })
-            }
-          >
-            Back
-          </BackLink>
-          <PrimaryButton
-            disabled={!isDisabled}
-            label="Next"
-            onClick={() =>
-              handleIncrementStep({ step: 3, view: 'addOrganization' })
-            }
-          />
-        </ButtonGroup>
-      </Fragment>
-    );
-  }
-}
+      </ButtonGroup>
+    </StyledFocusDiv>
+  );
+};
 
 ManualOrganization.propTypes = {
+  dispatchUpdateIsManual: T.func,
+  handleGenerateIdenticon: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   isDisabled: T.bool,
@@ -70,6 +96,8 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Organizations
      */
+    dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
+    handleGenerateIdenticon: () => dispatch(generateIdenticon()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };

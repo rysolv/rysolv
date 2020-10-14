@@ -3,17 +3,15 @@ import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import { BackNav } from 'components/base_ui';
 import { makeSelectAuth } from 'containers/Auth/selectors';
+import { makeSelectOrganizations } from 'containers/Organizations/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { makeSelectOrganizations } from 'containers/Organizations/selectors';
-import { searchOrganizations } from 'containers/Auth/actions';
-import { incrementStep, clearForm } from '../actions';
+import { clearAlerts, incrementStep, resetState } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -22,9 +20,12 @@ import {
   makeSelectIssuesStep,
 } from '../selectors';
 import { addIssueDictionary } from '../stepDictionary';
-import { AddWrapper, AddForm } from './styledComponents';
+import {
+  AddForm,
+  AddWrapper,
+  StyledErrorSuccessBanner,
+} from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
     document.title = 'Add Issue';
@@ -33,8 +34,8 @@ export class IssuesAdd extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    const { dispatchClearForm } = this.props;
-    dispatchClearForm();
+    const { dispatchResetState } = this.props;
+    dispatchResetState();
   }
 
   render() {
@@ -42,10 +43,11 @@ export class IssuesAdd extends React.PureComponent {
 
     const {
       activeUser,
+      alerts: { error, success },
+      handleClearAlerts,
+      handleIncrementStep,
       importSuccess,
       issueData,
-      handleNav,
-      handleIncrementStep,
       loading,
       organization,
       step,
@@ -58,7 +60,12 @@ export class IssuesAdd extends React.PureComponent {
 
     return (
       <AddWrapper>
-        <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
+        <BackNav label="Back to Issues" path="/issues" />
+        <StyledErrorSuccessBanner
+          error={error}
+          onClose={handleClearAlerts}
+          success={success}
+        />
         <AddForm>
           <AsyncRender
             asyncData={{ issueData, organization }}
@@ -66,7 +73,6 @@ export class IssuesAdd extends React.PureComponent {
             loading={loading}
             propsToPassDown={{
               activeUser,
-              handleNav,
               importSuccess,
             }}
           />
@@ -77,12 +83,13 @@ export class IssuesAdd extends React.PureComponent {
 }
 
 IssuesAdd.propTypes = {
-  importSuccess: T.bool,
   activeUser: T.object,
-  issueData: T.object,
-  dispatchClearForm: T.func,
+  alerts: T.object,
+  dispatchResetState: T.func.isRequired,
+  handleClearAlerts: T.func,
   handleIncrementStep: T.func,
-  handleNav: T.func,
+  importSuccess: T.bool,
+  issueData: T.object,
   loading: T.bool.isRequired,
   organization: T.object,
   step: T.number.isRequired,
@@ -90,14 +97,21 @@ IssuesAdd.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
+  /**
    * Reducer : Issues
    */
+  alerts: makeSelectIssues('alerts'),
   importSuccess: makeSelectIssues('importSuccess'),
   issueData: makeSelectIssues('issueData'),
-  organizationData: makeSelectOrganizations('organizationData'),
-  activeUser: makeSelectAuth('activeUser'),
   loading: makeSelectIssuesLoading('addIssue'),
   step: makeSelectIssuesStep('addIssue'),
+  /**
+   * Reducer : Organizations
+   */
+  organizationData: makeSelectOrganizations('organizationData'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -105,11 +119,9 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
-    dispatchClearForm: () => dispatch(clearForm()),
+    dispatchResetState: () => dispatch(resetState()),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
-    handleNav: route => dispatch(push(route)),
-    handleSearchOrganizations: payload =>
-      dispatch(searchOrganizations(payload)),
   };
 }
 

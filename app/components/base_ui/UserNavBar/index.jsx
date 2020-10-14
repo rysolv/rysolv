@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import T from 'prop-types';
 
-import { Star, DownArrow } from '../Icons';
+import { Coin, DownArrow } from '../Icons';
 import UserDropDownMenu from '../UserDropDown';
 import {
   IconWrapper,
@@ -30,7 +30,7 @@ const UserNavBar = ({ activeUser, handleNav, handleSignout, ...restProps }) => {
         {...restProps}
       >
         <IconWrapper>
-          <Star />
+          <Coin />
           <NumberContainer>{rep}</NumberContainer>
         </IconWrapper>
         <StyledAvatar alt={username} src={profilePic} />

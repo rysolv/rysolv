@@ -30,8 +30,8 @@ const UserMetricsView = ({
   createdDate,
   dollarsEarned,
   handleClose,
-  handleDone,
   handleEdit,
+  handleSubmitInputChange,
   isDisabled,
   preferredLanguages,
   rejectedPullRequests,
@@ -101,7 +101,7 @@ const UserMetricsView = ({
             FallbackComponent={
               <PreferredLanguagesEditComponent
                 handleClose={handleClose}
-                handleDone={handleDone}
+                handleSubmitInputChange={handleSubmitInputChange}
                 preferredLanguages={value}
                 setChangePreferredLanguages={setChangePreferredLanguages}
                 setValue={setValue}
@@ -129,8 +129,8 @@ UserMetricsView.propTypes = {
   createdDate: T.string,
   dollarsEarned: T.number,
   handleClose: T.func,
-  handleDone: T.func,
   handleEdit: T.func.isRequired,
+  handleSubmitInputChange: T.func,
   isDisabled: T.bool,
   preferredLanguages: T.array,
   rejectedPullRequests: T.number,

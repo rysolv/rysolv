@@ -1,12 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
+import { fetchActiveUser, updateActiveUser } from 'containers/Auth/actions';
+import { updateIssueDetail } from 'containers/Issues/actions';
+import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
-import { fetchActiveUser } from 'containers/Auth/actions';
-import { updateIssueDetail } from 'containers/Issues/actions';
 import {
   createPullRequestFailure,
   createPullRequestSuccess,
+  deletePullRequestFailure,
+  deletePullRequestSuccess,
   fetchUserPullRequestsFailure,
   fetchUserPullRequestsSuccess,
   importPullRequestFailure,
@@ -14,6 +17,7 @@ import {
 } from './actions';
 import {
   CREATE_PULL_REQUEST,
+  DELETE_PULL_REQUEST,
   FETCH_USER_PULL_REQUESTS,
   IMPORT_PULL_REQUEST,
 } from './constants';
@@ -22,17 +26,16 @@ export function* createPullRequestSaga({ payload }) {
   const {
     issueId,
     importData: {
+      githubUsername,
       htmlUrl,
       mergeable,
-      merged,
       mergeableState,
+      merged,
       open,
-      githubUsername,
       pullNumber,
       status,
       title,
     },
-    userId,
   } = payload;
   const query = `
     mutation {
@@ -48,12 +51,11 @@ export function* createPullRequestSaga({ payload }) {
           pullNumber: ${pullNumber.value},
           status: "${status.value}",
           title: "${title.value}"
-          userId: "${userId}",
         })
         {
         __typename
-        ... on PullRequest {
-          pullRequestId
+        ... on Success {
+          message
         }
         ... on Error {
           message
@@ -63,28 +65,67 @@ export function* createPullRequestSaga({ payload }) {
   `;
 
   try {
+    const token = yield call(fetchCurrentSession);
+
     const pullRequestQuery = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
-      data: { createPullRequest },
+      data: {
+        createPullRequest: { __typename, message },
+      },
     } = yield call(post, '/graphql', pullRequestQuery);
-    const { __typename, message, pullRequestId } = createPullRequest;
     if (__typename === 'Error') throw message;
-    yield put(createPullRequestSuccess({ message: 'Pull Request created' }));
-    yield put(fetchActiveUser({ userId }));
-    yield put(updateIssueDetail({ pullRequestId }));
+    yield put(createPullRequestSuccess());
+    yield put(fetchActiveUser());
+    yield put(updateIssueDetail());
   } catch (error) {
-    yield put(createPullRequestFailure({ error }));
+    yield put(createPullRequestFailure({ error: { message: error } }));
   }
 }
 
-export function* fetchUserPullRequestsSaga({ payload }) {
-  const { userId } = payload;
+export function* deletePullRequestSaga({ payload }) {
+  const { pullRequestId } = payload;
+  const query = `
+    mutation {
+      deletePullRequest(id: "${pullRequestId}")
+        {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+
+  try {
+    const token = yield call(fetchCurrentSession);
+
+    const pullRequestQuery = JSON.stringify({
+      query,
+      variables: { token },
+    });
+    const {
+      data: {
+        deletePullRequest: { __typename, message },
+      },
+    } = yield call(post, '/graphql', pullRequestQuery);
+    if (__typename === 'Error') throw message;
+    yield put(deletePullRequestSuccess({ id: pullRequestId, message }));
+    yield put(updateActiveUser({ pullRequestId }));
+  } catch (error) {
+    yield put(deletePullRequestFailure({ error: { message: error } }));
+  }
+}
+
+export function* fetchUserPullRequestsSaga() {
   const query = `
     query {
-      getUserPullRequests(id: "${userId}") {
+      getUserPullRequests {
         __typename
         ... on PullRequestArray {
           pullRequestArray {
@@ -112,10 +153,13 @@ export function* fetchUserPullRequestsSaga({ payload }) {
       }
     }
   `;
+
   try {
+    const token = yield call(fetchCurrentSession);
+
     const pullRequestQuery = JSON.stringify({
       query,
-      variables: {},
+      variables: { token },
     });
     const {
       data: {
@@ -123,21 +167,19 @@ export function* fetchUserPullRequestsSaga({ payload }) {
       },
     } = yield call(post, '/graphql', pullRequestQuery);
     if (__typename === 'Error') throw message;
-
-    yield put(fetchUserPullRequestsSuccess(pullRequestArray));
+    yield put(fetchUserPullRequestsSuccess({ pullRequestArray }));
   } catch (error) {
     yield put(fetchUserPullRequestsFailure({ error }));
   }
 }
 
 export function* importPullRequestSaga({ payload }) {
-  const { url, issueId } = payload;
+  const { issueId, url } = payload;
   const query = `
     mutation {
-      importPullRequest(url: "${url}", issueId:"${issueId}") {
+      importPullRequest(issueId:"${issueId}", url: "${url}") {
         __typename
         ... on ImportPullRequest {
-          apiUrl
           githubUsername
           htmlUrl
           mergeable
@@ -154,25 +196,27 @@ export function* importPullRequestSaga({ payload }) {
       }
     }
   `;
+
   try {
     const pullRequestQuery = JSON.stringify({
       query,
       variables: {},
     });
     const {
-      data: { importPullRequest },
+      data: {
+        importPullRequest: { __typename, message, ...restProps },
+      },
     } = yield call(post, '/graphql', pullRequestQuery);
-    const { __typename, message } = importPullRequest;
     if (__typename === 'Error') throw message;
-
-    yield put(importPullRequestSuccess({ importPullRequest }));
+    yield put(importPullRequestSuccess({ pullRequest: restProps }));
   } catch (error) {
-    yield put(importPullRequestFailure({ error }));
+    yield put(importPullRequestFailure({ error: { message: error } }));
   }
 }
 
 export default function* watcherSaga() {
   yield takeLatest(CREATE_PULL_REQUEST, createPullRequestSaga);
+  yield takeLatest(DELETE_PULL_REQUEST, deletePullRequestSaga);
   yield takeLatest(FETCH_USER_PULL_REQUESTS, fetchUserPullRequestsSaga);
   yield takeLatest(IMPORT_PULL_REQUEST, importPullRequestSaga);
 }

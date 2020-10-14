@@ -1,14 +1,17 @@
 import styled from 'styled-components';
+
+import { ErrorSuccessBanner } from 'components/base_ui';
 import {
   borderColor,
   defaultFontSize,
   headerFontSize,
   hoverLinkColor,
-  hyperlinkColor,
+  lightBlueColor,
   subHeaderColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
+
 const { desktop, desktopL, laptop, mobile, tablet } = mediaQueriesByDevice;
 
 export const AddWrapper = styled.div`
@@ -21,10 +24,10 @@ export const AddWrapper = styled.div`
 
 export const AddForm = styled.div`
   background-color: white;
-  border: 0.1rem solid ${borderColor};
-  width: 80%;
-  padding: 1rem;
   border-radius: 0.5rem;
+  border: 0.1rem solid ${borderColor};
+  padding: 1rem;
+  width: 80%;
 
   ${desktopL} {
     width: 70%;
@@ -56,8 +59,8 @@ export const BackLink = styled.div`
   vertical-align: middle;
 
   :hover {
-    cursor: pointer;
     color: ${hoverLinkColor};
+    cursor: pointer;
   }
 `;
 
@@ -67,9 +70,9 @@ export const ButtonGroup = styled.div`
 
 export const LogoContainer = styled.img`
   display: inline-flex;
+  height: 5rem;
   margin: 0 1rem 0 0;
   width: 5rem;
-  height: 5rem;
 `;
 
 export const OrganizationNameWrapper = styled.div`
@@ -78,26 +81,53 @@ export const OrganizationNameWrapper = styled.div`
 `;
 
 export const SelectedOrganization = styled.div`
-  margin: 0.5rem 0;
   font-size: ${headerFontSize};
+  margin: 0.5rem 0;
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin-bottom: 1rem;
+  width: 80%;
+
+  ${desktopL} {
+    width: 70%;
+  }
+  ${desktop} {
+    width: 70%;
+  }
+  ${laptop} {
+    width: 90%;
+  }
+  ${tablet} {
+    width: 90%;
+  }
+  ${mobile} {
+    width: 100%;
+  }
+`;
+
+export const StyledFocusDiv = styled.div`
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const StyledH3 = styled.h3`
   color: ${subHeaderColor};
-  padding: 1rem 2rem;
   margin-bottom: 0;
+  padding: 1rem 2rem;
+`;
+
+export const StyledLink = styled.a`
+  color: ${lightBlueColor};
+  font-size: ${defaultFontSize};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    cursor: pointer;
+  }
 `;
 
 export const VerifyWrapper = styled.div`
   padding: 0 2rem;
-`;
-
-export const StyledLink = styled.a`
-  font-size: ${defaultFontSize};
-  color: ${hyperlinkColor};
-
-  &:hover {
-    cursor: pointer;
-    color: ${hoverLinkColor};
-  }
 `;

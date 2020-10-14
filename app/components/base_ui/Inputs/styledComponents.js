@@ -1,13 +1,14 @@
-import React from 'react';
 import styled from 'styled-components';
 import FormControl from '@material-ui/core/FormControl';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import TextField from '@material-ui/core/TextField';
 
 import {
+  borderColor,
   defaultFontSize,
   errorBorder,
   inputBorder,
+  lightBlueColor,
   textColor,
 } from 'defaultStyleHelper';
 
@@ -17,9 +18,9 @@ export const FileInputIcon = styled.label`
   align-items: center;
   background-color: white;
   border-radius: 50%;
-  border: 0.2rem solid #1e88e5;
+  border: 0.2rem solid ${lightBlueColor};
   bottom: -1rem;
-  color: #1e88e5;
+  color: ${lightBlueColor};
   display: flex;
   height: 4rem;
   justify-content: center;
@@ -50,9 +51,7 @@ export const Spacer = styled.div`
   height: 1.5rem;
 `;
 
-export const StyledBaseInput = styled(({ textAlign, ...restProps }) => (
-  <OutlinedInput {...restProps} />
-))`
+export const StyledBaseInput = styled(OutlinedInput)`
   background: white;
   border-radius: 0.5rem;
   color: rgba(0, 0, 0, 0.7);
@@ -66,8 +65,7 @@ export const StyledBaseInput = styled(({ textAlign, ...restProps }) => (
   }
 
   .input {
-    padding: 0 2rem;
-    text-align: ${({ textAlign }) => textAlign || 'start'};
+    padding: 0 1rem;
   }
 `;
 
@@ -101,6 +99,11 @@ export const StyledBaseTextInput = styled(TextField)`
       border-bottom: none;
     }
   }
+
+  .MuiInputBase-input {
+    color: ${textColor};
+    font-size: ${defaultFontSize};
+  }
 `;
 
 export const StyledFormControl = styled(FormControl)`
@@ -110,14 +113,12 @@ export const StyledFormControl = styled(FormControl)`
 
 export const StyledFlatIcon = styled.div`
   font-size: ${defaultFontSize};
-
   justify-content: flex-end;
   padding: 0;
 `;
 
 export const StyledFlatIconButton = styled(FlatIconButton)`
   font-size: ${defaultFontSize};
-
   justify-content: flex-end;
   padding: 0;
 `;
@@ -129,4 +130,43 @@ export const StyledModalIcon = styled.div`
   padding: 2rem 0;
   text-align: center;
   width: 10rem;
+`;
+
+export const StyledStripeFormControl = styled(StyledFormControl)`
+  color: ${textColor};
+  margin-bottom: 0;
+
+  .MuiFormHelperText-contained {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .MuiFormHelperText-root {
+    font-size: 1.1rem;
+    line-height: normal;
+  }
+
+  .MuiOutlinedInput-adornedStart,
+  .MuiOutlinedInput-adornedStart:hover {
+    border: 0.1rem solid ${borderColor};
+    padding: 0;
+  }
+
+  .MuiOutlinedInput-input {
+    padding: 0 1rem;
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
+
+  .MuiOutlinedInput-root:hover {
+    border: 0.1rem solid ${borderColor};
+  }
+`;
+
+export const StyledStripeModalIcon = styled(StyledModalIcon)`
+  border-bottom-left-radius: 0.3rem;
+  border-top-left-radius: 0.3rem;
+  padding: 1rem 0;
 `;

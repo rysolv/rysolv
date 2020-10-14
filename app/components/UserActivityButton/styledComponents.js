@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 import { DownArrow } from 'components/base_ui';
-import { textColor } from 'defaultStyleHelper';
+import { lightBlueColor, textColor } from 'defaultStyleHelper';
 
 export const MenuItem = styled.div`
   color: ${textColor};
   padding: 6px 8px 6px 16px;
 
   &:hover {
-    background-color: #1e88e5;
+    background-color: ${lightBlueColor};
     color: #fff;
     cursor: pointer;
   }

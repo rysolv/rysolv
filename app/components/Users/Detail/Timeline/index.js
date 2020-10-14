@@ -5,6 +5,7 @@ import T from 'prop-types';
 import moment from 'moment';
 
 import { ConditionalRender } from 'components/base_ui';
+import { actionDictionary } from 'containers/Settings/constants';
 import { formatDollarAmount, formatWordString } from 'utils/globalHelpers';
 
 import {
@@ -33,8 +34,19 @@ const UserTimelineView = ({
   handleNav,
   filterValues: { users: usersFilter },
 }) => {
+  const filterActivity = () => {
+    const filteredArray = activity.filter(({ action }) => {
+      if (usersFilter === 'All' || actionDictionary[usersFilter] === action) {
+        return true;
+      }
+      return false;
+    });
+    return filteredArray;
+  };
+  const filteredActivity = filterActivity();
+
   const ActivityComponent = () =>
-    activity.map(
+    filteredActivity.map(
       (
         {
           action,
@@ -81,7 +93,7 @@ const UserTimelineView = ({
         if (
           index === 0 ||
           moment(date).format('YYYY/MM/DD') !==
-            moment(activity[index - 1].date).format('YYYY/MM/DD')
+            moment(filteredActivity[index - 1].date).format('YYYY/MM/DD')
         ) {
           return (
             <Fragment key={`list-item-${index}`}>
@@ -106,7 +118,7 @@ const UserTimelineView = ({
             handleInputChange({ field: 'users', form: 'filter', value })
           }
           selectedValue={usersFilter}
-          values={['All', 'Earned', 'Funded', 'Submitted', 'Withdrew']}
+          values={['All', 'Commented', 'Earned', 'Funded', 'Submitted']}
         />
       </HeaderWrapper>
       <ConditionalRender
@@ -114,7 +126,7 @@ const UserTimelineView = ({
         FallbackComponent={
           <EmptyMessageContainer>No recent activity.</EmptyMessageContainer>
         }
-        shouldRender={activity.length > 0}
+        shouldRender={filteredActivity.length > 0}
       />
     </TimelineContainer>
   );

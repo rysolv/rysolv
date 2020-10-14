@@ -21,6 +21,7 @@ const MobileHeader = ({
   activeUser,
   deviceView,
   handleNav,
+  handleResetState,
   handleSignout,
   isDrawerOpen,
   isLandingPage,
@@ -33,7 +34,7 @@ const MobileHeader = ({
       <StyledAppBar
         color="default"
         isLandingPage={isLandingPage}
-        position="relative"
+        position="fixed"
       >
         <Container>
           <TopBarWrapper isSignedIn={isSignedIn}>
@@ -55,8 +56,16 @@ const MobileHeader = ({
                 />
               ) : (
                 <Fragment>
-                  <StyledHeaderLink label="Sign Up" path="/signup" />
-                  <StyledHeaderLink label="Sign In" path="/signin" />
+                  <StyledHeaderLink
+                    label="Sign Up"
+                    onClick={handleResetState}
+                    path="/signup"
+                  />
+                  <StyledHeaderLink
+                    label="Sign In"
+                    onClick={handleResetState}
+                    path="/signin"
+                  />
                 </Fragment>
               )}
             </ButtonsWrapper>
@@ -77,15 +86,16 @@ const MobileHeader = ({
 );
 
 MobileHeader.propTypes = {
-  activeUser: T.object,
-  deviceView: T.string,
-  handleNav: T.func,
-  handleSignout: T.func,
-  isDrawerOpen: T.bool,
+  activeUser: T.object.isRequired,
+  deviceView: T.string.isRequired,
+  handleNav: T.func.isRequired,
+  handleResetState: T.func.isRequired,
+  handleSignout: T.func.isRequired,
+  isDrawerOpen: T.bool.isRequired,
   isLandingPage: T.bool.isRequired,
-  isMobile: T.bool,
-  isSignedIn: T.bool,
-  setIsDrawerOpen: T.func,
+  isMobile: T.bool.isRequired,
+  isSignedIn: T.bool.isRequired,
+  setIsDrawerOpen: T.func.isRequired,
 };
 
 export default MobileHeader;

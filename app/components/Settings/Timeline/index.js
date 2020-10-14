@@ -4,6 +4,7 @@ import T from 'prop-types';
 import moment from 'moment';
 
 import { ConditionalRender } from 'components/base_ui';
+import { actionDictionary } from 'containers/Settings/constants';
 import { formatDollarAmount, formatWordString } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -34,6 +35,7 @@ import {
   HeaderWrapper,
   StyledH3,
 } from '../styledComponents';
+import VerifiedAccountsView from '../VerifiedAccounts';
 
 const ViewAllIcon = iconDictionary('viewAll');
 
@@ -41,12 +43,25 @@ const UserTimelineView = ({
   activity,
   attempting,
   filterValues: { users: usersFilter },
+  githubUsername,
   handleInputChange,
   handleNav,
-  handleRemoveIssue,
-  userId,
+  handleRemoveAttempting,
+  handleRemoveWatching,
+  isGithubVerified,
   watching,
 }) => {
+  const filterActivity = () => {
+    const filteredArray = activity.filter(({ action }) => {
+      if (usersFilter === 'All' || actionDictionary[usersFilter] === action) {
+        return true;
+      }
+      return false;
+    });
+    return filteredArray;
+  };
+  const filteredActivity = filterActivity();
+
   const AttemptingComponent = () => (
     <ConditionalRender
       Component={OverviewListComponent}
@@ -55,10 +70,9 @@ const UserTimelineView = ({
       }
       propsToPassDown={{
         handleNav,
-        handleRemoveIssue,
+        handleRemoveAttempting,
         list: attempting.slice(0, 5),
         type: 'attempting',
-        userId,
       }}
       shouldRender={!!attempting.length}
     />
@@ -71,17 +85,17 @@ const UserTimelineView = ({
       }
       propsToPassDown={{
         handleNav,
-        handleRemoveIssue,
+        handleRemoveAttempting,
+        handleRemoveWatching,
         list: watching.slice(0, 5),
         type: 'watching',
-        userId,
       }}
       shouldRender={!!watching.length}
     />
   );
 
   const ActivityComponent = () =>
-    activity.map((el, index) => {
+    filteredActivity.map((el, index) => {
       const {
         action,
         activityId,
@@ -126,7 +140,7 @@ const UserTimelineView = ({
       if (
         index === 0 ||
         moment(date).format('YYYY/MM/DD') !==
-          moment(activity[index - 1].date).format('YYYY/MM/DD')
+          moment(filteredActivity[index - 1].date).format('YYYY/MM/DD')
       ) {
         return (
           <Fragment key={`list-item-${index}`}>
@@ -143,6 +157,10 @@ const UserTimelineView = ({
 
   return (
     <TimelineContainer>
+      <VerifiedAccountsView
+        githubUsername={githubUsername}
+        isGithubVerified={isGithubVerified}
+      />
       <div>
         <HeaderContainer>
           <StyledH3>Your Attempting</StyledH3>
@@ -186,7 +204,7 @@ const UserTimelineView = ({
             handleInputChange({ field: 'users', form: 'filter', value })
           }
           selectedValue={usersFilter}
-          values={['All', 'Earned', 'Funded', 'Submitted', 'Withdrew']}
+          values={['All', 'Commented', 'Earned', 'Funded', 'Submitted']}
         />
       </HeaderWrapper>
       <ConditionalRender
@@ -194,7 +212,7 @@ const UserTimelineView = ({
         FallbackComponent={
           <EmptyComponentContainer>No recent activity.</EmptyComponentContainer>
         }
-        shouldRender={activity.length > 0}
+        shouldRender={filteredActivity.length > 0}
       />
     </TimelineContainer>
   );
@@ -204,10 +222,12 @@ UserTimelineView.propTypes = {
   activity: T.array,
   attempting: T.array.isRequired,
   filterValues: T.object.isRequired,
+  githubUsername: T.string,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
-  userId: T.string.isRequired,
+  handleRemoveAttempting: T.func.isRequired,
+  handleRemoveWatching: T.func.isRequired,
+  isGithubVerified: T.bool.isRequired,
   watching: T.array.isRequired,
 };
 

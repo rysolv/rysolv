@@ -12,7 +12,7 @@ const BaseTextInputWithAdornment = ({
 }) => {
   const adornment = {
     [`${position}Adornment`]: (
-      <FlatIconButton Icon={adornmentComponent} onClick={onClick}>
+      <FlatIconButton disableRipple Icon={adornmentComponent} onClick={onClick}>
         {adornmentComponent}
       </FlatIconButton>
     ),

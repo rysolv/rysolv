@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { PrimaryAsyncButton } from 'components/base_ui';
+import { PrimaryButton } from 'components/base_ui';
 
 import {
   ButtonGroup,
@@ -19,7 +19,7 @@ const SigninModal = ({ handleClose, handleRedirect }) => (
     </StyledBodyMessage>
     <ButtonGroup>
       <StyledPrimaryButton label="Cancel" onClick={handleClose} />
-      <PrimaryAsyncButton
+      <PrimaryButton
         label="Sign In"
         onClick={() => handleRedirect('/signin')}
       />

@@ -1,12 +1,16 @@
-/* eslint-disable default-case, no-param-reassign */
+/* eslint-disable consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
 import {
   CLOSE_MODAL_STATE,
-  FETCH_WATCH_LIST_FAILURE,
-  FETCH_WATCH_LIST_SUCCESS,
+  FETCH_ATTEMPT_LIST_RESPONSE,
+  FETCH_ATTEMPT_LIST,
+  FETCH_PULL_REQUEST_LIST_RESPONSE,
+  FETCH_PULL_REQUEST_LIST,
+  FETCH_WATCH_LIST_RESPONSE,
   FETCH_WATCH_LIST,
   OPEN_MODAL_STATE,
+  RESET_STATE,
   UPDATE_PAYMENT_MODAL,
 } from './constants';
 
@@ -26,11 +30,23 @@ const mainReducer = produce((draft, { payload, type }) => {
       draft.tableData = initialState.tableData;
       break;
     }
-    case FETCH_WATCH_LIST_FAILURE: {
+    case FETCH_ATTEMPT_LIST_RESPONSE: {
       draft.loading = false;
       break;
     }
-    case FETCH_WATCH_LIST_SUCCESS: {
+    case FETCH_ATTEMPT_LIST: {
+      draft.loading = true;
+      break;
+    }
+    case FETCH_PULL_REQUEST_LIST_RESPONSE: {
+      draft.loading = false;
+      break;
+    }
+    case FETCH_PULL_REQUEST_LIST: {
+      draft.loading = true;
+      break;
+    }
+    case FETCH_WATCH_LIST_RESPONSE: {
       draft.loading = false;
       break;
     }
@@ -44,6 +60,9 @@ const mainReducer = produce((draft, { payload, type }) => {
       draft.modal = modalState;
       draft.tableData = tableData || [];
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
     case UPDATE_PAYMENT_MODAL: {
       const { balance, fundedAmount } = payload;

@@ -33,22 +33,29 @@ const SettingsTabs = ({
   creditCardProps,
   currentTab,
   deviceView,
-  dispatchInputError,
   dispatchOpenModal,
+  dispatchPaypalPayment,
   displayBottom,
   dollarsEarned,
   email,
   filterValues,
   firstName,
+  githubUsername,
+  handleClearAllAlerts,
+  handleClearErrors,
   handleClose,
-  handleDone,
   handleEdit,
   handleInputChange,
   handleNav,
-  handleRemoveIssue,
+  handleRemoveAttempting,
+  handleRemoveWatching,
+  handleSubmitEmailChange,
+  handleSubmitInputChange,
+  handleValidateInput,
   handleWithdrawFunds,
   inputErrors,
   isDisabled,
+  isGithubVerified,
   issues,
   lastName,
   organizations,
@@ -58,8 +65,8 @@ const SettingsTabs = ({
   setChangeLastName,
   setChangeUsername,
   setDisplayBottom,
+  setStripeError,
   setValue,
-  userId,
   username,
   value,
   view,
@@ -128,19 +135,24 @@ const SettingsTabs = ({
       Component={
         <DepositFormComponent
           creditCardProps={creditCardProps}
-          handleNav={handleNav}
+          dispatchPaypalPayment={dispatchPaypalPayment}
+          handleClearAllAlerts={handleClearAllAlerts}
+          handleClearErrors={handleClearErrors}
+          handleValidateInput={handleValidateInput}
+          inputErrors={inputErrors}
           setDisplayBottom={setDisplayBottom}
+          setStripeError={setStripeError}
         />
       }
       FallbackComponent={
         <WithdrawalFormComponent
           balance={balance}
-          dispatchInputError={dispatchInputError}
-          handleNav={handleNav}
+          handleClearAllAlerts={handleClearAllAlerts}
+          handleClearErrors={handleClearErrors}
+          handleValidateInput={handleValidateInput}
           handleWithdrawFunds={handleWithdrawFunds}
           inputErrors={inputErrors}
           setDisplayBottom={setDisplayBottom}
-          userId={userId}
         />
       }
       shouldRender={view === 'deposit'}
@@ -152,15 +164,13 @@ const SettingsTabs = ({
         <UserAttempting
           attempting={attempting}
           handleNav={handleNav}
-          handleRemoveIssue={handleRemoveIssue}
-          userId={userId}
+          handleRemoveAttempting={handleRemoveAttempting}
         />
       }
       FallbackComponent={
         <UserWatching
           handleNav={handleNav}
-          handleRemoveIssue={handleRemoveIssue}
-          userId={userId}
+          handleRemoveWatching={handleRemoveWatching}
           watching={watching}
         />
       }
@@ -180,10 +190,12 @@ const SettingsTabs = ({
         activity={activity}
         attempting={attempting}
         filterValues={filterValues}
+        githubUsername={githubUsername}
         handleInputChange={handleInputChange}
         handleNav={handleNav}
-        handleRemoveIssue={handleRemoveIssue}
-        userId={userId}
+        handleRemoveAttempting={handleRemoveAttempting}
+        handleRemoveWatching={handleRemoveWatching}
+        isGithubVerified={isGithubVerified}
         watching={watching}
       />
     ),
@@ -199,9 +211,10 @@ const SettingsTabs = ({
         email={email}
         firstName={firstName}
         handleClose={handleClose}
-        handleDone={handleDone}
         handleEdit={handleEdit}
         handleNav={handleNav}
+        handleSubmitEmailChange={handleSubmitEmailChange}
+        handleSubmitInputChange={handleSubmitInputChange}
         isDisabled={isDisabled}
         lastName={lastName}
         setChangeEmail={setChangeEmail}
@@ -323,22 +336,29 @@ SettingsTabs.propTypes = {
   creditCardProps: T.object,
   currentTab: T.number,
   deviceView: T.string,
-  dispatchInputError: T.func,
   dispatchOpenModal: T.func,
+  dispatchPaypalPayment: T.func,
   displayBottom: T.bool,
   dollarsEarned: T.number,
   email: T.string,
   filterValues: T.object,
   firstName: T.string,
+  githubUsername: T.string,
+  handleClearAllAlerts: T.func,
+  handleClearErrors: T.func,
   handleClose: T.func,
-  handleDone: T.func,
   handleEdit: T.func,
   handleInputChange: T.func,
   handleNav: T.func,
-  handleRemoveIssue: T.func,
+  handleRemoveAttempting: T.func,
+  handleRemoveWatching: T.func,
+  handleSubmitEmailChange: T.func,
+  handleSubmitInputChange: T.func,
+  handleValidateInput: T.func,
   handleWithdrawFunds: T.func,
   inputErrors: T.object,
   isDisabled: T.bool,
+  isGithubVerified: T.bool,
   issues: T.array,
   lastName: T.string,
   organizations: T.array,
@@ -348,8 +368,8 @@ SettingsTabs.propTypes = {
   setChangeLastName: T.func,
   setChangeUsername: T.func,
   setDisplayBottom: T.func,
+  setStripeError: T.func,
   setValue: T.func,
-  userId: T.string,
   username: T.string,
   value: T.oneOfType([T.array, T.number, T.string]),
   view: T.string,

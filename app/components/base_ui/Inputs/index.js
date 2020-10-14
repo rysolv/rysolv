@@ -1,10 +1,12 @@
+import BaseFileInput from './FileInput';
 import BaseInput from './BaseInput';
 import BaseInputWithAdornment from './BaseInputWithAdornment';
 import BaseTextInput from './BaseTextInput';
 import BaseTextInputWithAdornment from './BaseTextInputWithAdornment';
 import MainTextInput from './MainTextInput';
-import PaymentModalInputWithAdornment from './PaymentModalInputWithAdornment';
-import BaseFileInput from './FileInput';
+import PasswordTextInput from './PasswordTextInput';
+import PaymentTextInput from './PaymentTextInput';
+import StripeInput from './StripeInput';
 
 export {
   BaseFileInput,
@@ -13,5 +15,7 @@ export {
   BaseTextInput,
   BaseTextInputWithAdornment,
   MainTextInput,
-  PaymentModalInputWithAdornment,
+  PasswordTextInput,
+  PaymentTextInput,
+  StripeInput,
 };

@@ -59,10 +59,10 @@ export const filterIssues = (issues, filterParams) => {
     );
   }
   if (bug) {
-    bugIssues = filteredIssues.filter(({ type }) => type === 'bug');
+    bugIssues = filteredIssues.filter(({ type }) => type === 'Bug');
   }
   if (feature) {
-    featureIssues = filteredIssues.filter(({ type }) => type === 'feature');
+    featureIssues = filteredIssues.filter(({ type }) => type === 'Feature');
   }
   const arr1 =
     closed || funded || unfunded

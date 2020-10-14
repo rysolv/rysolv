@@ -39,10 +39,16 @@ const Footer = ({ handleNav }) => (
     <Divider />
     <StyledBottom>
       <LinkContainer>
+        <LinkWrapper onClick={() => handleNav('/terms-of-service')}>
+          Terms & Conditions
+        </LinkWrapper>
+        <LinkWrapper onClick={() => handleNav('/privacy-policy')}>
+          Privacy Policy
+        </LinkWrapper>
+        <LinkWrapper onClick={() => handleNav('/faq')}>FAQ</LinkWrapper>
         <LinkWrapper onClick={() => handleNav('/contact-us')}>
           Contact Us
         </LinkWrapper>
-        <LinkWrapper onClick={() => handleNav('/faq')}>FAQ</LinkWrapper>
       </LinkContainer>
       <CopyrightWrapper>
         <div>{`© ${new Date().getFullYear()} Rysolv, LLC`}</div>

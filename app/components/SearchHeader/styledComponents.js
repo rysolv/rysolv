@@ -61,8 +61,5 @@ export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
 export const StyledLabel = styled.div`
   align-self: center;
   font-size: ${defaultFontSize};
-
-  ${mobile} {
-    white-space: nowrap;
-  }
+  white-space: nowrap;
 `;

@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import moment from 'moment';
 import T from 'prop-types';
 
-import { ConditionalRender, ProfileImage } from 'components/base_ui';
+import { ConditionalRender, ImageLinkWrapper } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
@@ -22,7 +22,7 @@ import {
 
 export class RecentActivityView extends React.PureComponent {
   render() {
-    const { activity, handleNav } = this.props;
+    const { activity } = this.props;
     const ActivityComponent = (
       <ActivityContainer>
         {activity.map(
@@ -34,36 +34,44 @@ export class RecentActivityView extends React.PureComponent {
             path,
             target: { targetName, targetType },
             user: { userId, username, profilePic },
-          }) => (
-            <ActivityWrapper key={activityId}>
-              <div style={{ display: 'flex' }}>
-                <ProfileImageWrapper>
-                  <ProfileImage
-                    alt={username}
-                    detailRoute={`/users/detail/${userId}`}
-                    handleNav={handleNav}
-                    profilePic={profilePic}
-                    size="4rem"
-                  />
-                </ProfileImageWrapper>
-                <FundContent>
-                  <StyledWordLink to={`/users/detail/${userId}`}>
-                    {username}
-                  </StyledWordLink>
-                  &nbsp;
-                  <StyledAction>
-                    {action} {targetType.toLowerCase()}
-                  </StyledAction>
-                  &nbsp;
-                  {fundedValue ? `for ${formatDollarAmount(fundedValue)} ` : ''}
-                  <StyledExternalLink to={path}>
-                    {targetName}
-                  </StyledExternalLink>
-                  <ActivityDate>{moment(date).fromNow()}</ActivityDate>
-                </FundContent>
-              </div>
-            </ActivityWrapper>
-          ),
+          }) => {
+            const disabled = !userId;
+            const usernameToRender = username || 'anonymous';
+            return (
+              <ActivityWrapper key={activityId}>
+                <div style={{ display: 'flex' }}>
+                  <ProfileImageWrapper>
+                    <ImageLinkWrapper
+                      alt={usernameToRender}
+                      disabled={disabled}
+                      image={profilePic}
+                      route={`/users/detail/${userId}`}
+                    />
+                  </ProfileImageWrapper>
+                  <FundContent>
+                    <StyledWordLink
+                      disabled={disabled}
+                      to={`/users/detail/${userId}`}
+                    >
+                      {usernameToRender}
+                    </StyledWordLink>
+                    &nbsp;
+                    <StyledAction>
+                      {action} {targetType.toLowerCase()}
+                    </StyledAction>
+                    &nbsp;
+                    {fundedValue
+                      ? `for ${formatDollarAmount(fundedValue)} `
+                      : ''}
+                    <StyledExternalLink to={path}>
+                      {targetName}
+                    </StyledExternalLink>
+                    <ActivityDate>{moment(date).fromNow()}</ActivityDate>
+                  </FundContent>
+                </div>
+              </ActivityWrapper>
+            );
+          },
         )}
       </ActivityContainer>
     );
@@ -85,9 +93,6 @@ export class RecentActivityView extends React.PureComponent {
   }
 }
 
-RecentActivityView.propTypes = {
-  activity: T.array,
-  handleNav: T.func.isRequired,
-};
+RecentActivityView.propTypes = { activity: T.array };
 
 export default RecentActivityView;

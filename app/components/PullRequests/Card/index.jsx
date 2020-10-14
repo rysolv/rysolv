@@ -7,7 +7,9 @@ import { formatDollarAmount } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
+  ButtomBarContainer,
   ContentWrapper,
+  DeleteButton,
   Icon,
   IssueFundedAmount,
   IssueMerged,
@@ -24,11 +26,12 @@ import {
 } from './styledComponents';
 
 const CheckIcon = iconDictionary('check');
+const CloseCircleIcon = iconDictionary('closeCircle');
 const CloseIcon = iconDictionary('close');
 const GithubIcon = iconDictionary('github');
 const IssueIcon = iconDictionary('issue');
 
-const PullRequestCard = ({ data }) => (
+const PullRequestCard = ({ data, handleDelete }) => (
   <PullRequestCardContainer>
     {data.map(
       (
@@ -39,6 +42,7 @@ const PullRequestCard = ({ data }) => (
           issueId,
           mergeableState,
           merged,
+          pullRequestId,
           title,
         },
         index,
@@ -53,6 +57,19 @@ const PullRequestCard = ({ data }) => (
               <ContentWrapper>
                 <TitleWrapper>{title}</TitleWrapper>
                 <UrlContainer>
+                  <StatusWrapper>
+                    <IssueMerged merged={merged}>
+                      {merged ? 'Merged' : 'Open'}
+                    </IssueMerged>
+                    <TestIconContainer>
+                      <TestIconWrapper isMergeable={isMergeable}>
+                        {isMergeable ? CheckIcon : CloseIcon}
+                      </TestIconWrapper>
+                      <div>Tests Passed</div>
+                    </TestIconContainer>
+                  </StatusWrapper>
+                </UrlContainer>
+                <ButtomBarContainer>
                   <UrlWrapper
                     addPadding
                     href={`/issues/detail/${issueId}`}
@@ -63,20 +80,10 @@ const PullRequestCard = ({ data }) => (
                   <UrlWrapper href={htmlUrl} target="_blank">
                     <Icon>{GithubIcon}</Icon> View on Github
                   </UrlWrapper>
-                </UrlContainer>
-                <StatusWrapper>
-                  <div>
-                    <IssueMerged merged={merged}>
-                      {merged ? 'Merged' : 'Open'}
-                    </IssueMerged>
-                  </div>
-                  <TestIconContainer>
-                    <TestIconWrapper isMergeable={isMergeable}>
-                      {isMergeable ? CheckIcon : CloseIcon}
-                    </TestIconWrapper>
-                    <div>Tests Passed</div>
-                  </TestIconContainer>
-                </StatusWrapper>
+                  <DeleteButton onClick={() => handleDelete({ pullRequestId })}>
+                    <Icon>{CloseCircleIcon}</Icon>Cancel
+                  </DeleteButton>
+                </ButtomBarContainer>
               </ContentWrapper>
               <IssueFundedAmount>
                 {formatDollarAmount(fundedAmount)}
@@ -91,6 +98,7 @@ const PullRequestCard = ({ data }) => (
 
 PullRequestCard.propTypes = {
   data: T.array.isRequired,
+  handleDelete: T.func.isRequired,
 };
 
 export default PullRequestCard;

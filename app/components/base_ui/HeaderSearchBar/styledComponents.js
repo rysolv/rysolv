@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { textColor } from 'defaultStyleHelper';
+import {
+  commentHeaderColor,
+  inputFieldColor,
+  lightBlueColor,
+  textColor,
+} from 'defaultStyleHelper';
 
 import { BaseInputWithAdornment } from '../Inputs';
 
@@ -11,9 +16,9 @@ export const HeaderSearchBarContainer = styled.div`
 
 export const OptionTitle = styled.button`
   align-items: center;
-  background-color: #f6f8fa;
+  background-color: ${commentHeaderColor};
   border-radius: 0.3rem;
-  border: 0.1rem solid #cfd8dc;
+  border: 0.1rem solid ${inputFieldColor};
   color: #6a737d;
   display: flex;
   font-size: 1.2rem;
@@ -37,13 +42,13 @@ export const RedirectIcon = styled.span`
 `;
 
 export const SearchItemContainer = styled.div`
+  border-bottom: 0.1rem solid #d5d5d5;
   display: flex;
   height: 4rem;
   padding: 1rem;
-  border-bottom: 0.1rem solid #d5d5d5;
 
   &:hover {
-    background-color: #1e88e5;
+    background-color: ${lightBlueColor};
     color: white;
     cursor: pointer;
   }

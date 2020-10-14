@@ -11,7 +11,6 @@ import {
   PullRequestContainer,
   PullRequestInfo,
   StatusWrapper,
-  StyledErrorSuccessBanner,
   StyledHeader,
   StyledItem,
   StyledLabel,
@@ -19,14 +18,15 @@ import {
   StyledSecondayButton,
   StyledSubHeader,
 } from './styledComponents';
+import { StyledErrorSuccessBanner } from '../styledComponents';
 
 const CheckIcon = iconDictionary('check');
 const CloseIcon = iconDictionary('close');
 
 const VerifyForm = ({
+  alerts: { error },
   dispatchHandleStep,
-  error,
-  handleClearError,
+  handleClearAlerts,
   handleSubmit,
   importData: {
     githubUsername,
@@ -39,20 +39,16 @@ const VerifyForm = ({
   },
   loading,
 }) => {
-  const errorToDisplay = error ? { message: error } : false;
   const handleBack = () => {
     dispatchHandleStep({ step: 1 });
-    handleClearError();
+    handleClearAlerts();
   };
   const isMergeable = mergeable.value;
   const haveTestsPassed = mergeableState.value !== 'unstable';
   return (
     <Fragment>
       <StyledHeader>Verify</StyledHeader>
-      <StyledErrorSuccessBanner
-        error={errorToDisplay}
-        onClose={handleClearError}
-      />
+      <StyledErrorSuccessBanner error={error} onClose={handleClearAlerts} />
       <PullRequestContainer>
         <StyledSubHeader>General</StyledSubHeader>
         <Divider />
@@ -107,9 +103,9 @@ const VerifyForm = ({
 };
 
 VerifyForm.propTypes = {
+  alerts: T.object,
   dispatchHandleStep: T.func,
-  error: T.string,
-  handleClearError: T.func,
+  handleClearAlerts: T.func,
   handleSubmit: T.func,
   importData: T.object,
   loading: T.bool,

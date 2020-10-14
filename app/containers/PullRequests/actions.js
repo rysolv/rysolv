@@ -1,9 +1,11 @@
 import {
-  CLEAR_ERROR,
-  CLEAR_FORM,
+  CLEAR_ALERTS,
   CREATE_PULL_REQUEST_FAILURE,
   CREATE_PULL_REQUEST_SUCCESS,
   CREATE_PULL_REQUEST,
+  DELETE_PULL_REQUEST_FAILURE,
+  DELETE_PULL_REQUEST_SUCCESS,
+  DELETE_PULL_REQUEST,
   FETCH_USER_PULL_REQUESTS_FAILURE,
   FETCH_USER_PULL_REQUESTS_SUCCESS,
   FETCH_USER_PULL_REQUESTS,
@@ -13,17 +15,12 @@ import {
   IMPORT_PULL_REQUEST,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
 } from './constants';
 
-export function clearError() {
+export function clearAlerts() {
   return {
-    type: CLEAR_ERROR,
-  };
-}
-
-export function clearForm() {
-  return {
-    type: CLEAR_FORM,
+    type: CLEAR_ALERTS,
   };
 }
 
@@ -34,17 +31,35 @@ export function createPullRequestFailure(payload) {
   };
 }
 
-export function createPullRequestSuccess(payload) {
-  return {
-    payload,
-    type: CREATE_PULL_REQUEST_SUCCESS,
-  };
+export function createPullRequestSuccess() {
+  return { type: CREATE_PULL_REQUEST_SUCCESS };
 }
 
 export function createPullRequest(payload) {
   return {
     payload,
     type: CREATE_PULL_REQUEST,
+  };
+}
+
+export function deletePullRequestFailure(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_FAILURE,
+  };
+}
+
+export function deletePullRequestSuccess(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_SUCCESS,
+  };
+}
+
+export function deletePullRequest(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST,
   };
 }
 
@@ -62,11 +77,8 @@ export function fetchUserPullRequestsSuccess(payload) {
   };
 }
 
-export function fetchUserPullRequests(payload) {
-  return {
-    payload,
-    type: FETCH_USER_PULL_REQUESTS,
-  };
+export function fetchUserPullRequests() {
+  return { type: FETCH_USER_PULL_REQUESTS };
 }
 
 export function handleStep(payload) {
@@ -108,5 +120,11 @@ export function inputError(payload) {
   return {
     payload,
     type: INPUT_ERROR,
+  };
+}
+
+export function resetState() {
+  return {
+    type: RESET_STATE,
   };
 }

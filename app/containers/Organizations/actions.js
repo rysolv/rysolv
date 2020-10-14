@@ -3,21 +3,20 @@ import {
   CHANGE_ORGANIZATION_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
-  DELETE_ORGANIZATION_FAILURE,
-  DELETE_ORGANIZATION_SUCCESS,
-  DELETE_ORGANIZATION,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
   FETCH_ORGANIZATIONS_FAILURE,
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
+  GENERATE_IDENTICON,
   IMPORT_ORGANIZATION_FAILURE,
   IMPORT_ORGANIZATION_SUCCESS,
   IMPORT_ORGANIZATION,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
@@ -27,10 +26,11 @@ import {
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
+  UPDATE_IS_MANUAL,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export function changeOrganizationFilter(payload) {
@@ -56,27 +56,6 @@ export function clearAlerts() {
 export function clearForm() {
   return {
     type: CLEAR_FORM,
-  };
-}
-
-export function deleteOrganizationFailure(payload) {
-  return {
-    payload,
-    type: DELETE_ORGANIZATION_FAILURE,
-  };
-}
-
-export function deleteOrganizationSuccess(payload) {
-  return {
-    payload,
-    type: DELETE_ORGANIZATION_SUCCESS,
-  };
-}
-
-export function deleteOrganization(payload) {
-  return {
-    payload,
-    type: DELETE_ORGANIZATION,
   };
 }
 
@@ -121,6 +100,10 @@ export function fetchInfo(payload) {
   };
 }
 
+export function generateIdenticon() {
+  return { type: GENERATE_IDENTICON };
+}
+
 export function importOrganizationFailure(payload) {
   return {
     payload,
@@ -163,6 +146,10 @@ export function inputError(payload) {
   };
 }
 
+export function resetState() {
+  return { type: RESET_STATE };
+}
+
 export function saveInfoFailure(payload) {
   return {
     payload,
@@ -184,11 +171,8 @@ export function saveInfo(payload) {
   };
 }
 
-export function searchOrganizationsFailure(payload) {
-  return {
-    payload,
-    type: SEARCH_ORGANIZATIONS_FAILURE,
-  };
+export function searchOrganizationsFailure() {
+  return { type: SEARCH_ORGANIZATIONS_FAILURE };
 }
 
 export function searchOrganizationsSuccess(payload) {
@@ -226,6 +210,13 @@ export function updateInfo(payload) {
   };
 }
 
+export function updateIsManual(payload) {
+  return {
+    payload,
+    type: UPDATE_IS_MANUAL,
+  };
+}
+
 export function upvoteIssueFailure(payload) {
   return {
     payload,
@@ -240,13 +231,16 @@ export function upvoteIssueSuccess(payload) {
   };
 }
 
+export function upvoteIssueTemp(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE_TEMP,
+  };
+}
+
 export function upvoteIssue(payload) {
   return {
     payload,
     type: UPVOTE_ISSUE,
   };
-}
-
-export function verifyInfo() {
-  return { type: VERIFY_INFO };
 }

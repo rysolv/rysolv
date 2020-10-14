@@ -8,13 +8,13 @@ import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import {
-  clearError,
-  clearForm,
+  clearAlerts,
   createPullRequest,
   handleStep,
   importPullRequest,
   inputChange,
   inputError,
+  resetState,
 } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
@@ -22,21 +22,21 @@ import { makeSelectPullRequests } from '../selectors';
 import { importPullRequestDictionary } from '../stepDictionary';
 
 const AddPullRequest = ({
-  dispatchClearForm,
+  alerts,
   dispatchCreatePullRequest,
   dispatchHandleStep,
   dispatchImportPullRequest,
-  error,
-  handleClearError,
+  dispatchResetState,
+  handleClearAlerts,
   handleClose,
   handleInputChange,
   importData,
   issueId,
   loading,
   step,
-  userId,
 }) => {
-  useEffect(() => dispatchClearForm, []);
+  useEffect(() => dispatchResetState, []);
+
   const ComponentToRender = importPullRequestDictionary[step];
 
   const handleImport = () => {
@@ -47,13 +47,13 @@ const AddPullRequest = ({
     });
   };
   const handleSubmit = () => {
-    dispatchCreatePullRequest({ issueId, userId, importData });
+    dispatchCreatePullRequest({ issueId, importData });
   };
 
   const propsToPassDown = {
+    alerts,
     dispatchHandleStep,
-    error,
-    handleClearError,
+    handleClearAlerts,
     handleClose,
     handleImport,
     handleInputChange,
@@ -66,26 +66,25 @@ const AddPullRequest = ({
 };
 
 AddPullRequest.propTypes = {
-  dispatchClearForm: T.func,
+  alerts: T.object.isRequired,
   dispatchCreatePullRequest: T.func,
   dispatchHandleStep: T.func,
   dispatchImportPullRequest: T.func,
-  error: T.oneOfType([T.bool, T.string]),
-  handleClearError: T.func,
+  dispatchResetState: T.func.isRequired,
+  handleClearAlerts: T.func.isRequired,
   handleClose: T.func,
   handleInputChange: T.func,
   importData: T.object,
   issueId: T.string,
   loading: T.bool,
   step: T.number,
-  userId: T.string,
 };
 
 const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : PullRequests
    */
-  error: makeSelectPullRequests('error'),
+  alerts: makeSelectPullRequests('alerts'),
   importData: makeSelectPullRequests('importData'),
   loading: makeSelectPullRequests('loading'),
   step: makeSelectPullRequests('step'),
@@ -96,12 +95,12 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : PullRequests
      */
-    dispatchClearForm: () => dispatch(clearForm()),
     dispatchCreatePullRequest: payload => dispatch(createPullRequest(payload)),
     dispatchHandleStep: payload => dispatch(handleStep(payload)),
     dispatchImportPullRequest: payload => dispatch(importPullRequest(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
-    handleClearError: () => dispatch(clearError()),
+    dispatchResetState: () => dispatch(resetState()),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }
