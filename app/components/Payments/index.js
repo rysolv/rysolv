@@ -4,20 +4,20 @@ import T from 'prop-types';
 import { paymentsStepDictionary } from './stepDictionary';
 import { PaymentContainer } from './styledComponents';
 
-const PaymentPortal = ({ removeBorder, step, ...restProps }) => {
+const PaymentPortal = ({ isModal, step, ...restProps }) => {
   const Component = paymentsStepDictionary[step];
 
   return (
-    <PaymentContainer removeBorder={removeBorder}>
+    <PaymentContainer isModal={isModal}>
       <Component {...restProps} />
     </PaymentContainer>
   );
 };
 
-PaymentPortal.defaultProps = { removeBorder: false };
+PaymentPortal.defaultProps = { isModal: false };
 
 PaymentPortal.propTypes = {
-  removeBorder: T.bool,
+  isModal: T.bool,
   step: T.number.isRequired,
 };
 

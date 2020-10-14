@@ -13,17 +13,13 @@ import {
 const closeIcon = iconDictionary('close');
 
 const PaymentPortalModal = ({ handleClose, step, ...restProps }) => {
-  const hasPadding = step === 1;
+  const isFirstStep = step === 1;
   return (
-    <PaymentPortalContainer hasPadding={hasPadding}>
-      <IconWrapper hasPadding={hasPadding}>
-        <IconButton
-          icon={closeIcon}
-          label="Close"
-          onClick={() => handleClose()}
-        />
+    <PaymentPortalContainer isFirstStep={isFirstStep}>
+      <IconWrapper isFirstStep={isFirstStep}>
+        <IconButton icon={closeIcon} label="Close" onClick={handleClose} />
       </IconWrapper>
-      <StyledPaymentPortal removeBorder step={step} {...restProps} />
+      <StyledPaymentPortal isModal step={step} {...restProps} />
     </PaymentPortalContainer>
   );
 };

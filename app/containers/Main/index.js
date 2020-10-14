@@ -6,7 +6,6 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
-import { ModalDialog } from 'components/base_ui';
 import CloseIssueModal from 'components/CloseIssueModal';
 import ProgressModal from 'components/ProgressModal';
 import Header from 'components/Header';
@@ -34,6 +33,7 @@ import {
   AppBodyWrapper,
   AppContentWrapper,
   RoutesWrapper,
+  StyledModalDialog,
 } from './styledComponents';
 
 export const Main = ({
@@ -71,6 +71,7 @@ export const Main = ({
     dispatchCloseModal();
     handleNav(route);
   };
+  const isPaymentModal = modal === 'fundIssue';
   const modalPropsDictionary = {
     closeIssue: {
       Component: CloseIssueModal,
@@ -171,7 +172,12 @@ export const Main = ({
         </AppContentWrapper>
       </AppBodyWrapper>
       <Footer handleNav={handleNav} />
-      {modal && <ModalDialog {...modalPropsDictionary[modal]} />}
+      {modal && (
+        <StyledModalDialog
+          isPaymentModal={isPaymentModal}
+          {...modalPropsDictionary[modal]}
+        />
+      )}
     </Fragment>
   );
 };

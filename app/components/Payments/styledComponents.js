@@ -118,8 +118,8 @@ export const InputWrapper = styled.div`
 export const PaymentContainer = styled.div`
   background-color: white;
   border-radius: 0.2rem;
-  border: ${({ removeBorder }) =>
-    removeBorder ? 'none' : `0.1rem solid ${borderColor}`};
+  border: ${({ isModal }) =>
+    isModal ? 'none' : `0.1rem solid ${borderColor}`};
   color: rgba(0, 0, 0, 0.7);
   min-height: 53rem;
   width: 100%;

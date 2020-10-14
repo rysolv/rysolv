@@ -23,7 +23,6 @@ const PaymentSuccessView = ({
     handleClearPaymentAlerts();
     handleIncrement({ step: 1 });
   };
-  setTimeout(handleBack, 5000);
   return (
     <div>
       <SuccessIconWrapper>
