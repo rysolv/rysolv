@@ -5,7 +5,7 @@ import { BackNav, ConditionalRender } from 'components/base_ui';
 import { CommentCard, NewComment, NoComment } from 'components/MarkdownRender';
 import UpvotePanel from 'components/Upvote';
 import PaymentPortal from 'containers/Payments';
-import iconDictionary from 'utils/iconDictionary';
+// import iconDictionary from 'utils/iconDictionary';
 
 import IssueDetailBody from './IssueDetailBody';
 import IssueDetailHeader from './IssueDetailHeader';
@@ -22,14 +22,14 @@ import {
   LeftPanel,
   ManageIssueWrapper,
   SidebarContainer,
-  StyledButton,
+  // StyledButton,
   StyledErrorSuccessBanner,
   StyledIssueAccountManager,
   TopBarWrapper,
 } from './styledComponents';
 
-const CloseCircleIcon = iconDictionary('closeCircle');
-const OpenCircleIcon = iconDictionary('successOutline');
+// const CloseCircleIcon = iconDictionary('closeCircle');
+// const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
@@ -53,7 +53,7 @@ const IssueDetail = ({
     username,
   },
   deviceView,
-  dispatchCloseIssue,
+  // dispatchCloseIssue,
   dispatchEditIssue,
   dispatchFetchAttemptList,
   dispatchFetchPullRequestList,
@@ -92,42 +92,42 @@ const IssueDetail = ({
     });
   };
 
-  const CloseOpenIssueComponent = (
-    <ConditionalRender
-      Component={
-        <StyledButton
-          disableRipple
-          onClick={() =>
-            dispatchOpenModal({
-              modalState: 'closeIssue',
-              tableData: { issueId },
-            })
-          }
-          open={open}
-        >
-          {CloseCircleIcon}
-          Close Issue
-        </StyledButton>
-      }
-      FallbackComponent={
-        <StyledButton
-          disableRipple
-          onClick={() =>
-            dispatchCloseIssue({
-              issueId,
-              shouldClose: false,
-              userId: activeUserId,
-            })
-          }
-          open={open}
-        >
-          {OpenCircleIcon}
-          Reopen Issue
-        </StyledButton>
-      }
-      shouldRender={open}
-    />
-  );
+  // const CloseOpenIssueComponent = (
+  //   <ConditionalRender
+  //     Component={
+  //       <StyledButton
+  //         disableRipple
+  //         onClick={() =>
+  //           dispatchOpenModal({
+  //             modalState: 'closeIssue',
+  //             tableData: { issueId },
+  //           })
+  //         }
+  //         open={open}
+  //       >
+  //         {CloseCircleIcon}
+  //         Close Issue
+  //       </StyledButton>
+  //     }
+  //     FallbackComponent={
+  //       <StyledButton
+  //         disableRipple
+  //         onClick={() =>
+  //           dispatchCloseIssue({
+  //             issueId,
+  //             shouldClose: false,
+  //             userId: activeUserId,
+  //           })
+  //         }
+  //         open={open}
+  //       >
+  //         {OpenCircleIcon}
+  //         Reopen Issue
+  //       </StyledButton>
+  //     }
+  //     shouldRender={open}
+  //   />
+  // );
 
   const EditIssueComponent = (
     <StyledIssueAccountManager
@@ -186,7 +186,7 @@ const IssueDetail = ({
       <Divider>Manage Issue</Divider>
       <ManageIssueWrapper>
         <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
-        {CloseOpenIssueComponent}
+        {/* {CloseOpenIssueComponent} */}
       </ManageIssueWrapper>
     </Fragment>
   );
@@ -291,12 +291,6 @@ const IssueDetail = ({
           </IssueDetailContentContainer>
         </IssueDetailWrapper>
         <SidebarContainer>
-          <ConditionalRender
-            Component={EditIssueComponent}
-            shouldRender={
-              isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
-            }
-          />
           <PaymentPortal
             fundedAmount={fundedAmount}
             handleNav={handleNav}
@@ -305,11 +299,17 @@ const IssueDetail = ({
             open={open}
           />
           <ConditionalRender
-            Component={CloseOpenIssueComponent}
+            Component={EditIssueComponent}
             shouldRender={
               isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
             }
           />
+          {/* <ConditionalRender
+            Component={CloseOpenIssueComponent}
+            shouldRender={
+              isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
+            }
+          /> */}
         </SidebarContainer>
       </DetailContainer>
     </IssueDetailContainer>
@@ -325,7 +325,7 @@ IssueDetail.propTypes = {
   }),
   data: T.object,
   deviceView: T.string,
-  dispatchCloseIssue: T.func,
+  // dispatchCloseIssue: T.func,
   dispatchEditIssue: T.func,
   dispatchFetchAttemptList: T.func,
   dispatchFetchPullRequestList: T.func,

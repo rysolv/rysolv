@@ -7,13 +7,13 @@ import iconDictionary from 'utils/iconDictionary';
 import {
   ImportFormContainer,
   StyledImportError,
-  StyledLabel,
+  // StyledLabel,
 } from './styledComponents';
 
 const SearchIcon = iconDictionary('search');
 
 const ImportForm = ({
-  handleIncrementStep,
+  // handleIncrementStep,
   handleInputChange,
   handleSubmit,
   importError,
@@ -56,18 +56,18 @@ const ImportForm = ({
       <StyledImportError>
         {importError.error ? importError.message : null}
       </StyledImportError>
-      or
+      {/* or
       <StyledLabel
         onClick={() => handleIncrementStep({ step: 2, view: 'addIssue' })}
       >
         Manual
-      </StyledLabel>
+      </StyledLabel> */}
     </ImportFormContainer>
   );
 };
 
 ImportForm.propTypes = {
-  handleIncrementStep: T.func,
+  // handleIncrementStep: T.func,
   handleInputChange: T.func,
   handleSubmit: T.func,
   importError: T.object,

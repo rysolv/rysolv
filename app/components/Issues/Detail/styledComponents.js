@@ -54,8 +54,6 @@ export const Divider = styled.div`
 `;
 
 export const EditIssueWrapper = styled.div`
-  margin-bottom: -1rem;
-
   ${mobileS} {
     width: 100%;
   }
@@ -136,14 +134,8 @@ export const LeftPanel = styled.div`
 export const ManageIssueWrapper = styled.div`
   align-items: center;
   display: flex;
-  justify-content: space-between;
   min-height: 7.5rem;
   padding: 0 1rem;
-  white-space: nowrap;
-
-  ${mobileS} {
-    flex-direction: column;
-  }
 `;
 
 export const PostingInfoWrapper = styled.div`
@@ -196,7 +188,11 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
 `;
 
 export const StyledIssueAccountManager = styled(IssueAccountManager)`
-  margin-bottom: 1rem;
+  margin-top: 2rem;
+
+  ${laptop} {
+    margin-top: 0;
+  }
 
   ${mobileS} {
     text-align: left;
