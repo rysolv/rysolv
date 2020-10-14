@@ -15,6 +15,8 @@ const getUserSettingsError = `Something went wrong when getting your account inf
 
 const oneUserError = `Something went wrong when getting this user.`;
 
+const remainingBalanceError = `Your account cannot be deleted with an outstanding balance.`;
+
 const transformUserError = `Something went wrong when updating your account.`;
 
 const transformUserSuccess = `Your account has been successfully updated.`;
@@ -36,6 +38,7 @@ module.exports = {
   getUsersError,
   getUserSettingsError,
   oneUserError,
+  remainingBalanceError,
   transformUserError,
   transformUserSuccess,
   verifyUserAccountError,
