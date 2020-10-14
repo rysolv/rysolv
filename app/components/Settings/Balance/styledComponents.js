@@ -14,6 +14,7 @@ import {
 import {
   commentHeaderColor,
   defaultFontSize,
+  hoverLinkColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -134,6 +135,15 @@ export const InputHeader = styled.div`
 export const InputWrapper = styled.div`
   margin-bottom: 1.5rem;
   width: ${({ width }) => width || 'inherit'};
+`;
+
+export const LinkWrapper = styled.a`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    text-decoration: underline;
+  }
 `;
 
 export const PaymentOptionWrapper = styled.div`

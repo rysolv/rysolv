@@ -12,6 +12,7 @@ import {
   DisplayText,
   Divider,
   InputHeader,
+  LinkWrapper,
   StyledBaseDropDownMenu,
   StyledBaseTextInput,
   StyledPrimaryAsyncButton,
@@ -82,6 +83,12 @@ const WithdrawalFormComponent = ({
       <StyledText>
         Funds earned on the Rysolv platform are available for withdrawal via
         PayPal account. Expect to receive funds within 24 hours of withdrawal.
+        <br />
+        <br />
+        For issues involving payments, please contact{' '}
+        <LinkWrapper href="mailto: support@rysolv.com">
+            support@rysolv.com
+        </LinkWrapper>.
       </StyledText>
       <BalanceSquare isCentered>
         <BalanceTitle>Available to withdraw</BalanceTitle>
