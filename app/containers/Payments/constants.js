@@ -1,5 +1,7 @@
 export const CLEAR_ALERTS = 'app/Payments/CLEAR_ALERTS';
 
+export const INCREMENT_STEP = 'app/Payments/INCREMENT_STEP';
+
 export const INPUT_ERROR = 'app/Payments/INPUT_ERROR';
 
 export const PAYPAL_PAYMENT = 'app/Payments/PAYPAL_PAYMENT';
