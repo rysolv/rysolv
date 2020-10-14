@@ -81,7 +81,7 @@ const WithdrawalFormComponent = ({
       <StyledH3>Withdraw funds</StyledH3>
       <StyledText>
         Funds earned on the Rysolv platform are available for withdrawal via
-        PayPal account.
+        PayPal account. Expect to receive funds within 24 hours of withdrawal.
       </StyledText>
       <BalanceSquare isCentered>
         <BalanceTitle>Available to withdraw</BalanceTitle>
