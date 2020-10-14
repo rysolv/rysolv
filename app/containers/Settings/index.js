@@ -46,7 +46,7 @@ const Settings = ({
   activeUser: { id: userId },
   alerts,
   data,
-  data: { isGithubVerified },
+  data: { balance, isGithubVerified },
   deviceView,
   dispatchCloseModal,
   dispatchFetchInfo,
@@ -142,6 +142,7 @@ const Settings = ({
       Component: DeleteUserModal,
       open: isModalOpen,
       propsToPassDown: {
+        balance,
         handleClose: dispatchCloseModal,
         handleDeleteUser,
       },

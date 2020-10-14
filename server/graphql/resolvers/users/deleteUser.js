@@ -2,8 +2,13 @@ const {
   deletedUserImage,
   deleteUserError,
   deleteUserSuccess,
+  remainingBalanceError,
 } = require('./constants');
-const { deleteUserPullRequests, transformUser } = require('../../../db');
+const {
+  deleteUserPullRequests,
+  getUserSettings,
+  transformUser,
+} = require('../../../db');
 
 const deleteUser = async (_, { authError, userId }) => {
   try {
@@ -34,6 +39,12 @@ const deleteUser = async (_, { authError, userId }) => {
       upvotes: [],
       username: '[deleted]',
     };
+
+    const { balance } = await getUserSettings({ userId });
+    if (balance > 0) {
+      throw new Error(remainingBalanceError);
+    }
+
     await deleteUserPullRequests({ userId });
     await transformUser({ data, userId });
     return {
