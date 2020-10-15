@@ -193,6 +193,11 @@ export const StyledBaseTextInput = styled(BaseTextInput)`
   }
 `;
 
+export const StyledCheckboxWrapper = styled.div`
+  margin-bottom: -1rem;
+  margin-left: -1rem;
+`;
+
 export const StyledPaper = styled(Paper)`
   border-bottom: 0.1rem solid lightgrey;
   border-radius: 0;
@@ -277,13 +282,10 @@ export const Value = styled.div`
   padding: 0.75rem 0;
 `;
 
-export const WithdrawalInputContainer = styled.div`
-  width: 50%;
-`;
-
 export const WithdrawalInputWrapper = styled.div`
   align-items: center;
   display: ${({ isRow }) => (isRow ? 'flex' : 'block')};
   font-weight: ${({ isThin }) => (isThin ? '400' : '600')};
   padding: 1rem 0;
+  width: ${({ width }) => width || '50%'};
 `;

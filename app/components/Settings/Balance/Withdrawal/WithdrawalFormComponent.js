@@ -2,7 +2,11 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
-import { BackNav } from 'components/base_ui';
+import {
+  BackNav,
+  CheckboxWithLabel,
+  ConditionalRender,
+} from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
@@ -15,24 +19,29 @@ import {
   LinkWrapper,
   StyledBaseDropDownMenu,
   StyledBaseTextInput,
+  StyledCheckboxWrapper,
   StyledPrimaryAsyncButton,
   StyledText,
-  WithdrawalInputContainer,
   WithdrawalInputWrapper,
 } from '../styledComponents';
 import { StyledH3 } from '../../styledComponents';
 
 const WithdrawalFormComponent = ({
   balance,
+  email,
   handleClearAllAlerts,
   handleClearErrors,
   handleValidateInput,
   handleWithdrawFunds,
-  inputErrors: { transferValue: transferValueError },
+  inputErrors: { email: emailError, transferValue: transferValueError },
   setDisplayBottom,
 }) => {
+  const [isPaypalEmailChecked, setIsPaypalEmailChecked] = useState(true);
+  const [paypalEmail, setPaypalEmail] = useState('');
   const [transferLocation, setTransferLocation] = useState('PayPal');
   const [transferValue, setTransferValue] = useState('0');
+
+  const emailToSend = isPaypalEmailChecked ? email : paypalEmail;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,7 +49,7 @@ const WithdrawalFormComponent = ({
       handleClearAllAlerts();
       handleClearErrors();
       setDisplayBottom(false);
-    }
+    };
   }, []);
 
   const handleChangeDollarValue = e => {
@@ -64,7 +73,8 @@ const WithdrawalFormComponent = ({
         setTransferValue(formattedValue);
       }
       if (formattedString.length === 2) {
-        formattedString[0] = formattedString[0] === '' ? '0' : formattedString[0];
+        formattedString[0] =
+          formattedString[0] === '' ? '0' : formattedString[0];
         formattedString[1] = formattedString[1]
           ? formattedString[1].slice(0, 2)
           : '';
@@ -75,10 +85,7 @@ const WithdrawalFormComponent = ({
   };
   return (
     <Fragment>
-      <BackNav
-        label="Back to Account"
-        path="/settings/account"
-      />
+      <BackNav label="Back to Account" path="/settings/account" />
       <StyledH3>Withdraw funds</StyledH3>
       <StyledText>
         Funds earned on the Rysolv platform are available for withdrawal via
@@ -87,8 +94,9 @@ const WithdrawalFormComponent = ({
         <br />
         For issues involving payments, please contact{' '}
         <LinkWrapper href="mailto: support@rysolv.com">
-            support@rysolv.com
-        </LinkWrapper>.
+          support@rysolv.com
+        </LinkWrapper>
+        .
       </StyledText>
       <BalanceSquare isCentered>
         <BalanceTitle>Available to withdraw</BalanceTitle>
@@ -96,7 +104,7 @@ const WithdrawalFormComponent = ({
           {balance ? `${formatDollarAmount(balance)} USD` : '–'}
         </BalanceAmount>
       </BalanceSquare>
-      <WithdrawalInputContainer>
+      <div>
         <WithdrawalInputWrapper>
           <InputHeader>Transfer to:</InputHeader>
           <StyledBaseDropDownMenu
@@ -105,21 +113,56 @@ const WithdrawalFormComponent = ({
             values={['PayPal']}
           />
         </WithdrawalInputWrapper>
+        <WithdrawalInputWrapper width="100%">
+          <StyledCheckboxWrapper>
+            <CheckboxWithLabel
+              checked={isPaypalEmailChecked}
+              label="Paypal email is same as Rysolv email"
+              onChange={() => setIsPaypalEmailChecked(!isPaypalEmailChecked)}
+            />
+          </StyledCheckboxWrapper>
+          <ConditionalRender
+            Component={
+              <WithdrawalInputWrapper>
+                <InputHeader>Paypal email:</InputHeader>
+                <StyledBaseTextInput
+                  error={!!emailError}
+                  helperText={emailError}
+                  onBlur={() =>
+                    handleValidateInput({
+                      field: 'email',
+                      values: { email: paypalEmail },
+                    })
+                  }
+                  onChange={e => setPaypalEmail(e.target.value)}
+                  value={paypalEmail}
+                  variant="outlined"
+                />
+              </WithdrawalInputWrapper>
+            }
+            shouldRender={!isPaypalEmailChecked}
+          />
+        </WithdrawalInputWrapper>
         <WithdrawalInputWrapper>
           <InputHeader>Amount to withdraw:</InputHeader>
           <StyledBaseTextInput
             inputProps={{ maxLength: 7 }}
             error={!!transferValueError}
             helperText={transferValueError}
-            onBlur={() => handleValidateInput({ field: 'transferValue', values: { transferValue } })}
+            onBlur={() =>
+              handleValidateInput({
+                field: 'transferValue',
+                values: { transferValue },
+              })
+            }
             onChange={e => handleChangeDollarValue(e)}
             value={transferValue}
             variant="outlined"
           />
         </WithdrawalInputWrapper>
-      </WithdrawalInputContainer>
+      </div>
       <Divider />
-      <WithdrawalInputContainer>
+      <div>
         <WithdrawalInputWrapper isRow isThin>
           <InputHeader>15% Rysolv Service Fee:</InputHeader>
           <DisplayText>{formatDollarAmount(transferValue * 0.15)}</DisplayText>
@@ -134,12 +177,21 @@ const WithdrawalFormComponent = ({
               : '–'}
           </DisplayText>
         </WithdrawalInputWrapper>
-      </WithdrawalInputContainer>
+      </div>
       <StyledPrimaryAsyncButton
-        disabled={!!transferValueError || transferValue <= 0 || transferValue === '.'}
+        disabled={
+          !emailToSend ||
+          !!transferValueError ||
+          transferValue <= 0 ||
+          transferValue === '.'
+        }
         label="Withdraw Funds"
         onClick={() =>
-          handleWithdrawFunds({ transferValue, values: { transferValue } })
+          handleWithdrawFunds({
+            email: emailToSend,
+            transferValue,
+            values: { email: emailToSend, transferValue },
+          })
         }
       />
     </Fragment>
@@ -148,6 +200,7 @@ const WithdrawalFormComponent = ({
 
 WithdrawalFormComponent.propTypes = {
   balance: T.number.isRequired,
+  email: T.string.isRequired,
   handleClearAllAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
   handleValidateInput: T.func.isRequired,

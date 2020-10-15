@@ -414,10 +414,10 @@ export function* verifyAccountSaga({ payload }) {
 }
 
 export function* withdrawFundsSaga({ payload }) {
-  const { transferValue } = payload;
+  const { email, transferValue } = payload;
   const query = `
     mutation {
-      createWithdrawal(transferValue: ${transferValue}) {
+      createWithdrawal(email: "${email}", transferValue: ${transferValue}) {
         __typename
         ... on Withdrawal {
           balance

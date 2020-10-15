@@ -119,10 +119,10 @@ const Settings = ({
     });
   };
 
-  const handleWithdrawFunds = ({ transferValue, values }) => {
+  const handleWithdrawFunds = ({ email, transferValue, values }) => {
     const { isValidated, validationErrors } = validateFields({ values });
     if (isValidated) {
-      dispatchWithdrawFunds({ transferValue });
+      dispatchWithdrawFunds({ email, transferValue });
     } else {
       dispatchInputError({ errors: validationErrors });
     }

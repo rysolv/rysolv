@@ -14,7 +14,10 @@ const {
   lessThanBalanceError,
 } = require('./constants');
 
-const createWithdrawal = async ({ transferValue }, { authError, userId }) => {
+const createWithdrawal = async (
+  { email, transferValue },
+  { authError, userId },
+) => {
   try {
     if (authError || !userId) throw new Error(authError);
 
@@ -34,6 +37,7 @@ const createWithdrawal = async ({ transferValue }, { authError, userId }) => {
       // Record new withdrawal
       const data = {
         created_date: createdDate,
+        email,
         fee: transferValue * 0.15,
         id: uuidv4(),
         transfer_value: transferValue,

@@ -358,7 +358,7 @@ module.exports = buildSchema(`
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
     createStripeCharge(amount: Float!, issueId: ID, token: String!): PaymentResult!
     createUser(userInput: UserInput): UserResult!
-    createWithdrawal(transferValue: Float!): WithdrawalResult!
+    createWithdrawal(email: String!, transferValue: Float!): WithdrawalResult!
 
     deletePullRequest(id:ID!): EventResponse!
     deleteUser: EventResponse!
