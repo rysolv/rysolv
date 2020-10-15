@@ -126,7 +126,7 @@ const OrganizationDetailView = ({
               shouldRender={verified}
             />
           </NameWrapper>
-          <ConditionalRender
+          {/* <ConditionalRender
             Component={
               <StyledPrimaryButton
                 label="Edit"
@@ -138,7 +138,7 @@ const OrganizationDetailView = ({
               organizations &&
               !!organizations.find(({ id }) => organizationId === id)
             }
-          />
+          /> */}
         </HeaderWrapper>
         <Description>{description}</Description>
         <UrlWrapper>
