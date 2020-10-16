@@ -14,17 +14,17 @@ import {
   CommentWrapper,
   DetailContainer,
   Divider,
-  EditIssueWrapper,
+  // EditIssueWrapper,
   IssueDetailColumn,
   IssueDetailContainer,
   IssueDetailContentContainer,
   IssueDetailWrapper,
   LeftPanel,
-  ManageIssueWrapper,
+  // ManageIssueWrapper,
   SidebarContainer,
   // StyledButton,
   StyledErrorSuccessBanner,
-  StyledIssueAccountManager,
+  // StyledIssueAccountManager,
   TopBarWrapper,
 } from './styledComponents';
 
@@ -33,7 +33,7 @@ import {
 
 const IssueDetail = ({
   activeUser,
-  activeUser: { id: activeUserId, issues },
+  activeUser: { id: activeUserId },
   addWatching,
   alerts: { error, success },
   data,
@@ -54,7 +54,7 @@ const IssueDetail = ({
   },
   deviceView,
   // dispatchCloseIssue,
-  dispatchEditIssue,
+  // dispatchEditIssue,
   dispatchFetchAttemptList,
   dispatchFetchPullRequestList,
   dispatchFetchWatchList,
@@ -66,30 +66,30 @@ const IssueDetail = ({
   handleUpvote,
   isSignedIn,
 }) => {
-  const [displayEditView, setDisplayEditView] = useState(false);
+  // const [displayEditView, setDisplayEditView] = useState(false);
   const [bodyChange, setBodyChange] = useState(body);
   const [languageChange, setLanguageChange] = useState(language);
   const [nameChange, setNameChange] = useState(name);
   const [typeChange, setTypeChange] = useState(type);
-  const handleClose = () => {
-    setDisplayEditView(false);
-    setBodyChange(body);
-    setLanguageChange(language);
-    setNameChange(name);
-    setTypeChange(type);
-  };
+  // const handleClose = () => {
+  //   setDisplayEditView(false);
+  //   setBodyChange(body);
+  //   setLanguageChange(language);
+  //   setNameChange(name);
+  //   setTypeChange(type);
+  // };
 
-  const handleSave = () => {
-    dispatchEditIssue({
-      editRequest: {
-        body: bodyChange,
-        language: languageChange,
-        name: nameChange,
-        type: typeChange,
-      },
-      issueId,
-    });
-  };
+  // const handleSave = () => {
+  //   dispatchEditIssue({
+  //     editRequest: {
+  //       body: bodyChange,
+  //       language: languageChange,
+  //       name: nameChange,
+  //       type: typeChange,
+  //     },
+  //     issueId,
+  //   });
+  // };
 
   // const CloseOpenIssueComponent = (
   //   <ConditionalRender
@@ -128,15 +128,15 @@ const IssueDetail = ({
   //   />
   // );
 
-  const EditIssueComponent = (
-    <StyledIssueAccountManager
-      displayEditView={displayEditView}
-      handleClose={handleClose}
-      handleSave={handleSave}
-      setDisplayEditView={setDisplayEditView}
-      type="issue"
-    />
-  );
+  // const EditIssueComponent = (
+  //   <StyledIssueAccountManager
+  //     displayEditView={displayEditView}
+  //     handleClose={handleClose}
+  //     handleSave={handleSave}
+  //     setDisplayEditView={setDisplayEditView}
+  //     type="issue"
+  //   />
+  // );
 
   const primaryUser = {
     route: `/users/detail/${userId}`,
@@ -169,26 +169,26 @@ const IssueDetail = ({
     deviceView === 'desktop' ||
     deviceView === 'desktopL';
 
-  const isMobileOrLaptop =
-    deviceView === 'mobileXXS' ||
-    deviceView === 'mobileXS' ||
-    deviceView === 'mobileS' ||
-    deviceView === 'mobile' ||
-    deviceView === 'tablet' ||
-    deviceView === 'laptopS' ||
-    deviceView === 'laptop';
+  // const isMobileOrLaptop =
+  //   deviceView === 'mobileXXS' ||
+  //   deviceView === 'mobileXS' ||
+  //   deviceView === 'mobileS' ||
+  //   deviceView === 'mobile' ||
+  //   deviceView === 'tablet' ||
+  //   deviceView === 'laptopS' ||
+  //   deviceView === 'laptop';
 
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
 
-  const ManageIssueComponent = () => (
-    <Fragment>
-      <Divider>Manage Issue</Divider>
-      <ManageIssueWrapper>
-        <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
-        {/* {CloseOpenIssueComponent} */}
-      </ManageIssueWrapper>
-    </Fragment>
-  );
+  // const ManageIssueComponent = () => (
+  //   <Fragment>
+  //     <Divider>Manage Issue</Divider>
+  //     <ManageIssueWrapper>
+  //       <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
+  //       {CloseOpenIssueComponent}
+  //     </ManageIssueWrapper>
+  //   </Fragment>
+  // );
   return (
     <IssueDetailContainer>
       <BackNav label="Back to Issues" path="/issues" />
@@ -236,7 +236,7 @@ const IssueDetail = ({
             <IssueDetailColumn>
               <IssueDetailHeader
                 data={data}
-                displayEditView={displayEditView}
+                displayEditView={false}
                 nameChange={nameChange}
                 setNameChange={setNameChange}
               />
@@ -246,7 +246,7 @@ const IssueDetail = ({
                   body={body}
                   bodyChange={bodyChange}
                   date={createdDate}
-                  displayEditView={displayEditView}
+                  displayEditView={false}
                   language={language}
                   languageChange={languageChange}
                   repo={repo}
@@ -258,7 +258,7 @@ const IssueDetail = ({
                 />
               </div>
 
-              <ConditionalRender
+              {/* <ConditionalRender
                 Component={ManageIssueComponent}
                 shouldRender={
                   isMobileOrLaptop &&
@@ -266,7 +266,7 @@ const IssueDetail = ({
                   issues &&
                   !!issues.find(({ id }) => issueId === id)
                 }
-              />
+              /> */}
 
               <Divider>Comments</Divider>
               <CommentWrapper>{commentsDiv}</CommentWrapper>
@@ -296,13 +296,13 @@ const IssueDetail = ({
             issueId={issueId}
             open={open}
           />
-          <ConditionalRender
+          {/* <ConditionalRender
             Component={EditIssueComponent}
             shouldRender={
               isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
             }
           />
-          {/* <ConditionalRender
+          <ConditionalRender
             Component={CloseOpenIssueComponent}
             shouldRender={
               isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
@@ -324,7 +324,7 @@ IssueDetail.propTypes = {
   data: T.object,
   deviceView: T.string,
   // dispatchCloseIssue: T.func,
-  dispatchEditIssue: T.func,
+  // dispatchEditIssue: T.func,
   dispatchFetchAttemptList: T.func,
   dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
