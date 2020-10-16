@@ -4,6 +4,7 @@ const {
   existingPullRequestError,
   importPullRequestError,
 } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 const {
   formatPullRequestUrl,
 } = require('../../../integrations/github/helpers');
@@ -43,6 +44,7 @@ const importPullRequest = async ({ issueId, url }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || importPullRequestError,

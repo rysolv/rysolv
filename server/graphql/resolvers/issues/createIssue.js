@@ -20,6 +20,7 @@ const {
   newIssueObject,
   newOrganizationObject,
 } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 
 const createIssue = async ({ issueInput }, { authError, userId }) => {
   try {
@@ -115,6 +116,7 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || createIssueError,

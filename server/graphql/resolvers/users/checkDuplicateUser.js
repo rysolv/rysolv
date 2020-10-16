@@ -3,6 +3,7 @@ const {
   checkDuplicateUsername,
 } = require('../../../db');
 const { checkDuplicateUserSuccess, createUserError } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 
 const checkDuplicateUser = async ({ email, username }) => {
   try {
@@ -15,6 +16,7 @@ const checkDuplicateUser = async ({ email, username }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || createUserError,

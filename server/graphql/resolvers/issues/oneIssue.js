@@ -1,3 +1,4 @@
+const { errorLogger } = require('../../../helpers');
 const { getOneIssue: getOneIssueQuery } = require('../../../db');
 const { oneIssueError } = require('./constants');
 
@@ -9,6 +10,7 @@ const oneIssue = async ({ id }) => {
       ...issueDetail,
     };
   } catch (error) {
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: oneIssueError,

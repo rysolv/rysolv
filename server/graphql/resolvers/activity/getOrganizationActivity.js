@@ -1,3 +1,4 @@
+const { errorLogger } = require('../../../helpers');
 const {
   getOrganizationActivity: getOrganizationActivityQuery,
 } = require('../../../db');
@@ -9,6 +10,7 @@ const getOrganizationActivity = async ({ organizationId }) => {
     });
     return activityArray;
   } catch (error) {
+    errorLogger(error);
     return [];
   }
 };

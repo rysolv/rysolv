@@ -1,4 +1,5 @@
 const { createActivity } = require('../activity');
+const { errorLogger } = require('../../../helpers');
 const { transformIssue: transformIssueQuery } = require('../../../db');
 const { transformIssueError, transformIssueSuccess } = require('./constants');
 
@@ -32,6 +33,7 @@ const transformIssue = async (
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || transformIssueError,

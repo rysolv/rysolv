@@ -6,6 +6,7 @@ const {
   deletePullRequestError,
   deletePullRequestSuccess,
 } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 
 const deletePullRequest = async ({ id }, { authError, userId }) => {
   try {
@@ -25,6 +26,7 @@ const deletePullRequest = async ({ id }, { authError, userId }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || deletePullRequestError,

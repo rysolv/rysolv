@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+const { errorLogger } = require('../../../helpers');
 const { transformUser: transformUserQuery } = require('../../../db');
 const { transformUserError, transformUserSuccess } = require('./constants');
 const { uploadImage } = require('../../../middlewares/imageUpload');
@@ -38,6 +39,7 @@ const transformUser = async ({ userInput }, { authError, userId }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || transformUserError,

@@ -5,6 +5,7 @@ const {
   lowBalanceError,
   submitAccountPaymentError,
 } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 const { getUserSettings, submitInternalPayment } = require('../../../db');
 
 const submitAccountPayment = async (
@@ -53,6 +54,7 @@ const submitAccountPayment = async (
     }
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || submitAccountPaymentError,
