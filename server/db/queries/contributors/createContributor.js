@@ -1,18 +1,18 @@
 const { formatParameters } = require('../../helpers');
 const { singleQuery } = require('../../baseQueries');
-const { withdrawalValues } = require('./constants');
+const { contributorValues } = require('./constants');
 
-// CREATE single withdrawal
-const createWithdrawal = async ({ data }) => {
+// CREATE single contributor
+const createContributor = async ({ data }) => {
   const { parameters, substitution, values } = formatParameters({
     newObject: data,
-    tableParameters: withdrawalValues,
+    tableParameters: contributorValues,
   });
   const queryText = `
-    INSERT INTO withdrawal(${parameters})
+    INSERT INTO contributors(${parameters})
     VALUES(${substitution})
   `;
   await singleQuery({ queryText, values });
 };
 
-module.exports = createWithdrawal;
+module.exports = createContributor;
