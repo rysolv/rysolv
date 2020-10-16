@@ -1,6 +1,6 @@
 const Sentry = require('@sentry/node');
 
-Sentry.init({ dsn: 'https://examplePublicKey@o0.ingest.sentry.io/0' });
+Sentry.init({ dsn: process.env.SENTRY_DSN });
 
 const arrayCheck = result => {
   if (Array.isArray(result) && result.length > 1) {
