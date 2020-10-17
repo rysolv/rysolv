@@ -1,4 +1,5 @@
 const { checkDuplicateIssue, getOrganizationsWhere } = require('../../../db');
+const { errorLogger } = require('../../../helpers');
 const { existingIssueError, importIssueError } = require('./constants');
 const { formatIssueUrl } = require('../../../integrations/github/helpers');
 const { getSingleIssue, getSingleRepo } = require('../../../integrations');
@@ -47,6 +48,7 @@ const importIssue = async ({ url }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || importIssueError,

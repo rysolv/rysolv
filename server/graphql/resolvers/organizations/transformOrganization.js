@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 const { createActivity } = require('../activity');
-const { isUrl } = require('../../../helpers');
+const { errorLogger, isUrl } = require('../../../helpers');
 const {
   transformOrganization: transformOrganizationQuery,
 } = require('../../../db');
@@ -49,6 +49,7 @@ const transformOrganization = async (
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || transformOrganizationError,

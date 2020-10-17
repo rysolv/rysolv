@@ -9,6 +9,7 @@ const {
   getUserSettings,
   transformUser,
 } = require('../../../db');
+const { errorLogger } = require('../../../helpers');
 
 const deleteUser = async (_, { authError, userId }) => {
   try {
@@ -53,6 +54,7 @@ const deleteUser = async (_, { authError, userId }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || deleteUserError,

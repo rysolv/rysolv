@@ -2,6 +2,7 @@ const {
   downvoteIssue: downvoteIssueQuery,
   upvoteIssue: upvoteIssueQuery,
 } = require('../../../db');
+const { errorLogger } = require('../../../helpers');
 const { upvoteIssueError } = require('./constants');
 
 const upvoteIssue = async ({ issueId, upvote }, { authError, userId }) => {
@@ -31,6 +32,7 @@ const upvoteIssue = async ({ issueId, upvote }, { authError, userId }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || upvoteIssueError({ upvote }),

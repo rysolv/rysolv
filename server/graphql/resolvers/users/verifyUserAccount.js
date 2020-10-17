@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+const { errorLogger } = require('../../../helpers');
 const { getUserSettings, transformUser } = require('../../../db');
 const { requestGithubUser } = require('../../../integrations/github');
 const {
@@ -34,6 +35,7 @@ const verifyUserAccount = async ({ code }, { authError, userId }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || verifyUserAccountError,

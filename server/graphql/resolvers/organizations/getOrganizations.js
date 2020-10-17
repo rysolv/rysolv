@@ -1,3 +1,4 @@
+const { errorLogger } = require('../../../helpers');
 const { getOrganizations: getOrganizationsQuery } = require('../../../db');
 const { getOrganizationsError } = require('./constants');
 
@@ -9,6 +10,7 @@ const getOrganizations = async () => {
       organizations,
     };
   } catch (error) {
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: getOrganizationsError,

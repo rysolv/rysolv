@@ -1,6 +1,7 @@
 const { closeIssue: closeIssueQuery, getOneIssue } = require('../../../db');
 const { closeIssueError, closeIssueSuccess } = require('./constants');
 const { createActivity } = require('../activity');
+const { errorLogger } = require('../../../helpers');
 
 const closeIssue = async ({ issueId, shouldClose }, { authError, userId }) => {
   try {
@@ -24,6 +25,7 @@ const closeIssue = async ({ issueId, shouldClose }, { authError, userId }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || closeIssueError({ shouldClose }),

@@ -1,3 +1,4 @@
+const { errorLogger } = require('../../../helpers');
 const {
   getOneIssue,
   getOneOrganization,
@@ -58,6 +59,7 @@ const getUserSettings = async (_, { authError, userId }) => {
       ...result,
     };
   } catch (error) {
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: getUserSettingsError,

@@ -1,3 +1,4 @@
+const { errorLogger } = require('../../../helpers');
 const { getUsers: getUsersQuery } = require('../../../db');
 const { getUsersError } = require('./constants');
 
@@ -9,6 +10,7 @@ const getUsers = async () => {
       users,
     };
   } catch (error) {
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: getUsersError,

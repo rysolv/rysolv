@@ -1,4 +1,5 @@
 const { createActivity } = require('../activity');
+const { errorLogger } = require('../../../helpers');
 const { toggleWatching: toggleWatchingQuery } = require('../../../db');
 const { toggleWatchingError } = require('./constants');
 
@@ -26,6 +27,7 @@ const toggleWatching = async ({ issueId }, { authError, userId }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || toggleWatchingError,

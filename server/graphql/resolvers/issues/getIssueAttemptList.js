@@ -1,3 +1,4 @@
+const { errorLogger } = require('../../../helpers');
 const {
   getIssueAttemptList: getIssueAttemptListQuery,
 } = require('../../../db');
@@ -7,6 +8,7 @@ const getIssueAttemptList = async ({ issueId }) => {
     const attemptList = await getIssueAttemptListQuery({ issueId });
     return attemptList;
   } catch (error) {
+    errorLogger(error);
     return [];
   }
 };

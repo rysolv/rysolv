@@ -6,6 +6,7 @@ const {
   greaterThanError,
   paypalPaymentSuccess,
 } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 const {
   submitAccountDepositUser,
   submitExternalPayment,
@@ -63,6 +64,7 @@ const createPaypalPayment = async (
     }
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || createPaypalPaymentError({ issueId }),

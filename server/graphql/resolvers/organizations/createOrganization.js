@@ -12,6 +12,7 @@ const {
   createOrganization: createOrganizationQuery,
   updateUserArray,
 } = require('../../../db');
+const { errorLogger } = require('../../../helpers');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
 const createOrganization = async (
@@ -75,6 +76,7 @@ const createOrganization = async (
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || createOrganizationError,

@@ -1,4 +1,5 @@
 const { createUserError } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 const { getOneUserSignUp } = require('../../../db');
 
 const oneUserSignUp = async ({ email }) => {
@@ -9,6 +10,7 @@ const oneUserSignUp = async ({ email }) => {
       ...result,
     };
   } catch (error) {
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: createUserError,

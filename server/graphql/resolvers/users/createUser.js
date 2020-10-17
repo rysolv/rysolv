@@ -2,6 +2,7 @@ const Identicon = require('identicon.js');
 
 const { createUser: createUserQuery } = require('../../../db');
 const { createUserError } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
 const createUser = async ({
@@ -26,6 +27,7 @@ const createUser = async ({
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || createUserError,

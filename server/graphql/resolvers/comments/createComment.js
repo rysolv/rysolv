@@ -6,6 +6,7 @@ const {
   createComment: createCommentQuery,
   updateUserArray,
 } = require('../../../db');
+const { errorLogger } = require('../../../helpers');
 
 const createComment = async ({ commentInput }, { authError, userId }) => {
   try {
@@ -51,6 +52,7 @@ const createComment = async ({ commentInput }, { authError, userId }) => {
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || createCommentError,

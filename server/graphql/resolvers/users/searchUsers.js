@@ -1,3 +1,4 @@
+const { errorLogger } = require('../../../helpers');
 const { searchUsers: searchUsersQuery } = require('../../../db');
 
 const searchUsers = async ({ value }) => {
@@ -5,6 +6,7 @@ const searchUsers = async ({ value }) => {
     const users = await searchUsersQuery({ value });
     return users;
   } catch (error) {
+    errorLogger(error);
     return [];
   }
 };

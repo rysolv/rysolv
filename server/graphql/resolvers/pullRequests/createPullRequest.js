@@ -12,6 +12,7 @@ const {
   diffGithubAccountError,
   existingPullRequestError,
 } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 const {
   formatPullRequestUrl,
 } = require('../../../integrations/github/helpers');
@@ -85,6 +86,7 @@ const createPullRequest = async (
     };
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || createPullRequestError,

@@ -13,6 +13,7 @@ const {
   greaterThanZeroError,
   lessThanBalanceError,
 } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 
 const createWithdrawal = async ({ transferValue }, { authError, userId }) => {
   try {
@@ -69,6 +70,7 @@ const createWithdrawal = async ({ transferValue }, { authError, userId }) => {
     }
   } catch (error) {
     const { message } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: message || createWithdrawalError,

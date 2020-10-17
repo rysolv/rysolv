@@ -1,3 +1,4 @@
+const { errorLogger } = require('../../../helpers');
 const { transformUser: transformUserQuery } = require('../../../db');
 const { verifyUserEmailError, verifyUserEmailSuccess } = require('./constants');
 
@@ -13,6 +14,7 @@ const verifyUserEmail = async ({ userId }) => {
       message: verifyUserEmailSuccess,
     };
   } catch (error) {
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: verifyUserEmailError,

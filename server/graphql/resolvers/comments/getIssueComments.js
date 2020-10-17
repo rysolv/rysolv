@@ -1,3 +1,4 @@
+const { errorLogger } = require('../../../helpers');
 const { getIssueComments: getIssueCommentsQuery } = require('../../../db');
 
 const getIssueComments = async ({ issueId }) => {
@@ -5,6 +6,7 @@ const getIssueComments = async ({ issueId }) => {
     const comments = await getIssueCommentsQuery({ issueId });
     return comments;
   } catch (error) {
+    errorLogger(error);
     return [];
   }
 };
