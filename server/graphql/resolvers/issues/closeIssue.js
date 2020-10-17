@@ -5,7 +5,11 @@ const { errorLogger } = require('../../../helpers');
 
 const closeIssue = async ({ issueId, shouldClose }, { authError, userId }) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) {
+      const error = new Error();
+      error.alert = authError;
+      throw error;
+    }
 
     await closeIssueQuery({ issueId, shouldClose });
 
@@ -24,11 +28,11 @@ const closeIssue = async ({ issueId, shouldClose }, { authError, userId }) => {
       message: closeIssueSuccess({ shouldClose }),
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || closeIssueError({ shouldClose }),
+      message: alert || closeIssueError({ shouldClose }),
     };
   }
 };

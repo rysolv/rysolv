@@ -10,7 +10,11 @@ const { errorLogger } = require('../../../helpers');
 
 const createComment = async ({ commentInput }, { authError, userId }) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) {
+      const error = new Error();
+      error.alert = authError;
+      throw error;
+    }
 
     const date = new Date();
     const data = {
@@ -51,11 +55,11 @@ const createComment = async ({ commentInput }, { authError, userId }) => {
       ...result,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createCommentError,
+      message: alert || createCommentError,
     };
   }
 };

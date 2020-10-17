@@ -24,7 +24,11 @@ const { errorLogger } = require('../../../helpers');
 
 const createIssue = async ({ issueInput }, { authError, userId }) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) {
+      const error = new Error();
+      error.alert = authError;
+      throw error;
+    }
 
     const { identiconId, organizationId, organizationRepo, repo } = issueInput;
     const newIssueId = uuidv4();
@@ -40,7 +44,7 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
     const createNewOrganization = async () => {
       if (await checkDuplicateOrganization({ repo: organizationRepo })) {
         const error = new Error();
-        error.message = existingOrganizationError;
+        error.alert = existingOrganizationError;
         throw error;
       }
 
@@ -49,7 +53,7 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
         const result = await createOrganization({ data: organizationObject });
         return result;
       } catch (error) {
-        error.message = createOrganizationError;
+        error.alert = createOrganizationError;
         throw error;
       }
     };
@@ -57,7 +61,7 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
     // Check for duplicate issue
     if (await checkDuplicateIssue({ repo })) {
       const error = new Error();
-      error.message = existingIssueError;
+      error.alert = existingIssueError;
       throw error;
     }
 
@@ -115,11 +119,11 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
       ...issueResult,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createIssueError,
+      message: alert || createIssueError,
     };
   }
 };
