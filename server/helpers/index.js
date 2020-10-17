@@ -2,6 +2,13 @@ const Sentry = require('@sentry/node');
 
 Sentry.init({ dsn: process.env.SENTRY_DSN });
 
+class CustomError extends Error {
+  constructor(message) {
+    super();
+    this.alert = message;
+  }
+}
+
 const arrayCheck = result => {
   if (Array.isArray(result) && result.length > 1) {
     return result;
@@ -26,6 +33,7 @@ const isUrl = string => {
 
 module.exports = {
   arrayCheck,
+  CustomError,
   errorLogger,
   isUrl,
 };

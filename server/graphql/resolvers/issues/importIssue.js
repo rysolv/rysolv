@@ -1,5 +1,5 @@
 const { checkDuplicateIssue, getOrganizationsWhere } = require('../../../db');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const { existingIssueError, importIssueError } = require('./constants');
 const { formatIssueUrl } = require('../../../integrations/github/helpers');
 const { getSingleIssue, getSingleRepo } = require('../../../integrations');
@@ -17,11 +17,8 @@ const importIssue = async ({ url }) => {
     });
 
     // Check issue repo for duplicate
-    if (await checkDuplicateIssue({ repo: issueInput.issueUrl })) {
-      const error = new Error();
-      error.message = existingIssueError;
-      throw error;
-    }
+    if (await checkDuplicateIssue({ repo: issueInput.issueUrl }))
+      throw new CustomError(existingIssueError);
 
     // Get organization detail from github API
     const { organizationInput } = await getSingleRepo({
@@ -47,11 +44,11 @@ const importIssue = async ({ url }) => {
       ...importData,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || importIssueError,
+      message: alert || importIssueError,
     };
   }
 };

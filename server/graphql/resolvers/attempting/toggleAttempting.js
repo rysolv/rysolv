@@ -1,15 +1,11 @@
 const { createActivity } = require('../activity');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const { toggleAttempting: toggleAttemptingQuery } = require('../../../db');
 const { toggleAttemptingError } = require('./constants');
 
 const toggleAttempting = async ({ issueId }, { authError, userId }) => {
   try {
-    if (authError || !userId) {
-      const error = new Error();
-      error.alert = authError;
-      throw error;
-    }
+    if (authError || !userId) throw new CustomError(authError);
 
     const { issueArray, remove, userArray } = await toggleAttemptingQuery({
       issueId,

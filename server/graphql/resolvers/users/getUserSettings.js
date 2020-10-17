@@ -1,4 +1,4 @@
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getOneIssue,
   getOneOrganization,
@@ -11,7 +11,7 @@ const { getUserSettingsError } = require('./constants');
 
 const getUserSettings = async (_, { authError, userId }) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const result = await getUserSettingsQuery({ userId });
     const { issues, organizations } = result;
@@ -59,10 +59,11 @@ const getUserSettings = async (_, { authError, userId }) => {
       ...result,
     };
   } catch (error) {
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: getUserSettingsError,
+      message: alert || getUserSettingsError,
     };
   }
 };

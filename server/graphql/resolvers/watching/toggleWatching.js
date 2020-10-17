@@ -1,11 +1,11 @@
 const { createActivity } = require('../activity');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const { toggleWatching: toggleWatchingQuery } = require('../../../db');
 const { toggleWatchingError } = require('./constants');
 
 const toggleWatching = async ({ issueId }, { authError, userId }) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const { issueArray, remove, userArray } = await toggleWatchingQuery({
       issueId,
@@ -26,11 +26,11 @@ const toggleWatching = async ({ issueId }, { authError, userId }) => {
       ...result,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || toggleWatchingError,
+      message: alert || toggleWatchingError,
     };
   }
 };

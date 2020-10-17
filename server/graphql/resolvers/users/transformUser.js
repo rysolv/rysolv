@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const { transformUser: transformUserQuery } = require('../../../db');
 const { transformUserError, transformUserSuccess } = require('./constants');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
 const transformUser = async ({ userInput }, { authError, userId }) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     if (userInput.profilePic) {
       const formattedProfilePic = userInput.profilePic;
@@ -38,11 +38,11 @@ const transformUser = async ({ userInput }, { authError, userId }) => {
       message: transformUserSuccess,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || transformUserError,
+      message: alert || transformUserError,
     };
   }
 };

@@ -12,7 +12,7 @@ const {
   createOrganization: createOrganizationQuery,
   updateUserArray,
 } = require('../../../db');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
 const createOrganization = async (
@@ -20,7 +20,7 @@ const createOrganization = async (
   { authError, userId },
 ) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const { identiconId } = organizationInput;
     if (identiconId && identiconId !== 'undefined') {
@@ -75,11 +75,11 @@ const createOrganization = async (
       ...result,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createOrganizationError,
+      message: alert || createOrganizationError,
     };
   }
 };

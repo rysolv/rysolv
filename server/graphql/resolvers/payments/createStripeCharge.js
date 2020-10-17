@@ -15,7 +15,7 @@ const {
   greaterThanError,
   stripePaymentSuccess,
 } = require('./constants');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const {
   submitAccountDepositUser,
   submitExternalPayment,
@@ -26,14 +26,11 @@ const createStripeCharge = async (
   { authError, userId },
 ) => {
   try {
-    if (authError) throw new Error(authError);
+    if (authError) throw new CustomError(authError);
+
+    if (amount < 1) throw new CustomError(greaterThanError);
 
     const totalAmount = calculateTotalAmount(amount);
-    if (amount < 1) {
-      const error = new Error();
-      error.message = greaterThanError;
-      throw error;
-    }
     await stripe.charges.create({
       amount: totalAmount,
       currency: 'usd',
@@ -78,11 +75,11 @@ const createStripeCharge = async (
       };
     }
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createStripePaymentError({ issueId }),
+      message: alert || createStripePaymentError({ issueId }),
     };
   }
 };

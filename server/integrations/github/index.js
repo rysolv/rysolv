@@ -2,6 +2,7 @@
 const fetch = require('node-fetch');
 
 const { authenticate } = require('./auth');
+const { CustomError } = require('../helpers');
 
 const getSingleIssue = async ({ issueNumber, organization, repo }) => {
   try {
@@ -23,15 +24,14 @@ const getSingleIssue = async ({ issueNumber, organization, repo }) => {
       title,
     } = issueData;
 
-    if (!html_url) {
-      throw new Error(`Unable to import issue from ${repo}.`);
-    }
-    if (pull_request) {
-      throw new Error('Issue addressed by existing pull request.');
-    }
-    if (state !== 'open') {
-      throw new Error('Cannot add closed issue.');
-    }
+    if (!html_url)
+      throw new CustomError(`We are unable to import this issue from ${repo}.`);
+    if (pull_request)
+      throw new CustomError(
+        `This issue is addressed by an existing pull request.`,
+      );
+    if (state !== 'open')
+      throw new CustomError(`Closed issue cannot be added.`);
 
     const issueInput = {
       issueBody: body, // Required
@@ -63,12 +63,14 @@ const getSingleOrganization = async organization => {
     type,
   } = organizationData;
 
-  if (!html_url) {
-    throw new Error(`Unable to import organization from ${organization}.`);
-  }
-  if (type === 'User') {
-    throw new Error('Cannot import user account as organization.');
-  }
+  if (!html_url)
+    throw new CustomError(
+      `We are unable to import this organization from ${organization}.`,
+    );
+  if (type === 'User')
+    throw new CustomError(
+      `User account cannot be imported as an organization.`,
+    );
 
   const organizationInput = {
     organizationDescription: bio || '', // Optional
@@ -102,12 +104,10 @@ const getSinglePullRequest = async ({ organization, repo, pullNumber }) => {
     user: { id, login },
   } = pullRequestData;
 
-  if (state !== 'open') {
-    throw new Error('This pull request has been closed.');
-  }
-  if (merged) {
-    throw new Error('Pull request has already been merged.');
-  }
+  if (state !== 'open')
+    throw new CustomError(`This pull request has been closed.`);
+  if (merged)
+    throw new CustomError(`This pull request has already been merged.`);
 
   const isMergeable = mergeable === null ? false : mergeable;
   const isMerged = merged === null ? false : merged;
@@ -145,9 +145,8 @@ const getSingleRepo = async ({ organization, repo }) => {
       organization: parentOrganization,
     } = repoData;
 
-    if (!html_url) {
-      throw new Error(`Unable to import organization.`);
-    }
+    if (!html_url)
+      throw new CustomError(`We are unable to import this organization.`);
 
     const organizationInput = {
       issueLanguages: [language], // Optional - one entry

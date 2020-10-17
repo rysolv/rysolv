@@ -1,15 +1,11 @@
 const { closeIssue: closeIssueQuery, getOneIssue } = require('../../../db');
 const { closeIssueError, closeIssueSuccess } = require('./constants');
 const { createActivity } = require('../activity');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 
 const closeIssue = async ({ issueId, shouldClose }, { authError, userId }) => {
   try {
-    if (authError || !userId) {
-      const error = new Error();
-      error.alert = authError;
-      throw error;
-    }
+    if (authError || !userId) throw new CustomError(authError);
 
     await closeIssueQuery({ issueId, shouldClose });
 

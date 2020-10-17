@@ -20,15 +20,11 @@ const {
   newIssueObject,
   newOrganizationObject,
 } = require('./constants');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 
 const createIssue = async ({ issueInput }, { authError, userId }) => {
   try {
-    if (authError || !userId) {
-      const error = new Error();
-      error.alert = authError;
-      throw error;
-    }
+    if (authError || !userId) throw new CustomError(authError);
 
     const { identiconId, organizationId, organizationRepo, repo } = issueInput;
     const newIssueId = uuidv4();
@@ -42,28 +38,21 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
 
     // Populate organization object and create new organization
     const createNewOrganization = async () => {
-      if (await checkDuplicateOrganization({ repo: organizationRepo })) {
-        const error = new Error();
-        error.alert = existingOrganizationError;
-        throw error;
-      }
+      if (await checkDuplicateOrganization({ repo: organizationRepo }))
+        throw new CustomError(existingOrganizationError);
 
       const organizationObject = await newOrganizationObject(issueInput);
       try {
         const result = await createOrganization({ data: organizationObject });
         return result;
       } catch (error) {
-        error.alert = createOrganizationError;
-        throw error;
+        throw new CustomError(createOrganizationError);
       }
     };
 
     // Check for duplicate issue
-    if (await checkDuplicateIssue({ repo })) {
-      const error = new Error();
-      error.alert = existingIssueError;
-      throw error;
-    }
+    if (await checkDuplicateIssue({ repo }))
+      throw new CustomError(existingIssueError);
 
     // Check for existing organization. If not: create organization
     if (!organizationId) {
