@@ -14,6 +14,7 @@ import {
 import {
   commentHeaderColor,
   defaultFontSize,
+  hoverLinkColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -136,6 +137,15 @@ export const InputWrapper = styled.div`
   width: ${({ width }) => width || 'inherit'};
 `;
 
+export const LinkWrapper = styled.a`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    text-decoration: underline;
+  }
+`;
+
 export const PaymentOptionWrapper = styled.div`
   padding: 1.5rem 0;
 `;
@@ -181,6 +191,11 @@ export const StyledBaseTextInput = styled(BaseTextInput)`
     font-size: 1.1rem;
     margin-left: 0;
   }
+`;
+
+export const StyledCheckboxWrapper = styled.div`
+  margin-bottom: -1rem;
+  margin-left: -1rem;
 `;
 
 export const StyledPaper = styled(Paper)`
@@ -267,13 +282,10 @@ export const Value = styled.div`
   padding: 0.75rem 0;
 `;
 
-export const WithdrawalInputContainer = styled.div`
-  width: 50%;
-`;
-
 export const WithdrawalInputWrapper = styled.div`
   align-items: center;
   display: ${({ isRow }) => (isRow ? 'flex' : 'block')};
   font-weight: ${({ isThin }) => (isThin ? '400' : '600')};
-  padding: 1rem 0;
+  padding: 0.5rem 0;
+  width: ${({ width }) => width || '50%'};
 `;

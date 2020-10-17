@@ -147,6 +147,7 @@ const SettingsTabs = ({
       FallbackComponent={
         <WithdrawalFormComponent
           balance={balance}
+          email={email}
           handleClearAllAlerts={handleClearAllAlerts}
           handleClearErrors={handleClearErrors}
           handleValidateInput={handleValidateInput}

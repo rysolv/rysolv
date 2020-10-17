@@ -2,6 +2,7 @@ import { validate } from 'utils/validate';
 
 const validationPropsByField = {
   depositValue: { type: 'fundInput' },
+  email: { type: 'emailInput' },
   transferValue: { type: 'fundInput' },
 };
 
