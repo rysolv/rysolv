@@ -1,4 +1,3 @@
-/* eslint-disable  */
 /* eslint-disable indent */
 import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
