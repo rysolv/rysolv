@@ -1,4 +1,5 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable  */
+/* eslint-disable indent */
 import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
@@ -57,11 +58,11 @@ const WithdrawalFormComponent = ({
     if (value <= balance) {
       const string = value
         ? value
-          .replace(',', '.')
-          .replace(/[^\d.]/g, '')
-          .replace(/\./, 'x')
-          .replace(/\./g, '')
-          .replace(/x/, '.')
+            .replace(',', '.')
+            .replace(/[^\d.]/g, '')
+            .replace(/\./, 'x')
+            .replace(/\./g, '')
+            .replace(/x/, '.')
         : '0';
       const formattedString =
         string.length === 1
@@ -117,7 +118,7 @@ const WithdrawalFormComponent = ({
           <StyledCheckboxWrapper>
             <CheckboxWithLabel
               checked={isPaypalEmailChecked}
-              label="Paypal email is same as Rysolv email"
+              label={`Send to  ${email}`}
               onChange={() => setIsPaypalEmailChecked(!isPaypalEmailChecked)}
             />
           </StyledCheckboxWrapper>
@@ -164,16 +165,20 @@ const WithdrawalFormComponent = ({
       <Divider />
       <div>
         <WithdrawalInputWrapper isRow isThin>
-          <InputHeader>15% Rysolv Service Fee:</InputHeader>
-          <DisplayText>{formatDollarAmount(transferValue * 0.15)}</DisplayText>
+          <InputHeader>10% Rysolv Service Fee:</InputHeader>
+          <DisplayText>{formatDollarAmount(transferValue * 0.1)}</DisplayText>
+        </WithdrawalInputWrapper>
+        <WithdrawalInputWrapper isRow isThin>
+          <InputHeader>Transaction Fee:</InputHeader>
+          <DisplayText>{formatDollarAmount(transferValue * 0.05)}</DisplayText>
         </WithdrawalInputWrapper>
         <WithdrawalInputWrapper isRow>
           <InputHeader>Transfer to PayPal:</InputHeader>
           <DisplayText>
             {transferValue > 0
               ? `${formatDollarAmount(
-                transferValue - transferValue * 0.15,
-              )} USD`
+                  transferValue - transferValue * 0.15,
+                )} USD`
               : '–'}
           </DisplayText>
         </WithdrawalInputWrapper>

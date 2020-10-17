@@ -286,6 +286,6 @@ export const WithdrawalInputWrapper = styled.div`
   align-items: center;
   display: ${({ isRow }) => (isRow ? 'flex' : 'block')};
   font-weight: ${({ isThin }) => (isThin ? '400' : '600')};
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   width: ${({ width }) => width || '50%'};
 `;
