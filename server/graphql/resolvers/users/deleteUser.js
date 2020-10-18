@@ -1,3 +1,4 @@
+const { CustomError, errorLogger } = require('../../../helpers');
 const {
   deletedUserImage,
   deleteUserError,
@@ -9,11 +10,10 @@ const {
   getUserSettings,
   transformUser,
 } = require('../../../db');
-const { errorLogger } = require('../../../helpers');
 
 const deleteUser = async (_, { authError, userId }) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const data = {
       attempting: [],
@@ -42,9 +42,8 @@ const deleteUser = async (_, { authError, userId }) => {
     };
 
     const { balance } = await getUserSettings({ userId });
-    if (balance > 0) {
-      throw new Error(remainingBalanceError);
-    }
+
+    if (balance > 0) throw new CustomError(remainingBalanceError);
 
     await deleteUserPullRequests({ userId });
     await transformUser({ data, userId });
@@ -53,11 +52,11 @@ const deleteUser = async (_, { authError, userId }) => {
       message: deleteUserSuccess,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || deleteUserError,
+      message: alert || deleteUserError,
     };
   }
 };

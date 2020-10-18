@@ -1,6 +1,6 @@
 const request = require('request').defaults({ encoding: null });
 const { uploadFileS3 } = require('./awsConfig');
-const { isUrl } = require('../helpers');
+const { CustomError, isUrl } = require('../helpers');
 
 const base64FromUrl = async url =>
   new Promise((resolve, reject) => {
@@ -11,7 +11,7 @@ const base64FromUrl = async url =>
         };base64,${Buffer.from(body).toString('base64')}`;
         resolve(data);
       }
-      reject(new Error('Unable to parse imported image'));
+      reject(new CustomError(`Imported image cannot be parsed.`));
     });
   }).catch(error => {
     throw error;
@@ -27,7 +27,7 @@ const uploadImage = async image => {
   );
   const fileSize = parseInt(image.replace(/=/g, '').length * 0.75, 10);
   const type = image.split(';')[0].split('/')[1];
-  if (fileSize >= 1000000) throw new Error('Images must be under 1MB');
+  if (fileSize >= 1000000) throw new CustomError(`Images must be under 1MB.`);
 
   const { Location } = await uploadFileS3({
     file: base64Data,
@@ -36,6 +36,4 @@ const uploadImage = async image => {
   return { uploadUrl: Location };
 };
 
-module.exports = {
-  uploadImage,
-};
+module.exports = { uploadImage };

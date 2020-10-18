@@ -403,7 +403,7 @@ export function* verifyAccountSaga({ payload }) {
         },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') throw message;
+    if (__typename === 'Error') throw new Error(message);
     yield put(verifyAccountSuccess({ githubUsername, message }));
     yield put(updateActiveUser({ isGithubVerified }));
   } catch (error) {

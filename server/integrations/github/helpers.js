@@ -1,3 +1,5 @@
+const { CustomError } = require('../helpers');
+
 // ISSUE URL
 // Incoming:  https://github.com/tylermaran/cadl/issues/5
 const formatIssueUrl = value => {
@@ -22,7 +24,7 @@ const formatIssueUrl = value => {
       repo,
     };
   }
-  throw new Error('Not a valid issue url');
+  throw new CustomError(`Not a valid issue url.`);
 };
 
 // ORGANIZATION URL
@@ -52,8 +54,7 @@ const formatOrganizationUrl = value => {
       type: 'organization',
     };
   }
-
-  throw new Error('Not a valid organization url');
+  throw new CustomError(`Not a valid organization url.`);
 };
 
 // PULL_REQUEST URL
@@ -80,7 +81,7 @@ const formatPullRequestUrl = value => {
       repo,
     };
   }
-  throw new Error('Not a valid pull request url');
+  throw new CustomError(`Not a valid pull request url.`);
 };
 
 module.exports = {

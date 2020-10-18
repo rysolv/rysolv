@@ -12,7 +12,7 @@ const {
   diffGithubAccountError,
   existingPullRequestError,
 } = require('./constants');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const {
   formatPullRequestUrl,
 } = require('../../../integrations/github/helpers');
@@ -36,7 +36,7 @@ const createPullRequest = async (
   { authError, userId },
 ) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const date = new Date();
     const data = {
@@ -61,16 +61,11 @@ const createPullRequest = async (
       pullNumber,
       repo,
     });
-    if (await checkUserGithubId({ githubId, userId })) {
-      const error = new Error();
-      error.message = diffGithubAccountError;
-      throw error;
-    }
-    if (await checkDuplicatePullRequest({ repo: htmlUrl })) {
-      const error = new Error();
-      error.message = existingPullRequestError;
-      throw error;
-    }
+    if (await checkUserGithubId({ githubId, userId }))
+      throw new CustomError(diffGithubAccountError);
+    if (await checkDuplicatePullRequest({ repo: htmlUrl }))
+      throw new CustomError(existingPullRequestError);
+
     const result = await createPullRequestQuery({ data });
 
     // Add issue to user issue list
@@ -85,11 +80,11 @@ const createPullRequest = async (
       message: createPullRequestSuccess,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createPullRequestError,
+      message: alert || createPullRequestError,
     };
   }
 };

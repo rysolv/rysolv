@@ -1,5 +1,5 @@
 const { createActivity } = require('../activity');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const { transformIssue: transformIssueQuery } = require('../../../db');
 const { transformIssueError, transformIssueSuccess } = require('./constants');
 
@@ -8,7 +8,7 @@ const transformIssue = async (
   { authError, userId },
 ) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const data = {
       body: issueInput.body,
@@ -32,11 +32,11 @@ const transformIssue = async (
       message: transformIssueSuccess,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || transformIssueError,
+      message: alert || transformIssueError,
     };
   }
 };

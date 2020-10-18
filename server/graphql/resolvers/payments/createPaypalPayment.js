@@ -6,7 +6,7 @@ const {
   greaterThanError,
   paypalPaymentSuccess,
 } = require('./constants');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const {
   submitAccountDepositUser,
   submitExternalPayment,
@@ -17,13 +17,9 @@ const createPaypalPayment = async (
   { authError, userId },
 ) => {
   try {
-    if (authError) throw new Error(authError);
+    if (authError) throw new CustomError(authError);
 
-    if (amount < 1) {
-      const error = new Error();
-      error.message = greaterThanError;
-      throw error;
-    }
+    if (amount < 1) throw new CustomError(greaterThanError);
 
     if (issueId) {
       const { fundedAmount, organizationId } = await submitExternalPayment({
@@ -63,11 +59,11 @@ const createPaypalPayment = async (
       };
     }
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createPaypalPaymentError({ issueId }),
+      message: alert || createPaypalPaymentError({ issueId }),
     };
   }
 };

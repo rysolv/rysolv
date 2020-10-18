@@ -1,11 +1,11 @@
 const { closeIssue: closeIssueQuery, getOneIssue } = require('../../../db');
 const { closeIssueError, closeIssueSuccess } = require('./constants');
 const { createActivity } = require('../activity');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 
 const closeIssue = async ({ issueId, shouldClose }, { authError, userId }) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     await closeIssueQuery({ issueId, shouldClose });
 
@@ -24,11 +24,11 @@ const closeIssue = async ({ issueId, shouldClose }, { authError, userId }) => {
       message: closeIssueSuccess({ shouldClose }),
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || closeIssueError({ shouldClose }),
+      message: alert || closeIssueError({ shouldClose }),
     };
   }
 };

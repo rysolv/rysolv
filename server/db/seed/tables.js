@@ -5,7 +5,6 @@ const {
   alterActivityTable,
   alterAttemptingTable,
   alterCommentsTable,
-  alterContributorsTable,
   alterFundingTable,
   alterIssuesTable,
   alterOrganizationsTable,
@@ -16,7 +15,6 @@ const {
   createActivityTable,
   createAttemptingTable,
   createCommentsTable,
-  createContributorsTable,
   createFundingsTable,
   createIssuesTable,
   createOrganizationsTable,
@@ -31,7 +29,6 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterActivityTable });
   await singleQuery({ queryText: alterAttemptingTable });
   await singleQuery({ queryText: alterCommentsTable });
-  await singleQuery({ queryText: alterContributorsTable });
   await singleQuery({ queryText: alterFundingTable });
   await singleQuery({ queryText: alterIssuesTable });
   await singleQuery({ queryText: alterOrganizationsTable });
@@ -46,7 +43,6 @@ const createTables = async () => {
   await singleQuery({ queryText: createActivityTable });
   await singleQuery({ queryText: createAttemptingTable });
   await singleQuery({ queryText: createCommentsTable });
-  await singleQuery({ queryText: createContributorsTable });
   await singleQuery({ queryText: createFundingsTable });
   await singleQuery({ queryText: createIssuesTable });
   await singleQuery({ queryText: createOrganizationsTable });
@@ -61,7 +57,6 @@ const dropAllTables = async () => {
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS activity cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS attempting cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS comments cascade' });
-  await singleQuery({ queryText: 'DROP TABLE IF EXISTS contributors cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS funding cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS issues cascade' });
   await singleQuery({
@@ -79,7 +74,6 @@ const printTables = async () => {
     'SELECT * FROM activity',
     'SELECT * FROM attempting',
     'SELECT * FROM comments',
-    'SELECT * FROM contributors',
     'SELECT * FROM funding',
     'SELECT * FROM issues',
     'SELECT * FROM organizations',

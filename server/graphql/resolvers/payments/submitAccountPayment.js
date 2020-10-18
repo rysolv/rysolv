@@ -5,7 +5,7 @@ const {
   lowBalanceError,
   submitAccountPaymentError,
 } = require('./constants');
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const { getUserSettings, submitInternalPayment } = require('../../../db');
 
 const submitAccountPayment = async (
@@ -13,7 +13,7 @@ const submitAccountPayment = async (
   { authError, userId },
 ) => {
   try {
-    if (authError) throw new Error(authError);
+    if (authError) throw new CustomError(authError);
 
     if (issueId) {
       const { balance } = await getUserSettings({ userId });
@@ -48,16 +48,14 @@ const submitAccountPayment = async (
           ...result,
         };
       }
-      const error = new Error();
-      error.message = lowBalanceError;
-      throw error;
+      throw new CustomError(lowBalanceError);
     }
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || submitAccountPaymentError,
+      message: alert || submitAccountPaymentError,
     };
   }
 };

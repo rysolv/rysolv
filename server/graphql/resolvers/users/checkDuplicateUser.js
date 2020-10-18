@@ -15,11 +15,11 @@ const checkDuplicateUser = async ({ email, username }) => {
       message: checkDuplicateUserSuccess,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createUserError,
+      message: alert || createUserError,
     };
   }
 };
