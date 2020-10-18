@@ -1,4 +1,4 @@
-const { CustomError } = require('../../helpers');
+const { CustomError } = require('../../../helpers');
 const { singleQuery } = require('../../baseQueries');
 
 // Check duplicate user email
