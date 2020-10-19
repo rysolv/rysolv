@@ -18,3 +18,5 @@ First follow the instructions in [/server/README.md](/server/README.md)
 rysolv uses a graphql API located at `localhost:3000/graphql`
 
 Some random change
+
+A more different change
