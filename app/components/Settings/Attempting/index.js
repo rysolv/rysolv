@@ -74,9 +74,7 @@ const UserAttempting = ({ attempting, handleNav, handleRemoveAttempting }) => {
       </SearchContainer>
       <ConditionalRender
         Component={OverviewListComponent}
-        FallbackComponent={
-          <EmptyOverviewListComponent handleNav={handleNav} type="attempting" />
-        }
+        FallbackComponent={<EmptyOverviewListComponent type="attempting" />}
         propsToPassDown={{
           handleNav,
           handleRemoveAttempting,

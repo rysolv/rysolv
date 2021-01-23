@@ -16,19 +16,19 @@ import {
   OverviewListItem,
 } from './styledComponents';
 import { IconButtonContainer } from '../styledComponents';
-import { TimelineActivity } from '../Timeline/styledComponents';
+import { InternalTimelineActivity } from '../Timeline/styledComponents';
 
 const AttemptingIcon = iconDictionary('attempt');
 const WatchingIcon = iconDictionary('monocle');
 
-export const EmptyOverviewListComponent = ({ handleNav, type }) => (
+export const EmptyOverviewListComponent = ({ type }) => (
   <OverviewList>
     <EmptyOverviewListItem>
       <EmptyOverviewListDetail>
         Not {type} any issues.{' '}
-        <TimelineActivity onClick={() => handleNav('/issues')}>
+        <InternalTimelineActivity to="/issues">
           Browse issues
-        </TimelineActivity>{' '}
+        </InternalTimelineActivity>{' '}
         to add to your {type} list.
       </EmptyOverviewListDetail>
     </EmptyOverviewListItem>
@@ -96,10 +96,7 @@ export const OverviewListComponent = ({
   );
 };
 
-EmptyOverviewListComponent.propTypes = {
-  handleNav: T.func,
-  type: T.string,
-};
+EmptyOverviewListComponent.propTypes = { type: T.string };
 
 OverviewListComponent.propTypes = {
   handleNav: T.func,

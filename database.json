@@ -1,0 +1,28 @@
+{
+  "defaultEnv": "local",
+  "dev": {
+    "database": { "ENV": "DB_NAME_DEV" },
+    "driver": "pg",
+    "host": { "ENV": "DB_HOST_DEV" },
+    "password": { "ENV": "DB_PASSWORD_DEV" },
+    "port": { "ENV": "DB_PORT_DEV" },
+    "user": { "ENV": "DB_USER_DEV" }
+  },
+  "local": {
+    "database": { "ENV": "DB_NAME_LOCAL" },
+    "driver": "pg",
+    "host": { "ENV": "DB_HOST_LOCAL" },
+    "password": { "ENV": "DB_PASSWORD_LOCAL" },
+    "port": { "ENV": "DB_PORT_LOCAL" },
+    "user": { "ENV": "DB_USER_LOCAL" }
+  },
+  "prod": {
+    "database": { "ENV": "DB_NAME" },
+    "driver": "pg",
+    "host": { "ENV": "DB_HOST" },
+    "password": { "ENV": "DB_PASSWORD" },
+    "port": { "ENV": "DB_PORT" },
+    "user": { "ENV": "DB_USER" }
+  },
+  "sql-file": true
+}

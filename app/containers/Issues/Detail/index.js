@@ -3,11 +3,11 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { push } from 'connected-react-router';
 
 import AddPullRequestModal from 'components/AddPullRequestModal';
 import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
+import EmbedIssueModal from 'components/EmbedIssueModal';
 import IssueDetail from 'components/Issues/Detail';
 import {
   fetchAttemptList,
@@ -79,7 +79,6 @@ export class IssuesDetail extends React.PureComponent {
       handleClearAlerts,
       handleComment,
       handleIncrement,
-      handleNav,
       isModalOpen,
       isSignedIn,
       issueDetail,
@@ -100,6 +99,15 @@ export class IssuesDetail extends React.PureComponent {
         Component: AddPullRequestModal,
         open: isModalOpen,
         propsToPassDown: {
+          handleClose: dispatchCloseIssueModal,
+          issueId: id,
+        },
+      },
+      embedIssue: {
+        Component: EmbedIssueModal,
+        open: isModalOpen,
+        propsToPassDown: {
+          deviceView,
           handleClose: dispatchCloseIssueModal,
           issueId: id,
         },
@@ -129,7 +137,6 @@ export class IssuesDetail extends React.PureComponent {
             handleClearAlerts,
             handleComment,
             handleIncrement,
-            handleNav,
             handleUpvote,
             isSignedIn,
           }}
@@ -216,10 +223,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(fetchPullRequestList(payload)),
     dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
-    /**
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 

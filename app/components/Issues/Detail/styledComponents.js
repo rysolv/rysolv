@@ -1,8 +1,9 @@
+import React from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
-import { ErrorSuccessBanner } from 'components/base_ui';
+import { ErrorSuccessBanner, SecondaryButton } from 'components/base_ui';
 import IssueAccountManager from 'components/IssueAccountManager';
 import LanguageAutocomplete from 'components/LanguageAutocomplete';
 import Markdown from 'components/Markdown';
@@ -15,7 +16,7 @@ import {
   detailFontSize,
   fundingText,
   hoverLinkColor,
-  lightGreyColor,
+  lightBlueColor,
   styledScrollbar,
   textColor,
 } from 'defaultStyleHelper';
@@ -25,7 +26,6 @@ const { laptop, mobile, mobileS, tablet } = mediaQueriesByDevice;
 
 export const CommentWrapper = styled.div`
   ${styledScrollbar}
-  padding: 0 1rem 0 0;
 `;
 
 export const DetailContainer = styled.div`
@@ -54,15 +54,18 @@ export const Divider = styled.div`
 `;
 
 export const EditIssueWrapper = styled.div`
-  margin-bottom: -1rem;
-
   ${mobileS} {
     width: 100%;
   }
 `;
 
+export const EmbedIssueWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 export const ExternalLinkWrapper = styled.a`
-  color: ${lightGreyColor};
+  color: ${hoverLinkColor};
   display: flex;
   font-size: ${defaultFontSize};
   font-weight: 500;
@@ -83,6 +86,15 @@ export const Icon = styled.span`
   margin-right: 0.5rem;
 `;
 
+export const InfoItemContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: ${defaultFontSize};
+  justify-content: space-between;
+  margin: 1rem 0;
+`;
+
 export const InfoItemTitle = styled.div`
   color: ${textColor};
   font-size: ${defaultFontSize};
@@ -94,10 +106,7 @@ export const InfoItemTitle = styled.div`
 `;
 
 export const InfoItemWrapper = styled.div`
-  align-items: center;
   display: flex;
-  font-size: ${defaultFontSize};
-  margin: 1rem 0;
 `;
 
 export const IssueDetailColumn = styled.div`
@@ -136,14 +145,8 @@ export const LeftPanel = styled.div`
 export const ManageIssueWrapper = styled.div`
   align-items: center;
   display: flex;
-  justify-content: space-between;
   min-height: 7.5rem;
   padding: 0 1rem;
-  white-space: nowrap;
-
-  ${mobileS} {
-    flex-direction: column;
-  }
 `;
 
 export const PostingInfoWrapper = styled.div`
@@ -196,7 +199,11 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
 `;
 
 export const StyledIssueAccountManager = styled(IssueAccountManager)`
-  margin-bottom: 1rem;
+  margin-top: 2rem;
+
+  ${laptop} {
+    margin-top: 0;
+  }
 
   ${mobileS} {
     text-align: left;
@@ -212,6 +219,23 @@ export const StyledMarkdown = styled(Markdown)`
   color: ${textColor};
   font-size: 1.2rem;
   padding: 1rem;
+`;
+
+export const StyledSecondaryButton = styled(
+  ({ removeMargin, ...restProps }) => <SecondaryButton {...restProps} />,
+)`
+  background-color: white;
+  border: 0.1rem solid ${lightBlueColor};
+  color: ${lightBlueColor};
+  margin: ${({ removeMargin }) => (removeMargin ? '0' : '1rem')};
+
+  &:hover {
+    background-color: white;
+  }
+
+  ${mobile} {
+    margin-right: 0;
+  }
 `;
 
 export const TopBarWrapper = styled.div`

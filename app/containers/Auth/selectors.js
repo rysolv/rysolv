@@ -16,4 +16,10 @@ const makeSelectAuthLoading = prop =>
     loading => loading[prop],
   );
 
-export { makeSelectAuth, makeSelectAuthLoading };
+const makeSelectAuthRoute = prop =>
+  createSelector(
+    makeSelectAuth('route'),
+    route => route[prop],
+  );
+
+export { makeSelectAuth, makeSelectAuthLoading, makeSelectAuthRoute };

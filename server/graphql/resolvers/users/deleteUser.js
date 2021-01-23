@@ -1,13 +1,21 @@
+const { CustomError, errorLogger } = require('../../../helpers');
+const { deleteCognitoUser } = require('../../../middlewares/awsConfig');
 const {
   deletedUserImage,
   deleteUserError,
   deleteUserSuccess,
+  remainingBalanceError,
 } = require('./constants');
-const { deleteUserPullRequests, transformUser } = require('../../../db');
+const {
+  deleteUserLanguages,
+  deleteUserPullRequests,
+  getUserSettings,
+  transformUser,
+} = require('../../../db');
 
-const deleteUser = async (_, { authError, userId }) => {
+const deleteUser = async (_, { authError, email, provider, userId }) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const data = {
       attempting: [],
@@ -26,25 +34,37 @@ const deleteUser = async (_, { authError, userId }) => {
       modified_date: new Date(), // update modified date
       organizations: [],
       personal_link: '',
-      preferred_languages: [],
       profile_pic: deletedUserImage,
+      provider: null,
       pull_requests: [],
       rep: 0,
       stackoverflow_link: '',
       upvotes: [],
       username: '[deleted]',
     };
+
+    const { balance } = await getUserSettings({ userId });
+
+    if (balance > 0) throw new CustomError(remainingBalanceError);
+
+    if (provider === 'cognito') {
+      await deleteCognitoUser({ email });
+    }
+
+    await deleteUserLanguages({ userId });
     await deleteUserPullRequests({ userId });
     await transformUser({ data, userId });
+
     return {
       __typename: 'Success',
       message: deleteUserSuccess,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || deleteUserError,
+      message: alert || deleteUserError,
     };
   }
 };

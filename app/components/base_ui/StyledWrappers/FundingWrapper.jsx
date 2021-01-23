@@ -8,6 +8,7 @@ const FundingWrapper = ({ medium, open, value, ...restProps }) => (
     {value}
   </StyledFundingWrapper>
 );
+
 FundingWrapper.propTypes = {
   medium: T.bool,
   open: T.bool,

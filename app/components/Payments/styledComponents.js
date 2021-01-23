@@ -5,15 +5,20 @@ import {
   ErrorSuccessBanner,
   PaymentTextInput,
   PrimaryAsyncButton,
+  SecondaryButton,
 } from 'components/base_ui';
-
 import {
-  borderColor,
+  buttonRed,
   commentHeaderColor,
   defaultFontSize,
   dividerBorder,
   fundingText,
+  lightBlueColor,
+  successGreen,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobileXS } = mediaQueriesByDevice;
 
 export const Amount = styled.div`
   align-self: center;
@@ -47,7 +52,23 @@ export const BalanceWrapper = styled.div`
   width: 80%;
 `;
 
+export const ChargeBreakdownWrapper = styled.div`
+  display: flex;
+  font-size: ${defaultFontSize};
+  justify-content: space-between;
+  margin: auto;
+  padding-bottom: 2rem;
+  width: 80%;
+`;
+
+export const ChargeTitle = styled.div``;
+
+export const ChargeValue = styled.div`
+  text-align: end;
+`;
+
 export const ConfirmAmount = styled.div`
+  color: ${({ isNegative }) => (isNegative ? buttonRed : 'inherit')};
   white-space: nowrap;
 `;
 
@@ -113,14 +134,6 @@ export const InputWrapper = styled.div`
   width: auto;
 `;
 
-export const PaymentContainer = styled.div`
-  background-color: white;
-  border-radius: 0.2rem;
-  border: ${({ removeBorder }) =>
-    removeBorder ? 'none' : `0.1rem solid ${borderColor}`};
-  color: rgba(0, 0, 0, 0.7);
-`;
-
 export const PaymentInformationWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -132,7 +145,7 @@ export const PaypalContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 2rem 2rem 2rem;
+  padding-bottom: 2rem;
   width: 100%;
 `;
 
@@ -149,11 +162,6 @@ export const StyledLabel = styled.div`
   text-align: left;
 `;
 
-export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
-  height: 3rem;
-  width: auto;
-`;
-
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   margin: 1rem;
 `;
@@ -162,6 +170,26 @@ export const StyledPaymentTextInput = styled(PaymentTextInput)`
   align-self: center;
   margin: 0.5rem 0.5rem 1rem;
   width: 80%;
+`;
+
+export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
+  height: 3rem;
+  width: auto;
+`;
+
+export const StyledSecondaryButton = styled(SecondaryButton)`
+  background-color: white;
+  border: 0.1rem solid ${lightBlueColor};
+  color: ${lightBlueColor};
+  margin-top: 13.4rem;
+
+  &:hover {
+    background-color: white;
+  }
+
+  svg {
+    margin-right: 0.5rem;
+  }
 `;
 
 export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
@@ -191,6 +219,34 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
   }
 `;
 
+export const SuccessContentWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 6rem 1rem;
+  text-align: center;
+`;
+
+export const SuccessHeader = styled.span`
+  font-size: 2.4rem;
+  margin-bottom: 2.5rem;
+`;
+
+export const SuccessIconWrapper = styled.div`
+  align-items: center;
+  background-color: ${successGreen};
+  color: white;
+  display: flex;
+  font-size: 3rem;
+  height: 10rem;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const SuccessText = styled.span`
+  font-size: ${defaultFontSize};
+`;
+
 export const TextWrapper = styled.div`
   font-size: 1.2rem;
   margin: auto;
@@ -198,6 +254,22 @@ export const TextWrapper = styled.div`
   padding: 2rem 0;
   text-align: left;
   width: 80%;
+`;
+
+export const Title = styled.div`
+  font-weight: ${({ isBold }) => (isBold ? 'bold' : 'normal')};
+  padding: 0.75rem 7.5rem 0.75rem 0;
+  white-space: nowrap;
+
+  ${mobileXS} {
+    padding-right: 4rem;
+  }
+`;
+
+export const Value = styled.div`
+  font-weight: ${({ isBold }) => (isBold ? 'bold' : 'normal')};
+  padding: 0.75rem 0;
+  white-space: nowrap;
 `;
 
 export const YourAccountContainer = styled.div`

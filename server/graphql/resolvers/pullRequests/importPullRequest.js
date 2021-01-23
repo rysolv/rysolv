@@ -1,4 +1,5 @@
 const { checkDuplicatePullRequest, getOneIssue } = require('../../../db');
+const { CustomError, errorLogger } = require('../../../helpers');
 const {
   diffRepoError,
   existingPullRequestError,
@@ -19,11 +20,8 @@ const importPullRequest = async ({ issueId, url }) => {
     const issueUrl = pathname.split('/');
 
     // Check PR organization against issue organization
-    if (issueUrl[1] !== organization && issueUrl[2] !== repo) {
-      const error = new Error();
-      error.message = diffRepoError;
-      throw error;
-    }
+    if (issueUrl[1] !== organization && issueUrl[2] !== repo)
+      throw new CustomError(diffRepoError);
 
     const result = await getSinglePullRequest({
       organization,
@@ -31,21 +29,19 @@ const importPullRequest = async ({ issueId, url }) => {
       repo,
     });
 
-    if (await checkDuplicatePullRequest({ repo: result.htmlUrl })) {
-      const error = new Error();
-      error.message = existingPullRequestError;
-      throw error;
-    }
+    if (await checkDuplicatePullRequest({ repo: result.htmlUrl }))
+      throw new CustomError(existingPullRequestError);
 
     return {
       __typename: 'ImportPullRequest',
       ...result,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || importPullRequestError,
+      message: alert || importPullRequestError,
     };
   }
 };

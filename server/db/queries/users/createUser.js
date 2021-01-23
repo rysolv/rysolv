@@ -12,7 +12,9 @@ const createUser = async ({ data }) => {
     users( ${parameters} )
     VALUES(${substitution})
     RETURNING
+      CASE WHEN github_id IS NOT NULL THEN true ELSE false END AS "isGithubVerified",
       email,
+      github_username AS "githubUsername",
       id,
       username
   `;

@@ -6,6 +6,7 @@ import {
   defaultFontSize,
   headerFontSize,
   hoverLinkColor,
+  landingButtonGreen,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -86,7 +87,7 @@ export const StyledBaseExpansionPanel = styled(BaseExpansionPanel)`
   }
 
   svg {
-    color: #1da09c;
+    color: ${landingButtonGreen};
     font-size: 2.5rem;
   }
 `;

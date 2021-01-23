@@ -29,10 +29,7 @@ const SignUpContainer = ({
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Create Account';
-    return () => {
-      handleClearAuthAlerts();
-    };
+    document.title = 'Sign Up';
   }, []);
 
   const { email, firstName, lastName, password, username } = data;

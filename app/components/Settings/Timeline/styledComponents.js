@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 import { BaseDropDownMenu } from 'components/base_ui';
 import {
@@ -9,9 +10,29 @@ import {
   textColor,
 } from 'defaultStyleHelper';
 
+export const ExternalTimelineActivity = styled.a`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
+
 export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const InternalTimelineActivity = styled(Link)`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
 
 export const StyledAction = styled.span`
@@ -38,16 +59,6 @@ export const StyledButton = styled(Button)`
   svg {
     height: 2rem;
     width: 2rem;
-  }
-`;
-
-export const TimelineActivity = styled.span`
-  color: ${hoverLinkColor};
-
-  &:hover {
-    color: ${hoverLinkColor};
-    cursor: pointer;
-    text-decoration: underline;
   }
 `;
 

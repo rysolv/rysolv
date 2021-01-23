@@ -75,8 +75,10 @@ export const filterIssues = (issues, filterParams) => {
 
 export const organizeIssues = (issues, organizeParam) => {
   const sortedArray = issues.sort((a, b) => {
+    if (!a.open) return 1;
+    if (!b.open) return -1;
     if (organizeParam === 'Newest') {
-      if (a.modifiedDate < b.modifiedDate) {
+      if (a.createdDate < b.createdDate) {
         return 1;
       }
       return -1;

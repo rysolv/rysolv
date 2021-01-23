@@ -6,9 +6,7 @@ import { organizationDataDictionary } from 'containers/Organizations/constants';
 
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 
-// eslint-disable-next-line arrow-body-style
 const OrganizationForm = ({ handleInputChange, organizationData }) => {
-  // eslint-disable-next-line no-param-reassign
   const {
     organizationDescription,
     organizationId,

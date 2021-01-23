@@ -10,7 +10,10 @@ const getPullRequestList = async ({ issueId }) => {
       users.rep,
       users.username FROM pullRequests
     LEFT JOIN users ON pullRequests.user_id = users.id
-    WHERE pullRequests.issue_id = $1`;
+    WHERE
+      pullRequests.is_deleted = false AND
+      pullRequests.issue_id = $1
+  `;
   const { rows } = await singleQuery({ queryText, values: [issueId] });
   return rows;
 };

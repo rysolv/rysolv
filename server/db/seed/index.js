@@ -36,18 +36,9 @@ const seed = async () => {
   };
 
   console.clear();
-  if (process.env.NODE_ENV === 'production') {
-    console.log('**********************************************************');
-    console.log('***********************  WARNING  ************************');
-    console.log('**********************************************************');
-    console.log('*          ABOUT TO RE-SEED PRODUCTION DATABASE          *');
-    console.log('*                    ARE YOU SURE?                       *');
-    console.log('**********************************************************\n');
-  } else {
-    console.log('**********************************************************');
-    console.log('*         ABOUT TO RE-SEED DEVELOPMENT DATABASE          *');
-    console.log('**********************************************************');
-  }
+  console.log('**********************************************************');
+  console.log('*         ABOUT TO RE-SEED DEVELOPMENT DATABASE          *');
+  console.log('**********************************************************');
 
   // Prompt user to verify Database
   prompt.question(

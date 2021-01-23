@@ -23,7 +23,7 @@ import {
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile } = mediaQueriesByDevice;
+const { mobile, mobileS } = mediaQueriesByDevice;
 
 export const ActivityContainer = styled.div`
   display: flex;
@@ -47,6 +47,11 @@ export const ActivityWrapper = styled.div`
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
   width: 45%;
+
+  ${mobileS} {
+    margin: ${({ hasMargin }) => (hasMargin ? '0 2rem' : '0')};
+    width: 85%;
+  }
 `;
 
 export const ButtonGroup = styled.div`
@@ -106,7 +111,7 @@ export const ContributorName = styled.span`
 export const ContributorsList = styled.ul``;
 
 export const ContributorsSearchHeaderContainer = styled.div`
-  margin: 3em 0;
+  margin: 2rem 0;
   width: 100%;
 `;
 
@@ -114,6 +119,7 @@ export const Description = styled.div`
   color: #6a737d;
   font-size: ${defaultFontSize};
   margin-bottom: 2rem;
+  min-height: 4rem;
   text-align: justify;
 `;
 
@@ -150,6 +156,11 @@ export const EmptyMessageComponent = styled.div`
   font-size: ${defaultFontSize};
   height: 70%;
   justify-content: center;
+  text-align: center;
+
+  ${mobile} {
+    height: 25rem;
+  }
 `;
 
 export const FundContent = styled.div`

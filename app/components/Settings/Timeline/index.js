@@ -13,10 +13,11 @@ import {
   OverviewListComponent,
 } from '../OverviewList';
 import {
+  ExternalTimelineActivity,
   HeaderContainer,
+  InternalTimelineActivity,
   StyledBaseDropDownMenu,
   StyledButton,
-  TimelineActivity,
   TimelineContainer,
   TimelineContent,
   TimelineDividerContainer,
@@ -37,7 +38,7 @@ import {
 } from '../styledComponents';
 import VerifiedAccountsView from '../VerifiedAccounts';
 
-const ViewAllIcon = iconDictionary('viewAll');
+const ViewAllIcon = iconDictionary('navigateNext');
 
 const UserTimelineView = ({
   activity,
@@ -65,9 +66,7 @@ const UserTimelineView = ({
   const AttemptingComponent = () => (
     <ConditionalRender
       Component={OverviewListComponent}
-      FallbackComponent={
-        <EmptyOverviewListComponent handleNav={handleNav} type="attempting" />
-      }
+      FallbackComponent={<EmptyOverviewListComponent type="attempting" />}
       propsToPassDown={{
         handleNav,
         handleRemoveAttempting,
@@ -80,9 +79,7 @@ const UserTimelineView = ({
   const WatchingComponent = () => (
     <ConditionalRender
       Component={OverviewListComponent}
-      FallbackComponent={
-        <EmptyOverviewListComponent handleNav={handleNav} type="watching" />
-      }
+      FallbackComponent={<EmptyOverviewListComponent type="watching" />}
       propsToPassDown={{
         handleNav,
         handleRemoveAttempting,
@@ -95,65 +92,83 @@ const UserTimelineView = ({
   );
 
   const ActivityComponent = () =>
-    filteredActivity.map((el, index) => {
-      const {
-        action,
-        activityId,
-        date,
-        fundedValue,
-        icon,
-        path,
-        target: { targetType, targetName },
-      } = el;
-
-      const TimelineListItemComponent = (
-        <TimelineListItem key={activityId}>
-          <TimelineDividerContainer>
-            <TimelineVerticalDivider />
-            {icon}
-          </TimelineDividerContainer>
-          <TimelineContent>
-            <TimelineType>
-              <StyledAction>{formatWordString(action)}</StyledAction>&nbsp;
-              {targetType}
-            </TimelineType>
-            <TimelineInfo>
-              <ConditionalRender
-                Component={
-                  <Fragment>
-                    <TimelineDollar>
-                      {formatDollarAmount(fundedValue)}&nbsp;
-                    </TimelineDollar>
-                    for&nbsp;
-                  </Fragment>
-                }
-                shouldRender={!!fundedValue}
-              />
-              <TimelineActivity onClick={() => handleNav(path)}>
-                {targetName}
-              </TimelineActivity>
-            </TimelineInfo>
-          </TimelineContent>
-        </TimelineListItem>
-      );
-
-      if (
-        index === 0 ||
-        moment(date).format('YYYY/MM/DD') !==
-          moment(filteredActivity[index - 1].date).format('YYYY/MM/DD')
-      ) {
-        return (
-          <Fragment key={`list-item-${index}`}>
-            <TimelineHeader>
-              <TimelineTitle>{moment(date).format('MMMM DD')}</TimelineTitle>
-              <TimelineHorizontalDivider />
-            </TimelineHeader>
-            {TimelineListItemComponent}
-          </Fragment>
+    filteredActivity.map(
+      (
+        {
+          action,
+          activityId,
+          date,
+          fundedValue,
+          icon,
+          isInternalLink,
+          path,
+          target: { targetName, targetType },
+        },
+        index,
+      ) => {
+        const shouldRenderFor = targetType === 'account with';
+        const TimelineListItemComponent = (
+          <TimelineListItem key={activityId}>
+            <TimelineDividerContainer>
+              <TimelineVerticalDivider />
+              {icon}
+            </TimelineDividerContainer>
+            <TimelineContent>
+              <TimelineType>
+                <StyledAction>{formatWordString(action)}</StyledAction>&nbsp;
+                {targetType}
+              </TimelineType>
+              <TimelineInfo>
+                <ConditionalRender
+                  Component={
+                    <Fragment>
+                      <TimelineDollar>
+                        {formatDollarAmount(fundedValue)}
+                      </TimelineDollar>
+                      <ConditionalRender
+                        Component={() => ` for `}
+                        shouldRender={!shouldRenderFor}
+                      />
+                    </Fragment>
+                  }
+                  shouldRender={!!fundedValue}
+                />
+                <ConditionalRender
+                  Component={
+                    <InternalTimelineActivity to={path}>
+                      {targetName}
+                    </InternalTimelineActivity>
+                  }
+                  FallbackComponent={
+                    <ExternalTimelineActivity href={path} target="_blank">
+                      {targetName}
+                    </ExternalTimelineActivity>
+                  }
+                  shouldRender={isInternalLink}
+                />
+              </TimelineInfo>
+            </TimelineContent>
+          </TimelineListItem>
         );
-      }
-      return TimelineListItemComponent;
-    });
+
+        if (
+          index === 0 ||
+          moment(date).format('YYYY/MM/DD') !==
+            moment(filteredActivity[index - 1].date).format('YYYY/MM/DD')
+        ) {
+          return (
+            <Fragment key={`list-item-${index}`}>
+              <TimelineHeader>
+                <TimelineTitle>{moment(date).format('MMMM DD')}</TimelineTitle>
+                <TimelineHorizontalDivider />
+              </TimelineHeader>
+              {TimelineListItemComponent}
+            </Fragment>
+          );
+        }
+        return TimelineListItemComponent;
+      },
+    );
 
   return (
     <TimelineContainer>

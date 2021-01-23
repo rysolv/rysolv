@@ -4,8 +4,8 @@ import { ErrorSuccessBanner } from 'components/base_ui';
 import {
   borderColor,
   defaultFontSize,
+  headerColor,
   hoverLinkColor,
-  subHeaderColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -21,9 +21,10 @@ export const AddWrapper = styled.div`
 `;
 
 export const AddForm = styled.div`
-  background-color: white;
-  border-radius: 0.5rem;
-  border: 0.1rem solid ${borderColor};
+  background-color: ${({ isVerify }) => (isVerify ? 'transparent' : 'white')};
+  border-radius: ${({ isVerify }) => (isVerify ? '0' : '0.5rem')};
+  border: ${({ isVerify }) =>
+    isVerify ? 'none' : `0.1rem solid ${borderColor}`};
   padding: 1rem;
   width: 80%;
 
@@ -94,10 +95,10 @@ export const StyledFocusDiv = styled.div`
 `;
 
 export const StyledH3 = styled.h3`
-  color: ${subHeaderColor};
-  padding: 1rem 2rem;
-`;
-
-export const Wrapper = styled.div`
-  padding: 0 2.5rem;
+  color: ${headerColor};
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0;
+  padding: ${({ isFirstHeader }) =>
+    isFirstHeader ? '0 0 1rem' : '2rem 0 1rem'};
 `;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
 
 import { formatDollarAmount } from 'utils/globalHelpers';
@@ -6,6 +6,7 @@ import { formatDollarAmount } from 'utils/globalHelpers';
 import { StyledSlider } from './styledComponents';
 
 const BaseSlider = ({ max, min, onChange, value: currValue }) => {
+  const [newValue, setNewValue] = useState(currValue);
   const marks = [
     {
       value: min,
@@ -23,8 +24,9 @@ const BaseSlider = ({ max, min, onChange, value: currValue }) => {
       marks={marks}
       max={max}
       min={min}
-      onChange={onChange}
-      value={currValue}
+      onChange={(e, value) => setNewValue(value)}
+      onChangeCommitted={onChange}
+      value={newValue}
       valueLabelDisplay="auto"
     />
   );

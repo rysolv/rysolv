@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { defaultFontSize, lightBlueColor, textColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  landingButtonGreen,
+  lightBlueColor,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { desktopL, laptopS, mobile } = mediaQueriesByDevice;
@@ -59,10 +64,10 @@ export const CardItem = styled.li`
 
 export const CardTitleWrapper = styled.div`
   color: ${lightBlueColor};
-  font-size: 24px;
+  font-size: 2.4rem;
   font-weight: 400;
-  line-height: 32px;
-  margin-top: 17px;
+  line-height: 3.2rem;
+  margin-top: 1.7rem;
 `;
 
 export const HorizontalList = styled.div`
@@ -179,15 +184,17 @@ export const ListContainer = styled.ul`
 export const ListContent = styled.div``;
 
 export const ListImage = styled.div`
-  margin: 0 2rem 2rem 2rem;
-
-  svg {
-    color: ${lightBlueColor};
-    height: 6rem;
-    stroke-width: 0.05rem;
-    stroke: white;
-    width: 6rem;
-  }
+  align-items: center;
+  border-radius: 50%;
+  border: 2px solid ${lightBlueColor};
+  color: ${lightBlueColor};
+  display: flex;
+  font-size: 2.4rem;
+  font-weight: 400;
+  height: 5rem;
+  justify-content: center;
+  margin: 0 2rem 2rem;
+  width: 5rem;
 `;
 
 export const ListText = styled.p`
@@ -203,7 +210,7 @@ export const ListTitle = styled.div`
 `;
 
 export const Section = styled.div`
-  margin-bottom: 10rem;
+  margin-bottom: 5rem;
 
   ${mobile} {
     padding-top: 10rem;
@@ -215,7 +222,7 @@ export const Section = styled.div`
 `;
 
 export const StyledLink = styled(Link)`
-  background: #1da09c;
+  background: ${landingButtonGreen};
   border-radius: 10.2rem;
   color: white;
   display: inline-block;
@@ -243,7 +250,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const StyledSubheader = styled.h2`
-  color: #1da09c;
+  color: ${landingButtonGreen};
   font-size: 2.4rem;
   font-weight: 500;
   line-height: 1.5em;

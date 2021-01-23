@@ -1,0 +1,1 @@
+ALTER TABLE users ADD COLUMN IF NOT EXISTS provider VARCHAR(7) DEFAULT 'cognito'

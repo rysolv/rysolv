@@ -1,12 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 import AsyncRender from 'components/AsyncRender';
 import ImportForm from 'components/Organizations/Add/ImportForm';
-
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import { validateOrganizationUrl } from 'utils/validate';
+
 import {
   clearAlerts,
   importOrganization,
@@ -35,6 +36,7 @@ export class ImportOrganization extends React.PureComponent {
 
   render() {
     const {
+      activeUser,
       dispatchImportOrganization,
       dispatchInputError,
       handleIncrementStep,
@@ -42,12 +44,16 @@ export class ImportOrganization extends React.PureComponent {
       importError,
       importOrganizationLoading,
       organizationData,
+      userOrganizations,
+      userOrganizationsLoading,
     } = this.props;
+    const { isGithubVerified } = activeUser || {};
+
     const handleSubmit = () => {
-      const {
-        importUrl: { value: url },
-      } = organizationData;
-      const { error, validatedUrl, message } = validateOrganizationUrl(url);
+      const { autoImportUrl, importUrl } = organizationData;
+      const url =
+        autoImportUrl.value !== '' ? autoImportUrl.value : importUrl.value;
+      const { error, message, validatedUrl } = validateOrganizationUrl(url);
 
       if (error) {
         dispatchInputError({ errors: { importUrl: message } });
@@ -55,27 +61,30 @@ export class ImportOrganization extends React.PureComponent {
         dispatchImportOrganization({ validatedUrl });
       }
     };
+
     return (
-      <Fragment>
-        <AsyncRender
-          isRequiredData={false}
-          component={ImportForm}
-          loading={importOrganizationLoading}
-          propsToPassDown={{
-            handleIncrementStep,
-            handleInputChange,
-            handleSubmit,
-            importError,
-            importOrganizationLoading,
-            organizationData,
-          }}
-        />
-      </Fragment>
+      <AsyncRender
+        component={ImportForm}
+        isRequiredData={false}
+        loading={importOrganizationLoading}
+        propsToPassDown={{
+          handleIncrementStep,
+          handleInputChange,
+          handleSubmit,
+          importError,
+          importOrganizationLoading,
+          isGithubVerified,
+          organizationData,
+          userOrganizations,
+          userOrganizationsLoading,
+        }}
+      />
     );
   }
 }
 
 ImportOrganization.propTypes = {
+  activeUser: T.object.isRequired,
   dispatchImportOrganization: T.func,
   dispatchInputError: T.func,
   dispatchUpdateIsManual: T.func,
@@ -85,9 +94,15 @@ ImportOrganization.propTypes = {
   importError: T.object,
   importOrganizationLoading: T.bool,
   organizationData: T.object,
+  userOrganizations: T.array,
+  userOrganizationsLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
+  /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
   /**
    * Reducer : Organizations
    */
@@ -96,6 +111,8 @@ const mapStateToProps = createStructuredSelector({
     'importOrganization',
   ),
   organizationData: makeSelectOrganizations('organizationData'),
+  userOrganizations: makeSelectOrganizations('userOrganizations'),
+  userOrganizationsLoading: makeSelectOrganizationsLoading('userOrganizations'),
 });
 
 function mapDispatchToProps(dispatch) {

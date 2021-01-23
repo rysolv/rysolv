@@ -1,22 +1,37 @@
 const Identicon = require('identicon.js');
 
-const { createUser: createUserQuery } = require('../../../db');
+const {
+  checkDuplicateUserEmail,
+  createUser: createUserQuery,
+} = require('../../../db');
 const { createUserError } = require('./constants');
+const { errorLogger } = require('../../../helpers');
+const { registerCognitoUser } = require('../../../middlewares/awsConfig');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
 const createUser = async ({
-  userInput: { email, firstName, id, lastName, username },
+  userInput: { email, firstName, lastName, password, username },
 }) => {
   try {
-    const { uploadUrl } = await uploadImage(new Identicon(id, 250).toString());
+    await checkDuplicateUserEmail({ email });
+
+    // Register user with AWS
+    const { userId } = await registerCognitoUser({ email, password });
+
+    const provider = 'cognito';
+    const { uploadUrl } = await uploadImage(
+      new Identicon(userId, 250).toString(),
+    );
+
     const newUser = {
       created_date: new Date(),
       email,
       first_name: firstName,
-      id,
+      id: userId,
       last_name: lastName,
       modified_date: new Date(),
       profile_pic: uploadUrl,
+      provider,
       username,
     };
     const result = await createUserQuery({ data: newUser });
@@ -25,10 +40,11 @@ const createUser = async ({
       ...result,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createUserError,
+      message: alert || createUserError,
     };
   }
 };

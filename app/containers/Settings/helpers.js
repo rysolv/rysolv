@@ -1,8 +1,15 @@
 import { validate } from 'utils/validate';
 
 const validationPropsByField = {
-  depositValue: { type: 'fundInput' },
-  transferValue: { type: 'fundInput' },
+  depositValue: { required: true, type: 'fundInput' },
+  email: { required: true, type: 'emailInput' },
+  firstName: { maxLength: 30, required: true, type: 'stringInput' },
+  githubLink: { type: 'githubLinkInput' },
+  lastName: { maxLength: 30, required: true, type: 'stringInput' },
+  personalLink: { type: 'linkInput' },
+  stackoverflowLink: { type: 'stackoverflowLinkInput' },
+  transferValue: { required: true, type: 'fundInput' },
+  username: { maxLength: 20, required: true, type: 'stringInput' },
 };
 
 export const validateFields = ({ values }) =>
@@ -21,7 +28,6 @@ export const validateFields = ({ values }) =>
 export const validateOneField = ({ field, values }) => {
   const value = values[field];
   return validate({
-    required: true,
     value,
     ...validationPropsByField[field],
   });

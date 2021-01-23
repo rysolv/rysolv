@@ -10,7 +10,6 @@ export const StyledDropDownMenu = styled(DropDownMenu)`
   font-size: 1.4rem;
   height: 3rem;
   padding: 1rem;
-  width: 12rem;
   .select {
     &:focus {
       background-color: transparent;

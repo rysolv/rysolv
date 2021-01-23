@@ -2,7 +2,6 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { fetchActiveUser, updateActiveUser } from 'containers/Auth/actions';
 import { updateIssueDetail } from 'containers/Issues/actions';
-import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
@@ -33,7 +32,6 @@ export function* createPullRequestSaga({ payload }) {
       merged,
       open,
       pullNumber,
-      status,
       title,
     },
   } = payload;
@@ -49,7 +47,6 @@ export function* createPullRequestSaga({ payload }) {
           merged: ${merged.value},
           open: ${open.value},
           pullNumber: ${pullNumber.value},
-          status: "${status.value}",
           title: "${title.value}"
         })
         {
@@ -63,19 +60,13 @@ export function* createPullRequestSaga({ payload }) {
       }
     }
   `;
-
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const pullRequestQuery = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         createPullRequest: { __typename, message },
       },
-    } = yield call(post, '/graphql', pullRequestQuery);
+    } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(createPullRequestSuccess());
     yield put(fetchActiveUser());
@@ -101,19 +92,13 @@ export function* deletePullRequestSaga({ payload }) {
       }
     }
   `;
-
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const pullRequestQuery = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         deletePullRequest: { __typename, message },
       },
-    } = yield call(post, '/graphql', pullRequestQuery);
+    } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(deletePullRequestSuccess({ id: pullRequestId, message }));
     yield put(updateActiveUser({ pullRequestId }));
@@ -142,7 +127,6 @@ export function* fetchUserPullRequestsSaga() {
             open
             pullNumber
             pullRequestId
-            status
             title
             userId
           }
@@ -153,19 +137,13 @@ export function* fetchUserPullRequestsSaga() {
       }
     }
   `;
-
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const pullRequestQuery = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         getUserPullRequests: { __typename, message, pullRequestArray },
       },
-    } = yield call(post, '/graphql', pullRequestQuery);
+    } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(fetchUserPullRequestsSuccess({ pullRequestArray }));
   } catch (error) {
@@ -187,7 +165,6 @@ export function* importPullRequestSaga({ payload }) {
           merged
           open
           pullNumber
-          status
           title
         }
         ... on Error {
@@ -196,17 +173,13 @@ export function* importPullRequestSaga({ payload }) {
       }
     }
   `;
-
   try {
-    const pullRequestQuery = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         importPullRequest: { __typename, message, ...restProps },
       },
-    } = yield call(post, '/graphql', pullRequestQuery);
+    } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(importPullRequestSuccess({ pullRequest: restProps }));
   } catch (error) {

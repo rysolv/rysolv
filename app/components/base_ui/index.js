@@ -5,9 +5,13 @@ export { default as BaseDropDownMenu } from './DropDownMenu';
 export { default as BaseExpansionPanel } from './ExpansionPanel';
 export { default as BaseRadioButtonGroup } from './RadioButtonGroup';
 export { default as BaseSlider } from './Slider';
+export { default as Card } from './Card';
 export { default as ConditionalRender } from './ConditionalRender';
 export { default as ErrorSuccessBanner } from './Banner';
 export { default as HeaderSearchBar } from './HeaderSearchBar';
+export {
+  default as ImageExternalLinkWrapper,
+} from './ImageExternalLinkWrapper';
 export { default as ImageLinkWrapper } from './ImageLinkWrapper';
 export { default as ModalDialog } from './ModalDialog';
 export { default as Pagination } from './Pagination';

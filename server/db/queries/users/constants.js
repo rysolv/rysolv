@@ -17,8 +17,8 @@ const userValues = [
   'modified_date',
   'organizations',
   'personal_link',
-  'preferred_languages',
   'profile_pic',
+  'provider',
   'pull_requests',
   'rep',
   'stackoverflow_link',
@@ -27,39 +27,64 @@ const userValues = [
 ];
 
 const userReturnValues = `
-  attempting,
-  balance,
-  comments,
-  created_date AS "createdDate",
-  dollars_earned AS "dollarsEarned",
-  email_verified AS "emailVerified",
-  email,
-  first_name AS "firstName",
-  github_link AS "githubLink",
-  id,
-  is_deleted AS "isDeleted",
-  issues,
-  last_name AS "lastName",
-  modified_date AS "modifiedDate",
-  organizations,
-  personal_link AS "personalLink",
-  preferred_languages AS "preferredLanguages",
-  profile_pic AS "profilePic",
-  pull_requests AS "pullRequests",
-  rep,
-  stackoverflow_link AS "stackoverflowLink",
-  upvotes,
-  username
+  users.balance,
+  users.comments,
+  users.created_date AS "createdDate",
+  users.dollars_earned AS "dollarsEarned",
+  users.email_verified AS "emailVerified",
+  users.email,
+  users.first_name AS "firstName",
+  users.github_link AS "githubLink",
+  users.id,
+  users.is_deleted AS "isDeleted",
+  users.issues,
+  users.last_name AS "lastName",
+  users.modified_date AS "modifiedDate",
+  users.organizations,
+  users.personal_link AS "personalLink",
+  users.profile_pic AS "profilePic",
+  users.pull_requests AS "pullRequests",
+  users.rep,
+  users.stackoverflow_link AS "stackoverflowLink",
+  users.upvotes,
+  users.username
 `;
 
 const userSettingsReturnValues = `
-  CASE WHEN github_id IS NOT NULL THEN true ELSE false END AS "isGithubVerified",
-  github_username AS "githubUsername",
+  ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages",
+  CASE WHEN users.github_id IS NOT NULL THEN true ELSE false END AS "isGithubVerified",
+  users.github_username AS "githubUsername",
   ${userReturnValues}
 `;
 
 // @TODO: refactor SQL query to not require group values
-const groupValues = userValues.join(',');
+const groupValues = `
+  users.attempting,
+  users.balance,
+  users.comments,
+  users.created_date,
+  users.dollars_earned,
+  users.email_verified,
+  users.email,
+  users.first_name,
+  users.github_id,
+  users.github_link,
+  users.github_username,
+  users.id,
+  users.is_deleted,
+  users.issues,
+  users.last_name,
+  users.modified_date,
+  users.organizations,
+  users.personal_link,
+  users.profile_pic,
+  users.provider,
+  users.pull_requests,
+  users.rep,
+  users.stackoverflow_link,
+  users.upvotes,
+  users.username
+`;
 
 module.exports = {
   groupValues,

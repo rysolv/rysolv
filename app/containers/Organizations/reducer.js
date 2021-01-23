@@ -14,6 +14,9 @@ import {
   FETCH_ORGANIZATIONS_FAILURE,
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
+  FETCH_USER_ORGANIZATIONS_FAILURE,
+  FETCH_USER_ORGANIZATIONS_SUCCESS,
+  FETCH_USER_ORGANIZATIONS,
   GENERATE_IDENTICON,
   IMPORT_ORGANIZATION_FAILURE,
   IMPORT_ORGANIZATION_SUCCESS,
@@ -57,12 +60,13 @@ export const initialState = {
     importOrganization: { error: false, message: '' },
     organizations: false,
     searchOrganizations: false,
+    userOrganizations: false,
   },
   filter: {
-    issues: 'Newest',
+    issues: 'Most Funded',
     language: [],
     organization: [],
-    overview: 'Newest',
+    overview: 'Most Funded',
     price: [0, 5000],
   },
   importSuccess: false,
@@ -76,13 +80,16 @@ export const initialState = {
     searchOrganizations: false,
     updateOrganization: false,
     upvoteIssue: false,
+    userOrganizations: false,
   },
   organization: {},
   organizationData: {
+    autoImportUrl: { error: '', value: '' },
     identiconId: { error: '', value: '' },
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
     organizationId: { error: '', value: '' },
+    organizationLanguages: { error: '', value: '' },
     organizationLogo: { error: '', value: '' },
     organizationName: { error: '', value: '' },
     organizationRepo: { error: '', value: '' },
@@ -98,6 +105,7 @@ export const initialState = {
   step: {
     addOrganization: 1,
   },
+  userOrganizations: [],
 };
 
 const organizationsReducer = produce((draft, { payload, type }) => {
@@ -129,22 +137,6 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       draft.organizationData = initialState.organizationData;
       break;
     }
-    case FETCH_ORGANIZATIONS_FAILURE: {
-      const { error } = payload;
-      draft.error.organizations = error;
-      draft.loading.organizations = false;
-      break;
-    }
-    case FETCH_ORGANIZATIONS_SUCCESS: {
-      const { organizations } = payload;
-      draft.loading.organizations = false;
-      draft.organizations = organizations;
-      break;
-    }
-    case FETCH_ORGANIZATIONS: {
-      draft.loading.organizations = true;
-      break;
-    }
     case FETCH_INFO_FAILURE: {
       const { error } = payload;
       draft.error.fetchOrganizations = error;
@@ -166,6 +158,37 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       draft.loading.fetchOrganization = true;
       break;
     }
+    case FETCH_ORGANIZATIONS_FAILURE: {
+      const { error } = payload;
+      draft.error.organizations = error;
+      draft.loading.organizations = false;
+      break;
+    }
+    case FETCH_ORGANIZATIONS_SUCCESS: {
+      const { organizations } = payload;
+      draft.loading.organizations = false;
+      draft.organizations = organizations;
+      break;
+    }
+    case FETCH_ORGANIZATIONS: {
+      draft.loading.organizations = true;
+      break;
+    }
+    case FETCH_USER_ORGANIZATIONS_FAILURE: {
+      draft.error.userOrganizations = true;
+      draft.loading.userOrganizations = false;
+      break;
+    }
+    case FETCH_USER_ORGANIZATIONS_SUCCESS: {
+      const { organizations } = payload;
+      draft.loading.userOrganizations = false;
+      draft.userOrganizations = organizations;
+      break;
+    }
+    case FETCH_USER_ORGANIZATIONS: {
+      draft.loading.userOrganizations = true;
+      break;
+    }
     case GENERATE_IDENTICON: {
       const identiconId = uuidv4();
       const identicon = new Identicon(identiconId, 250).toString();
@@ -176,6 +199,8 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     case IMPORT_ORGANIZATION_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
+      draft.organizationData.autoImportUrl.error = error;
+      draft.organizationData.autoImportUrl.value = '';
       draft.loading.importOrganization = false;
       break;
     }
@@ -183,7 +208,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       const { importOrganization } = payload;
       draft.loading.importOrganization = false;
       Object.keys(importOrganization).map(field => {
-        if (draft.organizationData[field]) {
+        if (draft.organizationData[field] && importOrganization[field]) {
           draft.organizationData[field].value = importOrganization[field];
         }
       });

@@ -9,17 +9,24 @@ import {
 } from '@stripe/react-stripe-js';
 
 import { ConditionalRender, StripeInput } from 'components/base_ui';
+import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
+  ChargeBreakdownWrapper,
+  ChargeTitle,
+  ChargeValue,
   CreditCardViewContainer,
   HorizontalInputWrapper,
   InputWrapper,
   StyledPaymentTextInput,
   StyledPrimaryAsyncButton,
   TextWrapper,
+  Title,
+  Value,
 } from './styledComponents';
 
 const CreditCardView = ({
+  emailValue,
   fundValue,
   handleClearAlerts,
   handleStripeToken,
@@ -34,6 +41,10 @@ const CreditCardView = ({
 }) => {
   const stripe = useStripe();
   const elements = useElements();
+
+  const fundAmount = Number(fundValue);
+  const feeValue = fundAmount * 0.03 + 0.3;
+  const totalValue = fundAmount + feeValue;
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -50,10 +61,11 @@ const CreditCardView = ({
     } else {
       handleStripeToken({
         amount: fundValue,
+        email: emailValue,
         token,
         values,
       });
-      setFundValue('2');
+      setFundValue('10');
     }
   };
   return (
@@ -62,9 +74,21 @@ const CreditCardView = ({
         <Fragment>
           <CreditCardViewContainer>
             <TextWrapper>
-              A 3.6% standard transaction fee will be added to cover credit card
-              processing and the safe transfer of funds.
+              A 3% + $0.30 standard transaction fee will be added to cover
+              credit card processing and the safe transfer of funds.
             </TextWrapper>
+            <ChargeBreakdownWrapper>
+              <ChargeTitle>
+                <Title>Transaction fee</Title>
+                <Title isBold>Total due today</Title>
+              </ChargeTitle>
+              <ChargeValue>
+                <Value>{formatDollarAmount(parseFloat(feeValue, 10))}</Value>
+                <Value isBold>
+                  {formatDollarAmount(parseFloat(totalValue, 10))}
+                </Value>
+              </ChargeValue>
+            </ChargeBreakdownWrapper>
             <InputWrapper>
               <StyledPaymentTextInput
                 adornmentComponent="Number"
@@ -122,6 +146,7 @@ const CreditCardView = ({
 };
 
 CreditCardView.propTypes = {
+  emailValue: T.string.isRequired,
   fundValue: T.oneOfType([T.number, T.string]),
   handleClearAlerts: T.func,
   handleStripeToken: T.func,

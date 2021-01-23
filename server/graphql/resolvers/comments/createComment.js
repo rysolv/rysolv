@@ -6,10 +6,11 @@ const {
   createComment: createCommentQuery,
   updateUserArray,
 } = require('../../../db');
+const { CustomError, errorLogger } = require('../../../helpers');
 
 const createComment = async ({ commentInput }, { authError, userId }) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const date = new Date();
     const data = {
@@ -50,10 +51,11 @@ const createComment = async ({ commentInput }, { authError, userId }) => {
       ...result,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createCommentError,
+      message: alert || createCommentError,
     };
   }
 };

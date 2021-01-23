@@ -33,7 +33,7 @@ const UsersOverview = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Users Overview';
+    document.title = 'Users';
     if (searchValue) {
       handleSearchUsers({ value: searchValue });
     } else {

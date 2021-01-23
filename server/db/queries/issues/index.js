@@ -3,6 +3,7 @@ const closeIssue = require('./closeIssue');
 const createIssue = require('./createIssue');
 const downvoteIssue = require('./downvoteIssue');
 const getIssueAttemptList = require('./getIssueAttemptList');
+const getIssueList = require('./getIssueList');
 const getIssues = require('./getIssues');
 const getIssueWatchList = require('./getIssueWatchList');
 const getOneIssue = require('./getOneIssue');
@@ -16,6 +17,7 @@ module.exports = {
   createIssue,
   downvoteIssue,
   getIssueAttemptList,
+  getIssueList,
   getIssues,
   getIssueWatchList,
   getOneIssue,

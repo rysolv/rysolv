@@ -25,22 +25,16 @@ const VerifyContainer = ({
   handleClearAuthAlerts,
   handleInputChange,
   loading,
-  signInData: { password: signInPassword },
-  signUpData: { password: signUpPassword },
   verify,
   verifyDisabled,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    return () => {
-      handleClearAuthAlerts();
-    };
   }, []);
 
   const { email: userEmail, id: userId } = activeUser;
   const form = 'verify';
   const { verificationCode } = verify;
-  const password = signInPassword.value || signUpPassword.value;
 
   const handleVerifyEmail = () => {
     const { isValidated, validationErrors } = validateFields({
@@ -49,7 +43,6 @@ const VerifyContainer = ({
     });
     if (isValidated) {
       dispatchVerifyEmail({
-        password,
         userEmail,
         userId,
         verificationCode,
@@ -92,8 +85,6 @@ VerifyContainer.propTypes = {
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   loading: T.bool.isRequired,
-  signInData: T.object.isRequired,
-  signUpData: T.object.isRequired,
   verify: T.object.isRequired,
   verifyDisabled: T.bool.isRequired,
 };
@@ -108,8 +99,6 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : Signin
    */
-  signInData: makeSelectSignIn('signIn'),
-  signUpData: makeSelectSignIn('signUp'),
   verify: makeSelectSignIn('verify'),
   verifyDisabled: makeSelectDisabled('verify'),
 });

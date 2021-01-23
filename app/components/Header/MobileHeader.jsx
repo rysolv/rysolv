@@ -3,13 +3,11 @@ import T from 'prop-types';
 
 import Logo from './Logo';
 import {
-  BottomBarWrapper,
-  Browse,
   ButtonsWrapper,
   Container,
-  HeaderSection,
   LogoWrapper,
   MobileDrawerComponent,
+  NavLink,
   StyledAppBar,
   StyledHeaderLink,
   StyledHeaderSearchBar,
@@ -27,59 +25,57 @@ const MobileHeader = ({
   isLandingPage,
   isMobile,
   isSignedIn,
+  location,
   setIsDrawerOpen,
 }) => (
   <Fragment>
-    <HeaderSection>
-      <StyledAppBar
-        color="default"
-        isLandingPage={isLandingPage}
-        position="fixed"
-      >
-        <Container>
-          <TopBarWrapper isSignedIn={isSignedIn}>
-            <LogoWrapper>
-              <Logo
-                deviceView={deviceView}
-                isMobile={isMobile}
-                open={isDrawerOpen}
-                setOpen={setIsDrawerOpen}
+    <StyledAppBar
+      color="default"
+      isLandingPage={isLandingPage}
+      position="fixed"
+    >
+      <Container>
+        <TopBarWrapper isSignedIn={isSignedIn}>
+          <LogoWrapper>
+            <Logo
+              deviceView={deviceView}
+              isMobile={isMobile}
+              open={isDrawerOpen}
+              setOpen={setIsDrawerOpen}
+            />
+          </LogoWrapper>
+          <ButtonsWrapper>
+            <NavLink label="Find Issues" path="/issues" shouldRemoveThird />
+            {isSignedIn ? (
+              <StyledUserNavBar
+                activeUser={activeUser}
+                handleNav={handleNav}
+                handleSignout={handleSignout}
               />
-            </LogoWrapper>
-            <ButtonsWrapper>
-              <Browse label="Browse" path="/issues" />
-              {isSignedIn ? (
-                <StyledUserNavBar
-                  activeUser={activeUser}
-                  handleNav={handleNav}
-                  handleSignout={handleSignout}
+            ) : (
+              <Fragment>
+                <StyledHeaderLink
+                  label="Sign Up"
+                  onClick={handleResetState}
+                  path="/signup"
                 />
-              ) : (
-                <Fragment>
-                  <StyledHeaderLink
-                    label="Sign Up"
-                    onClick={handleResetState}
-                    path="/signup"
-                  />
-                  <StyledHeaderLink
-                    label="Sign In"
-                    onClick={handleResetState}
-                    path="/signin"
-                  />
-                </Fragment>
-              )}
-            </ButtonsWrapper>
-          </TopBarWrapper>
-          <BottomBarWrapper>
-            <StyledHeaderSearchBar handleNav={handleNav} />
-          </BottomBarWrapper>
-        </Container>
-      </StyledAppBar>
-    </HeaderSection>
+                <StyledHeaderLink
+                  label="Sign In"
+                  onClick={handleResetState}
+                  path="/signin"
+                />
+              </Fragment>
+            )}
+          </ButtonsWrapper>
+        </TopBarWrapper>
+        <StyledHeaderSearchBar handleNav={handleNav} />
+      </Container>
+    </StyledAppBar>
     <MobileDrawerComponent
       handleNav={handleNav}
       isDrawerOpen={isDrawerOpen}
       isSignedIn={isSignedIn}
+      location={location}
       setIsDrawerOpen={() => setIsDrawerOpen(!isDrawerOpen)}
     />
   </Fragment>
@@ -95,6 +91,7 @@ MobileHeader.propTypes = {
   isLandingPage: T.bool.isRequired,
   isMobile: T.bool.isRequired,
   isSignedIn: T.bool.isRequired,
+  location: T.object.isRequired,
   setIsDrawerOpen: T.func.isRequired,
 };
 

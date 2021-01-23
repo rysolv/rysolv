@@ -3,9 +3,15 @@ const { singleQuery } = require('../../baseQueries');
 
 // GET User Activity for a specific id
 const getUserActivity = async ({ userId }) => {
-  const queryText = `SELECT ${activityReturnValues} FROM activity
+  const queryText = `
+    SELECT
+      ${activityReturnValues},
+      pullrequests.title AS "pullRequestName",
+      pullrequests.html_url AS "pullRequestUrl"
+    FROM activity
     LEFT JOIN issues on (activity.issue_id = issues.id)
     LEFT JOIN organizations on (activity.organization_id = organizations.id)
+    LEFT JOIN pullrequests on (activity.pullrequest_id = pullrequests.pullrequest_id)
     LEFT JOIN users on (activity.user_id = users.id)
     WHERE activity.user_id = $1
     AND activity.is_private = false

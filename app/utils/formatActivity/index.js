@@ -48,6 +48,8 @@ export const formatActivity = data => {
     organizationName,
     profilePic,
     pullRequestId,
+    pullRequestName,
+    pullRequestUrl,
     userId,
     username,
   } = data;
@@ -70,11 +72,15 @@ export const formatActivity = data => {
   };
 
   const { action, icon } = actionDictionary[actionType];
-  const targetType = issueId
+  const targetType = pullRequestId
+    ? 'pull request'
+    : issueId
     ? 'issue'
     : organizationId
     ? 'organization'
-    : 'pull request';
+    : userId
+    ? 'account with'
+    : null;
 
   const route = issueId
     ? 'issues'
@@ -82,11 +88,12 @@ export const formatActivity = data => {
     ? 'organizations'
     : 'pullrequests';
 
-  const targetId = issueId || organizationId || pullRequestId;
+  const targetId = pullRequestId || issueId || organizationId;
 
-  const path = `/${route}/detail/${targetId}`;
+  const isInternalLink = !pullRequestId;
+  const path = pullRequestId ? pullRequestUrl : `/${route}/detail/${targetId}`;
 
-  const targetName = issueName || organizationName;
+  const targetName = pullRequestName || issueName || organizationName;
 
   const formattedActivity = {
     action,
@@ -94,6 +101,7 @@ export const formatActivity = data => {
     date: createdDate,
     fundedValue,
     icon,
+    isInternalLink,
     path,
     target: {
       targetId,

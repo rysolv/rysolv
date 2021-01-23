@@ -46,7 +46,6 @@ export class UserDetailView extends React.PureComponent {
       },
       filterValues,
       handleInputChange,
-      handleNav,
     } = this.props;
     return (
       <DetailContainer>
@@ -101,7 +100,6 @@ export class UserDetailView extends React.PureComponent {
               activity={activity}
               filterValues={filterValues}
               handleInputChange={handleInputChange}
-              handleNav={handleNav}
             />
           </UserContentsWrapper>
         </DetailViewContainer>
@@ -114,7 +112,6 @@ UserDetailView.propTypes = {
   data: T.object.isRequired,
   filterValues: T.object.isRequired,
   handleInputChange: T.func.isRequired,
-  handleNav: T.func.isRequired,
 };
 
 export default UserDetailView;

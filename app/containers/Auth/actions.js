@@ -3,9 +3,9 @@ import {
   FETCH_ACTIVE_USER_FAILURE,
   FETCH_ACTIVE_USER_SUCCESS,
   FETCH_ACTIVE_USER,
-  FETCH_USER_SESSION_FAILURE,
-  FETCH_USER_SESSION_SUCCESS,
-  FETCH_USER_SESSION,
+  GITHUB_SIGN_IN_FAILURE,
+  GITHUB_SIGN_IN_SUCCESS,
+  GITHUB_SIGN_IN,
   RESEND_SIGN_UP,
   RESET_ROUTE,
   SIGN_IN_FAILURE,
@@ -49,17 +49,24 @@ export function fetchActiveUser() {
   return { type: FETCH_ACTIVE_USER };
 }
 
-export function fetchUserSessionFailure() {
-  return { type: FETCH_USER_SESSION_FAILURE };
-}
-
-export function fetchUserSessionSuccess() {
-  return { type: FETCH_USER_SESSION_SUCCESS };
-}
-
-export function fetchUserSession() {
+export function githubSignInFailure(payload) {
   return {
-    type: FETCH_USER_SESSION,
+    payload,
+    type: GITHUB_SIGN_IN_FAILURE,
+  };
+}
+
+export function githubSignInSuccess(payload) {
+  return {
+    payload,
+    type: GITHUB_SIGN_IN_SUCCESS,
+  };
+}
+
+export function githubSignIn(payload) {
+  return {
+    payload,
+    type: GITHUB_SIGN_IN,
   };
 }
 

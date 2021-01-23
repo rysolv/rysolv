@@ -54,6 +54,7 @@ class PaypalButton extends React.Component {
     const {
       dispatchPaypalPayment,
       dollarValue,
+      emailValue,
       handleValidateInput,
       initialValue,
       issueId,
@@ -77,6 +78,7 @@ class PaypalButton extends React.Component {
       actions.payment.execute().then(() => {
         const paymentObj = {
           amount: dollarValue,
+          email: emailValue,
           issueId,
         };
         dispatchPaypalPayment(paymentObj);

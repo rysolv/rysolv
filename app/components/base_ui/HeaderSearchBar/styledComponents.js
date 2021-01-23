@@ -42,7 +42,10 @@ export const RedirectIcon = styled.span`
 `;
 
 export const SearchItemContainer = styled.div`
+  background-color: ${({ isSelectedRoute }) =>
+    isSelectedRoute ? lightBlueColor : 'transparent'};
   border-bottom: 0.1rem solid #d5d5d5;
+  color: ${({ isSelectedRoute }) => (isSelectedRoute ? 'white' : 'inherit')};
   display: flex;
   height: 4rem;
   padding: 1rem;

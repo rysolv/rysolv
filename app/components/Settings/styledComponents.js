@@ -7,7 +7,11 @@ import Popper from '@material-ui/core/Popper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
-import { BaseDropDownMenu, ErrorSuccessBanner } from 'components/base_ui';
+import {
+  BaseDropDownMenu,
+  BaseTextInput,
+  ErrorSuccessBanner,
+} from 'components/base_ui';
 import {
   commentHeaderColor,
   defaultFontSize,
@@ -43,6 +47,7 @@ export const DetailViewContainer = styled.div`
 `;
 
 export const EditUserImageWrapper = styled.div`
+  align-self: center;
   position: relative;
 `;
 
@@ -188,6 +193,10 @@ export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   }
 `;
 
+export const StyledBaseTextInput = styled(BaseTextInput)`
+  margin: 0;
+`;
+
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   margin-top: 1.6rem;
   width: 100%;
@@ -275,7 +284,7 @@ export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
   }
 
   .MuiTabs-centered {
-    justify-content: end;
+    justify-content: start;
   }
 `;
 

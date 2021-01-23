@@ -1,14 +1,18 @@
-const { organizationReturnValues } = require('./constants');
+const { groupValues, organizationReturnValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
 // SEARCH organizations
 const searchOrganizations = async ({ value }) => {
   const queryText = `
-    SELECT ${organizationReturnValues} FROM organizations
+    SELECT ${organizationReturnValues},
+      ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages"
+    FROM organizations
+      LEFT JOIN languages ON languages.organization_id = organizations.id
     WHERE
-    LOWER(organizations.name) LIKE LOWER('%'||$1||'%') OR
-    LOWER(organizations.description) LIKE LOWER('%'||$1||'%')`;
-
+      LOWER(organizations.name) LIKE LOWER('%'||$1||'%') OR
+      LOWER(organizations.description) LIKE LOWER('%'||$1||'%')
+    GROUP BY ${groupValues}
+  `;
   const { rows } = await singleQuery({ queryText, values: [value] });
   return rows;
 };

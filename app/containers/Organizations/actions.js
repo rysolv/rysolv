@@ -9,6 +9,9 @@ import {
   FETCH_ORGANIZATIONS_FAILURE,
   FETCH_ORGANIZATIONS_SUCCESS,
   FETCH_ORGANIZATIONS,
+  FETCH_USER_ORGANIZATIONS_FAILURE,
+  FETCH_USER_ORGANIZATIONS_SUCCESS,
+  FETCH_USER_ORGANIZATIONS,
   GENERATE_IDENTICON,
   IMPORT_ORGANIZATION_FAILURE,
   IMPORT_ORGANIZATION_SUCCESS,
@@ -59,6 +62,27 @@ export function clearForm() {
   };
 }
 
+export function fetchInfoFailure(payload) {
+  return {
+    payload,
+    type: FETCH_INFO_FAILURE,
+  };
+}
+
+export function fetchInfoSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_INFO_SUCCESS,
+  };
+}
+
+export function fetchInfo(payload) {
+  return {
+    payload,
+    type: FETCH_INFO,
+  };
+}
+
 export function fetchOrganizationsFailure(payload) {
   return {
     payload,
@@ -79,25 +103,19 @@ export function fetchOrganizations() {
   };
 }
 
-export function fetchInfoFailure(payload) {
+export function fetchUserOrganizationsFailure() {
+  return { type: FETCH_USER_ORGANIZATIONS_FAILURE };
+}
+
+export function fetchUserOrganizationsSuccess(payload) {
   return {
     payload,
-    type: FETCH_INFO_FAILURE,
+    type: FETCH_USER_ORGANIZATIONS_SUCCESS,
   };
 }
 
-export function fetchInfoSuccess(payload) {
-  return {
-    payload,
-    type: FETCH_INFO_SUCCESS,
-  };
-}
-
-export function fetchInfo(payload) {
-  return {
-    payload,
-    type: FETCH_INFO,
-  };
+export function fetchUserOrganizations() {
+  return { type: FETCH_USER_ORGANIZATIONS };
 }
 
 export function generateIdenticon() {

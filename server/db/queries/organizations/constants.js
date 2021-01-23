@@ -1,5 +1,4 @@
 const organizationValues = [
-  'contributors',
   'created_date',
   'description',
   'id',
@@ -10,28 +9,41 @@ const organizationValues = [
   'name',
   'organization_url',
   'owner_id',
-  'preferred_languages',
   'repo_url',
   'total_funded',
   'verified',
 ];
 
 const organizationReturnValues = `
-  contributors,
-  created_date AS "createdDate",
-  description,
-  id,
-  is_manual AS "isManual",
-  issues,
-  logo,
-  modified_date AS "modifiedDate",
-  name,
-  organization_url AS "organizationUrl",
-  owner_id AS "ownerId",
-  preferred_languages AS "preferredLanguages",
-  repo_url AS "repoUrl",
-  total_funded AS "totalFunded",
-  verified
+  organizations.created_date AS "createdDate",
+  organizations.description,
+  organizations.id,
+  organizations.is_manual AS "isManual",
+  organizations.issues,
+  organizations.logo,
+  organizations.modified_date AS "modifiedDate",
+  organizations.name,
+  organizations.organization_url AS "organizationUrl",
+  organizations.owner_id AS "ownerId",
+  organizations.repo_url AS "repoUrl",
+  organizations.total_funded AS "totalFunded",
+  organizations.verified
 `;
 
-module.exports = { organizationReturnValues, organizationValues };
+const groupValues = `
+  organizations.created_date,
+  organizations.description,
+  organizations.id,
+  organizations.is_manual,
+  organizations.issues,
+  organizations.logo,
+  organizations.modified_date,
+  organizations.name,
+  organizations.organization_url,
+  organizations.owner_id,
+  organizations.repo_url,
+  organizations.total_funded,
+  organizations.verified
+`;
+
+module.exports = { groupValues, organizationReturnValues, organizationValues };

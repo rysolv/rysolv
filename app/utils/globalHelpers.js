@@ -11,7 +11,8 @@ export const formatDollarAmount = (value, noDecimals = false) => {
   return `$${valueWithDecimals}`;
 };
 
-export const formatPaypalTotal = value => (Number(value) * 1.036).toFixed(2);
+export const formatPaypalTotal = value =>
+  (Number(value) * 1.03 + 0.3).toFixed(2);
 
 export const formatUrlLinks = value => {
   const { githubLink, personalLink, stackoverflowLink } = value;
@@ -66,6 +67,10 @@ export const navHelper = (e, handleNav, route) => {
   }
 };
 
+export const removeCookie = cookie => {
+  document.cookie = `${cookie}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+};
+
 export const setCookie = (name, value, options = {}) => {
   const baseCookie = `${name}=${JSON.stringify(value)}`;
   const cookieWithOptions = Object.keys(options).reduce((acc, option) => {
@@ -73,8 +78,4 @@ export const setCookie = (name, value, options = {}) => {
     return acc + cookieOption;
   }, baseCookie);
   document.cookie = `${cookieWithOptions};`;
-};
-
-export const removeCookie = cookie => {
-  document.cookie = `${cookie}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
 };

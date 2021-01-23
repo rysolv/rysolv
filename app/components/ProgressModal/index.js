@@ -5,11 +5,13 @@ import { PrimaryButton } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
+  ButtonGroup,
   ContentWrapper,
   LogoWrapper,
   ModalBody,
   ModalTitle,
   ProgressContainer,
+  StyledLink,
 } from './styledComponents';
 
 const siteLogo = iconDictionary('siteLogo');
@@ -24,7 +26,12 @@ const ProgressModal = ({ handleClose }) => (
         tell us what you think, and come back often as we make improvements
         based on your feedback.
       </ModalBody>
-      <PrimaryButton label="Try it out" onClick={handleClose} />
+      <ButtonGroup>
+        <PrimaryButton label="Try it out" onClick={handleClose} />
+        <StyledLink onClick={handleClose} to="/how-to">
+          How it works
+        </StyledLink>
+      </ButtonGroup>
     </ContentWrapper>
   </ProgressContainer>
 );

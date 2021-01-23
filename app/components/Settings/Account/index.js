@@ -38,6 +38,13 @@ const UserAccount = ({
   handleNav,
   handleSubmitEmailChange,
   handleSubmitInputChange,
+  handleValidateInput,
+  inputErrors: {
+    email: emailError,
+    firstName: firstNameError,
+    lastName: lastNameError,
+    username: usernameError,
+  },
   isDisabled,
   lastName,
   setChangeEmail,
@@ -56,7 +63,15 @@ const UserAccount = ({
     <InputWrapper>
       <MainTextInput
         disabled={!changeFirstName}
+        error={!!firstNameError}
+        helperText={firstNameError}
         label="First Name"
+        onBlur={() =>
+          handleValidateInput({
+            field: 'firstName',
+            values: { firstName: value },
+          })
+        }
         onChange={e => setValue(e.target.value)}
         value={!changeFirstName ? firstName : value}
       />
@@ -103,7 +118,15 @@ const UserAccount = ({
     <InputWrapper>
       <MainTextInput
         disabled={!changeLastName}
+        error={!!lastNameError}
+        helperText={lastNameError}
         label="Last Name"
+        onBlur={() =>
+          handleValidateInput({
+            field: 'lastName',
+            values: { lastName: value },
+          })
+        }
         onChange={e => setValue(e.target.value)}
         value={!changeLastName ? lastName : value}
       />
@@ -150,7 +173,15 @@ const UserAccount = ({
     <InputWrapper>
       <MainTextInput
         disabled={!changeUsername}
+        error={!!usernameError}
+        helperText={usernameError}
         label="Username"
+        onBlur={() =>
+          handleValidateInput({
+            field: 'username',
+            values: { username: value },
+          })
+        }
         onChange={e => setValue(e.target.value)}
         value={!changeUsername ? username : value}
       />
@@ -197,7 +228,15 @@ const UserAccount = ({
     <InputWrapper>
       <MainTextInput
         disabled={!changeEmail}
+        error={!!emailError}
+        helperText={emailError}
         label="E-mail"
+        onBlur={() =>
+          handleValidateInput({
+            field: 'email',
+            values: { email: value },
+          })
+        }
         onChange={e => setValue(e.target.value)}
         value={!changeEmail ? email : value}
       />
@@ -273,6 +312,8 @@ UserAccount.propTypes = {
   handleNav: T.func,
   handleSubmitEmailChange: T.func,
   handleSubmitInputChange: T.func,
+  handleValidateInput: T.func.isRequired,
+  inputErrors: T.object.isRequired,
   isDisabled: T.bool,
   lastName: T.string,
   setChangeEmail: T.func,

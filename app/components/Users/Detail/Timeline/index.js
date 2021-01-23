@@ -10,11 +10,12 @@ import { formatDollarAmount, formatWordString } from 'utils/globalHelpers';
 
 import {
   EmptyMessageContainer,
+  ExternalTimelineActivity,
   HeaderWrapper,
+  InternalTimelineActivity,
   StyledAction,
   StyledBaseDropDownMenu,
   StyledH3,
-  TimelineActivity,
   TimelineContainer,
   TimelineContent,
   TimelineDividerContainer,
@@ -31,7 +32,6 @@ import {
 const UserTimelineView = ({
   activity,
   handleInputChange,
-  handleNav,
   filterValues: { users: usersFilter },
 }) => {
   const filterActivity = () => {
@@ -54,11 +54,13 @@ const UserTimelineView = ({
           date,
           fundedValue,
           icon,
+          isInternalLink,
           path,
-          target: { targetType, targetName },
+          target: { targetName, targetType },
         },
         index,
       ) => {
+        const shouldRenderFor = targetType === 'account with';
         const TimelineListItemComponent = (
           <TimelineListItem key={activityId}>
             <TimelineDividerContainer>
@@ -75,16 +77,29 @@ const UserTimelineView = ({
                   Component={
                     <Fragment>
                       <TimelineDollar>
-                        {formatDollarAmount(fundedValue)}&nbsp;
+                        {formatDollarAmount(fundedValue)}
                       </TimelineDollar>
-                      for&nbsp;
+                      <ConditionalRender
+                        Component={() => ` for `}
+                        shouldRender={!shouldRenderFor}
+                      />
                     </Fragment>
                   }
                   shouldRender={!!fundedValue}
                 />
-                <TimelineActivity onClick={() => handleNav(path)}>
-                  {targetName}
-                </TimelineActivity>
+                <ConditionalRender
+                  Component={
+                    <InternalTimelineActivity to={path}>
+                      {targetName}
+                    </InternalTimelineActivity>
+                  }
+                  FallbackComponent={
+                    <ExternalTimelineActivity href={path} target="_blank">
+                      {targetName}
+                    </ExternalTimelineActivity>
+                  }
+                  shouldRender={isInternalLink}
+                />
               </TimelineInfo>
             </TimelineContent>
           </TimelineListItem>
@@ -136,7 +151,6 @@ UserTimelineView.propTypes = {
   activity: T.array,
   filterValues: T.object.isRequired,
   handleInputChange: T.func.isRequired,
-  handleNav: T.func.isRequired,
 };
 
 export default UserTimelineView;

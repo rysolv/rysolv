@@ -36,11 +36,13 @@ import {
   StyledIssueText,
   StyledListItem,
 } from './styledComponents';
+import { issueTags, tagColors } from '../constants';
+import { TagWrapper } from '../styledComponents';
 
 const AttemptingIcon = IconDictionary('attempt');
 
 const IssueCard = ({
-  activeUser,
+  activeUser: { id: userId, upvotes: userUpvotes, watching: userWatchList },
   addWatching,
   data,
   deviceView,
@@ -49,9 +51,10 @@ const IssueCard = ({
   dispatchOpenModal,
   handleNav,
   handleUpvote,
+  height,
   isSignedIn,
 }) => (
-  <StyledIssueCard>
+  <StyledIssueCard height={height}>
     {data.map(
       ({
         attempting,
@@ -66,9 +69,10 @@ const IssueCard = ({
         organizationName,
         organizationVerified,
         rep,
+        type,
         watching,
       }) => {
-        const { id: userId, watching: userWatchList } = activeUser;
+        const colorIndex = issueTags.indexOf(type);
 
         const isMobile =
           deviceView === 'laptopS' ||
@@ -80,7 +84,7 @@ const IssueCard = ({
 
         const userWatching =
           userWatchList && userWatchList.find(el => el.id === id);
-        const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
+        const upvoted = userUpvotes && userUpvotes.includes(id);
 
         const DesktopButtonBar = (
           <Fragment>
@@ -190,7 +194,7 @@ const IssueCard = ({
                 issueId={id}
                 rep={rep}
                 upvoted={upvoted}
-                userId={activeUser.id}
+                userId={userId}
               />
               <StyledIssueContent>
                 <StyledIssueHeader>
@@ -219,6 +223,9 @@ const IssueCard = ({
                     {language.map(el => (
                       <LanguageWrapper key={`${id}-${el}`} language={el} />
                     ))}
+                    <TagWrapper tagColor={tagColors[colorIndex]}>
+                      {type}
+                    </TagWrapper>
                   </IssueLanguageContainer>
                 </StyledIssueText>
 
@@ -265,6 +272,7 @@ IssueCard.propTypes = {
   dispatchOpenModal: T.func,
   handleNav: T.func.isRequired,
   handleUpvote: T.func.isRequired,
+  height: T.number.isRequired,
   isSignedIn: T.bool.isRequired,
 };
 

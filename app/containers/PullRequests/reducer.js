@@ -35,7 +35,6 @@ export const initialState = {
     merged: { error: '', value: null },
     open: { error: '', value: null },
     pullNumber: { error: '', value: '' },
-    status: { error: '', value: '' },
     title: { error: '', value: '' },
   },
   importSuccess: false,

@@ -8,6 +8,7 @@ const getUserPullRequestDetail = async ({ userId }) => {
     WHERE
       merged = false AND
       open = true AND
+      pullrequests.is_deleted = false AND
       pullrequests.user_id = $1
   `;
   const { rows: activeRows } = await singleQuery({

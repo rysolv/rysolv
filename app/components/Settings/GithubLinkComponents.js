@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { BaseTextInput, IconButton } from 'components/base_ui';
+import { IconButton } from 'components/base_ui';
 import { formatUrlLinks } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -11,6 +11,7 @@ import {
   OneLink,
   OneLinkWrapper,
   StyledA,
+  StyledBaseTextInput,
 } from './styledComponents';
 
 const CloseIcon = iconDictionary('close');
@@ -42,8 +43,10 @@ export const EmptyGithubLinkComponent = ({
 );
 
 export const GithubEditComponent = ({
+  githubLinkError,
   handleClose,
   handleSubmitInputChange,
+  handleValidateInput,
   setChangeGithub,
   setValue,
   value,
@@ -51,7 +54,19 @@ export const GithubEditComponent = ({
   <OneLinkWrapper>
     <OneLink>
       <LinkIcon>{GithubIcon}</LinkIcon>
-      <BaseTextInput onChange={e => setValue(e.target.value)} value={value} />
+      <StyledBaseTextInput
+        error={!!githubLinkError}
+        helperText={githubLinkError}
+        onBlur={() =>
+          handleValidateInput({
+            field: 'githubLink',
+            values: { githubLink: value },
+          })
+        }
+        onChange={e => setValue(e.target.value)}
+        placeholder="https://github.com/bob123"
+        value={value}
+      />
     </OneLink>
     <IconButtonGroup>
       <IconButton
@@ -108,7 +123,9 @@ EmptyGithubLinkComponent.propTypes = {
 
 GithubEditComponent.propTypes = {
   handleClose: T.func,
+  githubLinkError: T.string.isRequired,
   handleSubmitInputChange: T.func,
+  handleValidateInput: T.func.isRequired,
   setChangeGithub: T.func,
   setValue: T.func,
   value: T.oneOfType([T.array, T.number, T.string]),

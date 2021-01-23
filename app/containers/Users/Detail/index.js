@@ -3,7 +3,6 @@ import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import UserDetailView from 'components/Users/Detail/UserDetailView';
@@ -28,7 +27,6 @@ const UsersDetail = ({
   error,
   filterValues,
   handleInputChange,
-  handleNav,
   loading,
   match: {
     params: { id },
@@ -53,7 +51,6 @@ const UsersDetail = ({
         propsToPassDown={{
           filterValues,
           handleInputChange,
-          handleNav,
         }}
       />
     </DetailWrapper>
@@ -67,7 +64,6 @@ UsersDetail.propTypes = {
   error: T.oneOfType([T.bool, T.string]).isRequired,
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
-  handleNav: T.func.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
 };
@@ -90,10 +86,6 @@ function mapDispatchToProps(dispatch) {
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     dispatchResetState: () => dispatch(resetState()),
     handleInputChange: payload => dispatch(inputChange(payload)),
-    /**
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 

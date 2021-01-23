@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import {
   borderColor,
   defaultFontSize,
+  detailFontSize,
   errorBorder,
   inputBorder,
   lightBlueColor,
@@ -79,6 +80,10 @@ export const StyledBaseTextInput = styled(TextField)`
     font-size: ${defaultFontSize};
   }
 
+  .helperText {
+    font-size: ${detailFontSize};
+  }
+
   .label {
     color: ${textColor};
     font-size: ${defaultFontSize};
@@ -95,7 +100,8 @@ export const StyledBaseTextInput = styled(TextField)`
       border-bottom: none;
     }
 
-    &:before {
+    &:before,
+    &:hover:before {
       border-bottom: none;
     }
   }

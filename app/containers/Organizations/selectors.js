@@ -71,13 +71,7 @@ const makeSelectOrganizationsFormattedData = () =>
     makeSelectOrganizations('search'),
     makeSelectOrganizations('shouldSearch'),
     (organization, filter, { contributorInput, issueInput }) => {
-      const {
-        activity,
-        contributors,
-        issues,
-        ownerId,
-        ...restProps
-      } = organization;
+      const { activity, contributors, issues, ...restProps } = organization;
       const newIssues = extend([], issues);
       let returnObj = {};
       if (contributors) {
@@ -85,13 +79,7 @@ const makeSelectOrganizationsFormattedData = () =>
           contributors,
           contributorInput,
         );
-        const formattedContributors = filteredContributors.map(contributor => {
-          const { id } = contributor;
-          // eslint-disable-next-line no-param-reassign
-          contributor.isOwner = id === ownerId;
-          return contributor;
-        });
-        returnObj = { contributors: formattedContributors, ...restProps };
+        returnObj = { contributors: filteredContributors, ...restProps };
       }
       if (issues) {
         const filteredIssues = filterIssues(newIssues, filter, issueInput);

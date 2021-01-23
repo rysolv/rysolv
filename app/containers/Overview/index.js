@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { ConditionalRender } from 'components/base_ui';
 import Filter from 'components/Filter';
 import SearchHeader from 'components/SearchHeader';
 import {
@@ -17,6 +18,7 @@ import {
 import { changeUserFilter, changeUserSearch } from 'containers/Users/actions';
 import { makeSelectIssues } from 'containers/Issues/selectors';
 import { makeSelectOrganizations } from 'containers/Organizations/selectors';
+import Stats from 'containers/Stats';
 import { makeSelectUsers } from 'containers/Users/selectors';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import autocompleteDictionary from 'utils/autocompleteDictionary';
@@ -54,8 +56,10 @@ const Overview = ({
   match: { params, path },
   organizationOptions,
 }) => {
+  const [height, setHeight] = useState(0);
   useEffect(() => {
     dispatchFetchOrganizationOptions();
+    setHeight(document.getElementById('filter-container').clientHeight);
     window.scrollTo(0, 0);
     return dispatchResetState;
   }, []);
@@ -110,17 +114,23 @@ const Overview = ({
     deviceView === 'mobileS' ||
     deviceView === 'mobileXS' ||
     deviceView === 'mobileXXS';
+  const isMobileOrTablet = isMobile || deviceView === 'tablet';
   return (
     <OverviewContainer>
       <OverviewHeader>{title}</OverviewHeader>
       <ContentContainer>
         <ComponentContainer>
           <SearchHeader {...headerProps[formattedPath]} />
-          <Component params={params} />
+          <Component height={height} params={params} />
         </ComponentContainer>
 
-        <FilterContainer>
+        <FilterContainer id="filter-container">
           <Filter isMobile={isMobile} {...filterProps[formattedPath]} />
+          <ConditionalRender
+            Component={Stats}
+            propsToPassDown={{ isOverview: true }}
+            shouldRender={formattedPath === 'issues' && !isMobileOrTablet}
+          />
         </FilterContainer>
       </ContentContainer>
     </OverviewContainer>

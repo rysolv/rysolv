@@ -74,9 +74,7 @@ const UserWatching = ({ handleNav, handleRemoveWatching, watching }) => {
       </SearchContainer>
       <ConditionalRender
         Component={OverviewListComponent}
-        FallbackComponent={
-          <EmptyOverviewListComponent handleNav={handleNav} type="watching" />
-        }
+        FallbackComponent={<EmptyOverviewListComponent type="watching" />}
         propsToPassDown={{
           handleNav,
           handleRemoveWatching,

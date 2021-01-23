@@ -9,9 +9,11 @@ const {
 } = require('./constants');
 const { createActivity } = require('../activity');
 const {
+  createLanguage,
   createOrganization: createOrganizationQuery,
   updateUserArray,
 } = require('../../../db');
+const { CustomError, errorLogger } = require('../../../helpers');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
 const createOrganization = async (
@@ -19,7 +21,7 @@ const createOrganization = async (
   { authError, userId },
 ) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const { identiconId } = organizationInput;
     if (identiconId && identiconId !== 'undefined') {
@@ -31,7 +33,6 @@ const createOrganization = async (
     const { uploadUrl } = await uploadImage(organizationInput.organizationLogo);
 
     const organization = {
-      contributors: organizationInput.contributors || [],
       created_date: new Date(),
       description: organizationInput.organizationDescription,
       id: uuidv4(),
@@ -42,7 +43,6 @@ const createOrganization = async (
       name: organizationInput.organizationName,
       organization_url: organizationInput.organizationUrl || '',
       owner_id: userId,
-      preferred_languages: organizationInput.preferredLanguages || [],
       repo_url: organizationInput.organizationRepo,
       total_funded: organizationInput.totalFunded || 0,
       verified: organizationInput.verified || false,
@@ -52,6 +52,13 @@ const createOrganization = async (
 
     // create organization
     const result = await createOrganizationQuery({ data: organization });
+
+    if (organizationInput.organizationLanguages) {
+      await createLanguage({
+        languages: organizationInput.organizationLanguages,
+        target: { organizationId: result.id },
+      });
+    }
 
     // add organization to user
     await updateUserArray({
@@ -74,10 +81,11 @@ const createOrganization = async (
       ...result,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createOrganizationError,
+      message: alert || createOrganizationError,
     };
   }
 };

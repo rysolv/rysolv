@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import styled from 'styled-components';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,20 +12,7 @@ import {
 import { defaultFontSize, headerColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile } = mediaQueriesByDevice;
-
-export const BottomBarWrapper = styled.div``;
-
-export const Browse = styled(BaseLink)`
-  color: white;
-  font-size: ${defaultFontSize};
-  margin: 0 1rem;
-  white-space: nowrap;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+const { mobile, tablet } = mediaQueriesByDevice;
 
 export const ButtonsWrapper = styled.section`
   align-items: center;
@@ -46,8 +34,6 @@ export const Container = styled.section`
   }
 `;
 
-export const HeaderSection = styled.section``;
-
 export const LinkTitle = styled.div`
   font-size: 1.6rem;
   font-weight: 400;
@@ -67,6 +53,36 @@ export const MobileDrawerComponent = styled(BaseDrawer)`
   .drawer-paper {
     height: 100%;
     width: 25rem;
+  }
+`;
+
+export const NavLink = styled(({ shouldRemoveFirst, shouldRemoveSecond, shouldRemoveThird, ...restProps }) => (
+  <BaseLink {...restProps} />
+))`
+  color: white;
+  font-size: ${defaultFontSize};
+  margin: 0 1rem;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  ${tablet} {
+    display: ${({ shouldRemoveFirst }) =>
+    shouldRemoveFirst ? 'none' : 'block'};
+  }
+
+  @media (max-width: 630px) {
+    display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
+    shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
+  }
+
+  @media (max-width: 365px) {
+    display: ${({ shouldRemoveFirst, shouldRemoveSecond, shouldRemoveThird }) =>
+    shouldRemoveFirst || shouldRemoveSecond || shouldRemoveThird
+      ? 'none'
+      : 'block'};
   }
 `;
 

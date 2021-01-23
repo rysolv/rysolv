@@ -1,5 +1,6 @@
 import AttemptButton from './AttemptButton';
 import FundIssueButton from './FundIssueButton';
+import GithubButton from './GithubButton';
 import IconButton from './IconButton';
 import PaypalButton from './PaypalButton';
 import PullRequestButton from './PullRequestButton';
@@ -16,6 +17,7 @@ export {
   AttemptButton,
   FlatIconButton,
   FundIssueButton,
+  GithubButton,
   IconButton,
   PaypalButton,
   PrimaryAsyncButton,

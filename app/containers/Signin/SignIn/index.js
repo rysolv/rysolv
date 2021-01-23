@@ -31,9 +31,6 @@ const SigninContainer = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Sign In';
-    return () => {
-      handleClearAuthAlerts();
-    };
   }, []);
 
   const form = 'signIn';

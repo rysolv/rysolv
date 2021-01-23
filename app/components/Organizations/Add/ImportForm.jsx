@@ -1,32 +1,49 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
 
-import { BaseTextInputWithAdornment } from 'components/base_ui';
+import { ConditionalRender } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
+
+import UserOrganizations from './UserOrganizations';
 
 import {
   ImportFormContainer,
+  MessageWrapper,
+  StyledBaseLink,
+  StyledBaseTextInputWithAdornment,
   StyledImportError,
-  StyledLabel,
+  // StyledLabel,
 } from './styledComponents';
 
+const GithubIcon = iconDictionary('github');
 const SearchIcon = iconDictionary('search');
 
 const ImportForm = ({
-  handleIncrementStep,
+  // handleIncrementStep,
   handleInputChange,
   handleSubmit,
   importError,
   importOrganizationLoading,
-  organizationData: { importUrl },
+  isGithubVerified,
+  organizationData: { autoImportUrl, importUrl },
+  userOrganizations,
+  userOrganizationsLoading,
 }) => {
   useEffect(() => document.getElementById('organizationImport').focus(), []);
+
+  useEffect(() => {
+    const { error, value } = autoImportUrl;
+    if (!error && value) {
+      handleSubmit();
+    }
+  }, [autoImportUrl]);
 
   const handleKeypress = ({ key }) => {
     if (key === 'Enter') {
       handleSubmit();
     }
   };
+
   const onChangeHandler = e => {
     handleInputChange({
       field: 'importUrl',
@@ -34,6 +51,15 @@ const ImportForm = ({
       value: e.target.value,
     });
   };
+
+  const UnauthenticatedMessage = (
+    <MessageWrapper>
+      {GithubIcon}
+      <StyledBaseLink label="Link your Github account" path="/settings" /> for
+      easier importing.
+    </MessageWrapper>
+  );
+
   return (
     <ImportFormContainer
       id="organizationImport"
@@ -42,7 +68,7 @@ const ImportForm = ({
     >
       Import GitHub Organization
       <br />
-      <BaseTextInputWithAdornment
+      <StyledBaseTextInputWithAdornment
         adornmentComponent={SearchIcon}
         disabled={importOrganizationLoading}
         error={!!importUrl.error}
@@ -50,31 +76,45 @@ const ImportForm = ({
         name="url"
         onChange={onChangeHandler}
         onClick={handleSubmit}
+        placeholder="https://github.com/rysolv/rysolv"
         position="end"
         value={importUrl.value}
       />
       <StyledImportError>
         {importError.error ? importError.message : null}
       </StyledImportError>
-      or
+      <ConditionalRender
+        Component={UserOrganizations}
+        FallbackComponent={UnauthenticatedMessage}
+        propsToPassDown={{
+          handleInputChange,
+          userOrganizations,
+          userOrganizationsLoading,
+        }}
+        shouldRender={isGithubVerified}
+      />
+      {/* or
       <StyledLabel
         onClick={() =>
           handleIncrementStep({ step: 2, view: 'addOrganization' })
         }
       >
         Manual
-      </StyledLabel>
+      </StyledLabel> */}
     </ImportFormContainer>
   );
 };
 
 ImportForm.propTypes = {
-  handleIncrementStep: T.func,
+  // handleIncrementStep: T.func,
   handleInputChange: T.func,
   handleSubmit: T.func,
   importError: T.object,
   importOrganizationLoading: T.bool,
+  isGithubVerified: T.bool,
   organizationData: T.object,
+  userOrganizations: T.array,
+  userOrganizationsLoading: T.bool,
 };
 
 export default ImportForm;

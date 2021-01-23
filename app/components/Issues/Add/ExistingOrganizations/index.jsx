@@ -1,6 +1,6 @@
-/* eslint-disable indent */
 import React from 'react';
 import T from 'prop-types';
+
 import { CheckboxWithLabel, ConditionalRender } from 'components/base_ui';
 
 import {

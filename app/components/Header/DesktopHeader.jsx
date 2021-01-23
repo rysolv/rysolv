@@ -6,12 +6,11 @@ import UserActivityButton from 'components/UserActivityButton';
 
 import Logo from './Logo';
 import {
-  Browse,
   ButtonsWrapper,
   Container,
-  HeaderSection,
   LogoWrapper,
   MobileDrawerComponent,
+  NavLink,
   StyledAppBar,
   StyledHeaderLink,
 } from './styledComponents';
@@ -26,9 +25,10 @@ const DesktopHeader = ({
   isLandingPage,
   isMobile,
   isSignedIn,
+  location,
   setIsDrawerOpen,
 }) => (
-  <HeaderSection>
+  <Fragment>
     <StyledAppBar
       color="default"
       isLandingPage={isLandingPage}
@@ -45,7 +45,9 @@ const DesktopHeader = ({
           <HeaderSearchBar handleNav={handleNav} />
         </LogoWrapper>
         <ButtonsWrapper>
-          <Browse label="Browse" path="/issues" />
+          <NavLink label="Start Here" path="/how-to" shouldRemoveSecond />
+          <NavLink label="Leaderboard" path="/stats" shouldRemoveFirst />
+          <NavLink label="Find Issues" path="/issues" />
           <UserActivityButton handleNav={handleNav} />
 
           {isSignedIn ? (
@@ -75,9 +77,10 @@ const DesktopHeader = ({
       handleNav={handleNav}
       isDrawerOpen={isDrawerOpen}
       isSignedIn={isSignedIn}
+      location={location}
       setIsDrawerOpen={() => setIsDrawerOpen(!isDrawerOpen)}
     />
-  </HeaderSection>
+  </Fragment>
 );
 
 DesktopHeader.propTypes = {
@@ -90,6 +93,7 @@ DesktopHeader.propTypes = {
   isLandingPage: T.bool.isRequired,
   isMobile: T.bool.isRequired,
   isSignedIn: T.bool.isRequired,
+  location: T.object.isRequired,
   setIsDrawerOpen: T.func.isRequired,
 };
 

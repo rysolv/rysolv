@@ -1,17 +1,19 @@
-const { getOneIssue, getOneOrganization, getOneUser } = require('../../../db');
+const { errorLogger } = require('../../../helpers');
+const {
+  getOneIssue,
+  getOneOrganization,
+  getOrganizationContributors,
+} = require('../../../db');
 const { oneOrganizationError } = require('./constants');
 
 const oneOrganization = async ({ id }) => {
   try {
     const result = await getOneOrganization({ organizationId: id });
-    const { contributors, issues } = result;
+    const { issues } = result;
 
-    const contributorsResult = await Promise.all(
-      contributors.map(async contributorId => {
-        const userResult = await getOneUser({ userId: contributorId });
-        return userResult;
-      }),
-    );
+    const contributorsResult = await getOrganizationContributors({
+      organizationId: id,
+    });
     result.contributors = contributorsResult;
 
     const issuesResult = await Promise.all(
@@ -26,6 +28,7 @@ const oneOrganization = async ({ id }) => {
       ...result,
     };
   } catch (error) {
+    errorLogger(error);
     return {
       __typename: 'Error',
       message: oneOrganizationError,

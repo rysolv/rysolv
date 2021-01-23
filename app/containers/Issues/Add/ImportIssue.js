@@ -1,12 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 import AsyncRender from 'components/AsyncRender';
 import ImportForm from 'components/Issues/Add/ImportForm';
-
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import { validateIssueUrl } from 'utils/validate';
+
 import {
   clearAlerts,
   importIssue,
@@ -35,6 +36,7 @@ export class ImportIssue extends React.PureComponent {
 
   render() {
     const {
+      activeUser,
       dispatchImportIssue,
       dispatchInputError,
       handleIncrementStep,
@@ -42,11 +44,15 @@ export class ImportIssue extends React.PureComponent {
       importError,
       importIssueLoading,
       issueData,
+      userIssues,
+      userIssuesLoading,
     } = this.props;
+    const { isGithubVerified } = activeUser || {};
+
     const handleSubmit = () => {
-      const {
-        importUrl: { value: url },
-      } = issueData;
+      const { autoImportUrl, importUrl } = issueData;
+      const url =
+        autoImportUrl.value !== '' ? autoImportUrl.value : importUrl.value;
       const { error, message, validatedUrl } = validateIssueUrl(url);
 
       if (error) {
@@ -57,26 +63,28 @@ export class ImportIssue extends React.PureComponent {
     };
 
     return (
-      <Fragment>
-        <AsyncRender
-          component={ImportForm}
-          isRequiredData={false}
-          loading={importIssueLoading}
-          propsToPassDown={{
-            handleIncrementStep,
-            handleInputChange,
-            handleSubmit,
-            importError,
-            importIssueLoading,
-            issueData,
-          }}
-        />
-      </Fragment>
+      <AsyncRender
+        component={ImportForm}
+        isRequiredData={false}
+        loading={importIssueLoading}
+        propsToPassDown={{
+          handleIncrementStep,
+          handleInputChange,
+          handleSubmit,
+          importError,
+          importIssueLoading,
+          isGithubVerified,
+          issueData,
+          userIssues,
+          userIssuesLoading,
+        }}
+      />
     );
   }
 }
 
 ImportIssue.propTypes = {
+  activeUser: T.object.isRequired,
   dispatchImportIssue: T.func,
   dispatchInputError: T.func,
   dispatchUpdateIsManual: T.func,
@@ -86,15 +94,23 @@ ImportIssue.propTypes = {
   importError: T.object,
   importIssueLoading: T.bool,
   issueData: T.object,
+  userIssues: T.array,
+  userIssuesLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
+  /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
   /**
    * Reducer : Issues
    */
   importError: makeSelectIssueDetailError('importIssue'),
   importIssueLoading: makeSelectIssuesLoading('importIssue'),
   issueData: makeSelectIssues('issueData'),
+  userIssues: makeSelectIssues('userIssues'),
+  userIssuesLoading: makeSelectIssuesLoading('userIssues'),
 });
 
 function mapDispatchToProps(dispatch) {

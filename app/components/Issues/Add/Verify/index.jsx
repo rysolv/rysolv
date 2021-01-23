@@ -1,58 +1,21 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { LanguageWrapper } from 'components/base_ui';
-import { BodyCard } from 'components/MarkdownRender';
-import { issueDataDictionary } from 'containers/Issues/constants';
+import { ConditionalRender } from 'components/base_ui';
 
-import {
-  DataWrapper,
-  Divider,
-  LabelWrapper,
-  LanguageContainer,
-  NameWrapper,
-  StyledLink,
-  ValueWrapper,
-} from './styledComponents';
+import { NameWrapper, StyledBodyCard, StyledLink } from './styledComponents';
 
-export class VerifyForm extends React.PureComponent {
-  render() {
-    const {
-      issueData: { issueBody, issueLanguages, issueName, issueUrl },
-    } = this.props;
+const VerifyForm = ({ issueData: { issueBody, issueName, issueUrl } }) => (
+  <Fragment>
+    <NameWrapper>{issueName.value}</NameWrapper>
+    <StyledLink>{issueUrl.value}</StyledLink>
+    <ConditionalRender
+      Component={() => <StyledBodyCard body={issueBody.value} />}
+      shouldRender={!!issueBody.value}
+    />
+  </Fragment>
+);
 
-    const mapLanguages = array => {
-      if (array.value.length > 0) {
-        return array.value.map(el => (
-          <LanguageWrapper key={el} language={el} />
-        ));
-      }
-      return 'None Listed';
-    };
-
-    const languageDiv = mapLanguages(issueLanguages);
-
-    return (
-      <DataWrapper>
-        <ValueWrapper>
-          <NameWrapper>{issueName.value}</NameWrapper>
-        </ValueWrapper>
-        <StyledLink>{issueUrl.value}</StyledLink>
-        <ValueWrapper>
-          <BodyCard body={issueBody.value} />
-        </ValueWrapper>
-        <ValueWrapper>
-          <Divider />
-        </ValueWrapper>
-        <LabelWrapper>{issueDataDictionary.language}</LabelWrapper>
-        <ValueWrapper>
-          <LanguageContainer>{languageDiv}</LanguageContainer>
-        </ValueWrapper>
-      </DataWrapper>
-    );
-  }
-}
-
-VerifyForm.propTypes = { issueData: T.object };
+VerifyForm.propTypes = { issueData: T.object.isRequired };
 
 export default VerifyForm;

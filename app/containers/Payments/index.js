@@ -4,13 +4,16 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import AsyncRender from 'components/AsyncRender';
 import PaymentPortal from 'components/Payments';
+import PaymentPortalModal from 'components/PaymentsModal';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import {
   clearAlerts,
+  incrementStep,
   inputError,
   paypalPayment,
   resetState,
@@ -21,6 +24,7 @@ import { validateFields, validateOneField } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectPayments } from './selectors';
+import { PaymentContainer } from './styledComponents';
 
 const PaymentsContainer = ({
   activeUser,
@@ -31,22 +35,25 @@ const PaymentsContainer = ({
   dispatchStripeToken,
   dispatchSubmitAccountPayment,
   errors,
-  fundedAmount,
   handleClearPaymentAlerts,
-  handleNav,
-  isSignedIn,
+  handleIncrement,
+  isModal,
   issueId,
-  open,
+  loading,
+  step,
   ...restProps
 }) => {
-  const { balance, email, firstName, lastName } = activeUser;
+  const { balance, email: userEmail } = activeUser;
   useEffect(() => dispatchResetState, []);
 
-  const handleStripeToken = ({ amount, token, values }) => {
+  const ComponentToRender = isModal ? PaymentPortalModal : PaymentPortal;
+
+  const handleStripeToken = ({ amount, email, token, values }) => {
     const { isValidated, validationErrors } = validateFields({ values });
     if (isValidated) {
       dispatchStripeToken({
         amount,
+        email,
         issueId,
         token,
       });
@@ -55,10 +62,11 @@ const PaymentsContainer = ({
     }
   };
 
-  const handleSubmitAccountPayment = ({ fundValue, values }) => {
+  const handleSubmitAccountPayment = ({ email, fundValue, values }) => {
     const { isValidated, validationErrors } = validateFields({ values });
     if (isValidated) {
       dispatchSubmitAccountPayment({
+        email,
         fundValue,
         issueId,
       });
@@ -76,27 +84,33 @@ const PaymentsContainer = ({
     });
   };
   return (
-    <PaymentPortal
-      alerts={alerts}
-      balance={balance}
-      dispatchPaypalPayment={dispatchPaypalPayment}
-      email={email}
-      errors={errors}
-      firstName={firstName}
-      fundedAmount={fundedAmount}
-      handleClearPaymentAlerts={handleClearPaymentAlerts}
-      handleNav={handleNav}
-      handleStripeToken={handleStripeToken}
-      handleSubmitAccountPayment={handleSubmitAccountPayment}
-      handleValidateInput={handleValidateInput}
-      isSignedIn={isSignedIn}
-      issueId={issueId}
-      lastName={lastName}
-      open={open}
-      {...restProps}
-    />
+    <PaymentContainer isModal={isModal}>
+      <AsyncRender
+        asyncData={{}}
+        component={ComponentToRender}
+        isRequiredData={false}
+        loading={loading}
+        propsToPassDown={{
+          alerts,
+          balance,
+          dispatchPaypalPayment,
+          email: userEmail,
+          errors,
+          handleClearPaymentAlerts,
+          handleIncrement,
+          handleStripeToken,
+          handleSubmitAccountPayment,
+          handleValidateInput,
+          issueId,
+          step,
+          ...restProps,
+        }}
+      />
+    </PaymentContainer>
   );
 };
+
+PaymentsContainer.defaultProps = { isModal: false };
 
 PaymentsContainer.propTypes = {
   activeUser: T.object,
@@ -107,12 +121,12 @@ PaymentsContainer.propTypes = {
   dispatchStripeToken: T.func,
   dispatchSubmitAccountPayment: T.func,
   errors: T.object,
-  fundedAmount: T.number,
   handleClearPaymentAlerts: T.func,
-  handleNav: T.func,
-  isSignedIn: T.bool,
+  handleIncrement: T.func.isRequired,
+  isModal: T.bool,
   issueId: T.string,
-  open: T.bool,
+  loading: T.bool.isRequired,
+  step: T.number.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -125,6 +139,8 @@ const mapStateToProps = createStructuredSelector({
    */
   alerts: makeSelectPayments('alerts'),
   errors: makeSelectPayments('errors'),
+  loading: makeSelectPayments('loading'),
+  step: makeSelectPayments('step'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -138,6 +154,7 @@ const mapDispatchToProps = dispatch => ({
   dispatchSubmitAccountPayment: payload =>
     dispatch(submitAccountPayment(payload)),
   handleClearPaymentAlerts: () => dispatch(clearAlerts()),
+  handleIncrement: payload => dispatch(incrementStep(payload)),
 });
 
 const withConnect = connect(

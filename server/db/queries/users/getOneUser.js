@@ -1,13 +1,22 @@
 const { singleQuery } = require('../../baseQueries');
-const { userReturnValues } = require('./constants');
+const { groupValues, userReturnValues } = require('./constants');
 
 // GET single user
 const getOneUser = async ({ userId }) => {
-  const queryText = `	
-    SELECT ${userReturnValues} from users	
-    WHERE id = $1	
-    AND email_verified = true	
-    AND is_deleted = false	
+  const queryText = `
+    SELECT ${userReturnValues},
+      ARRAY_REMOVE(ARRAY_AGG(DISTINCT(attempting.user_id)), NULL) AS attempting,
+      ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages",
+      ARRAY_REMOVE(ARRAY_AGG(DISTINCT(watching.user_id)), NULL) AS watching
+    FROM users
+      LEFT JOIN attempting ON attempting.user_id = users.id
+      LEFT JOIN languages ON languages.user_id = users.id
+      LEFT JOIN watching ON watching.user_id = users.id
+    WHERE
+      users.id = $1
+      AND users.email_verified = true
+      AND users.is_deleted = false
+    GROUP BY ${groupValues}
   `;
   const { rows } = await singleQuery({ queryText, values: [userId] });
   const [oneRow] = rows;

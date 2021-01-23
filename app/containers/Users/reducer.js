@@ -29,7 +29,7 @@ export const initialState = {
     users: 'All',
   },
   loading: {
-    fetchUser: false,
+    fetchUser: true,
     searchUsers: false,
     users: false,
   },

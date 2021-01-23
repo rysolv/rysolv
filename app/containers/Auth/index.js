@@ -6,10 +6,16 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { ConditionalRender, LoadingIndicator } from 'components/base_ui';
 
-import injectSaga from 'utils/injectSaga';
+import { getCookie } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
 
-import { fetchUserSession, signIn, signUp } from './actions';
+import {
+  fetchActiveUser,
+  fetchActiveUserFailure,
+  signIn,
+  signUp,
+} from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectAuth, makeSelectAuthLoading } from './selectors';
@@ -17,7 +23,8 @@ import { makeSelectAuth, makeSelectAuthLoading } from './selectors';
 export default function withAuth(config, Component) {
   const Auth = ({
     authenticateLoading,
-    dispatchFetchUserSession,
+    dispatchFetchActiveUser,
+    dispatchFetchActiveUserFailure,
     handleSignIn,
     handleSignUp,
     isSignedIn,
@@ -27,7 +34,12 @@ export default function withAuth(config, Component) {
     const { isPrivate } = config;
 
     useEffect(() => {
-      if (!loading) dispatchFetchUserSession();
+      const signedIn = getCookie('signedIn');
+      if (!loading && signedIn) {
+        dispatchFetchActiveUser();
+      } else {
+        dispatchFetchActiveUserFailure();
+      }
     }, []);
 
     if (!authenticateLoading && isPrivate && !isSignedIn)
@@ -45,10 +57,11 @@ export default function withAuth(config, Component) {
 
   Auth.propTypes = {
     authenticateLoading: T.bool,
-    dispatchFetchUserSession: T.func,
+    dispatchFetchActiveUser: T.func,
+    dispatchFetchActiveUserFailure: T.func,
     handleSignIn: T.func,
     handleSignUp: T.func,
-    isSignedIn: T.bool,
+    isSignedIn: T.bool.isRequired,
     loading: T.bool,
   };
 
@@ -65,7 +78,8 @@ export default function withAuth(config, Component) {
     /**
      * Auth
      */
-    dispatchFetchUserSession: () => dispatch(fetchUserSession()),
+    dispatchFetchActiveUser: () => dispatch(fetchActiveUser()),
+    dispatchFetchActiveUserFailure: () => dispatch(fetchActiveUserFailure()),
     handleSignIn: payload => dispatch(signIn(payload)),
     handleSignUp: payload => dispatch(signUp(payload)),
   });

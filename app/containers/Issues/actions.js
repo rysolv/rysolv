@@ -29,6 +29,9 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  FETCH_USER_ISSUES_FAILURE,
+  FETCH_USER_ISSUES_SUCCESS,
+  FETCH_USER_ISSUES,
   GENERATE_IDENTICON,
   IMPORT_ISSUE_FAILURE,
   IMPORT_ISSUE_SUCCESS,
@@ -219,6 +222,27 @@ export function editIssue(payload) {
   };
 }
 
+export function fetchIssueDetailFailure(payload) {
+  return {
+    payload,
+    type: FETCH_ISSUE_DETAIL_FAILURE,
+  };
+}
+
+export function fetchIssueDetailSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_ISSUE_DETAIL_SUCCESS,
+  };
+}
+
+export function fetchIssueDetail(payload) {
+  return {
+    payload,
+    type: FETCH_ISSUE_DETAIL,
+  };
+}
+
 export function fetchIssuesFailure(payload) {
   return {
     payload,
@@ -239,25 +263,19 @@ export function fetchIssues() {
   };
 }
 
-export function fetchIssueDetailFailure(payload) {
+export function fetchUserIssuesFailure() {
+  return { type: FETCH_USER_ISSUES_FAILURE };
+}
+
+export function fetchUserIssuesSuccess(payload) {
   return {
     payload,
-    type: FETCH_ISSUE_DETAIL_FAILURE,
+    type: FETCH_USER_ISSUES_SUCCESS,
   };
 }
 
-export function fetchIssueDetailSuccess(payload) {
-  return {
-    payload,
-    type: FETCH_ISSUE_DETAIL_SUCCESS,
-  };
-}
-
-export function fetchIssueDetail(payload) {
-  return {
-    payload,
-    type: FETCH_ISSUE_DETAIL,
-  };
+export function fetchUserIssues() {
+  return { type: FETCH_USER_ISSUES };
 }
 
 export function generateIdenticon() {

@@ -16,11 +16,13 @@ import {
 const GithubIcon = iconDictionary('github');
 
 const VerifiedAccountsView = ({ githubUsername, isGithubVerified }) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  const clientId = isProduction
+    ? process.env.GITHUB_VERIFY_CLIENT_ID
+    : process.env.GITHUB_VERIFY_CLIENT_ID_DEV;
   const VerifyLinkComponent = () => (
     <VerifyLink
-      href={`https://github.com/login/oauth/authorize?scope=user&client_id=${
-        process.env.GITHUB_CLIENT_ID
-      }`}
+      href={`https://github.com/login/oauth/authorize?scope=user&client_id=${clientId}`}
     >
       Connect Github
     </VerifyLink>

@@ -104,6 +104,10 @@ module.exports = require('./webpack.base.babel')({
         additional: ['*.chunk.js'],
       },
 
+      //  With 'network-first' all request are sent to the network first and if
+      //  the network request fails consult the cache as a fallback.
+      responseStrategy: 'network-first',
+
       // Removes warning for about `additional` section usage
       safeToUseOptionalCaches: true,
     }),

@@ -69,8 +69,8 @@ const DepositFormComponent = ({
       if (formattedString.length === 1) {
         const formattedValue = formattedString.join('.');
         setDollarValue(formattedValue);
-        setFeeValue((formattedValue * 0.036).toString());
-        setTotalValue((formattedValue * 1.036).toString());
+        setFeeValue((formattedValue * 0.03 + 0.3).toString());
+        setTotalValue((formattedValue * 1.03 + 0.3).toString());
       }
       if (formattedString.length === 2) {
         formattedString[0] =
@@ -80,8 +80,8 @@ const DepositFormComponent = ({
           : '';
         const formattedValue = formattedString.join('.');
         setDollarValue(formattedValue);
-        setFeeValue((formattedValue * 0.036).toString());
-        setTotalValue((formattedValue * 1.036).toString());
+        setFeeValue((formattedValue * 0.03 + 0.3).toString());
+        setTotalValue((formattedValue * 1.03 + 0.3).toString());
       }
     }
   };
@@ -107,7 +107,7 @@ const DepositFormComponent = ({
       <Divider />
       <StyledH3>Your funding amount</StyledH3>
       <StyledText>
-        Rysolv has a 3.6% standard transaction fee to cover credit card / Paypal
+        Rysolv has a 3% + $0.30 standard transaction fee to cover credit card / Paypal
         processing and the safe transfer of funds.
       </StyledText>
       <ChargeBreakdownWrapper>

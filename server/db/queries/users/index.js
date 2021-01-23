@@ -1,6 +1,7 @@
+const checkDuplicateGithubId = require('./checkDuplicateGithubId');
 const checkDuplicateUserEmail = require('./checkDuplicateUserEmail');
-const checkDuplicateUsername = require('./checkDuplicateUsername');
-const checkUserGithubId = require('./checkUserGithubId');
+const checkExistingGithubAccount = require('./checkExistingGithubAccount');
+const checkGithubIdMatch = require('./checkGithubIdMatch');
 const createUser = require('./createUser');
 const getOneUser = require('./getOneUser');
 const getOneUserSignUp = require('./getOneUserSignUp');
@@ -14,9 +15,10 @@ const transformUser = require('./transformUser');
 const updateUserArray = require('./updateUserArray');
 
 module.exports = {
+  checkDuplicateGithubId,
   checkDuplicateUserEmail,
-  checkDuplicateUsername,
-  checkUserGithubId,
+  checkExistingGithubAccount,
+  checkGithubIdMatch,
   createUser,
   getOneUser,
   getOneUserSignUp,

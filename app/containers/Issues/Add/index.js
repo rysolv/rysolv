@@ -11,7 +11,12 @@ import { makeSelectOrganizations } from 'containers/Organizations/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { clearAlerts, incrementStep, resetState } from '../actions';
+import {
+  clearAlerts,
+  fetchUserIssues,
+  incrementStep,
+  resetState,
+} from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -29,7 +34,16 @@ import {
 export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
     document.title = 'Add Issue';
-    const { handleIncrementStep } = this.props;
+    const {
+      activeUser: { isGithubVerified },
+      dispatchFetchUserIssues,
+      handleIncrementStep,
+    } = this.props;
+
+    if (isGithubVerified) {
+      dispatchFetchUserIssues();
+    }
+
     handleIncrementStep({ step: 1, view: 'addIssue' });
   }
 
@@ -52,6 +66,7 @@ export class IssuesAdd extends React.PureComponent {
       organization,
       step,
     } = this.props;
+    const isVerify = step === 4;
     const StepToRender = addIssueDictionary[step];
 
     if (importSuccess) {
@@ -66,7 +81,7 @@ export class IssuesAdd extends React.PureComponent {
           onClose={handleClearAlerts}
           success={success}
         />
-        <AddForm>
+        <AddForm isVerify={isVerify}>
           <AsyncRender
             asyncData={{ issueData, organization }}
             component={StepToRender}
@@ -85,6 +100,7 @@ export class IssuesAdd extends React.PureComponent {
 IssuesAdd.propTypes = {
   activeUser: T.object,
   alerts: T.object,
+  dispatchFetchUserIssues: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
   handleClearAlerts: T.func,
   handleIncrementStep: T.func,
@@ -119,6 +135,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
+    dispatchFetchUserIssues: () => dispatch(fetchUserIssues()),
     dispatchResetState: () => dispatch(resetState()),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),

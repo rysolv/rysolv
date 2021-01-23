@@ -9,7 +9,6 @@ import {
   userAttemptingTemp,
   userWatchingTemp,
 } from 'containers/Auth/actions';
-import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
@@ -30,8 +29,11 @@ import {
   fetchIssueDetailSuccess,
   fetchIssuesFailure,
   fetchIssuesSuccess,
+  fetchUserIssuesFailure,
+  fetchUserIssuesSuccess,
   importIssueFailure,
   importIssueSuccess,
+  openIssueModalState,
   saveInfoFailure,
   saveInfoSuccess,
   searchIssuesFailure,
@@ -49,6 +51,7 @@ import {
   EDIT_ISSUE,
   FETCH_ISSUE_DETAIL,
   FETCH_ISSUES,
+  FETCH_USER_ISSUES,
   IMPORT_ISSUE,
   SAVE_INFO,
   SEARCH_ISSUES,
@@ -77,12 +80,7 @@ export function* addAttemptSaga({ payload }) {
     }
   `;
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const graphql = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         toggleAttempting: { __typename, issueArray, message, userArray },
@@ -121,12 +119,7 @@ export function* addCommentSaga({ payload }) {
     }
   `;
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const graphql = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         createComment: { __typename, message, ...restProps },
@@ -161,12 +154,7 @@ export function* addWatchSaga({ payload }) {
     }
   `;
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const graphql = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         toggleWatching: { __typename, issueArray, message, userArray },
@@ -197,12 +185,7 @@ export function* closeIssueSaga({ payload }) {
     }
   `;
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const graphql = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         closeIssue: { __typename, message },
@@ -232,17 +215,12 @@ export function* deletePullRequestSaga({ payload }) {
     }
   `;
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const pullRequestQuery = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         deletePullRequest: { __typename, message },
       },
-    } = yield call(post, '/graphql', pullRequestQuery);
+    } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(deletePullRequestSuccess({ message }));
     yield put(fetchActiveUser());
@@ -273,12 +251,7 @@ export function* editIssueSaga({ payload }) {
     }
   `;
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const graphql = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         transformIssue: { __typename, message },
@@ -312,7 +285,6 @@ export function* fetchIssueDetailSaga({ payload }) {
           organizationId
           organizationName
           organizationVerified
-          profilePic
           pullRequests
           rep
           repo
@@ -328,6 +300,8 @@ export function* fetchIssueDetailSaga({ payload }) {
       getIssueComments(issueId: "${id}") {
         body
         createdDate
+        githubUrl
+        isGithubComment
         profilePic
         userId
         username
@@ -335,16 +309,13 @@ export function* fetchIssueDetailSaga({ payload }) {
     }
   `;
   try {
-    const issueQuery = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         getIssueComments,
         oneIssue: { __typename, message, ...restProps },
       },
-    } = yield call(post, '/graphql', issueQuery);
+    } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
 
     restProps.comments = getIssueComments;
@@ -388,19 +359,50 @@ export function* fetchIssuesSaga() {
     }
   `;
   try {
-    const issueQuery = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         getIssues: { __typename, issues, message },
       },
-    } = yield call(post, '/graphql', issueQuery);
+    } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(fetchIssuesSuccess({ issues }));
   } catch (error) {
     yield put(fetchIssuesFailure({ error }));
+  }
+}
+
+export function* fetchUserIssuesSaga() {
+  const query = `
+    query {
+      getUserIssues {
+        __typename
+        ... on IssueArray {
+          issues {
+            createdDate
+            exists
+            name
+            organizationName
+            repo
+          }
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        getUserIssues: { __typename, issues, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchUserIssuesSuccess({ issues }));
+  } catch (error) {
+    yield put(fetchUserIssuesFailure());
   }
 }
 
@@ -411,6 +413,7 @@ export function* importIssueSaga({ payload }) {
       importIssue(url: "${validatedUrl}") {
         __typename
         ... on ImportData {
+          githubCommentCount
           issueBody
           issueLanguages
           issueName
@@ -430,10 +433,7 @@ export function* importIssueSaga({ payload }) {
     }
   `;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         importIssue: { __typename, message, ...restProps },
@@ -449,11 +449,13 @@ export function* importIssueSaga({ payload }) {
 export function* saveInfoSaga({ payload }) {
   const {
     requestBody: {
+      githubCommentCount,
       identiconId,
       isManual,
       issueBody,
       issueLanguages,
       issueName,
+      issueType,
       issueUrl,
       organizationDescription,
       organizationId,
@@ -468,17 +470,19 @@ export function* saveInfoSaga({ payload }) {
       createIssue(
         issueInput: {
           body: ${JSON.stringify(issueBody)},
+          githubCommentCount: ${githubCommentCount},
           identiconId: "${identiconId}",
           isManual: ${isManual},
-          language:  ${JSON.stringify(issueLanguages)},
+          language: ${JSON.stringify(issueLanguages)},
           name: ${JSON.stringify(issueName)},
-          organizationDescription:  "${organizationDescription}",
-          organizationId:  ${JSON.stringify(organizationId)},
-          organizationLogo:  ${JSON.stringify(organizationLogo)},
-          organizationName:  "${organizationName}",
-          organizationRepo:  "${organizationRepo}",
-          organizationUrl:  "${organizationUrl}",
+          organizationDescription: ${JSON.stringify(organizationDescription)},
+          organizationId: ${JSON.stringify(organizationId)},
+          organizationLogo: ${JSON.stringify(organizationLogo)},
+          organizationName: ${JSON.stringify(organizationName)},
+          organizationRepo: "${organizationRepo}",
+          organizationUrl: "${organizationUrl}",
           repo: "${issueUrl}",
+          type: "${issueType}",
         }
       ) {
         __typename
@@ -493,12 +497,7 @@ export function* saveInfoSaga({ payload }) {
     }
   `;
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const graphql = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         createIssue: { __typename, id, message },
@@ -507,6 +506,7 @@ export function* saveInfoSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(fetchActiveUser());
     yield put(push(`/issues/detail/${id}`));
+    yield put(openIssueModalState({ modalState: 'embedIssue' }));
     yield put(saveInfoSuccess({ message }));
   } catch (error) {
     yield put(push('/issues'));
@@ -534,15 +534,13 @@ export function* searchIssuesSaga({ payload }) {
         organizationVerified
         rep
         repo
+        type
         watching
       }
     }
   `;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: { searchIssues },
     } = yield call(post, '/graphql', graphql);
@@ -559,7 +557,7 @@ export function* upvoteIssuesSaga({ payload }) {
   yield put(upvoteIssueTemp({ issueId, upvote }));
   yield put(upvoteUserTemp({ issueId, upvote }));
 
-  const upvoteIssueQuery = `
+  const query = `
     mutation {
       upvoteIssue(issueId: "${issueId}", upvote: ${upvote}) {
         __typename
@@ -574,17 +572,12 @@ export function* upvoteIssuesSaga({ payload }) {
     }
   `;
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const upvoteIssue = JSON.stringify({
-      query: upvoteIssueQuery,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         upvoteIssue: { __typename, issueRep, message, userRep },
       },
-    } = yield call(post, '/graphql', upvoteIssue);
+    } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(upvoteIssueSuccess({ issueId, issueRep }));
     if (upvote) {
@@ -608,6 +601,7 @@ export default function* watcherSaga() {
   yield takeLatest(EDIT_ISSUE, editIssueSaga);
   yield takeLatest(FETCH_ISSUE_DETAIL, fetchIssueDetailSaga);
   yield takeLatest(FETCH_ISSUES, fetchIssuesSaga);
+  yield takeLatest(FETCH_USER_ISSUES, fetchUserIssuesSaga);
   yield takeLatest(IMPORT_ISSUE, importIssueSaga);
   yield takeLatest(SAVE_INFO, saveInfoSaga);
   yield takeLatest(SEARCH_ISSUES, searchIssuesSaga);

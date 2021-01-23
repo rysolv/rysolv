@@ -11,6 +11,7 @@ import {
 const TermsOfService = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Terms of Service';
   }, []);
   return (
     <TermsOfServiceContainer>

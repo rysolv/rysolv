@@ -2,9 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import T from 'prop-types';
 
-import { MainTextInput, PasswordTextInput } from 'components/base_ui';
+import {
+  GithubButton,
+  MainTextInput,
+  PasswordTextInput,
+} from 'components/base_ui';
 
 import {
+  Divider,
+  DividerWrapper,
   HorizontalWrapper,
   InputFormWrapper,
   PasswordRequirements,
@@ -13,6 +19,7 @@ import {
   StyledPrimaryAsyncButton,
   SubText,
   Title,
+  WordDivider,
 } from '../styledComponents';
 
 const Signup = ({
@@ -33,13 +40,18 @@ const Signup = ({
   return (
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
-        <Title>Create account</Title>
+        <Title>Get started with Rysolv</Title>
         {error && (
           <StyledErrorSuccessBanner
             error={error}
             onClose={handleClearAuthAlerts}
           />
         )}
+        <GithubButton />
+        <DividerWrapper>
+          <Divider />
+          <WordDivider>or</WordDivider>
+        </DividerWrapper>
         <MainTextInput
           autoComplete="nickname"
           error={!!username.error}

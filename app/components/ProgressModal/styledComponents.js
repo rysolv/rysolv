@@ -1,10 +1,19 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import {
   commentHeaderColor,
   defaultFontSize,
+  hoverLinkColor,
   textColor,
 } from 'defaultStyleHelper';
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: fit-content;
+`;
 
 export const ContentWrapper = styled.div`
   padding: 2rem;
@@ -34,4 +43,16 @@ export const ModalTitle = styled.h1`
 export const ProgressContainer = styled.div`
   color: ${textColor};
   text-align: center;
+`;
+
+export const StyledLink = styled(Link)`
+  color: ${hoverLinkColor};
+  font-size: ${defaultFontSize};
+  font-weight: 500;
+  margin: 1rem;
+
+  &:hover {
+    color: ${hoverLinkColor};
+    text-decoration: underline;
+  }
 `;

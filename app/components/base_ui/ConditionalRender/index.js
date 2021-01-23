@@ -23,8 +23,8 @@ function ConditionalRender({
 }
 
 ConditionalRender.propTypes = {
-  Component: T.oneOfType([T.func, T.element]),
-  FallbackComponent: T.oneOfType([T.func, T.element]),
+  Component: T.oneOfType([T.element, T.func]),
+  FallbackComponent: T.oneOfType([T.element, T.func]),
   propsToPassDown: T.object,
   shouldRender: T.bool,
 };

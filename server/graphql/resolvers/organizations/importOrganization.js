@@ -1,4 +1,5 @@
 const { checkDuplicate, importOrganizationError } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 const {
   formatOrganizationUrl,
 } = require('../../../integrations/github/helpers');
@@ -38,9 +39,11 @@ const importOrganization = async ({ url }) => {
       ...importData,
     };
   } catch (error) {
+    const { alert } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
-      message: importOrganizationError,
+      message: alert || importOrganizationError,
     };
   }
 };

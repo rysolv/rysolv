@@ -13,6 +13,7 @@ export const fundingText = '#08b26e';
 export const headerColor = '#37474f';
 export const hoverLinkColor = '#007bff';
 export const inputFieldColor = '#cfd8dc';
+export const landingButtonGreen = '#1da09c';
 export const languageBackground = '#e8f0fa';
 export const languageText = '#6487ae';
 export const lightBlueColor = '#1e88e5';
@@ -20,7 +21,6 @@ export const lightGreyColor = 'rgba(0, 0, 0, 0.4)';
 export const markdownHeader = '#546e7a';
 export const secondaryButtonColor = '#5e35b1';
 export const selectedColor = '#00eb93';
-export const subHeaderColor = '#0d47a1';
 export const subTextColor = '#878a8c';
 export const successGreen = '#31b589';
 export const textColor = 'rgba(0,0,0,0.7)';
@@ -28,9 +28,11 @@ export const verifyBackgroundColor = 'rgb(229, 251, 242)';
 export const verifyColor = 'rgb(8, 178, 110)';
 
 // Font Family
+export const codeFontFamily = `monospace`;
 export const defaultFontFamily = `'Helvetica Neue', Helvetica, Arial, sans-serif`;
 
 // Font Sizes
+export const cardHeaderFontSize = '2rem';
 export const defaultFontSize = '1.4rem';
 export const detailFontSize = '1.2rem';
 export const headerFontSize = '2.4rem';
@@ -45,7 +47,7 @@ export const issueBorder = `0.1rem solid ${borderColor}`;
 // Scrollbar
 export const styledScrollbar = `
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
   }
   ::-webkit-scrollbar-track {
     background: #f1f1f1;
@@ -57,3 +59,18 @@ export const styledScrollbar = `
     background: #555;
   }
 `;
+
+// Icon Size
+export const iconSize = {
+  medium: {
+    height: '2rem',
+    width: '2rem',
+  },
+};
+
+// Icon Style
+export const iconStyle = {
+  code: {
+    marginRight: '0.5rem',
+  },
+};

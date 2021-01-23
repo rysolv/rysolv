@@ -3,6 +3,7 @@ import produce from 'immer';
 
 import {
   CLEAR_ALERTS,
+  INCREMENT_STEP,
   INPUT_ERROR,
   PAYPAL_PAYMENT_FAILURE,
   PAYPAL_PAYMENT_SUCCESS,
@@ -20,17 +21,21 @@ export const initialState = {
   alerts: { error: false, success: false },
   errors: {
     email: '',
-    firstName: '',
     fundValue: '',
-    lastName: '',
   },
   loading: false,
+  step: 1,
 };
 
 const paymentReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
+      break;
+    }
+    case INCREMENT_STEP: {
+      const { step } = payload;
+      draft.step = step;
       break;
     }
     case INPUT_ERROR: {

@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Add from '@material-ui/icons/Add';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import AddCircle from '@material-ui/icons/AddCircle';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -27,22 +27,21 @@ import Email from '@material-ui/icons/Email';
 import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
 import Facebook from '@material-ui/icons/Facebook';
-import Four from '@material-ui/icons/Looks4Outlined';
 import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
+import Help from '@material-ui/icons/Help';
 import Info from '@material-ui/icons/Info';
 import Link from '@material-ui/icons/Link';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
-import One from '@material-ui/icons/LooksOneOutlined';
+import NavigateBefore from '@material-ui/icons/NavigateBefore';
+import NavigateNext from '@material-ui/icons/NavigateNext';
 import PublishIcon from '@material-ui/icons/Publish';
 import PullRequest from '@material-ui/icons/AccountTree';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
-import Three from '@material-ui/icons/Looks3Outlined';
+import Stats from '@material-ui/icons/Equalizer';
 import Twitter from '@material-ui/icons/Twitter';
-import Two from '@material-ui/icons/LooksTwoOutlined';
 import Verified from '@material-ui/icons/VerifiedUser';
-import ViewAll from '@material-ui/icons/NavigateNext';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Warning from '@material-ui/icons/Warning';
@@ -56,9 +55,12 @@ import Paypal from './svg/Paypal';
 import SiteLogo from './svg/SiteLogo';
 import Stackoverflow from './svg/Stackoverflow';
 
-export default (name, options) => {
+import { iconSize, iconStyle } from '../defaultStyleHelper';
+
+export default (name, size, style) => {
   const icons = {
     add: Add,
+    addBox: AddBoxIcon,
     addCircle: AddCircle,
     attempt: Attempt,
     backArrow: ArrowBackIcon,
@@ -83,16 +85,17 @@ export default (name, options) => {
     exit: Exit,
     facebook: Facebook,
     forwardArrowHalf: ArrowForwardIosIcon,
-    four: Four,
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,
     gitlab: Gitlab,
+    help: Help,
     info: Info,
     issue: ErrorIcon,
     link: Link,
     monocle: Monocle,
-    one: One,
+    navigateBefore: NavigateBefore,
+    navigateNext: NavigateNext,
     organization: WebIcon,
     paypal: Paypal,
     pullRequest: PullRequest,
@@ -100,32 +103,16 @@ export default (name, options) => {
     settings: Settings,
     siteLogo: SiteLogo,
     stackoverflow: Stackoverflow,
+    stats: Stats,
     successOutline: CheckCircleOutline,
-    three: Three,
     twitter: Twitter,
-    two: Two,
     upload: PublishIcon,
     user: AccountCircleIcon,
     verified: Verified,
-    viewAll: ViewAll,
     visibility: Visibility,
     visibilityOff: VisibilityOff,
     warning: Warning,
   };
-  // Create style object to apply to SVG Icon
-  const sizing = {};
-  const styling = {};
-  const stylesToApply = Object.assign({}, sizing, styling);
-  const propsToPassDown = Object.assign({}, options);
   const IconToRender = icons[name];
-  // Style Icon by applying to root styles
-  const StyledIcon = styled(IconToRender)({ '&.root': stylesToApply });
-  // Return Styled Icon w/ proper class selection
-  return (
-    <StyledIcon
-      classes={{ root: 'root' }}
-      className="styled-icon"
-      {...propsToPassDown}
-    />
-  );
+  return <IconToRender style={{ ...iconSize[size], ...iconStyle[style] }} />;
 };

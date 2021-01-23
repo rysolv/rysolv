@@ -26,15 +26,11 @@ import {
   TextWrapper,
 } from './styledComponents';
 
-const ArrowIcon = iconDictionary('viewAll');
+const ArrowIcon = iconDictionary('navigateNext');
 const CodeIcon = iconDictionary('code');
 const ComputerIcon = iconDictionary('computer');
-const FourIcon = iconDictionary('four');
 const IssueIcon = iconDictionary('issue');
-const OneIcon = iconDictionary('one');
 const OrganizationIcon = iconDictionary('organization');
-const ThreeIcon = iconDictionary('three');
-const TwoIcon = iconDictionary('two');
 const UserIcon = iconDictionary('user');
 
 const Landing = () => (
@@ -97,7 +93,7 @@ const Landing = () => (
       <ListContainer>
         <HorizontalList>
           <List>
-            <ListImage>{OneIcon}</ListImage>
+            <ListImage>1</ListImage>
             <ListContent>
               <ListTitle>Fund an issue</ListTitle>
               <ListText>
@@ -107,7 +103,7 @@ const Landing = () => (
             </ListContent>
           </List>
           <List>
-            <ListImage>{TwoIcon}</ListImage>
+            <ListImage>2</ListImage>
             <ListContent>
               <ListTitle>Find issues to solve</ListTitle>
               <ListText>
@@ -118,7 +114,7 @@ const Landing = () => (
         </HorizontalList>
         <HorizontalList>
           <List>
-            <ListImage>{ThreeIcon}</ListImage>
+            <ListImage>3</ListImage>
             <ListContent>
               <ListTitle>Submit a solution</ListTitle>
               <ListText>
@@ -128,7 +124,7 @@ const Landing = () => (
             </ListContent>
           </List>
           <List>
-            <ListImage>{FourIcon}</ListImage>
+            <ListImage>4</ListImage>
             <ListContent>
               <ListTitle>Get paid</ListTitle>
               <ListText>

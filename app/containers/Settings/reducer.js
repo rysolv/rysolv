@@ -48,7 +48,14 @@ export const initialState = {
   },
   inputErrors: {
     depositValue: '',
+    email: '',
+    firstName: '',
+    githubLink: '',
+    lastName: '',
+    personalLink: '',
+    stackoverflowLink: '',
     transferValue: '',
+    username: '',
   },
   isModalOpen: false,
   loading: true,
@@ -228,11 +235,8 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case VERIFY_ACCOUNT_SUCCESS: {
-      const { githubUsername, message } = payload;
-      draft.account.githubUsername = githubUsername;
-      draft.account.isGithubVerified = true;
+      const { message } = payload;
       draft.alerts.success = { message };
-      draft.loading = false;
       break;
     }
     case VERIFY_ACCOUNT: {

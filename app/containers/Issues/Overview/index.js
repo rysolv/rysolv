@@ -49,6 +49,7 @@ const IssuesOverview = ({
   handleClearAlerts,
   handleNav,
   handleSearchIssues,
+  height,
   isSignedIn,
   issues,
   loading,
@@ -89,6 +90,7 @@ const IssuesOverview = ({
         handleClearAlerts,
         handleNav,
         handleUpvote,
+        height,
         isSignedIn,
       }}
     />
@@ -113,6 +115,7 @@ IssuesOverview.propTypes = {
   handleClearAlerts: T.func,
   handleNav: T.func,
   handleSearchIssues: T.func,
+  height: T.number.isRequired,
   isSignedIn: T.bool,
   issues: T.array,
   loading: T.bool,

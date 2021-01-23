@@ -7,15 +7,22 @@ export const CLEAR_ALERTS = 'app/Organizations/CLEAR_ALERTS';
 
 export const CLEAR_FORM = 'app/Organizations/CLEAR_FORM';
 
+export const FETCH_INFO = 'app/Organizations/FETCH_INFO';
+export const FETCH_INFO_FAILURE = 'app/Organizations/FETCH_INFO_FAILURE';
+export const FETCH_INFO_SUCCESS = 'app/Organizations/FETCH_INFO_SUCCESS';
+
 export const FETCH_ORGANIZATIONS = 'app/Organizations/FETCH_ORGANIZATIONS';
 export const FETCH_ORGANIZATIONS_FAILURE =
   'app/Organizations/FETCH_ORGANIZATIONS_FAILURE';
 export const FETCH_ORGANIZATIONS_SUCCESS =
   'app/Organizations/FETCH_ORGANIZATIONS_SUCCESS';
 
-export const FETCH_INFO = 'app/Organizations/FETCH_INFO';
-export const FETCH_INFO_FAILURE = 'app/Organizations/FETCH_INFO_FAILURE';
-export const FETCH_INFO_SUCCESS = 'app/Organizations/FETCH_INFO_SUCCESS';
+export const FETCH_USER_ORGANIZATIONS =
+  'app/Organizations/FETCH_USER_ORGANIZATIONS';
+export const FETCH_USER_ORGANIZATIONS_FAILURE =
+  'app/Organizations/FETCH_USER_ORGANIZATIONS_FAILURE';
+export const FETCH_USER_ORGANIZATIONS_SUCCESS =
+  'app/Organizations/FETCH_USER_ORGANIZATIONS_SUCCESS';
 
 export const GENERATE_IDENTICON = 'app/Organizations/GENERATE_IDENTICON';
 

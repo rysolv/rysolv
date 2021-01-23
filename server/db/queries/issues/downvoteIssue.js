@@ -1,4 +1,5 @@
 const pool = require('../../connect');
+const { CustomError } = require('../../helpers');
 const { singleItem } = require('../../baseQueries');
 
 // Downvote issue
@@ -8,7 +9,7 @@ const downvoteIssue = async ({ issueId, userId }) => {
     // @TODO: evaluate the need for this query. May be good to remove.
     const [userData] = await singleItem('users', userId);
     const { upvotes } = userData;
-    if (!upvotes.includes(issueId)) throw new Error('Downvote failed');
+    if (!upvotes.includes(issueId)) throw new CustomError(`Downvote failed.`);
 
     // Open transaction
     await client.query('BEGIN');

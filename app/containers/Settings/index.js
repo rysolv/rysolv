@@ -13,8 +13,8 @@ import { makeSelectAuth } from 'containers/Auth/selectors';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import PullRequestOverview from 'containers/PullRequests/Overview';
 import { handleZipChange } from 'utils/globalHelpers';
-import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
 
 import {
   changeEmail,
@@ -32,7 +32,6 @@ import {
   resetState,
   saveChange,
   stripeToken,
-  verifyAccount,
   withdrawFunds,
 } from './actions';
 import { settingViewDictionary } from './constants';
@@ -46,7 +45,7 @@ const Settings = ({
   activeUser: { id: userId },
   alerts,
   data,
-  data: { isGithubVerified },
+  data: { balance },
   deviceView,
   dispatchCloseModal,
   dispatchFetchInfo,
@@ -56,7 +55,6 @@ const Settings = ({
   dispatchResetState,
   dispatchSaveChange,
   dispatchStripeToken,
-  dispatchVerifyAccount,
   dispatchWithdrawFunds,
   error,
   filterValues,
@@ -77,20 +75,6 @@ const Settings = ({
   const [zipValue, setZipValue] = useState('');
 
   useEffect(() => dispatchResetState, []);
-
-  useEffect(() => {
-    const url = window.location.href;
-    const hasCode = url.includes('?code=');
-    if (
-      hasCode &&
-      isGithubVerified !== undefined &&
-      !isGithubVerified &&
-      userId
-    ) {
-      const newUrl = url.split('?code=');
-      dispatchVerifyAccount({ code: newUrl[1] });
-    }
-  }, [isGithubVerified, userId]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -119,10 +103,10 @@ const Settings = ({
     });
   };
 
-  const handleWithdrawFunds = ({ transferValue, values }) => {
+  const handleWithdrawFunds = ({ email, transferValue, values }) => {
     const { isValidated, validationErrors } = validateFields({ values });
     if (isValidated) {
-      dispatchWithdrawFunds({ transferValue });
+      dispatchWithdrawFunds({ email, transferValue });
     } else {
       dispatchInputError({ errors: validationErrors });
     }
@@ -142,6 +126,7 @@ const Settings = ({
       Component: DeleteUserModal,
       open: isModalOpen,
       propsToPassDown: {
+        balance,
         handleClose: dispatchCloseModal,
         handleDeleteUser,
       },
@@ -197,7 +182,6 @@ Settings.propTypes = {
   dispatchResetState: T.func.isRequired,
   dispatchSaveChange: T.func,
   dispatchStripeToken: T.func.isRequired,
-  dispatchVerifyAccount: T.func.isRequired,
   dispatchWithdrawFunds: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object,
@@ -251,7 +235,6 @@ function mapDispatchToProps(dispatch) {
     dispatchResetState: () => dispatch(resetState()),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
     dispatchStripeToken: payload => dispatch(stripeToken(payload)),
-    dispatchVerifyAccount: payload => dispatch(verifyAccount(payload)),
     dispatchWithdrawFunds: payload => dispatch(withdrawFunds(payload)),
     handleChangeEmail: payload => dispatch(changeEmail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),

@@ -16,4 +16,5 @@ export const getInitialValue = {
   'organizations/add': {
     initialValue: 4,
   },
+  'how-to': { initialValue: 5 },
 };

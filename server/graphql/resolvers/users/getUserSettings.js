@@ -1,3 +1,4 @@
+const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getOneIssue,
   getOneOrganization,
@@ -10,14 +11,13 @@ const { getUserSettingsError } = require('./constants');
 
 const getUserSettings = async (_, { authError, userId }) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const result = await getUserSettingsQuery({ userId });
     const { issues, organizations } = result;
 
     // Pull user attempting detail
     const attemptingListResult = await getUserAttemptList({ userId });
-    result.attempting = attemptingListResult;
 
     // Pull user issue detail
     const issuesListResult = await Promise.all(
@@ -26,7 +26,6 @@ const getUserSettings = async (_, { authError, userId }) => {
         return issuesResult;
       }),
     );
-    result.issues = issuesListResult;
 
     // Pull user organization detail
     const organizationsListResult = await Promise.all(
@@ -37,7 +36,6 @@ const getUserSettings = async (_, { authError, userId }) => {
         return organizationsResult;
       }),
     );
-    result.organizations = organizationsListResult;
 
     // Pull user pull request detail
     const {
@@ -45,12 +43,16 @@ const getUserSettings = async (_, { authError, userId }) => {
       completedPullRequests,
       rejectedPullRequests,
     } = await getUserPullRequestDetail({ userId });
-    result.activePullRequests = activePullRequests;
-    result.completedPullRequests = completedPullRequests;
-    result.rejectedPullRequests = rejectedPullRequests;
 
     // Pull user watching detail
     const watchingListResult = await getUserWatchList({ userId });
+
+    result.activePullRequests = activePullRequests;
+    result.attempting = attemptingListResult;
+    result.completedPullRequests = completedPullRequests;
+    result.issues = issuesListResult;
+    result.organizations = organizationsListResult;
+    result.rejectedPullRequests = rejectedPullRequests;
     result.watching = watchingListResult;
 
     return {
@@ -58,9 +60,11 @@ const getUserSettings = async (_, { authError, userId }) => {
       ...result,
     };
   } catch (error) {
+    const { alert } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
-      message: getUserSettingsError,
+      message: alert || getUserSettingsError,
     };
   }
 };

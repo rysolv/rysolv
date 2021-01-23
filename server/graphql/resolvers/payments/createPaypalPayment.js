@@ -6,23 +6,20 @@ const {
   greaterThanError,
   paypalPaymentSuccess,
 } = require('./constants');
+const { CustomError, errorLogger, sendEmail } = require('../../../helpers');
 const {
   submitAccountDepositUser,
   submitExternalPayment,
 } = require('../../../db');
 
 const createPaypalPayment = async (
-  { amount, issueId },
+  { amount, email, issueId },
   { authError, userId },
 ) => {
   try {
-    if (authError) throw new Error(authError);
+    if (authError) throw new CustomError(authError);
 
-    if (amount < 1) {
-      const error = new Error();
-      error.message = greaterThanError;
-      throw error;
-    }
+    if (amount < 1) throw new CustomError(greaterThanError);
 
     if (issueId) {
       const { fundedAmount, organizationId } = await submitExternalPayment({
@@ -38,6 +35,11 @@ const createPaypalPayment = async (
       };
       await createActivity({ activityInput });
 
+      sendEmail({
+        body: { amount, email, issueId, userId },
+        path: '/s/funding/fundedIssue',
+      });
+
       return {
         __typename: 'Payment',
         fundedAmount,
@@ -51,9 +53,15 @@ const createPaypalPayment = async (
       const activityInput = {
         actionType: 'fund',
         fundedValue: amount,
+        isPrivate: true,
         userId,
       };
       await createActivity({ activityInput });
+
+      sendEmail({
+        body: { amount, userId },
+        path: '/s/funding/fundedAccount',
+      });
 
       return {
         __typename: 'Payment',
@@ -62,10 +70,11 @@ const createPaypalPayment = async (
       };
     }
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createPaypalPaymentError({ issueId }),
+      message: alert || createPaypalPaymentError({ issueId }),
     };
   }
 };

@@ -17,7 +17,8 @@ const DepositComponent = ({ handleNav, setDisplayBottom }) => {
     <ComponentContainer>
       <ComponentTitle>Add Funding</ComponentTitle>
       <ComponentText>
-        Add money to your account. 3.6% will be charged as a transaction fee.
+        Add money to your account. 3% + $0.30 will be charged as a transaction
+        fee.
       </ComponentText>
       <StyledSecondaryButton label="Deposit" onClick={handleClick} />
     </ComponentContainer>

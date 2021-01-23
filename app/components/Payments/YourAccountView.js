@@ -18,6 +18,7 @@ import {
 
 const YourAccountView = ({
   balance,
+  email,
   fundValue,
   handleSubmitAccountPayment,
   isPersonalInfoComplete,
@@ -26,11 +27,14 @@ const YourAccountView = ({
 }) => {
   const handleSubmit = ({ value }) => {
     handleSubmitAccountPayment({
+      email,
       fundValue: value,
       values,
     });
-    setFundValue('2');
+    setFundValue('10');
   };
+  const newBalance = balance - fundValue;
+  const isNewBalanceNegative = newBalance < 0;
   return (
     <YourAccountContainer>
       <BalanceWrapper>
@@ -49,7 +53,7 @@ const YourAccountView = ({
         </ConfirmWrapper>
         <ConfirmWrapper isBold>
           <ConfirmText>New account balance</ConfirmText>
-          <ConfirmAmount>
+          <ConfirmAmount isNegative={isNewBalanceNegative}>
             {formatDollarAmount(balance - fundValue)}
           </ConfirmAmount>
         </ConfirmWrapper>
@@ -59,7 +63,8 @@ const YourAccountView = ({
           balance <= 0 ||
           fundValue <= 0 ||
           fundValue === '.' ||
-          !isPersonalInfoComplete
+          !isPersonalInfoComplete ||
+          newBalance < 0
         }
         label="Confirm"
         onClick={() =>
@@ -73,6 +78,7 @@ const YourAccountView = ({
 };
 YourAccountView.propTypes = {
   balance: T.number,
+  email: T.string.isRequired,
   fundValue: T.oneOfType([T.number, T.string]),
   handleSubmitAccountPayment: T.func,
   isPersonalInfoComplete: T.bool,

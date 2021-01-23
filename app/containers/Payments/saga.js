@@ -3,10 +3,10 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { updateActiveUser } from 'containers/Auth/actions';
 import { updateFundedIssue } from 'containers/Issues/actions';
 import { updatePaymentModal } from 'containers/Main/actions';
-import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
+  incrementStep,
   paypalPaymentFailure,
   paypalPaymentSuccess,
   stripeTokenFailure,
@@ -21,11 +21,11 @@ import {
 } from './constants';
 
 export function* paypalPaymentSaga({ payload }) {
-  const { amount, error: paypalError, issueId } = payload;
+  const { amount, email, error: paypalError, issueId } = payload;
   const isFundedFromOverview = window.location.pathname === '/issues';
   const query = `
       mutation {
-        createPaypalPayment(amount: ${amount}, issueId: "${issueId}") {
+        createPaypalPayment(amount: ${amount}, email: "${email}", issueId: "${issueId}") {
           __typename
           ... on Payment {
             fundedAmount
@@ -39,20 +39,16 @@ export function* paypalPaymentSaga({ payload }) {
     `;
 
   try {
-    const token = yield call(fetchCurrentSession);
-
     if (paypalError) throw paypalError;
 
-    const graphql = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         createPaypalPayment: { __typename, fundedAmount, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
+    yield put(incrementStep({ step: 2 }));
     yield put(paypalPaymentSuccess({ message }));
     yield put(
       updateFundedIssue({ fundedAmount, isFundedFromOverview, issueId }),
@@ -66,14 +62,14 @@ export function* paypalPaymentSaga({ payload }) {
 export function* stripeTokenSaga({ payload }) {
   const {
     amount,
+    email,
     issueId,
     token: { id },
   } = payload;
   const isFundedFromOverview = window.location.pathname === '/issues';
-
   const query = `
       mutation {
-        createStripeCharge(amount: ${amount}, issueId: "${issueId}", token: "${id}") {
+        createStripeCharge(amount: ${amount}, email: "${email}", issueId: "${issueId}", token: "${id}") {
           __typename
           ... on Payment {
             fundedAmount
@@ -87,18 +83,14 @@ export function* stripeTokenSaga({ payload }) {
     `;
 
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const request = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         createStripeCharge: { __typename, fundedAmount, message },
       },
-    } = yield call(post, '/graphql', request);
+    } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
+    yield put(incrementStep({ step: 2 }));
     yield put(stripeTokenSuccess({ message }));
     yield put(
       updateFundedIssue({ fundedAmount, isFundedFromOverview, issueId }),
@@ -110,11 +102,11 @@ export function* stripeTokenSaga({ payload }) {
 }
 
 export function* submitAccountPaymentSaga({ payload }) {
-  const { fundValue, issueId } = payload;
+  const { email, fundValue, issueId } = payload;
   const isFundedFromOverview = window.location.pathname === '/issues';
-  const submitAccountPaymentQuery = `
+  const query = `
     mutation {
-      submitAccountPayment(fundValue: ${fundValue}, issueId: "${issueId}") {
+      submitAccountPayment(email: "${email}", fundValue: ${fundValue}, issueId: "${issueId}") {
         __typename
         ... on Payment {
           balance
@@ -129,18 +121,14 @@ export function* submitAccountPaymentSaga({ payload }) {
   `;
 
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const graphql = JSON.stringify({
-      query: submitAccountPaymentQuery,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         submitAccountPayment: { __typename, balance, fundedAmount, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
+    yield put(incrementStep({ step: 2 }));
     yield put(submitAccountPaymentSuccess({ message }));
     yield put(updateActiveUser({ balance }));
     yield put(

@@ -6,7 +6,10 @@ const validationPropsByField = {
   },
   signUp: {
     email: { type: 'emailInput' },
+    firstName: { maxLength: 30, type: 'stringInput' },
+    lastName: { maxLength: 30, type: 'stringInput' },
     password: { type: 'passwordInput' },
+    username: { maxLength: 20, type: 'stringInput' },
     verifyPassword: { type: 'verifyInput' },
   },
   verify: {},

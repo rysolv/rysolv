@@ -4,9 +4,9 @@ export const FETCH_ACTIVE_USER = 'app/Auth/FETCH_ACTIVE_USER';
 export const FETCH_ACTIVE_USER_FAILURE = 'app/Auth/FETCH_ACTIVE_USER_FAILURE';
 export const FETCH_ACTIVE_USER_SUCCESS = 'app/Auth/FETCH_ACTIVE_USER_SUCCESS';
 
-export const FETCH_USER_SESSION = 'app/Auth/FETCH_USER_SESSION';
-export const FETCH_USER_SESSION_FAILURE = 'app/Auth/FETCH_USER_SESSION_FAILURE';
-export const FETCH_USER_SESSION_SUCCESS = 'app/Auth/FETCH_USER_SESSION_SUCCESS';
+export const GITHUB_SIGN_IN = 'app/Auth/GITHUB_SIGN_IN';
+export const GITHUB_SIGN_IN_FAILURE = 'app/Auth/GITHUB_SIGN_IN_FAILURE';
+export const GITHUB_SIGN_IN_SUCCESS = 'app/Auth/GITHUB_SIGN_IN_SUCCESS';
 
 export const RESEND_SIGN_UP = 'app/Auth/RESEND_SIGN_UP';
 
@@ -35,6 +35,10 @@ export const VERIFY_EMAIL_FAILURE = 'app/Auth/VERIFY_EMAIL_FAILURE';
 export const VERIFY_EMAIL_SUCCESS = 'app/Auth/VERIFY_EMAIL_SUCCESS';
 
 // Messages to display
+export const githubSignInError = `Something went wrong when signing you in through Github.`;
+
+export const githubSignUpError = `Something went wrong when signing you up through Github.`;
+
 export const signInError = `Something went wrong when signing you in. Please try again later.`;
 
 export const signUpError = `Something went wrong when signing you up. Please try again later.`;

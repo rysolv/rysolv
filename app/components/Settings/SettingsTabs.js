@@ -79,7 +79,6 @@ const SettingsTabs = ({
 
   useEffect(() => {
     setTab(currentTab);
-    setValue(currentTab);
     setTabToDisplay(getTabToDisplay(currentTab, tabsInMenu));
   }, [currentTab]);
 
@@ -147,6 +146,7 @@ const SettingsTabs = ({
       FallbackComponent={
         <WithdrawalFormComponent
           balance={balance}
+          email={email}
           handleClearAllAlerts={handleClearAllAlerts}
           handleClearErrors={handleClearErrors}
           handleValidateInput={handleValidateInput}
@@ -215,6 +215,8 @@ const SettingsTabs = ({
         handleNav={handleNav}
         handleSubmitEmailChange={handleSubmitEmailChange}
         handleSubmitInputChange={handleSubmitInputChange}
+        handleValidateInput={handleValidateInput}
+        inputErrors={inputErrors}
         isDisabled={isDisabled}
         lastName={lastName}
         setChangeEmail={setChangeEmail}

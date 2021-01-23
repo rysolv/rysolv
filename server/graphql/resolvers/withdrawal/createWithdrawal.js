@@ -13,10 +13,14 @@ const {
   greaterThanZeroError,
   lessThanBalanceError,
 } = require('./constants');
+const { CustomError, errorLogger } = require('../../../helpers');
 
-const createWithdrawal = async ({ transferValue }, { authError, userId }) => {
+const createWithdrawal = async (
+  { email, transferValue },
+  { authError, userId },
+) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const { balance } = await getUserSettings({ userId });
     const createdDate = new Date();
@@ -34,6 +38,7 @@ const createWithdrawal = async ({ transferValue }, { authError, userId }) => {
       // Record new withdrawal
       const data = {
         created_date: createdDate,
+        email,
         fee: transferValue * 0.15,
         id: uuidv4(),
         transfer_value: transferValue,
@@ -57,21 +62,16 @@ const createWithdrawal = async ({ transferValue }, { authError, userId }) => {
         ...result,
       };
     }
-    if (!lessThanBalance && greaterThanZero) {
-      const error = new Error();
-      error.message = greaterThanZeroError;
-      throw error;
-    }
-    if (lessThanBalance && !greaterThanZero) {
-      const error = new Error();
-      error.message = lessThanBalanceError;
-      throw error;
-    }
+    if (!lessThanBalance && greaterThanZero)
+      throw new CustomError(greaterThanZeroError);
+    if (lessThanBalance && !greaterThanZero)
+      throw new CustomError(lessThanBalanceError);
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createWithdrawalError,
+      message: alert || createWithdrawalError,
     };
   }
 };

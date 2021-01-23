@@ -9,7 +9,12 @@ import AsyncRender from 'components/AsyncRender';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { clearAlerts, incrementStep, resetState } from '../actions';
+import {
+  clearAlerts,
+  fetchUserOrganizations,
+  incrementStep,
+  resetState,
+} from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -26,7 +31,8 @@ import {
 
 export class OrganizationsAdd extends React.PureComponent {
   componentDidMount() {
-    const { handleIncrementStep } = this.props;
+    const { dispatchFetchUserOrganizations, handleIncrementStep } = this.props;
+    dispatchFetchUserOrganizations();
     handleIncrementStep({ step: 1, view: 'addOrganization' });
   }
 
@@ -47,11 +53,13 @@ export class OrganizationsAdd extends React.PureComponent {
       organizationData,
       step,
     } = this.props;
-
+    const isVerify = step === 3;
     const StepToRender = addOrganizationDictionary[step];
+
     if (importSuccess) {
       handleIncrementStep({ step: 3, view: 'addOrganization' });
     }
+
     return (
       <AddWrapper>
         <BackNav label="Back to Organizations" path="/organizations" />
@@ -60,7 +68,7 @@ export class OrganizationsAdd extends React.PureComponent {
           onClose={handleClearAlerts}
           success={success}
         />
-        <AddForm>
+        <AddForm isVerify={isVerify}>
           <AsyncRender
             asyncData={{ organizationData }}
             component={StepToRender}
@@ -75,6 +83,7 @@ export class OrganizationsAdd extends React.PureComponent {
 
 OrganizationsAdd.propTypes = {
   alerts: T.object,
+  dispatchFetchUserOrganizations: T.func,
   dispatchResetState: T.func.isRequired,
   handleClearAlerts: T.func,
   handleIncrementStep: T.func,
@@ -100,6 +109,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Organizations
      */
+    dispatchFetchUserOrganizations: () => dispatch(fetchUserOrganizations()),
     dispatchResetState: () => dispatch(resetState()),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),

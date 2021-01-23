@@ -3,7 +3,7 @@ import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import { PrimaryAsyncButton } from 'components/base_ui';
+import { Card, PrimaryAsyncButton } from 'components/base_ui';
 import VerifyForm from 'components/Organizations/Add/VerifyForm';
 
 import {
@@ -21,7 +21,6 @@ import {
   ButtonGroup,
   StyledFocusDiv,
   StyledH3,
-  Wrapper,
 } from './styledComponents';
 
 const VerifyOrganization = ({
@@ -39,6 +38,10 @@ const VerifyOrganization = ({
     document.getElementById('organizationAdd').focus();
   }, []);
 
+  const cancelImport = () => {
+    dispatchClearForm();
+    dispatchIncrementStep({ step: 1, view: 'addOrganization' });
+  };
   const handleKeypress = ({ key }) => {
     if (key === 'Enter') {
       handleSaveInfo();
@@ -47,20 +50,16 @@ const VerifyOrganization = ({
   const handleSaveInfo = () => {
     dispatchSaveInfo({ requestBody });
   };
-  const cancelImport = () => {
-    dispatchClearForm();
-    dispatchIncrementStep({ step: 1, view: 'addOrganization' });
-  };
   return (
     <StyledFocusDiv
       id="organizationAdd"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <StyledH3>Verify Organization Information</StyledH3>
-      <Wrapper>
+      <StyledH3 isFirstHeader>Organization</StyledH3>
+      <Card>
         <VerifyForm organizationData={organizationData} />
-      </Wrapper>
+      </Card>
       <ButtonGroup>
         {importSuccess ? (
           <BackLink onClick={() => cancelImport()}>Cancel</BackLink>

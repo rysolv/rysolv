@@ -1,3 +1,4 @@
+const { errorLogger } = require('../../../helpers');
 const { getUserActivity: getUserActivityQuery } = require('../../../db');
 
 const getUserActivity = async ({ userId }) => {
@@ -5,6 +6,7 @@ const getUserActivity = async ({ userId }) => {
     const activityArray = await getUserActivityQuery({ userId });
     return activityArray;
   } catch (error) {
+    errorLogger(error);
     return [];
   }
 };

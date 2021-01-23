@@ -86,7 +86,7 @@ export const StyledSideNav = styled.div`
   }
 
   .MuiIconButton-label {
-    justify-content: end;
+    justify-content: left;
     padding-left: 2.1rem;
   }
 

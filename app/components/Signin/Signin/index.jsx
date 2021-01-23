@@ -2,15 +2,22 @@ import React from 'react';
 import T from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { MainTextInput, PasswordTextInput } from 'components/base_ui';
+import {
+  GithubButton,
+  MainTextInput,
+  PasswordTextInput,
+} from 'components/base_ui';
 
 import {
+  Divider,
+  DividerWrapper,
   InputFormWrapper,
   SigninWrapper,
   StyledErrorSuccessBanner,
   StyledPrimaryAsyncButton,
   SubText,
   Title,
+  WordDivider,
 } from '../styledComponents';
 
 const Signin = ({
@@ -32,13 +39,18 @@ const Signin = ({
   return (
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
-        <Title>Sign in</Title>
+        <Title>Sign in and get rysolving</Title>
         {error && (
           <StyledErrorSuccessBanner
             error={error}
             onClose={handleClearAuthAlerts}
           />
         )}
+        <GithubButton isSignIn />
+        <DividerWrapper>
+          <Divider />
+          <WordDivider>or</WordDivider>
+        </DividerWrapper>
         <MainTextInput
           autoComplete="email"
           error={!!email.error}

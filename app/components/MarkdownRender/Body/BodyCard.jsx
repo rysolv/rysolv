@@ -1,14 +1,17 @@
 import React from 'react';
 import T from 'prop-types';
+import DOMPurify from 'dompurify';
 import marked from 'marked';
 
 import { Body, IssueBodyContainer } from '../styledComponents';
 
-const BodyCard = ({ body }) => {
+const BodyCard = ({ body, ...restProps }) => {
   const html = marked(body);
+  const cleanHtml = DOMPurify.sanitize(html);
+
   return (
-    <IssueBodyContainer>
-      <Body dangerouslySetInnerHTML={{ __html: html }} />
+    <IssueBodyContainer {...restProps}>
+      <Body dangerouslySetInnerHTML={{ __html: cleanHtml }} />
     </IssueBodyContainer>
   );
 };

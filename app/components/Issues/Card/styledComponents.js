@@ -46,8 +46,9 @@ export const IssueFooterIconWrapper = styled.div`
 `;
 
 export const IssueLanguageContainer = styled.div`
-  margin: 1rem 0;
+  display: flex;
   font-size: ${detailFontSize};
+  margin: 1rem 0;
 `;
 
 export const MobileIconDescription = styled.div`
@@ -90,7 +91,7 @@ export const StyledIconButton = styled(
 `;
 
 export const StyledIssueCard = styled.div`
-  min-height: 50rem;
+  min-height: ${({ height }) => `${height}px` || '50rem'};
 `;
 
 export const StyledIssueContent = styled.div`

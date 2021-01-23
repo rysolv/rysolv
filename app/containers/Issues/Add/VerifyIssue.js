@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import { PrimaryAsyncButton } from 'components/base_ui';
+import { Card, PrimaryAsyncButton } from 'components/base_ui';
+import { issueTags, tagColors } from 'components/Issues/constants';
 import VerifyForm from 'components/Issues/Add/Verify';
 
 import {
@@ -16,13 +17,18 @@ import { makeSelectIssues, makeSelectIssuesRequestBody } from '../selectors';
 import {
   BackLink,
   ButtonGroup,
-  LogoContainer,
+  LanguageContainer,
+  LogoWrapper,
+  OrganizationName,
   OrganizationNameWrapper,
-  SelectedOrganization,
   StyledFocusDiv,
+  StyledFormHelperText,
   StyledH3,
+  StyledLanguageWrapper,
   StyledLink,
-  VerifyWrapper,
+  StyledTagWrapper,
+  Tag,
+  TagContainer,
 } from './styledComponents';
 
 const VerifyIssue = ({
@@ -32,52 +38,113 @@ const VerifyIssue = ({
   handleGenerateIdenticon,
   importSuccess,
   issueData,
-  organizationData,
-  organizationData: { organizationLogo },
+  issueData: { issueLanguages },
+  organizationData: { organizationLogo, organizationName, organizationRepo },
   requestBody,
 }) => {
+  const [selectedType, setSelectedType] = useState('');
+  const [typeError, setTypeError] = useState('');
+
   useEffect(() => {
     if (!organizationLogo.value) handleGenerateIdenticon();
     document.getElementById('issueAdd').focus();
   }, []);
 
-  const handleKeypress = ({ key }) => {
-    if (key === 'Enter') {
-      dispatchSaveInfo({ requestBody });
-    }
-  };
+  useEffect(() => {
+    // eslint-disable-next-line no-param-reassign
+    requestBody.issueType = selectedType;
+  }, [selectedType]);
+
   const cancelImport = () => {
     dispatchClearForm();
     dispatchIncrementStep({ step: 1, view: 'addIssue' });
   };
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter') {
+      handleSubmit();
+    }
+  };
+  const handleSubmit = () => {
+    if (!selectedType) {
+      setTypeError('One issue type needs to be selected.');
+    } else {
+      setTypeError('');
+      dispatchSaveInfo({ requestBody });
+    }
+  };
+
+  const mapLanguages = array => {
+    if (array.value.length > 0) {
+      return array.value.map(el => (
+        <StyledLanguageWrapper key={el} language={el} />
+      ));
+    }
+    return 'None listed.';
+  };
+
+  const languageDiv = mapLanguages(issueLanguages);
+
+  const tagDiv = issueTags.map((el, idx) => {
+    const isTagSelected = el === selectedType;
+
+    const handleSelectType = () => {
+      setSelectedType(el);
+      setTypeError('');
+    };
+    return (
+      <StyledTagWrapper
+        key={el}
+        isTagSelected={isTagSelected}
+        onClick={handleSelectType}
+        tagColor={tagColors[idx]}
+      >
+        {el}
+      </StyledTagWrapper>
+    );
+  });
+
   return (
     <StyledFocusDiv
       id="issueAdd"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <StyledH3>Organization</StyledH3>
-      <VerifyWrapper>
-        <LogoContainer
-          alt={organizationData.organizationName.value}
-          src={organizationData.organizationLogo.value}
+      <StyledH3 isFirstHeader>Organization</StyledH3>
+      <Card>
+        <LogoWrapper
+          alt={organizationName.value}
+          src={organizationLogo.value}
         />
         <OrganizationNameWrapper>
-          <SelectedOrganization>
-            {organizationData.organizationName.value}
-          </SelectedOrganization>
-          <StyledLink
-            href={organizationData.organizationRepo.value}
-            target="_blank"
-          >
-            {organizationData.organizationRepo.value}
+          <OrganizationName>{organizationName.value}</OrganizationName>
+          <StyledLink href={organizationRepo.value} target="_blank">
+            {organizationRepo.value}
           </StyledLink>
         </OrganizationNameWrapper>
-      </VerifyWrapper>
+      </Card>
       <StyledH3>Issue</StyledH3>
-      <VerifyWrapper>
-        <VerifyForm issueData={issueData} />
-      </VerifyWrapper>
+      <Card>
+        <VerifyForm
+          issueData={issueData}
+          selectedType={selectedType}
+          setSelectedType={setSelectedType}
+          setTypeError={setTypeError}
+          typeError={typeError}
+        />
+      </Card>
+      <StyledH3>Languages</StyledH3>
+      <Card>
+        <LanguageContainer>{languageDiv}</LanguageContainer>
+      </Card>
+      <StyledH3>Select a tag</StyledH3>
+      <Card>
+        <TagContainer>
+          <Tag>{tagDiv}</Tag>
+          <StyledFormHelperText error={!!typeError}>
+            {typeError}
+          </StyledFormHelperText>
+        </TagContainer>
+      </Card>
       <ButtonGroup>
         {importSuccess ? (
           <BackLink onClick={() => cancelImport()}>Cancel</BackLink>
@@ -92,7 +159,7 @@ const VerifyIssue = ({
         <PrimaryAsyncButton
           disabled={false}
           label="Submit"
-          onClick={() => dispatchSaveInfo({ requestBody })}
+          onClick={handleSubmit}
         />
       </ButtonGroup>
     </StyledFocusDiv>

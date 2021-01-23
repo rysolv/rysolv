@@ -49,16 +49,15 @@ export function* fetchInfoSaga({ payload }) {
         organizationId
         organizationName
         pullRequestId
+        pullRequestName
+        pullRequestUrl
         userId
         username
       }
     }
 `;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         getUserActivity,
@@ -99,10 +98,7 @@ export function* fetchUsersSaga() {
     }
   `;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         getUsers: { __typename, message, users },
@@ -132,12 +128,9 @@ export function* searchUsersSaga({ payload }) {
         username
       }
     }
-`;
+  `;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: { searchUsers },
     } = yield call(post, '/graphql', graphql);

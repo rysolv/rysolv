@@ -1,19 +1,21 @@
-/* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
+import iconDictionary from 'utils/iconDictionary';
+
 import {
-  DataWrapper,
-  HeaderWrapper,
-  LogoContainer,
+  ContentWrapper,
+  DescriptionWrapper,
+  LogoWrapper,
+  OrganizationName,
   OrganizationNameWrapper,
-  SelectedOrganization,
+  StyledIcon,
   StyledLink,
-  ValueWrapper,
-  VerifyWrapper,
 } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
+const CodeIcon = iconDictionary('code');
+const LinkIcon = iconDictionary('link');
+
 export class VerifyForm extends React.PureComponent {
   render() {
     const {
@@ -25,34 +27,43 @@ export class VerifyForm extends React.PureComponent {
         organizationUrl,
       },
     } = this.props;
-
     return (
-      <DataWrapper>
-        <VerifyWrapper>
-          <HeaderWrapper>
-            <LogoContainer
-              src={organizationLogo.value}
-              alt={organizationName.value}
-            />
-            <OrganizationNameWrapper>
-              <SelectedOrganization>
-                {organizationName.value}
-              </SelectedOrganization>
-              <StyledLink href={organizationRepo.value} target="_blank">
+      <Fragment>
+        <ContentWrapper>
+          <LogoWrapper
+            alt={organizationName.value}
+            src={organizationLogo.value}
+          />
+          <OrganizationNameWrapper>
+            <OrganizationName>{organizationName.value}</OrganizationName>
+            <ContentWrapper>
+              <StyledLink
+                hasValue={!!organizationUrl.value}
+                href={organizationRepo.value}
+                target="_blank"
+              >
+                <StyledIcon>{CodeIcon}</StyledIcon>
                 {organizationRepo.value}
               </StyledLink>
-              <StyledLink href={organizationUrl.value} target="_blank">
+              <StyledLink
+                hasValue={!!organizationUrl.value}
+                href={organizationUrl.value}
+                target="_blank"
+              >
+                <StyledIcon>{LinkIcon}</StyledIcon>
                 {organizationUrl.value}
               </StyledLink>
-            </OrganizationNameWrapper>
-          </HeaderWrapper>
-          <ValueWrapper>{organizationDescription.value}</ValueWrapper>
-        </VerifyWrapper>
-      </DataWrapper>
+            </ContentWrapper>
+          </OrganizationNameWrapper>
+        </ContentWrapper>
+        <DescriptionWrapper hasValue={!!organizationDescription.value}>
+          {organizationDescription.value}
+        </DescriptionWrapper>
+      </Fragment>
     );
   }
 }
 
-VerifyForm.propTypes = { organizationData: T.object };
+VerifyForm.propTypes = { organizationData: T.object.isRequired };
 
 export default VerifyForm;

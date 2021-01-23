@@ -107,6 +107,12 @@ const SettingsView = ({
   const [stripeError, setStripeError] = useState('');
   const [value, setValue] = useState('');
 
+  const {
+    githubLink: githubLinkError,
+    personalLink: personalLinkError,
+    stackoverflowLink: stackoverflowLinkError,
+  } = inputErrors;
+
   const handleClearAllAlerts = () => {
     handleClearAlerts();
     setStripeError('');
@@ -114,6 +120,7 @@ const SettingsView = ({
 
   const handleClose = ({ changeInputState }) => {
     changeInputState(false);
+    handleClearErrors();
     setIsDisabled(false);
     setValue('');
   };
@@ -125,15 +132,29 @@ const SettingsView = ({
   };
 
   const handleSubmitEmailChange = () => {
-    handleChangeEmail({ email: value });
-    setChangeEmail(false);
-    setIsDisabled(false);
+    const hasNoErrors = Object.keys(inputErrors).every(
+      input => inputErrors[input] === '',
+    );
+    if (hasNoErrors) {
+      handleChangeEmail({ email: value });
+      setChangeEmail(false);
+      setIsDisabled(false);
+    } else {
+      handleValidateInput({ field: 'email', values: { email: value } });
+    }
   };
 
   const handleSubmitInputChange = ({ changeInputState, field }) => {
-    changeInputState(false);
-    dispatchSaveChange({ field, value });
-    setIsDisabled(false);
+    const hasNoErrors = Object.keys(inputErrors).every(
+      input => inputErrors[input] === '',
+    );
+    if (hasNoErrors) {
+      changeInputState(false);
+      dispatchSaveChange({ field, value });
+      setIsDisabled(false);
+    } else {
+      handleValidateInput({ field, values: { [field]: value } });
+    }
   };
 
   const handleUploadUserImage = async e => {
@@ -208,8 +229,10 @@ const SettingsView = ({
               }
               FallbackComponent={
                 <GithubEditComponent
+                  githubLinkError={githubLinkError}
                   handleClose={handleClose}
                   handleSubmitInputChange={handleSubmitInputChange}
+                  handleValidateInput={handleValidateInput}
                   setChangeGithub={setChangeGithub}
                   setValue={setValue}
                   value={value}
@@ -235,6 +258,8 @@ const SettingsView = ({
                 <PersonalEditComponent
                   handleClose={handleClose}
                   handleSubmitInputChange={handleSubmitInputChange}
+                  handleValidateInput={handleValidateInput}
+                  personalLinkError={personalLinkError}
                   setChangePersonal={setChangePersonal}
                   setValue={setValue}
                   value={value}
@@ -260,8 +285,10 @@ const SettingsView = ({
                 <StackoverflowEditComponent
                   handleClose={handleClose}
                   handleSubmitInputChange={handleSubmitInputChange}
+                  handleValidateInput={handleValidateInput}
                   setChangeStackoverflow={setChangeStackoverflow}
                   setValue={setValue}
+                  stackoverflowLinkError={stackoverflowLinkError}
                   value={value}
                 />
               }

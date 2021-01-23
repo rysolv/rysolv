@@ -7,12 +7,12 @@ import {
   updateActiveUser,
   upvoteUserTemp,
 } from 'containers/Auth/actions';
-import { fetchCurrentSession } from 'utils/authHelper';
 import { post } from 'utils/request';
 
 import {
   FETCH_INFO,
   FETCH_ORGANIZATIONS,
+  FETCH_USER_ORGANIZATIONS,
   IMPORT_ORGANIZATION,
   SAVE_INFO,
   SEARCH_ORGANIZATIONS,
@@ -25,6 +25,8 @@ import {
   fetchInfoSuccess,
   fetchOrganizationsFailure,
   fetchOrganizationsSuccess,
+  fetchUserOrganizationsFailure,
+  fetchUserOrganizationsSuccess,
   importOrganizationFailure,
   importOrganizationSuccess,
   saveInfoFailure,
@@ -37,50 +39,6 @@ import {
   upvoteIssueSuccess,
   upvoteIssueTemp,
 } from './actions';
-
-export function* fetchOrganizationsSaga() {
-  const query = `
-    query {
-      getOrganizations {
-        __typename
-        ... on OrganizationArray {
-          organizations {
-            createdDate
-            description
-            id
-            issues
-            logo
-            modifiedDate
-            name
-            organizationUrl
-            preferredLanguages
-            repoUrl
-            totalFunded
-            verified
-          }
-        }
-        ... on Error {
-          message
-        }
-      }
-    }
-  `;
-  try {
-    const organizationsQuery = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const {
-      data: {
-        getOrganizations: { __typename, message, organizations },
-      },
-    } = yield call(post, '/graphql', organizationsQuery);
-    if (__typename === 'Error') throw message;
-    yield put(fetchOrganizationsSuccess({ organizations }));
-  } catch (error) {
-    yield put(fetchOrganizationsFailure({ error }));
-  }
-}
 
 export function* fetchInfoSaga({ payload }) {
   const { itemId } = payload;
@@ -98,7 +56,6 @@ export function* fetchInfoSaga({ payload }) {
           modifiedDate
           name
           organizationUrl
-          ownerId
           preferredLanguages
           repoUrl
           totalFunded
@@ -125,10 +82,7 @@ export function* fetchInfoSaga({ payload }) {
     }
   `;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         getOrganizationActivity,
@@ -140,6 +94,76 @@ export function* fetchInfoSaga({ payload }) {
     yield put(fetchInfoSuccess({ organization: restProps }));
   } catch (error) {
     yield put(fetchInfoFailure({ error }));
+  }
+}
+
+export function* fetchOrganizationsSaga() {
+  const query = `
+    query {
+      getOrganizations {
+        __typename
+        ... on OrganizationArray {
+          organizations {
+            description
+            id
+            issues
+            logo
+            modifiedDate
+            name
+            preferredLanguages
+            totalFunded
+          }
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        getOrganizations: { __typename, message, organizations },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchOrganizationsSuccess({ organizations }));
+  } catch (error) {
+    yield put(fetchOrganizationsFailure({ error }));
+  }
+}
+
+export function* fetchUserOrganizationsSaga() {
+  const query = `
+    query {
+      getUserRepos {
+        __typename
+        ... on OrganizationArray {
+          organizations {
+            exists
+            modifiedDate
+            name
+            organizationUrl
+          }
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        getUserRepos: { __typename, organizations, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchUserOrganizationsSuccess({ organizations }));
+  } catch (error) {
+    yield put(fetchUserOrganizationsFailure());
   }
 }
 
@@ -165,10 +189,7 @@ export function* importOrganizationSaga({ payload }) {
     }
   `;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         importOrganization: { __typename, message, ...restProps },
@@ -187,21 +208,22 @@ export function* saveInfoSaga({ payload }) {
       identiconId,
       isManual,
       organizationDescription,
+      organizationLanguages,
       organizationLogo,
       organizationName,
       organizationRepo,
       organizationUrl,
     },
   } = payload;
-
   const query = `
     mutation {
       createOrganization(organizationInput: {
         identiconId: "${identiconId}",
         isManual: ${isManual},
-        organizationDescription: "${organizationDescription}",
+        organizationDescription: ${JSON.stringify(organizationDescription)},
+        organizationLanguages: "${organizationLanguages}",
         organizationLogo: "${organizationLogo}",
-        organizationName: "${organizationName}",
+        organizationName: ${JSON.stringify(organizationName)},
         organizationRepo: "${organizationRepo}",
         organizationUrl: "${organizationUrl}"
       }) {
@@ -217,12 +239,7 @@ export function* saveInfoSaga({ payload }) {
     }
   `;
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const graphql = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         createOrganization: { __typename, id, message },
@@ -243,26 +260,19 @@ export function* searchOrganizationsSaga({ payload }) {
   const query = `
     query {
       searchOrganizations(value: "${value}") {
-        createdDate
         description
         id
         issues
         logo
         modifiedDate
         name
-        organizationUrl
         preferredLanguages
-        repoUrl
         totalFunded
-        verified
       }
     }
   `;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: { searchOrganizations },
     } = yield call(post, '/graphql', graphql);
@@ -291,7 +301,7 @@ export function* updateInfoSaga({ payload }) {
         organizationDescription: "${description}",
         organizationLogo: "${logo}",
         organizationName: "${name}",
-        organizationPreferredLanguages: ${JSON.stringify(preferredLanguages)},
+        organizationLanguages: ${JSON.stringify(preferredLanguages)},
         organizationRepo: "${repoUrl}",
         organizationUrl: "${organizationUrl}",
         organizationVerified: ${verified}
@@ -307,12 +317,7 @@ export function* updateInfoSaga({ payload }) {
     }
   `;
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const graphql = JSON.stringify({
-      query,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         transformOrganization: { __typename, message },
@@ -333,7 +338,7 @@ export function* upvoteIssueSaga({ payload }) {
   yield put(upvoteIssueTemp({ issueId, upvote }));
   yield put(upvoteUserTemp({ issueId, upvote }));
 
-  const upvoteIssueQuery = `
+  const query = `
     mutation {
       upvoteIssue(issueId: "${issueId}", upvote: ${upvote}) {
         __typename
@@ -348,17 +353,12 @@ export function* upvoteIssueSaga({ payload }) {
     }
   `;
   try {
-    const token = yield call(fetchCurrentSession);
-
-    const upvoteIssue = JSON.stringify({
-      query: upvoteIssueQuery,
-      variables: { token },
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         upvoteIssue: { __typename, issueRep, message, userRep },
       },
-    } = yield call(post, '/graphql', upvoteIssue);
+    } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(upvoteIssueSuccess({ issueId, issueRep }));
     if (upvote) {
@@ -376,6 +376,7 @@ export function* upvoteIssueSaga({ payload }) {
 export default function* watcherSaga() {
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(FETCH_ORGANIZATIONS, fetchOrganizationsSaga);
+  yield takeLatest(FETCH_USER_ORGANIZATIONS, fetchUserOrganizationsSaga);
   yield takeLatest(IMPORT_ORGANIZATION, importOrganizationSaga);
   yield takeLatest(SAVE_INFO, saveInfoSaga);
   yield takeLatest(SEARCH_ORGANIZATIONS, searchOrganizationsSaga);

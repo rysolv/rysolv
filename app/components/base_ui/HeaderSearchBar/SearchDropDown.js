@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import ConditionalRender from '../ConditionalRender';
-
+import { searchOptions } from './constants';
 import {
   OptionTitle,
   OptionWrapper,
@@ -12,33 +12,23 @@ import {
   ValueWrapper,
 } from './styledComponents';
 
-const searchOptions = [
-  {
-    route: '/issues/search/',
-    title: 'In Issues',
-  },
-  {
-    route: '/organizations/search/',
-    title: 'In Organizations',
-  },
-  {
-    route: '/users/search/',
-    title: 'In Users',
-  },
-];
-
-const SearchDropDown = ({ handleClose, handleNav, open, setValue, value }) => {
-  const handleSubmit = ({ route }) => {
-    handleNav(`${route}${value}`);
-    setValue('');
-  };
+const SearchDropDown = ({
+  handleChangeRoute,
+  handleClose,
+  handleSubmit,
+  open,
+  selectedRoute,
+  value,
+}) => {
   const SearchDropDownComponent = (
     <StyledSearchDropDown handleClose={handleClose}>
-      {searchOptions.map(({ route, title }) => (
+      {searchOptions.map(({ route, title }, index) => (
         <SearchItemContainer
           key={`search-item-${title}`}
-          onMouseDown={() => handleSubmit({ route })}
-          onKeyPress={() => handleSubmit({ route })}
+          isSelectedRoute={route === selectedRoute}
+          onKeyPress={() => handleSubmit({ route: selectedRoute })}
+          onMouseDown={() => handleSubmit({ route: selectedRoute })}
+          onMouseEnter={() => handleChangeRoute({ index, route })}
         >
           <ValueWrapper>{value}</ValueWrapper>
           <OptionWrapper>
@@ -60,10 +50,11 @@ const SearchDropDown = ({ handleClose, handleNav, open, setValue, value }) => {
 };
 
 SearchDropDown.propTypes = {
-  handleClose: T.func,
-  handleNav: T.func,
-  open: T.bool,
-  setValue: T.func,
-  value: T.string,
+  handleChangeRoute: T.func.isRequired,
+  handleClose: T.func.isRequired,
+  handleSubmit: T.func.isRequired,
+  open: T.bool.isRequired,
+  selectedRoute: T.string.isRequired,
+  value: T.string.isRequired,
 };
 export default SearchDropDown;

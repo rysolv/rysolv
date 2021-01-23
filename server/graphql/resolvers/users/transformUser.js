@@ -1,11 +1,20 @@
 /* eslint-disable no-param-reassign */
-const { transformUser: transformUserQuery } = require('../../../db');
+const {
+  createLanguage,
+  deleteUserLanguages,
+  transformUser: transformUserQuery,
+} = require('../../../db');
+const { CustomError, errorLogger } = require('../../../helpers');
 const { transformUserError, transformUserSuccess } = require('./constants');
+const { updateCognitoEmail } = require('../../../middlewares/awsConfig');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
-const transformUser = async ({ userInput }, { authError, userId }) => {
+const transformUser = async (
+  { userInput },
+  { authError, email, provider, userId },
+) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     if (userInput.profilePic) {
       const formattedProfilePic = userInput.profilePic;
@@ -16,6 +25,14 @@ const transformUser = async ({ userInput }, { authError, userId }) => {
         userInput.profilePic = uploadUrl;
       }
     }
+
+    if (userInput.email && provider === 'cognito') {
+      await updateCognitoEmail({
+        currentEmail: email,
+        newEmail: userInput.email,
+      });
+    }
+
     const data = {
       balance: userInput.balance,
       email_verified: userInput.emailVerified,
@@ -24,23 +41,35 @@ const transformUser = async ({ userInput }, { authError, userId }) => {
       github_link: userInput.githubLink,
       issues: userInput.issues,
       last_name: userInput.lastName,
-      modified_date: new Date(), // update modified date
+      modified_date: new Date(),
       personal_link: userInput.personalLink,
-      preferred_languages: userInput.preferredLanguages,
       profile_pic: userInput.profilePic,
       stackoverflow_link: userInput.stackoverflowLink,
       username: userInput.username,
     };
-    await transformUserQuery({ data, userId });
+
+    if (userInput.preferredLanguages) {
+      await deleteUserLanguages({ userId });
+      await createLanguage({
+        languages: userInput.preferredLanguages,
+        target: {
+          userId,
+        },
+      });
+    } else {
+      await transformUserQuery({ data, userId });
+    }
+
     return {
       __typename: 'Success',
       message: transformUserSuccess,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || transformUserError,
+      message: alert || transformUserError,
     };
   }
 };

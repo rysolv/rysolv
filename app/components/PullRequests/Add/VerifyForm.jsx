@@ -33,8 +33,8 @@ const VerifyForm = ({
     htmlUrl,
     mergeable,
     mergeableState,
+    open,
     pullNumber,
-    status,
     title,
   },
   loading,
@@ -45,6 +45,7 @@ const VerifyForm = ({
   };
   const isMergeable = mergeable.value;
   const haveTestsPassed = mergeableState.value !== 'unstable';
+  const status = open.value ? 'open' : 'closed';
   return (
     <Fragment>
       <StyledHeader>Verify</StyledHeader>
@@ -74,7 +75,7 @@ const VerifyForm = ({
         <PullRequestInfo>
           <StyledItem>
             <StyledLabel>Status</StyledLabel>
-            <StatusWrapper>{status.value}</StatusWrapper>
+            <StatusWrapper>{status}</StatusWrapper>
           </StyledItem>
           <StyledItem>
             <StyledLabel>Mergeable</StyledLabel>

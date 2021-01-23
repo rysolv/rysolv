@@ -1,11 +1,9 @@
 const { checkDuplicateOrganization } = require('../../../db');
+const { CustomError } = require('../../../helpers');
 
 const checkDuplicate = async repo => {
-  if (await checkDuplicateOrganization({ repo })) {
-    const error = new Error();
-    error.message = existingOrganizationError;
-    throw error;
-  }
+  if (await checkDuplicateOrganization({ repo }))
+    throw new CustomError(existingOrganizationError);
 };
 
 const createOrganizationError = `Something went wrong when creating the organization.`;

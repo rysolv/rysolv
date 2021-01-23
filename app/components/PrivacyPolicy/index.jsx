@@ -10,6 +10,7 @@ import {
 const PrivacyPolicy = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Privacy Policy';
   }, []);
   return (
     <PrivacyPolicyContainer>

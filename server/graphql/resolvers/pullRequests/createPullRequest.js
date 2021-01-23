@@ -2,16 +2,18 @@ const { v4: uuidv4 } = require('uuid');
 
 const {
   checkDuplicatePullRequest,
-  checkUserGithubId,
+  checkGithubIdMatch,
   createPullRequest: createPullRequestQuery,
   updateUserArray,
 } = require('../../../db');
+const { createActivity } = require('../activity');
 const {
   createPullRequestError,
   createPullRequestSuccess,
   diffGithubAccountError,
   existingPullRequestError,
 } = require('./constants');
+const { CustomError, errorLogger } = require('../../../helpers');
 const {
   formatPullRequestUrl,
 } = require('../../../integrations/github/helpers');
@@ -28,16 +30,16 @@ const createPullRequest = async (
       merged,
       open,
       pullNumber,
-      status,
       title,
     },
   },
   { authError, userId },
 ) => {
   try {
-    if (authError || !userId) throw new Error(authError);
+    if (authError || !userId) throw new CustomError(authError);
 
     const date = new Date();
+    const pullRequestId = uuidv4();
     const data = {
       created_date: date,
       github_username: githubUsername,
@@ -49,8 +51,7 @@ const createPullRequest = async (
       modified_date: date,
       open,
       pull_number: pullNumber,
-      pullrequest_id: uuidv4(),
-      status,
+      pullrequest_id: pullRequestId,
       title,
       user_id: userId,
     };
@@ -60,16 +61,11 @@ const createPullRequest = async (
       pullNumber,
       repo,
     });
-    if (await checkUserGithubId({ githubId, userId })) {
-      const error = new Error();
-      error.message = diffGithubAccountError;
-      throw error;
-    }
-    if (await checkDuplicatePullRequest({ repo: htmlUrl })) {
-      const error = new Error();
-      error.message = existingPullRequestError;
-      throw error;
-    }
+    if (await checkGithubIdMatch({ githubId, userId }))
+      throw new CustomError(diffGithubAccountError);
+    if (await checkDuplicatePullRequest({ repo: htmlUrl }))
+      throw new CustomError(existingPullRequestError);
+
     const result = await createPullRequestQuery({ data });
 
     // Add issue to user issue list
@@ -79,15 +75,24 @@ const createPullRequest = async (
       userId: result.userId,
     });
 
+    const activityInput = {
+      actionType: 'create',
+      issueId,
+      pullRequestId,
+      userId,
+    };
+    await createActivity({ activityInput });
+
     return {
       __typename: 'Success',
       message: createPullRequestSuccess,
     };
   } catch (error) {
-    const { message } = error;
+    const { alert } = error;
+    errorLogger(error);
     return {
       __typename: 'Error',
-      message: message || createPullRequestError,
+      message: alert || createPullRequestError,
     };
   }
 };

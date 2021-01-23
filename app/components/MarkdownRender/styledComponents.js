@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import { PrimaryButton, SecondaryButton } from 'components/base_ui';
 import {
   borderColor,
+  codeFontFamily,
   codeGrey,
-  commentHeaderColor,
   defaultFontSize,
+  headerColor,
   hoverLinkColor,
   lightBlueColor,
   styledScrollbar,
@@ -28,6 +29,10 @@ export const Body = styled.div`
     color: ${textColor};
     font-family: inherit;
     width: 100%;
+  }
+
+  a {
+      color: ${hoverLinkColor}
   }
 `;
 
@@ -51,7 +56,7 @@ export const CommentContainer = styled.div`
   }
 
   &:after {
-    border-color: transparent ${commentHeaderColor} transparent transparent;
+    border-color: transparent ${headerColor} transparent transparent;
     border-width: 9px;
     left: -18px;
     top: 8px;
@@ -68,7 +73,7 @@ export const CommentContainer = styled.div`
     background-color: ${codeGrey};
     border-radius: 0.25rem;
     color: ${textColor};
-    font-family: monospace;
+    font-family: ${codeFontFamily};
     white-space: pre-wrap;
   }
 
@@ -87,9 +92,13 @@ export const CommentContainer = styled.div`
 `;
 
 export const CommentHeader = styled.div`
-  background-color: ${commentHeaderColor};
-  color: ${textColor};
+  background-color: ${headerColor};
+  border-top-left-radius: 0.1rem;
+  border-top-right-radius: 0.1rem;
+  color: white;
+  display: flex;
   font-size: ${defaultFontSize};
+  justify-content: space-between;
   padding: 0.8rem;
   width: 100%;
 `;
@@ -98,6 +107,10 @@ export const FlexContainer = styled.div`
   display: flex;
   margin: 3rem 0;
   width: 100%;
+`;
+
+export const GithubIconWrapper = styled.span`
+  vertical-align: middle;
 `;
 
 export const IssueBodyContainer = styled.div`
@@ -113,7 +126,7 @@ export const IssueBodyContainer = styled.div`
     background-color: ${codeGrey};
     border-radius: 0.25rem;
     color: ${textColor};
-    font-family: monospace;
+    font-family: ${codeFontFamily};
     white-space: pre-wrap;
   }
 
@@ -167,11 +180,20 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
   }
 `;
 
+export const UsernameExternalLink = styled.a`
+  display: inline;
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 export const UsernameLink = styled(Link)`
   display: inline;
   font-weight: bold;
 
   &:hover {
-    color: ${hoverLinkColor};
+    text-decoration: underline;
   }
 `;

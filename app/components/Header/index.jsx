@@ -14,6 +14,7 @@ const Header = ({
   handleSignin,
   handleSignout,
   isSignedIn,
+  location,
 }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const isMobile =
@@ -38,6 +39,7 @@ const Header = ({
         isLandingPage,
         isMobile,
         isSignedIn,
+        location,
         setIsDrawerOpen,
       }}
       shouldRender={!isMobile}
@@ -53,6 +55,7 @@ Header.propTypes = {
   handleSignin: T.func.isRequired,
   handleSignout: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
+  location: T.object.isRequired,
 };
 
 export default Header;

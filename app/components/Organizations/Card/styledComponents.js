@@ -81,7 +81,7 @@ export const StatsWrapper = styled.div`
   display: flex;
   font-size: ${detailFontSize};
   justify-content: space-between;
-  padding: 1rem 0;
+  padding: 1rem 0 1rem 1rem;
 `;
 
 export const StyledImageLinkWrapper = styled(ImageLinkWrapper)`

@@ -19,6 +19,7 @@ const Issues = ({
   handleClearAlerts,
   handleNav,
   handleUpvote,
+  height,
   isSignedIn,
 }) => {
   const hasData = data.length > 0 && !data.includes(null);
@@ -32,12 +33,13 @@ const Issues = ({
     dispatchOpenModal,
     handleNav,
     handleUpvote,
+    height,
     isSignedIn,
   };
   const viewToRender = hasData ? (
     <Pagination Component={IssueCard} propsToPassDown={propsToPassDown} />
   ) : (
-    <EmptyCard />
+    <EmptyCard height={height} />
   );
   return (
     <Fragment>
@@ -66,6 +68,7 @@ Issues.propTypes = {
   handleClearAlerts: T.func,
   handleNav: T.func,
   handleUpvote: T.func,
+  height: T.number.isRequired,
   isSignedIn: T.bool,
 };
 

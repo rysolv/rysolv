@@ -12,7 +12,7 @@ export const CopyrightWrapper = styled.div`
 
 export const Divider = styled.div`
   border-top: 0.2rem solid ${textColor};
-  margin: 1rem auto;
+  margin: 2rem auto 1rem;
   width: 100%;
 `;
 

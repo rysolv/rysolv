@@ -1,5 +1,6 @@
 import React from 'react';
 import T from 'prop-types';
+import DOMPurify from 'dompurify';
 import marked from 'marked';
 import moment from 'moment';
 
@@ -20,6 +21,8 @@ const CommentCard = ({
   userProfile: { alt, image, route, username },
 }) => {
   const html = marked(body);
+  const cleanHtml = DOMPurify.sanitize(html);
+
   return (
     <FlexContainer>
       <ProfileImageContainer>
@@ -27,12 +30,15 @@ const CommentCard = ({
       </ProfileImageContainer>
       <CommentContainer>
         <CommentHeader>
-          Posted by <UsernameLink to={route}>{username}</UsernameLink>&nbsp;
+          <span>
+            Posted by&nbsp;<UsernameLink to={route}>{username}</UsernameLink>
+          </span>
+          &nbsp;
           {moment(date)
             .utc()
             .fromNow()}
         </CommentHeader>
-        <Body dangerouslySetInnerHTML={{ __html: html }} />
+        <Body dangerouslySetInnerHTML={{ __html: cleanHtml }} />
       </CommentContainer>
     </FlexContainer>
   );

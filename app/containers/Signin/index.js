@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -13,6 +13,7 @@ import { resetRoute, signOut } from 'containers/Auth/actions';
 import {
   makeSelectAuth,
   makeSelectAuthLoading,
+  makeSelectAuthRoute,
 } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
@@ -28,19 +29,19 @@ const Signin = ({
   dispatchSignOut,
   handleNav,
   isSignedIn,
-  isVerifyRoute,
+  isSignInRoute,
+  isSignUpRoute,
   loading,
   match,
   step,
 }) => {
   const [viewToRender, setViewToRender] = useState(null);
-  const { current: prevIsSignedIn } = useRef(isSignedIn);
   useEffect(() => dispatchResetState, []);
 
   useEffect(() => {
-    if (!isVerifyRoute && isSignedIn !== prevIsSignedIn) {
+    if (isSignInRoute) {
       setViewToRender(<Redirect to="/issues" />);
-    } else if (isVerifyRoute && isSignedIn !== prevIsSignedIn) {
+    } else if (isSignUpRoute) {
       dispatchResetRoute();
       setViewToRender(<Redirect to="/settings" />);
     } else {
@@ -78,7 +79,8 @@ Signin.propTypes = {
   dispatchSignOut: T.func.isRequired,
   handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
-  isVerifyRoute: T.bool.isRequired,
+  isSignInRoute: T.bool.isRequired,
+  isSignUpRoute: T.bool.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
   step: T.number.isRequired,
@@ -90,7 +92,8 @@ const mapStateToProps = createStructuredSelector({
    */
   activeUser: makeSelectAuth('activeUser'),
   isSignedIn: makeSelectAuth('isSignedIn'),
-  isVerifyRoute: makeSelectAuth('isVerifyRoute'),
+  isSignInRoute: makeSelectAuthRoute('signIn'),
+  isSignUpRoute: makeSelectAuthRoute('signUp'),
   loading: makeSelectAuthLoading('auth'),
   /**
    * Reducer : Signin

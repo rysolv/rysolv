@@ -2,6 +2,7 @@ const pullRequestValues = [
   'created_date',
   'github_username',
   'html_url',
+  'is_deleted',
   'issue_id',
   'mergeable_state',
   'mergeable',
@@ -10,7 +11,6 @@ const pullRequestValues = [
   'open',
   'pull_number',
   'pullrequest_id',
-  'status',
   'title',
   'user_id',
 ];
@@ -27,7 +27,6 @@ const pullRequestReturnValues = `
   pullRequests.open,
   pullRequests.pull_number AS "pullNumber",
   pullRequests.pullrequest_id AS "pullRequestId",
-  pullRequests.status,
   pullRequests.title,
   pullRequests.user_id AS "userId"
 `;

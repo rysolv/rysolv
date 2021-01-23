@@ -29,6 +29,18 @@ export const validateFundValue = value => {
   return false;
 };
 
+const validateGithubLink = value => {
+  const formattedValue = value.replace(/(^\w+:|^)\/\//, '');
+  const linkArray = formattedValue.split('/');
+  const isLinkValid =
+    linkArray.length === 2 &&
+    (linkArray[0] === 'www.github.com' || linkArray[0] === 'github.com');
+  if (!isLinkValid) {
+    return `Must enter valid Github link ex. https://github.com/bob123`;
+  }
+  return false;
+};
+
 export const validateIssueUrl = value => {
   const url = value.split('/');
   const issueNumber = url[url.length - 1];
@@ -50,6 +62,23 @@ export const validateIssueUrl = value => {
     error: 'invalidImport',
     message: 'Invalid GitHub Issue',
   };
+};
+
+const validateLink = value => {
+  const pattern = new RegExp(
+    '^(https?:\\/\\/)?' +
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
+      '((\\d{1,3}\\.){3}\\d{1,3}))' +
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
+      '(\\?[;&a-z\\d%_.~+=-]*)?' +
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
+  );
+  const isLinkValid = pattern.test(value);
+  if (!isLinkValid) {
+    return `Must enter valid link`;
+  }
+  return false;
 };
 
 export const validateOrganizationUrl = value => {
@@ -88,17 +117,54 @@ export const validateOrganizationUrl = value => {
 };
 
 const validatePassword = value => {
-  const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=])(?=.{8,})/;
-  const isValidPassword = re.test(value);
-  if (!isValidPassword) {
-    return 'Password must contain one lowercase letter, one uppercase letter, one number, one special character and be at least 8 characters long';
+  const containsLowercase = /(?=.*[a-z])/.test(value);
+  const containsNumber = /(?=.*\d)/.test(value);
+  const containsSymbol = /(?=.*[^\w\d\s])/.test(value);
+  const containsUppercase = /(?=.*[A-Z])/.test(value);
+  const greaterThanEight = value.length >= 8;
+
+  if (!containsLowercase) {
+    return 'Password must contain at least one lowercase letter';
+  }
+
+  if (!containsNumber) {
+    return 'Password must contain at least one number';
+  }
+
+  if (!containsSymbol) {
+    return 'Password must contain at least one symbol';
+  }
+
+  if (!containsUppercase) {
+    return 'Password must contain at least one uppercase letter';
+  }
+
+  if (!greaterThanEight) {
+    return 'Password must be at least 8 characters long';
   }
   return false;
 };
 
-const validateString = value => {
+const validateStackoverflowLink = value => {
+  const formattedValue = value.replace(/(^\w+:|^)\/\//, '');
+  const linkArray = formattedValue.split('/');
+  const isLinkValid =
+    linkArray.length === 4 &&
+    (linkArray[0] === 'www.stackoverflow.com' ||
+      linkArray[0] === 'stackoverflow.com') &&
+    linkArray[1] === 'users';
+  if (!isLinkValid) {
+    return `Must enter valid Stackoverflow link ex. https://stackoverflow.com/users/12345`;
+  }
+  return false;
+};
+
+const validateString = (value, { maxLength = 60 }) => {
   if (typeof value !== 'string') {
     return 'Invalid value';
+  }
+  if (value.length > maxLength) {
+    return `Must be less than ${maxLength + 1} characters`;
   }
   return false;
 };
@@ -113,7 +179,10 @@ const validateVerifyInput = (value, { field, verifyValue }) => {
 export const validationDictionary = {
   emailInput: validateEmail,
   fundInput: validateFundValue,
+  githubLinkInput: validateGithubLink,
+  linkInput: validateLink,
   passwordInput: validatePassword,
+  stackoverflowLinkInput: validateStackoverflowLink,
   stringInput: validateString,
   verifyInput: validateVerifyInput,
 };
@@ -121,6 +190,9 @@ export const validationDictionary = {
 export const validate = ({ required, type, value, ...validationProps }) => {
   if (required && isBlank(value)) {
     return 'Required field';
+  }
+  if (!required && isBlank(value)) {
+    return false;
   }
   const validationFunction = validationDictionary[type];
   if (validationFunction) {

@@ -26,10 +26,7 @@ export function* fetchAttemptListSaga({ payload }) {
     }
   `;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: { getIssueAttemptList },
     } = yield call(post, '/graphql', graphql);
@@ -55,10 +52,7 @@ export function* fetchPullRequestListSaga({ payload }) {
     }
   `;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: { getPullRequestList },
     } = yield call(post, '/graphql', graphql);
@@ -89,10 +83,7 @@ export function* fetchWatchListSaga({ payload }) {
     }
   `;
   try {
-    const graphql = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: { getIssueWatchList },
     } = yield call(post, '/graphql', graphql);

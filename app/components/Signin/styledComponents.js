@@ -14,12 +14,25 @@ import {
   hoverLinkColor,
   lightBlueColor,
   lightGreyColor,
-  subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
+
+export const Divider = styled.div`
+  align-self: center;
+  background-color: ${borderColor};
+  height: 0.1rem;
+  margin: 3rem 0 2rem;
+  width: 95%;
+`;
+
+export const DividerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  position: relative;
+`;
 
 export const EmailWrapper = styled.span`
   color: ${hoverLinkColor};
@@ -42,8 +55,8 @@ export const InputFormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   font-size: ${defaultFontSize};
-  padding: 5rem;
-  width: 50rem;
+  padding: 5rem 7rem;
+  width: 47.5rem;
 
   ${mobile} {
     padding: 3rem;
@@ -54,7 +67,7 @@ export const InputFormWrapper = styled.form`
 export const InputSubText = styled.div`
   color: ${textColor};
   font-size: ${detailFontSize};
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   text-align: left;
 `;
 
@@ -67,7 +80,7 @@ export const PasswordRequirements = styled.div`
 
 export const RedirectText = styled.span`
   color: ${textColor};
-  margin: 1rem 0;
+  margin: 1rem 0 2rem;
 `;
 
 export const SigninWrapper = styled.div`
@@ -75,15 +88,21 @@ export const SigninWrapper = styled.div`
   flex-direction: column;
   margin-top: 5rem;
   width: 100%;
+
+  ${mobile} {
+    margin-bottom: 5rem;
+  }
 `;
 
 export const StyledButton = styled(Button)`
+  align-self: center;
   color: ${lightGreyColor};
   font-family: ${defaultFontFamily};
   font-size: ${defaultFontSize};
   font-weight: 500;
   padding: 0;
   text-transform: none;
+  width: 95%;
 
   &:focus,
   &:hover {
@@ -93,17 +112,21 @@ export const StyledButton = styled(Button)`
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
-  margin-bottom: 3rem;
+  align-self: center;
+  margin-bottom: 2rem;
+  width: 95%;
 `;
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   align-self: center;
   min-width: 50%;
+  width: 95%;
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
   align-self: center;
   min-width: 50%;
+  width: 95%;
 `;
 
 export const SubText = styled.div`
@@ -121,9 +144,10 @@ export const SubText = styled.div`
 `;
 
 export const Title = styled.div`
+  align-self: center;
   color: ${textColor};
-  font-size: ${subheaderFontSize};
-  margin-bottom: 3rem;
+  font-size: 2rem;
+  margin-bottom: 1rem;
 `;
 
 export const UsernameWrapper = styled.span`
@@ -133,5 +157,14 @@ export const UsernameWrapper = styled.span`
 export const VerificationWrapper = styled.div`
   align-self: center;
   display: flex;
-  width: 60%;
+  width: 75%;
+`;
+
+export const WordDivider = styled.div`
+  background: white;
+  bottom: 20%;
+  color: ${textColor};
+  left: 50%;
+  padding: 0.5rem;
+  position: absolute;
 `;

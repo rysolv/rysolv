@@ -25,15 +25,12 @@ export function* fetchOrganizationOptionsSaga() {
     }
   `;
   try {
-    const organizationsQuery = JSON.stringify({
-      query,
-      variables: {},
-    });
+    const graphql = JSON.stringify({ query });
     const {
       data: {
         getOrganizations: { organizations },
       },
-    } = yield call(post, '/graphql', organizationsQuery);
+    } = yield call(post, '/graphql', graphql);
     yield put(fetchOrganizationOptionsSuccess({ organizations }));
   } catch (error) {
     yield put(fetchOrganizationOptionsFailure());

@@ -35,15 +35,19 @@ export const EDIT_ISSUE = 'app/Issues/EDIT_ISSUE';
 export const EDIT_ISSUE_FAILURE = 'app/Issues/EDIT_ISSUE_FAILURE';
 export const EDIT_ISSUE_SUCCESS = 'app/Issues/EDIT_ISSUE_SUCCESS';
 
-export const FETCH_ISSUES = 'app/Issues/FETCH_ISSUES';
-export const FETCH_ISSUES_FAILURE = 'app/Issues/FETCH_ISSUES_FAILURE';
-export const FETCH_ISSUES_SUCCESS = 'app/Issues/FETCH_ISSUES_SUCCESS';
-
 export const FETCH_ISSUE_DETAIL = 'app/Issues/FETCH_ISSUE_DETAIL';
 export const FETCH_ISSUE_DETAIL_FAILURE =
   'app/Issues/FETCH_ISSUE_DETAIL_FAILURE';
 export const FETCH_ISSUE_DETAIL_SUCCESS =
   'app/Issues/FETCH_ISSUE_DETAIL_SUCCESS';
+
+export const FETCH_ISSUES = 'app/Issues/FETCH_ISSUES';
+export const FETCH_ISSUES_FAILURE = 'app/Issues/FETCH_ISSUES_FAILURE';
+export const FETCH_ISSUES_SUCCESS = 'app/Issues/FETCH_ISSUES_SUCCESS';
+
+export const FETCH_USER_ISSUES = 'app/Issues/FETCH_USER_ISSUES';
+export const FETCH_USER_ISSUES_FAILURE = 'app/Issues/FETCH_USER_ISSUES_FAILURE';
+export const FETCH_USER_ISSUES_SUCCESS = 'app/Issues/FETCH_USER_ISSUES_SUCCESS';
 
 export const GENERATE_IDENTICON = 'app/Issues/GENERATE_IDENTICON';
 

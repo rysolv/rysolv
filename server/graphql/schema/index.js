@@ -14,6 +14,8 @@ module.exports = buildSchema(`
     organizationName: String
     profilePic: String
     pullRequestId: ID
+    pullRequestName: String
+    pullRequestUrl: String
     userId: ID
     username: String
   }
@@ -33,6 +35,8 @@ module.exports = buildSchema(`
     body: String
     commentId: ID
     createdDate: Object
+    githubUrl: String
+    isGithubComment: Boolean
     modifiedDate: Object
     profilePic: String
     target: String
@@ -50,6 +54,7 @@ module.exports = buildSchema(`
   }
 
   type ImportData {
+    githubCommentCount: Int
     issueBody: String!
     issueLanguages: [String]
     issueName: String!
@@ -71,7 +76,6 @@ module.exports = buildSchema(`
     merged: Boolean
     open: Boolean
     pullNumber: Int
-    status: String
     title: String
   }
 
@@ -81,6 +85,7 @@ module.exports = buildSchema(`
     comments: Int
     contributor: [String]
     createdDate: Object
+    exists: Boolean
     fundedAmount: Float
     id: ID!
     language: [String]
@@ -91,7 +96,6 @@ module.exports = buildSchema(`
     organizationId: String
     organizationName: String
     organizationVerified: Boolean
-    profilePic: String
     pullRequests: Int
     rep: Int
     repo: String
@@ -108,6 +112,7 @@ module.exports = buildSchema(`
   input IssueInput {
     body: String
     fundedAmount: Int
+    githubCommentCount: Int
     identiconId: ID
     isManual: Boolean
     language: [String]
@@ -127,6 +132,7 @@ module.exports = buildSchema(`
     contributors: [Object]
     createdDate: Object
     description: String
+    exists: Boolean
     id: ID!
     issues: [Object]
     logo: String
@@ -149,9 +155,9 @@ module.exports = buildSchema(`
     identiconId: ID
     isManual: Boolean
     organizationDescription: String
+    organizationLanguages: [String]
     organizationLogo: String
     organizationName: String
-    organizationPreferredLanguages: [String]
     organizationRepo: String
     organizationUrl: String
     organizationVerified: Boolean
@@ -177,7 +183,6 @@ module.exports = buildSchema(`
     open: Boolean!
     pullNumber: Int
     pullRequestId: ID!
-    status: String!
     title: String!
     userId: ID!
   }
@@ -195,7 +200,6 @@ module.exports = buildSchema(`
     merged: Boolean
     open: Boolean!
     pullNumber: Int
-    status: String!
     title: String!
   }
 
@@ -206,6 +210,16 @@ module.exports = buildSchema(`
     title: String
     userId: ID
     username: String
+  }
+
+  type Stats {
+    mostContribution: [Object]!
+    mostEarned: [Object]!
+    mostRep: [Object]!
+    totalAvailable: Int!
+    totalEarned: Int!
+    totalFunded: Int!
+    totalResolved: Int!
   }
 
   type Success {
@@ -266,6 +280,7 @@ module.exports = buildSchema(`
     issues: [String]
     lastName: String
     organizations: [String]
+    password: String
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
@@ -315,6 +330,8 @@ module.exports = buildSchema(`
   union OrganizationResult = Organization | Error
   union PaymentResult = Payment | Error
   union PullRequestArrayResult = PullRequestArray | Error
+  union SignInResult = User | Error
+  union StatsResult = Stats | Error
   union ToggleAttemptingResult = AttemptingArray | Error
   union ToggleWatchingResult = WatchListArray | Error
   union UpvoteResult = Upvote | Error
@@ -324,8 +341,6 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
-    checkDuplicateUser(email: String, username: String): EventResponse!
-
     getIssueAttemptList(issueId: ID!): [WatchList]!
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!
@@ -333,10 +348,15 @@ module.exports = buildSchema(`
     getOrganizationActivity(organizationId: ID): [Activity]!
     getOrganizations: OrganizationArrayResult!
     getPullRequestList(issueId: ID): [PullRequestList]!
+    getStats: StatsResult!
     getUserActivity(userId: ID): [Activity]!
+    getUserIssues: IssueArrayResult!
     getUserPullRequests: PullRequestArrayResult!
+    getUserRepos: OrganizationArrayResult!
     getUsers: UserArrayResult!
     getUserSettings: UserResult!
+
+    githubSignIn(code: String!, isSignIn: Boolean!): UserResult!
 
     oneIssue(id: ID!): IssueResult!
     oneOrganization(id: ID!): OrganizationResult!
@@ -354,11 +374,11 @@ module.exports = buildSchema(`
     createComment(commentInput: CommentInput): CommentResult!
     createIssue(issueInput: IssueInput): IssueResult!
     createOrganization(organizationInput: OrganizationInput): OrganizationResult!
-    createPaypalPayment(amount: Float!, issueId: ID): PaymentResult!
+    createPaypalPayment(amount: Float!, email: String, issueId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
-    createStripeCharge(amount: Float!, issueId: ID, token: String!): PaymentResult!
+    createStripeCharge(amount: Float!, email: String, issueId: ID, token: String!): PaymentResult!
     createUser(userInput: UserInput): UserResult!
-    createWithdrawal(transferValue: Float!): WithdrawalResult!
+    createWithdrawal(email: String!, transferValue: Float!): WithdrawalResult!
 
     deletePullRequest(id:ID!): EventResponse!
     deleteUser: EventResponse!
@@ -367,7 +387,10 @@ module.exports = buildSchema(`
     importOrganization(url: String!): ImportResult!
     importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
 
-    submitAccountPayment(issueId: ID!, fundValue: Float!): PaymentResult!
+    signIn(password: String!, username: String!): SignInResult!
+    signOut: EventResponse!
+
+    submitAccountPayment(email: String!, issueId: ID!, fundValue: Float!): PaymentResult!
 
     toggleAttempting(issueId: ID!): ToggleAttemptingResult!
     toggleWatching(issueId: ID!): ToggleWatchingResult!
@@ -379,7 +402,7 @@ module.exports = buildSchema(`
     upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
 
     verifyUserAccount(code: String!): VerificationResult!
-    verifyUserEmail(userId: ID!): EventResponse!
+    verifyUserEmail(code: String!, email: String!, userId: ID!): EventResponse!
   }
 
   schema {

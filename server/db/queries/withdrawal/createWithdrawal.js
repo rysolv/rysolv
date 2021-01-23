@@ -13,7 +13,6 @@ const createWithdrawal = async ({ data }) => {
     VALUES(${substitution})
   `;
   await singleQuery({ queryText, values });
-  return 'Successfully created withdrawal';
 };
 
 module.exports = createWithdrawal;

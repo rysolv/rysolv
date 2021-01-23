@@ -33,6 +33,7 @@ import {
 
 export class OrganizationsDetail extends React.PureComponent {
   componentDidMount() {
+    window.scrollTo(0, 0);
     const {
       dispatchFetchInfo,
       match: {

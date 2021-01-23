@@ -5,7 +5,8 @@ import { Results, StyledPagination } from './styledComponents';
 
 const Pagination = ({ Component, propsToPassDown }) => {
   const { data, ...restProps } = propsToPassDown;
-  const perPage = 10;
+  const { length } = data;
+  const perPage = 15;
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
@@ -14,9 +15,8 @@ const Pagination = ({ Component, propsToPassDown }) => {
 
   useEffect(() => {
     setCurrentPage(0);
-  }, [data]);
+  }, [length]);
 
-  const { length } = data;
   const count = Math.ceil(length / perPage);
   const slice = data.slice(
     currentPage * perPage,

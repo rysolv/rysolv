@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { BaseTextInput, IconButton } from 'components/base_ui';
+import { IconButton } from 'components/base_ui';
 import { formatUrlLinks } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -11,6 +11,7 @@ import {
   OneLink,
   OneLinkWrapper,
   StyledA,
+  StyledBaseTextInput,
 } from './styledComponents';
 
 const CloseIcon = iconDictionary('close');
@@ -44,14 +45,28 @@ export const EmptyStackoverflowLinkComponent = ({
 export const StackoverflowEditComponent = ({
   handleClose,
   handleSubmitInputChange,
+  handleValidateInput,
   setChangeStackoverflow,
   setValue,
+  stackoverflowLinkError,
   value,
 }) => (
   <OneLinkWrapper>
     <OneLink>
       <LinkIcon>{StackoverflowIcon}</LinkIcon>
-      <BaseTextInput onChange={e => setValue(e.target.value)} value={value} />
+      <StyledBaseTextInput
+        error={!!stackoverflowLinkError}
+        helperText={stackoverflowLinkError}
+        onBlur={() =>
+          handleValidateInput({
+            field: 'stackoverflowLink',
+            values: { stackoverflowLink: value },
+          })
+        }
+        onChange={e => setValue(e.target.value)}
+        placeholder="https://stackoverflow.com/users/12345"
+        value={value}
+      />
     </OneLink>
     <IconButtonGroup>
       <IconButton
@@ -111,8 +126,10 @@ EmptyStackoverflowLinkComponent.propTypes = {
 StackoverflowEditComponent.propTypes = {
   handleClose: T.func,
   handleSubmitInputChange: T.func,
+  handleValidateInput: T.func.isRequired,
   setChangeStackoverflow: T.func,
   setValue: T.func,
+  stackoverflowLinkError: T.string.isRequired,
   value: T.oneOfType([T.array, T.number, T.string]),
 };
 

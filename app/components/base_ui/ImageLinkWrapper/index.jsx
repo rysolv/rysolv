@@ -17,7 +17,7 @@ const ImageLinkWrapper = ({
   <StyledLink disabled={disabled} onClick={onClick} to={route}>
     <StyledImage
       alt={alt}
-      isSquare={isSquare || false}
+      isSquare={isSquare}
       size={size}
       src={image}
       {...restProps}
@@ -29,6 +29,7 @@ ImageLinkWrapper.defaultProps = {
   alt: 'anonymous',
   disabled: false,
   image: anonymousUserImage,
+  isSquare: false,
 };
 
 ImageLinkWrapper.propTypes = {

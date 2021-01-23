@@ -34,6 +34,9 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  FETCH_USER_ISSUES_FAILURE,
+  FETCH_USER_ISSUES_SUCCESS,
+  FETCH_USER_ISSUES,
   GENERATE_IDENTICON,
   IMPORT_ISSUE_FAILURE,
   IMPORT_ISSUE_SUCCESS,
@@ -62,11 +65,13 @@ import {
 export const initialState = {
   alerts: { error: false, success: false },
   issueData: {
-    issueName: { error: '', value: '' },
-    issueBody: { error: '', value: '' },
-    issueUrl: { error: '', value: '' },
-    issueLanguages: { error: '', value: [] },
+    autoImportUrl: { error: '', value: '' },
+    githubCommentCount: { error: '', value: 0 },
     importUrl: { error: '', value: '' },
+    issueBody: { error: '', value: '' },
+    issueLanguages: { error: '', value: [] },
+    issueName: { error: '', value: '' },
+    issueUrl: { error: '', value: '' },
   },
   error: {
     importIssue: { error: false, message: '' },
@@ -74,11 +79,12 @@ export const initialState = {
     issues: false,
     searchIssues: false,
     submitAccountPayment: false,
+    userIssues: false,
   },
   filter: {
     language: [],
     organization: [],
-    overview: 'Newest',
+    overview: 'Most Funded',
     price: [0, 5000],
     status: {
       closed: false,
@@ -115,6 +121,7 @@ export const initialState = {
     importUrl: { error: '', value: '' },
     organizationDescription: { error: '', value: '' },
     organizationId: { error: '', value: '' },
+    organizationLanguages: { error: '', value: '' },
     organizationLogo: { error: '', value: '' },
     organizationName: { error: '', value: '' },
     organizationRepo: { error: '', value: '' },
@@ -128,6 +135,7 @@ export const initialState = {
     addIssue: 1,
     editIssue: 1,
   },
+  userIssues: [],
 };
 
 const issuesReducer = produce((draft, { payload, type }) => {
@@ -341,22 +349,6 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.editIssue = true;
       break;
     }
-    case FETCH_ISSUES_FAILURE: {
-      const { error } = payload;
-      draft.error.issues = error;
-      draft.loading.issues = false;
-      break;
-    }
-    case FETCH_ISSUES_SUCCESS: {
-      const { issues } = payload;
-      draft.issues = issues;
-      draft.loading.issues = false;
-      break;
-    }
-    case FETCH_ISSUES: {
-      draft.loading.issues = true;
-      break;
-    }
     case FETCH_ISSUE_DETAIL_FAILURE: {
       const { error } = payload;
       draft.error.issueDetail = error;
@@ -373,6 +365,37 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.issueDetail = true;
       break;
     }
+    case FETCH_ISSUES_FAILURE: {
+      const { error } = payload;
+      draft.error.issues = error;
+      draft.loading.issues = false;
+      break;
+    }
+    case FETCH_ISSUES_SUCCESS: {
+      const { issues } = payload;
+      draft.issues = issues;
+      draft.loading.issues = false;
+      break;
+    }
+    case FETCH_ISSUES: {
+      draft.loading.issues = true;
+      break;
+    }
+    case FETCH_USER_ISSUES_FAILURE: {
+      draft.error.userIssues = true;
+      draft.loading.userIssues = false;
+      break;
+    }
+    case FETCH_USER_ISSUES_SUCCESS: {
+      const { issues } = payload;
+      draft.loading.userIssues = false;
+      draft.userIssues = issues;
+      break;
+    }
+    case FETCH_USER_ISSUES: {
+      draft.loading.userIssues = true;
+      break;
+    }
     case GENERATE_IDENTICON: {
       const identiconId = uuidv4();
       const identicon = new Identicon(identiconId, 250).toString();
@@ -383,6 +406,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case IMPORT_ISSUE_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
+      draft.issueData.autoImportUrl.error = error;
+      draft.issueData.autoImportUrl.value = '';
       draft.loading.importIssue = false;
       break;
     }

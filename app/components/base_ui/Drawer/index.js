@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -6,6 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import iconDictionary from 'utils/iconDictionary';
 
+import pathnameDictionary from './pathnameDictionary';
 import {
   StyledDrawer,
   StyledList,
@@ -14,18 +15,24 @@ import {
 } from './styledComponents';
 
 const addIcon = iconDictionary('addCircle');
+const helpIcon = iconDictionary('help');
 const issueIcon = iconDictionary('issue');
 const organizationIcon = iconDictionary('organization');
-const userIcon = iconDictionary('user');
+const statsIcon = iconDictionary('stats');
 const uploadIcon = iconDictionary('upload');
+const userIcon = iconDictionary('user');
 
 const BaseDrawer = ({
   handleNav,
   isDrawerOpen,
   isSignedIn,
+  location: { pathname },
   setIsDrawerOpen,
 }) => {
-  const [currentValue, setCurrentValue] = useState(0);
+  const value = pathnameDictionary[pathname];
+  const [currentValue, setCurrentValue] = useState(value);
+
+  useEffect(() => setCurrentValue(pathnameDictionary[pathname]), [pathname]);
 
   const handleClick = (route, tab) => {
     handleNav(route);
@@ -91,6 +98,26 @@ const BaseDrawer = ({
             />
           </ListItem>
         </StyledListWrapper>
+        <Divider />
+        <StyledListWrapper active={currentValue === 5}>
+          <ListItem
+            button
+            key="howTo"
+            onClick={() => handleClick('/how-to', 5)}
+          >
+            <ListItemIcon>{helpIcon}</ListItemIcon>
+            <StyledListItemText
+              active={currentValue === 5}
+              primary="How It Works"
+            />
+          </ListItem>
+        </StyledListWrapper>
+        <StyledListWrapper active={currentValue === 6}>
+          <ListItem button key="stats" onClick={() => handleClick('/stats', 6)}>
+            <ListItemIcon>{statsIcon}</ListItemIcon>
+            <StyledListItemText active={currentValue === 6} primary="Stats" />
+          </ListItem>
+        </StyledListWrapper>
       </StyledList>
     </StyledDrawer>
   );
@@ -100,6 +127,7 @@ BaseDrawer.propTypes = {
   handleNav: T.func,
   isDrawerOpen: T.bool,
   isSignedIn: T.bool,
+  location: T.object.isRequired,
   setIsDrawerOpen: T.func,
 };
 

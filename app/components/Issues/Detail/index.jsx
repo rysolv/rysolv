@@ -2,11 +2,12 @@ import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
 import { BackNav, ConditionalRender } from 'components/base_ui';
-import { CommentCard, NewComment, NoComment } from 'components/MarkdownRender';
+import { NewComment } from 'components/MarkdownRender';
 import UpvotePanel from 'components/Upvote';
 import PaymentPortal from 'containers/Payments';
 import iconDictionary from 'utils/iconDictionary';
 
+import Comments from './Comments';
 import IssueDetailBody from './IssueDetailBody';
 import IssueDetailHeader from './IssueDetailHeader';
 import IssueTopBar from './IssueTopBar';
@@ -14,7 +15,8 @@ import {
   CommentWrapper,
   DetailContainer,
   Divider,
-  EditIssueWrapper,
+  // EditIssueWrapper,
+  EmbedIssueWrapper,
   IssueDetailColumn,
   IssueDetailContainer,
   IssueDetailContentContainer,
@@ -22,18 +24,20 @@ import {
   LeftPanel,
   ManageIssueWrapper,
   SidebarContainer,
-  StyledButton,
+  // StyledButton,
   StyledErrorSuccessBanner,
-  StyledIssueAccountManager,
+  // StyledIssueAccountManager,
+  StyledSecondaryButton,
   TopBarWrapper,
 } from './styledComponents';
 
-const CloseCircleIcon = iconDictionary('closeCircle');
-const OpenCircleIcon = iconDictionary('successOutline');
+// const CloseCircleIcon = iconDictionary('closeCircle');
+const CodeIcon = iconDictionary('code', {}, 'code');
+// const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
-  activeUser: { id: activeUserId, issues },
+  activeUser: { id: activeUserId },
   addWatching,
   alerts: { error, success },
   data,
@@ -53,8 +57,8 @@ const IssueDetail = ({
     username,
   },
   deviceView,
-  dispatchCloseIssue,
-  dispatchEditIssue,
+  // dispatchCloseIssue,
+  // dispatchEditIssue,
   dispatchFetchAttemptList,
   dispatchFetchPullRequestList,
   dispatchFetchWatchList,
@@ -63,79 +67,91 @@ const IssueDetail = ({
   handleClearAlerts,
   handleComment,
   handleIncrement,
-  handleNav,
   handleUpvote,
   isSignedIn,
 }) => {
-  const [displayEditView, setDisplayEditView] = useState(false);
+  // const [displayEditView, setDisplayEditView] = useState(false);
   const [bodyChange, setBodyChange] = useState(body);
   const [languageChange, setLanguageChange] = useState(language);
   const [nameChange, setNameChange] = useState(name);
   const [typeChange, setTypeChange] = useState(type);
-  const handleClose = () => {
-    setDisplayEditView(false);
-    setBodyChange(body);
-    setLanguageChange(language);
-    setNameChange(name);
-    setTypeChange(type);
-  };
+  // const handleClose = () => {
+  //   setDisplayEditView(false);
+  //   setBodyChange(body);
+  //   setLanguageChange(language);
+  //   setNameChange(name);
+  //   setTypeChange(type);
+  // };
 
-  const handleSave = () => {
-    dispatchEditIssue({
-      editRequest: {
-        body: bodyChange,
-        language: languageChange,
-        name: nameChange,
-        type: typeChange,
-      },
-      issueId,
-    });
-  };
+  // const handleSave = () => {
+  //   dispatchEditIssue({
+  //     editRequest: {
+  //       body: bodyChange,
+  //       language: languageChange,
+  //       name: nameChange,
+  //       type: typeChange,
+  //     },
+  //     issueId,
+  //   });
+  // };
 
-  const CloseOpenIssueComponent = (
-    <ConditionalRender
-      Component={
-        <StyledButton
-          disableRipple
-          onClick={() =>
-            dispatchOpenModal({
-              modalState: 'closeIssue',
-              tableData: { issueId },
-            })
-          }
-          open={open}
-        >
-          {CloseCircleIcon}
-          Close Issue
-        </StyledButton>
+  // const CloseOpenIssueComponent = (
+  //   <ConditionalRender
+  //     Component={
+  //       <StyledButton
+  //         disableRipple
+  //         onClick={() =>
+  //           dispatchOpenModal({
+  //             modalState: 'closeIssue',
+  //             tableData: { issueId },
+  //           })
+  //         }
+  //         open={open}
+  //       >
+  //         {CloseCircleIcon}
+  //         Close Issue
+  //       </StyledButton>
+  //     }
+  //     FallbackComponent={
+  //       <StyledButton
+  //         disableRipple
+  //         onClick={() =>
+  //           dispatchCloseIssue({
+  //             issueId,
+  //             shouldClose: false,
+  //             userId: activeUserId,
+  //           })
+  //         }
+  //         open={open}
+  //       >
+  //         {OpenCircleIcon}
+  //         Reopen Issue
+  //       </StyledButton>
+  //     }
+  //     shouldRender={open}
+  //   />
+  // );
+
+  // const EditIssueComponent = (
+  //   <StyledIssueAccountManager
+  //     displayEditView={displayEditView}
+  //     handleClose={handleClose}
+  //     handleSave={handleSave}
+  //     setDisplayEditView={setDisplayEditView}
+  //     type="issue"
+  //   />
+  // );
+
+  const EmbedIssueComponent = props => (
+    <StyledSecondaryButton
+      Icon={CodeIcon}
+      label="Embed"
+      onClick={() =>
+        dispatchOpenIssueModal({
+          modalState: 'embedIssue',
+        })
       }
-      FallbackComponent={
-        <StyledButton
-          disableRipple
-          onClick={() =>
-            dispatchCloseIssue({
-              issueId,
-              shouldClose: false,
-              userId: activeUserId,
-            })
-          }
-          open={open}
-        >
-          {OpenCircleIcon}
-          Reopen Issue
-        </StyledButton>
-      }
-      shouldRender={open}
-    />
-  );
-
-  const EditIssueComponent = (
-    <StyledIssueAccountManager
-      displayEditView={displayEditView}
-      handleClose={handleClose}
-      handleSave={handleSave}
-      setDisplayEditView={setDisplayEditView}
-      type="issue"
+      {...props}
     />
   );
 
@@ -143,27 +159,6 @@ const IssueDetail = ({
     route: `/users/detail/${userId}`,
     username,
   };
-
-  const generateComments = () =>
-    comments.map(comment => {
-      const user = {
-        alt: comment.username,
-        image: comment.profilePic,
-        route: `/users/detail/${comment.userId}`,
-        username: comment.username,
-      };
-      return (
-        <CommentCard
-          key={`${comment.username}-${comment.createdDate}`}
-          body={comment.body}
-          date={comment.createdDate}
-          userProfile={user}
-        />
-      );
-    });
-
-  const commentsDiv =
-    comments && comments.length > 0 ? generateComments() : <NoComment />;
 
   const isDesktop =
     deviceView === 'desktopS' ||
@@ -185,8 +180,9 @@ const IssueDetail = ({
     <Fragment>
       <Divider>Manage Issue</Divider>
       <ManageIssueWrapper>
-        <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
-        {CloseOpenIssueComponent}
+        <EmbedIssueComponent removeMargin />
+        {/* <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
+        {CloseOpenIssueComponent} */}
       </ManageIssueWrapper>
     </Fragment>
   );
@@ -237,7 +233,7 @@ const IssueDetail = ({
             <IssueDetailColumn>
               <IssueDetailHeader
                 data={data}
-                displayEditView={displayEditView}
+                displayEditView={false}
                 nameChange={nameChange}
                 setNameChange={setNameChange}
               />
@@ -247,13 +243,14 @@ const IssueDetail = ({
                   body={body}
                   bodyChange={bodyChange}
                   date={createdDate}
-                  displayEditView={displayEditView}
+                  displayEditView={false}
                   language={language}
                   languageChange={languageChange}
                   repo={repo}
                   setBodyChange={setBodyChange}
                   setLanguageChange={setLanguageChange}
                   setTypeChange={setTypeChange}
+                  type={type}
                   typeChange={typeChange}
                   userProfile={primaryUser}
                 />
@@ -261,16 +258,11 @@ const IssueDetail = ({
 
               <ConditionalRender
                 Component={ManageIssueComponent}
-                shouldRender={
-                  isMobileOrLaptop &&
-                  isSignedIn &&
-                  issues &&
-                  !!issues.find(({ id }) => issueId === id)
-                }
+                shouldRender={isMobileOrLaptop}
               />
 
               <Divider>Comments</Divider>
-              <CommentWrapper>{commentsDiv}</CommentWrapper>
+              <Comments comments={comments} />
 
               <ConditionalRender
                 Component={
@@ -291,25 +283,27 @@ const IssueDetail = ({
           </IssueDetailContentContainer>
         </IssueDetailWrapper>
         <SidebarContainer>
-          <ConditionalRender
+          <PaymentPortal
+            fundedAmount={fundedAmount}
+            isSignedIn={isSignedIn}
+            issueId={issueId}
+            open={open}
+          />
+          <EmbedIssueWrapper>
+            <EmbedIssueComponent />
+          </EmbedIssueWrapper>
+          {/* <ConditionalRender
             Component={EditIssueComponent}
             shouldRender={
               isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
             }
-          />
-          <PaymentPortal
-            fundedAmount={fundedAmount}
-            handleNav={handleNav}
-            isSignedIn={isSignedIn}
-            issueId={issueId}
-            open={open}
           />
           <ConditionalRender
             Component={CloseOpenIssueComponent}
             shouldRender={
               isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
             }
-          />
+          /> */}
         </SidebarContainer>
       </DetailContainer>
     </IssueDetailContainer>
@@ -325,8 +319,8 @@ IssueDetail.propTypes = {
   }),
   data: T.object,
   deviceView: T.string,
-  dispatchCloseIssue: T.func,
-  dispatchEditIssue: T.func,
+  // dispatchCloseIssue: T.func,
+  // dispatchEditIssue: T.func,
   dispatchFetchAttemptList: T.func,
   dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
@@ -335,7 +329,6 @@ IssueDetail.propTypes = {
   handleClearAlerts: T.func,
   handleComment: T.func,
   handleIncrement: T.func,
-  handleNav: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
 };

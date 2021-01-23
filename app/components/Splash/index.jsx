@@ -1,48 +1,26 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
+import { ImageWrapper } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
   ButtonWrapper,
-  CircleOne,
-  CircleThree,
-  CircleTwo,
-  CircleWrapper,
   ContentWrapper,
   CreateAccountButton,
-  Image,
-  ImageNavBar,
-  ImageWrapper,
   LogoText,
-  Row,
-  RowWrapper,
   SplashBackground,
   SplashContent,
   TagLine,
 } from './styledComponents';
 
-const ArrowIcon = iconDictionary('viewAll');
+const ArrowIcon = iconDictionary('navigateNext');
 
 const Splash = ({ handleNav }) => (
   <Fragment>
     <SplashBackground>
       <SplashContent>
-        <ImageWrapper>
-          <ImageNavBar>
-            <CircleWrapper>
-              <CircleOne />
-              <CircleTwo />
-              <CircleThree />
-            </CircleWrapper>
-            <RowWrapper>
-              <Row />
-              <Row />
-              <Row />
-            </RowWrapper>
-          </ImageNavBar>
-          <Image src="https://rysolv.s3.us-east-2.amazonaws.com/issueExampleLandingPage.png" />
-        </ImageWrapper>
+        <ImageWrapper image="https://rysolv.s3.us-east-2.amazonaws.com/issueExampleLandingPage.png" />
         <ContentWrapper>
           <LogoText>rysolv</LogoText>
           <TagLine>

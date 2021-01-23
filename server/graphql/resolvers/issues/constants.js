@@ -9,6 +9,7 @@ const newIssueObject = (issueId, issueInput) => ({
   contributor_id: issueInput.contributor, // contributor
   created_date: new Date(), // created_date
   funded_amount: issueInput.fundedAmount || 0, // funded_amount
+  github_comment_count: issueInput.githubCommentCount,
   id: issueId, // id
   is_manual: issueInput.isManual,
   language: issueInput.language || [], // language
@@ -18,7 +19,7 @@ const newIssueObject = (issueId, issueInput) => ({
   organization_id: issueInput.organizationId, // organization_id
   rep: issueInput.rep || 25, // rep
   repo: issueInput.repo, // repo
-  type: issueInput.type || 'Bug', // bug
+  type: issueInput.type, // bug
 });
 
 const newOrganizationObject = async organizationInput => {
@@ -26,7 +27,6 @@ const newOrganizationObject = async organizationInput => {
   const { uploadUrl } = await uploadImage(organizationInput.organizationLogo);
 
   return {
-    contributors: [], // contributors
     created_date: new Date(), // created_date
     description: organizationInput.organizationDescription, // description
     id: organizationId, // id
@@ -37,7 +37,6 @@ const newOrganizationObject = async organizationInput => {
     name: organizationInput.organizationName, // name
     organization_url: organizationInput.organizationUrl || '', // url
     owner_id: organizationInput.contributor, // owner_id
-    preferred_languages: organizationInput.preferred_languages || [], // languages
     repo_url: organizationInput.organizationRepo, // repo
     total_funded: organizationInput.totalFunded || 0, // funded
     verified: organizationInput.verified || false, // verified

@@ -1,4 +1,5 @@
 const pool = require('../../connect');
+const { CustomError } = require('../../helpers');
 
 const upvoteIssue = async ({ issueId, userId }) => {
   // Pulling in Client to use transaction
@@ -11,9 +12,11 @@ const upvoteIssue = async ({ issueId, userId }) => {
     const { rep, upvotes } = oneUser;
 
     if (rep - 1 < 0)
-      throw new Error('You do not have enough points to upvote this issue.');
+      throw new CustomError(
+        `You do not have enough points to upvote this issue.`,
+      );
     if (upvotes.includes(issueId))
-      throw new Error('You have already upvoted this issue.');
+      throw new CustomError(`You have already upvoted this issue.`);
 
     // Open transaction
     await client.query('BEGIN');

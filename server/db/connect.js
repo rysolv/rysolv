@@ -1,24 +1,51 @@
-/* eslint-disable no-console */
+/* eslint-disable consistent-return, no-console */
 const { Pool } = require('pg');
 require('dotenv').config();
 
-console.log('Connected to DB');
+const switchCredentials = () => {
+  switch (process.env.NODE_ENV) {
+    case 'development':
+      return {
+        database: process.env.DB_NAME_DEV,
+        host: process.env.DB_HOST_DEV,
+        password: process.env.DB_PASSWORD_DEV,
+        port: process.env.DB_PORT_DEV,
+        user: process.env.DB_USER_DEV,
+      };
+    case 'local':
+      return {
+        database: process.env.DB_NAME_LOCAL,
+        host: process.env.DB_HOST_LOCAL,
+        password: process.env.DB_PASSWORD_LOCAL,
+        port: process.env.DB_PORT_LOCAL,
+        user: process.env.DB_USER_LOCAL,
+      };
+    case 'production':
+      return {
+        database: process.env.DB_NAME,
+        host: process.env.DB_HOST,
+        password: process.env.DB_PASSWORD,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+      };
+    default:
+      break;
+  }
+};
 
-const production = process.env.NODE_ENV === 'production';
+const poolCredentials = switchCredentials();
 
 const pool = new Pool({
-  database: production ? process.env.DB_NAME : process.env.DB_NAME_DEV,
-  host: production ? process.env.DB_HOST : process.env.DB_HOST_DEV,
-  password: production ? process.env.DB_PASSWORD : process.env.DB_PASSWORD_DEV,
-  port: production ? process.env.DB_PORT : process.env.DB_PORT_DEV,
-  user: production ? process.env.DB_USER : process.env.DB_USER_DEV,
+  ...poolCredentials,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
   max: 20,
 });
 
+console.log('Connected to DB:', pool.options.database);
+
 pool.on('connect', () => {
-  console.log('Connected to db');
+  console.log('Client connected to db');
 });
 
 pool.on('error', (err, client) => {

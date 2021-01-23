@@ -1,4 +1,4 @@
-const calculateTotalAmount = amount => (amount * 103.6).toFixed();
+const calculateTotalAmount = amount => (amount * 103 + 30).toFixed();
 
 const responseMessages = {
   unreachable:
