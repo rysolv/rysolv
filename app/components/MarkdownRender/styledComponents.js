@@ -28,7 +28,7 @@ export const Body = styled.div`
     background: white;
     color: ${textColor};
     font-family: inherit;
-    width: 100%;
+    max-width: 100%;
   }
 
   a {
