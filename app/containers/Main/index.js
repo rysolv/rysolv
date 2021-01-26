@@ -66,7 +66,6 @@ class Main extends React.PureComponent {
       handleDelete,
       handleNav,
       handleResetState,
-      handleSignin,
       handleSignout,
       isModalOpen,
       isSignedIn,
@@ -175,7 +174,6 @@ class Main extends React.PureComponent {
             deviceView={deviceView}
             handleNav={handleNav}
             handleResetState={handleResetState}
-            handleSignin={handleSignin}
             handleSignout={handleSignout}
             isSignedIn={isSignedIn}
             location={location}

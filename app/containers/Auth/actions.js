@@ -7,7 +7,12 @@ import {
   GITHUB_SIGN_IN_SUCCESS,
   GITHUB_SIGN_IN,
   RESEND_SIGN_UP,
+  RESET_PASSWORD_FAILURE,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD,
   RESET_ROUTE,
+  SEND_LINK_RESPONSE,
+  SEND_LINK,
   SIGN_IN_FAILURE,
   SIGN_IN_SUCCESS,
   SIGN_IN,
@@ -77,8 +82,40 @@ export function resendSignUp(payload) {
   };
 }
 
+export function resetPasswordFailure(payload) {
+  return {
+    payload,
+    type: RESET_PASSWORD_FAILURE,
+  };
+}
+
+export function resetPasswordSuccess(payload) {
+  return {
+    payload,
+    type: RESET_PASSWORD_SUCCESS,
+  };
+}
+
+export function resetPassword(payload) {
+  return {
+    payload,
+    type: RESET_PASSWORD,
+  };
+}
+
 export function resetRoute() {
   return { type: RESET_ROUTE };
+}
+
+export function sendLinkResponse() {
+  return { type: SEND_LINK_RESPONSE };
+}
+
+export function sendLink(payload) {
+  return {
+    payload,
+    type: SEND_LINK,
+  };
 }
 
 export function signInFailure(payload) {

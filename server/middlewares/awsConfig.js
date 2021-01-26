@@ -83,6 +83,21 @@ const deleteCognitoUser = ({ email }) =>
     });
   });
 
+// Generates a verification code and sends it to the user
+const forgotCognitoPassword = ({ email }) =>
+  new Promise((resolve, reject) => {
+    const cognitoUser = getCognitoUser(email);
+
+    cognitoUser.forgotPassword({
+      onSuccess: result => {
+        resolve(result);
+      },
+      onFailure: error => {
+        reject(error);
+      },
+    });
+  });
+
 // Create new user in cognito (return userId)
 const registerCognitoUser = ({ email, password }) =>
   new Promise((resolve, reject) => {
@@ -109,6 +124,21 @@ const resendConfirmationCode = ({ email }) =>
       } else {
         resolve(result);
       }
+    });
+  });
+
+// Reset cognito password
+const resetCognitoPassword = ({ code, email, password }) =>
+  new Promise((resolve, reject) => {
+    const cognitoUser = getCognitoUser(email);
+
+    cognitoUser.confirmPassword(code, password, {
+      onFailure: error => {
+        reject({ alert: error.message });
+      },
+      onSuccess: result => {
+        resolve(result);
+      },
     });
   });
 
@@ -169,8 +199,10 @@ const verifyCognitoEmail = ({ code, email }) =>
 module.exports = {
   authenticateCognitoUser,
   deleteCognitoUser,
+  forgotCognitoPassword,
   registerCognitoUser,
   resendConfirmationCode,
+  resetCognitoPassword,
   updateCognitoEmail,
   uploadFileS3,
   verifyCognitoEmail,

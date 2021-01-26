@@ -1,19 +1,24 @@
+import React from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 import {
   ErrorSuccessBanner,
   PrimaryAsyncButton,
   PrimaryButton,
+  SecondaryButton,
 } from 'components/base_ui';
 import {
   borderColor,
   defaultFontFamily,
   defaultFontSize,
   detailFontSize,
+  errorRed,
   hoverLinkColor,
   lightBlueColor,
   lightGreyColor,
+  successGreen,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -89,6 +94,10 @@ export const SigninWrapper = styled.div`
   margin-top: 5rem;
   width: 100%;
 
+  &:focus {
+    outline: none;
+  }
+
   ${mobile} {
     margin-bottom: 5rem;
   }
@@ -117,16 +126,43 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   width: 95%;
 `;
 
-export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
+export const StyledLink = styled(Link)`
+  color: ${hoverLinkColor};
+  margin-top: -1.5rem;
+  padding-right: 1rem;
+  text-align: right;
+
+  &:hover {
+    color: ${hoverLinkColor};
+    text-decoration: underline;
+  }
+`;
+
+export const StyledPrimaryAsyncButton = styled(
+  ({ hasSecondaryButton, ...restProps }) => (
+    <PrimaryAsyncButton {...restProps} />
+  ),
+)`
   align-self: center;
-  min-width: 50%;
-  width: 95%;
+  min-width: ${({ hasSecondaryButton }) =>
+    hasSecondaryButton ? 'inherit' : '50%'};
+  width: ${({ hasSecondaryButton }) => (hasSecondaryButton ? errorRed : '95%')};
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
   align-self: center;
   min-width: 50%;
   width: 95%;
+`;
+
+export const StyledSecondaryButton = styled(SecondaryButton)`
+  background-color: white;
+  border: 0.1rem solid ${lightBlueColor};
+  color: ${lightBlueColor};
+
+  &:hover {
+    background-color: white;
+  }
 `;
 
 export const SubText = styled.div`
@@ -145,7 +181,9 @@ export const SubText = styled.div`
 
 export const Title = styled.div`
   align-self: center;
-  color: ${textColor};
+  color: ${({ isError, isSuccess }) =>
+    // eslint-disable-next-line no-nested-ternary
+    isError ? errorRed : isSuccess ? successGreen : textColor};
   font-size: 2rem;
   margin-bottom: 1rem;
 `;

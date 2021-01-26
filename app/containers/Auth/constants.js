@@ -10,7 +10,14 @@ export const GITHUB_SIGN_IN_SUCCESS = 'app/Auth/GITHUB_SIGN_IN_SUCCESS';
 
 export const RESEND_SIGN_UP = 'app/Auth/RESEND_SIGN_UP';
 
+export const RESET_PASSWORD = 'app/Auth/RESET_PASSWORD';
+export const RESET_PASSWORD_FAILURE = 'app/Auth/RESET_PASSWORD_FAILURE';
+export const RESET_PASSWORD_SUCCESS = 'app/Auth/RESET_PASSWORD_SUCCESS';
+
 export const RESET_ROUTE = 'app/Auth/RESET_ROUTE';
+
+export const SEND_LINK = 'app/Auth/SEND_LINK';
+export const SEND_LINK_RESPONSE = 'app/Auth/SEND_LINK_RESPONSE';
 
 export const SIGN_IN = 'app/Auth/SIGN_IN';
 export const SIGN_IN_FAILURE = 'app/Auth/SIGN_IN_FAILURE';

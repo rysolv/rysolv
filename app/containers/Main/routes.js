@@ -57,6 +57,7 @@ const Routes = () => (
     <Route exact path="/organizations/add" component={PrivateOrganizationsAdd} />
     <Route exact path="/organizations/detail/:id" component={PublicOrganizationsDetail} />
     <Route exact path="/organizations/search/:searchValue" component={PublicOverview} />
+    <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
     <Route exact path="/settings/:view?" component={PrivateSettings} />
     <Route exact path="/stats" component={PublicStats} />
