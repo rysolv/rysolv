@@ -14,7 +14,7 @@ import {
 import { ButtonGroup, DescriptionText } from './styledComponents';
 
 const ResetPassword = ({
-  data: { verificationCode, password, verifyPassword },
+  data: { password, verificationCode, verifyPassword },
   dispatchIncrementResetStep,
   handleInputChange,
   handleResetPassword,

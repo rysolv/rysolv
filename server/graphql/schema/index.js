@@ -365,11 +365,11 @@ module.exports = buildSchema(`
 
     resetPassword(code: String!, email: String!, password: String!): EventResponse!
 
-    sendLink(email: String!): EventResponse!
-
     searchIssues(value: String!): [Issue]!
     searchOrganizations(value: String!): [Organization]!
     searchUsers(value: String!): [User]!
+
+    sendLink(email: String!): EventResponse!
   }
 
   type RootMutation {
