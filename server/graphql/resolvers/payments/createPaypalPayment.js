@@ -14,7 +14,7 @@ const {
 
 const createPaypalPayment = async (
   { amount, email, issueId },
-  { authError, userId },
+  { authError, userId = null },
 ) => {
   try {
     if (authError) throw new CustomError(authError);
@@ -32,6 +32,7 @@ const createPaypalPayment = async (
         fundedValue: amount,
         issueId,
         organizationId,
+        userId,
       };
       await createActivity({ activityInput });
 

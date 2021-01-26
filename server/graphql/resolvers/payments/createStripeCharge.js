@@ -23,7 +23,7 @@ const {
 
 const createStripeCharge = async (
   { amount, email, issueId, token },
-  { authError, userId },
+  { authError, userId = null },
 ) => {
   try {
     if (authError) throw new CustomError(authError);
@@ -49,6 +49,7 @@ const createStripeCharge = async (
         fundedValue: amount,
         issueId,
         organizationId,
+        userId,
       };
       await createActivity({ activityInput });
 
