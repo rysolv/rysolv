@@ -363,9 +363,13 @@ module.exports = buildSchema(`
     oneUser(userId: ID!): UserResult!
     oneUserSignUp(email: String!): UserResult!
 
+    resetPassword(code: String!, email: String!, password: String!): EventResponse!
+
     searchIssues(value: String!): [Issue]!
     searchOrganizations(value: String!): [Organization]!
     searchUsers(value: String!): [User]!
+
+    sendLink(email: String!): EventResponse!
   }
 
   type RootMutation {

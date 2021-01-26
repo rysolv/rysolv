@@ -14,6 +14,7 @@ import {
   InputFormWrapper,
   SigninWrapper,
   StyledErrorSuccessBanner,
+  StyledLink,
   StyledPrimaryAsyncButton,
   SubText,
   Title,
@@ -82,6 +83,7 @@ const Signin = ({
           }
           value={password.value}
         />
+        <StyledLink to="/password-reset">Forgot password?</StyledLink>
         <StyledPrimaryAsyncButton
           disabled={signInDisabled}
           label="Sign in"

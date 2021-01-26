@@ -21,6 +21,14 @@ const oneUserError = `Something went wrong when getting this user.`;
 
 const remainingBalanceError = `Your account cannot be deleted with an outstanding balance.`;
 
+const resetPasswordError = `Something went wrong when resetting your password.`;
+
+const resetPasswordSuccess = `Your password has been successfully reset.`;
+
+const sendLinkError = `Something went wrong when sending a verification code to your email address.`;
+
+const sendLinkSuccess = `A verification code has been sent to your email address.`;
+
 const signInError = `Something went wrong when signing you in. Please try again later.`;
 
 const signOutError = `Something went wrong when signing you out.`;
@@ -51,6 +59,10 @@ module.exports = {
   githubSignUpError,
   oneUserError,
   remainingBalanceError,
+  resetPasswordError,
+  resetPasswordSuccess,
+  sendLinkError,
+  sendLinkSuccess,
   signInError,
   signOutError,
   signOutSuccess,

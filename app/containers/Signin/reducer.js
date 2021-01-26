@@ -1,14 +1,25 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
 import {
+  INCREMENT_RESET_STEP,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  RESET_PASSWORD_STATE,
   RESET_STATE,
 } from './constants';
 
 export const initialState = {
   alerts: { error: false, success: false },
+  resetPassword: {
+    password: { error: '', value: '' },
+    verificationCode: { error: '', value: '' },
+    verifyPassword: { error: '', value: '' },
+  },
+  resetStep: 1,
+  sendLink: {
+    email: { error: '', value: '' },
+  },
   signIn: {
     email: { error: '', value: '' },
     password: { error: '', value: '' },
@@ -30,6 +41,11 @@ export const initialState = {
 /* eslint-disable consistent-return, default-case, no-param-reassign */
 const signinReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case INCREMENT_RESET_STEP: {
+      const { step } = payload;
+      draft.resetStep = step;
+      break;
+    }
     case INCREMENT_STEP: {
       const { step } = payload;
       draft.step = step;
@@ -47,6 +63,11 @@ const signinReducer = produce((draft, { payload, type }) => {
       fields.forEach(field => {
         draft[form][field].error = errors[field] || '';
       });
+      break;
+    }
+    case RESET_PASSWORD_STATE: {
+      draft.alerts = initialState.alerts;
+      draft.resetPassword = initialState.resetPassword;
       break;
     }
     case RESET_STATE: {

@@ -10,12 +10,7 @@ import { getCookie } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import {
-  fetchActiveUser,
-  fetchActiveUserFailure,
-  signIn,
-  signUp,
-} from './actions';
+import { fetchActiveUser, fetchActiveUserFailure } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectAuth, makeSelectAuthLoading } from './selectors';
@@ -25,8 +20,6 @@ export default function withAuth(config, Component) {
     authenticateLoading,
     dispatchFetchActiveUser,
     dispatchFetchActiveUserFailure,
-    handleSignIn,
-    handleSignUp,
     isSignedIn,
     loading,
     ...restProps
@@ -59,8 +52,6 @@ export default function withAuth(config, Component) {
     authenticateLoading: T.bool,
     dispatchFetchActiveUser: T.func,
     dispatchFetchActiveUserFailure: T.func,
-    handleSignIn: T.func,
-    handleSignUp: T.func,
     isSignedIn: T.bool.isRequired,
     loading: T.bool,
   };
@@ -80,8 +71,6 @@ export default function withAuth(config, Component) {
      */
     dispatchFetchActiveUser: () => dispatch(fetchActiveUser()),
     dispatchFetchActiveUserFailure: () => dispatch(fetchActiveUserFailure()),
-    handleSignIn: payload => dispatch(signIn(payload)),
-    handleSignUp: payload => dispatch(signUp(payload)),
   });
 
   const withConnect = connect(

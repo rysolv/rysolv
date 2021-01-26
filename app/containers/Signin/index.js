@@ -20,7 +20,11 @@ import injectReducer from 'utils/injectReducer';
 import { resetState } from './actions';
 import reducer from './reducer';
 import { makeSelectSignIn } from './selectors';
-import { signInDictionary, signUpDictionary } from './stepDictionary';
+import {
+  passwordResetComponent,
+  signInDictionary,
+  signUpDictionary,
+} from './stepDictionary';
 
 const Signin = ({
   activeUser,
@@ -37,7 +41,6 @@ const Signin = ({
 }) => {
   const [viewToRender, setViewToRender] = useState(null);
   useEffect(() => dispatchResetState, []);
-
   useEffect(() => {
     if (isSignInRoute) {
       setViewToRender(<Redirect to="/issues" />);
@@ -60,9 +63,16 @@ const Signin = ({
     }
   }, [isSignedIn, loading]);
   const view = match.path.substr(1);
-  const dictionaryToUse =
-    view === 'signin' ? signInDictionary : signUpDictionary;
-  const ComponentToRender = dictionaryToUse[step];
+  const dictionaryToUse = {
+    'password-reset': passwordResetComponent,
+    signin: signInDictionary,
+    signup: signUpDictionary,
+  };
+  const ComponentToRender =
+    view === 'password-reset'
+      ? dictionaryToUse[view]
+      : dictionaryToUse[view][step];
+
   return (
     <ConditionalRender
       Component={ComponentToRender}

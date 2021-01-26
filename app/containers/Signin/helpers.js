@@ -1,6 +1,13 @@
 import { validate } from 'utils/validate';
 
 const validationPropsByField = {
+  resetPassword: {
+    password: { type: 'passwordInput' },
+    verifyPassword: { type: 'verifyInput' },
+  },
+  sendLink: {
+    email: { type: 'emailInput' },
+  },
   signIn: {
     email: { type: 'emailInput' },
   },
