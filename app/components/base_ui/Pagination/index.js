@@ -12,8 +12,11 @@ const Pagination = ({ Component, propsToPassDown }) => {
     path,
     ...restProps
   } = propsToPassDown;
-  const page = getPage();
+
   const perPage = 15;
+  const count = Math.ceil(length / perPage);
+  const page = getPage({ count });
+
   const [currentPage, setCurrentPage] = useState(page);
 
   useEffect(() => {
@@ -25,7 +28,6 @@ const Pagination = ({ Component, propsToPassDown }) => {
     setCurrentPage(newPage);
   }, [length, page]);
 
-  const count = Math.ceil(length / perPage);
   const slice = data.slice(
     currentPage * perPage,
     currentPage * perPage + perPage,
