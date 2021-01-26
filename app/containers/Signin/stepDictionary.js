@@ -1,6 +1,9 @@
+import PasswordReset from './PasswordReset';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Verify from './Verify';
+
+export const passwordResetComponent = PasswordReset;
 
 export const signInDictionary = {
   1: SignIn,

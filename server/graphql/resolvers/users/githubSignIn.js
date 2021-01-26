@@ -92,7 +92,7 @@ const githubSignIn = async ({ code, isSignIn }, { res }) => {
       });
 
       sendEmail({
-        body: { userId: id },
+        body: { userId },
         path: '/s/users/welcome',
       });
 

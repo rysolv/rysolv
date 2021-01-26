@@ -363,6 +363,10 @@ module.exports = buildSchema(`
     oneUser(userId: ID!): UserResult!
     oneUserSignUp(email: String!): UserResult!
 
+    resetPassword(code: String!, email: String!, password: String!): EventResponse!
+
+    sendLink(email: String!): EventResponse!
+
     searchIssues(value: String!): [Issue]!
     searchOrganizations(value: String!): [Organization]!
     searchUsers(value: String!): [User]!

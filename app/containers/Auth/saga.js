@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { resetState } from 'containers/Main/actions';
-import { incrementStep } from 'containers/Signin/actions';
+import { incrementResetStep, incrementStep } from 'containers/Signin/actions';
 import { post } from 'utils/request';
 
 import {
@@ -11,6 +11,8 @@ import {
   githubSignInError,
   githubSignUpError,
   RESEND_SIGN_UP,
+  RESET_PASSWORD,
+  SEND_LINK,
   SIGN_IN,
   SIGN_OUT,
   SIGN_UP,
@@ -26,6 +28,9 @@ import {
   githubSignInFailure,
   githubSignInSuccess,
   resendSignUp,
+  resetPasswordFailure,
+  resetPasswordSuccess,
+  sendLinkResponse,
   signInFailure,
   signInSuccess,
   signOutResponse,
@@ -178,6 +183,63 @@ export function* resendSignUpSaga({ payload }) {
     const { message } = error;
     const messageToRender = message || signInError;
     yield put(signInFailure({ error: { message: messageToRender } }));
+  }
+}
+
+export function* resetPasswordSaga({ payload }) {
+  const { email, password, verificationCode } = payload;
+  const query = `
+    query{
+      resetPassword(code: "${verificationCode}", email: "${email}", password: "${password}")  {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        resetPassword: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(incrementResetStep({ step: 3 }));
+    yield put(resetPasswordSuccess({ message }));
+  } catch (error) {
+    yield put(incrementResetStep({ step: 4 }));
+    yield put(resetPasswordFailure({ error: { message: error } }));
+  }
+}
+
+export function* sendLinkSaga({ payload }) {
+  const { email } = payload;
+  const query = `
+    query{
+      sendLink(email: "${email}")  {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    yield call(post, '/graphql', graphql);
+    yield put(incrementResetStep({ step: 2 }));
+    yield put(sendLinkResponse());
+  } catch (error) {
+    yield put(incrementResetStep({ step: 2 }));
+    yield put(sendLinkResponse());
   }
 }
 
@@ -345,6 +407,8 @@ export default function* watcherSaga() {
   yield takeLatest(FETCH_ACTIVE_USER, fetchActiveUserSaga);
   yield takeLatest(GITHUB_SIGN_IN, githubSignInSaga);
   yield takeLatest(RESEND_SIGN_UP, resendSignUpSaga);
+  yield takeLatest(RESET_PASSWORD, resetPasswordSaga);
+  yield takeLatest(SEND_LINK, sendLinkSaga);
   yield takeLatest(SIGN_IN, signInSaga);
   yield takeLatest(SIGN_OUT, signOutSaga);
   yield takeLatest(SIGN_UP, signUpSaga);
