@@ -49,6 +49,7 @@ const createStripeCharge = async (
         fundedValue: amount,
         issueId,
         organizationId,
+        userId: userId || null,
       };
       await createActivity({ activityInput });
 
