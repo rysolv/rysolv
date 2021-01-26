@@ -120,9 +120,10 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SIGN_OUT_RESPONSE: {
-      const tempState = { ...initialState };
-      tempState.loading.authenticateUser = false;
-      return tempState;
+      return {
+        ...initialState,
+        loading: { auth: false, authenticateUser: false },
+      };
     }
     case SIGN_OUT: {
       draft.loading.auth = true;
