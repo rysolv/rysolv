@@ -11,9 +11,10 @@ const Organizations = ({
   alerts: { error, success },
   data,
   handleClearAlerts,
+  path,
 }) => {
   const hasOrganizations = data.length > 0 && !data.includes(null);
-  const propsToPassDown = { data };
+  const propsToPassDown = { data, path };
   const viewToRender = hasOrganizations ? (
     <Pagination
       Component={OrganizationCard}
@@ -41,6 +42,7 @@ Organizations.propTypes = {
   }).isRequired,
   data: T.array.isRequired,
   handleClearAlerts: T.func.isRequired,
+  path: T.string.isRequired,
 };
 
 export default Organizations;

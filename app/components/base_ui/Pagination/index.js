@@ -1,37 +1,53 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
+import { getPage } from './helpers';
 import { Results, StyledPagination } from './styledComponents';
 
 const Pagination = ({ Component, propsToPassDown }) => {
-  const { data, ...restProps } = propsToPassDown;
-  const { length } = data;
+  const {
+    data,
+    data: { length },
+    handleNav,
+    path,
+    ...restProps
+  } = propsToPassDown;
+
   const perPage = 15;
-  const [currentPage, setCurrentPage] = useState(0);
+  const count = Math.ceil(length / perPage);
+  const page = getPage({ count });
+
+  const [currentPage, setCurrentPage] = useState(page);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
   useEffect(() => {
-    setCurrentPage(0);
-  }, [length]);
+    const newPage = page > 0 ? page - 1 : 0;
+    setCurrentPage(newPage);
+  }, [length, page]);
 
-  const count = Math.ceil(length / perPage);
   const slice = data.slice(
     currentPage * perPage,
     currentPage * perPage + perPage,
   );
+
+  const handleChangePage = (e, value) => {
+    const newPage = value > 0 ? value - 1 : 0;
+    handleNav(`${path}?page=${value}`);
+    setCurrentPage(newPage);
+  };
   return (
     <Fragment>
       <Results>
         {length} {length === 1 ? 'Result' : 'Results'}
       </Results>
-      <Component data={slice} {...restProps} />
+      <Component data={slice} handleNav={handleNav} {...restProps} />
       <StyledPagination
         count={count}
         shape="rounded"
-        onChange={(e, value) => setCurrentPage(value - 1)}
+        onChange={(e, value) => handleChangePage(e, value)}
       />
     </Fragment>
   );

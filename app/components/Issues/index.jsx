@@ -21,6 +21,7 @@ const Issues = ({
   handleUpvote,
   height,
   isSignedIn,
+  path,
 }) => {
   const hasData = data.length > 0 && !data.includes(null);
   const propsToPassDown = {
@@ -35,6 +36,7 @@ const Issues = ({
     handleUpvote,
     height,
     isSignedIn,
+    path,
   };
   const viewToRender = hasData ? (
     <Pagination Component={IssueCard} propsToPassDown={propsToPassDown} />
@@ -70,6 +72,7 @@ Issues.propTypes = {
   handleUpvote: T.func,
   height: T.number.isRequired,
   isSignedIn: T.bool,
+  path: T.string.isRequired,
 };
 
 export default Issues;

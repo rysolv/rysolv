@@ -53,9 +53,13 @@ const IssuesOverview = ({
   isSignedIn,
   issues,
   loading,
-  params: { searchValue },
+  match,
   upvoteLoading,
 }) => {
+  const {
+    params: { searchValue },
+    path,
+  } = match;
   useEffect(() => dispatchResetState, []);
 
   useEffect(() => {
@@ -92,6 +96,7 @@ const IssuesOverview = ({
         handleUpvote,
         height,
         isSignedIn,
+        path,
       }}
     />
   );
@@ -119,7 +124,7 @@ IssuesOverview.propTypes = {
   isSignedIn: T.bool,
   issues: T.array,
   loading: T.bool,
-  params: T.object,
+  match: T.object.isRequired,
   upvoteLoading: T.bool,
 };
 
