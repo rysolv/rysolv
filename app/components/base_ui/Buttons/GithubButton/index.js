@@ -21,7 +21,7 @@ const GithubButton = ({ isSignIn }) => {
   const label = isSignIn ? 'Sign in with Github' : 'Sign up with Github';
   return (
     <StyledGithubButton
-      href={`https://github.com/login/oauth/authorize?scope=user&client_id=${clientId}`}
+      href={`https://github.com/login/oauth/authorize?scope=user:email%20read:user&client_id=${clientId}`}
     >
       {GithubIcon}
       <LabelWrapper>{label}</LabelWrapper>
