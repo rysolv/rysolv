@@ -292,7 +292,8 @@ const requestGithubUser = async credentials => {
     access_token,
   );
   const emailList = await requestGithubUserEmail(access_token);
-  const [{ email: secondaryEmail }] = emailList.filter(
+  const emailArray = Array.isArray(emailList) ? emailList : [];
+  const [{ email: secondaryEmail }] = emailArray.filter(
     ({ primary }) => primary === true,
   );
   const fullName = name || '';
