@@ -53,7 +53,8 @@ const Overview = ({
   handleChangeOrganizationSearch,
   handleChangeUserFilter,
   handleChangeUserSearch,
-  match: { params, path },
+  match,
+  match: { path },
   organizationOptions,
 }) => {
   const [height, setHeight] = useState(0);
@@ -121,7 +122,7 @@ const Overview = ({
       <ContentContainer>
         <ComponentContainer>
           <SearchHeader {...headerProps[formattedPath]} />
-          <Component height={height} params={params} />
+          <Component height={height} match={match} />
         </ComponentContainer>
 
         <FilterContainer id="filter-container">
