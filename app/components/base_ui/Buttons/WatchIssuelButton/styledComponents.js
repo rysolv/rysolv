@@ -34,6 +34,10 @@ export const StyledWatchIssueButton = styled.button`
     box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   }
 
+  &:disabled {
+    box-shadow: none;
+  }
+
   &:focus {
     outline: 0;
   }
