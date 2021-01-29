@@ -63,6 +63,8 @@ const existingOrganizationError = `This organization already exists.`;
 
 const getIssuesError = `Something went wrong when getting issues.`;
 
+const getFilterError = `Something went wrong when getting filter criteria.`;
+
 const importIssueError = `Something went wrong when importing this issue.`;
 
 const oneIssueError = `Something went wrong when getting this issue.`;
@@ -82,6 +84,7 @@ module.exports = {
   createOrganizationError,
   existingIssueError,
   existingOrganizationError,
+  getFilterError,
   getIssuesError,
   importIssueError,
   newIssueObject,

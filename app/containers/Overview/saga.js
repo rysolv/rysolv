@@ -11,12 +11,17 @@ import { FETCH_ORGANIZATION_OPTIONS } from './constants';
 export function* fetchOrganizationOptionsSaga() {
   const query = `
     query {
-      getOrganizations {
+      getFilter {
         __typename
-        ... on OrganizationArray {
-          organizations {
-            name
-          }
+        ... on Filter {
+          languageArray
+          unfundedIssues
+          closedIssues
+          organizations
+          fundedIssues
+          maxBounty
+          featureTag
+          bugTag
         }
         ... on Error {
           message
@@ -27,11 +32,14 @@ export function* fetchOrganizationOptionsSaga() {
   try {
     const graphql = JSON.stringify({ query });
     const {
-      data: {
-        getOrganizations: { organizations },
-      },
+      data: { getFilter },
     } = yield call(post, '/graphql', graphql);
-    yield put(fetchOrganizationOptionsSuccess({ organizations }));
+    console.log(getFilter);
+    yield put(
+      fetchOrganizationOptionsSuccess({
+        organizations: getFilter.organizations,
+      }),
+    );
   } catch (error) {
     yield put(fetchOrganizationOptionsFailure());
   }
