@@ -10,10 +10,10 @@ const submitAccountDepositUser = async ({ amount, platform, userId }) => {
     await client.query('BEGIN');
 
     const queryText = `
-    UPDATE users
-    SET balance = balance + $1
-    WHERE id = $2
-    RETURNING *
+      UPDATE users
+      SET balance = balance + $1
+      WHERE id = $2
+      RETURNING *
   `;
     const { rows } = await singleQuery({ queryText, values: [amount, userId] });
     const [oneRow] = rows;

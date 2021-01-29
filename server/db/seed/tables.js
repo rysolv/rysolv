@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 const { mapQueryPrint, singleQuery } = require('../baseQueries');
 
 // Import schemas
@@ -52,13 +51,13 @@ const alterTables = async () => {
 const createTables = async () => {
   await singleQuery({ queryText: createActivityTable });
   await singleQuery({ queryText: createAttemptingTable });
-  await singleQuery({ queryText: createPaymentsTable });
   await singleQuery({ queryText: createCommentsTable });
   await singleQuery({ queryText: createCronActivityTable });
   await singleQuery({ queryText: createFundingsTable });
   await singleQuery({ queryText: createIssuesTable });
   await singleQuery({ queryText: createLanguagesTable });
   await singleQuery({ queryText: createOrganizationsTable });
+  await singleQuery({ queryText: createPaymentsTable });
   await singleQuery({ queryText: createPullRequestsTable });
   await singleQuery({ queryText: createUsersTable });
   await singleQuery({ queryText: createWatchingTable });
@@ -74,7 +73,9 @@ const dropAllTables = async () => {
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS funding cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS issues cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS languages cascade' });
-  await singleQuery({ queryText: 'DROP TABLE IF EXISTS organizations cascade' });
+  await singleQuery({
+    queryText: 'DROP TABLE IF EXISTS organizations cascade',
+  });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS payments cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS pullRequests cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS users cascade' });
