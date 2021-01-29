@@ -14,14 +14,14 @@ export function* fetchOrganizationOptionsSaga() {
       getFilter {
         __typename
         ... on Filter {
-          languageArray
-          unfundedIssues
-          closedIssues
-          organizations
-          fundedIssues
-          maxBounty
-          featureTag
           bugTag
+          closedIssues
+          featureTag
+          fundedIssues
+          languageArray
+          maxBounty
+          organizations
+          unfundedIssues
         }
         ... on Error {
           message
@@ -32,12 +32,16 @@ export function* fetchOrganizationOptionsSaga() {
   try {
     const graphql = JSON.stringify({ query });
     const {
-      data: { getFilter },
+      data: { getFilter: filterCriteria },
     } = yield call(post, '/graphql', graphql);
-    console.log(getFilter);
+
+    const organizations = filterCriteria.organizations.map(el => ({
+      name: el,
+    }));
+
     yield put(
       fetchOrganizationOptionsSuccess({
-        organizations: getFilter.organizations,
+        organizations,
       }),
     );
   } catch (error) {
