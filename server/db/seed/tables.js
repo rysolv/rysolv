@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const { mapQueryPrint, singleQuery } = require('../baseQueries');
 
 // Import schemas
@@ -73,9 +74,7 @@ const dropAllTables = async () => {
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS funding cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS issues cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS languages cascade' });
-  await singleQuery({
-    queryText: 'DROP TABLE IF EXISTS organizations cascade',
-  });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS organizations cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS payments cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS pullRequests cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS users cascade' });
