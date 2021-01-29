@@ -23,8 +23,11 @@ const createPaypalPayment = async (
 
     if (issueId) {
       const { fundedAmount, organizationId } = await submitExternalPayment({
+        action: 'fund_issue',
         fundValue: amount,
         issueId,
+        platform: 'paypal',
+        userId,
       });
 
       const activityInput = {
@@ -48,7 +51,11 @@ const createPaypalPayment = async (
     }
 
     if (userId) {
-      const userResult = await submitAccountDepositUser({ amount, userId });
+      const userResult = await submitAccountDepositUser({
+        amount,
+        platform: 'paypal',
+        userId,
+      });
 
       const activityInput = {
         actionType: 'fund',

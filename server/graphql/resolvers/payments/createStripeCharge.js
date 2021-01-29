@@ -40,8 +40,11 @@ const createStripeCharge = async (
 
     if (issueId) {
       const { fundedAmount, organizationId } = await submitExternalPayment({
+        action: 'fund_issue',
         fundValue: amount,
         issueId,
+        platform: 'stripe',
+        userId,
       });
 
       const activityInput = {
@@ -64,7 +67,11 @@ const createStripeCharge = async (
       };
     }
     if (userId) {
-      const userResult = await submitAccountDepositUser({ amount, userId });
+      const userResult = await submitAccountDepositUser({
+        amount,
+        platform: 'stripe',
+        userId,
+      });
 
       const activityInput = {
         actionType: 'fund',

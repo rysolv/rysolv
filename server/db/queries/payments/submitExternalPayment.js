@@ -1,7 +1,14 @@
 const pool = require('../../connect');
 const { singleQuery } = require('../../baseQueries');
+const updatePaymentTable = require('./updatePaymentTable');
 
-const submitExternalPayment = async ({ fundValue, issueId }) => {
+const submitExternalPayment = async ({
+  action,
+  fundValue,
+  issueId,
+  platform,
+  userId,
+}) => {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
@@ -27,6 +34,15 @@ const submitExternalPayment = async ({ fundValue, issueId }) => {
     await singleQuery({
       queryText: organizationQueryText,
       values: [fundValue, organizationId],
+    });
+
+    await updatePaymentTable({
+      action,
+      fundedAmount: fundValue,
+      issueId,
+      organizationId,
+      platform,
+      userId,
     });
 
     await client.query('COMMIT');
