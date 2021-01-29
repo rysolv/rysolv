@@ -157,7 +157,6 @@ const SideNav = ({ deviceView, handleNav }) => {
             <ListItemText primary="How It Works" />
           </ListItem>
         </StyledListWrapper>
-        <Divider />
         <StyledIconButton disableRipple onClick={toggleDrawer} open>
           {open ? backArrow : forwardArrow}
         </StyledIconButton>

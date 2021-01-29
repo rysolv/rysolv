@@ -148,9 +148,13 @@ const SettingsView = ({
     const hasNoErrors = Object.keys(inputErrors).every(
       input => inputErrors[input] === '',
     );
+    const formattedValue =
+      field === 'githubLink' || field === 'stackoverflowLink'
+        ? handleFormatUrl(value)
+        : value;
     if (hasNoErrors) {
       changeInputState(false);
-      dispatchSaveChange({ field, value });
+      dispatchSaveChange({ field, value: formattedValue });
       setIsDisabled(false);
     } else {
       handleValidateInput({ field, values: { [field]: value } });
@@ -163,6 +167,11 @@ const SettingsView = ({
     setIsDisabled(true);
     setChangeUserImage(true);
     setValue(formattedUserImage);
+  };
+
+  const handleFormatUrl = val => {
+    const { origin, pathname } = new URL(val);
+    return `${origin}${pathname}`;
   };
 
   const profilePicToRender = !changeUserImage ? profilePic : value;
