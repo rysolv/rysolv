@@ -7,14 +7,20 @@ export const getInitialValue = {
   organizations: {
     initialValue: 1,
   },
-  users: {
+  projects: {
     initialValue: 2,
   },
-  'issues/add': {
+  users: {
     initialValue: 3,
   },
-  'organizations/add': {
+  'issues/add': {
     initialValue: 4,
   },
-  'how-to': { initialValue: 5 },
+  'organizations/add': {
+    initialValue: 5,
+  },
+  'projects/add': {
+    initialValue: 6,
+  },
+  'how-to': { initialValue: 7 },
 };

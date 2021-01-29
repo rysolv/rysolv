@@ -35,6 +35,8 @@ import Link from '@material-ui/icons/Link';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import NavigateNext from '@material-ui/icons/NavigateNext';
+import NewProject from '@material-ui/icons/AssignmentReturned';
+import Project from '@material-ui/icons/Assignment';
 import PublishIcon from '@material-ui/icons/Publish';
 import PullRequest from '@material-ui/icons/AccountTree';
 import Search from '@material-ui/icons/Search';
@@ -96,8 +98,10 @@ export default (name, size, style) => {
     monocle: Monocle,
     navigateBefore: NavigateBefore,
     navigateNext: NavigateNext,
+    newProject: NewProject,
     organization: WebIcon,
     paypal: Paypal,
+    project: Project,
     pullRequest: PullRequest,
     search: Search,
     settings: Settings,

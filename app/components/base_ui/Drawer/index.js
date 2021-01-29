@@ -14,12 +14,14 @@ import {
   StyledListWrapper,
 } from './styledComponents';
 
-const addIcon = iconDictionary('addCircle');
 const helpIcon = iconDictionary('help');
 const issueIcon = iconDictionary('issue');
+const newIssueIcon = iconDictionary('upload');
+const newOrganizationIcon = iconDictionary('addCircle');
+const newProjectIcon = iconDictionary('newProject');
 const organizationIcon = iconDictionary('organization');
+const projectIcon = iconDictionary('project');
 const statsIcon = iconDictionary('stats');
-const uploadIcon = iconDictionary('upload');
 const userIcon = iconDictionary('user');
 
 const BaseDrawer = ({
@@ -66,56 +68,82 @@ const BaseDrawer = ({
           </ListItem>
         </StyledListWrapper>
         <StyledListWrapper active={currentValue === 2}>
-          <ListItem button key="Users" onClick={() => handleClick('/users', 2)}>
+          <ListItem
+            button
+            key="Projects"
+            onClick={() => handleClick('/projects', 2)}
+          >
+            <ListItemIcon>{projectIcon}</ListItemIcon>
+            <StyledListItemText
+              active={currentValue === 2}
+              primary="Projects"
+            />
+          </ListItem>
+        </StyledListWrapper>
+        <StyledListWrapper active={currentValue === 3}>
+          <ListItem button key="Users" onClick={() => handleClick('/users', 3)}>
             <ListItemIcon>{userIcon}</ListItemIcon>
-            <StyledListItemText active={currentValue === 2} primary="Users" />
+            <StyledListItemText active={currentValue === 3} primary="Users" />
           </ListItem>
         </StyledListWrapper>
         <Divider />
-        <StyledListWrapper active={currentValue === 3}>
+        <StyledListWrapper active={currentValue === 4}>
           <ListItem
             button
             key="addIssues"
-            onClick={() => handleClick('/issues/add', 3)}
+            onClick={() => handleClick('/issues/add', 4)}
           >
-            <ListItemIcon>{uploadIcon}</ListItemIcon>
+            <ListItemIcon>{newIssueIcon}</ListItemIcon>
             <StyledListItemText
-              active={currentValue === 3}
+              active={currentValue === 4}
               primary="New Issue"
             />
           </ListItem>
         </StyledListWrapper>
-        <StyledListWrapper active={currentValue === 4}>
+        <StyledListWrapper active={currentValue === 5}>
           <ListItem
             button
             key="addOrganizations"
-            onClick={() => handleClick('/organizations/add', 4)}
+            onClick={() => handleClick('/organizations/add', 5)}
           >
-            <ListItemIcon>{addIcon}</ListItemIcon>
+            <ListItemIcon>{newOrganizationIcon}</ListItemIcon>
             <StyledListItemText
-              active={currentValue === 4}
+              active={currentValue === 5}
               primary="New Organization"
             />
           </ListItem>
         </StyledListWrapper>
+        <StyledListWrapper active={currentValue === 6}>
+          <ListItem
+            button
+            key="addProjects"
+            onClick={() => handleClick('/projects/add', 6)}
+          >
+            <ListItemIcon>{newProjectIcon}</ListItemIcon>
+            <StyledListItemText
+              active={currentValue === 6}
+              primary="New Project"
+            />
+          </ListItem>
+        </StyledListWrapper>
         <Divider />
-        <StyledListWrapper active={currentValue === 5}>
+        <StyledListWrapper active={currentValue === 7}>
           <ListItem
             button
             key="howTo"
-            onClick={() => handleClick('/how-to', 5)}
+            onClick={() => handleClick('/how-to', 7)}
           >
             <ListItemIcon>{helpIcon}</ListItemIcon>
             <StyledListItemText
-              active={currentValue === 5}
+              active={currentValue === 7}
               primary="How It Works"
             />
           </ListItem>
         </StyledListWrapper>
-        <StyledListWrapper active={currentValue === 6}>
-          <ListItem button key="stats" onClick={() => handleClick('/stats', 6)}>
+        <StyledListWrapper active={currentValue === 8}>
+          <ListItem button key="stats" onClick={() => handleClick('/stats', 8)}>
             <ListItemIcon>{statsIcon}</ListItemIcon>
-            <StyledListItemText active={currentValue === 6} primary="Stats" />
+            <StyledListItemText active={currentValue === 8} primary="Stats" />
           </ListItem>
         </StyledListWrapper>
       </StyledList>
