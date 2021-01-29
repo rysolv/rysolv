@@ -34,7 +34,6 @@ const {
 } = require('./queries/organizations');
 const {
   submitAccountDepositUser,
-  submitAccountPaymentUser,
   submitExternalPayment,
   submitInternalPayment,
 } = require('./queries/payments');
@@ -118,7 +117,6 @@ module.exports = {
   searchOrganizations,
   searchUsers,
   submitAccountDepositUser,
-  submitAccountPaymentUser,
   submitExternalPayment,
   submitInternalPayment,
   toggleAttempting,

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const { mapQueryPrint, singleQuery } = require('../baseQueries');
 
 // Import schemas
@@ -10,6 +11,7 @@ const {
   alterIssuesTable,
   alterLanguagesTable,
   alterOrganizationsTable,
+  alterPaymentTable,
   alterPullRequestsTable,
   alterUsersTable,
   alterWatchingTable,
@@ -22,6 +24,7 @@ const {
   createIssuesTable,
   createLanguagesTable,
   createOrganizationsTable,
+  createPaymentsTable,
   createPullRequestsTable,
   createUsersTable,
   createWatchingTable,
@@ -38,6 +41,7 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterIssuesTable });
   await singleQuery({ queryText: alterLanguagesTable });
   await singleQuery({ queryText: alterOrganizationsTable });
+  await singleQuery({ queryText: alterPaymentTable });
   await singleQuery({ queryText: alterPullRequestsTable });
   await singleQuery({ queryText: alterUsersTable });
   await singleQuery({ queryText: alterWatchingTable });
@@ -54,6 +58,7 @@ const createTables = async () => {
   await singleQuery({ queryText: createIssuesTable });
   await singleQuery({ queryText: createLanguagesTable });
   await singleQuery({ queryText: createOrganizationsTable });
+  await singleQuery({ queryText: createPaymentsTable });
   await singleQuery({ queryText: createPullRequestsTable });
   await singleQuery({ queryText: createUsersTable });
   await singleQuery({ queryText: createWatchingTable });
@@ -69,9 +74,8 @@ const dropAllTables = async () => {
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS funding cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS issues cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS languages cascade' });
-  await singleQuery({
-    queryText: 'DROP TABLE IF EXISTS organizations cascade',
-  });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS organizations cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS payments cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS pullRequests cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS users cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS watching cascade' });
@@ -89,6 +93,7 @@ const printTables = async () => {
     'SELECT * FROM issues',
     'SELECT * FROM languages',
     'SELECT * FROM organizations',
+    'SELECT * from payments',
     'SELECT * FROM pullRequests',
     'SELECT * FROM users',
     'SELECT * FROM watching',

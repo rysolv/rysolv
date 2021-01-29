@@ -24,6 +24,7 @@ const submitAccountPayment = async (
           organizationId,
           fundedAmount,
         } = await submitInternalPayment({
+          action: 'fund_issue',
           fundValue,
           issueId,
           userId,
