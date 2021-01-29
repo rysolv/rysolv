@@ -6,6 +6,7 @@ const fundingSchema = require('./funding');
 const issueSchema = require('./issues');
 const languageSchema = require('./languages');
 const organizationSchema = require('./organizations');
+const paymentsSchema = require('./payments');
 const pullRequestSchema = require('./pullRequest');
 const userSchema = require('./users');
 const watchingSchema = require('./watching');
@@ -20,6 +21,7 @@ module.exports = {
   ...issueSchema,
   ...languageSchema,
   ...organizationSchema,
+  ...paymentsSchema,
   ...pullRequestSchema,
   ...userSchema,
   ...watchingSchema,

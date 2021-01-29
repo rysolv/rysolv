@@ -278,6 +278,7 @@ export function* fetchIssueDetailSaga({ payload }) {
           createdDate
           fundedAmount
           id
+          isInFundingQueue
           language
           modifiedDate
           name

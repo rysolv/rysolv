@@ -46,8 +46,9 @@ const Pagination = ({ Component, propsToPassDown }) => {
       <Component data={slice} handleNav={handleNav} {...restProps} />
       <StyledPagination
         count={count}
-        shape="rounded"
         onChange={(e, value) => handleChangePage(e, value)}
+        page={currentPage + 1}
+        shape="rounded"
       />
     </Fragment>
   );

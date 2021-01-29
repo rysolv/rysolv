@@ -1,7 +1,13 @@
 const pool = require('../../connect');
 const { singleQuery } = require('../../baseQueries');
+const updatePaymentTable = require('./updatePaymentTable');
 
-const submitInternalPayment = async ({ fundValue, issueId, userId }) => {
+const submitInternalPayment = async ({
+  action,
+  fundValue,
+  issueId,
+  userId,
+}) => {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
@@ -41,6 +47,15 @@ const submitInternalPayment = async ({ fundValue, issueId, userId }) => {
     });
     const [oneUserRow] = userRows;
     const { balance } = oneUserRow;
+
+    await updatePaymentTable({
+      action,
+      fundedAmount: fundValue,
+      issueId,
+      organizationId,
+      platform: 'account',
+      userId,
+    });
 
     await client.query('COMMIT');
     return { balance, fundedAmount, organizationId };
