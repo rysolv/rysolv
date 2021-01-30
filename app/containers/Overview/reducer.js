@@ -16,7 +16,7 @@ export const initialState = {
     featureTag: 0,
     fundedIssues: 0,
     issueLanguages: [],
-    maxBounty: 1,
+    maxBounty: 100,
     organizations: [],
     unfundedIssues: 0,
     userLanguages: [],
