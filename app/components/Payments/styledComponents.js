@@ -16,6 +16,7 @@ import {
   fundingText,
   hoverLinkColor,
   lightBlueColor,
+  rewardColor,
   successGreen,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -26,6 +27,13 @@ export const Amount = styled.div`
   align-self: center;
   font-size: 2.4rem;
   font-weight: 500;
+`;
+
+export const AwardedUserWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+  padding: 0 0.5rem 0.5rem;
 `;
 
 export const BalanceAmount = styled.h3`
@@ -69,6 +77,18 @@ export const ChargeValue = styled.div`
   text-align: end;
 `;
 
+export const CoinWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  svg {
+    height: 2.25rem;
+    padding-right: 0.5rem;
+    width: 2.25rem;
+  }
+`;
+
 export const ConfirmAmount = styled.div`
   color: ${({ isNegative }) => (isNegative ? buttonRed : 'inherit')};
   white-space: nowrap;
@@ -91,6 +111,12 @@ export const ConfirmWrapper = styled.div`
   font-weight: ${({ isBold }) => (isBold ? '400' : '600')};
   justify-content: space-between;
   padding: 1rem;
+`;
+
+export const ContentWrapper = styled.div`
+  align-items: center;
+  align-self: center;
+  display: flex;
 `;
 
 export const CreditCardViewContainer = styled.div`
@@ -136,6 +162,16 @@ export const InputWrapper = styled.div`
   width: auto;
 `;
 
+export const LinkWrapper = styled.div`
+  display: flex;
+  margin: 1rem;
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+  }
+`;
+
 export const PaymentInformationWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -157,15 +193,40 @@ export const OverviewWrapper = styled.div`
   padding: 3rem;
 `;
 
+export const Rewarded = styled.span`
+  align-self: center;
+  color: ${rewardColor};
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 0.5rem 0.5rem 2rem;
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin: 1rem;
+`;
+
+export const StyledExternalLink = styled.a`
+  padding-left: 0.5rem;
+  white-space: nowrap;
+
+  &:hover {
+    color: ${hoverLinkColor};
+  }
+`;
+
+export const StyledInternalLink = styled(Link)`
+  font-weight: 500;
+
+  &:hover {
+    color: ${hoverLinkColor};
+  }
+`;
+
 export const StyledLabel = styled.div`
   font-size: 1.4rem;
   font-weight: 500;
   padding: 0.5rem 1.5rem;
   text-align: left;
-`;
-
-export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
-  margin: 1rem;
 `;
 
 export const StyledPaymentTextInput = styled(PaymentTextInput)`
@@ -278,62 +339,4 @@ export const YourAccountContainer = styled.div`
   margin: 0.5rem 0;
   text-align: center;
   width: 100%;
-`;
-
-export const AwardedUserWrapper = styled.div`
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  font-size: 1.4rem;
-  padding: 0 0.5rem 0.5rem;
-  text-align: center;
-`;
-
-export const CoinWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-
-  svg {
-    height: 2.25rem;
-    padding-right: 0.5rem;
-    width: 2.25rem;
-  }
-`;
-
-export const Rewarded = styled.span`
-  align-self: center;
-  color: rgb(150, 112, 255);
-  font-size: 1.4rem;
-  font-weight: 500;
-  padding: 0.5rem 0.5rem 2rem;
-`;
-
-export const StyledInternalLink = styled(Link)`
-  font-weight: 500;
-
-  &:hover {
-    color: ${hoverLinkColor};
-  }
-`;
-
-export const StyledExternalLink = styled.a`
-  align-items: center;
-  display: flex;
-  padding-left: 0.5rem;
-
-  &:hover {
-    color: ${hoverLinkColor};
-  }
-`;
-
-export const LinkWrapper = styled.div`
-  align-self: center;
-  display: flex;
-  margin: 1rem;
-
-  svg {
-    height: 2rem;
-    width: 2rem;
-  }
 `;
