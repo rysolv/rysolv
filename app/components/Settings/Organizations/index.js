@@ -22,7 +22,7 @@ const UserOrganizations = ({ handleNav, organizations }) => {
 
   const filterOrganizations = () => {
     // eslint-disable-next-line array-callback-return, consistent-return
-    const sortedArray = organizations.sort((a, b) => {
+    const sortedArray = [...organizations].sort((a, b) => {
       if (selectedValue === 'Newest') {
         if (a.modifiedDate < b.modifiedDate) {
           return 1;
@@ -36,7 +36,7 @@ const UserOrganizations = ({ handleNav, organizations }) => {
         return -1;
       }
     });
-    const filteredArray = sortedArray.filter(({ name }) => {
+    const filteredArray = [...sortedArray].filter(({ name }) => {
       if (name.toLowerCase().includes(searchValue.toLowerCase())) {
         return true;
       }
