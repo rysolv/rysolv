@@ -6,7 +6,7 @@ import { BaseExpansionPanel, ConditionalRender } from 'components/base_ui';
 import { formatDollarAmount, handleZipChange } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
-import AwardedUserView from './AwardedUserView';
+import AwardedUserView from './AwardedUser';
 import CreditCardView from './CreditCardView';
 import DollarValueToggle from './DollarValueToggle';
 import PaypalView from './PaypalView';
