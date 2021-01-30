@@ -530,6 +530,8 @@ export function* searchIssuesSaga({ payload }) {
         createdDate
         fundedAmount
         id
+        isInFundingQueue
+        isPullRequestMerged
         language
         modifiedDate
         name
