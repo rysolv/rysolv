@@ -137,10 +137,10 @@ const Overview = ({
 
 Overview.propTypes = {
   deviceView: T.string.isRequired,
-  dispatchFetchFilterOptions: T.func,
+  dispatchFetchFilterOptions: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
   filterIssueValues: T.object,
-  filterOptions: T.object,
+  filterOptions: T.object.isRequired,
   filterOrganizationValues: T.object,
   filterUserValues: T.object,
   handleChangeIssueFilter: T.func,

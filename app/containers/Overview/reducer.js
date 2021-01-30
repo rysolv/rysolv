@@ -10,7 +10,6 @@ import {
 
 export const initialState = {
   error: null,
-  loading: false,
   filterOptions: {
     bugTag: 0,
     closedIssues: 0,
@@ -22,6 +21,7 @@ export const initialState = {
     unfundedIssues: 0,
     userLanguages: [],
   },
+  loading: false,
 };
 
 const overviewReducer = produce((draft, { payload, type }) => {

@@ -1,6 +1,6 @@
 const { errorLogger } = require('../../../helpers');
-const { getFilterOptions: getFilterOptionsQuery } = require('../../../db');
 const { getFilterError } = require('./constants');
+const { getFilterOptions: getFilterOptionsQuery } = require('../../../db');
 
 const getFilter = async () => {
   try {

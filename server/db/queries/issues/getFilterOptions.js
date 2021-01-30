@@ -13,7 +13,6 @@ const getFilterOptions = async () => {
     (SELECT COUNT(*) FROM issues WHERE type = 'Feature') AS "featureTag",
     (SELECT COUNT(*) FROM issues WHERE type = 'Bug') AS "bugTag"
   `;
-
   const { rows } = await singleQuery({ queryText });
   const [oneRow] = rows;
   return oneRow;

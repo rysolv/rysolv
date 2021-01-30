@@ -36,13 +36,13 @@ const Filter = ({
   const [open, setOpen] = useState(false);
 
   const statusOptions = [
-    { name: 'Closed', count: closedIssues },
-    { name: 'Funded', count: fundedIssues },
-    { name: 'Unfunded', count: unfundedIssues },
+    { count: closedIssues, name: 'Closed' },
+    { count: fundedIssues, name: 'Funded' },
+    { count: unfundedIssues, name: 'Unfunded' },
   ];
   const typeOptions = [
-    { name: 'Bug', count: bugTag },
-    { name: 'Feature', count: featureTag },
+    { count: bugTag, name: 'Bug' },
+    { count: featureTag, name: 'Feature' },
   ];
 
   const FilterOptionsComponent = () => (
@@ -147,7 +147,7 @@ const Filter = ({
 };
 
 Filter.propTypes = {
-  filterOptions: T.object,
+  filterOptions: T.object.isRequired,
   filterValues: T.object.isRequired,
   handleChangeFilter: T.func.isRequired,
   isMobile: T.bool.isRequired,

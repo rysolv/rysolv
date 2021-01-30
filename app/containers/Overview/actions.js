@@ -5,11 +5,8 @@ import {
   RESET_STATE,
 } from './constants';
 
-export function fetchFilterOptionsFailure(payload) {
-  return {
-    payload,
-    type: FETCH_FILTER_OPTIONS_FAILURE,
-  };
+export function fetchFilterOptionsFailure() {
+  return { type: FETCH_FILTER_OPTIONS_FAILURE };
 }
 
 export function fetchFilterOptionsSuccess(payload) {

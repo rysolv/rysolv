@@ -61,9 +61,9 @@ const existingIssueError = `This issue already exists.`;
 
 const existingOrganizationError = `This organization already exists.`;
 
-const getIssuesError = `Something went wrong when getting issues.`;
-
 const getFilterError = `Something went wrong when getting filter criteria.`;
+
+const getIssuesError = `Something went wrong when getting issues.`;
 
 const importIssueError = `Something went wrong when importing this issue.`;
 

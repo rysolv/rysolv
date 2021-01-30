@@ -35,7 +35,6 @@ export function* fetchFilterOptionsSaga() {
     const {
       data: { getFilterOptions: filterOptions },
     } = yield call(post, '/graphql', graphql);
-
     yield put(
       fetchFilterOptionsSuccess({
         filterOptions,
