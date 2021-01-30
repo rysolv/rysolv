@@ -16,17 +16,35 @@ import {
   StyledTitle,
 } from './styledComponents';
 
-const statusOptions = ['Closed', 'Funded', 'Unfunded'];
-const typeOptions = ['Bug', 'Feature'];
-
 const Filter = ({
+  filterOptions: {
+    bugTag,
+    closedIssues,
+    featureTag,
+    fundedIssues,
+    issueLanguages,
+    maxBounty,
+    organizations,
+    unfundedIssues,
+    userLanguages,
+  },
   filterValues: { language, organization, price, status, type },
   handleChangeFilter,
   isMobile,
-  languageOptions,
-  organizationOptions,
+  view,
 }) => {
   const [open, setOpen] = useState(false);
+
+  const statusOptions = [
+    { count: closedIssues, name: 'Closed' },
+    { count: fundedIssues, name: 'Funded' },
+    { count: unfundedIssues, name: 'Unfunded' },
+  ];
+  const typeOptions = [
+    { count: bugTag, name: 'Bug' },
+    { count: featureTag, name: 'Feature' },
+  ];
+
   const FilterOptionsComponent = () => (
     <OptionsWrapper>
       {language && (
@@ -36,7 +54,7 @@ const Filter = ({
             onChange={(e, value) =>
               handleChangeFilter({ field: 'language', value })
             }
-            options={languageOptions}
+            options={view === 'users' ? userLanguages : issueLanguages}
             value={language}
           />
         </Fragment>
@@ -48,7 +66,7 @@ const Filter = ({
             onChange={(e, value) =>
               handleChangeFilter({ field: 'organization', value })
             }
-            options={organizationOptions}
+            options={organizations}
             value={organization}
           />
         </Fragment>
@@ -57,7 +75,7 @@ const Filter = ({
         <Fragment>
           <StyledLabel>Price Range</StyledLabel>
           <BaseSlider
-            max={5000}
+            max={maxBounty}
             min={0}
             onChange={(e, value) =>
               handleChangeFilter({ field: 'price', value })
@@ -69,12 +87,15 @@ const Filter = ({
       {status && (
         <Fragment>
           <StyledLabel>Status</StyledLabel>
-          {statusOptions.map(value => (
+          {statusOptions.map(el => (
             <CheckboxWithLabel
-              key={`checkbox-${value}`}
-              checked={status[value.toLowerCase()]}
-              label={value}
-              onChange={() => handleChangeFilter({ field: 'status', value })}
+              checked={status[el.name.toLowerCase()]}
+              count={el.count}
+              key={`checkbox-${el.name}`}
+              label={el.name}
+              onChange={() =>
+                handleChangeFilter({ field: 'status', value: el.name })
+              }
             />
           ))}
         </Fragment>
@@ -82,12 +103,15 @@ const Filter = ({
       {type && (
         <Fragment>
           <StyledLabel>Type</StyledLabel>
-          {typeOptions.map(value => (
+          {typeOptions.map(el => (
             <CheckboxWithLabel
-              key={`checkbox-${value}`}
-              checked={type[value.toLowerCase()]}
-              label={value}
-              onChange={() => handleChangeFilter({ field: 'type', value })}
+              checked={type[el.name.toLowerCase()]}
+              count={el.count}
+              key={`checkbox-${el.name}`}
+              label={el.name}
+              onChange={() =>
+                handleChangeFilter({ field: 'type', value: el.name })
+              }
             />
           ))}
         </Fragment>
@@ -123,11 +147,11 @@ const Filter = ({
 };
 
 Filter.propTypes = {
+  filterOptions: T.object.isRequired,
   filterValues: T.object.isRequired,
   handleChangeFilter: T.func.isRequired,
   isMobile: T.bool.isRequired,
-  languageOptions: T.array,
-  organizationOptions: T.array,
+  view: T.string.isRequired,
 };
 
 export default Filter;

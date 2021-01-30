@@ -53,6 +53,18 @@ module.exports = buildSchema(`
     message: String
   }
 
+  type Filter {
+    bugTag: Int
+    closedIssues: Int
+    featureTag: Int
+    fundedIssues: Int
+    issueLanguages: [Object]
+    maxBounty: Float
+    organizations: [Object]
+    unfundedIssues: Int
+    userLanguages: [Object]
+  }
+
   type ImportData {
     githubCommentCount: Int
     issueBody: String!
@@ -323,6 +335,7 @@ module.exports = buildSchema(`
 
   union CommentResult = Comment | Error
   union EventResponse = Success | Error
+  union FilterResult = Filter | Error
   union ImportPullRequestResult = ImportPullRequest | Error
   union ImportResult = ImportData | Error
   union IssueArrayResult = IssueArray | Error
@@ -342,6 +355,7 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
+    getFilterOptions: FilterResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!

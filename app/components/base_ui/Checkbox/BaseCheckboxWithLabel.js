@@ -3,10 +3,11 @@ import T from 'prop-types';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import BaseCheckbox from './BaseCheckbox';
-import { CheckboxWrapper } from './styledComponents';
+import { CheckboxWrapper, StyledCount } from './styledComponents';
 
 const CheckboxWithLabel = ({
   checked,
+  count,
   disabled,
   formControlProps,
   label,
@@ -28,11 +29,13 @@ const CheckboxWithLabel = ({
       {...formControlProps}
       {...restProps}
     />
+    {count > 0 && <StyledCount>{count}</StyledCount>}
   </CheckboxWrapper>
 );
 
 CheckboxWithLabel.propTypes = {
   checked: T.bool.isRequired,
+  count: T.number,
   disabled: T.bool,
   formControlProps: T.object,
   label: T.string.isRequired,

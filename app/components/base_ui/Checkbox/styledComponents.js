@@ -30,3 +30,12 @@ export const CheckboxWrapper = styled.div`
     width: 2rem;
   }
 `;
+
+export const StyledCount = styled.div`
+  align-self: center;
+  color: rgba(0, 0, 0, 0.3);
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: ${defaultFontSize};
+  font-weight: bold;
+  margin-left: 0.5rem;
+`;

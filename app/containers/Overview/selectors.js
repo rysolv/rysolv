@@ -11,18 +11,5 @@ const makeSelectOverview = prop =>
     substate => substate[prop],
   );
 
-const makeSelectOrganizationOptions = () =>
-  createSelector(
-    makeSelectOverview('organizationOptions'),
-    organizationOptions => {
-      if (organizationOptions) {
-        return organizationOptions.map(({ name }) => ({
-          value: name,
-        }));
-      }
-      return [];
-    },
-  );
-
 export default makeSelectOverview;
-export { makeSelectOrganizationOptions, selectOverviewDomain };
+export { selectOverviewDomain };

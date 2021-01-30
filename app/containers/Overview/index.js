@@ -21,15 +21,14 @@ import { makeSelectOrganizations } from 'containers/Organizations/selectors';
 import Stats from 'containers/Stats';
 import { makeSelectUsers } from 'containers/Users/selectors';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
-import autocompleteDictionary from 'utils/autocompleteDictionary';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { fetchOrganizationOptions, resetState } from './actions';
+import { fetchFilterOptions, resetState } from './actions';
 import { overviewDirectory } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectOrganizationOptions } from './selectors';
+import makeSelectOverview from './selectors';
 import {
   ComponentContainer,
   ContentContainer,
@@ -38,13 +37,12 @@ import {
   OverviewHeader,
 } from './styledComponents';
 
-const languageOptions = autocompleteDictionary.language;
-
 const Overview = ({
   deviceView,
-  dispatchFetchOrganizationOptions,
+  dispatchFetchFilterOptions,
   dispatchResetState,
   filterIssueValues,
+  filterOptions,
   filterOrganizationValues,
   filterUserValues,
   handleChangeIssueFilter,
@@ -55,11 +53,10 @@ const Overview = ({
   handleChangeUserSearch,
   match,
   match: { path },
-  organizationOptions,
 }) => {
   const [height, setHeight] = useState(0);
   useEffect(() => {
-    dispatchFetchOrganizationOptions();
+    dispatchFetchFilterOptions();
     setHeight(document.getElementById('filter-container').clientHeight);
     window.scrollTo(0, 0);
     return dispatchResetState;
@@ -69,22 +66,22 @@ const Overview = ({
   document.title = title;
   const filterProps = {
     issues: {
+      filterOptions,
       filterValues: filterIssueValues,
       handleChangeFilter: handleChangeIssueFilter,
-      languageOptions,
-      organizationOptions,
+      view: 'issues',
     },
     organizations: {
+      filterOptions,
       filterValues: filterOrganizationValues,
       handleChangeFilter: handleChangeOrganizationFilter,
-      languageOptions,
-      organizationOptions,
+      view: 'organizations',
     },
     users: {
+      filterOptions,
       filterValues: filterUserValues,
       handleChangeFilter: handleChangeUserFilter,
-      languageOptions,
-      organizationOptions,
+      view: 'users',
     },
   };
   const headerProps = {
@@ -140,9 +137,10 @@ const Overview = ({
 
 Overview.propTypes = {
   deviceView: T.string.isRequired,
-  dispatchFetchOrganizationOptions: T.func,
+  dispatchFetchFilterOptions: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
   filterIssueValues: T.object,
+  filterOptions: T.object.isRequired,
   filterOrganizationValues: T.object,
   filterUserValues: T.object,
   handleChangeIssueFilter: T.func,
@@ -152,7 +150,6 @@ Overview.propTypes = {
   handleChangeUserFilter: T.func,
   handleChangeUserSearch: T.func,
   match: T.object,
-  organizationOptions: T.array,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -167,7 +164,7 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : Overview
    */
-  organizationOptions: makeSelectOrganizationOptions(),
+  filterOptions: makeSelectOverview('filterOptions'),
   /**
    * Reducer : Users
    */
@@ -195,8 +192,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Overview
      */
-    dispatchFetchOrganizationOptions: () =>
-      dispatch(fetchOrganizationOptions()),
+    dispatchFetchFilterOptions: () => dispatch(fetchFilterOptions()),
     dispatchResetState: () => dispatch(resetState()),
     /*
      * Reducer : Users
