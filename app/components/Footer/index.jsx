@@ -15,9 +15,12 @@ import {
   StyledTop,
   StyledUrl,
   TextContainer,
+  TextWrapper,
+  UrlWrapper,
 } from './styledComponent';
 
 const FacebookIcon = iconDictionary('facebook');
+const GithubIcon = iconDictionary('github');
 const TwitterIcon = iconDictionary('twitter');
 
 const Footer = ({ handleNav }) => (
@@ -25,16 +28,19 @@ const Footer = ({ handleNav }) => (
     <StyledTop>
       <TextContainer>
         <StyledTitle>rysolv</StyledTitle>
-        <div>Fixing the internet. One bug at a time.</div>
+        <TextWrapper>Fixing the internet. One bug at a time.</TextWrapper>
       </TextContainer>
-      <div>
+      <UrlWrapper>
+        <StyledUrl href="https://github.com/rysolv" target="_blank">
+          {GithubIcon}
+        </StyledUrl>
         <StyledUrl href="https://facebook.com/rysolv" target="_blank">
           {FacebookIcon}
         </StyledUrl>
         <StyledUrl href="https://twitter.com/rysolv" target="_blank">
           {TwitterIcon}
         </StyledUrl>
-      </div>
+      </UrlWrapper>
     </StyledTop>
     <Divider />
     <StyledBottom>
@@ -45,10 +51,10 @@ const Footer = ({ handleNav }) => (
         <LinkWrapper onClick={() => handleNav('/privacy-policy')}>
           Privacy Policy
         </LinkWrapper>
-        <LinkWrapper onClick={() => handleNav('/faq')}>FAQ</LinkWrapper>
         <LinkWrapper onClick={() => handleNav('/contact-us')}>
           Contact Us
         </LinkWrapper>
+        <LinkWrapper onClick={() => handleNav('/faq')}>FAQ</LinkWrapper>
       </LinkContainer>
       <CopyrightWrapper>
         <div>{`© ${new Date().getFullYear()} Rysolv, LLC`}</div>

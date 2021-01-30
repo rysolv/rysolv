@@ -99,3 +99,15 @@ export const StyledUrl = styled.a`
 export const TextContainer = styled.div`
   text-align: center;
 `;
+
+export const TextWrapper = styled.div`
+  text-align: left;
+  white-space: nowrap;
+`;
+
+export const UrlWrapper = styled.div`
+  margin-right: 5%;
+  position: absolute;
+  right: 0;
+  white-space: nowrap;
+`;
