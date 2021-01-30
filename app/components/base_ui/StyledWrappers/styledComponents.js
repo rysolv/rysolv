@@ -109,3 +109,14 @@ export const StyledLanguageWrapper = styled.div`
   margin: 0 0.5rem 0.5rem 0;
   padding: 0.5rem;
 `;
+
+export const StyledRewardWrapper = styled.div`
+  background: rgb(150, 112, 255);
+  border-radius: 0.25rem;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 2rem;
+  padding: 0.2rem 1rem;
+  white-space: nowrap;
+`;

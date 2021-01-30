@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import { Link } from 'react-router-dom';
 
 import {
   ErrorSuccessBanner,
@@ -13,6 +14,7 @@ import {
   defaultFontSize,
   dividerBorder,
   fundingText,
+  hoverLinkColor,
   lightBlueColor,
   successGreen,
 } from 'defaultStyleHelper';
@@ -276,4 +278,62 @@ export const YourAccountContainer = styled.div`
   margin: 0.5rem 0;
   text-align: center;
   width: 100%;
+`;
+
+export const AwardedUserWrapper = styled.div`
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+  padding: 0 0.5rem 0.5rem;
+  text-align: center;
+`;
+
+export const CoinWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  svg {
+    height: 2.25rem;
+    padding-right: 0.5rem;
+    width: 2.25rem;
+  }
+`;
+
+export const Rewarded = styled.span`
+  align-self: center;
+  color: rgb(150, 112, 255);
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 0.5rem 0.5rem 2rem;
+`;
+
+export const StyledInternalLink = styled(Link)`
+  font-weight: 500;
+
+  &:hover {
+    color: ${hoverLinkColor};
+  }
+`;
+
+export const StyledExternalLink = styled.a`
+  align-items: center;
+  display: flex;
+  padding-left: 0.5rem;
+
+  &:hover {
+    color: ${hoverLinkColor};
+  }
+`;
+
+export const LinkWrapper = styled.div`
+  align-self: center;
+  display: flex;
+  margin: 1rem;
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+  }
 `;

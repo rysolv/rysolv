@@ -8,6 +8,6 @@ export const PaymentContainer = styled.div`
   border: ${({ isModal }) =>
     isModal ? 'none' : `0.1rem solid ${borderColor}`};
   color: rgba(0, 0, 0, 0.7);
-  min-height: 46rem;
+  min-height: ${({ isOnPaymentView }) => (isOnPaymentView ? '46rem' : 'auto')};
   width: 100%;
 `;

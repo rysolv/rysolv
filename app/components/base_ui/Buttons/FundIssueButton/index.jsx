@@ -4,6 +4,8 @@ import T from 'prop-types';
 import iconDictionary from 'utils/iconDictionary';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
+import ConditionalRender from '../../ConditionalRender';
+import { RewardWrapper } from '../../StyledWrappers';
 import {
   AddFundsButton,
   FundAmount,
@@ -17,16 +19,25 @@ const FundIssueButton = ({
   disabled,
   dispatchOpenModal,
   fundedAmount,
+  isInFundingQueue,
+  isPullRequestMerged,
   issueId,
   open,
+  rep,
 }) => (
   <FundIssueButtonContainer>
-    <FundAmount open={open}>
-      <StyledFundingWrapper
-        open={open}
-        value={formatDollarAmount(fundedAmount)}
-      />
-    </FundAmount>
+    <ConditionalRender
+      Component={<RewardWrapper fundedAmount={fundedAmount} />}
+      FallbackComponent={
+        <FundAmount open={open}>
+          <StyledFundingWrapper
+            open={open}
+            value={formatDollarAmount(fundedAmount)}
+          />
+        </FundAmount>
+      }
+      shouldRender={!isInFundingQueue && isPullRequestMerged && !open}
+    />
     <AddFundsButton
       disabled={disabled}
       open={open}
@@ -37,6 +48,7 @@ const FundIssueButton = ({
             fundedAmount,
             issueId,
             open,
+            rep,
           },
         })
       }
@@ -52,8 +64,11 @@ FundIssueButton.propTypes = {
   disabled: T.bool,
   dispatchOpenModal: T.func.isRequired,
   fundedAmount: T.number.isRequired,
+  isInFundingQueue: T.bool.isRequired,
+  isPullRequestMerged: T.bool.isRequired,
   issueId: T.string.isRequired,
   open: T.bool.isRequired,
+  rep: T.number.isRequired,
 };
 
 export default FundIssueButton;

@@ -42,11 +42,14 @@ const IssueDetail = ({
   alerts: { error, success },
   data,
   data: {
+    awardedUser,
     body,
     comments,
     createdDate,
     fundedAmount,
     id: issueId,
+    isInFundingQueue,
+    isPullRequestMerged,
     language,
     name,
     open,
@@ -284,10 +287,14 @@ const IssueDetail = ({
         </IssueDetailWrapper>
         <SidebarContainer>
           <PaymentPortal
+            awardedUser={awardedUser}
             fundedAmount={fundedAmount}
+            isInFundingQueue={isInFundingQueue}
+            isPullRequestMerged={isPullRequestMerged}
             isSignedIn={isSignedIn}
             issueId={issueId}
             open={open}
+            rep={rep}
           />
           <EmbedIssueWrapper>
             <EmbedIssueComponent />

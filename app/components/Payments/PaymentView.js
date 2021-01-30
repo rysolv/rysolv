@@ -6,6 +6,7 @@ import { BaseExpansionPanel, ConditionalRender } from 'components/base_ui';
 import { formatDollarAmount, handleZipChange } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
+import AwardedUserView from './AwardedUserView';
 import CreditCardView from './CreditCardView';
 import DollarValueToggle from './DollarValueToggle';
 import PaypalView from './PaypalView';
@@ -29,6 +30,7 @@ const PaypalIcon = iconDictionary('paypal');
 
 const PaymentView = ({
   alerts: { error, success },
+  awardedUser,
   balance,
   dispatchPaypalPayment,
   email,
@@ -41,9 +43,12 @@ const PaymentView = ({
   handleStripeToken,
   handleSubmitAccountPayment,
   handleValidateInput,
+  isInFundingQueue,
+  isPullRequestMerged,
   isSignedIn,
   issueId,
   open,
+  rep,
 }) => {
   const initialValue = '10';
   const [emailValue, setEmailValue] = useState(email || '');
@@ -150,9 +155,16 @@ const PaymentView = ({
     <Fragment>
       <OverviewWrapper>
         <Amount>{formatDollarAmount(fundedAmount)}</Amount>
-        <Funded isFunded={!fundedAmount || !open}>
-          {fundedAmount ? 'Funded' : 'Unfunded'}
-        </Funded>
+        <ConditionalRender
+          Component={AwardedUserView}
+          FallbackComponent={
+            <Funded isFunded={!fundedAmount || !open}>
+              {fundedAmount ? 'Funded' : 'Unfunded'}
+            </Funded>
+          }
+          propsToPassDown={{ awardedUser, isInFundingQueue, rep }}
+          shouldRender={isPullRequestMerged && !open}
+        />
       </OverviewWrapper>
       <FundingContainer open={open}>
         <DollarValueWrapper>
@@ -245,6 +257,7 @@ const PaymentView = ({
 
 PaymentView.propTypes = {
   alerts: T.object,
+  awardedUser: T.object,
   balance: T.number,
   dispatchPaypalPayment: T.func,
   email: T.string,
@@ -254,9 +267,12 @@ PaymentView.propTypes = {
   handleStripeToken: T.func,
   handleSubmitAccountPayment: T.func,
   handleValidateInput: T.func,
+  isInFundingQueue: T.bool.isRequired,
+  isPullRequestMerged: T.bool,
   isSignedIn: T.bool,
   issueId: T.string,
   open: T.bool,
+  rep: T.number,
 };
 
 export default PaymentView;
