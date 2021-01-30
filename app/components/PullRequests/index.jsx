@@ -22,9 +22,10 @@ const PullRequests = ({
 }) => {
   const [selectedValue, setSelectedValue] = useState('Newest');
   const [searchValue, setSearchValue] = useState('');
+
   const filterData = () => {
     // eslint-disable-next-line array-callback-return, consistent-return
-    const sortedArray = data.sort((a, b) => {
+    const sortedArray = [...data].sort((a, b) => {
       if (selectedValue === 'Newest') {
         if (a.createdDate < b.createdDate) {
           return 1;
@@ -32,7 +33,7 @@ const PullRequests = ({
         return -1;
       }
     });
-    const filteredArray = sortedArray.filter(({ merged, open, title }) => {
+    const filteredArray = [...sortedArray].filter(({ merged, open, title }) => {
       if (!title.toLowerCase().includes(searchValue.toLowerCase())) {
         return false;
       }
