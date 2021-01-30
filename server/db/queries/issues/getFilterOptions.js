@@ -1,9 +1,10 @@
 const { singleQuery } = require('../../baseQueries');
 
-const getFilter = async () => {
+const getFilterOptions = async () => {
   const queryText = `
     SELECT
-    (SELECT ARRAY_AGG(DISTINCT(language)) FROM languages WHERE issue_id IS NOT NULL) AS "languageArray",
+    (SELECT ARRAY_AGG(DISTINCT(language)) FROM languages WHERE issue_id IS NOT NULL) AS "issueLanguages",
+    (SELECT ARRAY_AGG(DISTINCT(language)) FROM languages WHERE user_id IS NOT NULL) AS "userLanguages",
     (SELECT COUNT(*) FROM issues WHERE open = true AND funded_amount = 0) AS "unfundedIssues",
     (SELECT ARRAY_AGG(name) from organizations) AS organizations,
     (SELECT COUNT(*) FROM issues WHERE open = false) AS "closedIssues",
@@ -18,4 +19,4 @@ const getFilter = async () => {
   return oneRow;
 };
 
-module.exports = getFilter;
+module.exports = getFilterOptions;

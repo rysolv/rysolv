@@ -58,10 +58,11 @@ module.exports = buildSchema(`
     closedIssues: Int
     featureTag: Int
     fundedIssues: Int
-    languageArray: [String]
+    issueLanguages: [Object]
     maxBounty: Int
-    organizations: [String]
+    organizations: [Object]
     unfundedIssues: Int
+    userLanguages: [Object]
   }
 
   type ImportData {
@@ -354,7 +355,7 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
-    getFilter: FilterResult!
+    getFilterOptions: FilterResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!

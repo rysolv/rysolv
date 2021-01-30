@@ -2,31 +2,41 @@
 import produce from 'immer';
 
 import {
-  FETCH_ORGANIZATION_OPTIONS_FAILURE,
-  FETCH_ORGANIZATION_OPTIONS_SUCCESS,
-  FETCH_ORGANIZATION_OPTIONS,
+  FETCH_FILTER_OPTIONS_FAILURE,
+  FETCH_FILTER_OPTIONS_SUCCESS,
+  FETCH_FILTER_OPTIONS,
   RESET_STATE,
 } from './constants';
 
 export const initialState = {
   error: null,
   loading: false,
-  organizationOptions: [],
+  filterOptions: {
+    bugTag: 0,
+    closedIssues: 0,
+    featureTag: 0,
+    fundedIssues: 0,
+    issueLanguages: [],
+    maxBounty: 1,
+    organizations: [],
+    unfundedIssues: 0,
+    userLanguages: [],
+  },
 };
 
 const overviewReducer = produce((draft, { payload, type }) => {
   switch (type) {
-    case FETCH_ORGANIZATION_OPTIONS_FAILURE: {
+    case FETCH_FILTER_OPTIONS_FAILURE: {
       draft.loading = false;
       break;
     }
-    case FETCH_ORGANIZATION_OPTIONS_SUCCESS: {
-      const { organizations } = payload;
+    case FETCH_FILTER_OPTIONS_SUCCESS: {
+      const { filterOptions } = payload;
       draft.loading = false;
-      draft.organizationOptions = organizations;
+      draft.filterOptions = filterOptions;
       break;
     }
-    case FETCH_ORGANIZATION_OPTIONS: {
+    case FETCH_FILTER_OPTIONS: {
       draft.loading = true;
       break;
     }
