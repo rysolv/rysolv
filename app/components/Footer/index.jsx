@@ -18,6 +18,7 @@ import {
 } from './styledComponent';
 
 const FacebookIcon = iconDictionary('facebook');
+const GithubIcon = iconDictionary('github');
 const TwitterIcon = iconDictionary('twitter');
 
 const Footer = ({ handleNav }) => (
@@ -28,6 +29,9 @@ const Footer = ({ handleNav }) => (
         <div>Fixing the internet. One bug at a time.</div>
       </TextContainer>
       <div>
+        <StyledUrl href="https://github.com/rysolv" target="_blank">
+          {GithubIcon}
+        </StyledUrl>
         <StyledUrl href="https://facebook.com/rysolv" target="_blank">
           {FacebookIcon}
         </StyledUrl>
@@ -45,10 +49,10 @@ const Footer = ({ handleNav }) => (
         <LinkWrapper onClick={() => handleNav('/privacy-policy')}>
           Privacy Policy
         </LinkWrapper>
-        <LinkWrapper onClick={() => handleNav('/faq')}>FAQ</LinkWrapper>
         <LinkWrapper onClick={() => handleNav('/contact-us')}>
           Contact Us
         </LinkWrapper>
+        <LinkWrapper onClick={() => handleNav('/faq')}>FAQ</LinkWrapper>
       </LinkContainer>
       <CopyrightWrapper>
         <div>{`© ${new Date().getFullYear()} Rysolv, LLC`}</div>
