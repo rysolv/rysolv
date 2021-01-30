@@ -15,6 +15,8 @@ import {
   StyledTop,
   StyledUrl,
   TextContainer,
+  TextWrapper,
+  UrlWrapper,
 } from './styledComponent';
 
 const FacebookIcon = iconDictionary('facebook');
@@ -26,9 +28,9 @@ const Footer = ({ handleNav }) => (
     <StyledTop>
       <TextContainer>
         <StyledTitle>rysolv</StyledTitle>
-        <div>Fixing the internet. One bug at a time.</div>
+        <TextWrapper>Fixing the internet. One bug at a time.</TextWrapper>
       </TextContainer>
-      <div>
+      <UrlWrapper>
         <StyledUrl href="https://github.com/rysolv" target="_blank">
           {GithubIcon}
         </StyledUrl>
@@ -38,7 +40,7 @@ const Footer = ({ handleNav }) => (
         <StyledUrl href="https://twitter.com/rysolv" target="_blank">
           {TwitterIcon}
         </StyledUrl>
-      </div>
+      </UrlWrapper>
     </StyledTop>
     <Divider />
     <StyledBottom>
