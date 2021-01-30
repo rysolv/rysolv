@@ -59,7 +59,7 @@ module.exports = buildSchema(`
     featureTag: Int
     fundedIssues: Int
     issueLanguages: [Object]
-    maxBounty: Int
+    maxBounty: Float
     organizations: [Object]
     unfundedIssues: Int
     userLanguages: [Object]
