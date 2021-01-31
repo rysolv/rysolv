@@ -19,9 +19,9 @@ export const CoinWrapper = styled.div`
   padding-bottom: 1rem;
 
   svg {
-    height: 2.25rem;
-    padding-right: 0.5rem;
-    width: 2.25rem;
+    height: 2rem;
+    margin-right: 0.5rem;
+    width: 2rem;
   }
 `;
 
