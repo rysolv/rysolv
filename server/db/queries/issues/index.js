@@ -2,6 +2,7 @@ const checkDuplicateIssue = require('./checkDuplicateIssue');
 const closeIssue = require('./closeIssue');
 const createIssue = require('./createIssue');
 const downvoteIssue = require('./downvoteIssue');
+const getFilterOptions = require('./getFilterOptions');
 const getIssueAttemptList = require('./getIssueAttemptList');
 const getIssueList = require('./getIssueList');
 const getIssues = require('./getIssues');
@@ -16,6 +17,7 @@ module.exports = {
   closeIssue,
   createIssue,
   downvoteIssue,
+  getFilterOptions,
   getIssueAttemptList,
   getIssueList,
   getIssues,

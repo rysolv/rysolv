@@ -62,6 +62,8 @@ const IssueCard = ({
         createdDate,
         fundedAmount,
         id,
+        isInFundingQueue,
+        isPullRequestMerged,
         language,
         name,
         open,
@@ -243,14 +245,20 @@ const IssueCard = ({
                       <FundIssueButton
                         dispatchOpenModal={dispatchOpenModal}
                         fundedAmount={fundedAmount}
+                        isInFundingQueue={isInFundingQueue}
+                        isPullRequestMerged={isPullRequestMerged}
                         issueId={id}
                         open={open}
+                        rep={rep}
                       />
                     }
                     FallbackComponent={
                       <FundingWrapper open={open} value="Issue Closed" medium />
                     }
-                    shouldRender={open}
+                    shouldRender={
+                      open ||
+                      (isPullRequestMerged && !isInFundingQueue && !open)
+                    }
                   />
                 </StyledIssueFooter>
               </StyledIssueContent>

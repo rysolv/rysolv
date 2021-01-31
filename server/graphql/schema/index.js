@@ -53,6 +53,18 @@ module.exports = buildSchema(`
     message: String
   }
 
+  type Filter {
+    bugTag: Int
+    closedIssues: Int
+    featureTag: Int
+    fundedIssues: Int
+    issueLanguages: [Object]
+    maxBounty: Float
+    organizations: [Object]
+    unfundedIssues: Int
+    userLanguages: [Object]
+  }
+
   type ImportData {
     githubCommentCount: Int
     issueBody: String!
@@ -81,6 +93,7 @@ module.exports = buildSchema(`
 
   type Issue {
     attempting: [ID]
+    awardedUser: Object
     body: String
     comments: Int
     contributor: [String]
@@ -89,6 +102,7 @@ module.exports = buildSchema(`
     fundedAmount: Float
     id: ID!
     isInFundingQueue: Boolean
+    isPullRequestMerged: Boolean
     language: [String]
     message: String
     modifiedDate: Object
@@ -217,9 +231,9 @@ module.exports = buildSchema(`
     mostContribution: [Object]!
     mostEarned: [Object]!
     mostRep: [Object]!
-    totalAvailable: Int!
-    totalEarned: Int!
-    totalFunded: Int!
+    totalAvailable: Float!
+    totalEarned: Float!
+    totalFunded: Float!
     totalResolved: Int!
   }
 
@@ -323,6 +337,7 @@ module.exports = buildSchema(`
 
   union CommentResult = Comment | Error
   union EventResponse = Success | Error
+  union FilterResult = Filter | Error
   union ImportPullRequestResult = ImportPullRequest | Error
   union ImportResult = ImportData | Error
   union IssueArrayResult = IssueArray | Error
@@ -342,6 +357,7 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
+    getFilterOptions: FilterResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!

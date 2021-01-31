@@ -29,6 +29,7 @@ import { PaymentContainer } from './styledComponents';
 const PaymentsContainer = ({
   activeUser,
   alerts,
+  awardedUser,
   dispatchInputError,
   dispatchPaypalPayment,
   dispatchResetState,
@@ -37,9 +38,13 @@ const PaymentsContainer = ({
   errors,
   handleClearPaymentAlerts,
   handleIncrement,
+  isInFundingQueue,
   isModal,
+  isPullRequestMerged,
   issueId,
   loading,
+  open,
+  rep,
   step,
   ...restProps
 }) => {
@@ -84,7 +89,7 @@ const PaymentsContainer = ({
     });
   };
   return (
-    <PaymentContainer isModal={isModal}>
+    <PaymentContainer isModal={isModal} isOnPaymentView={open}>
       <AsyncRender
         asyncData={{}}
         component={ComponentToRender}
@@ -92,6 +97,7 @@ const PaymentsContainer = ({
         loading={loading}
         propsToPassDown={{
           alerts,
+          awardedUser,
           balance,
           dispatchPaypalPayment,
           email: userEmail,
@@ -101,7 +107,11 @@ const PaymentsContainer = ({
           handleStripeToken,
           handleSubmitAccountPayment,
           handleValidateInput,
+          isInFundingQueue,
+          isPullRequestMerged,
           issueId,
+          open,
+          rep,
           step,
           ...restProps,
         }}
@@ -110,11 +120,17 @@ const PaymentsContainer = ({
   );
 };
 
-PaymentsContainer.defaultProps = { isModal: false };
+PaymentsContainer.defaultProps = {
+  awardedUser: null,
+  isInFundingQueue: false,
+  isModal: false,
+  isPullRequestMerged: false,
+};
 
 PaymentsContainer.propTypes = {
   activeUser: T.object,
   alerts: T.object,
+  awardedUser: T.object,
   dispatchInputError: T.func,
   dispatchPaypalPayment: T.func,
   dispatchResetState: T.func,
@@ -123,9 +139,13 @@ PaymentsContainer.propTypes = {
   errors: T.object,
   handleClearPaymentAlerts: T.func,
   handleIncrement: T.func.isRequired,
+  isInFundingQueue: T.bool,
   isModal: T.bool,
+  isPullRequestMerged: T.bool,
   issueId: T.string,
   loading: T.bool.isRequired,
+  open: T.bool.isRequired,
+  rep: T.number.isRequired,
   step: T.number.isRequired,
 };
 

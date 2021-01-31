@@ -34,6 +34,7 @@ import {
 export class OrganizationsDetail extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
+    document.title = 'Organization Detail';
     const {
       dispatchFetchInfo,
       match: {

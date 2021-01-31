@@ -27,6 +27,7 @@ import Email from '@material-ui/icons/Email';
 import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
 import Facebook from '@material-ui/icons/Facebook';
+import Flare from '@material-ui/icons/Flare';
 import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
 import Help from '@material-ui/icons/Help';
@@ -84,6 +85,7 @@ export default (name, size, style) => {
     email: Email,
     exit: Exit,
     facebook: Facebook,
+    flare: Flare,
     forwardArrowHalf: ArrowForwardIosIcon,
     funded: MonetizationOn,
     gift: Gift,

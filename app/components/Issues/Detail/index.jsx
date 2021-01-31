@@ -42,11 +42,14 @@ const IssueDetail = ({
   alerts: { error, success },
   data,
   data: {
+    awardedUser,
     body,
     comments,
     createdDate,
     fundedAmount,
     id: issueId,
+    isInFundingQueue,
+    isPullRequestMerged,
     language,
     name,
     open,
@@ -180,7 +183,11 @@ const IssueDetail = ({
     <Fragment>
       <Divider>Manage Issue</Divider>
       <ManageIssueWrapper>
-        <EmbedIssueComponent removeMargin />
+        <ConditionalRender
+          Component={EmbedIssueComponent}
+          propsToPassDown={{ removeMargin: true }}
+          shouldRender={open}
+        />
         {/* <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
         {CloseOpenIssueComponent} */}
       </ManageIssueWrapper>
@@ -284,13 +291,20 @@ const IssueDetail = ({
         </IssueDetailWrapper>
         <SidebarContainer>
           <PaymentPortal
+            awardedUser={awardedUser}
             fundedAmount={fundedAmount}
+            isInFundingQueue={isInFundingQueue}
+            isPullRequestMerged={isPullRequestMerged}
             isSignedIn={isSignedIn}
             issueId={issueId}
             open={open}
+            rep={rep}
           />
           <EmbedIssueWrapper>
-            <EmbedIssueComponent />
+            <ConditionalRender
+              Component={EmbedIssueComponent}
+              shouldRender={open}
+            />
           </EmbedIssueWrapper>
           {/* <ConditionalRender
             Component={EditIssueComponent}

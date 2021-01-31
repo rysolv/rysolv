@@ -6,6 +6,7 @@ import { BaseExpansionPanel, ConditionalRender } from 'components/base_ui';
 import { formatDollarAmount, handleZipChange } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
+import AwardedUserView from './AwardedUser';
 import CreditCardView from './CreditCardView';
 import DollarValueToggle from './DollarValueToggle';
 import PaypalView from './PaypalView';
@@ -18,6 +19,7 @@ import {
   FundingContainer,
   OverviewWrapper,
   PaymentInformationWrapper,
+  RewardWrapper,
   StyledErrorSuccessBanner,
   StyledLabel,
   StyledPaymentTextInput,
@@ -26,24 +28,26 @@ import {
 const AccountIcon = iconDictionary('user');
 const CreditCardIcon = iconDictionary('creditCard');
 const PaypalIcon = iconDictionary('paypal');
+const RewardIcon = iconDictionary('flare');
 
 const PaymentView = ({
   alerts: { error, success },
+  awardedUser,
   balance,
   dispatchPaypalPayment,
   email,
-  errors: {
-    email: emailError,
-    fundValue: fundValueError,
-  },
+  errors: { email: emailError, fundValue: fundValueError },
   fundedAmount,
   handleClearPaymentAlerts,
   handleStripeToken,
   handleSubmitAccountPayment,
   handleValidateInput,
+  isInFundingQueue,
+  isPullRequestMerged,
   isSignedIn,
   issueId,
   open,
+  rep,
 }) => {
   const initialValue = '10';
   const [emailValue, setEmailValue] = useState(email || '');
@@ -149,10 +153,23 @@ const PaymentView = ({
   return (
     <Fragment>
       <OverviewWrapper>
-        <Amount>{formatDollarAmount(fundedAmount)}</Amount>
-        <Funded isFunded={!fundedAmount || !open}>
-          {fundedAmount ? 'Funded' : 'Unfunded'}
-        </Funded>
+        <ConditionalRender
+          Component={<RewardWrapper>{RewardIcon} Rewarded</RewardWrapper>}
+          shouldRender={!!awardedUser}
+        />
+        <Amount success={!!awardedUser}>
+          {formatDollarAmount(fundedAmount)}
+        </Amount>
+        <ConditionalRender
+          Component={AwardedUserView}
+          FallbackComponent={
+            <Funded isFunded={!fundedAmount || !open}>
+              {fundedAmount ? 'Funded' : 'Unfunded'}
+            </Funded>
+          }
+          propsToPassDown={{ awardedUser, isInFundingQueue, rep }}
+          shouldRender={isPullRequestMerged && !open}
+        />
       </OverviewWrapper>
       <FundingContainer open={open}>
         <DollarValueWrapper>
@@ -245,6 +262,7 @@ const PaymentView = ({
 
 PaymentView.propTypes = {
   alerts: T.object,
+  awardedUser: T.object,
   balance: T.number,
   dispatchPaypalPayment: T.func,
   email: T.string,
@@ -254,9 +272,12 @@ PaymentView.propTypes = {
   handleStripeToken: T.func,
   handleSubmitAccountPayment: T.func,
   handleValidateInput: T.func,
+  isInFundingQueue: T.bool.isRequired,
+  isPullRequestMerged: T.bool.isRequired,
   isSignedIn: T.bool,
   issueId: T.string,
   open: T.bool,
+  rep: T.number.isRequired,
 };
 
 export default PaymentView;
