@@ -14,6 +14,7 @@ import {
   dividerBorder,
   fundingText,
   lightBlueColor,
+  rewardColor,
   successGreen,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -22,7 +23,7 @@ const { mobileXS } = mediaQueriesByDevice;
 
 export const Amount = styled.div`
   align-self: center;
-  font-size: 2.4rem;
+  font-size: ${({ success }) => (success ? '2.8rem' : '2.4rem')};
   font-weight: 500;
 `;
 
@@ -155,15 +156,31 @@ export const OverviewWrapper = styled.div`
   padding: 3rem;
 `;
 
+export const RewardWrapper = styled.div`
+  align-items: center;
+  align-self: center;
+  color: ${rewardColor};
+  display: flex;
+  font-size: 2.8rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+
+  svg {
+    height: 2.8rem;
+    margin-right: 0.5rem;
+    width: 2.8rem;
+  }
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin: 1rem;
+`;
+
 export const StyledLabel = styled.div`
   font-size: 1.4rem;
   font-weight: 500;
   padding: 0.5rem 1.5rem;
   text-align: left;
-`;
-
-export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
-  margin: 1rem;
 `;
 
 export const StyledPaymentTextInput = styled(PaymentTextInput)`

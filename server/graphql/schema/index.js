@@ -93,6 +93,7 @@ module.exports = buildSchema(`
 
   type Issue {
     attempting: [ID]
+    awardedUser: Object
     body: String
     comments: Int
     contributor: [String]
@@ -101,6 +102,7 @@ module.exports = buildSchema(`
     fundedAmount: Float
     id: ID!
     isInFundingQueue: Boolean
+    isPullRequestMerged: Boolean
     language: [String]
     message: String
     modifiedDate: Object
@@ -229,9 +231,9 @@ module.exports = buildSchema(`
     mostContribution: [Object]!
     mostEarned: [Object]!
     mostRep: [Object]!
-    totalAvailable: Int!
-    totalEarned: Int!
-    totalFunded: Int!
+    totalAvailable: Float!
+    totalEarned: Float!
+    totalFunded: Float!
     totalResolved: Int!
   }
 

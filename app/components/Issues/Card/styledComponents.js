@@ -79,6 +79,10 @@ export const OrganizationNameWrapper = styled.div`
   color: ${textColor};
   display: flex;
   font-weight: bold;
+
+  &:hover {
+    color: ${hoverLinkColor};
+  }
 `;
 
 export const StyledIconButton = styled(

@@ -273,12 +273,14 @@ export function* fetchIssueDetailSaga({ payload }) {
         __typename
         ... on Issue {
           attempting
+          awardedUser
           body
           contributor
           createdDate
           fundedAmount
           id
           isInFundingQueue
+          isPullRequestMerged
           language
           modifiedDate
           name
@@ -340,6 +342,8 @@ export function* fetchIssuesSaga() {
             createdDate
             fundedAmount
             id
+            isInFundingQueue
+            isPullRequestMerged
             language
             modifiedDate
             name
@@ -526,6 +530,8 @@ export function* searchIssuesSaga({ payload }) {
         createdDate
         fundedAmount
         id
+        isInFundingQueue
+        isPullRequestMerged
         language
         modifiedDate
         name

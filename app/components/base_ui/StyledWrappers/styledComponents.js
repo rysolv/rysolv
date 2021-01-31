@@ -6,6 +6,8 @@ import {
   fundingText,
   languageBackground,
   languageText,
+  rewardBackground,
+  rewardColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
@@ -108,4 +110,15 @@ export const StyledLanguageWrapper = styled.div`
   font-size: inherit;
   margin: 0 0.5rem 0.5rem 0;
   padding: 0.5rem;
+`;
+
+export const StyledRewardWrapper = styled.div`
+  background: ${rewardBackground};
+  border-radius: 0.25rem;
+  color: ${rewardColor};
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 2rem;
+  padding: 0.2rem 1rem;
+  white-space: nowrap;
 `;
