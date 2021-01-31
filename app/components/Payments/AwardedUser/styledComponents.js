@@ -14,6 +14,7 @@ export const AwardedUserWrapper = styled.div`
 export const CoinWrapper = styled.div`
   align-items: center;
   display: flex;
+  font-size: 2rem;
   justify-content: center;
   padding-bottom: 1rem;
 
@@ -46,7 +47,7 @@ export const StyledExternalLink = styled.a`
 
 export const StyledInternalLink = styled(Link)`
   font-weight: 500;
-
+  font-size: 2rem;
   &:hover {
     color: ${hoverLinkColor};
   }

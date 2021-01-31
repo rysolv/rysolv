@@ -28,7 +28,7 @@ const AwardedUserView = ({ awardedUser, isInFundingQueue, rep }) => {
         alt={username}
         image={profilePic}
         route={`/users/detail/${id}`}
-        size="6rem"
+        size="8rem"
       />
       <LinkWrapper>
         <StyledInternalLink to={`/users/detail/${id}`}>

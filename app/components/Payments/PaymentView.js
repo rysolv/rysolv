@@ -157,7 +157,9 @@ const PaymentView = ({
           Component={<RewardWrapper>{RewardIcon} Rewarded</RewardWrapper>}
           shouldRender={!!awardedUser}
         />
-        <Amount>{formatDollarAmount(fundedAmount)}</Amount>
+        <Amount sucess={!!awardedUser}>
+          {formatDollarAmount(fundedAmount)}
+        </Amount>
         <ConditionalRender
           Component={AwardedUserView}
           FallbackComponent={

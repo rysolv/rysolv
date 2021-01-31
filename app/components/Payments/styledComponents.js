@@ -23,6 +23,7 @@ const { mobileXS } = mediaQueriesByDevice;
 
 export const Amount = styled.div`
   align-self: center;
+  color: ${({ success }) => (success ? '3rem' : 'inherit')};
   font-size: 2.4rem;
   font-weight: 500;
 `;
