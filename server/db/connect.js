@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const switchCredentials = () => {
-  switch (process.env.NODE_ENV) {
+  switch ('production') {
     case 'development':
       return {
         database: process.env.DB_NAME_DEV,

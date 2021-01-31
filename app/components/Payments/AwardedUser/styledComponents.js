@@ -46,8 +46,9 @@ export const StyledExternalLink = styled.a`
 `;
 
 export const StyledInternalLink = styled(Link)`
-  font-weight: 500;
   font-size: 2rem;
+  font-weight: 500;
+
   &:hover {
     color: ${hoverLinkColor};
   }
