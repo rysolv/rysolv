@@ -273,11 +273,11 @@ PaymentView.propTypes = {
   handleSubmitAccountPayment: T.func,
   handleValidateInput: T.func,
   isInFundingQueue: T.bool.isRequired,
-  isPullRequestMerged: T.bool,
+  isPullRequestMerged: T.bool.isRequired,
   isSignedIn: T.bool,
   issueId: T.string,
   open: T.bool,
-  rep: T.number,
+  rep: T.number.isRequired,
 };
 
 export default PaymentView;

@@ -184,7 +184,8 @@ const IssueDetail = ({
       <Divider>Manage Issue</Divider>
       <ManageIssueWrapper>
         <ConditionalRender
-          Component={<EmbedIssueComponent removeMargin />}
+          Component={EmbedIssueComponent}
+          propsToPassDown={{ removeMargin: true }}
           shouldRender={open}
         />
         {/* <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
@@ -301,7 +302,8 @@ const IssueDetail = ({
           />
           <EmbedIssueWrapper>
             <ConditionalRender
-              Component={<EmbedIssueComponent removeMargin />}
+              Component={EmbedIssueComponent}
+              propsToPassDown={{ removeMargin: true }}
               shouldRender={open}
             />
           </EmbedIssueWrapper>

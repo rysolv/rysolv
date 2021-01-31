@@ -75,6 +75,7 @@ const IssueCard = ({
         watching,
       }) => {
         const colorIndex = issueTags.indexOf(type);
+
         const isMobile =
           deviceView === 'laptopS' ||
           deviceView === 'tablet' ||

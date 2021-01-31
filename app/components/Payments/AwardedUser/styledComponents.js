@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { hoverLinkColor } from '../../../defaultStyleHelper';
+
+import { hoverLinkColor } from 'defaultStyleHelper';
 
 export const AwardedUserWrapper = styled.div`
   align-items: center;

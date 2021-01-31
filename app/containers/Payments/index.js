@@ -145,7 +145,7 @@ PaymentsContainer.propTypes = {
   issueId: T.string,
   loading: T.bool.isRequired,
   open: T.bool.isRequired,
-  rep: T.number,
+  rep: T.number.isRequired,
   step: T.number.isRequired,
 };
 
