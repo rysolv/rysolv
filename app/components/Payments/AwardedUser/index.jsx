@@ -7,9 +7,7 @@ import iconDictionary from 'utils/iconDictionary';
 import {
   AwardedUserWrapper,
   CoinWrapper,
-  ContentWrapper,
   LinkWrapper,
-  Rewarded,
   StyledExternalLink,
   StyledInternalLink,
 } from './styledComponents';
@@ -26,20 +24,17 @@ const AwardedUserView = ({ awardedUser, isInFundingQueue, rep }) => {
         {CoinIcon}
         {rep}
       </CoinWrapper>
-      <Rewarded>awarded to</Rewarded>
-      <ContentWrapper>
-        <ImageLinkWrapper
-          alt={username}
-          image={profilePic}
-          route={`/users/detail/${id}`}
-          size="8rem"
-        />
-        <LinkWrapper>
-          <StyledInternalLink to={`/users/detail/${id}`}>
-            {username}
-          </StyledInternalLink>
-        </LinkWrapper>
-      </ContentWrapper>
+      <ImageLinkWrapper
+        alt={username}
+        image={profilePic}
+        route={`/users/detail/${id}`}
+        size="6rem"
+      />
+      <LinkWrapper>
+        <StyledInternalLink to={`/users/detail/${id}`}>
+          {username}
+        </StyledInternalLink>
+      </LinkWrapper>
       <LinkWrapper>
         {CodeIcon}
         <StyledExternalLink href={htmlUrl} target="_blank">

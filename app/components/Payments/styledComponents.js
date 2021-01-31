@@ -14,6 +14,7 @@ import {
   dividerBorder,
   fundingText,
   lightBlueColor,
+  rewardColor,
   successGreen,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -21,9 +22,9 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 const { mobileXS } = mediaQueriesByDevice;
 
 export const Amount = styled.div`
-  font-size: ${({ success }) => (success ? '2.8rem' : '2.4rem')};
-  font-weight: 500;
   align-self: center;
+  font-size: 2.4rem;
+  font-weight: 500;
 `;
 
 export const BalanceAmount = styled.h3`
@@ -155,19 +156,19 @@ export const OverviewWrapper = styled.div`
   padding: 3rem;
 `;
 
-export const Resolved = styled.div`
+export const RewardWrapper = styled.div`
   align-items: center;
   align-self: center;
-  color: ${successGreen};
+  color: ${rewardColor};
   display: flex;
-  font-size: 4rem;
+  font-size: 2.8rem;
   font-weight: 500;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
   svg {
-    height: 4rem;
+    height: 2.8rem;
     margin-right: 0.5rem;
-    width: 4rem;
+    width: 2.8rem;
   }
 `;
 

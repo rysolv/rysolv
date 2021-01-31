@@ -303,7 +303,6 @@ const IssueDetail = ({
           <EmbedIssueWrapper>
             <ConditionalRender
               Component={EmbedIssueComponent}
-              propsToPassDown={{ removeMargin: true }}
               shouldRender={open}
             />
           </EmbedIssueWrapper>

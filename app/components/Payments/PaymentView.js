@@ -19,7 +19,7 @@ import {
   FundingContainer,
   OverviewWrapper,
   PaymentInformationWrapper,
-  Resolved,
+  RewardWrapper,
   StyledErrorSuccessBanner,
   StyledLabel,
   StyledPaymentTextInput,
@@ -28,7 +28,7 @@ import {
 const AccountIcon = iconDictionary('user');
 const CreditCardIcon = iconDictionary('creditCard');
 const PaypalIcon = iconDictionary('paypal');
-const SuccessIcon = iconDictionary('successOutline');
+const RewardIcon = iconDictionary('flare');
 
 const PaymentView = ({
   alerts: { error, success },
@@ -154,12 +154,10 @@ const PaymentView = ({
     <Fragment>
       <OverviewWrapper>
         <ConditionalRender
-          Component={<Resolved>{SuccessIcon} Resolved</Resolved>}
+          Component={<RewardWrapper>{RewardIcon} Rewarded</RewardWrapper>}
           shouldRender={!!awardedUser}
         />
-        <Amount success={!!awardedUser}>
-          {formatDollarAmount(fundedAmount)}
-        </Amount>
+        <Amount>{formatDollarAmount(fundedAmount)}</Amount>
         <ConditionalRender
           Component={AwardedUserView}
           FallbackComponent={
