@@ -21,9 +21,9 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 const { mobileXS } = mediaQueriesByDevice;
 
 export const Amount = styled.div`
-  align-self: center;
-  font-size: 2.4rem;
+  font-size: ${({ success }) => (success ? '2.8rem' : '2.4rem')};
   font-weight: 500;
+  align-self: center;
 `;
 
 export const BalanceAmount = styled.h3`
@@ -153,6 +153,22 @@ export const OverviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 3rem;
+`;
+
+export const Resolved = styled.div`
+  align-items: center;
+  align-self: center;
+  color: ${successGreen};
+  display: flex;
+  font-size: 4rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+
+  svg {
+    height: 4rem;
+    margin-right: 0.5rem;
+    width: 4rem;
+  }
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`

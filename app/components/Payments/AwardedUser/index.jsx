@@ -8,12 +8,12 @@ import {
   AwardedUserWrapper,
   CoinWrapper,
   ContentWrapper,
-  Funded,
   LinkWrapper,
   Rewarded,
   StyledExternalLink,
   StyledInternalLink,
 } from './styledComponents';
+import { Funded } from '../styledComponents';
 
 const CodeIcon = iconDictionary('code');
 const CoinIcon = iconDictionary('coin');
@@ -26,28 +26,26 @@ const AwardedUserView = ({ awardedUser, isInFundingQueue, rep }) => {
         {CoinIcon}
         {rep}
       </CoinWrapper>
-      <Rewarded>Rewarded</Rewarded>
+      <Rewarded>awarded to</Rewarded>
       <ContentWrapper>
         <ImageLinkWrapper
           alt={username}
           image={profilePic}
           route={`/users/detail/${id}`}
-          size="5rem"
+          size="8rem"
         />
-        <div>
-          <LinkWrapper>
-            <StyledInternalLink to={`/users/detail/${id}`}>
-              {username}
-            </StyledInternalLink>
-          </LinkWrapper>
-          <LinkWrapper>
-            {CodeIcon}
-            <StyledExternalLink href={htmlUrl} target="_blank">
-              View pull request
-            </StyledExternalLink>
-          </LinkWrapper>
-        </div>
+        <LinkWrapper>
+          <StyledInternalLink to={`/users/detail/${id}`}>
+            {username}
+          </StyledInternalLink>
+        </LinkWrapper>
       </ContentWrapper>
+      <LinkWrapper>
+        {CodeIcon}
+        <StyledExternalLink href={htmlUrl} target="_blank">
+          View pull request
+        </StyledExternalLink>
+      </LinkWrapper>
     </AwardedUserWrapper>
   );
   const PendingApprovalComponent = () => (

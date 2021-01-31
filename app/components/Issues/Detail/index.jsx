@@ -183,7 +183,10 @@ const IssueDetail = ({
     <Fragment>
       <Divider>Manage Issue</Divider>
       <ManageIssueWrapper>
-        <EmbedIssueComponent removeMargin />
+        <ConditionalRender
+          Component={<EmbedIssueComponent removeMargin />}
+          shouldRender={open}
+        />
         {/* <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
         {CloseOpenIssueComponent} */}
       </ManageIssueWrapper>
@@ -297,7 +300,10 @@ const IssueDetail = ({
             rep={rep}
           />
           <EmbedIssueWrapper>
-            <EmbedIssueComponent />
+            <ConditionalRender
+              Component={<EmbedIssueComponent removeMargin />}
+              shouldRender={open}
+            />
           </EmbedIssueWrapper>
           {/* <ConditionalRender
             Component={EditIssueComponent}
