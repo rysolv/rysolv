@@ -81,7 +81,7 @@ export const RowSection = styled.div`
   display: flex;
   flex-direction: row;
   flex-flow: wrap;
-  justify-content: start;
+  justify-content: center;
   margin-left: 2rem;
 
   ${mobileS} {
