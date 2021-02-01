@@ -170,9 +170,9 @@ const validateString = (value, { maxLength = 60 }) => {
 };
 
 const validateUsername = (value, { maxLength = 60 }) => {
-  const isAlphaNumeric = /[^a-zA-Z0-9]/.test(value);
-  if (isAlphaNumeric) {
-    return `Username must only contain alphanumeric characters`;
+  const isNotAlphaNumeric = /[^a-zA-Z0-9-_]/.test(value);
+  if (isNotAlphaNumeric) {
+    return `Username must only contain alphanumeric characters, hyphens, and underscores`;
   }
   return validateString(value, { maxLength });
 };
