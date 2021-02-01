@@ -16,7 +16,7 @@ const validationPropsByField = {
     firstName: { maxLength: 30, type: 'stringInput' },
     lastName: { maxLength: 30, type: 'stringInput' },
     password: { type: 'passwordInput' },
-    username: { maxLength: 20, type: 'stringInput' },
+    username: { maxLength: 20, type: 'usernameInput' },
     verifyPassword: { type: 'verifyInput' },
   },
   verify: {},

@@ -169,6 +169,14 @@ const validateString = (value, { maxLength = 60 }) => {
   return false;
 };
 
+const validateUsername = (value, { maxLength = 60 }) => {
+  const isAlphaNumeric = /[^a-zA-Z0-9]/.test(value);
+  if (isAlphaNumeric) {
+    return `Username must only contain alphanumeric characters`;
+  }
+  return validateString(value, { maxLength });
+};
+
 const validateVerifyInput = (value, { field, verifyValue }) => {
   if (value !== verifyValue) {
     return `${capitalize(field)}s do not match`;
@@ -184,6 +192,7 @@ export const validationDictionary = {
   passwordInput: validatePassword,
   stackoverflowLinkInput: validateStackoverflowLink,
   stringInput: validateString,
+  usernameInput: validateUsername,
   verifyInput: validateVerifyInput,
 };
 
