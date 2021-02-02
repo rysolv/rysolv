@@ -112,8 +112,7 @@ const authReducer = produce((draft, { payload, type }) => {
       break;
     }
     case RESEND_CODE: {
-      const { message } = payload;
-      draft.alerts.success = { message };
+      draft.alerts = initialState.alerts;
       draft.loading.resendCode = false;
       break;
     }

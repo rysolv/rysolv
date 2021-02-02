@@ -19,7 +19,7 @@ import reducer from '../reducer';
 
 const VerifyContainer = ({
   activeUser,
-  alerts: { error },
+  alerts: { error, success },
   dispatchInputError,
   dispatchVerifyEmail,
   handleClearAuthAlerts,
@@ -73,6 +73,7 @@ const VerifyContainer = ({
       handleValidateInput={handleValidateInput}
       handleVerifyEmail={handleVerifyEmail}
       loading={loading}
+      success={success}
       verify={verify}
       verifyDisabled={verifyDisabled}
     />

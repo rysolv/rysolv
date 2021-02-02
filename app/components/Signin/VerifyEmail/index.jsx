@@ -26,6 +26,7 @@ const VerifyEmail = ({
   handleValidateInput,
   handleVerifyEmail,
   loading,
+  success,
   verify: { verificationCode },
   verifyDisabled,
 }) => {
@@ -40,10 +41,11 @@ const VerifyEmail = ({
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
         <Title>Confirm your email</Title>
-        {error && (
+        {(error || success) && (
           <StyledErrorSuccessBanner
             error={error}
             onClose={handleClearAuthAlerts}
+            success={success}
           />
         )}
         <InputSubText>
@@ -95,6 +97,7 @@ VerifyEmail.propTypes = {
   handleValidateInput: T.func.isRequired,
   handleVerifyEmail: T.func.isRequired,
   loading: T.bool.isRequired,
+  success: T.oneOfType([T.bool, T.object]).isRequired,
   verify: T.object.isRequired,
   verifyDisabled: T.bool.isRequired,
 };
