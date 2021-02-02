@@ -7,6 +7,7 @@ const getUserSettings = require('./getUserSettings');
 const githubSignIn = require('./githubSignIn');
 const oneUser = require('./oneUser');
 const oneUserSignUp = require('./oneUserSignUp');
+const resendCode = require('./resendCode');
 const resetPassword = require('./resetPassword');
 const searchUsers = require('./searchUsers');
 const sendLink = require('./sendLink');
@@ -26,6 +27,7 @@ module.exports = {
   githubSignIn,
   oneUser,
   oneUserSignUp,
+  resendCode,
   resetPassword,
   searchUsers,
   sendLink,

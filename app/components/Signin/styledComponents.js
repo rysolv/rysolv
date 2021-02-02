@@ -71,8 +71,8 @@ export const InputFormWrapper = styled.form`
 
 export const InputSubText = styled.div`
   color: ${textColor};
-  font-size: ${detailFontSize};
-  margin-bottom: 2rem;
+  font-size: ${defaultFontSize};
+  margin: 0 1rem 2rem;
   text-align: left;
 `;
 
@@ -124,6 +124,23 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   align-self: center;
   margin-bottom: 2rem;
   width: 95%;
+`;
+
+export const ResendButton = styled(Button)`
+  align-self: flex-end;
+  color: ${hoverLinkColor};
+  font-family: ${defaultFontFamily};
+  font-size: ${defaultFontSize};
+  font-weight: 400;
+  margin-top: -1.9rem;
+  padding: 0 1rem 0 0;
+  text-transform: none;
+
+  &:hover {
+    background-color: transparent;
+    color: ${hoverLinkColor};
+    text-decoration: underline;
+  }
 `;
 
 export const StyledLink = styled(Link)`
@@ -195,7 +212,8 @@ export const UsernameWrapper = styled.span`
 export const VerificationWrapper = styled.div`
   align-self: center;
   display: flex;
-  width: 75%;
+  flex-direction: column;
+  width: 100%;
 `;
 
 export const WordDivider = styled.div`

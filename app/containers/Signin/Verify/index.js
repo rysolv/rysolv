@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import VerifyEmail from 'components/Signin/VerifyEmail';
-import { clearAlerts, verifyEmail } from 'containers/Auth/actions';
+import { clearAlerts, resendCode, verifyEmail } from 'containers/Auth/actions';
 import {
   makeSelectAuth,
   makeSelectAuthLoading,
@@ -24,6 +24,7 @@ const VerifyContainer = ({
   dispatchVerifyEmail,
   handleClearAuthAlerts,
   handleInputChange,
+  handleResendCode,
   loading,
   verify,
   verifyDisabled,
@@ -68,6 +69,7 @@ const VerifyContainer = ({
       error={error}
       handleClearAuthAlerts={handleClearAuthAlerts}
       handleInputChange={handleInputChange}
+      handleResendCode={handleResendCode}
       handleValidateInput={handleValidateInput}
       handleVerifyEmail={handleVerifyEmail}
       loading={loading}
@@ -84,6 +86,7 @@ VerifyContainer.propTypes = {
   dispatchVerifyEmail: T.func.isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
+  handleResendCode: T.func.isRequired,
   loading: T.bool.isRequired,
   verify: T.object.isRequired,
   verifyDisabled: T.bool.isRequired,
@@ -110,6 +113,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchVerifyEmail: payload => dispatch(verifyEmail(payload)),
     handleClearAuthAlerts: () => dispatch(clearAlerts()),
+    handleResendCode: payload => dispatch(resendCode(payload)),
     /*
      * Reducer : Signin
      */

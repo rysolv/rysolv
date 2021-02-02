@@ -8,6 +8,7 @@ import {
   EmailWrapper,
   InputFormWrapper,
   InputSubText,
+  ResendButton,
   SigninWrapper,
   StyledErrorSuccessBanner,
   StyledPrimaryAsyncButton,
@@ -21,6 +22,7 @@ const VerifyEmail = ({
   error,
   handleClearAuthAlerts,
   handleInputChange,
+  handleResendCode,
   handleValidateInput,
   handleVerifyEmail,
   loading,
@@ -63,6 +65,12 @@ const VerifyEmail = ({
             }
             value={verificationCode.value}
           />
+          <ResendButton
+            disableRipple
+            onClick={() => handleResendCode({ email })}
+          >
+            Resend code
+          </ResendButton>
         </VerificationWrapper>
         <StyledPrimaryAsyncButton
           disabled={verifyDisabled}
@@ -83,6 +91,7 @@ VerifyEmail.propTypes = {
   error: T.oneOfType([T.bool, T.object]).isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
+  handleResendCode: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   handleVerifyEmail: T.func.isRequired,
   loading: T.bool.isRequired,

@@ -6,6 +6,9 @@ import {
   GITHUB_SIGN_IN_FAILURE,
   GITHUB_SIGN_IN_SUCCESS,
   GITHUB_SIGN_IN,
+  RESEND_CODE_FAILURE,
+  RESEND_CODE_SUCCESS,
+  RESEND_CODE,
   RESEND_SIGN_UP,
   RESET_PASSWORD_FAILURE,
   RESET_PASSWORD_SUCCESS,
@@ -72,6 +75,27 @@ export function githubSignIn(payload) {
   return {
     payload,
     type: GITHUB_SIGN_IN,
+  };
+}
+
+export function resendCodeFailure(payload) {
+  return {
+    payload,
+    type: RESEND_CODE_FAILURE,
+  };
+}
+
+export function resendCodeSuccess(payload) {
+  return {
+    payload,
+    type: RESEND_CODE_SUCCESS,
+  };
+}
+
+export function resendCode(payload) {
+  return {
+    payload,
+    type: RESEND_CODE,
   };
 }
 
