@@ -72,8 +72,11 @@ export const InputFormWrapper = styled.form`
 export const InputSubText = styled.div`
   color: ${textColor};
   font-size: ${defaultFontSize};
-  margin: 0 1rem 2rem;
+  line-height: 1.5;
+  margin: 1rem;
+  padding: 0.6rem 0;
   text-align: left;
+  width: 100%;
 `;
 
 export const PasswordRequirements = styled.div`
