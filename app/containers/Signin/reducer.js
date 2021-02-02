@@ -32,7 +32,7 @@ export const initialState = {
     username: { error: '', value: '' },
     verifyPassword: { error: '', value: '' },
   },
-  step: 2,
+  step: 1,
   verify: {
     verificationCode: { error: '', value: '' },
   },
