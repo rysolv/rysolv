@@ -132,7 +132,7 @@ export const ResendButton = styled(Button)`
   font-family: ${defaultFontFamily};
   font-size: ${defaultFontSize};
   font-weight: 400;
-  margin-top: -1.9rem;
+  margin-top: -2rem;
   padding: 0 1rem 0 0;
   text-transform: none;
 
