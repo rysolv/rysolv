@@ -17,6 +17,7 @@ const getIssues = async () => {
     LEFT JOIN organizations ON issues.organization_id = organizations.id
     LEFT JOIN pullrequests on pullrequests.issue_id = issues.id AND pullrequests.is_deleted = false
     LEFT JOIN watching ON watching.issue_id = issues.id
+    WHERE issues.is_deleted = false
     GROUP BY ${groupValues}, funding.id, funding.is_approved, pullrequests.merged
   `;
   const { rows } = await singleQuery({ queryText });

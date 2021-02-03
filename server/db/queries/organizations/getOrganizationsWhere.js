@@ -7,6 +7,7 @@ const getOrganizationsWhere = async ({ column, value }) => {
     SELECT ${organizationReturnValues} FROM organizations
       LEFT JOIN languages ON languages.organization_id = organizations.id
     WHERE ${column} = $1
+    AND organizations.is_deleted = false
     GROUP BY ${groupValues}
   `;
   const { rows } = await singleQuery({

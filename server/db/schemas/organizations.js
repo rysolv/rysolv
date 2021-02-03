@@ -1,6 +1,7 @@
 const alterOrganizationsTable = `ALTER TABLE organizations
 ADD COLUMN created_date TIMESTAMP,
 ADD COLUMN description VARCHAR(512) NOT NULL,
+ADD COLUMN is_deleted BOOLEAN DEFAULT false,
 ADD COLUMN is_manual BOOLEAN,
 ADD COLUMN issues UUID [],
 ADD COLUMN logo VARCHAR(256),

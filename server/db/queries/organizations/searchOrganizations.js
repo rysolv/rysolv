@@ -9,8 +9,11 @@ const searchOrganizations = async ({ value }) => {
     FROM organizations
       LEFT JOIN languages ON languages.organization_id = organizations.id
     WHERE
-      LOWER(organizations.name) LIKE LOWER('%'||$1||'%') OR
-      LOWER(organizations.description) LIKE LOWER('%'||$1||'%')
+      organizations.is_deleted = false AND
+      (
+        LOWER(organizations.name) LIKE LOWER('%'||$1||'%') OR
+        LOWER(organizations.description) LIKE LOWER('%'||$1||'%')
+      )
     GROUP BY ${groupValues}
   `;
   const { rows } = await singleQuery({ queryText, values: [value] });

@@ -80,6 +80,7 @@ export class IssuesDetail extends React.PureComponent {
       handleComment,
       handleIncrement,
       isModalOpen,
+      isNotFound,
       isSignedIn,
       issueDetail,
       loading,
@@ -120,8 +121,9 @@ export class IssuesDetail extends React.PureComponent {
           asyncData={issueDetail}
           component={IssueDetail}
           error={error}
-          loading={loading}
+          isNotFound={isNotFound}
           isRequiredData
+          loading={loading}
           propsToPassDown={{
             activeUser,
             addWatching,
@@ -169,6 +171,7 @@ IssuesDetail.propTypes = {
   handleIncrement: T.func,
   handleNav: T.func,
   isModalOpen: T.bool,
+  isNotFound: T.bool.isRequired,
   isSignedIn: T.bool,
   issueDetail: T.object,
   loading: T.bool,
@@ -189,6 +192,7 @@ const mapStateToProps = createStructuredSelector({
   alerts: makeSelectIssues('alerts'),
   error: makeSelectIssueDetailError('issueDetail'),
   isModalOpen: makeSelectIssues('isModalOpen'),
+  isNotFound: makeSelectIssues('isNotFound'),
   issueDetail: makeSelectIssueDetail('issueDetail'),
   loading: makeSelectIssuesLoading('issueDetail'),
   modal: makeSelectIssues('modal'),

@@ -9,6 +9,7 @@ const getOrganizations = async () => {
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages"
     FROM organizations
     LEFT JOIN languages ON languages.organization_id = organizations.id
+    WHERE organizations.is_deleted = false
     GROUP BY ${groupValues}
   `;
   const { rows } = await singleQuery({ queryText });

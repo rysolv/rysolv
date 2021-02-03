@@ -18,9 +18,12 @@ const searchIssues = async ({ value }) => {
       LEFT JOIN pullrequests on pullrequests.issue_id = issues.id AND pullrequests.is_deleted = false
       LEFT JOIN watching ON watching.issue_id = issues.id
     WHERE
-      LOWER(issues.body) LIKE LOWER('%'||$1||'%') OR
-      LOWER(issues.name) LIKE LOWER('%'||$1||'%') OR
-      LOWER(organizations.name) LIKE LOWER('%'||$1||'%')
+      issues.is_deleted = false AND
+      (
+        LOWER(issues.body) LIKE LOWER('%'||$1||'%') OR
+        LOWER(issues.name) LIKE LOWER('%'||$1||'%') OR
+        LOWER(organizations.name) LIKE LOWER('%'||$1||'%')
+      )
     GROUP BY ${groupValues}, funding.id, funding.is_approved, pullrequests.merged
   `;
 

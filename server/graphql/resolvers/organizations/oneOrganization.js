@@ -9,6 +9,12 @@ const { oneOrganizationError } = require('./constants');
 const oneOrganization = async ({ id }) => {
   try {
     const result = await getOneOrganization({ organizationId: id });
+    if (!result) {
+      const error = new Error(`Not found`);
+      error.status = 404;
+      throw error;
+    }
+
     const { issues } = result;
 
     const contributorsResult = await getOrganizationContributors({
@@ -28,10 +34,12 @@ const oneOrganization = async ({ id }) => {
       ...result,
     };
   } catch (error) {
+    const { status } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
       message: oneOrganizationError,
+      status,
     };
   }
 };

@@ -63,6 +63,7 @@ export class OrganizationsDetail extends React.PureComponent {
       handleClearAlerts,
       handleInputChange,
       handleNav,
+      isNotFound,
       isSignedIn,
       loading,
       upvoteLoading,
@@ -77,6 +78,7 @@ export class OrganizationsDetail extends React.PureComponent {
         asyncData={data}
         component={OrganizationDetailView}
         error={error}
+        isNotFound={isNotFound}
         isRequiredData
         loading={loading}
         propsToPassDown={{
@@ -112,6 +114,7 @@ OrganizationsDetail.propTypes = {
   handleClearAlerts: T.func.isRequired,
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
+  isNotFound: T.bool.isRequired,
   isSignedIn: T.bool.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
@@ -131,6 +134,7 @@ const mapStateToProps = createStructuredSelector({
   data: makeSelectOrganizationsFormattedData(),
   error: makeSelectOrganizationsError('fetchOrganization'),
   filterValues: makeSelectOrganizations('filter'),
+  isNotFound: makeSelectOrganizations('isNotFound'),
   loading: makeSelectOrganizationsLoading('fetchOrganization'),
   upvoteLoading: makeSelectOrganizationsLoading('upvoteIssue'),
   /**

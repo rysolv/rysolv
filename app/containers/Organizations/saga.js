@@ -63,6 +63,7 @@ export function* fetchInfoSaga({ payload }) {
         }
         ... on Error {
           message
+          status
         }
       }
       getOrganizationActivity(organizationId: "${itemId}") {
@@ -86,14 +87,15 @@ export function* fetchInfoSaga({ payload }) {
     const {
       data: {
         getOrganizationActivity,
-        oneOrganization: { __typename, message, ...restProps },
+        oneOrganization: { __typename, message, status, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
+    console.log('status', status);
     if (__typename === 'Error') throw message;
     restProps.activity = getOrganizationActivity;
     yield put(fetchInfoSuccess({ organization: restProps }));
   } catch (error) {
-    yield put(fetchInfoFailure({ error }));
+    yield put(fetchInfoFailure({ error, status: 404 }));
   }
 }
 

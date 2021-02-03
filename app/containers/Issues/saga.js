@@ -298,6 +298,7 @@ export function* fetchIssueDetailSaga({ payload }) {
         }
         ... on Error {
           message
+          status
         }
       }
       getIssueComments(issueId: "${id}") {
@@ -316,16 +317,17 @@ export function* fetchIssueDetailSaga({ payload }) {
     const {
       data: {
         getIssueComments,
-        oneIssue: { __typename, message, ...restProps },
+        oneIssue: { __typename, message, status, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
+    console.log('status', status);
     if (__typename === 'Error') throw message;
 
     restProps.comments = getIssueComments;
 
     yield put(fetchIssueDetailSuccess({ issueDetail: restProps }));
   } catch (error) {
-    yield put(fetchIssueDetailFailure({ error }));
+    yield put(fetchIssueDetailFailure({ error, status: 404 }));
   }
 }
 

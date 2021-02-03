@@ -10,6 +10,7 @@ const getOneOrganization = async ({ organizationId }) => {
     FROM organizations
       LEFT JOIN languages ON languages.organization_id = organizations.id
     WHERE organizations.id = $1
+    AND organizations.is_deleted = false
     GROUP BY ${groupValues}
   `;
   const { rows } = await singleQuery({ queryText, values: [organizationId] });

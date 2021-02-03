@@ -51,6 +51,7 @@ module.exports = buildSchema(`
 
   type Error {
     message: String
+    status: String
   }
 
   type Filter {
@@ -100,7 +101,7 @@ module.exports = buildSchema(`
     createdDate: Object
     exists: Boolean
     fundedAmount: Float
-    id: ID!
+    id: ID
     isInFundingQueue: Boolean
     isPullRequestMerged: Boolean
     language: [String]
