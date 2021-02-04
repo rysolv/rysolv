@@ -2,6 +2,7 @@
 /* eslint-disable camelcase, consistent-return, prettier/prettier */
 const { v4: uuidv4 } = require('uuid');
 const Identicon = require('identicon.js');
+const isEmpty = require('lodash/isEmpty');
 
 const {
   checkDuplicateGithubId,
@@ -79,12 +80,14 @@ const githubSignIn = async ({ code, isSignIn }, { res }) => {
       };
       const result = await createUser({ data: newUser });
 
-      await createLanguage({
-        languages,
-        target: {
-          userId: id,
-        },
-      });
+      if(!isEmpty(languages)) {
+        await createLanguage({
+          languages,
+          target: {
+            userId: id,
+          },
+        });
+      }
 
       const token = generateToken({
         email,
