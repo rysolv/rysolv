@@ -51,7 +51,6 @@ module.exports = buildSchema(`
 
   type Error {
     message: String
-    status: String
   }
 
   type Filter {

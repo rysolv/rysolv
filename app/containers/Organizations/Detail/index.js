@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
+import { ConditionalRender } from 'components/base_ui';
+import NotFoundPage from 'components/NotFoundPage';
 import OrganizationDetailView from 'components/Organizations/Detail';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { openModalState } from 'containers/Main/actions';
@@ -74,26 +76,31 @@ export class OrganizationsDetail extends React.PureComponent {
     };
 
     return (
-      <AsyncRender
-        asyncData={data}
-        component={OrganizationDetailView}
-        error={error}
-        isNotFound={isNotFound}
-        isRequiredData
-        loading={loading}
-        propsToPassDown={{
-          activeUser,
-          alerts,
-          deviceView,
-          dispatchEditOrganization,
-          dispatchOpenModal,
-          filterValues,
-          handleClearAlerts,
-          handleInputChange,
-          handleNav,
-          handleUpvote,
-          isSignedIn,
-        }}
+      <ConditionalRender
+        Component={
+          <AsyncRender
+            asyncData={data}
+            component={OrganizationDetailView}
+            error={error}
+            isRequiredData
+            loading={loading}
+            propsToPassDown={{
+              activeUser,
+              alerts,
+              deviceView,
+              dispatchEditOrganization,
+              dispatchOpenModal,
+              filterValues,
+              handleClearAlerts,
+              handleInputChange,
+              handleNav,
+              handleUpvote,
+              isSignedIn,
+            }}
+          />
+        }
+        FallbackComponent={NotFoundPage}
+        shouldRender={!isNotFound}
       />
     );
   }

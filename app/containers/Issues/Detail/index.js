@@ -6,9 +6,10 @@ import { createStructuredSelector } from 'reselect';
 
 import AddPullRequestModal from 'components/AddPullRequestModal';
 import AsyncRender from 'components/AsyncRender';
-import { ModalDialog } from 'components/base_ui';
+import { ConditionalRender, ModalDialog } from 'components/base_ui';
 import EmbedIssueModal from 'components/EmbedIssueModal';
 import IssueDetail from 'components/Issues/Detail';
+import NotFoundPage from 'components/NotFoundPage';
 import {
   fetchAttemptList,
   fetchPullRequestList,
@@ -117,31 +118,36 @@ export class IssuesDetail extends React.PureComponent {
 
     return (
       <Fragment>
-        <AsyncRender
-          asyncData={issueDetail}
-          component={IssueDetail}
-          error={error}
-          isNotFound={isNotFound}
-          isRequiredData
-          loading={loading}
-          propsToPassDown={{
-            activeUser,
-            addWatching,
-            alerts,
-            deviceView,
-            dispatchCloseIssue,
-            dispatchEditIssue,
-            dispatchFetchAttemptList,
-            dispatchFetchPullRequestList,
-            dispatchFetchWatchList,
-            dispatchOpenIssueModal,
-            dispatchOpenModal,
-            handleClearAlerts,
-            handleComment,
-            handleIncrement,
-            handleUpvote,
-            isSignedIn,
-          }}
+        <ConditionalRender
+          Component={
+            <AsyncRender
+              asyncData={issueDetail}
+              component={IssueDetail}
+              error={error}
+              isRequiredData
+              loading={loading}
+              propsToPassDown={{
+                activeUser,
+                addWatching,
+                alerts,
+                deviceView,
+                dispatchCloseIssue,
+                dispatchEditIssue,
+                dispatchFetchAttemptList,
+                dispatchFetchPullRequestList,
+                dispatchFetchWatchList,
+                dispatchOpenIssueModal,
+                dispatchOpenModal,
+                handleClearAlerts,
+                handleComment,
+                handleIncrement,
+                handleUpvote,
+                isSignedIn,
+              }}
+            />
+          }
+          FallbackComponent={NotFoundPage}
+          shouldRender={!isNotFound}
         />
         {isModalOpen && <ModalDialog {...modalPropsDictionary[modal]} />}
       </Fragment>

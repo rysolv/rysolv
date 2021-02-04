@@ -1,26 +1,22 @@
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const { getOneIssue: getOneIssueQuery } = require('../../../db');
 const { oneIssueError } = require('./constants');
 
 const oneIssue = async ({ id }) => {
   try {
     const issueDetail = await getOneIssueQuery({ issueId: id });
-    if (!issueDetail) {
-      const error = new Error(`Not found`);
-      error.status = 404;
-      throw error;
-    }
+    if (!issueDetail) throw new CustomError(`Not found`);
+
     return {
       __typename: 'Issue',
       ...issueDetail,
     };
   } catch (error) {
-    const { status } = error;
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: oneIssueError,
-      status,
+      message: alert || oneIssueError,
     };
   }
 };

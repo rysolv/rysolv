@@ -139,9 +139,9 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_INFO_FAILURE: {
-      const { error, status } = payload;
-      if (status === 404) draft.isNotFound = true;
-      draft.error.fetchOrganizations = error;
+      const { error, isNotFound } = payload;
+      draft.error.fetchOrganizations = error.message;
+      draft.isNotFound = isNotFound;
       draft.loading.fetchOrganization = false;
       break;
     }

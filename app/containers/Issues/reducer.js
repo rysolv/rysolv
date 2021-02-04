@@ -351,9 +351,9 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ISSUE_DETAIL_FAILURE: {
-      const { error, status } = payload;
-      if (status === 404) draft.isNotFound = true;
-      draft.error.issueDetail = error;
+      const { error, isNotFound } = payload;
+      draft.error.issueDetail = error.message;
+      draft.isNotFound = isNotFound;
       draft.loading.issueDetail = false;
       break;
     }

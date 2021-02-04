@@ -4,7 +4,6 @@ import isEmpty from 'lodash/isEmpty';
 
 import { LoadingIndicator } from 'components/base_ui';
 import Message from 'components/Message';
-import NotFoundPage from 'components/NotFoundPage';
 import iconDictionary from 'utils/iconDictionary';
 
 import { IconWrapper, LinkWrapper } from './styledComponents';
@@ -15,7 +14,6 @@ const AsyncRender = ({
   asyncData,
   component,
   error,
-  isNotFound,
   isRequiredData,
   loading,
   propsToPassDown,
@@ -29,9 +27,6 @@ const AsyncRender = ({
   );
   if (loading) {
     return <LoadingIndicator />;
-  }
-  if (isNotFound) {
-    return <NotFoundPage />;
   }
   if (error) {
     return (
@@ -57,17 +52,12 @@ const AsyncRender = ({
   );
 };
 
-AsyncRender.defaultProps = {
-  isNotFound: false,
-  isRequiredData: false,
-  propsToPassDown: {},
-};
+AsyncRender.defaultProps = { isRequiredData: false, propsToPassDown: {} };
 
 AsyncRender.propTypes = {
   asyncData: T.oneOfType([T.array, T.object]),
   component: T.oneOfType([T.func, T.object]),
   error: T.oneOfType([T.bool, T.object, T.string]),
-  isNotFound: T.bool,
   isRequiredData: T.bool,
   loading: T.bool,
   propsToPassDown: T.object,
