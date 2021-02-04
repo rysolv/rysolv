@@ -52,13 +52,13 @@ const githubSignIn = async ({ code, isSignIn }, { res }) => {
     const { isDuplicateGithubId, userId } = await checkDuplicateGithubId({
       githubId: github_id,
     });
+    const provider = 'github';
 
     if (!isDuplicateGithubId && !userId) {
       if (email) await checkDuplicateUserEmail({ email });
 
       const date = new Date();
       const id = uuidv4();
-      const provider = 'github';
 
       const imageToUpload = avatar_url || new Identicon(id, 250).toString();
       const { uploadUrl } = await uploadImage(imageToUpload);
@@ -153,7 +153,6 @@ const githubSignIn = async ({ code, isSignIn }, { res }) => {
       result.rejectedPullRequests = rejectedPullRequests;
       result.watching = watchingListResult;
 
-      const provider = 'cognito';
       const token = generateToken({
         email: result.email,
         provider,
