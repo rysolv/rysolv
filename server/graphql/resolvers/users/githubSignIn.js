@@ -6,6 +6,7 @@ const Identicon = require('identicon.js');
 const {
   checkDuplicateGithubId,
   checkDuplicateUserEmail,
+  createLanguage,
   createUser,
   getOneIssue,
   getOneOrganization,
@@ -38,11 +39,13 @@ const githubSignIn = async ({ code, isSignIn }, { res }) => {
         ? process.env.GITHUB_SIGNUP_SECRET
         : process.env.GITHUB_SIGNUP_SECRET_DEV;
     const {
+      avatar_url,
       email,
       first_name,
       github_id,
       github_link,
       github_username,
+      languages,
       last_name,
     } = await requestGithubUser({ client_id, client_secret, code });
 
@@ -57,9 +60,8 @@ const githubSignIn = async ({ code, isSignIn }, { res }) => {
       const id = uuidv4();
       const provider = 'github';
 
-      const { uploadUrl } = await uploadImage(
-        new Identicon(id, 250).toString(),
-      );
+      const imageToUpload = avatar_url || new Identicon(id, 250).toString();
+      const { uploadUrl } = await uploadImage(imageToUpload);
       const newUser = {
         created_date: date,
         email_verified: true,
@@ -76,6 +78,13 @@ const githubSignIn = async ({ code, isSignIn }, { res }) => {
         username: github_username,
       };
       const result = await createUser({ data: newUser });
+
+      await createLanguage({
+        languages,
+        target: {
+          userId: id,
+        },
+      });
 
       const token = generateToken({
         email,
