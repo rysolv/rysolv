@@ -62,7 +62,9 @@ export const ChargeBreakdownWrapper = styled.div`
   width: 80%;
 `;
 
-export const ChargeTitle = styled.div``;
+export const ChargeTitle = styled.div`
+  width: inherit;
+`;
 
 export const ChargeValue = styled.div`
   text-align: end;
@@ -276,6 +278,7 @@ export const TextWrapper = styled.div`
 export const Title = styled.div`
   font-weight: ${({ isBold }) => (isBold ? 'bold' : 'normal')};
   padding: 0.75rem 7.5rem 0.75rem 0;
+  text-align: left;
   white-space: nowrap;
 
   ${mobileXS} {

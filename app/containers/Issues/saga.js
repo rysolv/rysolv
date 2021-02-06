@@ -319,13 +319,15 @@ export function* fetchIssueDetailSaga({ payload }) {
         oneIssue: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') throw message;
+    if (__typename === 'Error') throw new Error(message);
 
     restProps.comments = getIssueComments;
 
     yield put(fetchIssueDetailSuccess({ issueDetail: restProps }));
   } catch (error) {
-    yield put(fetchIssueDetailFailure({ error }));
+    const { message } = error;
+    const isNotFound = message === 'Not found';
+    yield put(fetchIssueDetailFailure({ error: { message }, isNotFound }));
   }
 }
 

@@ -99,6 +99,7 @@ export const initialState = {
   importSuccess: false,
   isManual: false,
   isModalOpen: false,
+  isNotFound: false,
   issueDetail: {},
   issues: [],
   loading: {
@@ -350,8 +351,9 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ISSUE_DETAIL_FAILURE: {
-      const { error } = payload;
-      draft.error.issueDetail = error;
+      const { error, isNotFound } = payload;
+      draft.error.issueDetail = error.message;
+      draft.isNotFound = isNotFound;
       draft.loading.issueDetail = false;
       break;
     }

@@ -166,7 +166,7 @@ const StatsTable = ({
     const tempTableProps = tableProps.filter(
       ({ tableData }) => !isEmpty(tableData),
     );
-    const { tableData, title } = tempTableProps[currIndex];
+    const { tableData, title } = tempTableProps[currIndex] || {};
     return (
       <StatsTableComponent
         currIndex={currIndex}
@@ -190,15 +190,20 @@ const StatsTable = ({
   );
 };
 
+StatsTableComponent.defaultProps = {
+  tableData: [],
+  title: '',
+};
+
 StatsTableComponent.propTypes = {
   currIndex: T.number,
   isOverview: T.bool.isRequired,
   numberOfTables: T.number.isRequired,
   setCurrIndex: T.func,
   shouldRenderOneTable: T.bool.isRequired,
-  tableData: T.array.isRequired,
+  tableData: T.array,
   tableLength: T.number.isRequired,
-  title: T.string.isRequired,
+  title: T.string,
 };
 
 StatsTable.propTypes = {
