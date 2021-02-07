@@ -13,6 +13,7 @@ export const NumberContainer = styled.div`
   align-self: center;
   font-weight: 500;
   padding-left: 0.5rem;
+  white-space: nowrap;
 `;
 
 export const StyledAvatar = styled.img`

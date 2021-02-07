@@ -262,6 +262,24 @@ const getUserGithubRepos = async ({ username }) => {
   }));
 };
 
+const getUserLanguages = async ({ login }) => {
+  const { GITHUB } = await authenticate();
+
+  let languageArray = [];
+  const { data: repos } = await GITHUB.repos.listForUser({ username: login });
+  await Promise.all(
+    repos.map(async ({ name }) => {
+      const { data: languages } = await GITHUB.repos.listLanguages({
+        owner: login,
+        repo: name,
+      });
+      const tempLanguageArray = languages ? Object.keys(languages) : [];
+      languageArray = [...new Set([...languageArray, ...tempLanguageArray])];
+    }),
+  );
+  return languageArray;
+};
+
 const requestGithubToken = credentials =>
   fetch('https://github.com/login/oauth/access_token', {
     method: 'POST',
@@ -286,18 +304,6 @@ const requestGithubUserEmail = token =>
     headers: { Authorization: `token ${token}` },
   }).then(res => res.json());
 
-const requestGithubUserLanguages = token =>
-  fetch(`https://api.github.com/user/repos`, {
-    headers: { Authorization: `token ${token}` },
-  })
-    .then(res => res.json())
-    .then(repos =>
-      repos.reduce((acc, { language }) => {
-        if (language && !acc.includes(language)) acc.push(language);
-        return acc;
-      }, []),
-    );
-
 const requestGithubUser = async credentials => {
   const { access_token } = await requestGithubToken(credentials);
   const {
@@ -313,7 +319,7 @@ const requestGithubUser = async credentials => {
   const [{ email: secondaryEmail }] = emailArray.filter(
     ({ primary }) => primary === true,
   );
-  const languages = await requestGithubUserLanguages(access_token);
+  const languages = await getUserLanguages({ login });
   const fullName = name || '';
   const nameArray = fullName.split(' ');
   const first_name = nameArray[0];
