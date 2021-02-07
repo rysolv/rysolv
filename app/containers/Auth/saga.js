@@ -10,6 +10,7 @@ import {
   GITHUB_SIGN_IN,
   githubSignInError,
   githubSignUpError,
+  RESEND_CODE,
   RESEND_SIGN_UP,
   RESET_PASSWORD,
   SEND_LINK,
@@ -27,6 +28,8 @@ import {
   fetchActiveUserSuccess,
   githubSignInFailure,
   githubSignInSuccess,
+  resendCodeFailure,
+  resendCodeSuccess,
   resendSignUp,
   resetPasswordFailure,
   resetPasswordSuccess,
@@ -150,6 +153,36 @@ export function* githubSignInSaga({ payload }) {
 
 export function* removeUserData() {
   yield put(resetState());
+}
+
+export function* resendCodeSaga({ payload }) {
+  const { email } = payload;
+  const query = `
+    query {
+      resendCode(email: "${email}") {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        resendCode: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw new Error(message);
+    yield put(resendCodeSuccess({ message }));
+  } catch (error) {
+    const { message } = error;
+    yield put(resendCodeFailure({ error: { message } }));
+  }
 }
 
 export function* resendSignUpSaga({ payload }) {
@@ -406,6 +439,7 @@ export function* verifyEmailSaga({ payload }) {
 export default function* watcherSaga() {
   yield takeLatest(FETCH_ACTIVE_USER, fetchActiveUserSaga);
   yield takeLatest(GITHUB_SIGN_IN, githubSignInSaga);
+  yield takeLatest(RESEND_CODE, resendCodeSaga);
   yield takeLatest(RESEND_SIGN_UP, resendSignUpSaga);
   yield takeLatest(RESET_PASSWORD, resetPasswordSaga);
   yield takeLatest(SEND_LINK, sendLinkSaga);

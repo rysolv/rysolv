@@ -34,6 +34,7 @@ const groupValues = `
   organizations.created_date,
   organizations.description,
   organizations.id,
+  organizations.is_deleted,
   organizations.is_manual,
   organizations.issues,
   organizations.logo,

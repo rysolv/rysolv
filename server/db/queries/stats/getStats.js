@@ -9,8 +9,10 @@ const getStats = async () => {
       SUM(a.funded_value) AS "fundedValue"
     FROM activity a
     JOIN users u ON a.user_id = u.id
+    LEFT JOIN issues i on a.issue_id = i.id
     WHERE a.action_type = 'fund'
-    AND issue_id IS NOT NULL
+    AND a.issue_id IS NOT NULL
+    AND i.is_deleted = false
     GROUP BY u.id, u.profile_pic, u.username
     ORDER BY SUM(a.funded_value) DESC
     LIMIT 10
@@ -33,9 +35,11 @@ const getStats = async () => {
   `;
   const totalFundedQuery = `
     SELECT
-      COALESCE(SUM(funded_value),0) AS "totalFunded"
-    FROM activity
-    WHERE issue_id IS NOT NULL
+      COALESCE(SUM(a.funded_value),0) AS "totalFunded"
+    FROM activity a
+    LEFT JOIN issues i ON a.issue_id = i.id
+    WHERE a.issue_id IS NOT NULL
+    AND i.is_deleted = false
   `;
   const totalEarnedQuery = `
     SELECT

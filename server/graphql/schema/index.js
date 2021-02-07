@@ -100,7 +100,7 @@ module.exports = buildSchema(`
     createdDate: Object
     exists: Boolean
     fundedAmount: Float
-    id: ID!
+    id: ID
     isInFundingQueue: Boolean
     isPullRequestMerged: Boolean
     language: [String]
@@ -379,6 +379,8 @@ module.exports = buildSchema(`
     oneOrganization(id: ID!): OrganizationResult!
     oneUser(userId: ID!): UserResult!
     oneUserSignUp(email: String!): UserResult!
+
+    resendCode(email: String!): EventResponse!
 
     resetPassword(code: String!, email: String!, password: String!): EventResponse!
 

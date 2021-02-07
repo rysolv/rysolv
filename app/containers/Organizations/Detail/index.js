@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
+import { ConditionalRender } from 'components/base_ui';
+import NotFoundPage from 'components/NotFoundPage';
 import OrganizationDetailView from 'components/Organizations/Detail';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { openModalState } from 'containers/Main/actions';
@@ -63,6 +65,7 @@ export class OrganizationsDetail extends React.PureComponent {
       handleClearAlerts,
       handleInputChange,
       handleNav,
+      isNotFound,
       isSignedIn,
       loading,
       upvoteLoading,
@@ -73,25 +76,31 @@ export class OrganizationsDetail extends React.PureComponent {
     };
 
     return (
-      <AsyncRender
-        asyncData={data}
-        component={OrganizationDetailView}
-        error={error}
-        isRequiredData
-        loading={loading}
-        propsToPassDown={{
-          activeUser,
-          alerts,
-          deviceView,
-          dispatchEditOrganization,
-          dispatchOpenModal,
-          filterValues,
-          handleClearAlerts,
-          handleInputChange,
-          handleNav,
-          handleUpvote,
-          isSignedIn,
-        }}
+      <ConditionalRender
+        Component={
+          <AsyncRender
+            asyncData={data}
+            component={OrganizationDetailView}
+            error={error}
+            isRequiredData
+            loading={loading}
+            propsToPassDown={{
+              activeUser,
+              alerts,
+              deviceView,
+              dispatchEditOrganization,
+              dispatchOpenModal,
+              filterValues,
+              handleClearAlerts,
+              handleInputChange,
+              handleNav,
+              handleUpvote,
+              isSignedIn,
+            }}
+          />
+        }
+        FallbackComponent={NotFoundPage}
+        shouldRender={!isNotFound}
       />
     );
   }
@@ -112,6 +121,7 @@ OrganizationsDetail.propTypes = {
   handleClearAlerts: T.func.isRequired,
   handleInputChange: T.func,
   handleNav: T.func.isRequired,
+  isNotFound: T.bool.isRequired,
   isSignedIn: T.bool.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
@@ -131,6 +141,7 @@ const mapStateToProps = createStructuredSelector({
   data: makeSelectOrganizationsFormattedData(),
   error: makeSelectOrganizationsError('fetchOrganization'),
   filterValues: makeSelectOrganizations('filter'),
+  isNotFound: makeSelectOrganizations('isNotFound'),
   loading: makeSelectOrganizationsLoading('fetchOrganization'),
   upvoteLoading: makeSelectOrganizationsLoading('upvoteIssue'),
   /**

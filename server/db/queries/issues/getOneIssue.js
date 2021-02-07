@@ -19,31 +19,34 @@ const getOneIssue = async ({ issueId }) => {
     LEFT JOIN pullrequests on pullrequests.issue_id = issues.id AND pullrequests.is_deleted = false
     LEFT JOIN watching ON watching.issue_id = issues.id
     WHERE issues.id = $1
+    AND issues.is_deleted = false
     GROUP BY ${groupValues}, funding.id, funding.is_approved, pullrequests.merged, users.id, users.profile_pic, users.username
   `;
   const { rows } = await singleQuery({ queryText, values: [issueId] });
   const [oneRow] = rows;
-  const { isInFundingQueue, open } = oneRow;
-  if (!isInFundingQueue && !open) {
-    const awardedUserQuery = `
-      SELECT
-        pullrequests.html_url AS "htmlUrl",
-        users.id,
-        users.profile_pic AS "profilePic",
-        users.username
-      FROM pullrequests
-      LEFT JOIN users on users.id = pullrequests.user_id
-      WHERE pullrequests.is_deleted = false
-        AND pullrequests.issue_id = $1
-        AND pullrequests.merged = true`;
-    const { rows: awardedUserRows } = await singleQuery({
-      queryText: awardedUserQuery,
-      values: [issueId],
-    });
-    const [oneAwardedUserRow] = awardedUserRows;
-    oneRow.awardedUser = oneAwardedUserRow;
-  } else {
-    oneRow.awardedUser = null;
+  if (oneRow) {
+    const { isInFundingQueue, open } = oneRow;
+    if (!isInFundingQueue && !open) {
+      const awardedUserQuery = `
+        SELECT
+          pullrequests.html_url AS "htmlUrl",
+          users.id,
+          users.profile_pic AS "profilePic",
+          users.username
+        FROM pullrequests
+        LEFT JOIN users on users.id = pullrequests.user_id
+        WHERE pullrequests.is_deleted = false
+          AND pullrequests.issue_id = $1
+          AND pullrequests.merged = true`;
+      const { rows: awardedUserRows } = await singleQuery({
+        queryText: awardedUserQuery,
+        values: [issueId],
+      });
+      const [oneAwardedUserRow] = awardedUserRows;
+      oneRow.awardedUser = oneAwardedUserRow;
+    } else {
+      oneRow.awardedUser = null;
+    }
   }
   return oneRow;
 };

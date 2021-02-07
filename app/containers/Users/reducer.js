@@ -28,6 +28,7 @@ export const initialState = {
     overview: 'Newest',
     users: 'All',
   },
+  isNotFound: false,
   loading: {
     fetchUser: true,
     searchUsers: false,
@@ -59,8 +60,9 @@ const usersReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_INFO_FAILURE: {
-      const { error } = payload;
+      const { error, isNotFound } = payload;
       draft.error.fetchUser = error;
+      draft.isNotFound = isNotFound;
       draft.loading.fetchUser = false;
       break;
     }

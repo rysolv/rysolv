@@ -1,4 +1,4 @@
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getOneIssue,
   getOneOrganization,
@@ -8,13 +8,15 @@ const { oneOrganizationError } = require('./constants');
 
 const oneOrganization = async ({ id }) => {
   try {
-    const result = await getOneOrganization({ organizationId: id });
-    const { issues } = result;
+    const organizationDetail = await getOneOrganization({ organizationId: id });
+    if (!organizationDetail) throw new CustomError(`Not found`);
+
+    const { issues } = organizationDetail;
 
     const contributorsResult = await getOrganizationContributors({
       organizationId: id,
     });
-    result.contributors = contributorsResult;
+    organizationDetail.contributors = contributorsResult;
 
     const issuesResult = await Promise.all(
       issues.map(async issueId => {
@@ -22,16 +24,19 @@ const oneOrganization = async ({ id }) => {
         return issueResult;
       }),
     );
-    result.issues = issuesResult;
+    const filteredIssues = issuesResult.filter(issue => issue);
+    organizationDetail.issues = filteredIssues;
+
     return {
       __typename: 'Organization',
-      ...result,
+      ...organizationDetail,
     };
   } catch (error) {
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: oneOrganizationError,
+      message: alert || oneOrganizationError,
     };
   }
 };

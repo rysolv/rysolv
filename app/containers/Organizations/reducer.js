@@ -71,6 +71,7 @@ export const initialState = {
   },
   importSuccess: false,
   isManual: false,
+  isNotFound: false,
   loading: {
     addOrganization: false,
     fetchOrganization: false,
@@ -138,8 +139,9 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_INFO_FAILURE: {
-      const { error } = payload;
-      draft.error.fetchOrganizations = error;
+      const { error, isNotFound } = payload;
+      draft.error.fetchOrganizations = error.message;
+      draft.isNotFound = isNotFound;
       draft.loading.fetchOrganization = false;
       break;
     }

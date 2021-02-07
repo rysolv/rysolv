@@ -26,6 +26,7 @@ const getUserSettings = async (_, { authError, userId }) => {
         return issuesResult;
       }),
     );
+    const filteredIssuesList = issuesListResult.filter(issue => issue);
 
     // Pull user organization detail
     const organizationsListResult = await Promise.all(
@@ -35,6 +36,9 @@ const getUserSettings = async (_, { authError, userId }) => {
         });
         return organizationsResult;
       }),
+    );
+    const filteredOrganizationsList = organizationsListResult.filter(
+      organization => organization,
     );
 
     // Pull user pull request detail
@@ -50,8 +54,8 @@ const getUserSettings = async (_, { authError, userId }) => {
     result.activePullRequests = activePullRequests;
     result.attempting = attemptingListResult;
     result.completedPullRequests = completedPullRequests;
-    result.issues = issuesListResult;
-    result.organizations = organizationsListResult;
+    result.issues = filteredIssuesList;
+    result.organizations = filteredOrganizationsList;
     result.rejectedPullRequests = rejectedPullRequests;
     result.watching = watchingListResult;
 
