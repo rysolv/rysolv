@@ -8,6 +8,7 @@ const getOrganizationActivity = async ({ organizationId }) => {
     LEFT JOIN organizations on (activity.organization_id = organizations.id)
     LEFT JOIN users on (activity.user_id = users.id)
     WHERE activity.organization_id = $1
+    AND issues.is_deleted IS NOT true
     ORDER BY activity.created_date DESC`;
   const { rows } = await singleQuery({ queryText, values: [organizationId] });
   return rows;
