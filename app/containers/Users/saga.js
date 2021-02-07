@@ -64,11 +64,13 @@ export function* fetchInfoSaga({ payload }) {
         oneUser: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') throw message;
+    if (__typename === 'Error') throw new Error(message);
     restProps.activity = getUserActivity;
     yield put(fetchInfoSuccess({ user: restProps }));
   } catch (error) {
-    yield put(fetchInfoFailure({ error }));
+    const { message } = error;
+    const isNotFound = message === 'Not found';
+    yield put(fetchInfoFailure({ error: { message }, isNotFound }));
   }
 }
 
