@@ -10,6 +10,7 @@ const getUserAttemptList = async ({ userId }) => {
     FROM attempting
     JOIN issues ON attempting.issue_id = issues.id
     WHERE attempting.user_id = $1
+    AND issues.is_deleted = false
   `;
   const { rows } = await singleQuery({ queryText, values: [userId] });
   return rows;

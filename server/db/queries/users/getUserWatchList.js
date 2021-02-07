@@ -10,6 +10,7 @@ const getUserWatchList = async ({ userId }) => {
     FROM watching
     JOIN issues ON watching.issue_id = issues.id
     WHERE watching.user_id = $1
+    AND issues.is_deleted = false
   `;
   const { rows } = await singleQuery({ queryText, values: [userId] });
   return rows;
