@@ -8,6 +8,7 @@ import {
   EmailWrapper,
   InputFormWrapper,
   InputSubText,
+  ResendButton,
   SigninWrapper,
   StyledErrorSuccessBanner,
   StyledPrimaryAsyncButton,
@@ -21,9 +22,11 @@ const VerifyEmail = ({
   error,
   handleClearAuthAlerts,
   handleInputChange,
+  handleResendCode,
   handleValidateInput,
   handleVerifyEmail,
   loading,
+  success,
   verify: { verificationCode },
   verifyDisabled,
 }) => {
@@ -38,10 +41,11 @@ const VerifyEmail = ({
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
         <Title>Confirm your email</Title>
-        {error && (
+        {(error || success) && (
           <StyledErrorSuccessBanner
             error={error}
             onClose={handleClearAuthAlerts}
+            success={success}
           />
         )}
         <InputSubText>
@@ -63,6 +67,12 @@ const VerifyEmail = ({
             }
             value={verificationCode.value}
           />
+          <ResendButton
+            disableRipple
+            onClick={() => handleResendCode({ email })}
+          >
+            Resend code
+          </ResendButton>
         </VerificationWrapper>
         <StyledPrimaryAsyncButton
           disabled={verifyDisabled}
@@ -83,9 +93,11 @@ VerifyEmail.propTypes = {
   error: T.oneOfType([T.bool, T.object]).isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
+  handleResendCode: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   handleVerifyEmail: T.func.isRequired,
   loading: T.bool.isRequired,
+  success: T.oneOfType([T.bool, T.object]).isRequired,
   verify: T.object.isRequired,
   verifyDisabled: T.bool.isRequired,
 };

@@ -12,6 +12,9 @@ import {
   GITHUB_SIGN_IN_FAILURE,
   GITHUB_SIGN_IN_SUCCESS,
   GITHUB_SIGN_IN,
+  RESEND_CODE_FAILURE,
+  RESEND_CODE_SUCCESS,
+  RESEND_CODE,
   RESEND_SIGN_UP,
   RESET_PASSWORD_FAILURE,
   RESET_PASSWORD_SUCCESS,
@@ -43,6 +46,7 @@ export const initialState = {
   loading: {
     auth: false,
     authenticateUser: true,
+    resendCode: false,
   },
   resetStep: 1,
   route: {
@@ -93,6 +97,23 @@ const authReducer = produce((draft, { payload, type }) => {
     case GITHUB_SIGN_IN: {
       draft.isSignedIn = false;
       draft.loading.auth = true;
+      break;
+    }
+    case RESEND_CODE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.resendCode = false;
+      break;
+    }
+    case RESEND_CODE_SUCCESS: {
+      const { message } = payload;
+      draft.alerts.success = { message };
+      draft.loading.resendCode = false;
+      break;
+    }
+    case RESEND_CODE: {
+      draft.alerts = initialState.alerts;
+      draft.loading.resendCode = false;
       break;
     }
     case RESEND_SIGN_UP: {

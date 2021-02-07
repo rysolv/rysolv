@@ -8,6 +8,10 @@ export const GITHUB_SIGN_IN = 'app/Auth/GITHUB_SIGN_IN';
 export const GITHUB_SIGN_IN_FAILURE = 'app/Auth/GITHUB_SIGN_IN_FAILURE';
 export const GITHUB_SIGN_IN_SUCCESS = 'app/Auth/GITHUB_SIGN_IN_SUCCESS';
 
+export const RESEND_CODE = 'app/Auth/RESEND_CODE';
+export const RESEND_CODE_FAILURE = 'app/Auth/RESEND_CODE_FAILURE';
+export const RESEND_CODE_SUCCESS = 'app/Auth/RESEND_CODE_SUCCESS';
+
 export const RESEND_SIGN_UP = 'app/Auth/RESEND_SIGN_UP';
 
 export const RESET_PASSWORD = 'app/Auth/RESET_PASSWORD';

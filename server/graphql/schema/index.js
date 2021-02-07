@@ -380,6 +380,8 @@ module.exports = buildSchema(`
     oneUser(userId: ID!): UserResult!
     oneUserSignUp(email: String!): UserResult!
 
+    resendCode(email: String!): EventResponse!
+
     resetPassword(code: String!, email: String!, password: String!): EventResponse!
 
     searchIssues(value: String!): [Issue]!
