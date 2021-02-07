@@ -15,6 +15,7 @@ import Main from 'containers/HomePage/Loadable';
 import OrganizationsAdd from 'containers/Organizations/Add';
 import OrganizationsDetail from 'containers/Organizations/Detail';
 import Overview from 'containers/Overview';
+import Recruitment from 'containers/Recruitment';
 import Settings from 'containers/Settings';
 import SignIn from 'containers/Signin';
 import UsersDetail from 'containers/Users/Detail';
@@ -35,6 +36,7 @@ const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
 const PublicOrganizationsDetail = withAuth(publicConfig, OrganizationsDetail);
 const PublicOverview = withAuth(publicConfig, Overview);
 const PublicPrivacyPolicy = withAuth(publicConfig, PrivacyPolicy);
+const PublicRecruitment = withAuth(publicConfig, Recruitment);
 const PublicSignIn = withAuth(publicConfig, SignIn);
 const PublicStats = withAuth(publicConfig, Stats);
 const PublicTermsOfService = withAuth(publicConfig, TermsOfService);
@@ -59,6 +61,7 @@ const Routes = () => (
     <Route exact path="/organizations/search/:searchValue" component={PublicOverview} />
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
+    <Route exact path="/recruitment" component={PublicRecruitment} />
     <Route exact path="/settings/:view?" component={PrivateSettings} />
     <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/signin" component={PublicSignIn} />
