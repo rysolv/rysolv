@@ -5,6 +5,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import AsyncRender from 'components/AsyncRender';
+import { ConditionalRender } from 'components/base_ui';
+import NotFoundPage from 'components/NotFoundPage';
 import UserDetailView from 'components/Users/Detail/UserDetailView';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -27,6 +29,7 @@ const UsersDetail = ({
   error,
   filterValues,
   handleInputChange,
+  isNotFound,
   loading,
   match: {
     params: { id },
@@ -42,16 +45,22 @@ const UsersDetail = ({
 
   return (
     <DetailWrapper>
-      <AsyncRender
-        asyncData={data}
-        component={UserDetailView}
-        error={error}
-        isRequiredData
-        loading={loading}
-        propsToPassDown={{
-          filterValues,
-          handleInputChange,
-        }}
+      <ConditionalRender
+        Component={
+          <AsyncRender
+            asyncData={data}
+            component={UserDetailView}
+            error={error}
+            isRequiredData
+            loading={loading}
+            propsToPassDown={{
+              filterValues,
+              handleInputChange,
+            }}
+          />
+        }
+        FallbackComponent={NotFoundPage}
+        shouldRender={!isNotFound}
       />
     </DetailWrapper>
   );
@@ -64,6 +73,7 @@ UsersDetail.propTypes = {
   error: T.oneOfType([T.bool, T.string]).isRequired,
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
+  isNotFound: T.bool.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
 };
@@ -75,6 +85,7 @@ const mapStateToProps = createStructuredSelector({
   data: makeSelectUserDetail(),
   error: makeSelectUsersError('fetchUser'),
   filterValues: makeSelectUsers('filter'),
+  isNotFound: makeSelectUsers('isNotFound'),
   loading: makeSelectUsersLoading('fetchUser'),
 });
 
