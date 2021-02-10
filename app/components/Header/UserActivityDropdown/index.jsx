@@ -12,7 +12,7 @@ import {
 
 const AddIcon = iconDictionary('add');
 
-const UserActivityButton = ({ handleNav }) => {
+const UserActivityDropdown = ({ handleNav }) => {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const documentClickHandler = () => {
@@ -47,6 +47,6 @@ const UserActivityButton = ({ handleNav }) => {
   );
 };
 
-UserActivityButton.propTypes = { handleNav: T.func.isRequired };
+UserActivityDropdown.propTypes = { handleNav: T.func.isRequired };
 
-export default UserActivityButton;
+export default UserActivityDropdown;

@@ -56,7 +56,7 @@ export const MobileDrawerComponent = styled(BaseDrawer)`
   }
 `;
 
-export const NavLink = styled(({ shouldRemoveFirst, shouldRemoveSecond, shouldRemoveThird, ...restProps }) => (
+export const NavLink = styled(({ shouldRemoveFirst, shouldRemoveSecond, ...restProps }) => (
   <BaseLink {...restProps} />
 ))`
   color: white;
@@ -73,14 +73,9 @@ export const NavLink = styled(({ shouldRemoveFirst, shouldRemoveSecond, shouldRe
     shouldRemoveFirst ? 'none' : 'block'};
   }
 
-  @media (max-width: 630px) {
-    display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
-    shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
-  }
-
   @media (max-width: 365px) {
-    display: ${({ shouldRemoveFirst, shouldRemoveSecond, shouldRemoveThird }) =>
-    shouldRemoveFirst || shouldRemoveSecond || shouldRemoveThird
+    display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
+    shouldRemoveFirst || shouldRemoveSecond
       ? 'none'
       : 'block'};
   }

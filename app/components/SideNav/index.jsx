@@ -20,7 +20,6 @@ import {
 const addIcon = iconDictionary('addCircle');
 const backArrow = iconDictionary('backArrowHalf');
 const forwardArrow = iconDictionary('forwardArrowHalf');
-const helpIcon = iconDictionary('help');
 const issueIcon = iconDictionary('issue');
 const organizationIcon = iconDictionary('organization');
 const uploadIcon = iconDictionary('upload');
@@ -146,17 +145,6 @@ const SideNav = ({ deviceView, handleNav }) => {
             </ListItem>
           </StyledListWrapper>
         </List>
-        <Divider />
-        <StyledListWrapper active={currentValue === 5}>
-          <ListItem
-            button
-            key="howTo"
-            onClick={() => handleClick('/how-to', 5)}
-          >
-            <ListItemIcon>{helpIcon}</ListItemIcon>
-            <ListItemText primary="How It Works" />
-          </ListItem>
-        </StyledListWrapper>
         <StyledIconButton disableRipple onClick={toggleDrawer} open>
           {open ? backArrow : forwardArrow}
         </StyledIconButton>

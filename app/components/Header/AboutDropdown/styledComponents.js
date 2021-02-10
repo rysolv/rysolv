@@ -3,6 +3,32 @@ import styled from 'styled-components';
 import { DownArrow } from 'components/base_ui';
 import { lightBlueColor, textColor } from 'defaultStyleHelper';
 
+export const AboutButtonWrapper = styled.div`
+  align-items: center;
+  color: white;
+  display: flex;
+  height: 2rem;
+  margin: 0 1rem 0 0.75rem;
+  white-space: nowrap;
+
+  &:hover {
+    color: #b0bec5;
+    cursor: pointer;
+  }
+
+  svg {
+    font-size: 2rem;
+  }
+`;
+
+export const AboutContainer = styled.div`
+  position: relative;
+
+  @media (max-width: 630px) {
+    display: none;
+  }
+`;
+
 export const MenuItem = styled.div`
   color: ${textColor};
   padding: 6px 8px 6px 16px;
@@ -14,7 +40,7 @@ export const MenuItem = styled.div`
   }
 `;
 
-export const StyledActivityMenu = styled.div`
+export const StyledAboutMenu = styled.div`
   background-color: #fff;
   border-radius: 0.4rem;
   border: 0.1rem solid #e1e4e8;
@@ -58,25 +84,8 @@ export const StyledDownArrow = styled(DownArrow)`
 
   svg {
     height: 3rem;
+    margin-left: 0.5rem;
     width: 3rem;
-  }
-`;
-
-export const UserActivityContainer = styled.div`
-  position: relative;
-`;
-
-export const UserActivityButtonWrapper = styled.div`
-  color: white;
-  margin: 0 1rem 0 0.75rem;
-  white-space: nowrap;
-
-  &:hover {
-    color: #b0bec5;
-    cursor: pointer;
-  }
-
-  svg {
-    font-size: 2rem;
+    margin-right: -0.5rem;
   }
 `;
