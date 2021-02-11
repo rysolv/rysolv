@@ -6,7 +6,8 @@ import { submitJobInfoFailure, submitJobInfoSuccess } from './actions';
 import { SUBMIT_JOB_INFO } from './constants';
 
 export function* submitJobInfoSaga({ payload }) {
-  const { email } = payload;
+  const { requestBody } = payload;
+  const { email } = requestBody;
   const query = `
     query{
       submitJobInfo(email: "${email}")  {
