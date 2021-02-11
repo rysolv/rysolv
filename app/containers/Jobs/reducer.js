@@ -2,9 +2,9 @@
 import produce from 'immer';
 
 import {
-  SUBMIT_EMAIL_FAILURE,
-  SUBMIT_EMAIL_SUCCESS,
-  SUBMIT_EMAIL,
+  SUBMIT_JOB_INFO_FAILURE,
+  SUBMIT_JOB_INFO_SUCCESS,
+  SUBMIT_JOB_INFO,
 } from './constants';
 
 export const initialState = {
@@ -12,19 +12,19 @@ export const initialState = {
   loading: false,
 };
 
-const recruitmentReducer = produce((draft, { payload, type }) => {
+const jobsReducer = produce((draft, { payload, type }) => {
   switch (type) {
-    case SUBMIT_EMAIL_FAILURE: {
+    case SUBMIT_JOB_INFO_FAILURE: {
       const { error } = payload;
       draft.error = error;
       draft.loading = false;
       break;
     }
-    case SUBMIT_EMAIL_SUCCESS: {
+    case SUBMIT_JOB_INFO_SUCCESS: {
       draft.loading = false;
       break;
     }
-    case SUBMIT_EMAIL: {
+    case SUBMIT_JOB_INFO: {
       draft.error = null;
       draft.loading = true;
       break;
@@ -32,4 +32,4 @@ const recruitmentReducer = produce((draft, { payload, type }) => {
   }
 }, initialState);
 
-export default recruitmentReducer;
+export default jobsReducer;

@@ -3,24 +3,24 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import RecruitmentView from 'components/Recruitment';
+import JobsView from 'components/Jobs';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { submitEmail } from './actions';
+import { submitJobInfo } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 
-const Recruitment = ({ dispatchSubmitEmail, error, loading }) => (
-  <RecruitmentView
-    dispatchSubmitEmail={dispatchSubmitEmail}
+const Jobs = ({ dispatchSubmitJobInfo, error, loading }) => (
+  <JobsView
+    dispatchSubmitJobInfo={dispatchSubmitJobInfo}
     error={error}
     loading={loading}
   />
 );
 
-Recruitment.propTypes = {
-  dispatchSubmitEmail: T.func.isRequired,
+Jobs.propTypes = {
+  dispatchSubmitJobInfo: T.func.isRequired,
   error: T.string,
   loading: T.bool.isRequired,
 };
@@ -28,9 +28,9 @@ Recruitment.propTypes = {
 function mapDispatchToProps(dispatch) {
   return {
     /*
-     * Reducer : Recruitment
+     * Reducer : Jobs
      */
-    dispatchSubmitEmail: payload => dispatch(submitEmail(payload)),
+    dispatchSubmitJobInfo: payload => dispatch(submitJobInfo(payload)),
   };
 }
 
@@ -39,11 +39,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'recruitment', reducer });
-const withSaga = injectSaga({ key: 'recruitment', saga });
+const withReducer = injectReducer({ key: 'jobs', reducer });
+const withSaga = injectSaga({ key: 'jobs', saga });
 
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(Recruitment);
+)(Jobs);

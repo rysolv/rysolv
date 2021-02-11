@@ -1,0 +1,3 @@
+export const SUBMIT_JOB_INFO = 'app/Jobs/SUBMIT_JOB_INFO';
+export const SUBMIT_JOB_INFO_FAILURE = 'app/Jobs/SUBMIT_JOB_INFO_FAILURE';
+export const SUBMIT_JOB_INFO_SUCCESS = 'app/Jobs/SUBMIT_JOB_INFO_SUCCESS';

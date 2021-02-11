@@ -2,14 +2,14 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { post } from 'utils/request';
 
-import { submitEmailFailure, submitEmailSuccess } from './actions';
-import { SUBMIT_EMAIL } from './constants';
+import { submitJobInfoFailure, submitJobInfoSuccess } from './actions';
+import { SUBMIT_JOB_INFO } from './constants';
 
-export function* submitEmailSaga({ payload }) {
+export function* submitJobInfoSaga({ payload }) {
   const { email } = payload;
   const query = `
     query{
-      submitEmail(email: "${email}")  {
+      submitJobInfo(email: "${email}")  {
         __typename
         ... on Success {
           message
@@ -23,12 +23,12 @@ export function* submitEmailSaga({ payload }) {
   try {
     const graphql = JSON.stringify({ query });
     yield call(post, '/graphql', graphql);
-    yield put(submitEmailSuccess());
+    yield put(submitJobInfoSuccess());
   } catch (error) {
-    yield put(submitEmailFailure({ error }));
+    yield put(submitJobInfoFailure({ error }));
   }
 }
 
 export default function* watcherSaga() {
-  yield takeLatest(SUBMIT_EMAIL, submitEmailSaga);
+  yield takeLatest(SUBMIT_JOB_INFO, submitJobInfoSaga);
 }

@@ -11,11 +11,11 @@ import TermsOfService from 'components/TermsOfService';
 import Stats from 'containers/Stats/Loadable';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
+import Jobs from 'containers/Jobs';
 import Main from 'containers/HomePage/Loadable';
 import OrganizationsAdd from 'containers/Organizations/Add';
 import OrganizationsDetail from 'containers/Organizations/Detail';
 import Overview from 'containers/Overview';
-import Recruitment from 'containers/Recruitment';
 import Settings from 'containers/Settings';
 import SignIn from 'containers/Signin';
 import UsersDetail from 'containers/Users/Detail';
@@ -31,12 +31,12 @@ const PublicContact = withAuth(publicConfig, Contact);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
 const PublicIssuesDetail = withAuth(publicConfig, IssuesDetail);
+const PublicJobs = withAuth(publicConfig, Jobs);
 const PublicMain = withAuth(publicConfig, Main);
 const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
 const PublicOrganizationsDetail = withAuth(publicConfig, OrganizationsDetail);
 const PublicOverview = withAuth(publicConfig, Overview);
 const PublicPrivacyPolicy = withAuth(publicConfig, PrivacyPolicy);
-const PublicRecruitment = withAuth(publicConfig, Recruitment);
 const PublicSignIn = withAuth(publicConfig, SignIn);
 const PublicStats = withAuth(publicConfig, Stats);
 const PublicTermsOfService = withAuth(publicConfig, TermsOfService);
@@ -55,13 +55,13 @@ const Routes = () => (
     <Route exact path="/issues/add" component={PrivateIssuesAdd} />
     <Route exact path="/issues/detail/:id" component={PublicIssuesDetail} />
     <Route exact path="/issues/search/:searchValue" component={PublicOverview} />
+    <Route exact path="/jobs" component={PublicJobs} />
     <Route exact path="/organizations" component={PublicOverview} />
     <Route exact path="/organizations/add" component={PrivateOrganizationsAdd} />
     <Route exact path="/organizations/detail/:id" component={PublicOrganizationsDetail} />
     <Route exact path="/organizations/search/:searchValue" component={PublicOverview} />
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
-    <Route exact path="/recruitment" component={PublicRecruitment} />
     <Route exact path="/settings/:view?" component={PrivateSettings} />
     <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/signin" component={PublicSignIn} />
