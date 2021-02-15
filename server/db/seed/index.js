@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
 const readline = require('readline');
 
-const pool = require('../connect');
-const { seedQuestions, seedResponses } = require('./questions');
 const {
   alterTables,
   createTables,
   dropAllTables,
   printTables,
 } = require('./tables');
+const pool = require('../connect');
+const { seedQuestions, seedResponses } = require('./questions');
 
 const prompt = readline.createInterface({
   input: process.stdin,

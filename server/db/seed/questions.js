@@ -1,6 +1,6 @@
 const { singleQuery } = require('../baseQueries');
 
-// Genereate initial list of questions
+// Generate initial list of questions
 const questions = [
   // us citizen
   {

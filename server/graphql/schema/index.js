@@ -240,8 +240,8 @@ module.exports = buildSchema(`
   }
 
   type QuestionResponse {
-    id: ID,
-    responseKey: String,
+    id: ID
+    responseKey: String
     value: String
   }
 

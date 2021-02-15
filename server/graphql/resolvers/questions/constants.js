@@ -1,8 +1,8 @@
-const getQuestionsError = `Something went wrong getting questions.`;
+const getQuestionsError = `Something went wrong when getting the questionnaire.`;
 
-const saveResponseError = `Something went wrong saving responses.`;
+const postUserResponseError = `Something went wrong when saving your responses. Please try again later.`;
 
 module.exports = {
   getQuestionsError,
-  saveResponseError,
+  postUserResponseError,
 };
