@@ -14,11 +14,11 @@ const JobsButton = ({ dispatchChangeInput, form, id, options }) => {
   };
   return (
     <div>
-      {options.map(({ label, value }, index) => (
+      {options.map(({ value }, index) => (
         <StyledPrimaryButton
           key={`option-${index}`}
           isSelected={selected === value}
-          label={label}
+          label={value}
           onClick={() => handleClick({ value })}
         />
       ))}

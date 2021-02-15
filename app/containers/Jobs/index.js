@@ -1,26 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
+import AsyncRender from 'components/AsyncRender';
 import JobsView from 'components/Jobs';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { changeInput, changeView, submitJobInfo } from './actions';
-import { surveyQuestions } from './constants';
+import {
+  changeInput,
+  changeView,
+  fetchQuestions,
+  submitJobInfo,
+} from './actions';
 import { getQuestion } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectJobs } from './selectors';
+import { makeSelectJobQuestions, makeSelectJobs } from './selectors';
 
 const Jobs = ({
   activeUser: { isGithubVerified },
   dispatchChangeInput,
   dispatchChangeView,
+  dispatchFetchQuestions,
   dispatchSubmitJobInfo,
   error,
   form,
@@ -28,32 +34,45 @@ const Jobs = ({
   isSignedIn,
   loading,
   match: { path },
+  questions,
   requestBody,
   view,
 }) => {
+  useEffect(() => {
+    dispatchFetchQuestions({ category: 'hiring' });
+  }, []);
+
   const handleStart = () => {
     dispatchChangeView({ view: 1 });
     handleNav(`${path}?question=1`);
   };
   const handleSubmit = () => dispatchSubmitJobInfo({ requestBody });
+
   const step = getQuestion();
-  const surveyProps = surveyQuestions[step - 1];
+  const questionProps = questions[step - 1];
   return (
-    <JobsView
-      dispatchChangeInput={dispatchChangeInput}
+    <AsyncRender
+      asyncData={questions}
+      component={JobsView}
       error={error}
-      form={form}
-      handleNav={handleNav}
-      handleStart={handleStart}
-      handleSubmit={handleSubmit}
-      isGithubVerified={isGithubVerified}
-      isSignedIn={isSignedIn}
+      isRequiredData
       loading={loading}
-      path={path}
-      step={step}
-      steps={surveyQuestions.length}
-      view={view}
-      {...surveyProps}
+      propsToPassDown={{
+        dispatchChangeInput,
+        error,
+        form,
+        handleNav,
+        handleStart,
+        handleSubmit,
+        isGithubVerified,
+        isSignedIn,
+        loading,
+        path,
+        step,
+        steps: questions.length,
+        view,
+        ...questionProps,
+      }}
     />
   );
 };
@@ -64,6 +83,7 @@ Jobs.propTypes = {
   activeUser: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeView: T.func.isRequired,
+  dispatchFetchQuestions: T.func.isRequired,
   dispatchSubmitJobInfo: T.func.isRequired,
   error: T.string,
   form: T.object.isRequired,
@@ -71,6 +91,7 @@ Jobs.propTypes = {
   isSignedIn: T.bool.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
+  questions: T.array.isRequired,
   requestBody: T.object,
   view: T.number.isRequired,
 };
@@ -87,6 +108,7 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectJobs('error'),
   form: makeSelectJobs('form'),
   loading: makeSelectJobs('loading'),
+  questions: makeSelectJobQuestions(),
   requestBody: makeSelectJobs('requestBody'),
   view: makeSelectJobs('view'),
 });
@@ -98,6 +120,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchChangeInput: payload => dispatch(changeInput(payload)),
     dispatchChangeView: payload => dispatch(changeView(payload)),
+    dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
     dispatchSubmitJobInfo: payload => dispatch(submitJobInfo(payload)),
     /*
      * Reducer : Router

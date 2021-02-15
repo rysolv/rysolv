@@ -64,10 +64,7 @@ const SurveyView = ({
             <OptionToRender {...optionProps} />
           </OptionWrapper>
         </div>
-        <ButtonGroup
-          shouldDisplayBack={shouldDisplayBack}
-          shouldDisplaySubmit={shouldDisplaySubmit}
-        >
+        <ButtonGroup shouldDisplayBack={shouldDisplayBack}>
           <StyledButton
             disableRipple
             onClick={() => handleNav(`${path}?question=${step - 1}`)}

@@ -5,9 +5,7 @@ import T from 'prop-types';
 
 import { BaseAutocomplete } from 'components/base_ui';
 
-import autocompleteDictionary from 'utils/autocompleteDictionary';
-
-const JobsAutocomplete = ({ dispatchChangeInput, form, id }) => {
+const JobsAutocomplete = ({ dispatchChangeInput, form, id, options }) => {
   const [selected, setSelected] = useState(form[id].value || []);
   useEffect(() => {
     setSelected(form[id].value || []);
@@ -32,7 +30,7 @@ const JobsAutocomplete = ({ dispatchChangeInput, form, id }) => {
       <BaseAutocomplete
         multiple={false}
         onChange={(e, value) => handleChange(value)}
-        options={autocompleteDictionary[id]}
+        options={options}
         value={selected.value}
         {...additionalProps}
       />
@@ -44,6 +42,7 @@ JobsAutocomplete.propTypes = {
   dispatchChangeInput: T.func.isRequired,
   form: T.object.isRequired,
   id: T.string.isRequired,
+  options: T.array.isRequired,
 };
 
 export default JobsAutocomplete;

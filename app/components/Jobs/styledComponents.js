@@ -68,8 +68,8 @@ export const DescriptionWrapper = styled.div`
 
 export const ButtonGroup = styled.div`
   display: flex;
-  justify-content: ${({ shouldDisplayBack, shouldDisplaySubmit }) =>
-    shouldDisplayBack || shouldDisplaySubmit ? 'flex-end' : 'space-between'};
+  justify-content: ${({ shouldDisplayBack }) =>
+    !shouldDisplayBack ? 'space-between' : 'flex-end'};
   width: 100%;
 `;
 
