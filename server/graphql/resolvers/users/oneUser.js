@@ -1,29 +1,31 @@
-const { errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
 const { getOneUser, getUserPullRequestDetail } = require('../../../db');
 const { oneUserError } = require('./constants');
 
 const oneUser = async ({ userId }) => {
   try {
-    const result = await getOneUser({ userId });
+    const userDetail = await getOneUser({ userId });
+    if (!userDetail) throw new CustomError(`Not found`);
 
     const {
       activePullRequests,
       completedPullRequests,
       rejectedPullRequests,
     } = await getUserPullRequestDetail({ userId });
-    result.activePullRequests = activePullRequests;
-    result.completedPullRequests = completedPullRequests;
-    result.rejectedPullRequests = rejectedPullRequests;
+    userDetail.activePullRequests = activePullRequests;
+    userDetail.completedPullRequests = completedPullRequests;
+    userDetail.rejectedPullRequests = rejectedPullRequests;
 
     return {
       __typename: 'User',
-      ...result,
+      ...userDetail,
     };
   } catch (error) {
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: oneUserError,
+      message: alert || oneUserError,
     };
   }
 };

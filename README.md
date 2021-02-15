@@ -38,3 +38,5 @@ Then populate each of the sql files with the appropriate query
 - For `down` migrations, add the inverse of that query
 
 Then run `db-migrate up` or `db-migrate down` to cycle forward or backwards through the migrations.
+
+To migrate a specific database environment run `db-migrate up -e [local/dev/prod]`

@@ -24,7 +24,8 @@ const oneOrganization = async ({ id }) => {
         return issueResult;
       }),
     );
-    organizationDetail.issues = issuesResult;
+    const filteredIssues = issuesResult.filter(issue => issue);
+    organizationDetail.issues = filteredIssues;
 
     return {
       __typename: 'Organization',

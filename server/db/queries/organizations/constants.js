@@ -2,7 +2,6 @@ const organizationValues = [
   'created_date',
   'description',
   'id',
-  'is_deleted',
   'is_manual',
   'issues',
   'logo',

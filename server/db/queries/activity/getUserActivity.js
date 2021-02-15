@@ -15,6 +15,8 @@ const getUserActivity = async ({ userId }) => {
     LEFT JOIN users on (activity.user_id = users.id)
     WHERE activity.user_id = $1
     AND activity.is_private = false
+    AND issues.is_deleted IS NOT true
+    AND organizations.is_deleted IS NOT true
     ORDER BY activity.created_date DESC`;
   const { rows } = await singleQuery({ queryText, values: [userId] });
   return rows;

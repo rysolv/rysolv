@@ -40,7 +40,7 @@ app.use(
     graphiql: !PRODUCTION,
     rootValue: graphQlResolvers,
     schema: graphQlSchema,
-    validationRules: [disableIntrospection],
+    validationRules: PRODUCTION ? [disableIntrospection] : [],
   })),
 );
 
