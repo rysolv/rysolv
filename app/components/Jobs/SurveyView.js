@@ -70,7 +70,7 @@ const SurveyView = ({
         >
           <StyledButton
             disableRipple
-            onClick={() => handleNav(`${path}?page=${step - 1}`)}
+            onClick={() => handleNav(`${path}?question=${step - 1}`)}
             shouldDisplayBack={!shouldDisplayBack}
           >
             {BackIcon}
@@ -79,7 +79,7 @@ const SurveyView = ({
           <StyledButton
             disableRipple
             disabled={checkInputDisabled(id)}
-            onClick={() => handleNav(`${path}?page=${step + 1}`)}
+            onClick={() => handleNav(`${path}?question=${step + 1}`)}
             shouldDisplaySubmit={!shouldDisplaySubmit}
           >
             Continue
