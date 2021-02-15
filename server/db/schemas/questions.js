@@ -1,8 +1,9 @@
 const alterQuestionsTable = `
   ALTER TABLE questions
+  ADD COLUMN category VARCHAR(32),
   ADD COLUMN created_date TIMESTAMP,
   ADD COLUMN priority INT,
-  ADD COLUMN question_key TEXT,
+  ADD COLUMN question_key VARCHAR(32),
   ADD COLUMN question_text TEXT,
   ADD COLUMN subtext TEXT
 `;

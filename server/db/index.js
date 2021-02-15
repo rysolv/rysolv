@@ -46,6 +46,7 @@ const {
   getPullRequestList,
   getUserPullRequests,
 } = require('./queries/pullRequests');
+const { getQuestions, postUserResponse } = require('./queries/questions');
 const { getStats } = require('./queries/stats');
 const {
   checkDuplicateGithubId,
@@ -107,6 +108,7 @@ module.exports = {
   getOrganizations,
   getOrganizationsWhere,
   getPullRequestList,
+  getQuestions,
   getStats,
   getUserActivity,
   getUserAttemptList,
@@ -115,6 +117,7 @@ module.exports = {
   getUsers,
   getUserSettings,
   getUserWatchList,
+  postUserResponse,
   searchIssues,
   searchOrganizations,
   searchUsers,
