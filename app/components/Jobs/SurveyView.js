@@ -25,7 +25,6 @@ const SurveyView = ({
   handleNav,
   handleSubmit,
   id,
-  label,
   options,
   optionType,
   path,
@@ -34,7 +33,7 @@ const SurveyView = ({
   steps,
 }) => {
   const shouldDisplayBack = step === 1;
-  const shouldDisplaySubmit = step === steps - 1;
+  const shouldDisplaySubmit = step === steps;
   const OptionToRender = optionDictionary[optionType];
   const optionProps = {
     dispatchChangeInput,
@@ -54,7 +53,7 @@ const SurveyView = ({
   return (
     <Fragment>
       <JobsHeader>
-        <ProgressBar label={label} step={step} steps={steps} />
+        <ProgressBar step={step} steps={steps} />
       </JobsHeader>
       <ViewContainer>
         <div>
@@ -105,7 +104,6 @@ SurveyView.propTypes = {
   handleNav: T.func.isRequired,
   handleSubmit: T.func.isRequired,
   id: T.string.isRequired,
-  label: T.string.isRequired,
   options: T.array.isRequired,
   optionType: T.string.isRequired,
   path: T.string.isRequired,

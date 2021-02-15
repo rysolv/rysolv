@@ -1,24 +1,42 @@
 import styled from 'styled-components';
 import MobileStepper from '@material-ui/core/MobileStepper';
 
-import {
-  defaultFontSize,
-  landingButtonGreen,
-  textColor,
-} from 'defaultStyleHelper';
+import { landingButtonGreen, textColor } from 'defaultStyleHelper';
 
 export const ProgressBarWrapper = styled.div`
+  display: flex;
   text-align: center;
 `;
 
 export const StyledLabel = styled.span`
+  align-self: center;
   color: ${textColor};
-  font-size: ${defaultFontSize};
+  font-size: 1.8rem;
   font-weight: 500;
+  position: absolute;
+  right: 20%;
+  white-space: nowrap;
+
+  @media (max-width: 575px) {
+    right: 18%;
+  }
+  @media (max-width: 475px) {
+    right: 17%;
+  }
+  @media (max-width: 415px) {
+    right: 16%;
+  }
+  @media (max-width: 395px) {
+    right: 15%;
+  }
+  @media (max-width: 350px) {
+    right: 14%;
+  }
 `;
 
 export const StyledProgressBar = styled(MobileStepper)`
   justify-content: center;
+  width: 100%;
 
   .progress {
     animation-duration: 333ms;
