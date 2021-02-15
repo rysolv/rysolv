@@ -1,6 +1,6 @@
 export const CHANGE_INPUT = 'app/Jobs/CHANGE_INPUT';
 
-export const CHANGE_STEP = 'app/Jobs/CHANGE_STEP';
+export const CHANGE_VIEW = 'app/Jobs/CHANGE_VIEW';
 
 export const SUBMIT_JOB_INFO = 'app/Jobs/SUBMIT_JOB_INFO';
 export const SUBMIT_JOB_INFO_FAILURE = 'app/Jobs/SUBMIT_JOB_INFO_FAILURE';

@@ -1,6 +1,6 @@
 import {
   CHANGE_INPUT,
-  CHANGE_STEP,
+  CHANGE_VIEW,
   SUBMIT_JOB_INFO_FAILURE,
   SUBMIT_JOB_INFO_SUCCESS,
   SUBMIT_JOB_INFO,
@@ -13,10 +13,10 @@ export function changeInput(payload) {
   };
 }
 
-export function changeStep(payload) {
+export function changeView(payload) {
   return {
     payload,
-    type: CHANGE_STEP,
+    type: CHANGE_VIEW,
   };
 }
 

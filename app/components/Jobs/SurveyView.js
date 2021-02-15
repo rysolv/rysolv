@@ -33,7 +33,7 @@ const SurveyView = ({
   step,
   steps,
 }) => {
-  const shouldDisplayBack = step === 0;
+  const shouldDisplayBack = step === 1;
   const shouldDisplaySubmit = step === steps - 1;
   const OptionToRender = optionDictionary[optionType];
   const optionProps = {

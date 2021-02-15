@@ -4,6 +4,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { resetState } from 'containers/Main/actions';
+import { changeView } from 'containers/Jobs/actions';
 import { incrementResetStep, incrementStep } from 'containers/Signin/actions';
 import { post } from 'utils/request';
 
@@ -146,6 +147,7 @@ export function* githubSignInSaga({ payload }) {
       signup: '/settings',
     }
     const route = routeDictionary[origin];
+    if (origin === 'jobs') yield put(changeView({ view: 1 }));
     yield put(githubSignInSuccess({ user: restProps }));
     yield put(push(route));
   } catch (error) {

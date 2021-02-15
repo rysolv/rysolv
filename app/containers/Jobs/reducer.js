@@ -3,7 +3,7 @@ import produce from 'immer';
 
 import {
   CHANGE_INPUT,
-  CHANGE_STEP,
+  CHANGE_VIEW,
   SUBMIT_JOB_INFO_FAILURE,
   SUBMIT_JOB_INFO_SUCCESS,
   SUBMIT_JOB_INFO,
@@ -20,7 +20,6 @@ export const initialState = {
     location: { error: false, value: '' },
     salary: { error: false, value: '' },
   },
-  step: 0,
   view: 0,
 };
 
@@ -31,9 +30,9 @@ const jobsReducer = produce((draft, { payload, type }) => {
       draft.form[field].value = value;
       break;
     }
-    case CHANGE_STEP: {
-      const { step } = payload;
-      draft.step = step;
+    case CHANGE_VIEW: {
+      const { view } = payload;
+      draft.view = view;
       break;
     }
     case SUBMIT_JOB_INFO_FAILURE: {

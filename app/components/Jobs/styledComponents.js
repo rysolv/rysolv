@@ -31,7 +31,6 @@ export const JobsContainer = styled.div`
 
 export const JobsHeader = styled.div`
   color: ${textColor};
-  display: flex;
   font-size: ${headerFontSize};
   margin: 5rem 0 2rem 0;
   width: 100%;

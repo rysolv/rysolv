@@ -13,7 +13,7 @@ import {
   ViewContainer,
 } from './styledComponents';
 
-const DescriptionView = ({ isGithubVerified, isSignedIn }) => (
+const DescriptionView = ({ handleStart, isGithubVerified, isSignedIn }) => (
   <Fragment>
     <JobsHeader>Job Recruitment</JobsHeader>
     <ViewContainer>
@@ -32,7 +32,7 @@ const DescriptionView = ({ isGithubVerified, isSignedIn }) => (
             <StyledPrimaryButton
               isSelected
               label="Start Questionnaire"
-              onClick={() => {}}
+              onClick={handleStart}
             />
           }
           FallbackComponent={<StyledGithubButton type="jobs" />}
@@ -46,6 +46,7 @@ const DescriptionView = ({ isGithubVerified, isSignedIn }) => (
 DescriptionView.defaultProp = { isGithubVerified: false };
 
 DescriptionView.propTypes = {
+  handleStart: T.func.isRequired,
   isGithubVerified: T.bool,
   isSignedIn: T.bool.isRequired,
 };

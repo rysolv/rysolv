@@ -10,7 +10,7 @@ import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { changeInput, submitJobInfo } from './actions';
+import { changeInput, changeView, submitJobInfo } from './actions';
 import { surveyQuestions } from './constants';
 import { getQuestion } from './helpers';
 import reducer from './reducer';
@@ -20,6 +20,7 @@ import { makeSelectJobs } from './selectors';
 const Jobs = ({
   activeUser: { isGithubVerified },
   dispatchChangeInput,
+  dispatchChangeView,
   dispatchSubmitJobInfo,
   error,
   form,
@@ -30,6 +31,10 @@ const Jobs = ({
   requestBody,
   view,
 }) => {
+  const handleStart = () => {
+    dispatchChangeView({ view: 1 });
+    handleNav(`${path}?question=1`);
+  };
   const handleSubmit = () => dispatchSubmitJobInfo({ requestBody });
   const step = getQuestion();
   const surveyProps = surveyQuestions[step - 1];
@@ -39,6 +44,7 @@ const Jobs = ({
       error={error}
       form={form}
       handleNav={handleNav}
+      handleStart={handleStart}
       handleSubmit={handleSubmit}
       isGithubVerified={isGithubVerified}
       isSignedIn={isSignedIn}
@@ -57,6 +63,7 @@ Jobs.defaultProp = { step: 1 };
 Jobs.propTypes = {
   activeUser: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeView: T.func.isRequired,
   dispatchSubmitJobInfo: T.func.isRequired,
   error: T.string,
   form: T.object.isRequired,
@@ -90,6 +97,7 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Jobs
      */
     dispatchChangeInput: payload => dispatch(changeInput(payload)),
+    dispatchChangeView: payload => dispatch(changeView(payload)),
     dispatchSubmitJobInfo: payload => dispatch(submitJobInfo(payload)),
     /*
      * Reducer : Router
