@@ -56,6 +56,7 @@ const Routes = () => (
     <Route exact path="/issues/detail/:id" component={PublicIssuesDetail} />
     <Route exact path="/issues/search/:searchValue" component={PublicOverview} />
     <Route exact path="/jobs" component={PublicJobs} />
+    <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/organizations" component={PublicOverview} />
     <Route exact path="/organizations/add" component={PrivateOrganizationsAdd} />
     <Route exact path="/organizations/detail/:id" component={PublicOrganizationsDetail} />

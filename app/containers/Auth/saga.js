@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-nested-ternary */
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
@@ -86,10 +88,10 @@ export function* fetchActiveUserSaga() {
 }
 
 export function* githubSignInSaga({ payload }) {
-  const { code, isSignIn } = payload;
+  const { code, origin } = payload;
   const signInQuery = `
     query {
-      githubSignIn(code: "${code}", isSignIn: ${isSignIn}) {
+      githubSignIn(code: "${code}", origin: "${origin}") {
         __typename
         ... on User {
           attempting
@@ -116,7 +118,7 @@ export function* githubSignInSaga({ payload }) {
   `;
   const signUpQuery = `
     query {
-      githubSignIn(code: "${code}", isSignIn: ${isSignIn}) {
+      githubSignIn(code: "${code}", origin: "${origin}") {
         __typename
         ... on User {
           email
@@ -129,7 +131,7 @@ export function* githubSignInSaga({ payload }) {
       }
     }
   `;
-  const query = isSignIn ? signInQuery : signUpQuery;
+  const query = origin === 'jobs' || origin === 'signin' ? signInQuery : signUpQuery;
   try {
     const graphql = JSON.stringify({ query });
     const {
@@ -138,13 +140,23 @@ export function* githubSignInSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
-    const route = isSignIn ? '/issues' : '/settings';
+    const routeDictionary = {
+      jobs: '/jobs?question=1',
+      signin: '/issues',
+      signup: '/settings',
+    }
+    const route = routeDictionary[origin];
     yield put(githubSignInSuccess({ user: restProps }));
     yield put(push(route));
   } catch (error) {
     const { message } = error;
-    const githubError = isSignIn ? githubSignInError : githubSignUpError;
-    const route = isSignIn ? '/signin' : '/signup';
+    const githubError = origin === 'jobs' || origin === 'signin' ? githubSignInError : githubSignUpError;
+    const routeDictionary = {
+      jobs: '/jobs',
+      signin: '/signin',
+      signup: '/signup',
+    }
+    const route = routeDictionary[origin];
     const messageToRender = message || githubError;
     yield put(githubSignInFailure({ error: { message: messageToRender } }));
     yield put(push(route));

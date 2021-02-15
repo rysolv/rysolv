@@ -373,7 +373,7 @@ module.exports = buildSchema(`
     getUsers: UserArrayResult!
     getUserSettings: UserResult!
 
-    githubSignIn(code: String!, isSignIn: Boolean!): UserResult!
+    githubSignIn(code: String!, origin: String!): UserResult!
 
     oneIssue(id: ID!): IssueResult!
     oneOrganization(id: ID!): OrganizationResult!

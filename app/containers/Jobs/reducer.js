@@ -16,11 +16,12 @@ export const initialState = {
     citizenship: { error: false, value: '' },
     experience: { error: false, value: '' },
     isRemote: { error: false, value: '' },
+    language: { error: false, value: '' },
     location: { error: false, value: '' },
-    preferredLanguages: { error: false, value: '' },
     salary: { error: false, value: '' },
   },
   step: 0,
+  view: 0,
 };
 
 const jobsReducer = produce((draft, { payload, type }) => {

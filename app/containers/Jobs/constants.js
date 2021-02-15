@@ -36,7 +36,7 @@ export const surveyQuestions = [
     id: 'salary',
     label: 'Test',
     options: [{ value: false, label: 'No' }, { value: true, label: 'Yes' }],
-    optionType: 'dropdown',
+    optionType: 'autocomplete',
     question: 'What is your desired salary range?',
   },
   {
@@ -52,7 +52,7 @@ export const surveyQuestions = [
     id: 'experience',
     label: 'Test',
     options: [{ value: false, label: 'No' }, { value: true, label: 'Yes' }],
-    optionType: 'dropdown',
+    optionType: 'autocomplete',
     question: 'How many years of experience?',
   },
 ];

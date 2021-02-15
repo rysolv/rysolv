@@ -8,6 +8,11 @@ const { mobile } = mediaQueriesByDevice;
 export const ActivityContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 49%;
+
+  ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const DetailListItem = styled.div`
@@ -43,6 +48,11 @@ export const Divider = styled.div`
 export const RankingContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 49%;
+
+  ${mobile} {
+    width: 100%;
+  }
 `;
 
 export const StyledUserBarTitle = styled.div`

@@ -19,6 +19,11 @@ export const StyledAutocomplete = styled(Autocomplete)`
     color: #616161;
     font-size: 1.4rem;
   }
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+  }
 `;
 
 export const StyledChip = styled(Chip)`

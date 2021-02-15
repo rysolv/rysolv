@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 
-import { StyledPrimaryButton } from './styledComponents';
+import { StyledPrimaryButton } from '../styledComponents';
 
 const JobsButton = ({ dispatchChangeInput, form, id, options }) => {
   const [selected, setSelected] = useState(form[id].value || null);

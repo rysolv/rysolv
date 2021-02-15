@@ -3,56 +3,77 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { push } from 'connected-react-router';
 
 import JobsView from 'components/Jobs';
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { changeInput, changeStep, submitJobInfo } from './actions';
+import { changeInput, submitJobInfo } from './actions';
 import { surveyQuestions } from './constants';
+import { getQuestion } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectJobs } from './selectors';
 
 const Jobs = ({
+  activeUser: { isGithubVerified },
   dispatchChangeInput,
-  dispatchChangeStep,
   dispatchSubmitJobInfo,
   error,
   form,
+  handleNav,
+  isSignedIn,
   loading,
+  match: { path },
   requestBody,
-  step,
+  view,
 }) => {
   const handleSubmit = () => dispatchSubmitJobInfo({ requestBody });
-  const surveyProps = surveyQuestions[step];
+  const step = getQuestion();
+  const surveyProps = surveyQuestions[step - 1];
   return (
     <JobsView
       dispatchChangeInput={dispatchChangeInput}
-      dispatchChangeStep={dispatchChangeStep}
       error={error}
       form={form}
+      handleNav={handleNav}
       handleSubmit={handleSubmit}
+      isGithubVerified={isGithubVerified}
+      isSignedIn={isSignedIn}
       loading={loading}
+      path={path}
       step={step}
       steps={surveyQuestions.length}
+      view={view}
       {...surveyProps}
     />
   );
 };
 
+Jobs.defaultProp = { step: 1 };
+
 Jobs.propTypes = {
+  activeUser: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
-  dispatchChangeStep: T.func.isRequired,
   dispatchSubmitJobInfo: T.func.isRequired,
   error: T.string,
   form: T.object.isRequired,
+  handleNav: T.func.isRequired,
+  isSignedIn: T.bool.isRequired,
   loading: T.bool.isRequired,
+  match: T.object.isRequired,
   requestBody: T.object,
-  step: T.number.isRequired,
+  view: T.number.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
+  /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
+  isSignedIn: makeSelectAuth('isSignedIn'),
   /**
    * Reducer : Jobs
    */
@@ -60,7 +81,7 @@ const mapStateToProps = createStructuredSelector({
   form: makeSelectJobs('form'),
   loading: makeSelectJobs('loading'),
   requestBody: makeSelectJobs('requestBody'),
-  step: makeSelectJobs('step'),
+  view: makeSelectJobs('view'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -69,8 +90,11 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Jobs
      */
     dispatchChangeInput: payload => dispatch(changeInput(payload)),
-    dispatchChangeStep: payload => dispatch(changeStep(payload)),
     dispatchSubmitJobInfo: payload => dispatch(submitJobInfo(payload)),
+    /*
+     * Reducer : Router
+     */
+    handleNav: route => dispatch(push(route)),
   };
 }
 

@@ -1,11 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
 
-import { PrimaryAsyncButton, SecondaryButton } from 'components/base_ui';
-import { defaultFontSize, lightBlueColor, textColor } from 'defaultStyleHelper';
+import {
+  GithubButton,
+  PrimaryAsyncButton,
+  PrimaryButton,
+  SecondaryButton,
+} from 'components/base_ui';
+import {
+  defaultFontFamily,
+  defaultFontSize,
+  headerFontSize,
+  lightBlueColor,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile } = mediaQueriesByDevice;
+const { mobile, mobileS } = mediaQueriesByDevice;
 
 export const JobsContainer = styled.div`
   display: flex;
@@ -18,6 +30,9 @@ export const JobsContainer = styled.div`
 `;
 
 export const JobsHeader = styled.div`
+  color: ${textColor};
+  display: flex;
+  font-size: ${headerFontSize};
   margin: 5rem 0 2rem 0;
   width: 100%;
 
@@ -26,7 +41,7 @@ export const JobsHeader = styled.div`
   }
 `;
 
-export const SurveryContainer = styled.div`
+export const ViewContainer = styled.div`
   background: white;
   color: ${textColor};
   display: flex;
@@ -53,8 +68,10 @@ export const DescriptionWrapper = styled.div`
 `;
 
 export const ButtonGroup = styled.div`
-  align-self: center;
   display: flex;
+  justify-content: ${({ shouldDisplayBack, shouldDisplaySubmit }) =>
+    shouldDisplayBack || shouldDisplaySubmit ? 'flex-end' : 'space-between'};
+  width: 100%;
 `;
 
 export const StyledPrimaryAsyncButton = styled(
@@ -83,4 +100,76 @@ export const StyledSecondaryButton = styled(
 
 export const OptionWrapper = styled.div`
   margin: 5rem auto;
+  width: 75%;
+`;
+
+export const StyledButton = styled(
+  ({ shouldDisplayBack, shouldDisplaySubmit, ...restProps }) => (
+    <Button {...restProps} />
+  ),
+)`
+  color: ${lightBlueColor};
+  display: ${({ shouldDisplayBack, shouldDisplaySubmit }) =>
+    shouldDisplayBack || shouldDisplaySubmit ? 'inherit' : 'none'};
+  font-family: ${defaultFontFamily};
+  font-size: ${defaultFontSize};
+  font-weight: 500;
+  margin: 1rem;
+  padding: 0rem;
+  text-transform: none;
+
+  &:hover {
+    background-color: transparent;
+  }
+
+  svg {
+    height: 2rem;
+    margin-right: 1rem;
+    width: 2rem;
+  }
+
+  ${mobileS} {
+    justify-content: start;
+    width: 100%;
+  }
+`;
+
+export const StyledGithubButton = styled(GithubButton)`
+  width: auto;
+`;
+
+export const ButtonWrapper = styled.div`
+  align-self: center;
+  display: flex;
+`;
+
+export const DescriptionTitle = styled.div`
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 44px;
+  margin-bottom: 24px;
+  text-align: center;
+`;
+
+export const DescriptionContent = styled.div`
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  margin-bottom: 40px;
+  text-align: center;
+  letter-spacing: -0.2px;
+`;
+
+export const StyledPrimaryButton = styled(({ isSelected, ...restProps }) => (
+  <PrimaryButton {...restProps} />
+))`
+  background-color: ${({ isSelected }) =>
+    isSelected ? lightBlueColor : 'white'};
+  border: 0.1rem solid ${lightBlueColor};
+  color: ${({ isSelected }) => (isSelected ? 'white' : lightBlueColor)};
+
+  &:hover {
+    background-color: ${lightBlueColor};
+    color: white;
+  }
 `;
