@@ -8,15 +8,16 @@ const getQuestions = async ({ category }) => {
       q.question_key AS "questionKey",
       q.question_text AS "questionText",
       q.subtext,
-      json_agg(
-        (
-          SELECT subquery FROM
-          (SELECT
-           qr.id,
-           qr.response_key AS "responseKey",
-           qr.value
-           ORDER BY qr.priority ASC
-          ) AS subquery)
+      json_agg((
+        SELECT subquery FROM (
+          SELECT
+            qr.id,
+            qr.response_key AS "responseKey",
+            qr.value,
+            qr.priority
+            ORDER BY qr.priority ASC
+          ) AS subquery
+        ) ORDER BY qr.priority ASC
       ) AS responses
     FROM questions q
     JOIN question_responses qr ON qr.question_id = q.id
