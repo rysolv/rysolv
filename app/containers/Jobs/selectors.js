@@ -35,35 +35,36 @@ const makeSelectJobResponseArray = () =>
     makeSelectJobs('form'),
     makeSelectJobs('questions'),
     (form, questions) => {
+      const responseArray = [];
       if (questions.length) {
-        const requestBody = Object.keys(form).map(input => {
+        Object.keys(form).forEach(input => {
           const { value: values } = form[input];
           const [{ id: questionId, responses }] = questions.filter(
             ({ questionKey }) => input === snakeToCamel(questionKey),
           );
           if (Array.isArray(values)) {
-            const array = values.map(value => {
+            values.forEach(value => {
               const [{ id: responseId }] = responses.filter(
                 response => response.value === value,
               );
-              return {
+              responseArray.push({
                 question_id: questionId,
                 response_id: responseId,
-              };
+              });
             });
-            return array;
           }
-          const [{ id: responseId }] = responses.filter(
-            response => response.value === values,
-          );
-          return {
-            question_id: questionId,
-            response_id: responseId,
-          };
+          if (!Array.isArray(values) && values) {
+            const [{ id: responseId }] = responses.filter(
+              response => response.value === values,
+            );
+            responseArray.push({
+              question_id: questionId,
+              response_id: responseId,
+            });
+          }
         });
-        return requestBody;
       }
-      return [];
+      return responseArray;
     },
   );
 

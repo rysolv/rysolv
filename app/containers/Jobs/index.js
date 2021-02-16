@@ -99,7 +99,7 @@ Jobs.propTypes = {
   dispatchChangeView: T.func.isRequired,
   dispatchFetchQuestions: T.func.isRequired,
   dispatchSubmitUserResponse: T.func.isRequired,
-  error: T.string,
+  error: T.oneOfType([T.object, T.string]),
   form: T.object.isRequired,
   handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
