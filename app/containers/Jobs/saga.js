@@ -51,20 +51,19 @@ export function* fetchQuestionsSaga({ payload }) {
 }
 
 export function* submitUserResponseSaga({ payload }) {
-  const { requestBody } = payload;
-  const { email } = requestBody;
+  const { responseArray } = payload;
   const query = `
-    query{
-      submitJobInfo(email: "${email}")  {
-        __typename
-        ... on Success {
-          message
-        }
-        ... on Error {
-          message
-        }
+  mutation {
+    postUserResponse(responseArray: ${responseArray}) {
+      __typename
+      ... on Success {
+        message
+      }
+      ... on Error {
+        message
       }
     }
+  }
   `;
   try {
     const graphql = JSON.stringify({ query });

@@ -22,7 +22,7 @@ import reducer from './reducer';
 import saga from './saga';
 import {
   makeSelectJobQuestions,
-  makeSelectJobRequestBody,
+  makeSelectJobResponseArray,
   makeSelectJobs,
 } from './selectors';
 
@@ -39,7 +39,7 @@ const Jobs = ({
   loading,
   match: { path },
   questions,
-  requestBody,
+  responseArray,
   view,
 }) => {
   useEffect(() => {
@@ -58,7 +58,7 @@ const Jobs = ({
     dispatchChangeView({ view: 1 });
     handleNav(`${path}?question=1`);
   };
-  const handleSubmit = () => dispatchSubmitUserResponse({ requestBody });
+  const handleSubmit = () => dispatchSubmitUserResponse({ responseArray });
 
   const step = getQuestion();
   const questionProps = questions[step - 1];
@@ -106,7 +106,7 @@ Jobs.propTypes = {
   loading: T.bool.isRequired,
   match: T.object.isRequired,
   questions: T.array.isRequired,
-  requestBody: T.array.isRequired,
+  responseArray: T.array.isRequired,
   view: T.number.isRequired,
 };
 
@@ -123,7 +123,7 @@ const mapStateToProps = createStructuredSelector({
   form: makeSelectJobs('form'),
   loading: makeSelectJobs('loading'),
   questions: makeSelectJobQuestions(),
-  requestBody: makeSelectJobRequestBody(),
+  responseArray: makeSelectJobResponseArray(),
   view: makeSelectJobs('view'),
 });
 

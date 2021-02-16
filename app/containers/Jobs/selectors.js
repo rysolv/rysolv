@@ -30,7 +30,7 @@ const makeSelectJobQuestions = () =>
     },
   );
 
-const makeSelectJobRequestBody = () =>
+const makeSelectJobResponseArray = () =>
   createSelector(
     makeSelectJobs('form'),
     makeSelectJobs('questions'),
@@ -68,4 +68,4 @@ const makeSelectJobRequestBody = () =>
   );
 
 export default selectJobsDomain;
-export { makeSelectJobQuestions, makeSelectJobRequestBody, makeSelectJobs };
+export { makeSelectJobQuestions, makeSelectJobResponseArray, makeSelectJobs };
