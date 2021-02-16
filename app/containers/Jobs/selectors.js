@@ -18,9 +18,10 @@ const makeSelectJobQuestions = () =>
     makeSelectJobs('questions'),
     questions => {
       const formattedQuestions = questions.map(
-        ({ questionKey, questionText, responses, subtext }) => ({
+        ({ limit, questionKey, questionText, responses, subtext }) => ({
           description: subtext,
           id: snakeToCamel(questionKey),
+          limit,
           options: responses.map(({ value }) => ({ value, label: value })),
           optionType: optionDictionary[questionKey],
           question: questionText,

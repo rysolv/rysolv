@@ -229,6 +229,7 @@ module.exports = buildSchema(`
 
   type Question {
     id: ID
+    limit: Int
     questionKey: String
     questionText: String
     responses: [QuestionResponse]
@@ -275,14 +276,14 @@ module.exports = buildSchema(`
     dollarsEarned: Int
     email: String!
     emailVerified: Boolean
-    firstName: String!
+    firstName: String
     githubLink: String
     githubUsername: String
     id: ID!
     isGithubVerified: Boolean
     isQuestionnaireComplete: Boolean
     issues: [Object]
-    lastName: String!
+    lastName: String
     modifiedDate: Object
     organizations: [Object]
     personalLink: String

@@ -7,6 +7,7 @@ const getQuestions = async ({ category }) => {
       q.priority,
       q.question_key AS "questionKey",
       q.question_text AS "questionText",
+      q.response_limit AS "limit",
       q.subtext,
       json_agg((
         SELECT subquery FROM (
@@ -27,6 +28,7 @@ const getQuestions = async ({ category }) => {
       q.priority,
       q.question_key,
       q.question_text,
+      q.response_limit,
       q.subtext
     ORDER BY q.priority ASC
   `;

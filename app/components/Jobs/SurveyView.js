@@ -26,6 +26,7 @@ const SurveyView = ({
   handleNav,
   handleSubmit,
   id,
+  limit,
   options,
   optionType,
   path,
@@ -41,6 +42,7 @@ const SurveyView = ({
     dispatchChangeInput,
     form,
     id,
+    limit,
     options,
   };
   const checkInputDisabled = input => {
@@ -117,6 +119,7 @@ SurveyView.propTypes = {
   handleNav: T.func.isRequired,
   handleSubmit: T.func.isRequired,
   id: T.string.isRequired,
+  limit: T.number,
   options: T.array.isRequired,
   optionType: T.string.isRequired,
   path: T.string.isRequired,

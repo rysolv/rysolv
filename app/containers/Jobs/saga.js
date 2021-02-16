@@ -21,6 +21,7 @@ export function* fetchQuestionsSaga({ payload }) {
         ... on QuestionArray {
           questionArray {
             id
+            limit
             questionKey
             questionText
             responses {
