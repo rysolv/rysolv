@@ -68,8 +68,8 @@ export const DescriptionWrapper = styled.div`
 
 export const ButtonGroup = styled.div`
   display: flex;
-  justify-content: ${({ shouldDisplayBack }) =>
-    !shouldDisplayBack ? 'space-between' : 'flex-end'};
+  justify-content: ${({ shouldDisplayBack, shouldDisplayCancel }) =>
+    shouldDisplayBack || shouldDisplayCancel ? 'space-between' : 'flex-end'};
   width: 100%;
 `;
 
@@ -103,13 +103,22 @@ export const OptionWrapper = styled.div`
 `;
 
 export const StyledButton = styled(
-  ({ shouldDisplayBack, shouldDisplaySubmit, ...restProps }) => (
-    <Button {...restProps} />
-  ),
+  ({
+    shouldDisplayBack,
+    shouldDisplayCancel,
+    shouldDisplaySubmit,
+    ...restProps
+  }) => <Button {...restProps} />,
 )`
   color: ${lightBlueColor};
-  display: ${({ shouldDisplayBack, shouldDisplaySubmit }) =>
-    shouldDisplayBack || shouldDisplaySubmit ? 'inherit' : 'none'};
+  display: ${({
+    shouldDisplayBack,
+    shouldDisplayCancel,
+    shouldDisplaySubmit,
+  }) =>
+    shouldDisplayBack || shouldDisplayCancel || shouldDisplaySubmit
+      ? 'inherit'
+      : 'none'};
   font-family: ${defaultFontFamily};
   font-size: ${defaultFontSize};
   font-weight: 500;

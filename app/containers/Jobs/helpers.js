@@ -6,9 +6,9 @@ export const getQuestion = () => {
 };
 
 export const optionDictionary = {
-  desired_role: 'button',
-  preferred_location: 'autocomplete',
-  remote: 'button',
-  target_salary: 'autocomplete',
-  us_citizen: 'button',
+  desired_role: 'multipleButton',
+  preferred_location: 'multipleButton',
+  remote: 'singleButton',
+  target_salary: 'singleButton',
+  us_citizen: 'singleButton',
 };

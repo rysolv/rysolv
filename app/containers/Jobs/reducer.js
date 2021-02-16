@@ -16,10 +16,10 @@ export const initialState = {
   error: null,
   loading: false,
   form: {
-    desiredRole: { error: false, value: '' },
-    preferredLocation: { error: false, value: '' },
+    desiredRole: { error: false, value: [] },
+    preferredLocation: { error: false, value: [] },
     remote: { error: false, value: '' },
-    targetSalary: { error: false, value: '' },
+    targetSalary: { error: false, value: [] },
     usCitizen: { error: false, value: '' },
   },
   questions: [],

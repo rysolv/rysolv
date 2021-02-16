@@ -22,6 +22,7 @@ const SurveyView = ({
   description,
   dispatchChangeInput,
   form,
+  handleCancel,
   handleNav,
   handleSubmit,
   id,
@@ -32,7 +33,8 @@ const SurveyView = ({
   step,
   steps,
 }) => {
-  const shouldDisplayBack = step === 1;
+  const shouldDisplayBack = step > 1;
+  const shouldDisplayCancel = step === 1;
   const shouldDisplaySubmit = step === steps;
   const OptionToRender = optionDictionary[optionType];
   const optionProps = {
@@ -63,11 +65,21 @@ const SurveyView = ({
             <OptionToRender {...optionProps} />
           </OptionWrapper>
         </div>
-        <ButtonGroup shouldDisplayBack={shouldDisplayBack}>
+        <ButtonGroup
+          shouldDisplayBack={shouldDisplayBack}
+          shouldDisplayCancel={shouldDisplayCancel}
+        >
+          <StyledButton
+            disableRipple
+            onClick={handleCancel}
+            shouldDisplayCancel={shouldDisplayCancel}
+          >
+            Cancel
+          </StyledButton>
           <StyledButton
             disableRipple
             onClick={() => handleNav(`${path}?question=${step - 1}`)}
-            shouldDisplayBack={!shouldDisplayBack}
+            shouldDisplayBack={shouldDisplayBack}
           >
             {BackIcon}
             Back
@@ -101,6 +113,7 @@ SurveyView.propTypes = {
   description: T.string,
   dispatchChangeInput: T.func.isRequired,
   form: T.object.isRequired,
+  handleCancel: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleSubmit: T.func.isRequired,
   id: T.string.isRequired,

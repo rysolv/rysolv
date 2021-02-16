@@ -42,6 +42,10 @@ const Jobs = ({
     dispatchFetchQuestions({ category: 'hiring' });
   }, []);
 
+  const handleCancel = () => {
+    dispatchChangeView({ view: 0 });
+    handleNav(`${path}`);
+  };
   const handleStart = () => {
     dispatchChangeView({ view: 1 });
     handleNav(`${path}?question=1`);
@@ -59,8 +63,10 @@ const Jobs = ({
       loading={loading}
       propsToPassDown={{
         dispatchChangeInput,
+        dispatchChangeView,
         error,
         form,
+        handleCancel,
         handleNav,
         handleStart,
         handleSubmit,

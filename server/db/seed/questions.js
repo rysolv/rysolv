@@ -202,7 +202,7 @@ const responses = [
     priority: 1,
     question_id: '32eee9df-e3f8-4288-9671-d69981c6554d',
     response_key: '75',
-    value: 'More than $75,000',
+    value: '$75,000 +',
   },
   {
     id: 'ef9a6743-9711-4e73-9d79-364c76ba374d',
@@ -210,7 +210,7 @@ const responses = [
     priority: 2,
     question_id: '32eee9df-e3f8-4288-9671-d69981c6554d',
     response_key: '100',
-    value: 'More than $100,000',
+    value: '$100,000 +',
   },
   {
     id: '2fc18a45-e807-49cd-9003-3bf0912a90c8',
@@ -218,7 +218,7 @@ const responses = [
     priority: 3,
     question_id: '32eee9df-e3f8-4288-9671-d69981c6554d',
     response_key: '125',
-    value: 'More than $125,000',
+    value: '$125,000 +',
   },
   {
     id: '4e1d1560-82bd-4fe2-b7c9-37be865534e3',
@@ -226,7 +226,7 @@ const responses = [
     priority: 4,
     question_id: '32eee9df-e3f8-4288-9671-d69981c6554d',
     response_key: '150',
-    value: 'More than $150,000',
+    value: '$150,000 +',
   },
   {
     id: 'dd7a67a7-54df-491a-9a9b-a980b27b9f65',
@@ -234,7 +234,7 @@ const responses = [
     priority: 5,
     question_id: '32eee9df-e3f8-4288-9671-d69981c6554d',
     response_key: '175',
-    value: 'More than $175,000',
+    value: '$175,000 +',
   },
   {
     created_date: new Date(),
@@ -242,7 +242,7 @@ const responses = [
     priority: 6,
     question_id: '32eee9df-e3f8-4288-9671-d69981c6554d',
     response_key: '200',
-    value: 'More than $200,000',
+    value: '$200,000 +',
   },
 ];
 

@@ -1,7 +1,8 @@
-import JobsAutocompleteComponent from './JobsAutocompleteComponent';
-import JobsButtonComponent from './JobsButtonComponent';
+import { MultipleButton, SingleButton } from './ButtonComponent';
+import AutocompleteComponent from './AutocompleteComponent';
 
 export default {
-  autocomplete: JobsAutocompleteComponent,
-  button: JobsButtonComponent,
+  autocomplete: AutocompleteComponent,
+  multipleButton: MultipleButton,
+  singleButton: SingleButton,
 };
