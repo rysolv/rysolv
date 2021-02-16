@@ -58,6 +58,7 @@ export function* fetchActiveUserSaga() {
           firstName
           id
           isGithubVerified
+          isQuestionnaireComplete
           issues
           lastName
           organizations
