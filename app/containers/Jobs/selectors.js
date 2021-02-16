@@ -48,8 +48,8 @@ const makeSelectJobResponseArray = () =>
                 response => response.value === value,
               );
               responseArray.push({
-                question_id: questionId,
-                response_id: responseId,
+                questionId,
+                responseId,
               });
             });
           }
@@ -58,8 +58,8 @@ const makeSelectJobResponseArray = () =>
               response => response.value === values,
             );
             responseArray.push({
-              question_id: questionId,
-              response_id: responseId,
+              questionId,
+              responseId,
             });
           }
         });

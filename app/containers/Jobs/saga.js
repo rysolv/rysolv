@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 
 import { post } from 'utils/request';
 
@@ -52,25 +53,34 @@ export function* fetchQuestionsSaga({ payload }) {
 
 export function* submitUserResponseSaga({ payload }) {
   const { responseArray } = payload;
+  const formattedResponse = responseArray.map(
+    ({ questionId, responseId }) =>
+      `{
+      questionId: "${questionId}",
+      responseId: "${responseId}",
+    }`,
+  );
   const query = `
-  mutation {
-    postUserResponse(responseArray: ${responseArray}) {
-      __typename
-      ... on Success {
-        message
-      }
-      ... on Error {
-        message
+    mutation {
+      postUserResponse(responseArray: [${formattedResponse}]) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
       }
     }
-  }
   `;
   try {
     const graphql = JSON.stringify({ query });
     yield call(post, '/graphql', graphql);
-    yield put(submitUserResponseSuccess());
     yield put(changeView({ view: 2 }));
+    yield put(push('/jobs'));
+    yield put(submitUserResponseSuccess());
   } catch (error) {
+    yield put(push('/jobs'));
     yield put(submitUserResponseFailure({ error }));
   }
 }

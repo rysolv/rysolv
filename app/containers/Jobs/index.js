@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -42,11 +42,13 @@ const Jobs = ({
   responseArray,
   view,
 }) => {
+  const [isRequiredData, setIsRequiredData] = useState(true);
   useEffect(() => {
     if (!isQuestionnaireComplete) {
       dispatchFetchQuestions({ category: 'hiring' });
     } else {
       dispatchChangeView({ view: 2 });
+      setIsRequiredData(false);
     }
   }, []);
 
@@ -67,7 +69,7 @@ const Jobs = ({
       asyncData={questions}
       component={JobsView}
       error={error}
-      isRequiredData
+      isRequiredData={isRequiredData}
       loading={loading}
       propsToPassDown={{
         dispatchChangeInput,
