@@ -20,7 +20,11 @@ import {
 import { getQuestion } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectJobQuestions, makeSelectJobs } from './selectors';
+import {
+  makeSelectJobQuestions,
+  makeSelectJobRequestBody,
+  makeSelectJobs,
+} from './selectors';
 
 const Jobs = ({
   activeUser: { isGithubVerified, isQuestionnaireComplete },
@@ -102,7 +106,7 @@ Jobs.propTypes = {
   loading: T.bool.isRequired,
   match: T.object.isRequired,
   questions: T.array.isRequired,
-  requestBody: T.object,
+  requestBody: T.array.isRequired,
   view: T.number.isRequired,
 };
 
@@ -119,7 +123,7 @@ const mapStateToProps = createStructuredSelector({
   form: makeSelectJobs('form'),
   loading: makeSelectJobs('loading'),
   questions: makeSelectJobQuestions(),
-  requestBody: makeSelectJobs('requestBody'),
+  requestBody: makeSelectJobRequestBody(),
   view: makeSelectJobs('view'),
 });
 

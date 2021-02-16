@@ -30,5 +30,42 @@ const makeSelectJobQuestions = () =>
     },
   );
 
+const makeSelectJobRequestBody = () =>
+  createSelector(
+    makeSelectJobs('form'),
+    makeSelectJobs('questions'),
+    (form, questions) => {
+      if (questions.length) {
+        const requestBody = Object.keys(form).map(input => {
+          const { value: values } = form[input];
+          const [{ id: questionId, responses }] = questions.filter(
+            ({ questionKey }) => input === snakeToCamel(questionKey),
+          );
+          if (Array.isArray(values)) {
+            const array = values.map(value => {
+              const [{ id: responseId }] = responses.filter(
+                response => response.value === value,
+              );
+              return {
+                question_id: questionId,
+                response_id: responseId,
+              };
+            });
+            return array;
+          }
+          const [{ id: responseId }] = responses.filter(
+            response => response.value === values,
+          );
+          return {
+            question_id: questionId,
+            response_id: responseId,
+          };
+        });
+        return requestBody;
+      }
+      return [];
+    },
+  );
+
 export default selectJobsDomain;
-export { makeSelectJobQuestions, makeSelectJobs };
+export { makeSelectJobQuestions, makeSelectJobRequestBody, makeSelectJobs };
