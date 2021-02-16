@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
+import { Redirect } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
 import JobsView from 'components/Jobs';
@@ -64,6 +65,9 @@ const Jobs = ({
 
   const step = getQuestion();
   const questionProps = questions[step - 1];
+
+  if (step && view === 0) return <Redirect to="/jobs" />;
+
   return (
     <AsyncRender
       asyncData={questions}
