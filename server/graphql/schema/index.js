@@ -280,6 +280,7 @@ module.exports = buildSchema(`
     githubUsername: String
     id: ID!
     isGithubVerified: Boolean
+    isQuestionnaireComplete: Boolean
     issues: [Object]
     lastName: String!
     modifiedDate: Object

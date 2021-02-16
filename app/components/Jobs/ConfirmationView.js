@@ -1,52 +1,31 @@
 import React, { Fragment } from 'react';
-import T from 'prop-types';
 
-import { ConditionalRender } from 'components/base_ui';
+import iconDictionary from 'utils/iconDictionary';
 
 import {
-  ButtonWrapper,
-  DescriptionContent,
-  DescriptionTitle,
+  IconWrapper,
   JobsHeader,
-  StyledGithubButton,
-  StyledPrimaryButton,
+  LinkWrapper,
+  MiddleParagraph,
+  TopParagraph,
   ViewContainer,
 } from './styledComponents';
 
-const ConfirmationView = ({ handleStart, isGithubVerified, isSignedIn }) => (
+const SuccessIcon = iconDictionary('successOutline');
+
+const ConfirmationView = () => (
   <Fragment>
-    <JobsHeader>Job Recruitment</JobsHeader>
-    <ViewContainer>
-      <div>
-        <DescriptionTitle>
-          Apply to join Rysolv&#39;s talent network
-        </DescriptionTitle>
-        <DescriptionContent>
-          Rysolv has created a network of top talent in technology. Based on
-          experience, we can provide matches with top companies.
-        </DescriptionContent>
-      </div>
-      <ButtonWrapper>
-        <ConditionalRender
-          Component={
-            <StyledPrimaryButton
-              isSelected
-              label="Start Questionnaire"
-              onClick={handleStart}
-            />
-          }
-          FallbackComponent={<StyledGithubButton type="jobs" />}
-          shouldRender={isSignedIn && isGithubVerified}
-        />
-      </ButtonWrapper>
+    <JobsHeader />
+    <ViewContainer isFinalView>
+      <IconWrapper isSuccess>{SuccessIcon}</IconWrapper>
+      <TopParagraph>Success! Let&#39;s match you with companies.</TopParagraph>
+      <MiddleParagraph>
+        Someone will be reaching out to you soon. In the meantime, continue
+        growing your profile by resolving{' '}
+        <LinkWrapper to="/issues">issues</LinkWrapper>.
+      </MiddleParagraph>
     </ViewContainer>
   </Fragment>
 );
-
-ConfirmationView.propTypes = {
-  handleStart: T.func.isRequired,
-  isGithubVerified: T.bool,
-  isSignedIn: T.bool.isRequired,
-};
 
 export default ConfirmationView;

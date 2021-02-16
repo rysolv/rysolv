@@ -23,7 +23,7 @@ import saga from './saga';
 import { makeSelectJobQuestions, makeSelectJobs } from './selectors';
 
 const Jobs = ({
-  activeUser: { isGithubVerified },
+  activeUser: { isGithubVerified, isQuestionnaireComplete },
   dispatchChangeInput,
   dispatchChangeView,
   dispatchFetchQuestions,
@@ -39,7 +39,11 @@ const Jobs = ({
   view,
 }) => {
   useEffect(() => {
-    dispatchFetchQuestions({ category: 'hiring' });
+    if (!isQuestionnaireComplete) {
+      dispatchFetchQuestions({ category: 'hiring' });
+    } else {
+      dispatchChangeView({ view: 2 });
+    }
   }, []);
 
   const handleCancel = () => {

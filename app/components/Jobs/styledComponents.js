@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
 import {
@@ -11,7 +12,10 @@ import {
 import {
   defaultFontFamily,
   defaultFontSize,
+  fundingOpenBackground,
+  fundingText,
   headerFontSize,
+  hoverLinkColor,
   lightBlueColor,
   textColor,
 } from 'defaultStyleHelper';
@@ -46,7 +50,8 @@ export const ViewContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-size: ${defaultFontSize};
-  justify-content: space-between;
+  justify-content: ${({ isFinalView }) =>
+    isFinalView ? 'inherit' : 'space-between'};
   min-height: 50rem;
   padding: 3.8rem 2.6rem;
   text-align: center;
@@ -180,4 +185,36 @@ export const StyledPrimaryButton = styled(({ isSelected, ...restProps }) => (
     background-color: ${lightBlueColor};
     color: white;
   }
+`;
+
+export const IconWrapper = styled.div`
+  align-self: center;
+  background: ${fundingOpenBackground};
+  border-radius: 50%;
+  height: 5rem;
+  width: 5rem;
+
+  svg {
+    color: ${fundingText};
+    height: 4rem;
+    margin: 0.5rem auto;
+    width: 4rem;
+  }
+`;
+
+export const LinkWrapper = styled(Link)`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    text-decoration: underline;
+  }
+`;
+
+export const MiddleParagraph = styled.p``;
+
+export const TopParagraph = styled.p`
+  font-size: 1.8rem;
+  font-weight: 500;
+  padding-top: 2rem;
 `;

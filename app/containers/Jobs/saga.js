@@ -73,7 +73,6 @@ export function* submitUserResponseSaga({ payload }) {
     yield put(changeView({ view: 2 }));
   } catch (error) {
     yield put(submitUserResponseFailure({ error }));
-    yield put(changeView({ view: 3 }));
   }
 }
 
