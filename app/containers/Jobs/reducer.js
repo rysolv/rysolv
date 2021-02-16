@@ -7,9 +7,9 @@ import {
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
-  SUBMIT_JOB_INFO_FAILURE,
-  SUBMIT_JOB_INFO_SUCCESS,
-  SUBMIT_JOB_INFO,
+  SUBMIT_USER_RESPONSE_FAILURE,
+  SUBMIT_USER_RESPONSE_SUCCESS,
+  SUBMIT_USER_RESPONSE,
 } from './constants';
 
 export const initialState = {
@@ -55,17 +55,17 @@ const jobsReducer = produce((draft, { payload, type }) => {
       draft.loading = true;
       break;
     }
-    case SUBMIT_JOB_INFO_FAILURE: {
+    case SUBMIT_USER_RESPONSE_FAILURE: {
       const { error } = payload;
       draft.error = error;
       draft.loading = false;
       break;
     }
-    case SUBMIT_JOB_INFO_SUCCESS: {
+    case SUBMIT_USER_RESPONSE_SUCCESS: {
       draft.loading = false;
       break;
     }
-    case SUBMIT_JOB_INFO: {
+    case SUBMIT_USER_RESPONSE: {
       draft.error = null;
       draft.loading = true;
       break;

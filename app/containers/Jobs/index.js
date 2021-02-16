@@ -15,7 +15,7 @@ import {
   changeInput,
   changeView,
   fetchQuestions,
-  submitJobInfo,
+  submitUserResponse,
 } from './actions';
 import { getQuestion } from './helpers';
 import reducer from './reducer';
@@ -27,7 +27,7 @@ const Jobs = ({
   dispatchChangeInput,
   dispatchChangeView,
   dispatchFetchQuestions,
-  dispatchSubmitJobInfo,
+  dispatchSubmitUserResponse,
   error,
   form,
   handleNav,
@@ -50,7 +50,7 @@ const Jobs = ({
     dispatchChangeView({ view: 1 });
     handleNav(`${path}?question=1`);
   };
-  const handleSubmit = () => dispatchSubmitJobInfo({ requestBody });
+  const handleSubmit = () => dispatchSubmitUserResponse({ requestBody });
 
   const step = getQuestion();
   const questionProps = questions[step - 1];
@@ -90,7 +90,7 @@ Jobs.propTypes = {
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeView: T.func.isRequired,
   dispatchFetchQuestions: T.func.isRequired,
-  dispatchSubmitJobInfo: T.func.isRequired,
+  dispatchSubmitUserResponse: T.func.isRequired,
   error: T.string,
   form: T.object.isRequired,
   handleNav: T.func.isRequired,
@@ -127,7 +127,8 @@ function mapDispatchToProps(dispatch) {
     dispatchChangeInput: payload => dispatch(changeInput(payload)),
     dispatchChangeView: payload => dispatch(changeView(payload)),
     dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
-    dispatchSubmitJobInfo: payload => dispatch(submitJobInfo(payload)),
+    dispatchSubmitUserResponse: payload =>
+      dispatch(submitUserResponse(payload)),
     /*
      * Reducer : Router
      */

@@ -3,12 +3,13 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { post } from 'utils/request';
 
 import {
+  changeView,
   fetchQuestionsFailure,
   fetchQuestionsSuccess,
-  submitJobInfoFailure,
-  submitJobInfoSuccess,
+  submitUserResponseFailure,
+  submitUserResponseSuccess,
 } from './actions';
-import { FETCH_QUESTIONS, SUBMIT_JOB_INFO } from './constants';
+import { FETCH_QUESTIONS, SUBMIT_USER_RESPONSE } from './constants';
 
 export function* fetchQuestionsSaga({ payload }) {
   const { category } = payload;
@@ -49,7 +50,7 @@ export function* fetchQuestionsSaga({ payload }) {
   }
 }
 
-export function* submitJobInfoSaga({ payload }) {
+export function* submitUserResponseSaga({ payload }) {
   const { requestBody } = payload;
   const { email } = requestBody;
   const query = `
@@ -68,13 +69,15 @@ export function* submitJobInfoSaga({ payload }) {
   try {
     const graphql = JSON.stringify({ query });
     yield call(post, '/graphql', graphql);
-    yield put(submitJobInfoSuccess());
+    yield put(submitUserResponseSuccess());
+    yield put(changeView({ view: 2 }));
   } catch (error) {
-    yield put(submitJobInfoFailure({ error }));
+    yield put(submitUserResponseFailure({ error }));
+    yield put(changeView({ view: 3 }));
   }
 }
 
 export default function* watcherSaga() {
   yield takeLatest(FETCH_QUESTIONS, fetchQuestionsSaga);
-  yield takeLatest(SUBMIT_JOB_INFO, submitJobInfoSaga);
+  yield takeLatest(SUBMIT_USER_RESPONSE, submitUserResponseSaga);
 }

@@ -4,9 +4,9 @@ import {
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
-  SUBMIT_JOB_INFO_FAILURE,
-  SUBMIT_JOB_INFO_SUCCESS,
-  SUBMIT_JOB_INFO,
+  SUBMIT_USER_RESPONSE_FAILURE,
+  SUBMIT_USER_RESPONSE_SUCCESS,
+  SUBMIT_USER_RESPONSE,
 } from './constants';
 
 export function changeInput(payload) {
@@ -44,20 +44,20 @@ export function fetchQuestions(payload) {
   };
 }
 
-export function submitJobInfoFailure(payload) {
+export function submitUserResponseFailure(payload) {
   return {
     payload,
-    type: SUBMIT_JOB_INFO_FAILURE,
+    type: SUBMIT_USER_RESPONSE_FAILURE,
   };
 }
 
-export function submitJobInfoSuccess() {
-  return { type: SUBMIT_JOB_INFO_SUCCESS };
+export function submitUserResponseSuccess() {
+  return { type: SUBMIT_USER_RESPONSE_SUCCESS };
 }
 
-export function submitJobInfo(payload) {
+export function submitUserResponse(payload) {
   return {
     payload,
-    type: SUBMIT_JOB_INFO,
+    type: SUBMIT_USER_RESPONSE,
   };
 }
