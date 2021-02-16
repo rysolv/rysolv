@@ -257,13 +257,13 @@ module.exports = buildSchema(`
     dollarsEarned: Int
     email: String!
     emailVerified: Boolean
-    firstName: String!
+    firstName: String
     githubLink: String
     githubUsername: String
     id: ID!
     isGithubVerified: Boolean
     issues: [Object]
-    lastName: String!
+    lastName: String
     modifiedDate: Object
     organizations: [Object]
     personalLink: String

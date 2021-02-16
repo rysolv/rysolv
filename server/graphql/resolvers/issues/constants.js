@@ -38,7 +38,6 @@ const newOrganizationObject = async organizationInput => {
     organization_url: organizationInput.organizationUrl || '', // url
     owner_id: organizationInput.contributor, // owner_id
     repo_url: organizationInput.organizationRepo, // repo
-    total_funded: organizationInput.totalFunded || 0, // funded
     verified: organizationInput.verified || false, // verified
   };
 };
