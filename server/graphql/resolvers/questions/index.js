@@ -1,3 +1,4 @@
 const getQuestions = require('./getQuestions');
+const postUserResponse = require('./postResponse');
 
-module.exports = { getQuestions };
+module.exports = { getQuestions, postUserResponse };

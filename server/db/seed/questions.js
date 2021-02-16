@@ -10,6 +10,7 @@ const questions = [
     priority: 1,
     question_key: 'us_citizen',
     question_text: 'Are you a US citizen?',
+    response_limit: 1,
     subtext: null,
   },
   // remote ok
@@ -20,6 +21,7 @@ const questions = [
     priority: 2,
     question_key: 'remote',
     question_text: 'Are you looking for a remote only position?',
+    response_limit: 1,
     subtext: 'Many remote positions are expected to return to offices in 2021.',
   },
   // preferred location
@@ -30,7 +32,8 @@ const questions = [
     priority: 3,
     question_key: 'preferred_location',
     question_text: 'What is your preferred location?',
-    subtext: null,
+    response_limit: 5,
+    subtext: 'Select as many as apply.',
   },
   // specialty
   {
@@ -40,7 +43,8 @@ const questions = [
     priority: 4,
     question_key: 'desired_role',
     question_text: 'What is your desired role?',
-    subtext: null,
+    response_limit: 3,
+    subtext: 'Select up to 3',
   },
   // target salary
   {
@@ -50,6 +54,7 @@ const questions = [
     priority: 5,
     question_key: 'target_salary',
     question_text: 'What is your target salary?',
+    response_limit: 1,
     subtext: null,
   },
 ];
@@ -257,9 +262,10 @@ const seedQuestions = async () => {
         priority,
         question_key,
         question_text,
+        response_limit,
         subtext
       )
-      VALUES($1, $2, $3, $4, $5, $6, $7)
+      VALUES($1, $2, $3, $4, $5, $6, $7, $8)
     `;
       const values = [
         el.category,
@@ -268,6 +274,7 @@ const seedQuestions = async () => {
         el.priority,
         el.question_key,
         el.question_text,
+        el.response_limit,
         el.subtext,
       ];
       await singleQuery({

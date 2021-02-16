@@ -430,6 +430,8 @@ module.exports = buildSchema(`
     importOrganization(url: String!): ImportResult!
     importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
 
+    postUserResponse(responseArray: [Object]): EventResponse!
+
     signIn(password: String!, username: String!): SignInResult!
     signOut: EventResponse!
 
