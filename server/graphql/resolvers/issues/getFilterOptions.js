@@ -22,6 +22,7 @@ const getFilter = async () => {
       ...filterOptions,
     };
   } catch (error) {
+    console.log('error', error);
     errorLogger(error);
     return {
       __typename: 'Error',
