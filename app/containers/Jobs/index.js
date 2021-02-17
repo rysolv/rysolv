@@ -16,6 +16,7 @@ import {
   changeInput,
   changeView,
   fetchQuestions,
+  resetState,
   submitUserResponse,
 } from './actions';
 import { getQuestion } from './helpers';
@@ -32,6 +33,7 @@ const Jobs = ({
   dispatchChangeInput,
   dispatchChangeView,
   dispatchFetchQuestions,
+  dispatchResetState,
   dispatchSubmitUserResponse,
   error,
   form,
@@ -51,7 +53,15 @@ const Jobs = ({
       dispatchChangeView({ view: 2 });
       setIsRequiredData(false);
     }
+    return dispatchResetState;
   }, []);
+
+  useEffect(() => {
+    if (!isSignedIn) {
+      dispatchResetState();
+      handleCancel();
+    }
+  }, [isSignedIn]);
 
   const handleCancel = () => {
     dispatchChangeView({ view: 0 });
@@ -66,7 +76,9 @@ const Jobs = ({
   const step = getQuestion();
   const questionProps = questions[step - 1];
 
-  if (step && view === 0) return <Redirect to="/jobs" />;
+  if (step && view === 0) {
+    return <Redirect to="/jobs" />;
+  }
 
   return (
     <AsyncRender
@@ -104,6 +116,7 @@ Jobs.propTypes = {
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeView: T.func.isRequired,
   dispatchFetchQuestions: T.func.isRequired,
+  dispatchResetState: T.func.isRequired,
   dispatchSubmitUserResponse: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
   form: T.object.isRequired,
@@ -141,6 +154,7 @@ function mapDispatchToProps(dispatch) {
     dispatchChangeInput: payload => dispatch(changeInput(payload)),
     dispatchChangeView: payload => dispatch(changeView(payload)),
     dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     dispatchSubmitUserResponse: payload =>
       dispatch(submitUserResponse(payload)),
     /*
