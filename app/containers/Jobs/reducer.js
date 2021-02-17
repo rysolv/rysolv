@@ -18,6 +18,7 @@ export const initialState = {
   loading: true,
   form: {
     desiredRole: { value: [] },
+    preferredLanguages: { value: [] },
     preferredLocation: { value: [] },
     remote: { value: '' },
     targetSalary: { value: [] },

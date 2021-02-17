@@ -44,7 +44,7 @@ const questions = [
     question_key: 'desired_role',
     question_text: 'What is your desired role?',
     response_limit: 3,
-    subtext: 'Select up to three.',
+    subtext: 'Select up to 3 roles.',
   },
   // target salary
   {

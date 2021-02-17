@@ -22,7 +22,7 @@ const makeSelectJobQuestions = () =>
           description: subtext,
           id: snakeToCamel(questionKey),
           limit,
-          options: responses.map(({ value }) => ({ value, label: value })),
+          options: responses.map(({ value }) => ({ value })),
           optionType: optionDictionary[questionKey],
           question: questionText,
         }),
