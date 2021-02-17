@@ -6,7 +6,7 @@ const searchOrganizations = async ({ value }) => {
   const queryText = `
     SELECT ${organizationReturnValues},
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages",
-      COALESCE(SUM(payments.funded_amount),0) AS "totalFunded"
+      COALESCE(SUM(DISTINCT payments.funded_amount),0) AS "totalFunded"
     FROM organizations
       LEFT JOIN languages ON languages.organization_id = organizations.id
       LEFT JOIN payments ON payments.organization_id = organizations.id
