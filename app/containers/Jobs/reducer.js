@@ -7,6 +7,7 @@ import {
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
+  RESET_STATE,
   SUBMIT_USER_RESPONSE_FAILURE,
   SUBMIT_USER_RESPONSE_SUCCESS,
   SUBMIT_USER_RESPONSE,
@@ -14,7 +15,7 @@ import {
 
 export const initialState = {
   error: null,
-  loading: false,
+  loading: true,
   form: {
     desiredRole: { value: [] },
     preferredLocation: { value: [] },
@@ -35,6 +36,7 @@ const jobsReducer = produce((draft, { payload, type }) => {
     }
     case CHANGE_VIEW: {
       const { view } = payload;
+      draft.loading = false;
       draft.view = view;
       break;
     }
@@ -54,6 +56,9 @@ const jobsReducer = produce((draft, { payload, type }) => {
       draft.error = null;
       draft.loading = true;
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
     case SUBMIT_USER_RESPONSE_FAILURE: {
       const { error } = payload;
