@@ -8,7 +8,6 @@ const {
   printTables,
 } = require('./tables');
 const pool = require('../connect');
-const { seedQuestions, seedResponses } = require('./questions');
 
 const prompt = readline.createInterface({
   input: process.stdin,
@@ -27,10 +26,6 @@ const seed = async () => {
     await dropAllTables();
     await createTables();
     await alterTables();
-
-    // Populate the Q&A data for jobs
-    await seedQuestions();
-    await seedResponses();
 
     // Log results and end connection
     const t2 = Date.now();

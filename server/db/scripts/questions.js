@@ -40,7 +40,7 @@ const questions = [
     id: 'eb292e4a-96f8-444e-953c-f29f726abd6e',
     category: 'hiring',
     created_date: new Date(),
-    priority: 4,
+    priority: 5,
     question_key: 'desired_role',
     question_text: 'What is your desired role?',
     response_limit: 3,
@@ -51,11 +51,22 @@ const questions = [
     id: '32eee9df-e3f8-4288-9671-d69981c6554d',
     category: 'hiring',
     created_date: new Date(),
-    priority: 5,
+    priority: 6,
     question_key: 'target_salary',
     question_text: 'What is your target salary?',
     response_limit: 1,
     subtext: null,
+  },
+  // preferred languages
+  {
+    id: '7d62997d-16a7-43aa-a8af-3120cfb95b28',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 4,
+    question_key: 'preferred_languages',
+    question_text: 'What are your strongest languages?',
+    response_limit: 3,
+    subtext: 'Select up to 3 languages.',
   },
 ];
 

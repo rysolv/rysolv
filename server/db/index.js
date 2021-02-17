@@ -20,7 +20,11 @@ const {
   transformIssue,
   upvoteIssue,
 } = require('./queries/issues');
-const { createLanguage, deleteUserLanguages } = require('./queries/languages');
+const {
+  createLanguage,
+  deleteUserLanguages,
+  getUserLanguages,
+} = require('./queries/languages');
 const {
   checkDuplicateOrganization,
   createOrganization,
@@ -112,6 +116,7 @@ module.exports = {
   getStats,
   getUserActivity,
   getUserAttemptList,
+  getUserLanguages,
   getUserPullRequestDetail,
   getUserPullRequests,
   getUsers,
