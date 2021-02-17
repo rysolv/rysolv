@@ -48,10 +48,15 @@ const Jobs = ({
 }) => {
   const [isRequiredData, setIsRequiredData] = useState(true);
   useEffect(() => {
-    if (!isQuestionnaireComplete) {
-      dispatchFetchQuestions({ category: 'hiring' });
+    if (isSignedIn) {
+      if (!isQuestionnaireComplete) {
+        dispatchFetchQuestions({ category: 'hiring' });
+      } else {
+        dispatchChangeView({ view: 2 });
+        setIsRequiredData(false);
+      }
     } else {
-      dispatchChangeView({ view: 2 });
+      dispatchChangeView({ view: 0 });
       setIsRequiredData(false);
     }
     return dispatchResetState;
