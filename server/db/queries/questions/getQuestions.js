@@ -9,7 +9,7 @@ const getQuestions = async ({ category }) => {
       q.question_text AS "questionText",
       q.response_limit AS "limit",
       q.subtext,
-      json_agg((
+      COALESCE(json_agg((
         SELECT subquery FROM (
           SELECT
             qr.id,
@@ -19,9 +19,9 @@ const getQuestions = async ({ category }) => {
             ORDER BY qr.priority ASC
           ) AS subquery
         ) ORDER BY qr.priority ASC
-      ) AS responses
+      ),'{}') AS responses
     FROM questions q
-    JOIN question_responses qr ON qr.question_id = q.id
+    LEFT JOIN question_responses qr ON qr.question_id = q.id
     WHERE q.category = $1
     GROUP BY
       q.id,
