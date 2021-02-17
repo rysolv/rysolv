@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 export const formatDollarAmount = (value, noDecimals = false) => {
   const numOfDecimals = noDecimals ? 0 : 2;
   const valueWithDecimals = parseFloat(value).toFixed(numOfDecimals);
@@ -87,3 +89,15 @@ export const snakeToCamel = str =>
       .replace('-', '')
       .replace('_', ''),
   );
+
+export const useDidUpdateEffect = (effect, inputList = []) => {
+  const didMountRef = useRef(false);
+  const effectRef = useRef();
+
+  effectRef.current = effect;
+
+  useEffect(() => {
+    if (didMountRef.current) effectRef.current();
+    else didMountRef.current = true;
+  }, inputList);
+};

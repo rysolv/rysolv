@@ -9,6 +9,7 @@ import { Redirect } from 'react-router-dom';
 import AsyncRender from 'components/AsyncRender';
 import JobsView from 'components/Jobs';
 import { makeSelectAuth } from 'containers/Auth/selectors';
+import { useDidUpdateEffect } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -56,7 +57,7 @@ const Jobs = ({
     return dispatchResetState;
   }, []);
 
-  useEffect(() => {
+  useDidUpdateEffect(() => {
     if (!isSignedIn) {
       dispatchResetState();
       handleCancel();
