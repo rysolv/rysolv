@@ -102,6 +102,7 @@ export function* githubSignInSaga({ payload }) {
           firstName
           id
           isGithubVerified
+          isQuestionnaireComplete
           issues
           lastName
           organizations
@@ -138,7 +139,7 @@ export function* githubSignInSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        githubSignIn: { __typename, message, ...restProps },
+        githubSignIn: { __typename, isQuestionnaireComplete, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
@@ -148,7 +149,13 @@ export function* githubSignInSaga({ payload }) {
       signup: '/settings',
     }
     const route = routeDictionary[origin];
-    if (origin === 'jobs') yield put(changeView({ view: 1 }));
+    if (origin === 'jobs') {
+      if (isQuestionnaireComplete) {
+        yield put(changeView({ view: 2 }));
+      } else {
+        yield put(changeView({ view: 1 }));
+      }
+    }
     yield put(githubSignInSuccess({ user: restProps }));
     yield put(push(route));
   } catch (error) {
