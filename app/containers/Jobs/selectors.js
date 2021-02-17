@@ -40,8 +40,8 @@ const makeSelectJobResponseArray = () =>
       if (questions.length) {
         Object.keys(form).forEach(input => {
           const { value: values } = form[input];
-          const [{ id: questionId, responses }] = questions.filter(
-            ({ questionKey }) => input === snakeToCamel(questionKey),
+          const [{ id: questionId, questionKey, responses }] = questions.filter(
+            ({ questionKey: key }) => input === snakeToCamel(key),
           );
           if (Array.isArray(values)) {
             values.forEach(value => {
@@ -50,6 +50,7 @@ const makeSelectJobResponseArray = () =>
               );
               responseArray.push({
                 questionId,
+                questionKey,
                 responseId,
               });
             });
@@ -60,6 +61,7 @@ const makeSelectJobResponseArray = () =>
             );
             responseArray.push({
               questionId,
+              questionKey,
               responseId,
             });
           }

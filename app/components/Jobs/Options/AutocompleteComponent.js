@@ -27,7 +27,7 @@ const Autocomplete = ({ dispatchChangeInput, form, id, limit, options }) => {
         multiple
         onChange={(e, value) => handleChange(value)}
         options={options}
-        value={selected.value}
+        value={selected.map(el => ({ value: el.value || el }))}
       />
     </div>
   );

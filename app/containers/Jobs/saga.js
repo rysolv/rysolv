@@ -55,9 +55,10 @@ export function* fetchQuestionsSaga({ payload }) {
 export function* submitUserResponseSaga({ payload }) {
   const { responseArray } = payload;
   const formattedResponse = responseArray.map(
-    ({ questionId, responseId }) =>
+    ({ questionId, questionKey, responseId }) =>
       `{
       questionId: "${questionId}",
+      questionKey: "${questionKey}",
       responseId: "${responseId}",
     }`,
   );
