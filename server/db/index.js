@@ -24,6 +24,7 @@ const {
   createLanguage,
   deleteUserLanguages,
   getUserLanguages,
+  setPreferredLanguage,
 } = require('./queries/languages');
 const {
   checkDuplicateOrganization,
@@ -126,6 +127,7 @@ module.exports = {
   searchIssues,
   searchOrganizations,
   searchUsers,
+  setPreferredLanguage,
   submitAccountDepositUser,
   submitExternalPayment,
   submitInternalPayment,

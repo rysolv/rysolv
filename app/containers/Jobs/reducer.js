@@ -18,9 +18,9 @@ export const initialState = {
   loading: true,
   form: {
     desiredRole: { value: [] },
+    experience: { value: [] },
     preferredLanguages: { value: [] },
     preferredLocation: { value: [] },
-    remote: { value: '' },
     targetSalary: { value: [] },
     usCitizen: { value: '' },
   },

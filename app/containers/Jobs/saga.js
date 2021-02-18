@@ -55,11 +55,12 @@ export function* fetchQuestionsSaga({ payload }) {
 export function* submitUserResponseSaga({ payload }) {
   const { responseArray } = payload;
   const formattedResponse = responseArray.map(
-    ({ questionId, questionKey, responseId }) =>
+    ({ questionId, questionKey, responseId, value }) =>
       `{
       questionId: "${questionId}",
       questionKey: "${questionKey}",
       responseId: "${responseId}",
+      value: "${value}",
     }`,
   );
   const query = `

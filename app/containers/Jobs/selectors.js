@@ -52,6 +52,7 @@ const makeSelectJobResponseArray = () =>
                 questionId,
                 questionKey,
                 responseId,
+                value,
               });
             });
           }
@@ -63,6 +64,7 @@ const makeSelectJobResponseArray = () =>
               questionId,
               questionKey,
               responseId,
+              value: values,
             });
           }
         });
