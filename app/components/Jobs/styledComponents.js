@@ -166,6 +166,12 @@ export const StyledButton = styled(
   }
 `;
 
+export const StyledFocusDiv = styled.div`
+  &:focus {
+    outline: none;
+  }
+`;
+
 export const StyledGithubButton = styled(GithubButton)`
   width: auto;
 `;

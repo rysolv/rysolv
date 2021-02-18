@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 
 import { ProgressBar } from 'components/base_ui';
@@ -12,6 +12,7 @@ import {
   OptionWrapper,
   QuestionWrapper,
   StyledButton,
+  StyledFocusDiv,
   ViewContainer,
 } from './styledComponents';
 
@@ -34,6 +35,9 @@ const SurveyView = ({
   step,
   steps,
 }) => {
+  useEffect(() => {
+    document.getElementById('surveyQuestion').focus();
+  }, []);
   const shouldDisplayBack = step > 1;
   const shouldDisplayCancel = step === 1;
   const shouldDisplaySubmit = step === steps;
@@ -54,8 +58,18 @@ const SurveyView = ({
     }
     return disabled;
   };
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter' && !checkInputDisabled(id)) {
+      if (shouldDisplaySubmit) handleSubmit();
+      else handleNav(`${path}?question=${step + 1}`);
+    }
+  };
   return (
-    <Fragment>
+    <StyledFocusDiv
+      id="surveyQuestion"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
       <JobsHeader>
         <ProgressBar step={step} steps={steps} />
       </JobsHeader>
@@ -107,7 +121,7 @@ const SurveyView = ({
           </StyledButton>
         </ButtonGroup>
       </ViewContainer>
-    </Fragment>
+    </StyledFocusDiv>
   );
 };
 
