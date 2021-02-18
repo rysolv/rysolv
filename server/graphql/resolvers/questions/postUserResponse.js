@@ -16,9 +16,9 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
 
     await Promise.all(
       responseArray.map(
-        async ({ questionId, responseId, questionKey, value }) => {
+        async ({ questionId, questionKey, responseId, value }) => {
           if (questionKey === 'preferred_languages') {
-            await setPreferredLanguage({ userId, language: value });
+            await setPreferredLanguage({ language: value, userId });
           } else {
             const data = {
               createdDate: new Date(),

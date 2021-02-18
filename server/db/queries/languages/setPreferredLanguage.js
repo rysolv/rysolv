@@ -1,7 +1,7 @@
 const { singleQuery } = require('../../baseQueries');
 
 // Mark a user's language as preferred in the language table
-const setPreferredLanguage = async ({ userId, language }) => {
+const setPreferredLanguage = async ({ language, userId }) => {
   const queryText = `
     UPDATE languages
     SET preferred = true

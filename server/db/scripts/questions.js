@@ -13,7 +13,7 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
-  // remote ok
+  // experience
   {
     id: '4bef1f37-f09b-4515-a483-047faa0758cd',
     category: 'hiring',
@@ -22,7 +22,7 @@ const questions = [
     question_key: 'experience',
     question_text: 'How many years of experience do you have?',
     response_limit: 1,
-    subtext: 'This can include professional and educational.',
+    subtext: 'This can include educational and professional.',
   },
   // preferred location
   {
@@ -165,7 +165,7 @@ const responses = [
   {
     id: 'bcc8a483-6e32-4aeb-96d6-5e84382337ac',
     created_date: new Date(),
-    priority: 5,
+    priority: 6,
     question_id: '29a29e9c-798e-4dd1-a8a3-c9029e5b9020',
     response_key: 'remote',
     value: 'Remote',
