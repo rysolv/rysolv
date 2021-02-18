@@ -1,7 +1,10 @@
 const { v4: uuidv4 } = require('uuid');
 
 const { CustomError, errorLogger } = require('../../../helpers');
-const { postUserResponse: postUserResponseQuery } = require('../../../db');
+const {
+  postUserResponse: postUserResponseQuery,
+  setPreferredLanguage,
+} = require('../../../db');
 const {
   postUserResponseError,
   postUserResponseSuccess,
@@ -12,16 +15,22 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
     if (authError || !userId) throw new CustomError(authError);
 
     await Promise.all(
-      responseArray.map(async ({ questionId, responseId }) => {
-        const data = {
-          createdDate: new Date(),
-          id: uuidv4(),
-          questionId,
-          responseId,
-          userId,
-        };
-        await postUserResponseQuery(data);
-      }),
+      responseArray.map(
+        async ({ questionId, responseId, questionKey, value }) => {
+          if (questionKey === 'preferred_languages') {
+            await setPreferredLanguage({ userId, language: value });
+          } else {
+            const data = {
+              createdDate: new Date(),
+              id: uuidv4(),
+              questionId,
+              responseId,
+              userId,
+            };
+            await postUserResponseQuery(data);
+          }
+        },
+      ),
     );
 
     return {

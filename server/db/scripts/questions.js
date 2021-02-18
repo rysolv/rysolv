@@ -19,10 +19,10 @@ const questions = [
     category: 'hiring',
     created_date: new Date(),
     priority: 2,
-    question_key: 'remote',
-    question_text: 'Are you looking for a remote only position?',
+    question_key: 'experience',
+    question_text: 'How many years of experience do you have?',
     response_limit: 1,
-    subtext: 'Many remote positions are expected to return to offices in 2021.',
+    subtext: 'This can include professional and educational.',
   },
   // preferred location
   {
@@ -32,7 +32,7 @@ const questions = [
     priority: 3,
     question_key: 'preferred_location',
     question_text: 'What is your preferred location?',
-    response_limit: 5,
+    response_limit: 6,
     subtext: 'Select as many as apply.',
   },
   // specialty
@@ -88,22 +88,38 @@ const responses = [
     response_key: 'no_us_citizen',
     value: 'No',
   },
-  // remote ok
+  // experience
   {
     id: '0f49a4a1-4ce2-4a7a-a3f1-8c45f22342dc',
     created_date: new Date(),
     priority: 1,
     question_id: '4bef1f37-f09b-4515-a483-047faa0758cd',
-    response_key: 'yes_remote',
-    value: 'Yes',
+    response_key: '0',
+    value: 'Less than 1 year',
   },
   {
     id: 'a37ee7fc-8101-4bb4-ab97-88f80d3924ad',
     created_date: new Date(),
     priority: 2,
     question_id: '4bef1f37-f09b-4515-a483-047faa0758cd',
-    response_key: 'no_remote',
-    value: 'No',
+    response_key: '1',
+    value: '1 to 2 years',
+  },
+  {
+    id: '80ae4b39-ee0c-4aa7-986f-79e196ab51f3',
+    created_date: new Date(),
+    priority: 3,
+    question_id: '4bef1f37-f09b-4515-a483-047faa0758cd',
+    response_key: '2',
+    value: '2 to 5 years',
+  },
+  {
+    id: '12630854-e30e-400d-8697-f23a61fc6792',
+    created_date: new Date(),
+    priority: 4,
+    question_id: '4bef1f37-f09b-4515-a483-047faa0758cd',
+    response_key: '5',
+    value: 'More than 5 years',
   },
   // preferred locations
   {
@@ -145,6 +161,14 @@ const responses = [
     question_id: '29a29e9c-798e-4dd1-a8a3-c9029e5b9020',
     response_key: 'seattle',
     value: 'Seattle, WA',
+  },
+  {
+    id: 'bcc8a483-6e32-4aeb-96d6-5e84382337ac',
+    created_date: new Date(),
+    priority: 5,
+    question_id: '29a29e9c-798e-4dd1-a8a3-c9029e5b9020',
+    response_key: 'remote',
+    value: 'Remote',
   },
   // Specialty
   {
