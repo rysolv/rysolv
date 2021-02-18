@@ -5,7 +5,7 @@ const {
   getQuestions: getQuestionsQuery,
   getUserLanguages,
 } = require('../../../db');
-const { getQuestionsError } = require('./constants');
+const { defaultLanguages, getQuestionsError } = require('./constants');
 
 const getQuestions = async ({ category }, { authError, userId }) => {
   try {
@@ -15,7 +15,8 @@ const getQuestions = async ({ category }, { authError, userId }) => {
 
     if (category === 'hiring') {
       const { languages } = await getUserLanguages({ userId });
-      const languageRespones = languages.map(el => ({
+      const languagesToUse = languages || defaultLanguages;
+      const languageRespones = languagesToUse.map(el => ({
         id: uuidv4(),
         responseKey: 'language',
         value: el,

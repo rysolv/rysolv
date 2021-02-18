@@ -48,7 +48,7 @@ const Jobs = ({
 }) => {
   const [isRequiredData, setIsRequiredData] = useState(true);
   useEffect(() => {
-    if (isSignedIn) {
+    if (isGithubVerified && isSignedIn) {
       if (!isQuestionnaireComplete) {
         dispatchFetchQuestions({ category: 'hiring' });
       } else {
