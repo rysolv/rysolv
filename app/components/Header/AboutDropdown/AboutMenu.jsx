@@ -3,7 +3,7 @@ import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
 
-import { MenuItem, StyledAboutMenu } from './styledComponents';
+import { MenuItem, StyledMenu } from '../styledComponents';
 
 const AboutMenu = ({ handleClose, handleNav, menuClickHandler, open }) => {
   const handleClick = (e, route) => {
@@ -12,10 +12,10 @@ const AboutMenu = ({ handleClose, handleNav, menuClickHandler, open }) => {
     handleNav(route);
   };
   const AboutMenuComponent = (
-    <StyledAboutMenu>
+    <StyledMenu>
       <MenuItem onClick={e => handleClick(e, '/how-to')}>How It Works</MenuItem>
       <MenuItem onClick={e => handleClick(e, '/stats')}>Stats</MenuItem>
-    </StyledAboutMenu>
+    </StyledMenu>
   );
   return (
     <ConditionalRender Component={AboutMenuComponent} shouldRender={open} />

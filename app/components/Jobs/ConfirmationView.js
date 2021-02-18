@@ -6,8 +6,7 @@ import {
   IconWrapper,
   JobsHeader,
   LinkWrapper,
-  MiddleParagraph,
-  TopParagraph,
+  StyledParagraph,
   ViewContainer,
 } from './styledComponents';
 
@@ -18,12 +17,14 @@ const ConfirmationView = () => (
     <JobsHeader />
     <ViewContainer isFinalView>
       <IconWrapper isSuccess>{SuccessIcon}</IconWrapper>
-      <TopParagraph>Success! Let&#39;s match you with companies.</TopParagraph>
-      <MiddleParagraph>
+      <StyledParagraph>
+        Success! Let&#39;s match you with companies.
+      </StyledParagraph>
+      <p>
         Someone will be reaching out to you soon. In the meantime, continue
         growing your profile by resolving{' '}
         <LinkWrapper to="/issues">issues</LinkWrapper>.
-      </MiddleParagraph>
+      </p>
     </ViewContainer>
   </Fragment>
 );

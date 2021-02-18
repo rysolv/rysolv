@@ -4,11 +4,8 @@ import T from 'prop-types';
 import iconDictionary from 'utils/iconDictionary';
 
 import UserActivityMenu from './UserActivityMenu';
-import {
-  StyledDownArrow,
-  UserActivityButtonWrapper,
-  UserActivityContainer,
-} from './styledComponents';
+import { StyledDownArrow, UserActivityContainer } from './styledComponents';
+import { DropdownButtonWrapper } from '../styledComponents';
 
 const AddIcon = iconDictionary('add');
 
@@ -33,10 +30,10 @@ const UserActivityDropdown = ({ handleNav }) => {
   };
   return (
     <UserActivityContainer>
-      <UserActivityButtonWrapper onClick={e => handleOpen(e)}>
+      <DropdownButtonWrapper onClick={e => handleOpen(e)}>
         {AddIcon}
         <StyledDownArrow />
-      </UserActivityButtonWrapper>
+      </DropdownButtonWrapper>
       <UserActivityMenu
         handleClose={handleClose}
         handleNav={handleNav}

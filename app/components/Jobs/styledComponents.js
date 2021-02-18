@@ -107,8 +107,6 @@ export const LinkWrapper = styled(Link)`
   }
 `;
 
-export const MiddleParagraph = styled.p``;
-
 export const OptionWrapper = styled.div`
   margin: 5rem auto;
   width: 75%;
@@ -172,6 +170,12 @@ export const StyledGithubButton = styled(GithubButton)`
   width: auto;
 `;
 
+export const StyledParagraph = styled.p`
+  font-size: 1.8rem;
+  font-weight: 500;
+  padding-top: 2rem;
+`;
+
 export const StyledPrimaryAsyncButton = styled(
   ({ shouldDisplaySubmit, ...restProps }) => (
     <PrimaryAsyncButton {...restProps} />
@@ -208,12 +212,6 @@ export const StyledSecondaryButton = styled(
   &:hover {
     background-color: white;
   }
-`;
-
-export const TopParagraph = styled.p`
-  font-size: 1.8rem;
-  font-weight: 500;
-  padding-top: 2rem;
 `;
 
 export const ViewContainer = styled.div`

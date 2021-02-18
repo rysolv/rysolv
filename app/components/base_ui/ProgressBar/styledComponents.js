@@ -48,6 +48,7 @@ export const StyledProgressBar = styled(MobileStepper)`
     height: 1.2rem;
     max-width: 100%;
   }
+
   .MuiLinearProgress-barColorPrimary {
     background-color: ${landingButtonGreen};
     border-radius: 0.6rem;

@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-nested-ternary */
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
@@ -134,12 +132,18 @@ export function* githubSignInSaga({ payload }) {
       }
     }
   `;
-  const query = origin === 'jobs' || origin === 'signin' ? signInQuery : signUpQuery;
+  const query =
+    origin === 'jobs' || origin === 'signin' ? signInQuery : signUpQuery;
   try {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        githubSignIn: { __typename, isQuestionnaireComplete, message, ...restProps },
+        githubSignIn: {
+          __typename,
+          isQuestionnaireComplete,
+          message,
+          ...restProps
+        },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
@@ -147,7 +151,7 @@ export function* githubSignInSaga({ payload }) {
       jobs: '/jobs?question=1',
       signin: '/issues',
       signup: '/settings',
-    }
+    };
     const route = routeDictionary[origin];
     if (origin === 'jobs') {
       if (isQuestionnaireComplete) {
@@ -160,12 +164,15 @@ export function* githubSignInSaga({ payload }) {
     yield put(push(route));
   } catch (error) {
     const { message } = error;
-    const githubError = origin === 'jobs' || origin === 'signin' ? githubSignInError : githubSignUpError;
+    const githubError =
+      origin === 'jobs' || origin === 'signin'
+        ? githubSignInError
+        : githubSignUpError;
     const routeDictionary = {
       jobs: '/jobs',
       signin: '/signin',
       signup: '/signup',
-    }
+    };
     const route = routeDictionary[origin];
     const messageToRender = message || githubError;
     yield put(githubSignInFailure({ error: { message: messageToRender } }));

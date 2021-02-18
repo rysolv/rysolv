@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getQuestions: getQuestionsQuery,
@@ -31,10 +32,11 @@ const getQuestions = async ({ category }, { authError, userId }) => {
       questionArray: result,
     };
   } catch (error) {
+    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: getQuestionsError,
+      message: alert || getQuestionsError,
     };
   }
 };

@@ -22,14 +22,13 @@ const Autocomplete = ({ dispatchChangeInput, form, id, limit, options }) => {
     }
   };
   return (
-    <div key={id}>
-      <StyledBaseAutocomplete
-        multiple
-        onChange={(e, value) => handleChange(value)}
-        options={options}
-        value={selected.map(el => ({ value: el.value || el }))}
-      />
-    </div>
+    <StyledBaseAutocomplete
+      key={id}
+      multiple
+      onChange={(e, value) => handleChange(value)}
+      options={options}
+      value={selected.map(el => ({ value: el.value || el }))}
+    />
   );
 };
 

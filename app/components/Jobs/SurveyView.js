@@ -62,7 +62,7 @@ const SurveyView = ({
       <ViewContainer>
         <div>
           <QuestionWrapper>{question}</QuestionWrapper>
-          <DescriptionWrapper description>{description}</DescriptionWrapper>
+          <DescriptionWrapper>{description}</DescriptionWrapper>
           <OptionWrapper>
             <OptionToRender {...optionProps} />
           </OptionWrapper>
@@ -87,8 +87,8 @@ const SurveyView = ({
             Back
           </StyledButton>
           <StyledButton
-            disableRipple
             disabled={checkInputDisabled(id)}
+            disableRipple
             onClick={() => handleNav(`${path}?question=${step + 1}`)}
             shouldDisplaySubmit={!shouldDisplaySubmit}
           >
@@ -96,10 +96,10 @@ const SurveyView = ({
             {NextIcon}
           </StyledButton>
           <StyledButton
-            disableRipple
             disabled={
               !Object.keys(form).every(input => !checkInputDisabled(input))
             }
+            disableRipple
             onClick={handleSubmit}
             shouldDisplaySubmit={shouldDisplaySubmit}
           >

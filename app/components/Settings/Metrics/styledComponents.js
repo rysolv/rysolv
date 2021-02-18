@@ -45,7 +45,6 @@ export const RankingContainer = styled.div`
 export const StyledUserBarTitle = styled.div`
   font-size: 1.8rem;
   padding: 0.5rem 0.5rem 0.5rem 1rem;
-  width: 20rem;
 `;
 
 export const UserDetails = styled.div`

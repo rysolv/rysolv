@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
 import { StyledPrimaryButton } from '../styledComponents';
@@ -16,7 +16,6 @@ export const MultipleButton = ({
 
   const handleClick = ({ value }) => {
     const tempValue = [...selected];
-
     if (tempValue.length < limit && !tempValue.includes(value)) {
       tempValue.push(value);
     } else if (tempValue.length === limit && !tempValue.includes(value)) {
@@ -26,12 +25,11 @@ export const MultipleButton = ({
       const index = tempValue.indexOf(value);
       tempValue.splice(index, 1);
     }
-
     setSelected(tempValue);
     dispatchChangeInput({ field: id, value: tempValue });
   };
   return (
-    <div>
+    <Fragment>
       {options.map(({ value }, index) => (
         <StyledPrimaryButton
           key={`option-${index}`}
@@ -40,7 +38,7 @@ export const MultipleButton = ({
           onClick={() => handleClick({ value })}
         />
       ))}
-    </div>
+    </Fragment>
   );
 };
 
@@ -54,7 +52,7 @@ export const SingleButton = ({ dispatchChangeInput, form, id, options }) => {
     dispatchChangeInput({ field: id, value: tempValue });
   };
   return (
-    <div>
+    <Fragment>
       {options.map(({ value }, index) => (
         <StyledPrimaryButton
           key={`option-${index}`}
@@ -63,7 +61,7 @@ export const SingleButton = ({ dispatchChangeInput, form, id, options }) => {
           onClick={() => handleClick({ value })}
         />
       ))}
-    </div>
+    </Fragment>
   );
 };
 

@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 
 import AboutMenu from './AboutMenu';
-import {
-  AboutButtonWrapper,
-  AboutContainer,
-  StyledDownArrow,
-} from './styledComponents';
+import { AboutContainer, StyledDownArrow } from './styledComponents';
+import { DropdownButtonWrapper } from '../styledComponents';
 
 const AboutDropdown = ({ handleNav }) => {
   const [open, setOpen] = useState(false);
@@ -29,10 +26,10 @@ const AboutDropdown = ({ handleNav }) => {
   };
   return (
     <AboutContainer>
-      <AboutButtonWrapper onClick={e => handleOpen(e)}>
+      <DropdownButtonWrapper onClick={e => handleOpen(e)}>
         About
         <StyledDownArrow />
-      </AboutButtonWrapper>
+      </DropdownButtonWrapper>
       <AboutMenu
         handleClose={handleClose}
         handleNav={handleNav}
