@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import { HeaderSearchBar, UserNavBar } from 'components/base_ui';
-import UserActivityButton from 'components/UserActivityButton';
 
+import AboutDropdown from './AboutDropdown';
 import Logo from './Logo';
 import {
   ButtonsWrapper,
@@ -14,6 +14,7 @@ import {
   StyledAppBar,
   StyledHeaderLink,
 } from './styledComponents';
+import UserActivityDropdown from './UserActivityDropdown';
 
 const DesktopHeader = ({
   activeUser,
@@ -45,10 +46,10 @@ const DesktopHeader = ({
           <HeaderSearchBar handleNav={handleNav} />
         </LogoWrapper>
         <ButtonsWrapper>
-          <NavLink label="Start Here" path="/how-to" shouldRemoveSecond />
-          <NavLink label="Leaderboard" path="/stats" shouldRemoveFirst />
+          <AboutDropdown handleNav={handleNav} />
+          <NavLink label="Jobs" path="/jobs" shouldRemoveFirst />
           <NavLink label="Find Issues" path="/issues" />
-          <UserActivityButton handleNav={handleNav} />
+          <UserActivityDropdown handleNav={handleNav} />
 
           {isSignedIn ? (
             <UserNavBar

@@ -8,6 +8,9 @@ const languageSchema = require('./languages');
 const organizationSchema = require('./organizations');
 const paymentsSchema = require('./payments');
 const pullRequestSchema = require('./pullRequest');
+const questionResponseSchema = require('./questionResponses');
+const questionSchema = require('./questions');
+const userQuestionResponseSchema = require('./userQuestionResponses');
 const userSchema = require('./users');
 const watchingSchema = require('./watching');
 const withdrawalSchema = require('./withdrawal');
@@ -23,6 +26,9 @@ module.exports = {
   ...organizationSchema,
   ...paymentsSchema,
   ...pullRequestSchema,
+  ...questionResponseSchema,
+  ...questionSchema,
+  ...userQuestionResponseSchema,
   ...userSchema,
   ...watchingSchema,
   ...withdrawalSchema,

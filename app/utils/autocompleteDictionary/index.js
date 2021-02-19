@@ -1,5 +1,5 @@
-import { languageOptions } from './languages';
-import { typeOptions } from './types';
+import { languageOptions } from './language';
+import { typeOptions } from './type';
 
 export default {
   language: languageOptions,

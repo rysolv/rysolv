@@ -20,7 +20,12 @@ const {
   transformIssue,
   upvoteIssue,
 } = require('./queries/issues');
-const { createLanguage, deleteUserLanguages } = require('./queries/languages');
+const {
+  createLanguage,
+  deleteUserLanguages,
+  getUserLanguages,
+  setPreferredLanguage,
+} = require('./queries/languages');
 const {
   checkDuplicateOrganization,
   createOrganization,
@@ -46,6 +51,7 @@ const {
   getPullRequestList,
   getUserPullRequests,
 } = require('./queries/pullRequests');
+const { getQuestions, postUserResponse } = require('./queries/questions');
 const { getStats } = require('./queries/stats');
 const {
   checkDuplicateGithubId,
@@ -107,17 +113,21 @@ module.exports = {
   getOrganizations,
   getOrganizationsWhere,
   getPullRequestList,
+  getQuestions,
   getStats,
   getUserActivity,
   getUserAttemptList,
+  getUserLanguages,
   getUserPullRequestDetail,
   getUserPullRequests,
   getUsers,
   getUserSettings,
   getUserWatchList,
+  postUserResponse,
   searchIssues,
   searchOrganizations,
   searchUsers,
+  setPreferredLanguage,
   submitAccountDepositUser,
   submitExternalPayment,
   submitInternalPayment,

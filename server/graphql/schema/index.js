@@ -227,6 +227,25 @@ module.exports = buildSchema(`
     username: String
   }
 
+  type Question {
+    id: ID
+    limit: Int
+    questionKey: String
+    questionText: String
+    responses: [QuestionResponse]
+    subtext: String
+  }
+
+  type QuestionArray {
+    questionArray: [Question]
+  }
+
+  type QuestionResponse {
+    id: ID
+    responseKey: String
+    value: String
+  }
+
   type Stats {
     mostContribution: [Object]!
     mostEarned: [Object]!
@@ -257,13 +276,14 @@ module.exports = buildSchema(`
     dollarsEarned: Int
     email: String!
     emailVerified: Boolean
-    firstName: String!
+    firstName: String
     githubLink: String
     githubUsername: String
     id: ID!
     isGithubVerified: Boolean
+    isQuestionnaireComplete: Boolean
     issues: [Object]
-    lastName: String!
+    lastName: String
     modifiedDate: Object
     organizations: [Object]
     personalLink: String
@@ -346,6 +366,7 @@ module.exports = buildSchema(`
   union OrganizationResult = Organization | Error
   union PaymentResult = Payment | Error
   union PullRequestArrayResult = PullRequestArray | Error
+  union QuestionResult = QuestionArray | Error
   union SignInResult = User | Error
   union StatsResult = Stats | Error
   union ToggleAttemptingResult = AttemptingArray | Error
@@ -365,6 +386,7 @@ module.exports = buildSchema(`
     getOrganizationActivity(organizationId: ID): [Activity]!
     getOrganizations: OrganizationArrayResult!
     getPullRequestList(issueId: ID): [PullRequestList]!
+    getQuestions(category: String!): QuestionResult
     getStats: StatsResult!
     getUserActivity(userId: ID): [Activity]!
     getUserIssues: IssueArrayResult!
@@ -373,7 +395,7 @@ module.exports = buildSchema(`
     getUsers: UserArrayResult!
     getUserSettings: UserResult!
 
-    githubSignIn(code: String!, isSignIn: Boolean!): UserResult!
+    githubSignIn(code: String!, origin: String!): UserResult!
 
     oneIssue(id: ID!): IssueResult!
     oneOrganization(id: ID!): OrganizationResult!
@@ -409,6 +431,8 @@ module.exports = buildSchema(`
     importIssue(url: String!): ImportResult!
     importOrganization(url: String!): ImportResult!
     importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
+
+    postUserResponse(responseArray: [Object]): EventResponse!
 
     signIn(password: String!, username: String!): SignInResult!
     signOut: EventResponse!

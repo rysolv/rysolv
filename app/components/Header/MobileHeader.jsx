@@ -45,7 +45,7 @@ const MobileHeader = ({
             />
           </LogoWrapper>
           <ButtonsWrapper>
-            <NavLink label="Find Issues" path="/issues" shouldRemoveThird />
+            <NavLink label="Find Issues" path="/issues" shouldRemoveSecond />
             {isSignedIn ? (
               <StyledUserNavBar
                 activeUser={activeUser}

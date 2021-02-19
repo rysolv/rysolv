@@ -1,0 +1,1 @@
+ALTER TABLE languages ADD COLUMN IF NOT EXISTS preferred BOOLEAN DEFAULT false;

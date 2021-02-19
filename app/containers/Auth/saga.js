@@ -2,6 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { resetState } from 'containers/Main/actions';
+import { changeView } from 'containers/Jobs/actions';
 import { incrementResetStep, incrementStep } from 'containers/Signin/actions';
 import { post } from 'utils/request';
 
@@ -55,6 +56,7 @@ export function* fetchActiveUserSaga() {
           firstName
           id
           isGithubVerified
+          isQuestionnaireComplete
           issues
           lastName
           organizations
@@ -86,10 +88,10 @@ export function* fetchActiveUserSaga() {
 }
 
 export function* githubSignInSaga({ payload }) {
-  const { code, isSignIn } = payload;
+  const { code, origin } = payload;
   const signInQuery = `
     query {
-      githubSignIn(code: "${code}", isSignIn: ${isSignIn}) {
+      githubSignIn(code: "${code}", origin: "${origin}") {
         __typename
         ... on User {
           attempting
@@ -98,6 +100,7 @@ export function* githubSignInSaga({ payload }) {
           firstName
           id
           isGithubVerified
+          isQuestionnaireComplete
           issues
           lastName
           organizations
@@ -116,7 +119,7 @@ export function* githubSignInSaga({ payload }) {
   `;
   const signUpQuery = `
     query {
-      githubSignIn(code: "${code}", isSignIn: ${isSignIn}) {
+      githubSignIn(code: "${code}", origin: "${origin}") {
         __typename
         ... on User {
           email
@@ -129,22 +132,48 @@ export function* githubSignInSaga({ payload }) {
       }
     }
   `;
-  const query = isSignIn ? signInQuery : signUpQuery;
+  const query =
+    origin === 'jobs' || origin === 'signin' ? signInQuery : signUpQuery;
   try {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        githubSignIn: { __typename, message, ...restProps },
+        githubSignIn: {
+          __typename,
+          isQuestionnaireComplete,
+          message,
+          ...restProps
+        },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
-    const route = isSignIn ? '/issues' : '/settings';
+    const routeDictionary = {
+      jobs: '/jobs?question=1',
+      signin: '/issues',
+      signup: '/settings',
+    };
+    const route = routeDictionary[origin];
+    if (origin === 'jobs') {
+      if (isQuestionnaireComplete) {
+        yield put(changeView({ view: 2 }));
+      } else {
+        yield put(changeView({ view: 1 }));
+      }
+    }
     yield put(githubSignInSuccess({ user: restProps }));
     yield put(push(route));
   } catch (error) {
     const { message } = error;
-    const githubError = isSignIn ? githubSignInError : githubSignUpError;
-    const route = isSignIn ? '/signin' : '/signup';
+    const githubError =
+      origin === 'jobs' || origin === 'signin'
+        ? githubSignInError
+        : githubSignUpError;
+    const routeDictionary = {
+      jobs: '/jobs',
+      signin: '/signin',
+      signup: '/signup',
+    };
+    const route = routeDictionary[origin];
     const messageToRender = message || githubError;
     yield put(githubSignInFailure({ error: { message: messageToRender } }));
     yield put(push(route));

@@ -3,7 +3,7 @@ import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
 
-import { MenuItem, StyledActivityMenu } from './styledComponents';
+import { MenuItem, StyledMenu } from '../styledComponents';
 
 const UserActivityMenu = ({
   handleClose,
@@ -17,14 +17,14 @@ const UserActivityMenu = ({
     handleNav(route);
   };
   const ActivityMenuComponent = (
-    <StyledActivityMenu>
+    <StyledMenu>
       <MenuItem onClick={e => handleClick(e, '/issues/add')}>
         New Issue
       </MenuItem>
       <MenuItem onClick={e => handleClick(e, '/organizations/add')}>
         New Organization
       </MenuItem>
-    </StyledActivityMenu>
+    </StyledMenu>
   );
   return (
     <ConditionalRender Component={ActivityMenuComponent} shouldRender={open} />

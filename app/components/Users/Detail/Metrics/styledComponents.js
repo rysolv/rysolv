@@ -3,11 +3,16 @@ import styled from 'styled-components';
 import { defaultFontSize } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile } = mediaQueriesByDevice;
+const { laptop } = mediaQueriesByDevice;
 
 export const ActivityContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 49%;
+
+  ${laptop} {
+    width: 100%;
+  }
 `;
 
 export const DetailListItem = styled.div`
@@ -43,12 +48,16 @@ export const Divider = styled.div`
 export const RankingContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 49%;
+
+  ${laptop} {
+    width: 100%;
+  }
 `;
 
 export const StyledUserBarTitle = styled.div`
   font-size: 1.8rem;
   padding: 0.5rem 0.5rem 0.5rem 1rem;
-  width: 20rem;
 `;
 
 export const UserDetails = styled.div`
@@ -59,7 +68,7 @@ export const UserMetricsContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
 
-  ${mobile} {
+  ${laptop} {
     flex-direction: column;
   }
 `;

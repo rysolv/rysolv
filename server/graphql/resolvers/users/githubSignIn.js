@@ -1,5 +1,4 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable camelcase, consistent-return, prettier/prettier */
+/* eslint-disable camelcase, consistent-return */
 const { v4: uuidv4 } = require('uuid');
 const Identicon = require('identicon.js');
 
@@ -21,23 +20,42 @@ const { githubSignInError, githubSignUpError } = require('./constants');
 const { requestGithubUser } = require('../../../integrations/github');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
-const githubSignIn = async ({ code, isSignIn }, { res }) => {
+const githubSignIn = async ({ code, origin }, { res }) => {
   try {
-    const isProduction = process.env.NODE_ENV === 'production';
-    const client_id = isSignIn
-      ? isProduction
-        ? process.env.GITHUB_SIGNIN_CLIENT_ID
-        : process.env.GITHUB_SIGNIN_CLIENT_ID_DEV
-      : isProduction
-        ? process.env.GITHUB_SIGNUP_CLIENT_ID
-        : process.env.GITHUB_SIGNUP_CLIENT_ID_DEV;
-    const client_secret = isSignIn
-      ? isProduction
-        ? process.env.GITHUB_SIGNIN_SECRET
-        : process.env.GITHUB_SIGNIN_SECRET_DEV
-      : isProduction
-        ? process.env.GITHUB_SIGNUP_SECRET
-        : process.env.GITHUB_SIGNUP_SECRET_DEV;
+    const isProduction = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
+    const githubProps = {
+      jobs: {
+        dev: {
+          client_id: process.env.GITHUB_JOBS_CLIENT_ID_DEV,
+          client_secret: process.env.GITHUB_JOBS_SECRET_DEV,
+        },
+        prod: {
+          client_id: process.env.GITHUB_JOBS_CLIENT_ID,
+          client_secret: process.env.GITHUB_JOBS_SECRET,
+        },
+      },
+      signin: {
+        dev: {
+          client_id: process.env.GITHUB_SIGNIN_CLIENT_ID_DEV,
+          client_secret: process.env.GITHUB_SIGNIN_SECRET_DEV,
+        },
+        prod: {
+          client_id: process.env.GITHUB_SIGNIN_CLIENT_ID,
+          client_secret: process.env.GITHUB_SIGNIN_SECRET,
+        },
+      },
+      signup: {
+        dev: {
+          client_id: process.env.GITHUB_SIGNUP_CLIENT_ID_DEV,
+          client_secret: process.env.GITHUB_SIGNUP_SECRET_DEV,
+        },
+        prod: {
+          client_id: process.env.GITHUB_SIGNUP_CLIENT_ID,
+          client_secret: process.env.GITHUB_SIGNUP_SECRET,
+        },
+      },
+    };
+    const { client_id, client_secret } = githubProps[origin][isProduction];
     const {
       avatar_url,
       email,
@@ -79,7 +97,7 @@ const githubSignIn = async ({ code, isSignIn }, { res }) => {
       };
       const result = await createUser({ data: newUser });
 
-      if(languages.length) {
+      if (languages.length) {
         await createLanguage({
           languages,
           target: {
@@ -177,9 +195,10 @@ const githubSignIn = async ({ code, isSignIn }, { res }) => {
   } catch (error) {
     const { alert } = error;
     errorLogger(error);
-    const errorMessageToReturn = isSignIn
-      ? githubSignInError
-      : githubSignUpError;
+    const errorMessageToReturn =
+      origin === 'jobs' || origin === 'signin'
+        ? githubSignInError
+        : githubSignUpError;
     return {
       __typename: 'Error',
       message: alert || errorMessageToReturn,

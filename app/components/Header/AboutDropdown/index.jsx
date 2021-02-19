@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 
-import iconDictionary from 'utils/iconDictionary';
+import AboutMenu from './AboutMenu';
+import { AboutContainer, StyledDownArrow } from './styledComponents';
+import { DropdownButtonWrapper } from '../styledComponents';
 
-import UserActivityMenu from './UserActivityMenu';
-import {
-  StyledDownArrow,
-  UserActivityButtonWrapper,
-  UserActivityContainer,
-} from './styledComponents';
-
-const AddIcon = iconDictionary('add');
-
-const UserActivityButton = ({ handleNav }) => {
+const AboutDropdown = ({ handleNav }) => {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const documentClickHandler = () => {
@@ -32,21 +25,21 @@ const UserActivityButton = ({ handleNav }) => {
     e.nativeEvent.stopImmediatePropagation();
   };
   return (
-    <UserActivityContainer>
-      <UserActivityButtonWrapper onClick={e => handleOpen(e)}>
-        {AddIcon}
+    <AboutContainer>
+      <DropdownButtonWrapper onClick={e => handleOpen(e)}>
+        About
         <StyledDownArrow />
-      </UserActivityButtonWrapper>
-      <UserActivityMenu
+      </DropdownButtonWrapper>
+      <AboutMenu
         handleClose={handleClose}
         handleNav={handleNav}
         menuClickHandler={menuClickHandler}
         open={open}
       />
-    </UserActivityContainer>
+    </AboutContainer>
   );
 };
 
-UserActivityButton.propTypes = { handleNav: T.func.isRequired };
+AboutDropdown.propTypes = { handleNav: T.func.isRequired };
 
-export default UserActivityButton;
+export default AboutDropdown;

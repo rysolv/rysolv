@@ -41,6 +41,10 @@ export const ImportFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const ImportUrlLabel = styled.div`
@@ -74,6 +78,12 @@ export const StatusWrapper = styled.span`
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   margin: 0 2rem;
+`;
+
+export const StyledFocusDiv = styled.div`
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const StyledHeader = styled.h1`
@@ -143,8 +153,16 @@ export const StyledTextareaAutosize = styled(TextareaAutosize)`
   color: ${textColor};
   height: auto !important;
   width: 100%;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const TextareaWrapper = styled.div`
   width: 100%;
+
+  &:focus {
+    outline: none;
+  }
 `;
