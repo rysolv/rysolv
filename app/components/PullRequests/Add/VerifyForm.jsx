@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 
 import iconDictionary from 'utils/iconDictionary';
@@ -11,6 +11,7 @@ import {
   PullRequestContainer,
   PullRequestInfo,
   StatusWrapper,
+  StyledFocusDiv,
   StyledHeader,
   StyledItem,
   StyledLabel,
@@ -39,15 +40,27 @@ const VerifyForm = ({
   },
   loading,
 }) => {
+  useEffect(() => {
+    document.getElementById('verifyPullRequest').focus();
+  }, []);
   const handleBack = () => {
     dispatchHandleStep({ step: 1 });
     handleClearAlerts();
+  };
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter') {
+      handleSubmit();
+    }
   };
   const isMergeable = mergeable.value;
   const haveTestsPassed = mergeableState.value !== 'unstable';
   const status = open.value ? 'open' : 'closed';
   return (
-    <Fragment>
+    <StyledFocusDiv
+      id="verifyPullRequest"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
       <StyledHeader>Verify</StyledHeader>
       <StyledErrorSuccessBanner error={error} onClose={handleClearAlerts} />
       <PullRequestContainer>
@@ -96,10 +109,10 @@ const VerifyForm = ({
         <StyledPrimaryAsyncButton
           label="Submit"
           loading={loading}
-          onClick={() => handleSubmit()}
+          onClick={handleSubmit}
         />
       </ButtonGroup>
-    </Fragment>
+    </StyledFocusDiv>
   );
 };
 

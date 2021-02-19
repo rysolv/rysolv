@@ -47,7 +47,7 @@ const Signin = ({
             onClose={handleClearAuthAlerts}
           />
         )}
-        <GithubButton isSignIn />
+        <GithubButton type="signin" />
         <DividerWrapper>
           <Divider />
           <WordDivider>or</WordDivider>

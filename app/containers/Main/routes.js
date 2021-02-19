@@ -11,6 +11,7 @@ import TermsOfService from 'components/TermsOfService';
 import Stats from 'containers/Stats/Loadable';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
+import Jobs from 'containers/Jobs';
 import Main from 'containers/HomePage/Loadable';
 import OrganizationsAdd from 'containers/Organizations/Add';
 import OrganizationsDetail from 'containers/Organizations/Detail';
@@ -30,6 +31,7 @@ const PublicContact = withAuth(publicConfig, Contact);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
 const PublicIssuesDetail = withAuth(publicConfig, IssuesDetail);
+const PublicJobs = withAuth(publicConfig, Jobs);
 const PublicMain = withAuth(publicConfig, Main);
 const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
 const PublicOrganizationsDetail = withAuth(publicConfig, OrganizationsDetail);
@@ -53,6 +55,8 @@ const Routes = () => (
     <Route exact path="/issues/add" component={PrivateIssuesAdd} />
     <Route exact path="/issues/detail/:id" component={PublicIssuesDetail} />
     <Route exact path="/issues/search/:searchValue" component={PublicOverview} />
+    <Route exact path="/jobs" component={PublicJobs} />
+    <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/organizations" component={PublicOverview} />
     <Route exact path="/organizations/add" component={PrivateOrganizationsAdd} />
     <Route exact path="/organizations/detail/:id" component={PublicOrganizationsDetail} />
