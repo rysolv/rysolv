@@ -55,11 +55,11 @@ const createIssueError = `Something went wrong when creating the issue.`;
 
 const createIssueSuccess = `Issue was successfully created.`;
 
-const createOrganizationError = `Something went wrong when creating the organization for the issue.`;
+const createRepoError = `Something went wrong when creating the repo for the issue.`;
 
 const existingIssueError = `This issue already exists.`;
 
-const existingOrganizationError = `This organization already exists.`;
+const existingRepoError = `This repo already exists.`;
 
 const getFilterError = `Something went wrong when getting filter criteria.`;
 
@@ -81,9 +81,9 @@ module.exports = {
   closeIssueSuccess,
   createIssueError,
   createIssueSuccess,
-  createOrganizationError,
+  createRepoError,
   existingIssueError,
-  existingOrganizationError,
+  existingRepoError,
   getFilterError,
   getIssuesError,
   importIssueError,

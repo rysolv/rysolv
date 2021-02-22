@@ -28,7 +28,7 @@ const {
 } = require('./queries/languages');
 const {
   checkDuplicateOrganization,
-  createOrganization,
+  createRepo,
   getOneOrganization,
   getOrganizationContributors,
   getOrganizationList,
@@ -89,8 +89,8 @@ module.exports = {
   createComment,
   createIssue,
   createLanguage,
-  createOrganization,
   createPullRequest,
+  createRepo,
   createUser,
   createWithdrawal,
   deletePullRequest,

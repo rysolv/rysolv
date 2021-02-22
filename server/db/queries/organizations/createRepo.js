@@ -1,21 +1,21 @@
 const { formatParameters } = require('../../helpers');
-const { organizationReturnValues, organizationValues } = require('./constants');
+const { repoReturnValues, repoValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
-// Create new organization
-const createOrganization = async ({ data }) => {
+// Create new repo
+const createRepo = async ({ data }) => {
   const { parameters, substitution, values } = formatParameters({
     newObject: data,
-    tableParameters: organizationValues,
+    tableParameters: repoValues,
   });
   const queryText = `INSERT INTO
-    organizations(${parameters})
+    repos(${parameters})
     VALUES(${substitution})
-    RETURNING ${organizationReturnValues}`;
+    RETURNING ${repoReturnValues}`;
 
   const { rows } = await singleQuery({ queryText, values });
   const [oneRow] = rows;
   return oneRow;
 };
 
-module.exports = createOrganization;
+module.exports = createRepo;

@@ -7,7 +7,7 @@ const {
   checkDuplicateOrganization,
   createIssue: createIssueQuery,
   createLanguage,
-  createOrganization,
+  createRepo,
   updateOrganizationArray,
   updateUserArray,
 } = require('../../../db');
@@ -15,9 +15,9 @@ const { createActivity } = require('../activity');
 const {
   createIssueError,
   createIssueSuccess,
-  createOrganizationError,
+  createRepoError,
   existingIssueError,
-  existingOrganizationError,
+  existingRepoError,
   newIssueObject,
   newOrganizationObject,
 } = require('./constants');
@@ -27,7 +27,7 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    const { identiconId, organizationId, organizationRepo, repo } = issueInput;
+    const { identiconId, organizationId, repo, repoUrl } = issueInput;
     const newIssueId = uuidv4();
 
     if (identiconId && identiconId !== 'undefined') {
@@ -37,17 +37,17 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
     // Add userId from token
     issueInput.contributor = userId;
 
-    // Populate organization object and create new organization
-    const createNewOrganization = async () => {
-      if (await checkDuplicateOrganization({ repo: organizationRepo }))
-        throw new CustomError(existingOrganizationError);
+    // Populate repo object and create new repo
+    const createNewRepo = async () => {
+      if (await checkDuplicateOrganization({ repo: repoUrl }))
+        throw new CustomError(existingRepoError);
 
       const organizationObject = await newOrganizationObject(issueInput);
       try {
-        const result = await createOrganization({ data: organizationObject });
+        const result = await createRepo({ data: organizationObject });
         return result;
       } catch (error) {
-        throw new CustomError(createOrganizationError);
+        throw new CustomError(createRepoError);
       }
     };
 
@@ -57,7 +57,7 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
 
     // Check for existing organization. If not: create organization
     if (!organizationId) {
-      const organizationResult = await createNewOrganization();
+      const organizationResult = await createNewRepo();
 
       const activityInput = {
         actionType: 'create',
