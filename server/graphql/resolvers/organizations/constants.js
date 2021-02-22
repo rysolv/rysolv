@@ -18,9 +18,9 @@ const importOrganizationError = `Something went wrong when importing this organi
 
 const oneOrganizationError = `Something went wrong when getting this organization.`;
 
-const transformOrganizationError = `Something went wrong when editing this organization.`;
+const transformRepoError = `Something went wrong when editing this repo.`;
 
-const transformOrganizationSuccess = `Your organization was successfully edited.`;
+const transformRepoSuccess = `Your repo was successfully edited.`;
 
 module.exports = {
   checkDuplicate,
@@ -29,6 +29,6 @@ module.exports = {
   getOrganizationsError,
   importOrganizationError,
   oneOrganizationError,
-  transformOrganizationError,
-  transformOrganizationSuccess,
+  transformRepoError,
+  transformRepoSuccess,
 };

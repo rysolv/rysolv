@@ -35,7 +35,7 @@ const {
   getOrganizations,
   getOrganizationsWhere,
   searchOrganizations,
-  transformOrganization,
+  transformRepo,
   updateOrganizationArray,
 } = require('./queries/organizations');
 const {
@@ -134,7 +134,7 @@ module.exports = {
   toggleAttempting,
   toggleWatching,
   transformIssue,
-  transformOrganization,
+  transformRepo,
   transformUser,
   transformUserBalance,
   updateOrganizationArray,

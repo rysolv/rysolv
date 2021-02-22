@@ -1,4 +1,4 @@
-const organizationValues = [
+const repoValues = [
   'created_date',
   'description',
   'id',
@@ -14,37 +14,37 @@ const organizationValues = [
   'verified',
 ];
 
-const organizationReturnValues = `
-  organizations.created_date AS "createdDate",
-  organizations.description,
-  organizations.id,
-  organizations.is_manual AS "isManual",
-  organizations.issues,
-  organizations.logo,
-  organizations.modified_date AS "modifiedDate",
-  organizations.name,
-  organizations.organization_url AS "organizationUrl",
-  organizations.owner_id AS "ownerId",
-  organizations.repo_url AS "repoUrl",
-  organizations.total_funded AS "totalFunded",
-  organizations.verified
+const repoReturnValues = `
+  repos.created_date AS "createdDate",
+  repos.description,
+  repos.id,
+  repos.is_manual AS "isManual",
+  repos.issues,
+  repos.logo,
+  repos.modified_date AS "modifiedDate",
+  repos.name,
+  repos.organization_url AS "organizationUrl",
+  repos.owner_id AS "ownerId",
+  repos.repo_url AS "repoUrl",
+  repos.total_funded AS "totalFunded",
+  repos.verified
 `;
 
 const groupValues = `
-  organizations.created_date,
-  organizations.description,
-  organizations.id,
-  organizations.is_deleted,
-  organizations.is_manual,
-  organizations.issues,
-  organizations.logo,
-  organizations.modified_date,
-  organizations.name,
-  organizations.organization_url,
-  organizations.owner_id,
-  organizations.repo_url,
-  organizations.total_funded,
-  organizations.verified
+  repos.created_date,
+  repos.description,
+  repos.id,
+  repos.is_deleted,
+  repos.is_manual,
+  repos.issues,
+  repos.logo,
+  repos.modified_date,
+  repos.name,
+  repos.organization_url,
+  repos.owner_id,
+  repos.repo_url,
+  repos.total_funded,
+  repos.verified
 `;
 
-module.exports = { groupValues, organizationReturnValues, organizationValues };
+module.exports = { groupValues, repoReturnValues, repoValues };

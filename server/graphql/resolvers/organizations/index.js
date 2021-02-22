@@ -3,7 +3,7 @@ const getOrganizations = require('./getOrganizations');
 const importOrganization = require('./importOrganization');
 const oneOrganization = require('./oneOrganization');
 const searchOrganizations = require('./searchOrganizations');
-const transformOrganization = require('./transformOrganization');
+const transformRepo = require('./transformRepo');
 
 module.exports = {
   createOrganization,
@@ -11,5 +11,5 @@ module.exports = {
   importOrganization,
   oneOrganization,
   searchOrganizations,
-  transformOrganization,
+  transformRepo,
 };
