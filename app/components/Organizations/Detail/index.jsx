@@ -10,9 +10,9 @@ import {
 import iconDictionary from 'utils/iconDictionary';
 import { getBase64 } from 'utils/globalHelpers';
 
-import OrganizationDetailTabs from './OrganizationDetailTabs';
-import TopLanguagesView from './TopLanguagesView';
 import RecentActivityView from './RecentActivityView';
+import RepoDetailTabs from './RepoDetailTabs';
+import TopLanguagesView from './TopLanguagesView';
 import {
   ButtonGroup,
   ContentWrapper,
@@ -49,9 +49,9 @@ const VerifiedComponent = (
   </VerifiedWrapper>
 );
 
-const OrganizationDetailView = ({
+const RepoDetailView = ({
   activeUser,
-  activeUser: { organizations },
+  activeUser: { repos },
   alerts: { error, success },
   data: {
     activity,
@@ -67,7 +67,7 @@ const OrganizationDetailView = ({
     verified,
   },
   deviceView,
-  dispatchEditOrganization,
+  dispatchEditRepo,
   dispatchOpenModal,
   filterValues,
   handleClearAlerts,
@@ -92,7 +92,7 @@ const OrganizationDetailView = ({
   };
 
   const handleSave = () => {
-    dispatchEditOrganization({
+    dispatchEditRepo({
       editRequest: {
         description: descriptionChange,
         logo: logoChange,
@@ -135,8 +135,8 @@ const OrganizationDetailView = ({
             }
             shouldRender={
               isSignedIn &&
-              organizations &&
-              !!organizations.find(({ id }) => organizationId === id)
+              repos &&
+              !!repos.find(({ id }) => organizationId === id)
             }
           /> */}
         </HeaderWrapper>
@@ -171,7 +171,7 @@ const OrganizationDetailView = ({
           <NameWrapper>
             <StyledBaseTextInput
               onChange={e => setNameChange(e.target.value)}
-              placeholder="Organization Name"
+              placeholder="Repo Name"
               value={nameChange}
             />
 
@@ -188,7 +188,7 @@ const OrganizationDetailView = ({
         <StyledBaseTextInput
           multiline
           onChange={e => setDescriptionChange(e.target.value)}
-          placeholder="Organization Description"
+          placeholder="Repo Description"
           value={descriptionChange}
           width="100%"
         />
@@ -217,7 +217,7 @@ const OrganizationDetailView = ({
 
   return (
     <DetailContainer>
-      <BackNav label="Back to Organizations" path="/organizations" />
+      <BackNav label="Back to Repos" path="/repos" />
       <ConditionalRender
         Component={
           <StyledErrorSuccessBanner
@@ -227,9 +227,7 @@ const OrganizationDetailView = ({
           />
         }
         shouldRender={
-          isSignedIn &&
-          organizations &&
-          !!organizations.find(({ id }) => organizationId === id)
+          isSignedIn && repos && !!repos.find(({ id }) => organizationId === id)
         }
       />
       <ConditionalRender
@@ -239,7 +237,7 @@ const OrganizationDetailView = ({
       />
       <TabsContainer>
         <MainTabs>
-          <OrganizationDetailTabs
+          <RepoDetailTabs
             activeUser={activeUser}
             contributors={contributors}
             dispatchOpenModal={dispatchOpenModal}
@@ -267,12 +265,12 @@ const OrganizationDetailView = ({
   );
 };
 
-OrganizationDetailView.propTypes = {
+RepoDetailView.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
   data: T.object.isRequired,
   deviceView: T.string.isRequired,
-  dispatchEditOrganization: T.func.isRequired,
+  dispatchEditRepo: T.func.isRequired,
   dispatchOpenModal: T.func,
   filterValues: T.object.isRequired,
   handleClearAlerts: T.func.isRequired,
@@ -282,4 +280,4 @@ OrganizationDetailView.propTypes = {
   isSignedIn: T.bool,
 };
 
-export default OrganizationDetailView;
+export default RepoDetailView;

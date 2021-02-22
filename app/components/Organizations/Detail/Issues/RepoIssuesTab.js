@@ -20,7 +20,7 @@ import {
   IssuesList,
 } from '../styledComponents';
 
-const OrganizationIssuesTab = ({
+const RepoIssuesTab = ({
   activeUser,
   dispatchOpenModal,
   handleNav,
@@ -87,7 +87,7 @@ const OrganizationIssuesTab = ({
   </IssuesList>
 );
 
-OrganizationIssuesTab.propTypes = {
+RepoIssuesTab.propTypes = {
   activeUser: T.object,
   dispatchOpenModal: T.func,
   handleNav: T.func,
@@ -96,4 +96,4 @@ OrganizationIssuesTab.propTypes = {
   issues: T.array,
 };
 
-export default OrganizationIssuesTab;
+export default RepoIssuesTab;

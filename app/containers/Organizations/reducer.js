@@ -4,23 +4,23 @@ import { v4 as uuidv4 } from 'uuid';
 import Identicon from 'identicon.js';
 
 import {
-  CHANGE_ORGANIZATION_FILTER,
-  CHANGE_ORGANIZATION_SEARCH,
+  CHANGE_REPO_FILTER,
+  CHANGE_REPO_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
-  FETCH_ORGANIZATIONS_FAILURE,
-  FETCH_ORGANIZATIONS_SUCCESS,
-  FETCH_ORGANIZATIONS,
-  FETCH_USER_ORGANIZATIONS_FAILURE,
-  FETCH_USER_ORGANIZATIONS_SUCCESS,
-  FETCH_USER_ORGANIZATIONS,
+  FETCH_REPOS_FAILURE,
+  FETCH_REPOS_SUCCESS,
+  FETCH_REPOS,
+  FETCH_USER_REPOS_FAILURE,
+  FETCH_USER_REPOS_SUCCESS,
+  FETCH_USER_REPOS,
   GENERATE_IDENTICON,
-  IMPORT_ORGANIZATION_FAILURE,
-  IMPORT_ORGANIZATION_SUCCESS,
-  IMPORT_ORGANIZATION,
+  IMPORT_REPO_FAILURE,
+  IMPORT_REPO_SUCCESS,
+  IMPORT_REPO,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
@@ -28,9 +28,9 @@ import {
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
-  SEARCH_ORGANIZATIONS_FAILURE,
-  SEARCH_ORGANIZATIONS_SUCCESS,
-  SEARCH_ORGANIZATIONS,
+  SEARCH_REPOS_FAILURE,
+  SEARCH_REPOS_SUCCESS,
+  SEARCH_REPOS,
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
@@ -56,35 +56,32 @@ export const initialState = {
     verified: { error: '', value: '' },
   },
   error: {
-    fetchOrganization: false,
-    importOrganization: { error: false, message: '' },
-    organizations: false,
-    searchOrganizations: false,
-    userOrganizations: false,
+    fetchRepo: false,
+    repos: false,
+    userRepos: false,
   },
   filter: {
     issues: 'Most Funded',
     language: [],
-    organization: [],
     overview: 'Most Funded',
     price: [0, 5000],
+    repo: [],
   },
   importSuccess: false,
   isManual: false,
   isNotFound: false,
   loading: {
-    addOrganization: false,
-    fetchOrganization: false,
-    importOrganization: false,
-    organizations: false,
-    saveOrganization: false,
-    searchOrganizations: false,
-    updateOrganization: false,
+    addRepo: false,
+    fetchRepo: false,
+    importRepo: false,
+    repos: false,
+    searchRepos: false,
+    updateRepo: false,
     upvoteIssue: false,
-    userOrganizations: false,
+    userRepos: false,
   },
-  organization: {},
-  organizationData: {
+  repo: {},
+  repoData: {
     autoImportUrl: { error: '', value: '' },
     identiconId: { error: '', value: '' },
     importUrl: { error: '', value: '' },
@@ -96,7 +93,7 @@ export const initialState = {
     organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
   },
-  organizations: [],
+  repos: [],
   search: {
     contributorInput: { error: '', value: '' },
     issueInput: { error: '', value: '' },
@@ -104,16 +101,16 @@ export const initialState = {
     searchInput: { error: '', value: '' },
   },
   step: {
-    addOrganization: 1,
+    addRepo: 1,
   },
-  userOrganizations: [],
+  userRepos: [],
 };
 
-const organizationsReducer = produce((draft, { payload, type }) => {
+const reposReducer = produce((draft, { payload, type }) => {
   switch (type) {
-    case CHANGE_ORGANIZATION_FILTER: {
+    case CHANGE_REPO_FILTER: {
       const { field, value } = payload;
-      if (field === 'language' || field === 'organization') {
+      if (field === 'language' || field === 'repo') {
         draft.filter[field] = [];
         value.map(language => draft.filter[field].push(language));
       } else {
@@ -121,7 +118,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       }
       break;
     }
-    case CHANGE_ORGANIZATION_SEARCH: {
+    case CHANGE_REPO_SEARCH: {
       const { field, value } = payload;
       draft.search[field].value = value;
       break;
@@ -135,90 +132,90 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     case CLEAR_FORM: {
       draft.error = initialState.error;
       draft.importSuccess = initialState.importSuccess;
-      draft.organizationData = initialState.organizationData;
+      draft.repoData = initialState.repoData;
       break;
     }
     case FETCH_INFO_FAILURE: {
       const { error, isNotFound } = payload;
-      draft.error.fetchOrganizations = error.message;
+      draft.error.fetchRepo = error.message;
       draft.isNotFound = isNotFound;
-      draft.loading.fetchOrganization = false;
+      draft.loading.fetchRepo = false;
       break;
     }
     case FETCH_INFO_SUCCESS: {
-      const { organization } = payload;
-      Object.keys(organization).forEach(detail => {
+      const { repo } = payload;
+      Object.keys(repo).forEach(detail => {
         if (draft.editInfo[detail]) {
-          draft.editInfo[detail].value = organization[detail];
+          draft.editInfo[detail].value = repo[detail];
         }
       });
-      draft.organization = organization;
-      draft.loading.fetchOrganization = false;
+      draft.loading.fetchRepo = false;
+      draft.repo = repo;
       break;
     }
     case FETCH_INFO: {
-      draft.loading.fetchOrganization = true;
+      draft.loading.fetchRepo = true;
       break;
     }
-    case FETCH_ORGANIZATIONS_FAILURE: {
+    case FETCH_REPOS_FAILURE: {
       const { error } = payload;
-      draft.error.organizations = error;
-      draft.loading.organizations = false;
+      draft.error.repos = error;
+      draft.loading.repos = false;
       break;
     }
-    case FETCH_ORGANIZATIONS_SUCCESS: {
-      const { organizations } = payload;
-      draft.loading.organizations = false;
-      draft.organizations = organizations;
+    case FETCH_REPOS_SUCCESS: {
+      const { repos } = payload;
+      draft.loading.repos = false;
+      draft.repos = repos;
       break;
     }
-    case FETCH_ORGANIZATIONS: {
-      draft.loading.organizations = true;
+    case FETCH_REPOS: {
+      draft.loading.repos = true;
       break;
     }
-    case FETCH_USER_ORGANIZATIONS_FAILURE: {
-      draft.error.userOrganizations = true;
-      draft.loading.userOrganizations = false;
+    case FETCH_USER_REPOS_FAILURE: {
+      draft.error.userRepos = true;
+      draft.loading.userRepos = false;
       break;
     }
-    case FETCH_USER_ORGANIZATIONS_SUCCESS: {
-      const { organizations } = payload;
-      draft.loading.userOrganizations = false;
-      draft.userOrganizations = organizations;
+    case FETCH_USER_REPOS_SUCCESS: {
+      const { repos } = payload;
+      draft.loading.useRepos = false;
+      draft.useRepos = repos;
       break;
     }
-    case FETCH_USER_ORGANIZATIONS: {
-      draft.loading.userOrganizations = true;
+    case FETCH_USER_REPOS: {
+      draft.loading.userRepos = true;
       break;
     }
     case GENERATE_IDENTICON: {
       const identiconId = uuidv4();
       const identicon = new Identicon(identiconId, 250).toString();
-      draft.organizationData.identiconId.value = identiconId;
-      draft.organizationData.organizationLogo.value = `data:image/png;base64,${identicon}`;
+      draft.repoData.identiconId.value = identiconId;
+      draft.repoData.organizationLogo.value = `data:image/png;base64,${identicon}`;
       break;
     }
-    case IMPORT_ORGANIZATION_FAILURE: {
+    case IMPORT_REPO_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.organizationData.autoImportUrl.error = error;
-      draft.organizationData.autoImportUrl.value = '';
-      draft.loading.importOrganization = false;
+      draft.loading.importRepo = false;
+      draft.repoData.autoImportUrl.error = error;
+      draft.repoData.autoImportUrl.value = '';
       break;
     }
-    case IMPORT_ORGANIZATION_SUCCESS: {
-      const { importOrganization } = payload;
-      draft.loading.importOrganization = false;
-      Object.keys(importOrganization).map(field => {
-        if (draft.organizationData[field] && importOrganization[field]) {
-          draft.organizationData[field].value = importOrganization[field];
+    case IMPORT_REPO_SUCCESS: {
+      const { importRepo } = payload;
+      Object.keys(importRepo).map(field => {
+        if (draft.repoData[field] && importRepo[field]) {
+          draft.repoData[field].value = importRepo[field];
         }
       });
       draft.importSuccess = true;
+      draft.loading.importRepo = false;
       break;
     }
-    case IMPORT_ORGANIZATION: {
-      draft.loading.importOrganization = true;
+    case IMPORT_REPO: {
+      draft.loading.importRepo = true;
       break;
     }
     case INCREMENT_STEP: {
@@ -241,7 +238,7 @@ const organizationsReducer = produce((draft, { payload, type }) => {
       const { errors } = payload;
       const fields = Object.keys(errors);
       fields.forEach(field => {
-        draft.organizationData[field].error = errors[field] || '';
+        draft.repoData[field].error = errors[field] || '';
       });
       break;
     }
@@ -251,48 +248,48 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.addOrganization = false;
+      draft.loading.addRepo = false;
       break;
     }
     case SAVE_INFO_SUCCESS: {
       const { message } = payload;
       draft.alerts.success = { message };
-      draft.loading.addOrganization = false;
+      draft.loading.addRepo = false;
       break;
     }
     case SAVE_INFO: {
-      draft.loading.addOrganization = true;
+      draft.loading.addRepo = true;
       break;
     }
-    case SEARCH_ORGANIZATIONS_FAILURE: {
-      draft.loading.searchOrganizations = false;
+    case SEARCH_REPOS_FAILURE: {
+      draft.loading.searchRepos = false;
       break;
     }
-    case SEARCH_ORGANIZATIONS_SUCCESS: {
-      const { organizations } = payload;
-      draft.organizations = organizations || null;
-      draft.loading.searchOrganizations = false;
+    case SEARCH_REPOS_SUCCESS: {
+      const { repos } = payload;
+      draft.repos = repos || null;
+      draft.loading.searchRepos = false;
       break;
     }
-    case SEARCH_ORGANIZATIONS: {
-      draft.loading.searchOrganizations = true;
+    case SEARCH_REPOS: {
+      draft.loading.searchRepos = true;
       break;
     }
     case UPDATE_INFO_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.updateOrganization = false;
+      draft.loading.updateRepo = false;
       break;
     }
     case UPDATE_INFO_SUCCESS: {
       const { message } = payload;
       draft.alerts.success = { message };
-      draft.loading.updateOrganization = false;
+      draft.loading.updateRepo = false;
       break;
     }
     case UPDATE_INFO: {
       draft.alerts = initialState.alerts;
-      draft.loading.updateOrganization = true;
+      draft.loading.updateRepo = true;
       break;
     }
     case UPDATE_IS_MANUAL: {
@@ -308,9 +305,9 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case UPVOTE_ISSUE_SUCCESS: {
       const { issueId, issueRep } = payload;
-      draft.organization.issues.map(({ id }, index) => {
+      draft.repo.issues.map(({ id }, index) => {
         if (id === issueId) {
-          draft.organization.issues[index].rep = issueRep;
+          draft.repo.issues[index].rep = issueRep;
         }
       });
       draft.loading.upvoteIssue = false;
@@ -318,12 +315,12 @@ const organizationsReducer = produce((draft, { payload, type }) => {
     }
     case UPVOTE_ISSUE_TEMP: {
       const { issueId, upvote } = payload;
-      draft.organization.issues.map(({ id }, index) => {
+      draft.repo.issues.map(({ id }, index) => {
         if (id === issueId) {
           // eslint-disable-next-line no-unused-expressions
           upvote
-            ? (draft.organization.issues[index].rep += 1)
-            : (draft.organization.issues[index].rep -= 1);
+            ? (draft.repo.issues[index].rep += 1)
+            : (draft.repo.issues[index].rep -= 1);
         }
       });
       break;
@@ -335,4 +332,4 @@ const organizationsReducer = produce((draft, { payload, type }) => {
   }
 }, initialState);
 
-export default organizationsReducer;
+export default reposReducer;

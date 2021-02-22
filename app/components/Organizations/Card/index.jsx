@@ -15,25 +15,25 @@ import {
   IssuesIcon,
   IssuesWrapper,
   NameLink,
-  OrganizationCardItem,
+  RepoCardItem,
   SettingsContainer,
   StatsWrapper,
   StyledImageLinkWrapper,
   StyledListItem,
-  StyledOrganizationCard,
+  StyledRepoCard,
   TextContainer,
   TitleContainer,
 } from './styledComponents';
 
 const issueIcon = iconDictionary('issue');
 
-const OrganizationCard = ({ data }) => (
-  <StyledOrganizationCard>
+const RepoCard = ({ data }) => (
+  <StyledRepoCard>
     {data.map(
       ({ description, id, issues, logo, modifiedDate, name, totalFunded }) => (
         <StyledListItem key={id}>
           <TitleContainer>
-            <NameLink to={`/organizations/detail/${id}`}>{name}</NameLink>
+            <NameLink to={`/repos/detail/${id}`}>{name}</NameLink>
             <SettingsContainer>
               <DateWrapper>
                 Last post {moment(modifiedDate).format('M/D/YYYY')}
@@ -43,40 +43,40 @@ const OrganizationCard = ({ data }) => (
           <ContentContainer>
             <ImageContainer>
               <StyledImageLinkWrapper
-                alt="Organization Image"
+                alt="Repo Image"
                 image={logo}
                 isSquare
-                route={`/organizations/detail/${id}`}
+                route={`/repos/detail/${id}`}
                 size="5rem"
               />
             </ImageContainer>
             <TextContainer>
               <DescriptionWrapper>{description}</DescriptionWrapper>
               <StatsWrapper>
-                <OrganizationCardItem>
+                <RepoCardItem>
                   <IssuesWrapper>
                     <IssuesIcon>{issueIcon}</IssuesIcon>
                     <Issues>
                       {issues.length} {issues.length === 1 ? `Issue` : `Issues`}
                     </Issues>
                   </IssuesWrapper>
-                </OrganizationCardItem>
-                <OrganizationCardItem>
+                </RepoCardItem>
+                <RepoCardItem>
                   <FundingWrapper
                     medium
                     open
                     value={formatDollarAmount(totalFunded)}
                   />
-                </OrganizationCardItem>
+                </RepoCardItem>
               </StatsWrapper>
             </TextContainer>
           </ContentContainer>
         </StyledListItem>
       ),
     )}
-  </StyledOrganizationCard>
+  </StyledRepoCard>
 );
 
-OrganizationCard.propTypes = { data: T.array.isRequired };
+RepoCard.propTypes = { data: T.array.isRequired };
 
-export default OrganizationCard;
+export default RepoCard;

@@ -3,10 +3,10 @@ import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
 
-import OrganizationContributorsTab from './Contributors/OrganizationContributorsTab';
-import OrganizationIssuesTab from './Issues/OrganizationIssuesTab';
 import ContributorsSearchHeader from './Contributors/ContributorsSearchHeader';
 import IssuesSearchHeader from './Issues/IssuesSearchHeader';
+import RepoContributorsTab from './Contributors/RepoContributorsTab';
+import RepoIssuesTab from './Issues/RepoIssuesTab';
 import {
   EmptyMessageComponent,
   StyledPaper,
@@ -14,7 +14,7 @@ import {
   StyledTabs,
 } from './styledComponents';
 
-const OrganizationDetailTabs = ({
+const RepoDetailTabs = ({
   activeUser,
   contributors,
   dispatchOpenModal,
@@ -31,10 +31,10 @@ const OrganizationDetailTabs = ({
   };
   const { issues: issuesFilter } = filterValues;
 
-  const OrganizationContributorsTabComponent = (
+  const RepoContributorsTabComponent = (
     <ConditionalRender
       Component={
-        <OrganizationContributorsTab
+        <RepoContributorsTab
           contributors={contributors}
           handleNav={handleNav}
         />
@@ -48,10 +48,10 @@ const OrganizationDetailTabs = ({
     />
   );
 
-  const OrganizationIssuesTabComponent = (
+  const RepoIssuesTabComponent = (
     <ConditionalRender
       Component={
-        <OrganizationIssuesTab
+        <RepoIssuesTab
           activeUser={activeUser}
           dispatchOpenModal={dispatchOpenModal}
           handleNav={handleNav}
@@ -93,15 +93,15 @@ const OrganizationDetailTabs = ({
         shouldRender={!!value}
       />
       <ConditionalRender
-        Component={OrganizationContributorsTabComponent}
-        FallbackComponent={OrganizationIssuesTabComponent}
+        Component={RepoContributorsTabComponent}
+        FallbackComponent={RepoIssuesTabComponent}
         shouldRender={!!value}
       />
     </StyledPaper>
   );
 };
 
-OrganizationDetailTabs.propTypes = {
+RepoDetailTabs.propTypes = {
   activeUser: T.object,
   contributors: T.array,
   dispatchOpenModal: T.func,
@@ -113,4 +113,4 @@ OrganizationDetailTabs.propTypes = {
   issues: T.array,
 };
 
-export default OrganizationDetailTabs;
+export default RepoDetailTabs;

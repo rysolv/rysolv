@@ -27,7 +27,7 @@ import {
   MobileIconDescription,
   NameLink,
   NameWrapper,
-  OrganizationNameWrapper,
+  RepoNameWrapper,
   StyledIconButton,
   StyledIssueCard,
   StyledIssueContent,
@@ -200,8 +200,8 @@ const IssueCard = ({
               />
               <StyledIssueContent>
                 <StyledIssueHeader>
-                  <OrganizationNameWrapper>
-                    <Link to={`/organizations/detail/${organizationId}`}>
+                  <RepoNameWrapper>
+                    <Link to={`/repos/detail/${organizationId}`}>
                       {organizationName}
                     </Link>
 
@@ -214,7 +214,7 @@ const IssueCard = ({
                     ) : (
                       ''
                     )}
-                  </OrganizationNameWrapper>
+                  </RepoNameWrapper>
                   {moment.utc(createdDate).fromNow()}
                 </StyledIssueHeader>
                 <StyledIssueText>

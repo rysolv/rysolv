@@ -1,17 +1,17 @@
 /* eslint-disable array-callback-return, consistent-return */
 import isEmtpy from 'lodash/isEmpty';
 
-export const filterOrganizations = (organizations, filterParams) =>
-  organizations.filter(({ name, preferredLanguages, totalFunded }) => {
+export const filterRepos = (repos, filterParams) =>
+  repos.filter(({ name, preferredLanguages, totalFunded }) => {
     const {
       language: languageFilter,
-      organization: organizationFilter,
       price: priceFilter,
+      repo: repoFilter,
     } = filterParams;
     const formattedLanguageFilter = languageFilter.map(({ value }) =>
       value.toLowerCase(),
     );
-    const formattedOrganizationFilter = organizationFilter.map(({ value }) =>
+    const formattedRepoFilter = repoFilter.map(({ value }) =>
       value.toLowerCase(),
     );
     if (
@@ -23,8 +23,8 @@ export const filterOrganizations = (organizations, filterParams) =>
       return false;
     }
     if (
-      !isEmtpy(formattedOrganizationFilter) &&
-      !formattedOrganizationFilter.includes(name.toLowerCase())
+      !isEmtpy(formattedRepoFilter) &&
+      !formattedRepoFilter.includes(name.toLowerCase())
     ) {
       return false;
     }
@@ -34,8 +34,8 @@ export const filterOrganizations = (organizations, filterParams) =>
     return true;
   });
 
-export const organizeOrganizations = (organizations, organizeParam) => {
-  const sortedArray = organizations.sort((a, b) => {
+export const organizeRepos = (repos, organizeParam) => {
+  const sortedArray = repos.sort((a, b) => {
     if (organizeParam === 'Newest') {
       if (a.modifiedDate < b.modifiedDate) {
         return 1;
@@ -52,8 +52,8 @@ export const organizeOrganizations = (organizations, organizeParam) => {
   return sortedArray;
 };
 
-export const searchOrganizations = (organizations, { value }) => {
-  const filteredArray = organizations.filter(({ description, name }) => {
+export const searchRepos = (repos, { value }) => {
+  const filteredArray = repos.filter(({ description, name }) => {
     if (name.toLowerCase().includes(value.toLowerCase())) {
       return true;
     }

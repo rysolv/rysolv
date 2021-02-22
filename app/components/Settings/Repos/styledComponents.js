@@ -20,21 +20,21 @@ export const ImageWrapper = styled.div`
   padding-left: 1.5rem;
 `;
 
-export const OrganizationContent = styled.div`
+export const RepoContent = styled.div`
   display: flex;
   height: auto;
   margin: 1rem 0;
   width: 100%;
 `;
 
-export const OrganizationContentInfo = styled.div`
+export const RepoContentInfo = styled.div`
   color: ${textColor};
   display: flex;
   flex-direction: column;
   flex: 100%;
 `;
 
-export const OrganizationDetail = styled.div`
+export const RepoDetail = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -43,7 +43,7 @@ export const OrganizationDetail = styled.div`
   width: 100%;
 `;
 
-export const OrganizationFundedAmount = styled.div`
+export const RepoFundedAmount = styled.div`
   background-color: ${({ open }) =>
     open ? verifyBackgroundColor : 'rgb(237, 238, 240)'};
   border-radius: 0.25rem;
@@ -55,18 +55,18 @@ export const OrganizationFundedAmount = styled.div`
   white-space: nowrap;
 `;
 
-export const OrganizationFundedWrapper = styled.div`
+export const RepoFundedWrapper = styled.div`
   display: flex;
   font-size: 1.2rem;
   justify-content: space-between;
 `;
 
-export const OrganizationIssues = styled.div`
+export const RepoIssues = styled.div`
   align-self: center;
   color: #6a737d;
 `;
 
-export const OrganizationListItem = styled.li`
+export const RepoListItem = styled.li`
   border-top: 0.1rem solid #d5d5d5;
   display: flex;
   width: 90%;
@@ -76,12 +76,12 @@ export const OrganizationListItem = styled.li`
   }
 `;
 
-export const OrganizationModifiedDate = styled.div`
+export const RepoModifiedDate = styled.div`
   align-self: flex-end;
   font-size: 1.2rem;
 `;
 
-export const OrganizationName = styled.a`
+export const RepoName = styled.a`
   font-size: 1.6rem;
   font-weight: 500;
 
@@ -91,7 +91,7 @@ export const OrganizationName = styled.a`
   }
 `;
 
-export const OrganizationsList = styled.ul`
+export const ReposList = styled.ul`
   align-items: center;
   display: flex;
   flex-direction: column;

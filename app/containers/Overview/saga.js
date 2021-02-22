@@ -20,7 +20,7 @@ export function* fetchFilterOptionsSaga() {
           fundedIssues
           issueLanguages
           maxBounty
-          organizations
+          repos
           unfundedIssues
           userLanguages
         }

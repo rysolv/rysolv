@@ -11,11 +11,11 @@ import { post } from 'utils/request';
 
 import {
   FETCH_INFO,
-  FETCH_ORGANIZATIONS,
-  FETCH_USER_ORGANIZATIONS,
-  IMPORT_ORGANIZATION,
+  FETCH_REPOS,
+  FETCH_USER_REPOS,
+  IMPORT_REPO,
   SAVE_INFO,
-  SEARCH_ORGANIZATIONS,
+  SEARCH_REPOS,
   UPDATE_INFO,
   UPVOTE_ISSUE,
 } from './constants';
@@ -23,16 +23,16 @@ import {
   fetchInfo,
   fetchInfoFailure,
   fetchInfoSuccess,
-  fetchOrganizationsFailure,
-  fetchOrganizationsSuccess,
-  fetchUserOrganizationsFailure,
-  fetchUserOrganizationsSuccess,
-  importOrganizationFailure,
-  importOrganizationSuccess,
+  fetchReposFailure,
+  fetchReposSuccess,
+  fetchUserReposFailure,
+  fetchUserReposSuccess,
+  importRepoFailure,
+  importRepoSuccess,
   saveInfoFailure,
   saveInfoSuccess,
-  searchOrganizationsFailure,
-  searchOrganizationsSuccess,
+  searchReposFailure,
+  searchReposSuccess,
   updateInfoFailure,
   updateInfoSuccess,
   upvoteIssueFailure,
@@ -91,7 +91,7 @@ export function* fetchInfoSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
     restProps.activity = getOrganizationActivity;
-    yield put(fetchInfoSuccess({ organization: restProps }));
+    yield put(fetchInfoSuccess({ repo: restProps }));
   } catch (error) {
     const { message } = error;
     const isNotFound = message === 'Not found';
@@ -99,7 +99,7 @@ export function* fetchInfoSaga({ payload }) {
   }
 }
 
-export function* fetchOrganizationsSaga() {
+export function* fetchReposSaga() {
   const query = `
     query {
       getOrganizations {
@@ -130,13 +130,13 @@ export function* fetchOrganizationsSaga() {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(fetchOrganizationsSuccess({ organizations }));
+    yield put(fetchReposSuccess({ repos: organizations }));
   } catch (error) {
-    yield put(fetchOrganizationsFailure({ error }));
+    yield put(fetchReposFailure({ error }));
   }
 }
 
-export function* fetchUserOrganizationsSaga() {
+export function* fetchUserReposSaga() {
   const query = `
     query {
       getUserRepos {
@@ -163,13 +163,13 @@ export function* fetchUserOrganizationsSaga() {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(fetchUserOrganizationsSuccess({ organizations }));
+    yield put(fetchUserReposSuccess({ repos: organizations }));
   } catch (error) {
-    yield put(fetchUserOrganizationsFailure());
+    yield put(fetchUserReposFailure());
   }
 }
 
-export function* importOrganizationSaga({ payload }) {
+export function* importRepoSaga({ payload }) {
   const { validatedUrl } = payload;
   const query = `
     mutation{
@@ -198,9 +198,9 @@ export function* importOrganizationSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(importOrganizationSuccess({ importOrganization: restProps }));
+    yield put(importRepoSuccess({ importRepo: restProps }));
   } catch (error) {
-    yield put(importOrganizationFailure({ error: { message: error } }));
+    yield put(importRepoFailure({ error: { message: error } }));
   }
 }
 
@@ -249,15 +249,15 @@ export function* saveInfoSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(fetchActiveUser());
-    yield put(push(`/organizations/detail/${id}`));
+    yield put(push(`/repos/detail/${id}`));
     yield put(saveInfoSuccess({ message }));
   } catch (error) {
-    yield put(push('/organizations'));
+    yield put(push('/repos'));
     yield put(saveInfoFailure({ error: { message: error } }));
   }
 }
 
-export function* searchOrganizationsSaga({ payload }) {
+export function* searchReposSaga({ payload }) {
   const { value } = payload;
   const query = `
     query {
@@ -278,11 +278,9 @@ export function* searchOrganizationsSaga({ payload }) {
     const {
       data: { searchOrganizations },
     } = yield call(post, '/graphql', graphql);
-    yield put(
-      searchOrganizationsSuccess({ organizations: searchOrganizations }),
-    );
+    yield put(searchReposSuccess({ repos: searchOrganizations }));
   } catch (error) {
-    yield put(searchOrganizationsFailure());
+    yield put(searchReposFailure());
   }
 }
 
@@ -377,11 +375,11 @@ export function* upvoteIssueSaga({ payload }) {
 
 export default function* watcherSaga() {
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
-  yield takeLatest(FETCH_ORGANIZATIONS, fetchOrganizationsSaga);
-  yield takeLatest(FETCH_USER_ORGANIZATIONS, fetchUserOrganizationsSaga);
-  yield takeLatest(IMPORT_ORGANIZATION, importOrganizationSaga);
+  yield takeLatest(FETCH_REPOS, fetchReposSaga);
+  yield takeLatest(FETCH_USER_REPOS, fetchUserReposSaga);
+  yield takeLatest(IMPORT_REPO, importRepoSaga);
   yield takeLatest(SAVE_INFO, saveInfoSaga);
-  yield takeLatest(SEARCH_ORGANIZATIONS, searchOrganizationsSaga);
+  yield takeLatest(SEARCH_REPOS, searchReposSaga);
   yield takeLatest(UPDATE_INFO, updateInfoSaga);
   yield takeLatest(UPVOTE_ISSUE, upvoteIssueSaga);
 }

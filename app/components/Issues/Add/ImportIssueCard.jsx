@@ -9,7 +9,7 @@ import {
   AddContainer,
   IconContainer,
   ImportCardWrapper,
-  OrganizationNameWrapper,
+  RepoNameWrapper,
   StyledIssueBody,
   StyledIssueContent,
   StyledIssueHeader,
@@ -42,7 +42,7 @@ const ImportCard = ({
     <ImportCardWrapper>
       <StyledIssueBody>
         <StyledIssueHeader>
-          <OrganizationNameWrapper>{organizationName}</OrganizationNameWrapper>
+          <RepoNameWrapper>{organizationName}</RepoNameWrapper>
           {moment.utc(createdDate).fromNow()}
         </StyledIssueHeader>
         <StyledIssueContent>

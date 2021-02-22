@@ -1,9 +1,9 @@
-import ImportOrganization from './Add/ImportOrganization';
-import ManualOrganization from './Add/ManualOrganization';
-import VerifyOrganization from './Add/VerifyOrganization';
+import ImportRepo from './Add/ImportRepo';
+import ManualRepo from './Add/ManualRepo';
+import VerifyRepo from './Add/VerifyRepo';
 
-export const addOrganizationDictionary = {
-  1: ImportOrganization,
-  2: ManualOrganization,
-  3: VerifyOrganization,
+export const addRepoDictionary = {
+  1: ImportRepo,
+  2: ManualRepo,
+  3: VerifyRepo,
 };

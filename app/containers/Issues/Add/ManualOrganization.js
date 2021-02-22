@@ -4,20 +4,17 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 import { PrimaryButton } from 'components/base_ui';
-import OrganizationForm from 'components/Issues/Add/OrganizationForm';
-import ExistingOrganizations from 'components/Issues/Add/ExistingOrganizations';
+import RepoForm from 'components/Issues/Add/RepoForm';
+import ExistingRepos from 'components/Issues/Add/ExistingRepos';
 
 import {
-  clearOrganization,
+  clearRepo,
   incrementStep,
   inputChange,
   updateIsManual,
-  updateOrganization,
+  updateRepo,
 } from '../actions';
-import {
-  makeSelectIssues,
-  makeSelectOrganizationsDisabled,
-} from '../selectors';
+import { makeSelectIssues, makeSelectReposDisabled } from '../selectors';
 import {
   BackLink,
   ButtonGroup,
@@ -25,22 +22,22 @@ import {
   StyledH3,
 } from './styledComponents';
 
-const ManualOrganization = ({
+const ManualRepo = ({
   activeUser,
   dispatchUpdateIsManual,
-  handleClearOrganization,
+  handleClearRepo,
   handleIncrementStep,
   handleInputChange,
-  handleUpdateOrganization,
+  handleUpdateRepo,
   isDisabled,
-  organizationData,
+  repoData,
 }) => {
   useEffect(() => {
     dispatchUpdateIsManual({ value: true });
-    document.getElementById('issueOrgManual').focus();
+    document.getElementById('issueRepoManual').focus();
   }, []);
 
-  const idSelected = organizationData.organizationId.value !== '';
+  const idSelected = repoData.organizationId.value !== '';
 
   const handleKeypress = ({ key }) => {
     if (key === 'Enter' && idSelected) {
@@ -49,24 +46,21 @@ const ManualOrganization = ({
   };
   return (
     <StyledFocusDiv
-      id="issueOrgManual"
+      id="issueRepoManual"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <StyledH3>Select an Organization</StyledH3>
-      <ExistingOrganizations
+      <StyledH3>Select a Repo</StyledH3>
+      <ExistingRepos
         activeUser={activeUser}
-        handleClearOrganization={handleClearOrganization}
+        handleClearRepo={handleClearRepo}
         handleInputChange={handleInputChange}
-        handleUpdateOrganization={handleUpdateOrganization}
-        organizationData={organizationData}
+        handleUpdateRepo={handleUpdateRepo}
+        repoData={repoData}
       />
-      <StyledH3>Or create a new Organization</StyledH3>
+      <StyledH3>Or create a new Repo</StyledH3>
 
-      <OrganizationForm
-        handleInputChange={handleInputChange}
-        organizationData={organizationData}
-      />
+      <RepoForm handleInputChange={handleInputChange} repoData={repoData} />
       <ButtonGroup>
         <BackLink
           onClick={() => handleIncrementStep({ step: 1, view: 'addIssue' })}
@@ -83,23 +77,23 @@ const ManualOrganization = ({
   );
 };
 
-ManualOrganization.propTypes = {
+ManualRepo.propTypes = {
   activeUser: T.object,
   dispatchUpdateIsManual: T.func,
-  handleClearOrganization: T.func,
+  handleClearRepo: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
-  handleUpdateOrganization: T.func,
+  handleUpdateRepo: T.func,
   isDisabled: T.bool,
-  organizationData: T.object,
+  repoData: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Issues
    */
-  isDisabled: makeSelectOrganizationsDisabled(),
-  organizationData: makeSelectIssues('organizationData'),
+  isDisabled: makeSelectReposDisabled(),
+  repoData: makeSelectIssues('repoData'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -108,14 +102,14 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Issues
      */
     dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
-    handleClearOrganization: payload => dispatch(clearOrganization(payload)),
+    handleClearRepo: payload => dispatch(clearRepo(payload)),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
-    handleUpdateOrganization: payload => dispatch(updateOrganization(payload)),
+    handleUpdateRepo: payload => dispatch(updateRepo(payload)),
   };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ManualOrganization);
+)(ManualRepo);

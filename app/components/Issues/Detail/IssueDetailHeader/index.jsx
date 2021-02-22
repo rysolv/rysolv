@@ -8,7 +8,7 @@ import { ConditionalRender, IconToolTip } from 'components/base_ui';
 import {
   IssueDetailContainer,
   NameWrapper,
-  OrganizationNameContainer,
+  RepoNameContainer,
   StyledBaseTextInput,
   StyledIssueDetail,
   StyledVerified,
@@ -40,8 +40,8 @@ const IssueDetailHeader = ({
     <Fragment>
       <IssueDetailContainer>
         <StyledIssueDetail>
-          <OrganizationNameContainer>
-            <Link to={`/organizations/detail/${organizationId}`}>
+          <RepoNameContainer>
+            <Link to={`/repos/detail/${organizationId}`}>
               {organizationName}
             </Link>
             {organizationVerified ? (
@@ -51,7 +51,7 @@ const IssueDetailHeader = ({
             ) : (
               ''
             )}
-          </OrganizationNameContainer>
+          </RepoNameContainer>
           <div>
             Issue opened{' '}
             {moment(createdDate)

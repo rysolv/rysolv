@@ -7,8 +7,8 @@ import {
   ContentWrapper,
   DescriptionWrapper,
   LogoWrapper,
-  OrganizationName,
-  OrganizationNameWrapper,
+  RepoName,
+  RepoNameWrapper,
   StyledIcon,
   StyledLink,
 } from './styledComponents';
@@ -19,7 +19,7 @@ const LinkIcon = iconDictionary('link');
 export class VerifyForm extends React.PureComponent {
   render() {
     const {
-      organizationData: {
+      repoData: {
         organizationDescription,
         organizationLogo,
         organizationName,
@@ -34,8 +34,8 @@ export class VerifyForm extends React.PureComponent {
             alt={organizationName.value}
             src={organizationLogo.value}
           />
-          <OrganizationNameWrapper>
-            <OrganizationName>{organizationName.value}</OrganizationName>
+          <RepoNameWrapper>
+            <RepoName>{organizationName.value}</RepoName>
             <ContentWrapper>
               <StyledLink
                 hasValue={!!organizationUrl.value}
@@ -54,7 +54,7 @@ export class VerifyForm extends React.PureComponent {
                 {organizationUrl.value}
               </StyledLink>
             </ContentWrapper>
-          </OrganizationNameWrapper>
+          </RepoNameWrapper>
         </ContentWrapper>
         <DescriptionWrapper hasValue={!!organizationDescription.value}>
           {organizationDescription.value}
@@ -64,6 +64,6 @@ export class VerifyForm extends React.PureComponent {
   }
 }
 
-VerifyForm.propTypes = { organizationData: T.object.isRequired };
+VerifyForm.propTypes = { repoData: T.object.isRequired };
 
 export default VerifyForm;

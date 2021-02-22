@@ -12,7 +12,7 @@ import {
   ContributorsList,
 } from '../styledComponents';
 
-const OrganizationContributorsTab = ({ contributors, handleNav }) => (
+const RepoContributorsTab = ({ contributors, handleNav }) => (
   <ContributorsList>
     {contributors.map(
       ({ firstName, id, isOwner, lastName, profilePic, username }) => (
@@ -44,9 +44,9 @@ const OrganizationContributorsTab = ({ contributors, handleNav }) => (
   </ContributorsList>
 );
 
-OrganizationContributorsTab.propTypes = {
+RepoContributorsTab.propTypes = {
   contributors: T.array,
   handleNav: T.func,
 };
 
-export default OrganizationContributorsTab;
+export default RepoContributorsTab;

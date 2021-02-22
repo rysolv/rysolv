@@ -6,7 +6,7 @@ const getFilterOptions = async () => {
     (SELECT COALESCE(ARRAY_AGG(DISTINCT(language)), '{}') FROM languages WHERE issue_id IS NOT NULL) AS "issueLanguages",
     (SELECT COALESCE(ARRAY_AGG(DISTINCT(language)), '{}') FROM languages WHERE user_id IS NOT NULL) AS "userLanguages",
     (SELECT COUNT(*) FROM issues WHERE funded_amount = 0 AND is_deleted = false AND open = true) AS "unfundedIssues",
-    (SELECT COALESCE(ARRAY_AGG(name), '{}') from organizations WHERE is_deleted = false) AS organizations,
+    (SELECT COALESCE(ARRAY_AGG(name), '{}') from organizations WHERE is_deleted = false) AS repos,
     (SELECT COUNT(*) FROM issues WHERE is_deleted = false AND open = false) AS "closedIssues",
     (SELECT COUNT(*) FROM issues WHERE funded_amount > 0 AND is_deleted = false AND open = true) AS "fundedIssues",
     (SELECT COALESCE(MAX(funded_amount), 0) FROM issues WHERE is_deleted = false) AS "maxBounty",

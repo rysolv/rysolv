@@ -33,9 +33,9 @@ const makeSelectIssuesLoading = prop =>
     loading => loading[prop],
   );
 
-const makeSelectOrganizationsDisabled = () =>
+const makeSelectReposDisabled = () =>
   createSelector(
-    makeSelectIssues('organizationData'),
+    makeSelectIssues('repoData'),
     data => {
       const tempData = omit(data, [
         'identiconId',
@@ -83,9 +83,9 @@ const makeSelectIssuesRequestBody = () =>
   createSelector(
     makeSelectIssues('isManual'),
     makeSelectIssues('issueData'),
-    makeSelectIssues('organizationData'),
-    (isManual, issueData, organizationData) => {
-      const formData = { ...issueData, ...organizationData };
+    makeSelectIssues('repoData'),
+    (isManual, issueData, repoData) => {
+      const formData = { ...issueData, ...repoData };
       const requestBody = Object.keys(formData).reduce((acc, field) => {
         acc[field] = formData[field].value;
         return acc;
@@ -113,5 +113,5 @@ export {
   makeSelectIssuesLoading,
   makeSelectIssuesRequestBody,
   makeSelectIssuesStep,
-  makeSelectOrganizationsDisabled,
+  makeSelectReposDisabled,
 };

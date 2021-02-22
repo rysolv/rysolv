@@ -5,24 +5,20 @@ import { extend, omit } from 'lodash';
 import { formatActivity } from 'utils/formatActivity';
 import { filterContributors, filterIssues } from 'utils/filterHelpers';
 
-import {
-  filterOrganizations,
-  organizeOrganizations,
-  searchOrganizations,
-} from './helpers';
+import { filterRepos, organizeRepos, searchRepos } from './helpers';
 import { initialState } from './reducer';
 
-const selectOrganizationsDomain = state => state.organizations || initialState;
+const selectReposDomain = state => state.repos || initialState;
 
-const makeSelectOrganizations = prop =>
+const makeSelectRepos = prop =>
   createSelector(
-    selectOrganizationsDomain,
+    selectReposDomain,
     substate => substate[prop],
   );
 
-const makeSelectOrganizationsDisabled = () =>
+const makeSelectReposDisabled = () =>
   createSelector(
-    makeSelectOrganizations('organizationData'),
+    makeSelectRepos('repoData'),
     data => {
       const tempData = omit(data, [
         'identiconId',
@@ -35,43 +31,34 @@ const makeSelectOrganizationsDisabled = () =>
     },
   );
 
-const makeSelectOrganizationsError = prop =>
+const makeSelectReposError = prop =>
   createSelector(
-    makeSelectOrganizations('error'),
+    makeSelectRepos('error'),
     error => error[prop],
   );
 
-const makeSelectOrganizationsFiltered = () =>
+const makeSelectReposFiltered = () =>
   createSelector(
-    makeSelectOrganizations('organizations'),
-    makeSelectOrganizations('filter'),
-    makeSelectOrganizations('search'),
-    (organizations, filter, { overviewInput }) => {
+    makeSelectRepos('repos'),
+    makeSelectRepos('filter'),
+    makeSelectRepos('search'),
+    (repos, filter, { overviewInput }) => {
       const { overview: overviewFilter } = filter;
-      const searchedOrganizations = searchOrganizations(
-        organizations,
-        overviewInput,
-      );
-      const organizedOrganizations = organizeOrganizations(
-        searchedOrganizations,
-        overviewFilter,
-      );
-      const filteredOrganizations = filterOrganizations(
-        organizedOrganizations,
-        filter,
-      );
-      return filteredOrganizations;
+      const searchedRepos = searchRepos(repos, overviewInput);
+      const organizedRepos = organizeRepos(searchedRepos, overviewFilter);
+      const filteredRepos = filterRepos(organizedRepos, filter);
+      return filteredRepos;
     },
   );
 
-const makeSelectOrganizationsFormattedData = () =>
+const makeSelectReposFormattedData = () =>
   createSelector(
-    makeSelectOrganizations('organization'),
-    makeSelectOrganizations('filter'),
-    makeSelectOrganizations('search'),
-    makeSelectOrganizations('shouldSearch'),
-    (organization, filter, { contributorInput, issueInput }) => {
-      const { activity, contributors, issues, ...restProps } = organization;
+    makeSelectRepos('repo'),
+    makeSelectRepos('filter'),
+    makeSelectRepos('search'),
+    makeSelectRepos('shouldSearch'),
+    (repo, filter, { contributorInput, issueInput }) => {
+      const { activity, contributors, issues, ...restProps } = repo;
       const newIssues = extend([], issues);
       let returnObj = {};
       if (contributors) {
@@ -102,16 +89,16 @@ const makeSelectOrganizationsFormattedData = () =>
     },
   );
 
-const makeSelectOrganizationsLoading = prop =>
+const makeSelectReposLoading = prop =>
   createSelector(
-    makeSelectOrganizations('loading'),
+    makeSelectRepos('loading'),
     loading => loading[prop],
   );
 
-const makeSelectOrganizationsRequestBody = () =>
+const makeSelectReposRequestBody = () =>
   createSelector(
-    makeSelectOrganizations('isManual'),
-    makeSelectOrganizations('organizationData'),
+    makeSelectRepos('isManual'),
+    makeSelectRepos('repoData'),
     (isManual, data) => {
       const requestBody = Object.keys(data).reduce((acc, field) => {
         acc[field] = data[field].value;
@@ -122,20 +109,20 @@ const makeSelectOrganizationsRequestBody = () =>
     },
   );
 
-const makeSelectOrganizationsStep = prop =>
+const makeSelectReposStep = prop =>
   createSelector(
-    makeSelectOrganizations('step'),
+    makeSelectRepos('step'),
     step => step[prop],
   );
 
-export default selectOrganizationsDomain;
+export default selectReposDomain;
 export {
-  makeSelectOrganizations,
-  makeSelectOrganizationsDisabled,
-  makeSelectOrganizationsError,
-  makeSelectOrganizationsFiltered,
-  makeSelectOrganizationsFormattedData,
-  makeSelectOrganizationsLoading,
-  makeSelectOrganizationsRequestBody,
-  makeSelectOrganizationsStep,
+  makeSelectRepos,
+  makeSelectReposDisabled,
+  makeSelectReposError,
+  makeSelectReposFiltered,
+  makeSelectReposFormattedData,
+  makeSelectReposLoading,
+  makeSelectReposRequestBody,
+  makeSelectReposStep,
 };

@@ -19,8 +19,8 @@ import {
   ButtonGroup,
   LanguageContainer,
   LogoWrapper,
-  OrganizationName,
-  OrganizationNameWrapper,
+  RepoName,
+  RepoNameWrapper,
   StyledFocusDiv,
   StyledFormHelperText,
   StyledH3,
@@ -39,7 +39,7 @@ const VerifyIssue = ({
   importSuccess,
   issueData,
   issueData: { issueLanguages },
-  organizationData: { organizationLogo, organizationName, organizationRepo },
+  repoData: { organizationLogo, organizationName, organizationRepo },
   requestBody,
 }) => {
   const [selectedType, setSelectedType] = useState('');
@@ -109,18 +109,18 @@ const VerifyIssue = ({
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <StyledH3 isFirstHeader>Organization</StyledH3>
+      <StyledH3 isFirstHeader>Repo</StyledH3>
       <Card>
         <LogoWrapper
           alt={organizationName.value}
           src={organizationLogo.value}
         />
-        <OrganizationNameWrapper>
-          <OrganizationName>{organizationName.value}</OrganizationName>
+        <RepoNameWrapper>
+          <RepoName>{organizationName.value}</RepoName>
           <StyledLink href={organizationRepo.value} target="_blank">
             {organizationRepo.value}
           </StyledLink>
-        </OrganizationNameWrapper>
+        </RepoNameWrapper>
       </Card>
       <StyledH3>Issue</StyledH3>
       <Card>
@@ -173,7 +173,7 @@ VerifyIssue.propTypes = {
   handleGenerateIdenticon: T.func,
   importSuccess: T.bool,
   issueData: T.object,
-  organizationData: T.object,
+  repoData: T.object,
   requestBody: T.object,
 };
 
@@ -182,7 +182,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   issueData: makeSelectIssues('issueData'),
-  organizationData: makeSelectIssues('organizationData'),
+  repoData: makeSelectIssues('repoData'),
   requestBody: makeSelectIssuesRequestBody(),
 });
 

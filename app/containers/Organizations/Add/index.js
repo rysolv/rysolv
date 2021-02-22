@@ -11,29 +11,29 @@ import injectReducer from 'utils/injectReducer';
 
 import {
   clearAlerts,
-  fetchUserOrganizations,
+  fetchUserRepos,
   incrementStep,
   resetState,
 } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
-  makeSelectOrganizations,
-  makeSelectOrganizationsLoading,
-  makeSelectOrganizationsStep,
+  makeSelectRepos,
+  makeSelectReposLoading,
+  makeSelectReposStep,
 } from '../selectors';
-import { addOrganizationDictionary } from '../stepDictionary';
+import { addRepoDictionary } from '../stepDictionary';
 import {
   AddWrapper,
   AddForm,
   StyledErrorSuccessBanner,
 } from './styledComponents';
 
-export class OrganizationsAdd extends React.PureComponent {
+export class ReposAdd extends React.PureComponent {
   componentDidMount() {
-    const { dispatchFetchUserOrganizations, handleIncrementStep } = this.props;
-    dispatchFetchUserOrganizations();
-    handleIncrementStep({ step: 1, view: 'addOrganization' });
+    const { dispatchFetchUserRepos, handleIncrementStep } = this.props;
+    dispatchFetchUserRepos();
+    handleIncrementStep({ step: 1, view: 'addRepo' });
   }
 
   componentWillUnmount() {
@@ -50,19 +50,19 @@ export class OrganizationsAdd extends React.PureComponent {
       handleIncrementStep,
       importSuccess,
       loading,
-      organizationData,
+      repoData,
       step,
     } = this.props;
     const isVerify = step === 3;
-    const StepToRender = addOrganizationDictionary[step];
+    const StepToRender = addRepoDictionary[step];
 
     if (importSuccess) {
-      handleIncrementStep({ step: 3, view: 'addOrganization' });
+      handleIncrementStep({ step: 3, view: 'addRepo' });
     }
 
     return (
       <AddWrapper>
-        <BackNav label="Back to Organizations" path="/organizations" />
+        <BackNav label="Back to Repos" path="/repos" />
         <StyledErrorSuccessBanner
           error={error}
           onClose={handleClearAlerts}
@@ -70,7 +70,7 @@ export class OrganizationsAdd extends React.PureComponent {
         />
         <AddForm isVerify={isVerify}>
           <AsyncRender
-            asyncData={{ organizationData }}
+            asyncData={{ repoData }}
             component={StepToRender}
             loading={loading}
             propsToPassDown={{ importSuccess }}
@@ -81,35 +81,35 @@ export class OrganizationsAdd extends React.PureComponent {
   }
 }
 
-OrganizationsAdd.propTypes = {
+ReposAdd.propTypes = {
   alerts: T.object,
-  dispatchFetchUserOrganizations: T.func,
+  dispatchFetchUserRepos: T.func,
   dispatchResetState: T.func.isRequired,
   handleClearAlerts: T.func,
   handleIncrementStep: T.func,
   importSuccess: T.bool,
   loading: T.bool.isRequired,
-  organizationData: T.object,
+  repoData: T.object,
   step: T.number.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
-   * Reducer : Organizations
+   * Reducer : Repos
    */
-  alerts: makeSelectOrganizations('alerts'),
-  importSuccess: makeSelectOrganizations('importSuccess'),
-  loading: makeSelectOrganizationsLoading('addOrganization'),
-  organizationData: makeSelectOrganizations('organizationData'),
-  step: makeSelectOrganizationsStep('addOrganization'),
+  alerts: makeSelectRepos('alerts'),
+  importSuccess: makeSelectRepos('importSuccess'),
+  loading: makeSelectReposLoading('addRepo'),
+  repoData: makeSelectRepos('repoData'),
+  step: makeSelectReposStep('addRepo'),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     /**
-     * Reducer : Organizations
+     * Reducer : Repos
      */
-    dispatchFetchUserOrganizations: () => dispatch(fetchUserOrganizations()),
+    dispatchFetchUserRepos: () => dispatch(fetchUserRepos()),
     dispatchResetState: () => dispatch(resetState()),
     handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
@@ -121,11 +121,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'organizations', reducer });
-const withSaga = injectSaga({ key: 'organizations', saga });
+const withReducer = injectReducer({ key: 'repos', reducer });
+const withSaga = injectSaga({ key: 'repos', saga });
 
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(OrganizationsAdd);
+)(ReposAdd);

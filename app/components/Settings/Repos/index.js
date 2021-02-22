@@ -5,7 +5,7 @@ import { BaseInputWithAdornment, ConditionalRender } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import EmptyComponent from './EmptyComponent';
-import OrganizationsComponent from './OrganizationsComponent';
+import ReposComponent from './ReposComponent';
 import {
   BaseInputWrapper,
   HeaderWrapper,
@@ -16,13 +16,13 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const UserOrganizations = ({ handleNav, organizations }) => {
-  const [selectedValue, setSelectedValue] = useState('Newest');
+const UserRepos = ({ handleNav, repos }) => {
   const [searchValue, setSearchValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState('Newest');
 
-  const filterOrganizations = () => {
+  const filterRepos = () => {
     // eslint-disable-next-line array-callback-return, consistent-return
-    const sortedArray = [...organizations].sort((a, b) => {
+    const sortedArray = [...repos].sort((a, b) => {
       if (selectedValue === 'Newest') {
         if (a.modifiedDate < b.modifiedDate) {
           return 1;
@@ -44,18 +44,18 @@ const UserOrganizations = ({ handleNav, organizations }) => {
     });
     return filteredArray;
   };
-  const filteredOrganizations = filterOrganizations();
+  const filteredRepos = filterRepos();
   return (
     <Fragment>
       <HeaderWrapper>
-        <StyledH3>Your Organizations</StyledH3>
+        <StyledH3>Your Repos</StyledH3>
       </HeaderWrapper>
       <SearchContainer>
         <BaseInputWrapper hasMargin={false}>
           <BaseInputWithAdornment
             adornmentComponent={SearchIcon}
             onChange={e => setSearchValue(e.target.value)}
-            placeholder="Find an organization..."
+            placeholder="Find a repo..."
             position="end"
             renderIcon
           />
@@ -67,24 +67,24 @@ const UserOrganizations = ({ handleNav, organizations }) => {
         />
       </SearchContainer>
       <ConditionalRender
-        Component={OrganizationsComponent}
+        Component={ReposComponent}
         FallbackComponent={EmptyComponent}
         propsToPassDown={{
           handleNav,
-          organizations: filteredOrganizations,
+          repos: filteredRepos,
           selectedValue,
           setSearchValue,
           setSelectedValue,
         }}
-        shouldRender={!!filteredOrganizations.length}
+        shouldRender={!!filteredRepos.length}
       />
     </Fragment>
   );
 };
 
-UserOrganizations.propTypes = {
+UserRepos.propTypes = {
   handleNav: T.func,
-  organizations: T.array,
+  repos: T.array,
 };
 
-export default UserOrganizations;
+export default UserRepos;

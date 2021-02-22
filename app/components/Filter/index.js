@@ -24,11 +24,11 @@ const Filter = ({
     fundedIssues,
     issueLanguages,
     maxBounty,
-    organizations,
+    repos,
     unfundedIssues,
     userLanguages,
   },
-  filterValues: { language, organization, price, status, type },
+  filterValues: { language, price, repo, status, type },
   handleChangeFilter,
   isMobile,
   view,
@@ -59,15 +59,15 @@ const Filter = ({
           />
         </Fragment>
       )}
-      {organization && (
+      {repo && (
         <Fragment>
-          <StyledLabel>Organization</StyledLabel>
+          <StyledLabel>Repo</StyledLabel>
           <BaseAutocomplete
             onChange={(e, value) =>
-              handleChangeFilter({ field: 'organization', value })
+              handleChangeFilter({ field: 'repo', value })
             }
-            options={organizations}
-            value={organization}
+            options={repos}
+            value={repo}
           />
         </Fragment>
       )}

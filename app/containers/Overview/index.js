@@ -12,12 +12,12 @@ import {
   changeIssueSearch,
 } from 'containers/Issues/actions';
 import {
-  changeOrganizationFilter,
-  changeOrganizationSearch,
+  changeRepoFilter,
+  changeRepoSearch,
 } from 'containers/Organizations/actions';
 import { changeUserFilter, changeUserSearch } from 'containers/Users/actions';
 import { makeSelectIssues } from 'containers/Issues/selectors';
-import { makeSelectOrganizations } from 'containers/Organizations/selectors';
+import { makeSelectRepos } from 'containers/Organizations/selectors';
 import Stats from 'containers/Stats';
 import { makeSelectUsers } from 'containers/Users/selectors';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
@@ -43,12 +43,12 @@ const Overview = ({
   dispatchResetState,
   filterIssueValues,
   filterOptions,
-  filterOrganizationValues,
+  filterRepoValues,
   filterUserValues,
   handleChangeIssueFilter,
   handleChangeIssueSearch,
-  handleChangeOrganizationFilter,
-  handleChangeOrganizationSearch,
+  handleChangeRepoFilter,
+  handleChangeRepoSearch,
   handleChangeUserFilter,
   handleChangeUserSearch,
   match,
@@ -71,11 +71,11 @@ const Overview = ({
       handleChangeFilter: handleChangeIssueFilter,
       view: 'issues',
     },
-    organizations: {
+    repos: {
       filterOptions,
-      filterValues: filterOrganizationValues,
-      handleChangeFilter: handleChangeOrganizationFilter,
-      view: 'organizations',
+      filterValues: filterRepoValues,
+      handleChangeFilter: handleChangeRepoFilter,
+      view: 'repos',
     },
     users: {
       filterOptions,
@@ -92,11 +92,11 @@ const Overview = ({
       placeholder: 'Find an issue...',
       values: ['Newest', 'Most Funded', 'Most Popular'],
     },
-    organizations: {
-      handleChangeFilter: handleChangeOrganizationFilter,
-      handleChangeSearch: handleChangeOrganizationSearch,
-      overviewFilter: filterOrganizationValues.overview,
-      placeholder: 'Find an organization...',
+    repos: {
+      handleChangeFilter: handleChangeRepoFilter,
+      handleChangeSearch: handleChangeRepoSearch,
+      overviewFilter: filterRepoValues.overview,
+      placeholder: 'Find a repo...',
       values: ['Newest', 'Most Funded'],
     },
     users: {
@@ -141,12 +141,12 @@ Overview.propTypes = {
   dispatchResetState: T.func.isRequired,
   filterIssueValues: T.object,
   filterOptions: T.object.isRequired,
-  filterOrganizationValues: T.object,
+  filterRepoValues: T.object,
   filterUserValues: T.object,
   handleChangeIssueFilter: T.func,
   handleChangeIssueSearch: T.func,
-  handleChangeOrganizationFilter: T.func,
-  handleChangeOrganizationSearch: T.func,
+  handleChangeRepoFilter: T.func,
+  handleChangeRepoSearch: T.func,
   handleChangeUserFilter: T.func,
   handleChangeUserSearch: T.func,
   match: T.object,
@@ -157,14 +157,14 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   filterIssueValues: makeSelectIssues('filter'),
-  /**
-   * Reducer : Organizations
-   */
-  filterOrganizationValues: makeSelectOrganizations('filter'),
   /*
    * Reducer : Overview
    */
   filterOptions: makeSelectOverview('filterOptions'),
+  /**
+   * Reducer : Repos
+   */
+  filterRepoValues: makeSelectRepos('filter'),
   /**
    * Reducer : Users
    */
@@ -183,17 +183,15 @@ function mapDispatchToProps(dispatch) {
     handleChangeIssueFilter: payload => dispatch(changeIssueFilter(payload)),
     handleChangeIssueSearch: payload => dispatch(changeIssueSearch(payload)),
     /*
-     * Reducer : Organizations
-     */
-    handleChangeOrganizationFilter: payload =>
-      dispatch(changeOrganizationFilter(payload)),
-    handleChangeOrganizationSearch: payload =>
-      dispatch(changeOrganizationSearch(payload)),
-    /*
      * Reducer : Overview
      */
     dispatchFetchFilterOptions: () => dispatch(fetchFilterOptions()),
     dispatchResetState: () => dispatch(resetState()),
+    /*
+     * Reducer : Repos
+     */
+    handleChangeRepoFilter: payload => dispatch(changeRepoFilter(payload)),
+    handleChangeRepoSearch: payload => dispatch(changeRepoSearch(payload)),
     /*
      * Reducer : Users
      */

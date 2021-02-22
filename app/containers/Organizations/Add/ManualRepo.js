@@ -12,10 +12,7 @@ import {
   inputChange,
   updateIsManual,
 } from '../actions';
-import {
-  makeSelectOrganizations,
-  makeSelectOrganizationsDisabled,
-} from '../selectors';
+import { makeSelectRepos, makeSelectReposDisabled } from '../selectors';
 import {
   BackLink,
   ButtonGroup,
@@ -23,22 +20,22 @@ import {
   StyledH3,
 } from './styledComponents';
 
-const ManualOrganization = ({
+const ManualRepo = ({
   dispatchUpdateIsManual,
   handleGenerateIdenticon,
   handleIncrementStep,
   handleInputChange,
   isDisabled,
-  organizationData,
+  repoData,
 }) => {
   useEffect(() => {
     dispatchUpdateIsManual({ value: true });
-    document.getElementById('organizationManual').focus();
+    document.getElementById('repoManual').focus();
   }, []);
 
   const handleNextStep = () => {
     handleGenerateIdenticon();
-    handleIncrementStep({ step: 3, view: 'addOrganization' });
+    handleIncrementStep({ step: 3, view: 'addRepo' });
   };
 
   const handleKeypress = ({ key }) => {
@@ -47,20 +44,15 @@ const ManualOrganization = ({
 
   return (
     <StyledFocusDiv
-      id="organizationManual"
+      id="repoManual"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <StyledH3>Add Organization</StyledH3>
-      <ManualForm
-        handleInputChange={handleInputChange}
-        organizationData={organizationData}
-      />
+      <StyledH3>Add Repo</StyledH3>
+      <ManualForm handleInputChange={handleInputChange} repoData={repoData} />
       <ButtonGroup>
         <BackLink
-          onClick={() =>
-            handleIncrementStep({ step: 1, view: 'addOrganization' })
-          }
+          onClick={() => handleIncrementStep({ step: 1, view: 'addRepo' })}
         >
           Back
         </BackLink>
@@ -74,27 +66,27 @@ const ManualOrganization = ({
   );
 };
 
-ManualOrganization.propTypes = {
+ManualRepo.propTypes = {
   dispatchUpdateIsManual: T.func,
   handleGenerateIdenticon: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   isDisabled: T.bool,
-  organizationData: T.object,
+  repoData: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
-   * Reducer : Organizations
+   * Reducer : Repos
    */
-  isDisabled: makeSelectOrganizationsDisabled(),
-  organizationData: makeSelectOrganizations('organizationData'),
+  isDisabled: makeSelectReposDisabled(),
+  repoData: makeSelectRepos('repoData'),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     /**
-     * Reducer : Organizations
+     * Reducer : Repos
      */
     dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
     handleGenerateIdenticon: () => dispatch(generateIdenticon()),
@@ -106,4 +98,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ManualOrganization);
+)(ManualRepo);

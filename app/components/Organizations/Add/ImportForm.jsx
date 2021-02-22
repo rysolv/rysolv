@@ -4,7 +4,7 @@ import T from 'prop-types';
 import { ConditionalRender } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
-import UserOrganizations from './UserOrganizations';
+import UserRepos from './UserRepos';
 
 import {
   ImportFormContainer,
@@ -23,13 +23,13 @@ const ImportForm = ({
   handleInputChange,
   handleSubmit,
   importError,
-  importOrganizationLoading,
+  importRepoLoading,
   isGithubVerified,
-  organizationData: { autoImportUrl, importUrl },
-  userOrganizations,
-  userOrganizationsLoading,
+  repoData: { autoImportUrl, importUrl },
+  useRepos,
+  userReposLoading,
 }) => {
-  useEffect(() => document.getElementById('organizationImport').focus(), []);
+  useEffect(() => document.getElementById('repoImport').focus(), []);
 
   useEffect(() => {
     const { error, value } = autoImportUrl;
@@ -47,7 +47,7 @@ const ImportForm = ({
   const onChangeHandler = e => {
     handleInputChange({
       field: 'importUrl',
-      form: 'organizationData',
+      form: 'repoData',
       value: e.target.value,
     });
   };
@@ -62,15 +62,15 @@ const ImportForm = ({
 
   return (
     <ImportFormContainer
-      id="organizationImport"
+      id="repoImport"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      Import GitHub Organization
+      Import GitHub Repo
       <br />
       <StyledBaseTextInputWithAdornment
         adornmentComponent={SearchIcon}
-        disabled={importOrganizationLoading}
+        disabled={importRepoLoading}
         error={!!importUrl.error}
         helperText={importUrl.error || ''}
         name="url"
@@ -84,12 +84,12 @@ const ImportForm = ({
         {importError.error ? importError.message : null}
       </StyledImportError>
       <ConditionalRender
-        Component={UserOrganizations}
+        Component={UserRepos}
         FallbackComponent={UnauthenticatedMessage}
         propsToPassDown={{
           handleInputChange,
-          userOrganizations,
-          userOrganizationsLoading,
+          useRepos,
+          userReposLoading,
         }}
         shouldRender={isGithubVerified}
       />
@@ -110,11 +110,11 @@ ImportForm.propTypes = {
   handleInputChange: T.func,
   handleSubmit: T.func,
   importError: T.object,
-  importOrganizationLoading: T.bool,
+  importRepoLoading: T.bool,
   isGithubVerified: T.bool,
-  organizationData: T.object,
-  userOrganizations: T.array,
-  userOrganizationsLoading: T.bool,
+  repoData: T.object,
+  useRepos: T.array,
+  userReposLoading: T.bool,
 };
 
 export default ImportForm;

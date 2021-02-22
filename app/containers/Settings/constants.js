@@ -62,8 +62,8 @@ export const settingViewDictionary = {
   attempting: 0,
   deposit: 1,
   issues: 2,
-  organizations: 3,
   pullrequests: 4,
+  repos: 3,
   watching: 0,
   withdrawal: 1,
 };

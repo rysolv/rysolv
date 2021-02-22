@@ -8,7 +8,7 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import { ConditionalRender } from 'components/base_ui';
 import NotFoundPage from 'components/NotFoundPage';
-import OrganizationDetailView from 'components/Organizations/Detail';
+import RepoDetailView from 'components/Organizations/Detail';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { openModalState } from 'containers/Main/actions';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
@@ -27,16 +27,16 @@ import {
 import reducer from '../reducer';
 import saga from '../saga';
 import {
-  makeSelectOrganizations,
-  makeSelectOrganizationsError,
-  makeSelectOrganizationsFormattedData,
-  makeSelectOrganizationsLoading,
+  makeSelectRepos,
+  makeSelectReposError,
+  makeSelectReposFormattedData,
+  makeSelectReposLoading,
 } from '../selectors';
 
-export class OrganizationsDetail extends React.PureComponent {
+export class ReposDetail extends React.PureComponent {
   componentDidMount() {
     window.scrollTo(0, 0);
-    document.title = 'Organization Detail';
+    document.title = 'Repo Detail';
     const {
       dispatchFetchInfo,
       match: {
@@ -57,7 +57,7 @@ export class OrganizationsDetail extends React.PureComponent {
       alerts,
       data,
       deviceView,
-      dispatchEditOrganization,
+      dispatchEditRepo,
       dispatchOpenModal,
       dispatchUpvote,
       error,
@@ -80,7 +80,7 @@ export class OrganizationsDetail extends React.PureComponent {
         Component={
           <AsyncRender
             asyncData={data}
-            component={OrganizationDetailView}
+            component={RepoDetailView}
             error={error}
             isRequiredData
             loading={loading}
@@ -88,7 +88,7 @@ export class OrganizationsDetail extends React.PureComponent {
               activeUser,
               alerts,
               deviceView,
-              dispatchEditOrganization,
+              dispatchEditRepo,
               dispatchOpenModal,
               filterValues,
               handleClearAlerts,
@@ -106,12 +106,12 @@ export class OrganizationsDetail extends React.PureComponent {
   }
 }
 
-OrganizationsDetail.propTypes = {
+ReposDetail.propTypes = {
   activeUser: T.object.isRequired,
   alerts: T.object.isRequired,
   data: T.object,
   deviceView: T.string.isRequired,
-  dispatchEditOrganization: T.func.isRequired,
+  dispatchEditRepo: T.func.isRequired,
   dispatchFetchInfo: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
@@ -135,15 +135,15 @@ const mapStateToProps = createStructuredSelector({
   activeUser: makeSelectAuth('activeUser'),
   isSignedIn: makeSelectAuth('isSignedIn'),
   /**
-   * Reducer : Organizations
+   * Reducer : Repos
    */
-  alerts: makeSelectOrganizations('alerts'),
-  data: makeSelectOrganizationsFormattedData(),
-  error: makeSelectOrganizationsError('fetchOrganization'),
-  filterValues: makeSelectOrganizations('filter'),
-  isNotFound: makeSelectOrganizations('isNotFound'),
-  loading: makeSelectOrganizationsLoading('fetchOrganization'),
-  upvoteLoading: makeSelectOrganizationsLoading('upvoteIssue'),
+  alerts: makeSelectRepos('alerts'),
+  data: makeSelectReposFormattedData(),
+  error: makeSelectReposError('fetchRepo'),
+  filterValues: makeSelectRepos('filter'),
+  isNotFound: makeSelectRepos('isNotFound'),
+  loading: makeSelectReposLoading('fetchRepo'),
+  upvoteLoading: makeSelectReposLoading('upvoteIssue'),
   /**
    * Reducer : ViewSize
    */
@@ -161,9 +161,9 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     /**
-     * Reducer : Organizations
+     * Reducer : Repos
      */
-    dispatchEditOrganization: payload => dispatch(updateInfo(payload)),
+    dispatchEditRepo: payload => dispatch(updateInfo(payload)),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     dispatchResetState: () => dispatch(resetState()),
     handleClearAlerts: () => dispatch(clearAlerts()),
@@ -180,11 +180,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'organizations', reducer });
-const withSaga = injectSaga({ key: 'organizations', saga });
+const withReducer = injectReducer({ key: 'repos', reducer });
+const withSaga = injectSaga({ key: 'repos', saga });
 
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(OrganizationsDetail);
+)(ReposDetail);

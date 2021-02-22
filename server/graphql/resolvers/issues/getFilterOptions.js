@@ -6,11 +6,11 @@ const getFilter = async () => {
   try {
     const filterOptions = await getFilterOptionsQuery();
 
-    // Format organizations and languages to fit the dropdown component
+    // Format repos and languages to fit the dropdown component
     filterOptions.issueLanguages = filterOptions.issueLanguages.map(el => ({
       value: el,
     }));
-    filterOptions.organizations = filterOptions.organizations.map(el => ({
+    filterOptions.repos = filterOptions.repos.map(el => ({
       value: el,
     }));
     filterOptions.userLanguages = filterOptions.userLanguages.map(el => ({

@@ -1,21 +1,21 @@
 import {
-  CHANGE_ORGANIZATION_FILTER,
-  CHANGE_ORGANIZATION_SEARCH,
+  CHANGE_REPO_FILTER,
+  CHANGE_REPO_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
-  FETCH_ORGANIZATIONS_FAILURE,
-  FETCH_ORGANIZATIONS_SUCCESS,
-  FETCH_ORGANIZATIONS,
-  FETCH_USER_ORGANIZATIONS_FAILURE,
-  FETCH_USER_ORGANIZATIONS_SUCCESS,
-  FETCH_USER_ORGANIZATIONS,
+  FETCH_REPOS_FAILURE,
+  FETCH_REPOS_SUCCESS,
+  FETCH_REPOS,
+  FETCH_USER_REPOS_FAILURE,
+  FETCH_USER_REPOS_SUCCESS,
+  FETCH_USER_REPOS,
   GENERATE_IDENTICON,
-  IMPORT_ORGANIZATION_FAILURE,
-  IMPORT_ORGANIZATION_SUCCESS,
-  IMPORT_ORGANIZATION,
+  IMPORT_REPO_FAILURE,
+  IMPORT_REPO_SUCCESS,
+  IMPORT_REPO,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
@@ -23,9 +23,9 @@ import {
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
-  SEARCH_ORGANIZATIONS_FAILURE,
-  SEARCH_ORGANIZATIONS_SUCCESS,
-  SEARCH_ORGANIZATIONS,
+  SEARCH_REPOS_FAILURE,
+  SEARCH_REPOS_SUCCESS,
+  SEARCH_REPOS,
   UPDATE_INFO_FAILURE,
   UPDATE_INFO_SUCCESS,
   UPDATE_INFO,
@@ -36,17 +36,17 @@ import {
   UPVOTE_ISSUE,
 } from './constants';
 
-export function changeOrganizationFilter(payload) {
+export function changeRepoFilter(payload) {
   return {
     payload,
-    type: CHANGE_ORGANIZATION_FILTER,
+    type: CHANGE_REPO_FILTER,
   };
 }
 
-export function changeOrganizationSearch(payload) {
+export function changeRepoSearch(payload) {
   return {
     payload,
-    type: CHANGE_ORGANIZATION_SEARCH,
+    type: CHANGE_REPO_SEARCH,
   };
 }
 
@@ -83,63 +83,61 @@ export function fetchInfo(payload) {
   };
 }
 
-export function fetchOrganizationsFailure(payload) {
+export function fetchReposFailure(payload) {
   return {
     payload,
-    type: FETCH_ORGANIZATIONS_FAILURE,
+    type: FETCH_REPOS_FAILURE,
   };
 }
 
-export function fetchOrganizationsSuccess(payload) {
+export function fetchReposSuccess(payload) {
   return {
     payload,
-    type: FETCH_ORGANIZATIONS_SUCCESS,
+    type: FETCH_REPOS_SUCCESS,
   };
 }
 
-export function fetchOrganizations() {
-  return {
-    type: FETCH_ORGANIZATIONS,
-  };
+export function fetchRepos() {
+  return { type: FETCH_REPOS };
 }
 
-export function fetchUserOrganizationsFailure() {
-  return { type: FETCH_USER_ORGANIZATIONS_FAILURE };
+export function fetchUserReposFailure() {
+  return { type: FETCH_USER_REPOS_FAILURE };
 }
 
-export function fetchUserOrganizationsSuccess(payload) {
+export function fetchUserReposSuccess(payload) {
   return {
     payload,
-    type: FETCH_USER_ORGANIZATIONS_SUCCESS,
+    type: FETCH_USER_REPOS_SUCCESS,
   };
 }
 
-export function fetchUserOrganizations() {
-  return { type: FETCH_USER_ORGANIZATIONS };
+export function fetchUserRepos() {
+  return { type: FETCH_USER_REPOS };
 }
 
 export function generateIdenticon() {
   return { type: GENERATE_IDENTICON };
 }
 
-export function importOrganizationFailure(payload) {
+export function importRepoFailure(payload) {
   return {
     payload,
-    type: IMPORT_ORGANIZATION_FAILURE,
+    type: IMPORT_REPO_FAILURE,
   };
 }
 
-export function importOrganizationSuccess(payload) {
+export function importRepoSuccess(payload) {
   return {
     payload,
-    type: IMPORT_ORGANIZATION_SUCCESS,
+    type: IMPORT_REPO_SUCCESS,
   };
 }
 
-export function importOrganization(payload) {
+export function importRepo(payload) {
   return {
     payload,
-    type: IMPORT_ORGANIZATION,
+    type: IMPORT_REPO,
   };
 }
 
@@ -189,21 +187,21 @@ export function saveInfo(payload) {
   };
 }
 
-export function searchOrganizationsFailure() {
-  return { type: SEARCH_ORGANIZATIONS_FAILURE };
+export function searchReposFailure() {
+  return { type: SEARCH_REPOS_FAILURE };
 }
 
-export function searchOrganizationsSuccess(payload) {
+export function searchReposSuccess(payload) {
   return {
     payload,
-    type: SEARCH_ORGANIZATIONS_SUCCESS,
+    type: SEARCH_REPOS_SUCCESS,
   };
 }
 
-export function searchOrganizations(payload) {
+export function searchRepos(payload) {
   return {
     payload,
-    type: SEARCH_ORGANIZATIONS,
+    type: SEARCH_REPOS,
   };
 }
 

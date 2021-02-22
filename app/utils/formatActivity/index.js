@@ -77,16 +77,12 @@ export const formatActivity = data => {
     : issueId
     ? 'issue'
     : organizationId
-    ? 'organization'
+    ? 'repo'
     : userId
     ? 'account with'
     : null;
 
-  const route = issueId
-    ? 'issues'
-    : organizationId
-    ? 'organizations'
-    : 'pullrequests';
+  const route = issueId ? 'issues' : organizationId ? 'repos' : 'pullrequests';
 
   const targetId = pullRequestId || issueId || organizationId;
 

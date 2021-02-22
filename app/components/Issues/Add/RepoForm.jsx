@@ -2,18 +2,18 @@ import React from 'react';
 import T from 'prop-types';
 
 import { MainTextInput } from 'components/base_ui';
-import { organizationDataDictionary } from 'containers/Organizations/constants';
+import { repoDataDictionary } from 'containers/Organizations/constants';
 
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 
-const OrganizationForm = ({ handleInputChange, organizationData }) => {
+const RepoForm = ({ handleInputChange, repoData }) => {
   const {
     organizationDescription,
     organizationId,
     organizationName,
     organizationRepo,
     organizationUrl,
-  } = organizationData;
+  } = repoData;
   const idSelected = organizationId.value !== '';
 
   return (
@@ -22,11 +22,11 @@ const OrganizationForm = ({ handleInputChange, organizationData }) => {
         disabled={idSelected}
         error={!!organizationName.error}
         helperText={organizationName.error}
-        label={organizationDataDictionary.name}
+        label={repoDataDictionary.name}
         onChange={e =>
           handleInputChange({
             field: 'organizationName',
-            form: 'organizationData',
+            form: 'repoData',
             value: e.target.value,
           })
         }
@@ -36,11 +36,11 @@ const OrganizationForm = ({ handleInputChange, organizationData }) => {
         disabled={idSelected}
         error={!!organizationDescription.error}
         helperText={organizationDescription.error}
-        label={organizationDataDictionary.description}
+        label={repoDataDictionary.description}
         onChange={e =>
           handleInputChange({
             field: 'organizationDescription',
-            form: 'organizationData',
+            form: 'repoData',
             value: e.target.value,
           })
         }
@@ -51,11 +51,11 @@ const OrganizationForm = ({ handleInputChange, organizationData }) => {
           disabled={idSelected}
           error={!!organizationUrl.error}
           helperText={organizationUrl.error}
-          label={organizationDataDictionary.organizationUrl}
+          label={repoDataDictionary.organizationUrl}
           onChange={e =>
             handleInputChange({
               field: 'organizationUrl',
-              form: 'organizationData',
+              form: 'repoData',
               value: e.target.value,
             })
           }
@@ -65,11 +65,11 @@ const OrganizationForm = ({ handleInputChange, organizationData }) => {
           disabled={idSelected}
           error={!!organizationRepo.error}
           helperText={organizationRepo.error}
-          label={organizationDataDictionary.repoUrl}
+          label={repoDataDictionary.repoUrl}
           onChange={e =>
             handleInputChange({
               field: 'organizationRepo',
-              form: 'organizationData',
+              form: 'repoData',
               value: e.target.value,
             })
           }
@@ -80,9 +80,9 @@ const OrganizationForm = ({ handleInputChange, organizationData }) => {
   );
 };
 
-OrganizationForm.propTypes = {
+RepoForm.propTypes = {
   handleInputChange: T.func.isRequired,
-  organizationData: T.object.isRequired,
+  repoData: T.object.isRequired,
 };
 
-export default OrganizationForm;
+export default RepoForm;

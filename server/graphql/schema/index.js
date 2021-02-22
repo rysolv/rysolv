@@ -60,7 +60,7 @@ module.exports = buildSchema(`
     fundedIssues: Int
     issueLanguages: [Object]
     maxBounty: Float
-    organizations: [Object]
+    repos: [Object]
     unfundedIssues: Int
     userLanguages: [Object]
   }
@@ -285,13 +285,13 @@ module.exports = buildSchema(`
     issues: [Object]
     lastName: String
     modifiedDate: Object
-    organizations: [Object]
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
     pullRequests: [String]
     rejectedPullRequests: Int
     rep: Int
+    repos: [Object]
     stackoverflowLink: String
     upvotes: [ID]
     username: String

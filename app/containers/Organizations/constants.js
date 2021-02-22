@@ -1,74 +1,62 @@
-export const CHANGE_ORGANIZATION_FILTER =
-  'app/Organizations/CHANGE_ORGANIZATION_FILTER';
-export const CHANGE_ORGANIZATION_SEARCH =
-  'app/Organizations/CHANGE_ORGANIZATION_SEARCH';
+export const CHANGE_REPO_FILTER = 'app/Repos/CHANGE_REPO_FILTER';
+export const CHANGE_REPO_SEARCH = 'app/Repos/CHANGE_REPO_SEARCH';
 
-export const CLEAR_ALERTS = 'app/Organizations/CLEAR_ALERTS';
+export const CLEAR_ALERTS = 'app/Repos/CLEAR_ALERTS';
 
-export const CLEAR_FORM = 'app/Organizations/CLEAR_FORM';
+export const CLEAR_FORM = 'app/Repos/CLEAR_FORM';
 
-export const FETCH_INFO = 'app/Organizations/FETCH_INFO';
-export const FETCH_INFO_FAILURE = 'app/Organizations/FETCH_INFO_FAILURE';
-export const FETCH_INFO_SUCCESS = 'app/Organizations/FETCH_INFO_SUCCESS';
+export const FETCH_INFO = 'app/Repos/FETCH_INFO';
+export const FETCH_INFO_FAILURE = 'app/Repos/FETCH_INFO_FAILURE';
+export const FETCH_INFO_SUCCESS = 'app/Repos/FETCH_INFO_SUCCESS';
 
-export const FETCH_ORGANIZATIONS = 'app/Organizations/FETCH_ORGANIZATIONS';
-export const FETCH_ORGANIZATIONS_FAILURE =
-  'app/Organizations/FETCH_ORGANIZATIONS_FAILURE';
-export const FETCH_ORGANIZATIONS_SUCCESS =
-  'app/Organizations/FETCH_ORGANIZATIONS_SUCCESS';
+export const FETCH_REPOS = 'app/Repos/FETCH_REPOS';
+export const FETCH_REPOS_FAILURE = 'app/Repos/FETCH_REPOS_FAILURE';
+export const FETCH_REPOS_SUCCESS = 'app/Repos/FETCH_REPOS_SUCCESS';
 
-export const FETCH_USER_ORGANIZATIONS =
-  'app/Organizations/FETCH_USER_ORGANIZATIONS';
-export const FETCH_USER_ORGANIZATIONS_FAILURE =
-  'app/Organizations/FETCH_USER_ORGANIZATIONS_FAILURE';
-export const FETCH_USER_ORGANIZATIONS_SUCCESS =
-  'app/Organizations/FETCH_USER_ORGANIZATIONS_SUCCESS';
+export const FETCH_USER_REPOS = 'app/Repos/FETCH_USER_REPOS';
+export const FETCH_USER_REPOS_FAILURE = 'app/Repos/FETCH_USER_REPOS_FAILURE';
+export const FETCH_USER_REPOS_SUCCESS = 'app/Repos/FETCH_USER_REPOS_SUCCESS';
 
-export const GENERATE_IDENTICON = 'app/Organizations/GENERATE_IDENTICON';
+export const GENERATE_IDENTICON = 'app/Repos/GENERATE_IDENTICON';
 
-export const IMPORT_ORGANIZATION = 'app/organizations/IMPORT_ORGANIZATION';
-export const IMPORT_ORGANIZATION_FAILURE =
-  'app/organizations/IMPORT_ORGANIZATION_FAILURE';
-export const IMPORT_ORGANIZATION_SUCCESS =
-  'app/organizations/IMPORT_ORGANIZATION_SUCCESS';
+export const IMPORT_REPO = 'app/Repos/IMPORT_REPO';
+export const IMPORT_REPO_FAILURE = 'app/Repos/IMPORT_REPO_FAILURE';
+export const IMPORT_REPO_SUCCESS = 'app/Repos/IMPORT_REPO_SUCCESS';
 
-export const INCREMENT_STEP = 'app/Organizations/INCREMENT_STEP';
+export const INCREMENT_STEP = 'app/Repos/INCREMENT_STEP';
 
-export const INPUT_CHANGE = 'app/Organizations/INPUT_CHANGE';
+export const INPUT_CHANGE = 'app/Repos/INPUT_CHANGE';
 
-export const INPUT_ERROR = 'app/Organizations/INPUT_ERROR';
+export const INPUT_ERROR = 'app/Repos/INPUT_ERROR';
 
-export const RESET_STATE = 'app/Organizations/RESET_STATE';
+export const RESET_STATE = 'app/Repos/RESET_STATE';
 
-export const SAVE_INFO = 'app/Organizations/SAVE_INFO';
-export const SAVE_INFO_FAILURE = 'app/Organizations/SAVE_INFO_FAILURE';
-export const SAVE_INFO_SUCCESS = 'app/Organizations/SAVE_INFO_SUCCESS';
+export const SAVE_INFO = 'app/Repos/SAVE_INFO';
+export const SAVE_INFO_FAILURE = 'app/Repos/SAVE_INFO_FAILURE';
+export const SAVE_INFO_SUCCESS = 'app/Repos/SAVE_INFO_SUCCESS';
 
-export const SEARCH_ORGANIZATIONS = 'app/Organizations/SEARCH_ORGANIZATIONS';
-export const SEARCH_ORGANIZATIONS_FAILURE =
-  'app/Organizations/SEARCH_ORGANIZATIONS_FAILURE';
-export const SEARCH_ORGANIZATIONS_SUCCESS =
-  'app/Organizations/SEARCH_ORGANIZATIONS_SUCCESS';
+export const SEARCH_REPOS = 'app/Repos/SEARCH_REPOS';
+export const SEARCH_REPOS_FAILURE = 'app/Repos/SEARCH_REPOS_FAILURE';
+export const SEARCH_REPOS_SUCCESS = 'app/Repos/SEARCH_REPOS_SUCCESS';
 
-export const UPDATE_INFO = 'app/Organizations/UPDATE_INFO';
-export const UPDATE_INFO_FAILURE = 'app/Organizations/UPDATE_INFO_FAILURE';
-export const UPDATE_INFO_SUCCESS = 'app/Organizations/UPDATE_INFO_SUCCESS';
+export const UPDATE_INFO = 'app/Repos/UPDATE_INFO';
+export const UPDATE_INFO_FAILURE = 'app/Repos/UPDATE_INFO_FAILURE';
+export const UPDATE_INFO_SUCCESS = 'app/Repos/UPDATE_INFO_SUCCESS';
 
-export const UPDATE_IS_MANUAL = 'app/Organizations/UPDATE_IS_MANUAL';
+export const UPDATE_IS_MANUAL = 'app/Repos/UPDATE_IS_MANUAL';
 
-export const UPVOTE_ISSUE = 'app/Organizations/UPVOTE_ISSUE';
-export const UPVOTE_ISSUE_FAILURE = 'app/Organizations/UPVOTE_ISSUE_FAILURE';
-export const UPVOTE_ISSUE_SUCCESS = 'app/Organizations/UPVOTE_ISSUE_SUCCESS';
-export const UPVOTE_ISSUE_TEMP = 'app/Organizations/UPVOTE_ISSUE_TEMP';
+export const UPVOTE_ISSUE = 'app/Repos/UPVOTE_ISSUE';
+export const UPVOTE_ISSUE_FAILURE = 'app/Repos/UPVOTE_ISSUE_FAILURE';
+export const UPVOTE_ISSUE_SUCCESS = 'app/Repos/UPVOTE_ISSUE_SUCCESS';
+export const UPVOTE_ISSUE_TEMP = 'app/Repos/UPVOTE_ISSUE_TEMP';
 
-export const organizationDataDictionary = {
-  organizationUrl: 'Organization URL (optional)',
-  description: 'Organization Description',
-  repoUrl: 'Repository URL',
-  logo: 'Logo',
+export const repoDataDictionary = {
+  description: 'Repo Description',
   issues: 'Issues',
-  name: 'Organization Name',
+  logo: 'Logo',
+  name: 'Repo Name',
+  organizationUrl: 'Organization Url (optional)',
+  repoUrl: 'Repository Url',
 };
 
-export const emptyCardMessage =
-  'There are no organizations matching the search terms.';
+export const emptyCardMessage = 'There are no repos matching the search terms.';

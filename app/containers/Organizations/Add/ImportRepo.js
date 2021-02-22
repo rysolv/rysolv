@@ -6,24 +6,23 @@ import { connect } from 'react-redux';
 import AsyncRender from 'components/AsyncRender';
 import ImportForm from 'components/Organizations/Add/ImportForm';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { validateOrganizationUrl } from 'utils/validate';
+import { validateRepoUrl } from 'utils/validate';
 
 import {
   clearAlerts,
-  importOrganization,
+  importRepo,
   incrementStep,
   inputChange,
   inputError,
   updateIsManual,
 } from '../actions';
 import {
-  makeSelectOrganizations,
-  makeSelectOrganizationsLoading,
-  makeSelectOrganizationsError,
+  makeSelectRepos,
+  makeSelectReposError,
+  makeSelectReposLoading,
 } from '../selectors';
 
-// eslint-disable-next-line react/prefer-stateless-function
-export class ImportOrganization extends React.PureComponent {
+export class ImportRepo extends React.PureComponent {
   componentDidMount() {
     const { dispatchUpdateIsManual } = this.props;
     dispatchUpdateIsManual({ value: false });
@@ -37,28 +36,28 @@ export class ImportOrganization extends React.PureComponent {
   render() {
     const {
       activeUser,
-      dispatchImportOrganization,
+      dispatchImportRepo,
       dispatchInputError,
       handleIncrementStep,
       handleInputChange,
       importError,
-      importOrganizationLoading,
-      organizationData,
-      userOrganizations,
-      userOrganizationsLoading,
+      importRepoLoading,
+      repoData,
+      userRepos,
+      userReposLoading,
     } = this.props;
     const { isGithubVerified } = activeUser || {};
 
     const handleSubmit = () => {
-      const { autoImportUrl, importUrl } = organizationData;
+      const { autoImportUrl, importUrl } = repoData;
       const url =
         autoImportUrl.value !== '' ? autoImportUrl.value : importUrl.value;
-      const { error, message, validatedUrl } = validateOrganizationUrl(url);
+      const { error, message, validatedUrl } = validateRepoUrl(url);
 
       if (error) {
         dispatchInputError({ errors: { importUrl: message } });
       } else {
-        dispatchImportOrganization({ validatedUrl });
+        dispatchImportRepo({ validatedUrl });
       }
     };
 
@@ -66,36 +65,36 @@ export class ImportOrganization extends React.PureComponent {
       <AsyncRender
         component={ImportForm}
         isRequiredData={false}
-        loading={importOrganizationLoading}
+        loading={importRepoLoading}
         propsToPassDown={{
           handleIncrementStep,
           handleInputChange,
           handleSubmit,
           importError,
-          importOrganizationLoading,
+          importRepoLoading,
           isGithubVerified,
-          organizationData,
-          userOrganizations,
-          userOrganizationsLoading,
+          repoData,
+          userRepos,
+          userReposLoading,
         }}
       />
     );
   }
 }
 
-ImportOrganization.propTypes = {
+ImportRepo.propTypes = {
   activeUser: T.object.isRequired,
-  dispatchImportOrganization: T.func,
+  dispatchImportRepo: T.func,
   dispatchInputError: T.func,
   dispatchUpdateIsManual: T.func,
   handleClearAlerts: T.func,
   handleIncrementStep: T.func,
   handleInputChange: T.func,
   importError: T.object,
-  importOrganizationLoading: T.bool,
-  organizationData: T.object,
-  userOrganizations: T.array,
-  userOrganizationsLoading: T.bool,
+  importRepoLoading: T.bool,
+  repoData: T.object,
+  userRepos: T.array,
+  userReposLoading: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -104,24 +103,21 @@ const mapStateToProps = createStructuredSelector({
    */
   activeUser: makeSelectAuth('activeUser'),
   /**
-   * Reducer : Organizations
+   * Reducer : Repos
    */
-  importError: makeSelectOrganizationsError('importOrganization'),
-  importOrganizationLoading: makeSelectOrganizationsLoading(
-    'importOrganization',
-  ),
-  organizationData: makeSelectOrganizations('organizationData'),
-  userOrganizations: makeSelectOrganizations('userOrganizations'),
-  userOrganizationsLoading: makeSelectOrganizationsLoading('userOrganizations'),
+  importError: makeSelectReposError('importRepo'),
+  importRepoLoading: makeSelectReposLoading('importRepo'),
+  repoData: makeSelectRepos('repoData'),
+  userRepos: makeSelectRepos('userRepos'),
+  userReposLoading: makeSelectReposLoading('userRepos'),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     /**
-     * Reducer : Organizations
+     * Reducer : Repos
      */
-    dispatchImportOrganization: payload =>
-      dispatch(importOrganization(payload)),
+    dispatchImportRepo: payload => dispatch(importRepo(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchUpdateIsManual: payload => dispatch(updateIsManual(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
@@ -133,4 +129,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ImportOrganization);
+)(ImportRepo);

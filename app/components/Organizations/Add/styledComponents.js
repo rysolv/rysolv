@@ -114,13 +114,13 @@ export const MessageWrapper = styled.div`
   }
 `;
 
-export const OrganizationName = styled.div`
+export const RepoName = styled.div`
   color: ${textColor};
   font-size: ${cardHeaderFontSize};
   margin: 0.5rem 0;
 `;
 
-export const OrganizationNameWrapper = styled.div`
+export const RepoNameWrapper = styled.div`
   align-self: center;
 `;
 
@@ -185,11 +185,11 @@ export const StyledLinkContainer = styled.div`
   vertical-align: middle;
 `;
 
-export const StyledOrganizationBody = styled.div`
+export const StyledRepoBody = styled.div`
   width: 100%;
 `;
 
-export const StyledOrganizationHeader = styled.div`
+export const StyledRepoHeader = styled.div`
   align-items: center;
   color: ${textColor};
   display: flex;
@@ -199,7 +199,7 @@ export const StyledOrganizationHeader = styled.div`
   width: 100%;
 `;
 
-export const StyledOrganizationTitle = styled.div`
+export const StyledRepoTitle = styled.div`
   align-self: flex-start;
   display: flex;
   font-size: ${defaultFontSize};
@@ -218,7 +218,7 @@ export const TextWrapper = styled.div`
   margin-top: 2rem;
 `;
 
-export const UserOrganizationsContainer = styled.div`
+export const UserReposContainer = styled.div`
   ${styledScrollbar}
   max-height: 75rem;
   overflow-y: auto;

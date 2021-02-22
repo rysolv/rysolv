@@ -17,7 +17,7 @@ export const initialState = {
     fundedIssues: 0,
     issueLanguages: [],
     maxBounty: 100,
-    organizations: [],
+    repos: [],
     unfundedIssues: 0,
     userLanguages: [],
   },

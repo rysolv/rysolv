@@ -10,9 +10,9 @@ import {
   IconContainer,
   ImportCardWrapper,
   StyledLinkContainer,
-  StyledOrganizationBody,
-  StyledOrganizationHeader,
-  StyledOrganizationTitle,
+  StyledRepoBody,
+  StyledRepoHeader,
+  StyledRepoTitle,
 } from './styledComponents';
 
 const AddBox = iconDictionary('addBox');
@@ -29,7 +29,7 @@ const ImportCard = ({
     if (!exists) {
       handleInputChange({
         field: 'autoImportUrl',
-        form: 'organizationData',
+        form: 'repoData',
         value: organizationUrl,
       });
     }
@@ -37,19 +37,19 @@ const ImportCard = ({
 
   return (
     <ImportCardWrapper>
-      <StyledOrganizationBody>
-        <StyledOrganizationHeader>
+      <StyledRepoBody>
+        <StyledRepoHeader>
           {moment.utc(modifiedDate).fromNow()}
-        </StyledOrganizationHeader>
-        <StyledOrganizationTitle>
+        </StyledRepoHeader>
+        <StyledRepoTitle>
           <IconContainer>{GithubIcon}</IconContainer>
           <StyledLinkContainer>
             <a href={organizationUrl} target="_blank">
               {name}
             </a>
           </StyledLinkContainer>
-        </StyledOrganizationTitle>
-      </StyledOrganizationBody>
+        </StyledRepoTitle>
+      </StyledRepoBody>
       <IconToolTip disabled={!exists} toolTipText="Already imported">
         <AddContainer disabled={exists} onClick={handleImport}>
           {AddBox}

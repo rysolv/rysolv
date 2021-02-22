@@ -68,9 +68,9 @@ export const NameLink = styled(Link)`
   }
 `;
 
-export const OrganizationCardItem = styled.div`
-  display: inline-flex;
+export const RepoCardItem = styled.div`
   align-items: center;
+  display: inline-flex;
 `;
 
 export const SettingsContainer = styled.div`
@@ -103,7 +103,7 @@ export const StyledListItem = styled.li`
   }
 `;
 
-export const StyledOrganizationCard = styled.div`
+export const StyledRepoCard = styled.div`
   min-height: 50rem;
 `;
 

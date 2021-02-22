@@ -4,8 +4,8 @@ import { intersection, isEmpty } from 'lodash';
 export const filterIssues = (issues, filterParams) => {
   const {
     language: languageFilter,
-    organization: organizationFilter,
     price: priceFilter,
+    repo: repoFilter,
     status: { closed, funded, unfunded },
     type: { bug, feature },
   } = filterParams;
@@ -20,7 +20,7 @@ export const filterIssues = (issues, filterParams) => {
       const formattedLanguageFilter = languageFilter.map(({ value }) =>
         value.toLowerCase(),
       );
-      const formattedOrganizationFilter = organizationFilter.map(({ value }) =>
+      const formattedRepoFilter = repoFilter.map(({ value }) =>
         value.toLowerCase(),
       );
       if (
@@ -32,8 +32,8 @@ export const filterIssues = (issues, filterParams) => {
         return false;
       }
       if (
-        !isEmpty(formattedOrganizationFilter) &&
-        !formattedOrganizationFilter.includes(organizationName.toLowerCase())
+        !isEmpty(formattedRepoFilter) &&
+        !formattedRepoFilter.includes(organizationName.toLowerCase())
       ) {
         return false;
       }

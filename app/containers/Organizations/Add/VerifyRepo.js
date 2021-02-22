@@ -12,10 +12,7 @@ import {
   incrementStep,
   saveInfo,
 } from '../actions';
-import {
-  makeSelectOrganizations,
-  makeSelectOrganizationsRequestBody,
-} from '../selectors';
+import { makeSelectRepos, makeSelectReposRequestBody } from '../selectors';
 import {
   BackLink,
   ButtonGroup,
@@ -23,24 +20,24 @@ import {
   StyledH3,
 } from './styledComponents';
 
-const VerifyOrganization = ({
+const VerifyRepo = ({
   dispatchClearForm,
   dispatchIncrementStep,
   dispatchSaveInfo,
   handleGenerateIdenticon,
   importSuccess,
-  organizationData,
-  organizationData: { organizationLogo },
+  repoData,
+  repoData: { organizationLogo },
   requestBody,
 }) => {
   useEffect(() => {
     if (!organizationLogo.value) handleGenerateIdenticon();
-    document.getElementById('organizationAdd').focus();
+    document.getElementById('repoAdd').focus();
   }, []);
 
   const cancelImport = () => {
     dispatchClearForm();
-    dispatchIncrementStep({ step: 1, view: 'addOrganization' });
+    dispatchIncrementStep({ step: 1, view: 'addRepo' });
   };
   const handleKeypress = ({ key }) => {
     if (key === 'Enter') {
@@ -52,24 +49,22 @@ const VerifyOrganization = ({
   };
   return (
     <StyledFocusDiv
-      id="organizationAdd"
+      id="repoAdd"
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <StyledH3 isFirstHeader>Organization</StyledH3>
+      <StyledH3 isFirstHeader>Repo</StyledH3>
       <Card>
-        <VerifyForm organizationData={organizationData} />
+        <VerifyForm repoData={repoData} />
       </Card>
       <ButtonGroup>
         {importSuccess ? (
           <BackLink onClick={() => cancelImport()}>Cancel</BackLink>
         ) : (
           <BackLink
-            onClick={() =>
-              dispatchIncrementStep({ step: 2, view: 'addOrganization' })
-            }
+            onClick={() => dispatchIncrementStep({ step: 2, view: 'addRepo' })}
           >
-            Edit Org
+            Edit Repo
           </BackLink>
         )}
         <PrimaryAsyncButton label="Submit" onClick={handleSaveInfo} />
@@ -78,28 +73,28 @@ const VerifyOrganization = ({
   );
 };
 
-VerifyOrganization.propTypes = {
+VerifyRepo.propTypes = {
   dispatchClearForm: T.func,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
   handleGenerateIdenticon: T.func,
   importSuccess: T.bool,
-  organizationData: T.object,
+  repoData: T.object,
   requestBody: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
-   * Reducer : Organizations
+   * Reducer : Repos
    */
-  organizationData: makeSelectOrganizations('organizationData'),
-  requestBody: makeSelectOrganizationsRequestBody(),
+  repoData: makeSelectRepos('repoData'),
+  requestBody: makeSelectReposRequestBody(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     /**
-     * Reducer : Organizations
+     * Reducer : Repos
      */
     dispatchClearForm: () => dispatch(clearForm()),
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
@@ -111,4 +106,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(VerifyOrganization);
+)(VerifyRepo);

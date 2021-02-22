@@ -2,27 +2,27 @@ import React from 'react';
 import T from 'prop-types';
 
 import { MainTextInput } from 'components/base_ui';
-import { organizationDataDictionary } from 'containers/Organizations/constants';
+import { repoDataDictionary } from 'containers/Organizations/constants';
 
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 
-const ManualForm = ({ organizationData, handleInputChange }) => {
+const ManualForm = ({ handleInputChange, repoData }) => {
   const {
     organizationDescription,
     organizationName,
     organizationRepo,
     organizationUrl,
-  } = organizationData;
+  } = repoData;
   return (
     <InputFormWrapper>
       <MainTextInput
         error={!!organizationName.error}
         helperText={organizationName.error}
-        label={organizationDataDictionary.name}
+        label={repoDataDictionary.name}
         onChange={e =>
           handleInputChange({
             field: 'organizationName',
-            form: 'organizationData',
+            form: 'repoData',
             value: e.target.value,
           })
         }
@@ -31,11 +31,11 @@ const ManualForm = ({ organizationData, handleInputChange }) => {
       <MainTextInput
         error={!!organizationDescription.error}
         helperText={organizationDescription.error}
-        label={organizationDataDictionary.description}
+        label={repoDataDictionary.description}
         onChange={e =>
           handleInputChange({
             field: 'organizationDescription',
-            form: 'organizationData',
+            form: 'repoData',
             value: e.target.value,
           })
         }
@@ -45,11 +45,11 @@ const ManualForm = ({ organizationData, handleInputChange }) => {
         <MainTextInput
           error={!!organizationUrl.error}
           helperText={organizationUrl.error}
-          label={organizationDataDictionary.organizationUrl}
+          label={repoDataDictionary.organizationUrl}
           onChange={e =>
             handleInputChange({
               field: 'organizationUrl',
-              form: 'organizationData',
+              form: 'repoData',
               value: e.target.value,
             })
           }
@@ -58,11 +58,11 @@ const ManualForm = ({ organizationData, handleInputChange }) => {
         <MainTextInput
           error={!!organizationRepo.error}
           helperText={organizationRepo.error}
-          label={organizationDataDictionary.repoUrl}
+          label={repoDataDictionary.repoUrl}
           onChange={e =>
             handleInputChange({
               field: 'organizationRepo',
-              form: 'organizationData',
+              form: 'repoData',
               value: e.target.value,
             })
           }
@@ -75,7 +75,7 @@ const ManualForm = ({ organizationData, handleInputChange }) => {
 
 ManualForm.propTypes = {
   handleInputChange: T.func.isRequired,
-  organizationData: T.object.isRequired,
+  repoData: T.object.isRequired,
 };
 
 export default ManualForm;
