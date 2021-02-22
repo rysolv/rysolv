@@ -57,6 +57,7 @@ export const initialState = {
   },
   error: {
     fetchRepo: false,
+    importRepo: { error: false, message: '' },
     repos: false,
     userRepos: false,
   },
@@ -180,7 +181,7 @@ const reposReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_USER_REPOS_SUCCESS: {
       const { repos } = payload;
-      draft.loading.useRepos = false;
+      draft.loading.userRepos = false;
       draft.useRepos = repos;
       break;
     }

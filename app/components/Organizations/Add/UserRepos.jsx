@@ -6,7 +6,7 @@ import AsyncRender from 'components/AsyncRender';
 import ImportRepoCard from './ImportRepoCard';
 import { TextWrapper, UserReposContainer } from './styledComponents';
 
-const ImportForm = ({ handleInputChange, userRepos, userReposLoading }) => {
+const UserRepos = ({ handleInputChange, userRepos, userReposLoading }) => {
   const UserIssueList =
     userRepos &&
     userRepos.map(({ exists, modifiedDate, name, organizationUrl }) => (
@@ -46,10 +46,10 @@ const ImportForm = ({ handleInputChange, userRepos, userReposLoading }) => {
   );
 };
 
-ImportForm.propTypes = {
+UserRepos.propTypes = {
   handleInputChange: T.func,
   userRepos: T.array,
   userReposLoading: T.bool,
 };
 
-export default ImportForm;
+export default UserRepos;

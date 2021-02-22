@@ -62,7 +62,7 @@ const createOrganization = async (
 
     // add organization to user
     await updateUserArray({
-      column: 'organizations',
+      column: 'repos',
       data: result.id,
       userId: result.ownerId,
     });

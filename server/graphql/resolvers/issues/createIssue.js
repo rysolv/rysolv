@@ -108,7 +108,7 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
 
     // add organization to user list
     await updateUserArray({
-      column: 'organizations',
+      column: 'repos',
       data: issueInput.organizationId,
       userId,
     });
