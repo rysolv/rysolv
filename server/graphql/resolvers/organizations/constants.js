@@ -14,7 +14,7 @@ const existingOrganizationError = `This organization already exists.`;
 
 const getOrganizationsError = `Something went wrong when getting organizations.`;
 
-const importOrganizationError = `Something went wrong when importing this organization.`;
+const importRepoError = `Something went wrong when importing this repo.`;
 
 const oneOrganizationError = `Something went wrong when getting this organization.`;
 
@@ -27,7 +27,7 @@ module.exports = {
   createOrganizationError,
   createOrganizationSuccess,
   getOrganizationsError,
-  importOrganizationError,
+  importRepoError,
   oneOrganizationError,
   transformRepoError,
   transformRepoSuccess,
