@@ -44,9 +44,9 @@ export function* fetchInfoSaga({ payload }) {
   const { itemId } = payload;
   const query = `
     query {
-      oneOrganization(id: "${itemId}") {
+      oneRepo(id: "${itemId}") {
         __typename
-        ... on Organization {
+        ... on Repo {
           contributors
           createdDate
           description
@@ -65,17 +65,17 @@ export function* fetchInfoSaga({ payload }) {
           message
         }
       }
-      getOrganizationActivity(organizationId: "${itemId}") {
+      getRepoActivity(repoId: "${itemId}") {
         actionType
         activityId
         createdDate
         fundedValue
         issueId
         issueName
-        organizationId
-        organizationName
         profilePic
         pullRequestId
+        repoId
+        repoName
         userId
         username
       }
@@ -85,12 +85,12 @@ export function* fetchInfoSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        getOrganizationActivity,
-        oneOrganization: { __typename, message, ...restProps },
+        getRepoActivity,
+        oneRepo: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
-    restProps.activity = getOrganizationActivity;
+    restProps.activity = getRepoActivity;
     yield put(fetchInfoSuccess({ repo: restProps }));
   } catch (error) {
     const { message } = error;
@@ -102,10 +102,10 @@ export function* fetchInfoSaga({ payload }) {
 export function* fetchReposSaga() {
   const query = `
     query {
-      getOrganizations {
+      getRepos {
         __typename
-        ... on OrganizationArray {
-          organizations {
+        ... on RepoArray {
+          repos {
             description
             id
             issues
@@ -126,11 +126,11 @@ export function* fetchReposSaga() {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        getOrganizations: { __typename, message, organizations },
+        getRepos: { __typename, message, repos },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(fetchReposSuccess({ repos: organizations }));
+    yield put(fetchReposSuccess({ repos }));
   } catch (error) {
     yield put(fetchReposFailure({ error }));
   }
@@ -159,11 +159,11 @@ export function* fetchUserReposSaga() {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        getUserRepos: { __typename, organizations, message },
+        getUserRepos: { __typename, message, repos },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(fetchUserReposSuccess({ repos: organizations }));
+    yield put(fetchUserReposSuccess({ repos }));
   } catch (error) {
     yield put(fetchUserReposFailure());
   }
@@ -173,16 +173,16 @@ export function* importRepoSaga({ payload }) {
   const { validatedUrl } = payload;
   const query = `
     mutation{
-      importOrganization(url: "${validatedUrl}") {
+      importRepo(url: "${validatedUrl}") {
         __typename
         ... on ImportData {
-          organizationDescription
-          organizationId
-          organizationLanguages
-          organizationLogo
-          organizationName
-          organizationRepo
           organizationUrl
+          repoDescription
+          repoId
+          repoLanguages
+          repoLogo
+          repoName
+          repoUrl
         }
         ... on Error {
           message
@@ -194,7 +194,7 @@ export function* importRepoSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        importOrganization: { __typename, message, ...restProps },
+        importRepo: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
@@ -219,18 +219,18 @@ export function* saveInfoSaga({ payload }) {
   } = payload;
   const query = `
     mutation {
-      createOrganization(organizationInput: {
+      createRepo(repoInput: {
         identiconId: "${identiconId}",
         isManual: ${isManual},
-        organizationDescription: ${JSON.stringify(organizationDescription)},
-        organizationLanguages: "${organizationLanguages}",
-        organizationLogo: "${organizationLogo}",
-        organizationName: ${JSON.stringify(organizationName)},
-        organizationRepo: "${organizationRepo}",
-        organizationUrl: "${organizationUrl}"
+        organizationUrl: "${organizationUrl}",
+        repoDescription: ${JSON.stringify(organizationDescription)},
+        repoLanguages: "${organizationLanguages}",
+        repoLogo: "${organizationLogo}",
+        repoName: ${JSON.stringify(organizationName)},
+        repoUrl: "${organizationRepo}"
       }) {
         __typename
-        ... on Organization {
+        ... on Repo {
           id
           message
         }
@@ -244,7 +244,7 @@ export function* saveInfoSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        createOrganization: { __typename, id, message },
+        createRepo: { __typename, id, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
@@ -261,7 +261,7 @@ export function* searchReposSaga({ payload }) {
   const { value } = payload;
   const query = `
     query {
-      searchOrganizations(value: "${value}") {
+      searchRepos(value: "${value}") {
         description
         id
         issues
@@ -276,9 +276,9 @@ export function* searchReposSaga({ payload }) {
   try {
     const graphql = JSON.stringify({ query });
     const {
-      data: { searchOrganizations },
+      data: { searchRepos },
     } = yield call(post, '/graphql', graphql);
-    yield put(searchReposSuccess({ repos: searchOrganizations }));
+    yield put(searchReposSuccess({ repos: searchRepos }));
   } catch (error) {
     yield put(searchReposFailure());
   }
@@ -297,14 +297,14 @@ export function* updateInfoSaga({ payload }) {
   } = editRequest;
   const query = `
     mutation {
-      transformOrganization(organizationId: "${itemId}", organizationInput: {
-        organizationDescription: "${description}",
-        organizationLogo: "${logo}",
-        organizationName: "${name}",
-        organizationLanguages: ${JSON.stringify(preferredLanguages)},
-        organizationRepo: "${repoUrl}",
+      transformRepo(repoId: "${itemId}", repoInput: {
         organizationUrl: "${organizationUrl}",
-        organizationVerified: ${verified}
+        repoDescription: "${description}",
+        repoLanguages: ${JSON.stringify(preferredLanguages)},
+        repoLogo: "${logo}",
+        repoName: "${name}",
+        repoUrl: "${repoUrl}",
+        repoVerified: ${verified}
       }) {
         __typename
         ... on Success {
@@ -320,7 +320,7 @@ export function* updateInfoSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        transformOrganization: { __typename, message },
+        transformRepo: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
