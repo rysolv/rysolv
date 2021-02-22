@@ -205,8 +205,8 @@ rysolv=> \d
  public | languages         | table    | alice
  public | migrations        | table    | alice
  public | migrations_id_seq | sequence | alice
- public | organizations     | table    | alice
  public | pullrequests      | table    | alice
+ public | repos             | table    | alice
  public | users             | table    | alice
  public | watching          | table    | alice
  public | withdrawal        | table    | alice
