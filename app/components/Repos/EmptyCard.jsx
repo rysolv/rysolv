@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { emptyCardMessage } from 'containers/Organizations/constants';
+import { emptyCardMessage } from 'containers/Repos/constants';
 
 import { MessageWrapper } from './styledComponents';
 

@@ -8,7 +8,7 @@ import { push } from 'connected-react-router';
 import AsyncRender from 'components/AsyncRender';
 import { ConditionalRender } from 'components/base_ui';
 import NotFoundPage from 'components/NotFoundPage';
-import RepoDetailView from 'components/Organizations/Detail';
+import RepoDetailView from 'components/Repos/Detail';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { openModalState } from 'containers/Main/actions';
 import makeSelectViewSize from 'containers/ViewSize/selectors';

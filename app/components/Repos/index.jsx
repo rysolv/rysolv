@@ -4,23 +4,20 @@ import T from 'prop-types';
 import { Pagination } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
-import OrganizationCard from './Card';
+import RepoCard from './Card';
 import { StyledErrorSuccessBanner } from './styledComponents';
 
-const Organizations = ({
+const Repos = ({
   alerts: { error, success },
   data,
   handleClearAlerts,
   handleNav,
   path,
 }) => {
-  const hasOrganizations = data.length > 0 && !data.includes(null);
+  const hasRepos = data.length > 0 && !data.includes(null);
   const propsToPassDown = { data, handleNav, path };
-  const viewToRender = hasOrganizations ? (
-    <Pagination
-      Component={OrganizationCard}
-      propsToPassDown={propsToPassDown}
-    />
+  const viewToRender = hasRepos ? (
+    <Pagination Component={RepoCard} propsToPassDown={propsToPassDown} />
   ) : (
     <EmptyCard />
   );
@@ -36,7 +33,7 @@ const Organizations = ({
   );
 };
 
-Organizations.propTypes = {
+Repos.propTypes = {
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
@@ -47,4 +44,4 @@ Organizations.propTypes = {
   path: T.string.isRequired,
 };
 
-export default Organizations;
+export default Repos;

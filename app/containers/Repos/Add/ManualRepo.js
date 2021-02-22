@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 import { PrimaryButton } from 'components/base_ui';
-import ManualForm from 'components/Organizations/Add/ManualForm';
+import ManualForm from 'components/Repos/Add/ManualForm';
 
 import {
   generateIdenticon,

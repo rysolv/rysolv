@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 import { Card, PrimaryAsyncButton } from 'components/base_ui';
-import VerifyForm from 'components/Organizations/Add/VerifyForm';
+import VerifyForm from 'components/Repos/Add/VerifyForm';
 
 import {
   clearForm,

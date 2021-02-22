@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import AsyncRender from 'components/AsyncRender';
 import { BackNav } from 'components/base_ui';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { makeSelectRepos } from 'containers/Organizations/selectors';
+import { makeSelectRepos } from 'containers/Repos/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 

@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-import Repos from 'components/Organizations';
+import Repos from 'components/Repos';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 

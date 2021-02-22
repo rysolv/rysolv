@@ -11,13 +11,10 @@ import {
   changeIssueFilter,
   changeIssueSearch,
 } from 'containers/Issues/actions';
-import {
-  changeRepoFilter,
-  changeRepoSearch,
-} from 'containers/Organizations/actions';
+import { changeRepoFilter, changeRepoSearch } from 'containers/Repos/actions';
 import { changeUserFilter, changeUserSearch } from 'containers/Users/actions';
 import { makeSelectIssues } from 'containers/Issues/selectors';
-import { makeSelectRepos } from 'containers/Organizations/selectors';
+import { makeSelectRepos } from 'containers/Repos/selectors';
 import Stats from 'containers/Stats';
 import { makeSelectUsers } from 'containers/Users/selectors';
 import makeSelectViewSize from 'containers/ViewSize/selectors';

@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import { MainTextInput } from 'components/base_ui';
-import { repoDataDictionary } from 'containers/Organizations/constants';
+import { repoDataDictionary } from 'containers/Repos/constants';
 
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 

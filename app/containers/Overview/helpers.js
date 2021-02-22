@@ -1,5 +1,5 @@
 import IssuesOverview from 'containers/Issues/Overview';
-import ReposOverview from 'containers/Organizations/Overview';
+import ReposOverview from 'containers/Repos/Overview';
 import UsersOverview from 'containers/Users/Overview';
 
 export const overviewDirectory = {

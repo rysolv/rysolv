@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 import AsyncRender from 'components/AsyncRender';
-import ImportForm from 'components/Organizations/Add/ImportForm';
+import ImportForm from 'components/Repos/Add/ImportForm';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { validateRepoUrl } from 'utils/validate';
 
