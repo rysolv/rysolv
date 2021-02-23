@@ -5,7 +5,7 @@ const getOrganizationContributors = require('./getOrganizationContributors');
 const getOrganizationList = require('./getOrganizationList');
 const getOrganizations = require('./getOrganizations');
 const getOrganizationsWhere = require('./getOrganizationsWhere');
-const searchOrganizations = require('./searchOrganizations');
+const searchRepos = require('./searchRepos');
 const transformRepo = require('./transformRepo');
 const updateOrganizationArray = require('./updateOrganizationArray');
 
@@ -17,7 +17,7 @@ module.exports = {
   getOrganizationList,
   getOrganizations,
   getOrganizationsWhere,
-  searchOrganizations,
+  searchRepos,
   transformRepo,
   updateOrganizationArray,
 };

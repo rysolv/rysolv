@@ -1,18 +1,18 @@
 const { groupValues, organizationReturnValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
-// SEARCH organizations
-const searchOrganizations = async ({ value }) => {
+// SEARCH repos
+const searchRepos = async ({ value }) => {
   const queryText = `
     SELECT ${organizationReturnValues},
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages"
-    FROM organizations
-      LEFT JOIN languages ON languages.organization_id = organizations.id
+    FROM repos
+      LEFT JOIN languages ON languages.repo_id = repos.id
     WHERE
-      organizations.is_deleted = false AND
+      repos.is_deleted = false AND
       (
-        LOWER(organizations.name) LIKE LOWER('%'||$1||'%') OR
-        LOWER(organizations.description) LIKE LOWER('%'||$1||'%')
+        LOWER(repos.name) LIKE LOWER('%'||$1||'%') OR
+        LOWER(repos.description) LIKE LOWER('%'||$1||'%')
       )
     GROUP BY ${groupValues}
   `;
@@ -20,4 +20,4 @@ const searchOrganizations = async ({ value }) => {
   return rows;
 };
 
-module.exports = searchOrganizations;
+module.exports = searchRepos;

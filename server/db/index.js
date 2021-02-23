@@ -34,7 +34,7 @@ const {
   getOrganizationList,
   getOrganizations,
   getOrganizationsWhere,
-  searchOrganizations,
+  searchRepos,
   transformRepo,
   updateOrganizationArray,
 } = require('./queries/organizations');
@@ -125,7 +125,7 @@ module.exports = {
   getUserWatchList,
   postUserResponse,
   searchIssues,
-  searchOrganizations,
+  searchRepos,
   searchUsers,
   setPreferredLanguage,
   submitAccountDepositUser,
