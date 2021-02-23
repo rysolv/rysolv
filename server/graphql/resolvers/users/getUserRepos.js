@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 const { CustomError, errorLogger } = require('../../../helpers');
-const { getOrganizationList, getUserSettings } = require('../../../db');
+const { getRepoList, getUserSettings } = require('../../../db');
 const { getUserGithubRepos } = require('../../../integrations');
 const { githubNotVerifiedError } = require('./constants');
 
@@ -13,7 +13,7 @@ const getUserRepos = async (_, { authError, userId }) => {
     });
 
     if (isGithubVerified) {
-      const repoList = await getOrganizationList();
+      const repoList = await getRepoList();
 
       const userRepos = await getUserGithubRepos({
         username: githubUsername,
