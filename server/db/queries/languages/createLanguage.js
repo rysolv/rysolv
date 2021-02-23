@@ -13,13 +13,13 @@ const createLanguage = async ({ languages, target }) => {
         uuidv4(),
         target.issueId || null,
         language,
-        target.organizationId || null,
+        target.reponId || null,
         target.userId || null,
       ];
 
       const queryText = `
         INSERT INTO
-        languages(id, issue_id, language, organization_id, user_id)
+        languages(id, issue_id, language, repo_id, user_id)
         VALUES($1, $2, $3, $4, $5)
       `;
 

@@ -6,9 +6,9 @@ const checkDuplicate = async repo => {
     throw new CustomError(existingOrganizationError);
 };
 
-const createOrganizationError = `Something went wrong when creating the organization.`;
+const createRepoError = `Something went wrong when creating the repo.`;
 
-const createOrganizationSuccess = `Organization was successfully added.`;
+const createRepoSuccess = `Repo was successfully added.`;
 
 const existingOrganizationError = `This organization already exists.`;
 
@@ -24,8 +24,8 @@ const transformRepoSuccess = `Your repo was successfully edited.`;
 
 module.exports = {
   checkDuplicate,
-  createOrganizationError,
-  createOrganizationSuccess,
+  createRepoError,
+  createRepoSuccess,
   getOrganizationsError,
   importRepoError,
   oneOrganizationError,
