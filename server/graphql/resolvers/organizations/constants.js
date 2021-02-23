@@ -1,16 +1,16 @@
-const { checkDuplicateOrganization } = require('../../../db');
+const { checkDuplicateRepo } = require('../../../db');
 const { CustomError } = require('../../../helpers');
 
 const checkDuplicate = async repo => {
-  if (await checkDuplicateOrganization({ repo }))
-    throw new CustomError(existingOrganizationError);
+  if (await checkDuplicateRepo({ repo }))
+    throw new CustomError(existingRepoError);
 };
 
 const createRepoError = `Something went wrong when creating the repo.`;
 
 const createRepoSuccess = `Repo was successfully added.`;
 
-const existingOrganizationError = `This organization already exists.`;
+const existingRepoError = `This repo already exists.`;
 
 const getReposError = `Something went wrong when getting repos.`;
 

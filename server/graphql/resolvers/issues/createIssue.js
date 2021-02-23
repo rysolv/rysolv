@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const {
   checkDuplicateIssue,
-  checkDuplicateOrganization,
+  checkDuplicateRepo,
   createIssue: createIssueQuery,
   createLanguage,
   createRepo,
@@ -39,7 +39,7 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
 
     // Populate repo object and create new repo
     const createNewRepo = async () => {
-      if (await checkDuplicateOrganization({ repo: repoUrl }))
+      if (await checkDuplicateRepo({ repo: repoUrl }))
         throw new CustomError(existingRepoError);
 
       const organizationObject = await newOrganizationObject(issueInput);

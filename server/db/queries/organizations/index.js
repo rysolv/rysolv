@@ -1,4 +1,4 @@
-const checkDuplicateOrganization = require('./checkDuplicateOrganization');
+const checkDuplicateRepo = require('./checkDuplicateRepo');
 const createRepo = require('./createRepo');
 const getOneRepo = require('./getOneRepo');
 const getOrganizationList = require('./getOrganizationList');
@@ -10,7 +10,7 @@ const transformRepo = require('./transformRepo');
 const updateOrganizationArray = require('./updateOrganizationArray');
 
 module.exports = {
-  checkDuplicateOrganization,
+  checkDuplicateRepo,
   createRepo,
   getOneRepo,
   getOrganizationList,

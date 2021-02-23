@@ -27,7 +27,7 @@ const {
   setPreferredLanguage,
 } = require('./queries/languages');
 const {
-  checkDuplicateOrganization,
+  checkDuplicateRepo,
   createRepo,
   getOneRepo,
   getOrganizationContributors,
@@ -79,8 +79,8 @@ const {
 module.exports = {
   checkDuplicateGithubId,
   checkDuplicateIssue,
-  checkDuplicateOrganization,
   checkDuplicatePullRequest,
+  checkDuplicateRepo,
   checkDuplicateUserEmail,
   checkExistingGithubAccount,
   checkGithubIdMatch,
