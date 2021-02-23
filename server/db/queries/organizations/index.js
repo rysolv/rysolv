@@ -2,9 +2,9 @@ const checkDuplicateOrganization = require('./checkDuplicateOrganization');
 const createRepo = require('./createRepo');
 const getOneRepo = require('./getOneRepo');
 const getOrganizationList = require('./getOrganizationList');
-const getOrganizations = require('./getOrganizations');
-const getOrganizationsWhere = require('./getOrganizationsWhere');
 const getRepoContributors = require('./getRepoContributors');
+const getRepos = require('./getRepos');
+const getReposWhere = require('./getReposWhere');
 const searchRepos = require('./searchRepos');
 const transformRepo = require('./transformRepo');
 const updateOrganizationArray = require('./updateOrganizationArray');
@@ -14,9 +14,9 @@ module.exports = {
   createRepo,
   getOneRepo,
   getOrganizationList,
-  getOrganizations,
-  getOrganizationsWhere,
   getRepoContributors,
+  getRepos,
+  getReposWhere,
   searchRepos,
   transformRepo,
   updateOrganizationArray,

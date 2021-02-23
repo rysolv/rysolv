@@ -1,4 +1,4 @@
-const { checkDuplicateIssue, getOrganizationsWhere } = require('../../../db');
+const { checkDuplicateIssue, getReposWhere } = require('../../../db');
 const { CustomError, errorLogger } = require('../../../helpers');
 const { existingIssueError, importIssueError } = require('./constants');
 const { formatIssueUrl } = require('../../../integrations/github/helpers');
@@ -26,8 +26,8 @@ const importIssue = async ({ url }) => {
       repo,
     });
 
-    // Return organizaiton ID if exists in db
-    const [organizationData] = await getOrganizationsWhere({
+    // Return repo ID if exists in db
+    const [organizationData] = await getReposWhere({
       column: 'repo_url',
       value: organizationInput.organizationRepo,
     });

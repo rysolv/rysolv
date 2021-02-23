@@ -12,7 +12,7 @@ const createRepoSuccess = `Repo was successfully added.`;
 
 const existingOrganizationError = `This organization already exists.`;
 
-const getOrganizationsError = `Something went wrong when getting organizations.`;
+const getReposError = `Something went wrong when getting repos.`;
 
 const importRepoError = `Something went wrong when importing this repo.`;
 
@@ -26,7 +26,7 @@ module.exports = {
   checkDuplicate,
   createRepoError,
   createRepoSuccess,
-  getOrganizationsError,
+  getReposError,
   importRepoError,
   oneRepoError,
   transformRepoError,

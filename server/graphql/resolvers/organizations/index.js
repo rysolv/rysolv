@@ -1,5 +1,5 @@
 const createRepo = require('./createRepo');
-const getOrganizations = require('./getOrganizations');
+const getRepos = require('./getRepos');
 const importRepo = require('./importRepo');
 const oneRepo = require('./oneRepo');
 const searchRepos = require('./searchRepos');
@@ -7,7 +7,7 @@ const transformRepo = require('./transformRepo');
 
 module.exports = {
   createRepo,
-  getOrganizations,
+  getRepos,
   importRepo,
   oneRepo,
   searchRepos,

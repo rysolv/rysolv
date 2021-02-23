@@ -37,7 +37,7 @@ const getUserRepos = async (_, { authError, userId }) => {
       });
 
       return {
-        __typename: 'OrganizationArray',
+        __typename: 'RepoArray',
         repos,
       };
     }

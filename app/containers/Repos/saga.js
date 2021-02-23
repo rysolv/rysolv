@@ -141,8 +141,8 @@ export function* fetchUserReposSaga() {
     query {
       getUserRepos {
         __typename
-        ... on OrganizationArray {
-          organizations {
+        ... on RepoArray {
+          repos {
             exists
             modifiedDate
             name
