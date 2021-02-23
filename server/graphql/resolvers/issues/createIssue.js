@@ -8,7 +8,7 @@ const {
   createIssue: createIssueQuery,
   createLanguage,
   createRepo,
-  updateOrganizationArray,
+  updateRepoArray,
   updateUserArray,
 } = require('../../../db');
 const { createActivity } = require('../activity');
@@ -19,7 +19,7 @@ const {
   existingIssueError,
   existingRepoError,
   newIssueObject,
-  newOrganizationObject,
+  newRepoObject,
 } = require('./constants');
 const { CustomError, errorLogger } = require('../../../helpers');
 
@@ -27,11 +27,11 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    const { identiconId, organizationId, repo, repoUrl } = issueInput;
+    const { identiconId, repo, repoId, repoUrl } = issueInput;
     const newIssueId = uuidv4();
 
     if (identiconId && identiconId !== 'undefined') {
-      issueInput.organizationLogo = new Identicon(identiconId, 250).toString();
+      issueInput.repoLogo = new Identicon(identiconId, 250).toString();
     }
 
     // Add userId from token
@@ -42,9 +42,9 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
       if (await checkDuplicateRepo({ repo: repoUrl }))
         throw new CustomError(existingRepoError);
 
-      const organizationObject = await newOrganizationObject(issueInput);
+      const repoObject = await newRepoObject(issueInput);
       try {
-        const result = await createRepo({ data: organizationObject });
+        const result = await createRepo({ data: repoObject });
         return result;
       } catch (error) {
         throw new CustomError(createRepoError);
@@ -55,18 +55,18 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
     if (await checkDuplicateIssue({ repo }))
       throw new CustomError(existingIssueError);
 
-    // Check for existing organization. If not: create organization
-    if (!organizationId) {
-      const organizationResult = await createNewRepo();
+    // Check for existing repo. If not: create repo
+    if (!repoId) {
+      const repoResult = await createNewRepo();
 
       const activityInput = {
         actionType: 'create',
-        organizationId: organizationResult.id,
-        userId: organizationResult.ownerId,
+        repoId: repoResult.id,
+        userId: repoResult.ownerId,
       };
       await createActivity({ activityInput });
 
-      issueInput.organizationId = organizationResult.id;
+      issueInput.repoId = repoResult.id;
     }
 
     // Create new issue
@@ -78,24 +78,24 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
         languages: issueInput.language,
         target: {
           issueId: newIssueId,
-          organizationId: issueResult.organization_id,
+          repoId: issueResult.repo_id,
         },
       });
     }
 
     const activityInput = {
       actionType: 'create',
-      organizationId: issueResult.organization_id,
+      repoId: issueResult.repo_id,
       issueId: issueResult.id,
       userId,
     };
     await createActivity({ activityInput });
 
-    // add issue to organization issue list
-    await updateOrganizationArray({
+    // add issue to repo issue list
+    await updateRepoArray({
       column: 'issues',
       data: newIssueId,
-      id: issueInput.organizationId,
+      id: issueInput.repoId,
       remove: false,
     });
 
@@ -106,10 +106,10 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
       userId,
     });
 
-    // add organization to user list
+    // add repo to user list
     await updateUserArray({
       column: 'repos',
-      data: issueInput.organizationId,
+      data: issueInput.repoId,
       userId,
     });
 

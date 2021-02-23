@@ -54,7 +54,7 @@ const createRepo = async ({ repoInput }, { authError, userId }) => {
       });
     }
 
-    // add organization to user
+    // add repo to user
     await updateUserArray({
       column: 'repos',
       data: result.id,

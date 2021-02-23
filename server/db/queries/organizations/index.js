@@ -7,7 +7,7 @@ const getRepos = require('./getRepos');
 const getReposWhere = require('./getReposWhere');
 const searchRepos = require('./searchRepos');
 const transformRepo = require('./transformRepo');
-const updateOrganizationArray = require('./updateOrganizationArray');
+const updateRepoArray = require('./updateRepoArray');
 
 module.exports = {
   checkDuplicateRepo,
@@ -19,5 +19,5 @@ module.exports = {
   getReposWhere,
   searchRepos,
   transformRepo,
-  updateOrganizationArray,
+  updateRepoArray,
 };

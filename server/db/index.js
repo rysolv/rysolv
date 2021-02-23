@@ -36,7 +36,7 @@ const {
   getReposWhere,
   searchRepos,
   transformRepo,
-  updateOrganizationArray,
+  updateRepoArray,
 } = require('./queries/organizations');
 const {
   submitAccountDepositUser,
@@ -137,7 +137,7 @@ module.exports = {
   transformRepo,
   transformUser,
   transformUserBalance,
-  updateOrganizationArray,
+  updateRepoArray,
   updateUserArray,
   upvoteIssue,
 };

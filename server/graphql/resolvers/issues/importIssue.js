@@ -20,25 +20,25 @@ const importIssue = async ({ url }) => {
     if (await checkDuplicateIssue({ repo: issueInput.issueUrl }))
       throw new CustomError(existingIssueError);
 
-    // Get organization detail from github API
-    const { organizationInput } = await getSingleRepo({
+    // Get repo detail from github API
+    const { repoInput } = await getSingleRepo({
       organization,
       repo,
     });
 
     // Return repo ID if exists in db
-    const [organizationData] = await getReposWhere({
+    const [repoData] = await getReposWhere({
       column: 'repo_url',
-      value: organizationInput.organizationRepo,
+      value: repoInput.repoUrl,
     });
 
-    if (organizationData) {
-      const { id, logo } = organizationData;
-      issueInput.organizationId = id;
-      organizationInput.organizationLogo = logo;
+    if (repoData) {
+      const { id, logo } = repoData;
+      issueInput.repoId = id;
+      repoInput.repoLogo = logo;
     }
 
-    const importData = { ...issueInput, ...organizationInput };
+    const importData = { ...issueInput, ...repoInput };
     return {
       __typename: 'ImportData',
       ...importData,

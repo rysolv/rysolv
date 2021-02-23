@@ -39,7 +39,7 @@ const createStripeCharge = async (
     });
 
     if (issueId) {
-      const { fundedAmount, organizationId } = await submitExternalPayment({
+      const { fundedAmount, repoId } = await submitExternalPayment({
         action: 'fund_issue',
         fundValue: amount,
         issueId,
@@ -51,7 +51,7 @@ const createStripeCharge = async (
         actionType: 'fund',
         fundedValue: amount,
         issueId,
-        organizationId,
+        repoId,
         userId,
       };
       await createActivity({ activityInput });
