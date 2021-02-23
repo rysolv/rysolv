@@ -1,6 +1,6 @@
 const {
   createActivity,
-  getOrganizationActivity,
+  getRepoActivity,
   getUserActivity,
 } = require('./queries/activity');
 const { toggleAttempting } = require('./queries/attempting');
@@ -107,11 +107,11 @@ module.exports = {
   getOneRepo,
   getOneUser,
   getOneUserSignUp,
-  getOrganizationActivity,
   getOrganizationContributors,
   getOrganizationList,
   getPullRequestList,
   getQuestions,
+  getRepoActivity,
   getRepos,
   getReposWhere,
   getStats,
