@@ -4,7 +4,7 @@ const { generateToken } = require('../../../middlewares/generateToken');
 const {
   checkExistingGithubAccount,
   getOneIssue,
-  getOneOrganization,
+  getOneRepo,
   getUserAttemptList,
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
@@ -48,10 +48,8 @@ const signIn = async ({ password, username }, { res }) => {
 
     // Pull user repo detail
     const reposListResult = await Promise.all(
-      repos.map(async organizationId => {
-        const reposResult = await getOneOrganization({
-          organizationId,
-        });
+      repos.map(async repoId => {
+        const reposResult = await getOneRepo({ repoId });
         return reposResult;
       }),
     );

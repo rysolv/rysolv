@@ -8,7 +8,7 @@ const {
   createLanguage,
   createUser,
   getOneIssue,
-  getOneOrganization,
+  getOneRepo,
   getUserAttemptList,
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
@@ -147,10 +147,8 @@ const githubSignIn = async ({ code, origin }, { res }) => {
 
       // Pull user repo detail
       const reposListResult = await Promise.all(
-        repos.map(async organizationId => {
-          const reposResult = await getOneOrganization({
-            organizationId,
-          });
+        repos.map(async repoId => {
+          const reposResult = await getOneRepo({ repoId });
           return reposResult;
         }),
       );

@@ -16,7 +16,7 @@ const getOrganizationsError = `Something went wrong when getting organizations.`
 
 const importRepoError = `Something went wrong when importing this repo.`;
 
-const oneOrganizationError = `Something went wrong when getting this organization.`;
+const oneRepoError = `Something went wrong when getting this repo.`;
 
 const transformRepoError = `Something went wrong when editing this repo.`;
 
@@ -28,7 +28,7 @@ module.exports = {
   createRepoSuccess,
   getOrganizationsError,
   importRepoError,
-  oneOrganizationError,
+  oneRepoError,
   transformRepoError,
   transformRepoSuccess,
 };

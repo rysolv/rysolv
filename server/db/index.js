@@ -29,7 +29,7 @@ const {
 const {
   checkDuplicateOrganization,
   createRepo,
-  getOneOrganization,
+  getOneRepo,
   getOrganizationContributors,
   getOrganizationList,
   getOrganizations,
@@ -104,7 +104,7 @@ module.exports = {
   getIssues,
   getIssueWatchList,
   getOneIssue,
-  getOneOrganization,
+  getOneRepo,
   getOneUser,
   getOneUserSignUp,
   getOrganizationActivity,
