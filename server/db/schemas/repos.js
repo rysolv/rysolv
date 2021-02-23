@@ -1,4 +1,4 @@
-const alterOrganizationsTable = `ALTER TABLE organizations
+const alterReposTable = `ALTER TABLE repos
 ADD COLUMN created_date TIMESTAMP,
 ADD COLUMN description VARCHAR(512) NOT NULL,
 ADD COLUMN is_deleted BOOLEAN DEFAULT false,
@@ -13,9 +13,9 @@ ADD COLUMN repo_url VARCHAR(128) NOT NULL,
 ADD COLUMN total_funded FLOAT DEFAULT 0,
 ADD COLUMN verified BOOLEAN DEFAULT false`;
 
-const createOrganizationsTable = `CREATE TABLE IF NOT EXISTS
+const createReposTable = `CREATE TABLE IF NOT EXISTS
 organizations(
   id UUID PRIMARY KEY
 )`;
 
-module.exports = { alterOrganizationsTable, createOrganizationsTable };
+module.exports = { alterReposTable, createReposTable };

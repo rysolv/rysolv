@@ -10,11 +10,11 @@ const {
   alterFundingTable,
   alterIssuesTable,
   alterLanguagesTable,
-  alterOrganizationsTable,
   alterPaymentTable,
   alterPullRequestsTable,
   alterQuestionResponseTable,
   alterQuestionsTable,
+  alterReposTable,
   alterUserQuestionResponseTable,
   alterUsersTable,
   alterWatchingTable,
@@ -26,11 +26,11 @@ const {
   createFundingsTable,
   createIssuesTable,
   createLanguagesTable,
-  createOrganizationsTable,
   createPaymentsTable,
   createPullRequestsTable,
   createQuestionResponseTable,
   createQuestionsTable,
+  createReposTable,
   createUserQuestionResponseTable,
   createUsersTable,
   createWatchingTable,
@@ -46,11 +46,11 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterFundingTable });
   await singleQuery({ queryText: alterIssuesTable });
   await singleQuery({ queryText: alterLanguagesTable });
-  await singleQuery({ queryText: alterOrganizationsTable });
   await singleQuery({ queryText: alterPaymentTable });
   await singleQuery({ queryText: alterPullRequestsTable });
   await singleQuery({ queryText: alterQuestionResponseTable });
   await singleQuery({ queryText: alterQuestionsTable });
+  await singleQuery({ queryText: alterReposTable });
   await singleQuery({ queryText: alterUserQuestionResponseTable });
   await singleQuery({ queryText: alterUsersTable });
   await singleQuery({ queryText: alterWatchingTable });
@@ -66,11 +66,11 @@ const createTables = async () => {
   await singleQuery({ queryText: createFundingsTable });
   await singleQuery({ queryText: createIssuesTable });
   await singleQuery({ queryText: createLanguagesTable });
-  await singleQuery({ queryText: createOrganizationsTable });
   await singleQuery({ queryText: createPaymentsTable });
   await singleQuery({ queryText: createPullRequestsTable });
   await singleQuery({ queryText: createQuestionResponseTable });
   await singleQuery({ queryText: createQuestionsTable });
+  await singleQuery({ queryText: createReposTable });
   await singleQuery({ queryText: createUserQuestionResponseTable });
   await singleQuery({ queryText: createUsersTable });
   await singleQuery({ queryText: createWatchingTable });
@@ -86,11 +86,11 @@ const dropAllTables = async () => {
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS funding cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS issues cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS languages cascade' });
-  await singleQuery({ queryText: 'DROP TABLE IF EXISTS organizations cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS payments cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS pullRequests cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS question_responses cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS questions cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS repos cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS user_question_responses cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS users cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS watching cascade' });
@@ -107,11 +107,11 @@ const printTables = async () => {
     'SELECT * FROM funding',
     'SELECT * FROM issues',
     'SELECT * FROM languages',
-    'SELECT * FROM organizations',
     'SELECT * from payments',
     'SELECT * FROM pullRequests',
     'SELECT * FROM question_responses',
     'SELECT * FROM questions',
+    'SELECT * FROM repos',
     'SELECT * FROM user_question_responses',
     'SELECT * FROM users',
     'SELECT * FROM watching',

@@ -5,11 +5,11 @@ const cronActivitySchema = require('./cronActivity');
 const fundingSchema = require('./funding');
 const issueSchema = require('./issues');
 const languageSchema = require('./languages');
-const organizationSchema = require('./organizations');
 const paymentsSchema = require('./payments');
 const pullRequestSchema = require('./pullRequest');
 const questionResponseSchema = require('./questionResponses');
 const questionSchema = require('./questions');
+const repoSchema = require('./repos');
 const userQuestionResponseSchema = require('./userQuestionResponses');
 const userSchema = require('./users');
 const watchingSchema = require('./watching');
@@ -23,11 +23,11 @@ module.exports = {
   ...fundingSchema,
   ...issueSchema,
   ...languageSchema,
-  ...organizationSchema,
   ...paymentsSchema,
   ...pullRequestSchema,
   ...questionResponseSchema,
   ...questionSchema,
+  ...repoSchema,
   ...userQuestionResponseSchema,
   ...userSchema,
   ...watchingSchema,

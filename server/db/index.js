@@ -27,18 +27,6 @@ const {
   setPreferredLanguage,
 } = require('./queries/languages');
 const {
-  checkDuplicateRepo,
-  createRepo,
-  getOneRepo,
-  getOrganizationContributors,
-  getRepoList,
-  getRepos,
-  getReposWhere,
-  searchRepos,
-  transformRepo,
-  updateRepoArray,
-} = require('./queries/organizations');
-const {
   submitAccountDepositUser,
   submitExternalPayment,
   submitInternalPayment,
@@ -52,6 +40,18 @@ const {
   getUserPullRequests,
 } = require('./queries/pullRequests');
 const { getQuestions, postUserResponse } = require('./queries/questions');
+const {
+  checkDuplicateRepo,
+  createRepo,
+  getOneRepo,
+  getRepoContributors,
+  getRepoList,
+  getRepos,
+  getReposWhere,
+  searchRepos,
+  transformRepo,
+  updateRepoArray,
+} = require('./queries/repos');
 const { getStats } = require('./queries/stats');
 const {
   checkDuplicateGithubId,
@@ -107,10 +107,10 @@ module.exports = {
   getOneRepo,
   getOneUser,
   getOneUserSignUp,
-  getOrganizationContributors,
   getPullRequestList,
   getQuestions,
   getRepoActivity,
+  getRepoContributors,
   getRepoList,
   getRepos,
   getReposWhere,
