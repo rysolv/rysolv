@@ -285,12 +285,12 @@ export function* fetchIssueDetailSaga({ payload }) {
           modifiedDate
           name
           open
-          organizationId
-          organizationName
-          organizationVerified
           pullRequests
           rep
           repo
+          repoId
+          repoName
+          repoVerified
           type
           userId
           username
@@ -350,11 +350,11 @@ export function* fetchIssuesSaga() {
             modifiedDate
             name
             open
-            organizationId
-            organizationName
-            organizationVerified
             rep
             repo
+            repoId
+            repoName
+            repoVerified
             type
             watching
           }
@@ -389,8 +389,8 @@ export function* fetchUserIssuesSaga() {
             createdDate
             exists
             name
-            organizationName
             repo
+            repoName
           }
         }
         ... on Error {
@@ -425,13 +425,13 @@ export function* importIssueSaga({ payload }) {
           issueLanguages
           issueName
           issueUrl
-          organizationDescription
-          organizationId
-          organizationLanguages
-          organizationLogo
-          organizationName
-          organizationRepo
           organizationUrl
+          repoDescription
+          repoId
+          repoLanguages
+          repoLogo
+          repoName
+          repoUrl
         }
         ... on Error {
           message
@@ -464,12 +464,12 @@ export function* saveInfoSaga({ payload }) {
       issueName,
       issueType,
       issueUrl,
-      organizationDescription,
-      organizationId,
-      organizationLogo,
-      organizationName,
-      organizationRepo,
       organizationUrl,
+      repoDescription,
+      repoId,
+      repoLogo,
+      repoName,
+      repoUrl,
     },
   } = payload;
   const query = `
@@ -482,13 +482,13 @@ export function* saveInfoSaga({ payload }) {
           isManual: ${isManual},
           language: ${JSON.stringify(issueLanguages)},
           name: ${JSON.stringify(issueName)},
-          organizationDescription: ${JSON.stringify(organizationDescription)},
-          organizationId: ${JSON.stringify(organizationId)},
-          organizationLogo: ${JSON.stringify(organizationLogo)},
-          organizationName: ${JSON.stringify(organizationName)},
-          organizationRepo: "${organizationRepo}",
           organizationUrl: "${organizationUrl}",
           repo: "${issueUrl}",
+          repoDescription: ${JSON.stringify(repoDescription)},
+          repoId: ${JSON.stringify(repoId)},
+          repoLogo: ${JSON.stringify(repoLogo)},
+          repoName: ${JSON.stringify(repoName)},
+          repoUrl: "${repoUrl}",
           type: "${issueType}",
         }
       ) {
@@ -538,11 +538,11 @@ export function* searchIssuesSaga({ payload }) {
         modifiedDate
         name
         open
-        organizationId
-        organizationName
-        organizationVerified
         rep
         repo
+        repoId
+        repoName
+        repoVerified
         type
         watching
       }

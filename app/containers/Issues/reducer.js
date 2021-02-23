@@ -120,13 +120,13 @@ export const initialState = {
   repoData: {
     identiconId: { error: '', value: '' },
     importUrl: { error: '', value: '' },
-    organizationDescription: { error: '', value: '' },
-    organizationId: { error: '', value: '' },
-    organizationLanguages: { error: '', value: '' },
-    organizationLogo: { error: '', value: '' },
-    organizationName: { error: '', value: '' },
-    organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
+    repoDescription: { error: '', value: '' },
+    repoId: { error: '', value: '' },
+    repoLanguages: { error: '', value: '' },
+    repoLogo: { error: '', value: '' },
+    repoName: { error: '', value: '' },
+    repoUrl: { error: '', value: '' },
   },
   search: {
     overviewInput: { error: '', value: '' },
@@ -402,7 +402,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
       const identiconId = uuidv4();
       const identicon = new Identicon(identiconId, 250).toString();
       draft.repoData.identiconId.value = identiconId;
-      draft.repoData.organizationLogo.value = `data:image/png;base64,${identicon}`;
+      draft.repoData.repoLogo.value = `data:image/png;base64,${identicon}`;
       break;
     }
     case IMPORT_ISSUE_FAILURE: {

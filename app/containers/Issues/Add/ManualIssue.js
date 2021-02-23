@@ -44,12 +44,9 @@ const ManualIssue = ({
     >
       <StyledH3>Repo</StyledH3>
       <VerifyWrapper>
-        <SelectedRepo>{repoData.organizationName.value}</SelectedRepo>
-        <StyledLink
-          href={`//${repoData.organizationRepo.value}`}
-          target="_blank"
-        >
-          {repoData.organizationRepo.value}
+        <SelectedRepo>{repoData.repoName.value}</SelectedRepo>
+        <StyledLink href={`//${repoData.repoUrl.value}`} target="_blank">
+          {repoData.repoUrl.value}
         </StyledLink>
       </VerifyWrapper>
       <StyledH3>Add Issue</StyledH3>
@@ -58,7 +55,7 @@ const ManualIssue = ({
         <BackLink
           onClick={() => handleIncrementStep({ step: 2, view: 'addIssue' })}
         >
-          Edit Org
+          Edit Repo
         </BackLink>
         <PrimaryButton
           disabled={!isDisabled}

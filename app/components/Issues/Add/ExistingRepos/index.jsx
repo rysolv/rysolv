@@ -17,7 +17,7 @@ const ExistingRepos = ({
   const handleUnselect = () => {
     handleClearRepo();
     handleInputChange({
-      field: 'organizationId',
+      field: 'repoId',
       form: 'repoData',
       value: '',
     });
@@ -28,26 +28,26 @@ const ExistingRepos = ({
       if (el.id === id) {
         const selectedRepos = {
           importUrl: { error: '', value: '' },
-          organizationDescription: { error: '', value: el.description },
-          organizationId: { error: '', value: el.id },
-          organizationLogo: { error: '', value: el.logo },
-          organizationName: { error: '', value: el.name },
-          organizationRepo: { error: '', value: el.repoUrl },
           organizationUrl: { error: '', value: el.organizationUrl },
+          repoDescription: { error: '', value: el.description },
+          repoId: { error: '', value: el.id },
+          repoLogo: { error: '', value: el.logo },
+          repoName: { error: '', value: el.name },
+          repoUrl: { error: '', value: el.repoUrl },
         };
         handleUpdateRepo({ repoData: selectedRepos });
       }
     });
 
     handleInputChange({
-      field: 'organizationId',
+      field: 'repoId',
       form: 'repoData',
       value: id,
     });
   };
 
   const userRepos = activeUser.repos.map(el => {
-    const checked = el.id === repoData.organizationId.value;
+    const checked = el.id === repoData.repoId.value;
 
     return (
       <RepoCard key={el.id}>

@@ -9,7 +9,7 @@ const transformRepo = async ({ data, repoId }) => {
     tableParameters: repoValues,
   });
   const queryText = `
-      UPDATE organizations
+      UPDATE repos
       SET (${parameters})
       = (${substitution})
       WHERE id = '${repoId}'

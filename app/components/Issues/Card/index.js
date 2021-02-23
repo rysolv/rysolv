@@ -67,10 +67,10 @@ const IssueCard = ({
         language,
         name,
         open,
-        organizationId,
-        organizationName,
-        organizationVerified,
         rep,
+        repoId,
+        repoName,
+        repoVerified,
         type,
         watching,
       }) => {
@@ -201,11 +201,9 @@ const IssueCard = ({
               <StyledIssueContent>
                 <StyledIssueHeader>
                   <RepoNameWrapper>
-                    <Link to={`/repos/detail/${organizationId}`}>
-                      {organizationName}
-                    </Link>
+                    <Link to={`/repos/detail/${repoId}`}>{repoName}</Link>
 
-                    {organizationVerified ? (
+                    {repoVerified ? (
                       <IconToolTip toolTipText="Verified Contributor">
                         <div>
                           <Verified />

@@ -96,7 +96,7 @@ const ImportForm = ({
       {/* or
       <StyledLabel
         onClick={() =>
-          handleIncrementStep({ step: 2, view: 'addOrganization' })
+          handleIncrementStep({ step: 2, view: 'addRepo' })
         }
       >
         Manual

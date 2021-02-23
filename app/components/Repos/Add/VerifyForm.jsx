@@ -20,30 +20,27 @@ export class VerifyForm extends React.PureComponent {
   render() {
     const {
       repoData: {
-        organizationDescription,
-        organizationLogo,
-        organizationName,
-        organizationRepo,
         organizationUrl,
+        repoDescription,
+        repoLogo,
+        repoName,
+        repoUrl,
       },
     } = this.props;
     return (
       <Fragment>
         <ContentWrapper>
-          <LogoWrapper
-            alt={organizationName.value}
-            src={organizationLogo.value}
-          />
+          <LogoWrapper alt={repoName.value} src={repoLogo.value} />
           <RepoNameWrapper>
-            <RepoName>{organizationName.value}</RepoName>
+            <RepoName>{repoName.value}</RepoName>
             <ContentWrapper>
               <StyledLink
-                hasValue={!!organizationUrl.value}
-                href={organizationRepo.value}
+                hasValue={!!repoUrl.value}
+                href={repoUrl.value}
                 target="_blank"
               >
                 <StyledIcon>{CodeIcon}</StyledIcon>
-                {organizationRepo.value}
+                {repoUrl.value}
               </StyledLink>
               <StyledLink
                 hasValue={!!organizationUrl.value}
@@ -56,8 +53,8 @@ export class VerifyForm extends React.PureComponent {
             </ContentWrapper>
           </RepoNameWrapper>
         </ContentWrapper>
-        <DescriptionWrapper hasValue={!!organizationDescription.value}>
-          {organizationDescription.value}
+        <DescriptionWrapper hasValue={!!repoDescription.value}>
+          {repoDescription.value}
         </DescriptionWrapper>
       </Fragment>
     );

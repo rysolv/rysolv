@@ -9,15 +9,15 @@ import { TextWrapper, UserIssuesContainer } from './styledComponents';
 const ImportForm = ({ handleInputChange, userIssues, userIssuesLoading }) => {
   const UserIssueList =
     userIssues &&
-    userIssues.map(({ createdDate, exists, name, organizationName, repo }) => (
+    userIssues.map(({ createdDate, exists, name, repo, repoName }) => (
       <ImportIssueCard
         createdDate={createdDate}
         exists={exists}
         handleInputChange={handleInputChange}
         key={repo}
         name={name}
-        organizationName={organizationName}
         repo={repo}
+        repoName={repoName}
       />
     ));
 

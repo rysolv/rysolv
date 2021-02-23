@@ -14,7 +14,7 @@ ADD COLUMN total_funded FLOAT DEFAULT 0,
 ADD COLUMN verified BOOLEAN DEFAULT false`;
 
 const createReposTable = `CREATE TABLE IF NOT EXISTS
-organizations(
+repos(
   id UUID PRIMARY KEY
 )`;
 

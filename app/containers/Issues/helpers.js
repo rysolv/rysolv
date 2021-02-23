@@ -16,7 +16,7 @@ export const filterIssues = (issues, filterParams) => {
   let unfundedIssues = [];
 
   const filteredIssues = issues.filter(
-    ({ fundedAmount, language: languages, organizationName }) => {
+    ({ fundedAmount, language: languages, repoName }) => {
       const formattedLanguageFilter = languageFilter.map(({ value }) =>
         value.toLowerCase(),
       );
@@ -33,7 +33,7 @@ export const filterIssues = (issues, filterParams) => {
       }
       if (
         !isEmpty(formattedRepoFilter) &&
-        !formattedRepoFilter.includes(organizationName.toLowerCase())
+        !formattedRepoFilter.includes(repoName.toLowerCase())
       ) {
         return false;
       }

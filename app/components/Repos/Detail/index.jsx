@@ -57,7 +57,7 @@ const RepoDetailView = ({
     activity,
     contributors,
     description,
-    id: organizationId,
+    id: repoId,
     issues,
     logo,
     name,
@@ -102,7 +102,7 @@ const RepoDetailView = ({
         repoUrl: repoUrlChange,
         verified,
       },
-      itemId: organizationId,
+      itemId: repoId,
     });
   };
 
@@ -136,7 +136,7 @@ const RepoDetailView = ({
             shouldRender={
               isSignedIn &&
               repos &&
-              !!repos.find(({ id }) => organizationId === id)
+              !!repos.find(({ id }) => repoId === id)
             }
           /> */}
         </HeaderWrapper>
@@ -227,7 +227,7 @@ const RepoDetailView = ({
           />
         }
         shouldRender={
-          isSignedIn && repos && !!repos.find(({ id }) => organizationId === id)
+          isSignedIn && repos && !!repos.find(({ id }) => repoId === id)
         }
       />
       <ConditionalRender

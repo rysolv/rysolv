@@ -1,10 +1,10 @@
-const { groupValues, organizationReturnValues } = require('./constants');
+const { groupValues, repoReturnValues } = require('./constants');
 const { singleQuery } = require('../../baseQueries');
 
 // SEARCH repos
 const searchRepos = async ({ value }) => {
   const queryText = `
-    SELECT ${organizationReturnValues},
+    SELECT ${repoReturnValues},
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages"
     FROM repos
       LEFT JOIN languages ON languages.repo_id = repos.id

@@ -39,14 +39,14 @@ const VerifyIssue = ({
   importSuccess,
   issueData,
   issueData: { issueLanguages },
-  repoData: { organizationLogo, organizationName, organizationRepo },
+  repoData: { repoLogo, repoName, repoUrl },
   requestBody,
 }) => {
   const [selectedType, setSelectedType] = useState('');
   const [typeError, setTypeError] = useState('');
 
   useEffect(() => {
-    if (!organizationLogo.value) handleGenerateIdenticon();
+    if (!repoLogo.value) handleGenerateIdenticon();
     document.getElementById('issueAdd').focus();
   }, []);
 
@@ -111,14 +111,11 @@ const VerifyIssue = ({
     >
       <StyledH3 isFirstHeader>Repo</StyledH3>
       <Card>
-        <LogoWrapper
-          alt={organizationName.value}
-          src={organizationLogo.value}
-        />
+        <LogoWrapper alt={repoName.value} src={repoLogo.value} />
         <RepoNameWrapper>
-          <RepoName>{organizationName.value}</RepoName>
-          <StyledLink href={organizationRepo.value} target="_blank">
-            {organizationRepo.value}
+          <RepoName>{repoName.value}</RepoName>
+          <StyledLink href={repoUrl.value} target="_blank">
+            {repoUrl.value}
           </StyledLink>
         </RepoNameWrapper>
       </Card>

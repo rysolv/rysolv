@@ -37,7 +37,7 @@ const ManualRepo = ({
     document.getElementById('issueRepoManual').focus();
   }, []);
 
-  const idSelected = repoData.organizationId.value !== '';
+  const idSelected = repoData.repoId.value !== '';
 
   const handleKeypress = ({ key }) => {
     if (key === 'Enter' && idSelected) {

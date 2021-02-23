@@ -25,8 +25,8 @@ const ImportCard = ({
   exists,
   handleInputChange,
   name,
-  organizationName,
   repo,
+  repoName,
 }) => {
   const handleImport = () => {
     if (!exists) {
@@ -42,7 +42,7 @@ const ImportCard = ({
     <ImportCardWrapper>
       <StyledIssueBody>
         <StyledIssueHeader>
-          <RepoNameWrapper>{organizationName}</RepoNameWrapper>
+          <RepoNameWrapper>{repoName}</RepoNameWrapper>
           {moment.utc(createdDate).fromNow()}
         </StyledIssueHeader>
         <StyledIssueContent>
@@ -70,8 +70,8 @@ ImportCard.propTypes = {
   exists: T.bool.isRequired,
   handleInputChange: T.func.isRequired,
   name: T.string.isRequired,
-  organizationName: T.string.isRequired,
   repo: T.string.isRequired,
+  repoName: T.string.isRequired,
 };
 
 export default ImportCard;

@@ -40,9 +40,9 @@ const makeSelectReposDisabled = () =>
       const tempData = omit(data, [
         'identiconId',
         'importUrl',
-        'organizationId',
-        'organizationLogo',
         'organizationUrl',
+        'repoId',
+        'repoLogo',
       ]);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
@@ -90,7 +90,7 @@ const makeSelectIssuesRequestBody = () =>
         acc[field] = formData[field].value;
         return acc;
       }, {});
-      if (requestBody.identiconId) requestBody.organizationLogo = '';
+      if (requestBody.identiconId) requestBody.repoLogo = '';
       return { isManual, ...requestBody };
     },
   );

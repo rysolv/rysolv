@@ -209,12 +209,12 @@ export function* saveInfoSaga({ payload }) {
     requestBody: {
       identiconId,
       isManual,
-      organizationDescription,
-      organizationLanguages,
-      organizationLogo,
-      organizationName,
-      organizationRepo,
       organizationUrl,
+      repoDescription,
+      repoLanguages,
+      repoLogo,
+      repoName,
+      repoUrl,
     },
   } = payload;
   const query = `
@@ -223,11 +223,11 @@ export function* saveInfoSaga({ payload }) {
         identiconId: "${identiconId}",
         isManual: ${isManual},
         organizationUrl: "${organizationUrl}",
-        repoDescription: ${JSON.stringify(organizationDescription)},
-        repoLanguages: "${organizationLanguages}",
-        repoLogo: "${organizationLogo}",
-        repoName: ${JSON.stringify(organizationName)},
-        repoUrl: "${organizationRepo}"
+        repoDescription: ${JSON.stringify(repoDescription)},
+        repoLanguages: "${repoLanguages}",
+        repoLogo: "${repoLogo}",
+        repoName: ${JSON.stringify(repoName)},
+        repoUrl: "${repoUrl}"
       }) {
         __typename
         ... on Repo {

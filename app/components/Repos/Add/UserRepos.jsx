@@ -11,9 +11,9 @@ const UserRepos = ({ handleInputChange, userRepos, userReposLoading }) => {
     userRepos &&
     userRepos.map(({ exists, modifiedDate, name, organizationUrl }) => (
       <ImportRepoCard
-        key={organizationUrl}
         exists={exists}
         handleInputChange={handleInputChange}
+        key={organizationUrl}
         modifiedDate={modifiedDate}
         name={name}
         organizationUrl={organizationUrl}

@@ -7,39 +7,34 @@ import { repoDataDictionary } from 'containers/Repos/constants';
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 
 const ManualForm = ({ handleInputChange, repoData }) => {
-  const {
-    organizationDescription,
-    organizationName,
-    organizationRepo,
-    organizationUrl,
-  } = repoData;
+  const { organizationUrl, repoDescription, repoName, repoUrl } = repoData;
   return (
     <InputFormWrapper>
       <MainTextInput
-        error={!!organizationName.error}
-        helperText={organizationName.error}
+        error={!!repoName.error}
+        helperText={repoName.error}
         label={repoDataDictionary.name}
         onChange={e =>
           handleInputChange({
-            field: 'organizationName',
+            field: 'repoName',
             form: 'repoData',
             value: e.target.value,
           })
         }
-        value={organizationName.value}
+        value={repoName.value}
       />
       <MainTextInput
-        error={!!organizationDescription.error}
-        helperText={organizationDescription.error}
+        error={!!repoDescription.error}
+        helperText={repoDescription.error}
         label={repoDataDictionary.description}
         onChange={e =>
           handleInputChange({
-            field: 'organizationDescription',
+            field: 'repoDescription',
             form: 'repoData',
             value: e.target.value,
           })
         }
-        value={organizationDescription.value}
+        value={repoDescription.value}
       />
       <HorizontalWrapper>
         <MainTextInput
@@ -56,17 +51,17 @@ const ManualForm = ({ handleInputChange, repoData }) => {
           value={organizationUrl.value}
         />
         <MainTextInput
-          error={!!organizationRepo.error}
-          helperText={organizationRepo.error}
+          error={!!repoUrl.error}
+          helperText={repoUrl.error}
           label={repoDataDictionary.repoUrl}
           onChange={e =>
             handleInputChange({
-              field: 'organizationRepo',
+              field: 'repoUrl',
               form: 'repoData',
               value: e.target.value,
             })
           }
-          value={organizationRepo.value}
+          value={repoUrl.value}
         />
       </HorizontalWrapper>
     </InputFormWrapper>

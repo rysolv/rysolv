@@ -27,11 +27,11 @@ const VerifyRepo = ({
   handleGenerateIdenticon,
   importSuccess,
   repoData,
-  repoData: { organizationLogo },
+  repoData: { repoLogo },
   requestBody,
 }) => {
   useEffect(() => {
-    if (!organizationLogo.value) handleGenerateIdenticon();
+    if (!repoLogo.value) handleGenerateIdenticon();
     document.getElementById('repoAdd').focus();
   }, []);
 

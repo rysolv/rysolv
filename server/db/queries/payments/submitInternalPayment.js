@@ -16,23 +16,23 @@ const submitInternalPayment = async ({
       UPDATE issues
       SET funded_amount = funded_amount + $1
       WHERE id = $2
-      RETURNING funded_amount AS "fundedAmount", organization_id AS "organizationId"
+      RETURNING funded_amount AS "fundedAmount", repo_id AS "repoId"
     `;
     const { rows: issueRows } = await singleQuery({
       queryText: issueQueryText,
       values: [fundValue, issueId],
     });
     const [oneIssueRow] = issueRows;
-    const { fundedAmount, organizationId } = oneIssueRow;
+    const { fundedAmount, repoId } = oneIssueRow;
 
-    const organizationQueryText = `
-      UPDATE organizations
+    const repoQueryText = `
+      UPDATE repos
       SET total_funded = total_funded + $1
       WHERE id = $2
     `;
     await singleQuery({
-      queryText: organizationQueryText,
-      values: [fundValue, organizationId],
+      queryText: repoQueryText,
+      values: [fundValue, repoId],
     });
 
     const userQueryText = `
@@ -52,13 +52,13 @@ const submitInternalPayment = async ({
       action,
       fundedAmount: fundValue,
       issueId,
-      organizationId,
       platform: 'account',
+      repoId,
       userId,
     });
 
     await client.query('COMMIT');
-    return { balance, fundedAmount, organizationId };
+    return { balance, fundedAmount, repoId };
   } catch (error) {
     await client.query('ROLLBACK');
     throw error;

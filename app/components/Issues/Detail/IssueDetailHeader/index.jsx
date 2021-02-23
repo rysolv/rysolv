@@ -15,13 +15,7 @@ import {
 } from './styledComponents';
 
 const IssueDetailHeader = ({
-  data: {
-    createdDate,
-    name,
-    organizationId,
-    organizationName,
-    organizationVerified,
-  },
+  data: { createdDate, name, repoId, repoName, repoVerified },
   displayEditView,
   nameChange,
   setNameChange,
@@ -41,10 +35,8 @@ const IssueDetailHeader = ({
       <IssueDetailContainer>
         <StyledIssueDetail>
           <RepoNameContainer>
-            <Link to={`/repos/detail/${organizationId}`}>
-              {organizationName}
-            </Link>
-            {organizationVerified ? (
+            <Link to={`/repos/detail/${repoId}`}>{repoName}</Link>
+            {repoVerified ? (
               <IconToolTip toolTipText="Verified Contributor">
                 <StyledVerified />
               </IconToolTip>

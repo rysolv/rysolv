@@ -5,8 +5,8 @@ const activityValues = [
   'funded_value',
   'is_private',
   'issue_id',
-  'organization_id',
   'pullrequest_id',
+  'repo_id',
   'user_id',
 ];
 
@@ -16,11 +16,11 @@ const activityReturnValues = `
   activity.created_date AS "createdDate",
   activity.funded_value AS "fundedValue",
   activity.issue_id AS "issueId",
-  activity.organization_id AS "organizationId",
   activity.pullrequest_id AS "pullRequestId",
+  activity.repo_id AS "repoId",
   activity.user_id AS "userId",
   issues.name AS "issueName",
-  organizations.name AS "organizationName",
+  repos.name AS "repoName",
   users.profile_pic AS "profilePic",
   users.username AS "username"
 `;

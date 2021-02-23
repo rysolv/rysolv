@@ -44,12 +44,12 @@ export const formatActivity = data => {
     fundedValue,
     issueId,
     issueName,
-    organizationId,
-    organizationName,
     profilePic,
     pullRequestId,
     pullRequestName,
     pullRequestUrl,
+    repoId,
+    repoName,
     userId,
     username,
   } = data;
@@ -76,20 +76,20 @@ export const formatActivity = data => {
     ? 'pull request'
     : issueId
     ? 'issue'
-    : organizationId
+    : repoId
     ? 'repo'
     : userId
     ? 'account with'
     : null;
 
-  const route = issueId ? 'issues' : organizationId ? 'repos' : 'pullrequests';
+  const route = issueId ? 'issues' : repoId ? 'repos' : 'pullrequests';
 
-  const targetId = pullRequestId || issueId || organizationId;
+  const targetId = pullRequestId || issueId || repoId;
 
   const isInternalLink = !pullRequestId;
   const path = pullRequestId ? pullRequestUrl : `/${route}/detail/${targetId}`;
 
-  const targetName = pullRequestName || issueName || organizationName;
+  const targetName = pullRequestName || issueName || repoName;
 
   const formattedActivity = {
     action,

@@ -8,43 +8,43 @@ import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 
 const RepoForm = ({ handleInputChange, repoData }) => {
   const {
-    organizationDescription,
-    organizationId,
-    organizationName,
-    organizationRepo,
     organizationUrl,
+    repoDescription,
+    repoId,
+    repoName,
+    repoUrl,
   } = repoData;
-  const idSelected = organizationId.value !== '';
+  const idSelected = repoId.value !== '';
 
   return (
     <InputFormWrapper>
       <MainTextInput
         disabled={idSelected}
-        error={!!organizationName.error}
-        helperText={organizationName.error}
+        error={!!repoName.error}
+        helperText={repoName.error}
         label={repoDataDictionary.name}
         onChange={e =>
           handleInputChange({
-            field: 'organizationName',
+            field: 'repoName',
             form: 'repoData',
             value: e.target.value,
           })
         }
-        value={organizationName.value}
+        value={repoName.value}
       />
       <MainTextInput
         disabled={idSelected}
-        error={!!organizationDescription.error}
-        helperText={organizationDescription.error}
+        error={!!repoDescription.error}
+        helperText={repoDescription.error}
         label={repoDataDictionary.description}
         onChange={e =>
           handleInputChange({
-            field: 'organizationDescription',
+            field: 'repoDescription',
             form: 'repoData',
             value: e.target.value,
           })
         }
-        value={organizationDescription.value}
+        value={repoDescription.value}
       />
       <HorizontalWrapper>
         <MainTextInput
@@ -63,17 +63,17 @@ const RepoForm = ({ handleInputChange, repoData }) => {
         />
         <MainTextInput
           disabled={idSelected}
-          error={!!organizationRepo.error}
-          helperText={organizationRepo.error}
+          error={!!repoUrl.error}
+          helperText={repoUrl.error}
           label={repoDataDictionary.repoUrl}
           onChange={e =>
             handleInputChange({
-              field: 'organizationRepo',
+              field: 'repoUrl',
               form: 'repoData',
               value: e.target.value,
             })
           }
-          value={organizationRepo.value}
+          value={repoUrl.value}
         />
       </HorizontalWrapper>
     </InputFormWrapper>
