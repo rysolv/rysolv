@@ -6,14 +6,10 @@ import { repoDataDictionary } from 'containers/Repos/constants';
 
 import { HorizontalWrapper, InputFormWrapper } from './styledComponents';
 
-const RepoForm = ({ handleInputChange, repoData }) => {
-  const {
-    organizationUrl,
-    repoDescription,
-    repoId,
-    repoName,
-    repoUrl,
-  } = repoData;
+const RepoForm = ({
+  handleInputChange,
+  repoData: { organizationUrl, repoDescription, repoId, repoName, repoUrl },
+}) => {
   const idSelected = repoId.value !== '';
 
   return (

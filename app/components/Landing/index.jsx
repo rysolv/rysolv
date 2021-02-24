@@ -47,33 +47,39 @@ const Landing = () => (
       <CardContainer>
         <CardItem>
           <Card>
-            <CardIcon>{UserIcon}</CardIcon>
-            <CardTitleWrapper>Sign Up</CardTitleWrapper>
-            <TextWrapper>
-              The best way to earn income while contributing to open source
-              development.
-            </TextWrapper>
+            <div>
+              <CardIcon>{UserIcon}</CardIcon>
+              <CardTitleWrapper>Sign Up</CardTitleWrapper>
+              <TextWrapper>
+                The best way to earn income while contributing to open source
+                development.
+              </TextWrapper>
+            </div>
             <StyledLink to="/signup">Create account {ArrowIcon}</StyledLink>
           </Card>
         </CardItem>
         <CardItem>
           <Card>
-            <CardIcon>{RepoIcon}</CardIcon>
-            <CardTitleWrapper>Browse Repos</CardTitleWrapper>
-            <TextWrapper>
-              Support some of the awesome repos that use rysolv.
-            </TextWrapper>
+            <div>
+              <CardIcon>{RepoIcon}</CardIcon>
+              <CardTitleWrapper>Browse Repos</CardTitleWrapper>
+              <TextWrapper>
+                Support some of the awesome repos that use rysolv.
+              </TextWrapper>
+            </div>
             <StyledLink to="/repos">Find a repo {ArrowIcon}</StyledLink>
           </Card>
         </CardItem>
         <CardItem>
           <Card>
-            <CardIcon>{IssueIcon}</CardIcon>
-            <CardTitleWrapper>Browse Issues</CardTitleWrapper>
-            <TextWrapper>
-              Find issues and get paid to solve them. Contribute to software
-              people use every day.
-            </TextWrapper>
+            <div>
+              <CardIcon>{IssueIcon}</CardIcon>
+              <CardTitleWrapper>Browse Issues</CardTitleWrapper>
+              <TextWrapper>
+                Find issues and get paid to solve them. Contribute to software
+                people use every day.
+              </TextWrapper>
+            </div>
             <StyledLink to="/issues">Find an issue {ArrowIcon}</StyledLink>
           </Card>
         </CardItem>

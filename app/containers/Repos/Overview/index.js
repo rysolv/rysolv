@@ -39,6 +39,8 @@ const ReposOverview = ({
   useEffect(() => dispatchResetState, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'Repos';
     if (searchValue) {
       handleSearchRepos({ value: searchValue });
     } else {

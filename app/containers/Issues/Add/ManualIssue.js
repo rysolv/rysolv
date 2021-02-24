@@ -24,7 +24,7 @@ const ManualIssue = ({
   handleInputChange,
   isDisabled,
   issueData,
-  repoData,
+  repoData: { repoName, repoUrl },
 }) => {
   useEffect(() => {
     dispatchUpdateIsManual({ value: true });
@@ -44,9 +44,9 @@ const ManualIssue = ({
     >
       <StyledH3>Repo</StyledH3>
       <VerifyWrapper>
-        <SelectedRepo>{repoData.repoName.value}</SelectedRepo>
-        <StyledLink href={`//${repoData.repoUrl.value}`} target="_blank">
-          {repoData.repoUrl.value}
+        <SelectedRepo>{repoName.value}</SelectedRepo>
+        <StyledLink href={`//${repoUrl.value}`} target="_blank">
+          {repoUrl.value}
         </StyledLink>
       </VerifyWrapper>
       <StyledH3>Add Issue</StyledH3>

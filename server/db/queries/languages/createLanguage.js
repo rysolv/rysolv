@@ -13,7 +13,7 @@ const createLanguage = async ({ languages, target }) => {
         uuidv4(),
         target.issueId || null,
         language,
-        target.reponId || null,
+        target.repoId || null,
         target.userId || null,
       ];
 

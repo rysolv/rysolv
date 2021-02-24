@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import AsyncRender from 'components/AsyncRender';
 import { BackNav } from 'components/base_ui';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { makeSelectRepos } from 'containers/Repos/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -122,10 +121,6 @@ const mapStateToProps = createStructuredSelector({
   issueData: makeSelectIssues('issueData'),
   loading: makeSelectIssuesLoading('addIssue'),
   step: makeSelectIssuesStep('addIssue'),
-  /**
-   * Reducer : Repos
-   */
-  repoData: makeSelectRepos('repoData'),
 });
 
 function mapDispatchToProps(dispatch) {

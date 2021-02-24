@@ -72,9 +72,6 @@ const UserRepos = ({ handleNav, repos }) => {
         propsToPassDown={{
           handleNav,
           repos: filteredRepos,
-          selectedValue,
-          setSearchValue,
-          setSelectedValue,
         }}
         shouldRender={!!filteredRepos.length}
       />

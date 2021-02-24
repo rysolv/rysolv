@@ -236,20 +236,20 @@ GraphQl Functions:
 --------------------------------------------------
 * Queries
   * `getIssues` - returns all issues
-  * `getUsers` - returns all users
   * `getRepos` - returns all repos
+  * `getUsers` - returns all users
   * `oneIssue` - requires `id: <UUID>` - returns one issue
-  * `oneUser` - requires `id: <UUID>` - returns one user
   * `oneRepo` - requires `id: <UUID>` - returns one repo
+  * `oneUser` - requires `id: <UUID>` - returns one user
 
 * Mutations
   * `createIssue` - requires `issueInput: <type IssueInput>` - returns created issue
-  * `createUser` - requires `userInput: <type UserInput>`- returns created user
   * `createRepo` - requires `repoInput: <type RepoInput>`- returns created repo
-  * `transformIssue` - requires `id: <type ID>, issueInput: <type IssueInput>`- returns transformed issue
-  * `transformUser` - requires `id: <type ID>, userInput: <type UserInput>`- returns transformed issue
-  * `transformRepo` - requires `id: <type ID>, repoInput: <type RepoInput>`- returns transformed repo
+  * `createUser` - requires `userInput: <type UserInput>`- returns created user
   * `deleteUser` - required `id: <type ID>` - returns success or failure string
+  * `transformIssue` - requires `id: <type ID>, issueInput: <type IssueInput>`- returns transformed issue
+  * `transformRepo` - requires `id: <type ID>, repoInput: <type RepoInput>`- returns transformed repo
+  * `transformUser` - requires `id: <type ID>, userInput: <type UserInput>`- returns transformed issue
 
 GraphQL Types
 --------------------------------------------------

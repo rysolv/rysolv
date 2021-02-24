@@ -31,6 +31,7 @@ import {
 
 export class ReposAdd extends React.PureComponent {
   componentDidMount() {
+    document.title = 'Add Repo';
     const { dispatchFetchUserRepos, handleIncrementStep } = this.props;
     dispatchFetchUserRepos();
     handleIncrementStep({ step: 1, view: 'addRepo' });

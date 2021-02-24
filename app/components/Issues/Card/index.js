@@ -16,7 +16,7 @@ import {
 } from 'components/base_ui';
 import UpvotePanel from 'components/Upvote';
 import { navHelper } from 'utils/globalHelpers';
-import IconDictionary from 'utils/iconDictionary';
+import iconDictionary from 'utils/iconDictionary';
 
 import {
   IssueCardIconWrapper,
@@ -39,7 +39,7 @@ import {
 import { issueTags, tagColors } from '../constants';
 import { TagWrapper } from '../styledComponents';
 
-const AttemptingIcon = IconDictionary('attempt');
+const AttemptingIcon = iconDictionary('attempt');
 
 const IssueCard = ({
   activeUser: { id: userId, upvotes: userUpvotes, watching: userWatchList },

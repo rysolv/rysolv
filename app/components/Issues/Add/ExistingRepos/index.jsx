@@ -6,13 +6,13 @@ import { CheckboxWithLabel, ConditionalRender } from 'components/base_ui';
 import { RepoCard, StyledExistingRepos } from './styledComponents';
 
 const ExistingRepos = ({
-  activeUser,
+  activeUser: { repos },
   handleClearRepo,
   handleInputChange,
   handleUpdateRepo,
   repoData,
 }) => {
-  const hadRepos = activeUser.repos && activeUser.repos.length > 0;
+  const hadRepos = repos && repos.length > 0;
 
   const handleUnselect = () => {
     handleClearRepo();
@@ -24,7 +24,7 @@ const ExistingRepos = ({
   };
 
   const handleSelect = id => {
-    activeUser.repos.forEach(el => {
+    repos.forEach(el => {
       if (el.id === id) {
         const selectedRepos = {
           importUrl: { error: '', value: '' },
@@ -46,7 +46,7 @@ const ExistingRepos = ({
     });
   };
 
-  const userRepos = activeUser.repos.map(el => {
+  const userRepos = repos.map(el => {
     const checked = el.id === repoData.repoId.value;
 
     return (

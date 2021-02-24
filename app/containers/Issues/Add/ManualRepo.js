@@ -4,8 +4,8 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 import { PrimaryButton } from 'components/base_ui';
-import RepoForm from 'components/Issues/Add/RepoForm';
 import ExistingRepos from 'components/Issues/Add/ExistingRepos';
+import RepoForm from 'components/Issues/Add/RepoForm';
 
 import {
   clearRepo,

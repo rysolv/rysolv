@@ -9,10 +9,7 @@ const getReposWhere = async ({ column, value }) => {
     WHERE ${column} = $1
     GROUP BY ${groupValues}
   `;
-  const { rows } = await singleQuery({
-    queryText,
-    values: [value],
-  });
+  const { rows } = await singleQuery({ queryText, values: [value] });
   return rows;
 };
 

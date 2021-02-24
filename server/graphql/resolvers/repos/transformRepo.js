@@ -31,7 +31,6 @@ const transformRepo = async ({ repoId, repoInput }, { authError, userId }) => {
       repoId: result.id,
       userId: result.ownerId,
     };
-
     await createActivity({ activityInput });
 
     return {
