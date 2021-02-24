@@ -444,6 +444,11 @@ export const StyledTabs = styled(Tabs)`
   }
 `;
 
+export const StyledText = styled.div`
+  font-size: ${defaultFontSize};
+  text-align: center;
+`;
+
 export const StyledTitled = styled.div`
   font-size: 1.8rem;
   padding-bottom: 1rem;

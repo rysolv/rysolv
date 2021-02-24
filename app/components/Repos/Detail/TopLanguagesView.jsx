@@ -12,6 +12,7 @@ import {
   Language,
   LanguageWrapper,
   StyledLanguageAutocomplete,
+  StyledText,
   StyledTitled,
   TopLanguagesContainer,
 } from './styledComponents';
@@ -41,14 +42,20 @@ export class TopLanguagesView extends React.PureComponent {
     );
 
     const LanguagesComponent = (
-      <LanguageWrapper>
-        {preferredLanguages.map((language, index) => (
-          <Language key={`list-item-${index}`}>
-            <Icon color={blueColorSpectrum[index]}>{CircleIcon}</Icon>
-            {language}
-          </Language>
-        ))}
-      </LanguageWrapper>
+      <ConditionalRender
+        Component={
+          <LanguageWrapper>
+            {preferredLanguages.map((language, index) => (
+              <Language key={`list-item-${index}`}>
+                <Icon color={blueColorSpectrum[index]}>{CircleIcon}</Icon>
+                {language}
+              </Language>
+            ))}
+          </LanguageWrapper>
+        }
+        FallbackComponent={<StyledText>None yet</StyledText>}
+        shouldRender={!!preferredLanguages.length}
+      />
     );
 
     return (
