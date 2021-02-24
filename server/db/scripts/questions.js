@@ -68,6 +68,17 @@ const questions = [
     response_limit: 3,
     subtext: 'Select up to 3 languages.',
   },
+  // timeline
+  {
+    id: '71401a1a-54bc-4816-a6b1-2e2679b57b4b',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 7,
+    question_key: 'timeline',
+    question_text: 'How soon are you looking to be hired?',
+    response_limit: 1,
+    subtext: null,
+  },
 ];
 
 const responses = [
@@ -283,6 +294,39 @@ const responses = [
     question_id: '32eee9df-e3f8-4288-9671-d69981c6554d',
     response_key: '200',
     value: '$200,000 +',
+  },
+  // us citizen
+  {
+    id: '2abcd529-6fb2-40c3-8969-d7990568b95d',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '71401a1a-54bc-4816-a6b1-2e2679b57b4b',
+    response_key: '0_months',
+    value: 'Immediately',
+  },
+  {
+    id: '0c553a85-d783-4184-8453-fb8e99a659a7',
+    created_date: new Date(),
+    priority: 2,
+    question_id: '71401a1a-54bc-4816-a6b1-2e2679b57b4b',
+    response_key: '3_months',
+    value: 'Next 3 months',
+  },
+  {
+    id: '0c553a85-d783-4184-8453-fb8e99a659a7',
+    created_date: new Date(),
+    priority: 2,
+    question_id: '71401a1a-54bc-4816-a6b1-2e2679b57b4b',
+    response_key: '6_months',
+    value: 'Next 6 months',
+  },
+  {
+    id: 'cf3a4da5-7f80-4c36-9c6e-4c84bdb812bf',
+    created_date: new Date(),
+    priority: 3,
+    question_id: '71401a1a-54bc-4816-a6b1-2e2679b57b4b',
+    response_key: 'indefinite',
+    value: 'Not actively looking',
   },
 ];
 

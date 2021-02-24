@@ -25,6 +25,7 @@ export const RoutesWrapper = styled.section`
   }
 
   ${mobile} {
+    margin-bottom: 15rem;
     padding-top: 10rem;
   }
 `;

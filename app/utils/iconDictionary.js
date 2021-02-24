@@ -20,6 +20,7 @@ import Comments from '@material-ui/icons/Forum';
 import Computer from '@material-ui/icons/Computer';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
+import DesktopMacIcon from '@material-ui/icons/DesktopMac';
 import Dollar from '@material-ui/icons/AttachMoney';
 import Done from '@material-ui/icons/Done';
 import Edit from '@material-ui/icons/Edit';
@@ -33,6 +34,7 @@ import GitHub from '@material-ui/icons/GitHub';
 import Help from '@material-ui/icons/Help';
 import Info from '@material-ui/icons/Info';
 import Link from '@material-ui/icons/Link';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import NavigateNext from '@material-ui/icons/NavigateNext';
@@ -40,6 +42,7 @@ import PublishIcon from '@material-ui/icons/Publish';
 import PullRequest from '@material-ui/icons/AccountTree';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
+import StarsIcon from '@material-ui/icons/Stars';
 import Stats from '@material-ui/icons/Equalizer';
 import Twitter from '@material-ui/icons/Twitter';
 import Verified from '@material-ui/icons/VerifiedUser';
@@ -50,9 +53,15 @@ import WebIcon from '@material-ui/icons/Web';
 
 import CloseMenu from './svg/CloseMenu';
 import Coin from './svg/RysolvCoin';
+import FreeCodeCamp from './svg/FreeCodeCamp';
 import Gitlab from './svg/Gitlab';
+import Graphql from './svg/Graphql';
+import Javascript from './svg/Javascript';
 import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
+import Python from './svg/Python';
+import ReactIcon from './svg/React';
+import Ruby from './svg/Ruby';
 import SiteLogo from './svg/SiteLogo';
 import Stackoverflow from './svg/Stackoverflow';
 
@@ -78,7 +87,9 @@ export default (name, size, style) => {
     computer: Computer,
     creditCard: CreditCard,
     delete: Delete,
+    desktop: DesktopMacIcon,
     dollar: Dollar,
+    dollarSquare: LocalAtmIcon,
     done: Done,
     dropdownArrow: ArrowDropDownIcon,
     edit: Edit,
@@ -87,13 +98,16 @@ export default (name, size, style) => {
     facebook: Facebook,
     flare: Flare,
     forwardArrowHalf: ArrowForwardIosIcon,
+    freeCodeCamp: FreeCodeCamp,
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,
     gitlab: Gitlab,
+    graphql: Graphql,
     help: Help,
     info: Info,
     issue: ErrorIcon,
+    javascript: Javascript,
     link: Link,
     monocle: Monocle,
     navigateBefore: NavigateBefore,
@@ -101,10 +115,14 @@ export default (name, size, style) => {
     organization: WebIcon,
     paypal: Paypal,
     pullRequest: PullRequest,
+    python: Python,
+    reactIcon: ReactIcon,
+    ruby: Ruby,
     search: Search,
     settings: Settings,
     siteLogo: SiteLogo,
     stackoverflow: Stackoverflow,
+    star: StarsIcon,
     stats: Stats,
     successOutline: CheckCircleOutline,
     twitter: Twitter,

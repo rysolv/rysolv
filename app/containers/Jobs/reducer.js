@@ -19,6 +19,7 @@ export const initialState = {
   form: {
     desiredRole: { value: [] },
     experience: { value: [] },
+    timeline: { value: [] },
     preferredLanguages: { value: [] },
     preferredLocation: { value: [] },
     targetSalary: { value: [] },

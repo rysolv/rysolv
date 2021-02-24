@@ -17,9 +17,12 @@ import {
   fundingText,
   headerFontSize,
   hoverLinkColor,
+  landingButtonGreen,
   languageBackground,
   languageText,
   lightBlueColor,
+  primaryButtonColor,
+  subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -38,20 +41,39 @@ export const ButtonWrapper = styled.div`
   display: flex;
 `;
 
+export const DescriptionBullets = styled.div`
+  display: flex;
+
+  li {
+    align-items: center;
+    display: flex;
+    list-style-type: none;
+    margin: 1.5rem 0;
+  }
+
+  svg {
+    color: ${landingButtonGreen};
+    height: 2rem;
+    margin-right: 1rem;
+    width: 2rem;
+  }
+`;
+
 export const DescriptionContent = styled.div`
-  font-size: 16px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
   font-weight: 400;
-  line-height: 24px;
-  margin-bottom: 40px;
+  line-height: 2.4rem;
   text-align: center;
-  letter-spacing: -0.2px;
 `;
 
 export const DescriptionTitle = styled.div`
-  font-size: 36px;
+  color: ${primaryButtonColor};
+  font-size: 3.6rem;
   font-weight: 300;
-  line-height: 44px;
-  margin-bottom: 24px;
+  margin-bottom: 2rem;
   text-align: center;
 `;
 
@@ -83,7 +105,7 @@ export const JobsContainer = styled.div`
   width: 90%;
 
   ${mobile} {
-    margin: 0 1rem;
+    width: 100%;
   }
 `;
 
@@ -119,6 +141,8 @@ export const QuestionWrapper = styled.div`
 `;
 
 export const StyledBaseAutocomplete = styled(BaseAutocomplete)`
+  margin: 0 auto;
+  width: 70%;
   .tag {
     background-color: ${languageBackground};
     color: ${languageText};
@@ -144,7 +168,7 @@ export const StyledButton = styled(
       ? 'inherit'
       : 'none'};
   font-family: ${defaultFontFamily};
-  font-size: ${defaultFontSize};
+  font-size: ${subheaderFontSize};
   font-weight: 500;
   margin: 1rem;
   padding: 0rem;
@@ -174,6 +198,7 @@ export const StyledFocusDiv = styled.div`
 
 export const StyledGithubButton = styled(GithubButton)`
   width: auto;
+  font-size: 1.6rem;
 `;
 
 export const StyledParagraph = styled.p`
@@ -199,6 +224,8 @@ export const StyledPrimaryButton = styled(({ isSelected, ...restProps }) => (
     isSelected ? lightBlueColor : 'white'};
   border: 0.1rem solid ${lightBlueColor};
   color: ${({ isSelected }) => (isSelected ? 'white' : lightBlueColor)};
+  font-size: 1.6rem;
+  min-width: 20rem;
 
   &:hover {
     background-color: ${lightBlueColor};
@@ -228,8 +255,13 @@ export const ViewContainer = styled.div`
   font-size: ${defaultFontSize};
   justify-content: ${({ isFinalView }) =>
     isFinalView ? 'inherit' : 'space-between'};
+  margin: 0 auto;
   min-height: 50rem;
   padding: 3.8rem 2.6rem;
   text-align: center;
   width: 100%;
+
+  ${mobile} {
+    padding: 2rem 0.5rem;
+  }
 `;
