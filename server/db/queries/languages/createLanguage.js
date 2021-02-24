@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const { singleQuery } = require('../../baseQueries');
 
 // Add language to table
-const createLanguage = async ({ languages, target, preferred }) => {
+const createLanguage = async ({ languages, preferred, target }) => {
   languages.map(async language => {
     const isLanguageDefined =
       language !== '' && language !== null && language !== undefined;

@@ -4,7 +4,7 @@ import {
   borderColor,
   languageBackground,
   languageText,
-  primaryButtonColor,
+  lightBlueColor,
 } from 'defaultStyleHelper';
 
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -71,7 +71,7 @@ export const LanguageWrapper = styled.div`
 `;
 
 export const Name = styled.div`
-  color: ${primaryButtonColor};
+  color: ${lightBlueColor};
   font-size: 1.8rem;
   font-weight: bold;
   text-align: left;

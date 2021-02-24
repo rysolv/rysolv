@@ -21,7 +21,6 @@ import {
   languageBackground,
   languageText,
   lightBlueColor,
-  primaryButtonColor,
   subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
@@ -70,7 +69,7 @@ export const DescriptionContent = styled.div`
 `;
 
 export const DescriptionTitle = styled.div`
-  color: ${primaryButtonColor};
+  color: ${lightBlueColor};
   font-size: 3.6rem;
   font-weight: 300;
   margin-bottom: 2rem;

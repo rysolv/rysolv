@@ -19,7 +19,6 @@ export const languageText = '#6487ae';
 export const lightBlueColor = '#1e88e5';
 export const lightGreyColor = 'rgba(0, 0, 0, 0.4)';
 export const markdownHeader = '#546e7a';
-export const primaryButtonColor = `#1e88e5`;
 export const rewardBackground = 'rgb(236, 234, 252)';
 export const rewardColor = 'rgb(105, 8, 201)';
 export const secondaryButtonColor = '#5e35b1';

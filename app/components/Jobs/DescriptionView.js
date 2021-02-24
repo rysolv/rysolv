@@ -70,7 +70,7 @@ const DescriptionView = ({ handleStart, isGithubVerified, isSignedIn }) => {
             Component={
               <StyledPrimaryButton
                 isSelected
-                label="Get Started!"
+                label="Get Started"
                 onClick={handleStart}
               />
             }

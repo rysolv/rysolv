@@ -2,10 +2,10 @@ const { v4: uuidv4 } = require('uuid');
 
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
+  createLanguage,
+  getUserLanguages,
   postUserResponse: postUserResponseQuery,
   setPreferredLanguage,
-  getUserLanguages,
-  createLanguage,
 } = require('../../../db');
 const {
   postUserResponseError,
