@@ -232,8 +232,8 @@ const getUserGithubIssues = async ({ username }) => {
           issues.push({
             createdDate: updated_at,
             name: title,
-            organizationName: repo.name,
             repo: html_url,
+            repoName: repo.name,
           });
         }
       });

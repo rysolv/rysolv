@@ -6,7 +6,7 @@ const getRepos = async () => {
   try {
     const repos = await getReposQuery();
     return {
-      __typename: 'ReposArray',
+      __typename: 'RepoArray',
       repos,
     };
   } catch (error) {

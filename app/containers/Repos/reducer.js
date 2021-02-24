@@ -182,7 +182,7 @@ const reposReducer = produce((draft, { payload, type }) => {
     case FETCH_USER_REPOS_SUCCESS: {
       const { repos } = payload;
       draft.loading.userRepos = false;
-      draft.useRepos = repos;
+      draft.userRepos = repos;
       break;
     }
     case FETCH_USER_REPOS: {

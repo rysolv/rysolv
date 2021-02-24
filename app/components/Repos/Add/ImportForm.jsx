@@ -26,7 +26,7 @@ const ImportForm = ({
   importRepoLoading,
   isGithubVerified,
   repoData: { autoImportUrl, importUrl },
-  useRepos,
+  userRepos,
   userReposLoading,
 }) => {
   useEffect(() => document.getElementById('repoImport').focus(), []);
@@ -88,7 +88,7 @@ const ImportForm = ({
         FallbackComponent={UnauthenticatedMessage}
         propsToPassDown={{
           handleInputChange,
-          useRepos,
+          userRepos,
           userReposLoading,
         }}
         shouldRender={isGithubVerified}
@@ -113,7 +113,7 @@ ImportForm.propTypes = {
   importRepoLoading: T.bool,
   isGithubVerified: T.bool,
   repoData: T.object,
-  useRepos: T.array,
+  userRepos: T.array,
   userReposLoading: T.bool,
 };
 
