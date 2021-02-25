@@ -47,7 +47,7 @@ const DesktopHeader = ({
         </LogoWrapper>
         <ButtonsWrapper>
           <AboutDropdown handleNav={handleNav} />
-          {/* <NavLink label="Jobs" path="/jobs" shouldRemoveFirst /> */}
+          <NavLink label="Jobs" path="/jobs" shouldRemoveFirst />
           <NavLink label="Find Issues" path="/issues" />
           <UserActivityDropdown handleNav={handleNav} />
 

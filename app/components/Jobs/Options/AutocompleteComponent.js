@@ -3,7 +3,14 @@ import T from 'prop-types';
 
 import { StyledBaseAutocomplete } from '../styledComponents';
 
-const Autocomplete = ({ dispatchChangeInput, form, id, limit, options }) => {
+const Autocomplete = ({
+  dispatchChangeInput,
+  form,
+  id,
+  limit,
+  options,
+  placeholder,
+}) => {
   const [selected, setSelected] = useState(form[id].value || []);
   useEffect(() => {
     setSelected(form[id].value || []);
@@ -27,6 +34,7 @@ const Autocomplete = ({ dispatchChangeInput, form, id, limit, options }) => {
       multiple
       onChange={(e, value) => handleChange(value)}
       options={options}
+      placeholder={placeholder}
       value={selected.map(el => ({ value: el.value || el }))}
     />
   );
@@ -40,6 +48,7 @@ Autocomplete.propTypes = {
   id: T.string.isRequired,
   limit: T.number,
   options: T.array.isRequired,
+  placeholder: T.string,
 };
 
 export default Autocomplete;

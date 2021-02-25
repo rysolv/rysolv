@@ -22,6 +22,7 @@ export const initialState = {
     preferredLanguages: { value: [] },
     preferredLocation: { value: [] },
     targetSalary: { value: [] },
+    timeline: { value: [] },
     usCitizen: { value: '' },
   },
   questions: [],

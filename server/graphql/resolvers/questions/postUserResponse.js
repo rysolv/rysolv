@@ -2,6 +2,8 @@ const { v4: uuidv4 } = require('uuid');
 
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
+  createLanguage,
+  getUserLanguages,
   postUserResponse: postUserResponseQuery,
   setPreferredLanguage,
 } = require('../../../db');
@@ -13,12 +15,21 @@ const {
 const postUserResponse = async ({ responseArray }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
+    const { languages } = await getUserLanguages({ userId });
 
     await Promise.all(
       responseArray.map(
         async ({ questionId, questionKey, responseId, value }) => {
           if (questionKey === 'preferred_languages') {
-            await setPreferredLanguage({ language: value, userId });
+            if (languages && languages.includes(value)) {
+              await setPreferredLanguage({ language: value, userId });
+            } else {
+              await createLanguage({
+                languages: [value],
+                preferred: true,
+                target: { userId },
+              });
+            }
           } else {
             const data = {
               createdDate: new Date(),

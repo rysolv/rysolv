@@ -78,7 +78,7 @@ export function* submitUserResponseSaga({ payload }) {
   `;
   try {
     const graphql = JSON.stringify({ query });
-    // yield call(post, '/graphql', graphql);
+    yield call(post, '/graphql', graphql);
     yield put(changeView({ view: 2 }));
     yield put(push('/jobs'));
     yield put(submitUserResponseSuccess());
