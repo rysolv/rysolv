@@ -26,7 +26,7 @@ import {
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile, mobileS } = mediaQueriesByDevice;
+const { laptop, mobile, mobileS } = mediaQueriesByDevice;
 
 export const BottomFade = styled.div`
   background: linear-gradient(
@@ -88,14 +88,14 @@ export const DescriptionBullets = styled.div`
 export const DescriptionContent = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: ${defaultFontSize};
+  font-size: 1.6rem;
   line-height: 2.4rem;
   text-align: left;
 `;
 
 export const DescriptionSubTitle = styled.b`
   font-size: 1.6rem;
-  margin: 1rem 0;
+  margin: 2rem 0;
   text-align: center;
 `;
 
@@ -287,9 +287,13 @@ export const ViewContainer = styled.div`
   justify-content: ${({ isFinalView }) =>
     isFinalView ? 'inherit' : 'space-between'};
   min-height: 50rem;
-  padding: 3.8rem 2.6rem;
+  padding: 3.8rem 10%;
   text-align: center;
   width: 100%;
+
+  ${laptop} {
+    padding: 3.8rem 2.6rem;
+  }
 
   ${mobile} {
     padding: 2rem 0.5rem;
