@@ -7,10 +7,9 @@ const getOneOrganization = async ({ organizationId }) => {
     SELECT
       ${organizationReturnValues},
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages",
-      COALESCE(SUM(DISTINCT payments.funded_amount),0) AS "totalFunded"
+      (SELECT COALESCE(SUM(funded_amount),0) FROM payments WHERE organization_id = $1) as "totalFunded"
     FROM organizations
       LEFT JOIN languages ON languages.organization_id = organizations.id
-      LEFT JOIN payments ON payments.organization_id = organizations.id
     WHERE organizations.id = $1
     AND organizations.is_deleted = false
     GROUP BY ${groupValues}

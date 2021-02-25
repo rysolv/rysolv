@@ -6,11 +6,16 @@ const getOrganizations = async () => {
   const queryText = `
     SELECT
       ${organizationReturnValues},
-      ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages",
-      COALESCE(SUM(DISTINCT payments.funded_amount),0) AS "totalFunded"
+      ARRAY_REMOVE(ARRAY_AGG(l.language), NULL) AS "preferredLanguages",
+      COALESCE(SUM(payments.funded_amount),0) AS "totalFunded"
     FROM organizations
-      LEFT JOIN languages ON languages.organization_id = organizations.id
-      LEFT JOIN payments ON payments.organization_id = organizations.id
+      LEFT JOIN (
+        select l.organization_id,
+        l.language as language
+        from languages l
+        group by organization_id, language
+      ) l on l.organization_id = organizations.id
+      LEFT JOIN payments on payments.organization_id = organizations.id
     WHERE organizations.is_deleted = false
     GROUP BY ${groupValues}
   `;

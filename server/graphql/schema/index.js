@@ -60,6 +60,8 @@ module.exports = buildSchema(`
     fundedIssues: Int
     issueLanguages: [Object]
     maxBounty: Float
+    maxOrgFunded: Float
+    organizationLanguages: [Object]
     organizations: [Object]
     unfundedIssues: Int
     userLanguages: [Object]
