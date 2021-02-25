@@ -11,5 +11,6 @@ export const optionDictionary = {
   preferred_languages: 'autocomplete',
   preferred_location: 'multipleButton',
   target_salary: 'singleButton',
+  timeline: 'multipleButton',
   us_citizen: 'singleButton',
 };

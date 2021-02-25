@@ -31,6 +31,7 @@ const SurveyView = ({
   options,
   optionType,
   path,
+  placeholder,
   question,
   step,
   steps,
@@ -48,6 +49,7 @@ const SurveyView = ({
     id,
     limit,
     options,
+    placeholder,
   };
   const checkInputDisabled = input => {
     let disabled = true;
@@ -137,6 +139,7 @@ SurveyView.propTypes = {
   options: T.array.isRequired,
   optionType: T.string.isRequired,
   path: T.string.isRequired,
+  placeholder: T.string,
   question: T.string.isRequired,
   step: T.number.isRequired,
   steps: T.number.isRequired,

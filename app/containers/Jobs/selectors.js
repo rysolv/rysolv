@@ -15,8 +15,9 @@ const makeSelectJobs = prop =>
 
 const makeSelectJobQuestions = () =>
   createSelector(
+    makeSelectJobs('form'),
     makeSelectJobs('questions'),
-    questions => {
+    (form, questions) => {
       const formattedQuestions = questions.map(
         ({ limit, questionKey, questionText, responses, subtext }) => ({
           description: subtext,
@@ -24,6 +25,11 @@ const makeSelectJobQuestions = () =>
           limit,
           options: responses.map(({ value }) => ({ value })),
           optionType: optionDictionary[questionKey],
+          placeholder:
+            questionKey === 'preferred_languages' &&
+            !form[snakeToCamel(questionKey)].value.length
+              ? 'Languages'
+              : '',
           question: questionText,
         }),
       );
