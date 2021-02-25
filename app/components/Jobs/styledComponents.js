@@ -11,6 +11,7 @@ import {
   SecondaryButton,
 } from 'components/base_ui';
 import {
+  commentHeaderColor,
   defaultFontFamily,
   defaultFontSize,
   fundingOpenBackground,
@@ -21,12 +22,23 @@ import {
   languageBackground,
   languageText,
   lightBlueColor,
-  subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile, mobileS } = mediaQueriesByDevice;
+
+export const BottomFade = styled.div`
+  background: linear-gradient(
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 90%
+  );
+  bottom: 0;
+  height: 15rem;
+  left: 0;
+  position: absolute;
+  width: 100%;
+`;
 
 export const ButtonGroup = styled.div`
   display: flex;
@@ -41,9 +53,16 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const DescriptionBullets = styled.div`
+  align-self: center;
   display: flex;
 
-  li {
+  div {
+    display: flex;
+    flex-direction: column;
+    padding: 0 2rem;
+  }
+
+  span {
     align-items: center;
     display: flex;
     list-style-type: none;
@@ -51,20 +70,32 @@ export const DescriptionBullets = styled.div`
   }
 
   svg {
-    color: ${landingButtonGreen};
-    height: 2rem;
+    background: ${landingButtonGreen};
+    border-radius: 50%;
+    color: white;
+    height: 2.5rem;
     margin-right: 1rem;
-    width: 2rem;
+    padding: 0.2rem;
+    width: 2.5rem;
+  }
+
+  ${mobile} {
+    align-self: center;
+    flex-direction: column;
   }
 `;
 
 export const DescriptionContent = styled.div`
-  align-items: center;
   display: flex;
   flex-direction: column;
-  font-size: 1.6rem;
-  font-weight: 400;
+  font-size: ${defaultFontSize};
   line-height: 2.4rem;
+  text-align: left;
+`;
+
+export const DescriptionSubTitle = styled.b`
+  font-size: 1.6rem;
+  margin: 1rem 0;
   text-align: center;
 `;
 
@@ -72,8 +103,6 @@ export const DescriptionTitle = styled.div`
   color: ${lightBlueColor};
   font-size: 3.6rem;
   font-weight: 300;
-  margin-bottom: 2rem;
-  text-align: center;
 `;
 
 export const DescriptionWrapper = styled.div`
@@ -139,9 +168,15 @@ export const QuestionWrapper = styled.div`
   font-weight: 500;
 `;
 
+export const SampleWrapper = styled.div`
+  background: ${commentHeaderColor};
+  margin: 2rem 0;
+  opacity: 0.9;
+  padding: 2rem;
+  position: relative;
+`;
+
 export const StyledBaseAutocomplete = styled(BaseAutocomplete)`
-  margin: 0 auto;
-  width: 70%;
   .tag {
     background-color: ${languageBackground};
     color: ${languageText};
@@ -167,7 +202,7 @@ export const StyledButton = styled(
       ? 'inherit'
       : 'none'};
   font-family: ${defaultFontFamily};
-  font-size: ${subheaderFontSize};
+  font-size: ${defaultFontSize};
   font-weight: 500;
   margin: 1rem;
   padding: 0rem;
@@ -185,7 +220,6 @@ export const StyledButton = styled(
 
   ${mobileS} {
     justify-content: start;
-    width: 100%;
   }
 `;
 
@@ -197,7 +231,6 @@ export const StyledFocusDiv = styled.div`
 
 export const StyledGithubButton = styled(GithubButton)`
   width: auto;
-  font-size: 1.6rem;
 `;
 
 export const StyledParagraph = styled.p`
@@ -223,7 +256,6 @@ export const StyledPrimaryButton = styled(({ isSelected, ...restProps }) => (
     isSelected ? lightBlueColor : 'white'};
   border: 0.1rem solid ${lightBlueColor};
   color: ${({ isSelected }) => (isSelected ? 'white' : lightBlueColor)};
-  font-size: 1.6rem;
   min-width: 20rem;
 
   &:hover {
@@ -254,7 +286,6 @@ export const ViewContainer = styled.div`
   font-size: ${defaultFontSize};
   justify-content: ${({ isFinalView }) =>
     isFinalView ? 'inherit' : 'space-between'};
-  margin: 0 auto;
   min-height: 50rem;
   padding: 3.8rem 2.6rem;
   text-align: center;

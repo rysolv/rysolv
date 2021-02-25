@@ -1,18 +1,16 @@
 import React from 'react';
+
 import iconDictionary from 'utils/iconDictionary';
 
 import {
-  IconContainer,
   InfoContainer,
+  Language,
   LanguageContainer,
-  LanguageIcon,
   LanguageStats,
-  LanguageWrapper,
   Name,
   ProfileContainer,
-  ProfileImage,
-  ProfileImageContainer,
   Stats,
+  StyledImage,
   Title,
   UserContainer,
 } from './styledComponents';
@@ -27,51 +25,34 @@ const Ruby = iconDictionary('ruby');
 const ExampleProfile = () => (
   <ProfileContainer>
     <UserContainer>
-      <ProfileImageContainer>
-        <ProfileImage />
-      </ProfileImageContainer>
+      <StyledImage src="https://rysolv.s3.us-east-2.amazonaws.com/default-profile-picture.png" />
       <InfoContainer>
         <Name>John Doe</Name>
         <Stats>
-          <Title>
-            <IconContainer>{PullRequest}</IconContainer>
-            Pull Requests
-          </Title>
+          <Title>{PullRequest}Pull requests</Title>
           84
         </Stats>
         <Stats>
-          <Title>
-            <IconContainer>{Commits}</IconContainer>
-            Commits
-          </Title>
+          <Title>{Commits}Commits</Title>
           2,308
         </Stats>
         <Stats>
-          <Title>
-            <IconContainer>{Issues}</IconContainer>
-            Issues resolved
-          </Title>
+          <Title>{Issues}Issues resolved</Title>
           22
         </Stats>
       </InfoContainer>
     </UserContainer>
     <LanguageContainer>
       <LanguageStats>
-        <LanguageWrapper>
-          <LanguageIcon>{Javascript}</LanguageIcon>Javascript
-        </LanguageWrapper>
+        <Language>{Javascript}Javascript</Language>
         1,022 commits
       </LanguageStats>
       <LanguageStats>
-        <LanguageWrapper>
-          <LanguageIcon>{Python}</LanguageIcon>Python
-        </LanguageWrapper>
+        <Language>{Python}Python</Language>
         794 commits
       </LanguageStats>
       <LanguageStats>
-        <LanguageWrapper>
-          <LanguageIcon>{Ruby}</LanguageIcon>Ruby
-        </LanguageWrapper>
+        <Language>{Ruby}Ruby</Language>
         433 commits
       </LanguageStats>
     </LanguageContainer>

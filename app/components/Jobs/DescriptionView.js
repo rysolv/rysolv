@@ -8,11 +8,14 @@ import ExampleContributions from './ExampleContributions';
 import ExampleProfile from './ExampleProfile';
 
 import {
+  BottomFade,
   ButtonWrapper,
   DescriptionBullets,
   DescriptionContent,
+  DescriptionSubTitle,
   DescriptionTitle,
   JobsHeader,
+  SampleWrapper,
   StyledFocusDiv,
   StyledGithubButton,
   StyledPrimaryButton,
@@ -41,30 +44,31 @@ const DescriptionView = ({ handleStart, isGithubVerified, isSignedIn }) => {
     >
       <JobsHeader />
       <ViewContainer>
-        <div>
-          <DescriptionTitle>Let your code speak</DescriptionTitle>
-          <DescriptionContent>
-            <b>Introducing a new hiring platform for developers.</b>
-            <br />
-            No more take home assignments or algorithm tests! Rysolv lets you
-            fast track your way through the hiring process. We analyze your
-            coding history, conduct an interview to gauge your interests, and
-            match you with companies looking for your skills.
-            <DescriptionBullets>
-              <ul>
-                <li>{Github}Generate insights on your git history</li>
-                <li>{Star}Showcase your contributions</li>
-              </ul>
-              <ul>
-                <li>{Edit}Get personalized feedback on your portfolio</li>
-                <li>{Dollar}Find employers looking for your exact skills</li>
-              </ul>
-            </DescriptionBullets>
-          </DescriptionContent>
+        <DescriptionTitle>Let your code speak</DescriptionTitle>
+        <DescriptionContent>
+          <DescriptionSubTitle>
+            Introducing a new hiring platform for developers.
+          </DescriptionSubTitle>
+          No more take home assignments or algorithm tests! Rysolv lets you fast
+          track your way through the hiring process. We analyze your coding
+          history, conduct an interview to gauge your interests, and match you
+          with companies looking for your skills.
+          <DescriptionBullets>
+            <div>
+              <span>{Github}Generate insights on your git history</span>
+              <span>{Star}Showcase your contributions</span>
+            </div>
+            <div>
+              <span>{Edit}Get personalized feedback on your portfolio</span>
+              <span>{Dollar}Find employers looking for your exact skills</span>
+            </div>
+          </DescriptionBullets>
+        </DescriptionContent>
+        <SampleWrapper>
           <ExampleProfile />
-          <br />
           <ExampleContributions />
-        </div>
+          <BottomFade />
+        </SampleWrapper>
         <ButtonWrapper>
           <ConditionalRender
             Component={

@@ -1,16 +1,14 @@
 import React from 'react';
+
 import iconDictionary from 'utils/iconDictionary';
 
 import {
-  BottomFade,
   Contribution,
   ContributionContainer,
   GithubLink,
   Info,
   InfoContainer,
-  InfoIcon,
   ProjectContainer,
-  ProjectLogo,
   ProjectName,
 } from './styledComponents';
 
@@ -26,72 +24,37 @@ const ExampleProfile = () => (
   <ContributionContainer>
     <Contribution>
       <ProjectContainer>
-        <ProjectName color="#e535ab">
-          <ProjectLogo>{Graphql}</ProjectLogo>
-          GraphQL JS
-        </ProjectName>
-        <GithubLink>
-          <InfoIcon>{Github}</InfoIcon> github.com/graphql/graphql-js
-        </GithubLink>
+        <ProjectName color="#e535ab">{Graphql}GraphQL JS</ProjectName>
+        <GithubLink>{Github}github.com/graphql/graphql-js</GithubLink>
       </ProjectContainer>
       <InfoContainer>
-        <Info>
-          <InfoIcon>{Issues}</InfoIcon>6 Issues Resolved
-        </Info>
-        <Info>
-          <InfoIcon>{PullRequest}</InfoIcon>8 Pull Requests
-        </Info>
-        <Info>
-          <InfoIcon>{Commit}</InfoIcon>102 commits
-        </Info>
-      </InfoContainer>
-    </Contribution>
-
-    <Contribution>
-      <ProjectContainer>
-        <ProjectName color="#61dafb">
-          <ProjectLogo>{ReactIcon}</ProjectLogo>
-          react-table
-        </ProjectName>
-        <GithubLink>
-          <InfoIcon>{Github}</InfoIcon> github.com/tannerlinsley/react-table
-        </GithubLink>
-      </ProjectContainer>
-      <InfoContainer>
-        <Info>
-          <InfoIcon>{Issues}</InfoIcon>3 Issues Resolved
-        </Info>
-        <Info>
-          <InfoIcon>{PullRequest}</InfoIcon>4 Pull Requests
-        </Info>
-        <Info>
-          <InfoIcon>{Commit}</InfoIcon>44 commits
-        </Info>
+        <Info>{Commit}102 Commits</Info>
+        <Info>{Issues}6 Issues resolved</Info>
+        <Info>{PullRequest}8 Pull requests</Info>
       </InfoContainer>
     </Contribution>
     <Contribution>
       <ProjectContainer>
-        <ProjectName color="#00471b">
-          <ProjectLogo>{FreeCodeCamp}</ProjectLogo>
-          FreeCodeCamp
-        </ProjectName>
-        <GithubLink>
-          <InfoIcon>{Github}</InfoIcon> github.com/freeCodeCamp/freeCodeCamp
-        </GithubLink>
+        <ProjectName color="#61dafb">{ReactIcon}react-table</ProjectName>
+        <GithubLink>{Github}github.com/tannerlinsley/react-table</GithubLink>
       </ProjectContainer>
       <InfoContainer>
-        <Info>
-          <InfoIcon>{Issues}</InfoIcon>2 Issues Resolved
-        </Info>
-        <Info>
-          <InfoIcon>{PullRequest}</InfoIcon>2 Pull Requests
-        </Info>
-        <Info>
-          <InfoIcon>{Commit}</InfoIcon>23 commits
-        </Info>
+        <Info>{Commit}44 Commits</Info>
+        <Info>{Issues}3 Issues resolved</Info>
+        <Info>{PullRequest}4 Pull requests</Info>
       </InfoContainer>
     </Contribution>
-    <BottomFade />
+    <Contribution>
+      <ProjectContainer>
+        <ProjectName color="#00471b">{FreeCodeCamp}FreeCodeCamp</ProjectName>
+        <GithubLink>{Github}github.com/freeCodeCamp/freeCodeCamp</GithubLink>
+      </ProjectContainer>
+      <InfoContainer>
+        <Info>{Commit}23 Commits</Info>
+        <Info>{Issues}2 Issues resolved</Info>
+        <Info>{PullRequest}2 Pull requests</Info>
+      </InfoContainer>
+    </Contribution>
   </ContributionContainer>
 );
 
