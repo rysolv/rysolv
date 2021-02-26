@@ -53,9 +53,7 @@ import Web from '@material-ui/icons/Web';
 
 import CloseMenu from './svg/CloseMenu';
 import Coin from './svg/RysolvCoin';
-import FreeCodeCamp from './svg/FreeCodeCamp';
 import Gitlab from './svg/Gitlab';
-import Graphql from './svg/Graphql';
 import Javascript from './svg/Javascript';
 import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
@@ -98,12 +96,10 @@ export default (name, size, style) => {
     facebook: Facebook,
     flare: Flare,
     forwardArrowHalf: ArrowForwardIos,
-    freeCodeCamp: FreeCodeCamp,
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,
     gitlab: Gitlab,
-    graphql: Graphql,
     help: Help,
     info: Info,
     issue: ErrorIcon,
