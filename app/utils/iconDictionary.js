@@ -1,13 +1,13 @@
 import React from 'react';
 
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import Add from '@material-ui/icons/Add';
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import AddBox from '@material-ui/icons/AddBox';
 import AddCircle from '@material-ui/icons/AddCircle';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import Attempt from '@material-ui/icons/ListAlt';
 import Cancel from '@material-ui/icons/Cancel';
 import Check from '@material-ui/icons/Check';
@@ -20,6 +20,7 @@ import Comments from '@material-ui/icons/Forum';
 import Computer from '@material-ui/icons/Computer';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Delete from '@material-ui/icons/Delete';
+import DesktopMac from '@material-ui/icons/DesktopMac';
 import Dollar from '@material-ui/icons/AttachMoney';
 import Done from '@material-ui/icons/Done';
 import Edit from '@material-ui/icons/Edit';
@@ -33,26 +34,34 @@ import GitHub from '@material-ui/icons/GitHub';
 import Help from '@material-ui/icons/Help';
 import Info from '@material-ui/icons/Info';
 import Link from '@material-ui/icons/Link';
+import LocalAtm from '@material-ui/icons/LocalAtm';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import NavigateNext from '@material-ui/icons/NavigateNext';
-import PublishIcon from '@material-ui/icons/Publish';
+import Publish from '@material-ui/icons/Publish';
 import PullRequest from '@material-ui/icons/AccountTree';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
+import Star from '@material-ui/icons/Star';
 import Stats from '@material-ui/icons/Equalizer';
 import Twitter from '@material-ui/icons/Twitter';
 import Verified from '@material-ui/icons/VerifiedUser';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Warning from '@material-ui/icons/Warning';
-import WebIcon from '@material-ui/icons/Web';
+import Web from '@material-ui/icons/Web';
 
 import CloseMenu from './svg/CloseMenu';
 import Coin from './svg/RysolvCoin';
+import FreeCodeCamp from './svg/FreeCodeCamp';
 import Gitlab from './svg/Gitlab';
+import Graphql from './svg/Graphql';
+import Javascript from './svg/Javascript';
 import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
+import Python from './svg/Python';
+import ReactIcon from './svg/React';
+import Ruby from './svg/Ruby';
 import SiteLogo from './svg/SiteLogo';
 import Stackoverflow from './svg/Stackoverflow';
 
@@ -61,11 +70,11 @@ import { iconSize, iconStyle } from '../defaultStyleHelper';
 export default (name, size, style) => {
   const icons = {
     add: Add,
-    addBox: AddBoxIcon,
+    addBox: AddBox,
     addCircle: AddCircle,
     attempt: Attempt,
-    backArrow: ArrowBackIcon,
-    backArrowHalf: ArrowBackIosIcon,
+    backArrow: ArrowBack,
+    backArrowHalf: ArrowBackIos,
     cancel: Cancel,
     check: Check,
     circle: Circle,
@@ -78,38 +87,47 @@ export default (name, size, style) => {
     computer: Computer,
     creditCard: CreditCard,
     delete: Delete,
+    desktop: DesktopMac,
     dollar: Dollar,
+    dollarSquare: LocalAtm,
     done: Done,
-    dropdownArrow: ArrowDropDownIcon,
+    dropdownArrow: ArrowDropDown,
     edit: Edit,
     email: Email,
     exit: Exit,
     facebook: Facebook,
     flare: Flare,
-    forwardArrowHalf: ArrowForwardIosIcon,
+    forwardArrowHalf: ArrowForwardIos,
+    freeCodeCamp: FreeCodeCamp,
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,
     gitlab: Gitlab,
+    graphql: Graphql,
     help: Help,
     info: Info,
     issue: ErrorIcon,
+    javascript: Javascript,
     link: Link,
     monocle: Monocle,
     navigateBefore: NavigateBefore,
     navigateNext: NavigateNext,
-    organization: WebIcon,
+    organization: Web,
     paypal: Paypal,
     pullRequest: PullRequest,
+    python: Python,
+    reactIcon: ReactIcon,
+    ruby: Ruby,
     search: Search,
     settings: Settings,
     siteLogo: SiteLogo,
     stackoverflow: Stackoverflow,
+    star: Star,
     stats: Stats,
     successOutline: CheckCircleOutline,
     twitter: Twitter,
-    upload: PublishIcon,
-    user: AccountCircleIcon,
+    upload: Publish,
+    user: AccountCircle,
     verified: Verified,
     visibility: Visibility,
     visibilityOff: VisibilityOff,

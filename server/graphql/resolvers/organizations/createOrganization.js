@@ -44,7 +44,6 @@ const createOrganization = async (
       organization_url: organizationInput.organizationUrl || '',
       owner_id: userId,
       repo_url: organizationInput.organizationRepo,
-      total_funded: organizationInput.totalFunded || 0,
       verified: organizationInput.verified || false,
     };
 

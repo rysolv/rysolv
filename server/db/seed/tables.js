@@ -13,6 +13,9 @@ const {
   alterOrganizationsTable,
   alterPaymentTable,
   alterPullRequestsTable,
+  alterQuestionResponseTable,
+  alterQuestionsTable,
+  alterUserQuestionResponseTable,
   alterUsersTable,
   alterWatchingTable,
   alterWithdrawalTable,
@@ -26,6 +29,9 @@ const {
   createOrganizationsTable,
   createPaymentsTable,
   createPullRequestsTable,
+  createQuestionResponseTable,
+  createQuestionsTable,
+  createUserQuestionResponseTable,
   createUsersTable,
   createWatchingTable,
   createWithdrawalTable,
@@ -43,6 +49,9 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterOrganizationsTable });
   await singleQuery({ queryText: alterPaymentTable });
   await singleQuery({ queryText: alterPullRequestsTable });
+  await singleQuery({ queryText: alterQuestionResponseTable });
+  await singleQuery({ queryText: alterQuestionsTable });
+  await singleQuery({ queryText: alterUserQuestionResponseTable });
   await singleQuery({ queryText: alterUsersTable });
   await singleQuery({ queryText: alterWatchingTable });
   await singleQuery({ queryText: alterWithdrawalTable });
@@ -60,6 +69,9 @@ const createTables = async () => {
   await singleQuery({ queryText: createOrganizationsTable });
   await singleQuery({ queryText: createPaymentsTable });
   await singleQuery({ queryText: createPullRequestsTable });
+  await singleQuery({ queryText: createQuestionResponseTable });
+  await singleQuery({ queryText: createQuestionsTable });
+  await singleQuery({ queryText: createUserQuestionResponseTable });
   await singleQuery({ queryText: createUsersTable });
   await singleQuery({ queryText: createWatchingTable });
   await singleQuery({ queryText: createWithdrawalTable });
@@ -77,6 +89,9 @@ const dropAllTables = async () => {
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS organizations cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS payments cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS pullRequests cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS question_responses cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS questions cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS user_question_responses cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS users cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS watching cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS withdrawal cascade' });
@@ -95,6 +110,9 @@ const printTables = async () => {
     'SELECT * FROM organizations',
     'SELECT * from payments',
     'SELECT * FROM pullRequests',
+    'SELECT * FROM question_responses',
+    'SELECT * FROM questions',
+    'SELECT * FROM user_question_responses',
     'SELECT * FROM users',
     'SELECT * FROM watching',
     'SELECT * FROM withdrawal',

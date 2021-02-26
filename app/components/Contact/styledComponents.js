@@ -10,8 +10,6 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
 
-export const BottomParagraph = styled.p``;
-
 export const ContactContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -70,9 +68,7 @@ export const LinkWrapper = styled.a`
   }
 `;
 
-export const MiddleParagraph = styled.p``;
-
-export const TopParagraph = styled.p`
+export const StyledParagraph = styled.p`
   font-size: 1.8rem;
   font-weight: 500;
   padding-top: 2rem;

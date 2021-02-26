@@ -22,6 +22,9 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "extract-intl": "node ./internals/scripts/extract-intl.js",
     "generate": "plop --plopfile internals/generators/index.js",
+    "generateQuestions": "cross-env NODE_ENV=local node ./server/db/scripts generateQuestions",
+    "generateQuestions:dev": "cross-env NODE_ENV=development node ./server/db/scripts generateQuestions",
+    "generateQuestions:prod": "cross-env NODE_ENV=production node ./server/db/scripts generateQuestions",
     "lint:css": "stylelint app/**/*.js",
     "lint:eslint:fix": "eslint --ignore-path .eslintignore --ignore-pattern internals/scripts --fix",
     "lint:eslint": "eslint --ignore-path .eslintignore --ignore-pattern internals/scripts",
@@ -35,8 +38,8 @@
     "presetup": "npm i chalk shelljs",
     "pretest": "npm run test:clean && npm run lint",
     "prettify": "prettier --write",
+    "seed": "db-migrate reset --env local && cross-env NODE_ENV=local node ./server/db/seed seed",
     "seed:dev": "db-migrate reset --env dev && cross-env NODE_ENV=development node ./server/db/seed seed",
-    "seed:local": "db-migrate reset --env local && cross-env NODE_ENV=local node ./server/db/seed seed",
     "setup": "node ./internals/scripts/setup.js",
     "start:dev": "cross-env NODE_ENV=development node server",
     "start:prod": "cross-env NODE_ENV=production node server",
@@ -194,7 +197,7 @@
     "webpack-cli": "3.3.12",
     "webpack-dev-middleware": "3.6.2",
     "webpack-hot-middleware": "2.24.3",
-    "webpack-pwa-manifest": "4.2.0",
+    "webpack-pwa-manifest": "4.3.0",
     "whatwg-fetch": "3.0.0"
   }
 }

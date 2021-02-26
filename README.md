@@ -6,7 +6,7 @@ Rysolv is a crowdfunding platform designed to accelerate work on open source pro
 
 rysolv is built on a React front end with a Node/Express/GraphQL API and a PostgreSQL database.
 
-### Running
+## Running
 
 - `npm i` to install dependencies
 - `npm run seed` to seed the database
@@ -14,7 +14,7 @@ rysolv is built on a React front end with a Node/Express/GraphQL API and a Postg
 
 <br>
 
-### Server
+## Server
 
 rysolv uses a graphql API located at `localhost:3000/graphql`
 
@@ -22,7 +22,7 @@ First follow the instructions in [/server/README.md](/server/README.md)
 
 <br>
 
-### Migrations
+## Migrations
 
 To create a new database migration, run `db-migrate create my-migration-name`
 
@@ -40,3 +40,23 @@ Then populate each of the sql files with the appropriate query
 Then run `db-migrate up` or `db-migrate down` to cycle forward or backwards through the migrations.
 
 To migrate a specific database environment run `db-migrate up -e [local/dev/prod]`
+
+## NPM Scripts
+
+### Reseed database from schema
+
+`npm run seed:local`
+
+or
+
+`npm run seed:dev`
+
+This should only be used on local, or when dev gets really out of sync.
+
+The script will first run `db-migrate reset` to roll back the migrations table.
+
+### Generate hiring questions
+
+One time script to generate questions & respones for hiring.
+
+`npm run generateQuestions:[local/dev/prod]`

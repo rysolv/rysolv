@@ -25,16 +25,6 @@ const submitInternalPayment = async ({
     const [oneIssueRow] = issueRows;
     const { fundedAmount, organizationId } = oneIssueRow;
 
-    const organizationQueryText = `
-      UPDATE organizations
-      SET total_funded = total_funded + $1
-      WHERE id = $2
-    `;
-    await singleQuery({
-      queryText: organizationQueryText,
-      values: [fundValue, organizationId],
-    });
-
     const userQueryText = `
       UPDATE users
       SET balance = balance - $1

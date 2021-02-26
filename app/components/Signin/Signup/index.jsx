@@ -47,7 +47,7 @@ const Signup = ({
             onClose={handleClearAuthAlerts}
           />
         )}
-        <GithubButton />
+        <GithubButton type="signup" />
         <DividerWrapper>
           <Divider />
           <WordDivider>or</WordDivider>

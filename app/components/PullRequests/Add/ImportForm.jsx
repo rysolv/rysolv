@@ -24,6 +24,7 @@ const ImportForm = ({
   loading,
 }) => {
   const { importUrl } = importData;
+  const enabled = !!importUrl.value;
   const handleChange = e => {
     handleInputChange({
       field: 'importUrl',
@@ -31,8 +32,13 @@ const ImportForm = ({
       value: e.target.value,
     });
   };
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter' && enabled) {
+      handleImport();
+    }
+  };
   return (
-    <ImportFormContainer>
+    <ImportFormContainer onKeyPress={e => handleKeypress(e)} tabIndex="0">
       <StyledHeader>Import Pull Request</StyledHeader>
       <StyledErrorSuccessBanner error={error} onClose={handleClearAlerts} />
       <ImportUrlWrapper>
@@ -49,9 +55,10 @@ const ImportForm = ({
       <ButtonGroup>
         <StyledSecondayButton label="Cancel" onClick={handleClose} />
         <StyledPrimaryAsyncButton
+          disabled={!enabled}
           label="Import"
           loading={loading}
-          onClick={() => handleImport()}
+          onClick={handleImport}
         />
       </ButtonGroup>
     </ImportFormContainer>

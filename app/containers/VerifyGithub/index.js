@@ -19,9 +19,8 @@ const VerifyGithub = ({ dispatchGithubSignIn, dispatchVerifyAccount }) => {
     if (origin === 'account') {
       dispatchVerifyAccount({ code });
     }
-    if (origin === 'signin' || origin === 'signup') {
-      const isSignIn = origin === 'signin';
-      dispatchGithubSignIn({ code, isSignIn });
+    if (origin === 'jobs' || origin === 'signin' || origin === 'signup') {
+      dispatchGithubSignIn({ code, origin });
     }
   }, []);
   return <AsyncLoad />;
