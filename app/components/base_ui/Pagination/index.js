@@ -10,10 +10,11 @@ const Pagination = ({ Component, propsToPassDown }) => {
     data: { length },
     handleNav,
     path,
+    perPage,
+    result,
     ...restProps
   } = propsToPassDown;
 
-  const perPage = 15;
   const count = Math.ceil(length / perPage);
   const page = getPage({ count });
 
@@ -40,9 +41,7 @@ const Pagination = ({ Component, propsToPassDown }) => {
   };
   return (
     <Fragment>
-      <Results>
-        {length} {length === 1 ? 'Result' : 'Results'}
-      </Results>
+      <Results>{result}</Results>
       <Component data={slice} handleNav={handleNav} {...restProps} />
       <StyledPagination
         count={count}
