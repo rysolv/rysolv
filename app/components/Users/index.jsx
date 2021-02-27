@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { ConditionalRender, Pagination } from 'components/base_ui';
+import { Pagination } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
 import MobileUserCard from './Card/MobileView';
@@ -22,14 +22,7 @@ const Users = ({ data, deviceView, handleNav, path }) => {
     perPage: 48,
     result: `${length} ${length === 1 ? 'User' : 'Users'}`,
   };
-  const UserCardToRender = () => (
-    <ConditionalRender
-      Component={UserCard}
-      FallbackComponent={MobileUserCard}
-      propsToPassDown={propsToPassDown}
-      shouldRender={!isMobile}
-    />
-  );
+  const UserCardToRender = !isMobile ? UserCard : MobileUserCard;
   const viewToRender = hasUsers ? (
     <Pagination
       Component={UserCardToRender}

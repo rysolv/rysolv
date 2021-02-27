@@ -6,6 +6,13 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
 
+export const PaginationWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+`;
+
 export const Results = styled.div`
   color: ${textColor};
   font-size: ${defaultFontSize};

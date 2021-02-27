@@ -79,6 +79,7 @@ export const OuterWrapper = styled.div`
 `;
 
 export const RowSection = styled.div`
+  align-content: start;
   display: flex;
   flex-direction: row;
   flex-flow: wrap;
