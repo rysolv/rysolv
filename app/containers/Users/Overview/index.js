@@ -3,6 +3,7 @@ import T from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import UserCard from 'components/Users';
@@ -24,6 +25,7 @@ const UsersOverview = ({
   dispatchFetchUsers,
   dispatchResetState,
   error,
+  handleNav,
   handleSearchUsers,
   loading,
   match,
@@ -31,6 +33,7 @@ const UsersOverview = ({
 }) => {
   const {
     params: { searchValue },
+    path,
   } = match;
   useEffect(() => dispatchResetState, []);
 
@@ -51,6 +54,8 @@ const UsersOverview = ({
       loading={loading}
       propsToPassDown={{
         deviceView,
+        handleNav,
+        path,
       }}
     />
   );
@@ -61,6 +66,7 @@ UsersOverview.propTypes = {
   dispatchFetchUsers: T.func,
   dispatchResetState: T.func.isRequired,
   error: T.oneOfType([T.bool, T.string]),
+  handleNav: T.func.isRequired,
   handleSearchUsers: T.func,
   loading: T.bool,
   match: T.object.isRequired,
@@ -82,6 +88,10 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    /*
+     * Reducer : Router
+     */
+    handleNav: route => dispatch(push(route)),
     /**
      * Reducer : Users
      */

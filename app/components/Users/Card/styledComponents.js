@@ -12,7 +12,7 @@ import {
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile, mobileS } = mediaQueriesByDevice;
+const { mobileS } = mediaQueriesByDevice;
 
 export const ActiveContainer = styled.div`
   color: #388e3c;
@@ -74,15 +74,18 @@ export const NumberContainer = styled.div`
 export const OuterWrapper = styled.div`
   display: flex;
   justify-content: center;
+  min-height: 50rem;
   width: 100%;
 `;
 
 export const RowSection = styled.div`
+  align-content: start;
   display: flex;
   flex-direction: row;
   flex-flow: wrap;
   justify-content: center;
   margin-left: 2rem;
+  min-height: 50rem;
 
   ${mobileS} {
     margin-left: 0;
@@ -116,7 +119,7 @@ export const StyledListSquare = styled.div`
   width: 17.5rem;
 
   ${mobileS} {
-    height: auto;
+    height: fit-content;
     margin-right: 0;
     padding: 0 1rem;
     width: 100%;
@@ -146,17 +149,5 @@ export const TextContainer = styled.div`
     flex-direction: column;
     justify-content: space-around;
     width: 70%;
-  }
-`;
-
-export const Users = styled.div`
-  color: ${textColor};
-  font-size: ${defaultFontSize};
-  padding: 0 1rem 1rem;
-  text-align: end;
-  width: 100%;
-
-  ${mobile} {
-    padding: 0 0 1rem;
   }
 `;

@@ -1,15 +1,15 @@
-/* eslint-disable camelcase */
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { ConditionalRender } from 'components/base_ui';
+import { Pagination } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
 import MobileUserCard from './Card/MobileView';
 import UserCard from './Card';
 
-const Users = ({ data, deviceView }) => {
-  const hasUsers = data.length > 0 && !data.includes(null);
+const Users = ({ data, deviceView, handleNav, path }) => {
+  const { length } = data;
+  const hasUsers = length > 0 && !data.includes(null);
   const isMobile =
     deviceView === 'mobileS' ||
     deviceView === 'mobileXS' ||
@@ -17,22 +17,28 @@ const Users = ({ data, deviceView }) => {
   const propsToPassDown = {
     data,
     deviceView,
+    handleNav,
+    path,
+    perPage: 48,
+    result: `${length} ${length === 1 ? 'User' : 'Users'}`,
   };
-  const UserCardToRender = (
-    <ConditionalRender
-      Component={UserCard}
-      FallbackComponent={MobileUserCard}
-      propsToPassDown={{ ...propsToPassDown }}
-      shouldRender={!isMobile}
+  const UserCardToRender = !isMobile ? UserCard : MobileUserCard;
+  const viewToRender = hasUsers ? (
+    <Pagination
+      Component={UserCardToRender}
+      propsToPassDown={propsToPassDown}
     />
+  ) : (
+    <EmptyCard />
   );
-  const viewToRender = hasUsers ? UserCardToRender : <EmptyCard />;
   return <Fragment>{viewToRender}</Fragment>;
 };
 
 Users.propTypes = {
-  data: T.array,
+  data: T.array.isRequired,
   deviceView: T.string.isRequired,
+  handleNav: T.func.isRequired,
+  path: T.string.isRequired,
 };
 
 export default Users;

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { Fragment } from 'react';
+import React from 'react';
 import T from 'prop-types';
 
 import { Coin, ImageLinkWrapper } from 'components/base_ui';
@@ -21,11 +21,9 @@ import {
   StyledListSquare,
   StyledSettingWrapper,
   StyledSquare,
-  Users,
 } from './styledComponents';
 
 const UserCard = ({ data, deviceView }) => {
-  const { length } = data;
   const isMobile =
     deviceView === 'mobile' ||
     deviceView === 'mobileS' ||
@@ -33,71 +31,63 @@ const UserCard = ({ data, deviceView }) => {
     deviceView === 'mobileXXS';
   const hasOneItem = data.length === 1;
   return (
-    <Fragment>
-      <Users>
-        {length} {length === 1 ? 'User' : 'Users'}
-      </Users>
-      <OuterWrapper>
-        <RowSectionWrapper hasOneItem={hasOneItem}>
-          <RowSection>
-            {data.map(
-              (
-                {
-                  attempting,
-                  createdDate,
-                  id,
-                  issues,
-                  pointsNumber,
-                  profilePic,
-                  username,
-                },
-                index,
-              ) => (
-                <StyledListSquare key={`${username}-${index}`}>
-                  <StyledSquare>
-                    <StyledSettingWrapper>
-                      <MemberWrapper>
-                        <NameLink to={`/users/detail/${id}`}>
-                          {username}
-                        </NameLink>
-                        <MemberInfoContainer>
-                          Member since {createdDate}
-                        </MemberInfoContainer>
-                      </MemberWrapper>
-                    </StyledSettingWrapper>
-                    <ContentWrapper>
-                      <ImageContainer>
-                        <ImageLinkWrapper
-                          alt="Profile Image"
-                          image={profilePic}
-                          route={`/users/detail/${id}`}
-                          size={isMobile ? '4.75rem' : '7.5rem'}
-                        />
-                        <IconWrapper>
-                          <div>
-                            <Coin />
-                          </div>
-                          <NumberContainer>{pointsNumber}</NumberContainer>
-                        </IconWrapper>
-                      </ImageContainer>
-                    </ContentWrapper>
-                    <IssuesWrapper>
-                      <IssuesContainer>
-                        {issues.length}{' '}
-                        {issues.length === 1 ? `Issue` : `Issues`}
-                      </IssuesContainer>
-                      <ActiveContainer>
-                        {attempting.length} Attempting
-                      </ActiveContainer>
-                    </IssuesWrapper>
-                  </StyledSquare>
-                </StyledListSquare>
-              ),
-            )}
-          </RowSection>
-        </RowSectionWrapper>
-      </OuterWrapper>
-    </Fragment>
+    <OuterWrapper>
+      <RowSectionWrapper hasOneItem={hasOneItem}>
+        <RowSection>
+          {data.map(
+            (
+              {
+                attempting,
+                createdDate,
+                id,
+                issues,
+                pointsNumber,
+                profilePic,
+                username,
+              },
+              index,
+            ) => (
+              <StyledListSquare key={`${username}-${index}`}>
+                <StyledSquare>
+                  <StyledSettingWrapper>
+                    <MemberWrapper>
+                      <NameLink to={`/users/detail/${id}`}>{username}</NameLink>
+                      <MemberInfoContainer>
+                        Member since {createdDate}
+                      </MemberInfoContainer>
+                    </MemberWrapper>
+                  </StyledSettingWrapper>
+                  <ContentWrapper>
+                    <ImageContainer>
+                      <ImageLinkWrapper
+                        alt="Profile Image"
+                        image={profilePic}
+                        route={`/users/detail/${id}`}
+                        size={isMobile ? '4.75rem' : '7.5rem'}
+                      />
+                      <IconWrapper>
+                        <div>
+                          <Coin />
+                        </div>
+                        <NumberContainer>{pointsNumber}</NumberContainer>
+                      </IconWrapper>
+                    </ImageContainer>
+                  </ContentWrapper>
+                  <IssuesWrapper>
+                    <IssuesContainer>
+                      {issues.length} {issues.length === 1 ? `Issue` : `Issues`}
+                    </IssuesContainer>
+                    <ActiveContainer>
+                      {attempting.length} Attempting
+                    </ActiveContainer>
+                  </IssuesWrapper>
+                </StyledSquare>
+              </StyledListSquare>
+            ),
+          )}
+        </RowSection>
+      </RowSectionWrapper>
+    </OuterWrapper>
   );
 };
 
