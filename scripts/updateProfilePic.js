@@ -24,7 +24,7 @@ async function updateProfilePic() {
   });
 
   const getUsersQuery = `
-    SELECT id, github_username AS "githubUsername" FROM users
+    SELECT github_username AS "githubUsername", id FROM users
     WHERE github_username IS NOT NULL
   `;
   const updateUserQuery = `
