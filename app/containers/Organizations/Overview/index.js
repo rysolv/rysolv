@@ -34,8 +34,8 @@ const OrganizationsOverview = ({
   handleNav,
   handleSearchOrganizations,
   loading,
-  organizations,
   match,
+  organizations,
 }) => {
   const {
     params: { searchValue },

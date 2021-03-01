@@ -8,7 +8,6 @@ const { mobile } = mediaQueriesByDevice;
 export const ComponentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 0 10rem 0;
   width: 70%;
 
   ${mobile} {

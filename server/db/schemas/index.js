@@ -5,6 +5,7 @@ const cronActivitySchema = require('./cronActivity');
 const fundingSchema = require('./funding');
 const issueSchema = require('./issues');
 const languageSchema = require('./languages');
+const notificationSchema = require('./notifications');
 const organizationSchema = require('./organizations');
 const paymentsSchema = require('./payments');
 const pullRequestSchema = require('./pullRequest');
@@ -23,6 +24,7 @@ module.exports = {
   ...fundingSchema,
   ...issueSchema,
   ...languageSchema,
+  ...notificationSchema,
   ...organizationSchema,
   ...paymentsSchema,
   ...pullRequestSchema,
