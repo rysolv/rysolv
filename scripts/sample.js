@@ -20,6 +20,10 @@ async function sample() {
   const GITHUB = new Octokit({
     auth: token,
   });
+  const { data } = await GITHUB.rateLimit.get();
+  const { rate } = data;
+  const { remaining, reset } = rate;
+  console.log(data);
 
   console.log('Did some logic here');
 
