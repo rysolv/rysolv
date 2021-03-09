@@ -22,6 +22,8 @@ const transformOrganizationError = `Something went wrong when editing this organ
 
 const transformOrganizationSuccess = `Your organization was successfully edited.`;
 
+const typeOrganizationError = `Please select a repo within this organization to import.`;
+
 module.exports = {
   checkDuplicate,
   createOrganizationError,
@@ -31,4 +33,5 @@ module.exports = {
   oneOrganizationError,
   transformOrganizationError,
   transformOrganizationSuccess,
+  typeOrganizationError,
 };

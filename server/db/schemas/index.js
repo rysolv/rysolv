@@ -12,6 +12,7 @@ const pullRequestSchema = require('./pullRequest');
 const questionResponseSchema = require('./questionResponses');
 const questionSchema = require('./questions');
 const userQuestionResponseSchema = require('./userQuestionResponses');
+const userReposSchema = require('./userRepos');
 const userSchema = require('./users');
 const watchingSchema = require('./watching');
 const withdrawalSchema = require('./withdrawal');
@@ -31,6 +32,7 @@ module.exports = {
   ...questionResponseSchema,
   ...questionSchema,
   ...userQuestionResponseSchema,
+  ...userReposSchema,
   ...userSchema,
   ...watchingSchema,
   ...withdrawalSchema,

@@ -31,6 +31,29 @@ const getGithubIssueComments = async ({ issueNumber, organization, repo }) => {
   }
 };
 
+const getRepoOwners = async ({ organization, repo }) => {
+  try {
+    const { GITHUB } = await authenticate();
+
+    const { data: repoData } = await GITHUB.repos.get({
+      owner: organization,
+      repo,
+    });
+
+    const { owner } = repoData;
+    console.log('owner', owner);
+    if (owner.type === 'Organization') {
+      // TODO: Get owners of the organization
+    }
+
+    const githubOwners = [{ githubId: owner.id, userType: 'github_owner' }];
+
+    return githubOwners;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getSingleIssue = async ({ issueNumber, organization, repo }) => {
   try {
     // Authenticate with oktokit API - @TODO: create better auth middleware
@@ -338,6 +361,7 @@ const requestGithubUser = async credentials => {
 
 module.exports = {
   getGithubIssueComments,
+  getRepoOwners,
   getSingleIssue,
   getSingleOrganization,
   getSinglePullRequest,

@@ -50,6 +50,7 @@ export function* fetchInfoSaga({ payload }) {
           contributors
           createdDate
           description
+          githubOwners
           id
           issues
           logo

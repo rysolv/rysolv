@@ -17,6 +17,7 @@ const {
   alterQuestionResponseTable,
   alterQuestionsTable,
   alterUserQuestionResponseTable,
+  alterUserReposTable,
   alterUsersTable,
   alterWatchingTable,
   alterWithdrawalTable,
@@ -34,6 +35,7 @@ const {
   createQuestionResponseTable,
   createQuestionsTable,
   createUserQuestionResponseTable,
+  createUserReposTable,
   createUsersTable,
   createWatchingTable,
   createWithdrawalTable,
@@ -55,6 +57,7 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterQuestionResponseTable });
   await singleQuery({ queryText: alterQuestionsTable });
   await singleQuery({ queryText: alterUserQuestionResponseTable });
+  await singleQuery({ queryText: alterUserReposTable });
   await singleQuery({ queryText: alterUsersTable });
   await singleQuery({ queryText: alterWatchingTable });
   await singleQuery({ queryText: alterWithdrawalTable });
@@ -76,6 +79,7 @@ const createTables = async () => {
   await singleQuery({ queryText: createQuestionResponseTable });
   await singleQuery({ queryText: createQuestionsTable });
   await singleQuery({ queryText: createUserQuestionResponseTable });
+  await singleQuery({ queryText: createUserReposTable });
   await singleQuery({ queryText: createUsersTable });
   await singleQuery({ queryText: createWatchingTable });
   await singleQuery({ queryText: createWithdrawalTable });
@@ -105,6 +109,7 @@ const dropAllTables = async () => {
   await singleQuery({
     queryText: 'DROP TABLE IF EXISTS user_question_responses cascade',
   });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS user_repos cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS users cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS watching cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS withdrawal cascade' });
@@ -127,6 +132,7 @@ const printTables = async () => {
     'SELECT * FROM question_responses',
     'SELECT * FROM questions',
     'SELECT * FROM user_question_responses',
+    'SELECT * FROM user_repos',
     'SELECT * FROM users',
     'SELECT * FROM watching',
     'SELECT * FROM withdrawal',

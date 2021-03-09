@@ -51,12 +51,13 @@ const VerifiedComponent = (
 
 const OrganizationDetailView = ({
   activeUser,
-  activeUser: { organizations },
+  activeUser: { githubId, organizations },
   alerts: { error, success },
   data: {
     activity,
     contributors,
     description,
+    githubOwners,
     id: organizationId,
     issues,
     logo,
@@ -126,19 +127,15 @@ const OrganizationDetailView = ({
               shouldRender={verified}
             />
           </NameWrapper>
-          {/* <ConditionalRender
+          <ConditionalRender
             Component={
               <StyledPrimaryButton
                 label="Edit"
                 onClick={() => setDisplayEditView(true)}
               />
             }
-            shouldRender={
-              isSignedIn &&
-              organizations &&
-              !!organizations.find(({ id }) => organizationId === id)
-            }
-          /> */}
+            shouldRender={githubOwners.includes(githubId) && isSignedIn}
+          />
         </HeaderWrapper>
         <Description>{description}</Description>
         <UrlWrapper>

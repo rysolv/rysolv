@@ -7,6 +7,7 @@ const {
   remainingBalanceError,
 } = require('./constants');
 const {
+  deleteRepoMembers,
   deleteUserLanguages,
   deleteUserPullRequests,
   getUserSettings,
@@ -43,7 +44,7 @@ const deleteUser = async (_, { authError, email, provider, userId }) => {
       username: '[deleted]',
     };
 
-    const { balance } = await getUserSettings({ userId });
+    const { balance, githubId } = await getUserSettings({ userId });
 
     if (balance > 0) throw new CustomError(remainingBalanceError);
 
@@ -51,6 +52,7 @@ const deleteUser = async (_, { authError, email, provider, userId }) => {
       await deleteCognitoUser({ email });
     }
 
+    await deleteRepoMembers({ githubId });
     await deleteUserLanguages({ userId });
     await deleteUserPullRequests({ userId });
     await transformUser({ data, userId });
