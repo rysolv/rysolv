@@ -34,20 +34,26 @@ const getGithubIssueComments = async ({ issueNumber, organization, repo }) => {
 const getRepoOwners = async ({ organization, repo }) => {
   try {
     const { GITHUB } = await authenticate();
-
-    const { data: repoData } = await GITHUB.repos.get({
+    const members = [];
+    const {
+      data: { owner },
+    } = await GITHUB.repos.get({
       owner: organization,
       repo,
     });
-
-    const { owner } = repoData;
     if (owner.type === 'Organization') {
-      // TODO: Get owners of the organization
+      const { data } = await GITHUB.orgs.listMembers({
+        org: organization,
+      });
+      data.forEach(member => members.push(member));
     }
+    if (owner.type === 'User') members.push(owner);
 
-    const githubOwners = [{ id: owner.id, type: 'github_owner' }];
-
-    return githubOwners;
+    const formattedMembers = members.map(({ id }) => ({
+      id,
+      type: 'github_owner',
+    }));
+    return formattedMembers;
   } catch (error) {
     throw error;
   }

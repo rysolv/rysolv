@@ -171,6 +171,7 @@ module.exports = buildSchema(`
 
   input OrganizationInput {
     identiconId: ID
+    importUrl: String
     isManual: Boolean
     organizationDescription: String
     organizationLanguages: [String]

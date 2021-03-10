@@ -208,7 +208,9 @@ export function* importOrganizationSaga({ payload }) {
 export function* saveInfoSaga({ payload }) {
   const {
     requestBody: {
+      autoImportUrl,
       identiconId,
+      importUrl,
       isManual,
       organizationDescription,
       organizationLanguages,
@@ -222,6 +224,7 @@ export function* saveInfoSaga({ payload }) {
     mutation {
       createOrganization(organizationInput: {
         identiconId: "${identiconId}",
+        importUrl: "${autoImportUrl || importUrl}",
         isManual: ${isManual},
         organizationDescription: ${JSON.stringify(organizationDescription)},
         organizationLanguages: "${organizationLanguages}",

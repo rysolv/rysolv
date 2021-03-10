@@ -1,4 +1,4 @@
-const { CustomError } = require('../helpers');
+const { CustomError } = require('../../helpers');
 
 // ISSUE URL
 // Incoming:  https://github.com/tylermaran/cadl/issues/5
