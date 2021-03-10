@@ -41,12 +41,11 @@ const getRepoOwners = async ({ organization, repo }) => {
     });
 
     const { owner } = repoData;
-    console.log('owner', owner);
     if (owner.type === 'Organization') {
       // TODO: Get owners of the organization
     }
 
-    const githubOwners = [{ githubId: owner.id, userType: 'github_owner' }];
+    const githubOwners = [{ id: owner.id, type: 'github_owner' }];
 
     return githubOwners;
   } catch (error) {

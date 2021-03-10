@@ -15,7 +15,7 @@ const addRepoMembers = async ({ owners }) => {
     const queryText = `
       INSERT INTO
       user_repos(id, github_id, repo_id, user_id, user_type)
-      VALUES($1, $2, $3, $4, $5, $6)
+      VALUES($1, $2, $3, $4, $5)
     `;
 
     await singleQuery({ queryText, values });

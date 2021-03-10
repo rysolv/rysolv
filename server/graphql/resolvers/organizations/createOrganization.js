@@ -9,7 +9,7 @@ const {
 } = require('./constants');
 const { createActivity } = require('../activity');
 const {
-  addUserRepos,
+  addRepoMembers,
   createLanguage,
   createOrganization: createOrganizationQuery,
   getUserSettings,
@@ -61,8 +61,8 @@ const createOrganization = async (
     // create organization
     const result = await createOrganizationQuery({ data: organization });
 
-    await addUserRepos({
-      owners: formatMemberList({
+    await addRepoMembers({
+      owners: await formatMemberList({
         githubId,
         repoId: organizationId,
         url: organizationInput.organizationRepo,
