@@ -2,14 +2,14 @@ const { v4: uuidv4 } = require('uuid');
 
 const { singleQuery } = require('../../baseQueries');
 
-const addRepoMembers = async ({ owners }) => {
-  owners.map(async owner => {
+const addRepoMembers = async ({ members }) => {
+  members.map(async member => {
     const values = [
       uuidv4(),
-      owner.githubId,
-      owner.repoId,
-      owner.userId || null,
-      owner.userType,
+      member.githubId,
+      member.repoId,
+      member.userId || null,
+      member.userType,
     ];
 
     const queryText = `

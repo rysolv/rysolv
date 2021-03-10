@@ -62,7 +62,7 @@ const createOrganization = async (
     const result = await createOrganizationQuery({ data: organization });
 
     await addRepoMembers({
-      owners: await formatMemberList({
+      members: await formatMemberList({
         githubId,
         repoId: organizationId,
         url: organizationInput.organizationRepo,
