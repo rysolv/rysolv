@@ -1,6 +1,9 @@
 const Sentry = require('@sentry/node');
 
-const { formatOrganizationUrl } = require('../integrations/github/helpers');
+const {
+  formatIssueUrl,
+  formatOrganizationUrl,
+} = require('../integrations/github/helpers');
 const { getRepoMembers } = require('../integrations/github');
 
 Sentry.init({ dsn: process.env.SENTRY_DSN });
@@ -24,8 +27,16 @@ const arrayCheck = result => {
 
 const errorLogger = e => Sentry.captureException(e);
 
-const formatMemberList = async ({ githubId, repoId, url, userId }) => {
-  const { organization, repo } = formatOrganizationUrl(url);
+const formatMemberList = async ({
+  githubId,
+  issueUrl,
+  repoId,
+  repoUrl,
+  userId,
+}) => {
+  const { organization, repo } = issueUrl
+    ? formatIssueUrl(issueUrl)
+    : formatOrganizationUrl(repoUrl);
   const githubMembers = await getRepoMembers({ organization, repo });
   const formattedGithubMembers = githubMembers.map(({ id, type }) => ({
     githubId: id,

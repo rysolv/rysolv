@@ -65,7 +65,7 @@ const createOrganization = async (
       members: await formatMemberList({
         githubId,
         repoId: organizationId,
-        url: organizationInput.importUrl,
+        repoUrl: organizationInput.importUrl,
         userId,
       }),
     });

@@ -32,9 +32,9 @@ const getGithubIssueComments = async ({ issueNumber, organization, repo }) => {
 };
 
 const getRepoMembers = async ({ organization, repo }) => {
+  const members = [];
   try {
     const { GITHUB } = await authenticate();
-    const members = [];
     const {
       data: { owner },
     } = await GITHUB.repos.get({
@@ -55,7 +55,7 @@ const getRepoMembers = async ({ organization, repo }) => {
     }));
     return formattedMembers;
   } catch (error) {
-    throw error;
+    return members;
   }
 };
 
