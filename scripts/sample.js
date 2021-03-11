@@ -22,10 +22,8 @@ async function sample() {
   });
   const { data } = await GITHUB.rateLimit.get();
   const { rate } = data;
-  const { remaining, reset } = rate;
-  console.log(data);
-
-  console.log('Did some logic here');
+  const { remaining } = rate;
+  console.log(`Remaining requests: ${remaining}`);
 
   const t2 = Date.now();
   console.log(`Finished in  ${t2 - t1}ms`);
