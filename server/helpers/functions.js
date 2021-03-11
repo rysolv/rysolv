@@ -1,7 +1,7 @@
 const Sentry = require('@sentry/node');
 
 const { formatOrganizationUrl } = require('../integrations/github/helpers');
-const { getRepoOwners } = require('../integrations/github');
+const { getRepoMembers } = require('../integrations/github');
 
 Sentry.init({ dsn: process.env.SENTRY_DSN });
 
@@ -26,8 +26,8 @@ const errorLogger = e => Sentry.captureException(e);
 
 const formatMemberList = async ({ githubId, repoId, url, userId }) => {
   const { organization, repo } = formatOrganizationUrl(url);
-  const githubhOwners = await getRepoOwners({ organization, repo });
-  const formattedGithubOwners = githubhOwners.map(({ id, type }) => ({
+  const githubMembers = await getRepoMembers({ organization, repo });
+  const formattedGithubMembers = githubMembers.map(({ id, type }) => ({
     githubId: id,
     repoId,
     userType: type,
@@ -38,7 +38,7 @@ const formatMemberList = async ({ githubId, repoId, url, userId }) => {
     userId,
     userType: 'rysolv_owner',
   };
-  return [...formattedGithubOwners, formattedRysolvOwner];
+  return [...formattedGithubMembers, formattedRysolvOwner];
 };
 
 const isUrl = string => {

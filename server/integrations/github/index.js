@@ -31,7 +31,7 @@ const getGithubIssueComments = async ({ issueNumber, organization, repo }) => {
   }
 };
 
-const getRepoOwners = async ({ organization, repo }) => {
+const getRepoMembers = async ({ organization, repo }) => {
   try {
     const { GITHUB } = await authenticate();
     const members = [];
@@ -366,7 +366,7 @@ const requestGithubUser = async credentials => {
 
 module.exports = {
   getGithubIssueComments,
-  getRepoOwners,
+  getRepoMembers,
   getSingleIssue,
   getSingleOrganization,
   getSinglePullRequest,
