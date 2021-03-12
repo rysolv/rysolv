@@ -24,9 +24,9 @@ const Filter = ({
     fundedIssues,
     issueLanguages,
     maxBounty,
+    maxRepoFunded,
+    repoLanguages,
     repos,
-    maxOrgFunded,
-    organizationLanguages,
     unfundedIssues,
     userLanguages,
   },
@@ -57,8 +57,8 @@ const Filter = ({
       options.max = maxBounty;
       break;
     case 'repos':
-      options.languages = organizationLanguages;
-      options.max = maxOrgFunded;
+      options.languages = repoLanguages;
+      options.max = maxRepoFunded;
       break;
     default:
       break;
