@@ -38,7 +38,6 @@ const createRepo = async ({ repoInput }, { authError, userId }) => {
       organization_url: repoInput.organizationUrl || '',
       owner_id: userId,
       repo_url: repoInput.repoUrl,
-      total_funded: repoInput.totalFunded || 0,
       verified: repoInput.verified || false,
     };
 

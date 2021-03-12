@@ -26,16 +26,6 @@ const submitExternalPayment = async ({
     const [oneRow] = rows;
     const { fundedAmount, repoId } = oneRow;
 
-    const repoQueryText = `
-      UPDATE repos
-      SET total_funded = total_funded + $1
-      WHERE id = $2
-    `;
-    await singleQuery({
-      queryText: repoQueryText,
-      values: [fundValue, repoId],
-    });
-
     await updatePaymentTable({
       action,
       fundedAmount: fundValue,

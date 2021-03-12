@@ -10,7 +10,6 @@ const repoValues = [
   'organization_url',
   'owner_id',
   'repo_url',
-  'total_funded',
   'verified',
 ];
 
@@ -26,7 +25,6 @@ const repoReturnValues = `
   repos.organization_url AS "organizationUrl",
   repos.owner_id AS "ownerId",
   repos.repo_url AS "repoUrl",
-  repos.total_funded AS "totalFunded",
   repos.verified
 `;
 
@@ -43,7 +41,6 @@ const groupValues = `
   repos.organization_url,
   repos.owner_id,
   repos.repo_url,
-  repos.total_funded,
   repos.verified
 `;
 
