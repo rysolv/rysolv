@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 const { CustomError, errorLogger } = require('../../../helpers');
-const { getOrganizationList, getUserSettings } = require('../../../db');
+const { getRepoList, getUserSettings } = require('../../../db');
 const { getUserGithubRepos } = require('../../../integrations');
 const { githubNotVerifiedError } = require('./constants');
 
@@ -13,32 +13,32 @@ const getUserRepos = async (_, { authError, userId }) => {
     });
 
     if (isGithubVerified) {
-      const organizationList = await getOrganizationList();
+      const repoList = await getRepoList();
 
-      const userOrganizations = await getUserGithubRepos({
+      const userRepos = await getUserGithubRepos({
         username: githubUsername,
       });
 
-      const organizations = userOrganizations.map(organization => {
-        const parentArray = organization.organizationUrl.split('/');
+      const repos = userRepos.map(repo => {
+        const parentArray = repo.organizationUrl.split('/');
         parentArray.pop();
         const parentUrl = parentArray.join('/');
 
         if (
-          organizationList &&
-          (organizationList.includes(organization.organizationUrl) ||
-            organizationList.includes(parentUrl))
+          repoList &&
+          (repoList.includes(repo.organizationUrl) ||
+            repoList.includes(parentUrl))
         ) {
-          organization.exists = true;
-          return organization;
+          repo.exists = true;
+          return repo;
         }
-        organization.exists = false;
-        return organization;
+        repo.exists = false;
+        return repo;
       });
 
       return {
-        __typename: 'OrganizationArray',
-        organizations,
+        __typename: 'RepoArray',
+        repos,
       };
     }
     throw new CustomError(githubNotVerifiedError);

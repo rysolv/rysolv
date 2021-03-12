@@ -63,12 +63,12 @@ const SettingsView = ({
     isGithubVerified,
     issues,
     lastName,
-    organizations,
     personalLink,
     preferredLanguages,
     profilePic,
     rejectedPullRequests,
     rep,
+    repos,
     stackoverflowLink,
     username,
     watching,
@@ -362,8 +362,8 @@ const SettingsView = ({
             isGithubVerified={isGithubVerified}
             issues={issues}
             lastName={lastName}
-            organizations={organizations}
             PullRequestComponent={PullRequestComponent}
+            repos={repos}
             setChangeEmail={setChangeEmail}
             setChangeFirstName={setChangeFirstName}
             setChangeLastName={setChangeLastName}

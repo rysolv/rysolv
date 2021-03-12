@@ -8,7 +8,7 @@ const {
   createLanguage,
   createUser,
   getOneIssue,
-  getOneOrganization,
+  getOneRepo,
   getUserAttemptList,
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
@@ -132,7 +132,7 @@ const githubSignIn = async ({ code, origin }, { res }) => {
     }
     if (isDuplicateGithubId && userId) {
       const result = await getUserSettingsQuery({ userId });
-      const { issues, organizations } = result;
+      const { issues, repos } = result;
 
       // Pull user attempting detail
       const attemptingListResult = await getUserAttemptList({ userId });
@@ -145,13 +145,11 @@ const githubSignIn = async ({ code, origin }, { res }) => {
         }),
       );
 
-      // Pull user organization detail
-      const organizationsListResult = await Promise.all(
-        organizations.map(async organizationId => {
-          const organizationsResult = await getOneOrganization({
-            organizationId,
-          });
-          return organizationsResult;
+      // Pull user repo detail
+      const reposListResult = await Promise.all(
+        repos.map(async repoId => {
+          const reposResult = await getOneRepo({ repoId });
+          return reposResult;
         }),
       );
 
@@ -169,8 +167,8 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       result.attempting = attemptingListResult;
       result.completedPullRequests = completedPullRequests;
       result.issues = issuesListResult;
-      result.organizations = organizationsListResult;
       result.rejectedPullRequests = rejectedPullRequests;
+      result.repos = reposListResult;
       result.watching = watchingListResult;
 
       const token = generateToken({

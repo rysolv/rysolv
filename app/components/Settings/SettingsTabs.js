@@ -9,8 +9,8 @@ import DepositFormComponent from './Balance/Deposit/DepositFormComponent';
 import WithdrawalFormComponent from './Balance/Withdrawal/WithdrawalFormComponent';
 import { getTabToDisplay } from './helpers';
 import UserIssues from './Issues';
-import UserOrganizations from './Organizations';
 import UserPullRequests from './PullRequests';
+import UserRepos from './Repos';
 import UserTimelineView from './Timeline';
 import UserWatching from './Watching';
 import {
@@ -58,8 +58,8 @@ const SettingsTabs = ({
   isGithubVerified,
   issues,
   lastName,
-  organizations,
   PullRequestComponent,
+  repos,
   setChangeEmail,
   setChangeFirstName,
   setChangeLastName,
@@ -90,14 +90,14 @@ const SettingsTabs = ({
       deviceView === 'mobileXS' ||
       deviceView === 'mobileXXS'
     ) {
-      setTabsInMenu(['Issues', 'Organizations', 'Pull Requests']);
+      setTabsInMenu(['Issues', 'Repos', 'Pull Requests']);
     }
     if (
       deviceView === 'laptopS' ||
       deviceView === 'laptop' ||
       deviceView === 'desktopS'
     ) {
-      setTabsInMenu(['Organizations', 'Pull Requests']);
+      setTabsInMenu(['Repos', 'Pull Requests']);
     }
     if (deviceView === 'desktop') {
       setTabsInMenu(['Pull Requests']);
@@ -230,9 +230,7 @@ const SettingsTabs = ({
       />
     ),
     2: <UserIssues handleNav={handleNav} issues={issues} />,
-    3: (
-      <UserOrganizations handleNav={handleNav} organizations={organizations} />
-    ),
+    3: <UserRepos handleNav={handleNav} repos={repos} />,
     4: <UserPullRequests Component={PullRequestComponent} />,
   };
   const TabMenu = () => (
@@ -288,8 +286,8 @@ const SettingsTabs = ({
         {!isMobileOrTabletOrLaptop && (
           <StyledTab
             classes={{ selected: 'selected' }}
-            label="Organizations"
-            onClick={() => handleClick(3, '/settings/organizations')}
+            label="Repos"
+            onClick={() => handleClick(3, '/settings/repos')}
           />
         )}
         {isDesktopL && (
@@ -363,8 +361,8 @@ SettingsTabs.propTypes = {
   isGithubVerified: T.bool,
   issues: T.array,
   lastName: T.string,
-  organizations: T.array,
   PullRequestComponent: T.oneOfType([T.func, T.node, T.object]),
+  repos: T.array,
   setChangeEmail: T.func,
   setChangeFirstName: T.func,
   setChangeLastName: T.func,

@@ -11,11 +11,11 @@ const {
   alterIssuesTable,
   alterLanguagesTable,
   alterNotificationsTable,
-  alterOrganizationsTable,
   alterPaymentTable,
   alterPullRequestsTable,
   alterQuestionResponseTable,
   alterQuestionsTable,
+  alterReposTable,
   alterUserQuestionResponseTable,
   alterUsersTable,
   alterWatchingTable,
@@ -28,11 +28,11 @@ const {
   createIssuesTable,
   createLanguagesTable,
   createNotificationsTable,
-  createOrganizationsTable,
   createPaymentsTable,
   createPullRequestsTable,
   createQuestionResponseTable,
   createQuestionsTable,
+  createReposTable,
   createUserQuestionResponseTable,
   createUsersTable,
   createWatchingTable,
@@ -49,11 +49,11 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterIssuesTable });
   await singleQuery({ queryText: alterLanguagesTable });
   await singleQuery({ queryText: alterNotificationsTable });
-  await singleQuery({ queryText: alterOrganizationsTable });
   await singleQuery({ queryText: alterPaymentTable });
   await singleQuery({ queryText: alterPullRequestsTable });
   await singleQuery({ queryText: alterQuestionResponseTable });
   await singleQuery({ queryText: alterQuestionsTable });
+  await singleQuery({ queryText: alterReposTable });
   await singleQuery({ queryText: alterUserQuestionResponseTable });
   await singleQuery({ queryText: alterUsersTable });
   await singleQuery({ queryText: alterWatchingTable });
@@ -70,11 +70,11 @@ const createTables = async () => {
   await singleQuery({ queryText: createIssuesTable });
   await singleQuery({ queryText: createLanguagesTable });
   await singleQuery({ queryText: createNotificationsTable });
-  await singleQuery({ queryText: createOrganizationsTable });
   await singleQuery({ queryText: createPaymentsTable });
   await singleQuery({ queryText: createPullRequestsTable });
   await singleQuery({ queryText: createQuestionResponseTable });
   await singleQuery({ queryText: createQuestionsTable });
+  await singleQuery({ queryText: createReposTable });
   await singleQuery({ queryText: createUserQuestionResponseTable });
   await singleQuery({ queryText: createUsersTable });
   await singleQuery({ queryText: createWatchingTable });
@@ -93,15 +93,13 @@ const dropAllTables = async () => {
   await singleQuery({
     queryText: 'DROP TABLE IF EXISTS notifications cascade',
   });
-  await singleQuery({
-    queryText: 'DROP TABLE IF EXISTS organizations cascade',
-  });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS payments cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS pullRequests cascade' });
   await singleQuery({
     queryText: 'DROP TABLE IF EXISTS question_responses cascade',
   });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS questions cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS repos cascade' });
   await singleQuery({
     queryText: 'DROP TABLE IF EXISTS user_question_responses cascade',
   });
@@ -121,11 +119,11 @@ const printTables = async () => {
     'SELECT * FROM issues',
     'SELECT * FROM languages',
     'SELECT * FROM notifications',
-    'SELECT * FROM organizations',
     'SELECT * from payments',
     'SELECT * FROM pullRequests',
     'SELECT * FROM question_responses',
     'SELECT * FROM questions',
+    'SELECT * FROM repos',
     'SELECT * FROM user_question_responses',
     'SELECT * FROM users',
     'SELECT * FROM watching',

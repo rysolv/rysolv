@@ -22,7 +22,7 @@ const createPaypalPayment = async (
     if (amount < 1) throw new CustomError(greaterThanError);
 
     if (issueId) {
-      const { fundedAmount, organizationId } = await submitExternalPayment({
+      const { fundedAmount, repoId } = await submitExternalPayment({
         action: 'fund_issue',
         fundValue: amount,
         issueId,
@@ -34,7 +34,7 @@ const createPaypalPayment = async (
         actionType: 'fund',
         fundedValue: amount,
         issueId,
-        organizationId,
+        repoId,
         userId,
       };
       await createActivity({ activityInput });

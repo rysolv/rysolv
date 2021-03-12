@@ -1,6 +1,6 @@
 const {
   createActivity,
-  getOrganizationActivity,
+  getRepoActivity,
   getUserActivity,
 } = require('./queries/activity');
 const { toggleAttempting } = require('./queries/attempting');
@@ -27,18 +27,6 @@ const {
   setPreferredLanguage,
 } = require('./queries/languages');
 const {
-  checkDuplicateOrganization,
-  createOrganization,
-  getOneOrganization,
-  getOrganizationContributors,
-  getOrganizationList,
-  getOrganizations,
-  getOrganizationsWhere,
-  searchOrganizations,
-  transformOrganization,
-  updateOrganizationArray,
-} = require('./queries/organizations');
-const {
   submitAccountDepositUser,
   submitExternalPayment,
   submitInternalPayment,
@@ -52,6 +40,18 @@ const {
   getUserPullRequests,
 } = require('./queries/pullRequests');
 const { getQuestions, postUserResponse } = require('./queries/questions');
+const {
+  checkDuplicateRepo,
+  createRepo,
+  getOneRepo,
+  getRepoContributors,
+  getRepoList,
+  getRepos,
+  getReposWhere,
+  searchRepos,
+  transformRepo,
+  updateRepoArray,
+} = require('./queries/repos');
 const { getStats } = require('./queries/stats');
 const {
   checkDuplicateGithubId,
@@ -79,8 +79,8 @@ const {
 module.exports = {
   checkDuplicateGithubId,
   checkDuplicateIssue,
-  checkDuplicateOrganization,
   checkDuplicatePullRequest,
+  checkDuplicateRepo,
   checkDuplicateUserEmail,
   checkExistingGithubAccount,
   checkGithubIdMatch,
@@ -89,8 +89,8 @@ module.exports = {
   createComment,
   createIssue,
   createLanguage,
-  createOrganization,
   createPullRequest,
+  createRepo,
   createUser,
   createWithdrawal,
   deletePullRequest,
@@ -104,16 +104,16 @@ module.exports = {
   getIssues,
   getIssueWatchList,
   getOneIssue,
-  getOneOrganization,
+  getOneRepo,
   getOneUser,
   getOneUserSignUp,
-  getOrganizationActivity,
-  getOrganizationContributors,
-  getOrganizationList,
-  getOrganizations,
-  getOrganizationsWhere,
   getPullRequestList,
   getQuestions,
+  getRepoActivity,
+  getRepoContributors,
+  getRepoList,
+  getRepos,
+  getReposWhere,
   getStats,
   getUserActivity,
   getUserAttemptList,
@@ -125,7 +125,7 @@ module.exports = {
   getUserWatchList,
   postUserResponse,
   searchIssues,
-  searchOrganizations,
+  searchRepos,
   searchUsers,
   setPreferredLanguage,
   submitAccountDepositUser,
@@ -134,10 +134,10 @@ module.exports = {
   toggleAttempting,
   toggleWatching,
   transformIssue,
-  transformOrganization,
+  transformRepo,
   transformUser,
   transformUserBalance,
-  updateOrganizationArray,
+  updateRepoArray,
   updateUserArray,
   upvoteIssue,
 };

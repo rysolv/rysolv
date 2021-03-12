@@ -10,7 +10,7 @@ const getOneIssue = async ({ issueId }) => {
       CASE WHEN funding.id IS NOT NULL AND funding.is_approved = false THEN true ELSE false END AS "isInFundingQueue",
       CASE WHEN pullrequests.merged = true THEN true ELSE false END AS "isPullRequestMerged"
     FROM issues
-    JOIN organizations ON issues.organization_id = organizations.id
+    JOIN repos ON issues.repo_id = repos.id
     JOIN users ON issues.contributor_id = users.id
     LEFT JOIN attempting ON attempting.issue_id = issues.id
     LEFT JOIN comments ON comments.target = issues.id

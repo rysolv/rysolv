@@ -14,16 +14,16 @@ const { desktopL, laptopS, mobile } = mediaQueriesByDevice;
 export const Card = styled.div`
   align-items: center;
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 0.8rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.3);
   color: ${textColor};
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  margin: 0 auto 30px;
+  justify-content: space-between;
+  margin: 0 auto 3rem;
   max-width: 40rem;
   min-height: 36rem;
-  padding: 30px 35px;
+  padding: 3rem 3.5rem;
   text-align: center;
 
   ${laptopS} {
@@ -81,15 +81,15 @@ export const HorizontalList = styled.div`
 
 export const Icon = styled.div`
   background: linear-gradient(to bottom right, #4db6ac 0%, #00796b 100%);
-  border-radius: 10px;
+  border-radius: 1rem;
   color: #34a297;
   display: inline-block;
-  height: 87px;
-  margin: 0 20px;
+  height: 8.7rem;
+  margin: 0 2rem;
   position: relative;
   top: 0;
   transition: all 0.2s ease;
-  width: 56px;
+  width: 5.6rem;
 
   &:before {
     background: inherit;
@@ -186,7 +186,7 @@ export const ListContent = styled.div``;
 export const ListImage = styled.div`
   align-items: center;
   border-radius: 50%;
-  border: 2px solid ${lightBlueColor};
+  border: 0.2rem solid ${lightBlueColor};
   color: ${lightBlueColor};
   display: flex;
   font-size: 2.4rem;
@@ -231,7 +231,7 @@ export const StyledLink = styled(Link)`
   letter-spacing: 0.03em;
   line-height: 1.5;
   margin-bottom: 0;
-  margin-top: 30px;
+  margin-top: 3rem;
   padding: 0.6rem 1.2rem 0.6rem 1.8rem;
   white-space: nowrap;
   width: fit-content;

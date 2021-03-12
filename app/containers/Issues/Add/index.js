@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import AsyncRender from 'components/AsyncRender';
 import { BackNav } from 'components/base_ui';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { makeSelectOrganizations } from 'containers/Organizations/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
@@ -63,7 +62,6 @@ export class IssuesAdd extends React.PureComponent {
       importSuccess,
       issueData,
       loading,
-      organization,
       step,
     } = this.props;
     const isVerify = step === 4;
@@ -83,7 +81,7 @@ export class IssuesAdd extends React.PureComponent {
         />
         <AddForm isVerify={isVerify}>
           <AsyncRender
-            asyncData={{ issueData, organization }}
+            asyncData={{ issueData }}
             component={StepToRender}
             loading={loading}
             propsToPassDown={{
@@ -107,7 +105,6 @@ IssuesAdd.propTypes = {
   importSuccess: T.bool,
   issueData: T.object,
   loading: T.bool.isRequired,
-  organization: T.object,
   step: T.number.isRequired,
 };
 
@@ -124,10 +121,6 @@ const mapStateToProps = createStructuredSelector({
   issueData: makeSelectIssues('issueData'),
   loading: makeSelectIssuesLoading('addIssue'),
   step: makeSelectIssuesStep('addIssue'),
-  /**
-   * Reducer : Organizations
-   */
-  organizationData: makeSelectOrganizations('organizationData'),
 });
 
 function mapDispatchToProps(dispatch) {

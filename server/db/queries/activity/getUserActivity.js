@@ -10,13 +10,13 @@ const getUserActivity = async ({ userId }) => {
       pullrequests.html_url AS "pullRequestUrl"
     FROM activity
     LEFT JOIN issues on (activity.issue_id = issues.id)
-    LEFT JOIN organizations on (activity.organization_id = organizations.id)
     LEFT JOIN pullrequests on (activity.pullrequest_id = pullrequests.pullrequest_id)
+    LEFT JOIN repos on (activity.repo_id = repos.id)
     LEFT JOIN users on (activity.user_id = users.id)
     WHERE activity.user_id = $1
     AND activity.is_private = false
     AND issues.is_deleted IS NOT true
-    AND organizations.is_deleted IS NOT true
+    AND repos.is_deleted IS NOT true
     ORDER BY activity.created_date DESC`;
   const { rows } = await singleQuery({ queryText, values: [userId] });
   return rows;

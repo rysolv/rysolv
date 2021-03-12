@@ -15,7 +15,7 @@ export const CHANGE_ISSUE_SEARCH = 'app/Issues/CHANGE_ISSUE_SEARCH';
 
 export const CLEAR_ALERTS = 'app/Issues/CLEAR_ALERTS';
 export const CLEAR_FORM = 'app/Issues/CLEAR_FORM';
-export const CLEAR_ORGANIZATION = 'app/Issues/CLEAR_ORGANIZATION';
+export const CLEAR_REPO = 'app/Issues/CLEAR_REPO';
 
 export const CLOSE_ISSUE = 'app/Issues/CLOSE_ISSUE';
 export const CLOSE_ISSUE_FAILURE = 'app/Issues/CLOSE_ISSUE_FAILURE';
@@ -80,7 +80,7 @@ export const UPDATE_IS_MANUAL = 'app/Issues/UPDATE_IS_MANUAL';
 
 export const UPDATE_ISSUE_DETAIL = 'app/Issues/UPDATE_ISSUE_DETAIL';
 
-export const UPDATE_ORGANIZATION = 'app/Issues/UPDATE_ORGANIZATION';
+export const UPDATE_REPO = 'app/Issues/UPDATE_REPO';
 
 export const UPVOTE_ISSUE = 'app/Issues/UPVOTE_ISSUE';
 export const UPVOTE_ISSUE_FAILURE = 'app/Issues/UPVOTE_ISSUE_FAILURE';

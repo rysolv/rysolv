@@ -28,7 +28,7 @@ const ExpansionPanel = withStyles({
     '&:before': {
       display: 'none',
     },
-    '&$expanded': {
+    '&:expanded': {
       margin: 'auto',
     },
   },

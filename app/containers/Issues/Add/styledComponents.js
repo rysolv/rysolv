@@ -84,18 +84,18 @@ export const LogoWrapper = styled.img`
   width: 5rem;
 `;
 
-export const OrganizationName = styled.div`
+export const RepoName = styled.div`
   color: ${textColor};
   font-size: ${cardHeaderFontSize};
   margin: 0.5rem 0;
 `;
 
-export const OrganizationNameWrapper = styled.div`
+export const RepoNameWrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
 `;
 
-export const SelectedOrganization = styled.div`
+export const SelectedRepo = styled.div`
   font-size: ${headerFontSize};
   margin: 0.5rem 0;
 `;

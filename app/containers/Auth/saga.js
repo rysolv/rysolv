@@ -59,10 +59,10 @@ export function* fetchActiveUserSaga() {
           isQuestionnaireComplete
           issues
           lastName
-          organizations
           profilePic
           pullRequests
           rep
+          repos
           upvotes
           username
           watching
@@ -103,10 +103,10 @@ export function* githubSignInSaga({ payload }) {
           isQuestionnaireComplete
           issues
           lastName
-          organizations
           profilePic
           pullRequests
           rep
+          repos
           upvotes
           username
           watching
@@ -320,10 +320,10 @@ export function* signInSaga({ payload }) {
           isGithubVerified
           issues
           lastName
-          organizations
           profilePic
           pullRequests
           rep
+          repos
           upvotes
           username
           watching

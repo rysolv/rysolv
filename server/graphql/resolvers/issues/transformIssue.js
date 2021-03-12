@@ -22,7 +22,7 @@ const transformIssue = async (
     const activityInput = {
       actionType: 'update',
       issueId: result.id,
-      queryResult: result.organizationId,
+      queryResult: result.repoId,
       userId: result.contributorId,
     };
     await createActivity({ activityInput });

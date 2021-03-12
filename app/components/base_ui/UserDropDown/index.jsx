@@ -23,8 +23,8 @@ const AttemptIcon = iconDictionary('attempt');
 const ExitIcon = iconDictionary('exit');
 const FundedIcon = iconDictionary('funded');
 const IssueIcon = iconDictionary('issue');
-const OrganizationIcon = iconDictionary('organization');
 const PullRequestIcon = iconDictionary('pullRequest');
+const RepoIcon = iconDictionary('repo');
 const SettingsIcon = iconDictionary('settings');
 
 const MenuComponent = props => (
@@ -53,11 +53,10 @@ const UserDropDownMenu = ({
   const {
     attempting,
     balance,
-    id,
     issues,
-    organizations,
     profilePic,
     pullRequests,
+    repos,
     username,
     watching,
   } = activeUser;
@@ -125,14 +124,12 @@ const UserDropDownMenu = ({
           <MenuItemValue>{issues ? issues.length : 0}</MenuItemValue>
         </StyledMenuItem>
 
-        <StyledMenuItem onClick={() => handleNav('/settings/organizations')}>
+        <StyledMenuItem onClick={() => handleNav('/settings/repos')}>
           <MenuItemLabel>
-            <IconWrapper>{OrganizationIcon}</IconWrapper>
-            Organizations
+            <IconWrapper>{RepoIcon}</IconWrapper>
+            Repos
           </MenuItemLabel>
-          <MenuItemValue>
-            {organizations ? organizations.length : 0}
-          </MenuItemValue>
+          <MenuItemValue>{repos ? repos.length : 0}</MenuItemValue>
         </StyledMenuItem>
       </StyledMenuContainer>
 

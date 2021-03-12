@@ -21,8 +21,8 @@ const submitAccountPayment = async (
       if (adjustedBalance >= 0) {
         const {
           balance: newBalance,
-          organizationId,
           fundedAmount,
+          repoId,
         } = await submitInternalPayment({
           action: 'fund_issue',
           fundValue,
@@ -34,7 +34,7 @@ const submitAccountPayment = async (
           actionType: 'fund',
           fundedValue: fundValue,
           issueId,
-          organizationId,
+          repoId,
           userId,
         };
         await createActivity({ activityInput });

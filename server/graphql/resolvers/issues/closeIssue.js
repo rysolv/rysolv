@@ -14,7 +14,7 @@ const closeIssue = async ({ issueId, shouldClose }, { authError, userId }) => {
     const activityInput = {
       actionType: shouldClose ? 'close' : 'reopen',
       issueId: issue.id,
-      organizationId: issue.organizationId,
+      repoId: issue.repoId,
       userId: issue.userId,
     };
     await createActivity({ activityInput });

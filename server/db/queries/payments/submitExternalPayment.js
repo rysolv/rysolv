@@ -17,26 +17,26 @@ const submitExternalPayment = async ({
       UPDATE issues
       SET funded_amount = funded_amount + $1
       WHERE id = $2
-      RETURNING funded_amount AS "fundedAmount", organization_id AS "organizationId"
+      RETURNING funded_amount AS "fundedAmount", repo_id AS "repoId"
     `;
     const { rows } = await singleQuery({
       queryText: issueQueryText,
       values: [fundValue, issueId],
     });
     const [oneRow] = rows;
-    const { fundedAmount, organizationId } = oneRow;
+    const { fundedAmount, repoId } = oneRow;
 
     await updatePaymentTable({
       action,
       fundedAmount: fundValue,
       issueId,
-      organizationId,
       platform,
+      repoId,
       userId,
     });
 
     await client.query('COMMIT');
-    return { fundedAmount, organizationId };
+    return { fundedAmount, repoId };
   } catch (error) {
     await client.query('ROLLBACK');
     throw error;

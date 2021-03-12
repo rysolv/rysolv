@@ -81,7 +81,36 @@ const validateLink = value => {
   return false;
 };
 
-export const validateOrganizationUrl = value => {
+const validatePassword = value => {
+  const containsLowercase = /(?=.*[a-z])/.test(value);
+  const containsNumber = /(?=.*\d)/.test(value);
+  const containsSymbol = /(?=.*[^\w\d\s])/.test(value);
+  const containsUppercase = /(?=.*[A-Z])/.test(value);
+  const greaterThanEight = value.length >= 8;
+
+  if (!containsLowercase) {
+    return 'Password must contain at least one lowercase letter';
+  }
+
+  if (!containsNumber) {
+    return 'Password must contain at least one number';
+  }
+
+  if (!containsSymbol) {
+    return 'Password must contain at least one symbol';
+  }
+
+  if (!containsUppercase) {
+    return 'Password must contain at least one uppercase letter';
+  }
+
+  if (!greaterThanEight) {
+    return 'Password must be at least 8 characters long';
+  }
+  return false;
+};
+
+export const validateRepoUrl = value => {
   const url = value.split('/');
   const containsHttps = url.includes('https:');
   if (!containsHttps) {
@@ -112,37 +141,8 @@ export const validateOrganizationUrl = value => {
   }
   return {
     error: 'invalidImport',
-    message: 'Invalid GitHub Organization',
+    message: 'Invalid GitHub Repo',
   };
-};
-
-const validatePassword = value => {
-  const containsLowercase = /(?=.*[a-z])/.test(value);
-  const containsNumber = /(?=.*\d)/.test(value);
-  const containsSymbol = /(?=.*[^\w\d\s])/.test(value);
-  const containsUppercase = /(?=.*[A-Z])/.test(value);
-  const greaterThanEight = value.length >= 8;
-
-  if (!containsLowercase) {
-    return 'Password must contain at least one lowercase letter';
-  }
-
-  if (!containsNumber) {
-    return 'Password must contain at least one number';
-  }
-
-  if (!containsSymbol) {
-    return 'Password must contain at least one symbol';
-  }
-
-  if (!containsUppercase) {
-    return 'Password must contain at least one uppercase letter';
-  }
-
-  if (!greaterThanEight) {
-    return 'Password must be at least 8 characters long';
-  }
-  return false;
 };
 
 const validateStackoverflowLink = value => {

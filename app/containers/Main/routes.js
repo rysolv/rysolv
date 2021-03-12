@@ -8,16 +8,16 @@ import HowTo from 'components/HowTo';
 import NotFoundPage from 'components/NotFoundPage';
 import PrivacyPolicy from 'components/PrivacyPolicy';
 import TermsOfService from 'components/TermsOfService';
-import Stats from 'containers/Stats/Loadable';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
 import Jobs from 'containers/Jobs';
 import Main from 'containers/HomePage/Loadable';
-import OrganizationsAdd from 'containers/Organizations/Add';
-import OrganizationsDetail from 'containers/Organizations/Detail';
 import Overview from 'containers/Overview';
+import ReposAdd from 'containers/Repos/Add';
+import ReposDetail from 'containers/Repos/Detail';
 import Settings from 'containers/Settings';
 import SignIn from 'containers/Signin';
+import Stats from 'containers/Stats/Loadable';
 import UsersDetail from 'containers/Users/Detail';
 import VerifyGithub from 'containers/VerifyGithub/Loadable';
 
@@ -25,7 +25,7 @@ const privateConfig = { isAdmin: false, isPrivate: true };
 const publicConfig = { isAdmin: false, isPrivate: false };
 
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
-const PrivateOrganizationsAdd = withAuth(privateConfig, OrganizationsAdd);
+const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
 const PublicContact = withAuth(publicConfig, Contact);
 const PublicFaq = withAuth(publicConfig, Faq);
@@ -34,9 +34,9 @@ const PublicIssuesDetail = withAuth(publicConfig, IssuesDetail);
 const PublicJobs = withAuth(publicConfig, Jobs);
 const PublicMain = withAuth(publicConfig, Main);
 const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
-const PublicOrganizationsDetail = withAuth(publicConfig, OrganizationsDetail);
 const PublicOverview = withAuth(publicConfig, Overview);
 const PublicPrivacyPolicy = withAuth(publicConfig, PrivacyPolicy);
+const PublicReposDetail = withAuth(publicConfig, ReposDetail);
 const PublicSignIn = withAuth(publicConfig, SignIn);
 const PublicStats = withAuth(publicConfig, Stats);
 const PublicTermsOfService = withAuth(publicConfig, TermsOfService);
@@ -57,12 +57,12 @@ const Routes = () => (
     <Route exact path="/issues/search/:searchValue" component={PublicOverview} />
     <Route exact path="/jobs" component={PublicJobs} />
     <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
-    <Route exact path="/organizations" component={PublicOverview} />
-    <Route exact path="/organizations/add" component={PrivateOrganizationsAdd} />
-    <Route exact path="/organizations/detail/:id" component={PublicOrganizationsDetail} />
-    <Route exact path="/organizations/search/:searchValue" component={PublicOverview} />
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
+    <Route exact path="/repos" component={PublicOverview} />
+    <Route exact path="/repos/add" component={PrivateReposAdd} />
+    <Route exact path="/repos/detail/:id" component={PublicReposDetail} />
+    <Route exact path="/repos/search/:searchValue" component={PublicOverview} />
     <Route exact path="/settings/:view?" component={PrivateSettings} />
     <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/signin" component={PublicSignIn} />
