@@ -27,36 +27,6 @@ const formatIssueUrl = value => {
   throw new CustomError(`Not a valid issue url.`);
 };
 
-// ORGANIZATION URL
-// Incoming:  https://github.com/NixOS or https://github.com/NixOS/nixpkgs-channels
-const formatOrganizationUrl = value => {
-  const { hostname, pathname } = new URL(value);
-
-  const containsGithub = hostname === 'github.com';
-  const url = pathname.split('/');
-  url.shift();
-
-  if (containsGithub && url.length === 2) {
-    const repo = url[1];
-    const organization = url[0];
-    return {
-      formattedUrl: `https://api.github.com/repos/${organization}/${repo}`,
-      organization,
-      repo,
-      type: 'repo',
-    };
-  }
-  if (containsGithub && url.length === 1) {
-    const organization = url[0];
-    return {
-      formattedUrl: `https://api.github.com/users/${organization}`,
-      organization,
-      type: 'organization',
-    };
-  }
-  throw new CustomError(`Not a valid organization url.`);
-};
-
 // PULL_REQUEST URL
 // Incoming:  https://github.com/rysolv/rysolv/pull/4
 const formatPullRequestUrl = value => {
@@ -84,8 +54,38 @@ const formatPullRequestUrl = value => {
   throw new CustomError(`Not a valid pull request url.`);
 };
 
+// REPO URL
+// Incoming:  https://github.com/NixOS or https://github.com/NixOS/nixpkgs-channels
+const formatRepoUrl = value => {
+  const { hostname, pathname } = new URL(value);
+
+  const containsGithub = hostname === 'github.com';
+  const url = pathname.split('/');
+  url.shift();
+
+  if (containsGithub && url.length === 2) {
+    const repo = url[1];
+    const organization = url[0];
+    return {
+      formattedUrl: `https://api.github.com/repos/${organization}/${repo}`,
+      organization,
+      repo,
+      type: 'repo',
+    };
+  }
+  if (containsGithub && url.length === 1) {
+    const organization = url[0];
+    return {
+      formattedUrl: `https://api.github.com/users/${organization}`,
+      organization,
+      type: 'organization',
+    };
+  }
+  throw new CustomError(`Not a valid repo url.`);
+};
+
 module.exports = {
   formatIssueUrl,
-  formatOrganizationUrl,
   formatPullRequestUrl,
+  formatRepoUrl,
 };

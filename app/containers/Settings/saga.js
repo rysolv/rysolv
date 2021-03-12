@@ -105,12 +105,12 @@ export function* fetchInfoSaga({ payload }) {
           isGithubVerified
           issues
           lastName
-          organizations
           personalLink
           preferredLanguages
           profilePic
           rejectedPullRequests
           rep
+          repos
           stackoverflowLink
           username
           watching
@@ -126,11 +126,11 @@ export function* fetchInfoSaga({ payload }) {
         fundedValue
         issueId
         issueName
-        organizationId
-        organizationName
         pullRequestId
         pullRequestName
         pullRequestUrl
+        repoId
+        repoName
         userId
         username
       }

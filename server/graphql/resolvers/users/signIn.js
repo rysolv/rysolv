@@ -4,7 +4,7 @@ const { generateToken } = require('../../../middlewares/generateToken');
 const {
   checkExistingGithubAccount,
   getOneIssue,
-  getOneOrganization,
+  getOneRepo,
   getUserAttemptList,
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
@@ -33,7 +33,7 @@ const signIn = async ({ password, username }, { res }) => {
     });
 
     const result = await getUserSettingsQuery({ userId });
-    const { issues, organizations } = result;
+    const { issues, repos } = result;
 
     // Pull user attempting detail
     const attemptingListResult = await getUserAttemptList({ userId });
@@ -46,13 +46,11 @@ const signIn = async ({ password, username }, { res }) => {
       }),
     );
 
-    // Pull user organization detail
-    const organizationsListResult = await Promise.all(
-      organizations.map(async organizationId => {
-        const organizationsResult = await getOneOrganization({
-          organizationId,
-        });
-        return organizationsResult;
+    // Pull user repo detail
+    const reposListResult = await Promise.all(
+      repos.map(async repoId => {
+        const reposResult = await getOneRepo({ repoId });
+        return reposResult;
       }),
     );
 
@@ -70,8 +68,8 @@ const signIn = async ({ password, username }, { res }) => {
     result.attempting = attemptingListResult;
     result.completedPullRequests = completedPullRequests;
     result.issues = issuesListResult;
-    result.organizations = organizationsListResult;
     result.rejectedPullRequests = rejectedPullRequests;
+    result.repos = reposListResult;
     result.watching = watchingListResult;
 
     return {

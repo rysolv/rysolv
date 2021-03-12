@@ -2,7 +2,7 @@ const tabDictionary = {
   0: 'Overview',
   1: 'Account',
   2: 'Issues',
-  3: 'Organizations',
+  3: 'Repos',
   4: 'Pull Requests',
 };
 

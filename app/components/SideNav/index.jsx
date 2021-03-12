@@ -21,7 +21,7 @@ const addIcon = iconDictionary('addCircle');
 const backArrow = iconDictionary('backArrowHalf');
 const forwardArrow = iconDictionary('forwardArrowHalf');
 const issueIcon = iconDictionary('issue');
-const organizationIcon = iconDictionary('organization');
+const repoIcon = iconDictionary('repo');
 const uploadIcon = iconDictionary('upload');
 const userIcon = iconDictionary('user');
 
@@ -106,11 +106,11 @@ const SideNav = ({ deviceView, handleNav }) => {
           <StyledListWrapper active={currentValue === 1}>
             <ListItem
               button
-              key="Organizations"
-              onClick={() => handleClick('/organizations', 1)}
+              key="Repos"
+              onClick={() => handleClick('/repos', 1)}
             >
-              <ListItemIcon>{organizationIcon}</ListItemIcon>
-              <ListItemText primary="Organizations" />
+              <ListItemIcon>{repoIcon}</ListItemIcon>
+              <ListItemText primary="Repos" />
             </ListItem>
           </StyledListWrapper>
           <StyledListWrapper active={currentValue === 2}>
@@ -137,11 +137,11 @@ const SideNav = ({ deviceView, handleNav }) => {
           <StyledListWrapper active={currentValue === 4}>
             <ListItem
               button
-              key="addOrganizations"
-              onClick={() => handleClick('/organizations/add', 4)}
+              key="addRepos"
+              onClick={() => handleClick('/repos/add', 4)}
             >
               <ListItemIcon>{addIcon}</ListItemIcon>
-              <ListItemText primary="New Organization" />
+              <ListItemText primary="New Repo" />
             </ListItem>
           </StyledListWrapper>
         </List>

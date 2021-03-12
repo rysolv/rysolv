@@ -11,7 +11,7 @@ import { makeSelectIssues, makeSelectIssuesDisabled } from '../selectors';
 import {
   BackLink,
   ButtonGroup,
-  SelectedOrganization,
+  SelectedRepo,
   StyledFocusDiv,
   StyledH3,
   StyledLink,
@@ -24,7 +24,7 @@ const ManualIssue = ({
   handleInputChange,
   isDisabled,
   issueData,
-  organizationData,
+  repoData: { repoName, repoUrl },
 }) => {
   useEffect(() => {
     dispatchUpdateIsManual({ value: true });
@@ -42,16 +42,11 @@ const ManualIssue = ({
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <StyledH3>Organization</StyledH3>
+      <StyledH3>Repo</StyledH3>
       <VerifyWrapper>
-        <SelectedOrganization>
-          {organizationData.organizationName.value}
-        </SelectedOrganization>
-        <StyledLink
-          href={`//${organizationData.organizationRepo.value}`}
-          target="_blank"
-        >
-          {organizationData.organizationRepo.value}
+        <SelectedRepo>{repoName.value}</SelectedRepo>
+        <StyledLink href={`//${repoUrl.value}`} target="_blank">
+          {repoUrl.value}
         </StyledLink>
       </VerifyWrapper>
       <StyledH3>Add Issue</StyledH3>
@@ -60,7 +55,7 @@ const ManualIssue = ({
         <BackLink
           onClick={() => handleIncrementStep({ step: 2, view: 'addIssue' })}
         >
-          Edit Org
+          Edit Repo
         </BackLink>
         <PrimaryButton
           disabled={!isDisabled}
@@ -78,7 +73,7 @@ ManualIssue.propTypes = {
   handleInputChange: T.func,
   isDisabled: T.bool,
   issueData: T.object,
-  organizationData: T.object,
+  repoData: T.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -87,7 +82,7 @@ const mapStateToProps = createStructuredSelector({
    */
   isDisabled: makeSelectIssuesDisabled(),
   issueData: makeSelectIssues('issueData'),
-  organizationData: makeSelectIssues('organizationData'),
+  repoData: makeSelectIssues('repoData'),
 });
 
 function mapDispatchToProps(dispatch) {

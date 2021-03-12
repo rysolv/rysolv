@@ -11,16 +11,16 @@ const createLanguage = async ({ languages, preferred, target }) => {
     if (isLanguageDefined) {
       const values = [
         uuidv4(),
-        target.issueId || null,
         language,
-        target.organizationId || null,
         preferred || false,
+        target.issueId || null,
+        target.repoId || null,
         target.userId || null,
       ];
 
       const queryText = `
         INSERT INTO
-        languages(id, issue_id, language, organization_id, preferred, user_id)
+        languages(id, language, preferred, issue_id, repo_id, user_id)
         VALUES($1, $2, $3, $4, $5, $6)
       `;
 

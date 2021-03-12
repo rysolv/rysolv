@@ -8,20 +8,14 @@ import { ConditionalRender, IconToolTip } from 'components/base_ui';
 import {
   IssueDetailContainer,
   NameWrapper,
-  OrganizationNameContainer,
+  RepoNameContainer,
   StyledBaseTextInput,
   StyledIssueDetail,
   StyledVerified,
 } from './styledComponents';
 
 const IssueDetailHeader = ({
-  data: {
-    createdDate,
-    name,
-    organizationId,
-    organizationName,
-    organizationVerified,
-  },
+  data: { createdDate, name, repoId, repoName, repoVerified },
   displayEditView,
   nameChange,
   setNameChange,
@@ -40,18 +34,16 @@ const IssueDetailHeader = ({
     <Fragment>
       <IssueDetailContainer>
         <StyledIssueDetail>
-          <OrganizationNameContainer>
-            <Link to={`/organizations/detail/${organizationId}`}>
-              {organizationName}
-            </Link>
-            {organizationVerified ? (
+          <RepoNameContainer>
+            <Link to={`/repos/detail/${repoId}`}>{repoName}</Link>
+            {repoVerified ? (
               <IconToolTip toolTipText="Verified Contributor">
                 <StyledVerified />
               </IconToolTip>
             ) : (
               ''
             )}
-          </OrganizationNameContainer>
+          </RepoNameContainer>
           <div>
             Issue opened{' '}
             {moment(createdDate)

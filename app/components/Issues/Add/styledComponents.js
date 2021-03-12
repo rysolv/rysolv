@@ -92,7 +92,7 @@ export const MessageWrapper = styled.div`
   }
 `;
 
-export const OrganizationNameWrapper = styled.div`
+export const RepoNameWrapper = styled.div`
   color: ${textColor};
   font-size: ${detailFontSize};
   font-weight: bold;

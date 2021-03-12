@@ -24,13 +24,13 @@ const Filter = ({
     fundedIssues,
     issueLanguages,
     maxBounty,
-    maxOrgFunded,
-    organizationLanguages,
-    organizations,
+    maxRepoFunded,
+    repoLanguages,
+    repos,
     unfundedIssues,
     userLanguages,
   },
-  filterValues: { language, organization, price, status, type },
+  filterValues: { language, price, repo, status, type },
   handleChangeFilter,
   isMobile,
   view,
@@ -56,9 +56,9 @@ const Filter = ({
       options.languages = issueLanguages;
       options.max = maxBounty;
       break;
-    case 'organizations':
-      options.languages = organizationLanguages;
-      options.max = maxOrgFunded;
+    case 'repos':
+      options.languages = repoLanguages;
+      options.max = maxRepoFunded;
       break;
     default:
       break;
@@ -78,15 +78,15 @@ const Filter = ({
           />
         </Fragment>
       )}
-      {organization && (
+      {repo && (
         <Fragment>
-          <StyledLabel>Organization</StyledLabel>
+          <StyledLabel>Repo</StyledLabel>
           <BaseAutocomplete
             onChange={(e, value) =>
-              handleChangeFilter({ field: 'organization', value })
+              handleChangeFilter({ field: 'repo', value })
             }
-            options={organizations}
-            value={organization}
+            options={repos}
+            value={repo}
           />
         </Fragment>
       )}

@@ -74,7 +74,7 @@ export const NameWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-export const OrganizationNameWrapper = styled.div`
+export const RepoNameWrapper = styled.div`
   align-items: center;
   color: ${textColor};
   display: flex;

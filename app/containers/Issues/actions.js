@@ -12,7 +12,7 @@ import {
   CHANGE_ISSUE_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
-  CLEAR_ORGANIZATION,
+  CLEAR_REPO,
   CLOSE_ISSUE_FAILURE,
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
@@ -50,7 +50,7 @@ import {
   UPDATE_FUNDED_ISSUE,
   UPDATE_IS_MANUAL,
   UPDATE_ISSUE_DETAIL,
-  UPDATE_ORGANIZATION,
+  UPDATE_REPO,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
@@ -146,10 +146,10 @@ export function clearForm() {
   };
 }
 
-export function clearOrganization(payload) {
+export function clearRepo(payload) {
   return {
     payload,
-    type: CLEAR_ORGANIZATION,
+    type: CLEAR_REPO,
   };
 }
 
@@ -395,10 +395,10 @@ export function updateIssueDetail() {
   return { type: UPDATE_ISSUE_DETAIL };
 }
 
-export function updateOrganization(payload) {
+export function updateRepo(payload) {
   return {
     payload,
-    type: UPDATE_ORGANIZATION,
+    type: UPDATE_REPO,
   };
 }
 

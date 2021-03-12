@@ -2,7 +2,7 @@ const Sentry = require('@sentry/node');
 
 const {
   formatIssueUrl,
-  formatOrganizationUrl,
+  formatRepoUrl,
 } = require('../integrations/github/helpers');
 const { getRepoMembers } = require('../integrations/github');
 
@@ -36,7 +36,7 @@ const formatMemberList = async ({
 }) => {
   const { organization, repo } = issueUrl
     ? formatIssueUrl(issueUrl)
-    : formatOrganizationUrl(repoUrl);
+    : formatRepoUrl(repoUrl);
   const githubMembers = await getRepoMembers({ organization, repo });
   const formattedGithubMembers = githubMembers.map(({ id, type }) => ({
     githubId: id,

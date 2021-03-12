@@ -1,6 +1,6 @@
 const { singleQuery } = require('../../baseQueries');
 
-// Check duplicate organization
+// Check duplicate pull request
 const checkDuplicatePullRequest = async ({ repo }) => {
   const queryText = `
     SELECT pullrequest_id

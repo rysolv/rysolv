@@ -30,7 +30,7 @@ const ArrowIcon = iconDictionary('navigateNext');
 const CodeIcon = iconDictionary('code');
 const ComputerIcon = iconDictionary('computer');
 const IssueIcon = iconDictionary('issue');
-const OrganizationIcon = iconDictionary('organization');
+const RepoIcon = iconDictionary('repo');
 const UserIcon = iconDictionary('user');
 
 const Landing = () => (
@@ -47,35 +47,39 @@ const Landing = () => (
       <CardContainer>
         <CardItem>
           <Card>
-            <CardIcon>{UserIcon}</CardIcon>
-            <CardTitleWrapper>Sign Up</CardTitleWrapper>
-            <TextWrapper>
-              The best way to earn income while contributing to open source
-              development.
-            </TextWrapper>
+            <div>
+              <CardIcon>{UserIcon}</CardIcon>
+              <CardTitleWrapper>Sign Up</CardTitleWrapper>
+              <TextWrapper>
+                The best way to earn income while contributing to open source
+                development.
+              </TextWrapper>
+            </div>
             <StyledLink to="/signup">Create account {ArrowIcon}</StyledLink>
           </Card>
         </CardItem>
         <CardItem>
           <Card>
-            <CardIcon>{OrganizationIcon}</CardIcon>
-            <CardTitleWrapper>Browse Organizations</CardTitleWrapper>
-            <TextWrapper>
-              Support some of the awesome organizations that use rysolv.
-            </TextWrapper>
-            <StyledLink to="/organizations">
-              Find an organization {ArrowIcon}
-            </StyledLink>
+            <div>
+              <CardIcon>{RepoIcon}</CardIcon>
+              <CardTitleWrapper>Browse Repos</CardTitleWrapper>
+              <TextWrapper>
+                Support some of the awesome repos that use rysolv.
+              </TextWrapper>
+            </div>
+            <StyledLink to="/repos">Find a repo {ArrowIcon}</StyledLink>
           </Card>
         </CardItem>
         <CardItem>
           <Card>
-            <CardIcon>{IssueIcon}</CardIcon>
-            <CardTitleWrapper>Browse Issues</CardTitleWrapper>
-            <TextWrapper>
-              Find issues and get paid to solve them. Contribute to software
-              people use every day.
-            </TextWrapper>
+            <div>
+              <CardIcon>{IssueIcon}</CardIcon>
+              <CardTitleWrapper>Browse Issues</CardTitleWrapper>
+              <TextWrapper>
+                Find issues and get paid to solve them. Contribute to software
+                people use every day.
+              </TextWrapper>
+            </div>
             <StyledLink to="/issues">Find an issue {ArrowIcon}</StyledLink>
           </Card>
         </CardItem>

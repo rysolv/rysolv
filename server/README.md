@@ -205,8 +205,8 @@ rysolv=> \d
  public | languages         | table    | alice
  public | migrations        | table    | alice
  public | migrations_id_seq | sequence | alice
- public | organizations     | table    | alice
  public | pullrequests      | table    | alice
+ public | repos             | table    | alice
  public | users             | table    | alice
  public | watching          | table    | alice
  public | withdrawal        | table    | alice
@@ -236,20 +236,20 @@ GraphQl Functions:
 --------------------------------------------------
 * Queries
   * `getIssues` - returns all issues
+  * `getRepos` - returns all repos
   * `getUsers` - returns all users
-  * `getOrganizations` - returns all organizations
   * `oneIssue` - requires `id: <UUID>` - returns one issue
+  * `oneRepo` - requires `id: <UUID>` - returns one repo
   * `oneUser` - requires `id: <UUID>` - returns one user
-  * `oneOrganization` - requires `id: <UUID>` - returns one organization
 
 * Mutations
   * `createIssue` - requires `issueInput: <type IssueInput>` - returns created issue
+  * `createRepo` - requires `repoInput: <type RepoInput>`- returns created repo
   * `createUser` - requires `userInput: <type UserInput>`- returns created user
-  * `createOrganization` - requires `organizationInput: <type OrganizationInput>`- returns created organization
-  * `transformIssue` - requires `id: <type ID>, issueInput: <type IssueInput>`- returns transformed issue
-  * `transformUser` - requires `id: <type ID>, userInput: <type UserInput>`- returns transformed issue
-  * `transformOrganization` - requires `id: <type ID>, organizationInput: <type OrganizationInput>`- returns transformed organization
   * `deleteUser` - required `id: <type ID>` - returns success or failure string
+  * `transformIssue` - requires `id: <type ID>, issueInput: <type IssueInput>`- returns transformed issue
+  * `transformRepo` - requires `id: <type ID>, repoInput: <type RepoInput>`- returns transformed repo
+  * `transformUser` - requires `id: <type ID>, userInput: <type UserInput>`- returns transformed issue
 
 GraphQL Types
 --------------------------------------------------
