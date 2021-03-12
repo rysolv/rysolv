@@ -3,8 +3,9 @@ const { Octokit } = require('@octokit/rest');
 const { createTokenAuth } = require('@octokit/auth-token');
 const { v4: uuidv4 } = require('uuid');
 
-// Connect to DB
 const { connect } = require('./connect');
+
+// Connect to DB
 const env = process.argv[2];
 const { pool, singleQuery } = connect(env);
 
