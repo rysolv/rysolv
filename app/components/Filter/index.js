@@ -25,6 +25,8 @@ const Filter = ({
     issueLanguages,
     maxBounty,
     repos,
+    maxOrgFunded,
+    organizationLanguages,
     unfundedIssues,
     userLanguages,
   },
@@ -45,6 +47,23 @@ const Filter = ({
     { count: featureTag, name: 'Feature' },
   ];
 
+  const options = {};
+  switch (view) {
+    case 'users':
+      options.languages = userLanguages;
+      break;
+    case 'issues':
+      options.languages = issueLanguages;
+      options.max = maxBounty;
+      break;
+    case 'repos':
+      options.languages = organizationLanguages;
+      options.max = maxOrgFunded;
+      break;
+    default:
+      break;
+  }
+
   const FilterOptionsComponent = () => (
     <OptionsWrapper>
       {language && (
@@ -54,7 +73,7 @@ const Filter = ({
             onChange={(e, value) =>
               handleChangeFilter({ field: 'language', value })
             }
-            options={view === 'users' ? userLanguages : issueLanguages}
+            options={options.languages}
             value={language}
           />
         </Fragment>
@@ -75,7 +94,7 @@ const Filter = ({
         <Fragment>
           <StyledLabel>Price Range</StyledLabel>
           <BaseSlider
-            max={maxBounty}
+            max={options.max}
             min={0}
             onChange={(e, value) =>
               handleChangeFilter({ field: 'price', value })

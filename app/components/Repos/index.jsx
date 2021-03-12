@@ -14,8 +14,15 @@ const Repos = ({
   handleNav,
   path,
 }) => {
-  const hasRepos = data.length > 0 && !data.includes(null);
-  const propsToPassDown = { data, handleNav, path };
+  const { length } = data;
+  const hasRepos = length > 0 && !data.includes(null);
+  const propsToPassDown = {
+    data,
+    handleNav,
+    path,
+    perPage: 15,
+    result: `${length} ${length === 1 ? 'Result' : 'Results'}`,
+  };
   const viewToRender = hasRepos ? (
     <Pagination Component={RepoCard} propsToPassDown={propsToPassDown} />
   ) : (

@@ -13,6 +13,7 @@ const BaseAutocomplete = ({
   multiple,
   onChange,
   options,
+  placeholder,
   value,
   ...restProps
 }) => (
@@ -28,6 +29,7 @@ const BaseAutocomplete = ({
         error={error}
         helperText={helperText}
         label={label}
+        placeholder={placeholder}
         {...params}
       />
     )}
@@ -54,6 +56,7 @@ BaseAutocomplete.propTypes = {
   multiple: T.bool,
   onChange: T.func.isRequired,
   options: T.array,
+  placeholder: T.string,
   value: T.oneOfType([T.array, T.object]),
 };
 

@@ -11,12 +11,14 @@ import {
   SecondaryButton,
 } from 'components/base_ui';
 import {
+  commentHeaderColor,
   defaultFontFamily,
   defaultFontSize,
   fundingOpenBackground,
   fundingText,
   headerFontSize,
   hoverLinkColor,
+  landingButtonGreen,
   languageBackground,
   languageText,
   lightBlueColor,
@@ -24,7 +26,19 @@ import {
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile, mobileS } = mediaQueriesByDevice;
+const { laptop, mobile, mobileS } = mediaQueriesByDevice;
+
+export const BottomFade = styled.div`
+  background: linear-gradient(
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 90%
+  );
+  bottom: 0;
+  height: 15rem;
+  left: 0;
+  position: absolute;
+  width: 100%;
+`;
 
 export const ButtonGroup = styled.div`
   display: flex;
@@ -38,21 +52,57 @@ export const ButtonWrapper = styled.div`
   display: flex;
 `;
 
+export const DescriptionBullets = styled.div`
+  align-self: center;
+  display: flex;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    padding: 0 2rem;
+  }
+
+  span {
+    align-items: center;
+    display: flex;
+    list-style-type: none;
+    margin: 1.5rem 0;
+  }
+
+  svg {
+    background: ${landingButtonGreen};
+    border-radius: 50%;
+    color: white;
+    height: 2.5rem;
+    margin-right: 1rem;
+    padding: 0.2rem;
+    width: 2.5rem;
+  }
+
+  ${mobile} {
+    align-self: center;
+    flex-direction: column;
+  }
+`;
+
 export const DescriptionContent = styled.div`
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  text-align: left;
+`;
+
+export const DescriptionSubTitle = styled.b`
+  font-size: 1.6rem;
+  margin: 2rem 0;
   text-align: center;
-  letter-spacing: -0.2px;
 `;
 
 export const DescriptionTitle = styled.div`
-  font-size: 36px;
+  color: ${lightBlueColor};
+  font-size: 3.6rem;
   font-weight: 300;
-  line-height: 44px;
-  margin-bottom: 24px;
-  text-align: center;
 `;
 
 export const DescriptionWrapper = styled.div`
@@ -83,7 +133,7 @@ export const JobsContainer = styled.div`
   width: 90%;
 
   ${mobile} {
-    margin: 0 1rem;
+    width: 100%;
   }
 `;
 
@@ -116,6 +166,14 @@ export const QuestionWrapper = styled.div`
   color: ${textColor};
   font-size: 2.6rem;
   font-weight: 500;
+`;
+
+export const SampleWrapper = styled.div`
+  background: ${commentHeaderColor};
+  margin: 2rem 0;
+  opacity: 0.9;
+  padding: 2rem;
+  position: relative;
 `;
 
 export const StyledBaseAutocomplete = styled(BaseAutocomplete)`
@@ -162,7 +220,6 @@ export const StyledButton = styled(
 
   ${mobileS} {
     justify-content: start;
-    width: 100%;
   }
 `;
 
@@ -199,6 +256,7 @@ export const StyledPrimaryButton = styled(({ isSelected, ...restProps }) => (
     isSelected ? lightBlueColor : 'white'};
   border: 0.1rem solid ${lightBlueColor};
   color: ${({ isSelected }) => (isSelected ? 'white' : lightBlueColor)};
+  min-width: 20rem;
 
   &:hover {
     background-color: ${lightBlueColor};
@@ -229,7 +287,15 @@ export const ViewContainer = styled.div`
   justify-content: ${({ isFinalView }) =>
     isFinalView ? 'inherit' : 'space-between'};
   min-height: 50rem;
-  padding: 3.8rem 2.6rem;
+  padding: 3.8rem 10%;
   text-align: center;
   width: 100%;
+
+  ${laptop} {
+    padding: 3.8rem 2.6rem;
+  }
+
+  ${mobile} {
+    padding: 2rem 0.5rem;
+  }
 `;

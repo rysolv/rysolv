@@ -23,7 +23,8 @@ const Issues = ({
   isSignedIn,
   path,
 }) => {
-  const hasData = data.length > 0 && !data.includes(null);
+  const { length } = data;
+  const hasData = length > 0 && !data.includes(null);
   const propsToPassDown = {
     activeUser,
     addWatching,
@@ -37,6 +38,8 @@ const Issues = ({
     height,
     isSignedIn,
     path,
+    perPage: 15,
+    result: `${length} ${length === 1 ? 'Result' : 'Results'}`,
   };
   const viewToRender = hasData ? (
     <Pagination Component={IssueCard} propsToPassDown={propsToPassDown} />

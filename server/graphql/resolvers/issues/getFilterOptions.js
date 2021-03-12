@@ -10,9 +10,15 @@ const getFilter = async () => {
     filterOptions.issueLanguages = filterOptions.issueLanguages.map(el => ({
       value: el,
     }));
+    filterOptions.organizationLanguages = filterOptions.organizationLanguages.map(
+      el => ({
+        value: el,
+      }),
+    );
     filterOptions.repos = filterOptions.repos.map(el => ({
       value: el,
     }));
+
     filterOptions.userLanguages = filterOptions.userLanguages.map(el => ({
       value: el,
     }));
