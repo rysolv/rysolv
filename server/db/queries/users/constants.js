@@ -12,7 +12,6 @@ const userValues = [
   'github_username',
   'id',
   'is_deleted',
-  'issues',
   'last_name',
   'modified_date',
   'personal_link',
@@ -36,7 +35,6 @@ const userReturnValues = `
   users.github_link AS "githubLink",
   users.id,
   users.is_deleted AS "isDeleted",
-  users.issues,
   users.last_name AS "lastName",
   users.modified_date AS "modifiedDate",
   users.personal_link AS "personalLink",
@@ -57,6 +55,7 @@ const userSettingsReturnValues = `
     WHERE user_question_responses.user_id = users.id
     AND questions.category = 'hiring') AS "isQuestionnaireComplete",
   users.github_username AS "githubUsername",
+  (SELECT COALESCE(ARRAY_AGG(DISTINCT(id)), '{}') FROM issues WHERE contributor_id = $1 AND is_deleted = false) AS "issues",
   (SELECT COALESCE(ARRAY_AGG(DISTINCT(id)), '{}') FROM repos WHERE is_deleted = false AND owner_id = $1) AS "repos",
   ${userReturnValues}
 `;
@@ -76,7 +75,6 @@ const groupValues = `
   users.github_username,
   users.id,
   users.is_deleted,
-  users.issues,
   users.last_name,
   users.modified_date,
   users.personal_link,
