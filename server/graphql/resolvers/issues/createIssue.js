@@ -106,13 +106,6 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
       userId,
     });
 
-    // add repo to user list
-    await updateUserArray({
-      column: 'repos',
-      data: issueInput.repoId,
-      userId,
-    });
-
     return {
       __typename: 'Issue',
       message: createIssueSuccess,

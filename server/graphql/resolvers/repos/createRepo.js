@@ -8,11 +8,7 @@ const {
   createRepoSuccess,
 } = require('./constants');
 const { createActivity } = require('../activity');
-const {
-  createLanguage,
-  createRepo: createRepoQuery,
-  updateUserArray,
-} = require('../../../db');
+const { createLanguage, createRepo: createRepoQuery } = require('../../../db');
 const { CustomError, errorLogger } = require('../../../helpers');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
@@ -52,13 +48,6 @@ const createRepo = async ({ repoInput }, { authError, userId }) => {
         target: { repoId: result.id },
       });
     }
-
-    // add repo to user
-    await updateUserArray({
-      column: 'repos',
-      data: result.id,
-      userId: result.ownerId,
-    });
 
     // log activity
     const activityInput = {

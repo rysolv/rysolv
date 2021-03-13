@@ -35,7 +35,6 @@ const getUserSettings = async (_, { authError, userId }) => {
         return reposResult;
       }),
     );
-    const filteredReposList = reposListResult.filter(repo => repo);
 
     // Pull user pull request detail
     const {
@@ -52,7 +51,7 @@ const getUserSettings = async (_, { authError, userId }) => {
     result.completedPullRequests = completedPullRequests;
     result.issues = filteredIssuesList;
     result.rejectedPullRequests = rejectedPullRequests;
-    result.repos = filteredReposList;
+    result.repos = reposListResult;
     result.watching = watchingListResult;
 
     return {
