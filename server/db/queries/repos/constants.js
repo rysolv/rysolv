@@ -13,6 +13,7 @@ const repoValues = [
 ];
 
 const repoReturnValues = `
+  (SELECT COALESCE(ARRAY_AGG(DISTINCT(issues.id)), '{}') FROM issues WHERE repos.id = issues.repo_id AND repos.is_deleted = false) AS "issues",
   repos.created_date AS "createdDate",
   repos.description,
   repos.id,
