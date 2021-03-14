@@ -17,7 +17,6 @@ const userValues = [
   'personal_link',
   'profile_pic',
   'provider',
-  'pull_requests',
   'rep',
   'stackoverflow_link',
   'upvotes',
@@ -40,7 +39,6 @@ const userReturnValues = `
   users.modified_date AS "modifiedDate",
   users.personal_link AS "personalLink",
   users.profile_pic AS "profilePic",
-  users.pull_requests AS "pullRequests",
   users.rep,
   users.stackoverflow_link AS "stackoverflowLink",
   users.upvotes,
@@ -56,6 +54,7 @@ const userSettingsReturnValues = `
     WHERE user_question_responses.user_id = users.id
     AND questions.category = 'hiring') AS "isQuestionnaireComplete",
   users.github_username AS "githubUsername",
+  (SELECT COALESCE(ARRAY_AGG(DISTINCT(pullrequest_id)), '{}') FROM pullrequests WHERE is_deleted = false AND user_id = $1) AS "pullRequests",
   (SELECT COALESCE(ARRAY_AGG(DISTINCT(id)), '{}') FROM repos WHERE is_deleted = false AND owner_id = $1) AS "repos",
   ${userReturnValues}
 `;
@@ -80,7 +79,6 @@ const groupValues = `
   users.personal_link,
   users.profile_pic,
   users.provider,
-  users.pull_requests,
   users.rep,
   users.stackoverflow_link,
   users.upvotes,

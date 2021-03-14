@@ -320,7 +320,6 @@ module.exports = buildSchema(`
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
-    pullRequests: [String]
     rep: Int
     repos: [String]
     stackoverflowLink: String
