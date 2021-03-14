@@ -272,7 +272,6 @@ module.exports = buildSchema(`
     activePullRequests: Int
     attempting: [Object]
     balance: Float
-    comments: [String]
     completedPullRequests: Int
     createdDate: Object
     dollarsEarned: Int
@@ -307,7 +306,6 @@ module.exports = buildSchema(`
   input UserInput {
     attempting: [ID]
     balance: Float
-    comments: [String]
     dollarsEarned: Int
     email: String
     emailVerified: Boolean

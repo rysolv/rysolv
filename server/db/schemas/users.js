@@ -1,7 +1,6 @@
 const alterUsersTable = `ALTER TABLE users
 ADD COLUMN attempting UUID [] DEFAULT '{}',
 ADD COLUMN balance FLOAT DEFAULT 0,
-ADD COLUMN comments UUID [] DEFAULT '{}',
 ADD COLUMN created_date TIMESTAMP,
 ADD COLUMN dollars_earned FLOAT DEFAULT 0,
 ADD COLUMN email VARCHAR(128) NOT NULL,

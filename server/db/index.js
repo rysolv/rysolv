@@ -68,7 +68,6 @@ const {
   getUserWatchList,
   searchUsers,
   transformUser,
-  updateUserArray,
 } = require('./queries/users');
 const { toggleWatching } = require('./queries/watching');
 const {
@@ -138,6 +137,5 @@ module.exports = {
   transformUser,
   transformUserBalance,
   updateRepoArray,
-  updateUserArray,
   upvoteIssue,
 };

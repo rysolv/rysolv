@@ -1,7 +1,6 @@
 const userValues = [
   'attempting',
   'balance',
-  'comments',
   'created_date',
   'dollars_earned',
   'email_verified',
@@ -26,7 +25,6 @@ const userValues = [
 const userReturnValues = `
   (SELECT COALESCE(ARRAY_AGG(DISTINCT(id)), '{}') FROM issues WHERE contributor_id = users.id AND is_deleted = false) AS "issues",
   users.balance,
-  users.comments,
   users.created_date AS "createdDate",
   users.dollars_earned AS "dollarsEarned",
   users.email_verified AS "emailVerified",
@@ -63,7 +61,6 @@ const userSettingsReturnValues = `
 const groupValues = `
   users.attempting,
   users.balance,
-  users.comments,
   users.created_date,
   users.dollars_earned,
   users.email_verified,
