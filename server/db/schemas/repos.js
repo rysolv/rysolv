@@ -9,8 +9,7 @@ ADD COLUMN modified_date TIMESTAMP,
 ADD COLUMN name VARCHAR(128) NOT NULL,
 ADD COLUMN organization_url VARCHAR(128),
 ADD COLUMN owner_id UUID,
-ADD COLUMN repo_url VARCHAR(128) NOT NULL,
-ADD COLUMN verified BOOLEAN DEFAULT false`;
+ADD COLUMN repo_url VARCHAR(128) NOT NULL`;
 
 const createReposTable = `CREATE TABLE IF NOT EXISTS
 repos(
