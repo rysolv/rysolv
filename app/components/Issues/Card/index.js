@@ -11,7 +11,6 @@ import {
   IconToolTip,
   LanguageWrapper,
   MonocleIcon,
-  Verified,
   WatchButton,
 } from 'components/base_ui';
 import UpvotePanel from 'components/Upvote';
@@ -35,6 +34,7 @@ import {
   StyledIssueHeader,
   StyledIssueText,
   StyledListItem,
+  StyledVerified,
 } from './styledComponents';
 import { issueTags, tagColors } from '../constants';
 import { TagWrapper } from '../styledComponents';
@@ -205,9 +205,7 @@ const IssueCard = ({
 
                     {repoVerified ? (
                       <IconToolTip toolTipText="Verified Contributor">
-                        <div>
-                          <Verified />
-                        </div>
+                        <StyledVerified />
                       </IconToolTip>
                     ) : (
                       ''

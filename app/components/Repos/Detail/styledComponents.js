@@ -493,13 +493,18 @@ export const TopLanguagesContainer = styled.div`
 `;
 
 export const VerifiedWrapper = styled.div`
+  align-items: center;
   background-color: ${verifyBackgroundColor};
   border-radius: 0.5rem;
-  border: 0.1rem solid rgba(27, 31, 35, 0.15);
   color: ${verifyColor};
+  display: flex;
   height: fit-content;
-  padding: 0.5rem;
   margin: 0 2rem;
+  padding: 0.5rem;
+
+  svg {
+    margin: 0 0.5rem 0 0;
+  }
 `;
 
 export const UrlWrapper = styled.div`

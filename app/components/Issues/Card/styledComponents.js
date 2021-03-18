@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { IconButton } from 'components/base_ui';
+import { IconButton, Verified } from 'components/base_ui';
 import {
   defaultFontSize,
   detailFontSize,
@@ -142,4 +142,8 @@ export const StyledListItem = styled.li`
   ${mobile} {
     margin: 0 0 1rem 0;
   }
+`;
+
+export const StyledVerified = styled(Verified)`
+  margin: 0 0.5rem;
 `;
