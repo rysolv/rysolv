@@ -12,16 +12,12 @@ import Attempt from '@material-ui/icons/ListAlt';
 import Cancel from '@material-ui/icons/Cancel';
 import Check from '@material-ui/icons/Check';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
-import Circle from '@material-ui/icons/FiberManualRecord';
 import Close from '@material-ui/icons/Close';
 import CloseCircle from '@material-ui/icons/HighlightOff';
 import Code from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
 import Computer from '@material-ui/icons/Computer';
 import CreditCard from '@material-ui/icons/CreditCard';
-import Delete from '@material-ui/icons/Delete';
-import DesktopMac from '@material-ui/icons/DesktopMac';
-import Dollar from '@material-ui/icons/AttachMoney';
 import Done from '@material-ui/icons/Done';
 import Edit from '@material-ui/icons/Edit';
 import Email from '@material-ui/icons/Email';
@@ -33,6 +29,7 @@ import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
 import Help from '@material-ui/icons/Help';
 import Info from '@material-ui/icons/Info';
+import Language from '@material-ui/icons/Language';
 import Link from '@material-ui/icons/Link';
 import LocalAtm from '@material-ui/icons/LocalAtm';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
@@ -53,7 +50,6 @@ import Web from '@material-ui/icons/Web';
 
 import CloseMenu from './svg/CloseMenu';
 import Coin from './svg/RysolvCoin';
-import Gitlab from './svg/Gitlab';
 import Javascript from './svg/Javascript';
 import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
@@ -75,7 +71,6 @@ export default (name, size, style) => {
     backArrowHalf: ArrowBackIos,
     cancel: Cancel,
     check: Check,
-    circle: Circle,
     close: Close,
     closeCircle: CloseCircle,
     closeMenu: CloseMenu,
@@ -84,9 +79,6 @@ export default (name, size, style) => {
     comments: Comments,
     computer: Computer,
     creditCard: CreditCard,
-    delete: Delete,
-    desktop: DesktopMac,
-    dollar: Dollar,
     dollarSquare: LocalAtm,
     done: Done,
     dropdownArrow: ArrowDropDown,
@@ -99,11 +91,11 @@ export default (name, size, style) => {
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,
-    gitlab: Gitlab,
     help: Help,
     info: Info,
     issue: ErrorIcon,
     javascript: Javascript,
+    language: Language,
     link: Link,
     monocle: Monocle,
     navigateBefore: NavigateBefore,

@@ -12,7 +12,6 @@ import RepoDetailView from 'components/Repos/Detail';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { openModalState } from 'containers/Main/actions';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
-
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 

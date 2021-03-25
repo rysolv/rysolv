@@ -217,16 +217,19 @@ module.exports = buildSchema(`
     contributors: [Object]
     createdDate: Object
     description: String
+    earnedBounties: Float
     exists: Boolean
     githubOwners: [String]
     id: ID!
     issues: [Object]
     logo: String
+    maintainerProceeds: Float
     message: String
     modifiedDate: Object
     name: String
     organizationUrl: String
     ownerId: ID
+    payoutUrl: String
     preferredLanguages: [String]
     repoUrl: String
     totalFunded: Float
@@ -242,6 +245,7 @@ module.exports = buildSchema(`
     importUrl: String
     isManual: Boolean
     organizationUrl: String
+    payoutUrl: String
     repoDescription: String
     repoLanguages: [String]
     repoLogo: String

@@ -18,9 +18,9 @@ import {
   IssueOpen,
   IssueOpenWrapper,
   IssuesList,
-} from '../styledComponents';
+} from './styledComponents';
 
-const RepoIssuesTab = ({
+const RepoIssues = ({
   activeUser,
   dispatchOpenModal,
   handleNav,
@@ -87,7 +87,7 @@ const RepoIssuesTab = ({
   </IssuesList>
 );
 
-RepoIssuesTab.propTypes = {
+RepoIssues.propTypes = {
   activeUser: T.object,
   dispatchOpenModal: T.func,
   handleNav: T.func,
@@ -96,4 +96,4 @@ RepoIssuesTab.propTypes = {
   issues: T.array,
 };
 
-export default RepoIssuesTab;
+export default RepoIssues;

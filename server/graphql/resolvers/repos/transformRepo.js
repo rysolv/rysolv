@@ -17,10 +17,12 @@ const transformRepo = async ({ repoId, repoInput }, { authError, userId }) => {
 
     const data = {
       description: repoInput.repoDescription,
+      is_edited: true,
       logo: repoInput.logo,
       modified_date: new Date(), // update modified date
       name: repoInput.repoName,
       organization_url: repoInput.organizationUrl,
+      payout_url: repoInput.payoutUrl,
       repo_url: repoInput.repoUrl,
       verified: repoInput.repoVerified,
     };

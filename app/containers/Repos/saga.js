@@ -48,15 +48,16 @@ export function* fetchInfoSaga({ payload }) {
         __typename
         ... on Repo {
           contributors
-          createdDate
           description
+          earnedBounties
           githubOwners
           id
           issues
           logo
-          modifiedDate
+          maintainerProceeds
           name
           organizationUrl
+          payoutUrl
           preferredLanguages
           repoUrl
           totalFunded
@@ -291,11 +292,11 @@ export function* searchReposSaga({ payload }) {
 export function* updateInfoSaga({ payload }) {
   const { editRequest, itemId } = payload;
   const {
-    organizationUrl,
     description,
     logo,
     name,
-    preferredLanguages,
+    organizationUrl,
+    payoutUrl,
     repoUrl,
     verified,
   } = editRequest;
@@ -303,8 +304,8 @@ export function* updateInfoSaga({ payload }) {
     mutation {
       transformRepo(repoId: "${itemId}", repoInput: {
         organizationUrl: "${organizationUrl}",
+        payoutUrl: "${payoutUrl}",
         repoDescription: "${description}",
-        repoLanguages: ${JSON.stringify(preferredLanguages)},
         repoLogo: "${logo}",
         repoName: "${name}",
         repoUrl: "${repoUrl}",

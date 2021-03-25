@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable consistent-return, no-useless-escape */
 import capitalize from 'lodash/capitalize';
 import isNull from 'lodash/isNull';
@@ -79,6 +80,32 @@ const validateLink = value => {
     return `Must enter valid link`;
   }
   return false;
+};
+
+const validatePayoutUrl = (value, { payoutMethod }) => {
+  try {
+    const payoutMethodDictionary = {
+      'Github Sponsors': 'github',
+      'Open Collective': 'opencollective',
+      Paypal: 'paypal',
+    };
+    const formattedUrl = new URL(value);
+    const { host } = formattedUrl;
+    const urlArray = host.split('.');
+
+    let domain = '';
+    if (urlArray.length === 2) domain = urlArray[0];
+    if (urlArray.length === 3) domain = urlArray[1];
+    const selectedDomain = payoutMethodDictionary[payoutMethod];
+
+    if (domain !== selectedDomain) {
+      return `Link does not match selected payout method`;
+    }
+
+    return false;
+  } catch {
+    return `Must enter valid link`;
+  }
 };
 
 const validatePassword = value => {
@@ -190,6 +217,7 @@ export const validationDictionary = {
   githubLinkInput: validateGithubLink,
   linkInput: validateLink,
   passwordInput: validatePassword,
+  payoutUrlInput: validatePayoutUrl,
   stackoverflowLinkInput: validateStackoverflowLink,
   stringInput: validateString,
   usernameInput: validateUsername,

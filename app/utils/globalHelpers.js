@@ -57,6 +57,19 @@ export const getCookie = cookie => {
   return '';
 };
 
+export const getPaymentMethod = url => {
+  const hostDictionary = {
+    'github.com': 'Github Sponsors',
+    'opencollective.com': 'Open Collective',
+    'paypal.com': 'Paypal',
+  };
+  if (url) {
+    const { host } = new URL(url);
+    return hostDictionary[host];
+  }
+  return 'Payment Methods';
+};
+
 export const handleZipChange = (event, newZip, setZipValue) => {
   const formattedZip = newZip.replace(/[^0-9]/g, '');
   setZipValue(formattedZip);
