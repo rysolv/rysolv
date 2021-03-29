@@ -1,4 +1,5 @@
 import {
+  ADD_REPO_PAYOUT,
   CHANGE_REPO_FILTER,
   CHANGE_REPO_SEARCH,
   CLEAR_ALERTS,
@@ -35,6 +36,13 @@ import {
   UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
 } from './constants';
+
+export function addRepoPayout(payload) {
+  return {
+    payload,
+    type: ADD_REPO_PAYOUT,
+  };
+}
 
 export function changeRepoFilter(payload) {
   return {

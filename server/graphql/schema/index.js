@@ -245,6 +245,7 @@ module.exports = buildSchema(`
     importUrl: String
     isManual: Boolean
     organizationUrl: String
+    payoutMethod: String
     payoutUrl: String
     repoDescription: String
     repoLanguages: [String]
@@ -423,6 +424,8 @@ module.exports = buildSchema(`
   }
 
   type RootMutation {
+    addRepoPayout(repoId: ID!, repoInput: RepoInput): EventResponse!
+
     closeIssue(issueId: ID!, shouldClose: Boolean): EventResponse!
 
     createComment(commentInput: CommentInput): CommentResult!

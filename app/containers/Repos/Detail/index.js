@@ -16,6 +16,7 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
 import {
+  addRepoPayout,
   clearAlerts,
   fetchInfo,
   inputChange,
@@ -56,6 +57,7 @@ export class ReposDetail extends React.PureComponent {
       alerts,
       data,
       deviceView,
+      dispatchAddPayout,
       dispatchEditRepo,
       dispatchOpenModal,
       dispatchUpvote,
@@ -87,6 +89,7 @@ export class ReposDetail extends React.PureComponent {
               activeUser,
               alerts,
               deviceView,
+              dispatchAddPayout,
               dispatchEditRepo,
               dispatchOpenModal,
               filterValues,
@@ -110,6 +113,7 @@ ReposDetail.propTypes = {
   alerts: T.object.isRequired,
   data: T.object,
   deviceView: T.string.isRequired,
+  dispatchAddPayout: T.func.isRequired,
   dispatchEditRepo: T.func.isRequired,
   dispatchFetchInfo: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
@@ -162,6 +166,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Repos
      */
+    dispatchAddPayout: payload => dispatch(addRepoPayout(payload)),
     dispatchEditRepo: payload => dispatch(updateInfo(payload)),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     dispatchResetState: () => dispatch(resetState()),

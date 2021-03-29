@@ -4,6 +4,7 @@ const {
   errorLogger,
   formatMemberList,
   isUrl,
+  validatePayoutUrl,
 } = require('./functions');
 const { sendEmail } = require('./emailHelper');
 
@@ -14,4 +15,5 @@ module.exports = {
   formatMemberList,
   isUrl,
   sendEmail,
+  validatePayoutUrl,
 };

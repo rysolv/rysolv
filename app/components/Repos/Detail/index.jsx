@@ -70,6 +70,7 @@ const RepoDetailView = ({
     verified,
   },
   deviceView,
+  dispatchAddPayout,
   dispatchEditRepo,
   dispatchOpenModal,
   filterValues,
@@ -109,16 +110,8 @@ const RepoDetailView = ({
     });
     setPayoutUrlError(validationError);
     if (!validationError && !validationError) {
-      dispatchEditRepo({
-        editRequest: {
-          description: descriptionChange,
-          logo: logoChange,
-          name: nameChange,
-          organizationUrl: organizationUrlChange,
-          payoutUrl: payoutUrlChange,
-          repoUrl: repoUrlChange,
-          verified,
-        },
+      dispatchAddPayout({
+        editRequest: { payoutMethod, payoutUrl: payoutUrlChange },
         itemId: repoId,
       });
       handleClose();
@@ -333,6 +326,7 @@ RepoDetailView.propTypes = {
   alerts: T.object.isRequired,
   data: T.object.isRequired,
   deviceView: T.string.isRequired,
+  dispatchAddPayout: T.func.isRequired,
   dispatchEditRepo: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   filterValues: T.object.isRequired,

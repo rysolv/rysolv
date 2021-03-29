@@ -10,6 +10,7 @@ import {
 import { post } from 'utils/request';
 
 import {
+  ADD_REPO_PAYOUT,
   FETCH_INFO,
   FETCH_REPOS,
   FETCH_USER_REPOS,
@@ -39,6 +40,40 @@ import {
   upvoteIssueSuccess,
   upvoteIssueTemp,
 } from './actions';
+
+export function* addRepoPayoutSaga({ payload }) {
+  const { editRequest, itemId } = payload;
+  const { payoutMethod, payoutUrl } = editRequest;
+  const query = `
+    mutation {
+      addRepoPayout(repoId: "${itemId}", repoInput: {
+        payoutMethod: "${payoutMethod}",
+        payoutUrl: "${payoutUrl}"
+      }) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        addRepoPayout: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchInfo({ itemId }));
+    yield put(updateInfoSuccess({ message }));
+  } catch (error) {
+    yield put(updateInfoFailure({ error: { message: error } }));
+  }
+}
 
 export function* fetchInfoSaga({ payload }) {
   const { itemId } = payload;
@@ -296,7 +331,6 @@ export function* updateInfoSaga({ payload }) {
     logo,
     name,
     organizationUrl,
-    payoutUrl,
     repoUrl,
     verified,
   } = editRequest;
@@ -304,7 +338,6 @@ export function* updateInfoSaga({ payload }) {
     mutation {
       transformRepo(repoId: "${itemId}", repoInput: {
         organizationUrl: "${organizationUrl}",
-        payoutUrl: "${payoutUrl}",
         repoDescription: "${description}",
         repoLogo: "${logo}",
         repoName: "${name}",
@@ -379,6 +412,7 @@ export function* upvoteIssueSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(ADD_REPO_PAYOUT, addRepoPayoutSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(FETCH_REPOS, fetchReposSaga);
   yield takeLatest(FETCH_USER_REPOS, fetchUserReposSaga);

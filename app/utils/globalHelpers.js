@@ -59,13 +59,18 @@ export const getCookie = cookie => {
 
 export const getPaymentMethod = url => {
   const hostDictionary = {
-    'github.com': 'Github Sponsors',
-    'opencollective.com': 'Open Collective',
-    'paypal.com': 'Paypal',
+    github: 'Github Sponsors',
+    opencollective: 'Open Collective',
+    paypal: 'Paypal',
   };
   if (url) {
     const { host } = new URL(url);
-    return hostDictionary[host];
+    const urlArray = host.split('.');
+
+    let domain = '';
+    if (urlArray.length === 2) [domain] = urlArray;
+    if (urlArray.length === 3) [, domain] = urlArray;
+    return hostDictionary[domain];
   }
   return 'Payment Methods';
 };

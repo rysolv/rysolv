@@ -22,7 +22,6 @@ const transformRepo = async ({ repoId, repoInput }, { authError, userId }) => {
       modified_date: new Date(), // update modified date
       name: repoInput.repoName,
       organization_url: repoInput.organizationUrl,
-      payout_url: repoInput.payoutUrl,
       repo_url: repoInput.repoUrl,
       verified: repoInput.repoVerified,
     };

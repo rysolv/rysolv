@@ -1,4 +1,3 @@
-/* eslint-disable prefer-destructuring */
 /* eslint-disable consistent-return, no-useless-escape */
 import capitalize from 'lodash/capitalize';
 import isNull from 'lodash/isNull';
@@ -94,17 +93,17 @@ const validatePayoutUrl = (value, { payoutMethod }) => {
     const urlArray = host.split('.');
 
     let domain = '';
-    if (urlArray.length === 2) domain = urlArray[0];
-    if (urlArray.length === 3) domain = urlArray[1];
+    if (urlArray.length === 2) [domain] = urlArray;
+    if (urlArray.length === 3) [, domain] = urlArray;
     const selectedDomain = payoutMethodDictionary[payoutMethod];
 
     if (domain !== selectedDomain) {
-      return `Link does not match selected payout method`;
+      return `Payout url does not match selected payout method`;
     }
 
     return false;
   } catch {
-    return `Must enter valid link`;
+    return `Must enter valid payout url`;
   }
 };
 
