@@ -4,6 +4,8 @@ import Select from '@material-ui/core/Select';
 
 import { PrimaryAsyncButton, PrimaryButton } from 'components/base_ui';
 import {
+  buttonGrey,
+  cardHeaderFontSize,
   commentHeaderColor,
   defaultFontSize,
   fundingText,
@@ -115,16 +117,16 @@ export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
-  background-color: #bdbdbd;
+  background-color: ${buttonGrey};
 
   &:hover {
-    background-color: #bdbdbd;
+    background-color: ${buttonGrey};
   }
 `;
 
 export const StyledTitle = styled.h3`
   color: ${textColor};
-  font-size: 2rem;
+  font-size: ${cardHeaderFontSize};
   font-weight: 500;
   margin: 1rem 0;
   text-align: center;

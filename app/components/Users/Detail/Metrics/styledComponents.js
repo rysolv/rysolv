@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { defaultFontSize } from 'defaultStyleHelper';
+import { defaultFontSize, subTextLightGrey } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptop } = mediaQueriesByDevice;
@@ -23,8 +23,8 @@ export const DetailListItem = styled.div`
 `;
 
 export const DetailsPanel = styled.div`
-  color: #6a737d;
   align-self: flex-end;
+  color: ${subTextLightGrey};
   font-size: 1.2rem;
 
   &:hover {

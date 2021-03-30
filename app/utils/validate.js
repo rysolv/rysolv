@@ -81,32 +81,6 @@ const validateLink = value => {
   return false;
 };
 
-const validatePayoutUrl = (value, { payoutMethod }) => {
-  try {
-    const payoutMethodDictionary = {
-      'Github Sponsors': 'github',
-      'Open Collective': 'opencollective',
-      Paypal: 'paypal',
-    };
-    const formattedUrl = new URL(value);
-    const { host } = formattedUrl;
-    const urlArray = host.split('.');
-
-    let domain = '';
-    if (urlArray.length === 2) [domain] = urlArray;
-    if (urlArray.length === 3) [, domain] = urlArray;
-    const selectedDomain = payoutMethodDictionary[payoutMethod];
-
-    if (domain !== selectedDomain) {
-      return `Payout url does not match selected payout method`;
-    }
-
-    return false;
-  } catch {
-    return `Must enter valid payout url`;
-  }
-};
-
 const validatePassword = value => {
   const containsLowercase = /(?=.*[a-z])/.test(value);
   const containsNumber = /(?=.*\d)/.test(value);
@@ -134,6 +108,32 @@ const validatePassword = value => {
     return 'Password must be at least 8 characters long';
   }
   return false;
+};
+
+const validatePayoutUrl = (value, { payoutMethod }) => {
+  try {
+    const payoutMethodDictionary = {
+      'Github Sponsors': 'github',
+      'Open Collective': 'opencollective',
+      Paypal: 'paypal',
+    };
+    const formattedUrl = new URL(value);
+    const { host } = formattedUrl;
+    const urlArray = host.split('.');
+
+    let domain = '';
+    if (urlArray.length === 2) [domain] = urlArray;
+    if (urlArray.length === 3) [, domain] = urlArray;
+    const selectedDomain = payoutMethodDictionary[payoutMethod];
+
+    if (domain !== selectedDomain) {
+      return `Payout url does not match selected payout method`;
+    }
+
+    return false;
+  } catch {
+    return `Must enter valid payout url`;
+  }
 };
 
 export const validateRepoUrl = value => {

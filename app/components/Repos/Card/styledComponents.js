@@ -9,7 +9,7 @@ import {
   headerColor,
   hoverLinkColor,
   subheaderFontSize,
-  subTextColor,
+  subTextGrey,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -53,7 +53,7 @@ export const IssuesIcon = styled.div`
 
 export const IssuesWrapper = styled.div`
   align-items: center;
-  color: ${subTextColor};
+  color: ${subTextGrey};
   display: flex;
   font-weight: 500;
 `;

@@ -2,7 +2,10 @@ import styled from 'styled-components';
 
 import { BaseDropDownMenu } from 'components/base_ui';
 import {
+  defaultFontSize,
+  detailFontSize,
   hoverLinkColor,
+  subTextLightGrey,
   textColor,
   verifyBackgroundColor,
   verifyColor,
@@ -13,7 +16,7 @@ const { mobile } = mediaQueriesByDevice;
 
 export const IssueAttempts = styled.div`
   align-self: center;
-  color: #6a737d;
+  color: ${subTextLightGrey};
   margin-left: 1rem;
 `;
 
@@ -64,11 +67,11 @@ export const IssueListItem = styled.li`
 
 export const IssueModifiedDate = styled.div`
   align-self: flex-end;
-  font-size: 1.2rem;
+  font-size: ${detailFontSize};
 `;
 
 export const IssueName = styled.a`
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
 
   &:hover {
     color: ${hoverLinkColor};
@@ -97,7 +100,7 @@ export const IssueOpen = styled.div`
 
 export const IssueOpenWrapper = styled.div`
   display: flex;
-  font-size: 1.2rem;
+  font-size: ${detailFontSize};
 `;
 
 export const IssuesList = styled.ul`

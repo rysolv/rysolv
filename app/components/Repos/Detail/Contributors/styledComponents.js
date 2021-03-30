@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  subheaderFontSize,
+  textColor,
+} from 'defaultStyleHelper';
 
 export const ContributorContent = styled.div`
   display: flex;
@@ -34,7 +38,7 @@ export const ContributorListItem = styled.li`
 
 export const ContributorName = styled.span`
   color: #0366d6;
-  font-size: 1.6rem;
+  font-size: ${subheaderFontSize};
 
   &:hover {
     cursor: pointer;

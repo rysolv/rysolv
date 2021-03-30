@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import {
   hoverLinkColor,
+  subTextLightGrey,
   textColor,
   verifyBackgroundColor,
   verifyColor,
@@ -63,7 +64,7 @@ export const RepoFundedWrapper = styled.div`
 
 export const RepoIssues = styled.div`
   align-self: center;
-  color: #6a737d;
+  color: ${subTextLightGrey};
 `;
 
 export const RepoListItem = styled.li`

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import {
   hoverLinkColor,
+  subTextLightGrey,
   textColor,
   verifyBackgroundColor,
   verifyColor,
@@ -22,7 +23,7 @@ export const IconButtonWrapper = styled.div`
 
 export const IssueAttempts = styled.div`
   align-self: center;
-  color: #6a737d;
+  color: ${subTextLightGrey};
   margin-left: 1rem;
 `;
 

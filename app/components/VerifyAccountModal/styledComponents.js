@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { PrimaryButton } from 'components/base_ui';
-import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { buttonGrey, defaultFontSize, textColor } from 'defaultStyleHelper';
 
 export const ButtonGroup = styled.div`
   text-align: center;
@@ -15,10 +15,10 @@ export const StyledBodyMessage = styled.div`
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
-  background-color: #bdbdbd;
+  background-color: ${buttonGrey};
 
   &:hover {
-    background-color: #bdbdbd;
+    background-color: ${buttonGrey};
   }
 `;
 

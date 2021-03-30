@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { buttonRed, defaultFontSize, textColor } from 'defaultStyleHelper';
+import {
+  buttonGrey,
+  buttonRed,
+  defaultFontSize,
+  textColor,
+} from 'defaultStyleHelper';
 import { PrimaryAsyncButton, PrimaryButton } from 'components/base_ui';
 
 export const ButtonGroup = styled.div`
@@ -27,10 +32,10 @@ export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
-  background-color: #bdbdbd;
+  background-color: ${buttonGrey};
 
   &:hover {
-    background-color: #bdbdbd;
+    background-color: ${buttonGrey};
   }
 `;
 

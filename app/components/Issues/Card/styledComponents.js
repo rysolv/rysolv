@@ -9,7 +9,7 @@ import {
   hoverLinkColor,
   selectedColor,
   subheaderFontSize,
-  subTextColor,
+  subTextGrey,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -23,7 +23,7 @@ export const IssueCardIconWrapper = styled.div`
 
 export const IssueCardItem = styled.div`
   align-items: center;
-  color: ${subTextColor};
+  color: ${subTextGrey};
   display: flex;
   font-size: 1.2rem;
   font-weight: 500;
@@ -88,7 +88,7 @@ export const RepoNameWrapper = styled.div`
 export const StyledIconButton = styled(
   ({ isWatching, shouldBold, ...restProps }) => <IconButton {...restProps} />,
 )`
-  color: ${({ isWatching }) => (isWatching ? selectedColor : subTextColor)};
+  color: ${({ isWatching }) => (isWatching ? selectedColor : subTextGrey)};
   font-weight: 700;
   padding-right: 1rem;
   stroke: ${({ shouldBold }) => (shouldBold ? 'currentColor' : 'none')};

@@ -15,6 +15,7 @@ import {
   hoverLinkColor,
   landingButtonGreen,
   lightBlueColor,
+  subTextLightGrey,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -33,7 +34,7 @@ export const ActivityContainer = styled.div`
 `;
 
 export const ActivityDate = styled.div`
-  color: #6a737d;
+  color: ${subTextLightGrey};
   font-size: 90%;
   font-weight: 400;
   padding: 0.5rem 0;
@@ -93,7 +94,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const Description = styled.div`
-  color: #6a737d;
+  color: ${subTextLightGrey};
   font-size: ${defaultFontSize};
   margin: 1rem 0;
   min-height: 4rem;
@@ -259,6 +260,16 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   width: 100%;
 `;
 
+export const StyledExternalLink = styled(Link)`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
+
 export const StyledIcon = styled.div`
   border-radius: 50%;
   border: 1px solid grey;
@@ -296,12 +307,18 @@ export const StyledSecondayButton = styled(SecondaryButton)`
 `;
 
 export const StyledTitle = styled.div`
-  font-size: 1.8rem;
-  padding-bottom: 1rem;
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   font-size: 1.8rem;
   padding-bottom: 2rem;
   text-transform: uppercase;
+`;
+
+export const StyledVerified = styled(Verified)`
+  svg {
+    height: 2rem;
+    margin-left: 0.5rem;
+    width: 2rem;
+  }
 `;
 
 export const StyledWordLink = styled(Link)`
@@ -311,24 +328,6 @@ export const StyledWordLink = styled(Link)`
   &:hover {
     cursor: pointer;
     text-decoration: underline;
-  }
-`;
-
-export const StyledExternalLink = styled(Link)`
-  color: ${hoverLinkColor};
-
-  &:hover {
-    color: ${hoverLinkColor};
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`;
-
-export const StyledVerified = styled(Verified)`
-  svg {
-    height: 2rem;
-    margin-left: 0.5rem;
-    width: 2rem;
   }
 `;
 

@@ -118,8 +118,8 @@ export const FundingContainer = styled.div`
 
 export const HorizontalWrapper = styled.div`
   display: flex;
-  width: 50%;
   justify-content: space-between;
+  width: 50%;
 `;
 
 export const InputHeader = styled.div`
@@ -161,8 +161,8 @@ export const PaymentTitle = styled.div`
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   background-color: #fafbfc;
   border-radius: 0.3rem;
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 1.4rem;
+  color: ${textColor};
+  font-size: ${defaultFontSize};
   line-height: 2rem;
   margin-right: 0.5rem;
   min-height: 34px;
