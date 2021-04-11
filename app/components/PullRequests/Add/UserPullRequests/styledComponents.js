@@ -12,7 +12,7 @@ import {
   textColor,
 } from 'defaultStyleHelper';
 
-export const AddContainer = styled.div`
+export const AddIconWrapper = styled.div`
   place-self: center;
 
   svg {
@@ -26,7 +26,7 @@ export const AddContainer = styled.div`
   }
 `;
 
-export const IconContainer = styled.div`
+export const IconWrapper = styled.div`
   display: inline;
   margin: 0 0.5rem 0 0;
 `;
@@ -44,17 +44,11 @@ export const PullNumberWrapper = styled.span`
   color: ${lightGreyColor};
 `;
 
-export const StyledLinkContainer = styled.div`
-  display: inline;
-  text-align: left;
-  vertical-align: middle;
-`;
-
-export const StyledRepoBody = styled.div`
+export const StyledBody = styled.div`
   width: 100%;
 `;
 
-export const StyledRepoHeader = styled.div`
+export const StyledHeader = styled.div`
   align-items: center;
   color: ${textColor};
   display: flex;
@@ -63,7 +57,13 @@ export const StyledRepoHeader = styled.div`
   padding: 0 1rem;
 `;
 
-export const StyledRepoTitle = styled.div`
+export const StyledLink = styled.div`
+  display: inline;
+  text-align: left;
+  vertical-align: middle;
+`;
+
+export const StyledTitle = styled.div`
   align-items: center;
   color: ${textColor};
   display: flex;

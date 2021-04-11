@@ -41,11 +41,13 @@ export const initialState = {
     title: { error: '', value: '' },
   },
   importSuccess: false,
-  loading: false,
+  loading: {
+    default: false,
+    userPullRequests: false,
+  },
   pullRequests: [],
   step: 1,
   userPullRequests: [],
-  userPullRequestsLoading: false,
 };
 
 const pullRequestReducer = produce((draft, { payload, type }) => {
@@ -57,67 +59,67 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
     case CREATE_PULL_REQUEST_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading = false;
+      draft.loading.default = false;
       break;
     }
     case CREATE_PULL_REQUEST_SUCCESS: {
       draft.createSuccess = true;
-      draft.loading = false;
+      draft.loading.default = false;
       draft.step = 3;
       break;
     }
     case CREATE_PULL_REQUEST: {
       draft.alerts = initialState.alerts;
-      draft.loading = true;
+      draft.loading.default = true;
       break;
     }
     case DELETE_PULL_REQUEST_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading = false;
+      draft.loading.default = false;
       break;
     }
     case DELETE_PULL_REQUEST_SUCCESS: {
       const { id, message } = payload;
       draft.alerts.success = { message };
       remove(draft.pullRequests, ({ pullRequestId }) => pullRequestId === id);
-      draft.loading = false;
+      draft.loading.default = false;
       break;
     }
     case DELETE_PULL_REQUEST: {
-      draft.loading = true;
+      draft.loading.default = true;
       break;
     }
     case FETCH_GITHUB_PULL_REQUESTS_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.userPullRequestsLoading = false;
+      draft.loading.userPullRequests = false;
       break;
     }
     case FETCH_GITHUB_PULL_REQUESTS_SUCCESS: {
       const { pullRequestArray } = payload;
-      draft.userPullRequestsLoading = false;
+      draft.loading.userPullRequests = false;
       draft.userPullRequests = pullRequestArray;
       break;
     }
     case FETCH_GITHUB_PULL_REQUESTS: {
-      draft.userPullRequestsLoading = true;
+      draft.loading.userPullRequests = true;
       break;
     }
     case FETCH_USER_PULL_REQUESTS_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading = false;
+      draft.loading.default = false;
       break;
     }
     case FETCH_USER_PULL_REQUESTS_SUCCESS: {
       const { pullRequestArray } = payload;
-      draft.loading = false;
+      draft.loading.default = false;
       draft.pullRequests = pullRequestArray;
       break;
     }
     case FETCH_USER_PULL_REQUESTS: {
-      draft.loading = true;
+      draft.loading.default = true;
       break;
     }
     case HANDLE_STEP: {
@@ -128,13 +130,13 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
     case IMPORT_PULL_REQUEST_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading = false;
+      draft.loading.default = false;
       break;
     }
     case IMPORT_PULL_REQUEST_SUCCESS: {
       const { pullRequest } = payload;
       draft.importSuccess = true;
-      draft.loading = false;
+      draft.loading.default = false;
       draft.step = 2;
 
       Object.keys(draft.importData).map(field => {
@@ -145,7 +147,7 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
     }
     case IMPORT_PULL_REQUEST: {
       draft.alerts = initialState.alerts;
-      draft.loading = true;
+      draft.loading.default = true;
       break;
     }
     case INPUT_CHANGE: {

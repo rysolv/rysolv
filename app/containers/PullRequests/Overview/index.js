@@ -18,7 +18,10 @@ import {
 } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectPullRequests } from '../selectors';
+import {
+  makeSelectPullRequests,
+  makeSelectPullRequestsLoading,
+} from '../selectors';
 
 const PullRequestOverview = ({
   alerts,
@@ -68,7 +71,7 @@ const mapStateToProps = createStructuredSelector({
   alerts: makeSelectPullRequests('alerts'),
   createSuccess: makeSelectPullRequests('createSuccess'),
   error: makeSelectPullRequests('error'),
-  loading: makeSelectPullRequests('loading'),
+  loading: makeSelectPullRequestsLoading('default'),
   pullRequests: makeSelectPullRequests('pullRequests'),
 });
 

@@ -20,7 +20,10 @@ import {
 } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
-import { makeSelectPullRequests } from '../selectors';
+import {
+  makeSelectPullRequests,
+  makeSelectPullRequestsLoading,
+} from '../selectors';
 import { importPullRequestDictionary } from '../stepDictionary';
 
 const AddPullRequest = ({
@@ -107,10 +110,10 @@ const mapStateToProps = createStructuredSelector({
    */
   alerts: makeSelectPullRequests('alerts'),
   importData: makeSelectPullRequests('importData'),
-  loading: makeSelectPullRequests('loading'),
+  loading: makeSelectPullRequestsLoading('default'),
   step: makeSelectPullRequests('step'),
   userPullRequests: makeSelectPullRequests('userPullRequests'),
-  userPullRequestsLoading: makeSelectPullRequests('userPullRequestsLoading'),
+  userPullRequestsLoading: makeSelectPullRequestsLoading('userPullRequests'),
 });
 
 function mapDispatchToProps(dispatch) {
