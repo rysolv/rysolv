@@ -8,6 +8,7 @@ import { StyledHeader } from '../styledComponents';
 import { TextWrapper, UserPullRequestsContainer } from './styledComponents';
 
 const UserPullRequests = ({
+  handleImport,
   handleInputChange,
   userPullRequests,
   userPullRequestsLoading,
@@ -18,6 +19,7 @@ const UserPullRequests = ({
       ({ exists, htmlUrl, modifiedDate, pullNumber, title }) => (
         <ImportPullRequestCard
           exists={exists}
+          handleImport={handleImport}
           handleInputChange={handleInputChange}
           htmlUrl={htmlUrl}
           key={htmlUrl}
@@ -55,6 +57,7 @@ const UserPullRequests = ({
 };
 
 UserPullRequests.propTypes = {
+  handleImport: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   userPullRequests: T.array.isRequired,
   userPullRequestsLoading: T.bool.isRequired,

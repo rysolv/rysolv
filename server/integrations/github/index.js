@@ -253,8 +253,8 @@ const getUserGithubPullRequests = async ({ owner, repo }) => {
     state: 'open',
   });
 
-  return data.map(({ number, title, updated_at, url }) => ({
-    htmlUrl: url,
+  return data.map(({ html_url, number, title, updated_at }) => ({
+    htmlUrl: html_url,
     modifiedDate: updated_at,
     pullNumber: number,
     title,

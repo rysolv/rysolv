@@ -56,6 +56,7 @@ const ImportForm = ({
         </TextareaWrapper>
       </ImportUrlWrapper>
       <UserPullRequests
+        handleImport={handleImport}
         handleInputChange={handleInputChange}
         userPullRequests={userPullRequests}
         userPullRequestsLoading={userPullRequestsLoading}

@@ -6,6 +6,7 @@ import {
   detailFontSize,
   hoverGreen,
   hoverLinkColor,
+  lightGreyColor,
   styledScrollbar,
   successGreen,
   textColor,
@@ -15,10 +16,11 @@ export const AddContainer = styled.div`
   place-self: center;
 
   svg {
-    color: ${({ disabled }) => (disabled ? `grey` : successGreen)};
+    color: ${({ disabled }) => (disabled ? lightGreyColor : successGreen)};
     font-size: 3rem;
-    :hover {
-      color: ${({ disabled }) => (disabled ? 'grey' : hoverGreen)};
+
+    &:hover {
+      color: ${({ disabled }) => (disabled ? lightGreyColor : hoverGreen)};
       cursor: ${({ disabled }) => (disabled ? 'initial' : 'pointer')};
     }
   }
@@ -36,6 +38,10 @@ export const ImportCardWrapper = styled.li`
   list-style-type: none;
   margin: 0.5rem;
   padding: 0.25rem 0;
+`;
+
+export const PullNumberWrapper = styled.span`
+  color: ${lightGreyColor};
 `;
 
 export const StyledLinkContainer = styled.div`
@@ -65,7 +71,7 @@ export const StyledRepoTitle = styled.div`
   padding: 0 1rem;
   width: 100%;
 
-  :hover {
+  &:hover {
     color: ${hoverLinkColor};
     cursor: pointer;
   }
@@ -81,5 +87,5 @@ export const UserPullRequestsContainer = styled.div`
   ${styledScrollbar}
   max-height: 22rem;
   overflow-y: auto;
-  text-align: center;
+  padding: 0 0 2rem 2rem;
 `;

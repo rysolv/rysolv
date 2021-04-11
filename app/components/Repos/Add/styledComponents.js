@@ -10,6 +10,7 @@ import {
   hoverGreen,
   hoverLinkColor,
   lightBlueColor,
+  lightGreyColor,
   styledScrollbar,
   subheaderFontSize,
   successGreen,
@@ -23,10 +24,11 @@ export const AddContainer = styled.div`
   place-self: center;
 
   svg {
-    color: ${({ disabled }) => (disabled ? `grey` : successGreen)};
+    color: ${({ disabled }) => (disabled ? lightGreyColor : successGreen)};
     font-size: 3rem;
-    :hover {
-      color: ${({ disabled }) => (disabled ? 'grey' : hoverGreen)};
+
+    &:hover {
+      color: ${({ disabled }) => (disabled ? lightGreyColor : hoverGreen)};
       cursor: ${({ disabled }) => (disabled ? 'initial' : 'pointer')};
     }
   }

@@ -9,6 +9,7 @@ import {
   AddContainer,
   IconContainer,
   ImportCardWrapper,
+  PullNumberWrapper,
   StyledLinkContainer,
   StyledRepoBody,
   StyledRepoHeader,
@@ -20,19 +21,21 @@ const GithubIcon = iconDictionary('github');
 
 const ImportPullRequestCard = ({
   exists,
+  handleImport,
   handleInputChange,
   htmlUrl,
   modifiedDate,
   pullNumber,
   title,
 }) => {
-  const handleImport = () => {
+  const handleSubmitImport = () => {
     if (!exists) {
       handleInputChange({
         field: 'importUrl',
         form: 'importData',
         value: htmlUrl,
       });
+      handleImport({ url: htmlUrl });
     }
   };
 
@@ -46,13 +49,13 @@ const ImportPullRequestCard = ({
           <IconContainer>{GithubIcon}</IconContainer>
           <StyledLinkContainer>
             <a href={htmlUrl} target="_blank">
-              {title} #{pullNumber}
+              {title} <PullNumberWrapper>#{pullNumber}</PullNumberWrapper>
             </a>
           </StyledLinkContainer>
         </StyledRepoTitle>
       </StyledRepoBody>
       <IconToolTip disabled={!exists} toolTipText="Already imported">
-        <AddContainer disabled={exists} onClick={handleImport}>
+        <AddContainer disabled={exists} onClick={handleSubmitImport}>
           {AddBox}
         </AddContainer>
       </IconToolTip>
@@ -62,6 +65,7 @@ const ImportPullRequestCard = ({
 
 ImportPullRequestCard.propTypes = {
   exists: T.bool.isRequired,
+  handleImport: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   htmlUrl: T.string.isRequired,
   modifiedDate: T.string.isRequired,

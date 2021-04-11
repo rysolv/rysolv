@@ -50,11 +50,11 @@ const AddPullRequest = ({
 
   const ComponentToRender = importPullRequestDictionary[step];
 
-  const handleImport = () => {
+  const handleImport = ({ url }) => {
     const { importUrl } = importData;
     dispatchImportPullRequest({
-      url: importUrl.value,
       issueId,
+      url: url || importUrl.value,
     });
   };
   const handleSubmit = () => {

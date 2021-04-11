@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-export const AddPullRequesContainer = styled.div`
+export const AddPullRequestContainer = styled.div`
+  max-width: 44.1rem;
   padding: 1rem;
 `;
 

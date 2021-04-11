@@ -9,6 +9,7 @@ import {
   hoverGreen,
   hoverLinkColor,
   lightBlueColor,
+  lightGreyColor,
   styledScrollbar,
   subheaderFontSize,
   successGreen,
@@ -20,10 +21,11 @@ const { mobile } = mediaQueriesByDevice;
 
 export const AddContainer = styled.div`
   svg {
-    color: ${({ disabled }) => (disabled ? `grey` : successGreen)};
+    color: ${({ disabled }) => (disabled ? lightGreyColor : successGreen)};
     font-size: 3rem;
-    :hover {
-      color: ${({ disabled }) => (disabled ? 'grey' : hoverGreen)};
+
+    &:hover {
+      color: ${({ disabled }) => (disabled ? lightGreyColor : hoverGreen)};
       cursor: ${({ disabled }) => (disabled ? 'initial' : 'pointer')};
     }
   }
