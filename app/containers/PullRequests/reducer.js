@@ -10,6 +10,9 @@ import {
   DELETE_PULL_REQUEST_FAILURE,
   DELETE_PULL_REQUEST_SUCCESS,
   DELETE_PULL_REQUEST,
+  FETCH_GITHUB_PULL_REQUESTS_FAILURE,
+  FETCH_GITHUB_PULL_REQUESTS_SUCCESS,
+  FETCH_GITHUB_PULL_REQUESTS,
   FETCH_USER_PULL_REQUESTS_FAILURE,
   FETCH_USER_PULL_REQUESTS_SUCCESS,
   FETCH_USER_PULL_REQUESTS,
@@ -41,6 +44,8 @@ export const initialState = {
   loading: false,
   pullRequests: [],
   step: 1,
+  userPullRequests: [],
+  userPullRequestsLoading: false,
 };
 
 const pullRequestReducer = produce((draft, { payload, type }) => {
@@ -81,6 +86,22 @@ const pullRequestReducer = produce((draft, { payload, type }) => {
     }
     case DELETE_PULL_REQUEST: {
       draft.loading = true;
+      break;
+    }
+    case FETCH_GITHUB_PULL_REQUESTS_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      draft.userPullRequestsLoading = false;
+      break;
+    }
+    case FETCH_GITHUB_PULL_REQUESTS_SUCCESS: {
+      const { pullRequestArray } = payload;
+      draft.userPullRequestsLoading = false;
+      draft.userPullRequests = pullRequestArray;
+      break;
+    }
+    case FETCH_GITHUB_PULL_REQUESTS: {
+      draft.userPullRequestsLoading = true;
       break;
     }
     case FETCH_USER_PULL_REQUESTS_FAILURE: {

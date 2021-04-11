@@ -7,6 +7,7 @@ import {
   defaultFontSize,
   detailFontSize,
   errorRed,
+  hoverGreen,
   hoverLinkColor,
   lightBlueColor,
   styledScrollbar,
@@ -25,7 +26,7 @@ export const AddContainer = styled.div`
     color: ${({ disabled }) => (disabled ? `grey` : successGreen)};
     font-size: 3rem;
     :hover {
-      color: ${({ disabled }) => (disabled ? 'grey' : '#288f6d')};
+      color: ${({ disabled }) => (disabled ? 'grey' : hoverGreen)};
       cursor: ${({ disabled }) => (disabled ? 'initial' : 'pointer')};
     }
   }

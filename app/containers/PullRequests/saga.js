@@ -9,6 +9,8 @@ import {
   createPullRequestSuccess,
   deletePullRequestFailure,
   deletePullRequestSuccess,
+  fetchGithubPullRequestsFailure,
+  fetchGithubPullRequestsSuccess,
   fetchUserPullRequestsFailure,
   fetchUserPullRequestsSuccess,
   importPullRequestFailure,
@@ -17,6 +19,7 @@ import {
 import {
   CREATE_PULL_REQUEST,
   DELETE_PULL_REQUEST,
+  FETCH_GITHUB_PULL_REQUESTS,
   FETCH_USER_PULL_REQUESTS,
   IMPORT_PULL_REQUEST,
 } from './constants';
@@ -107,6 +110,41 @@ export function* deletePullRequestSaga({ payload }) {
   }
 }
 
+export function* fetchGithubPullRequestsSaga({ payload }) {
+  const { issueId } = payload;
+  const query = `
+    query {
+      getGithubPullRequests(issueId: "${issueId}") {
+        __typename
+        ... on PullRequestArray {
+          pullRequestArray {
+            exists
+            htmlUrl
+            modifiedDate
+            pullNumber
+            title
+          }
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        getGithubPullRequests: { __typename, message, pullRequestArray },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchGithubPullRequestsSuccess({ pullRequestArray }));
+  } catch (error) {
+    yield put(fetchGithubPullRequestsFailure({ error }));
+  }
+}
+
 export function* fetchUserPullRequestsSaga() {
   const query = `
     query {
@@ -190,6 +228,7 @@ export function* importPullRequestSaga({ payload }) {
 export default function* watcherSaga() {
   yield takeLatest(CREATE_PULL_REQUEST, createPullRequestSaga);
   yield takeLatest(DELETE_PULL_REQUEST, deletePullRequestSaga);
+  yield takeLatest(FETCH_GITHUB_PULL_REQUESTS, fetchGithubPullRequestsSaga);
   yield takeLatest(FETCH_USER_PULL_REQUESTS, fetchUserPullRequestsSaga);
   yield takeLatest(IMPORT_PULL_REQUEST, importPullRequestSaga);
 }

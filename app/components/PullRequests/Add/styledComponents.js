@@ -13,6 +13,7 @@ import {
   hoverLinkColor,
   lightBlueColor,
   lightGreyColor,
+  styledScrollbar,
   successGreen,
   textColor,
 } from 'defaultStyleHelper';
@@ -165,4 +166,16 @@ export const TextareaWrapper = styled.div`
   &:focus {
     outline: none;
   }
+`;
+
+export const TextWrapper = styled.div`
+  font-size: 1.6rem;
+  margin-top: 2rem;
+`;
+
+export const UserPullRequestsContainer = styled.div`
+  ${styledScrollbar}
+  max-height: 75rem;
+  overflow-y: auto;
+  text-align: center;
 `;

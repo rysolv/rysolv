@@ -1,6 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
+import UserPullRequests from './UserPullRequests';
 import {
   ButtonGroup,
   ImportFormContainer,
@@ -22,6 +23,8 @@ const ImportForm = ({
   handleInputChange,
   importData,
   loading,
+  userPullRequests,
+  userPullRequestsLoading,
 }) => {
   const { importUrl } = importData;
   const enabled = !!importUrl.value;
@@ -52,6 +55,11 @@ const ImportForm = ({
           />
         </TextareaWrapper>
       </ImportUrlWrapper>
+      <UserPullRequests
+        handleInputChange={handleInputChange}
+        userPullRequests={userPullRequests}
+        userPullRequestsLoading={userPullRequestsLoading}
+      />
       <ButtonGroup>
         <StyledSecondayButton label="Cancel" onClick={handleClose} />
         <StyledPrimaryAsyncButton
@@ -73,6 +81,8 @@ ImportForm.propTypes = {
   handleInputChange: T.func.isRequired,
   importData: T.object.isRequired,
   loading: T.bool.isRequired,
+  userPullRequests: T.array.isRequired,
+  userPullRequestsLoading: T.bool.isRequired,
 };
 
 export default ImportForm;
