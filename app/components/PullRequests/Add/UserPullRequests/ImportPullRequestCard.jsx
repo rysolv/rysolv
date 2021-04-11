@@ -12,7 +12,6 @@ import {
   PullNumberWrapper,
   StyledBody,
   StyledHeader,
-  StyledLink,
   StyledTitle,
 } from './styledComponents';
 
@@ -45,11 +44,11 @@ const ImportPullRequestCard = ({
         <StyledHeader>{moment.utc(modifiedDate).fromNow()}</StyledHeader>
         <StyledTitle>
           <IconWrapper>{GithubIcon}</IconWrapper>
-          <StyledLink>
+          <div>
             <a href={htmlUrl} target="_blank">
               {title} <PullNumberWrapper>#{pullNumber}</PullNumberWrapper>
             </a>
-          </StyledLink>
+          </div>
         </StyledTitle>
       </StyledBody>
       <IconToolTip disabled={!exists} toolTipText="Already imported">

@@ -27,7 +27,6 @@ export const AddIconWrapper = styled.div`
 `;
 
 export const IconWrapper = styled.div`
-  display: inline;
   margin: 0 0.5rem 0 0;
 `;
 
@@ -35,7 +34,6 @@ export const ImportCardWrapper = styled.li`
   border-radius: 0.5rem;
   border: 0.1rem solid ${borderColor};
   display: flex;
-  list-style-type: none;
   margin: 0.5rem;
   padding: 0.25rem 0;
 `;
@@ -57,19 +55,12 @@ export const StyledHeader = styled.div`
   padding: 0 1rem;
 `;
 
-export const StyledLink = styled.div`
-  display: inline;
-  text-align: left;
-  vertical-align: middle;
-`;
-
 export const StyledTitle = styled.div`
   align-items: center;
   color: ${textColor};
   display: flex;
   font-size: ${defaultFontSize};
   padding: 0 1rem;
-  width: 100%;
 
   &:hover {
     color: ${hoverLinkColor};
