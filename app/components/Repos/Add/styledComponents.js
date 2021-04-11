@@ -7,32 +7,14 @@ import {
   defaultFontSize,
   detailFontSize,
   errorRed,
-  hoverGreen,
   hoverLinkColor,
   lightBlueColor,
-  lightGreyColor,
-  styledScrollbar,
   subheaderFontSize,
-  successGreen,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
-
-export const AddContainer = styled.div`
-  place-self: center;
-
-  svg {
-    color: ${({ disabled }) => (disabled ? lightGreyColor : successGreen)};
-    font-size: 3rem;
-
-    &:hover {
-      color: ${({ disabled }) => (disabled ? lightGreyColor : hoverGreen)};
-      cursor: ${({ disabled }) => (disabled ? 'initial' : 'pointer')};
-    }
-  }
-`;
 
 export const ContentWrapper = styled.div`
   display: flex;
@@ -49,20 +31,6 @@ export const DescriptionWrapper = styled.div`
 export const HorizontalWrapper = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-export const IconContainer = styled.div`
-  display: inline;
-  margin: 0 0.5rem 0 0;
-`;
-
-export const ImportCardWrapper = styled.li`
-  border-radius: 0.5rem;
-  border: 0.1rem solid ${borderColor};
-  display: flex;
-  list-style-type: none;
-  margin: 0.5rem;
-  padding: 0.25rem 0;
 `;
 
 export const ImportFormContainer = styled.section`
@@ -109,9 +77,11 @@ export const MessageWrapper = styled.div`
   font-size: 1.6rem;
   justify-content: center;
   white-space: pre;
+
   * {
     font-size: 1.6rem;
   }
+
   svg {
     margin-right: 0.5rem;
   }
@@ -162,7 +132,7 @@ export const StyledLabel = styled.div`
   color: ${lightBlueColor};
   font-size: ${subheaderFontSize};
 
-  :hover {
+  &:hover {
     cursor: pointer;
     text-decoration: underline;
   }
@@ -180,52 +150,6 @@ export const StyledLink = styled.a`
     cursor: pointer;
     text-decoration: underline;
   }
-`;
-
-export const StyledLinkContainer = styled.div`
-  display: inline;
-  text-align: left;
-  vertical-align: middle;
-`;
-
-export const StyledRepoBody = styled.div`
-  width: 100%;
-`;
-
-export const StyledRepoHeader = styled.div`
-  align-items: center;
-  color: ${textColor};
-  display: flex;
-  font-size: ${detailFontSize};
-  height: 2rem;
-  padding: 0 1rem;
-  width: 100%;
-`;
-
-export const StyledRepoTitle = styled.div`
-  align-self: flex-start;
-  display: flex;
-  font-size: ${defaultFontSize};
-  line-height: normal;
-  padding-left: 1rem;
-  width: 100%;
-
-  :hover {
-    color: ${hoverLinkColor};
-    cursor: pointer;
-  }
-`;
-
-export const TextWrapper = styled.div`
-  font-size: 1.6rem;
-  margin-top: 2rem;
-`;
-
-export const UserReposContainer = styled.div`
-  ${styledScrollbar}
-  max-height: 75rem;
-  overflow-y: auto;
-  text-align: center;
 `;
 
 export const ValueWrapper = styled.div`

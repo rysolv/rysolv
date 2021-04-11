@@ -2,52 +2,21 @@ import styled from 'styled-components';
 
 import { BaseLink, BaseTextInputWithAdornment } from 'components/base_ui';
 import {
-  borderColor,
   defaultFontSize,
   detailFontSize,
   errorRed,
-  hoverGreen,
   hoverLinkColor,
   lightBlueColor,
-  lightGreyColor,
-  styledScrollbar,
   subheaderFontSize,
-  successGreen,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
 
-export const AddContainer = styled.div`
-  svg {
-    color: ${({ disabled }) => (disabled ? lightGreyColor : successGreen)};
-    font-size: 3rem;
-
-    &:hover {
-      color: ${({ disabled }) => (disabled ? lightGreyColor : hoverGreen)};
-      cursor: ${({ disabled }) => (disabled ? 'initial' : 'pointer')};
-    }
-  }
-`;
-
 export const HorizontalWrapper = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-export const IconContainer = styled.div`
-  display: inline;
-  margin: 0 0.5rem 0 0;
-`;
-
-export const ImportCardWrapper = styled.li`
-  border-radius: 0.5rem;
-  border: 0.1rem solid ${borderColor};
-  display: flex;
-  list-style-type: none;
-  margin: 0.5rem;
-  padding: 0.25rem 0;
 `;
 
 export const ImportFormContainer = styled.section`
@@ -87,18 +56,14 @@ export const MessageWrapper = styled.div`
   font-size: 1.6rem;
   justify-content: center;
   white-space: pre;
+
   * {
     font-size: 1.6rem;
   }
+
   svg {
     margin-right: 0.5rem;
   }
-`;
-
-export const RepoNameWrapper = styled.div`
-  color: ${textColor};
-  font-size: ${detailFontSize};
-  font-weight: bold;
 `;
 
 export const StyledBaseLink = styled(BaseLink)`
@@ -122,45 +87,11 @@ export const StyledImportError = styled.div`
   text-align: left;
 `;
 
-export const StyledIssueBody = styled.div`
-  width: 100%;
-`;
-
-export const StyledIssueContent = styled.div`
-  display: flex;
-  font-size: ${defaultFontSize};
-  justify-content: space-between;
-  line-height: normal;
-  padding-left: 1rem;
-  place-items: center;
-  width: 100%;
-`;
-
-export const StyledIssueHeader = styled.div`
-  align-items: center;
-  color: ${textColor};
-  display: flex;
-  font-size: ${detailFontSize};
-  height: 2rem;
-  justify-content: space-between;
-  padding: 0 0.5rem 0 1rem;
-  width: 100%;
-`;
-
-export const StyledIssueTitle = styled.div`
-  text-align: left;
-
-  :hover {
-    color: ${hoverLinkColor};
-    cursor: pointer;
-  }
-`;
-
 export const StyledLabel = styled.div`
   color: ${lightBlueColor};
   font-size: ${subheaderFontSize};
 
-  :hover {
+  &:hover {
     cursor: pointer;
     text-decoration: underline;
   }
@@ -170,22 +101,4 @@ export const StyledMarkdownWrapper = styled.div`
   color: ${textColor};
   font-size: 1.2rem;
   padding: 1rem;
-`;
-
-export const StyledLinkContainer = styled.div`
-  display: inline;
-  vertical-align: middle;
-`;
-
-export const TextWrapper = styled.div`
-  font-size: 1.6rem;
-  margin-top: 2rem;
-`;
-
-export const UserIssuesContainer = styled.div`
-  ${styledScrollbar}
-  color: ${textColor};
-  max-height: 75rem;
-  overflow-y: auto;
-  text-align: center;
 `;
