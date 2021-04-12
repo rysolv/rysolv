@@ -247,7 +247,7 @@ const SettingsTabs = ({
   const TabMenu = () => (
     <StyledPopper anchorEl={anchorEl} open={openMenu} placement="bottom-start">
       {tabsInMenu.map((newTab, index) => {
-        const tabIndex = 5 - tabsInMenu.length + index;
+        const tabIndex = 6 - tabsInMenu.length + index;
         return (
           <TabItemBorder
             key={`tab-item-${newTab}`}
