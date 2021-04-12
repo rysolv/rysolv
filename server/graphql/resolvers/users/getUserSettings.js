@@ -62,8 +62,8 @@ const getUserSettings = async (_, { authError, userId }) => {
     result.watching = watchingListResult;
 
     // Show notification for unaccepted bounties
-    bounties.forEach(el => {
-      if (!el.userAccepted) {
+    bounties.forEach(bounty => {
+      if (!bounty.userAccepted) {
         result.notifications = true;
       }
     });

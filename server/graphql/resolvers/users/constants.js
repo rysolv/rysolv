@@ -1,6 +1,6 @@
-const acceptBountyFailure = `Something went wrong accepting this bounty`;
+const acceptBountyFailure = `Something went wrong when accepting this bounty.`;
 
-const acceptBountySuccess = `Bounty accepted`;
+const acceptBountySuccess = `Bounty has successfully been accepted.`;
 
 const createUserError = `Something went wrong when signing you up.`;
 

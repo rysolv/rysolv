@@ -17,8 +17,8 @@ import {
 const SearchIcon = iconDictionary('search');
 
 const UserBounties = ({ bounties, dispatchAcceptBounty, handleNav }) => {
-  const [selectedValue, setSelectedValue] = useState('Newest');
   const [searchValue, setSearchValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState('Newest');
 
   const filterBounties = () => {
     // eslint-disable-next-line array-callback-return, consistent-return
@@ -56,7 +56,7 @@ const UserBounties = ({ bounties, dispatchAcceptBounty, handleNav }) => {
           <BaseInputWithAdornment
             adornmentComponent={SearchIcon}
             onChange={e => setSearchValue(e.target.value)}
-            placeholder="Find an bounty..."
+            placeholder="Find a bounty..."
             position="end"
             renderIcon
           />

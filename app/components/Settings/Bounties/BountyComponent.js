@@ -69,9 +69,9 @@ const BountyComponent = ({ bounties, dispatchAcceptBounty, handleNav }) => (
 );
 
 BountyComponent.propTypes = {
+  bounties: T.array.isRequired,
   dispatchAcceptBounty: T.func.isRequired,
   handleNav: T.func.isRequired,
-  bounties: T.array.isRequired,
 };
 
 export default BountyComponent;

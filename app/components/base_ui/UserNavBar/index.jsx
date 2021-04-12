@@ -34,10 +34,8 @@ const UserNavBar = ({ activeUser, handleNav, handleSignout, ...restProps }) => {
           <Coin />
           <NumberContainer>{rep}</NumberContainer>
         </IconWrapper>
-        <Fragment>
-          <StyledAvatar alt={username} src={profilePic} />
-          <Notification notifications={notifications} />
-        </Fragment>
+        <StyledAvatar alt={username} src={profilePic} />
+        <Notification notifications={notifications} />
         <DownArrow />
       </StyledUserNavBar>
       <UserDropDownMenu

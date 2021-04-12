@@ -431,6 +431,7 @@ module.exports = buildSchema(`
 
   type RootMutation {
     acceptBounty(fundingId: ID!): EventResponse!
+  
     closeIssue(issueId: ID!, shouldClose: Boolean): EventResponse!
 
     createComment(commentInput: CommentInput): CommentResult!

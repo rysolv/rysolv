@@ -114,9 +114,10 @@ const SettingsTabs = ({
     deviceView === 'mobileXS' ||
     deviceView === 'mobileXXS';
   const isMobileOrTabletOrLaptop =
-    isMobileOrTablet ||
-    deviceView === 'laptopS' ||
-    deviceView === 'laptop' ||
+    isMobileOrTablet || deviceView === 'laptopS' || deviceView === 'laptop';
+  const isLaptopOrDesktop =
+    isMobileOrTabletOrLaptop ||
+    deviceView === 'laptopL' ||
     deviceView === 'desktopS';
   const isDesktopL = deviceView === 'desktopL';
   const openMenu = Boolean(anchorEl);
@@ -294,14 +295,14 @@ const SettingsTabs = ({
             onClick={() => handleClick(2, '/settings/bounties')}
           />
         )}
-        {!isMobileOrTablet && (
+        {!isMobileOrTabletOrLaptop && (
           <StyledTab
             classes={{ selected: 'selected' }}
             label="Issues"
             onClick={() => handleClick(3, '/settings/issues')}
           />
         )}
-        {!isMobileOrTabletOrLaptop && (
+        {!isLaptopOrDesktop && (
           <StyledTab
             classes={{ selected: 'selected' }}
             label="Repos"

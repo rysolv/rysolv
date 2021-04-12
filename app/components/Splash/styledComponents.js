@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { landingButtonGreen } from 'defaultStyleHelper';
+import { headerColor, landingButtonGreen } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptopS, mobile, mobileXXS } = mediaQueriesByDevice;
@@ -60,7 +60,7 @@ export const LogoText = styled.div`
 
 export const SplashBackground = styled.div`
   &:before {
-    background-color: #07161d;
+    background-color: ${headerColor};
     clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
     content: '';
     height: 70rem;

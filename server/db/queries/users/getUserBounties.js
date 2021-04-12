@@ -19,7 +19,6 @@ const getUserBounties = async ({ userId }) => {
       WHERE f.user_id = $1
       AND f.is_approved = true
   `;
-
   const { rows } = await singleQuery({ queryText, values: [userId] });
   return rows;
 };

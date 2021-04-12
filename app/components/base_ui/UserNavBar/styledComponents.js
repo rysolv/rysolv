@@ -13,7 +13,6 @@ export const IconWrapper = styled.div`
 `;
 
 export const Notification = styled.div`
-  background: #f44336;
   background: linear-gradient(#f44336 0%, #b71c1c 100%);
   border-radius: 50%;
   display: ${({ notifications }) => (notifications ? 'block' : 'none')};

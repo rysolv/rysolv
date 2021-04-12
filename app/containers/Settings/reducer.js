@@ -75,8 +75,8 @@ const settingsReducer = produce((draft, { payload, type }) => {
     }
     case ACCEPT_BOUNTY_SUCCESS: {
       const { fundingId } = payload;
-      draft.account.bounties.forEach((el, i) => {
-        if (el.id === fundingId) {
+      draft.account.bounties.forEach((bounty, i) => {
+        if (bounty.id === fundingId) {
           draft.account.bounties[i].userAccepted = true;
         }
       });

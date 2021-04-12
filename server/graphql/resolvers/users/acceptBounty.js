@@ -1,6 +1,6 @@
-const { errorLogger } = require('../../../helpers');
-const { acceptBountyFailure, acceptBountySuccess } = require('./constants');
 const { acceptBounty: acceptBountyQuery } = require('../../../db');
+const { acceptBountyFailure, acceptBountySuccess } = require('./constants');
+const { errorLogger } = require('../../../helpers');
 
 const acceptBounty = async ({ fundingId }) => {
   try {

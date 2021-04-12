@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import { SecondaryButton } from 'components/base_ui';
 
-import { detailFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  detailFontSize,
+  hoverLinkColor,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -61,7 +66,7 @@ export const CreatedDate = styled.div`
 `;
 
 export const IssueName = styled.a`
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
 
   &:hover {
     color: ${hoverLinkColor};
