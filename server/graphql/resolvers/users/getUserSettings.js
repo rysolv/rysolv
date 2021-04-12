@@ -3,6 +3,7 @@ const {
   getOneIssue,
   getOneRepo,
   getUserAttemptList,
+  getUserBounties,
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
   getUserWatchList,
@@ -47,13 +48,25 @@ const getUserSettings = async (_, { authError, userId }) => {
     // Pull user watching detail
     const watchingListResult = await getUserWatchList({ userId });
 
+    // Pull user bounties
+    const bounties = await getUserBounties({ userId });
+
     result.activePullRequests = activePullRequests;
     result.attempting = attemptingListResult;
+    result.bounties = bounties;
     result.completedPullRequests = completedPullRequests;
     result.issues = filteredIssuesList;
+    result.notifications = false;
     result.rejectedPullRequests = rejectedPullRequests;
     result.repos = filteredReposList;
     result.watching = watchingListResult;
+
+    // Show notification for unaccepted bounties
+    bounties.forEach(el => {
+      if (!el.userAccepted) {
+        result.notifications = true;
+      }
+    });
 
     return {
       __typename: 'User',

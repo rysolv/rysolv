@@ -5,13 +5,14 @@ import { Coin, DownArrow } from '../Icons';
 import UserDropDownMenu from '../UserDropDown';
 import {
   IconWrapper,
+  Notification,
   NumberContainer,
   StyledAvatar,
   StyledUserNavBar,
 } from './styledComponents';
 
 const UserNavBar = ({ activeUser, handleNav, handleSignout, ...restProps }) => {
-  const { username, profilePic, rep } = activeUser;
+  const { notifications, profilePic, rep, username } = activeUser;
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClose = () => {
     setAnchorEl(null);
@@ -33,7 +34,10 @@ const UserNavBar = ({ activeUser, handleNav, handleSignout, ...restProps }) => {
           <Coin />
           <NumberContainer>{rep}</NumberContainer>
         </IconWrapper>
-        <StyledAvatar alt={username} src={profilePic} />
+        <Fragment>
+          <StyledAvatar alt={username} src={profilePic} />
+          <Notification notifications={notifications} />
+        </Fragment>
         <DownArrow />
       </StyledUserNavBar>
       <UserDropDownMenu

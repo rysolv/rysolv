@@ -49,10 +49,11 @@ const SettingsView = ({
   creditCardProps,
   currentTab,
   data: {
-    activity,
     activePullRequests,
+    activity,
     attempting,
     balance,
+    bounties,
     completedPullRequests,
     createdDate,
     dollarsEarned,
@@ -74,6 +75,7 @@ const SettingsView = ({
     watching,
   },
   deviceView,
+  dispatchAcceptBounty,
   dispatchOpenModal,
   dispatchPaypalPayment,
   dispatchSaveChange,
@@ -330,6 +332,7 @@ const SettingsView = ({
             activity={activity}
             attempting={attempting}
             balance={balance}
+            bounties={bounties}
             changeEmail={changeEmail}
             changeFirstName={changeFirstName}
             changeLastName={changeLastName}
@@ -337,6 +340,7 @@ const SettingsView = ({
             creditCardProps={creditCardProps}
             currentTab={currentTab}
             deviceView={deviceView}
+            dispatchAcceptBounty={dispatchAcceptBounty}
             dispatchOpenModal={dispatchOpenModal}
             dispatchPaypalPayment={dispatchPaypalPayment}
             displayBottom={displayBottom}
@@ -388,6 +392,7 @@ SettingsView.propTypes = {
   currentTab: T.number.isRequired,
   data: T.object.isRequired,
   deviceView: T.string.isRequired,
+  dispatchAcceptBounty: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchPaypalPayment: T.func.isRequired,
   dispatchSaveChange: T.func.isRequired,

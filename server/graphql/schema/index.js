@@ -31,6 +31,18 @@ module.exports = buildSchema(`
     name: String
   }
 
+  type Bounty {
+    createdDate: Object!
+    fundedAmount: Int!
+    id: ID!
+    isApproved: Boolean!
+    issueId: ID!
+    name: String!
+    pullRequestUrl: String!
+    rep: String!
+    userAccepted: Boolean!
+  }
+
   type Comment {
     body: String
     commentId: ID
@@ -272,6 +284,7 @@ module.exports = buildSchema(`
     activePullRequests: Int
     attempting: [Object]
     balance: Float
+    bounties: [Bounty]
     comments: [String]
     completedPullRequests: Int
     createdDate: Object
@@ -287,6 +300,7 @@ module.exports = buildSchema(`
     issues: [Object]
     lastName: String
     modifiedDate: Object
+    notifications: Boolean
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
@@ -416,6 +430,7 @@ module.exports = buildSchema(`
   }
 
   type RootMutation {
+    acceptBounty(fundingId: ID!): EventResponse!
     closeIssue(issueId: ID!, shouldClose: Boolean): EventResponse!
 
     createComment(commentInput: CommentInput): CommentResult!

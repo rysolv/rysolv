@@ -311,7 +311,7 @@ export const UserCardWrapper = styled.div`
   flex-direction: column;
   height: fit-content;
   padding: 15px 2%;
-  width: fit-content;
+  width: 30%;
 
   ${mobile} {
     display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};

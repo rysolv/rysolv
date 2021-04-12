@@ -2,6 +2,9 @@
 import produce from 'immer';
 
 import {
+  ACCEPT_BOUNTY_FAILURE,
+  ACCEPT_BOUNTY_SUCCESS,
+  ACCEPT_BOUNTY,
   CHANGE_EMAIL_FAILURE,
   CHANGE_EMAIL_SUCCESS,
   CHANGE_EMAIL,
@@ -64,6 +67,27 @@ export const initialState = {
 
 const settingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case ACCEPT_BOUNTY_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case ACCEPT_BOUNTY_SUCCESS: {
+      const { fundingId } = payload;
+      draft.account.bounties.forEach((el, i) => {
+        if (el.id === fundingId) {
+          draft.account.bounties[i].userAccepted = true;
+        }
+      });
+      draft.loading = false;
+      break;
+    }
+    case ACCEPT_BOUNTY: {
+      draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
     case CHANGE_EMAIL_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;

@@ -60,7 +60,7 @@ export const LogoText = styled.div`
 
 export const SplashBackground = styled.div`
   &:before {
-    background-color: #37474f;
+    background-color: #07161d;
     clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
     content: '';
     height: 70rem;
