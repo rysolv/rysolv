@@ -227,6 +227,10 @@ export const RecentActivityContainer = styled.div`
   }
 `;
 
+export const RepoDetailContainer = styled.div`
+  width: 100%;
+`;
+
 export const RepoUrl = styled.a`
   align-items: center;
   display: flex;

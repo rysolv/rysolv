@@ -10,7 +10,6 @@ import {
   defaultFontSize,
   fundingText,
   landingButtonGreen,
-  subheaderFontSize,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -19,7 +18,7 @@ const { mobile } = mediaQueriesByDevice;
 
 export const Amount = styled.span`
   color: ${fundingText};
-  font-size: ${subheaderFontSize};
+  font-size: 2rem;
   font-weight: bold;
   line-height: 2.4rem;
   white-space: nowrap;
@@ -36,7 +35,7 @@ export const DonationRow = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2.4rem;
+  padding: 1.6rem 2.4rem;
   width: ${({ hasPayoutUrl }) => (hasPayoutUrl ? '48%' : '31%')};
 
   ${mobile} {
@@ -57,11 +56,11 @@ export const DonationsContainer = styled.div`
 `;
 
 export const DonationTitle = styled.div`
-  color: ${textColor};
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 0.8rem;
-  text-align: center;
+  color: #586069;
+  font-size: ${defaultFontSize};
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 1rem;
   text-transform: uppercase;
 `;
 

@@ -8,6 +8,7 @@ import { IssuesSearchHeader, RepoIssues } from './Issues';
 import {
   ComponentContainer,
   EmptyMessageComponent,
+  RepoDetailContainer,
   StyledTitle,
 } from './styledComponents';
 
@@ -60,7 +61,7 @@ const RepoDetail = ({
   );
 
   return (
-    <div>
+    <RepoDetailContainer>
       <ComponentContainer>
         <StyledTitle>Issues</StyledTitle>
         <IssuesSearchHeader
@@ -74,7 +75,7 @@ const RepoDetail = ({
         <ContributorsSearchHeader handleInputChange={handleInputChange} />
         <RepoContributorsComponent />
       </ComponentContainer>
-    </div>
+    </RepoDetailContainer>
   );
 };
 
