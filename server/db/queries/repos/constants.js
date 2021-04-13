@@ -3,7 +3,6 @@ const repoValues = [
   'description',
   'id',
   'is_manual',
-  'issues',
   'logo',
   'modified_date',
   'name',
@@ -18,11 +17,11 @@ const repoReturnValues = `
     SELECT user_repos.id FROM user_repos
     WHERE user_repos.repo_id = repos.id
     AND user_repos.user_type = 'github_owner') AS "verified",
+  (SELECT COALESCE(ARRAY_AGG(DISTINCT(issues.id)), '{}') FROM issues WHERE repos.id = issues.repo_id AND repos.is_deleted = false) AS "issues",
   repos.created_date AS "createdDate",
   repos.description,
   repos.id,
   repos.is_manual AS "isManual",
-  repos.issues,
   repos.logo,
   repos.modified_date AS "modifiedDate",
   repos.name,
@@ -38,7 +37,6 @@ const groupValues = `
   repos.id,
   repos.is_deleted,
   repos.is_manual,
-  repos.issues,
   repos.logo,
   repos.modified_date,
   repos.name,
