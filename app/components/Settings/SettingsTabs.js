@@ -8,6 +8,7 @@ import UserAttempting from './Attempting';
 import DepositFormComponent from './Balance/Deposit/DepositFormComponent';
 import WithdrawalFormComponent from './Balance/Withdrawal/WithdrawalFormComponent';
 import { getTabToDisplay } from './helpers';
+import UserBounties from './Bounties';
 import UserIssues from './Issues';
 import UserPullRequests from './PullRequests';
 import UserRepos from './Repos';
@@ -26,6 +27,7 @@ const SettingsTabs = ({
   activity,
   attempting,
   balance,
+  bounties,
   changeEmail,
   changeFirstName,
   changeLastName,
@@ -33,6 +35,7 @@ const SettingsTabs = ({
   creditCardProps,
   currentTab,
   deviceView,
+  dispatchAcceptBounty,
   dispatchOpenModal,
   dispatchPaypalPayment,
   displayBottom,
@@ -90,7 +93,7 @@ const SettingsTabs = ({
       deviceView === 'mobileXS' ||
       deviceView === 'mobileXXS'
     ) {
-      setTabsInMenu(['Issues', 'Repos', 'Pull Requests']);
+      setTabsInMenu(['Bounties', 'Issues', 'Repos', 'Pull Requests']);
     }
     if (
       deviceView === 'laptopS' ||
@@ -229,14 +232,22 @@ const SettingsTabs = ({
         value={value}
       />
     ),
-    2: <UserIssues handleNav={handleNav} issues={issues} />,
-    3: <UserRepos handleNav={handleNav} repos={repos} />,
-    4: <UserPullRequests Component={PullRequestComponent} />,
+    2: (
+      <UserBounties
+        bounties={bounties}
+        dispatchAcceptBounty={dispatchAcceptBounty}
+        handleNav={handleNav}
+      />
+    ),
+    3: <UserIssues handleNav={handleNav} issues={issues} />,
+    4: <UserRepos handleNav={handleNav} repos={repos} />,
+    5: <UserPullRequests Component={PullRequestComponent} />,
   };
+
   const TabMenu = () => (
     <StyledPopper anchorEl={anchorEl} open={openMenu} placement="bottom-start">
       {tabsInMenu.map((newTab, index) => {
-        const tabIndex = 5 - tabsInMenu.length + index;
+        const tabIndex = 6 - tabsInMenu.length + index;
         return (
           <TabItemBorder
             key={`tab-item-${newTab}`}
@@ -279,22 +290,29 @@ const SettingsTabs = ({
         {!isMobileOrTablet && (
           <StyledTab
             classes={{ selected: 'selected' }}
+            label="Bounties"
+            onClick={() => handleClick(2, '/settings/bounties')}
+          />
+        )}
+        {!isMobileOrTablet && (
+          <StyledTab
+            classes={{ selected: 'selected' }}
             label="Issues"
-            onClick={() => handleClick(2, '/settings/issues')}
+            onClick={() => handleClick(3, '/settings/issues')}
           />
         )}
         {!isMobileOrTabletOrLaptop && (
           <StyledTab
             classes={{ selected: 'selected' }}
             label="Repos"
-            onClick={() => handleClick(3, '/settings/repos')}
+            onClick={() => handleClick(4, '/settings/repos')}
           />
         )}
         {isDesktopL && (
           <StyledTab
             classes={{ selected: 'selected' }}
             label="Pull Requests"
-            onClick={() => handleClick(4, '/settings/pullrequests')}
+            onClick={() => handleClick(5, '/settings/pullrequests')}
           />
         )}
         {!isDesktopL && [
@@ -329,6 +347,7 @@ SettingsTabs.propTypes = {
   activity: T.array,
   attempting: T.array,
   balance: T.number,
+  bounties: T.array,
   changeEmail: T.bool,
   changeFirstName: T.bool,
   changeLastName: T.bool,
@@ -336,6 +355,7 @@ SettingsTabs.propTypes = {
   creditCardProps: T.object,
   currentTab: T.number,
   deviceView: T.string,
+  dispatchAcceptBounty: T.func.isRequired,
   dispatchOpenModal: T.func,
   dispatchPaypalPayment: T.func,
   displayBottom: T.bool,

@@ -17,6 +17,7 @@ import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import {
+  acceptBounty,
   changeEmail,
   clearAlerts,
   clearErrors,
@@ -47,6 +48,7 @@ const Settings = ({
   data,
   data: { balance },
   deviceView,
+  dispatchAcceptBounty,
   dispatchCloseModal,
   dispatchFetchInfo,
   dispatchInputError,
@@ -146,6 +148,7 @@ const Settings = ({
           creditCardProps,
           currentTab,
           deviceView,
+          dispatchAcceptBounty,
           dispatchOpenModal,
           dispatchPaypalPayment,
           dispatchSaveChange,
@@ -174,6 +177,7 @@ Settings.propTypes = {
   alerts: T.object.isRequired,
   data: T.object.isRequired,
   deviceView: T.string.isRequired,
+  dispatchAcceptBounty: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchInfo: T.func,
   dispatchInputError: T.func.isRequired,
@@ -227,6 +231,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Settings
      */
+    dispatchAcceptBounty: payload => dispatch(acceptBounty(payload)),
     dispatchCloseModal: () => dispatch(closeModalState()),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),

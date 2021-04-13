@@ -1,3 +1,7 @@
+export const ACCEPT_BOUNTY = 'app/Settings/ACCEPT_BOUNTY';
+export const ACCEPT_BOUNTY_FAILURE = 'app/Settings/ACCEPT_BOUNTY_FAILURE';
+export const ACCEPT_BOUNTY_SUCCESS = 'app/Settings/ACCEPT_BOUNTY_SUCCESS';
+
 export const CHANGE_EMAIL = 'app/Settings/CHANGE_EMAIL';
 export const CHANGE_EMAIL_FAILURE = 'app/Settings/CHANGE_EMAIL_FAILURE';
 export const CHANGE_EMAIL_SUCCESS = 'app/Settings/CHANGE_EMAIL_SUCCESS';
@@ -58,14 +62,15 @@ export const actionDictionary = {
 export const changeEmailError = `Something went wrong when changing your email.`;
 
 export const settingViewDictionary = {
-  account: 1,
   attempting: 0,
-  deposit: 1,
-  issues: 2,
-  pullrequests: 4,
-  repos: 3,
   watching: 0,
+  account: 1,
+  deposit: 1,
   withdrawal: 1,
+  bounties: 2,
+  issues: 3,
+  repos: 4,
+  pullrequests: 5,
 };
 
 export const verifyUserAccountError = `Something went wrong when verifying your Github account.`;
