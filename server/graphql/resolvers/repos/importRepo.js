@@ -1,28 +1,19 @@
-const { checkDuplicate, importRepoError } = require('./constants');
-const { errorLogger } = require('../../../helpers');
-const { formatRepoUrl } = require('../../../integrations/github/helpers');
 const {
-  getSingleOrganization,
-  getSingleRepo,
-} = require('../../../integrations');
+  checkDuplicate,
+  importRepoError,
+  typeOrganizationError,
+} = require('./constants');
+const { CustomError, errorLogger } = require('../../../helpers');
+const { formatRepoUrl } = require('../../../integrations/github/helpers');
+const { getSingleRepo } = require('../../../integrations');
 
 const importRepo = async ({ url }) => {
   try {
     // Parse repo url
     const { organization, repo, type } = formatRepoUrl(url);
 
-    // If user supplied an organization: pull organization data
-    if (type === 'organization') {
-      const { repoInput: importData } = await getSingleOrganization(
-        organization,
-      );
-      await checkDuplicate(importData.repoUrl);
-
-      return {
-        __typename: 'ImportData',
-        ...importData,
-      };
-    }
+    // If user supplied an organization, throw error
+    if (type === 'organization') throw new CustomError(typeOrganizationError);
 
     // Else pull repo data
     const { repoInput: importData } = await getSingleRepo({

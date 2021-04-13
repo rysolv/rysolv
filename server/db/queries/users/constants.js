@@ -51,6 +51,7 @@ const userSettingsReturnValues = `
     LEFT JOIN questions ON questions.id = user_question_responses.question_id
     WHERE user_question_responses.user_id = users.id
     AND questions.category = 'hiring') AS "isQuestionnaireComplete",
+  users.github_id AS "githubId",
   users.github_username AS "githubUsername",
   (SELECT COALESCE(ARRAY_AGG(DISTINCT(pullrequest_id)), '{}') FROM pullrequests WHERE is_deleted = false AND user_id = $1) AS "pullRequests",
   (SELECT COALESCE(ARRAY_AGG(DISTINCT(id)), '{}') FROM repos WHERE is_deleted = false AND owner_id = $1) AS "repos",

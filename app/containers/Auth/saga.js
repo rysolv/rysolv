@@ -54,6 +54,7 @@ export function* fetchActiveUserSaga() {
           balance
           email
           firstName
+          githubId
           id
           isGithubVerified
           isQuestionnaireComplete

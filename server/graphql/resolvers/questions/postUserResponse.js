@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 
-const { CustomError, errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger, sendEmail } = require('../../../helpers');
 const {
   createLanguage,
   getUserLanguages,
@@ -43,6 +43,11 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
         },
       ),
     );
+
+    sendEmail({
+      body: { userId },
+      path: '/s/hiring/signup',
+    });
 
     return {
       __typename: 'Success',
