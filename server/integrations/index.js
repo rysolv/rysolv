@@ -5,6 +5,7 @@ const {
   getSinglePullRequest,
   getSingleRepo,
   getUserGithubIssues,
+  getUserGithubPullRequests,
   getUserGithubRepos,
   requestGithubUser,
 } = require('./github');
@@ -16,6 +17,7 @@ module.exports = {
   getSinglePullRequest,
   getSingleRepo,
   getUserGithubIssues,
+  getUserGithubPullRequests,
   getUserGithubRepos,
   requestGithubUser,
 };

@@ -6,6 +6,7 @@ import {
   ErrorSuccessBanner,
   PrimaryAsyncButton,
   SecondaryButton,
+  BaseTextInput,
 } from 'components/base_ui';
 import {
   defaultFontSize,
@@ -47,11 +48,6 @@ export const ImportFormContainer = styled.div`
   }
 `;
 
-export const ImportUrlLabel = styled.div`
-  padding-right: 1rem;
-  width: 12.5rem;
-`;
-
 export const ImportUrlWrapper = styled.div`
   color: #6a737d;
   display: flex;
@@ -74,6 +70,10 @@ export const PullNumberWrapper = styled.span`
 
 export const StatusWrapper = styled.span`
   text-transform: capitalize;
+`;
+
+export const StyledBaseTextInputWithAdornment = styled(BaseTextInput)`
+  margin: 0 0.5;
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`

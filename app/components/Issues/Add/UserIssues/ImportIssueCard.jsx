@@ -6,15 +6,15 @@ import { IconToolTip } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
-  AddContainer,
-  IconContainer,
+  AddIconWrapper,
+  IconWrapper,
   ImportCardWrapper,
   RepoNameWrapper,
-  StyledIssueBody,
-  StyledIssueContent,
-  StyledIssueHeader,
-  StyledIssueTitle,
-  StyledLinkContainer,
+  StyledBody,
+  StyledContent,
+  StyledHeader,
+  StyledLink,
+  StyledTitle,
 } from './styledComponents';
 
 const AddBox = iconDictionary('addBox');
@@ -40,27 +40,27 @@ const ImportCard = ({
 
   return (
     <ImportCardWrapper>
-      <StyledIssueBody>
-        <StyledIssueHeader>
+      <StyledBody>
+        <StyledHeader>
           <RepoNameWrapper>{repoName}</RepoNameWrapper>
           {moment.utc(createdDate).fromNow()}
-        </StyledIssueHeader>
-        <StyledIssueContent>
-          <StyledIssueTitle>
-            <IconContainer>{GithubIcon}</IconContainer>
-            <StyledLinkContainer>
+        </StyledHeader>
+        <StyledContent>
+          <StyledTitle>
+            <IconWrapper>{GithubIcon}</IconWrapper>
+            <StyledLink>
               <a href={repo} target="_blank">
                 {name}
               </a>
-            </StyledLinkContainer>
-          </StyledIssueTitle>
+            </StyledLink>
+          </StyledTitle>
           <IconToolTip disabled={!exists} toolTipText="Already imported">
-            <AddContainer disabled={exists} onClick={handleImport}>
+            <AddIconWrapper disabled={exists} onClick={handleImport}>
               {AddBox}
-            </AddContainer>
+            </AddIconWrapper>
           </IconToolTip>
-        </StyledIssueContent>
-      </StyledIssueBody>
+        </StyledContent>
+      </StyledBody>
     </ImportCardWrapper>
   );
 };

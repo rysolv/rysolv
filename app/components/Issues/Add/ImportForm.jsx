@@ -5,7 +5,6 @@ import { ConditionalRender } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import UserIssues from './UserIssues';
-
 import {
   ImportFormContainer,
   MessageWrapper,
@@ -67,6 +66,7 @@ const ImportForm = ({
       tabIndex="0"
     >
       Import GitHub Issue
+      <br />
       <StyledBaseTextInputWithAdornment
         adornmentComponent={SearchIcon}
         disabled={importIssueLoading}
