@@ -14,6 +14,8 @@ const existingPullRequestError = `This pull request already exists.`;
 
 const getUserPullRequestsError = `Something went wrong when getting your pull requests.`;
 
+const githubNotVerifiedError = 'This account has not been linked with Github.';
+
 const importPullRequestError = `Something went wrong when importing this pull requests. Please try again later.`;
 
 module.exports = {
@@ -25,5 +27,6 @@ module.exports = {
   diffRepoError,
   existingPullRequestError,
   getUserPullRequestsError,
+  githubNotVerifiedError,
   importPullRequestError,
 };

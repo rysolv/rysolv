@@ -1,4 +1,7 @@
 import {
+  ACCEPT_BOUNTY_FAILURE,
+  ACCEPT_BOUNTY_SUCCESS,
+  ACCEPT_BOUNTY,
   CHANGE_EMAIL_FAILURE,
   CHANGE_EMAIL_SUCCESS,
   CHANGE_EMAIL,
@@ -35,6 +38,27 @@ import {
   WITHDRAW_FUNDS_SUCCESS,
   WITHDRAW_FUNDS,
 } from './constants';
+
+export function acceptBountyFailure(payload) {
+  return {
+    payload,
+    type: ACCEPT_BOUNTY_FAILURE,
+  };
+}
+
+export function acceptBountySuccess(payload) {
+  return {
+    payload,
+    type: ACCEPT_BOUNTY_SUCCESS,
+  };
+}
+
+export function acceptBounty(payload) {
+  return {
+    payload,
+    type: ACCEPT_BOUNTY,
+  };
+}
 
 export function changeEmailFailure(payload) {
   return {

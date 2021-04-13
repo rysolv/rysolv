@@ -4,6 +4,7 @@ import {
   commentHeaderColor,
   defaultFontSize,
   hoverLinkColor,
+  lightGreyColor,
   textColor,
   verifyBackgroundColor,
   verifyColor,
@@ -45,7 +46,7 @@ export const AccountWrapper = styled.div`
 `;
 
 export const StyledText = styled.div`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
   font-size: ${defaultFontSize};
   font-weight: 500;
   margin-top: 0.25rem;

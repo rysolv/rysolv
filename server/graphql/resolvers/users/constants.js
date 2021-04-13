@@ -1,3 +1,7 @@
+const acceptBountyFailure = `Something went wrong when accepting this bounty.`;
+
+const acceptBountySuccess = `Bounty has successfully been accepted.`;
+
 const createUserError = `Something went wrong when signing you up.`;
 
 const deletedUserImage =
@@ -53,6 +57,8 @@ const verifyUserEmailError = `Something went wrong when verifying your email.`;
 const verifyUserEmailSuccess = `Your email has been successfully verified.`;
 
 module.exports = {
+  acceptBountyFailure,
+  acceptBountySuccess,
   createUserError,
   deletedUserImage,
   deleteUserError,

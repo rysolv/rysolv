@@ -6,8 +6,10 @@ ADD COLUMN issue_id UUID REFERENCES issues(id),
 ADD COLUMN pullrequest_id UUID REFERENCES pullrequests(pullrequest_id),
 ADD COLUMN rep SMALLINT,
 ADD COLUMN repo_payout FLOAT DEFAULT 0,
+ADD COLUMN user_accepted BOOLEAN DEFAULT FALSE,
 ADD COLUMN user_id UUID REFERENCES users(id),
-ADD COLUMN user_payout FLOAT DEFAULT 0`;
+ADD COLUMN user_payout FLOAT DEFAULT 0
+`;
 
 const createFundingsTable = `CREATE TABLE IF NOT EXISTS
 funding(

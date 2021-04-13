@@ -44,7 +44,10 @@ export const StyledMenu = styled(Menu)`
 `;
 
 export const StyledMenuItem = styled.li`
+  color: ${({ notifications }) =>
+    notifications ? 'rgb(8,178,110)' : 'inherit'};
   display: flex;
+  font-weight: ${({ notifications }) => (notifications ? 'bold' : 'inherit')};
   justify-content: space-between;
   min-width: 20rem;
   padding: 1rem;

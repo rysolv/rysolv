@@ -52,6 +52,10 @@ export function* fetchActiveUserSaga() {
         ... on User {
           attempting
           balance
+          bounties {
+            id
+            userAccepted
+          }
           email
           firstName
           githubId
@@ -60,6 +64,7 @@ export function* fetchActiveUserSaga() {
           isQuestionnaireComplete
           issues
           lastName
+          notifications
           profilePic
           pullRequests
           rep
