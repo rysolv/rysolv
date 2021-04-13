@@ -14,7 +14,6 @@ const getUserSettings = require('./getUserSettings');
 const getUserWatchList = require('./getUserWatchList');
 const searchUsers = require('./searchUsers');
 const transformUser = require('./transformUser');
-const updateUserArray = require('./updateUserArray');
 
 module.exports = {
   acceptBounty,
@@ -33,5 +32,4 @@ module.exports = {
   getUserWatchList,
   searchUsers,
   transformUser,
-  updateUserArray,
 };

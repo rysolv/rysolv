@@ -2,7 +2,7 @@
 const fetch = require('node-fetch');
 
 const { authenticate } = require('./auth');
-const { CustomError } = require('../helpers');
+const { CustomError } = require('../../helpers');
 
 const getGithubIssueComments = async ({ issueNumber, organization, repo }) => {
   try {
@@ -28,6 +28,34 @@ const getGithubIssueComments = async ({ issueNumber, organization, repo }) => {
     return githubComments;
   } catch (error) {
     return [];
+  }
+};
+
+const getRepoMembers = async ({ organization, repo }) => {
+  const members = [];
+  try {
+    const { GITHUB } = await authenticate();
+    const {
+      data: { owner },
+    } = await GITHUB.repos.get({
+      owner: organization,
+      repo,
+    });
+    if (owner.type === 'Organization') {
+      const { data } = await GITHUB.orgs.listMembers({
+        org: organization,
+      });
+      data.forEach(member => members.push(member));
+    }
+    if (owner.type === 'User') members.push(owner);
+
+    const formattedMembers = members.map(({ id }) => ({
+      id,
+      type: 'github_owner',
+    }));
+    return formattedMembers;
+  } catch (error) {
+    return members;
   }
 };
 
@@ -335,6 +363,7 @@ const requestGithubUser = async credentials => {
 
 module.exports = {
   getGithubIssueComments,
+  getRepoMembers,
   getSingleIssue,
   getSingleOrganization,
   getSinglePullRequest,

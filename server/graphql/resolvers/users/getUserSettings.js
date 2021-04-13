@@ -27,7 +27,6 @@ const getUserSettings = async (_, { authError, userId }) => {
         return issuesResult;
       }),
     );
-    const filteredIssuesList = issuesListResult.filter(issue => issue);
 
     // Pull user repo detail
     const reposListResult = await Promise.all(
@@ -36,7 +35,6 @@ const getUserSettings = async (_, { authError, userId }) => {
         return reposResult;
       }),
     );
-    const filteredReposList = reposListResult.filter(repo => repo);
 
     // Pull user pull request detail
     const {
@@ -55,10 +53,10 @@ const getUserSettings = async (_, { authError, userId }) => {
     result.attempting = attemptingListResult;
     result.bounties = bounties;
     result.completedPullRequests = completedPullRequests;
-    result.issues = filteredIssuesList;
+    result.issues = issuesListResult;
     result.notifications = false;
     result.rejectedPullRequests = rejectedPullRequests;
-    result.repos = filteredReposList;
+    result.repos = reposListResult;
     result.watching = watchingListResult;
 
     // Show notification for unaccepted bounties

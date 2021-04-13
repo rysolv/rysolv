@@ -230,6 +230,7 @@ module.exports = buildSchema(`
     createdDate: Object
     description: String
     exists: Boolean
+    githubOwners: [String]
     id: ID!
     issues: [Object]
     logo: String
@@ -250,6 +251,7 @@ module.exports = buildSchema(`
 
   input RepoInput {
     identiconId: ID
+    importUrl: String
     isManual: Boolean
     organizationUrl: String
     repoDescription: String
@@ -285,13 +287,13 @@ module.exports = buildSchema(`
     attempting: [Object]
     balance: Float
     bounties: [Bounty]
-    comments: [String]
     completedPullRequests: Int
     createdDate: Object
     dollarsEarned: Int
     email: String!
     emailVerified: Boolean
     firstName: String
+    githubId: String
     githubLink: String
     githubUsername: String
     id: ID!
@@ -321,7 +323,6 @@ module.exports = buildSchema(`
   input UserInput {
     attempting: [ID]
     balance: Float
-    comments: [String]
     dollarsEarned: Int
     email: String
     emailVerified: Boolean
@@ -334,7 +335,6 @@ module.exports = buildSchema(`
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
-    pullRequests: [String]
     rep: Int
     repos: [String]
     stackoverflowLink: String

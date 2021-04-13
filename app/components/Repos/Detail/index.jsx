@@ -51,12 +51,13 @@ const VerifiedComponent = (
 
 const RepoDetailView = ({
   activeUser,
-  activeUser: { repos },
+  activeUser: { githubId, repos },
   alerts: { error, success },
   data: {
     activity,
     contributors,
     description,
+    githubOwners,
     id: repoId,
     issues,
     logo,
@@ -126,19 +127,15 @@ const RepoDetailView = ({
               shouldRender={verified}
             />
           </NameWrapper>
-          {/* <ConditionalRender
+          <ConditionalRender
             Component={
               <StyledPrimaryButton
                 label="Edit"
                 onClick={() => setDisplayEditView(true)}
               />
             }
-            shouldRender={
-              isSignedIn &&
-              repos &&
-              !!repos.find(({ id }) => repoId === id)
-            }
-          /> */}
+            shouldRender={githubOwners.includes(githubId) && isSignedIn}
+          />
         </HeaderWrapper>
         <Description>{description}</Description>
         <UrlWrapper>

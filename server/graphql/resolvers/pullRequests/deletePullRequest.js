@@ -1,9 +1,6 @@
 const { createActivity } = require('../activity');
 const { CustomError, errorLogger } = require('../../../helpers');
-const {
-  deletePullRequest: deletePullRequestQuery,
-  updateUserArray,
-} = require('../../../db');
+const { deletePullRequest: deletePullRequestQuery } = require('../../../db');
 const {
   deletePullRequestError,
   deletePullRequestSuccess,
@@ -14,12 +11,6 @@ const deletePullRequest = async ({ id }, { authError, userId }) => {
     if (authError || !userId) throw new CustomError(authError);
 
     const result = await deletePullRequestQuery({ pullRequestId: id });
-    await updateUserArray({
-      column: 'pull_requests',
-      data: id,
-      remove: true,
-      userId: result.user_id,
-    });
 
     const activityInput = {
       actionType: 'delete',

@@ -50,6 +50,7 @@ export function* fetchInfoSaga({ payload }) {
           contributors
           createdDate
           description
+          githubOwners
           id
           issues
           logo
@@ -207,7 +208,9 @@ export function* importRepoSaga({ payload }) {
 export function* saveInfoSaga({ payload }) {
   const {
     requestBody: {
+      autoImportUrl,
       identiconId,
+      importUrl,
       isManual,
       organizationUrl,
       repoDescription,
@@ -221,6 +224,7 @@ export function* saveInfoSaga({ payload }) {
     mutation {
       createRepo(repoInput: {
         identiconId: "${identiconId}",
+        importUrl: "${autoImportUrl || importUrl}",
         isManual: ${isManual},
         organizationUrl: "${organizationUrl}",
         repoDescription: ${JSON.stringify(repoDescription)},

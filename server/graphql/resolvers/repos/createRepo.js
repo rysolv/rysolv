@@ -3,17 +3,20 @@ const Identicon = require('identicon.js');
 const { v4: uuidv4 } = require('uuid');
 
 const {
+  addRepoMembers,
+  createLanguage,
+  createRepo: createRepoQuery,
+  getUserSettings,
+  updateUserArray,
+} = require('../../../db');
+const {
   checkDuplicate,
   createRepoError,
   createRepoSuccess,
 } = require('./constants');
 const { createActivity } = require('../activity');
-const {
-  createLanguage,
-  createRepo: createRepoQuery,
-  updateUserArray,
-} = require('../../../db');
 const { CustomError, errorLogger } = require('../../../helpers');
+const { formatMemberList } = require('../../../integrations/github/helpers');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
 const createRepo = async ({ repoInput }, { authError, userId }) => {
@@ -25,11 +28,12 @@ const createRepo = async ({ repoInput }, { authError, userId }) => {
       repoInput.repoLogo = new Identicon(identiconId, 250).toString();
     }
     const { uploadUrl } = await uploadImage(repoInput.repoLogo);
+    const repoId = uuidv4();
 
     const repo = {
       created_date: new Date(),
       description: repoInput.repoDescription,
-      id: uuidv4(),
+      id: repoId,
       is_manual: repoInput.isManual,
       issues: repoInput.issues || [],
       logo: uploadUrl,
@@ -43,8 +47,18 @@ const createRepo = async ({ repoInput }, { authError, userId }) => {
 
     await checkDuplicate(repo.repo_url);
 
+    const { githubId } = await getUserSettings({ userId });
+
     // Create repo
     const result = await createRepoQuery({ data: repo });
+
+    await addRepoMembers({
+      members: await formatMemberList({
+        githubId,
+        repoId,
+        repoUrl: repoInput.importUrl,
+      }),
+    });
 
     if (repoInput.repoLanguages) {
       await createLanguage({
@@ -53,14 +67,14 @@ const createRepo = async ({ repoInput }, { authError, userId }) => {
       });
     }
 
-    // add repo to user
+    // Add repo to user
     await updateUserArray({
       column: 'repos',
       data: result.id,
       userId: result.ownerId,
     });
 
-    // log activity
+    // Log activity
     const activityInput = {
       actionType: 'create',
       repoId: result.id,

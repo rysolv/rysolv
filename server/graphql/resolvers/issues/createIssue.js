@@ -3,13 +3,14 @@ const Identicon = require('identicon.js');
 const { v4: uuidv4 } = require('uuid');
 
 const {
+  addRepoMembers,
   checkDuplicateIssue,
   checkDuplicateRepo,
   createIssue: createIssueQuery,
   createLanguage,
   createRepo,
+  getUserSettings,
   updateRepoArray,
-  updateUserArray,
 } = require('../../../db');
 const { createActivity } = require('../activity');
 const {
@@ -22,6 +23,7 @@ const {
   newRepoObject,
 } = require('./constants');
 const { CustomError, errorLogger } = require('../../../helpers');
+const { formatMemberList } = require('../../../integrations/github/helpers');
 
 const createIssue = async ({ issueInput }, { authError, userId }) => {
   try {
@@ -45,6 +47,16 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
       const repoObject = await newRepoObject(issueInput);
       try {
         const result = await createRepo({ data: repoObject });
+        const { githubId } = await getUserSettings({ userId });
+
+        await addRepoMembers({
+          members: await formatMemberList({
+            githubId,
+            issueUrl: issueInput.repo,
+            repoId: result.id,
+          }),
+        });
+
         return result;
       } catch (error) {
         throw new CustomError(createRepoError);
@@ -97,20 +109,6 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
       data: newIssueId,
       id: issueInput.repoId,
       remove: false,
-    });
-
-    // add issue to user issue list
-    await updateUserArray({
-      column: 'issues',
-      data: issueResult.id,
-      userId,
-    });
-
-    // add repo to user list
-    await updateUserArray({
-      column: 'repos',
-      data: issueInput.repoId,
-      userId,
     });
 
     return {

@@ -53,6 +53,7 @@ const {
   updateRepoArray,
 } = require('./queries/repos');
 const { getStats } = require('./queries/stats');
+const { addRepoMembers, deleteRepoMembers } = require('./queries/userRepos');
 const {
   acceptBounty,
   checkDuplicateGithubId,
@@ -70,7 +71,6 @@ const {
   getUserWatchList,
   searchUsers,
   transformUser,
-  updateUserArray,
 } = require('./queries/users');
 const { toggleWatching } = require('./queries/watching');
 const {
@@ -80,6 +80,7 @@ const {
 
 module.exports = {
   acceptBounty,
+  addRepoMembers,
   checkDuplicateGithubId,
   checkDuplicateIssue,
   checkDuplicatePullRequest,
@@ -97,6 +98,7 @@ module.exports = {
   createUser,
   createWithdrawal,
   deletePullRequest,
+  deleteRepoMembers,
   deleteUserLanguages,
   deleteUserPullRequests,
   downvoteIssue,
@@ -142,6 +144,5 @@ module.exports = {
   transformUser,
   transformUserBalance,
   updateRepoArray,
-  updateUserArray,
   upvoteIssue,
 };

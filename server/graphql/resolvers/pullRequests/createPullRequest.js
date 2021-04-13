@@ -4,7 +4,6 @@ const {
   checkDuplicatePullRequest,
   checkGithubIdMatch,
   createPullRequest: createPullRequestQuery,
-  updateUserArray,
 } = require('../../../db');
 const { createActivity } = require('../activity');
 const {
@@ -66,14 +65,7 @@ const createPullRequest = async (
     if (await checkDuplicatePullRequest({ repo: htmlUrl }))
       throw new CustomError(existingPullRequestError);
 
-    const result = await createPullRequestQuery({ data });
-
-    // Add issue to user issue list
-    await updateUserArray({
-      column: 'pull_requests',
-      data: result.pullRequestId,
-      userId: result.userId,
-    });
+    await createPullRequestQuery({ data });
 
     const activityInput = {
       actionType: 'create',
