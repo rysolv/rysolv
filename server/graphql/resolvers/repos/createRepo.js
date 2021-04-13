@@ -3,18 +3,18 @@ const Identicon = require('identicon.js');
 const { v4: uuidv4 } = require('uuid');
 
 const {
-  checkDuplicate,
-  createRepoError,
-  createRepoSuccess,
-} = require('./constants');
-const { createActivity } = require('../activity');
-const {
   addRepoMembers,
   createLanguage,
   createRepo: createRepoQuery,
   getUserSettings,
   updateUserArray,
 } = require('../../../db');
+const {
+  checkDuplicate,
+  createRepoError,
+  createRepoSuccess,
+} = require('./constants');
+const { createActivity } = require('../activity');
 const { CustomError, errorLogger } = require('../../../helpers');
 const { formatMemberList } = require('../../../integrations/github/helpers');
 const { uploadImage } = require('../../../middlewares/imageUpload');

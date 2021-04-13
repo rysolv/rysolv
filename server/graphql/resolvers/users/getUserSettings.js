@@ -26,7 +26,6 @@ const getUserSettings = async (_, { authError, userId }) => {
         return issuesResult;
       }),
     );
-    const filteredIssuesList = issuesListResult.filter(issue => issue);
 
     // Pull user repo detail
     const reposListResult = await Promise.all(
@@ -35,7 +34,6 @@ const getUserSettings = async (_, { authError, userId }) => {
         return reposResult;
       }),
     );
-    const filteredReposList = reposListResult.filter(repo => repo);
 
     // Pull user pull request detail
     const {
@@ -50,9 +48,9 @@ const getUserSettings = async (_, { authError, userId }) => {
     result.activePullRequests = activePullRequests;
     result.attempting = attemptingListResult;
     result.completedPullRequests = completedPullRequests;
-    result.issues = filteredIssuesList;
+    result.issues = issuesListResult;
     result.rejectedPullRequests = rejectedPullRequests;
-    result.repos = filteredReposList;
+    result.repos = reposListResult;
     result.watching = watchingListResult;
 
     return {

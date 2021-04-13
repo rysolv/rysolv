@@ -11,7 +11,6 @@ const {
   createRepo,
   getUserSettings,
   updateRepoArray,
-  updateUserArray,
 } = require('../../../db');
 const { createActivity } = require('../activity');
 const {
@@ -110,20 +109,6 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
       data: newIssueId,
       id: issueInput.repoId,
       remove: false,
-    });
-
-    // add issue to user issue list
-    await updateUserArray({
-      column: 'issues',
-      data: issueResult.id,
-      userId,
-    });
-
-    // add repo to user list
-    await updateUserArray({
-      column: 'repos',
-      data: issueInput.repoId,
-      userId,
     });
 
     return {

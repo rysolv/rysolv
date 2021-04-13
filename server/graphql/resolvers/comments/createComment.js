@@ -1,11 +1,11 @@
 const { v4: uuidv4 } = require('uuid');
 
 const { createActivity } = require('../activity');
-const { createCommentError } = require('./constants');
 const {
   createComment: createCommentQuery,
-  updateUserArray,
+  getOneUser,
 } = require('../../../db');
+const { createCommentError } = require('./constants');
 const { CustomError, errorLogger } = require('../../../helpers');
 
 const createComment = async ({ commentInput }, { authError, userId }) => {
@@ -22,6 +22,7 @@ const createComment = async ({ commentInput }, { authError, userId }) => {
       user_id: userId,
     };
     const comment = await createCommentQuery({ data });
+    const { profilePic, username } = await getOneUser({ userId });
 
     const activityInput = {
       actionType: 'comment',
@@ -30,21 +31,15 @@ const createComment = async ({ commentInput }, { authError, userId }) => {
     };
     await createActivity({ activityInput });
 
-    const user = await updateUserArray({
-      column: 'comments',
-      data: comment.id,
-      userId: comment.user_id,
-    });
-
     const result = {
       body: comment.body,
       commentId: comment.id,
       createdDate: comment.created_date,
       modifiedDate: comment.modified_date,
-      profilePic: user.profile_pic,
+      profilePic,
       target: comment.target,
       userId: comment.user_id,
-      username: user.username,
+      username,
     };
     return {
       __typename: 'Comment',
