@@ -1,11 +1,14 @@
 const { singleQuery } = require('../../baseQueries');
 
-const deleteRepoMembers = async ({ githubId }) => {
+const deleteRepoMembers = async ({ userId }) => {
   const queryText = `
-    DELETE FROM user_repos WHERE github_id = $1
+    UPDATE user_repos
+    SET user_id = null
+    WHERE user_id = $1
+    AND user_type = 'github_owner'
   `;
 
-  await singleQuery({ queryText, values: [githubId] });
+  await singleQuery({ queryText, values: [userId] });
 };
 
 module.exports = deleteRepoMembers;

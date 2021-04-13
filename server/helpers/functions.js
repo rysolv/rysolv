@@ -1,11 +1,5 @@
 const Sentry = require('@sentry/node');
 
-const {
-  formatIssueUrl,
-  formatRepoUrl,
-} = require('../integrations/github/helpers');
-const { getRepoMembers } = require('../integrations/github');
-
 Sentry.init({ dsn: process.env.SENTRY_DSN });
 
 class CustomError extends Error {
@@ -27,31 +21,6 @@ const arrayCheck = result => {
 
 const errorLogger = e => Sentry.captureException(e);
 
-const formatMemberList = async ({
-  githubId,
-  issueUrl,
-  repoId,
-  repoUrl,
-  userId,
-}) => {
-  const { organization, repo } = issueUrl
-    ? formatIssueUrl(issueUrl)
-    : formatRepoUrl(repoUrl);
-  const githubMembers = await getRepoMembers({ organization, repo });
-  const formattedGithubMembers = githubMembers.map(({ id, type }) => ({
-    githubId: id,
-    repoId,
-    userType: type,
-  }));
-  const formattedRysolvOwner = {
-    githubId,
-    repoId,
-    userId,
-    userType: 'rysolv_owner',
-  };
-  return [...formattedGithubMembers, formattedRysolvOwner];
-};
-
 const isUrl = string => {
   let url;
   try {
@@ -66,6 +35,5 @@ module.exports = {
   arrayCheck,
   CustomError,
   errorLogger,
-  formatMemberList,
   isUrl,
 };
