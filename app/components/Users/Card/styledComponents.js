@@ -7,7 +7,7 @@ import {
   detailFontSize,
   hoverLinkColor,
   subheaderFontSize,
-  subTextColor,
+  subTextGrey,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -36,7 +36,7 @@ export const ImageContainer = styled.div`
 `;
 
 export const IssuesContainer = styled.div`
-  color: ${subTextColor};
+  color: ${subTextGrey};
   font-weight: 500;
 `;
 
@@ -48,7 +48,7 @@ export const IssuesWrapper = styled.div`
 `;
 
 export const MemberInfoContainer = styled.div`
-  color: ${subTextColor};
+  color: ${subTextGrey};
   font-size: ${detailFontSize};
   line-height: 2rem;
 `;

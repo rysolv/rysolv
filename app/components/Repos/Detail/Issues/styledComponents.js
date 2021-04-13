@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
+import { BaseDropDownMenu } from 'components/base_ui';
 import {
+  defaultFontSize,
+  detailFontSize,
   hoverLinkColor,
   subTextLightGrey,
   textColor,
@@ -11,16 +14,6 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
 
-export const IconButtonContainer = styled.div`
-  display: flex;
-`;
-
-export const IconButtonWrapper = styled.div`
-  align-self: center;
-  display: flex;
-  height: fit-content;
-`;
-
 export const IssueAttempts = styled.div`
   align-self: center;
   color: ${subTextLightGrey};
@@ -29,8 +22,8 @@ export const IssueAttempts = styled.div`
 
 export const IssueContent = styled.div`
   display: flex;
+  height: 10rem;
   margin: 1rem 0;
-  min-height: 10rem;
   width: 100%;
 
   ${mobile} {
@@ -65,7 +58,7 @@ export const IssueFundedAmount = styled.div`
 export const IssueListItem = styled.li`
   border-top: 0.1rem solid #d5d5d5;
   display: flex;
-  width: 90%;
+  width: 100%;
 
   & :last-child {
     border-bottom: 0.1rem solid #d5d5d5;
@@ -74,11 +67,11 @@ export const IssueListItem = styled.li`
 
 export const IssueModifiedDate = styled.div`
   align-self: flex-end;
-  font-size: 1.2rem;
+  font-size: ${detailFontSize};
 `;
 
 export const IssueName = styled.a`
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
 
   &:hover {
     color: ${hoverLinkColor};
@@ -107,18 +100,25 @@ export const IssueOpen = styled.div`
 
 export const IssueOpenWrapper = styled.div`
   display: flex;
-  font-size: 1.2rem;
-
-  ${mobile} {
-    margin-top: 1rem;
-    white-space: nowrap;
-  }
+  font-size: ${detailFontSize};
 `;
 
 export const IssuesList = styled.ul`
-  align-items: center;
+  padding: 0 2rem;
+`;
+
+export const IssuesSearchHeaderContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  padding: 0;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 0 2rem;
   width: 100%;
+`;
+
+export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
+  margin-left: 1rem;
+
+  ${mobile} {
+    margin: 0;
+  }
 `;

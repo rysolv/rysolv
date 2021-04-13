@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { defaultFontSize } from 'defaultStyleHelper';
+import { defaultFontSize, subTextLightGrey } from 'defaultStyleHelper';
 
 export const ActivityContainer = styled.div`
   display: flex;
@@ -15,8 +15,8 @@ export const DetailListItem = styled.div`
 `;
 
 export const DetailsPanel = styled.div`
-  color: #6a737d;
   align-self: flex-end;
+  color: ${subTextLightGrey};
   font-size: 1.2rem;
 
   &:hover {

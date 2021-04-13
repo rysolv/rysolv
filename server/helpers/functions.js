@@ -31,9 +31,31 @@ const isUrl = string => {
   return url.protocol === 'http:' || url.protocol === 'https:';
 };
 
+const validatePayoutUrl = ({ payoutMethod, payoutUrl }) => {
+  const payoutMethodDictionary = {
+    'Github Sponsors': 'github',
+    'Open Collective': 'opencollective',
+    Paypal: 'paypal',
+  };
+  const formattedUrl = new URL(payoutUrl);
+  const { host } = formattedUrl;
+  const urlArray = host.split('.');
+
+  let domain = '';
+  if (urlArray.length === 2) [domain] = urlArray;
+  if (urlArray.length === 3) [, domain] = urlArray;
+  const selectedDomain = payoutMethodDictionary[payoutMethod];
+
+  if (domain !== selectedDomain)
+    throw new CustomError(`Payout url does not match selected payout method`);
+
+  if (!payoutUrl.length) throw new CustomError(`Must enter valid payout url`);
+};
+
 module.exports = {
   arrayCheck,
   CustomError,
   errorLogger,
   isUrl,
+  validatePayoutUrl,
 };

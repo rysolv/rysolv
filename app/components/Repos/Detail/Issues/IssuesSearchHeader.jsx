@@ -4,11 +4,11 @@ import T from 'prop-types';
 import { BaseInputWithAdornment } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
+import { BaseInputWrapper } from '../styledComponents';
 import {
-  BaseInputWrapper,
   IssuesSearchHeaderContainer,
   StyledBaseDropDownMenu,
-} from '../styledComponents';
+} from './styledComponents';
 
 const SearchIcon = iconDictionary('search');
 

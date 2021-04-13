@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Identicon from 'identicon.js';
 
 import {
+  ADD_REPO_PAYOUT,
   CHANGE_REPO_FILTER,
   CHANGE_REPO_SEARCH,
   CLEAR_ALERTS,
@@ -109,6 +110,11 @@ export const initialState = {
 
 const reposReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case ADD_REPO_PAYOUT: {
+      draft.alerts = initialState.alerts;
+      draft.loading.updateRepo = true;
+      break;
+    }
     case CHANGE_REPO_FILTER: {
       const { field, value } = payload;
       if (field === 'language' || field === 'repo') {

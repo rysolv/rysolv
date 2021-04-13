@@ -4,6 +4,7 @@ import {
   commentHeaderColor,
   inputFieldColor,
   lightBlueColor,
+  subTextGrey,
   textColor,
 } from 'defaultStyleHelper';
 
@@ -19,7 +20,7 @@ export const OptionTitle = styled.button`
   background-color: ${commentHeaderColor};
   border-radius: 0.3rem;
   border: 0.1rem solid ${inputFieldColor};
-  color: #6a737d;
+  color: ${subTextGrey};
   display: flex;
   font-size: 1.2rem;
   height: 2.2rem;

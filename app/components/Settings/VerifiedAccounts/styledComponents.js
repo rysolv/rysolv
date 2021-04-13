@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import {
+  commentHeaderColor,
   defaultFontSize,
   hoverLinkColor,
   lightGreyColor,
@@ -24,7 +25,7 @@ export const AccountIcon = styled.div`
 `;
 
 export const AccountSquare = styled.div`
-  background-color: #f6f8fa;
+  background-color: ${commentHeaderColor};
   border-radius: 0.3rem;
   height: 16.2rem;
   margin-top: 3rem;

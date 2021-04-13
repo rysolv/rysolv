@@ -10,6 +10,7 @@ import {
 import { post } from 'utils/request';
 
 import {
+  ADD_REPO_PAYOUT,
   FETCH_INFO,
   FETCH_REPOS,
   FETCH_USER_REPOS,
@@ -40,6 +41,40 @@ import {
   upvoteIssueTemp,
 } from './actions';
 
+export function* addRepoPayoutSaga({ payload }) {
+  const { editRequest, itemId } = payload;
+  const { payoutMethod, payoutUrl } = editRequest;
+  const query = `
+    mutation {
+      addRepoPayout(repoId: "${itemId}", repoInput: {
+        payoutMethod: "${payoutMethod}",
+        payoutUrl: "${payoutUrl}"
+      }) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        addRepoPayout: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchInfo({ itemId }));
+    yield put(updateInfoSuccess({ message }));
+  } catch (error) {
+    yield put(updateInfoFailure({ error: { message: error } }));
+  }
+}
+
 export function* fetchInfoSaga({ payload }) {
   const { itemId } = payload;
   const query = `
@@ -48,15 +83,16 @@ export function* fetchInfoSaga({ payload }) {
         __typename
         ... on Repo {
           contributors
-          createdDate
           description
+          earnedBounties
           githubOwners
           id
           issues
           logo
-          modifiedDate
+          maintainerProceeds
           name
           organizationUrl
+          payoutUrl
           preferredLanguages
           repoUrl
           totalFunded
@@ -291,11 +327,10 @@ export function* searchReposSaga({ payload }) {
 export function* updateInfoSaga({ payload }) {
   const { editRequest, itemId } = payload;
   const {
-    organizationUrl,
     description,
     logo,
     name,
-    preferredLanguages,
+    organizationUrl,
     repoUrl,
     verified,
   } = editRequest;
@@ -304,7 +339,6 @@ export function* updateInfoSaga({ payload }) {
       transformRepo(repoId: "${itemId}", repoInput: {
         organizationUrl: "${organizationUrl}",
         repoDescription: "${description}",
-        repoLanguages: ${JSON.stringify(preferredLanguages)},
         repoLogo: "${logo}",
         repoName: "${name}",
         repoUrl: "${repoUrl}",
@@ -378,6 +412,7 @@ export function* upvoteIssueSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(ADD_REPO_PAYOUT, addRepoPayoutSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
   yield takeLatest(FETCH_REPOS, fetchReposSaga);
   yield takeLatest(FETCH_USER_REPOS, fetchUserReposSaga);

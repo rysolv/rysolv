@@ -4,9 +4,11 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 
+import { defaultFontSize, textColor } from 'defaultStyleHelper';
+
 export const IconWrapper = styled.div`
+  color: ${textColor};
   padding: 0 1rem;
-  color: rgba(0, 0, 0, 0.7);
 
   svg {
     height: 2rem;
@@ -16,7 +18,7 @@ export const IconWrapper = styled.div`
 
 export const StyledExpansionPanel = styled(ExpansionPanel)`
   box-shadow: none;
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
 
   &:before {
     background-color: white;
@@ -44,5 +46,5 @@ export const StyledExpansionPanelSummary = styled(ExpansionPanelSummary)`
 `;
 
 export const StyledTypography = styled(Typography)`
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
 `;

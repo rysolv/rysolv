@@ -9,11 +9,10 @@ import {
   ContributorImageWrapper,
   ContributorListItem,
   ContributorName,
-  ContributorsList,
-} from '../styledComponents';
+} from './styledComponents';
 
-const RepoContributorsTab = ({ contributors, handleNav }) => (
-  <ContributorsList>
+const RepoContributors = ({ contributors, handleNav }) => (
+  <ul>
     {contributors.map(
       ({ firstName, id, isOwner, lastName, profilePic, username }) => (
         <ContributorListItem key={username}>
@@ -41,12 +40,12 @@ const RepoContributorsTab = ({ contributors, handleNav }) => (
         </ContributorListItem>
       ),
     )}
-  </ContributorsList>
+  </ul>
 );
 
-RepoContributorsTab.propTypes = {
+RepoContributors.propTypes = {
   contributors: T.array,
   handleNav: T.func,
 };
 
-export default RepoContributorsTab;
+export default RepoContributors;

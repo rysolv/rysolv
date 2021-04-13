@@ -36,8 +36,11 @@ const issueCardValues = `
   ARRAY_REMOVE(ARRAY_AGG(DISTINCT(attempting.user_id)), NULL) AS attempting,
   ARRAY_REMOVE(ARRAY_AGG(DISTINCT(watching.user_id)), NULL) AS watching,
   COUNT(DISTINCT(comments.id)) + github_comment_count AS comments,
-  repos.name AS "repoName",
-  repos.verified AS "repoVerified"
+  EXISTS(
+    SELECT user_repos.id FROM user_repos
+    WHERE user_repos.repo_id = repos.id
+    AND user_repos.user_type = 'github_owner') AS "repoVerified",
+  repos.name AS "repoName"
 `;
 
 const issueDetailValues = `
@@ -61,8 +64,8 @@ const groupValues = `
   issues.repo_id,
   issues.repo,
   issues.type,
-  repos.name,
-  repos.verified
+  repos.id,
+  repos.name
 `;
 
 module.exports = {

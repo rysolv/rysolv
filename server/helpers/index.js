@@ -1,4 +1,10 @@
-const { arrayCheck, CustomError, errorLogger, isUrl } = require('./functions');
+const {
+  arrayCheck,
+  CustomError,
+  errorLogger,
+  isUrl,
+  validatePayoutUrl,
+} = require('./functions');
 const { sendEmail } = require('./emailHelper');
 
 module.exports = {
@@ -7,4 +13,5 @@ module.exports = {
   errorLogger,
   isUrl,
   sendEmail,
+  validatePayoutUrl,
 };

@@ -52,6 +52,6 @@ export const StyledIssueDetail = styled.div`
 `;
 
 export const StyledVerified = styled(Verified)`
-  padding: 0 0.5rem;
   display: flex;
+  padding: 0 0.5rem;
 `;

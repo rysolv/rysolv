@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import { inputFieldColor } from 'defaultStyleHelper';
+import { inputFieldColor, textColor } from 'defaultStyleHelper';
 
 export const StyledAutocomplete = styled(Autocomplete)`
   padding-right: 2rem;
@@ -17,7 +17,7 @@ export const StyledAutocomplete = styled(Autocomplete)`
   .tag {
     background-color: rgb(237, 238, 240);
     border-radius: 0.25rem;
-    color: rgba(0, 0, 0, 0.7);
+    color: ${textColor};
     display: flex;
     font-weight: 700;
     line-height: 1.5;

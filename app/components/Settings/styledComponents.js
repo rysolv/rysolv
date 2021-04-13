@@ -17,6 +17,7 @@ import {
   defaultFontSize,
   headerColor,
   lightBlueColor,
+  subTextLightGrey,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -36,7 +37,7 @@ export const DetailContainer = styled.div`
 `;
 
 export const DetailViewContainer = styled.div`
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   display: flex;
   padding: 1.6rem 0;
   width: 100%;
@@ -125,7 +126,7 @@ export const LinkIcon = styled.div`
 `;
 
 export const LinksWrapper = styled.div`
-  color: #6a737d;
+  color: ${subTextLightGrey};
   font-size: ${defaultFontSize};
   font-weight: bold;
   margin-left: 0.5rem;
@@ -204,7 +205,7 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
 
 export const StyledExpansionPanel = styled(ExpansionPanel)`
   box-shadow: none;
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
 
   &:before {
     background-color: white;
@@ -290,7 +291,7 @@ export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
 
 export const TabItem = styled.div`
   color: ${commentHeaderColor};
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   padding: 0.5rem 0;
 `;
 

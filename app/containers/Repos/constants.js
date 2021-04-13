@@ -1,3 +1,5 @@
+export const ADD_REPO_PAYOUT = 'app/Repos/ADD_REPO_PAYOUT';
+
 export const CHANGE_REPO_FILTER = 'app/Repos/CHANGE_REPO_FILTER';
 export const CHANGE_REPO_SEARCH = 'app/Repos/CHANGE_REPO_SEARCH';
 

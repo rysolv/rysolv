@@ -1,6 +1,12 @@
 /* eslint-disable array-callback-return, consistent-return */
 import isEmtpy from 'lodash/isEmpty';
 
+import { validate } from 'utils/validate';
+
+const validationPropsByField = {
+  payoutUrl: { required: true, type: 'payoutUrlInput' },
+};
+
 export const filterRepos = (repos, filterParams) =>
   repos.filter(({ name, preferredLanguages, totalFunded }) => {
     const {
@@ -63,4 +69,13 @@ export const searchRepos = (repos, { value }) => {
     return false;
   });
   return filteredArray;
+};
+
+export const validateOneField = ({ field, values, verifyField }) => {
+  const value = values[field];
+  return validate({
+    value,
+    ...validationPropsByField[field],
+    ...verifyField,
+  });
 };

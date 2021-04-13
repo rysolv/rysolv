@@ -14,6 +14,7 @@ import {
   hoverLinkColor,
   lightBlueColor,
   lightGreyColor,
+  subTextLightGrey,
   successGreen,
   textColor,
 } from 'defaultStyleHelper';
@@ -49,7 +50,7 @@ export const ImportFormContainer = styled.div`
 `;
 
 export const ImportUrlWrapper = styled.div`
-  color: #6a737d;
+  color: ${subTextLightGrey};
   display: flex;
   flex-direction: column;
   font-size: ${defaultFontSize};

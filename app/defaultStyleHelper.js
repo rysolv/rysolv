@@ -1,6 +1,7 @@
 // Colors
 export const bodyColor = '#fafafa';
 export const borderColor = '#e0e0e0';
+export const buttonGrey = '#bdbdbd';
 export const buttonRed = '#dc3545';
 export const codeGrey = '#eceff1';
 export const commentHeaderColor = '#f6f8fa';
@@ -24,7 +25,8 @@ export const rewardBackground = 'rgb(236, 234, 252)';
 export const rewardColor = 'rgb(105, 8, 201)';
 export const secondaryButtonColor = '#5e35b1';
 export const selectedColor = '#00eb93';
-export const subTextColor = '#878a8c';
+export const subTextGrey = '#878a8c';
+export const subTextLightGrey = '#6a737d';
 export const successGreen = '#31b589';
 export const textColor = 'rgba(0,0,0,0.7)';
 export const verifyBackgroundColor = 'rgb(229, 251, 242)';

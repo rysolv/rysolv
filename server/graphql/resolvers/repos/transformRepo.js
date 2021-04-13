@@ -17,6 +17,7 @@ const transformRepo = async ({ repoId, repoInput }, { authError, userId }) => {
 
     const data = {
       description: repoInput.repoDescription,
+      is_edited: true,
       logo: repoInput.logo,
       modified_date: new Date(), // update modified date
       name: repoInput.repoName,

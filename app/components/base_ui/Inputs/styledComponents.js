@@ -55,7 +55,7 @@ export const Spacer = styled.div`
 export const StyledBaseInput = styled(OutlinedInput)`
   background: white;
   border-radius: 0.5rem;
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   font-size: ${defaultFontSize};
   height: 3rem;
   overflow: hidden;

@@ -16,8 +16,8 @@ import {
   ProfileImageWrapper,
   RecentActivityContainer,
   StyledAction,
-  StyledTitled,
   StyledExternalLink,
+  StyledTitle,
   StyledWordLink,
 } from './styledComponents';
 
@@ -81,7 +81,7 @@ export class RecentActivityView extends React.PureComponent {
     return (
       <Fragment>
         <RecentActivityContainer>
-          <StyledTitled>Recent activities</StyledTitled>
+          <StyledTitle>Recent activities</StyledTitle>
           <ConditionalRender
             Component={ActivityComponent}
             FallbackComponent={

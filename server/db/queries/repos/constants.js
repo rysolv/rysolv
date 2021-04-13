@@ -8,11 +8,15 @@ const repoValues = [
   'name',
   'organization_url',
   'owner_id',
+  'payout_url',
   'repo_url',
-  'verified',
 ];
 
 const repoReturnValues = `
+  EXISTS(
+    SELECT user_repos.id FROM user_repos
+    WHERE user_repos.repo_id = repos.id
+    AND user_repos.user_type = 'github_owner') AS "verified",
   (SELECT COALESCE(ARRAY_AGG(DISTINCT(issues.id)), '{}') FROM issues WHERE repos.id = issues.repo_id AND repos.is_deleted = false) AS "issues",
   repos.created_date AS "createdDate",
   repos.description,
@@ -23,8 +27,8 @@ const repoReturnValues = `
   repos.name,
   repos.organization_url AS "organizationUrl",
   repos.owner_id AS "ownerId",
-  repos.repo_url AS "repoUrl",
-  repos.verified
+  repos.payout_url AS "payoutUrl",
+  repos.repo_url AS "repoUrl"
 `;
 
 const groupValues = `
@@ -38,8 +42,8 @@ const groupValues = `
   repos.name,
   repos.organization_url,
   repos.owner_id,
-  repos.repo_url,
-  repos.verified
+  repos.payout_url,
+  repos.repo_url
 `;
 
 module.exports = { groupValues, repoReturnValues, repoValues };
