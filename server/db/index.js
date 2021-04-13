@@ -53,6 +53,7 @@ const {
   updateRepoArray,
 } = require('./queries/repos');
 const { getStats } = require('./queries/stats');
+const { addRepoMembers, deleteRepoMembers } = require('./queries/userRepos');
 const {
   checkDuplicateGithubId,
   checkDuplicateUserEmail,
@@ -77,6 +78,7 @@ const {
 } = require('./queries/withdrawal');
 
 module.exports = {
+  addRepoMembers,
   checkDuplicateGithubId,
   checkDuplicateIssue,
   checkDuplicatePullRequest,
@@ -94,6 +96,7 @@ module.exports = {
   createUser,
   createWithdrawal,
   deletePullRequest,
+  deleteRepoMembers,
   deleteUserLanguages,
   deleteUserPullRequests,
   downvoteIssue,

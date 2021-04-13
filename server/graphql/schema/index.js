@@ -218,6 +218,7 @@ module.exports = buildSchema(`
     createdDate: Object
     description: String
     exists: Boolean
+    githubOwners: [String]
     id: ID!
     issues: [Object]
     logo: String
@@ -238,6 +239,7 @@ module.exports = buildSchema(`
 
   input RepoInput {
     identiconId: ID
+    importUrl: String
     isManual: Boolean
     organizationUrl: String
     repoDescription: String
@@ -279,6 +281,7 @@ module.exports = buildSchema(`
     email: String!
     emailVerified: Boolean
     firstName: String
+    githubId: String
     githubLink: String
     githubUsername: String
     id: ID!

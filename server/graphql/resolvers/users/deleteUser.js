@@ -7,6 +7,7 @@ const {
   remainingBalanceError,
 } = require('./constants');
 const {
+  deleteRepoMembers,
   deleteUserLanguages,
   deleteUserPullRequests,
   getUserSettings,
@@ -51,6 +52,7 @@ const deleteUser = async (_, { authError, email, provider, userId }) => {
       await deleteCognitoUser({ email });
     }
 
+    await deleteRepoMembers({ userId });
     await deleteUserLanguages({ userId });
     await deleteUserPullRequests({ userId });
     await transformUser({ data, userId });

@@ -58,6 +58,7 @@ const userSettingsReturnValues = `
     LEFT JOIN questions ON questions.id = user_question_responses.question_id
     WHERE user_question_responses.user_id = users.id
     AND questions.category = 'hiring') AS "isQuestionnaireComplete",
+  users.github_id AS "githubId",
   users.github_username AS "githubUsername",
   ${userReturnValues}
 `;

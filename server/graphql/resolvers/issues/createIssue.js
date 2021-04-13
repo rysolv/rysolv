@@ -3,11 +3,13 @@ const Identicon = require('identicon.js');
 const { v4: uuidv4 } = require('uuid');
 
 const {
+  addRepoMembers,
   checkDuplicateIssue,
   checkDuplicateRepo,
   createIssue: createIssueQuery,
   createLanguage,
   createRepo,
+  getUserSettings,
   updateRepoArray,
   updateUserArray,
 } = require('../../../db');
@@ -22,6 +24,7 @@ const {
   newRepoObject,
 } = require('./constants');
 const { CustomError, errorLogger } = require('../../../helpers');
+const { formatMemberList } = require('../../../integrations/github/helpers');
 
 const createIssue = async ({ issueInput }, { authError, userId }) => {
   try {
@@ -45,6 +48,16 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
       const repoObject = await newRepoObject(issueInput);
       try {
         const result = await createRepo({ data: repoObject });
+        const { githubId } = await getUserSettings({ userId });
+
+        await addRepoMembers({
+          members: await formatMemberList({
+            githubId,
+            issueUrl: issueInput.repo,
+            repoId: result.id,
+          }),
+        });
+
         return result;
       } catch (error) {
         throw new CustomError(createRepoError);
