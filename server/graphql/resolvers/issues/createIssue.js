@@ -23,11 +23,8 @@ const {
   newIssueObject,
   newRepoObject,
 } = require('./constants');
-const {
-  CustomError,
-  errorLogger,
-  formatMemberList,
-} = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
+const { formatMemberList } = require('../../../integrations/github/helpers');
 
 const createIssue = async ({ issueInput }, { authError, userId }) => {
   try {
@@ -58,7 +55,6 @@ const createIssue = async ({ issueInput }, { authError, userId }) => {
             githubId,
             issueUrl: issueInput.repo,
             repoId: result.id,
-            userId,
           }),
         });
 

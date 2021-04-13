@@ -2,7 +2,6 @@ const {
   arrayCheck,
   CustomError,
   errorLogger,
-  formatMemberList,
   isUrl,
   validatePayoutUrl,
 } = require('./functions');
@@ -12,7 +11,6 @@ module.exports = {
   arrayCheck,
   CustomError,
   errorLogger,
-  formatMemberList,
   isUrl,
   sendEmail,
   validatePayoutUrl,

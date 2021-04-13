@@ -15,11 +15,8 @@ const {
   createRepoSuccess,
 } = require('./constants');
 const { createActivity } = require('../activity');
-const {
-  CustomError,
-  errorLogger,
-  formatMemberList,
-} = require('../../../helpers');
+const { CustomError, errorLogger } = require('../../../helpers');
+const { formatMemberList } = require('../../../integrations/github/helpers');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
 const createRepo = async ({ repoInput }, { authError, userId }) => {
@@ -60,7 +57,6 @@ const createRepo = async ({ repoInput }, { authError, userId }) => {
         githubId,
         repoId,
         repoUrl: repoInput.importUrl,
-        userId,
       }),
     });
 

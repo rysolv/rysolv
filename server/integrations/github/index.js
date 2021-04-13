@@ -2,7 +2,7 @@
 const fetch = require('node-fetch');
 
 const { authenticate } = require('./auth');
-const { CustomError } = require('../helpers');
+const { CustomError } = require('../../helpers');
 
 const getGithubIssueComments = async ({ issueNumber, organization, repo }) => {
   try {
