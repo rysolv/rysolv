@@ -1,10 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { signOut, updateActiveUser } from 'containers/Auth/actions';
+import {
+  fetchActiveUser,
+  signOut,
+  updateActiveUser,
+} from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
+  ACCEPT_BOUNTY,
   CHANGE_EMAIL,
   changeEmailError,
   DELETE_USER,
@@ -19,6 +24,8 @@ import {
   WITHDRAW_FUNDS,
 } from './constants';
 import {
+  acceptBountyFailure,
+  acceptBountySuccess,
   changeEmailFailure,
   changeEmailSuccess,
   closeModalState,
@@ -40,6 +47,36 @@ import {
   withdrawFundsFailure,
   withdrawFundsSuccess,
 } from './actions';
+
+export function* acceptBountySaga({ payload }) {
+  const { fundingId } = payload;
+  const query = `
+    mutation{
+      acceptBounty(fundingId: "${fundingId}") {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        acceptBounty: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(acceptBountySuccess({ fundingId }));
+    yield put(fetchActiveUser());
+  } catch (error) {
+    yield put(acceptBountyFailure({ error: { message: error } }));
+  }
+}
 
 export function* changeEmailSaga({ payload }) {
   const { email } = payload;
@@ -94,6 +131,17 @@ export function* fetchInfoSaga({ payload }) {
           activePullRequests
           attempting
           balance
+          bounties {
+            createdDate
+            fundedAmount
+            id
+            isApproved
+            issueId
+            name
+            pullRequestUrl
+            rep
+            userAccepted
+          }
           completedPullRequests
           createdDate
           dollarsEarned
@@ -401,6 +449,7 @@ export function* withdrawFundsSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(ACCEPT_BOUNTY, acceptBountySaga);
   yield takeLatest(CHANGE_EMAIL, changeEmailSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);

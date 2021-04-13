@@ -55,6 +55,7 @@ const {
 const { getStats } = require('./queries/stats');
 const { addRepoMembers, deleteRepoMembers } = require('./queries/userRepos');
 const {
+  acceptBounty,
   checkDuplicateGithubId,
   checkDuplicateUserEmail,
   checkExistingGithubAccount,
@@ -63,6 +64,7 @@ const {
   getOneUser,
   getOneUserSignUp,
   getUserAttemptList,
+  getUserBounties,
   getUserPullRequestDetail,
   getUsers,
   getUserSettings,
@@ -77,6 +79,7 @@ const {
 } = require('./queries/withdrawal');
 
 module.exports = {
+  acceptBounty,
   addRepoMembers,
   checkDuplicateGithubId,
   checkDuplicateIssue,
@@ -119,6 +122,7 @@ module.exports = {
   getStats,
   getUserActivity,
   getUserAttemptList,
+  getUserBounties,
   getUserLanguages,
   getUserPullRequestDetail,
   getUserPullRequests,

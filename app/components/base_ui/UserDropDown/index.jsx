@@ -20,6 +20,7 @@ import { FundingWrapper } from '../StyledWrappers';
 import { MonocleIcon } from '../Icons';
 
 const AttemptIcon = iconDictionary('attempt');
+const BountyIcon = iconDictionary('gift');
 const ExitIcon = iconDictionary('exit');
 const FundedIcon = iconDictionary('funded');
 const IssueIcon = iconDictionary('issue');
@@ -53,7 +54,9 @@ const UserDropDownMenu = ({
   const {
     attempting,
     balance,
+    bounties,
     issues,
+    notifications,
     profilePic,
     pullRequests,
     repos,
@@ -86,6 +89,17 @@ const UserDropDownMenu = ({
           <MenuItemValue>
             <FundingWrapper open value={formatDollarAmount(balance)} />
           </MenuItemValue>
+        </StyledMenuItem>
+
+        <StyledMenuItem
+          notifications={notifications}
+          onClick={() => handleNav('/settings/bounties')}
+        >
+          <MenuItemLabel>
+            <IconWrapper>{BountyIcon}</IconWrapper>
+            Bounties
+          </MenuItemLabel>
+          <MenuItemValue>{bounties ? bounties.length : 0}</MenuItemValue>
         </StyledMenuItem>
 
         <StyledMenuItem onClick={() => handleNav('/settings')}>
