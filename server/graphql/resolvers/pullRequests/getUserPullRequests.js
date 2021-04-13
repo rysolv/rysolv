@@ -8,7 +8,7 @@ const getUserPullRequests = async (_, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    const result = await getUserPullRequestsQuery({ pullRequestId: userId });
+    const result = await getUserPullRequestsQuery({ userId });
     return {
       __typename: 'PullRequestArray',
       pullRequestArray: result,

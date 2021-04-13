@@ -153,6 +153,7 @@ module.exports = buildSchema(`
 
   type PullRequest {
     createdDate: Object!
+    exists: Boolean
     fundedAmount: Float
     githubUsername: String
     htmlUrl: String
@@ -381,6 +382,7 @@ module.exports = buildSchema(`
 
   type RootQuery {
     getFilterOptions: FilterResult!
+    getGithubPullRequests(issueId: ID!): PullRequestArrayResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!

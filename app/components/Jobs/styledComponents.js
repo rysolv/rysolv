@@ -22,6 +22,7 @@ import {
   languageBackground,
   languageText,
   lightBlueColor,
+  lightGreyColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -106,7 +107,7 @@ export const DescriptionTitle = styled.div`
 `;
 
 export const DescriptionWrapper = styled.div`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
   font-size: 2rem;
   font-weight: 500;
   padding: 1rem;

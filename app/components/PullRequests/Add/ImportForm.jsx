@@ -1,17 +1,16 @@
 import React from 'react';
 import T from 'prop-types';
 
+import UserPullRequests from './UserPullRequests';
 import {
   ButtonGroup,
   ImportFormContainer,
-  ImportUrlLabel,
   ImportUrlWrapper,
+  StyledBaseTextInputWithAdornment,
   StyledErrorSuccessBanner,
   StyledHeader,
   StyledPrimaryAsyncButton,
   StyledSecondayButton,
-  StyledTextareaAutosize,
-  TextareaWrapper,
 } from './styledComponents';
 
 const ImportForm = ({
@@ -22,6 +21,8 @@ const ImportForm = ({
   handleInputChange,
   importData,
   loading,
+  userPullRequests,
+  userPullRequestsLoading,
 }) => {
   const { importUrl } = importData;
   const enabled = !!importUrl.value;
@@ -42,16 +43,20 @@ const ImportForm = ({
       <StyledHeader>Import Pull Request</StyledHeader>
       <StyledErrorSuccessBanner error={error} onClose={handleClearAlerts} />
       <ImportUrlWrapper>
-        <ImportUrlLabel>Pull Request URL</ImportUrlLabel>
-        <TextareaWrapper>
-          <StyledTextareaAutosize
-            disabled={loading}
-            onChange={handleChange}
-            rows={2}
-            value={importUrl.value}
-          />
-        </TextareaWrapper>
+        <StyledBaseTextInputWithAdornment
+          disabled={userPullRequestsLoading}
+          name="url"
+          onChange={handleChange}
+          placeholder="https://github.com/rysolv/rysolv/pull/1"
+          value={importUrl.value}
+        />
       </ImportUrlWrapper>
+      <UserPullRequests
+        handleImport={handleImport}
+        handleInputChange={handleInputChange}
+        userPullRequests={userPullRequests}
+        userPullRequestsLoading={userPullRequestsLoading}
+      />
       <ButtonGroup>
         <StyledSecondayButton label="Cancel" onClick={handleClose} />
         <StyledPrimaryAsyncButton
@@ -73,6 +78,8 @@ ImportForm.propTypes = {
   handleInputChange: T.func.isRequired,
   importData: T.object.isRequired,
   loading: T.bool.isRequired,
+  userPullRequests: T.array.isRequired,
+  userPullRequestsLoading: T.bool.isRequired,
 };
 
 export default ImportForm;

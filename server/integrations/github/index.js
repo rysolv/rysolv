@@ -271,6 +271,24 @@ const getUserGithubIssues = async ({ username }) => {
   return issues;
 };
 
+const getUserGithubPullRequests = async ({ owner, repo }) => {
+  const { GITHUB } = await authenticate();
+
+  const { data } = await GITHUB.pulls.list({
+    owner,
+    repo,
+    sort: 'updated',
+    state: 'open',
+  });
+
+  return data.map(({ html_url, number, title, updated_at }) => ({
+    htmlUrl: html_url,
+    modifiedDate: updated_at,
+    pullNumber: number,
+    title,
+  }));
+};
+
 const getUserGithubRepos = async ({ username }) => {
   const { GITHUB } = await authenticate();
 
@@ -369,6 +387,7 @@ module.exports = {
   getSinglePullRequest,
   getSingleRepo,
   getUserGithubIssues,
+  getUserGithubPullRequests,
   getUserGithubRepos,
   requestGithubUser,
 };

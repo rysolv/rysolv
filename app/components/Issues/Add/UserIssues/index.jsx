@@ -6,7 +6,7 @@ import AsyncRender from 'components/AsyncRender';
 import ImportIssueCard from './ImportIssueCard';
 import { TextWrapper, UserIssuesContainer } from './styledComponents';
 
-const ImportForm = ({ handleInputChange, userIssues, userIssuesLoading }) => {
+const UserIssues = ({ handleInputChange, userIssues, userIssuesLoading }) => {
   const UserIssueList =
     userIssues &&
     userIssues.map(({ createdDate, exists, name, repo, repoName }) => (
@@ -47,10 +47,10 @@ const ImportForm = ({ handleInputChange, userIssues, userIssuesLoading }) => {
   );
 };
 
-ImportForm.propTypes = {
+UserIssues.propTypes = {
   handleInputChange: T.func,
   userIssues: T.array,
   userIssuesLoading: T.bool,
 };
 
-export default ImportForm;
+export default UserIssues;

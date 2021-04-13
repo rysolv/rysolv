@@ -6,13 +6,13 @@ import { IconToolTip } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
-  AddContainer,
-  IconContainer,
+  AddIconWrapper,
+  IconWrapper,
   ImportCardWrapper,
-  StyledLinkContainer,
-  StyledRepoBody,
-  StyledRepoHeader,
-  StyledRepoTitle,
+  StyledBody,
+  StyledHeader,
+  StyledLink,
+  StyledTitle,
 } from './styledComponents';
 
 const AddBox = iconDictionary('addBox');
@@ -37,23 +37,21 @@ const ImportCard = ({
 
   return (
     <ImportCardWrapper>
-      <StyledRepoBody>
-        <StyledRepoHeader>
-          {moment.utc(modifiedDate).fromNow()}
-        </StyledRepoHeader>
-        <StyledRepoTitle>
-          <IconContainer>{GithubIcon}</IconContainer>
-          <StyledLinkContainer>
+      <StyledBody>
+        <StyledHeader>{moment.utc(modifiedDate).fromNow()}</StyledHeader>
+        <StyledTitle>
+          <IconWrapper>{GithubIcon}</IconWrapper>
+          <StyledLink>
             <a href={organizationUrl} target="_blank">
               {name}
             </a>
-          </StyledLinkContainer>
-        </StyledRepoTitle>
-      </StyledRepoBody>
+          </StyledLink>
+        </StyledTitle>
+      </StyledBody>
       <IconToolTip disabled={!exists} toolTipText="Already imported">
-        <AddContainer disabled={exists} onClick={handleImport}>
+        <AddIconWrapper disabled={exists} onClick={handleImport}>
           {AddBox}
-        </AddContainer>
+        </AddIconWrapper>
       </IconToolTip>
     </ImportCardWrapper>
   );
