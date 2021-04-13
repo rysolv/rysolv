@@ -281,12 +281,18 @@ const getUserGithubPullRequests = async ({ owner, repo }) => {
     state: 'open',
   });
 
-  return data.map(({ html_url, number, title, updated_at }) => ({
-    htmlUrl: html_url,
-    modifiedDate: updated_at,
-    pullNumber: number,
-    title,
-  }));
+  const pullRequestList = [];
+  data.forEach(({ html_url, number, title, updated_at, user }) => {
+    if (user.type !== 'Bot') {
+      pullRequestList.push({
+        htmlUrl: html_url,
+        modifiedDate: updated_at,
+        pullNumber: number,
+        title,
+      });
+    }
+  });
+  return pullRequestList;
 };
 
 const getUserGithubRepos = async ({ username }) => {

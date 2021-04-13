@@ -53,7 +53,7 @@ export const ImportUrlWrapper = styled.div`
   display: flex;
   flex-direction: column;
   font-size: ${defaultFontSize};
-  padding: 2rem;
+  padding: 2rem 0.5rem 2rem 2rem;
 `;
 
 export const PullRequestContainer = styled.div`
@@ -73,7 +73,7 @@ export const StatusWrapper = styled.span`
 `;
 
 export const StyledBaseTextInputWithAdornment = styled(BaseTextInput)`
-  margin: 0 0.5;
+  margin: 0 0 0 0.5rem;
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
@@ -92,7 +92,7 @@ export const StyledHeader = styled.h1`
   font-weight: 500;
   margin: 0;
   min-width: 40rem;
-  padding: 1rem 0;
+  padding: 1rem 0 1rem 1rem;
   text-align: left;
 `;
 

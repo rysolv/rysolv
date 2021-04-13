@@ -72,6 +72,7 @@ export const TextWrapper = styled.div`
   color: ${textColor};
   font-size: ${defaultFontSize};
   margin: 2rem 0;
+  text-align: center;
 `;
 
 export const UserPullRequestsContainer = styled.div`
