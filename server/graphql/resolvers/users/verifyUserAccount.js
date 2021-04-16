@@ -1,6 +1,10 @@
 /* eslint-disable camelcase */
 const { CustomError, errorLogger } = require('../../../helpers');
-const { getUserSettings, transformUser } = require('../../../db');
+const {
+  assignOwnerToRepo,
+  getUserSettings,
+  transformUser,
+} = require('../../../db');
 const { requestGithubUser } = require('../../../integrations/github');
 const {
   verifyUserAccountError,
@@ -29,6 +33,9 @@ const verifyUserAccount = async ({ code }, { authError, userId }) => {
       },
       userId,
     });
+
+    await assignOwnerToRepo({ githubId: github_id, userId });
+
     const { githubUsername, isGithubVerified } = await getUserSettings({
       userId,
     });
