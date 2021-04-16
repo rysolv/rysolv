@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const Identicon = require('identicon.js');
 
 const {
+  assignOwnerToRepo,
   checkDuplicateGithubId,
   checkDuplicateUserEmail,
   createLanguage,
@@ -96,6 +97,8 @@ const githubSignIn = async ({ code, origin }, { res }) => {
         username: github_username,
       };
       const result = await createUser({ data: newUser });
+
+      await assignOwnerToRepo({ githubId: github_id, userId: id });
 
       if (languages.length) {
         await createLanguage({

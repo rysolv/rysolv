@@ -39,7 +39,8 @@ const issueCardValues = `
   EXISTS(
     SELECT user_repos.id FROM user_repos
     WHERE user_repos.repo_id = repos.id
-    AND user_repos.user_type = 'github_owner') AS "repoVerified",
+    AND user_repos.user_type = 'github_owner'
+    AND user_repos.user_id IS NOT NULL) AS "repoVerified",
   repos.name AS "repoName"
 `;
 

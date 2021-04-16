@@ -16,7 +16,8 @@ const repoReturnValues = `
   EXISTS(
     SELECT user_repos.id FROM user_repos
     WHERE user_repos.repo_id = repos.id
-    AND user_repos.user_type = 'github_owner') AS "verified",
+    AND user_repos.user_type = 'github_owner'
+    AND user_repos.user_id IS NOT NULL) AS "verified",
   (SELECT COALESCE(ARRAY_AGG(DISTINCT(issues.id)), '{}') FROM issues WHERE repos.id = issues.repo_id AND repos.is_deleted = false) AS "issues",
   repos.created_date AS "createdDate",
   repos.description,
