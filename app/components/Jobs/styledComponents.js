@@ -128,6 +128,27 @@ export const IconWrapper = styled.div`
   }
 `;
 
+export const JobsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+
+  ${mobile} {
+    width: 100%;
+  }
+`;
+
+export const JobsHeader = styled.div`
+  color: ${textColor};
+  font-size: ${headerFontSize};
+  margin: 5rem 0 2rem 0;
+  width: 100%;
+
+  ${mobile} {
+    margin: 2rem 0;
+  }
+`;
+
 export const LinkWrapper = styled(Link)`
   color: ${hoverLinkColor};
 
@@ -146,27 +167,6 @@ export const QuestionWrapper = styled.div`
   color: ${textColor};
   font-size: 2.6rem;
   font-weight: 500;
-`;
-
-export const RecruitingContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-
-  ${mobile} {
-    width: 100%;
-  }
-`;
-
-export const RecruitingHeader = styled.div`
-  color: ${textColor};
-  font-size: ${headerFontSize};
-  margin: 5rem 0 2rem 0;
-  width: 100%;
-
-  ${mobile} {
-    margin: 2rem 0;
-  }
 `;
 
 export const SampleWrapper = styled.div`

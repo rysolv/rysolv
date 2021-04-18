@@ -10,9 +10,9 @@ import PrivacyPolicy from 'components/PrivacyPolicy';
 import TermsOfService from 'components/TermsOfService';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
+import Jobs from 'containers/Jobs';
 import Main from 'containers/HomePage/Loadable';
 import Overview from 'containers/Overview';
-import Recruiting from 'containers/Recruiting';
 import ReposAdd from 'containers/Repos/Add';
 import ReposDetail from 'containers/Repos/Detail';
 import Settings from 'containers/Settings';
@@ -31,11 +31,11 @@ const PublicContact = withAuth(publicConfig, Contact);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
 const PublicIssuesDetail = withAuth(publicConfig, IssuesDetail);
+const PublicJobs = withAuth(publicConfig, Jobs);
 const PublicMain = withAuth(publicConfig, Main);
 const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
 const PublicOverview = withAuth(publicConfig, Overview);
 const PublicPrivacyPolicy = withAuth(publicConfig, PrivacyPolicy);
-const PublicRecruiting = withAuth(publicConfig, Recruiting);
 const PublicReposDetail = withAuth(publicConfig, ReposDetail);
 const PublicSignIn = withAuth(publicConfig, SignIn);
 const PublicStats = withAuth(publicConfig, Stats);
@@ -55,10 +55,10 @@ const Routes = () => (
     <Route exact path="/issues/add" component={PrivateIssuesAdd} />
     <Route exact path="/issues/detail/:id" component={PublicIssuesDetail} />
     <Route exact path="/issues/search/:searchValue" component={PublicOverview} />
+    <Route exact path="/jobs" component={PublicJobs} />
+    <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
-    <Route exact path="/recruiting" component={PublicRecruiting} />
-    <Route exact path="/recruiting/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/repos" component={PublicOverview} />
     <Route exact path="/repos/add" component={PrivateReposAdd} />
     <Route exact path="/repos/detail/:id" component={PublicReposDetail} />

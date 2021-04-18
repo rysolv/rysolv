@@ -29,7 +29,7 @@ export const initialState = {
   view: 0,
 };
 
-const recruitingReducer = produce((draft, { payload, type }) => {
+const jobsReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_INPUT: {
       const { field, value } = payload;
@@ -80,4 +80,4 @@ const recruitingReducer = produce((draft, { payload, type }) => {
   }
 }, initialState);
 
-export default recruitingReducer;
+export default jobsReducer;

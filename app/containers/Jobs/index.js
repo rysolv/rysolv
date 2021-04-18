@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import { Redirect } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
-import RecruitingView from 'components/Recruiting';
+import JobsView from 'components/Jobs';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { useDidUpdateEffect } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
@@ -24,12 +24,12 @@ import { getQuestion } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import {
-  makeSelectRecruiting,
-  makeSelectRecruitingQuestions,
-  makeSelectRecruitingResponseArray,
+  makeSelectJobs,
+  makeSelectJobsQuestions,
+  makeSelectJobsResponseArray,
 } from './selectors';
 
-const Recruiting = ({
+const Jobs = ({
   activeUser: { isGithubVerified, isQuestionnaireComplete },
   dispatchChangeInput,
   dispatchChangeView,
@@ -83,13 +83,13 @@ const Recruiting = ({
   const questionProps = questions[step - 1];
 
   if (step && view === 0) {
-    return <Redirect to="/recruiting" />;
+    return <Redirect to="/jobs" />;
   }
 
   return (
     <AsyncRender
       asyncData={questions}
-      component={RecruitingView}
+      component={JobsView}
       error={error}
       isRequiredData={isRequiredData}
       loading={loading}
@@ -115,9 +115,9 @@ const Recruiting = ({
   );
 };
 
-Recruiting.defaultProp = { step: 1 };
+Jobs.defaultProp = { step: 1 };
 
-Recruiting.propTypes = {
+Jobs.propTypes = {
   activeUser: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeView: T.func.isRequired,
@@ -142,20 +142,20 @@ const mapStateToProps = createStructuredSelector({
   activeUser: makeSelectAuth('activeUser'),
   isSignedIn: makeSelectAuth('isSignedIn'),
   /**
-   * Reducer : Recruiting
+   * Reducer : Jobs
    */
-  error: makeSelectRecruiting('error'),
-  form: makeSelectRecruiting('form'),
-  loading: makeSelectRecruiting('loading'),
-  questions: makeSelectRecruitingQuestions(),
-  responseArray: makeSelectRecruitingResponseArray(),
-  view: makeSelectRecruiting('view'),
+  error: makeSelectJobs('error'),
+  form: makeSelectJobs('form'),
+  loading: makeSelectJobs('loading'),
+  questions: makeSelectJobsQuestions(),
+  responseArray: makeSelectJobsResponseArray(),
+  view: makeSelectJobs('view'),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     /*
-     * Reducer : Recruiting
+     * Reducer : Jobs
      */
     dispatchChangeInput: payload => dispatch(changeInput(payload)),
     dispatchChangeView: payload => dispatch(changeView(payload)),
@@ -175,11 +175,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'recruiting', reducer });
-const withSaga = injectSaga({ key: 'recruiting', saga });
+const withReducer = injectReducer({ key: 'jobs', reducer });
+const withSaga = injectSaga({ key: 'jobs', saga });
 
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(Recruiting);
+)(Jobs);

@@ -14,7 +14,7 @@ import {
   DescriptionContent,
   DescriptionSubTitle,
   DescriptionTitle,
-  RecruitingHeader,
+  JobsHeader,
   SampleWrapper,
   StyledFocusDiv,
   StyledGithubButton,
@@ -42,7 +42,7 @@ const DescriptionView = ({ handleStart, isGithubVerified, isSignedIn }) => {
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <RecruitingHeader />
+      <JobsHeader />
       <ViewContainer>
         <DescriptionTitle>Let your code speak</DescriptionTitle>
         <DescriptionContent>
@@ -78,7 +78,7 @@ const DescriptionView = ({ handleStart, isGithubVerified, isSignedIn }) => {
                 onClick={handleStart}
               />
             }
-            FallbackComponent={<StyledGithubButton type="recruiting" />}
+            FallbackComponent={<StyledGithubButton type="jobs" />}
             shouldRender={isSignedIn && isGithubVerified}
           />
         </ButtonWrapper>

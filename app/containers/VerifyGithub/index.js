@@ -19,7 +19,7 @@ const VerifyGithub = ({ dispatchGithubSignIn, dispatchVerifyAccount }) => {
     if (origin === 'account') {
       dispatchVerifyAccount({ code });
     }
-    if (origin === 'recruiting' || origin === 'signin' || origin === 'signup') {
+    if (origin === 'jobs' || origin === 'signin' || origin === 'signup') {
       dispatchGithubSignIn({ code, origin });
     }
   }, []);

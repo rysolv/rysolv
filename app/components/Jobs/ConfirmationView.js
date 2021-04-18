@@ -4,8 +4,8 @@ import iconDictionary from 'utils/iconDictionary';
 
 import {
   IconWrapper,
+  JobsHeader,
   LinkWrapper,
-  RecruitingHeader,
   StyledParagraph,
   ViewContainer,
 } from './styledComponents';
@@ -14,7 +14,7 @@ const SuccessIcon = iconDictionary('successOutline');
 
 const ConfirmationView = () => (
   <Fragment>
-    <RecruitingHeader />
+    <JobsHeader />
     <ViewContainer isFinalView>
       <IconWrapper isSuccess>{SuccessIcon}</IconWrapper>
       <StyledParagraph>

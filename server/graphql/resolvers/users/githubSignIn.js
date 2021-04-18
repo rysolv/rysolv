@@ -25,14 +25,14 @@ const githubSignIn = async ({ code, origin }, { res }) => {
   try {
     const isProduction = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
     const githubProps = {
-      recruiting: {
+      jobs: {
         dev: {
-          client_id: process.env.GITHUB_RECRUITING_CLIENT_ID_DEV,
-          client_secret: process.env.GITHUB_RECRUITING_SECRET_DEV,
+          client_id: process.env.GITHUB_JOBS_CLIENT_ID_DEV,
+          client_secret: process.env.GITHUB_JOBS_SECRET_DEV,
         },
         prod: {
-          client_id: process.env.GITHUB_RECRUITING_CLIENT_ID,
-          client_secret: process.env.GITHUB_RECRUITING_SECRET,
+          client_id: process.env.GITHUB_JOBS_CLIENT_ID,
+          client_secret: process.env.GITHUB_JOBS_SECRET,
         },
       },
       signin: {
@@ -197,7 +197,7 @@ const githubSignIn = async ({ code, origin }, { res }) => {
     const { alert } = error;
     errorLogger(error);
     const errorMessageToReturn =
-      origin === 'recruiting' || origin === 'signin'
+      origin === 'jobs' || origin === 'signin'
         ? githubSignInError
         : githubSignUpError;
     return {

@@ -8,9 +8,9 @@ import optionDictionary from './Options';
 import {
   ButtonGroup,
   DescriptionWrapper,
+  JobsHeader,
   OptionWrapper,
   QuestionWrapper,
-  RecruitingHeader,
   StyledButton,
   StyledFocusDiv,
   ViewContainer,
@@ -72,9 +72,9 @@ const SurveyView = ({
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <RecruitingHeader>
+      <JobsHeader>
         <ProgressBar step={step} steps={steps} />
-      </RecruitingHeader>
+      </JobsHeader>
       <ViewContainer>
         <div>
           <QuestionWrapper>{question}</QuestionWrapper>
