@@ -14,28 +14,28 @@ import {
   EmptyGithubLinkComponent,
   GithubEditComponent,
   GithubLinkComponent,
-} from '../GithubLinkComponents';
+} from './GithubLinkComponents';
 import {
   EmptyPersonalLinkComponent,
   PersonalEditComponent,
   PersonalLinkComponent,
-} from '../PersonalLinkComponents';
+} from './PersonalLinkComponents';
 import {
   EmptyStackoverflowLinkComponent,
   StackoverflowEditComponent,
   StackoverflowLinkComponent,
-} from '../StackoverflowLinkComponents';
+} from './StackoverflowLinkComponents';
 import UserMetricsView from '../Metrics';
 import {
   DetailViewContainer,
   EditUserImageWrapper,
   InputIconGroup,
-  LinksWrapper,
   Name,
   Rep,
   UserCardWrapper,
   UserImage,
-} from '../styledComponents';
+} from './styledComponents';
+import { LinksWrapper } from '../styledComponents';
 
 const CloseIcon = iconDictionary('close');
 const DoneIcon = iconDictionary('done');

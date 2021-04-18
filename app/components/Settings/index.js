@@ -14,9 +14,9 @@ import UserTimelineView from './Timeline';
 import UserWatching from './Watching';
 import WithdrawalFormComponent from './Balance/Withdrawal/WithdrawalFormComponent';
 import {
-  ComponentContainer,
-  DetailContainer,
+  SettingsContainer,
   SettingsTabsWrapper,
+  SettingsViewContainer,
   StyledErrorSuccessBanner,
   StyledPaper,
   StyledTab,
@@ -299,7 +299,7 @@ const SettingsView = ({
   };
 
   return (
-    <DetailContainer>
+    <SettingsContainer>
       <StyledErrorSuccessBanner
         error={stripeError || error}
         onClose={handleClearAllAlerts}
@@ -352,7 +352,7 @@ const SettingsView = ({
               onClick={() => handleClick(5, '/settings/pullrequests')}
             />
           </StyledTabs>
-          <ComponentContainer>
+          <SettingsViewContainer>
             <ConditionalRender
               Component={SecondarySettingsComponent}
               FallbackComponent={ComponentToRender[tab]}
@@ -363,10 +363,10 @@ const SettingsView = ({
                 view === 'withdrawal'
               }
             />
-          </ComponentContainer>
+          </SettingsViewContainer>
         </StyledPaper>
       </SettingsTabsWrapper>
-    </DetailContainer>
+    </SettingsContainer>
   );
 };
 
