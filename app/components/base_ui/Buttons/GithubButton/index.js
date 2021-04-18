@@ -11,13 +11,13 @@ const GithubIcon = iconDictionary('github');
 const GithubButton = ({ type, ...restProps }) => {
   const isProduction = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
   const buttonProps = {
-    jobs: {
+    recruiting: {
       dev: {
-        clientId: process.env.GITHUB_JOBS_CLIENT_ID_DEV,
+        clientId: process.env.GITHUB_RECRUITING_CLIENT_ID_DEV,
         label: 'Sign in with Github',
       },
       prod: {
-        clientId: process.env.GITHUB_JOBS_CLIENT_ID,
+        clientId: process.env.GITHUB_RECRUITING_CLIENT_ID,
         label: 'Sign in with Github',
       },
     },

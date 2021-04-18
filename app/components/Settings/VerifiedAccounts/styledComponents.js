@@ -28,7 +28,6 @@ export const AccountSquare = styled.div`
   background-color: ${commentHeaderColor};
   border-radius: 0.3rem;
   height: 16.2rem;
-  margin-top: 3rem;
   padding: 1.6rem 2.4rem;
   width: 15rem;
 

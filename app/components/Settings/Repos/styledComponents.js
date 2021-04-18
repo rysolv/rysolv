@@ -70,7 +70,7 @@ export const RepoIssues = styled.div`
 export const RepoListItem = styled.li`
   border-top: 0.1rem solid #d5d5d5;
   display: flex;
-  width: 90%;
+  width: 95%;
 
   & :last-child {
     border-bottom: 0.1rem solid #d5d5d5;
@@ -96,6 +96,7 @@ export const ReposList = styled.ul`
   align-items: center;
   display: flex;
   flex-direction: column;
+  min-height: 30rem;
   padding: 0;
   width: 100%;
 `;

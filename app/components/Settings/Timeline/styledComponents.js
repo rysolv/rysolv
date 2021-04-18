@@ -9,6 +9,9 @@ import {
   hoverLinkColor,
   textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { laptop } = mediaQueriesByDevice;
 
 export const ExternalTimelineActivity = styled.a`
   color: ${hoverLinkColor};
@@ -40,7 +43,7 @@ export const StyledAction = styled.span`
 `;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
-  margin: 0 1rem;
+  margin-left: 1rem;
   width: 15rem;
 `;
 
@@ -63,7 +66,12 @@ export const StyledButton = styled(Button)`
 `;
 
 export const TimelineContainer = styled.div`
+  display: flex;
   height: 100%;
+
+  ${laptop} {
+    flex-direction: column;
+  }
 `;
 
 export const TimelineContent = styled.div`
@@ -127,4 +135,8 @@ export const TimelineVerticalDivider = styled.div`
   height: 100%;
   position: relative;
   width: 1px;
+`;
+
+export const ActivityContainer = styled.div`
+  width: 100%;
 `;

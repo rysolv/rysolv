@@ -1,7 +1,7 @@
 const pool = require('../connect');
 const { seedQuestions, seedResponses } = require('./questions');
 
-// Populate the Q&A data for jobs
+// Populate the Q&A data for recruiting
 const generateQuestions = async () => {
   await seedQuestions();
   await seedResponses();

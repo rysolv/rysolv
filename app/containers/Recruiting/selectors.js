@@ -5,18 +5,18 @@ import { snakeToCamel } from 'utils/globalHelpers';
 import { optionDictionary } from './helpers';
 import { initialState } from './reducer';
 
-const selectJobsDomain = state => state.jobs || initialState;
+const selectRecruitingDomain = state => state.recruiting || initialState;
 
-const makeSelectJobs = prop =>
+const makeSelectRecruiting = prop =>
   createSelector(
-    selectJobsDomain,
+    selectRecruitingDomain,
     substate => substate[prop],
   );
 
-const makeSelectJobQuestions = () =>
+const makeSelectRecruitingQuestions = () =>
   createSelector(
-    makeSelectJobs('form'),
-    makeSelectJobs('questions'),
+    makeSelectRecruiting('form'),
+    makeSelectRecruiting('questions'),
     (form, questions) => {
       const formattedQuestions = questions.map(
         ({ limit, questionKey, questionText, responses, subtext }) => ({
@@ -37,10 +37,10 @@ const makeSelectJobQuestions = () =>
     },
   );
 
-const makeSelectJobResponseArray = () =>
+const makeSelectRecruitingResponseArray = () =>
   createSelector(
-    makeSelectJobs('form'),
-    makeSelectJobs('questions'),
+    makeSelectRecruiting('form'),
+    makeSelectRecruiting('questions'),
     (form, questions) => {
       const responseArray = [];
       if (questions.length) {
@@ -79,5 +79,9 @@ const makeSelectJobResponseArray = () =>
     },
   );
 
-export default selectJobsDomain;
-export { makeSelectJobQuestions, makeSelectJobResponseArray, makeSelectJobs };
+export default selectRecruitingDomain;
+export {
+  makeSelectRecruiting,
+  makeSelectRecruitingQuestions,
+  makeSelectRecruitingResponseArray,
+};

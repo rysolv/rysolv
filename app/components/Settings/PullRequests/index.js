@@ -6,7 +6,7 @@ import { HeaderWrapper, StyledH3 } from '../styledComponents';
 const UserPullRequests = ({ Component }) => (
   <Fragment>
     <HeaderWrapper>
-      <StyledH3>Your Pull Requests</StyledH3>
+      <StyledH3 removeMarginTop>Your Pull Requests</StyledH3>
     </HeaderWrapper>
     <Component />
   </Fragment>

@@ -15,14 +15,14 @@ import {
 import {
   commentHeaderColor,
   defaultFontSize,
-  headerColor,
+  hoverLinkColor,
   lightBlueColor,
   subTextLightGrey,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile } = mediaQueriesByDevice;
+const { mobile, laptop } = mediaQueriesByDevice;
 
 export const BaseInputWrapper = styled.div`
   margin-left: ${({ hasMargin }) => (hasMargin ? '4rem' : '0')};
@@ -39,8 +39,6 @@ export const DetailContainer = styled.div`
 export const DetailViewContainer = styled.div`
   color: ${textColor};
   display: flex;
-  padding: 1.6rem 0;
-  width: 100%;
 
   ${mobile} {
     flex-direction: column;
@@ -167,11 +165,8 @@ export const SearchContainer = styled.div`
 `;
 
 export const SettingsTabsWrapper = styled.div`
-  background-color: white;
   border-radius: 0.2rem;
-  margin-left: 2rem;
   overflow: hidden;
-  padding: 2rem;
   width: 100%;
 
   ${mobile} {
@@ -187,11 +182,7 @@ export const StyledA = styled.a`
 `;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
-  margin: 0 1rem;
-
-  ${mobile} {
-    margin-right: 0;
-  }
+  margin-left: 1rem;
 `;
 
 export const StyledBaseTextInput = styled(BaseTextInput)`
@@ -240,7 +231,7 @@ export const StyledH3 = styled.h3`
   color: ${textColor};
   font-size: 2rem;
   font-weight: 500;
-  margin: 3rem 0;
+  margin: ${({ removeMarginTop }) => (removeMarginTop ? '0 0 3rem' : '3rem 0')};
 `;
 
 export const StyledLanguageAutocomplete = styled.div`
@@ -248,6 +239,7 @@ export const StyledLanguageAutocomplete = styled.div`
 `;
 
 export const StyledPaper = styled(Paper)`
+  background-color: transparent;
   box-shadow: none;
   width: 100%;
 `;
@@ -262,10 +254,15 @@ export const StyledPopper = styled(Popper)`
 export const StyledTab = styled(Tab)`
   font-size: ${defaultFontSize};
   min-width: fit-content;
-  padding: 0.6rem;
 
   &.selected {
-    color: ${headerColor};
+    background-color: white;
+    color: ${hoverLinkColor};
+  }
+
+  &:hover {
+    background-color: white;
+    color: ${hoverLinkColor};
   }
 
   .MuiTab-wrapper {
@@ -276,16 +273,20 @@ export const StyledTab = styled(Tab)`
 export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
   <Tabs {...restProps} />
 ))`
+  margin: 4rem 0 0;
+
   ${mobile} {
     display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
+    margin-top: 2rem;
   }
 
   .indicator {
-    background-color: ${headerColor};
+    background-color: transparent;
   }
 
-  .MuiTabs-centered {
-    justify-content: start;
+  svg {
+    color: ${textColor};
+    font-size: 2rem;
   }
 `;
 
@@ -311,22 +312,28 @@ export const UserCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: fit-content;
-  padding: 15px 2%;
+  padding-right: 5rem;
   width: fit-content;
 
-  ${mobile} {
+  ${laptop} {
     display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
+    padding-right: 0;
     width: 100%;
   }
 `;
 
 export const UserImage = styled.img`
   height: 25rem;
-  margin: 0.5rem;
+  margin-bottom: 0.5rem;
   object-fit: cover;
   width: 25rem;
 
   ${mobile} {
     align-self: center;
   }
+`;
+
+export const ComponentContainer = styled.div`
+  background-color: white;
+  padding: 4rem 2rem 2rem;
 `;

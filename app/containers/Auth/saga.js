@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { resetState } from 'containers/Main/actions';
-import { changeView } from 'containers/Jobs/actions';
+import { changeView } from 'containers/Recruiting/actions';
 import { incrementResetStep, incrementStep } from 'containers/Signin/actions';
 import { post } from 'utils/request';
 
@@ -139,7 +139,7 @@ export function* githubSignInSaga({ payload }) {
     }
   `;
   const query =
-    origin === 'jobs' || origin === 'signin' ? signInQuery : signUpQuery;
+    origin === 'recruiting' || origin === 'signin' ? signInQuery : signUpQuery;
   try {
     const graphql = JSON.stringify({ query });
     const {
@@ -154,12 +154,12 @@ export function* githubSignInSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
     const routeDictionary = {
-      jobs: '/jobs?question=1',
+      recruiting: '/recruiting?question=1',
       signin: '/issues',
       signup: '/settings',
     };
     const route = routeDictionary[origin];
-    if (origin === 'jobs') {
+    if (origin === 'recruiting') {
       if (isQuestionnaireComplete) {
         yield put(changeView({ view: 2 }));
       } else {
@@ -171,11 +171,11 @@ export function* githubSignInSaga({ payload }) {
   } catch (error) {
     const { message } = error;
     const githubError =
-      origin === 'jobs' || origin === 'signin'
+      origin === 'recruiting' || origin === 'signin'
         ? githubSignInError
         : githubSignUpError;
     const routeDictionary = {
-      jobs: '/jobs',
+      recruiting: '/recruiting',
       signin: '/signin',
       signup: '/signup',
     };

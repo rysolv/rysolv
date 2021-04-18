@@ -80,10 +80,10 @@ export function* submitUserResponseSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     yield call(post, '/graphql', graphql);
     yield put(changeView({ view: 2 }));
-    yield put(push('/jobs'));
+    yield put(push('/recruiting'));
     yield put(submitUserResponseSuccess());
   } catch (error) {
-    yield put(push('/jobs'));
+    yield put(push('/recruiting'));
     yield put(submitUserResponseFailure({ error }));
   }
 }

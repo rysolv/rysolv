@@ -29,7 +29,7 @@ export const EmptyListItem = styled.div`
   display: flex;
   justify-content: center;
   text-align: center;
-  width: 90%;
+  width: 95%;
 
   & :last-child {
     border-bottom: 0.1rem solid #d5d5d5;
@@ -76,7 +76,7 @@ export const ListItemWrapper = styled.li`
   border-top: 0.1rem solid #d5d5d5;
   display: flex;
   justify-content: space-between;
-  width: 90%;
+  width: 95%;
 
   & :last-child {
     border-bottom: 0.1rem solid #d5d5d5;

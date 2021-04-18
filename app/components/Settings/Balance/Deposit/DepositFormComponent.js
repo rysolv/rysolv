@@ -2,11 +2,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
-import {
-  BackNav,
-  BaseRadioButtonGroup,
-  ConditionalRender,
-} from 'components/base_ui';
+import { BaseRadioButtonGroup, ConditionalRender } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import CreditCardPaymentComponent from '../CreditCardPaymentComponent';
@@ -18,6 +14,7 @@ import {
   Divider,
   PaymentOptionWrapper,
   PaymentTitle,
+  StyledBackNav,
   StyledPaymentTextInput,
   StyledText,
   Title,
@@ -87,7 +84,7 @@ const DepositFormComponent = ({
   };
   return (
     <Fragment>
-      <BackNav label="Back to Account" path="/settings/account" />
+      <StyledBackNav label="Back to Account" path="/settings/account" />
       <StyledH3>Enter your funding amount</StyledH3>
       <StyledPaymentTextInput
         adornmentComponent="$"

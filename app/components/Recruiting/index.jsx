@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
 
-import { JobsContainer } from './styledComponents';
+import { RecruitingContainer } from './styledComponents';
 import viewDictionary from './viewDictionary';
 
-const Jobs = ({ view, ...restProps }) => {
+const Recruiting = ({ view, ...restProps }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Jobs';
+    document.title = 'Recruiting';
   }, []);
   const ViewToRender = viewDictionary[view];
   return (
-    <JobsContainer>
+    <RecruitingContainer>
       <ViewToRender {...restProps} />
-    </JobsContainer>
+    </RecruitingContainer>
   );
 };
 
-Jobs.propTypes = { view: T.number.isRequired };
+Recruiting.propTypes = { view: T.number.isRequired };
 
-export default Jobs;
+export default Recruiting;
