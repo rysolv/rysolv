@@ -123,8 +123,10 @@ export const StyledPopper = styled(Popper)`
 `;
 
 export const StyledTab = styled(Tab)`
+  flex: 1;
   font-size: ${defaultFontSize};
   min-width: fit-content;
+  padding: 0.6rem;
 
   &.selected {
     background-color: white;
@@ -144,6 +146,8 @@ export const StyledTab = styled(Tab)`
 export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
   <Tabs {...restProps} />
 ))`
+  margin: 4rem 0 0;
+
   ${mobile} {
     display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
     margin-top: 2rem;
