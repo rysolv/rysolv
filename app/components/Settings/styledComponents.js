@@ -148,18 +148,24 @@ export const StyledTabs = styled(({ displayBottom, ...restProps }) => (
 ))`
   margin: 4rem 0 0;
 
-  ${mobile} {
-    display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
-    margin-top: 2rem;
-  }
-
   .indicator {
     display: none;
+  }
+
+  .scrollButtons {
+    &.Mui-disabled {
+      opacity: 0.3;
+    }
   }
 
   svg {
     color: ${textColor};
     font-size: 2rem;
+  }
+
+  ${mobile} {
+    display: ${({ displayBottom }) => (displayBottom ? 'none' : 'flex')};
+    margin-top: 0;
   }
 `;
 

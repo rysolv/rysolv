@@ -308,7 +308,7 @@ const SettingsView = ({
       <SettingsTabsWrapper displayBottom={displayBottom}>
         <StyledPaper>
           <StyledTabs
-            classes={{ indicator: 'indicator' }}
+            classes={{ indicator: 'indicator', scrollButtons: 'scrollButtons' }}
             displayBottom={displayBottom}
             scrollButtons="on"
             textColor="primary"
