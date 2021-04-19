@@ -24,9 +24,9 @@ import { getQuestion } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import {
+  makeSelectJobQuestions,
+  makeSelectJobResponseArray,
   makeSelectJobs,
-  makeSelectJobsQuestions,
-  makeSelectJobsResponseArray,
 } from './selectors';
 
 const Jobs = ({
@@ -147,8 +147,8 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectJobs('error'),
   form: makeSelectJobs('form'),
   loading: makeSelectJobs('loading'),
-  questions: makeSelectJobsQuestions(),
-  responseArray: makeSelectJobsResponseArray(),
+  questions: makeSelectJobQuestions(),
+  responseArray: makeSelectJobResponseArray(),
   view: makeSelectJobs('view'),
 });
 

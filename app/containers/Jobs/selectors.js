@@ -13,7 +13,7 @@ const makeSelectJobs = prop =>
     substate => substate[prop],
   );
 
-const makeSelectJobsQuestions = () =>
+const makeSelectJobQuestions = () =>
   createSelector(
     makeSelectJobs('form'),
     makeSelectJobs('questions'),
@@ -37,7 +37,7 @@ const makeSelectJobsQuestions = () =>
     },
   );
 
-const makeSelectJobsResponseArray = () =>
+const makeSelectJobResponseArray = () =>
   createSelector(
     makeSelectJobs('form'),
     makeSelectJobs('questions'),
@@ -80,4 +80,4 @@ const makeSelectJobsResponseArray = () =>
   );
 
 export default selectJobsDomain;
-export { makeSelectJobs, makeSelectJobsQuestions, makeSelectJobsResponseArray };
+export { makeSelectJobQuestions, makeSelectJobResponseArray, makeSelectJobs };
