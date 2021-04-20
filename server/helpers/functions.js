@@ -19,7 +19,14 @@ const arrayCheck = result => {
   return null;
 };
 
-const errorLogger = e => Sentry.captureException(e);
+const errorLogger = e => {
+  if (process.env.NODE_ENV === 'production') {
+    Sentry.captureException(e);
+  } else {
+    // eslint-disable-next-line no-console
+    console.error(e);
+  }
+};
 
 const isUrl = string => {
   let url;

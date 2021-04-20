@@ -1,4 +1,3 @@
-const acceptBounty = require('./acceptBounty');
 const assignOwnerToRepo = require('./assignOwnerToRepo');
 const checkDuplicateGithubId = require('./checkDuplicateGithubId');
 const checkDuplicateUserEmail = require('./checkDuplicateUserEmail');
@@ -17,7 +16,6 @@ const searchUsers = require('./searchUsers');
 const transformUser = require('./transformUser');
 
 module.exports = {
-  acceptBounty,
   assignOwnerToRepo,
   checkDuplicateGithubId,
   checkDuplicateUserEmail,

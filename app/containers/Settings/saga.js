@@ -49,10 +49,10 @@ import {
 } from './actions';
 
 export function* acceptBountySaga({ payload }) {
-  const { fundingId } = payload;
+  const { fundingId, userRatio } = payload;
   const query = `
     mutation{
-      acceptBounty(fundingId: "${fundingId}") {
+      acceptBounty(fundingId: "${fundingId}", userRatio: ${userRatio}) {
         __typename
         ... on Success {
           message
@@ -140,6 +140,7 @@ export function* fetchInfoSaga({ payload }) {
             name
             pullRequestUrl
             rep
+            repoPayout
             userAccepted
           }
           completedPullRequests

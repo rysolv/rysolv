@@ -236,6 +236,7 @@ const SettingsTabs = ({
       <UserBounties
         bounties={bounties}
         dispatchAcceptBounty={dispatchAcceptBounty}
+        dispatchOpenModal={dispatchOpenModal}
         handleNav={handleNav}
       />
     ),

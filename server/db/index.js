@@ -4,6 +4,7 @@ const {
   getUserActivity,
 } = require('./queries/activity');
 const { toggleAttempting } = require('./queries/attempting');
+const { acceptBounty, verifyPayout } = require('./queries/bounties');
 const { createComment, getIssueComments } = require('./queries/comments');
 const {
   checkDuplicateIssue,
@@ -55,7 +56,6 @@ const {
 const { getStats } = require('./queries/stats');
 const { addRepoMembers, deleteRepoMembers } = require('./queries/userRepos');
 const {
-  acceptBounty,
   assignOwnerToRepo,
   checkDuplicateGithubId,
   checkDuplicateUserEmail,
@@ -147,4 +147,5 @@ module.exports = {
   transformUserBalance,
   updateRepoArray,
   upvoteIssue,
+  verifyPayout,
 };

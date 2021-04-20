@@ -35,6 +35,8 @@ export const formatUrlLinks = value => {
   return value;
 };
 
+export const formatPercentage = value => `${(value * 100).toFixed(0)}%`;
+
 export const formatWordString = string =>
   string.charAt(0).toUpperCase() + string.slice(1);
 

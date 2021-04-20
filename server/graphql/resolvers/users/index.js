@@ -1,4 +1,3 @@
-const acceptBounty = require('./acceptBounty');
 const createUser = require('./createUser');
 const deleteUser = require('./deleteUser');
 const getUserIssues = require('./getUserIssues');
@@ -19,7 +18,6 @@ const verifyUserAccount = require('./verifyUserAccount');
 const verifyUserEmail = require('./verifyUserEmail');
 
 module.exports = {
-  acceptBounty,
   createUser,
   deleteUser,
   getUserIssues,

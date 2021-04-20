@@ -5,8 +5,9 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
-import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
+import AcceptBountyModal from 'components/AcceptBountyModal';
+import AsyncRender from 'components/AsyncRender';
 import DeleteUserModal from 'components/DeleteUserModal';
 import SettingsView from 'components/Settings';
 import { makeSelectAuth } from 'containers/Auth/selectors';
@@ -124,6 +125,16 @@ const Settings = ({
   };
   const currentTab = settingViewDictionary[view] || 0;
   const modalPropsDictionary = {
+    acceptBounty: {
+      Component: AcceptBountyModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        bounty: data.selectedBounty,
+        dispatchAcceptBounty,
+        fundingId: data.fundingId,
+        handleClose: dispatchCloseModal,
+      },
+    },
     deleteUser: {
       Component: DeleteUserModal,
       open: isModalOpen,
