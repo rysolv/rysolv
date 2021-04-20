@@ -115,7 +115,10 @@ const BaseDrawer = ({
         <StyledListWrapper active={currentValue === 7}>
           <ListItem button key="jobs" onClick={() => handleClick('/jobs', 7)}>
             <ListItemIcon>{dollarIcon}</ListItemIcon>
-            <StyledListItemText active={currentValue === 7} primary="Jobs" />
+            <StyledListItemText
+              active={currentValue === 7}
+              primary="Get Hired"
+            />
           </ListItem>
         </StyledListWrapper>
       </StyledList>

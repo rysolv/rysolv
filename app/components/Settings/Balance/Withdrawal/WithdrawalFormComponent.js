@@ -2,11 +2,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 
-import {
-  BackNav,
-  CheckboxWithLabel,
-  ConditionalRender,
-} from 'components/base_ui';
+import { CheckboxWithLabel, ConditionalRender } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
@@ -17,6 +13,7 @@ import {
   Divider,
   InputHeader,
   LinkWrapper,
+  StyledBackNav,
   StyledBaseDropDownMenu,
   StyledBaseTextInput,
   StyledCheckboxWrapper,
@@ -85,7 +82,7 @@ const WithdrawalFormComponent = ({
   };
   return (
     <Fragment>
-      <BackNav label="Back to Account" path="/settings/account" />
+      <StyledBackNav label="Back to Account" path="/settings/account" />
       <StyledH3>Withdraw funds</StyledH3>
       <StyledText>
         Funds earned on the Rysolv platform are available for withdrawal via

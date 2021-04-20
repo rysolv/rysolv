@@ -20,7 +20,7 @@ export const StyledDropDownMenu = styled(DropDownMenu)`
   }
 
   svg {
-    height: 2rem;
+    height: 2.4rem;
     width: 1.4rem;
   }
 `;

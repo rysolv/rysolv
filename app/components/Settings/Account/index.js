@@ -58,7 +58,7 @@ const UserAccount = ({
 }) => (
   <AccountContainer>
     <HeaderWrapper>
-      <StyledH3>Account</StyledH3>
+      <StyledH3 removeMarginTop>Account</StyledH3>
     </HeaderWrapper>
     <InputWrapper>
       <MainTextInput

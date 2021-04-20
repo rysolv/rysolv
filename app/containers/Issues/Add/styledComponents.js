@@ -30,6 +30,7 @@ export const AddForm = styled.div`
   border-radius: ${({ isVerify }) => (isVerify ? '0' : '0.5rem')};
   border: ${({ isVerify }) =>
     isVerify ? 'none' : `0.1rem solid ${borderColor}`};
+  margin-top: 1.5rem;
   padding: 1rem;
   width: 80%;
 
