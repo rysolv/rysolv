@@ -54,7 +54,7 @@ const UserBounties = ({
   return (
     <Fragment>
       <HeaderWrapper>
-        <StyledH3>Your Bounties</StyledH3>
+        <StyledH3 removeMarginTop>Your Bounties</StyledH3>
       </HeaderWrapper>
       <SearchContainer>
         <BaseInputWrapper hasMargin={false}>

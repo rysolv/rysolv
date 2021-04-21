@@ -49,7 +49,7 @@ const UserIssues = ({ handleNav, issues }) => {
   return (
     <Fragment>
       <HeaderWrapper>
-        <StyledH3>Your Issues</StyledH3>
+        <StyledH3 removeMarginTop>Your Issues</StyledH3>
       </HeaderWrapper>
       <SearchContainer>
         <BaseInputWrapper hasMargin={false}>

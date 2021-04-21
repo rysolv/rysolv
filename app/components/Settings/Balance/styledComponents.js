@@ -5,6 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
 import {
+  BackNav,
   BaseDropDownMenu,
   BaseTextInput,
   PaymentTextInput,
@@ -156,6 +157,10 @@ export const PaymentTitle = styled.div`
   font-weight: 500;
   line-height: 1.5;
   margin: 0.5rem 0;
+`;
+
+export const StyledBackNav = styled(BackNav)`
+  margin-bottom: 0;
 `;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`

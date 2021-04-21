@@ -11,7 +11,6 @@ import AsyncRender from 'components/AsyncRender';
 import DeleteUserModal from 'components/DeleteUserModal';
 import SettingsView from 'components/Settings';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import makeSelectViewSize from 'containers/ViewSize/selectors';
 import PullRequestOverview from 'containers/PullRequests/Overview';
 import { handleZipChange } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
@@ -48,7 +47,6 @@ const Settings = ({
   alerts,
   data,
   data: { balance },
-  deviceView,
   dispatchAcceptBounty,
   dispatchCloseModal,
   dispatchFetchInfo,
@@ -158,7 +156,6 @@ const Settings = ({
           alerts,
           creditCardProps,
           currentTab,
-          deviceView,
           dispatchAcceptBounty,
           dispatchOpenModal,
           dispatchPaypalPayment,
@@ -187,7 +184,6 @@ Settings.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
   data: T.object.isRequired,
-  deviceView: T.string.isRequired,
   dispatchAcceptBounty: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchInfo: T.func,
@@ -231,10 +227,6 @@ const mapStateToProps = createStructuredSelector({
   isModalOpen: makeSelectSettings('isModalOpen'),
   loading: makeSelectSettings('loading'),
   modal: makeSelectSettings('modal'),
-  /**
-   * Reducer : ViewSize
-   */
-  deviceView: makeSelectViewSize('deviceView'),
 });
 
 function mapDispatchToProps(dispatch) {

@@ -6,13 +6,15 @@ import LanguageAutocomplete from 'components/LanguageAutocomplete';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
-  IconButtonContainer,
-  IconButtonGroup,
   Language,
   LanguageListItem,
-  LinksWrapper,
   StyledLanguageAutocomplete,
 } from './styledComponents';
+import {
+  IconButtonContainer,
+  IconButtonGroup,
+  LinksWrapper,
+} from '../styledComponents';
 
 const CloseIcon = iconDictionary('close');
 const DoneIcon = iconDictionary('done');

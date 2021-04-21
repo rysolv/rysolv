@@ -10,7 +10,7 @@ import {
   EmptyPreferredLanguagesComponent,
   PreferredLanguagesComponent,
   PreferredLanguagesEditComponent,
-} from '../PreferredLanguagesComponents';
+} from './PreferredLanguagesComponents';
 import {
   ActivityContainer,
   DetailListItem,

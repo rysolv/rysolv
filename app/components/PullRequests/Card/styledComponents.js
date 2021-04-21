@@ -72,6 +72,7 @@ export const PullRequestCardContainer = styled.ul`
   align-items: center;
   display: flex;
   flex-direction: column;
+  min-height: 30rem;
   padding: 0;
 `;
 
@@ -98,7 +99,7 @@ export const PullRequestListItem = styled.li`
   flex-direction: column;
   font-size: ${defaultFontSize};
   padding: 1rem 0;
-  width: 90%;
+  width: 95%;
 
   & :last-child {
     border-bottom: 0.1rem solid #d5d5d5;

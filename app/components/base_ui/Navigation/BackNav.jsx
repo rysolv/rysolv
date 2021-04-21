@@ -4,8 +4,8 @@ import T from 'prop-types';
 import { BackIcon } from '../Icons';
 import { StyledBackNav } from './styledComponents';
 
-const BackNav = ({ label, path }) => (
-  <StyledBackNav to={path}>
+const BackNav = ({ label, path, ...restProps }) => (
+  <StyledBackNav to={path} {...restProps}>
     <BackIcon /> {label}
   </StyledBackNav>
 );

@@ -48,7 +48,7 @@ const UserRepos = ({ handleNav, repos }) => {
   return (
     <Fragment>
       <HeaderWrapper>
-        <StyledH3>Your Repos</StyledH3>
+        <StyledH3 removeMarginTop>Your Repos</StyledH3>
       </HeaderWrapper>
       <SearchContainer>
         <BaseInputWrapper hasMargin={false}>

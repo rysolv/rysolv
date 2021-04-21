@@ -15,7 +15,7 @@ export const EmptyOverviewListItem = styled.div`
   display: flex;
   justify-content: center;
   text-align: center;
-  width: 90%;
+  width: 95%;
 
   & :last-child {
     border-bottom: 0.1rem solid #d5d5d5;

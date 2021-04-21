@@ -51,7 +51,7 @@ export const StyledAction = styled.span`
 `;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
-  margin: 0 1rem;
+  margin-left: 1rem;
   width: 15rem;
 `;
 
