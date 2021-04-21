@@ -18,6 +18,8 @@ const AcceptBountyModal = ({
   dispatchAcceptBounty,
   fundingId,
   handleClose,
+  repoName,
+  username,
 }) => {
   const [userRatio, setUserRatio] = useState(0.9);
   const max = bounty * 10;
@@ -42,7 +44,9 @@ const AcceptBountyModal = ({
       <BountySlider
         bounty={bounty}
         max={max}
+        repoName={repoName}
         setPayout={setPayout}
+        username={username}
         userRatio={userRatio}
       />
       <StyledBodyMessage>
@@ -63,6 +67,8 @@ AcceptBountyModal.propTypes = {
   dispatchAcceptBounty: T.func.isRequired,
   fundingId: T.string.isRequired,
   handleClose: T.func.isRequired,
+  repoName: T.string.isRequired,
+  username: T.string.isRequired,
 };
 
 export default AcceptBountyModal;

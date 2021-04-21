@@ -131,6 +131,8 @@ const Settings = ({
         dispatchAcceptBounty,
         fundingId: data.fundingId,
         handleClose: dispatchCloseModal,
+        repoName: data.repoName,
+        username: data.username,
       },
     },
     deleteUser: {

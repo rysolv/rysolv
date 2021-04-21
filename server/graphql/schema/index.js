@@ -40,7 +40,8 @@ module.exports = buildSchema(`
     name: String!
     pullRequestUrl: String!
     rep: String!
-    repoPayout: Boolean!
+    repoName: String!
+    repoPayoutExists: Boolean!
     userAccepted: Boolean!
   }
 

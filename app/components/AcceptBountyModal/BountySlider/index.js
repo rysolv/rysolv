@@ -12,7 +12,14 @@ import {
   ValueContainer,
 } from './styledComponents';
 
-const BountySlider = ({ bounty, max, setPayout, userRatio }) => {
+const BountySlider = ({
+  bounty,
+  max,
+  repoName,
+  setPayout,
+  username,
+  userRatio,
+}) => {
   const userPortion = bounty * userRatio;
   const repoPortion = bounty * (1 - userRatio);
 
@@ -20,12 +27,12 @@ const BountySlider = ({ bounty, max, setPayout, userRatio }) => {
     <BountySlideContainer>
       <ValueContainer>
         <Bounty>
-          <Title>themanmaran</Title>
+          <Title>{username}</Title>
           {formatDollarAmount(userPortion)}
           <Percentage>{formatPercentage(userRatio)}</Percentage>
         </Bounty>
         <Bounty>
-          <Title>repo</Title>
+          <Title>{repoName}</Title>
           {formatDollarAmount(repoPortion)}
           <Percentage>{formatPercentage(1 - userRatio)}</Percentage>
         </Bounty>
@@ -47,7 +54,9 @@ const BountySlider = ({ bounty, max, setPayout, userRatio }) => {
 BountySlider.propTypes = {
   bounty: T.number.isRequired,
   max: T.number.isRequired,
+  repoName: T.string.isRequired,
   setPayout: T.func.isRequired,
+  username: T.string.isRequired,
   userRatio: T.number.isRequired,
 };
 

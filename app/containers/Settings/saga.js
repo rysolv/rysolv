@@ -140,7 +140,8 @@ export function* fetchInfoSaga({ payload }) {
             name
             pullRequestUrl
             rep
-            repoPayout
+            repoName
+            repoPayoutExists
             userAccepted
           }
           completedPullRequests

@@ -36,15 +36,17 @@ const BountyComponent = ({
         issueId,
         name,
         pullRequestUrl,
+        repoName,
+        repoPayoutExists,
         userAccepted,
-        repoPayout,
       }) => {
         const handleClick = () => {
-          if (repoPayout) {
+          if (repoPayoutExists) {
             dispatchOpenModal({
               bounty: fundedAmount,
               fundingId: id,
               modalState: 'acceptBounty',
+              repoName,
             });
           } else {
             dispatchAcceptBounty({ fundingId: id, userRatio: 1 });
