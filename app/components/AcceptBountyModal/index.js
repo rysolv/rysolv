@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import T from 'prop-types';
 
 import {
+  AcceptButton,
   ButtonGroup,
   DeleteUserContainer,
   StyledBodyMessage,
-  AcceptButton,
+  StyledLink,
   StyledSecondaryButton,
   StyledTitle,
 } from './styledComponents';
@@ -32,6 +33,7 @@ const AcceptBountyModal = ({
 
   const handleAccept = () => {
     dispatchAcceptBounty({ fundingId, userRatio });
+    handleClose();
   };
 
   return (
@@ -45,7 +47,8 @@ const AcceptBountyModal = ({
       />
       <StyledBodyMessage>
         A minimum of 10% of all bounties is contributed to the project
-        maintainers. For more information, see link:how are bounties paid.
+        maintainers. For more information, see
+        <StyledLink to="/how-to#bounties"> how are bounties paid.</StyledLink>
       </StyledBodyMessage>
       <ButtonGroup>
         <StyledSecondaryButton label="Cancel" onClick={handleClose} />

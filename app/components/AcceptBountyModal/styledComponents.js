@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-import { buttonGrey, textColor } from 'defaultStyleHelper';
+import { buttonGrey, hoverLinkColor, textColor } from 'defaultStyleHelper';
 import { SecondaryButton } from 'components/base_ui';
 
 export const AcceptButton = styled(SecondaryButton)``;
@@ -20,6 +21,14 @@ export const StyledBodyMessage = styled.div`
   text-align: justify;
 `;
 
+export const StyledLink = styled(Link)`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    text-decoration: underline;
+  }
+`;
 export const StyledSecondaryButton = styled(SecondaryButton)`
   background-color: ${buttonGrey};
 

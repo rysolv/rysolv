@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 
 import iconDictionary from 'utils/iconDictionary';
 
@@ -23,10 +23,15 @@ const CoinIcon = iconDictionary('coin');
 const SiteLogo = iconDictionary('siteLogo');
 
 const HowTo = () => {
+  const bountyRef = useRef(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'How To';
+    const location = window.location.hash;
+    if (location === '#bounties') bountyRef.current.scrollIntoView();
   }, []);
+
   return (
     <Fragment>
       <StyledHowContainer>
@@ -105,7 +110,7 @@ const HowTo = () => {
           </StepWrapper>
         </StepContainer>
 
-        <HeaderWrapper>Funding an Issue</HeaderWrapper>
+        <HeaderWrapper id="funding">Funding an Issue</HeaderWrapper>
         <StepContainer>
           <StepWrapper>
             <HeaderDescription>
@@ -206,6 +211,46 @@ const HowTo = () => {
             </StepContentWrapper>
             <StepImageWrapper>
               <StyledImageWrapper image="https://rysolv.s3.us-east-2.amazonaws.com/earnBounty.png" />
+            </StepImageWrapper>
+          </StepWrapper>
+        </StepContainer>
+
+        <HeaderWrapper ref={bountyRef}>How are bounties paid?</HeaderWrapper>
+        <StepContainer>
+          <StepWrapper>
+            <HeaderDescription>
+              <StepName>Add a bounty to an issue</StepName>
+              <StepDescription>
+                Looking to contribute to your favorite project? Or need to see a
+                particular issue fixed? Adding a bounty to an issue supports
+                maintainers, and shows which features the community needs.
+              </StepDescription>
+            </HeaderDescription>
+            <StepIconWrapper>
+              <LogoWrapper>{CoinIcon}</LogoWrapper>
+            </StepIconWrapper>
+          </StepWrapper>
+          <StepWrapper>
+            <StepContentWrapper>
+              <StepName>Make a payment</StepName>
+              <StepDescription>
+                Select an issue that you want to fund, and fill out the payment
+                information. You can contribute via card, Paypal, or with any
+                funds that are in your account.
+                <ul>
+                  <li>
+                    You will recieve an email receipt for any contribution you
+                    make, as well as an update when the issue is resolved.
+                  </li>
+                  <li>
+                    A standard transaction fee will be applied based on the
+                    payment platform.
+                  </li>
+                </ul>
+              </StepDescription>
+            </StepContentWrapper>
+            <StepImageWrapper>
+              <StyledImageWrapper image="https://rysolv.s3.us-east-2.amazonaws.com/fundIssue.png" />
             </StepImageWrapper>
           </StepWrapper>
         </StepContainer>
