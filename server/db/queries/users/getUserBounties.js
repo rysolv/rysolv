@@ -11,6 +11,7 @@ const getUserBounties = async ({ userId }) => {
       f.pullrequest_id AS "pullrequestId",
       f.rep,
       f.user_accepted AS "userAccepted",
+      COALESCE(f.user_payout, 0) AS "userPayout",
       i.name,
       pr.html_url AS "pullRequestUrl",
       r.name as "repoName",

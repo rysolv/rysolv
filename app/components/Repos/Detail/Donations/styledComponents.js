@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
@@ -9,6 +10,7 @@ import {
   commentHeaderColor,
   defaultFontSize,
   fundingText,
+  hoverLinkColor,
   landingButtonGreen,
   textColor,
 } from 'defaultStyleHelper';
@@ -82,9 +84,9 @@ export const StyledBodyMessage = styled.div`
   text-align: justify;
 `;
 
-export const StyleDropdown = styled(Select)`
+export const StyledDropdown = styled(Select)`
   margin: 0.5rem 0;
-  width: 50%;
+  width: 70%;
 
   .MuiOutlinedInput-input {
     color: ${textColor};
@@ -102,6 +104,14 @@ export const StyleDropdown = styled(Select)`
   }
 `;
 
+export const StyledLink = styled(Link)`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    text-decoration: underline;
+  }
+`;
 export const StyledMenuItem = styled(MenuItem)`
   color: ${textColor};
   font-size: ${defaultFontSize};

@@ -39,6 +39,7 @@ const BountyComponent = ({
         repoName,
         repoPayoutExists,
         userAccepted,
+        userPayout,
       }) => {
         const handleClick = () => {
           if (repoPayoutExists) {
@@ -72,7 +73,7 @@ const BountyComponent = ({
                     </LinkWrapper>
                   </IssueNameWrapper>
                   {userAccepted ? (
-                    <RewardWrapper fundedAmount={fundedAmount} />
+                    <RewardWrapper fundedAmount={userPayout} />
                   ) : (
                     <AcceptButton
                       label="Accept Bounty"

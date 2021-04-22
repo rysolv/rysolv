@@ -43,6 +43,7 @@ module.exports = buildSchema(`
     repoName: String!
     repoPayoutExists: Boolean!
     userAccepted: Boolean!
+    userPayout: Float!
   }
 
   type Comment {
