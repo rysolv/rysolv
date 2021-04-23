@@ -30,7 +30,7 @@ export const IssueAttempts = styled.div`
 export const IssueContent = styled.div`
   display: flex;
   margin: 1rem 0;
-  min-height: 10rem;
+  min-height: 7.5rem;
   width: 100%;
 
   ${mobile} {

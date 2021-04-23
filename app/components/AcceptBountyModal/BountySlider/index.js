@@ -1,10 +1,11 @@
 import React from 'react';
 import T from 'prop-types';
+
 import { formatDollarAmount, formatPercentage } from 'utils/globalHelpers';
 
 import {
   Bounty,
-  BountySlideContainer,
+  BountySliderContainer,
   Percentage,
   SlideContainer,
   Slider,
@@ -20,11 +21,11 @@ const BountySlider = ({
   username,
   userRatio,
 }) => {
-  const userPortion = bounty * userRatio;
   const repoPortion = bounty * (1 - userRatio);
+  const userPortion = bounty * userRatio;
 
   return (
-    <BountySlideContainer>
+    <BountySliderContainer>
       <ValueContainer>
         <Bounty>
           <Title>{username}</Title>
@@ -47,7 +48,7 @@ const BountySlider = ({
           value={userRatio * max}
         />
       </SlideContainer>
-    </BountySlideContainer>
+    </BountySliderContainer>
   );
 };
 

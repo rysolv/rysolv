@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
 
+import BountySlider from './BountySlider';
 import {
+  AcceptBountyContainer,
   AcceptButton,
   ButtonGroup,
-  DeleteUserContainer,
   StyledBodyMessage,
   StyledLink,
   StyledSecondaryButton,
   StyledTitle,
 } from './styledComponents';
-
-import BountySlider from './BountySlider';
 
 const AcceptBountyModal = ({
   bounty,
@@ -24,6 +23,11 @@ const AcceptBountyModal = ({
   const [userRatio, setUserRatio] = useState(0.9);
   const max = bounty * 10;
 
+  const handleAccept = () => {
+    dispatchAcceptBounty({ fundingId, userRatio });
+    handleClose();
+  };
+
   const setPayout = e => {
     const percentage = e.target.value / max;
     if (percentage <= 0.9) {
@@ -33,13 +37,8 @@ const AcceptBountyModal = ({
     }
   };
 
-  const handleAccept = () => {
-    dispatchAcceptBounty({ fundingId, userRatio });
-    handleClose();
-  };
-
   return (
-    <DeleteUserContainer>
+    <AcceptBountyContainer>
       <StyledTitle>You earned a bounty!</StyledTitle>
       <BountySlider
         bounty={bounty}
@@ -51,14 +50,14 @@ const AcceptBountyModal = ({
       />
       <StyledBodyMessage>
         A minimum of 10% of all bounties is contributed to the project
-        maintainers. For more information, see
-        <StyledLink to="/how-to#bounties"> how are bounties paid.</StyledLink>
+        maintainers. <StyledLink to="/how-to#bounties">Click here</StyledLink>{' '}
+        to see how bounties are paid out.
       </StyledBodyMessage>
       <ButtonGroup>
         <StyledSecondaryButton label="Cancel" onClick={handleClose} />
         <AcceptButton label="Accept Bounty" onClick={handleAccept} />
       </ButtonGroup>
-    </DeleteUserContainer>
+    </AcceptBountyContainer>
   );
 };
 

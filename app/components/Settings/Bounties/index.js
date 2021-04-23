@@ -19,8 +19,8 @@ const SearchIcon = iconDictionary('search');
 const UserBounties = ({
   bounties,
   dispatchAcceptBounty,
-  handleNav,
   dispatchOpenModal,
+  handleNav,
 }) => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedValue, setSelectedValue] = useState('Newest');
@@ -50,7 +50,6 @@ const UserBounties = ({
     return filteredArray;
   };
   const filteredBounties = filterBounties();
-
   return (
     <Fragment>
       <HeaderWrapper>

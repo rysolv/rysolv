@@ -15,7 +15,6 @@ import {
   CreatedDate,
   IssueName,
   IssueNameWrapper,
-  LinkWrapper,
   StyledExternalLink,
 } from './styledComponents';
 
@@ -65,12 +64,10 @@ const BountyComponent = ({
                     >
                       {name}
                     </IssueName>
-                    <LinkWrapper>
+                    <StyledExternalLink href={pullRequestUrl} target="_blank">
                       {CodeIcon}
-                      <StyledExternalLink href={pullRequestUrl} target="_blank">
-                        View pull request
-                      </StyledExternalLink>
-                    </LinkWrapper>
+                      View pull request
+                    </StyledExternalLink>
                   </IssueNameWrapper>
                   {userAccepted ? (
                     <RewardWrapper fundedAmount={userPayout} />

@@ -2,20 +2,28 @@ import styled from 'styled-components';
 
 import {
   defaultFontSize,
-  headerColor,
+  fundingText,
   lightGreyColor,
   textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobileXS } = mediaQueriesByDevice;
 
 export const Bounty = styled.div`
-  color: green;
+  color: ${fundingText};
   font-size: 2.8rem;
   font-weight: bold;
-  padding: 1rem 2rem;
+  max-width: 45%;
+  padding: 1rem;
   text-align: center;
+
+  ${mobileXS} {
+    font-size: 2.2rem;
+  }
 `;
 
-export const BountySlideContainer = styled.div`
+export const BountySliderContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -37,32 +45,32 @@ export const Slider = styled.input`
   -webkit-appearance: none;
   -webkit-transition: 0.2s;
   appearance: none;
-  background: #d3d3d3;
-  height: 1.5rem;
-  opacity: 0.8;
+  background-color: #d4d7dc;
+  border-radius: 0.6rem;
+  height: 1.2rem;
+  opacity: 1;
   outline: none;
   transition: opacity 0.2s;
   width: 100%;
 
-  &:hover {
-    opacity: 1;
-  }
-
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    background: ${headerColor};
-    border-radius: 0.25rem;
+    background: white;
+    border-radius: 50%;
+    border: 0.3rem solid ${textColor};
     cursor: pointer;
-    height: 3rem;
-    width: 1.5rem;
+    height: 2.5rem;
+    width: 2.5rem;
   }
+
   &::-moz-range-thumb {
-    background: ${headerColor};
-    border-radius: 0.25rem;
+    background: white;
+    border-radius: 50%;
+    border: 0.3rem solid ${textColor};
     cursor: pointer;
-    height: 3rem;
-    width: 1.5rem;
+    height: 2.5rem;
+    width: 2.5rem;
   }
 `;
 
@@ -75,5 +83,5 @@ export const Title = styled.div`
 export const ValueContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 3rem;
+  margin-top: 1rem;
 `;

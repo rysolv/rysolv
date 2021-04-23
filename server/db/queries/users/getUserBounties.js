@@ -24,8 +24,8 @@ const getUserBounties = async ({ userId }) => {
       ) AS "repoPayoutExists"
     FROM funding f
     JOIN issues i on i.id = f.issue_id
-    JOIN repos r on r.id = i.repo_id
     JOIN pullrequests pr on pr.pullrequest_id = f.pullrequest_id
+    JOIN repos r on r.id = i.repo_id
       WHERE f.user_id = $1
       AND f.is_approved = true
   `;

@@ -54,9 +54,9 @@ const validatePayoutUrl = ({ payoutMethod, payoutUrl }) => {
   const selectedDomain = payoutMethodDictionary[payoutMethod];
 
   if (domain !== selectedDomain)
-    throw new CustomError(`Payout url does not match selected payout method`);
+    throw new CustomError(`Payout url does not match selected payout method.`);
 
-  if (!payoutUrl.length) throw new CustomError(`Must enter valid payout url`);
+  if (!payoutUrl.length) throw new CustomError(`Must enter valid payout url.`);
 };
 
 module.exports = {

@@ -34,9 +34,9 @@ const PayoutModal = ({
         donated to that payout method.
       </StyledBodyMessage>
       <StyledBodyMessage>
-        Payouts are accumulated on Rysolv and paid out every 30 days. For more
-        information, see
-        <StyledLink to="/how-to#bounties"> how are bounties paid.</StyledLink>
+        Payouts are accumulated on Rysolv and paid out every 30 days.{' '}
+        <StyledLink to="/how-to#bounties">Click here</StyledLink> to see how
+        bounties are paid out.
       </StyledBodyMessage>
       <InputWrapper>
         <StyledDropdown

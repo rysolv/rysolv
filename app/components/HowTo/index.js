@@ -215,14 +215,14 @@ const HowTo = () => {
           </StepWrapper>
         </StepContainer>
 
-        <HeaderWrapper ref={bountyRef}>How are bounties paid?</HeaderWrapper>
+        <HeaderWrapper ref={bountyRef}>Bounty Payout</HeaderWrapper>
         <StepContainer>
           <StepWrapper>
             <StepContentWrapper>
               <StepName>Accepting a bounty</StepName>
               <StepDescription>
                 When a pull request has been merged in and the corresponding
-                issue closed. You will be notified of a pending bounty. To
+                issue closed, you will be notified of a pending bounty. To
                 accept this bounty, head to your
                 <StyledInternalLink to="/settings/bounty">
                   {' '}
@@ -230,26 +230,26 @@ const HowTo = () => {
                 </StyledInternalLink>
                 <ul>
                   <li>
-                    If the repo has set up a payout method. You will be prompted
-                    to contribute a potion to the repo. Otherwise you will be
+                    If the repo has set up a payout method, you will be prompted
+                    to contribute a portion to the repo. Otherwise, you will be
                     awarded the full dollar amount of the bounty.
                   </li>
                   <li>
                     If the repo has added a payout method, a minimum of 10% will
-                    be allocatd to the parent repo.
+                    be allocated to the parent repo.
                   </li>
                 </ul>
               </StepDescription>
-              <StepName>Repo payout</StepName>
+              <StepName>Maintainer proceeds</StepName>
               <StepDescription>
                 For each bounty, there is additional work placed on the repo
                 maintainers. To support this work, Rysolv allocates a portion of
-                each bounty to the parent repo. And gives the user the ability
-                to allocate more.
+                each bounty to the parent repo and gives the user the ability to
+                allocate more.
                 <ul>
                   <li>
-                    As a maintainer, to reqister for the contributions, locate
-                    your repo from
+                    As a maintainer, to register for the contributions, locate
+                    your repo in
                     <StyledInternalLink to="/repos">
                       {' '}
                       rysolv.com/repos
@@ -297,7 +297,7 @@ const HowTo = () => {
                 and select <b>Withdraw Funds</b>.
                 <ul>
                   <li>
-                    There will be a <b>5% service fee</b> on withdrawals, as
+                    There will be a <b>10% service fee</b> on withdrawals, as
                     well as applicable payment processing fees.
                   </li>
                 </ul>
