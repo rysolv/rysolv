@@ -2,7 +2,6 @@ import React from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
-import { RewardWrapper } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
@@ -16,6 +15,7 @@ import {
   IssueName,
   IssueNameWrapper,
   StyledExternalLink,
+  StyledRewardWrapper,
 } from './styledComponents';
 
 const CodeIcon = iconDictionary('code');
@@ -70,7 +70,7 @@ const BountyComponent = ({
                     </StyledExternalLink>
                   </IssueNameWrapper>
                   {userAccepted ? (
-                    <RewardWrapper fundedAmount={userPayout} />
+                    <StyledRewardWrapper fundedAmount={userPayout} />
                   ) : (
                     <AcceptButton
                       label="Accept Bounty"

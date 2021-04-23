@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { SecondaryButton } from 'components/base_ui';
+import { RewardWrapper, SecondaryButton } from 'components/base_ui';
 import {
   defaultFontSize,
   detailFontSize,
@@ -16,6 +16,11 @@ export const AcceptButton = styled(SecondaryButton)`
   align-self: center;
   margin: 0;
   min-width: 13.8rem;
+
+  @media (max-width: 380px) {
+    margin-top: 1rem;
+    place-self: flex-end;
+  }
 `;
 
 export const BountyContent = styled.div`
@@ -40,6 +45,10 @@ export const BountyDetail = styled.div`
   display: flex;
   height: 100%;
   justify-content: space-between;
+
+  @media (max-width: 380px) {
+    flex-direction: column;
+  }
 `;
 
 export const BountyList = styled.ul`
@@ -99,5 +108,12 @@ export const StyledExternalLink = styled.a`
     height: 2rem;
     margin-right: 0.5rem;
     width: 2rem;
+  }
+`;
+
+export const StyledRewardWrapper = styled(RewardWrapper)`
+  @media (max-width: 380px) {
+    margin-top: 1rem;
+    place-self: flex-end;
   }
 `;
