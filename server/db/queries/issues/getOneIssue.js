@@ -8,7 +8,7 @@ const getOneIssue = async ({ issueId }) => {
       ${issueDetailValues},
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS language,
       CASE WHEN pullrequests.merged = true THEN true ELSE false END AS "isPullRequestMerged",
-      funding.user_accepted AS "isUserAccepted"
+      COALESCE(funding.user_accepted, false) AS "isUserAccepted"
     FROM issues
     JOIN repos ON issues.repo_id = repos.id
     JOIN users ON issues.contributor_id = users.id

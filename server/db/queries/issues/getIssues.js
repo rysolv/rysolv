@@ -8,7 +8,7 @@ const getIssues = async () => {
       ${issueCardValues},
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS language,
       CASE WHEN pullrequests.merged = true THEN true ELSE false END AS "isPullRequestMerged",
-      funding.user_accepted AS "isUserAccepted"
+      COALESCE(funding.user_accepted, false) AS "isUserAccepted"
     FROM issues
     LEFT JOIN attempting ON attempting.issue_id = issues.id
     LEFT JOIN comments ON comments.target = issues.id
