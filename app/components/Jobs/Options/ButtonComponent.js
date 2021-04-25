@@ -11,11 +11,8 @@ export const MultipleButton = ({
   limit,
   options,
 }) => {
-  const [selected, setSelected] = useState(form[id].value || null);
-  useEffect(() => setSelected(form[id].value || null), [id]);
-
   const handleClick = ({ value }) => {
-    const tempValue = [...selected];
+    const tempValue = [...form[id].value];
     if (tempValue.length < limit && !tempValue.includes(value)) {
       tempValue.push(value);
     } else if (tempValue.length === limit && !tempValue.includes(value)) {
@@ -25,7 +22,6 @@ export const MultipleButton = ({
       const index = tempValue.indexOf(value);
       tempValue.splice(index, 1);
     }
-    setSelected(tempValue);
     dispatchChangeInput({ field: id, value: tempValue });
   };
   return (
@@ -33,7 +29,7 @@ export const MultipleButton = ({
       {options.map(({ value }, index) => (
         <StyledPrimaryButton
           key={`option-${index}`}
-          isSelected={selected.includes(value)}
+          isSelected={form[id].value.includes(value)}
           label={value}
           onClick={() => handleClick({ value })}
         />
