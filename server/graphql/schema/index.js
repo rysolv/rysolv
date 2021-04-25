@@ -32,15 +32,18 @@ module.exports = buildSchema(`
   }
 
   type Bounty {
-    createdDate: Object!
-    fundedAmount: Int!
-    id: ID!
-    isApproved: Boolean!
-    issueId: ID!
-    name: String!
-    pullRequestUrl: String!
-    rep: String!
-    userAccepted: Boolean!
+    createdDate: Object
+    fundedAmount: Float
+    id: ID
+    isApproved: Boolean
+    issueId: ID
+    name: String
+    pullRequestUrl: String
+    rep: String
+    repoName: String
+    repoPayoutExists: Boolean
+    userAccepted: Boolean
+    userPayout: Float
   }
 
   type Comment {
@@ -437,7 +440,7 @@ module.exports = buildSchema(`
   }
 
   type RootMutation {
-    acceptBounty(fundingId: ID!): EventResponse!
+    acceptBounty(fundingId: ID!, userRatio: Float!): EventResponse!
 
     addRepoPayout(repoId: ID!, repoInput: RepoInput): EventResponse!
 

@@ -2,7 +2,6 @@ import React from 'react';
 import T from 'prop-types';
 import moment from 'moment';
 
-import { RewardWrapper } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
@@ -15,13 +14,18 @@ import {
   CreatedDate,
   IssueName,
   IssueNameWrapper,
-  LinkWrapper,
   StyledExternalLink,
+  StyledRewardWrapper,
 } from './styledComponents';
 
 const CodeIcon = iconDictionary('code');
 
-const BountyComponent = ({ bounties, dispatchAcceptBounty, handleNav }) => (
+const BountyComponent = ({
+  bounties,
+  dispatchAcceptBounty,
+  dispatchOpenModal,
+  handleNav,
+}) => (
   <BountyList>
     {bounties.map(
       ({
@@ -31,39 +35,54 @@ const BountyComponent = ({ bounties, dispatchAcceptBounty, handleNav }) => (
         issueId,
         name,
         pullRequestUrl,
+        repoName,
+        repoPayoutExists,
         userAccepted,
-      }) => (
-        <BountyListItem key={`list-item-${id}`}>
-          <BountyContent>
-            <BountyContentInfo>
-              <CreatedDate>{moment.utc(createdDate).fromNow()}</CreatedDate>
-              <BountyDetail>
-                <IssueNameWrapper>
-                  <IssueName
-                    onClick={() => handleNav(`/issues/detail/${issueId}`)}
-                  >
-                    {name}
-                  </IssueName>
-                  <LinkWrapper>
-                    {CodeIcon}
+        userPayout,
+      }) => {
+        const handleClick = () => {
+          if (repoPayoutExists) {
+            dispatchOpenModal({
+              bounty: fundedAmount,
+              fundingId: id,
+              modalState: 'acceptBounty',
+              repoName,
+            });
+          } else {
+            dispatchAcceptBounty({ fundingId: id, userRatio: 1 });
+          }
+        };
+        return (
+          <BountyListItem key={`list-item-${id}`}>
+            <BountyContent>
+              <BountyContentInfo>
+                <CreatedDate>{moment.utc(createdDate).fromNow()}</CreatedDate>
+                <BountyDetail>
+                  <IssueNameWrapper>
+                    <IssueName
+                      onClick={() => handleNav(`/issues/detail/${issueId}`)}
+                    >
+                      {name}
+                    </IssueName>
                     <StyledExternalLink href={pullRequestUrl} target="_blank">
+                      {CodeIcon}
                       View pull request
                     </StyledExternalLink>
-                  </LinkWrapper>
-                </IssueNameWrapper>
-                {userAccepted ? (
-                  <RewardWrapper fundedAmount={fundedAmount} />
-                ) : (
-                  <AcceptButton
-                    label="Accept Bounty"
-                    onClick={() => dispatchAcceptBounty({ fundingId: id })}
-                  />
-                )}
-              </BountyDetail>
-            </BountyContentInfo>
-          </BountyContent>
-        </BountyListItem>
-      ),
+                  </IssueNameWrapper>
+                  {userAccepted ? (
+                    <StyledRewardWrapper fundedAmount={userPayout} />
+                  ) : (
+                    <AcceptButton
+                      label="Accept Bounty"
+                      onClick={() => handleClick()}
+                    />
+                  )}
+                </BountyDetail>
+              </BountyContentInfo>
+            </BountyContent>
+          </BountyListItem>
+        );
+      },
     )}
   </BountyList>
 );
@@ -71,6 +90,7 @@ const BountyComponent = ({ bounties, dispatchAcceptBounty, handleNav }) => (
 BountyComponent.propTypes = {
   bounties: T.array.isRequired,
   dispatchAcceptBounty: T.func.isRequired,
+  dispatchOpenModal: T.func.isRequired,
   handleNav: T.func.isRequired,
 };
 

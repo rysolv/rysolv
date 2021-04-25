@@ -16,7 +16,12 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const UserBounties = ({ bounties, dispatchAcceptBounty, handleNav }) => {
+const UserBounties = ({
+  bounties,
+  dispatchAcceptBounty,
+  dispatchOpenModal,
+  handleNav,
+}) => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedValue, setSelectedValue] = useState('Newest');
 
@@ -45,7 +50,6 @@ const UserBounties = ({ bounties, dispatchAcceptBounty, handleNav }) => {
     return filteredArray;
   };
   const filteredBounties = filterBounties();
-
   return (
     <Fragment>
       <HeaderWrapper>
@@ -73,6 +77,7 @@ const UserBounties = ({ bounties, dispatchAcceptBounty, handleNav }) => {
         propsToPassDown={{
           bounties: filteredBounties,
           dispatchAcceptBounty,
+          dispatchOpenModal,
           handleNav,
         }}
         shouldRender={!!filteredBounties.length}
@@ -84,6 +89,7 @@ const UserBounties = ({ bounties, dispatchAcceptBounty, handleNav }) => {
 UserBounties.propTypes = {
   bounties: T.array.isRequired,
   dispatchAcceptBounty: T.func.isRequired,
+  dispatchOpenModal: T.func.isRequired,
   handleNav: T.func.isRequired,
 };
 

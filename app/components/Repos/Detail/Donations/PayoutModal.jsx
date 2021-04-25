@@ -6,10 +6,11 @@ import {
   InputWrapper,
   PayoutContainer,
   StyledBodyMessage,
+  StyledDropdown,
+  StyledLink,
   StyledMenuItem,
   StyledPrimaryAsyncButton,
   StyledPrimaryButton,
-  StyleDropdown,
   StyledTitle,
 } from './styledComponents';
 import { StyledBaseTextInput } from '../styledComponents';
@@ -33,10 +34,12 @@ const PayoutModal = ({
         donated to that payout method.
       </StyledBodyMessage>
       <StyledBodyMessage>
-        Payouts are accumulated on Rysolv and paid out every 30 days.
+        Payouts are accumulated on Rysolv and paid out every 30 days.{' '}
+        <StyledLink to="/how-to#bounties">Click here</StyledLink> to see how
+        bounties are paid out.
       </StyledBodyMessage>
       <InputWrapper>
-        <StyleDropdown
+        <StyledDropdown
           onChange={e => setPayoutMethod(e.target.value)}
           value={payoutMethod}
           variant="outlined"
@@ -51,14 +54,14 @@ const PayoutModal = ({
             Open Collective
           </StyledMenuItem>
           <StyledMenuItem value="Paypal">Paypal</StyledMenuItem>
-        </StyleDropdown>
+        </StyledDropdown>
         <StyledBaseTextInput
           error={!!payoutUrlError}
           helperText={payoutUrlError}
           onChange={e => setPayoutUrlChange(e.target.value)}
           placeholder={payoutUrlChange || 'https://github.com/sponsors/rysolv'}
           value={payoutUrlChange || ''}
-          width="50%"
+          width="70%"
         />
       </InputWrapper>
       <ButtonGroup>

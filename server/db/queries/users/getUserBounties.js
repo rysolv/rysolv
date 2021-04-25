@@ -11,11 +11,21 @@ const getUserBounties = async ({ userId }) => {
       f.pullrequest_id AS "pullrequestId",
       f.rep,
       f.user_accepted AS "userAccepted",
+      COALESCE(f.user_payout, 0) AS "userPayout",
       i.name,
-      pr.html_url AS "pullRequestUrl"
+      pr.html_url AS "pullRequestUrl",
+      r.name as "repoName",
+      EXISTS(
+        SELECT r.payout_url FROM funding f
+          JOIN issues i on f.issue_id = i.id
+          JOIN repos r on i.repo_id = r.id
+          WHERE f.user_id = $1
+          AND r.payout_url IS NOT NULL
+      ) AS "repoPayoutExists"
     FROM funding f
     JOIN issues i on i.id = f.issue_id
     JOIN pullrequests pr on pr.pullrequest_id = f.pullrequest_id
+    JOIN repos r on r.id = i.repo_id
       WHERE f.user_id = $1
       AND f.is_approved = true
   `;

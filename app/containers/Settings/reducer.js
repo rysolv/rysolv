@@ -169,7 +169,12 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case OPEN_MODAL_STATE: {
-      const { modalState } = payload;
+      const { bounty, fundingId, modalState, repoName } = payload;
+      if (modalState === 'acceptBounty') {
+        draft.account.fundingId = fundingId;
+        draft.account.repoName = repoName;
+        draft.account.selectedBounty = bounty;
+      }
       draft.isModalOpen = true;
       draft.modal = modalState;
       break;

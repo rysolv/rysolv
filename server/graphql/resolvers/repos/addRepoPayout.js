@@ -12,9 +12,12 @@ const addRepoPayout = async ({ repoId, repoInput }, { authError, userId }) => {
     if (authError || !userId) throw new CustomError(authError);
 
     const { payoutMethod, payoutUrl } = repoInput;
-    await validatePayoutUrl({ payoutMethod, payoutUrl });
+    validatePayoutUrl({ payoutMethod, payoutUrl });
 
-    const data = { payout_url: payoutUrl };
+    const data = {
+      modified_date: new Date(),
+      payout_url: payoutUrl,
+    };
     const result = await transformRepoQuery({ data, repoId });
 
     const activityInput = {
