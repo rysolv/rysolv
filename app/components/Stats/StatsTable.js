@@ -132,12 +132,9 @@ const StatsTable = ({
   const isLaptop =
     isTablet || deviceView === 'laptopS' || deviceView === 'laptop';
   const tableProps = [
-    { tableData: mostRep, title: isOverview ? 'Leaderboard' : 'Most Coins' },
     { tableData: mostEarned, title: 'Highest Earning' },
-    {
-      tableData: mostContribution,
-      title: 'Top Donors',
-    },
+    { tableData: mostRep, title: 'Most Coins' },
+    { tableData: mostContribution, title: 'Top Donors' },
   ];
   const numberOfTables = getNumOfTablesToRender(tableProps);
   const shouldRenderOneTable =
