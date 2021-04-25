@@ -38,7 +38,6 @@ const PaymentsContainer = ({
   errors,
   handleClearPaymentAlerts,
   handleIncrement,
-  isInFundingQueue,
   isModal,
   isPullRequestMerged,
   issueId,
@@ -108,7 +107,6 @@ const PaymentsContainer = ({
           handleStripeToken,
           handleSubmitAccountPayment,
           handleValidateInput,
-          isInFundingQueue,
           isPullRequestMerged,
           issueId,
           isUserAccepted,
@@ -124,7 +122,6 @@ const PaymentsContainer = ({
 
 PaymentsContainer.defaultProps = {
   awardedUser: null,
-  isInFundingQueue: false,
   isModal: false,
   isPullRequestMerged: false,
 };
@@ -141,7 +138,6 @@ PaymentsContainer.propTypes = {
   errors: T.object,
   handleClearPaymentAlerts: T.func,
   handleIncrement: T.func.isRequired,
-  isInFundingQueue: T.bool,
   isModal: T.bool,
   isPullRequestMerged: T.bool,
   issueId: T.string,

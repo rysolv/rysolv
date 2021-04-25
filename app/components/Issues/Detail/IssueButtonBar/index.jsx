@@ -21,7 +21,7 @@ const IssueButtonBar = ({
   data: {
     attempting,
     id: issueId,
-    isInFundingQueue,
+    isUserAccepted,
     open,
     pullRequests,
     watching,
@@ -69,7 +69,7 @@ const IssueButtonBar = ({
       />
       <PullRequestButton
         activeUserPullRequests={activeUserPullRequests}
-        disabled={isInFundingQueue}
+        disabled={isUserAccepted}
         dispatchFetchPullRequestList={dispatchFetchPullRequestList}
         dispatchOpenIssueModal={dispatchOpenIssueModal}
         dispatchOpenModal={dispatchOpenModal}

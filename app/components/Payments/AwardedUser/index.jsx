@@ -16,12 +16,7 @@ import { Funded } from '../styledComponents';
 const CodeIcon = iconDictionary('code');
 const CoinIcon = iconDictionary('coin');
 
-const AwardedUserView = ({
-  awardedUser,
-  isInFundingQueue,
-  isUserAccepted,
-  rep,
-}) => {
+const AwardedUserView = ({ awardedUser, isUserAccepted, rep }) => {
   const { htmlUrl, id, profilePic, username } = awardedUser || {};
   const AwardedUserComponent = () => (
     <AwardedUserWrapper>
@@ -55,14 +50,13 @@ const AwardedUserView = ({
     <ConditionalRender
       Component={AwardedUserComponent}
       FallbackComponent={PendingApprovalComponent}
-      shouldRender={isUserAccepted && !isInFundingQueue}
+      shouldRender={isUserAccepted}
     />
   );
 };
 
 AwardedUserView.propTypes = {
   awardedUser: T.object,
-  isInFundingQueue: T.bool.isRequired,
   isUserAccepted: T.bool.isRequired,
   rep: T.number.isRequired,
 };

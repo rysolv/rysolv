@@ -42,7 +42,6 @@ const PaymentView = ({
   handleStripeToken,
   handleSubmitAccountPayment,
   handleValidateInput,
-  isInFundingQueue,
   isPullRequestMerged,
   isSignedIn,
   issueId,
@@ -168,7 +167,7 @@ const PaymentView = ({
               {fundedAmount ? 'Funded' : 'Unfunded'}
             </Funded>
           }
-          propsToPassDown={{ awardedUser, isInFundingQueue, isUserAccepted, rep }}
+          propsToPassDown={{ awardedUser, isUserAccepted, rep }}
           shouldRender={isPullRequestMerged && !open}
         />
       </OverviewWrapper>
@@ -273,7 +272,6 @@ PaymentView.propTypes = {
   handleStripeToken: T.func,
   handleSubmitAccountPayment: T.func,
   handleValidateInput: T.func,
-  isInFundingQueue: T.bool.isRequired,
   isPullRequestMerged: T.bool.isRequired,
   isSignedIn: T.bool,
   issueId: T.string,

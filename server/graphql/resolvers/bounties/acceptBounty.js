@@ -22,7 +22,7 @@ const acceptBounty = async (
       throw new CustomError(`You have already accepted this bounty.`);
 
     // If payout url, userRatio cannot exceed 90%
-    if (payoutUrl && userRatio > 0.9)
+    if (fundedAmount > 0 && payoutUrl && userRatio > 0.9)
       throw new CustomError(`Your portion of the bounty cannot exceed 90%.`);
 
     // Max user ratio of 1

@@ -41,7 +41,7 @@ const BountyComponent = ({
         userPayout,
       }) => {
         const handleClick = () => {
-          if (repoPayoutExists) {
+          if (fundedAmount > 0 && repoPayoutExists) {
             dispatchOpenModal({
               bounty: fundedAmount,
               fundingId: id,
@@ -72,10 +72,7 @@ const BountyComponent = ({
                   {userAccepted ? (
                     <StyledRewardWrapper fundedAmount={userPayout} />
                   ) : (
-                    <AcceptButton
-                      label="Accept Bounty"
-                      onClick={() => handleClick()}
-                    />
+                    <AcceptButton label="Accept Bounty" onClick={handleClick} />
                   )}
                 </BountyDetail>
               </BountyContentInfo>
