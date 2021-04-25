@@ -175,7 +175,7 @@ const WithdrawalFormComponent = ({
           <DisplayText>
             {transferValue > 0
               ? `${formatDollarAmount(
-                  transferValue - transferValue * 0.03 + 0.3,
+                  transferValue - (transferValue * 0.03 + 0.3),
                 )} USD`
               : '–'}
           </DisplayText>
