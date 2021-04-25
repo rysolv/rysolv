@@ -120,6 +120,7 @@ module.exports = buildSchema(`
     id: ID
     isInFundingQueue: Boolean
     isPullRequestMerged: Boolean
+    isUserAccepted: Boolean
     language: [String]
     message: String
     modifiedDate: Object

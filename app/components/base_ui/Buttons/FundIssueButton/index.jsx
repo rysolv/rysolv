@@ -22,6 +22,7 @@ const FundIssueButton = ({
   isInFundingQueue,
   isPullRequestMerged,
   issueId,
+  isUserAccepted,
   open,
   rep,
 }) => (
@@ -36,7 +37,9 @@ const FundIssueButton = ({
           />
         </FundAmount>
       }
-      shouldRender={!isInFundingQueue && isPullRequestMerged && !open}
+      shouldRender={
+        !isInFundingQueue && isPullRequestMerged && isUserAccepted && !open
+      }
     />
     <AddFundsButton
       disabled={disabled}
@@ -67,6 +70,7 @@ FundIssueButton.propTypes = {
   isInFundingQueue: T.bool.isRequired,
   isPullRequestMerged: T.bool.isRequired,
   issueId: T.string.isRequired,
+  isUserAccepted: T.bool.isRequired,
   open: T.bool.isRequired,
   rep: T.number.isRequired,
 };

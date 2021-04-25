@@ -9,6 +9,7 @@ import {
   BalanceAmount,
   BalanceSquare,
   BalanceTitle,
+  DisclaimerText,
   DisplayText,
   Divider,
   InputHeader,
@@ -161,19 +162,20 @@ const WithdrawalFormComponent = ({
       <Divider />
       <div>
         <WithdrawalInputWrapper isRow isThin>
-          <InputHeader>10% Rysolv Service Fee:</InputHeader>
-          <DisplayText>{formatDollarAmount(transferValue * 0.1)}</DisplayText>
-        </WithdrawalInputWrapper>
-        <WithdrawalInputWrapper isRow isThin>
           <InputHeader>Transaction Fee:</InputHeader>
-          <DisplayText>{formatDollarAmount(transferValue * 0.05)}</DisplayText>
+          <DisplayText>
+            {formatDollarAmount(transferValue * 0.03 + 0.3)}
+          </DisplayText>
         </WithdrawalInputWrapper>
+        <DisclaimerText>
+          A 3% + $0.30 standard transaction fee will be added.
+        </DisclaimerText>
         <WithdrawalInputWrapper isRow>
           <InputHeader>Transfer to PayPal:</InputHeader>
           <DisplayText>
             {transferValue > 0
               ? `${formatDollarAmount(
-                  transferValue - transferValue * 0.15,
+                  transferValue - transferValue * 0.03 + 0.3,
                 )} USD`
               : '–'}
           </DisplayText>

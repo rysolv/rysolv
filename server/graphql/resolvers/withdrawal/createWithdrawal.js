@@ -39,7 +39,7 @@ const createWithdrawal = async (
       const data = {
         created_date: createdDate,
         email,
-        fee: transferValue * 0.15,
+        fee: transferValue * 0.03 + 0.3,
         id: uuidv4(),
         transfer_value: transferValue,
         user_id: userId,

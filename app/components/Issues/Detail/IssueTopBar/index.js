@@ -28,6 +28,7 @@ const IssueTopBar = ({
     id: issueId,
     isInFundingQueue,
     isPullRequestMerged,
+    isUserAccepted,
     open,
     rep,
   } = data;
@@ -48,6 +49,7 @@ const IssueTopBar = ({
               isInFundingQueue={isInFundingQueue}
               isPullRequestMerged={isPullRequestMerged}
               issueId={issueId}
+              isUserAccepted={isUserAccepted}
               open={open}
               rep={rep}
             />

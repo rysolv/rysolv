@@ -8,6 +8,7 @@ const getIssues = async () => {
       ${issueCardValues},
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS language,
       CASE WHEN funding.id IS NOT NULL AND funding.is_approved = false THEN true ELSE false END AS "isInFundingQueue",
+      funding.user_accepted AS "isUserAccepted",
       CASE WHEN pullrequests.merged = true THEN true ELSE false END AS "isPullRequestMerged"
     FROM issues
     LEFT JOIN attempting ON attempting.issue_id = issues.id

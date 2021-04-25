@@ -50,6 +50,7 @@ const IssueDetail = ({
     id: issueId,
     isInFundingQueue,
     isPullRequestMerged,
+    isUserAccepted,
     language,
     name,
     open,
@@ -297,6 +298,7 @@ const IssueDetail = ({
             isPullRequestMerged={isPullRequestMerged}
             isSignedIn={isSignedIn}
             issueId={issueId}
+            isUserAccepted={isUserAccepted}
             open={open}
             rep={rep}
           />

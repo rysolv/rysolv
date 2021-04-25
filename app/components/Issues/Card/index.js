@@ -64,6 +64,7 @@ const IssueCard = ({
         id,
         isInFundingQueue,
         isPullRequestMerged,
+        isUserAccepted,
         language,
         name,
         open,
@@ -244,6 +245,7 @@ const IssueCard = ({
                         isInFundingQueue={isInFundingQueue}
                         isPullRequestMerged={isPullRequestMerged}
                         issueId={id}
+                        isUserAccepted={isUserAccepted}
                         open={open}
                         rep={rep}
                       />
@@ -253,7 +255,10 @@ const IssueCard = ({
                     }
                     shouldRender={
                       open ||
-                      (isPullRequestMerged && !isInFundingQueue && !open)
+                      (!isInFundingQueue &&
+                        isPullRequestMerged &&
+                        !isUserAccepted &&
+                        !open)
                     }
                   />
                 </StyledIssueFooter>

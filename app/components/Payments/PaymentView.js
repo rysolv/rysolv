@@ -46,6 +46,7 @@ const PaymentView = ({
   isPullRequestMerged,
   isSignedIn,
   issueId,
+  isUserAccepted,
   open,
   rep,
 }) => {
@@ -155,7 +156,7 @@ const PaymentView = ({
       <OverviewWrapper>
         <ConditionalRender
           Component={<RewardWrapper>{RewardIcon} Rewarded</RewardWrapper>}
-          shouldRender={!!awardedUser}
+          shouldRender={!!awardedUser && isUserAccepted}
         />
         <Amount success={!!awardedUser}>
           {formatDollarAmount(fundedAmount)}
@@ -167,7 +168,7 @@ const PaymentView = ({
               {fundedAmount ? 'Funded' : 'Unfunded'}
             </Funded>
           }
-          propsToPassDown={{ awardedUser, isInFundingQueue, rep }}
+          propsToPassDown={{ awardedUser, isInFundingQueue, isUserAccepted, rep }}
           shouldRender={isPullRequestMerged && !open}
         />
       </OverviewWrapper>
@@ -276,6 +277,7 @@ PaymentView.propTypes = {
   isPullRequestMerged: T.bool.isRequired,
   isSignedIn: T.bool,
   issueId: T.string,
+  isUserAccepted: T.bool.isRequired,
   open: T.bool,
   rep: T.number.isRequired,
 };

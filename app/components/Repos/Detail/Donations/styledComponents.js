@@ -9,6 +9,7 @@ import {
   cardHeaderFontSize,
   commentHeaderColor,
   defaultFontSize,
+  detailFontSize,
   fundingText,
   hoverLinkColor,
   landingButtonGreen,
@@ -29,6 +30,18 @@ export const Amount = styled.span`
 export const ButtonGroup = styled.div`
   margin-top: 1rem;
   text-align: center;
+`;
+
+export const DetailLink = styled.a`
+  color: ${hoverLinkColor};
+  font-size: ${detailFontSize};
+  margin: -1rem 0 1rem;
+
+  &:hover {
+    color: ${hoverLinkColor};
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
 
 export const DonationRow = styled.div`
