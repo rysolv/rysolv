@@ -349,7 +349,7 @@ UserTimelineView.propTypes = {
   setIsDisabled: T.func.isRequired,
   setValue: T.func.isRequired,
   stackoverflowLink: T.string,
-  value: T.string.isRequired,
+  value: T.oneOfType([T.array, T.string]).isRequired,
   watching: T.array.isRequired,
 };
 
