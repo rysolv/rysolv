@@ -26,8 +26,8 @@ const IssueTopBar = ({
   const {
     fundedAmount,
     id: issueId,
-    isInFundingQueue,
     isPullRequestMerged,
+    isUserAccepted,
     open,
     rep,
   } = data;
@@ -45,9 +45,9 @@ const IssueTopBar = ({
               disabled={!open}
               dispatchOpenModal={dispatchOpenModal}
               fundedAmount={fundedAmount}
-              isInFundingQueue={isInFundingQueue}
               isPullRequestMerged={isPullRequestMerged}
               issueId={issueId}
+              isUserAccepted={isUserAccepted}
               open={open}
               rep={rep}
             />

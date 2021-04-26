@@ -16,6 +16,7 @@ import {
   lightBlueColor,
   rewardColor,
   successGreen,
+  textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
@@ -108,14 +109,14 @@ export const Divider = styled.div`
 export const DollarValueWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   text-align: center;
 `;
 
 export const Funded = styled.div`
   align-self: center;
   color: ${({ isFunded }) => (isFunded ? 'rgba(0,0,0,0.4)' : fundingText)};
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   font-weight: 500;
   padding: 0.5rem;
 `;
@@ -179,7 +180,7 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
 `;
 
 export const StyledLabel = styled.div`
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   font-weight: 500;
   padding: 0.5rem 1.5rem;
   text-align: left;
@@ -218,23 +219,23 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
 
   .button {
     &:hover {
-      color: white;
       background: #31b589;
+      color: white;
     }
   }
 
   .grouped {
     border-radius: inherit;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    color: rgba(0, 0, 0, 0.7);
-    font-size: 1.4rem;
+    color: ${textColor};
+    font-size: ${defaultFontSize};
     margin: 0.5rem;
     padding: 1rem;
   }
 
   .selected {
-    color: white;
     background: #31b589;
+    color: white;
   }
 `;
 

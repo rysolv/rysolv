@@ -11,12 +11,11 @@ import {
   IconToolTip,
   LanguageWrapper,
   MonocleIcon,
-  Verified,
   WatchButton,
 } from 'components/base_ui';
 import UpvotePanel from 'components/Upvote';
 import { navHelper } from 'utils/globalHelpers';
-import IconDictionary from 'utils/iconDictionary';
+import iconDictionary from 'utils/iconDictionary';
 
 import {
   IssueCardIconWrapper,
@@ -27,7 +26,7 @@ import {
   MobileIconDescription,
   NameLink,
   NameWrapper,
-  OrganizationNameWrapper,
+  RepoNameWrapper,
   StyledIconButton,
   StyledIssueCard,
   StyledIssueContent,
@@ -35,11 +34,12 @@ import {
   StyledIssueHeader,
   StyledIssueText,
   StyledListItem,
+  StyledVerified,
 } from './styledComponents';
 import { issueTags, tagColors } from '../constants';
 import { TagWrapper } from '../styledComponents';
 
-const AttemptingIcon = IconDictionary('attempt');
+const AttemptingIcon = iconDictionary('attempt');
 
 const IssueCard = ({
   activeUser: { id: userId, upvotes: userUpvotes, watching: userWatchList },
@@ -62,15 +62,15 @@ const IssueCard = ({
         createdDate,
         fundedAmount,
         id,
-        isInFundingQueue,
         isPullRequestMerged,
+        isUserAccepted,
         language,
         name,
         open,
-        organizationId,
-        organizationName,
-        organizationVerified,
         rep,
+        repoId,
+        repoName,
+        repoVerified,
         type,
         watching,
       }) => {
@@ -200,21 +200,17 @@ const IssueCard = ({
               />
               <StyledIssueContent>
                 <StyledIssueHeader>
-                  <OrganizationNameWrapper>
-                    <Link to={`/organizations/detail/${organizationId}`}>
-                      {organizationName}
-                    </Link>
+                  <RepoNameWrapper>
+                    <Link to={`/repos/detail/${repoId}`}>{repoName}</Link>
 
-                    {organizationVerified ? (
+                    {repoVerified ? (
                       <IconToolTip toolTipText="Verified Contributor">
-                        <div>
-                          <Verified />
-                        </div>
+                        <StyledVerified />
                       </IconToolTip>
                     ) : (
                       ''
                     )}
-                  </OrganizationNameWrapper>
+                  </RepoNameWrapper>
                   {moment.utc(createdDate).fromNow()}
                 </StyledIssueHeader>
                 <StyledIssueText>
@@ -245,9 +241,9 @@ const IssueCard = ({
                       <FundIssueButton
                         dispatchOpenModal={dispatchOpenModal}
                         fundedAmount={fundedAmount}
-                        isInFundingQueue={isInFundingQueue}
                         isPullRequestMerged={isPullRequestMerged}
                         issueId={id}
+                        isUserAccepted={isUserAccepted}
                         open={open}
                         rep={rep}
                       />
@@ -256,8 +252,7 @@ const IssueCard = ({
                       <FundingWrapper open={open} value="Issue Closed" medium />
                     }
                     shouldRender={
-                      open ||
-                      (isPullRequestMerged && !isInFundingQueue && !open)
+                      open || (isPullRequestMerged && isUserAccepted && !open)
                     }
                   />
                 </StyledIssueFooter>

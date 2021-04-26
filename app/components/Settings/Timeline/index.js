@@ -30,26 +30,61 @@ import {
   TimelineType,
   TimelineVerticalDivider,
   StyledAction,
+  ActivityContainer,
 } from './styledComponents';
 import {
   EmptyComponentContainer,
   HeaderWrapper,
   StyledH3,
 } from '../styledComponents';
+import ProfileComponent from '../Profile';
 import VerifiedAccountsView from '../VerifiedAccounts';
 
 const ViewAllIcon = iconDictionary('navigateNext');
 
 const UserTimelineView = ({
+  activePullRequests,
   activity,
   attempting,
+  changeGithub,
+  changePersonal,
+  changePreferredLanguages,
+  changeStackoverflow,
+  changeUserImage,
+  completedPullRequests,
+  createdDate,
+  displayBottom,
+  dollarsEarned,
   filterValues: { users: usersFilter },
+  firstName,
+  githubLink,
   githubUsername,
+  handleClose,
+  handleEdit,
   handleInputChange,
   handleNav,
   handleRemoveAttempting,
   handleRemoveWatching,
+  handleSubmitInputChange,
+  handleValidateInput,
+  inputErrors,
+  isDisabled,
   isGithubVerified,
+  lastName,
+  personalLink,
+  preferredLanguages,
+  profilePic,
+  rejectedPullRequests,
+  rep,
+  setChangeGithub,
+  setChangePersonal,
+  setChangePreferredLanguages,
+  setChangeStackoverflow,
+  setChangeUserImage,
+  setIsDisabled,
+  setValue,
+  stackoverflowLink,
+  value,
   watching,
 }) => {
   const filterActivity = () => {
@@ -172,77 +207,149 @@ const UserTimelineView = ({
 
   return (
     <TimelineContainer>
-      <VerifiedAccountsView
-        githubUsername={githubUsername}
-        isGithubVerified={isGithubVerified}
+      <ProfileComponent
+        activePullRequests={activePullRequests}
+        changeGithub={changeGithub}
+        changePersonal={changePersonal}
+        changePreferredLanguages={changePreferredLanguages}
+        changeStackoverflow={changeStackoverflow}
+        changeUserImage={changeUserImage}
+        completedPullRequests={completedPullRequests}
+        createdDate={createdDate}
+        displayBottom={displayBottom}
+        dollarsEarned={dollarsEarned}
+        firstName={firstName}
+        githubLink={githubLink}
+        handleClose={handleClose}
+        handleEdit={handleEdit}
+        handleSubmitInputChange={handleSubmitInputChange}
+        handleValidateInput={handleValidateInput}
+        inputErrors={inputErrors}
+        isDisabled={isDisabled}
+        lastName={lastName}
+        personalLink={personalLink}
+        preferredLanguages={preferredLanguages}
+        profilePic={profilePic}
+        rejectedPullRequests={rejectedPullRequests}
+        rep={rep}
+        setChangeGithub={setChangeGithub}
+        setChangePersonal={setChangePersonal}
+        setChangePreferredLanguages={setChangePreferredLanguages}
+        setChangeStackoverflow={setChangeStackoverflow}
+        setChangeUserImage={setChangeUserImage}
+        setIsDisabled={setIsDisabled}
+        setValue={setValue}
+        stackoverflowLink={stackoverflowLink}
+        value={value}
       />
-      <div>
-        <HeaderContainer>
-          <StyledH3>Your Attempting</StyledH3>
-          <ConditionalRender
-            Component={
-              <StyledButton
-                disableRipple
-                onClick={() => handleNav('/settings/attempting')}
-              >
-                View All
-                {ViewAllIcon}
-              </StyledButton>
-            }
-            shouldRender={!!attempting.length}
-          />
-        </HeaderContainer>
-        <AttemptingComponent />
-      </div>
-      <div>
-        <HeaderContainer>
-          <StyledH3>Your Watching</StyledH3>
-          <ConditionalRender
-            Component={
-              <StyledButton
-                disableRipple
-                onClick={() => handleNav('/settings/watching')}
-              >
-                View All
-                {ViewAllIcon}
-              </StyledButton>
-            }
-            shouldRender={!!watching.length}
-          />
-        </HeaderContainer>
-        <WatchingComponent />
-      </div>
-      <HeaderWrapper>
-        <StyledH3>All Activity</StyledH3>
-        <StyledBaseDropDownMenu
-          handleChange={value =>
-            handleInputChange({ field: 'users', form: 'filter', value })
-          }
-          selectedValue={usersFilter}
-          values={['All', 'Commented', 'Earned', 'Funded', 'Submitted']}
+      <ActivityContainer>
+        <VerifiedAccountsView
+          githubUsername={githubUsername}
+          isGithubVerified={isGithubVerified}
         />
-      </HeaderWrapper>
-      <ConditionalRender
-        Component={ActivityComponent}
-        FallbackComponent={
-          <EmptyComponentContainer>No recent activity.</EmptyComponentContainer>
-        }
-        shouldRender={filteredActivity.length > 0}
-      />
+        <div>
+          <HeaderContainer>
+            <StyledH3>Your Attempting</StyledH3>
+            <ConditionalRender
+              Component={
+                <StyledButton
+                  disableRipple
+                  onClick={() => handleNav('/settings/attempting')}
+                >
+                  View All
+                  {ViewAllIcon}
+                </StyledButton>
+              }
+              shouldRender={!!attempting.length}
+            />
+          </HeaderContainer>
+          <AttemptingComponent />
+        </div>
+        <div>
+          <HeaderContainer>
+            <StyledH3>Your Watching</StyledH3>
+            <ConditionalRender
+              Component={
+                <StyledButton
+                  disableRipple
+                  onClick={() => handleNav('/settings/watching')}
+                >
+                  View All
+                  {ViewAllIcon}
+                </StyledButton>
+              }
+              shouldRender={!!watching.length}
+            />
+          </HeaderContainer>
+          <WatchingComponent />
+        </div>
+        <HeaderWrapper>
+          <StyledH3>All Activity</StyledH3>
+          <StyledBaseDropDownMenu
+            handleChange={el =>
+              handleInputChange({ field: 'users', form: 'filter', value: el })
+            }
+            selectedValue={usersFilter}
+            values={['All', 'Commented', 'Earned', 'Funded', 'Submitted']}
+          />
+        </HeaderWrapper>
+        <ConditionalRender
+          Component={ActivityComponent}
+          FallbackComponent={
+            <EmptyComponentContainer>
+              No recent activity.
+            </EmptyComponentContainer>
+          }
+          shouldRender={filteredActivity.length > 0}
+        />
+      </ActivityContainer>
     </TimelineContainer>
   );
 };
 
 UserTimelineView.propTypes = {
+  activePullRequests: T.number.isRequired,
   activity: T.array,
   attempting: T.array.isRequired,
+  changeGithub: T.bool.isRequired,
+  changePersonal: T.bool.isRequired,
+  changePreferredLanguages: T.bool.isRequired,
+  changeStackoverflow: T.bool.isRequired,
+  changeUserImage: T.bool.isRequired,
+  completedPullRequests: T.number.isRequired,
+  createdDate: T.string.isRequired,
+  displayBottom: T.bool.isRequired,
+  dollarsEarned: T.number.isRequired,
   filterValues: T.object.isRequired,
+  firstName: T.string.isRequired,
+  githubLink: T.string,
   githubUsername: T.string,
+  handleClose: T.func.isRequired,
+  handleEdit: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleRemoveAttempting: T.func.isRequired,
   handleRemoveWatching: T.func.isRequired,
+  handleSubmitInputChange: T.func.isRequired,
+  handleValidateInput: T.func.isRequired,
+  inputErrors: T.object.isRequired,
+  isDisabled: T.bool.isRequired,
   isGithubVerified: T.bool.isRequired,
+  lastName: T.string.isRequired,
+  personalLink: T.string,
+  preferredLanguages: T.array.isRequired,
+  profilePic: T.string.isRequired,
+  rejectedPullRequests: T.number.isRequired,
+  rep: T.number.isRequired,
+  setChangeGithub: T.func.isRequired,
+  setChangePersonal: T.func.isRequired,
+  setChangePreferredLanguages: T.func.isRequired,
+  setChangeStackoverflow: T.func.isRequired,
+  setChangeUserImage: T.func.isRequired,
+  setIsDisabled: T.func.isRequired,
+  setValue: T.func.isRequired,
+  stackoverflowLink: T.string,
+  value: T.oneOfType([T.array, T.string]).isRequired,
   watching: T.array.isRequired,
 };
 

@@ -13,4 +13,8 @@ export const StyledBackNav = styled(Link)`
   &:hover {
     color: ${textColor};
   }
+
+  svg {
+    margin-right: 0.5rem;
+  }
 `;

@@ -20,11 +20,12 @@ import { FundingWrapper } from '../StyledWrappers';
 import { MonocleIcon } from '../Icons';
 
 const AttemptIcon = iconDictionary('attempt');
+const BountyIcon = iconDictionary('gift');
 const ExitIcon = iconDictionary('exit');
 const FundedIcon = iconDictionary('funded');
 const IssueIcon = iconDictionary('issue');
-const OrganizationIcon = iconDictionary('organization');
 const PullRequestIcon = iconDictionary('pullRequest');
+const RepoIcon = iconDictionary('repo');
 const SettingsIcon = iconDictionary('settings');
 
 const MenuComponent = props => (
@@ -53,11 +54,12 @@ const UserDropDownMenu = ({
   const {
     attempting,
     balance,
-    id,
+    bounties,
     issues,
-    organizations,
+    notifications,
     profilePic,
     pullRequests,
+    repos,
     username,
     watching,
   } = activeUser;
@@ -87,6 +89,17 @@ const UserDropDownMenu = ({
           <MenuItemValue>
             <FundingWrapper open value={formatDollarAmount(balance)} />
           </MenuItemValue>
+        </StyledMenuItem>
+
+        <StyledMenuItem
+          notifications={notifications}
+          onClick={() => handleNav('/settings/bounties')}
+        >
+          <MenuItemLabel>
+            <IconWrapper>{BountyIcon}</IconWrapper>
+            Bounties
+          </MenuItemLabel>
+          <MenuItemValue>{bounties ? bounties.length : 0}</MenuItemValue>
         </StyledMenuItem>
 
         <StyledMenuItem onClick={() => handleNav('/settings')}>
@@ -125,14 +138,12 @@ const UserDropDownMenu = ({
           <MenuItemValue>{issues ? issues.length : 0}</MenuItemValue>
         </StyledMenuItem>
 
-        <StyledMenuItem onClick={() => handleNav('/settings/organizations')}>
+        <StyledMenuItem onClick={() => handleNav('/settings/repos')}>
           <MenuItemLabel>
-            <IconWrapper>{OrganizationIcon}</IconWrapper>
-            Organizations
+            <IconWrapper>{RepoIcon}</IconWrapper>
+            Repos
           </MenuItemLabel>
-          <MenuItemValue>
-            {organizations ? organizations.length : 0}
-          </MenuItemValue>
+          <MenuItemValue>{repos ? repos.length : 0}</MenuItemValue>
         </StyledMenuItem>
       </StyledMenuContainer>
 

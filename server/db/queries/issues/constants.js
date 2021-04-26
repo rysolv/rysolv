@@ -9,8 +9,8 @@ const issueValues = [
   'modified_date',
   'name',
   'open',
-  'organization_id',
   'rep',
+  'repo_id',
   'repo',
   'type',
 ];
@@ -25,8 +25,8 @@ const issueReturnValues = `
   issues.modified_date AS "modifiedDate",
   issues.name,
   issues.open,
-  issues.organization_id AS "organizationId",
   issues.rep,
+  issues.repo_id AS "repoId",
   issues.repo,
   issues.type
 `;
@@ -36,8 +36,12 @@ const issueCardValues = `
   ARRAY_REMOVE(ARRAY_AGG(DISTINCT(attempting.user_id)), NULL) AS attempting,
   ARRAY_REMOVE(ARRAY_AGG(DISTINCT(watching.user_id)), NULL) AS watching,
   COUNT(DISTINCT(comments.id)) + github_comment_count AS comments,
-  organizations.name AS "organizationName",
-  organizations.verified AS "organizationVerified"
+  EXISTS(
+    SELECT user_repos.id FROM user_repos
+    WHERE user_repos.repo_id = repos.id
+    AND user_repos.user_type = 'github_owner'
+    AND user_repos.user_id IS NOT NULL) AS "repoVerified",
+  repos.name AS "repoName"
 `;
 
 const issueDetailValues = `
@@ -57,12 +61,12 @@ const groupValues = `
   issues.modified_date,
   issues.name,
   issues.open,
-  issues.organization_id,
   issues.rep,
+  issues.repo_id,
   issues.repo,
   issues.type,
-  organizations.name,
-  organizations.verified
+  repos.id,
+  repos.name
 `;
 
 module.exports = {

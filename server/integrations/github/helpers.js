@@ -1,4 +1,5 @@
-const { CustomError } = require('../helpers');
+const { CustomError, isUrl } = require('../../helpers');
+const { getRepoMembers } = require('./index');
 
 // ISSUE URL
 // Incoming:  https://github.com/tylermaran/cadl/issues/5
@@ -27,34 +28,22 @@ const formatIssueUrl = value => {
   throw new CustomError(`Not a valid issue url.`);
 };
 
-// ORGANIZATION URL
-// Incoming:  https://github.com/NixOS or https://github.com/NixOS/nixpkgs-channels
-const formatOrganizationUrl = value => {
-  const { hostname, pathname } = new URL(value);
-
-  const containsGithub = hostname === 'github.com';
-  const url = pathname.split('/');
-  url.shift();
-
-  if (containsGithub && url.length === 2) {
-    const repo = url[1];
-    const organization = url[0];
-    return {
-      formattedUrl: `https://api.github.com/repos/${organization}/${repo}`,
-      organization,
-      repo,
-      type: 'repo',
-    };
-  }
-  if (containsGithub && url.length === 1) {
-    const organization = url[0];
-    return {
-      formattedUrl: `https://api.github.com/users/${organization}`,
-      organization,
-      type: 'organization',
-    };
-  }
-  throw new CustomError(`Not a valid organization url.`);
+const formatMemberList = async ({ githubId, issueUrl, repoId, repoUrl }) => {
+  const { organization, repo } = issueUrl
+    ? formatIssueUrl(issueUrl)
+    : formatRepoUrl(repoUrl);
+  const githubMembers = await getRepoMembers({ organization, repo });
+  const formattedGithubMembers = githubMembers.map(({ id, type }) => ({
+    githubId: id,
+    repoId,
+    userType: type,
+  }));
+  const formattedRysolvOwner = {
+    githubId,
+    repoId,
+    userType: 'rysolv_owner',
+  };
+  return [...formattedGithubMembers, formattedRysolvOwner];
 };
 
 // PULL_REQUEST URL
@@ -84,8 +73,40 @@ const formatPullRequestUrl = value => {
   throw new CustomError(`Not a valid pull request url.`);
 };
 
+// REPO URL
+// Incoming:  https://github.com/NixOS or https://github.com/NixOS/nixpkgs-channels
+const formatRepoUrl = value => {
+  const newUrl = isUrl(value) ? value : `https://${value}`;
+  const { hostname, pathname } = new URL(newUrl);
+
+  const containsGithub = hostname === 'github.com';
+  const url = pathname.split('/');
+  url.shift();
+
+  if (containsGithub && url.length === 2) {
+    const repo = url[1];
+    const organization = url[0];
+    return {
+      formattedUrl: `https://api.github.com/repos/${organization}/${repo}`,
+      organization,
+      repo,
+      type: 'repo',
+    };
+  }
+  if (containsGithub && url.length === 1) {
+    const organization = url[0];
+    return {
+      formattedUrl: `https://api.github.com/users/${organization}`,
+      organization,
+      type: 'organization',
+    };
+  }
+  throw new CustomError(`Not a valid repo url.`);
+};
+
 module.exports = {
   formatIssueUrl,
-  formatOrganizationUrl,
+  formatMemberList,
   formatPullRequestUrl,
+  formatRepoUrl,
 };

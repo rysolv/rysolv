@@ -6,6 +6,7 @@ import {
   ErrorSuccessBanner,
   PrimaryAsyncButton,
   SecondaryButton,
+  BaseTextInput,
 } from 'components/base_ui';
 import {
   defaultFontSize,
@@ -13,6 +14,7 @@ import {
   hoverLinkColor,
   lightBlueColor,
   lightGreyColor,
+  subTextLightGrey,
   successGreen,
   textColor,
 } from 'defaultStyleHelper';
@@ -47,17 +49,12 @@ export const ImportFormContainer = styled.div`
   }
 `;
 
-export const ImportUrlLabel = styled.div`
-  padding-right: 1rem;
-  width: 12.5rem;
-`;
-
 export const ImportUrlWrapper = styled.div`
-  color: #6a737d;
+  color: ${subTextLightGrey};
   display: flex;
   flex-direction: column;
   font-size: ${defaultFontSize};
-  padding: 2rem;
+  padding: 2rem 0.5rem 2rem 2rem;
 `;
 
 export const PullRequestContainer = styled.div`
@@ -76,6 +73,10 @@ export const StatusWrapper = styled.span`
   text-transform: capitalize;
 `;
 
+export const StyledBaseTextInputWithAdornment = styled(BaseTextInput)`
+  margin: 0 0 0 0.5rem;
+`;
+
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   margin: 0 2rem;
 `;
@@ -92,7 +93,7 @@ export const StyledHeader = styled.h1`
   font-weight: 500;
   margin: 0;
   min-width: 40rem;
-  padding: 1rem 0;
+  padding: 1rem 0 1rem 1rem;
   text-align: left;
 `;
 

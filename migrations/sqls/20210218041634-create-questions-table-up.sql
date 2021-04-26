@@ -8,4 +8,3 @@ CREATE TABLE IF NOT EXISTS questions (
   response_limit INT,
   subtext TEXT
 )
-

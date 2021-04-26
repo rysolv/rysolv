@@ -5,18 +5,19 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
-import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
+import AcceptBountyModal from 'components/AcceptBountyModal';
+import AsyncRender from 'components/AsyncRender';
 import DeleteUserModal from 'components/DeleteUserModal';
 import SettingsView from 'components/Settings';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import makeSelectViewSize from 'containers/ViewSize/selectors';
 import PullRequestOverview from 'containers/PullRequests/Overview';
 import { handleZipChange } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import {
+  acceptBounty,
   changeEmail,
   clearAlerts,
   clearErrors,
@@ -46,7 +47,7 @@ const Settings = ({
   alerts,
   data,
   data: { balance },
-  deviceView,
+  dispatchAcceptBounty,
   dispatchCloseModal,
   dispatchFetchInfo,
   dispatchInputError,
@@ -122,6 +123,18 @@ const Settings = ({
   };
   const currentTab = settingViewDictionary[view] || 0;
   const modalPropsDictionary = {
+    acceptBounty: {
+      Component: AcceptBountyModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        bounty: data.selectedBounty,
+        dispatchAcceptBounty,
+        fundingId: data.fundingId,
+        handleClose: dispatchCloseModal,
+        repoName: data.repoName,
+        username: data.username,
+      },
+    },
     deleteUser: {
       Component: DeleteUserModal,
       open: isModalOpen,
@@ -145,7 +158,7 @@ const Settings = ({
           alerts,
           creditCardProps,
           currentTab,
-          deviceView,
+          dispatchAcceptBounty,
           dispatchOpenModal,
           dispatchPaypalPayment,
           dispatchSaveChange,
@@ -173,7 +186,7 @@ Settings.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
   data: T.object.isRequired,
-  deviceView: T.string.isRequired,
+  dispatchAcceptBounty: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchInfo: T.func,
   dispatchInputError: T.func.isRequired,
@@ -216,10 +229,6 @@ const mapStateToProps = createStructuredSelector({
   isModalOpen: makeSelectSettings('isModalOpen'),
   loading: makeSelectSettings('loading'),
   modal: makeSelectSettings('modal'),
-  /**
-   * Reducer : ViewSize
-   */
-  deviceView: makeSelectViewSize('deviceView'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -227,6 +236,7 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Settings
      */
+    dispatchAcceptBounty: payload => dispatch(acceptBounty(payload)),
     dispatchCloseModal: () => dispatch(closeModalState()),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),

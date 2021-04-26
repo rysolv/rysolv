@@ -3,6 +3,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { updateActiveUser } from 'containers/Auth/actions';
 import { updateFundedIssue } from 'containers/Issues/actions';
 import { updatePaymentModal } from 'containers/Main/actions';
+import { fetchFilterOptions } from 'containers/Overview/actions';
 import { post } from 'utils/request';
 
 import {
@@ -48,6 +49,7 @@ export function* paypalPaymentSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
+    if (issueId) yield put(fetchFilterOptions());
     yield put(incrementStep({ step: 2 }));
     yield put(paypalPaymentSuccess({ message }));
     yield put(
@@ -90,6 +92,7 @@ export function* stripeTokenSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
+    if (issueId) yield put(fetchFilterOptions());
     yield put(incrementStep({ step: 2 }));
     yield put(stripeTokenSuccess({ message }));
     yield put(
@@ -128,6 +131,7 @@ export function* submitAccountPaymentSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
+    if (issueId) yield put(fetchFilterOptions());
     yield put(incrementStep({ step: 2 }));
     yield put(submitAccountPaymentSuccess({ message }));
     yield put(updateActiveUser({ balance }));

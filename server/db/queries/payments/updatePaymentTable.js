@@ -6,8 +6,8 @@ const updatePaymentTable = async ({
   action,
   fundedAmount,
   issueId,
-  organizationId,
   platform,
+  repoId,
   userId,
 }) => {
   const fee =
@@ -21,8 +21,8 @@ const updatePaymentTable = async ({
       funded_amount,
       id,
       issue_id,
-      organization_id,
       platform,
+      repo_id,
       user_id
     )
     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
@@ -35,8 +35,8 @@ const updatePaymentTable = async ({
     fundedAmount,
     uuidv4(),
     issueId,
-    organizationId,
     platform,
+    repoId,
     userId,
   ];
 

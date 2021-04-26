@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import {
   hoverLinkColor,
+  subTextLightGrey,
   textColor,
   verifyBackgroundColor,
   verifyColor,
@@ -22,14 +23,14 @@ export const IconButtonWrapper = styled.div`
 
 export const IssueAttempts = styled.div`
   align-self: center;
-  color: #6a737d;
+  color: ${subTextLightGrey};
   margin-left: 1rem;
 `;
 
 export const IssueContent = styled.div`
   display: flex;
   margin: 1rem 0;
-  min-height: 10rem;
+  min-height: 7.5rem;
   width: 100%;
 
   ${mobile} {
@@ -64,7 +65,7 @@ export const IssueFundedAmount = styled.div`
 export const IssueListItem = styled.li`
   border-top: 0.1rem solid #d5d5d5;
   display: flex;
-  width: 90%;
+  width: 95%;
 
   & :last-child {
     border-bottom: 0.1rem solid #d5d5d5;
@@ -118,6 +119,7 @@ export const IssuesList = styled.ul`
   align-items: center;
   display: flex;
   flex-direction: column;
+  min-height: 30rem;
   padding: 0;
   width: 100%;
 `;

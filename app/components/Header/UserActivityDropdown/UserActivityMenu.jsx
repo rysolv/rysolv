@@ -21,9 +21,7 @@ const UserActivityMenu = ({
       <MenuItem onClick={e => handleClick(e, '/issues/add')}>
         New Issue
       </MenuItem>
-      <MenuItem onClick={e => handleClick(e, '/organizations/add')}>
-        New Organization
-      </MenuItem>
+      <MenuItem onClick={e => handleClick(e, '/repos/add')}>New Repo</MenuItem>
     </StyledMenu>
   );
   return (

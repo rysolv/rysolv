@@ -19,9 +19,9 @@ const FundIssueButton = ({
   disabled,
   dispatchOpenModal,
   fundedAmount,
-  isInFundingQueue,
   isPullRequestMerged,
   issueId,
+  isUserAccepted,
   open,
   rep,
 }) => (
@@ -36,7 +36,7 @@ const FundIssueButton = ({
           />
         </FundAmount>
       }
-      shouldRender={!isInFundingQueue && isPullRequestMerged && !open}
+      shouldRender={isPullRequestMerged && isUserAccepted && !open}
     />
     <AddFundsButton
       disabled={disabled}
@@ -64,9 +64,9 @@ FundIssueButton.propTypes = {
   disabled: T.bool,
   dispatchOpenModal: T.func.isRequired,
   fundedAmount: T.number.isRequired,
-  isInFundingQueue: T.bool.isRequired,
   isPullRequestMerged: T.bool.isRequired,
   issueId: T.string.isRequired,
+  isUserAccepted: T.bool.isRequired,
   open: T.bool.isRequired,
   rep: T.number.isRequired,
 };

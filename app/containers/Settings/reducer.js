@@ -2,6 +2,9 @@
 import produce from 'immer';
 
 import {
+  ACCEPT_BOUNTY_FAILURE,
+  ACCEPT_BOUNTY_SUCCESS,
+  ACCEPT_BOUNTY,
   CHANGE_EMAIL_FAILURE,
   CHANGE_EMAIL_SUCCESS,
   CHANGE_EMAIL,
@@ -64,6 +67,28 @@ export const initialState = {
 
 const settingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case ACCEPT_BOUNTY_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case ACCEPT_BOUNTY_SUCCESS: {
+      const { fundedAmount, fundingId } = payload;
+      draft.account.bounties.forEach((bounty, i) => {
+        if (bounty.id === fundingId) {
+          draft.account.bounties[i].userAccepted = true;
+          draft.account.bounties[i].userPayout = fundedAmount;
+        }
+      });
+      draft.loading = false;
+      break;
+    }
+    case ACCEPT_BOUNTY: {
+      draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
     case CHANGE_EMAIL_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
@@ -145,7 +170,12 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case OPEN_MODAL_STATE: {
-      const { modalState } = payload;
+      const { bounty, fundingId, modalState, repoName } = payload;
+      if (modalState === 'acceptBounty') {
+        draft.account.fundingId = fundingId;
+        draft.account.repoName = repoName;
+        draft.account.selectedBounty = bounty;
+      }
       draft.isModalOpen = true;
       draft.modal = modalState;
       break;

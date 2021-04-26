@@ -1,0 +1,3 @@
+ALTER TABLE funding
+DROP COLUMN IF EXISTS repo_payout,
+DROP COLUMN IF EXISTS user_payout

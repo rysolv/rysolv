@@ -52,17 +52,23 @@ export function* fetchActiveUserSaga() {
         ... on User {
           attempting
           balance
+          bounties {
+            id
+            userAccepted
+          }
           email
           firstName
+          githubId
           id
           isGithubVerified
           isQuestionnaireComplete
           issues
           lastName
-          organizations
+          notifications
           profilePic
           pullRequests
           rep
+          repos
           upvotes
           username
           watching
@@ -103,10 +109,10 @@ export function* githubSignInSaga({ payload }) {
           isQuestionnaireComplete
           issues
           lastName
-          organizations
           profilePic
           pullRequests
           rep
+          repos
           upvotes
           username
           watching
@@ -320,10 +326,10 @@ export function* signInSaga({ payload }) {
           isGithubVerified
           issues
           lastName
-          organizations
           profilePic
           pullRequests
           rep
+          repos
           upvotes
           username
           watching

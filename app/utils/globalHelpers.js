@@ -35,6 +35,8 @@ export const formatUrlLinks = value => {
   return value;
 };
 
+export const formatPercentage = value => `${(value * 100).toFixed(0)}%`;
+
 export const formatWordString = string =>
   string.charAt(0).toUpperCase() + string.slice(1);
 
@@ -55,6 +57,24 @@ export const getCookie = cookie => {
   const cookieValue = document.cookie.replace(regexStr, '$1');
   if (cookieValue) return cookieValue;
   return '';
+};
+
+export const getPaymentMethod = url => {
+  const hostDictionary = {
+    github: 'Github Sponsors',
+    opencollective: 'Open Collective',
+    paypal: 'Paypal',
+  };
+  if (url) {
+    const { host } = new URL(url);
+    const urlArray = host.split('.');
+
+    let domain = '';
+    if (urlArray.length === 2) [domain] = urlArray;
+    if (urlArray.length === 3) [, domain] = urlArray;
+    return hostDictionary[domain];
+  }
+  return 'Payment Methods';
 };
 
 export const handleZipChange = (event, newZip, setZipValue) => {

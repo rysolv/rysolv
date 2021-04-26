@@ -44,11 +44,13 @@ export const AmountSquare = styled.div`
   }
 `;
 
-export const AmountTitle = styled.span`
+export const AmountTitle = styled.div`
   color: #586069;
   font-size: ${defaultFontSize};
   font-weight: 400;
   line-height: 1.5;
+  text-align: center;
+  text-transform: uppercase;
   word-wrap: break-word;
 `;
 

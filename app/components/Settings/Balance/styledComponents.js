@@ -5,6 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
 import {
+  BackNav,
   BaseDropDownMenu,
   BaseTextInput,
   PaymentTextInput,
@@ -14,7 +15,9 @@ import {
 import {
   commentHeaderColor,
   defaultFontSize,
+  detailFontSize,
   hoverLinkColor,
+  lightGreyColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -94,6 +97,17 @@ export const ComponentTitle = styled.div`
   text-decoration: underline;
 `;
 
+export const DisclaimerText = styled.div`
+  color: ${lightGreyColor};
+  font-size: ${detailFontSize};
+  margin: -1rem 0 1rem;
+  width: 50%;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+`;
+
 export const DisplayText = styled.div`
   color: ${textColor};
   display: flex;
@@ -118,8 +132,8 @@ export const FundingContainer = styled.div`
 
 export const HorizontalWrapper = styled.div`
   display: flex;
-  width: 50%;
   justify-content: space-between;
+  width: 50%;
 `;
 
 export const InputHeader = styled.div`
@@ -158,11 +172,15 @@ export const PaymentTitle = styled.div`
   margin: 0.5rem 0;
 `;
 
+export const StyledBackNav = styled(BackNav)`
+  margin-bottom: 0;
+`;
+
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   background-color: #fafbfc;
   border-radius: 0.3rem;
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 1.4rem;
+  color: ${textColor};
+  font-size: ${defaultFontSize};
   line-height: 2rem;
   margin-right: 0.5rem;
   min-height: 34px;
@@ -288,4 +306,8 @@ export const WithdrawalInputWrapper = styled.div`
   font-weight: ${({ isThin }) => (isThin ? '400' : '600')};
   padding: 0.5rem 0;
   width: ${({ width }) => width || '50%'};
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 `;

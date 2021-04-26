@@ -4,7 +4,7 @@ export const getInitialValue = {
   issues: {
     initialValue: 0,
   },
-  organizations: {
+  repos: {
     initialValue: 1,
   },
   users: {
@@ -13,7 +13,7 @@ export const getInitialValue = {
   'issues/add': {
     initialValue: 3,
   },
-  'organizations/add': {
+  'repos/add': {
     initialValue: 4,
   },
   'how-to': { initialValue: 5 },

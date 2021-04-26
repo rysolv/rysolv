@@ -10,12 +10,12 @@ module.exports = buildSchema(`
     fundedValue: Float
     issueId: ID
     issueName: String
-    organizationId: ID
-    organizationName: String
     profilePic: String
     pullRequestId: ID
     pullRequestName: String
     pullRequestUrl: String
+    repoId: ID
+    repoName: String
     userId: ID
     username: String
   }
@@ -29,6 +29,21 @@ module.exports = buildSchema(`
     fundedAmount: Float
     id: ID
     name: String
+  }
+
+  type Bounty {
+    createdDate: Object
+    fundedAmount: Float
+    id: ID
+    isApproved: Boolean
+    issueId: ID
+    name: String
+    pullRequestUrl: String
+    rep: String
+    repoName: String
+    repoPayoutExists: Boolean
+    userAccepted: Boolean
+    userPayout: Float
   }
 
   type Comment {
@@ -60,9 +75,9 @@ module.exports = buildSchema(`
     fundedIssues: Int
     issueLanguages: [Object]
     maxBounty: Float
-    maxOrgFunded: Float
-    organizationLanguages: [Object]
-    organizations: [Object]
+    maxRepoFunded: Float
+    repoLanguages: [Object]
+    repos: [Object]
     unfundedIssues: Int
     userLanguages: [Object]
   }
@@ -73,13 +88,13 @@ module.exports = buildSchema(`
     issueLanguages: [String]
     issueName: String!
     issueUrl: String!
-    organizationDescription: String
-    organizationId: ID
-    organizationLanguages: [String]
-    organizationLogo: String
-    organizationName: String
-    organizationRepo: String
     organizationUrl: String
+    repoDescription: String
+    repoId: ID
+    repoLanguages: [String]
+    repoLogo: String
+    repoName: String
+    repoUrl: String
   }
 
   type ImportPullRequest {
@@ -103,19 +118,19 @@ module.exports = buildSchema(`
     exists: Boolean
     fundedAmount: Float
     id: ID
-    isInFundingQueue: Boolean
     isPullRequestMerged: Boolean
+    isUserAccepted: Boolean
     language: [String]
     message: String
     modifiedDate: Object
     name: String
     open: Boolean
-    organizationId: String
-    organizationName: String
-    organizationVerified: Boolean
     pullRequests: Int
     rep: Int
     repo: String
+    repoId: String
+    repoName: String
+    repoVerified: Boolean
     type: String
     userId: ID
     username: String
@@ -134,50 +149,15 @@ module.exports = buildSchema(`
     isManual: Boolean
     language: [String]
     name: String
-    organizationDescription: String
-    organizationId: String
-    organizationLogo: String
-    organizationName: String
-    organizationRepo: String
     organizationUrl: String
     rep: Int
     repo: String
-    type: String
-  }
-
-  type Organization {
-    contributors: [Object]
-    createdDate: Object
-    description: String
-    exists: Boolean
-    id: ID!
-    issues: [Object]
-    logo: String
-    message: String
-    modifiedDate: Object
-    name: String
-    organizationUrl: String
-    ownerId: ID
-    preferredLanguages: [String]
+    repoDescription: String
+    repoId: String
+    repoLogo: String
+    repoName: String
     repoUrl: String
-    totalFunded: Float
-    verified: Boolean
-  }
-
-  type OrganizationArray {
-    organizations: [Organization]
-  }
-
-  input OrganizationInput {
-    identiconId: ID
-    isManual: Boolean
-    organizationDescription: String
-    organizationLanguages: [String]
-    organizationLogo: String
-    organizationName: String
-    organizationRepo: String
-    organizationUrl: String
-    organizationVerified: Boolean
+    type: String
   }
 
   type Payment {
@@ -188,6 +168,7 @@ module.exports = buildSchema(`
 
   type PullRequest {
     createdDate: Object!
+    exists: Boolean
     fundedAmount: Float
     githubUsername: String
     htmlUrl: String
@@ -248,6 +229,48 @@ module.exports = buildSchema(`
     value: String
   }
 
+  type Repo {
+    contributors: [Object]
+    createdDate: Object
+    description: String
+    earnedBounties: Float
+    exists: Boolean
+    githubOwners: [String]
+    id: ID!
+    issues: [Object]
+    logo: String
+    maintainerProceeds: Float
+    message: String
+    modifiedDate: Object
+    name: String
+    organizationUrl: String
+    ownerId: ID
+    payoutUrl: String
+    preferredLanguages: [String]
+    repoUrl: String
+    totalFunded: Float
+    verified: Boolean
+  }
+
+  type RepoArray {
+    repos: [Repo]
+  }
+
+  input RepoInput {
+    identiconId: ID
+    importUrl: String
+    isManual: Boolean
+    organizationUrl: String
+    payoutMethod: String
+    payoutUrl: String
+    repoDescription: String
+    repoLanguages: [String]
+    repoLogo: String
+    repoName: String
+    repoUrl: String
+    repoVerified: Boolean
+  }
+
   type Stats {
     mostContribution: [Object]!
     mostEarned: [Object]!
@@ -272,13 +295,14 @@ module.exports = buildSchema(`
     activePullRequests: Int
     attempting: [Object]
     balance: Float
-    comments: [String]
+    bounties: [Bounty]
     completedPullRequests: Int
     createdDate: Object
     dollarsEarned: Int
     email: String!
     emailVerified: Boolean
     firstName: String
+    githubId: String
     githubLink: String
     githubUsername: String
     id: ID!
@@ -287,13 +311,14 @@ module.exports = buildSchema(`
     issues: [Object]
     lastName: String
     modifiedDate: Object
-    organizations: [Object]
+    notifications: Boolean
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
     pullRequests: [String]
     rejectedPullRequests: Int
     rep: Int
+    repos: [Object]
     stackoverflowLink: String
     upvotes: [ID]
     username: String
@@ -307,7 +332,6 @@ module.exports = buildSchema(`
   input UserInput {
     attempting: [ID]
     balance: Float
-    comments: [String]
     dollarsEarned: Int
     email: String
     emailVerified: Boolean
@@ -316,13 +340,12 @@ module.exports = buildSchema(`
     id: ID
     issues: [String]
     lastName: String
-    organizations: [String]
     password: String
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
-    pullRequests: [String]
     rep: Int
+    repos: [String]
     stackoverflowLink: String
     upvotes: [ID]
     username: String
@@ -364,11 +387,11 @@ module.exports = buildSchema(`
   union ImportResult = ImportData | Error
   union IssueArrayResult = IssueArray | Error
   union IssueResult = Issue | Error
-  union OrganizationArrayResult = OrganizationArray | Error
-  union OrganizationResult = Organization | Error
   union PaymentResult = Payment | Error
   union PullRequestArrayResult = PullRequestArray | Error
   union QuestionResult = QuestionArray | Error
+  union RepoArrayResult = RepoArray | Error
+  union RepoResult = Repo | Error
   union SignInResult = User | Error
   union StatsResult = Stats | Error
   union ToggleAttemptingResult = AttemptingArray | Error
@@ -381,26 +404,27 @@ module.exports = buildSchema(`
 
   type RootQuery {
     getFilterOptions: FilterResult!
+    getGithubPullRequests(issueId: ID!): PullRequestArrayResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!
     getIssueWatchList(issueId: ID!): [WatchList]!
-    getOrganizationActivity(organizationId: ID): [Activity]!
-    getOrganizations: OrganizationArrayResult!
     getPullRequestList(issueId: ID): [PullRequestList]!
     getQuestions(category: String!): QuestionResult
+    getRepoActivity(repoId: ID): [Activity]!
+    getRepos: RepoArrayResult!
     getStats: StatsResult!
     getUserActivity(userId: ID): [Activity]!
     getUserIssues: IssueArrayResult!
     getUserPullRequests: PullRequestArrayResult!
-    getUserRepos: OrganizationArrayResult!
+    getUserRepos: RepoArrayResult!
     getUsers: UserArrayResult!
     getUserSettings: UserResult!
 
     githubSignIn(code: String!, origin: String!): UserResult!
 
     oneIssue(id: ID!): IssueResult!
-    oneOrganization(id: ID!): OrganizationResult!
+    oneRepo(id: ID!): RepoResult!
     oneUser(userId: ID!): UserResult!
     oneUserSignUp(email: String!): UserResult!
 
@@ -409,20 +433,24 @@ module.exports = buildSchema(`
     resetPassword(code: String!, email: String!, password: String!): EventResponse!
 
     searchIssues(value: String!): [Issue]!
-    searchOrganizations(value: String!): [Organization]!
+    searchRepos(value: String!): [Repo]!
     searchUsers(value: String!): [User]!
 
     sendLink(email: String!): EventResponse!
   }
 
   type RootMutation {
+    acceptBounty(fundingId: ID!, userRatio: Float!): EventResponse!
+
+    addRepoPayout(repoId: ID!, repoInput: RepoInput): EventResponse!
+
     closeIssue(issueId: ID!, shouldClose: Boolean): EventResponse!
 
     createComment(commentInput: CommentInput): CommentResult!
     createIssue(issueInput: IssueInput): IssueResult!
-    createOrganization(organizationInput: OrganizationInput): OrganizationResult!
     createPaypalPayment(amount: Float!, email: String, issueId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
+    createRepo(repoInput: RepoInput): RepoResult!
     createStripeCharge(amount: Float!, email: String, issueId: ID, token: String!): PaymentResult!
     createUser(userInput: UserInput): UserResult!
     createWithdrawal(email: String!, transferValue: Float!): WithdrawalResult!
@@ -431,8 +459,8 @@ module.exports = buildSchema(`
     deleteUser: EventResponse!
 
     importIssue(url: String!): ImportResult!
-    importOrganization(url: String!): ImportResult!
     importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
+    importRepo(url: String!): ImportResult!
 
     postUserResponse(responseArray: [Object]): EventResponse!
 
@@ -445,7 +473,7 @@ module.exports = buildSchema(`
     toggleWatching(issueId: ID!): ToggleWatchingResult!
 
     transformIssue(issueId: ID!, issueInput: IssueInput): EventResponse!
-    transformOrganization(organizationId: ID!, organizationInput: OrganizationInput): EventResponse!
+    transformRepo(repoId: ID!, repoInput: RepoInput): EventResponse!
     transformUser(userInput: UserInput): EventResponse!
 
     upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!

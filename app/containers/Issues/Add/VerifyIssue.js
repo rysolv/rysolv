@@ -19,8 +19,8 @@ import {
   ButtonGroup,
   LanguageContainer,
   LogoWrapper,
-  OrganizationName,
-  OrganizationNameWrapper,
+  RepoName,
+  RepoNameWrapper,
   StyledFocusDiv,
   StyledFormHelperText,
   StyledH3,
@@ -39,14 +39,14 @@ const VerifyIssue = ({
   importSuccess,
   issueData,
   issueData: { issueLanguages },
-  organizationData: { organizationLogo, organizationName, organizationRepo },
+  repoData: { repoLogo, repoName, repoUrl },
   requestBody,
 }) => {
   const [selectedType, setSelectedType] = useState('');
   const [typeError, setTypeError] = useState('');
 
   useEffect(() => {
-    if (!organizationLogo.value) handleGenerateIdenticon();
+    if (!repoLogo.value) handleGenerateIdenticon();
     document.getElementById('issueAdd').focus();
   }, []);
 
@@ -109,18 +109,15 @@ const VerifyIssue = ({
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <StyledH3 isFirstHeader>Organization</StyledH3>
+      <StyledH3 isFirstHeader>Repo</StyledH3>
       <Card>
-        <LogoWrapper
-          alt={organizationName.value}
-          src={organizationLogo.value}
-        />
-        <OrganizationNameWrapper>
-          <OrganizationName>{organizationName.value}</OrganizationName>
-          <StyledLink href={organizationRepo.value} target="_blank">
-            {organizationRepo.value}
+        <LogoWrapper alt={repoName.value} src={repoLogo.value} />
+        <RepoNameWrapper>
+          <RepoName>{repoName.value}</RepoName>
+          <StyledLink href={repoUrl.value} target="_blank">
+            {repoUrl.value}
           </StyledLink>
-        </OrganizationNameWrapper>
+        </RepoNameWrapper>
       </Card>
       <StyledH3>Issue</StyledH3>
       <Card>
@@ -173,7 +170,7 @@ VerifyIssue.propTypes = {
   handleGenerateIdenticon: T.func,
   importSuccess: T.bool,
   issueData: T.object,
-  organizationData: T.object,
+  repoData: T.object,
   requestBody: T.object,
 };
 
@@ -182,7 +179,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   issueData: makeSelectIssues('issueData'),
-  organizationData: makeSelectIssues('organizationData'),
+  repoData: makeSelectIssues('repoData'),
   requestBody: makeSelectIssuesRequestBody(),
 });
 

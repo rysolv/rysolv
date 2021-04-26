@@ -4,8 +4,8 @@ export const searchOptions = [
     title: 'In Issues',
   },
   {
-    route: '/organizations/search/',
-    title: 'In Organizations',
+    route: '/repos/search/',
+    title: 'In Repos',
   },
   {
     route: '/users/search/',

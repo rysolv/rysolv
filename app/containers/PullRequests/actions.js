@@ -6,6 +6,9 @@ import {
   DELETE_PULL_REQUEST_FAILURE,
   DELETE_PULL_REQUEST_SUCCESS,
   DELETE_PULL_REQUEST,
+  FETCH_GITHUB_PULL_REQUESTS_FAILURE,
+  FETCH_GITHUB_PULL_REQUESTS_SUCCESS,
+  FETCH_GITHUB_PULL_REQUESTS,
   FETCH_USER_PULL_REQUESTS_FAILURE,
   FETCH_USER_PULL_REQUESTS_SUCCESS,
   FETCH_USER_PULL_REQUESTS,
@@ -60,6 +63,27 @@ export function deletePullRequest(payload) {
   return {
     payload,
     type: DELETE_PULL_REQUEST,
+  };
+}
+
+export function fetchGithubPullRequestsFailure(payload) {
+  return {
+    payload,
+    type: FETCH_GITHUB_PULL_REQUESTS_FAILURE,
+  };
+}
+
+export function fetchGithubPullRequestsSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_GITHUB_PULL_REQUESTS_SUCCESS,
+  };
+}
+
+export function fetchGithubPullRequests(payload) {
+  return {
+    payload,
+    type: FETCH_GITHUB_PULL_REQUESTS,
   };
 }
 

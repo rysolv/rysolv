@@ -5,8 +5,8 @@ const alterPaymentTable = `
   ADD COLUMN fee FLOAT DEFAULT 0,
   ADD COLUMN funded_amount FLOAT,
   ADD COLUMN issue_id UUID REFERENCES issues(id),
-  ADD COLUMN organization_id UUID REFERENCES organizations(id),
   ADD COLUMN platform VARCHAR(16),
+  ADD COLUMN repo_id UUID REFERENCES repos(id),
   ADD COLUMN user_id UUID REFERENCES users(id)
 `;
 

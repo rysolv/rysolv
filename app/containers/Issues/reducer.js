@@ -17,7 +17,7 @@ import {
   CHANGE_ISSUE_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
-  CLEAR_ORGANIZATION,
+  CLEAR_REPO,
   CLOSE_ISSUE_FAILURE,
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
@@ -55,7 +55,7 @@ import {
   UPDATE_FUNDED_ISSUE,
   UPDATE_IS_MANUAL,
   UPDATE_ISSUE_DETAIL,
-  UPDATE_ORGANIZATION,
+  UPDATE_REPO,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
   UPVOTE_ISSUE_TEMP,
@@ -83,9 +83,9 @@ export const initialState = {
   },
   filter: {
     language: [],
-    organization: [],
     overview: 'Most Funded',
     price: [0, 5000],
+    repo: [],
     status: {
       closed: false,
       funded: false,
@@ -117,16 +117,16 @@ export const initialState = {
     upvoteIssue: false,
   },
   modal: '',
-  organizationData: {
+  repoData: {
     identiconId: { error: '', value: '' },
     importUrl: { error: '', value: '' },
-    organizationDescription: { error: '', value: '' },
-    organizationId: { error: '', value: '' },
-    organizationLanguages: { error: '', value: '' },
-    organizationLogo: { error: '', value: '' },
-    organizationName: { error: '', value: '' },
-    organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
+    repoDescription: { error: '', value: '' },
+    repoId: { error: '', value: '' },
+    repoLanguages: { error: '', value: '' },
+    repoLogo: { error: '', value: '' },
+    repoName: { error: '', value: '' },
+    repoUrl: { error: '', value: '' },
   },
   search: {
     overviewInput: { error: '', value: '' },
@@ -259,7 +259,7 @@ const issuesReducer = produce((draft, { payload, type }) => {
     }
     case CHANGE_ISSUE_FILTER: {
       const { field, value } = payload;
-      if (field === 'language' || field === 'organization') {
+      if (field === 'language' || field === 'repo') {
         draft.filter[field] = [];
         value.map(language => draft.filter[field].push(language));
       } else if (field === 'status' || field === 'type') {
@@ -287,11 +287,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.error = initialState.error;
       draft.importSuccess = initialState.importSuccess;
       draft.issueData = initialState.issueData;
-      draft.organizationData = initialState.organizationData;
+      draft.repoData = initialState.repoData;
       break;
     }
-    case CLEAR_ORGANIZATION: {
-      draft.organizationData = initialState.organizationData;
+    case CLEAR_REPO: {
+      draft.repoData = initialState.repoData;
       break;
     }
     case CLOSE_ISSUE_FAILURE: {
@@ -401,8 +401,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case GENERATE_IDENTICON: {
       const identiconId = uuidv4();
       const identicon = new Identicon(identiconId, 250).toString();
-      draft.organizationData.identiconId.value = identiconId;
-      draft.organizationData.organizationLogo.value = `data:image/png;base64,${identicon}`;
+      draft.repoData.identiconId.value = identiconId;
+      draft.repoData.repoLogo.value = `data:image/png;base64,${identicon}`;
       break;
     }
     case IMPORT_ISSUE_FAILURE: {
@@ -419,8 +419,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       Object.keys(draft.issueData).map(field => {
         draft.issueData[field].value = importIssue[field];
       });
-      Object.keys(draft.organizationData).map(field => {
-        draft.organizationData[field].value = importIssue[field];
+      Object.keys(draft.repoData).map(field => {
+        draft.repoData[field].value = importIssue[field];
       });
       draft.importSuccess = true;
       break;
@@ -518,11 +518,11 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.issueDetail.pullRequests += 1;
       break;
     }
-    case UPDATE_ORGANIZATION: {
-      const { organizationData } = payload;
-      Object.keys(draft.organizationData).map(field => {
+    case UPDATE_REPO: {
+      const { repoData } = payload;
+      Object.keys(draft.repoData).map(field => {
         if (payload[field]) {
-          draft.organizationData[field].value = organizationData[field].value;
+          draft.repoData[field].value = repoData[field].value;
         }
       });
       break;

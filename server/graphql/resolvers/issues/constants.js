@@ -16,29 +16,29 @@ const newIssueObject = (issueId, issueInput) => ({
   modified_date: new Date(), // modified_data
   name: issueInput.name, // name
   open: issueInput.open || true, // open
-  organization_id: issueInput.organizationId, // organization_id
   rep: issueInput.rep || 25, // rep
+  repo_id: issueInput.repoId, // repo_id
   repo: issueInput.repo, // repo
   type: issueInput.type, // bug
 });
 
-const newOrganizationObject = async organizationInput => {
-  const organizationId = uuidv4();
-  const { uploadUrl } = await uploadImage(organizationInput.organizationLogo);
+const newRepoObject = async repoInput => {
+  const repoId = uuidv4();
+  const { uploadUrl } = await uploadImage(repoInput.repoLogo);
 
   return {
     created_date: new Date(), // created_date
-    description: organizationInput.organizationDescription, // description
-    id: organizationId, // id
-    is_manual: organizationInput.isManual, // is_manual
-    issues: organizationInput.issues || [], // issues
+    description: repoInput.repoDescription, // description
+    id: repoId, // id
+    is_manual: repoInput.isManual, // is_manual
+    issues: repoInput.issues || [], // issues
     logo: uploadUrl, // logo
     modified_date: new Date(), // modified_date
-    name: organizationInput.organizationName, // name
-    organization_url: organizationInput.organizationUrl || '', // url
-    owner_id: organizationInput.contributor, // owner_id
-    repo_url: organizationInput.organizationRepo, // repo
-    verified: organizationInput.verified || false, // verified
+    name: repoInput.repoName, // name
+    organization_url: repoInput.organizationUrl || '', // url
+    owner_id: repoInput.contributor, // owner_id
+    repo_url: repoInput.repoUrl, // repo
+    verified: repoInput.verified || false, // verified
   };
 };
 
@@ -54,11 +54,11 @@ const createIssueError = `Something went wrong when creating the issue.`;
 
 const createIssueSuccess = `Issue was successfully created.`;
 
-const createOrganizationError = `Something went wrong when creating the organization for the issue.`;
+const createRepoError = `Something went wrong when creating the repo for the issue.`;
 
 const existingIssueError = `This issue already exists.`;
 
-const existingOrganizationError = `This organization already exists.`;
+const existingRepoError = `This repo already exists.`;
 
 const getFilterError = `Something went wrong when getting filter criteria.`;
 
@@ -80,14 +80,14 @@ module.exports = {
   closeIssueSuccess,
   createIssueError,
   createIssueSuccess,
-  createOrganizationError,
+  createRepoError,
   existingIssueError,
-  existingOrganizationError,
+  existingRepoError,
   getFilterError,
   getIssuesError,
   importIssueError,
   newIssueObject,
-  newOrganizationObject,
+  newRepoObject,
   oneIssueError,
   transformIssueError,
   transformIssueSuccess,

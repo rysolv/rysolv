@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 
 import iconDictionary from 'utils/iconDictionary';
 
@@ -23,10 +23,15 @@ const CoinIcon = iconDictionary('coin');
 const SiteLogo = iconDictionary('siteLogo');
 
 const HowTo = () => {
+  const bountyRef = useRef(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'How To';
+    const location = window.location.hash;
+    if (location === '#bounties') bountyRef.current.scrollIntoView();
   }, []);
+
   return (
     <Fragment>
       <StyledHowContainer>
@@ -105,7 +110,7 @@ const HowTo = () => {
           </StepWrapper>
         </StepContainer>
 
-        <HeaderWrapper>Funding an Issue</HeaderWrapper>
+        <HeaderWrapper id="funding">Funding an Issue</HeaderWrapper>
         <StepContainer>
           <StepWrapper>
             <HeaderDescription>
@@ -210,6 +215,74 @@ const HowTo = () => {
           </StepWrapper>
         </StepContainer>
 
+        <HeaderWrapper ref={bountyRef}>Bounty Payout</HeaderWrapper>
+        <StepContainer>
+          <StepWrapper>
+            <StepContentWrapper>
+              <StepName>Accepting a bounty</StepName>
+              <StepDescription>
+                When a pull request has been merged in and the corresponding
+                issue closed, you will be notified of a pending bounty. To
+                accept this bounty, head to your
+                <StyledInternalLink to="/settings/bounty">
+                  {' '}
+                  settings page
+                </StyledInternalLink>
+                <ul>
+                  <li>
+                    If the repo has set up a payout method, you will be prompted
+                    to contribute a portion to the repo. Otherwise, you will be
+                    awarded the full dollar amount of the bounty.
+                  </li>
+                  <li>
+                    If the repo has added a payout method, a minimum of 10% will
+                    be allocated to the parent repo.
+                  </li>
+                </ul>
+              </StepDescription>
+              <StepName>Maintainer proceeds</StepName>
+              <StepDescription>
+                For each bounty, there is additional work placed on the repo
+                maintainers. To support this work, Rysolv allocates a portion of
+                each bounty to the parent repo and gives the user the ability to
+                allocate more.
+                <ul>
+                  <li>
+                    As a maintainer, to register for the contributions, locate
+                    your repo in
+                    <StyledInternalLink to="/repos">
+                      {' '}
+                      rysolv.com/repos
+                    </StyledInternalLink>{' '}
+                    and click <b>Add Payout</b> at the top of the page.
+                  </li>
+                  <ul>
+                    <li>
+                      Maintainers will be able to select from Github Sponsors,
+                      Open Collective, or Paypal. The payments will be
+                      aggregated on Rysolv and distributed at the end of each
+                      month.
+                    </li>
+                  </ul>
+                  <li>
+                    If you don&apos;t see the option on your repo, make sure you
+                    have signed in with the Github account associated with your
+                    repo, or have verified your Github account in the
+                    <StyledInternalLink to="/settings">
+                      {' '}
+                      settings page
+                    </StyledInternalLink>
+                    .
+                  </li>
+                </ul>
+              </StepDescription>
+            </StepContentWrapper>
+            <StepImageWrapper>
+              <StyledImageWrapper image="https://rysolv.s3.us-east-2.amazonaws.com/acceptBounty.png" />
+            </StepImageWrapper>
+          </StepWrapper>
+        </StepContainer>
+
         <HeaderWrapper>Withdrawing Your Funds</HeaderWrapper>
         <StepContainer>
           <StepWrapper>
@@ -224,8 +297,8 @@ const HowTo = () => {
                 and select <b>Withdraw Funds</b>.
                 <ul>
                   <li>
-                    There will be a <b>10% service fee</b> on withdrawals, as
-                    well as applicable payment processing fees.
+                    There will be a <b>3% + $0.30 standard transaction fee</b>{' '}
+                    on withdrawals to cover payment processing.
                   </li>
                 </ul>
               </StepDescription>

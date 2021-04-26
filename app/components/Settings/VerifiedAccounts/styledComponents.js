@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 import {
+  commentHeaderColor,
   defaultFontSize,
   hoverLinkColor,
+  lightGreyColor,
   textColor,
   verifyBackgroundColor,
   verifyColor,
@@ -23,10 +25,9 @@ export const AccountIcon = styled.div`
 `;
 
 export const AccountSquare = styled.div`
-  background-color: #f6f8fa;
+  background-color: ${commentHeaderColor};
   border-radius: 0.3rem;
   height: 16.2rem;
-  margin-top: 3rem;
   padding: 1.6rem 2.4rem;
   width: 15rem;
 
@@ -44,7 +45,7 @@ export const AccountWrapper = styled.div`
 `;
 
 export const StyledText = styled.div`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${lightGreyColor};
   font-size: ${defaultFontSize};
   font-weight: 500;
   margin-top: 0.25rem;

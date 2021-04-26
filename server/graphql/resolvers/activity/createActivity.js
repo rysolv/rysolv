@@ -10,8 +10,8 @@ const createActivity = async ({ activityInput }) => {
     funded_value: activityInput.fundedValue || null,
     is_private: activityInput.isPrivate || false,
     issue_id: activityInput.issueId || null,
-    organization_id: activityInput.organizationId || null,
     pullrequest_id: activityInput.pullRequestId || null,
+    repo_id: activityInput.repoId || null,
     user_id: activityInput.userId || null,
   };
   await createActivityQuery({ data });

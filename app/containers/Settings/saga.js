@@ -1,10 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { signOut, updateActiveUser } from 'containers/Auth/actions';
+import {
+  fetchActiveUser,
+  signOut,
+  updateActiveUser,
+} from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
+  ACCEPT_BOUNTY,
   CHANGE_EMAIL,
   changeEmailError,
   DELETE_USER,
@@ -19,6 +24,8 @@ import {
   WITHDRAW_FUNDS,
 } from './constants';
 import {
+  acceptBountyFailure,
+  acceptBountySuccess,
   changeEmailFailure,
   changeEmailSuccess,
   closeModalState,
@@ -40,6 +47,36 @@ import {
   withdrawFundsFailure,
   withdrawFundsSuccess,
 } from './actions';
+
+export function* acceptBountySaga({ payload }) {
+  const { fundedAmount, fundingId, userRatio } = payload;
+  const query = `
+    mutation{
+      acceptBounty(fundingId: "${fundingId}", userRatio: ${userRatio}) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        acceptBounty: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(acceptBountySuccess({ fundedAmount, fundingId }));
+    yield put(fetchActiveUser());
+  } catch (error) {
+    yield put(acceptBountyFailure({ error: { message: error } }));
+  }
+}
 
 export function* changeEmailSaga({ payload }) {
   const { email } = payload;
@@ -94,6 +131,20 @@ export function* fetchInfoSaga({ payload }) {
           activePullRequests
           attempting
           balance
+          bounties {
+            createdDate
+            fundedAmount
+            id
+            isApproved
+            issueId
+            name
+            pullRequestUrl
+            rep
+            repoName
+            repoPayoutExists
+            userAccepted
+            userPayout
+          }
           completedPullRequests
           createdDate
           dollarsEarned
@@ -105,12 +156,12 @@ export function* fetchInfoSaga({ payload }) {
           isGithubVerified
           issues
           lastName
-          organizations
           personalLink
           preferredLanguages
           profilePic
           rejectedPullRequests
           rep
+          repos
           stackoverflowLink
           username
           watching
@@ -126,11 +177,11 @@ export function* fetchInfoSaga({ payload }) {
         fundedValue
         issueId
         issueName
-        organizationId
-        organizationName
         pullRequestId
         pullRequestName
         pullRequestUrl
+        repoId
+        repoName
         userId
         username
       }
@@ -401,6 +452,7 @@ export function* withdrawFundsSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(ACCEPT_BOUNTY, acceptBountySaga);
   yield takeLatest(CHANGE_EMAIL, changeEmailSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);

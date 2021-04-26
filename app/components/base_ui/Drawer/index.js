@@ -18,7 +18,7 @@ const addIcon = iconDictionary('addCircle');
 const dollarIcon = iconDictionary('dollarSquare');
 const helpIcon = iconDictionary('help');
 const issueIcon = iconDictionary('issue');
-const organizationIcon = iconDictionary('organization');
+const repoIcon = iconDictionary('repo');
 const statsIcon = iconDictionary('stats');
 const uploadIcon = iconDictionary('upload');
 const userIcon = iconDictionary('user');
@@ -54,16 +54,9 @@ const BaseDrawer = ({
           </ListItem>
         </StyledListWrapper>
         <StyledListWrapper active={currentValue === 1}>
-          <ListItem
-            button
-            key="Organizations"
-            onClick={() => handleClick('/organizations', 1)}
-          >
-            <ListItemIcon>{organizationIcon}</ListItemIcon>
-            <StyledListItemText
-              active={currentValue === 1}
-              primary="Organizations"
-            />
+          <ListItem button key="Repos" onClick={() => handleClick('/repos', 1)}>
+            <ListItemIcon>{repoIcon}</ListItemIcon>
+            <StyledListItemText active={currentValue === 1} primary="Repos" />
           </ListItem>
         </StyledListWrapper>
         <StyledListWrapper active={currentValue === 2}>
@@ -89,13 +82,13 @@ const BaseDrawer = ({
         <StyledListWrapper active={currentValue === 4}>
           <ListItem
             button
-            key="addOrganizations"
-            onClick={() => handleClick('/organizations/add', 4)}
+            key="addRepos"
+            onClick={() => handleClick('/repos/add', 4)}
           >
             <ListItemIcon>{addIcon}</ListItemIcon>
             <StyledListItemText
               active={currentValue === 4}
-              primary="New Organization"
+              primary="New Repo"
             />
           </ListItem>
         </StyledListWrapper>
@@ -122,7 +115,10 @@ const BaseDrawer = ({
         <StyledListWrapper active={currentValue === 7}>
           <ListItem button key="jobs" onClick={() => handleClick('/jobs', 7)}>
             <ListItemIcon>{dollarIcon}</ListItemIcon>
-            <StyledListItemText active={currentValue === 7} primary="Jobs" />
+            <StyledListItemText
+              active={currentValue === 7}
+              primary="Get Hired"
+            />
           </ListItem>
         </StyledListWrapper>
       </StyledList>

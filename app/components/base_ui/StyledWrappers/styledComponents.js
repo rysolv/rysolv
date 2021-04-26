@@ -113,6 +113,7 @@ export const StyledLanguageWrapper = styled.div`
 `;
 
 export const StyledRewardWrapper = styled.div`
+  align-self: center;
   background: ${rewardBackground};
   border-radius: 0.25rem;
   color: ${rewardColor};

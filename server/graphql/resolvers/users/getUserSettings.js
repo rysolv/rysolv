@@ -1,8 +1,9 @@
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getOneIssue,
-  getOneOrganization,
+  getOneRepo,
   getUserAttemptList,
+  getUserBounties,
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
   getUserWatchList,
@@ -14,7 +15,7 @@ const getUserSettings = async (_, { authError, userId }) => {
     if (authError || !userId) throw new CustomError(authError);
 
     const result = await getUserSettingsQuery({ userId });
-    const { issues, organizations } = result;
+    const { issues, repos } = result;
 
     // Pull user attempting detail
     const attemptingListResult = await getUserAttemptList({ userId });
@@ -26,19 +27,13 @@ const getUserSettings = async (_, { authError, userId }) => {
         return issuesResult;
       }),
     );
-    const filteredIssuesList = issuesListResult.filter(issue => issue);
 
-    // Pull user organization detail
-    const organizationsListResult = await Promise.all(
-      organizations.map(async organizationId => {
-        const organizationsResult = await getOneOrganization({
-          organizationId,
-        });
-        return organizationsResult;
+    // Pull user repo detail
+    const reposListResult = await Promise.all(
+      repos.map(async repoId => {
+        const reposResult = await getOneRepo({ repoId });
+        return reposResult;
       }),
-    );
-    const filteredOrganizationsList = organizationsListResult.filter(
-      organization => organization,
     );
 
     // Pull user pull request detail
@@ -51,13 +46,25 @@ const getUserSettings = async (_, { authError, userId }) => {
     // Pull user watching detail
     const watchingListResult = await getUserWatchList({ userId });
 
+    // Pull user bounties
+    const bounties = await getUserBounties({ userId });
+
     result.activePullRequests = activePullRequests;
     result.attempting = attemptingListResult;
+    result.bounties = bounties;
     result.completedPullRequests = completedPullRequests;
-    result.issues = filteredIssuesList;
-    result.organizations = filteredOrganizationsList;
+    result.issues = issuesListResult;
+    result.notifications = false;
     result.rejectedPullRequests = rejectedPullRequests;
+    result.repos = reposListResult;
     result.watching = watchingListResult;
+
+    // Show notification for unaccepted bounties
+    bounties.forEach(bounty => {
+      if (!bounty.userAccepted) {
+        result.notifications = true;
+      }
+    });
 
     return {
       __typename: 'User',

@@ -23,7 +23,7 @@ import {
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile } = mediaQueriesByDevice;
+const { mobile, mobileXS } = mediaQueriesByDevice;
 
 export const Divider = styled.div`
   align-self: center;
@@ -65,6 +65,10 @@ export const InputFormWrapper = styled.form`
 
   ${mobile} {
     padding: 3rem;
+    width: 90%;
+  }
+
+  ${mobileXS} {
     width: 100%;
   }
 `;

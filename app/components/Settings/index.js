@@ -1,58 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 
-import {
-  BaseFileInput,
-  Coin,
-  ConditionalRender,
-  IconButton,
-} from 'components/base_ui';
-import { getBase64 } from 'utils/globalHelpers';
-import iconDictionary from 'utils/iconDictionary';
+import { ConditionalRender } from 'components/base_ui';
 
+import DepositFormComponent from './Balance/Deposit/DepositFormComponent';
+import UserAccount from './Account';
+import UserAttempting from './Attempting';
+import UserBounties from './Bounties';
+import UserIssues from './Issues';
+import UserPullRequests from './PullRequests';
+import UserRepos from './Repos';
+import UserTimelineView from './Timeline';
+import UserWatching from './Watching';
+import WithdrawalFormComponent from './Balance/Withdrawal/WithdrawalFormComponent';
 import {
-  EmptyGithubLinkComponent,
-  GithubEditComponent,
-  GithubLinkComponent,
-} from './GithubLinkComponents';
-import {
-  EmptyPersonalLinkComponent,
-  PersonalEditComponent,
-  PersonalLinkComponent,
-} from './PersonalLinkComponents';
-import {
-  EmptyStackoverflowLinkComponent,
-  StackoverflowEditComponent,
-  StackoverflowLinkComponent,
-} from './StackoverflowLinkComponents';
-import UserMetricsView from './Metrics';
-import SettingsTabs from './SettingsTabs';
-import {
-  DetailContainer,
-  DetailViewContainer,
-  EditUserImageWrapper,
-  InputIconGroup,
-  LinksWrapper,
-  Name,
-  Rep,
+  SettingsContainer,
   SettingsTabsWrapper,
+  SettingsViewContainer,
   StyledErrorSuccessBanner,
-  UserCardWrapper,
-  UserImage,
+  StyledPaper,
+  StyledTab,
+  StyledTabs,
 } from './styledComponents';
-
-const CloseIcon = iconDictionary('close');
-const DoneIcon = iconDictionary('done');
 
 const SettingsView = ({
   alerts: { error, success },
   creditCardProps,
   currentTab,
   data: {
-    activity,
     activePullRequests,
+    activity,
     attempting,
     balance,
+    bounties,
     completedPullRequests,
     createdDate,
     dollarsEarned,
@@ -63,17 +43,17 @@ const SettingsView = ({
     isGithubVerified,
     issues,
     lastName,
-    organizations,
     personalLink,
     preferredLanguages,
     profilePic,
     rejectedPullRequests,
     rep,
+    repos,
     stackoverflowLink,
     username,
     watching,
   },
-  deviceView,
+  dispatchAcceptBounty,
   dispatchOpenModal,
   dispatchPaypalPayment,
   dispatchSaveChange,
@@ -91,7 +71,6 @@ const SettingsView = ({
   PullRequestComponent,
   view,
 }) => {
-  const [displayBottom, setDisplayBottom] = useState(false);
   const [changeEmail, setChangeEmail] = useState(false);
   const [changeFirstName, setChangeFirstName] = useState(false);
   const [changeGithub, setChangeGithub] = useState(false);
@@ -103,15 +82,23 @@ const SettingsView = ({
   const [changeStackoverflow, setChangeStackoverflow] = useState(false);
   const [changeUserImage, setChangeUserImage] = useState(false);
   const [changeUsername, setChangeUsername] = useState(false);
+  const [displayBottom, setDisplayBottom] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [stripeError, setStripeError] = useState('');
+  const [tab, setTab] = useState(currentTab);
+  const [tabToDisplay, setTabToDisplay] = useState(currentTab);
   const [value, setValue] = useState('');
 
-  const {
-    githubLink: githubLinkError,
-    personalLink: personalLinkError,
-    stackoverflowLink: stackoverflowLinkError,
-  } = inputErrors;
+  useEffect(() => {
+    setTab(currentTab);
+    setTabToDisplay(currentTab);
+  }, [currentTab]);
+
+  const handleClick = (newTab, route) => {
+    setTab(newTab);
+    setTabToDisplay(newTab);
+    handleNav(route);
+  };
 
   const handleClearAllAlerts = () => {
     handleClearAlerts();
@@ -161,224 +148,226 @@ const SettingsView = ({
     }
   };
 
-  const handleUploadUserImage = async e => {
-    const { files } = e.target;
-    const formattedUserImage = await getBase64(files[0]);
-    setIsDisabled(true);
-    setChangeUserImage(true);
-    setValue(formattedUserImage);
-  };
-
   const handleFormatUrl = val => {
     const { origin, pathname } = new URL(val);
     return `${origin}${pathname}`;
   };
 
-  const profilePicToRender = !changeUserImage ? profilePic : value;
+  const BalanceFormComponent = (
+    <ConditionalRender
+      Component={
+        <DepositFormComponent
+          creditCardProps={creditCardProps}
+          dispatchPaypalPayment={dispatchPaypalPayment}
+          handleClearAllAlerts={handleClearAllAlerts}
+          handleClearErrors={handleClearErrors}
+          handleValidateInput={handleValidateInput}
+          inputErrors={inputErrors}
+          setDisplayBottom={setDisplayBottom}
+          setStripeError={setStripeError}
+        />
+      }
+      FallbackComponent={
+        <WithdrawalFormComponent
+          balance={balance}
+          email={email}
+          handleClearAllAlerts={handleClearAllAlerts}
+          handleClearErrors={handleClearErrors}
+          handleValidateInput={handleValidateInput}
+          handleWithdrawFunds={handleWithdrawFunds}
+          inputErrors={inputErrors}
+          setDisplayBottom={setDisplayBottom}
+        />
+      }
+      shouldRender={view === 'deposit'}
+    />
+  );
+  const ListComponent = (
+    <ConditionalRender
+      Component={
+        <UserAttempting
+          attempting={attempting}
+          handleNav={handleNav}
+          handleRemoveAttempting={handleRemoveAttempting}
+        />
+      }
+      FallbackComponent={
+        <UserWatching
+          handleNav={handleNav}
+          handleRemoveWatching={handleRemoveWatching}
+          watching={watching}
+        />
+      }
+      shouldRender={view === 'attempting'}
+    />
+  );
+  const SecondarySettingsComponent = (
+    <ConditionalRender
+      Component={ListComponent}
+      FallbackComponent={BalanceFormComponent}
+      shouldRender={view === 'attempting' || view === 'watching'}
+    />
+  );
+  const ComponentToRender = {
+    0: (
+      <UserTimelineView
+        activePullRequests={activePullRequests}
+        activity={activity}
+        attempting={attempting}
+        changeGithub={changeGithub}
+        changePersonal={changePersonal}
+        changePreferredLanguages={changePreferredLanguages}
+        changeStackoverflow={changeStackoverflow}
+        changeUserImage={changeUserImage}
+        completedPullRequests={completedPullRequests}
+        createdDate={createdDate}
+        displayBottom={displayBottom}
+        dollarsEarned={dollarsEarned}
+        filterValues={filterValues}
+        firstName={firstName}
+        githubLink={githubLink}
+        githubUsername={githubUsername}
+        handleClose={handleClose}
+        handleEdit={handleEdit}
+        handleInputChange={handleInputChange}
+        handleNav={handleNav}
+        handleRemoveAttempting={handleRemoveAttempting}
+        handleRemoveWatching={handleRemoveWatching}
+        handleSubmitInputChange={handleSubmitInputChange}
+        handleValidateInput={handleValidateInput}
+        inputErrors={inputErrors}
+        isDisabled={isDisabled}
+        isGithubVerified={isGithubVerified}
+        lastName={lastName}
+        personalLink={personalLink}
+        preferredLanguages={preferredLanguages}
+        profilePic={profilePic}
+        rejectedPullRequests={rejectedPullRequests}
+        rep={rep}
+        setChangeGithub={setChangeGithub}
+        setChangePersonal={setChangePersonal}
+        setChangePreferredLanguages={setChangePreferredLanguages}
+        setChangeStackoverflow={setChangeStackoverflow}
+        setChangeUserImage={setChangeUserImage}
+        setIsDisabled={setIsDisabled}
+        setValue={setValue}
+        stackoverflowLink={stackoverflowLink}
+        value={value}
+        watching={watching}
+      />
+    ),
+    1: (
+      <UserAccount
+        balance={balance}
+        changeEmail={changeEmail}
+        changeFirstName={changeFirstName}
+        changeLastName={changeLastName}
+        changeUsername={changeUsername}
+        dispatchOpenModal={dispatchOpenModal}
+        dollarsEarned={dollarsEarned}
+        email={email}
+        firstName={firstName}
+        handleClose={handleClose}
+        handleEdit={handleEdit}
+        handleNav={handleNav}
+        handleSubmitEmailChange={handleSubmitEmailChange}
+        handleSubmitInputChange={handleSubmitInputChange}
+        handleValidateInput={handleValidateInput}
+        inputErrors={inputErrors}
+        isDisabled={isDisabled}
+        lastName={lastName}
+        setChangeEmail={setChangeEmail}
+        setChangeFirstName={setChangeFirstName}
+        setChangeLastName={setChangeLastName}
+        setChangeUsername={setChangeUsername}
+        setDisplayBottom={setDisplayBottom}
+        setValue={setValue}
+        username={username}
+        value={value}
+      />
+    ),
+    2: (
+      <UserBounties
+        bounties={bounties}
+        dispatchAcceptBounty={dispatchAcceptBounty}
+        dispatchOpenModal={dispatchOpenModal}
+        handleNav={handleNav}
+      />
+    ),
+    3: <UserIssues handleNav={handleNav} issues={issues} />,
+    4: <UserRepos handleNav={handleNav} repos={repos} />,
+    5: <UserPullRequests Component={PullRequestComponent} />,
+  };
+
   return (
-    <DetailContainer>
+    <SettingsContainer>
       <StyledErrorSuccessBanner
         error={stripeError || error}
         onClose={handleClearAllAlerts}
         success={success}
       />
-      <DetailViewContainer>
-        <UserCardWrapper displayBottom={displayBottom}>
-          <EditUserImageWrapper>
-            <UserImage src={profilePicToRender} />
-            <ConditionalRender
-              Component={
-                <BaseFileInput
-                  accept="image/png, image/jpeg"
-                  id="logoFileInput"
-                  onChange={handleUploadUserImage}
-                />
-              }
-              FallbackComponent={
-                <InputIconGroup>
-                  <IconButton
-                    icon={CloseIcon}
-                    label="Close"
-                    onClick={() =>
-                      handleClose({ changeInputState: setChangeUserImage })
-                    }
-                  />
-                  <IconButton
-                    icon={DoneIcon}
-                    label="Save"
-                    onClick={() =>
-                      handleSubmitInputChange({
-                        changeInputState: setChangeUserImage,
-                        field: 'profilePic',
-                      })
-                    }
-                  />
-                </InputIconGroup>
-              }
-              shouldRender={!changeUserImage}
-            />
-          </EditUserImageWrapper>
-          <Name>
-            {firstName} {lastName}
-          </Name>
-          <LinksWrapper>
-            <ConditionalRender
-              Component={
-                <ConditionalRender
-                  Component={GithubLinkComponent}
-                  FallbackComponent={EmptyGithubLinkComponent}
-                  propsToPassDown={{
-                    githubLink,
-                    handleEdit,
-                    isDisabled,
-                    setChangeGithub,
-                  }}
-                  shouldRender={!!githubLink}
-                />
-              }
-              FallbackComponent={
-                <GithubEditComponent
-                  githubLinkError={githubLinkError}
-                  handleClose={handleClose}
-                  handleSubmitInputChange={handleSubmitInputChange}
-                  handleValidateInput={handleValidateInput}
-                  setChangeGithub={setChangeGithub}
-                  setValue={setValue}
-                  value={value}
-                />
-              }
-              shouldRender={!changeGithub}
-            />
-            <ConditionalRender
-              Component={
-                <ConditionalRender
-                  Component={PersonalLinkComponent}
-                  FallbackComponent={EmptyPersonalLinkComponent}
-                  propsToPassDown={{
-                    handleEdit,
-                    isDisabled,
-                    personalLink,
-                    setChangePersonal,
-                  }}
-                  shouldRender={!!personalLink}
-                />
-              }
-              FallbackComponent={
-                <PersonalEditComponent
-                  handleClose={handleClose}
-                  handleSubmitInputChange={handleSubmitInputChange}
-                  handleValidateInput={handleValidateInput}
-                  personalLinkError={personalLinkError}
-                  setChangePersonal={setChangePersonal}
-                  setValue={setValue}
-                  value={value}
-                />
-              }
-              shouldRender={!changePersonal}
-            />
-            <ConditionalRender
-              Component={
-                <ConditionalRender
-                  Component={StackoverflowLinkComponent}
-                  FallbackComponent={EmptyStackoverflowLinkComponent}
-                  propsToPassDown={{
-                    stackoverflowLink,
-                    handleEdit,
-                    isDisabled,
-                    setChangeStackoverflow,
-                  }}
-                  shouldRender={!!stackoverflowLink}
-                />
-              }
-              FallbackComponent={
-                <StackoverflowEditComponent
-                  handleClose={handleClose}
-                  handleSubmitInputChange={handleSubmitInputChange}
-                  handleValidateInput={handleValidateInput}
-                  setChangeStackoverflow={setChangeStackoverflow}
-                  setValue={setValue}
-                  stackoverflowLinkError={stackoverflowLinkError}
-                  value={value}
-                />
-              }
-              shouldRender={!changeStackoverflow}
-            />
-          </LinksWrapper>
-          <Rep>
-            <Coin />
-            &nbsp;<b> {rep}</b>&nbsp;credits
-          </Rep>
-          <UserMetricsView
-            activePullRequests={activePullRequests}
-            changePreferredLanguages={changePreferredLanguages}
-            completedPullRequests={completedPullRequests}
-            createdDate={createdDate}
-            dollarsEarned={dollarsEarned}
-            handleClose={handleClose}
-            handleEdit={handleEdit}
-            handleSubmitInputChange={handleSubmitInputChange}
-            isDisabled={isDisabled}
-            preferredLanguages={preferredLanguages}
-            rejectedPullRequests={rejectedPullRequests}
-            setChangePreferredLanguages={setChangePreferredLanguages}
-            setValue={setValue}
-            value={value}
-          />
-        </UserCardWrapper>
-        <SettingsTabsWrapper displayBottom={displayBottom}>
-          <SettingsTabs
-            activity={activity}
-            attempting={attempting}
-            balance={balance}
-            changeEmail={changeEmail}
-            changeFirstName={changeFirstName}
-            changeLastName={changeLastName}
-            changeUsername={changeUsername}
-            creditCardProps={creditCardProps}
-            currentTab={currentTab}
-            deviceView={deviceView}
-            dispatchOpenModal={dispatchOpenModal}
-            dispatchPaypalPayment={dispatchPaypalPayment}
+      <SettingsTabsWrapper displayBottom={displayBottom}>
+        <StyledPaper>
+          <StyledTabs
+            classes={{ indicator: 'indicator', scrollButtons: 'scrollButtons' }}
             displayBottom={displayBottom}
-            dollarsEarned={dollarsEarned}
-            email={email}
-            filterValues={filterValues}
-            firstName={firstName}
-            githubUsername={githubUsername}
-            handleClearAllAlerts={handleClearAllAlerts}
-            handleClearErrors={handleClearErrors}
-            handleClose={handleClose}
-            handleEdit={handleEdit}
-            handleInputChange={handleInputChange}
-            handleNav={handleNav}
-            handleRemoveAttempting={handleRemoveAttempting}
-            handleRemoveWatching={handleRemoveWatching}
-            handleSubmitEmailChange={handleSubmitEmailChange}
-            handleSubmitInputChange={handleSubmitInputChange}
-            handleValidateInput={handleValidateInput}
-            handleWithdrawFunds={handleWithdrawFunds}
-            inputErrors={inputErrors}
-            isDisabled={isDisabled}
-            isGithubVerified={isGithubVerified}
-            issues={issues}
-            lastName={lastName}
-            organizations={organizations}
-            PullRequestComponent={PullRequestComponent}
-            setChangeEmail={setChangeEmail}
-            setChangeFirstName={setChangeFirstName}
-            setChangeLastName={setChangeLastName}
-            setChangeUsername={setChangeUsername}
-            setDisplayBottom={setDisplayBottom}
-            setStripeError={setStripeError}
-            setValue={setValue}
-            username={username}
-            value={value}
-            view={view}
-            watching={watching}
-          />
-        </SettingsTabsWrapper>
-      </DetailViewContainer>
-    </DetailContainer>
+            scrollButtons="on"
+            textColor="primary"
+            value={tabToDisplay}
+            variant="scrollable"
+          >
+            <StyledTab
+              classes={{ selected: 'selected' }}
+              disableRipple
+              label="Overview"
+              onClick={() => handleClick(0, '/settings/overview')}
+            />
+            <StyledTab
+              classes={{ selected: 'selected' }}
+              disableRipple
+              label="Account"
+              onClick={() => handleClick(1, '/settings/account')}
+            />
+            <StyledTab
+              classes={{ selected: 'selected' }}
+              disableRipple
+              label="Bounties"
+              onClick={() => handleClick(2, '/settings/bounties')}
+            />
+            <StyledTab
+              classes={{ selected: 'selected' }}
+              disableRipple
+              label="Issues"
+              onClick={() => handleClick(3, '/settings/issues')}
+            />
+            <StyledTab
+              classes={{ selected: 'selected' }}
+              disableRipple
+              label="Repos"
+              onClick={() => handleClick(4, '/settings/repos')}
+            />
+            <StyledTab
+              classes={{ selected: 'selected' }}
+              disableRipple
+              label="Pull Requests"
+              onClick={() => handleClick(5, '/settings/pullrequests')}
+            />
+          </StyledTabs>
+          <SettingsViewContainer>
+            <ConditionalRender
+              Component={SecondarySettingsComponent}
+              FallbackComponent={ComponentToRender[tab]}
+              shouldRender={
+                view === 'attempting' ||
+                view === 'deposit' ||
+                view === 'watching' ||
+                view === 'withdrawal'
+              }
+            />
+          </SettingsViewContainer>
+        </StyledPaper>
+      </SettingsTabsWrapper>
+    </SettingsContainer>
   );
 };
 
@@ -387,7 +376,7 @@ SettingsView.propTypes = {
   creditCardProps: T.object.isRequired,
   currentTab: T.number.isRequired,
   data: T.object.isRequired,
-  deviceView: T.string.isRequired,
+  dispatchAcceptBounty: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchPaypalPayment: T.func.isRequired,
   dispatchSaveChange: T.func.isRequired,

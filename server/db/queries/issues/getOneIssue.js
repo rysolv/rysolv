@@ -7,10 +7,10 @@ const getOneIssue = async ({ issueId }) => {
     SELECT
       ${issueDetailValues},
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS language,
-      CASE WHEN funding.id IS NOT NULL AND funding.is_approved = false THEN true ELSE false END AS "isInFundingQueue",
-      CASE WHEN pullrequests.merged = true THEN true ELSE false END AS "isPullRequestMerged"
+      CASE WHEN pullrequests.merged = true THEN true ELSE false END AS "isPullRequestMerged",
+      COALESCE(funding.user_accepted, false) AS "isUserAccepted"
     FROM issues
-    JOIN organizations ON issues.organization_id = organizations.id
+    JOIN repos ON issues.repo_id = repos.id
     JOIN users ON issues.contributor_id = users.id
     LEFT JOIN attempting ON attempting.issue_id = issues.id
     LEFT JOIN comments ON comments.target = issues.id
@@ -25,8 +25,8 @@ const getOneIssue = async ({ issueId }) => {
   const { rows } = await singleQuery({ queryText, values: [issueId] });
   const [oneRow] = rows;
   if (oneRow) {
-    const { isInFundingQueue, open } = oneRow;
-    if (!isInFundingQueue && !open) {
+    const { isUserAccepted, open } = oneRow;
+    if (isUserAccepted && !open) {
       const awardedUserQuery = `
         SELECT
           pullrequests.html_url AS "htmlUrl",

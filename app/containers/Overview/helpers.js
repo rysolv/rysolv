@@ -1,21 +1,21 @@
 import IssuesOverview from 'containers/Issues/Overview';
-import OrganizationsOverview from 'containers/Organizations/Overview';
+import ReposOverview from 'containers/Repos/Overview';
 import UsersOverview from 'containers/Users/Overview';
 
 export const overviewDirectory = {
   issues: {
     Component: IssuesOverview,
-    title: 'Issues',
     initialValue: 0,
+    title: 'Issues',
   },
-  organizations: {
-    Component: OrganizationsOverview,
-    title: 'Organizations',
+  repos: {
+    Component: ReposOverview,
     initialValue: 1,
+    title: 'Repos',
   },
   users: {
     Component: UsersOverview,
-    title: 'Users',
     initialValue: 2,
+    title: 'Users',
   },
 };

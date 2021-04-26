@@ -2,7 +2,7 @@
 const fetch = require('node-fetch');
 
 const { authenticate } = require('./auth');
-const { CustomError } = require('../helpers');
+const { CustomError } = require('../../helpers');
 
 const getGithubIssueComments = async ({ issueNumber, organization, repo }) => {
   try {
@@ -28,6 +28,34 @@ const getGithubIssueComments = async ({ issueNumber, organization, repo }) => {
     return githubComments;
   } catch (error) {
     return [];
+  }
+};
+
+const getRepoMembers = async ({ organization, repo }) => {
+  const members = [];
+  try {
+    const { GITHUB } = await authenticate();
+    const {
+      data: { owner },
+    } = await GITHUB.repos.get({
+      owner: organization,
+      repo,
+    });
+    if (owner.type === 'Organization') {
+      const { data } = await GITHUB.orgs.listMembers({
+        org: organization,
+      });
+      data.forEach(member => members.push(member));
+    }
+    if (owner.type === 'User') members.push(owner);
+
+    const formattedMembers = members.map(({ id }) => ({
+      id,
+      type: 'github_owner',
+    }));
+    return formattedMembers;
+  } catch (error) {
+    return members;
   }
 };
 
@@ -94,22 +122,20 @@ const getSingleOrganization = async organization => {
 
   if (!html_url)
     throw new CustomError(
-      `We are unable to import this organization from ${organization}.`,
+      `We are unable to import this repo from ${organization}.`,
     );
   if (type === 'User')
-    throw new CustomError(
-      `User account cannot be imported as an organization.`,
-    );
+    throw new CustomError(`User account cannot be imported as a repo.`);
 
-  const organizationInput = {
-    organizationDescription: bio || '', // Optional
-    organizationLanguages: [], // Optional
-    organizationLogo: avatar_url, // Required
-    organizationName: name || login, // Preferred name or login name
-    organizationRepo: html_url, // Required
+  const repoInput = {
     organizationUrl: blog || '', // Optional
+    repoDescription: bio || '', // Optional
+    repoLanguages: [], // Optional
+    repoLogo: avatar_url, // Required
+    repoName: name || login, // Preferred name or login name
+    repoUrl: html_url, // Required
   };
-  return { organizationInput };
+  return { repoInput };
 };
 
 const getSinglePullRequest = async ({ organization, pullNumber, repo }) => {
@@ -173,16 +199,15 @@ const getSingleRepo = async ({ organization, repo }) => {
       organization: parentOrganization,
     } = repoData;
 
-    if (!html_url)
-      throw new CustomError(`We are unable to import this organization.`);
+    if (!html_url) throw new CustomError(`We are unable to import this repo.`);
 
-    const organizationInput = {
+    const repoInput = {
       issueLanguages: language ? [language] : [], // Optional - one entry
-      organizationDescription: description || '', // Optional
-      organizationLanguages: language ? [language] : [], // Optional - one entry
-      organizationName: name, // Required
-      organizationRepo: html_url, // Required
       organizationUrl: homepage || '', // Optional
+      repoDescription: description || '', // Optional
+      repoLanguages: language ? [language] : [], // Optional - one entry
+      repoName: name, // Required
+      repoUrl: html_url, // Required
     };
 
     if (parentOrganization) {
@@ -199,15 +224,15 @@ const getSingleRepo = async ({ organization, repo }) => {
         name: parentName,
       } = parentData;
 
-      organizationInput.organizationLogo = avatar_url; // Required
-      organizationInput.organizationName = parentName || login; // Preferred name or login name
-      organizationInput.organizationRepo = parentRepo; // Required
-      organizationInput.organizationUrl = blog || ''; // Optional
+      repoInput.organizationUrl = blog || ''; // Optional
+      repoInput.repoLogo = avatar_url; // Required
+      repoInput.repoName = parentName || login; // Preferred name or login name
+      repoInput.repoUrl = parentRepo; // Required
       // Only replace repo bio if parent bio exists
-      if (bio) organizationInput.organizationDescription = bio;
+      if (bio) repoInput.repoDescription = bio;
     }
 
-    return { organizationInput };
+    return { repoInput };
   } catch (error) {
     throw error;
   }
@@ -235,8 +260,8 @@ const getUserGithubIssues = async ({ username }) => {
           issues.push({
             createdDate: updated_at,
             name: title,
-            organizationName: repo.name,
             repo: html_url,
+            repoName: repo.name,
           });
         }
       });
@@ -244,6 +269,30 @@ const getUserGithubIssues = async ({ username }) => {
   );
 
   return issues;
+};
+
+const getUserGithubPullRequests = async ({ owner, repo }) => {
+  const { GITHUB } = await authenticate();
+
+  const { data } = await GITHUB.pulls.list({
+    owner,
+    repo,
+    sort: 'updated',
+    state: 'open',
+  });
+
+  const pullRequestList = [];
+  data.forEach(({ html_url, number, title, updated_at, user }) => {
+    if (user.type !== 'Bot') {
+      pullRequestList.push({
+        htmlUrl: html_url,
+        modifiedDate: updated_at,
+        pullNumber: number,
+        title,
+      });
+    }
+  });
+  return pullRequestList;
 };
 
 const getUserGithubRepos = async ({ username }) => {
@@ -338,11 +387,13 @@ const requestGithubUser = async credentials => {
 
 module.exports = {
   getGithubIssueComments,
+  getRepoMembers,
   getSingleIssue,
   getSingleOrganization,
   getSinglePullRequest,
   getSingleRepo,
   getUserGithubIssues,
+  getUserGithubPullRequests,
   getUserGithubRepos,
   requestGithubUser,
 };

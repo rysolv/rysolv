@@ -19,7 +19,7 @@ export const NameWrapper = styled.div`
   margin-top: 1rem;
 `;
 
-export const OrganizationNameContainer = styled.div`
+export const RepoNameContainer = styled.div`
   align-items: center;
   color: ${textColor};
   display: flex;
@@ -52,6 +52,6 @@ export const StyledIssueDetail = styled.div`
 `;
 
 export const StyledVerified = styled(Verified)`
-  padding: 0 0.5rem;
   display: flex;
+  padding: 0 0.5rem;
 `;

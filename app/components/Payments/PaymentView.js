@@ -42,10 +42,10 @@ const PaymentView = ({
   handleStripeToken,
   handleSubmitAccountPayment,
   handleValidateInput,
-  isInFundingQueue,
   isPullRequestMerged,
   isSignedIn,
   issueId,
+  isUserAccepted,
   open,
   rep,
 }) => {
@@ -155,7 +155,7 @@ const PaymentView = ({
       <OverviewWrapper>
         <ConditionalRender
           Component={<RewardWrapper>{RewardIcon} Rewarded</RewardWrapper>}
-          shouldRender={!!awardedUser}
+          shouldRender={!!awardedUser && isUserAccepted}
         />
         <Amount success={!!awardedUser}>
           {formatDollarAmount(fundedAmount)}
@@ -167,7 +167,7 @@ const PaymentView = ({
               {fundedAmount ? 'Funded' : 'Unfunded'}
             </Funded>
           }
-          propsToPassDown={{ awardedUser, isInFundingQueue, rep }}
+          propsToPassDown={{ awardedUser, isUserAccepted, rep }}
           shouldRender={isPullRequestMerged && !open}
         />
       </OverviewWrapper>
@@ -272,10 +272,10 @@ PaymentView.propTypes = {
   handleStripeToken: T.func,
   handleSubmitAccountPayment: T.func,
   handleValidateInput: T.func,
-  isInFundingQueue: T.bool.isRequired,
   isPullRequestMerged: T.bool.isRequired,
   isSignedIn: T.bool,
   issueId: T.string,
+  isUserAccepted: T.bool.isRequired,
   open: T.bool,
   rep: T.number.isRequired,
 };
