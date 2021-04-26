@@ -118,8 +118,8 @@ module.exports = buildSchema(`
     exists: Boolean
     fundedAmount: Float
     id: ID
-    isInFundingQueue: Boolean
     isPullRequestMerged: Boolean
+    isUserAccepted: Boolean
     language: [String]
     message: String
     modifiedDate: Object

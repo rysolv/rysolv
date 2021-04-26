@@ -1,10 +1,11 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { formatDollarAmount } from 'utils/globalHelpers';
+import { formatDollarAmount, getPaymentMethod } from 'utils/globalHelpers';
 
 import {
   Amount,
+  DetailLink,
   DonationRow,
   DonationsContainer,
   DonationTitle,
@@ -33,6 +34,9 @@ const RepoDonations = ({
       {payoutUrl && (
         <DonationRow hasPayoutUrl={hasPayoutUrl}>
           <DonationTitle>Maintainer Proceeds</DonationTitle>
+          <DetailLink href={payoutUrl} target="_blank">
+            {getPaymentMethod(payoutUrl)}
+          </DetailLink>
           <Amount>{formatDollarAmount(maintainerProceeds, true)}</Amount>
         </DonationRow>
       )}

@@ -297,8 +297,8 @@ const HowTo = () => {
                 and select <b>Withdraw Funds</b>.
                 <ul>
                   <li>
-                    There will be a <b>10% service fee</b> on withdrawals, as
-                    well as applicable payment processing fees.
+                    There will be a <b>3% + $0.30 standard transaction fee</b>{' '}
+                    on withdrawals to cover payment processing.
                   </li>
                 </ul>
               </StepDescription>

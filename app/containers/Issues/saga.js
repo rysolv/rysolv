@@ -279,8 +279,8 @@ export function* fetchIssueDetailSaga({ payload }) {
           createdDate
           fundedAmount
           id
-          isInFundingQueue
           isPullRequestMerged
+          isUserAccepted
           language
           modifiedDate
           name
@@ -344,8 +344,8 @@ export function* fetchIssuesSaga() {
             createdDate
             fundedAmount
             id
-            isInFundingQueue
             isPullRequestMerged
+            isUserAccepted
             language
             modifiedDate
             name
@@ -532,8 +532,8 @@ export function* searchIssuesSaga({ payload }) {
         createdDate
         fundedAmount
         id
-        isInFundingQueue
         isPullRequestMerged
+        isUserAccepted
         language
         modifiedDate
         name

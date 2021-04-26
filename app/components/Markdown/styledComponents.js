@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
   defaultFontFamily,
   defaultFontSize,
-  markdownHeader,
+  headerColor,
   textColor,
 } from 'defaultStyleHelper';
 
@@ -18,10 +18,10 @@ export const MarkdownContainer = styled.div`
   a:active,
   .fa,
   .fa:hover {
-    background-color: ${markdownHeader} !important;
+    background-color: ${headerColor} !important;
     color: white;
     * {
-      background-color: ${markdownHeader};
+      background-color: ${headerColor};
     }
   }
 

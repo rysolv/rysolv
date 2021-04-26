@@ -11,7 +11,7 @@ const getFilterOptions = async () => {
     (SELECT COUNT(*) FROM issues WHERE is_deleted = false AND open = false) AS "closedIssues",
     (SELECT COUNT(*) FROM issues WHERE funded_amount > 0 AND is_deleted = false AND open = true) AS "fundedIssues",
     (SELECT COALESCE(MAX(funded_amount), 0) FROM issues WHERE is_deleted = false) AS "maxBounty",
-    (SELECT COALESCE(MAX(funded_amount),0) FROM (SELECT repo_id, SUM(funded_amount) as funded_amount FROM payments GROUP BY repo_id) AS sub) AS "maxRepoFunded",
+    (SELECT COALESCE(MAX(funded_amount),0) FROM (SELECT repo_id, SUM(funded_amount) as funded_amount FROM payments WHERE action = 'fund_issue' GROUP BY repo_id) AS sub) AS "maxRepoFunded",
     (SELECT COUNT(*) FROM issues WHERE is_deleted = false AND type = 'Feature') AS "featureTag",
     (SELECT COUNT(*) FROM issues WHERE is_deleted = false AND type = 'Bug') AS "bugTag"
   `;

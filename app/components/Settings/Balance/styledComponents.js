@@ -15,7 +15,9 @@ import {
 import {
   commentHeaderColor,
   defaultFontSize,
+  detailFontSize,
   hoverLinkColor,
+  lightGreyColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -93,6 +95,17 @@ export const ComponentTitle = styled.div`
   color: ${textColor};
   font-size: ${defaultFontSize};
   text-decoration: underline;
+`;
+
+export const DisclaimerText = styled.div`
+  color: ${lightGreyColor};
+  font-size: ${detailFontSize};
+  margin: -1rem 0 1rem;
+  width: 50%;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 export const DisplayText = styled.div`
@@ -293,4 +306,8 @@ export const WithdrawalInputWrapper = styled.div`
   font-weight: ${({ isThin }) => (isThin ? '400' : '600')};
   padding: 0.5rem 0;
   width: ${({ width }) => width || '50%'};
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 `;
