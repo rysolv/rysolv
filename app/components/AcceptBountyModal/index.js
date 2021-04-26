@@ -24,7 +24,8 @@ const AcceptBountyModal = ({
   const max = bounty * 10;
 
   const handleAccept = () => {
-    dispatchAcceptBounty({ fundingId, userRatio });
+    const fundedAmount = bounty * userRatio;
+    dispatchAcceptBounty({ fundedAmount, fundingId, userRatio });
     handleClose();
   };
 
