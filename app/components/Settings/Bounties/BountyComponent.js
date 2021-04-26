@@ -49,7 +49,7 @@ const BountyComponent = ({
               repoName,
             });
           } else {
-            dispatchAcceptBounty({ fundingId: id, userRatio: 1 });
+            dispatchAcceptBounty({ fundedAmount, fundingId: id, userRatio: 1 });
           }
         };
         return (

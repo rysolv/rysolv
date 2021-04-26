@@ -49,7 +49,7 @@ import {
 } from './actions';
 
 export function* acceptBountySaga({ payload }) {
-  const { fundingId, userRatio } = payload;
+  const { fundedAmount, fundingId, userRatio } = payload;
   const query = `
     mutation{
       acceptBounty(fundingId: "${fundingId}", userRatio: ${userRatio}) {
@@ -71,7 +71,7 @@ export function* acceptBountySaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(acceptBountySuccess({ fundingId }));
+    yield put(acceptBountySuccess({ fundedAmount, fundingId }));
     yield put(fetchActiveUser());
   } catch (error) {
     yield put(acceptBountyFailure({ error: { message: error } }));

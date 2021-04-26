@@ -3,7 +3,7 @@ const {
   verifyPayout,
 } = require('../../../db');
 const { acceptBountyError, acceptBountySuccess } = require('./constants');
-const { CustomError, errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger, sendEmail } = require('../../../helpers');
 
 const acceptBounty = async (
   { fundingId, userRatio },
@@ -33,6 +33,21 @@ const acceptBounty = async (
     const userPayout = (fundedAmount * userRatio).toFixed(2);
 
     await acceptBountyQuery({ fundingId, repoPayout, userPayout });
+
+    // Notify user of accepted bounty
+    sendEmail({
+      body: { fundingId },
+      path: '/s/funding/earnedBounty',
+    });
+
+    if (repoPayout > 0) {
+      // Notify maintainers of repo contribution
+      sendEmail({
+        body: { fundingId },
+        path: '/b/funding/repoPayout',
+      });
+    }
+
     return {
       __typename: 'Success',
       message: acceptBountySuccess,
