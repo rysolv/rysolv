@@ -298,8 +298,7 @@ const HowTo = () => {
                 <ul>
                   <li>
                     There will be a <b>3% + $0.30 standard transaction fee</b>{' '}
-                    on withdrawals, as well as applicable payment processing
-                    fees.
+                    on withdrawals to cover payment processing.
                   </li>
                 </ul>
               </StepDescription>

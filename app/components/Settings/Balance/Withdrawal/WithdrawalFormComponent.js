@@ -168,7 +168,7 @@ const WithdrawalFormComponent = ({
           </DisplayText>
         </WithdrawalInputWrapper>
         <DisclaimerText>
-          A 3% + $0.30 standard transaction fee will be added.
+          A 3% + $0.30 standard transaction fee will be applied.
         </DisclaimerText>
         <WithdrawalInputWrapper isRow>
           <InputHeader>Transfer to PayPal:</InputHeader>

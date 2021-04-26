@@ -76,6 +76,7 @@ export const DonationTitle = styled.div`
   font-weight: 400;
   line-height: 1.5;
   margin-bottom: 1rem;
+  text-align: center;
   text-transform: uppercase;
 `;
 
