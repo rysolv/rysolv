@@ -68,7 +68,7 @@ async function updateUserRepos() {
       user_repos.github_id AS "githubId",
       user_repos.id
     FROM user_repos
-    LEFT JOIN user_repos ON repos.id = user_repos.repo_id
+    LEFT JOIN repos ON repos.id = user_repos.repo_id
     WHERE repos.is_deleted = false
     AND repos.is_edited = false
     AND repos.is_manual = false
