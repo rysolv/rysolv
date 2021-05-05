@@ -30,7 +30,7 @@ const transformRepo = async ({ repoId, repoInput }, { authError, userId }) => {
     const activityInput = {
       actionType: 'update',
       repoId: result.id,
-      userId: result.ownerId,
+      userId,
     };
     await createActivity({ activityInput });
 
