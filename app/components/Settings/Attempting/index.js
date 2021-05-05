@@ -27,7 +27,7 @@ const UserAttempting = ({ attempting, handleNav, handleRemoveAttempting }) => {
   const [searchValue, setSearchValue] = useState('');
   const filterAttempting = () => {
     // eslint-disable-next-line array-callback-return, consistent-return
-    const sortedArray = attempting.sort((a, b) => {
+    const sortedArray = [...attempting].sort((a, b) => {
       if (selectedValue === 'Newest') {
         if (a.modifiedDate < b.modifiedDate) {
           return 1;
