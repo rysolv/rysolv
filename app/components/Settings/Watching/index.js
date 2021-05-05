@@ -27,7 +27,7 @@ const UserWatching = ({ handleNav, handleRemoveWatching, watching }) => {
   const [searchValue, setSearchValue] = useState('');
   const filterWatching = () => {
     // eslint-disable-next-line array-callback-return, consistent-return
-    const sortedArray = watching.sort((a, b) => {
+    const sortedArray = [...watching].sort((a, b) => {
       if (selectedValue === 'Newest') {
         if (a.modifiedDate < b.modifiedDate) {
           return 1;
