@@ -4,7 +4,7 @@ const alterWithdrawalTable = `
   ADD COLUMN email VARCHAR(128),
   ADD COLUMN fee FLOAT,
   ADD COLUMN transfer_value FLOAT,
-  ADD COLUMN user_id UUID REFERENCES users(id)
+  ADD COLUMN user_id UUID REFERENCES users(id),
   ADD COLUMN IF NOT EXISTS withdrawal_date TIMESTAMP
 `;
 
