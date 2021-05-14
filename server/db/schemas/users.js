@@ -19,6 +19,7 @@ const alterUsersTable = `
   ADD COLUMN rep SMALLINT NOT NULL DEFAULT 25,
   ADD COLUMN stackoverflow_link VARCHAR(128),
   ADD COLUMN upvotes UUID [] DEFAULT '{}',
+  ADD COLUMN user_type VARCHAR(7) DEFAULT 'full',
   ADD COLUMN username VARCHAR(40),
   ADD CONSTRAINT chkBalance CHECK (balance >= 0)
 `;
