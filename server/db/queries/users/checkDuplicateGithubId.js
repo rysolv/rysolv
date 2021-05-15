@@ -6,7 +6,6 @@ const checkDuplicateGithubId = async ({ githubId }) => {
     SELECT id
     FROM users
     WHERE github_id = $1
-    AND user_type = 'full'
   `;
   const { rows } = await singleQuery({ queryText, values: [githubId] });
   const [oneRow] = rows;
