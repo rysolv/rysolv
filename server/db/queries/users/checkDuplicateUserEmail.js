@@ -7,6 +7,7 @@ const checkDuplicateUserEmail = async ({ email }) => {
     SELECT id, email_verified AS "emailVerified", provider
     FROM users
     WHERE email = $1
+    AND user_type = 'full'
   `;
   const { rows } = await singleQuery({ queryText, values: [email] });
   const [oneRow] = rows;

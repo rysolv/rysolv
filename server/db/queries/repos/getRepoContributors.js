@@ -21,6 +21,7 @@ const getRepoContributors = async ({ repoId }) => {
     AND pullrequests.merged = true
     AND users.email_verified = true	
     AND users.is_deleted = false
+    AND users.user_type = 'full'
   `;
   const { rows } = await singleQuery({ queryText, values: [repoId] });
   return rows;

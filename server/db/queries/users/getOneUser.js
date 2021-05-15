@@ -16,6 +16,7 @@ const getOneUser = async ({ userId }) => {
       users.id = $1
       AND users.email_verified = true
       AND users.is_deleted = false
+      AND users.user_type = 'full'
     GROUP BY ${groupValues}
   `;
   const { rows } = await singleQuery({ queryText, values: [userId] });
