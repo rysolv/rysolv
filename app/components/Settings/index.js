@@ -46,6 +46,7 @@ const SettingsView = ({
     personalLink,
     preferredLanguages,
     profilePic,
+    receiveWeeklyEmails,
     rejectedPullRequests,
     rep,
     repos,
@@ -77,6 +78,9 @@ const SettingsView = ({
   const [changeLastName, setChangeLastName] = useState(false);
   const [changePersonal, setChangePersonal] = useState(false);
   const [changePreferredLanguages, setChangePreferredLanguages] = useState(
+    false,
+  );
+  const [changeReceiveWeeklyEmails, setChangeReceiveWeeklyEmails] = useState(
     false,
   );
   const [changeStackoverflow, setChangeStackoverflow] = useState(false);
@@ -131,7 +135,7 @@ const SettingsView = ({
     }
   };
 
-  const handleSubmitInputChange = ({ changeInputState, field }) => {
+  const handleSubmitInputChange = ({ changeInputState, field, inputValue }) => {
     const hasNoErrors = Object.keys(inputErrors).every(
       input => inputErrors[input] === '',
     );
@@ -141,10 +145,13 @@ const SettingsView = ({
         : value;
     if (hasNoErrors) {
       changeInputState(false);
-      dispatchSaveChange({ field, value: formattedValue });
+      dispatchSaveChange({
+        field,
+        value: formattedValue || inputValue,
+      });
       setIsDisabled(false);
     } else {
-      handleValidateInput({ field, values: { [field]: value } });
+      handleValidateInput({ field, values: { [field]: value || inputValue } });
     }
   };
 
@@ -262,6 +269,7 @@ const SettingsView = ({
         changeEmail={changeEmail}
         changeFirstName={changeFirstName}
         changeLastName={changeLastName}
+        changeReceiveWeeklyEmails={changeReceiveWeeklyEmails}
         changeUsername={changeUsername}
         dispatchOpenModal={dispatchOpenModal}
         dollarsEarned={dollarsEarned}
@@ -276,9 +284,11 @@ const SettingsView = ({
         inputErrors={inputErrors}
         isDisabled={isDisabled}
         lastName={lastName}
+        receiveWeeklyEmails={receiveWeeklyEmails}
         setChangeEmail={setChangeEmail}
         setChangeFirstName={setChangeFirstName}
         setChangeLastName={setChangeLastName}
+        setChangeReceiveWeeklyEmails={setChangeReceiveWeeklyEmails}
         setChangeUsername={setChangeUsername}
         setDisplayBottom={setDisplayBottom}
         setValue={setValue}

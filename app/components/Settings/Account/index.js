@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import {
+  CheckboxWithLabel,
   ConditionalRender,
   IconButton,
   MainTextInput,
@@ -47,9 +48,11 @@ const UserAccount = ({
   },
   isDisabled,
   lastName,
+  receiveWeeklyEmails,
   setChangeEmail,
   setChangeFirstName,
   setChangeLastName,
+  setChangeReceiveWeeklyEmails,
   setChangeUsername,
   setDisplayBottom,
   setValue,
@@ -276,6 +279,24 @@ const UserAccount = ({
       </IconButtonWrapper>
     </InputWrapper>
     <HeaderWrapper>
+      <StyledH3>Email Settings</StyledH3>
+    </HeaderWrapper>
+    <InputWrapper>
+      <CheckboxWithLabel
+        checked={!!receiveWeeklyEmails}
+        disabled={false}
+        label="Get notified of recommended issues (weekly)"
+        onChange={() => {
+          handleSubmitInputChange({
+            changeInputState: setChangeReceiveWeeklyEmails,
+            field: 'receiveWeeklyEmails',
+            inputValue: !receiveWeeklyEmails,
+          });
+        }}
+      />
+    </InputWrapper>
+
+    <HeaderWrapper>
       <StyledH3>Balance</StyledH3>
     </HeaderWrapper>
     <AccountBalance
@@ -316,9 +337,11 @@ UserAccount.propTypes = {
   inputErrors: T.object.isRequired,
   isDisabled: T.bool,
   lastName: T.string,
+  receiveWeeklyEmails: T.bool,
   setChangeEmail: T.func,
   setChangeFirstName: T.func,
   setChangeLastName: T.func,
+  setChangeReceiveWeeklyEmails: T.func,
   setChangeUsername: T.func,
   setDisplayBottom: T.func,
   setValue: T.func,

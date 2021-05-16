@@ -316,6 +316,7 @@ module.exports = buildSchema(`
     preferredLanguages: [String]
     profilePic: String
     pullRequests: [String]
+    receiveWeeklyEmails: Boolean
     rejectedPullRequests: Int
     rep: Int
     repos: [Object]
@@ -344,6 +345,7 @@ module.exports = buildSchema(`
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
+    receiveWeeklyEmails: Boolean
     rep: Int
     repos: [String]
     stackoverflowLink: String

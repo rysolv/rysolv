@@ -44,6 +44,7 @@ const transformUser = async (
       modified_date: new Date(),
       personal_link: userInput.personalLink,
       profile_pic: userInput.profilePic,
+      receive_weekly_emails: userInput.receiveWeeklyEmails,
       stackoverflow_link: userInput.stackoverflowLink,
       username: userInput.username,
     };
