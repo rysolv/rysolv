@@ -245,24 +245,6 @@ export const StyledMarkdown = styled(Markdown)`
   padding: 1rem;
 `;
 
-export const StyledSharingButton = styled(StyledSecondaryButton)`
-  border-radius: 0;
-  font-size: ${defaultFontSize};
-  height: 2.64rem;
-  margin: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  text-transform: capitalize;
-  width: 13.414rem;
-
-  .MuiButton-label {
-    display: inline-block;
-  }
-
-  &:hover {
-    box-shadow: none;
-  }
-`;
-
 export const StyledSharingLink = styled.a`
   color: white;
   display: inline-block;
@@ -290,6 +272,24 @@ export const StyledSecondaryButton = styled(
 
   ${mobile} {
     margin-right: 0;
+  }
+`;
+
+export const StyledSharingButton = styled(StyledSecondaryButton)`
+  border-radius: 0;
+  font-size: ${defaultFontSize};
+  height: 2.64rem;
+  margin: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  text-transform: capitalize;
+  width: 13.414rem;
+
+  .MuiButton-label {
+    display: inline-block;
+  }
+
+  &:hover {
+    box-shadow: none;
   }
 `;
 
