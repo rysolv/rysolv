@@ -11,11 +11,11 @@ import Comments from './Comments';
 import IssueDetailBody from './IssueDetailBody';
 import IssueDetailHeader from './IssueDetailHeader';
 import IssueTopBar from './IssueTopBar';
+import ShareComponent from './ShareComponent';
 import {
   CommentWrapper,
   DetailContainer,
   Divider,
-  // EditIssueWrapper,
   EmbedIssueWrapper,
   IssueDetailColumn,
   IssueDetailContainer,
@@ -24,10 +24,8 @@ import {
   LeftPanel,
   ManageIssueWrapper,
   SidebarContainer,
-  // StyledButton,
   StyledErrorSuccessBanner,
-  // StyledIssueAccountManager,
-  StyledSecondaryButton,
+  StyledSharingButton,
   TopBarWrapper,
 } from './styledComponents';
 
@@ -146,16 +144,19 @@ const IssueDetail = ({
   // );
 
   const EmbedIssueComponent = props => (
-    <StyledSecondaryButton
-      Icon={CodeIcon}
-      label="Embed"
-      onClick={() =>
-        dispatchOpenIssueModal({
-          modalState: 'embedIssue',
-        })
-      }
-      {...props}
-    />
+    <Fragment>
+      <ShareComponent fundedAmount={fundedAmount} issueId={issueId} />
+      <StyledSharingButton
+        Icon={CodeIcon}
+        label="Embed"
+        onClick={() =>
+          dispatchOpenIssueModal({
+            modalState: 'embedIssue',
+          })
+        }
+        {...props}
+      />
+    </Fragment>
   );
 
   const primaryUser = {
@@ -181,7 +182,7 @@ const IssueDetail = ({
 
   const ManageIssueComponent = () => (
     <Fragment>
-      <Divider>Manage Issue</Divider>
+      <Divider>Share Issue</Divider>
       <ManageIssueWrapper>
         <ConditionalRender
           Component={EmbedIssueComponent}

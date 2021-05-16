@@ -60,8 +60,9 @@ export const EditIssueWrapper = styled.div`
 `;
 
 export const EmbedIssueWrapper = styled.div`
+  align-items: center;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 `;
 
 export const ExternalLinkWrapper = styled.a`
@@ -145,8 +146,13 @@ export const LeftPanel = styled.div`
 export const ManageIssueWrapper = styled.div`
   align-items: center;
   display: flex;
+  justify-content: space-around;
   min-height: 7.5rem;
   padding: 0 1rem;
+
+  @media (max-width: 555px) {
+    flex-direction: column;
+  }
 `;
 
 export const PostingInfoWrapper = styled.div`
@@ -157,6 +163,24 @@ export const PostingInfoWrapper = styled.div`
   font-size: ${detailFontSize};
   justify-content: space-between;
   padding: 0.4rem 0;
+`;
+
+export const SharingButtonIcon = styled.div`
+  display: inline-block;
+  fill: none;
+  stroke: #fff;
+
+  svg {
+    height: 1.4rem;
+    margin-right: 0.4rem;
+    width: 1.4rem;
+  }
+`;
+
+export const SharingButtonIconWrapper = styled.div`
+  background: ${({ color }) => color};
+  padding: 0.5rem 0.75rem;
+  transition: 25ms ease-out;
 `;
 
 export const SidebarContainer = styled.div`
@@ -219,6 +243,37 @@ export const StyledMarkdown = styled(Markdown)`
   color: ${textColor};
   font-size: 1.2rem;
   padding: 1rem;
+`;
+
+export const StyledSharingButton = styled(StyledSecondaryButton)`
+  border-radius: 0;
+  font-size: ${defaultFontSize};
+  height: 2.64rem;
+  margin: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  text-transform: capitalize;
+  width: 13.414rem;
+
+  .MuiButton-label {
+    display: inline-block;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+`;
+
+export const StyledSharingLink = styled.a`
+  color: white;
+  display: inline-block;
+  font-family: ${defaultFontFamily};
+  font-size: ${defaultFontSize};
+  margin: 0.5rem;
+  white-space: nowrap;
+
+  &:hover {
+    color: white;
+  }
 `;
 
 export const StyledSecondaryButton = styled(
