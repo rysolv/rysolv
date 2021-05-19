@@ -41,6 +41,10 @@ export const DescriptionWrapper = styled.div`
 `;
 
 export const ImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
   width: 8rem;
   max-width: 8rem;
   max-height: 8rem;

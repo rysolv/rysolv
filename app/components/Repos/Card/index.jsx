@@ -37,7 +37,8 @@ const RepoCard = ({ data }) => (
               alt="Repo Image"
               image={logo}
               route={`/repos/detail/${id}`}
-              size="100%"
+              size="8rem"
+              isCircle={false}
             />
           </ImageContainer>
           <ContentContainer>
