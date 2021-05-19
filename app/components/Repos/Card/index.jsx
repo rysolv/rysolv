@@ -32,24 +32,23 @@ const RepoCard = ({ data }) => (
     {data.map(
       ({ description, id, issues, logo, modifiedDate, name, totalFunded }) => (
         <StyledListItem key={id}>
-          <TitleContainer>
-            <NameLink to={`/repos/detail/${id}`}>{name}</NameLink>
-            <SettingsContainer>
-              <DateWrapper>
-                Last post {moment(modifiedDate).format('M/D/YYYY')}
-              </DateWrapper>
-            </SettingsContainer>
-          </TitleContainer>
+          <ImageContainer>
+            <StyledImageLinkWrapper
+              alt="Repo Image"
+              image={logo}
+              route={`/repos/detail/${id}`}
+              size="100%"
+            />
+          </ImageContainer>
           <ContentContainer>
-            <ImageContainer>
-              <StyledImageLinkWrapper
-                alt="Repo Image"
-                image={logo}
-                isSquare
-                route={`/repos/detail/${id}`}
-                size="5rem"
-              />
-            </ImageContainer>
+            <TitleContainer>
+              <NameLink to={`/repos/detail/${id}`}>{name}</NameLink>
+              <SettingsContainer>
+                <DateWrapper>
+                  Last post {moment(modifiedDate).format('M/D/YYYY')}
+                </DateWrapper>
+              </SettingsContainer>
+            </TitleContainer>
             <TextContainer>
               <DescriptionWrapper>{description}</DescriptionWrapper>
               <StatsWrapper>

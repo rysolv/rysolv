@@ -18,17 +18,21 @@ const { mobile } = mediaQueriesByDevice;
 
 export const ContentContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+  align-content: space-between;
+  align-self: normal;
+  gap: 1rem;
 `;
 
 export const DateWrapper = styled.div`
   align-self: center;
   font-size: ${detailFontSize};
-  padding: 1rem;
 `;
 
 export const DescriptionWrapper = styled.div`
   font-size: ${defaultFontSize};
-  padding: 1rem;
   width: 100%;
 
   ${mobile} {
@@ -37,9 +41,10 @@ export const DescriptionWrapper = styled.div`
 `;
 
 export const ImageContainer = styled.div`
+  width: 8rem;
+  max-width: 8rem;
+  max-height: 8rem;
   min-width: 15%;
-  text-align: center;
-
   ${mobile} {
     min-width: 20%;
   }
@@ -61,7 +66,6 @@ export const IssuesWrapper = styled.div`
 export const NameLink = styled(Link)`
   color: ${headerColor};
   font-size: ${subheaderFontSize};
-  margin: 1rem;
 
   &:hover {
     color: ${hoverLinkColor};
@@ -81,11 +85,10 @@ export const StatsWrapper = styled.div`
   display: flex;
   font-size: ${detailFontSize};
   justify-content: space-between;
-  padding: 1rem 0 1rem 1rem;
 `;
 
 export const StyledImageLinkWrapper = styled(ImageLinkWrapper)`
-  margin: 1rem;
+  border-radius: 0.8rem;
 `;
 
 export const StyledListItem = styled.li`
@@ -94,9 +97,13 @@ export const StyledListItem = styled.li`
   border: 0.1rem solid ${borderColor};
   color: ${textColor};
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 0 1rem 1rem 1rem;
-
+  justify-content: safe center;
+  align-items: safe center;
+  align-content: space-between;
+  padding: 2rem;
+  gap: 1rem;
   ${mobile} {
     margin-left: 0;
     margin-right: 0;
@@ -108,12 +115,10 @@ export const StyledRepoCard = styled.div`
 `;
 
 export const TextContainer = styled.div`
-  padding: 0 3rem 0 0;
   width: 100%;
-
-  ${mobile} {
-    padding-right: 1rem;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 export const TitleContainer = styled.div`
