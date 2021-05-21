@@ -31,6 +31,7 @@ const UserAccount = ({
   changeLastName,
   changeUsername,
   dispatchOpenModal,
+  dispatchSaveChange,
   dollarsEarned,
   email,
   firstName,
@@ -52,7 +53,6 @@ const UserAccount = ({
   setChangeEmail,
   setChangeFirstName,
   setChangeLastName,
-  setChangeReceiveWeeklyEmails,
   setChangeUsername,
   setDisplayBottom,
   setValue,
@@ -279,23 +279,20 @@ const UserAccount = ({
       </IconButtonWrapper>
     </InputWrapper>
     <HeaderWrapper>
-      <StyledH3>Email Settings</StyledH3>
+      <StyledH3>Email Notifications</StyledH3>
     </HeaderWrapper>
     <InputWrapper>
       <CheckboxWithLabel
-        checked={!!receiveWeeklyEmails}
-        disabled={false}
-        label="Get notified of recommended issues (weekly)"
+        checked={receiveWeeklyEmails}
+        label="Get weekly notifications for recommended issues"
         onChange={() => {
-          handleSubmitInputChange({
-            changeInputState: setChangeReceiveWeeklyEmails,
+          dispatchSaveChange({
             field: 'receiveWeeklyEmails',
-            inputValue: !receiveWeeklyEmails,
+            value: !receiveWeeklyEmails,
           });
         }}
       />
     </InputWrapper>
-
     <HeaderWrapper>
       <StyledH3>Balance</StyledH3>
     </HeaderWrapper>
@@ -325,6 +322,7 @@ UserAccount.propTypes = {
   changeLastName: T.bool,
   changeUsername: T.bool,
   dispatchOpenModal: T.func,
+  dispatchSaveChange: T.func.isRequired,
   dollarsEarned: T.number,
   email: T.string,
   firstName: T.string,
@@ -337,11 +335,10 @@ UserAccount.propTypes = {
   inputErrors: T.object.isRequired,
   isDisabled: T.bool,
   lastName: T.string,
-  receiveWeeklyEmails: T.bool,
+  receiveWeeklyEmails: T.bool.isRequired,
   setChangeEmail: T.func,
   setChangeFirstName: T.func,
   setChangeLastName: T.func,
-  setChangeReceiveWeeklyEmails: T.func,
   setChangeUsername: T.func,
   setDisplayBottom: T.func,
   setValue: T.func,

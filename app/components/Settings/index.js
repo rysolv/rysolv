@@ -80,9 +80,6 @@ const SettingsView = ({
   const [changePreferredLanguages, setChangePreferredLanguages] = useState(
     false,
   );
-  const [changeReceiveWeeklyEmails, setChangeReceiveWeeklyEmails] = useState(
-    false,
-  );
   const [changeStackoverflow, setChangeStackoverflow] = useState(false);
   const [changeUserImage, setChangeUserImage] = useState(false);
   const [changeUsername, setChangeUsername] = useState(false);
@@ -135,7 +132,7 @@ const SettingsView = ({
     }
   };
 
-  const handleSubmitInputChange = ({ changeInputState, field, inputValue }) => {
+  const handleSubmitInputChange = ({ changeInputState, field }) => {
     const hasNoErrors = Object.keys(inputErrors).every(
       input => inputErrors[input] === '',
     );
@@ -147,11 +144,11 @@ const SettingsView = ({
       changeInputState(false);
       dispatchSaveChange({
         field,
-        value: formattedValue || inputValue,
+        value: formattedValue,
       });
       setIsDisabled(false);
     } else {
-      handleValidateInput({ field, values: { [field]: value || inputValue } });
+      handleValidateInput({ field, values: { [field]: value } });
     }
   };
 
@@ -269,9 +266,9 @@ const SettingsView = ({
         changeEmail={changeEmail}
         changeFirstName={changeFirstName}
         changeLastName={changeLastName}
-        changeReceiveWeeklyEmails={changeReceiveWeeklyEmails}
         changeUsername={changeUsername}
         dispatchOpenModal={dispatchOpenModal}
+        dispatchSaveChange={dispatchSaveChange}
         dollarsEarned={dollarsEarned}
         email={email}
         firstName={firstName}
@@ -288,7 +285,6 @@ const SettingsView = ({
         setChangeEmail={setChangeEmail}
         setChangeFirstName={setChangeFirstName}
         setChangeLastName={setChangeLastName}
-        setChangeReceiveWeeklyEmails={setChangeReceiveWeeklyEmails}
         setChangeUsername={setChangeUsername}
         setDisplayBottom={setDisplayBottom}
         setValue={setValue}

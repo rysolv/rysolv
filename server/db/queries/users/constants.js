@@ -79,6 +79,7 @@ const groupValues = `
   users.personal_link,
   users.profile_pic,
   users.provider,
+  users.receive_weekly_emails,
   users.rep,
   users.stackoverflow_link,
   users.upvotes,
