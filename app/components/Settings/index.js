@@ -46,6 +46,7 @@ const SettingsView = ({
     personalLink,
     preferredLanguages,
     profilePic,
+    receiveWeeklyEmails,
     rejectedPullRequests,
     rep,
     repos,
@@ -141,7 +142,10 @@ const SettingsView = ({
         : value;
     if (hasNoErrors) {
       changeInputState(false);
-      dispatchSaveChange({ field, value: formattedValue });
+      dispatchSaveChange({
+        field,
+        value: formattedValue,
+      });
       setIsDisabled(false);
     } else {
       handleValidateInput({ field, values: { [field]: value } });
@@ -264,6 +268,7 @@ const SettingsView = ({
         changeLastName={changeLastName}
         changeUsername={changeUsername}
         dispatchOpenModal={dispatchOpenModal}
+        dispatchSaveChange={dispatchSaveChange}
         dollarsEarned={dollarsEarned}
         email={email}
         firstName={firstName}
@@ -276,6 +281,7 @@ const SettingsView = ({
         inputErrors={inputErrors}
         isDisabled={isDisabled}
         lastName={lastName}
+        receiveWeeklyEmails={receiveWeeklyEmails}
         setChangeEmail={setChangeEmail}
         setChangeFirstName={setChangeFirstName}
         setChangeLastName={setChangeLastName}
