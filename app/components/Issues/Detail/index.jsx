@@ -11,11 +11,11 @@ import Comments from './Comments';
 import IssueDetailBody from './IssueDetailBody';
 import IssueDetailHeader from './IssueDetailHeader';
 import IssueTopBar from './IssueTopBar';
+import ShareComponent from './ShareComponent';
 import {
   CommentWrapper,
   DetailContainer,
   Divider,
-  // EditIssueWrapper,
   EmbedIssueWrapper,
   IssueDetailColumn,
   IssueDetailContainer,
@@ -24,10 +24,8 @@ import {
   LeftPanel,
   ManageIssueWrapper,
   SidebarContainer,
-  // StyledButton,
   StyledErrorSuccessBanner,
-  // StyledIssueAccountManager,
-  StyledSecondaryButton,
+  StyledSharingButton,
   TopBarWrapper,
 } from './styledComponents';
 
@@ -146,16 +144,19 @@ const IssueDetail = ({
   // );
 
   const EmbedIssueComponent = props => (
-    <StyledSecondaryButton
-      Icon={CodeIcon}
-      label="Embed"
-      onClick={() =>
-        dispatchOpenIssueModal({
-          modalState: 'embedIssue',
-        })
-      }
-      {...props}
-    />
+    <Fragment>
+      <ShareComponent fundedAmount={fundedAmount} issueId={issueId} />
+      <StyledSharingButton
+        Icon={CodeIcon}
+        label="Embed"
+        onClick={() =>
+          dispatchOpenIssueModal({
+            modalState: 'embedIssue',
+          })
+        }
+        {...props}
+      />
+    </Fragment>
   );
 
   const primaryUser = {
@@ -180,18 +181,19 @@ const IssueDetail = ({
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
 
   const ManageIssueComponent = () => (
-    <Fragment>
-      <Divider>Manage Issue</Divider>
-      <ManageIssueWrapper>
-        <ConditionalRender
-          Component={EmbedIssueComponent}
-          propsToPassDown={{ removeMargin: true }}
-          shouldRender={open}
-        />
-        {/* <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
-        {CloseOpenIssueComponent} */}
-      </ManageIssueWrapper>
-    </Fragment>
+    <ConditionalRender
+      Component={
+        <Fragment>
+          <Divider>Share Issue</Divider>
+          <ManageIssueWrapper>
+            <EmbedIssueComponent removeMargin />
+            {/* <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
+             {CloseOpenIssueComponent} */}
+          </ManageIssueWrapper>
+        </Fragment>
+      }
+      shouldRender={open}
+    />
   );
   return (
     <IssueDetailContainer>

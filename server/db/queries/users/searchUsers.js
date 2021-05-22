@@ -12,7 +12,7 @@ const searchUsers = async ({ value }) => {
       LEFT JOIN attempting ON attempting.user_id = users.id
       LEFT JOIN languages ON languages.user_id = users.id
     WHERE
-      is_deleted = false AND email_verified = true AND
+      is_deleted = false AND email_verified = true AND user_type = 'full' AND
       (
         LOWER(users.first_name) LIKE LOWER('%'||$1||'%') OR
         LOWER(users.last_name) LIKE LOWER('%'||$1||'%') OR

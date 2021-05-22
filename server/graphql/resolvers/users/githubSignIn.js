@@ -14,6 +14,7 @@ const {
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
   getUserWatchList,
+  transformUser: transformUserQuery,
 } = require('../../../db');
 const { errorLogger, sendEmail } = require('../../../helpers');
 const { generateToken } = require('../../../middlewares/generateToken');
@@ -94,6 +95,7 @@ const githubSignIn = async ({ code, origin }, { res }) => {
         modified_date: date,
         profile_pic: uploadUrl,
         provider,
+        user_type: 'full',
         username: github_username,
       };
       const result = await createUser({ data: newUser });
@@ -134,6 +136,9 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       };
     }
     if (isDuplicateGithubId && userId) {
+      const data = { user_type: 'full' };
+      await transformUserQuery({ data, userId });
+
       const result = await getUserSettingsQuery({ userId });
       const { issues, repos } = result;
 

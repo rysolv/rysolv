@@ -32,6 +32,7 @@ const createUser = async ({
       modified_date: new Date(),
       profile_pic: uploadUrl,
       provider,
+      user_type: 'full',
       username,
     };
     const result = await createUserQuery({ data: newUser });

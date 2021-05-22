@@ -159,6 +159,7 @@ export function* fetchInfoSaga({ payload }) {
           personalLink
           preferredLanguages
           profilePic
+          receiveWeeklyEmails
           rejectedPullRequests
           rep
           repos
@@ -306,8 +307,15 @@ export function* removeWatchingSaga({ payload }) {
 
 export function* saveChangeSaga({ payload }) {
   const { field, value } = payload;
-  const formattedValue =
-    field === 'preferredLanguages' ? JSON.stringify(value) : `"${value}"`;
+  let formattedValue;
+  if (field === 'preferredLanguages') {
+    formattedValue = JSON.stringify(value);
+  } else if (field === 'receiveWeeklyEmails') {
+    formattedValue = value;
+  } else {
+    formattedValue = `"${value}"`;
+  }
+
   const query = `
     mutation {
       transformUser(userInput: { ${field}: ${formattedValue} }) {
