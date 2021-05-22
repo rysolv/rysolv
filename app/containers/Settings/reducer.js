@@ -56,7 +56,7 @@ export const initialState = {
     githubLink: '',
     lastName: '',
     personalLink: '',
-    receiveWeeklyEmails: true,
+    receiveWeeklyEmails: '',
     stackoverflowLink: '',
     transferValue: '',
     username: '',
