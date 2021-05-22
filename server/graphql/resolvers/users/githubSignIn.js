@@ -14,7 +14,7 @@ const {
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
   getUserWatchList,
-  transformUserQuery,
+  transformUser: transformUserQuery,
 } = require('../../../db');
 const { errorLogger, sendEmail } = require('../../../helpers');
 const { generateToken } = require('../../../middlewares/generateToken');
