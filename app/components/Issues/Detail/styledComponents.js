@@ -63,6 +63,7 @@ export const EmbedIssueWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+  margin-top: 0.5rem;
 `;
 
 export const ExternalLinkWrapper = styled.a`
@@ -285,7 +286,7 @@ export const StyledSharingButton = styled(StyledSecondaryButton)`
   font-size: ${defaultFontSize};
   height: 3rem;
   margin: 0.5rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.6rem 1.6rem;
   text-transform: capitalize;
   width: 15.5rem;
 

@@ -181,18 +181,19 @@ const IssueDetail = ({
   const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
 
   const ManageIssueComponent = () => (
-    <Fragment>
-      <Divider>Share Issue</Divider>
-      <ManageIssueWrapper>
-        <ConditionalRender
-          Component={EmbedIssueComponent}
-          propsToPassDown={{ removeMargin: true }}
-          shouldRender={open}
-        />
-        {/* <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
-        {CloseOpenIssueComponent} */}
-      </ManageIssueWrapper>
-    </Fragment>
+    <ConditionalRender
+      Component={
+        <Fragment>
+          <Divider>Share Issue</Divider>
+          <ManageIssueWrapper>
+            <EmbedIssueComponent removeMargin />
+            {/* <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
+             {CloseOpenIssueComponent} */}
+          </ManageIssueWrapper>
+        </Fragment>
+      }
+      shouldRender={open}
+    />
   );
   return (
     <IssueDetailContainer>
