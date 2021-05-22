@@ -20,6 +20,7 @@ const userValues = [
   'rep',
   'stackoverflow_link',
   'upvotes',
+  'user_type',
   'username',
 ];
 
@@ -83,6 +84,7 @@ const groupValues = `
   users.rep,
   users.stackoverflow_link,
   users.upvotes,
+  users.user_type,
   users.username
 `;
 
