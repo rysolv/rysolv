@@ -150,7 +150,7 @@ export const ManageIssueWrapper = styled.div`
   min-height: 7.5rem;
   padding: 0 1rem;
 
-  @media (max-width: 555px) {
+  @media (max-width: 610px) {
     flex-direction: column;
   }
 `;
@@ -178,8 +178,13 @@ export const SharingButtonIcon = styled.div`
 `;
 
 export const SharingButtonIconWrapper = styled.div`
+  align-items: center;
   background: ${({ color }) => color};
-  padding: 0.5rem 0.75rem;
+  border-radius: 0.4rem;
+  display: flex;
+  height: 3rem;
+  min-width: 15.5rem;
+  padding: 0.6rem 1.6rem;
   transition: 25ms ease-out;
 `;
 
@@ -276,13 +281,13 @@ export const StyledSecondaryButton = styled(
 `;
 
 export const StyledSharingButton = styled(StyledSecondaryButton)`
-  border-radius: 0;
+  border-radius: 0.4rem;
   font-size: ${defaultFontSize};
-  height: 2.64rem;
+  height: 3rem;
   margin: 0.5rem;
   padding: 0.5rem 0.75rem;
   text-transform: capitalize;
-  width: 13.414rem;
+  width: 15.5rem;
 
   .MuiButton-label {
     display: inline-block;
