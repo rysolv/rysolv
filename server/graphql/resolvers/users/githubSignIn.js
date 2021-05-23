@@ -136,7 +136,7 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       };
     }
     if (isDuplicateGithubId && userId) {
-      const data = { user_type: 'full' };
+      const data = { modified_date: new Date(), user_type: 'full' };
       await transformUserQuery({ data, userId });
 
       const result = await getUserSettingsQuery({ userId });
