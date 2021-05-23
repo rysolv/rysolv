@@ -17,18 +17,14 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 const { mobile } = mediaQueriesByDevice;
 
 export const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: space-between;
   align-content: space-between;
   align-self: normal;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-`;
-
-export const DateWrapper = styled.div`
-  align-self: center;
-  font-size: ${detailFontSize};
+  justify-content: space-between;
+  margin-left: 1rem;
+  width: 100%;
 `;
 
 export const DescriptionWrapper = styled.div`
@@ -41,14 +37,15 @@ export const DescriptionWrapper = styled.div`
 `;
 
 export const ImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   align-content: center;
-  width: 8rem;
-  max-width: 8rem;
+  align-items: center;
+  display: flex;
+  justify-content: center;
   max-height: 8rem;
+  max-width: 8rem;
   min-width: 15%;
+  width: 8rem;
+
   ${mobile} {
     min-width: 20%;
   }
@@ -81,10 +78,6 @@ export const RepoCardItem = styled.div`
   display: inline-flex;
 `;
 
-export const SettingsContainer = styled.div`
-  display: flex;
-`;
-
 export const StatsWrapper = styled.div`
   display: flex;
   font-size: ${detailFontSize};
@@ -96,18 +89,19 @@ export const StyledImageLinkWrapper = styled(ImageLinkWrapper)`
 `;
 
 export const StyledListItem = styled.li`
+  align-content: space-between;
+  align-items: safe center;
   background-color: white;
   border-radius: 0.2rem;
   border: 0.1rem solid ${borderColor};
   color: ${textColor};
   display: flex;
   flex-direction: row;
-  margin: 0 1rem 1rem 1rem;
-  justify-content: safe center;
-  align-items: safe center;
-  align-content: space-between;
-  padding: 2rem;
   gap: 1rem;
+  justify-content: safe center;
+  margin: 0 1rem 1rem 1rem;
+  padding: 2rem;
+
   ${mobile} {
     margin-left: 0;
     margin-right: 0;
@@ -119,10 +113,10 @@ export const StyledRepoCard = styled.div`
 `;
 
 export const TextContainer = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
 `;
 
 export const TitleContainer = styled.div`
