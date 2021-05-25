@@ -43,7 +43,6 @@ export const ImageContainer = styled.div`
   justify-content: center;
   max-height: 8rem;
   max-width: 8rem;
-  min-width: 15%;
   width: 8rem;
 
   ${mobile} {
