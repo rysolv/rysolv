@@ -17,18 +17,18 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 const { mobile } = mediaQueriesByDevice;
 
 export const ContentContainer = styled.div`
+  align-content: space-between;
+  align-self: normal;
   display: flex;
-`;
-
-export const DateWrapper = styled.div`
-  align-self: center;
-  font-size: ${detailFontSize};
-  padding: 1rem;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-left: 1rem;
+  width: 100%;
 `;
 
 export const DescriptionWrapper = styled.div`
   font-size: ${defaultFontSize};
-  padding: 1rem;
   width: 100%;
 
   ${mobile} {
@@ -37,8 +37,14 @@ export const DescriptionWrapper = styled.div`
 `;
 
 export const ImageContainer = styled.div`
+  align-content: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  max-height: 8rem;
+  max-width: 8rem;
   min-width: 15%;
-  text-align: center;
+  width: 8rem;
 
   ${mobile} {
     min-width: 20%;
@@ -61,7 +67,6 @@ export const IssuesWrapper = styled.div`
 export const NameLink = styled(Link)`
   color: ${headerColor};
   font-size: ${subheaderFontSize};
-  margin: 1rem;
 
   &:hover {
     color: ${hoverLinkColor};
@@ -73,29 +78,29 @@ export const RepoCardItem = styled.div`
   display: inline-flex;
 `;
 
-export const SettingsContainer = styled.div`
-  display: flex;
-`;
-
 export const StatsWrapper = styled.div`
   display: flex;
   font-size: ${detailFontSize};
   justify-content: space-between;
-  padding: 1rem 0 1rem 1rem;
 `;
 
 export const StyledImageLinkWrapper = styled(ImageLinkWrapper)`
-  margin: 1rem;
+  border-radius: 0.8rem;
 `;
 
 export const StyledListItem = styled.li`
+  align-content: space-between;
+  align-items: safe center;
   background-color: white;
   border-radius: 0.2rem;
   border: 0.1rem solid ${borderColor};
   color: ${textColor};
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: safe center;
   margin: 0 1rem 1rem 1rem;
+  padding: 2rem;
 
   ${mobile} {
     margin-left: 0;
@@ -108,12 +113,10 @@ export const StyledRepoCard = styled.div`
 `;
 
 export const TextContainer = styled.div`
-  padding: 0 3rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   width: 100%;
-
-  ${mobile} {
-    padding-right: 1rem;
-  }
 `;
 
 export const TitleContainer = styled.div`

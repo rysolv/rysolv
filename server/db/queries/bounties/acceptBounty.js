@@ -18,6 +18,7 @@ const acceptBounty = async ({ fundingId, repoPayout, userPayout }) => {
     )
     UPDATE users SET
       balance = balance + (SELECT user_payout FROM accepted),
+      dollars_earned = dollars_earned + (SELECT user_payout FROM accepted),
       rep = rep + (SELECT rep FROM accepted),
       modified_date = $4
     WHERE id = (SELECT user_id FROM accepted)

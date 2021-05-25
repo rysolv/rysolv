@@ -60,8 +60,10 @@ export const EditIssueWrapper = styled.div`
 `;
 
 export const EmbedIssueWrapper = styled.div`
+  align-items: center;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  margin-top: 0.5rem;
 `;
 
 export const ExternalLinkWrapper = styled.a`
@@ -145,8 +147,13 @@ export const LeftPanel = styled.div`
 export const ManageIssueWrapper = styled.div`
   align-items: center;
   display: flex;
+  justify-content: space-around;
   min-height: 7.5rem;
   padding: 0 1rem;
+
+  @media (max-width: 610px) {
+    flex-direction: column;
+  }
 `;
 
 export const PostingInfoWrapper = styled.div`
@@ -157,6 +164,29 @@ export const PostingInfoWrapper = styled.div`
   font-size: ${detailFontSize};
   justify-content: space-between;
   padding: 0.4rem 0;
+`;
+
+export const SharingButtonIcon = styled.div`
+  display: inline-block;
+  fill: none;
+  stroke: #fff;
+
+  svg {
+    height: 1.4rem;
+    margin-right: 0.4rem;
+    width: 1.4rem;
+  }
+`;
+
+export const SharingButtonIconWrapper = styled.div`
+  align-items: center;
+  background: ${({ color }) => color};
+  border-radius: 0.4rem;
+  display: flex;
+  height: 3rem;
+  min-width: 15.5rem;
+  padding: 0.6rem 1.6rem;
+  transition: 25ms ease-out;
 `;
 
 export const SidebarContainer = styled.div`
@@ -221,6 +251,19 @@ export const StyledMarkdown = styled(Markdown)`
   padding: 1rem;
 `;
 
+export const StyledSharingLink = styled.a`
+  color: white;
+  display: inline-block;
+  font-family: ${defaultFontFamily};
+  font-size: ${defaultFontSize};
+  margin: 0.5rem;
+  white-space: nowrap;
+
+  &:hover {
+    color: white;
+  }
+`;
+
 export const StyledSecondaryButton = styled(
   ({ removeMargin, ...restProps }) => <SecondaryButton {...restProps} />,
 )`
@@ -235,6 +278,24 @@ export const StyledSecondaryButton = styled(
 
   ${mobile} {
     margin-right: 0;
+  }
+`;
+
+export const StyledSharingButton = styled(StyledSecondaryButton)`
+  border-radius: 0.4rem;
+  font-size: ${defaultFontSize};
+  height: 3rem;
+  margin: 0.5rem;
+  padding: 0.6rem 1.6rem;
+  text-transform: capitalize;
+  width: 15.5rem;
+
+  .MuiButton-label {
+    display: inline-block;
+  }
+
+  &:hover {
+    box-shadow: none;
   }
 `;
 

@@ -16,9 +16,11 @@ const userValues = [
   'personal_link',
   'profile_pic',
   'provider',
+  'receive_weekly_emails',
   'rep',
   'stackoverflow_link',
   'upvotes',
+  'user_type',
   'username',
 ];
 
@@ -53,6 +55,7 @@ const userSettingsReturnValues = `
     AND questions.category = 'hiring') AS "isQuestionnaireComplete",
   users.github_id AS "githubId",
   users.github_username AS "githubUsername",
+  users.receive_weekly_emails AS "receiveWeeklyEmails",
   (SELECT COALESCE(ARRAY_AGG(DISTINCT(pullrequest_id)), '{}') FROM pullrequests WHERE is_deleted = false AND user_id = $1) AS "pullRequests",
   (SELECT COALESCE(ARRAY_AGG(DISTINCT(id)), '{}') FROM repos WHERE is_deleted = false AND owner_id = $1) AS "repos",
   ${userReturnValues}
@@ -77,9 +80,11 @@ const groupValues = `
   users.personal_link,
   users.profile_pic,
   users.provider,
+  users.receive_weekly_emails,
   users.rep,
   users.stackoverflow_link,
   users.upvotes,
+  users.user_type,
   users.username
 `;
 

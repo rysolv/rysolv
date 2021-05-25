@@ -15,7 +15,7 @@ const getUserSettings = async (_, { authError, userId }) => {
     if (authError || !userId) throw new CustomError(authError);
 
     const result = await getUserSettingsQuery({ userId });
-    const { issues, repos } = result;
+    const { issues, repos } = result || {};
 
     // Pull user attempting detail
     const attemptingListResult = await getUserAttemptList({ userId });

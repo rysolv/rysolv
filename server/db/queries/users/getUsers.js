@@ -11,7 +11,7 @@ const getUsers = async () => {
     FROM users
       LEFT JOIN attempting ON attempting.user_id = users.id
       LEFT JOIN languages ON languages.user_id = users.id
-    WHERE is_deleted = false AND email_verified = true
+    WHERE is_deleted = false AND email_verified = true AND user_type = 'full'
     GROUP BY ${groupValues}`;
   const { rows } = await singleQuery({ queryText });
   return rows;

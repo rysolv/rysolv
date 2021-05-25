@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import {
+  CheckboxWithLabel,
   ConditionalRender,
   IconButton,
   MainTextInput,
@@ -30,6 +31,7 @@ const UserAccount = ({
   changeLastName,
   changeUsername,
   dispatchOpenModal,
+  dispatchSaveChange,
   dollarsEarned,
   email,
   firstName,
@@ -47,6 +49,7 @@ const UserAccount = ({
   },
   isDisabled,
   lastName,
+  receiveWeeklyEmails,
   setChangeEmail,
   setChangeFirstName,
   setChangeLastName,
@@ -276,6 +279,21 @@ const UserAccount = ({
       </IconButtonWrapper>
     </InputWrapper>
     <HeaderWrapper>
+      <StyledH3>Email Notifications</StyledH3>
+    </HeaderWrapper>
+    <InputWrapper>
+      <CheckboxWithLabel
+        checked={receiveWeeklyEmails}
+        label="Get weekly notifications for recommended issues"
+        onChange={() => {
+          dispatchSaveChange({
+            field: 'receiveWeeklyEmails',
+            value: !receiveWeeklyEmails,
+          });
+        }}
+      />
+    </InputWrapper>
+    <HeaderWrapper>
       <StyledH3>Balance</StyledH3>
     </HeaderWrapper>
     <AccountBalance
@@ -304,6 +322,7 @@ UserAccount.propTypes = {
   changeLastName: T.bool,
   changeUsername: T.bool,
   dispatchOpenModal: T.func,
+  dispatchSaveChange: T.func.isRequired,
   dollarsEarned: T.number,
   email: T.string,
   firstName: T.string,
@@ -316,6 +335,7 @@ UserAccount.propTypes = {
   inputErrors: T.object.isRequired,
   isDisabled: T.bool,
   lastName: T.string,
+  receiveWeeklyEmails: T.bool.isRequired,
   setChangeEmail: T.func,
   setChangeFirstName: T.func,
   setChangeLastName: T.func,
