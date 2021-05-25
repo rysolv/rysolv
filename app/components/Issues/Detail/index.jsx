@@ -3,9 +3,12 @@ import T from 'prop-types';
 
 import { BackNav, ConditionalRender } from 'components/base_ui';
 import { NewComment } from 'components/MarkdownRender';
+import Helmet from 'components/Helmet';
 import UpvotePanel from 'components/Upvote';
-import PaymentPortal from 'containers/Payments';
+
+import { formatDollarAmount } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
+import PaymentPortal from 'containers/Payments';
 
 import Comments from './Comments';
 import IssueDetailBody from './IssueDetailBody';
@@ -197,6 +200,11 @@ const IssueDetail = ({
   );
   return (
     <IssueDetailContainer>
+      <Helmet
+        description={`Earn ${formatDollarAmount(fundedAmount)} on rysolv!`}
+        location={`/issues/detail/${issueId}`}
+        title={name}
+      />
       <BackNav label="Back to Issues" path="/issues" />
       <ConditionalRender
         Component={
