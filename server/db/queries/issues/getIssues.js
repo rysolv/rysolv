@@ -5,6 +5,7 @@ const { singleQuery } = require('../../baseQueries');
 const getIssues = async () => {
   const queryText = `
     SELECT
+      DISTINCT ON (issues.id)
       ${issueCardValues},
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS language,
       CASE WHEN pullrequests.merged = true THEN true ELSE false END AS "isPullRequestMerged",
