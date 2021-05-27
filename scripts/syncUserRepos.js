@@ -1,7 +1,4 @@
-/* eslint-disable camelcase, no-console, no-unused-vars */
-const { Octokit } = require('@octokit/rest');
-const { createTokenAuth } = require('@octokit/auth-token');
-
+/* eslint-disable camelcase, no-console */
 const { connect } = require('./connect');
 
 // Connect to DB
@@ -25,7 +22,7 @@ async function sample() {
   console.log(`Updating ${rows.length} users`);
 
   await Promise.all(
-    rows.map(async ({ id, github_id }) => {
+    rows.map(async ({ github_id, id }) => {
       try {
         const updateUserIdQuery = `
           UPDATE user_repos SET user_id = $1
