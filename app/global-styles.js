@@ -44,6 +44,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.5em;
   }
+
+  .noOptions {
+    font-size: 1.4rem;
+  }
 `;
 
 export default GlobalStyle;
