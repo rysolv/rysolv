@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Typography from '@material-ui/core/Typography';
 
 import { inputFieldColor, textColor } from 'defaultStyleHelper';
 
@@ -24,7 +25,7 @@ export const StyledAutocomplete = styled(Autocomplete)`
     padding: 0.25rem 0.4rem;
   }
 
-  label {
+  span {
     color: #616161;
     font-size: 1.4rem;
   }
@@ -33,4 +34,8 @@ export const StyledAutocomplete = styled(Autocomplete)`
     height: 2rem;
     width: 2rem;
   }
+`;
+
+export const StyledOption = styled(Typography)`
+  font-size: 1.4rem;
 `;
