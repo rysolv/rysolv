@@ -1,6 +1,5 @@
-/* eslint-disable no-restricted-globals */
 import { createGlobalStyle } from 'styled-components';
-import { bodyColor } from './defaultStyleHelper';
+import { bodyColor, defaultFontSize } from './defaultStyleHelper';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -46,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .noOptions {
-    font-size: 1.4rem;
+    font-size: ${defaultFontSize};
   }
 `;
 

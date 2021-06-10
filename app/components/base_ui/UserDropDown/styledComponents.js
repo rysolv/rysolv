@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import Menu from '@material-ui/core/Menu';
 
-import { headerColor, inputFieldColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  headerColor,
+  inputFieldColor,
+} from 'defaultStyleHelper';
 
 export const IconWrapper = styled.div`
   display: inline-flex;
@@ -34,7 +38,7 @@ export const StyledMenu = styled(Menu)`
     border-top: none;
     border: 0.1rem solid #607d8b;
     color: white;
-    font-size: 1.4rem;
+    font-size: ${defaultFontSize};
     overflow: hidden;
   }
 

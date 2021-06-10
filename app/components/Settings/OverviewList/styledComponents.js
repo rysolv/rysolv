@@ -33,7 +33,7 @@ export const IssueFundedAmount = styled.div`
 `;
 
 export const IssueName = styled.a`
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
 
   &:hover {
     color: ${hoverLinkColor};

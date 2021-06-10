@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { borderColor, hoverLinkColor, textColor } from 'defaultStyleHelper';
+import {
+  borderColor,
+  defaultFontSize,
+  hoverLinkColor,
+  textColor,
+} from 'defaultStyleHelper';
 
 export const AttemptButtonContainer = styled.div`
   border-radius: 0.3rem;
@@ -49,7 +54,7 @@ export const StyledAttemptButton = styled.button`
   }
 
   svg {
-    font-size: 1.4rem;
+    font-size: ${defaultFontSize};
   }
 `;
 
