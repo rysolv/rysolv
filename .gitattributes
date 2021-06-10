@@ -20,6 +20,7 @@
 *.less text
 *.styl text
 *.js text eol=lf
+*.jsx text eol=lf
 *.coffee text
 *.json text
 *.htm text
@@ -52,7 +53,7 @@
 .nginx.conf text
 
 # git config
-.gitattributes text
+.gitattributes text eol=lf
 .gitignore text
 .gitconfig text
 
