@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import {
+  defaultFontSize,
   fundingClosedBackground,
   fundingOpenBackground,
   fundingText,
@@ -117,7 +118,7 @@ export const StyledRewardWrapper = styled.div`
   background: ${rewardBackground};
   border-radius: 0.25rem;
   color: ${rewardColor};
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   font-weight: 700;
   line-height: 2rem;
   padding: 0.2rem 1rem;

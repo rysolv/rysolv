@@ -4,7 +4,7 @@ import T from 'prop-types';
 import Chip from '@material-ui/core/Chip';
 
 import { MainTextInput } from '../Inputs';
-import { StyledAutocomplete } from './styledComponents';
+import { StyledAutocomplete, StyledOption } from './styledComponents';
 
 const BaseAutocomplete = ({
   error,
@@ -18,7 +18,11 @@ const BaseAutocomplete = ({
   ...restProps
 }) => (
   <StyledAutocomplete
-    classes={{ focused: 'focused', inputRoot: 'inputRoot' }}
+    classes={{
+      focused: 'focused',
+      inputRoot: 'inputRoot',
+      noOptions: 'noOptions',
+    }}
     getOptionLabel={option => option.value}
     getOptionSelected={(option1, option2) => option1.value === option2.value}
     multiple={multiple}
@@ -33,6 +37,7 @@ const BaseAutocomplete = ({
         {...params}
       />
     )}
+    renderOption={option => <StyledOption>{option.value}</StyledOption>}
     renderTags={(item, getTagProps) =>
       item.map((option, index) => (
         <Chip

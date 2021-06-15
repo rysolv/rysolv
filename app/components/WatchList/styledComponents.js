@@ -15,7 +15,7 @@ export const DeleteButton = styled.div`
   align-items: center;
   color: ${buttonRed};
   display: flex;
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   font-weight: 500;
   white-space: nowrap;
 

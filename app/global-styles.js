@@ -1,6 +1,5 @@
-/* eslint-disable no-restricted-globals */
 import { createGlobalStyle } from 'styled-components';
-import { bodyColor } from './defaultStyleHelper';
+import { bodyColor, defaultFontSize } from './defaultStyleHelper';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -43,6 +42,10 @@ const GlobalStyle = createGlobalStyle`
   label {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.5em;
+  }
+
+  .noOptions {
+    font-size: ${defaultFontSize};
   }
 `;
 

@@ -30,7 +30,7 @@ export const ContentWrapper = styled.div`
 export const DeleteButton = styled.div`
   color: ${buttonRed};
   display: flex;
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   font-weight: 500;
   white-space: nowrap;
 
@@ -161,7 +161,7 @@ export const UrlContainer = styled.div`
 export const UrlWrapper = styled.a`
   color: ${lightGreyColor};
   display: flex;
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   font-weight: 500;
   padding-right: ${({ addPadding }) => (addPadding ? '0.5rem' : '0')};
   white-space: nowrap;

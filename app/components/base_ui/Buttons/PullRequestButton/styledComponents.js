@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { borderColor, hoverLinkColor, textColor } from 'defaultStyleHelper';
+import {
+  borderColor,
+  defaultFontSize,
+  hoverLinkColor,
+  textColor,
+} from 'defaultStyleHelper';
 
 export const PullRequestButtonContainer = styled.div`
   border-radius: 0.3rem;
@@ -49,7 +54,7 @@ export const StyledPullRequestButton = styled.button`
   }
 
   svg {
-    font-size: 1.4rem;
+    font-size: ${defaultFontSize};
   }
 `;
 
