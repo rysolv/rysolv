@@ -39,8 +39,11 @@ const toggleAttempting = async ({ issueId, userId }) => {
   });
 
   const userArrayQuery = `
-    SELECT user_id AS "userId" FROM attempting
+    SELECT user_id AS "userId"
+    FROM attempting
+    LEFT JOIN users ON attempting.user_id = users.id
     WHERE issue_id = $1
+    AND users.is_deleted = false
   `;
   const { rows: userResult } = await singleQuery({
     queryText: userArrayQuery,

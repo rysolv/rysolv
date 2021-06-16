@@ -39,8 +39,11 @@ const toggleWatching = async ({ issueId, userId }) => {
   });
 
   const userArrayQuery = `
-    SELECT user_id AS "userId" FROM watching
+    SELECT user_id AS "userId"
+    FROM watching
+    LEFT JOIN users ON watching.user_id = users.id
     WHERE issue_id = $1
+    AND users.is_deleted = false
   `;
   const { rows: userResult } = await singleQuery({
     queryText: userArrayQuery,
