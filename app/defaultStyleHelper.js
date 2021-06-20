@@ -1,4 +1,4 @@
-// Colors
+// Custome Colors
 export const bodyColor = '#fafafa';
 export const borderColor = '#e0e0e0';
 export const buttonGrey = '#bdbdbd';
@@ -30,6 +30,11 @@ export const successGreen = '#31b589';
 export const textColor = 'rgba(0,0,0,0.7)';
 export const verifyBackgroundColor = 'rgb(229, 251, 242)';
 export const verifyColor = 'rgb(8, 178, 110)';
+
+// Redesign Colors
+export const blueGrayColor = '#4A62A0';
+export const navyBlueColor = '#081946';
+export const whiteColor = '#ffffff';
 
 // Font Family
 export const codeFontFamily = `monospace`;

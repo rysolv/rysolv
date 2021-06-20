@@ -7,7 +7,6 @@ import { Redirect } from 'react-router-dom';
 
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { ConditionalRender } from 'components/base_ui';
-import Splash from 'components/Splash';
 import Landing from 'components/Landing';
 
 import { HomePageContainer } from './styledComponents';
@@ -16,8 +15,7 @@ const HomePage = ({ handleNav, isSignedIn }) => {
   document.title = 'Rysolv';
   const HomePageComponent = (
     <HomePageContainer>
-      <Splash handleNav={handleNav} />
-      <Landing />
+      <Landing handleNav={handleNav} />
     </HomePageContainer>
   );
   return (

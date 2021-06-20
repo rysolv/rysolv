@@ -185,7 +185,7 @@ class Main extends React.PureComponent {
             </RoutesWrapper>
           </AppContentWrapper>
         </AppBodyWrapper>
-        <Footer handleNav={handleNav} />
+        <Footer />
         {modal && (
           <StyledModalDialog
             isPaymentModal={isPaymentModal}

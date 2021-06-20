@@ -50,6 +50,7 @@ import Web from '@material-ui/icons/Web';
 
 import CloseMenu from './svg/CloseMenu';
 import Coin from './svg/RysolvCoin';
+import Discord from './svg/Discord';
 import Javascript from './svg/Javascript';
 import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
@@ -79,6 +80,7 @@ export default (name, size, style) => {
     comments: Comments,
     computer: Computer,
     creditCard: CreditCard,
+    discord: Discord,
     dollarSquare: LocalAtm,
     done: Done,
     dropdownArrow: ArrowDropDown,
