@@ -12,13 +12,12 @@ const getOneIssue = async ({ issueId }) => {
     FROM issues
     JOIN repos ON issues.repo_id = repos.id
     JOIN users ON issues.contributor_id = users.id
-    LEFT JOIN users watching_attempting_users ON watching_attempting_users.is_deleted = false
-    LEFT JOIN attempting ON attempting.issue_id = issues.id AND attempting.user_id = watching_attempting_users.id
+    LEFT JOIN attempting ON attempting.issue_id = issues.id
     LEFT JOIN comments ON comments.target = issues.id
     LEFT JOIN funding ON funding.issue_id = issues.id
     LEFT JOIN languages ON languages.issue_id = issues.id
     LEFT JOIN pullrequests on pullrequests.issue_id = issues.id AND pullrequests.is_deleted = false
-    LEFT JOIN watching ON watching.issue_id = issues.id AND watching.user_id = watching_attempting_users.id
+    LEFT JOIN watching ON watching.issue_id = issues.id
     WHERE issues.id = $1
     AND issues.is_deleted = false
     GROUP BY ${groupValues}, funding.id, funding.is_approved, pullrequests.merged, users.id, users.profile_pic, users.username
