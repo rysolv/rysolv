@@ -11,6 +11,8 @@ const {
   deleteUserLanguages,
   deleteUserPullRequests,
   getUserSettings,
+  removeAttempting,
+  removeWatching,
   transformUser,
 } = require('../../../db');
 
@@ -55,6 +57,8 @@ const deleteUser = async (_, { authError, email, provider, userId }) => {
     await deleteRepoMembers({ userId });
     await deleteUserLanguages({ userId });
     await deleteUserPullRequests({ userId });
+    await removeAttempting({ userId });
+    await removeWatching({ userId });
     await transformUser({ data, userId });
 
     return {
