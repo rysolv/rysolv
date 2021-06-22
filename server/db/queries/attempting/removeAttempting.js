@@ -1,13 +1,13 @@
 const { singleQuery } = require('../../baseQueries');
 
 const removeAttempting = async ({ userId }) => {
-  // Remove issueId and userId from attempting
-  const deleteIssueQuery = `
+  // Remove all issues being attempted by the user
+  const deleteAttemptingQuery = `
       DELETE FROM attempting
       WHERE user_id = $1`;
 
   await singleQuery({
-    queryText: deleteIssueQuery,
+    queryText: deleteAttemptingQuery,
     values: [userId],
   });
 };

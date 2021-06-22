@@ -3,7 +3,7 @@ const {
   getRepoActivity,
   getUserActivity,
 } = require('./queries/activity');
-const { toggleAttempting, removeAttempting } = require('./queries/attempting');
+const { removeAttempting, toggleAttempting } = require('./queries/attempting');
 const { acceptBounty, verifyPayout } = require('./queries/bounties');
 const { createComment, getIssueComments } = require('./queries/comments');
 const {
@@ -73,7 +73,7 @@ const {
   searchUsers,
   transformUser,
 } = require('./queries/users');
-const { toggleWatching, removeWatching } = require('./queries/watching');
+const { removeWatching, toggleWatching } = require('./queries/watching');
 const {
   createWithdrawal,
   transformUserBalance,
