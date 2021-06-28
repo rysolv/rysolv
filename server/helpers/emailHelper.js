@@ -22,6 +22,7 @@ const sendEmail = async ({ body, path }) => {
     }
   } catch (error) {
     errorLogger(error);
+    throw new Error(error.message);
   }
 };
 
