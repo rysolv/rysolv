@@ -1,9 +1,9 @@
 const { errorLogger, sendEmail } = require('../../../helpers');
 
-const sendContact = async ({ email, body, source }) => {
+const sendContact = async ({ body, email, source }) => {
   try {
     await sendEmail({
-      body: { email, body, source },
+      body: { body, email, source },
       path: '/s/contact/contact',
     });
     return {
