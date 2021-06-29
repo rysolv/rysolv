@@ -64,6 +64,12 @@ module.exports = buildSchema(`
     target: ID!
   }
 
+  input ContactInput {
+    body: String!
+    email: String!
+    source: String!
+  }
+
   type Error {
     message: String
   }
@@ -468,6 +474,7 @@ module.exports = buildSchema(`
 
     signIn(password: String!, username: String!): SignInResult!
     signOut: EventResponse!
+    sendContact(contactInput: ContactInput): EventResponse!
 
     submitAccountPayment(email: String!, issueId: ID!, fundValue: Float!): PaymentResult!
 
