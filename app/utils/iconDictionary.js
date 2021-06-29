@@ -48,9 +48,13 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Warning from '@material-ui/icons/Warning';
 import Web from '@material-ui/icons/Web';
 
+import BackgroundHollowCircle from './svg/BackgroundHollowCircle';
+import BackgroundSolidCircle from './svg/BackgroundSolidCircle';
 import CloseMenu from './svg/CloseMenu';
 import Coin from './svg/RysolvCoin';
 import Discord from './svg/Discord';
+import HeaderImageLeft from './svg/HeaderImageLeft';
+import HeaderImageRight from './svg/HeaderImageRight';
 import Javascript from './svg/Javascript';
 import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
@@ -70,6 +74,8 @@ export default (name, size, style) => {
     attempt: Attempt,
     backArrow: ArrowBack,
     backArrowHalf: ArrowBackIos,
+    backgroundHollowCircle: BackgroundHollowCircle,
+    backgroundSolidCircle: BackgroundSolidCircle,
     cancel: Cancel,
     check: Check,
     close: Close,
@@ -93,6 +99,8 @@ export default (name, size, style) => {
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,
+    headerImageLeft: HeaderImageLeft,
+    headerImageRight: HeaderImageRight,
     help: Help,
     info: Info,
     issue: ErrorIcon,

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import styled from 'styled-components';
 
@@ -7,7 +8,7 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 const { mobile, tablet } = mediaQueriesByDevice;
 
 export const AppBodyWrapper = styled.div`
-  padding-bottom: 16rem;
+  padding-bottom: ${({ isLandingPage }) => (isLandingPage ? '0' : '16rem')};
 `;
 
 export const AppContentWrapper = styled.div`
@@ -17,16 +18,16 @@ export const AppContentWrapper = styled.div`
 export const RoutesWrapper = styled.section`
   display: flex;
   justify-content: center;
-  padding: 0 5% 3.6rem 5%;
+  padding: ${({ isLandingPage }) => (isLandingPage ? '0' : '0 5% 3.6rem 5%')};
   width: 100%;
 
   ${tablet} {
-    padding: 0 1rem 3.6rem 1rem;
+    padding: ${({ isLandingPage }) => (isLandingPage ? '0' : '0 1rem 3.6rem 1rem')};
   }
 
   ${mobile} {
     margin-bottom: 10rem;
-    padding-top: 10rem;
+    padding-top: ${({ isLandingPage }) => (isLandingPage ? '0' : '10rem')};
   }
 `;
 

@@ -85,6 +85,8 @@ class Main extends React.PureComponent {
       dispatchCloseModal();
       handleNav(route);
     };
+    const { pathname } = window.location;
+    const isLandingPage = pathname === '/';
     const isPaymentModal = modal === 'fundIssue';
     const modalPropsDictionary = {
       closeIssue: {
@@ -168,7 +170,7 @@ class Main extends React.PureComponent {
     };
     return (
       <Fragment>
-        <AppBodyWrapper>
+        <AppBodyWrapper isLandingPage={isLandingPage}>
           <Header
             activeUser={activeUser}
             deviceView={deviceView}
@@ -180,7 +182,7 @@ class Main extends React.PureComponent {
           />
           <AppContentWrapper>
             <SideNav deviceView={deviceView} handleNav={handleNav} />
-            <RoutesWrapper>
+            <RoutesWrapper isLandingPage={isLandingPage}>
               <Routes />
             </RoutesWrapper>
           </AppContentWrapper>

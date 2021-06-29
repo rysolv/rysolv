@@ -32,8 +32,12 @@ export const verifyBackgroundColor = 'rgb(229, 251, 242)';
 export const verifyColor = 'rgb(8, 178, 110)';
 
 // Redesign Colors
+export const blueColor = '#163486';
 export const blueGrayColor = '#4A62A0';
+export const darkBlueColor = '#153486';
+export const grayColor = '#c4c4c4';
 export const navyBlueColor = '#081946';
+export const navyColor = '#182F6A';
 export const whiteColor = '#ffffff';
 
 // Font Family

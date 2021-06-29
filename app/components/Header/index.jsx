@@ -4,6 +4,7 @@ import T from 'prop-types';
 import { ConditionalRender } from 'components/base_ui';
 
 import DesktopHeader from './DesktopHeader';
+import DesktopLandingHeader from './DesktopLandingHeader';
 import MobileHeader from './MobileHeader';
 
 const Header = ({
@@ -23,9 +24,13 @@ const Header = ({
     deviceView === 'mobileXXS';
   const { pathname } = window.location;
   const isLandingPage = pathname === '/';
+
+  const DesktopHeaderToRender = isLandingPage
+    ? DesktopLandingHeader
+    : DesktopHeader;
   return (
     <ConditionalRender
-      Component={DesktopHeader}
+      Component={DesktopHeaderToRender}
       FallbackComponent={MobileHeader}
       propsToPassDown={{
         activeUser,

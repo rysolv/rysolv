@@ -15,7 +15,7 @@ const baseButtonStyle = css`
     box-shadow: none;
   }
   background-color: ${lightBlueColor};
-  border-radius: 0.4rem;
+  border-radius: 0.8rem;
   box-shadow: none;
   color: white;
   font-size: ${detailFontSize};
