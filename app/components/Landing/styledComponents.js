@@ -16,7 +16,7 @@ export const ButtonGroup = styled.div`
 
 export const LandingContainer = styled.div`
   height: 100%;
-  padding: 17rem 12rem 0;
+  padding: 18.4rem 12rem 0;
   position: relative;
   z-index: 1;
 `;
@@ -107,12 +107,12 @@ export const PrimaryLandingCard = styled.div`
 `;
 
 export const LandingCardGroup = styled.div`
-  margin-bottom: 5.7rem;
+  margin-bottom: 7.7rem;
   position: relative;
 `;
 
 export const LandingCardContainer = styled.div`
-  margin-top: 31.7rem;
+  margin-top: 38.5rem;
 `;
 
 export const LandingCardLargeText = styled.div`

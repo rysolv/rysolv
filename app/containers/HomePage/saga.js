@@ -62,10 +62,10 @@ export function* sendContactSaga(payload) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield delay(1000);
+    yield delay(500);
     yield put(sendContactSuccess());
   } catch (error) {
-    yield delay(1000);
+    yield delay(500);
     yield put(sendContactFailure());
   }
 }

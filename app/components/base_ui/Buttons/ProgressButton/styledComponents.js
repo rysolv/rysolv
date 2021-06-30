@@ -37,7 +37,7 @@ const progressionAnimation = keyframes`
 `;
 
 export const ProgressBar = styled.div`
-  animation: 1.2s ${progressionAnimation} infinite;
+  animation: 0.7s ${progressionAnimation} infinite;
   background: ${whiteColor};
   border-radius: 0.7rem;
   height: 100%;
