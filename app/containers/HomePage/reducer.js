@@ -22,18 +22,15 @@ const homePageReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case FETCH_HOME_PAGE_STATS_FAILURE: {
       draft.error = true;
-      draft.loading = true;
       break;
     }
     case FETCH_HOME_PAGE_STATS_SUCCESS: {
       const { stats } = payload;
-      draft.loading = false;
       draft.stats = stats;
       break;
     }
     case FETCH_HOME_PAGE_STATS: {
       draft.error = false;
-      draft.loading = true;
       break;
     }
     case RESET_FEEDBACK: {
