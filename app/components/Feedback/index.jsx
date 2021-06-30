@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 
 import { ProgressButton } from 'components/base_ui';
@@ -10,9 +10,25 @@ import {
   InputWrapper,
 } from './styledComponents';
 
-const Feedback = ({ dispatchSendContact, error, loading, success }) => {
+const Feedback = ({
+  dispatchResetFeedback,
+  dispatchSendContact,
+  error,
+  loading,
+  success,
+}) => {
   const [body, setBody] = useState('');
   const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    if (error || success) {
+      setTimeout(() => {
+        dispatchResetFeedback();
+        setBody('');
+        setEmail('');
+      }, 6000);
+    }
+  }, [error, success]);
 
   return (
     <FeedbackContainer>
@@ -22,6 +38,7 @@ const Feedback = ({ dispatchSendContact, error, loading, success }) => {
           height="4.9rem"
           onChange={e => setEmail(e.target.value)}
           placeholder="Email"
+          value={email}
         />
       </InputWrapper>
       <InputWrapper>
@@ -30,9 +47,11 @@ const Feedback = ({ dispatchSendContact, error, loading, success }) => {
           height="14.4rem"
           onChange={e => setBody(e.target.value)}
           placeholder="What kind of software? What language? Do you have a repo?"
+          value={body}
         />
       </InputWrapper>
       <ProgressButton
+        disabled={body.length === 0 || email.length === 0}
         error={error}
         label="Send"
         loading={loading}
@@ -44,6 +63,7 @@ const Feedback = ({ dispatchSendContact, error, loading, success }) => {
 };
 
 Feedback.propTypes = {
+  dispatchResetFeedback: T.func.isRequired,
   dispatchSendContact: T.func.isRequired,
   error: T.bool.isRequired,
   loading: T.bool.isRequired,

@@ -5,6 +5,7 @@ import {
   FETCH_HOME_PAGE_STATS_FAILURE,
   FETCH_HOME_PAGE_STATS_SUCCESS,
   FETCH_HOME_PAGE_STATS,
+  RESET_FEEDBACK,
   SEND_CONTACT_FAILURE,
   SEND_CONTACT_SUCCESS,
   SEND_CONTACT,
@@ -33,6 +34,12 @@ const homePageReducer = produce((draft, { payload, type }) => {
     case FETCH_HOME_PAGE_STATS: {
       draft.error = false;
       draft.loading = true;
+      break;
+    }
+    case RESET_FEEDBACK: {
+      draft.error = initialState.error;
+      draft.loading = initialState.loading;
+      draft.success = initialState.success;
       break;
     }
     case SEND_CONTACT_FAILURE: {

@@ -2,6 +2,7 @@ import {
   FETCH_HOME_PAGE_STATS_FAILURE,
   FETCH_HOME_PAGE_STATS_SUCCESS,
   FETCH_HOME_PAGE_STATS,
+  RESET_FEEDBACK,
   SEND_CONTACT_FAILURE,
   SEND_CONTACT_SUCCESS,
   SEND_CONTACT,
@@ -20,6 +21,10 @@ export function fetchHomePageStatsSuccess(payload) {
 
 export function fetchHomePageStats() {
   return { type: FETCH_HOME_PAGE_STATS };
+}
+
+export function resetFeedback() {
+  return { type: RESET_FEEDBACK };
 }
 
 export function sendContactFailure() {

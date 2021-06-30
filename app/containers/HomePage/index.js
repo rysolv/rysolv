@@ -12,7 +12,7 @@ import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { fetchHomePageStats, sendContact } from './actions';
+import { fetchHomePageStats, resetFeedback, sendContact } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectHomePage } from './selectors';
@@ -20,6 +20,7 @@ import { HomePageContainer } from './styledComponents';
 
 const HomePage = ({
   dispatchFetchHomePageStats,
+  dispatchResetFeedback,
   dispatchSendContact,
   error,
   handleNav,
@@ -36,6 +37,7 @@ const HomePage = ({
   const HomePageComponent = (
     <HomePageContainer>
       <Landing
+        dispatchResetFeedback={dispatchResetFeedback}
         dispatchSendContact={dispatchSendContact}
         error={error}
         handleNav={handleNav}
@@ -57,6 +59,7 @@ const HomePage = ({
 
 HomePage.propTypes = {
   dispatchFetchHomePageStats: T.func.isRequired,
+  dispatchResetFeedback: T.func.isRequired,
   dispatchSendContact: T.func.isRequired,
   error: T.bool.isRequired,
   handleNav: T.func.isRequired,
@@ -85,6 +88,7 @@ const mapDispatchToProps = dispatch => ({
    * Reducer : HomePage
    */
   dispatchFetchHomePageStats: () => dispatch(fetchHomePageStats()),
+  dispatchResetFeedback: () => dispatch(resetFeedback()),
   dispatchSendContact: payload => dispatch(sendContact(payload)),
   /*
    * Reducer : Router

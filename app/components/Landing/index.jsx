@@ -61,7 +61,14 @@ const HeaderImageLeft = iconDictionary('headerImageLeft');
 const HeaderImageRight = iconDictionary('headerImageRight');
 const NextIcon = iconDictionary('navigateNext');
 
-const Landing = ({ dispatchSendContact, error, loading, stats, success }) => (
+const Landing = ({
+  dispatchResetFeedback,
+  dispatchSendContact,
+  error,
+  loading,
+  stats,
+  success,
+}) => (
   <Fragment>
     <LandingContainer>
       <div>
@@ -227,6 +234,7 @@ const Landing = ({ dispatchSendContact, error, loading, stats, success }) => (
             <FeedbackSubheader>Tell us more about your team.</FeedbackSubheader>
           </div>
           <Feedback
+            dispatchResetFeedback={dispatchResetFeedback}
             dispatchSendContact={dispatchSendContact}
             error={error}
             loading={loading}
@@ -250,6 +258,7 @@ const Landing = ({ dispatchSendContact, error, loading, stats, success }) => (
 );
 
 Landing.propTypes = {
+  dispatchResetFeedback: T.func.isRequired,
   dispatchSendContact: T.func.isRequired,
   error: T.bool.isRequired,
   loading: T.bool.isRequired,
