@@ -324,6 +324,7 @@ export const FeedbackContainer = styled.div`
   background: ${blueGrayColor};
   border-radius: 0.7rem;
   color: ${whiteColor};
+  display: flex;
   height: 47.5rem;
   margin: 24.4rem 0 5.6rem;
   padding: 6.4rem 7.5rem;
@@ -342,5 +343,3 @@ export const FeedbackSubheader = styled.div`
   line-height: 2.905rem;
   margin-top: 0.9rem;
 `;
-
-export const FeedbackInputs = styled.div``;

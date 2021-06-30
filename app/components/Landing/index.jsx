@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
+import T from 'prop-types';
 
-import { ProgressButton } from 'components/base_ui';
+import Feedback from 'components/Feedback';
+import { formatDollarAmount } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 import {
   FeatureCommentImage,
@@ -26,7 +28,6 @@ import {
   ContributorsWrapper,
   FeedbackContainer,
   FeedbackHeader,
-  FeedbackInputs,
   FeedbackSubheader,
   FundingContainer,
   FundingDescription,
@@ -60,7 +61,7 @@ const HeaderImageLeft = iconDictionary('headerImageLeft');
 const HeaderImageRight = iconDictionary('headerImageRight');
 const NextIcon = iconDictionary('navigateNext');
 
-const Landing = () => (
+const Landing = ({ dispatchSendContact, stats }) => (
   <Fragment>
     <LandingContainer>
       <div>
@@ -95,12 +96,22 @@ const Landing = () => (
               </TextWrapper>
             </LandingCard>
             <PrimaryLandingCard>
-              <StyledImage alt="" src={FeatureCommentImage} width="49.5rem" />
+              <StyledImage
+                alt=""
+                loading="lazy"
+                src={FeatureCommentImage}
+                width="49.5rem"
+              />
             </PrimaryLandingCard>
           </LandingCardGroup>
           <LandingCardGroup>
             <PrimaryLandingCard isFloatingLeft>
-              <StyledImage alt="" src={FeatureProfileImage} width="49.5rem" />
+              <StyledImage
+                alt=""
+                loading="lazy"
+                src={FeatureProfileImage}
+                width="49.5rem"
+              />
             </PrimaryLandingCard>
             <LandingCard isFloatingLeft>
               <TextWrapper isFloatingLeft>
@@ -125,11 +136,11 @@ const Landing = () => (
           </StatsHeader>
           <StatsWrapper>
             <div>
-              <Stat>$1,881</Stat>
+              <Stat>{formatDollarAmount(stats.totalFunded, true)}</Stat>
               <StatsText>bounties contributed</StatsText>
             </div>
             <div>
-              <Stat>13</Stat>
+              <Stat>{stats.totalResolved}</Stat>
               <StatsText>issues resolved</StatsText>
             </div>
           </StatsWrapper>
@@ -151,7 +162,12 @@ const Landing = () => (
             </LandingCardSmallText>
           </FundingDescription>
           <FundingImage>
-            <StyledImage alt="" src={FeatureFundingImage} width="47.6rem" />
+            <StyledImage
+              alt=""
+              loading="lazy"
+              src={FeatureFundingImage}
+              width="47.6rem"
+            />
           </FundingImage>
         </FundingContainer>
         <ActionContainer>
@@ -210,9 +226,7 @@ const Landing = () => (
             <FeedbackHeader>Want to get involved?</FeedbackHeader>
             <FeedbackSubheader>Tell us more about your team.</FeedbackSubheader>
           </div>
-          <FeedbackInputs>
-            <ProgressButton />
-          </FeedbackInputs>
+          <Feedback dispatchSendContact={dispatchSendContact} />
         </FeedbackContainer>
       </div>
     </LandingContainer>
@@ -229,5 +243,10 @@ const Landing = () => (
     </BackgroundSolidCircleIcon>
   </Fragment>
 );
+
+Landing.propTypes = {
+  dispatchSendContact: T.func.isRequired,
+  stats: T.object.isRequired,
+};
 
 export default Landing;
