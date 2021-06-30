@@ -40,6 +40,10 @@ export const ExternalLink = styled.a`
 export const ExternalLinkWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 713px) {
+    flex-direction: row;
+  }
 `;
 
 export const FooterContainer = styled.div`
@@ -48,6 +52,10 @@ export const FooterContainer = styled.div`
   height: 20rem;
   justify-content: space-between;
   padding: 4.8rem 12rem;
+
+  @media (max-width: 713px) {
+    flex-direction: column-reverse;
+  }
 `;
 
 export const InternalLink = styled(BaseLink)`

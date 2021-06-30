@@ -9,9 +9,6 @@ import {
   navyColor,
   whiteColor,
 } from 'defaultStyleHelper';
-// import { mediaQueriesByDevice } from 'utils/breakpoints';
-
-// const { mobileXS } = mediaQueriesByDevice;
 
 export const ButtonGroup = styled.div`
   margin-top: 3.2rem;
@@ -331,7 +328,7 @@ export const FeedbackContainer = styled.div`
   height: 47.5rem;
   margin: 24.4rem auto 5.6rem;
   padding: 6.4rem 7.5rem;
-  width: 120rem;
+  width: max-120rem;
 `;
 
 export const FeedbackHeader = styled.div`

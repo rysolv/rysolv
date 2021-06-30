@@ -7,7 +7,6 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import CloseIssueModal from 'components/CloseIssueModal';
-import ProgressModal from 'components/ProgressModal';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import SideNav from 'components/SideNav';
@@ -24,7 +23,7 @@ import { getCookie, setCookie } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { closeModalState, openModalState } from './actions';
+import { closeModalState } from './actions';
 import reducer from './reducer';
 import Routes from './routes';
 import saga from './saga';
@@ -38,9 +37,7 @@ import {
 
 class Main extends React.PureComponent {
   componentDidMount() {
-    const { dispatchOpenModal } = this.props;
     if (!getCookie('returnUser')) {
-      dispatchOpenModal({ modalState: 'progress' });
       setCookie('returnUser', true, {
         expires: 'Sun, 19 Jan 2038 00:00:01 GMT;',
       });
@@ -131,13 +128,6 @@ class Main extends React.PureComponent {
           type: 'issueWatchList',
         },
       },
-      progress: {
-        Component: ProgressModal,
-        open: isModalOpen,
-        propsToPassDown: {
-          handleClose: dispatchCloseModal,
-        },
-      },
       pullRequestList: {
         Component: WatchList,
         open: isModalOpen,
@@ -204,7 +194,6 @@ Main.propTypes = {
   deviceView: T.string.isRequired,
   dispatchCloseIssue: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
-  dispatchOpenModal: T.func.isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleDelete: T.func.isRequired,
   handleNav: T.func.isRequired,
@@ -251,7 +240,6 @@ const mapDispatchToProps = dispatch => ({
    * Main
    */
   dispatchCloseModal: () => dispatch(closeModalState()),
-  dispatchOpenModal: payload => dispatch(openModalState(payload)),
   /*
    * Reducer : PullRequests
    */
