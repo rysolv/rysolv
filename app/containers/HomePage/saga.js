@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, delay, put, takeLatest } from 'redux-saga/effects';
 
 import { post } from 'utils/request';
 
@@ -62,8 +62,10 @@ export function* sendContactSaga(payload) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
+    yield delay(3000);
     yield put(sendContactSuccess());
   } catch (error) {
+    yield delay(3000);
     yield put(sendContactFailure());
   }
 }

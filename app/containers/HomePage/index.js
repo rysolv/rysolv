@@ -21,9 +21,12 @@ import { HomePageContainer } from './styledComponents';
 const HomePage = ({
   dispatchFetchHomePageStats,
   dispatchSendContact,
+  error,
   handleNav,
   isSignedIn,
+  loading,
   stats,
+  success,
 }) => {
   useEffect(() => {
     dispatchFetchHomePageStats();
@@ -34,8 +37,11 @@ const HomePage = ({
     <HomePageContainer>
       <Landing
         dispatchSendContact={dispatchSendContact}
+        error={error}
         handleNav={handleNav}
+        loading={loading}
         stats={stats}
+        success={success}
       />
     </HomePageContainer>
   );
@@ -52,9 +58,12 @@ const HomePage = ({
 HomePage.propTypes = {
   dispatchFetchHomePageStats: T.func.isRequired,
   dispatchSendContact: T.func.isRequired,
+  error: T.bool.isRequired,
   handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
+  loading: T.bool.isRequired,
   stats: T.object.isRequired,
+  success: T.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -65,7 +74,10 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : HomePage
    */
+  error: makeSelectHomePage('error'),
+  loading: makeSelectHomePage('loading'),
   stats: makeSelectHomePage('stats'),
+  success: makeSelectHomePage('success'),
 });
 
 const mapDispatchToProps = dispatch => ({

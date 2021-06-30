@@ -11,10 +11,10 @@ import {
 } from './constants';
 
 export const initialState = {
-  error: null,
+  error: false,
   loading: false,
   stats: {},
-  success: null,
+  success: false,
 };
 
 const homePageReducer = produce((draft, { payload, type }) => {
@@ -31,7 +31,7 @@ const homePageReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_HOME_PAGE_STATS: {
-      draft.error = null;
+      draft.error = false;
       draft.loading = true;
       break;
     }
@@ -46,9 +46,9 @@ const homePageReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEND_CONTACT: {
-      draft.error = null;
+      draft.error = false;
       draft.loading = true;
-      draft.success = null;
+      draft.success = false;
       break;
     }
   }

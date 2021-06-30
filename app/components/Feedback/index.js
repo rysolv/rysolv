@@ -10,7 +10,7 @@ import {
   InputWrapper,
 } from './styledComponents';
 
-const Feedback = ({ dispatchSendContact }) => {
+const Feedback = ({ dispatchSendContact, error, loading, success }) => {
   const [body, setBody] = useState('');
   const [email, setEmail] = useState('');
 
@@ -33,13 +33,21 @@ const Feedback = ({ dispatchSendContact }) => {
         />
       </InputWrapper>
       <ProgressButton
+        error={error}
         label="Send"
+        loading={loading}
         onClick={() => dispatchSendContact({ body, email })}
+        success={success}
       />
     </FeedbackContainer>
   );
 };
 
-Feedback.propTypes = { dispatchSendContact: T.func.isRequired };
+Feedback.propTypes = {
+  dispatchSendContact: T.func.isRequired,
+  error: T.bool.isRequired,
+  loading: T.bool.isRequired,
+  success: T.bool.isRequired,
+};
 
 export default Feedback;
