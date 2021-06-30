@@ -41,20 +41,31 @@ export const ExternalLinkWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 713px) {
+  @media (max-width: 888px) {
+    align-items: center;
     flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 3.935rem;
+  }
+
+  @media (max-width: 445px) {
+    flex-direction: column;
   }
 `;
 
 export const FooterContainer = styled.div`
   background: ${navyBlueColor};
   display: flex;
-  height: 20rem;
   justify-content: space-between;
+  min-height: 20rem;
   padding: 4.8rem 12rem;
 
-  @media (max-width: 713px) {
+  @media (max-width: 888px) {
     flex-direction: column-reverse;
+  }
+
+  @media (max-width: 595px) {
+    padding: 3.335rem 5.1rem 4.8rem;
   }
 `;
 
@@ -70,15 +81,35 @@ export const InternalLink = styled(BaseLink)`
 
 export const InternalLinkWrapper = styled.div`
   display: flex;
+
+  @media (max-width: 888px) {
+    justify-content: space-between;
+  }
+
+  @media (max-width: 595px) {
+    flex-direction: column;
+  }
 `;
 
 export const LinkColumn = styled.div`
   display: flex;
   flex-direction: column;
   padding-right: 9.8rem;
+
+  @media (max-width: 888px) {
+    padding-right: 0;
+  }
 `;
 
 export const LinkRow = styled.div`
   padding-top: 2.8rem;
   text-align: right;
+
+  @media (max-width: 888px) {
+    padding-top: 0;
+  }
+
+  @media (max-width: 445px) {
+    padding-top: 2.8rem;
+  }
 `;
