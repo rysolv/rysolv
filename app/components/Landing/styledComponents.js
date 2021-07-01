@@ -113,11 +113,15 @@ export const PrimaryLandingCard = styled.div`
 
 export const LandingCardGroup = styled.div`
   margin-bottom: 7.7rem;
+  margin-left: -50.8rem;
   position: relative;
 `;
 
 export const LandingCardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-top: 38.5rem;
+  place-items: center;
 `;
 
 export const LandingCardLargeText = styled.div`
@@ -229,6 +233,14 @@ export const ActionCard = styled.div`
   margin-left: 2.5rem;
   padding: 4rem 3.2rem 3.5rem;
   width: 28.5rem;
+
+  @media (max-width: 1450px) {
+    width: 25.5rem;
+  }
+
+  @media (max-width: 1250px) {
+    width: 22.5rem;
+  }
 `;
 
 export const ActionCardWrapper = styled.div`
