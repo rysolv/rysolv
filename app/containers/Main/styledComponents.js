@@ -8,6 +8,7 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 const { mobile, tablet } = mediaQueriesByDevice;
 
 export const AppBodyWrapper = styled.div`
+  min-height: 90vh;
   padding-bottom: ${({ isLandingPage }) => (isLandingPage ? '0' : '16rem')};
 `;
 
@@ -22,7 +23,7 @@ export const RoutesWrapper = styled.section`
   width: 100%;
 
   ${tablet} {
-    padding: ${({ isLandingPage }) => (isLandingPage ? '0' : '0 1rem 3.6rem 1rem')};
+    padding: ${({ isLandingPage }) => isLandingPage ? '0' : '0 1rem 3.6rem 1rem'};
   }
 
   ${mobile} {

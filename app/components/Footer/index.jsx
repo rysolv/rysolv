@@ -36,7 +36,7 @@ const Footer = () => (
       <div>
         <ButtonLink
           aria-label="Join our discord server"
-          href="https://discord.com/channels/239433591950540801/239433678126710784"
+          href="https://discord.gg/kqt8RcVggN"
           rel="noopener"
           target="_blank"
         >
