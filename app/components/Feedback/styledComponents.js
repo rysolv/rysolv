@@ -4,6 +4,16 @@ import { whiteColor } from 'defaultStyleHelper';
 
 export const FeedbackContainer = styled.div`
   margin-left: 9.7rem;
+  width: 59%;
+
+  @media (max-width: 1100px) {
+    width: 100%;
+  }
+
+  @media (max-width: 1000px) {
+    margin-left: 0;
+    margin-top: 3.261rem;
+  }
 `;
 
 export const Input = styled.textarea`
@@ -19,7 +29,7 @@ export const Input = styled.textarea`
   overflow: hidden;
   padding: 1.6rem 2.4rem;
   transform: matrix(1, 0, 0, 1, 0, 0);
-  width: 61.1rem;
+  width: 100%;
 `;
 
 export const InputLabel = styled.div`

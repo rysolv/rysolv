@@ -9,6 +9,7 @@ import { compose } from 'redux';
 import { ConditionalRender } from 'components/base_ui';
 import Landing from 'components/Landing';
 import { makeSelectAuth } from 'containers/Auth/selectors';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -19,6 +20,7 @@ import { makeSelectHomePage } from './selectors';
 import { HomePageContainer } from './styledComponents';
 
 const HomePage = ({
+  deviceView,
   dispatchFetchHomePageStats,
   dispatchResetFeedback,
   dispatchSendContact,
@@ -37,6 +39,7 @@ const HomePage = ({
   const HomePageComponent = (
     <HomePageContainer>
       <Landing
+        deviceView={deviceView}
         dispatchResetFeedback={dispatchResetFeedback}
         dispatchSendContact={dispatchSendContact}
         error={error}
@@ -58,6 +61,7 @@ const HomePage = ({
 };
 
 HomePage.propTypes = {
+  deviceView: T.string.isRequired,
   dispatchFetchHomePageStats: T.func.isRequired,
   dispatchResetFeedback: T.func.isRequired,
   dispatchSendContact: T.func.isRequired,
@@ -81,6 +85,10 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectHomePage('loading'),
   stats: makeSelectHomePage('stats'),
   success: makeSelectHomePage('success'),
+  /**
+   * Reducer : ViewSize
+   */
+  deviceView: makeSelectViewSize('deviceView'),
 });
 
 const mapDispatchToProps = dispatch => ({

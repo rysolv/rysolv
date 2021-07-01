@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -19,6 +20,10 @@ export const LandingContainer = styled.div`
   padding: 18.4rem 12rem 0;
   position: relative;
   z-index: 1;
+
+  @media (max-width: 700px) {
+    padding: 41.8rem 3rem 0;
+  }
 `;
 
 export const LandingContainerText = styled.span`
@@ -69,8 +74,8 @@ export const HeaderImageLeftIcon = styled.div`
 
 export const HeaderImageRightIcon = styled.div`
   svg {
-    left: 88.2rem;
     position: absolute;
+    right: 0;
     top: 21.9rem;
   }
 `;
@@ -132,9 +137,10 @@ export const LandingCardSmallText = styled.div`
 
 export const BackgroundSolidCircleIcon = styled.div`
   svg {
-    left: 20.8rem;
+    left: 50%;
     position: absolute;
     top: 95.7rem;
+    transform: translateX(-50%);
   }
 `;
 
@@ -185,7 +191,7 @@ export const StatsWrapper = styled.div`
 export const FundingContainer = styled.div`
   display: flex;
   height: 25.2rem;
-  margin-top: 21.9rem;
+  margin: 21.9rem auto 0;
   width: 120rem;
 `;
 
@@ -258,6 +264,15 @@ export const StyledLink = styled(Link)`
     height: 2.4rem;
     width: 2.4rem;
   }
+
+  @media (max-width: 485px) {
+    margin-left: ${({ margin }) => (margin ? '3.2rem' : 0)};
+  }
+
+  @media (max-width: 390px) {
+    margin-left: 0;
+    margin-top: ${({ margin }) => (margin ? '2rem' : 0)};
+  }
 `;
 
 export const BackgroundHollowCircleBottomIcon = styled.div`
@@ -283,6 +298,33 @@ export const Contributor = styled.div`
   margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '4.1rem')};
   opacity: 0.2;
   width: 11.4rem;
+
+  @media (max-width: 833px) {
+    height: 9.5rem;
+    margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '3.1rem')};
+    width: 9.5rem;
+  }
+
+  @media (max-width: 670px) {
+    height: 8.5rem;
+    margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '3.1rem')};
+    width: 8.5rem;
+  }
+
+  @media (max-width: 630px) {
+    display: ${({ removeFirst }) => (removeFirst ? 'none' : 'flex')};
+  }
+
+  @media (max-width: 550px) {
+    height: 7.5rem;
+    margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '2.5rem')};
+    width: 7.5rem;
+  }
+
+  @media (max-width: 440px) {
+    display: ${({ removeFirst, removeSecond }) =>
+    removeFirst || removeSecond ? 'none' : 'flex'};
+  }
 `;
 
 export const ContributorsContainer = styled.div`
@@ -309,6 +351,10 @@ export const ContributorsHeader = styled.div`
 
 export const ContributorsLinkWrapper = styled.div`
   display: flex;
+
+  @media (max-width: 390px) {
+    flex-direction: column;
+  }
 `;
 
 export const BottomRowContributors = styled.div`
@@ -327,8 +373,17 @@ export const FeedbackContainer = styled.div`
   display: flex;
   height: 47.5rem;
   margin: 24.4rem auto 5.6rem;
+  max-width: 120rem;
   padding: 6.4rem 7.5rem;
-  width: max-120rem;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    height: auto;
+  }
+
+  @media (max-width: 500px) {
+    padding: 2.6rem 2.8rem 5.052rem;
+  }
 `;
 
 export const FeedbackHeader = styled.div`

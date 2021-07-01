@@ -26,7 +26,7 @@ export const RoutesWrapper = styled.section`
   }
 
   ${mobile} {
-    margin-bottom: 10rem;
+    margin-bottom: ${({ isLandingPage }) => (isLandingPage ? '0' : '10rem')};
     padding-top: ${({ isLandingPage }) => (isLandingPage ? '0' : '10rem')};
   }
 `;
