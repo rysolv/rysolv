@@ -190,7 +190,7 @@ const Landing = ({
           <ActionContainer>
             <ActionHeader>Get started on your first bounty</ActionHeader>
             <ActionCardWrapper>
-              <ActionCard>
+              <ActionCard hasNoMargin>
                 <ActionCardTitle>
                   Find issues in your favorite language.
                 </ActionCardTitle>

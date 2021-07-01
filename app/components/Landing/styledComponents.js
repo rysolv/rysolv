@@ -221,6 +221,10 @@ export const ActionContainer = styled.div`
   color: ${whiteColor};
   display: flex;
   margin-top: 36.7rem;
+
+  @media (max-width: 1275px) {
+    flex-direction: column;
+  }
 `;
 
 export const ActionCard = styled.div`
@@ -228,23 +232,49 @@ export const ActionCard = styled.div`
   border-radius: 0.7rem;
   display: flex;
   flex-direction: column;
-  height: 29rem;
+  height: 28.5rem;
   justify-content: space-between;
   margin-left: 2.5rem;
   padding: 4rem 3.2rem 3.5rem;
   width: 28.5rem;
 
-  @media (max-width: 1450px) {
+  @media (max-width: 1456px) {
+    height: 25.5rem;
     width: 25.5rem;
   }
 
-  @media (max-width: 1250px) {
+  @media (max-width: 1366px) {
+    height: 22.5rem;
+    padding: 2.4rem;
+    width: 22.5rem;
+  }
+
+  @media (max-width: 1275px) {
+    margin-left: ${({ hasNoMargin }) => hasNoMargin ? 0 : '2.5rem'};
+  }
+
+  @media (max-width: 900px) {
+    height: 28.5rem;
+    margin: 0 auto 1.6rem;
+    width: 28.5rem;
+  }
+
+  @media (max-width: 900px) {
+    height: 22.5rem;
     width: 22.5rem;
   }
 `;
 
 export const ActionCardWrapper = styled.div`
   display: flex;
+
+  @media (max-width: 1275px) {
+    align-self: center;
+  }
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
 `;
 
 export const ActionHeader = styled.div`
@@ -254,6 +284,12 @@ export const ActionHeader = styled.div`
   margin-right: 7.4rem;
   margin-top: 2rem;
   min-width: 19.8rem;
+
+  @media (max-width: 12755px) {
+    margin: 0 auto 3.3rem;
+    min-width: 15.9rem;
+    text-align: center;
+  }
 `;
 
 export const ActionCardTitle = styled.div`
