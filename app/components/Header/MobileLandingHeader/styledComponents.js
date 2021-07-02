@@ -36,12 +36,18 @@ export const InternalLink = styled(BaseLink)`
   }
 `;
 
-export const LogoContainer = styled.div`
-  background-color: ${whiteColor};
+export const Logo = styled.div`
+  background: white;
   border-radius: 50%;
-  height: 3.2rem;
-  margin-right: 1.4rem;
-  width: 3.2rem;
+  height: 3.5rem;
+  margin-right: 1rem;
+  text-align: center;
+  width: 3.5rem;
+
+  svg {
+    height: 100%;
+    width: 2.5rem;
+  }
 `;
 
 export const LogoText = styled.div`
@@ -59,7 +65,6 @@ export const LogoWrapper = styled.div`
 
 export const StyledExpandIcon = styled(ExpandIcon)`
   color: ${whiteColor};
-  margin: -0.8rem;
 
   &:hover {
     cursor: pointer;
@@ -67,8 +72,6 @@ export const StyledExpandIcon = styled(ExpandIcon)`
 
   svg {
     height: 3rem;
-    margin-left: 0.5rem;
-    margin-right: -0.5rem;
     width: 3rem;
   }
 `;
@@ -113,5 +116,12 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
 
   &:hover {
     background: ${whiteColor};
+  }
+`;
+
+export const Wordmark = styled.div`
+  svg {
+    height: 2.5rem;
+    width: auto;
   }
 `;

@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
 
+import iconDictionary from 'utils/iconDictionary';
+
 import {
   ButtonWrapper,
   DesktopHeaderContainer,
   HorizontalDivider,
   InternalLink,
-  LogoContainer,
-  LogoText,
+  Logo,
   LogoWrapper,
   StyledExpandIcon,
   StyledLoginLink,
   StyledMenu,
   StyledSecondaryButton,
+  Wordmark,
 } from './styledComponents';
+
+const SiteLogo = iconDictionary('siteLogo');
+const SiteWordmark = iconDictionary('siteWordmark');
 
 const MenuComponent = props => (
   <StyledMenu
@@ -44,8 +49,8 @@ const MobileLandingHeader = ({ handleNav }) => {
   return (
     <DesktopHeaderContainer>
       <LogoWrapper>
-        <LogoContainer />
-        <LogoText>rysolv</LogoText>
+        <Logo>{SiteLogo}</Logo>
+        <Wordmark>{SiteWordmark}</Wordmark>
       </LogoWrapper>
       <ButtonWrapper>
         <StyledSecondaryButton
