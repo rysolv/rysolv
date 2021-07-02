@@ -37,7 +37,7 @@ export const Logo = styled.div`
 
   svg {
     height: 100%;
-    width: 3rem;
+    width: 2.5rem;
   }
 `;
 

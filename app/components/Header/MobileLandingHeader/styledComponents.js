@@ -37,14 +37,18 @@ export const InternalLink = styled(BaseLink)`
 export const Logo = styled.div`
   background: white;
   border-radius: 50%;
-  height: 3.5rem;
+  height: 4rem;
   margin-right: 1rem;
   text-align: center;
-  width: 3.5rem;
+  width: 4rem;
 
   svg {
     height: 100%;
     width: 2.5rem;
+  }
+
+  @media (max-width: 380px) {
+    margin-right: 0.5rem;
   }
 `;
 
@@ -122,11 +126,20 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
   &:hover {
     background: ${whiteColor};
   }
+
+  @media (max-width: 380px) {
+    margin-right: 0;
+    width: auto;
+  }
 `;
 
 export const Wordmark = styled.div`
   svg {
     height: 2.5rem;
     width: auto;
+  }
+
+  @media (max-width: 460px) {
+    display: none;
   }
 `;

@@ -136,6 +136,7 @@ const Landing = ({
           </LandingCardGroup>
         </LandingCardContainer>
         <StatsContainer>
+          {BackgroundSolidCircle}
           <StatsHeader>
             Help sustain
             <br />

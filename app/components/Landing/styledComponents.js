@@ -13,6 +13,11 @@ import {
 
 export const ButtonGroup = styled.div`
   margin-top: 3.2rem;
+
+  @media (max-width: 460px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const LandingContainer = styled.div`
@@ -22,7 +27,7 @@ export const LandingContainer = styled.div`
   z-index: 1;
 
   @media (max-width: 700px) {
-    padding: 41.8rem 3rem 0;
+    padding: 18.4rem 3rem 0;
   }
 `;
 
@@ -32,15 +37,19 @@ export const LandingContainerText = styled.span`
   font-weight: 700;
   line-height: 6.16rem;
 
-  @media (max-width: 1283px) {
+  @media (max-width: 550px) {
     font-size: 4.6rem;
     line-height: 5.16rem;
   }
 
-  br {
-    @media (max-width: 1030px) {
-      display: none;
-    }
+  @media (max-width: 460px) {
+    font-size: 3.6rem;
+    line-height: 4.104rem;
+  }
+
+  @media (max-width: 350px) {
+    font-size: 3rem;
+    line-height: 3.5rem;
   }
 `;
 
@@ -58,6 +67,15 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   &:hover {
     background: ${darkBlueColor};
   }
+
+  @media (max-width: 992px) {
+    font-size: 1.376rem;
+  }
+
+  @media (max-width: 460px) {
+    margin: 2.4rem 0 0;
+    width: 19.7rem;
+  }
 `;
 
 export const StyledSecondaryButton = styled(SecondaryButton)`
@@ -72,6 +90,10 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
 
   &:hover {
     background: ${whiteColor};
+  }
+
+  @media (max-width: 992px) {
+    font-size: 1.376rem;
   }
 `;
 
@@ -107,6 +129,12 @@ export const HeaderImageRightIcon = styled.div`
     }
   }
 
+  @media (max-width: 960px) {
+    svg {
+      top: 31.9rem;
+    }
+  }
+
   @media (max-width: 525px) {
     svg {
       height: 39.3rem;
@@ -129,6 +157,12 @@ export const HeaderImageRightIcon = styled.div`
     svg {
       height: 33.3rem;
       left: 1rem;
+    }
+  }
+
+  @media (max-width: 345px) {
+    svg {
+      top: 33.9rem;
     }
   }
 `;
@@ -159,6 +193,22 @@ export const LandingCard = styled.div`
     height: 51.3rem;
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  @media (max-width: 755px) {
+    height: 50.3rem;
+    width: 50.5rem;
+  }
+
+  @media (max-width: 600px) {
+    padding: 2.4rem 3rem;
+    height: 35.3rem;
+    width: 38.2rem;
+  }
+
+  @media (max-width: 450px) {
+    height: 34.3rem;
+    width: 28.2rem;
   }
 `;
 
@@ -192,6 +242,23 @@ export const PrimaryLandingCard = styled.div`
     transform: translateX(-50%);
     width: 69.2rem;
   }
+
+  @media (max-width: 755px) {
+    width: 55.5rem;
+  }
+
+  @media (max-width: 600px) {
+    height: 14rem;
+    padding: 3.5rem 1.9rem;
+    top: 17.8rem;
+    width: 41.5rem;
+  }
+
+  @media (max-width: 450px) {
+    height: 12rem;
+    width: 30.5rem;
+    top: 19.8rem;
+  }
 `;
 
 export const LandingCardGroup = styled.div`
@@ -211,7 +278,17 @@ export const LandingCardContainer = styled.div`
   place-items: center;
 
   @media (max-width: 1030px) {
-    margin-top: 53.5rem;
+    height: 110rem;
+    margin-top: 62.5rem;
+  }
+
+  @media (max-width: 600px) {
+    height: 78rem;
+  }
+
+  @media (max-width: 450px) {
+    height: 76rem;
+    margin-top: 54.5rem;
   }
 `;
 
@@ -228,6 +305,12 @@ export const LandingCardSmallText = styled.div`
   font-weight: 400;
   line-height: 2.4rem;
   margin-top: 0.8rem;
+
+  @media (max-width: 450px) {
+    font-size 1.4rem;
+    line-height: 1.656rem;
+    margin-top: 0.4rem;
+  }
 `;
 
 export const BackgroundSolidCircleIcon = styled.div`
@@ -240,7 +323,13 @@ export const BackgroundSolidCircleIcon = styled.div`
 
   @media (max-width: 1200px) {
     svg {
-      top: 201.9rem;
+      top: 208.9rem;
+    }
+  }
+
+  @media (max-width: 860px) {
+    svg {
+      display: none;
     }
   }
 `;
@@ -261,6 +350,14 @@ export const StyledProfileImage = styled.img`
   @media (max-width: 1400px) {
     width: 42.5rem;
   }
+
+  @media (max-width: 600px) {
+    width: 39.5rem;
+  }
+
+    @media (max-width: 450px) {
+    width: 29rem;
+  }
 `;
 
 export const StyledCommentImage = styled.img`
@@ -270,11 +367,23 @@ export const StyledCommentImage = styled.img`
   @media (max-width: 1400px) {
     width: 42.5rem;
   }
+
+  @media (max-width: 600px) {
+    width: 39.5rem;
+  }
+
+  @media (max-width: 450px) {
+    width: 29rem;
+  }
 `;
 
 export const StyledFundingImage = styled.img`
   height: auto;
   width: 47.6rem;
+
+  @media (max-width: 740px) {
+    width: 43.6rem
+  }
 
   @media (max-width: 595px) {
     width: 40rem;
@@ -307,12 +416,51 @@ export const Stat = styled.div`
 export const StatsContainer = styled.div`
   color: ${whiteColor};
   margin: auto;
+  max-width: 34.5rem;
   padding-top: 15.8rem;
+  position: relative;
   text-align: center;
-  width: 34.5rem;
+
+  svg {
+    display: none;
+  }
 
   @media (max-width: 1200px) {
-    padding-top: 71.4rem;
+    padding-top: 69.5rem;
+  }
+
+  @media (max-width: 1030px) {
+    padding-top: 54.5rem;
+  }
+
+  @media (max-width: 860px) {
+    margin-top: 27.4rem;
+    padding-top: 0;
+
+    svg {
+      display: block;
+      height: 520px;
+      left: 50%;
+      position: absolute;
+      top: -50%;
+      transform: translateX(-50%);
+      z-index: -1;
+    }
+  }
+
+  @media (max-width: 560px) {
+    margin-top: 30.4rem;
+
+    svg {
+      height: 420px;
+      top: -35%;
+    }
+  }
+
+  @media (max-width: 355px) {
+    svg {
+      top: -20%;
+    }
   }
 `;
 
@@ -337,7 +485,6 @@ export const StatsWrapper = styled.div`
 
 export const FundingContainer = styled.div`
   display: flex;
-  height: 25.2rem;
   margin: 21.9rem auto 0;
   max-width: 120rem;
 
@@ -348,6 +495,10 @@ export const FundingContainer = styled.div`
 
   @media (max-width: 1200px){
     margin-top: 54.9rem;
+  }
+
+  @media (max-width: 860px){
+    margin-top: 29.9rem;
   }
 `;
 
@@ -395,7 +546,7 @@ export const FundingImage = styled.div`
 export const ActionContainer = styled.div`
   color: ${whiteColor};
   display: flex;
-  margin-top: 36.7rem;
+  margin-top: 24.4rem;
 
   @media (max-width: 1275px) {
     flex-direction: column;
@@ -627,7 +778,9 @@ export const FeedbackSubheader = styled.div`
 `;
 
 export const LandingWrapper = styled.div`
+  height: 32rem;
+  
   @media (max-width: 1030px) {
-    margin-top: -15rem;
+    margin-top: -18rem;
   }
 `;
