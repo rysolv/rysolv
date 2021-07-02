@@ -6,11 +6,6 @@ import { ConditionalRender } from 'components/base_ui';
 import Feedback from 'components/Feedback';
 import { formatDollarAmount } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
-import {
-  FeatureCommentImage,
-  FeatureFundingImage,
-  FeatureProfileImage,
-} from 'utils/png';
 
 import {
   ActionCard,
@@ -80,7 +75,7 @@ const Landing = ({
       <div>
         <LandingWrapper>
           <LandingContainerText>
-            A crowdfunding <br />platform for <br /> open source.
+            A crowdfunding <br />platform for <br /> <span>open source</span>.
           </LandingContainerText>
           <ButtonGroup>
             <StyledSecondaryButton
@@ -108,7 +103,7 @@ const Landing = ({
               <StyledCommentImage
                 alt=""
                 loading="lazy"
-                src={FeatureCommentImage}
+                src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureCommentImage.png"
               />
             </PrimaryLandingCard>
           </LandingCardGroup>
@@ -117,7 +112,7 @@ const Landing = ({
               <StyledProfileImage
                 alt=""
                 loading="lazy"
-                src={FeatureProfileImage}
+                src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureProfileImage.png"
               />
             </PrimaryLandingCard>
             <LandingCard isFloatingLeft>
@@ -173,7 +168,7 @@ const Landing = ({
             <StyledFundingImage
               alt=""
               loading="lazy"
-              src={FeatureFundingImage}
+              src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureFundingImage.png"
             />
           </FundingImage>
         </FundingContainer>

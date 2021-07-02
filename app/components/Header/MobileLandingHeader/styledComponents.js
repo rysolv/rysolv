@@ -2,12 +2,7 @@ import styled from 'styled-components';
 import Menu from '@material-ui/core/Menu';
 
 import { BaseLink, ExpandIcon, SecondaryButton } from 'components/base_ui';
-import {
-  blueColor,
-  darkBlueColor,
-  landingFontFamily,
-  whiteColor,
-} from 'defaultStyleHelper';
+import { blueColor, darkBlueColor, whiteColor } from 'defaultStyleHelper';
 
 export const ButtonWrapper = styled.div`
   align-items: center;
@@ -50,13 +45,6 @@ export const Logo = styled.div`
   @media (max-width: 380px) {
     margin-right: 0.5rem;
   }
-`;
-
-export const LogoText = styled.div`
-  color: ${whiteColor};
-  font-family: ${landingFontFamily};
-  font-size: 1.6rem;
-  font-weight: 700;
 `;
 
 export const LogoWrapper = styled.div`

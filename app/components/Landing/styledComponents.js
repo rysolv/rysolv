@@ -5,11 +5,139 @@ import { Link } from 'react-router-dom';
 import { PrimaryButton, SecondaryButton } from 'components/base_ui';
 import {
   blueGrayColor,
+  codeFontFamily,
   darkBlueColor,
   grayColor,
   navyColor,
   whiteColor,
 } from 'defaultStyleHelper';
+
+export const ActionCard = styled.div`
+  background: ${blueGrayColor};
+  border-radius: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  height: 28.5rem;
+  justify-content: space-between;
+  margin-left: 2.5rem;
+  padding: 4rem 3.2rem 3.5rem;
+  width: 28.5rem;
+
+  @media (max-width: 1456px) {
+    height: 25.5rem;
+    width: 25.5rem;
+  }
+
+  @media (max-width: 1366px) {
+    height: 22.5rem;
+    padding: 2.4rem;
+    width: 22.5rem;
+  }
+
+  @media (max-width: 1275px) {
+    margin-left: ${({ hasNoMargin }) => (hasNoMargin ? 0 : '2.5rem')};
+  }
+
+  @media (max-width: 900px) {
+    height: 28.5rem;
+    margin: 0 auto 1.6rem;
+    width: 28.5rem;
+  }
+
+  @media (max-width: 900px) {
+    height: 22.5rem;
+    width: 22.5rem;
+  }
+`;
+
+export const ActionCardTitle = styled.div`
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 3.45rem;
+`;
+
+export const ActionCardWrapper = styled.div`
+  display: flex;
+
+  @media (max-width: 1275px) {
+    align-self: center;
+  }
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+`;
+
+export const ActionContainer = styled.div`
+  color: ${whiteColor};
+  display: flex;
+  margin-top: 24.4rem;
+
+  @media (max-width: 1275px) {
+    flex-direction: column;
+  }
+`;
+
+export const ActionHeader = styled.div`
+  font-size 3.2rem;
+  font-weight: 700;
+  line-height: 3.873rem;
+  margin-right: 7.4rem;
+  margin-top: 2rem;
+  min-width: 19.8rem;
+
+  @media (max-width: 12755px) {
+    margin: 0 auto 3.3rem;
+    min-width: 15.9rem;
+    text-align: center;
+  }
+`;
+
+export const BackgroundHollowCircleBottomIcon = styled.div`
+  svg {
+    left: -6.4rem;
+    position: absolute;
+    top: 382.4rem;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+export const BackgroundHollowCircleTopIcon = styled.div`
+  svg {
+    left: 92rem;
+    position: absolute;
+    top: 249.9rem;
+  }
+`;
+
+export const BackgroundSolidCircleIcon = styled.div`
+  svg {
+    left: 50%;
+    position: absolute;
+    top: 95.7rem;
+    transform: translateX(-50%);
+  }
+
+  @media (max-width: 1200px) {
+    svg {
+      top: 208.9rem;
+    }
+  }
+
+  @media (max-width: 860px) {
+    svg {
+      display: none;
+    }
+  }
+`;
+
+export const BottomRowContributors = styled.div`
+  display: flex;
+  margin-top: 1.6rem;
+`;
 
 export const ButtonGroup = styled.div`
   margin-top: 3.2rem;
@@ -20,80 +148,162 @@ export const ButtonGroup = styled.div`
   }
 `;
 
-export const LandingContainer = styled.div`
-  height: 100%;
-  padding: 18.4rem 12rem 0;
-  position: relative;
-  z-index: 1;
+export const Contributor = styled.div`
+  background: ${grayColor};
+  border-radius: 50%;
+  height: 11.4rem;
+  margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '4.1rem')};
+  opacity: 0.2;
+  width: 11.4rem;
 
-  @media (max-width: 700px) {
-    padding: 18.4rem 3rem 0;
+  @media (max-width: 833px) {
+    height: 9.5rem;
+    margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '3.1rem')};
+    width: 9.5rem;
   }
-`;
 
-export const LandingContainerText = styled.span`
-  color: ${whiteColor};
-  font-size: 5.6rem;
-  font-weight: 700;
-  line-height: 6.16rem;
+  @media (max-width: 670px) {
+    height: 8.5rem;
+    margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '3.1rem')};
+    width: 8.5rem;
+  }
+
+  @media (max-width: 630px) {
+    display: ${({ removeFirst }) => (removeFirst ? 'none' : 'flex')};
+  }
 
   @media (max-width: 550px) {
-    font-size: 4.6rem;
-    line-height: 5.16rem;
+    height: 7.5rem;
+    margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '2.5rem')};
+    width: 7.5rem;
   }
 
-  @media (max-width: 460px) {
-    font-size: 3.6rem;
-    line-height: 4.104rem;
-  }
-
-  @media (max-width: 350px) {
-    font-size: 3rem;
-    line-height: 3.5rem;
+  @media (max-width: 440px) {
+    display: ${({ removeFirst, removeSecond }) =>
+    removeFirst || removeSecond ? 'none' : 'flex'};
   }
 `;
 
-export const StyledPrimaryButton = styled(PrimaryButton)`
-  background: ${darkBlueColor};
-  border: 0.2rem solid ${whiteColor};
+export const ContributorsContainer = styled.div`
+  align-items: center;
   color: ${whiteColor};
-  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  margin-top: 36.1rem;
+`;
+
+export const ContributorsHeader = styled.div`
+  font-size: 3.2rem;
   font-weight: 700;
-  height: 4.8rem;
-  margin: 0 0 0 2.4rem;
-  text-transform: none;
-  width: 16.3rem;
+  line-height: 3.36rem;
+  text-align: center;
+`;
 
-  &:hover {
-    background: ${darkBlueColor};
-  }
+export const ContributorsLinkWrapper = styled.div`
+  display: flex;
 
-  @media (max-width: 992px) {
-    font-size: 1.376rem;
-  }
-
-  @media (max-width: 460px) {
-    margin: 2.4rem 0 0;
-    width: 19.7rem;
+  @media (max-width: 390px) {
+    flex-direction: column;
   }
 `;
 
-export const StyledSecondaryButton = styled(SecondaryButton)`
-  background: ${whiteColor};
-  color: ${darkBlueColor};
-  font-size: 1.6rem;
-  font-weight: 700;
-  height: 4.8rem;
-  margin: 0;
-  text-transform: none;
-  width: 19.7rem;
+export const ContributorsWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 4rem 0;
+`;
 
-  &:hover {
-    background: ${whiteColor};
+export const FeedbackContainer = styled.div`
+  background: ${blueGrayColor};
+  border-radius: 0.7rem;
+  color: ${whiteColor};
+  display: flex;
+  height: 47.5rem;
+  margin: 24.4rem auto 5.6rem;
+  max-width: 120rem;
+  padding: 6.4rem 7.5rem;
+
+  @media (max-width: 1000px) {
+    flex-direction: column;
+    height: auto;
   }
 
-  @media (max-width: 992px) {
-    font-size: 1.376rem;
+  @media (max-width: 500px) {
+    padding: 2.6rem 2.8rem 5.052rem;
+  }
+`;
+
+export const FeedbackHeader = styled.div`
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 3.873rem;
+`;
+
+export const FeedbackSubheader = styled.div`
+  font-size: 2.4rem;
+  font-weight; 400;
+  line-height: 2.905rem;
+  margin-top: 0.9rem;
+`;
+
+export const FundingContainer = styled.div`
+  display: flex;
+  margin: 21.9rem auto 0;
+  max-width: 120rem;
+
+  @media (max-width: 1263px) {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  @media (max-width: 1200px) {
+    margin-top: 54.9rem;
+  }
+
+  @media (max-width: 860px) {
+    margin-top: 29.9rem;
+  }
+`;
+
+export const FundingDescription = styled.div`
+  background: ${blueGrayColor};
+  border-bottom-left-radius: 0.7rem;
+  border-top-left-radius: 0.7rem;
+  padding: 6.4rem 8.2rem;
+  width: 50%;
+
+  @media (max-width: 1263px) {
+    border-bottom-left-radius: 0rem;
+    border-top-right-radius: 0.7rem;
+    width: 100%;
+  }
+
+  @media (max-width: 740px) {
+    padding: 3.7rem 3.5rem;
+  }
+`;
+
+export const FundingImage = styled.div`
+  align-items: center;
+  background: ${navyColor};
+  border-bottom-right-radius: 0.7rem;
+  border-top-right-radius: 0.7rem;
+  display: flex;
+  justify-content: center;
+  width: 50%;
+
+  @media (max-width: 1263px) {
+    border-bottom-left-radius: 0.7rem;
+    border-top-right-radius: 0;
+    padding: 2rem;
+    width: 100%;
+  }
+
+  @media (max-width: 595px) {
+    svg {
+      width: 28.5rem;
+    }
   }
 `;
 
@@ -129,7 +339,7 @@ export const HeaderImageRightIcon = styled.div`
     }
   }
 
-  @media (max-width: 960px) {
+  @media (max-width: 1030px) {
     svg {
       top: 31.9rem;
     }
@@ -201,14 +411,111 @@ export const LandingCard = styled.div`
   }
 
   @media (max-width: 600px) {
-    padding: 2.4rem 3rem;
     height: 35.3rem;
+    padding: 2.4rem 3rem;
     width: 38.2rem;
   }
 
   @media (max-width: 450px) {
     height: 34.3rem;
     width: 28.2rem;
+  }
+`;
+
+export const LandingCardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 38.5rem;
+  place-items: center;
+
+  @media (max-width: 1030px) {
+    height: 110rem;
+    margin-top: 62.5rem;
+  }
+
+  @media (max-width: 600px) {
+    height: 78rem;
+  }
+
+  @media (max-width: 450px) {
+    height: 76rem;
+    margin-top: 54.5rem;
+  }
+`;
+
+export const LandingCardGroup = styled.div`
+  margin-bottom: 7.7rem;
+  margin-left: -50.8rem;
+  position: relative;
+
+  @media (max-width: 1200px) {
+    margin-left: 0;
+  }
+`;
+
+export const LandingCardLargeText = styled.div`
+  color: ${whiteColor};
+  font-size 3.2rem;
+  font-weight: 700;
+  line-height: 3.36rem;
+`;
+
+export const LandingCardSmallText = styled.div`
+  color: ${whiteColor};
+  font-size 1.6rem;
+  font-weight: 400;
+  line-height: 2.4rem;
+  margin-top: 0.8rem;
+
+  @media (max-width: 450px) {
+    font-size 1.4rem;
+    line-height: 1.656rem;
+    margin-top: 0.4rem;
+  }
+`;
+
+export const LandingContainer = styled.div`
+  height: 100%;
+  padding: 18.4rem 12rem 0;
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: 700px) {
+    padding: 18.4rem 3rem 0;
+  }
+`;
+
+export const LandingContainerText = styled.span`
+  color: ${whiteColor};
+  font-size: 5.6rem;
+  font-weight: 700;
+  line-height: 6.16rem;
+
+  span {
+    font-family: ${codeFontFamily};
+  }
+
+  @media (max-width: 550px) {
+    font-size: 4.6rem;
+    line-height: 5.16rem;
+  }
+
+  @media (max-width: 460px) {
+    font-size: 3.6rem;
+    line-height: 4.104rem;
+  }
+
+  @media (max-width: 350px) {
+    font-size: 3rem;
+    line-height: 3.5rem;
+  }
+`;
+
+export const LandingWrapper = styled.div`
+  height: 32rem;
+
+  @media (max-width: 1030px) {
+    margin-top: -18rem;
   }
 `;
 
@@ -256,153 +563,8 @@ export const PrimaryLandingCard = styled.div`
 
   @media (max-width: 450px) {
     height: 12rem;
-    width: 30.5rem;
     top: 19.8rem;
-  }
-`;
-
-export const LandingCardGroup = styled.div`
-  margin-bottom: 7.7rem;
-  margin-left: -50.8rem;
-  position: relative;
-
-  @media (max-width: 1200px) {
-    margin-left: 0;
-  }
-`;
-
-export const LandingCardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 38.5rem;
-  place-items: center;
-
-  @media (max-width: 1030px) {
-    height: 110rem;
-    margin-top: 62.5rem;
-  }
-
-  @media (max-width: 600px) {
-    height: 78rem;
-  }
-
-  @media (max-width: 450px) {
-    height: 76rem;
-    margin-top: 54.5rem;
-  }
-`;
-
-export const LandingCardLargeText = styled.div`
-  color: ${whiteColor};
-  font-size 3.2rem;
-  font-weight: 700;
-  line-height: 3.36rem;
-`;
-
-export const LandingCardSmallText = styled.div`
-  color: ${whiteColor};
-  font-size 1.6rem;
-  font-weight: 400;
-  line-height: 2.4rem;
-  margin-top: 0.8rem;
-
-  @media (max-width: 450px) {
-    font-size 1.4rem;
-    line-height: 1.656rem;
-    margin-top: 0.4rem;
-  }
-`;
-
-export const BackgroundSolidCircleIcon = styled.div`
-  svg {
-    left: 50%;
-    position: absolute;
-    top: 95.7rem;
-    transform: translateX(-50%);
-  }
-
-  @media (max-width: 1200px) {
-    svg {
-      top: 208.9rem;
-    }
-  }
-
-  @media (max-width: 860px) {
-    svg {
-      display: none;
-    }
-  }
-`;
-
-export const TextWrapper = styled.div`
-  float: ${({ isFloatingLeft }) => (isFloatingLeft ? 'right' : 'left')};
-  max-width: 32.7rem;
-
-  @media (max-width: 1200px) {
-    float: left;
-  }
-`;
-
-export const StyledProfileImage = styled.img`
-  height: auto;
-  width: 49.5rem;
-
-  @media (max-width: 1400px) {
-    width: 42.5rem;
-  }
-
-  @media (max-width: 600px) {
-    width: 39.5rem;
-  }
-
-    @media (max-width: 450px) {
-    width: 29rem;
-  }
-`;
-
-export const StyledCommentImage = styled.img`
-  height: auto;
-  width: 49.5rem;
-
-  @media (max-width: 1400px) {
-    width: 42.5rem;
-  }
-
-  @media (max-width: 600px) {
-    width: 39.5rem;
-  }
-
-  @media (max-width: 450px) {
-    width: 29rem;
-  }
-`;
-
-export const StyledFundingImage = styled.img`
-  height: auto;
-  width: 47.6rem;
-
-  @media (max-width: 740px) {
-    width: 43.6rem
-  }
-
-  @media (max-width: 595px) {
-    width: 40rem;
-  }
-
-  @media (max-width: 505px) {
-    width: 35rem;
-  }
-
-  @media (max-width: 450px) {
-    width: 30rem;
-  }
-
-  @media (max-width: 400px) {
-    width: 25.8rem;
-  }
-
-  @media (max-width: 350px) {
-    width: 22.5rem;
+    width: 30.5rem;
   }
 `;
 
@@ -472,8 +634,8 @@ export const StatsHeader = styled.div`
 `;
 
 export const StatsText = styled.div`
-  font-weight: 700;
   font-size: 1.6rem;
+  font-weight: 700;
   line-height: 1.936rem;
 `;
 
@@ -483,145 +645,50 @@ export const StatsWrapper = styled.div`
   margin: 2.7rem 0 4.5rem;
 `;
 
-export const FundingContainer = styled.div`
-  display: flex;
-  margin: 21.9rem auto 0;
-  max-width: 120rem;
+export const StyledCommentImage = styled.img`
+  height: auto;
+  width: 49.5rem;
 
-  @media (max-width: 1263px) {
-    align-items: center;
-    flex-direction: column;
+  @media (max-width: 1400px) {
+    width: 42.5rem;
   }
 
-  @media (max-width: 1200px){
-    margin-top: 54.9rem;
+  @media (max-width: 600px) {
+    width: 39.5rem;
   }
 
-  @media (max-width: 860px){
-    margin-top: 29.9rem;
+  @media (max-width: 450px) {
+    width: 29rem;
   }
 `;
 
-export const FundingDescription = styled.div`
-  background: ${blueGrayColor};
-  border-bottom-left-radius: 0.7rem;
-  border-top-left-radius: 0.7rem;
-  padding: 6.4rem 8.2rem;
-  width: 50%;
-
-  @media (max-width: 1263px) {
-    border-bottom-left-radius: 0rem;
-    border-top-right-radius: 0.7rem;
-    width: 100%;
-  }
+export const StyledFundingImage = styled.img`
+  height: auto;
+  width: 47.6rem;
 
   @media (max-width: 740px) {
-    padding: 3.7rem 3.5rem;
-  }
-`;
-
-export const FundingImage = styled.div`
-  align-items: center;
-  background: ${navyColor};
-  border-bottom-right-radius: 0.7rem;
-  border-top-right-radius: 0.7rem;
-  display: flex;
-  justify-content: center;
-  width: 50%;
-
-  @media (max-width: 1263px) {
-    border-bottom-left-radius: 0.7rem;
-    border-top-right-radius: 0;
-    padding: 2rem;
-    width: 100%;
+    width: 43.6rem;
   }
 
   @media (max-width: 595px) {
-    svg {
-      width: 28.5rem;
-    }
-  }
-`;
-
-export const ActionContainer = styled.div`
-  color: ${whiteColor};
-  display: flex;
-  margin-top: 24.4rem;
-
-  @media (max-width: 1275px) {
-    flex-direction: column;
-  }
-`;
-
-export const ActionCard = styled.div`
-  background: ${blueGrayColor};
-  border-radius: 0.7rem;
-  display: flex;
-  flex-direction: column;
-  height: 28.5rem;
-  justify-content: space-between;
-  margin-left: 2.5rem;
-  padding: 4rem 3.2rem 3.5rem;
-  width: 28.5rem;
-
-  @media (max-width: 1456px) {
-    height: 25.5rem;
-    width: 25.5rem;
+    width: 40rem;
   }
 
-  @media (max-width: 1366px) {
-    height: 22.5rem;
-    padding: 2.4rem;
+  @media (max-width: 505px) {
+    width: 35rem;
+  }
+
+  @media (max-width: 450px) {
+    width: 30rem;
+  }
+
+  @media (max-width: 400px) {
+    width: 25.8rem;
+  }
+
+  @media (max-width: 350px) {
     width: 22.5rem;
   }
-
-  @media (max-width: 1275px) {
-    margin-left: ${({ hasNoMargin }) => hasNoMargin ? 0 : '2.5rem'};
-  }
-
-  @media (max-width: 900px) {
-    height: 28.5rem;
-    margin: 0 auto 1.6rem;
-    width: 28.5rem;
-  }
-
-  @media (max-width: 900px) {
-    height: 22.5rem;
-    width: 22.5rem;
-  }
-`;
-
-export const ActionCardWrapper = styled.div`
-  display: flex;
-
-  @media (max-width: 1275px) {
-    align-self: center;
-  }
-
-  @media (max-width: 900px) {
-    flex-direction: column;
-  }
-`;
-
-export const ActionHeader = styled.div`
-  font-size 3.2rem;
-  font-weight: 700;
-  line-height: 3.873rem;
-  margin-right: 7.4rem;
-  margin-top: 2rem;
-  min-width: 19.8rem;
-
-  @media (max-width: 12755px) {
-    margin: 0 auto 3.3rem;
-    min-width: 15.9rem;
-    text-align: center;
-  }
-`;
-
-export const ActionCardTitle = styled.div`
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 3.45rem;
 `;
 
 export const StyledLink = styled(Link)`
@@ -649,138 +716,76 @@ export const StyledLink = styled(Link)`
   }
 `;
 
-export const BackgroundHollowCircleBottomIcon = styled.div`
-  svg {
-    left: -6.4rem;
-    position: absolute;
-    top: 382.4rem;
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  background: ${darkBlueColor};
+  border: 0.2rem solid ${whiteColor};
+  color: ${whiteColor};
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  margin: 0 0 0 2.4rem;
+  text-transform: none;
+  width: 16.3rem;
+
+  &:hover {
+    background: ${darkBlueColor};
+  }
+
+  @media (max-width: 992px) {
+    font-size: 1.376rem;
+  }
+
+  @media (max-width: 460px) {
+    margin: 2.4rem 0 0;
+    width: 19.7rem;
+  }
+`;
+
+export const StyledProfileImage = styled.img`
+  height: auto;
+  width: 49.5rem;
+
+  @media (max-width: 1400px) {
+    width: 42.5rem;
   }
 
   @media (max-width: 600px) {
-    display: none;
+    width: 39.5rem;
+  }
+
+  @media (max-width: 450px) {
+    width: 29rem;
   }
 `;
 
-export const BackgroundHollowCircleTopIcon = styled.div`
-  svg {
-    left: 92rem;
-    position: absolute;
-    top: 249.9rem;
-  }
-`;
-
-export const Contributor = styled.div`
-  background: ${grayColor};
-  border-radius: 50%;
-  height: 11.4rem;
-  margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '4.1rem')};
-  opacity: 0.2;
-  width: 11.4rem;
-
-  @media (max-width: 833px) {
-    height: 9.5rem;
-    margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '3.1rem')};
-    width: 9.5rem;
-  }
-
-  @media (max-width: 670px) {
-    height: 8.5rem;
-    margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '3.1rem')};
-    width: 8.5rem;
-  }
-
-  @media (max-width: 630px) {
-    display: ${({ removeFirst }) => (removeFirst ? 'none' : 'flex')};
-  }
-
-  @media (max-width: 550px) {
-    height: 7.5rem;
-    margin-left: ${({ hasNoMargin }) => (hasNoMargin ? '0' : '2.5rem')};
-    width: 7.5rem;
-  }
-
-  @media (max-width: 440px) {
-    display: ${({ removeFirst, removeSecond }) =>
-    removeFirst || removeSecond ? 'none' : 'flex'};
-  }
-`;
-
-export const ContributorsContainer = styled.div`
-  align-items: center;
-  color: ${whiteColor};
-  display: flex;
-  flex-direction: column;
-  margin-top: 36.1rem;
-`;
-
-export const ContributorsWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin: 4rem 0;
-`;
-
-export const ContributorsHeader = styled.div`
-  font-size: 3.2rem;
+export const StyledSecondaryButton = styled(SecondaryButton)`
+  background: ${whiteColor};
+  color: ${darkBlueColor};
+  font-size: 1.6rem;
   font-weight: 700;
-  line-height: 3.36rem;
-  text-align: center;
-`;
+  height: 4.8rem;
+  margin: 0;
+  text-transform: none;
+  width: 19.7rem;
 
-export const ContributorsLinkWrapper = styled.div`
-  display: flex;
+  &:hover {
+    background: ${whiteColor};
+  }
 
-  @media (max-width: 390px) {
-    flex-direction: column;
+  @media (max-width: 992px) {
+    font-size: 1.376rem;
   }
 `;
 
-export const BottomRowContributors = styled.div`
-  display: flex;
-  margin-top: 1.6rem;
+export const TextWrapper = styled.div`
+  float: ${({ isFloatingLeft }) => (isFloatingLeft ? 'right' : 'left')};
+  max-width: 32.7rem;
+
+  @media (max-width: 1200px) {
+    float: left;
+  }
 `;
 
 export const TopRowContributors = styled.div`
   display: flex;
-`;
-
-export const FeedbackContainer = styled.div`
-  background: ${blueGrayColor};
-  border-radius: 0.7rem;
-  color: ${whiteColor};
-  display: flex;
-  height: 47.5rem;
-  margin: 24.4rem auto 5.6rem;
-  max-width: 120rem;
-  padding: 6.4rem 7.5rem;
-
-  @media (max-width: 1000px) {
-    flex-direction: column;
-    height: auto;
-  }
-
-  @media (max-width: 500px) {
-    padding: 2.6rem 2.8rem 5.052rem;
-  }
-`;
-
-export const FeedbackHeader = styled.div`
-  font-size: 3.2rem;
-  font-weight: 700;
-  line-height: 3.873rem;
-`;
-
-export const FeedbackSubheader = styled.div`
-  font-size: 2.4rem;
-  font-weight; 400;
-  line-height: 2.905rem;
-  margin-top: 0.9rem;
-`;
-
-export const LandingWrapper = styled.div`
-  height: 32rem;
-  
-  @media (max-width: 1030px) {
-    margin-top: -18rem;
-  }
 `;
