@@ -27,15 +27,23 @@ export const InternalLink = styled(BaseLink)`
   }
 `;
 
-export const LogoText = styled.div`
-  color: ${whiteColor};
-  font-family: Courier;
-  font-size: 2.4rem;
-  font-weight: 700;
+export const Logo = styled.div`
+  background: white;
+  border-radius: 50%;
+  height: 4rem;
+  margin-right: 1rem;
+  text-align: center;
+  width: 4rem;
+
+  svg {
+    height: 100%;
+    width: 3rem;
+  }
 `;
 
 export const LogoWrapper = styled.div`
-  align-self: center;
+  align-items: center;
+  display: flex;
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
@@ -73,4 +81,11 @@ export const VerticalDivider = styled.div`
   height: 0rem;
   transform: rotate(90deg);
   width: 2.1rem;
+`;
+
+export const Wordmark = styled.div`
+  svg {
+    height: 3rem;
+    width: auto;
+  }
 `;

@@ -63,6 +63,7 @@ import Python from './svg/Python';
 import ReactIcon from './svg/React';
 import Ruby from './svg/Ruby';
 import SiteLogo from './svg/SiteLogo';
+import SiteWordmark from './svg/SiteWordmark';
 import Stackoverflow from './svg/Stackoverflow';
 
 import { iconSize, iconStyle } from '../defaultStyleHelper';
@@ -121,6 +122,7 @@ export default (name, size, style) => {
     search: Search,
     settings: Settings,
     siteLogo: SiteLogo,
+    siteWordmark: SiteWordmark,
     stackoverflow: Stackoverflow,
     star: Star,
     stats: Stats,

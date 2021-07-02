@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import T from 'prop-types';
 
 import {
   ButtonWrapper,
@@ -31,7 +31,7 @@ const MenuComponent = props => (
   />
 );
 
-const MobileLandingHeader = () => {
+const MobileLandingHeader = ({ handleNav }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClose = () => {
     setAnchorEl(null);
@@ -41,7 +41,6 @@ const MobileLandingHeader = () => {
     setAnchorEl(document.getElementById('mobileNavDropDown'));
   };
 
-  const history = useHistory();
   return (
     <DesktopHeaderContainer>
       <LogoWrapper>
@@ -51,7 +50,7 @@ const MobileLandingHeader = () => {
       <ButtonWrapper>
         <StyledSecondaryButton
           label="Sign up"
-          onClick={() => history.push('/signup')}
+          onClick={() => handleNav('/signup')}
         />
         <StyledExpandIcon id="mobileNavDropDown" onClick={() => handleOpen()} />
       </ButtonWrapper>
@@ -72,6 +71,6 @@ const MobileLandingHeader = () => {
   );
 };
 
-MobileLandingHeader.propTypes = {};
+MobileLandingHeader.propTypes = { handleNav: T.func.isRequired };
 
 export default MobileLandingHeader;

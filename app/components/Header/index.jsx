@@ -23,6 +23,12 @@ const Header = ({
     deviceView === 'mobileS' ||
     deviceView === 'mobileXS' ||
     deviceView === 'mobileXXS';
+  const isMobileOrTabletOrLaptop =
+    isMobile ||
+    deviceView === 'tablet' ||
+    deviceView === 'laptopS' ||
+    deviceView === 'laptop';
+
   const { pathname } = window.location;
   const isLandingPage = pathname === '/';
 
@@ -32,6 +38,7 @@ const Header = ({
   const MobileHeaderToRender = isLandingPage
     ? MobileLandingHeader
     : MobileHeader;
+
   return (
     <ConditionalRender
       Component={DesktopHeaderToRender}
@@ -49,7 +56,7 @@ const Header = ({
         location,
         setIsDrawerOpen,
       }}
-      shouldRender={!isMobile}
+      shouldRender={!isMobileOrTabletOrLaptop}
     />
   );
 };

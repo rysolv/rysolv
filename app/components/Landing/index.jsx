@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
@@ -48,12 +49,15 @@ import {
   StatsHeader,
   StatsText,
   StatsWrapper,
-  StyledImage,
+  StyledCommentImage,
+  StyledProfileImage,
   StyledLink,
   StyledPrimaryButton,
   StyledSecondaryButton,
   TextWrapper,
   TopRowContributors,
+  StyledFundingImage,
+  LandingWrapper,
 } from './styledComponents';
 
 const BackgroundHollowCircle = iconDictionary('backgroundHollowCircle');
@@ -63,236 +67,205 @@ const HeaderImageRight = iconDictionary('headerImageRight');
 const NextIcon = iconDictionary('navigateNext');
 
 const Landing = ({
-  deviceView,
   dispatchResetFeedback,
   dispatchSendContact,
   error,
+  handleNav,
   loading,
   stats,
   success,
-}) => {
-  const isMobile =
-    deviceView === 'mobile' ||
-    deviceView === 'mobileS' ||
-    deviceView === 'mobileXS' ||
-    deviceView === 'mobileXXS';
-
-  return (
-    <Fragment>
-      <LandingContainer>
-        <div>
-          <div>
-            <LandingContainerText>
-              A crowdfunding
-              <br />
-              platform for
-              <br />
-              open source.
-            </LandingContainerText>
-            <ButtonGroup>
-              <StyledSecondaryButton
-                label="Become a Rysolver"
-                onClick={() => {}}
-              />
-              <StyledPrimaryButton label="Add your team" onClick={() => {}} />
-            </ButtonGroup>
-          </div>
-          <LandingCardContainer>
-            <LandingCardGroup>
-              <LandingCard>
-                <TextWrapper>
-                  <LandingCardLargeText>
-                    Fix code.
-                    <br />
-                    Earn rewards.
-                  </LandingCardLargeText>
-                  <LandingCardSmallText>
-                    Once your pull request is approved, you can claim the
-                    bounty.
-                  </LandingCardSmallText>
-                </TextWrapper>
-              </LandingCard>
-              <PrimaryLandingCard>
-                <StyledImage
-                  alt=""
-                  loading="lazy"
-                  src={FeatureCommentImage}
-                  width="49.5rem"
-                />
-              </PrimaryLandingCard>
-            </LandingCardGroup>
-            <LandingCardGroup>
-              <PrimaryLandingCard isFloatingLeft>
-                <StyledImage
-                  alt=""
-                  loading="lazy"
-                  src={FeatureProfileImage}
-                  width="49.5rem"
-                />
-              </PrimaryLandingCard>
-              <LandingCard isFloatingLeft>
-                <TextWrapper isFloatingLeft>
-                  <LandingCardLargeText>
-                    Build your
-                    <br />
-                    developer profile.
-                  </LandingCardLargeText>
-                  <LandingCardSmallText>
-                    We analyze your coding history, and match you with companies
-                    looking for your skills.
-                  </LandingCardSmallText>
-                </TextWrapper>
-              </LandingCard>
-            </LandingCardGroup>
-          </LandingCardContainer>
-          <StatsContainer>
-            <StatsHeader>
-              Help sustain
-              <br />
-              the OS ecosystem
-            </StatsHeader>
-            <StatsWrapper>
-              <div>
-                <Stat>{formatDollarAmount(stats.totalFunded, true)}</Stat>
-                <StatsText>bounties contributed</StatsText>
-              </div>
-              <div>
-                <Stat>{stats.totalResolved}</Stat>
-                <StatsText>issues resolved</StatsText>
-              </div>
-            </StatsWrapper>
+}) => (
+  <Fragment>
+    <LandingContainer>
+      <div>
+        <LandingWrapper>
+          <LandingContainerText>
+            A crowdfunding <br />platform for <br /> open source.
+          </LandingContainerText>
+          <ButtonGroup>
             <StyledSecondaryButton
-              label="Join the community"
-              onClick={() => {}}
+              label="Become a Rysolver"
+              onClick={() => handleNav('/signup')}
             />
-          </StatsContainer>
-          <FundingContainer>
-            <FundingDescription>
-              <LandingCardLargeText>
-                Support open source
-                <br />
-                teams you care about.
-              </LandingCardLargeText>
-              <LandingCardSmallText>
-                Add funds to issues you care about. You can also use your
-                bounties to support more open source projects!
-              </LandingCardSmallText>
-            </FundingDescription>
-            <FundingImage>
-              <StyledImage
+            <StyledPrimaryButton label="Add your team" onClick={() => handleNav('/repos/add')} />
+          </ButtonGroup>
+        </LandingWrapper>
+        <LandingCardContainer>
+          <LandingCardGroup>
+            <LandingCard>
+              <TextWrapper>
+                <LandingCardLargeText>
+                  Fix code.
+                  <br />
+                  Earn rewards.
+                </LandingCardLargeText>
+                <LandingCardSmallText>
+                  Once your pull request is approved, you can claim the bounty.
+                </LandingCardSmallText>
+              </TextWrapper>
+            </LandingCard>
+            <PrimaryLandingCard>
+              <StyledCommentImage
                 alt=""
                 loading="lazy"
-                src={FeatureFundingImage}
-                width="47.6rem"
+                src={FeatureCommentImage}
               />
-            </FundingImage>
-          </FundingContainer>
-          <ActionContainer>
-            <ActionHeader>Get started on your first bounty</ActionHeader>
-            <ActionCardWrapper>
-              <ActionCard hasNoMargin>
-                <ActionCardTitle>
-                  Find issues in your favorite language.
-                </ActionCardTitle>
-                <StyledLink to="/">Browse bounties {NextIcon}</StyledLink>
-              </ActionCard>
-              <ActionCard>
-                <ActionCardTitle>Build your developer profile.</ActionCardTitle>
-                <StyledLink to="/">Sign up {NextIcon}</StyledLink>
-              </ActionCard>
-              <ActionCard>
-                <ActionCardTitle>
-                  Have a specific project in mind?
-                </ActionCardTitle>
-                <StyledLink to="/">Browse teams {NextIcon}</StyledLink>
-              </ActionCard>
-            </ActionCardWrapper>
-          </ActionContainer>
-          <ConditionalRender
-            Component={
-              <ContributorsContainer>
-                <ContributorsHeader>
-                  Contribute to software
+            </PrimaryLandingCard>
+          </LandingCardGroup>
+          <LandingCardGroup>
+            <PrimaryLandingCard isFloatingLeft>
+              <StyledProfileImage
+                alt=""
+                loading="lazy"
+                src={FeatureProfileImage}
+              />
+            </PrimaryLandingCard>
+            <LandingCard isFloatingLeft>
+              <TextWrapper isFloatingLeft>
+                <LandingCardLargeText>
+                  Build your
                   <br />
-                  people use every day.
-                </ContributorsHeader>
-                <ContributorsWrapper>
-                  <TopRowContributors>
-                    <Contributor hasNoMargin />
-                    <Contributor />
-                    <Contributor />
-                    <Contributor removeSecond />
-                    <Contributor removeFirst />
-                  </TopRowContributors>
-                  <BottomRowContributors>
-                    <Contributor hasNoMargin />
-                    <Contributor />
-                    <Contributor removeSecond />
-                    <Contributor removeFirst />
-                  </BottomRowContributors>
-                </ContributorsWrapper>
-                <ContributorsLinkWrapper>
-                  <StyledLink to="/" width="14.3rem">
-                    See all teams {NextIcon}
-                  </StyledLink>
-                  <StyledLink margin="8.2rem" to="/" width="14.3rem">
-                    Add your team {NextIcon}
-                  </StyledLink>
-                </ContributorsLinkWrapper>
-              </ContributorsContainer>
-            }
-            shouldRender={false}
-          />
-          <FeedbackContainer>
+                  developer profile.
+                </LandingCardLargeText>
+                <LandingCardSmallText>
+                  We analyze your coding history, and match you with companies
+                  looking for your skills.
+                </LandingCardSmallText>
+              </TextWrapper>
+            </LandingCard>
+          </LandingCardGroup>
+        </LandingCardContainer>
+        <StatsContainer>
+          <StatsHeader>
+            Help sustain
+            <br />
+            the OS ecosystem
+          </StatsHeader>
+          <StatsWrapper>
             <div>
-              <FeedbackHeader>Want to get involved?</FeedbackHeader>
-              <FeedbackSubheader>
-                Tell us more about your team.
-              </FeedbackSubheader>
+              <Stat>{formatDollarAmount(stats.totalFunded, true)}</Stat>
+              <StatsText>bounties contributed</StatsText>
             </div>
-            <Feedback
-              dispatchResetFeedback={dispatchResetFeedback}
-              dispatchSendContact={dispatchSendContact}
-              error={error}
-              loading={loading}
-              success={success}
+            <div>
+              <Stat>{stats.totalResolved}</Stat>
+              <StatsText>issues resolved</StatsText>
+            </div>
+          </StatsWrapper>
+          <StyledSecondaryButton
+            label="Join the community"
+            onClick={() => handleNav('/signup')}
+          />
+        </StatsContainer>
+        <FundingContainer>
+          <FundingDescription>
+            <LandingCardLargeText>
+              Support open source
+              <br />
+              teams you care about.
+            </LandingCardLargeText>
+            <LandingCardSmallText>
+              Add funds to issues you care about. You can also use your bounties
+              to support more open source projects!
+            </LandingCardSmallText>
+          </FundingDescription>
+          <FundingImage>
+            <StyledFundingImage
+              alt=""
+              loading="lazy"
+              src={FeatureFundingImage}
             />
-          </FeedbackContainer>
-        </div>
-      </LandingContainer>
-      <HeaderImageRightIcon>{HeaderImageRight}</HeaderImageRightIcon>
-      <ConditionalRender
-        Component={<HeaderImageLeftIcon>{HeaderImageLeft}</HeaderImageLeftIcon>}
-        shouldRender={!isMobile}
-      />
-      <ConditionalRender
-        Component={
-          <BackgroundHollowCircleTopIcon>
-            {BackgroundHollowCircle}
-          </BackgroundHollowCircleTopIcon>
-        }
-        shouldRender={!isMobile}
-      />
-      <ConditionalRender
-        Component={
-          <BackgroundHollowCircleBottomIcon>
-            {BackgroundHollowCircle}
-          </BackgroundHollowCircleBottomIcon>
-        }
-        shouldRender={!isMobile}
-      />
-      <BackgroundSolidCircleIcon>
-        {BackgroundSolidCircle}
-      </BackgroundSolidCircleIcon>
-    </Fragment>
-  );
-};
+          </FundingImage>
+        </FundingContainer>
+        <ActionContainer>
+          <ActionHeader>Get started on your first bounty</ActionHeader>
+          <ActionCardWrapper>
+            <ActionCard hasNoMargin>
+              <ActionCardTitle>
+                Find issues in your favorite language.
+              </ActionCardTitle>
+              <StyledLink to="/issues">Browse bounties {NextIcon}</StyledLink>
+            </ActionCard>
+            <ActionCard>
+              <ActionCardTitle>Build your developer profile.</ActionCardTitle>
+              <StyledLink to="/signup">Sign up {NextIcon}</StyledLink>
+            </ActionCard>
+            <ActionCard>
+              <ActionCardTitle>
+                Have a specific project in mind?
+              </ActionCardTitle>
+              <StyledLink to="/repos">Browse teams {NextIcon}</StyledLink>
+            </ActionCard>
+          </ActionCardWrapper>
+        </ActionContainer>
+        <ConditionalRender
+          Component={
+            <ContributorsContainer>
+              <ContributorsHeader>
+                Contribute to software
+                <br />
+                people use every day.
+              </ContributorsHeader>
+              <ContributorsWrapper>
+                <TopRowContributors>
+                  <Contributor hasNoMargin />
+                  <Contributor />
+                  <Contributor />
+                  <Contributor removeSecond />
+                  <Contributor removeFirst />
+                </TopRowContributors>
+                <BottomRowContributors>
+                  <Contributor hasNoMargin />
+                  <Contributor />
+                  <Contributor removeSecond />
+                  <Contributor removeFirst />
+                </BottomRowContributors>
+              </ContributorsWrapper>
+              <ContributorsLinkWrapper>
+                <StyledLink to="/repos" width="14.3rem">
+                  See all teams {NextIcon}
+                </StyledLink>
+                <StyledLink margin="8.2rem" to="/repos/add" width="14.3rem">
+                  Add your team {NextIcon}
+                </StyledLink>
+              </ContributorsLinkWrapper>
+            </ContributorsContainer>
+          }
+          shouldRender={false}
+        />
+        <FeedbackContainer>
+          <div>
+            <FeedbackHeader>Want to get involved?</FeedbackHeader>
+            <FeedbackSubheader>Tell us more about your team.</FeedbackSubheader>
+          </div>
+          <Feedback
+            dispatchResetFeedback={dispatchResetFeedback}
+            dispatchSendContact={dispatchSendContact}
+            error={error}
+            loading={loading}
+            success={success}
+          />
+        </FeedbackContainer>
+      </div>
+    </LandingContainer>
+    <HeaderImageRightIcon>{HeaderImageRight}</HeaderImageRightIcon>
+    <HeaderImageLeftIcon>{HeaderImageLeft}</HeaderImageLeftIcon>
+    <BackgroundHollowCircleTopIcon>
+      {BackgroundHollowCircle}
+    </BackgroundHollowCircleTopIcon>
+    <BackgroundHollowCircleBottomIcon>
+      {BackgroundHollowCircle}
+    </BackgroundHollowCircleBottomIcon>
+    <BackgroundSolidCircleIcon>
+      {BackgroundSolidCircle}
+    </BackgroundSolidCircleIcon>
+  </Fragment>
+);
 
 Landing.propTypes = {
-  deviceView: T.string.isRequired,
   dispatchResetFeedback: T.func.isRequired,
   dispatchSendContact: T.func.isRequired,
   error: T.bool.isRequired,
+  handleNav: T.func.isRequired,
   loading: T.bool.isRequired,
   stats: T.object.isRequired,
   success: T.bool.isRequired,
