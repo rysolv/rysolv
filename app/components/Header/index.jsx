@@ -4,7 +4,9 @@ import T from 'prop-types';
 import { ConditionalRender } from 'components/base_ui';
 
 import DesktopHeader from './DesktopHeader';
+import DesktopLandingHeader from './DesktopLandingHeader';
 import MobileHeader from './MobileHeader';
+import MobileLandingHeader from './MobileLandingHeader';
 
 const Header = ({
   activeUser,
@@ -21,12 +23,29 @@ const Header = ({
     deviceView === 'mobileS' ||
     deviceView === 'mobileXS' ||
     deviceView === 'mobileXXS';
+  const isMobileOrTabletOrLaptop =
+    isMobile ||
+    deviceView === 'tablet' ||
+    deviceView === 'laptopS' ||
+    deviceView === 'laptop';
+
   const { pathname } = window.location;
   const isLandingPage = pathname === '/';
+
+  const DesktopHeaderToRender = isLandingPage
+    ? DesktopLandingHeader
+    : DesktopHeader;
+
+  const MobileHeaderToRender = isLandingPage
+    ? MobileLandingHeader
+    : MobileHeader;
+
+  const shouldRender = isLandingPage ? !isMobileOrTabletOrLaptop : !isMobile;
+
   return (
     <ConditionalRender
-      Component={DesktopHeader}
-      FallbackComponent={MobileHeader}
+      Component={DesktopHeaderToRender}
+      FallbackComponent={MobileHeaderToRender}
       propsToPassDown={{
         activeUser,
         deviceView,
@@ -40,7 +59,7 @@ const Header = ({
         location,
         setIsDrawerOpen,
       }}
-      shouldRender={!isMobile}
+      shouldRender={shouldRender}
     />
   );
 };

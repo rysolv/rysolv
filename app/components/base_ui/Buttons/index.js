@@ -3,6 +3,7 @@ import FundIssueButton from './FundIssueButton';
 import GithubButton from './GithubButton';
 import IconButton from './IconButton';
 import PaypalButton from './PaypalButton';
+import ProgressButton from './ProgressButton';
 import PullRequestButton from './PullRequestButton';
 import WatchIssueButton from './WatchIssuelButton';
 import {
@@ -22,6 +23,7 @@ export {
   PaypalButton,
   PrimaryAsyncButton,
   PrimaryButton,
+  ProgressButton,
   PullRequestButton,
   SecondaryAsyncButton,
   SecondaryButton,

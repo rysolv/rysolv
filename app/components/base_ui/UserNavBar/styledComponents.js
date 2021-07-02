@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { darkTextColor } from 'defaultStyleHelper';
+import { navyColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -44,9 +44,9 @@ export const StyledAvatar = styled.img`
 
 export const StyledUserNavBar = styled.div`
   align-items: center;
-  background-color: ${darkTextColor};
+  background-color: ${navyColor};
   border-radius: 5rem;
-  border: 0.2rem solid ${darkTextColor};
+  border: 0.2rem solid ${navyColor};
   display: flex;
   margin: 0.25rem 1rem;
   padding: 0.25rem 0.5rem;

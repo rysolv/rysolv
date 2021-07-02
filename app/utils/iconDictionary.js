@@ -23,6 +23,7 @@ import Edit from '@material-ui/icons/Edit';
 import Email from '@material-ui/icons/Email';
 import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Facebook from '@material-ui/icons/Facebook';
 import Flare from '@material-ui/icons/Flare';
 import Gift from '@material-ui/icons/Redeem';
@@ -48,8 +49,14 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Warning from '@material-ui/icons/Warning';
 import Web from '@material-ui/icons/Web';
 
+import BackgroundHollowCircle from './svg/BackgroundHollowCircle';
+import BackgroundSolidCircle from './svg/BackgroundSolidCircle';
 import CloseMenu from './svg/CloseMenu';
 import Coin from './svg/RysolvCoin';
+import DarkSiteLogo from './svg/DarkSiteLogo';
+import Discord from './svg/Discord';
+import HeaderImageLeft from './svg/HeaderImageLeft';
+import HeaderImageRight from './svg/HeaderImageRight';
 import Javascript from './svg/Javascript';
 import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
@@ -57,6 +64,7 @@ import Python from './svg/Python';
 import ReactIcon from './svg/React';
 import Ruby from './svg/Ruby';
 import SiteLogo from './svg/SiteLogo';
+import SiteWordmark from './svg/SiteWordmark';
 import Stackoverflow from './svg/Stackoverflow';
 
 import { iconSize, iconStyle } from '../defaultStyleHelper';
@@ -69,6 +77,8 @@ export default (name, size, style) => {
     attempt: Attempt,
     backArrow: ArrowBack,
     backArrowHalf: ArrowBackIos,
+    backgroundHollowCircle: BackgroundHollowCircle,
+    backgroundSolidCircle: BackgroundSolidCircle,
     cancel: Cancel,
     check: Check,
     close: Close,
@@ -79,18 +89,23 @@ export default (name, size, style) => {
     comments: Comments,
     computer: Computer,
     creditCard: CreditCard,
+    darkSiteLogo: DarkSiteLogo,
+    discord: Discord,
     dollarSquare: LocalAtm,
     done: Done,
     dropdownArrow: ArrowDropDown,
     edit: Edit,
     email: Email,
     exit: Exit,
+    expandIcon: ExpandMoreIcon,
     facebook: Facebook,
     flare: Flare,
     forwardArrowHalf: ArrowForwardIos,
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,
+    headerImageLeft: HeaderImageLeft,
+    headerImageRight: HeaderImageRight,
     help: Help,
     info: Info,
     issue: ErrorIcon,
@@ -109,6 +124,7 @@ export default (name, size, style) => {
     search: Search,
     settings: Settings,
     siteLogo: SiteLogo,
+    siteWordmark: SiteWordmark,
     stackoverflow: Stackoverflow,
     star: Star,
     stats: Stats,

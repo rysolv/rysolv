@@ -1,146 +1,270 @@
-import React from 'react';
+/* eslint-disable prettier/prettier */
+import React, { Fragment } from 'react';
+import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
+import Feedback from 'components/Feedback';
+import { formatDollarAmount } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
-  Card,
-  CardContainer,
-  CardIcon,
-  CardItem,
-  CardTitleWrapper,
-  HorizontalList,
-  Icon,
-  IconCircle,
-  IconWrapper,
-  LandingWrapper,
-  List,
-  ListContainer,
-  ListContent,
-  ListImage,
-  ListText,
-  ListTitle,
-  Section,
+  ActionCard,
+  ActionCardTitle,
+  ActionCardWrapper,
+  ActionContainer,
+  ActionHeader,
+  BackgroundHollowCircleBottomIcon,
+  BackgroundHollowCircleTopIcon,
+  BackgroundSolidCircleIcon,
+  BottomRowContributors,
+  ButtonGroup,
+  Contributor,
+  ContributorsContainer,
+  ContributorsHeader,
+  ContributorsLinkWrapper,
+  ContributorsWrapper,
+  FeedbackContainer,
+  FeedbackHeader,
+  FeedbackSubheader,
+  FundingContainer,
+  FundingDescription,
+  FundingImage,
+  HeaderImageLeftIcon,
+  HeaderImageRightIcon,
+  LandingCard,
+  LandingCardContainer,
+  LandingCardGroup,
+  LandingCardLargeText,
+  LandingCardSmallText,
+  LandingContainer,
+  LandingContainerText,
+  PrimaryLandingCard,
+  Stat,
+  StatsContainer,
+  StatsHeader,
+  StatsText,
+  StatsWrapper,
+  StyledCommentImage,
+  StyledProfileImage,
   StyledLink,
-  StyledSubheader,
-  SubheaderWrapper,
+  StyledPrimaryButton,
+  StyledSecondaryButton,
   TextWrapper,
+  TopRowContributors,
+  StyledFundingImage,
+  LandingWrapper,
 } from './styledComponents';
 
-const ArrowIcon = iconDictionary('navigateNext');
-const CodeIcon = iconDictionary('code');
-const ComputerIcon = iconDictionary('computer');
-const IssueIcon = iconDictionary('issue');
-const RepoIcon = iconDictionary('repo');
-const UserIcon = iconDictionary('user');
+const BackgroundHollowCircle = iconDictionary('backgroundHollowCircle');
+const BackgroundSolidCircle = iconDictionary('backgroundSolidCircle');
+const HeaderImageLeft = iconDictionary('headerImageLeft');
+const HeaderImageRight = iconDictionary('headerImageRight');
+const NextIcon = iconDictionary('navigateNext');
 
-const Landing = () => (
-  <LandingWrapper>
-    <Section>
-      <SubheaderWrapper>
-        <StyledSubheader>Start rysolving</StyledSubheader>
-        <IconWrapper>
-          <Icon>
-            <IconCircle>{CodeIcon}</IconCircle>
-          </Icon>
-        </IconWrapper>
-      </SubheaderWrapper>
-      <CardContainer>
-        <CardItem>
-          <Card>
-            <div>
-              <CardIcon>{UserIcon}</CardIcon>
-              <CardTitleWrapper>Sign Up</CardTitleWrapper>
+const Landing = ({
+  dispatchResetFeedback,
+  dispatchSendContact,
+  error,
+  handleNav,
+  loading,
+  stats,
+  success,
+}) => (
+  <Fragment>
+    <LandingContainer>
+      <div>
+        <LandingWrapper>
+          <LandingContainerText>
+            A crowdfunding <br />platform for <br /> <span>open source</span>.
+          </LandingContainerText>
+          <ButtonGroup>
+            <StyledSecondaryButton
+              label="Become a Rysolver"
+              onClick={() => handleNav('/signup')}
+            />
+            <StyledPrimaryButton label="Add your team" onClick={() => handleNav('/repos/add')} />
+          </ButtonGroup>
+        </LandingWrapper>
+        <LandingCardContainer>
+          <LandingCardGroup>
+            <LandingCard>
               <TextWrapper>
-                The best way to earn income while contributing to open source
-                development.
+                <LandingCardLargeText>
+                  Fix code.
+                  <br />
+                  Earn rewards.
+                </LandingCardLargeText>
+                <LandingCardSmallText>
+                  Once your pull request is approved, you can claim the bounty.
+                </LandingCardSmallText>
               </TextWrapper>
-            </div>
-            <StyledLink to="/signup">Create account {ArrowIcon}</StyledLink>
-          </Card>
-        </CardItem>
-        <CardItem>
-          <Card>
-            <div>
-              <CardIcon>{RepoIcon}</CardIcon>
-              <CardTitleWrapper>Browse Repos</CardTitleWrapper>
-              <TextWrapper>
-                Support some of the awesome repos that use rysolv.
+            </LandingCard>
+            <PrimaryLandingCard>
+              <StyledCommentImage
+                alt=""
+                loading="lazy"
+                src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureCommentImage.png"
+              />
+            </PrimaryLandingCard>
+          </LandingCardGroup>
+          <LandingCardGroup>
+            <PrimaryLandingCard isFloatingLeft>
+              <StyledProfileImage
+                alt=""
+                loading="lazy"
+                src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureProfileImage.png"
+              />
+            </PrimaryLandingCard>
+            <LandingCard isFloatingLeft>
+              <TextWrapper isFloatingLeft>
+                <LandingCardLargeText>
+                  Build your
+                  <br />
+                  developer profile.
+                </LandingCardLargeText>
+                <LandingCardSmallText>
+                  We analyze your coding history, and match you with companies
+                  looking for your skills.
+                </LandingCardSmallText>
               </TextWrapper>
-            </div>
-            <StyledLink to="/repos">Find a repo {ArrowIcon}</StyledLink>
-          </Card>
-        </CardItem>
-        <CardItem>
-          <Card>
+            </LandingCard>
+          </LandingCardGroup>
+        </LandingCardContainer>
+        <StatsContainer>
+          {BackgroundSolidCircle}
+          <StatsHeader>
+            Help sustain
+            <br />
+            the OS ecosystem
+          </StatsHeader>
+          <StatsWrapper>
             <div>
-              <CardIcon>{IssueIcon}</CardIcon>
-              <CardTitleWrapper>Browse Issues</CardTitleWrapper>
-              <TextWrapper>
-                Find issues and get paid to solve them. Contribute to software
+              <Stat>{formatDollarAmount(stats.totalFunded, true)}</Stat>
+              <StatsText>bounties contributed</StatsText>
+            </div>
+            <div>
+              <Stat>{stats.totalResolved}</Stat>
+              <StatsText>issues resolved</StatsText>
+            </div>
+          </StatsWrapper>
+          <StyledSecondaryButton
+            label="Join the community"
+            onClick={() => handleNav('/signup')}
+          />
+        </StatsContainer>
+        <FundingContainer>
+          <FundingDescription>
+            <LandingCardLargeText>
+              Support open source
+              <br />
+              teams you care about.
+            </LandingCardLargeText>
+            <LandingCardSmallText>
+              Add funds to issues you care about. You can also use your bounties
+              to support more open source projects!
+            </LandingCardSmallText>
+          </FundingDescription>
+          <FundingImage>
+            <StyledFundingImage
+              alt=""
+              loading="lazy"
+              src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureFundingImage.png"
+            />
+          </FundingImage>
+        </FundingContainer>
+        <ActionContainer>
+          <ActionHeader>Get started on your first bounty</ActionHeader>
+          <ActionCardWrapper>
+            <ActionCard hasNoMargin>
+              <ActionCardTitle>
+                Find issues in your favorite language.
+              </ActionCardTitle>
+              <StyledLink to="/issues">Browse bounties {NextIcon}</StyledLink>
+            </ActionCard>
+            <ActionCard>
+              <ActionCardTitle>Build your developer profile.</ActionCardTitle>
+              <StyledLink to="/signup">Sign up {NextIcon}</StyledLink>
+            </ActionCard>
+            <ActionCard>
+              <ActionCardTitle>
+                Have a specific project in mind?
+              </ActionCardTitle>
+              <StyledLink to="/repos">Browse teams {NextIcon}</StyledLink>
+            </ActionCard>
+          </ActionCardWrapper>
+        </ActionContainer>
+        <ConditionalRender
+          Component={
+            <ContributorsContainer>
+              <ContributorsHeader>
+                Contribute to software
+                <br />
                 people use every day.
-              </TextWrapper>
-            </div>
-            <StyledLink to="/issues">Find an issue {ArrowIcon}</StyledLink>
-          </Card>
-        </CardItem>
-      </CardContainer>
-    </Section>
-    <Section>
-      <SubheaderWrapper>
-        <StyledSubheader>How it works</StyledSubheader>
-        <IconWrapper>
-          <Icon>
-            <IconCircle>{ComputerIcon}</IconCircle>
-          </Icon>
-        </IconWrapper>
-      </SubheaderWrapper>
-      <ListContainer>
-        <HorizontalList>
-          <List>
-            <ListImage>1</ListImage>
-            <ListContent>
-              <ListTitle>Fund an issue</ListTitle>
-              <ListText>
-                Help improve tools people use everyday. Anyone can create an
-                issue, and add bounties to it.
-              </ListText>
-            </ListContent>
-          </List>
-          <List>
-            <ListImage>2</ListImage>
-            <ListContent>
-              <ListTitle>Find issues to solve</ListTitle>
-              <ListText>
-                Browse through opportunities, and find an issue to fix.
-              </ListText>
-            </ListContent>
-          </List>
-        </HorizontalList>
-        <HorizontalList>
-          <List>
-            <ListImage>3</ListImage>
-            <ListContent>
-              <ListTitle>Submit a solution</ListTitle>
-              <ListText>
-                After you solve the problem, you can submit your pull request
-                via Rysolv.
-              </ListText>
-            </ListContent>
-          </List>
-          <List>
-            <ListImage>4</ListImage>
-            <ListContent>
-              <ListTitle>Get paid</ListTitle>
-              <ListText>
-                When your pull request is merged, you will earn the bounty
-                placed on that issue.
-              </ListText>
-            </ListContent>
-          </List>
-        </HorizontalList>
-      </ListContainer>
-    </Section>
-  </LandingWrapper>
+              </ContributorsHeader>
+              <ContributorsWrapper>
+                <TopRowContributors>
+                  <Contributor hasNoMargin />
+                  <Contributor />
+                  <Contributor />
+                  <Contributor removeSecond />
+                  <Contributor removeFirst />
+                </TopRowContributors>
+                <BottomRowContributors>
+                  <Contributor hasNoMargin />
+                  <Contributor />
+                  <Contributor removeSecond />
+                  <Contributor removeFirst />
+                </BottomRowContributors>
+              </ContributorsWrapper>
+              <ContributorsLinkWrapper>
+                <StyledLink to="/repos" width="14.3rem">
+                  See all teams {NextIcon}
+                </StyledLink>
+                <StyledLink margin="8.2rem" to="/repos/add" width="14.3rem">
+                  Add your team {NextIcon}
+                </StyledLink>
+              </ContributorsLinkWrapper>
+            </ContributorsContainer>
+          }
+          shouldRender={false}
+        />
+        <FeedbackContainer>
+          <div>
+            <FeedbackHeader>Want to get involved?</FeedbackHeader>
+            <FeedbackSubheader>Tell us more about your team.</FeedbackSubheader>
+          </div>
+          <Feedback
+            dispatchResetFeedback={dispatchResetFeedback}
+            dispatchSendContact={dispatchSendContact}
+            error={error}
+            loading={loading}
+            success={success}
+          />
+        </FeedbackContainer>
+      </div>
+    </LandingContainer>
+    <HeaderImageRightIcon>{HeaderImageRight}</HeaderImageRightIcon>
+    <HeaderImageLeftIcon>{HeaderImageLeft}</HeaderImageLeftIcon>
+    <BackgroundHollowCircleTopIcon>
+      {BackgroundHollowCircle}
+    </BackgroundHollowCircleTopIcon>
+    <BackgroundHollowCircleBottomIcon>
+      {BackgroundHollowCircle}
+    </BackgroundHollowCircleBottomIcon>
+    <BackgroundSolidCircleIcon>
+      {BackgroundSolidCircle}
+    </BackgroundSolidCircleIcon>
+  </Fragment>
 );
+
+Landing.propTypes = {
+  dispatchResetFeedback: T.func.isRequired,
+  dispatchSendContact: T.func.isRequired,
+  error: T.bool.isRequired,
+  handleNav: T.func.isRequired,
+  loading: T.bool.isRequired,
+  stats: T.object.isRequired,
+  success: T.bool.isRequired,
+};
 
 export default Landing;

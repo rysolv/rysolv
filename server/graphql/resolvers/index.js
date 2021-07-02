@@ -3,6 +3,7 @@ const activityResolver = require('./activity');
 const attemptingResolver = require('./attempting');
 const bountyResolver = require('./bounties');
 const commentResolver = require('./comments');
+const contactResolver = require('./contact');
 const issueResolver = require('./issues');
 const paymentResolver = require('./payments');
 const pullRequestResolver = require('./pullRequests');
@@ -18,6 +19,7 @@ const rootResolver = {
   ...attemptingResolver,
   ...bountyResolver,
   ...commentResolver,
+  ...contactResolver,
   ...issueResolver,
   ...objectScalerType,
   ...paymentResolver,
