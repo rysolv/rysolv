@@ -53,6 +53,7 @@ import BackgroundHollowCircle from './svg/BackgroundHollowCircle';
 import BackgroundSolidCircle from './svg/BackgroundSolidCircle';
 import CloseMenu from './svg/CloseMenu';
 import Coin from './svg/RysolvCoin';
+import DarkSiteLogo from './svg/DarkSiteLogo';
 import Discord from './svg/Discord';
 import HeaderImageLeft from './svg/HeaderImageLeft';
 import HeaderImageRight from './svg/HeaderImageRight';
@@ -88,6 +89,7 @@ export default (name, size, style) => {
     comments: Comments,
     computer: Computer,
     creditCard: CreditCard,
+    darkSiteLogo: DarkSiteLogo,
     discord: Discord,
     dollarSquare: LocalAtm,
     done: Done,
