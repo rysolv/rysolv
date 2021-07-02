@@ -34,6 +34,8 @@ const GlobalStyle = createGlobalStyle`
 
   #app {
     background-color: ${bodyColor};
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
     min-width: 100%;
   }
