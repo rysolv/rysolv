@@ -43,6 +43,7 @@ export const whiteColor = '#ffffff';
 // Font Family
 export const codeFontFamily = `monospace`;
 export const defaultFontFamily = `'Helvetica Neue', Helvetica, Arial, sans-serif`;
+export const landingFontFamily = `Courier`;
 
 // Font Sizes
 export const cardHeaderFontSize = '2rem';

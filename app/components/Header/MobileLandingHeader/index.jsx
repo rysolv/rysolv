@@ -3,12 +3,12 @@ import T from 'prop-types';
 
 import {
   ButtonWrapper,
-  DesktopHeaderContainer,
   HorizontalDivider,
   InternalLink,
   LogoContainer,
   LogoText,
   LogoWrapper,
+  MobileHeaderContainer,
   StyledExpandIcon,
   StyledLoginLink,
   StyledMenu,
@@ -17,12 +17,12 @@ import {
 
 const MenuComponent = props => (
   <StyledMenu
-    elevation={0}
-    getContentAnchorEl={null}
     anchorOrigin={{
       horizontal: 'right',
       vertical: 'bottom',
     }}
+    elevation={0}
+    getContentAnchorEl={null}
     transformOrigin={{
       horizontal: 'right',
       vertical: 'top',
@@ -42,7 +42,7 @@ const MobileLandingHeader = ({ handleNav }) => {
   };
 
   return (
-    <DesktopHeaderContainer>
+    <MobileHeaderContainer>
       <LogoWrapper>
         <LogoContainer />
         <LogoText>rysolv</LogoText>
@@ -64,10 +64,10 @@ const MobileLandingHeader = ({ handleNav }) => {
       >
         <StyledLoginLink label="Log in" path="/signin" />
         <HorizontalDivider />
-        <InternalLink label="Browse Issues" path="/issues" />
+        <InternalLink label="Browse issues" path="/issues" />
         <InternalLink label="Add your team" path="/repos" />
       </MenuComponent>
-    </DesktopHeaderContainer>
+    </MobileHeaderContainer>
   );
 };
 
