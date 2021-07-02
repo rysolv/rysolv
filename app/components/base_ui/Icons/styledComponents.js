@@ -46,6 +46,18 @@ export const StyledDownArrow = styled.div`
   }
 `;
 
+export const StyledExpandIcon = styled.div`
+  display: inline-block;
+
+  svg {
+    height: 3rem;
+    width: 3rem;
+  }
+  &:hover {
+    color: white;
+  }
+`;
+
 export const StyledIconTooltip = styled(Tooltip)`
   display: inline-block;
 

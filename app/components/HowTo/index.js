@@ -20,7 +20,7 @@ import {
 } from './styledComponents';
 
 const CoinIcon = iconDictionary('coin');
-const SiteLogo = iconDictionary('siteLogo');
+const DarkSiteLogo = iconDictionary('darkSiteLogo');
 
 const HowTo = () => {
   const bountyRef = useRef(null);
@@ -66,7 +66,7 @@ const HowTo = () => {
               </StepDescription>
             </HeaderDescription>
             <StepIconWrapper>
-              <LogoWrapper>{SiteLogo}</LogoWrapper>
+              <LogoWrapper>{DarkSiteLogo}</LogoWrapper>
             </StepIconWrapper>
           </StepWrapper>
         </StepContainer>
