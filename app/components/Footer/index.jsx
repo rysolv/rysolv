@@ -22,7 +22,7 @@ const Footer = () => (
   <FooterContainer>
     <InternalLinkWrapper>
       <LinkColumn>
-        <InternalLink label="About" path="" />
+        <InternalLink label="About" path="/how-to" />
         <InternalLink label="How it works" path="/how-to" />
         <InternalLink label="Privacy policy" path="/privacy-policy" />
       </LinkColumn>
