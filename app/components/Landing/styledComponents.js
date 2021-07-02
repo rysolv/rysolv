@@ -21,9 +21,9 @@ export const LandingContainer = styled.div`
   position: relative;
   z-index: 1;
 
-  @media (max-width: 700px) {
-    padding: 41.8rem 3rem 0;
-  }
+  // @media (max-width: 700px) {
+  //   padding: 41.8rem 3rem 0;
+  // }
 `;
 
 export const LandingContainerText = styled.span`
@@ -31,6 +31,17 @@ export const LandingContainerText = styled.span`
   font-size: 5.6rem;
   font-weight: 700;
   line-height: 6.16rem;
+
+  @media (max-width: 1283px) {
+    font-size: 4.6rem;
+    line-height: 5.16rem;
+  }
+
+  br {
+    @media (max-width: 1030px) {
+      display: none;
+    }
+  }
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
@@ -70,6 +81,10 @@ export const HeaderImageLeftIcon = styled.div`
     position: absolute;
     top: 66.1rem;
   }
+
+  @media (max-width: 1290px) {
+    display: none;
+  }
 `;
 
 export const HeaderImageRightIcon = styled.div`
@@ -77,6 +92,44 @@ export const HeaderImageRightIcon = styled.div`
     position: absolute;
     right: 0;
     top: 21.9rem;
+  }
+
+  @media (max-width: 1200px) {
+    svg {
+      height: 50.3rem;
+      width: auto;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    svg {
+      height: 45.3rem;
+    }
+  }
+
+  @media (max-width: 525px) {
+    svg {
+      height: 39.3rem;
+    }
+  }
+
+  @media (max-width: 460px) {
+    svg {
+      height: 36.3rem;
+    }
+  }
+
+  @media (max-width: 430px) {
+    svg {
+      height: 33.3rem;
+    }
+  }
+
+  @media (max-width: 395px) {
+    svg {
+      height: 33.3rem;
+      left: 1rem;
+    }
   }
 `;
 
@@ -92,6 +145,21 @@ export const LandingCard = styled.div`
   top: 0;
   width: 79.3rem;
   z-index: 0;
+
+  @media (max-width: 1500px) {
+    width: 69.3rem;
+  }
+
+  @media (max-width: 1400px) {
+    left: ${({ isFloatingLeft }) => (isFloatingLeft ? '41.8rem' : '0')};
+    width: 59.3rem;
+  }
+
+  @media (max-width: 1200px) {
+    height: 51.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 `;
 
 export const PrimaryLandingCard = styled.div`
@@ -109,12 +177,31 @@ export const PrimaryLandingCard = styled.div`
   top: 5.6rem;
   width: 69.2rem;
   z-index: 1;
+
+  @media (max-width: 1500px) {
+    width: 59.2rem;
+  }
+
+  @media (max-width: 1400px) {
+    width: 49.2rem;
+  }
+
+  @media (max-width: 1200px) {
+    left: 50%;
+    top: 23.8rem;
+    transform: translateX(-50%);
+    width: 69.2rem;
+  }
 `;
 
 export const LandingCardGroup = styled.div`
   margin-bottom: 7.7rem;
   margin-left: -50.8rem;
   position: relative;
+
+  @media (max-width: 1200px) {
+    margin-left: 0;
+  }
 `;
 
 export const LandingCardContainer = styled.div`
@@ -122,6 +209,10 @@ export const LandingCardContainer = styled.div`
   flex-direction: column;
   margin-top: 38.5rem;
   place-items: center;
+
+  @media (max-width: 1030px) {
+    margin-top: 53.5rem;
+  }
 `;
 
 export const LandingCardLargeText = styled.div`
@@ -146,16 +237,64 @@ export const BackgroundSolidCircleIcon = styled.div`
     top: 95.7rem;
     transform: translateX(-50%);
   }
+
+  @media (max-width: 1200px) {
+    svg {
+      top: 201.9rem;
+    }
+  }
 `;
 
 export const TextWrapper = styled.div`
   float: ${({ isFloatingLeft }) => (isFloatingLeft ? 'right' : 'left')};
   max-width: 32.7rem;
+
+  @media (max-width: 1200px) {
+    float: left;
+  }
 `;
 
-export const StyledImage = styled.img`
+export const StyledProfileImage = styled.img`
   height: auto;
-  width: ${({ width }) => width};
+  width: 49.5rem;
+
+  @media (max-width: 1400px) {
+    width: 42.5rem;
+  }
+`;
+
+export const StyledCommentImage = styled.img`
+  height: auto;
+  width: 49.5rem;
+
+  @media (max-width: 1400px) {
+    width: 42.5rem;
+  }
+`;
+
+export const StyledFundingImage = styled.img`
+  height: auto;
+  width: 47.6rem;
+
+  @media (max-width: 595px) {
+    width: 40rem;
+  }
+
+  @media (max-width: 505px) {
+    width: 35rem;
+  }
+
+  @media (max-width: 450px) {
+    width: 30rem;
+  }
+
+  @media (max-width: 400px) {
+    width: 25.8rem;
+  }
+
+  @media (max-width: 350px) {
+    width: 22.5rem;
+  }
 `;
 
 export const Stat = styled.div`
@@ -171,6 +310,10 @@ export const StatsContainer = styled.div`
   padding-top: 15.8rem;
   text-align: center;
   width: 34.5rem;
+
+  @media (max-width: 1200px) {
+    padding-top: 71.4rem;
+  }
 `;
 
 export const StatsHeader = styled.div`
@@ -196,7 +339,16 @@ export const FundingContainer = styled.div`
   display: flex;
   height: 25.2rem;
   margin: 21.9rem auto 0;
-  width: 120rem;
+  max-width: 120rem;
+
+  @media (max-width: 1263px) {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  @media (max-width: 1200px){
+    margin-top: 54.9rem;
+  }
 `;
 
 export const FundingDescription = styled.div`
@@ -205,6 +357,16 @@ export const FundingDescription = styled.div`
   border-top-left-radius: 0.7rem;
   padding: 6.4rem 8.2rem;
   width: 50%;
+
+  @media (max-width: 1263px) {
+    border-bottom-left-radius: 0rem;
+    border-top-right-radius: 0.7rem;
+    width: 100%;
+  }
+
+  @media (max-width: 740px) {
+    padding: 3.7rem 3.5rem;
+  }
 `;
 
 export const FundingImage = styled.div`
@@ -215,6 +377,19 @@ export const FundingImage = styled.div`
   display: flex;
   justify-content: center;
   width: 50%;
+
+  @media (max-width: 1263px) {
+    border-bottom-left-radius: 0.7rem;
+    border-top-right-radius: 0;
+    padding: 2rem;
+    width: 100%;
+  }
+
+  @media (max-width: 595px) {
+    svg {
+      width: 28.5rem;
+    }
+  }
 `;
 
 export const ActionContainer = styled.div`
@@ -328,6 +503,10 @@ export const BackgroundHollowCircleBottomIcon = styled.div`
     left: -6.4rem;
     position: absolute;
     top: 382.4rem;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 
@@ -445,4 +624,10 @@ export const FeedbackSubheader = styled.div`
   font-weight; 400;
   line-height: 2.905rem;
   margin-top: 0.9rem;
+`;
+
+export const LandingWrapper = styled.div`
+  @media (max-width: 1030px) {
+    margin-top: -15rem;
+  }
 `;
