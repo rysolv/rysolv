@@ -79,14 +79,14 @@ export const ActionContainer = styled.div`
 `;
 
 export const ActionHeader = styled.div`
-  font-size 3.2rem;
+  font-size: 3.2rem;
   font-weight: 700;
   line-height: 3.873rem;
   margin-right: 7.4rem;
   margin-top: 2rem;
   min-width: 19.8rem;
 
-  @media (max-width: 12755px) {
+  @media (max-width: 1275px) {
     margin: 0 auto 3.3rem;
     min-width: 15.9rem;
     text-align: center;
@@ -124,6 +124,12 @@ export const BackgroundSolidCircleIcon = styled.div`
   @media (max-width: 1200px) {
     svg {
       top: 208.9rem;
+    }
+  }
+
+  @media (max-width: 1030px) {
+    svg {
+      top: 220.9rem;
     }
   }
 
@@ -179,8 +185,7 @@ export const Contributor = styled.div`
   }
 
   @media (max-width: 440px) {
-    display: ${({ removeFirst, removeSecond }) =>
-    removeFirst || removeSecond ? 'none' : 'flex'};
+    display: ${({ removeFirst, removeSecond }) => removeFirst || removeSecond ? 'none' : 'flex'};
   }
 `;
 
@@ -242,7 +247,7 @@ export const FeedbackHeader = styled.div`
 
 export const FeedbackSubheader = styled.div`
   font-size: 2.4rem;
-  font-weight; 400;
+  font-weight: 400;
   line-height: 2.905rem;
   margin-top: 0.9rem;
 `;
@@ -455,20 +460,20 @@ export const LandingCardGroup = styled.div`
 
 export const LandingCardLargeText = styled.div`
   color: ${whiteColor};
-  font-size 3.2rem;
+  font-size: 3.2rem;
   font-weight: 700;
   line-height: 3.36rem;
 `;
 
 export const LandingCardSmallText = styled.div`
   color: ${whiteColor};
-  font-size 1.6rem;
+  font-size: 1.6rem;
   font-weight: 400;
   line-height: 2.4rem;
   margin-top: 0.8rem;
 
   @media (max-width: 450px) {
-    font-size 1.4rem;
+    font-size: 1.4rem;
     line-height: 1.656rem;
     margin-top: 0.4rem;
   }
