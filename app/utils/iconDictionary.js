@@ -23,6 +23,7 @@ import Edit from '@material-ui/icons/Edit';
 import Email from '@material-ui/icons/Email';
 import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Facebook from '@material-ui/icons/Facebook';
 import Flare from '@material-ui/icons/Flare';
 import Gift from '@material-ui/icons/Redeem';
@@ -93,6 +94,7 @@ export default (name, size, style) => {
     edit: Edit,
     email: Email,
     exit: Exit,
+    expandIcon: ExpandMoreIcon,
     facebook: Facebook,
     flare: Flare,
     forwardArrowHalf: ArrowForwardIos,

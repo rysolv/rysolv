@@ -21,7 +21,7 @@ const DesktopLandingHeader = () => {
       </LogoWrapper>
       <ButtonWrapper>
         <InternalLink label="Browse issues" path="/issues" />
-        <InternalLink label="Add your team" path="/repos/add" />
+        <InternalLink label="Add your team" path="/repos" />
         <VerticalDivider />
         <StyledSecondaryButton
           label="Sign up"
