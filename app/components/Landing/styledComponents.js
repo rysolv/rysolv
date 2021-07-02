@@ -21,9 +21,9 @@ export const LandingContainer = styled.div`
   position: relative;
   z-index: 1;
 
-  // @media (max-width: 700px) {
-  //   padding: 41.8rem 3rem 0;
-  // }
+  @media (max-width: 700px) {
+    padding: 41.8rem 3rem 0;
+  }
 `;
 
 export const LandingContainerText = styled.span`

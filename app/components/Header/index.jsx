@@ -35,9 +35,12 @@ const Header = ({
   const DesktopHeaderToRender = isLandingPage
     ? DesktopLandingHeader
     : DesktopHeader;
+
   const MobileHeaderToRender = isLandingPage
     ? MobileLandingHeader
     : MobileHeader;
+
+  const shouldRender = isLandingPage ? !isMobileOrTabletOrLaptop : !isMobile;
 
   return (
     <ConditionalRender
@@ -56,7 +59,7 @@ const Header = ({
         location,
         setIsDrawerOpen,
       }}
-      shouldRender={!isMobileOrTabletOrLaptop}
+      shouldRender={shouldRender}
     />
   );
 };
