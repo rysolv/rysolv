@@ -45,8 +45,8 @@ export function* sendContactSaga({ payload }) {
     mutation {
       sendContact(
         contactInput: {
-          body: "${body}"
-          email: "${email}"
+          body: ${JSON.stringify(body)}
+          email: ${JSON.stringify(email)}
           source: "landing"
         }
       ) {
