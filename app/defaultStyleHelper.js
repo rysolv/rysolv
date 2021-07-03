@@ -41,7 +41,7 @@ export const navyColor = '#182F6A';
 export const whiteColor = '#ffffff';
 
 // Font Family
-export const codeFontFamily = `monospace`;
+export const codeFontFamily = `courier`;
 export const defaultFontFamily = `'Helvetica Neue', Helvetica, Arial, sans-serif`;
 
 // Font Sizes
