@@ -8,6 +8,7 @@ import {
   Input,
   InputLabel,
   InputWrapper,
+  Textarea,
 } from './styledComponents';
 
 const Feedback = ({
@@ -44,7 +45,7 @@ const Feedback = ({
       </InputWrapper>
       <InputWrapper>
         <InputLabel>What are you building?</InputLabel>
-        <Input
+        <Textarea
           height="14.4rem"
           onChange={e => setBody(e.target.value)}
           placeholder="What kind of software? What language? Do you have a repo?"
