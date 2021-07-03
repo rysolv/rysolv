@@ -43,7 +43,7 @@ export function* sendContactSaga(payload) {
   const { body, email } = payload;
   const query = `
     mutation {
-      sendContact(contactInput: {body: ${body}, email: ${email}, source: "landing"}) {
+      sendContact(contactInput: {body: "${body}", email: "${email}", source: "landing"}) {
         __typename
         ... on Success {
           message
