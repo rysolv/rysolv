@@ -38,6 +38,7 @@ const Feedback = ({
           height="4.9rem"
           onChange={e => setEmail(e.target.value)}
           placeholder="Email"
+          type="email"
           value={email}
         />
       </InputWrapper>

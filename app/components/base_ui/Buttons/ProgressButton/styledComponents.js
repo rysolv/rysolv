@@ -1,14 +1,9 @@
-/* eslint-disable no-nested-ternary, prettier/prettier */
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import Button from '@material-ui/core/Button';
 
-import {
-  darkBlueColor,
-  errorRed,
-  successGreen,
-  whiteColor,
-} from 'defaultStyleHelper';
+import { darkBlueColor, whiteColor } from 'defaultStyleHelper';
 
 const progressionAnimation = keyframes`
   0% {
@@ -48,15 +43,10 @@ export const ProgressBar = styled.div`
   width: 100%;
 `;
 
-export const StyledButton = styled(({ error, success, ...restProps }) => (
-  <Button {...restProps} />
-))`
-  background: ${({ error, success }) =>
-    error
-      ? errorRed
-      : success
-        ? successGreen
-        : darkBlueColor};
+export const StyledButton = styled(
+  ({ hasErrorOrSuccess, style, ...restProps }) => <Button {...restProps} />,
+)`
+  background: ${({ hasErrorOrSuccess, style }) => hasErrorOrSuccess ? style.background : darkBlueColor};
   border-radius: 0.7rem;
   box-shadow: none;
   color: ${whiteColor};
@@ -74,22 +64,16 @@ export const StyledButton = styled(({ error, success, ...restProps }) => (
   }
 
   &:disabled {
-    background: ${({ error, success }) =>
-    error
-      ? errorRed
-      : success
-        ? successGreen
-        : 'rgba(0, 0, 0, 0.12)'};
-    color: ${({ error, success }) => error || success ? whiteColor : 'rgba(0, 0, 0, 0.26)'};
+    background: ${({ hasErrorOrSuccess, style }) => hasErrorOrSuccess ? style.background : 'rgba(0, 0, 0, 0.12)'};
+    color: ${({ hasErrorOrSuccess, style }) => hasErrorOrSuccess ? style.color : 'rgba(0, 0, 0, 0.26)'};
+
+    &:hover {
+      background: ${({ hasErrorOrSuccess, style }) => hasErrorOrSuccess ? style.background : 'rgba(0, 0, 0, 0.12)'};
+    }
   }
 
   &:hover {
-    background: ${({ error, success }) =>
-    error
-      ? errorRed
-      : success
-        ? successGreen
-        : darkBlueColor};
+    background: ${({ hasErrorOrSuccess, style }) => hasErrorOrSuccess ? style.background : darkBlueColor};
   }
 
   svg {

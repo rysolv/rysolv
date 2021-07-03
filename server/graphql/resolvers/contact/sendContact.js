@@ -8,7 +8,7 @@ const sendContact = async ({ body, email, source }) => {
     });
     return {
       __typename: 'Success',
-      message: 'Email deliverd',
+      message: 'Email delivered',
     };
   } catch (error) {
     errorLogger(error);

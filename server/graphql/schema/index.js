@@ -472,9 +472,10 @@ module.exports = buildSchema(`
 
     postUserResponse(responseArray: [Object]): EventResponse!
 
+    sendContact(contactInput: ContactInput): EventResponse!
+
     signIn(password: String!, username: String!): SignInResult!
     signOut: EventResponse!
-    sendContact(contactInput: ContactInput): EventResponse!
 
     submitAccountPayment(email: String!, issueId: ID!, fundValue: Float!): PaymentResult!
 
