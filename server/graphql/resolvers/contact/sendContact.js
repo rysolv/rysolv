@@ -1,6 +1,8 @@
 const { errorLogger, sendEmail } = require('../../../helpers');
 
-const sendContact = async ({ body, email, source }) => {
+const sendContact = async ({ contactInput }) => {
+  const { body, email, source } = contactInput;
+
   try {
     await sendEmail({
       body: { body, email, source },
