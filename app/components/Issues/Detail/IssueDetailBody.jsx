@@ -17,6 +17,7 @@ import {
   StyledLanguageAutocomplete,
   StyledMarkdown,
   UsernameLink,
+  Username,
 } from './styledComponents';
 import { issueTags, tagColors } from '../constants';
 import { TagWrapper } from '../styledComponents';
@@ -79,7 +80,13 @@ const IssueDetailBody = ({
     <Fragment>
       <PostingInfoWrapper>
         <div>
-          Opened by <UsernameLink to={route}>{username}</UsernameLink> on&nbsp;
+          Opened by{' '}
+          {username === '[deleted]' ? (
+            <Username>{username}</Username>
+          ) : (
+            <UsernameLink to={route}>{username}</UsernameLink>
+          )}{' '}
+          on&nbsp;
           {moment(date)
             .utc()
             .format('M/D/YYYY')}
