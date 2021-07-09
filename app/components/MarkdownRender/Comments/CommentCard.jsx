@@ -13,6 +13,7 @@ import {
   FlexContainer,
   ProfileImageContainer,
   UsernameLink,
+  DeletedName,
 } from '../styledComponents';
 
 const CommentCard = ({
@@ -31,7 +32,12 @@ const CommentCard = ({
       <CommentContainer>
         <CommentHeader>
           <span>
-            Posted by&nbsp;<UsernameLink to={route}>{username}</UsernameLink>
+            Posted by&nbsp;{' '}
+            {username === '[deleted]' ? (
+              <DeletedName>{username}</DeletedName>
+            ) : (
+              <UsernameLink to={route}>{username}</UsernameLink>
+            )}{' '}
           </span>
           &nbsp;
           {moment(date)
