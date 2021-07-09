@@ -312,3 +312,8 @@ export const UsernameLink = styled(Link)`
     color: ${hoverLinkColor};
   }
 `;
+
+export const DeletedName = styled.div`
+  display: inline;
+  font-weight: bold;
+`;
