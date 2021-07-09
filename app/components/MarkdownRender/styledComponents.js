@@ -197,3 +197,9 @@ export const UsernameLink = styled(Link)`
     text-decoration: underline;
   }
 `;
+
+export const DeletedName = styled(Link)`
+  display: inline;
+  font-weight: bold;
+  cursor: default;
+`;
