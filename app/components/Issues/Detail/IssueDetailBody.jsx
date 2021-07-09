@@ -17,7 +17,7 @@ import {
   StyledLanguageAutocomplete,
   StyledMarkdown,
   UsernameLink,
-  Username,
+  DeletedName,
 } from './styledComponents';
 import { issueTags, tagColors } from '../constants';
 import { TagWrapper } from '../styledComponents';
@@ -82,7 +82,7 @@ const IssueDetailBody = ({
         <div>
           Opened by{' '}
           {username === '[deleted]' ? (
-            <Username>{username}</Username>
+            <DeletedName>{username}</DeletedName>
           ) : (
             <UsernameLink to={route}>{username}</UsernameLink>
           )}{' '}
