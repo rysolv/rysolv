@@ -304,16 +304,15 @@ export const TopBarWrapper = styled.div`
   height: 10rem;
 `;
 
-export const UsernameLink = styled(Link)`
+export const UsernameLink = styled(({ isUserDeleted, ...restProps }) => (
+  <Link {...restProps} />
+))`
   display: inline;
   font-weight: bold;
+  pointer-events: ${({ isUserDeleted }) =>
+    isUserDeleted ? 'none' : 'inherit'};
 
   &:hover {
-    color: ${hoverLinkColor};
+    text-decoration: underline;
   }
-`;
-
-export const DeletedName = styled.div`
-  display: inline;
-  font-weight: bold;
 `;
