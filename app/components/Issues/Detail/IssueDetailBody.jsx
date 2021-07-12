@@ -17,7 +17,6 @@ import {
   StyledLanguageAutocomplete,
   StyledMarkdown,
   UsernameLink,
-  DeletedName,
 } from './styledComponents';
 import { issueTags, tagColors } from '../constants';
 import { TagWrapper } from '../styledComponents';
@@ -76,17 +75,17 @@ const IssueDetailBody = ({
     </InfoItemWrapper>
   );
 
+  const isUserDeleted = username === '[deleted]';
+
   return (
     <Fragment>
       <PostingInfoWrapper>
         <div>
-          Opened by{' '}
-          {username === '[deleted]' ? (
-            <DeletedName>{username}</DeletedName>
-          ) : (
-            <UsernameLink to={route}>{username}</UsernameLink>
-          )}{' '}
-          on&nbsp;
+          Opened by&nbsp;
+          <UsernameLink isUserDeleted={isUserDeleted} to={route}>
+            {username}
+          </UsernameLink>
+          &nbsp;on&nbsp;
           {moment(date)
             .utc()
             .format('M/D/YYYY')}
