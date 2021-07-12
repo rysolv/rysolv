@@ -13,7 +13,6 @@ import {
   FlexContainer,
   ProfileImageContainer,
   UsernameLink,
-  DeletedName,
 } from '../styledComponents';
 
 const CommentCard = ({
@@ -24,6 +23,8 @@ const CommentCard = ({
   const html = marked(body);
   const cleanHtml = DOMPurify.sanitize(html);
 
+  const isUserDeleted = username === '[deleted]';
+
   return (
     <FlexContainer>
       <ProfileImageContainer>
@@ -32,12 +33,10 @@ const CommentCard = ({
       <CommentContainer>
         <CommentHeader>
           <span>
-            Posted by&nbsp;{' '}
-            {username === '[deleted]' ? (
-              <DeletedName>{username}</DeletedName>
-            ) : (
-              <UsernameLink to={route}>{username}</UsernameLink>
-            )}{' '}
+            Posted by&nbsp;
+            <UsernameLink isUserDeleted={isUserDeleted} to={route}>
+              {username}
+            </UsernameLink>
           </span>
           &nbsp;
           {moment(date)
