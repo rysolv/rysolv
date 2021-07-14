@@ -75,11 +75,17 @@ const IssueDetailBody = ({
     </InfoItemWrapper>
   );
 
+  const isUserDeleted = username === '[deleted]';
+
   return (
     <Fragment>
       <PostingInfoWrapper>
         <div>
-          Opened by <UsernameLink to={route}>{username}</UsernameLink> on&nbsp;
+          Opened by&nbsp;
+          <UsernameLink isUserDeleted={isUserDeleted} to={route}>
+            {username}
+          </UsernameLink>
+          &nbsp;on&nbsp;
           {moment(date)
             .utc()
             .format('M/D/YYYY')}

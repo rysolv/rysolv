@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -189,9 +190,13 @@ export const UsernameExternalLink = styled.a`
   }
 `;
 
-export const UsernameLink = styled(Link)`
+export const UsernameLink = styled(({ isUserDeleted, ...restProps }) => (
+  <Link {...restProps} />
+))`
   display: inline;
   font-weight: bold;
+  pointer-events: ${({ isUserDeleted }) =>
+    isUserDeleted ? 'none' : 'inherit'};
 
   &:hover {
     text-decoration: underline;
