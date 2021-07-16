@@ -36,6 +36,7 @@ const Feedback = ({
       <InputWrapper>
         <InputLabel>Your email</InputLabel>
         <Input
+          autoComplete="email"
           height="4.9rem"
           onChange={e => setEmail(e.target.value)}
           placeholder="Email"
