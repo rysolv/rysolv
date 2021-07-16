@@ -11,7 +11,6 @@ import {
   ImageContainer,
   IssuesContainer,
   IssuesWrapper,
-  MemberInfoContainer,
   MemberWrapper,
   NameLink,
   NumberContainer,
@@ -38,7 +37,6 @@ const UserCard = ({ data, deviceView }) => {
             (
               {
                 attempting,
-                createdDate,
                 id,
                 issues,
                 pointsNumber,
@@ -52,9 +50,6 @@ const UserCard = ({ data, deviceView }) => {
                   <StyledSettingWrapper>
                     <MemberWrapper>
                       <NameLink to={`/users/detail/${id}`}>{username}</NameLink>
-                      <MemberInfoContainer>
-                        Member since {createdDate}
-                      </MemberInfoContainer>
                     </MemberWrapper>
                   </StyledSettingWrapper>
                   <ContentWrapper>
