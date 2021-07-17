@@ -82,7 +82,6 @@ export function* fetchUsersSaga() {
         ... on UserArray {
           users {
             attempting
-            createdDate
             firstName
             id
             issues
@@ -119,7 +118,6 @@ export function* searchUsersSaga({ payload }) {
     query {
       searchUsers(value: "${value}") {
         attempting
-        createdDate
         firstName
         id
         issues
