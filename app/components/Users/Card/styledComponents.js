@@ -47,12 +47,6 @@ export const IssuesWrapper = styled.div`
   padding-top: 1rem;
 `;
 
-export const MemberInfoContainer = styled.div`
-  color: ${subTextGrey};
-  font-size: ${detailFontSize};
-  line-height: 2rem;
-`;
-
 export const MemberWrapper = styled.div`
   align-self: center;
 `;
