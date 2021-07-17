@@ -4,6 +4,7 @@ const express = require('express');
 const graphQlHttp = require('express-graphql');
 const { resolve } = require('path');
 const cookieParser = require('cookie-parser');
+const rateLimit = require('express-rate-limit');
 
 const argv = require('./argv');
 const graphQlResolvers = require('./graphql/resolvers');
@@ -43,6 +44,14 @@ app.use(
     validationRules: PRODUCTION ? [disableIntrospection] : [],
   })),
 );
+
+// Set express rate limiter
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 25, // limit each IP to 25 requests per windowMs
+});
+
+app.use(limiter);
 
 // In production, we need to pass these values in instead of relying on webpack
 setup(app, {
