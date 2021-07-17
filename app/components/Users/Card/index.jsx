@@ -23,8 +23,7 @@ import {
 } from './styledComponents';
 
 const UserCard = ({ data, deviceView }) => {
-  const isMobile =
-    deviceView === 'mobile' ||
+  const isMobileS =
     deviceView === 'mobileS' ||
     deviceView === 'mobileXS' ||
     deviceView === 'mobileXXS';
@@ -35,14 +34,7 @@ const UserCard = ({ data, deviceView }) => {
         <RowSection>
           {data.map(
             (
-              {
-                attempting,
-                id,
-                issues,
-                pointsNumber,
-                profilePic,
-                username,
-              },
+              { attempting, id, issues, pointsNumber, profilePic, username },
               index,
             ) => (
               <StyledListSquare key={`${username}-${index}`}>
@@ -58,7 +50,7 @@ const UserCard = ({ data, deviceView }) => {
                         alt="Profile Image"
                         image={profilePic}
                         route={`/users/detail/${id}`}
-                        size={isMobile ? '4.75rem' : '7.5rem'}
+                        size={isMobileS ? '4.75rem' : '7.5rem'}
                       />
                       <IconWrapper>
                         <div>
