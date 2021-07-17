@@ -44,11 +44,12 @@ export const IssuesWrapper = styled.div`
   display: flex;
   font-size: ${detailFontSize};
   justify-content: space-between;
-  padding-top: 1rem;
+  padding-top: ${({ isMobileS }) => (isMobileS ? '4.1rem' : '1rem')};
 `;
 
 export const MemberWrapper = styled.div`
   align-self: center;
+  padding-top: ${({ isMobileS }) => (isMobileS ? '0.5rem' : '0')};
 `;
 
 export const NameLink = styled(Link)`

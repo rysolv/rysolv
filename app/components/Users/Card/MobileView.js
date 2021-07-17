@@ -23,8 +23,7 @@ import {
 } from './styledComponents';
 
 const MobileUserCard = ({ data, deviceView }) => {
-  const isMobile =
-    deviceView === 'mobile' ||
+  const isMobileS =
     deviceView === 'mobileS' ||
     deviceView === 'mobileXS' ||
     deviceView === 'mobileXXS';
@@ -32,14 +31,7 @@ const MobileUserCard = ({ data, deviceView }) => {
     <RowSection>
       {data.map(
         (
-          {
-            attempting,
-            id,
-            issues,
-            pointsNumber,
-            profilePic,
-            username,
-          },
+          { attempting, id, issues, pointsNumber, profilePic, username },
           index,
         ) => (
           <StyledListSquare key={`${username}-${index}`}>
@@ -50,7 +42,7 @@ const MobileUserCard = ({ data, deviceView }) => {
                     alt="Profile Image"
                     image={profilePic}
                     route={`/users/detail/${id}`}
-                    size={isMobile ? '4.75rem' : '7.5rem'}
+                    size={isMobileS ? '6.5rem' : '7.5rem'}
                   />
                   <IconWrapper>
                     <StyledCoin />
@@ -60,11 +52,11 @@ const MobileUserCard = ({ data, deviceView }) => {
               </ContentWrapper>
               <TextContainer>
                 <StyledSettingWrapper>
-                  <MemberWrapper>
+                  <MemberWrapper isMobileS>
                     <NameLink to={`/users/detail/${id}`}>{username}</NameLink>
                   </MemberWrapper>
                 </StyledSettingWrapper>
-                <IssuesWrapper>
+                <IssuesWrapper isMobileS>
                   <IssuesContainer>
                     {issues.length} {issues.length === 1 ? `Issue` : `Issues`}
                   </IssuesContainer>
