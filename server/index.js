@@ -26,6 +26,14 @@ app.use(cookieParser());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb' }));
 
+// Set express rate limiter
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 25, // limit each IP to 25 requests per windowMs
+});
+
+app.use(limiter);
+
 // Route requests through GraphQL
 app.use(
   '/graphql',
@@ -44,14 +52,6 @@ app.use(
     validationRules: PRODUCTION ? [disableIntrospection] : [],
   })),
 );
-
-// Set express rate limiter
-const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 25, // limit each IP to 25 requests per windowMs
-});
-
-app.use(limiter);
 
 // In production, we need to pass these values in instead of relying on webpack
 setup(app, {
