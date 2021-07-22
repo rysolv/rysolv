@@ -1,4 +1,10 @@
-export const excludedPath = ['', 'password-reset', 'signup', 'signin'];
+export const excludedPath = [
+  '',
+  'password-reset',
+  'recruitment',
+  'signin',
+  'signup',
+];
 
 export const getInitialValue = {
   issues: {

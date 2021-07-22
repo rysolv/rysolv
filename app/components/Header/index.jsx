@@ -30,7 +30,7 @@ const Header = ({
     deviceView === 'laptop';
 
   const { pathname } = window.location;
-  const isLandingPage = pathname === '/';
+  const isLandingPage = pathname === '/' || pathname === '/recruitment';
 
   const DesktopHeaderToRender = isLandingPage
     ? DesktopLandingHeader

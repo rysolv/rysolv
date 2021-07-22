@@ -13,6 +13,7 @@ import IssuesDetail from 'containers/Issues/Detail';
 import Jobs from 'containers/Jobs';
 import Main from 'containers/HomePage/Loadable';
 import Overview from 'containers/Overview';
+import RecruitmentSignup from 'containers/RecruitmentSignup/Loadable';
 import ReposAdd from 'containers/Repos/Add';
 import ReposDetail from 'containers/Repos/Detail';
 import Settings from 'containers/Settings';
@@ -36,6 +37,7 @@ const PublicMain = withAuth(publicConfig, Main);
 const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
 const PublicOverview = withAuth(publicConfig, Overview);
 const PublicPrivacyPolicy = withAuth(publicConfig, PrivacyPolicy);
+const PublicRecruitmentSignup = withAuth(publicConfig, RecruitmentSignup);
 const PublicReposDetail = withAuth(publicConfig, ReposDetail);
 const PublicSignIn = withAuth(publicConfig, SignIn);
 const PublicStats = withAuth(publicConfig, Stats);
@@ -59,20 +61,20 @@ const Routes = () => (
     <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
+    <Route exact path="/recruitment" component={PublicRecruitmentSignup} />
     <Route exact path="/repos" component={PublicOverview} />
     <Route exact path="/repos/add" component={PrivateReposAdd} />
     <Route exact path="/repos/detail/:id" component={PublicReposDetail} />
     <Route exact path="/repos/search/:searchValue" component={PublicOverview} />
     <Route exact path="/settings/:view?" component={PrivateSettings} />
-    <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/signin" component={PublicSignIn} />
     <Route exact path="/signin/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/signup" component={PublicSignIn} />
     <Route exact path="/signup/verify-github" component={PublicVerifyGithub} />
+    <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/terms-of-service" component={PublicTermsOfService} />
     <Route exact path="/users" component={PublicOverview} />
     <Route exact path="/users/detail/:id" component={PublicUsersDetail} />
-    <Route exact path="/users/search/:searchValue" component={PublicOverview} />
     <Route component={PublicNotFoundPage} />
   </Switch>
 );
