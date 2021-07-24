@@ -30,17 +30,20 @@ const Header = ({
     deviceView === 'laptop';
 
   const { pathname } = window.location;
-  const isLandingPage = pathname === '/' || pathname === '/recruitment';
+  const isLandingOrRecruitmentPage =
+    pathname === '/' || pathname === '/recruitment';
 
-  const DesktopHeaderToRender = isLandingPage
+  const DesktopHeaderToRender = isLandingOrRecruitmentPage
     ? DesktopLandingHeader
     : DesktopHeader;
 
-  const MobileHeaderToRender = isLandingPage
+  const MobileHeaderToRender = isLandingOrRecruitmentPage
     ? MobileLandingHeader
     : MobileHeader;
 
-  const shouldRender = isLandingPage ? !isMobileOrTabletOrLaptop : !isMobile;
+  const shouldRender = isLandingOrRecruitmentPage
+    ? !isMobileOrTabletOrLaptop
+    : !isMobile;
 
   return (
     <ConditionalRender
@@ -53,7 +56,7 @@ const Header = ({
         handleResetState,
         handleSignout,
         isDrawerOpen,
-        isLandingPage,
+        isLandingOrRecruitmentPage,
         isMobile,
         isSignedIn,
         location,

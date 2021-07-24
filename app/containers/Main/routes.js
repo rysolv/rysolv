@@ -2,23 +2,23 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import withAuth from 'containers/Auth';
 
+import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
 import Contact from 'components/Contact';
 import Faq from 'components/Faq';
 import HowTo from 'components/HowTo';
-import NotFoundPage from 'components/NotFoundPage';
-import PrivacyPolicy from 'components/PrivacyPolicy';
-import TermsOfService from 'components/TermsOfService';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
 import Jobs from 'containers/Jobs';
 import Main from 'containers/HomePage/Loadable';
+import NotFoundPage from 'components/NotFoundPage';
 import Overview from 'containers/Overview';
-import RecruitmentSignup from 'containers/RecruitmentSignup/Loadable';
+import PrivacyPolicy from 'components/PrivacyPolicy';
 import ReposAdd from 'containers/Repos/Add';
 import ReposDetail from 'containers/Repos/Detail';
 import Settings from 'containers/Settings';
 import SignIn from 'containers/Signin';
 import Stats from 'containers/Stats/Loadable';
+import TermsOfService from 'components/TermsOfService';
 import UsersDetail from 'containers/Users/Detail';
 import VerifyGithub from 'containers/VerifyGithub/Loadable';
 
@@ -28,6 +28,7 @@ const publicConfig = { isAdmin: false, isPrivate: false };
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
+const PublicCompanyRecruitment = withAuth(publicConfig, CompanyRecruitment);
 const PublicContact = withAuth(publicConfig, Contact);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
@@ -37,7 +38,6 @@ const PublicMain = withAuth(publicConfig, Main);
 const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
 const PublicOverview = withAuth(publicConfig, Overview);
 const PublicPrivacyPolicy = withAuth(publicConfig, PrivacyPolicy);
-const PublicRecruitmentSignup = withAuth(publicConfig, RecruitmentSignup);
 const PublicReposDetail = withAuth(publicConfig, ReposDetail);
 const PublicSignIn = withAuth(publicConfig, SignIn);
 const PublicStats = withAuth(publicConfig, Stats);
@@ -61,7 +61,7 @@ const Routes = () => (
     <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
-    <Route exact path="/recruitment" component={PublicRecruitmentSignup} />
+    <Route exact path="/recruitment" component={PublicCompanyRecruitment} />
     <Route exact path="/repos" component={PublicOverview} />
     <Route exact path="/repos/add" component={PrivateReposAdd} />
     <Route exact path="/repos/detail/:id" component={PublicReposDetail} />
