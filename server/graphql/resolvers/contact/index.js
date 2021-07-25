@@ -1,3 +1,4 @@
+const recruitingSignup = require('./recruitingSignup');
 const sendContact = require('./sendContact');
 
-module.exports = { sendContact };
+module.exports = { recruitingSignup, sendContact };

@@ -65,9 +65,12 @@ module.exports = buildSchema(`
   }
 
   input ContactInput {
-    body: String!
-    email: String!
-    source: String!
+    body: String
+    companyName: String
+    companyUrl: String
+    contactName: String
+    email: String
+    source: String
   }
 
   type Error {
@@ -472,6 +475,7 @@ module.exports = buildSchema(`
 
     postUserResponse(responseArray: [Object]): EventResponse!
 
+    recruitingSignup(contactInput: ContactInput): EventResponse!
     sendContact(contactInput: ContactInput): EventResponse!
 
     signIn(password: String!, username: String!): SignInResult!
