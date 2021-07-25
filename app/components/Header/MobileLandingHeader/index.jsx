@@ -48,7 +48,7 @@ const MobileLandingHeader = ({ handleNav }) => {
 
   return (
     <MobileHeaderContainer>
-      <LogoWrapper>
+      <LogoWrapper onClick={() => handleNav('/')}>
         <Logo>{SiteLogo}</Logo>
         <Wordmark>{SiteWordmark}</Wordmark>
       </LogoWrapper>
