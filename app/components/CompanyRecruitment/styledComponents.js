@@ -93,7 +93,7 @@ export const CompanyRecruitmentContainer = styled.div`
 `;
 
 export const CompanyRecruitmentHeader = styled.div`
-  font-size: 3.2rem;
+  font-size: 3.6rem;
   font-weight: 700;
   line-height: 3.873rem;
 
@@ -112,17 +112,17 @@ export const CompanyRecruitmentSubheader = styled.div`
   font-size: 2.4rem;
   font-weight: 400;
   line-height: 2.905rem;
-  margin-top: 0.9rem;
+  margin-top: 2rem;
 
   @media (max-width: 500px) {
     display: ${({ removeOnMobile }) => (removeOnMobile ? 'none' : 'block')};
-    font-size 2rem;
-    line-height 2.848rem;
+    font-size: 2rem;
+    line-height: 2.848rem;
   }
 
   @media (max-width: 370px) {
-    font-size 1.6rem;
-    line-height 2.348rem;
+    font-size: 1.6rem;
+    line-height: 2.348rem;
   }
 `;
 
@@ -133,8 +133,8 @@ export const FormWrapper = styled.div`
   display: flex;
   height: auto;
   justify-content: center;
-  margin: 10rem auto;
-  max-width: 71rem;
+  margin: 8rem auto;
+  max-width: 65rem;
   padding: 6.4rem;
   width: 60%;
 
@@ -239,7 +239,7 @@ export const HeaderImageRightIcon = styled.div`
 
 export const HeaderWrapper = styled.div`
   margin: auto;
-  max-width: 71rem;
+  max-width: 85rem;
   width: 60%;
 
   @media (max-width: 1242px) {
