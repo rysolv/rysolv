@@ -31,7 +31,7 @@ export function* sendFormSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        sendContact: { __typename, message },
+        recruitingSignup: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
