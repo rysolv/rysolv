@@ -79,7 +79,7 @@ export const ButtonWrapper = styled.div`
 export const CompanyRecruitmentContainer = styled.div`
   color: ${whiteColor};
   height: 100%;
-  padding: 10.4rem 12rem 0;
+  padding: 5rem 12rem 10.4rem;
   position: relative;
   z-index: 1;
 
@@ -89,16 +89,18 @@ export const CompanyRecruitmentContainer = styled.div`
 `;
 
 export const CompanyRecruitmentHeader = styled.div`
-  font-size: 3.2rem;
+  font-size: 3.6rem;
   font-weight: 700;
   line-height: 3.873rem;
+  margin-bottom: 3rem;
+  margin-top: 5rem;
 `;
 
 export const CompanyRecruitmentSubheader = styled.div`
-  font-size: 2.4rem;
+  font-size: 2.6rem;
   font-weight: 400;
   line-height: 2.905rem;
-  margin-top: 0.9rem;
+  margin-top: 2rem;
 `;
 
 export const FormWrapper = styled.div`
@@ -199,6 +201,7 @@ export const HeaderImageRightIcon = styled.div`
 export const HeaderWrapper = styled.div`
   margin: auto;
   max-width: 110rem;
+  width: 60%;
 `;
 
 export const Input = styled.input`
