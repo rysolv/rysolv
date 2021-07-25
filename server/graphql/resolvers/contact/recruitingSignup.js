@@ -2,13 +2,13 @@ const { createRecruiting } = require('../../../db');
 const { errorLogger, sendEmail } = require('../../../helpers');
 
 const recruitingSignup = async ({ contactInput }) => {
-  const { companyName, companyUrl, contactName, email, source } = contactInput;
+  const { companyName, companyUrl, contactName, email } = contactInput;
 
   try {
     await createRecruiting({ companyName, companyUrl, contactName, email });
 
     await sendEmail({
-      body: { email, source },
+      body: { companyName, companyUrl, contactName, email },
       path: '/s/contact/recruiting',
     });
 
