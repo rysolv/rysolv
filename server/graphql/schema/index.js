@@ -476,6 +476,7 @@ module.exports = buildSchema(`
     postUserResponse(responseArray: [Object]): EventResponse!
 
     recruitingSignup(contactInput: ContactInput): EventResponse!
+    
     sendContact(contactInput: ContactInput): EventResponse!
 
     signIn(password: String!, username: String!): SignInResult!

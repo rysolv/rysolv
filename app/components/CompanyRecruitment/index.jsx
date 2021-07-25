@@ -20,9 +20,13 @@ const RecruitmentHeaderImageRight = iconDictionary(
 );
 
 const CompanyRecruitment = ({
+  dispatchChangeInput,
   dispatchResetForm,
-  dispatchSendForm,
   error,
+  form,
+  formErrors,
+  handleSendContact,
+  handleValidateInput,
   loading,
   success,
 }) => (
@@ -39,9 +43,13 @@ const CompanyRecruitment = ({
       </HeaderWrapper>
       <FormWrapper>
         <RecruitmentForm
+          dispatchChangeInput={dispatchChangeInput}
           dispatchResetForm={dispatchResetForm}
-          dispatchSendForm={dispatchSendForm}
           error={error}
+          form={form}
+          formErrors={formErrors}
+          handleSendContact={handleSendContact}
+          handleValidateInput={handleValidateInput}
           loading={loading}
           success={success}
         />
@@ -53,11 +61,15 @@ const CompanyRecruitment = ({
 );
 
 CompanyRecruitment.propTypes = {
-  dispatchResetForm: T.func,
-  dispatchSendForm: T.func,
-  error: T.bool,
-  loading: T.bool,
-  success: T.bool,
+  dispatchChangeInput: T.func.isRequired,
+  dispatchResetForm: T.func.isRequired,
+  error: T.bool.isRequired,
+  form: T.object.isRequired,
+  formErrors: T.object.isRequired,
+  handleSendContact: T.func.isRequired,
+  handleValidateInput: T.func.isRequired,
+  loading: T.bool.isRequired,
+  success: T.bool.isRequired,
 };
 
 export default CompanyRecruitment;

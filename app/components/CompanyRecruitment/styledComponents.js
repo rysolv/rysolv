@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components';
 
-import { blueGrayColor, whiteColor } from 'defaultStyleHelper';
+import {
+  blueGrayColor,
+  defaultFontSize,
+  errorRed,
+  whiteColor,
+} from 'defaultStyleHelper';
 
 const baseInputStyle = css`
   background: ${whiteColor};
@@ -200,6 +205,13 @@ export const Input = styled.input`
   ${baseInputStyle};
 `;
 
+export const InputError = styled.div`
+  color: ${errorRed};
+  font-size: ${defaultFontSize};
+  height: 2.4rem;
+  padding: 0.5rem 0;
+`;
+
 export const InputLabel = styled.div`
   font-size: 1.6rem;
   font-weight: 400;
@@ -207,7 +219,7 @@ export const InputLabel = styled.div`
 `;
 
 export const InputWrapper = styled.div`
-  margin-bottom: 2.4rem;
+  margin-bottom: 1rem;
 `;
 
 export const RecruitmentFormContainer = styled.div`
