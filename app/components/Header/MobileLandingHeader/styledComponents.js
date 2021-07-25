@@ -49,8 +49,11 @@ export const Logo = styled.div`
 
 export const LogoWrapper = styled.div`
   align-items: center;
-  align-self: center;
   display: flex;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const MobileHeaderContainer = styled.div`
