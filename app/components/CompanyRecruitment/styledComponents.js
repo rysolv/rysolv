@@ -79,7 +79,7 @@ export const ButtonWrapper = styled.div`
 export const CompanyRecruitmentContainer = styled.div`
   color: ${whiteColor};
   height: 100%;
-  padding: 10.4rem 12rem 0;
+  padding: 5.4rem 12rem 0;
   position: relative;
   z-index: 1;
 
@@ -132,6 +132,10 @@ export const FormWrapper = styled.div`
   @media (max-width: 500px) {
     padding: 2.6rem 2.8rem 5.052rem;
   }
+`;
+
+export const HeaderGroup = styled.div`
+  margin-bottom: 3rem;
 `;
 
 export const HeaderImageLeftIcon = styled.div`
@@ -206,7 +210,24 @@ export const HeaderImageRightIcon = styled.div`
 
 export const HeaderWrapper = styled.div`
   margin: auto;
-  max-width: 110rem;
+  max-width: 71rem;
+  width: 60%;
+
+  @media (max-width: 1242px) {
+    width: 70%;
+  }
+
+  @media (max-width: 1192px) {
+    width: 75%;
+  }
+
+  @media (max-width: 1092px) {
+    width: 80%;
+  }
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 export const Input = styled.input`

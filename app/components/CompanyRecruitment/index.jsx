@@ -9,6 +9,7 @@ import {
   CompanyRecruitmentHeader,
   CompanyRecruitmentSubheader,
   FormWrapper,
+  HeaderGroup,
   HeaderImageLeftIcon,
   HeaderImageRightIcon,
   HeaderWrapper,
@@ -33,23 +34,27 @@ const CompanyRecruitment = ({
   <Fragment>
     <CompanyRecruitmentContainer>
       <HeaderWrapper>
-        <CompanyRecruitmentHeader>
-          Join the future of hiring
-        </CompanyRecruitmentHeader>
-        <CompanyRecruitmentSubheader>
-          Forget the algorithm tests! Rysolv evaluates a candidate&apos;s coding
-          history to find exactly the right engineer for the job.
-        </CompanyRecruitmentSubheader>
-        <CompanyRecruitmentSubheader>
-          We prioritize attributes that really matter to a team.
-        </CompanyRecruitmentSubheader>
-        <CompanyRecruitmentHeader>
-          Only pay for placement
-        </CompanyRecruitmentHeader>
-        <CompanyRecruitmentSubheader>
-          We&apos;re confident we&apos;ll find the right engineers for the job.
-          You only pay 2.5% at time of hire, and 2.5% after 60 days.
-        </CompanyRecruitmentSubheader>
+        <HeaderGroup>
+          <CompanyRecruitmentHeader>
+            Join the future of hiring
+          </CompanyRecruitmentHeader>
+          <CompanyRecruitmentSubheader>
+            Forget the algorithm tests! Rysolv evaluates a candidate&apos;s
+            coding history to find the right engineer for the job.
+          </CompanyRecruitmentSubheader>
+          <CompanyRecruitmentSubheader>
+            We prioritize attributes that really matter to a team.
+          </CompanyRecruitmentSubheader>
+        </HeaderGroup>
+        <HeaderGroup>
+          <CompanyRecruitmentHeader>
+            Only pay for placement
+          </CompanyRecruitmentHeader>
+          <CompanyRecruitmentSubheader>
+            We&apos;re confident we&apos;ll find the right engineers for the
+            job. You only pay 2.5% at time of hire, and 2.5% after 60 days.
+          </CompanyRecruitmentSubheader>
+        </HeaderGroup>
       </HeaderWrapper>
       <FormWrapper>
         <RecruitmentForm
