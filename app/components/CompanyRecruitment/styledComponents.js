@@ -140,9 +140,9 @@ export const HeaderGroup = styled.div`
 
 export const HeaderImageLeftIcon = styled.div`
   svg {
+    bottom: 20rem;
     left: -0.21rem;
     position: absolute;
-    top: 66.1rem;
   }
 
   @media (max-width: 1290px) {
