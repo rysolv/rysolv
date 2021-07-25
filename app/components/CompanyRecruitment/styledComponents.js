@@ -109,16 +109,24 @@ export const FormWrapper = styled.div`
   height: auto;
   justify-content: center;
   margin: 10rem auto;
-  max-width: 110rem;
-  padding: 6.4rem 12.4rem;
-  width: 80%;
+  max-width: 71rem;
+  padding: 6.4rem;
+  width: 60%;
 
-  @media (max-width: 992px) {
-    width: 100%;
+  @media (max-width: 1242px) {
+    width: 70%;
+  }
+
+  @media (max-width: 1192px) {
+    width: 75%;
+  }
+
+  @media (max-width: 1092px) {
+    width: 80%;
   }
 
   @media (max-width: 800px) {
-    padding: 6.4rem;
+    width: 100%;
   }
 
   @media (max-width: 500px) {
