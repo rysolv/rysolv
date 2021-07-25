@@ -2,23 +2,23 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import withAuth from 'containers/Auth';
 
-import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
 import Contact from 'components/Contact';
 import Faq from 'components/Faq';
 import HowTo from 'components/HowTo';
+import NotFoundPage from 'components/NotFoundPage';
+import PrivacyPolicy from 'components/PrivacyPolicy';
+import TermsOfService from 'components/TermsOfService';
+import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
+import Main from 'containers/HomePage/Loadable';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
 import Jobs from 'containers/Jobs';
-import Main from 'containers/HomePage/Loadable';
-import NotFoundPage from 'components/NotFoundPage';
 import Overview from 'containers/Overview';
-import PrivacyPolicy from 'components/PrivacyPolicy';
 import ReposAdd from 'containers/Repos/Add';
 import ReposDetail from 'containers/Repos/Detail';
 import Settings from 'containers/Settings';
 import SignIn from 'containers/Signin';
 import Stats from 'containers/Stats/Loadable';
-import TermsOfService from 'components/TermsOfService';
 import UsersDetail from 'containers/Users/Detail';
 import VerifyGithub from 'containers/VerifyGithub/Loadable';
 
@@ -75,6 +75,7 @@ const Routes = () => (
     <Route exact path="/terms-of-service" component={PublicTermsOfService} />
     <Route exact path="/users" component={PublicOverview} />
     <Route exact path="/users/detail/:id" component={PublicUsersDetail} />
+    <Route exact path="/users/search/:searchValue" component={PublicOverview} />
     <Route component={PublicNotFoundPage} />
   </Switch>
 );
