@@ -9,7 +9,7 @@ const { mobile, tablet } = mediaQueriesByDevice;
 
 export const AppBodyWrapper = styled.div`
   flex: 1;
-  padding-bottom: ${({ isLandingPage }) => (isLandingPage ? '0' : '16rem')};
+  padding-bottom: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? '0' : '16rem')};
 `;
 
 export const AppContentWrapper = styled.div`
@@ -19,16 +19,16 @@ export const AppContentWrapper = styled.div`
 export const RoutesWrapper = styled.section`
   display: flex;
   justify-content: center;
-  padding: ${({ isLandingPage }) => (isLandingPage ? '0' : '0 5% 3.6rem 5%')};
+  padding: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? '0' : '0 5% 3.6rem 5%')};
   width: 100%;
 
   ${tablet} {
-    padding: ${({ isLandingPage }) => isLandingPage ? '0' : '0 1rem 3.6rem 1rem'};
+    padding: ${({ isLandingOrRecruitmentPage }) => isLandingOrRecruitmentPage ? '0' : '0 1rem 3.6rem 1rem'};
   }
 
   ${mobile} {
-    margin-bottom: ${({ isLandingPage }) => (isLandingPage ? '0' : '10rem')};
-    padding-top: ${({ isLandingPage }) => (isLandingPage ? '0' : '10rem')};
+    margin-bottom: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? '0' : '10rem')};
+    padding-top: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? '0' : '10rem')};
   }
 `;
 

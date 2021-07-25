@@ -83,7 +83,8 @@ class Main extends React.PureComponent {
       handleNav(route);
     };
     const { pathname } = window.location;
-    const isLandingPage = pathname === '/';
+    const isLandingOrRecruitmentPage =
+      pathname === '/' || pathname === '/recruitment';
     const isPaymentModal = modal === 'fundIssue';
     const modalPropsDictionary = {
       closeIssue: {
@@ -160,7 +161,7 @@ class Main extends React.PureComponent {
     };
     return (
       <Fragment>
-        <AppBodyWrapper isLandingPage={isLandingPage}>
+        <AppBodyWrapper isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}>
           <Header
             activeUser={activeUser}
             deviceView={deviceView}
@@ -172,7 +173,9 @@ class Main extends React.PureComponent {
           />
           <AppContentWrapper>
             <SideNav deviceView={deviceView} handleNav={handleNav} />
-            <RoutesWrapper isLandingPage={isLandingPage}>
+            <RoutesWrapper
+              isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}
+            >
               <Routes />
             </RoutesWrapper>
           </AppContentWrapper>
