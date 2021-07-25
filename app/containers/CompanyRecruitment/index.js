@@ -10,7 +10,7 @@ import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import { changeInput, inputError, resetForm, sendForm } from './actions';
-import { validateFields } from './helpers';
+import { validateFields, validateOneField } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectCompanyRecruitment } from './selectors';
@@ -36,6 +36,15 @@ const CompanyRecruitment = ({
     }
   };
 
+  const handleValidateInput = ({ field, values }) => {
+    const validationError = validateOneField({ field, values }) || '';
+    dispatchInputError({
+      errors: {
+        [field]: validationError,
+      },
+    });
+  };
+
   return (
     <ViewContainer>
       <CompanyRecruitmentView
@@ -45,6 +54,7 @@ const CompanyRecruitment = ({
         form={form}
         formErrors={formErrors}
         handleSendContact={handleSendContact}
+        handleValidateInput={handleValidateInput}
         loading={loading}
         success={success}
       />

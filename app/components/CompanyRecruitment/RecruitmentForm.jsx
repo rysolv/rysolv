@@ -14,7 +14,7 @@ import {
 
 const RecruitmentForm = ({
   dispatchChangeInput,
-  dispatchResetFeedback,
+  dispatchResetForm,
   error,
   form,
   formErrors: {
@@ -33,7 +33,7 @@ const RecruitmentForm = ({
   useEffect(() => {
     if (error || success) {
       setTimeout(() => {
-        dispatchResetFeedback();
+        dispatchResetForm();
       }, 6000);
     }
   }, [error, success]);
@@ -45,7 +45,7 @@ const RecruitmentForm = ({
         <Input
           autoComplete="name"
           height="4.9rem"
-          onBlur={() => handleValidateInput({ field: 'name', form })}
+          onBlur={() => handleValidateInput({ field: 'name', values: form })}
           onChange={e =>
             dispatchChangeInput({ field: 'name', value: e.target.value })
           }
@@ -60,7 +60,7 @@ const RecruitmentForm = ({
         <Input
           autoComplete="email"
           height="4.9rem"
-          onBlur={() => handleValidateInput({ field: 'email', form })}
+          onBlur={() => handleValidateInput({ field: 'email', values: form })}
           onChange={e =>
             dispatchChangeInput({ field: 'email', value: e.target.value })
           }
@@ -75,7 +75,7 @@ const RecruitmentForm = ({
         <Input
           autoComplete="organization"
           height="4.9rem"
-          onBlur={() => handleValidateInput({ field: 'company', form })}
+          onBlur={() => handleValidateInput({ field: 'company', values: form })}
           onChange={e =>
             dispatchChangeInput({ field: 'company', value: e.target.value })
           }
@@ -90,7 +90,7 @@ const RecruitmentForm = ({
         <Input
           autoComplete="url"
           height="4.9rem"
-          onBlur={() => handleValidateInput({ field: 'url', form })}
+          onBlur={() => handleValidateInput({ field: 'url', values: form })}
           onChange={e =>
             dispatchChangeInput({ field: 'url', value: e.target.value })
           }
@@ -121,7 +121,7 @@ const RecruitmentForm = ({
 
 RecruitmentForm.propTypes = {
   dispatchChangeInput: T.func.isRequired,
-  dispatchResetFeedback: T.func.isRequired,
+  dispatchResetForm: T.func.isRequired,
   error: T.bool.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
