@@ -1,5 +1,5 @@
-const { errorLogger, sendEmail } = require('../../../helpers');
 const { createRecruiting } = require('../../../db');
+const { errorLogger, sendEmail } = require('../../../helpers');
 
 const recruitingSignup = async ({ contactInput }) => {
   const { companyName, companyUrl, contactName, email, source } = contactInput;

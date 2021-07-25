@@ -1,5 +1,3 @@
 const createRecruiting = require('./createRecruiting');
 
-module.exports = {
-  createRecruiting,
-};
+module.exports = { createRecruiting };
