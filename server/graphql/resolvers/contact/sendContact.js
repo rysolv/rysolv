@@ -8,6 +8,7 @@ const sendContact = async ({ contactInput }) => {
       body: { body, email, source },
       path: '/s/contact/contact',
     });
+
     return {
       __typename: 'Success',
       message: 'Email delivered',

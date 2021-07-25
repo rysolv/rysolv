@@ -53,11 +53,11 @@ const CompanyRecruitment = ({
 );
 
 CompanyRecruitment.propTypes = {
-  dispatchResetForm: T.func,
-  dispatchSendForm: T.func,
-  error: T.bool,
-  loading: T.bool,
-  success: T.bool,
+  dispatchResetForm: T.func.isRequired,
+  dispatchSendForm: T.func.isRequired,
+  error: T.bool.isRequired,
+  loading: T.bool.isRequired,
+  success: T.bool.isRequired,
 };
 
 export default CompanyRecruitment;
