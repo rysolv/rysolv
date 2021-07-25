@@ -110,10 +110,10 @@ export const NavLink = styled(({ shouldRemoveFirst, shouldRemoveSecond, ...restP
   }
 `;
 
-export const StyledAppBar = styled(({ isLandingPage, ...restProps }) => (
+export const StyledAppBar = styled(({ isLandingOrRecruitmentPage, ...restProps }) => (
   <AppBar {...restProps} />
 ))`
-  box-shadow: ${({ isLandingPage }) => (isLandingPage ? 'none' : '')};
+  box-shadow: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? 'none' : '')};
 `;
 
 export const StyledHeaderLink = styled(BaseLink)`

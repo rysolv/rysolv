@@ -41,6 +41,7 @@ const {
   getUserPullRequests,
 } = require('./queries/pullRequests');
 const { getQuestions, postUserResponse } = require('./queries/questions');
+const { createRecruiting } = require('./queries/recruiting');
 const {
   checkDuplicateRepo,
   createRepo,
@@ -96,6 +97,7 @@ module.exports = {
   createIssue,
   createLanguage,
   createPullRequest,
+  createRecruiting,
   createRepo,
   createUser,
   createWithdrawal,

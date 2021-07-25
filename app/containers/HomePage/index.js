@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { Redirect, withRouter } from 'react-router-dom';
-import { compose } from 'redux';
 
 import { ConditionalRender } from 'components/base_ui';
 import Landing from 'components/Landing';
