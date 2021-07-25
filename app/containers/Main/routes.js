@@ -8,10 +8,11 @@ import HowTo from 'components/HowTo';
 import NotFoundPage from 'components/NotFoundPage';
 import PrivacyPolicy from 'components/PrivacyPolicy';
 import TermsOfService from 'components/TermsOfService';
+import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
+import Main from 'containers/HomePage/Loadable';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
 import Jobs from 'containers/Jobs';
-import Main from 'containers/HomePage/Loadable';
 import Overview from 'containers/Overview';
 import ReposAdd from 'containers/Repos/Add';
 import ReposDetail from 'containers/Repos/Detail';
@@ -27,6 +28,7 @@ const publicConfig = { isAdmin: false, isPrivate: false };
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
+const PublicCompanyRecruitment = withAuth(publicConfig, CompanyRecruitment);
 const PublicContact = withAuth(publicConfig, Contact);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
@@ -59,16 +61,17 @@ const Routes = () => (
     <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
+    <Route exact path="/recruitment" component={PublicCompanyRecruitment} />
     <Route exact path="/repos" component={PublicOverview} />
     <Route exact path="/repos/add" component={PrivateReposAdd} />
     <Route exact path="/repos/detail/:id" component={PublicReposDetail} />
     <Route exact path="/repos/search/:searchValue" component={PublicOverview} />
     <Route exact path="/settings/:view?" component={PrivateSettings} />
-    <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/signin" component={PublicSignIn} />
     <Route exact path="/signin/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/signup" component={PublicSignIn} />
     <Route exact path="/signup/verify-github" component={PublicVerifyGithub} />
+    <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/terms-of-service" component={PublicTermsOfService} />
     <Route exact path="/users" component={PublicOverview} />
     <Route exact path="/users/detail/:id" component={PublicUsersDetail} />

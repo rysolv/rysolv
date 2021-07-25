@@ -20,7 +20,7 @@ const SiteWordmark = iconDictionary('siteWordmark');
 
 const DesktopLandingHeader = ({ handleNav }) => (
   <DesktopHeaderContainer>
-    <LogoWrapper>
+    <LogoWrapper onClick={() => handleNav('/')}>
       <Logo>{SiteLogo}</Logo>
       <Wordmark>{SiteWordmark}</Wordmark>
     </LogoWrapper>

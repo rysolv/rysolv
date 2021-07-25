@@ -10,6 +10,7 @@ const paymentsSchema = require('./payments');
 const pullRequestSchema = require('./pullRequest');
 const questionResponseSchema = require('./questionResponses');
 const questionSchema = require('./questions');
+const recruitingSignup = require('./recruiting_signup');
 const repoSchema = require('./repos');
 const userQuestionResponseSchema = require('./userQuestionResponses');
 const userReposSchema = require('./userRepos');
@@ -30,6 +31,7 @@ module.exports = {
   ...pullRequestSchema,
   ...questionResponseSchema,
   ...questionSchema,
+  ...recruitingSignup,
   ...repoSchema,
   ...userQuestionResponseSchema,
   ...userReposSchema,

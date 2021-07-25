@@ -44,6 +44,10 @@ export const Logo = styled.div`
 export const LogoWrapper = styled.div`
   align-items: center;
   display: flex;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`

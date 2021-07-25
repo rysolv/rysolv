@@ -23,7 +23,7 @@ const DesktopHeader = ({
   handleResetState,
   handleSignout,
   isDrawerOpen,
-  isLandingPage,
+  isLandingOrRecruitmentPage,
   isMobile,
   isSignedIn,
   location,
@@ -32,7 +32,7 @@ const DesktopHeader = ({
   <Fragment>
     <StyledAppBar
       color="default"
-      isLandingPage={isLandingPage}
+      isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}
       position="relative"
     >
       <Container>
@@ -91,7 +91,7 @@ DesktopHeader.propTypes = {
   handleResetState: T.func.isRequired,
   handleSignout: T.func.isRequired,
   isDrawerOpen: T.bool.isRequired,
-  isLandingPage: T.bool.isRequired,
+  isLandingOrRecruitmentPage: T.bool.isRequired,
   isMobile: T.bool.isRequired,
   isSignedIn: T.bool.isRequired,
   location: T.object.isRequired,
