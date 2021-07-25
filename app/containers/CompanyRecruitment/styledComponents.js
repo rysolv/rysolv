@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { blueColor } from 'defaultStyleHelper';
 
-export const Wrapper = styled.div`
+export const ViewContainer = styled.div`
   background: ${blueColor};
+  width: 100%;
 `;

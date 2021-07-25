@@ -4,11 +4,11 @@ import T from 'prop-types';
 import { ProgressButton } from 'components/base_ui';
 
 import {
+  ButtonWrapper,
   Input,
   InputLabel,
   InputWrapper,
   RecruitmentFormContainer,
-  Textarea,
 } from './styledComponents';
 
 const RecruitmentForm = ({
@@ -18,15 +18,19 @@ const RecruitmentForm = ({
   loading,
   success,
 }) => {
-  const [body, setBody] = useState('');
+  const [company, setCompany] = useState('');
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [url, setUrl] = useState('');
 
   useEffect(() => {
     if (error || success) {
       setTimeout(() => {
         dispatchResetFeedback();
-        setBody('');
+        setCompany('');
         setEmail('');
+        setName('');
+        setUrl('');
       }, 6000);
     }
   }, [error, success]);
@@ -34,7 +38,18 @@ const RecruitmentForm = ({
   return (
     <RecruitmentFormContainer>
       <InputWrapper>
-        <InputLabel>Your email</InputLabel>
+        <InputLabel>Contact name</InputLabel>
+        <Input
+          autoComplete="name"
+          height="4.9rem"
+          onChange={e => setName(e.target.value)}
+          placeholder="Contact name"
+          type="text"
+          value={name}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <InputLabel>Email</InputLabel>
         <Input
           autoComplete="email"
           height="4.9rem"
@@ -45,22 +60,39 @@ const RecruitmentForm = ({
         />
       </InputWrapper>
       <InputWrapper>
-        <InputLabel>What are you building?</InputLabel>
-        <Textarea
-          height="14.4rem"
-          onChange={e => setBody(e.target.value)}
-          placeholder="What kind of software? What language? Do you have a repo?"
-          value={body}
+        <InputLabel>Company name</InputLabel>
+        <Input
+          autoComplete="organization"
+          height="4.9rem"
+          onChange={e => setCompany(e.target.value)}
+          placeholder="Company name"
+          type="text"
+          value={company}
         />
       </InputWrapper>
-      <ProgressButton
-        disabled={body.length === 0 || email.length === 0}
-        error={error}
-        label="Send"
-        loading={loading}
-        onClick={() => dispatchSendContact({ body, email })}
-        success={success}
-      />
+      <InputWrapper>
+        <InputLabel>Company website</InputLabel>
+        <Input
+          autoComplete="url"
+          height="4.9rem"
+          onChange={e => setUrl(e.target.value)}
+          placeholder="Company website"
+          type="url"
+          value={url}
+        />
+      </InputWrapper>
+      <ButtonWrapper>
+        <ProgressButton
+          disabled={
+            company.length === 0 || email.length === 0 || name.length === 0
+          }
+          error={error}
+          label="Send"
+          loading={loading}
+          onClick={() => dispatchSendContact({ company, email, name, url })}
+          success={success}
+        />
+      </ButtonWrapper>
     </RecruitmentFormContainer>
   );
 };

@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 
 import CompanyRecruitmentView from 'components/CompanyRecruitment';
 
-import { Wrapper } from './styledComponents';
+import { ViewContainer } from './styledComponents';
 
 const CompanyRecruitment = () => (
-  <Wrapper>
+  <ViewContainer>
     <CompanyRecruitmentView />
-  </Wrapper>
+  </ViewContainer>
 );
 
 CompanyRecruitment.propTypes = {};

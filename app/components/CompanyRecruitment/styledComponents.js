@@ -65,34 +65,21 @@ export const BackgroundSolidCircleIcon = styled.div`
   }
 `;
 
+export const ButtonWrapper = styled.div`
+  margin-top: 4.8rem;
+  text-align: center;
+  width: 100%;
+`;
+
 export const CompanyRecruitmentContainer = styled.div`
+  color: ${whiteColor};
   height: 100%;
-  padding: 18.4rem 12rem 0;
+  padding: 10.4rem 12rem 0;
   position: relative;
   z-index: 1;
 
   @media (max-width: 700px) {
-    padding: 18.4rem 3rem 0;
-  }
-`;
-
-export const CompanyRecruitmentWrapper = styled.div`
-  background: ${blueGrayColor};
-  border-radius: 0.7rem;
-  color: ${whiteColor};
-  display: flex;
-  height: 47.5rem;
-  margin: 24.4rem auto 5.6rem;
-  max-width: 120rem;
-  padding: 6.4rem 7.5rem;
-
-  @media (max-width: 1000px) {
-    flex-direction: column;
-    height: auto;
-  }
-
-  @media (max-width: 500px) {
-    padding: 2.6rem 2.8rem 5.052rem;
+    padding: 5.4rem 3rem 0;
   }
 `;
 
@@ -107,6 +94,31 @@ export const CompanyRecruitmentSubheader = styled.div`
   font-weight: 400;
   line-height: 2.905rem;
   margin-top: 0.9rem;
+`;
+
+export const FormWrapper = styled.div`
+  background: ${blueGrayColor};
+  border-radius: 0.7rem;
+  color: ${whiteColor};
+  display: flex;
+  height: auto;
+  justify-content: center;
+  margin: 10rem auto;
+  max-width: 110rem;
+  padding: 6.4rem 12.4rem;
+  width: 80%;
+
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+
+  @media (max-width: 800px) {
+    padding: 6.4rem;
+  }
+
+  @media (max-width: 500px) {
+    padding: 2.6rem 2.8rem 5.052rem;
+  }
 `;
 
 export const HeaderImageLeftIcon = styled.div`
@@ -179,6 +191,11 @@ export const HeaderImageRightIcon = styled.div`
   }
 `;
 
+export const HeaderWrapper = styled.div`
+  margin: auto;
+  max-width: 110rem;
+`;
+
 export const Input = styled.input`
   ${baseInputStyle};
 `;
@@ -194,19 +211,6 @@ export const InputWrapper = styled.div`
 `;
 
 export const RecruitmentFormContainer = styled.div`
-  margin-left: 9.7rem;
-  width: 59%;
-
-  @media (max-width: 1100px) {
-    width: 100%;
-  }
-
-  @media (max-width: 1000px) {
-    margin-left: 0;
-    margin-top: 3.261rem;
-  }
-`;
-
-export const Textarea = styled.textarea`
-  ${baseInputStyle};
+  max-width: 58rem;
+  width: 100%;
 `;

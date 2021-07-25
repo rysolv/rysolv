@@ -62,6 +62,7 @@ import Monocle from './svg/Monocle';
 import Paypal from './svg/Paypal';
 import Python from './svg/Python';
 import ReactIcon from './svg/React';
+import RecruitmentHeaderImageRight from './svg/RecruitmentHeaderImageRight';
 import Ruby from './svg/Ruby';
 import SiteLogo from './svg/SiteLogo';
 import SiteWordmark from './svg/SiteWordmark';
@@ -119,6 +120,7 @@ export default (name, size, style) => {
     pullRequest: PullRequest,
     python: Python,
     reactIcon: ReactIcon,
+    recruitmentHeaderImageRight: RecruitmentHeaderImageRight,
     repo: Web,
     ruby: Ruby,
     search: Search,

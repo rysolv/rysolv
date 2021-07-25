@@ -5,21 +5,19 @@ import iconDictionary from 'utils/iconDictionary';
 
 import RecruitmentForm from './RecruitmentForm';
 import {
-  // BackgroundHollowCircleBottomIcon,
-  // BackgroundHollowCircleTopIcon,
-  // BackgroundSolidCircleIcon,
   CompanyRecruitmentContainer,
   CompanyRecruitmentHeader,
   CompanyRecruitmentSubheader,
-  CompanyRecruitmentWrapper,
+  FormWrapper,
   HeaderImageLeftIcon,
   HeaderImageRightIcon,
+  HeaderWrapper,
 } from './styledComponents';
 
-// const BackgroundHollowCircle = iconDictionary('backgroundHollowCircle');
-// const BackgroundSolidCircle = iconDictionary('backgroundSolidCircle');
 const HeaderImageLeft = iconDictionary('headerImageLeft');
-const HeaderImageRight = iconDictionary('headerImageRight');
+const RecruitmentHeaderImageRight = iconDictionary(
+  'recruitmentHeaderImageRight',
+);
 
 const CompanyRecruitment = ({
   dispatchResetForm,
@@ -30,16 +28,16 @@ const CompanyRecruitment = ({
 }) => (
   <Fragment>
     <CompanyRecruitmentContainer>
-      <CompanyRecruitmentWrapper>
-        <div>
-          <CompanyRecruitmentHeader>
-            Lorem ipsum dolor sit amet?
-          </CompanyRecruitmentHeader>
-          <CompanyRecruitmentSubheader>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </CompanyRecruitmentSubheader>
-        </div>
+      <HeaderWrapper>
+        <CompanyRecruitmentHeader>
+          Lorem ipsum dolor sit amet?
+        </CompanyRecruitmentHeader>
+        <CompanyRecruitmentSubheader>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </CompanyRecruitmentSubheader>
+      </HeaderWrapper>
+      <FormWrapper>
         <RecruitmentForm
           dispatchResetForm={dispatchResetForm}
           dispatchSendForm={dispatchSendForm}
@@ -47,9 +45,9 @@ const CompanyRecruitment = ({
           loading={loading}
           success={success}
         />
-      </CompanyRecruitmentWrapper>
+      </FormWrapper>
     </CompanyRecruitmentContainer>
-    <HeaderImageRightIcon>{HeaderImageRight}</HeaderImageRightIcon>
+    <HeaderImageRightIcon>{RecruitmentHeaderImageRight}</HeaderImageRightIcon>
     <HeaderImageLeftIcon>{HeaderImageLeft}</HeaderImageLeftIcon>
   </Fragment>
 );
