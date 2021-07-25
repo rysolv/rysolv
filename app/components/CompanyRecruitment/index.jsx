@@ -42,7 +42,7 @@ const CompanyRecruitment = ({
             Forget the algorithm tests! Rysolv evaluates a candidate&apos;s
             coding history to find the right engineer for the job.
           </CompanyRecruitmentSubheader>
-          <CompanyRecruitmentSubheader>
+          <CompanyRecruitmentSubheader removeOnMobile>
             We prioritize attributes that really matter to a team.
           </CompanyRecruitmentSubheader>
         </HeaderGroup>
