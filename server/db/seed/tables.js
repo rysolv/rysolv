@@ -15,6 +15,7 @@ const {
   alterPullRequestsTable,
   alterQuestionResponseTable,
   alterQuestionsTable,
+  alterRecruitingTable,
   alterReposTable,
   alterUserQuestionResponseTable,
   alterUserReposTable,
@@ -33,6 +34,7 @@ const {
   createPullRequestsTable,
   createQuestionResponseTable,
   createQuestionsTable,
+  createRecruitingTable,
   createReposTable,
   createUserQuestionResponseTable,
   createUserReposTable,
@@ -55,6 +57,7 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterPullRequestsTable });
   await singleQuery({ queryText: alterQuestionResponseTable });
   await singleQuery({ queryText: alterQuestionsTable });
+  await singleQuery({ queryText: alterRecruitingTable });
   await singleQuery({ queryText: alterReposTable });
   await singleQuery({ queryText: alterUserQuestionResponseTable });
   await singleQuery({ queryText: alterUserReposTable });
@@ -77,6 +80,7 @@ const createTables = async () => {
   await singleQuery({ queryText: createPullRequestsTable });
   await singleQuery({ queryText: createQuestionResponseTable });
   await singleQuery({ queryText: createQuestionsTable });
+  await singleQuery({ queryText: createRecruitingTable });
   await singleQuery({ queryText: createReposTable });
   await singleQuery({ queryText: createUserQuestionResponseTable });
   await singleQuery({ queryText: createUserReposTable });
@@ -103,6 +107,9 @@ const dropAllTables = async () => {
     queryText: 'DROP TABLE IF EXISTS question_responses cascade',
   });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS questions cascade' });
+  await singleQuery({
+    queryText: 'DROP TABLE IF EXISTS recruiting_signup cascade',
+  });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS repos cascade' });
   await singleQuery({
     queryText: 'DROP TABLE IF EXISTS user_question_responses cascade',
@@ -128,6 +135,7 @@ const printTables = async () => {
     'SELECT * FROM pullRequests',
     'SELECT * FROM question_responses',
     'SELECT * FROM questions',
+    'SELECT * FROM recruiting_signup',
     'SELECT * FROM repos',
     'SELECT * FROM user_question_responses',
     'SELECT * FROM user_repos',
