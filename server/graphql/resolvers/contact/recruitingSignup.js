@@ -8,7 +8,7 @@ const recruitingSignup = async ({ contactInput }) => {
     await createRecruiting({ companyName, companyUrl, contactName, email });
 
     await sendEmail({
-      body: { email },
+      body: { companyName, companyUrl, contactName, email },
       path: '/s/contact/recruiting',
     });
 
