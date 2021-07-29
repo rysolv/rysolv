@@ -28,6 +28,7 @@ import {
   makeSelectJobResponseArray,
   makeSelectJobs,
 } from './selectors';
+import { ViewContainer } from './styledComponents';
 
 const Jobs = ({
   activeUser: { isGithubVerified, isQuestionnaireComplete },
@@ -87,31 +88,33 @@ const Jobs = ({
   }
 
   return (
-    <AsyncRender
-      asyncData={questions}
-      component={JobsView}
-      error={error}
-      isRequiredData={isRequiredData}
-      loading={loading}
-      propsToPassDown={{
-        dispatchChangeInput,
-        dispatchChangeView,
-        error,
-        form,
-        handleCancel,
-        handleNav,
-        handleStart,
-        handleSubmit,
-        isGithubVerified,
-        isSignedIn,
-        loading,
-        path,
-        step,
-        steps: questions.length,
-        view,
-        ...questionProps,
-      }}
-    />
+    <ViewContainer>
+      <AsyncRender
+        asyncData={questions}
+        component={JobsView}
+        error={error}
+        isRequiredData={isRequiredData}
+        loading={loading}
+        propsToPassDown={{
+          dispatchChangeInput,
+          dispatchChangeView,
+          error,
+          form,
+          handleCancel,
+          handleNav,
+          handleStart,
+          handleSubmit,
+          isGithubVerified,
+          isSignedIn,
+          loading,
+          path,
+          step,
+          steps: questions.length,
+          view,
+          ...questionProps,
+        }}
+      />
+    </ViewContainer>
   );
 };
 

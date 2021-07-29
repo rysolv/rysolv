@@ -12,18 +12,19 @@ import {
 } from 'components/base_ui';
 import {
   commentHeaderColor,
+  darkBlueColor,
   defaultFontFamily,
   defaultFontSize,
   fundingOpenBackground,
   fundingText,
   headerFontSize,
   hoverLinkColor,
-  landingButtonGreen,
   languageBackground,
   languageText,
   lightBlueColor,
   lightGreyColor,
   textColor,
+  whiteColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
@@ -56,11 +57,17 @@ export const ButtonWrapper = styled.div`
 export const DescriptionBullets = styled.div`
   align-self: center;
   display: flex;
+  justify-content: space-around;
+  width: 100%;
 
   div {
     display: flex;
     flex-direction: column;
     padding: 0 2rem;
+
+    @media (max-width: 400px) {
+      padding: 0;
+    }
   }
 
   span {
@@ -71,7 +78,7 @@ export const DescriptionBullets = styled.div`
   }
 
   svg {
-    background: ${landingButtonGreen};
+    background: ${darkBlueColor};
     border-radius: 50%;
     color: white;
     height: 2.5rem;
@@ -90,20 +97,33 @@ export const DescriptionContent = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
+  font-weight: 400;
   line-height: 2.4rem;
   text-align: left;
 `;
 
 export const DescriptionSubTitle = styled.b`
-  font-size: 1.6rem;
-  margin: 2rem 0;
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 3.36rem;
+  margin: 3.2rem 0 0.8rem;
   text-align: center;
+
+  ${mobile} {
+    font-size: 2.5rem;
+  }
 `;
 
 export const DescriptionTitle = styled.div`
-  color: ${lightBlueColor};
-  font-size: 3.6rem;
-  font-weight: 300;
+  color: ${darkBlueColor};
+  font-size: 5.6rem;
+  font-weight: 700;
+  line-height: 6.16rem;
+
+  ${mobile} {
+    font-size: 3.2rem;
+    line-height: 3.36rem;
+  }
 `;
 
 export const DescriptionWrapper = styled.div`
@@ -131,10 +151,11 @@ export const IconWrapper = styled.div`
 export const JobsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  margin: 0 12rem;
+  max-width: 120rem;
 
-  ${mobile} {
-    width: 100%;
+  ${laptop} {
+    margin: 0 3rem;
   }
 `;
 
@@ -175,6 +196,10 @@ export const SampleWrapper = styled.div`
   opacity: 0.9;
   padding: 2rem;
   position: relative;
+
+  ${mobile} {
+    margin: 2rem -2rem;
+  }
 `;
 
 export const StyledBaseAutocomplete = styled(BaseAutocomplete)`
@@ -231,6 +256,16 @@ export const StyledFocusDiv = styled.div`
 `;
 
 export const StyledGithubButton = styled(GithubButton)`
+  align-items: center;
+  background: ${darkBlueColor};
+  border-radius: 0.8rem;
+  color: ${whiteColor};
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  text-transform: initial;
   width: auto;
 `;
 
@@ -280,23 +315,25 @@ export const StyledSecondaryButton = styled(
 `;
 
 export const ViewContainer = styled.div`
-  background: white;
+  background: ${whiteColor};
+  border-radius: 0.7rem;
   color: ${textColor};
   display: flex;
   flex-direction: column;
   font-size: ${defaultFontSize};
   justify-content: ${({ isFinalView }) =>
     isFinalView ? 'inherit' : 'space-between'};
+  margin: 0 0 5.6rem;
   min-height: 50rem;
-  padding: 3.8rem 10%;
+  padding: 7.5rem 10%;
   text-align: center;
   width: 100%;
 
   ${laptop} {
-    padding: 3.8rem 2.6rem;
+    padding: 4rem 3.2rem;
   }
 
   ${mobile} {
-    padding: 2rem 0.5rem;
+    padding: 2rem;
   }
 `;
