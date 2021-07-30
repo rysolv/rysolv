@@ -335,4 +335,8 @@ export const ViewContainer = styled.div`
   ${mobile} {
     padding: 2rem;
   }
+
+  @media (max-width: 370px) {
+    margin: 0;
+  }
 `;

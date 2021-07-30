@@ -1,7 +1,17 @@
 import styled from 'styled-components';
 
-import { BaseLink, PrimaryButton, SecondaryButton } from 'components/base_ui';
-import { blueColor, darkBlueColor, whiteColor } from 'defaultStyleHelper';
+import {
+  BaseLink,
+  PrimaryButton,
+  SecondaryButton,
+  UserNavBar,
+} from 'components/base_ui';
+import {
+  blueColor,
+  blueGrayColor,
+  darkBlueColor,
+  whiteColor,
+} from 'defaultStyleHelper';
 
 export const ButtonWrapper = styled.div`
   align-items: center;
@@ -76,6 +86,23 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
 
   &:hover {
     background: ${whiteColor};
+  }
+`;
+
+export const StyledUserNavBar = styled(UserNavBar)`
+  background-color: ${blueGrayColor};
+  border: 0.2rem solid ${darkBlueColor};
+  color: ${whiteColor};
+  font-size: 1.6rem;
+  margin: 0 0 0 2.2rem;
+
+  img {
+    height: 4rem;
+    width: 4rem;
+  }
+
+  &:hover {
+    border-color: ${darkBlueColor};
   }
 `;
 

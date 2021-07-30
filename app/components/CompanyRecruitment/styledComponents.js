@@ -79,12 +79,12 @@ export const ButtonWrapper = styled.div`
 export const CompanyRecruitmentContainer = styled.div`
   color: ${whiteColor};
   height: 100%;
-  padding: 5.4rem 12rem 0;
+  padding: 5rem 12rem 0;
   position: relative;
   z-index: 1;
 
   @media (max-width: 700px) {
-    padding: 5.4rem 3rem 0;
+    padding: 5rem 3rem 0;
   }
 
   @media (max-width: 370px) {

@@ -1,8 +1,19 @@
+/* eslint-disable indent */
 import styled from 'styled-components';
 import Menu from '@material-ui/core/Menu';
 
-import { BaseLink, ExpandIcon, SecondaryButton } from 'components/base_ui';
-import { blueColor, darkBlueColor, whiteColor } from 'defaultStyleHelper';
+import {
+  BaseLink,
+  ExpandIcon,
+  SecondaryButton,
+  UserNavBar,
+} from 'components/base_ui';
+import {
+  blueColor,
+  blueGrayColor,
+  darkBlueColor,
+  whiteColor,
+} from 'defaultStyleHelper';
 
 export const ButtonWrapper = styled.div`
   align-items: center;
@@ -18,14 +29,24 @@ export const HorizontalDivider = styled.div`
 `;
 
 export const InternalLink = styled(BaseLink)`
-  color: ${darkBlueColor};
-  font-size: 1.376rem;
-  font-weight: 400;
-  line-height: 1.665rem;
-  margin-bottom: 1.5rem;
+  color: ${whiteColor};
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.9rem;
+  padding-right: 2.2rem;
 
   &:hover {
-    color: ${darkBlueColor};
+    color: ${whiteColor};
+  }
+
+  @media (max-width: 750px) {
+    display: ${({ shouldRemoveFirst }) =>
+      shouldRemoveFirst ? 'none' : 'block'};
+  }
+
+  @media (max-width: 470px) {
+    display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
+      shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
   }
 `;
 
@@ -53,6 +74,18 @@ export const LogoWrapper = styled.div`
 
   &:hover {
     cursor: pointer;
+  }
+`;
+
+export const MenuInternalLink = styled(BaseLink)`
+  color: ${darkBlueColor};
+  font-size: 1.376rem;
+  font-weight: 400;
+  line-height: 1.665rem;
+  margin-bottom: 1.5rem;
+
+  &:hover {
+    color: ${darkBlueColor};
   }
 `;
 
@@ -124,13 +157,42 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
   }
 `;
 
+export const StyledUserNavBar = styled(UserNavBar)`
+  background-color: ${blueGrayColor};
+  border: 0.2rem solid ${darkBlueColor};
+  color: ${whiteColor};
+  font-size: 1.6rem;
+  margin: 0 0 0 2.2rem;
+
+  img {
+    height: 4rem;
+    width: 4rem;
+  }
+
+  &:hover {
+    border-color: ${darkBlueColor};
+  }
+`;
+
+export const VerticalDivider = styled.div`
+  background: ${whiteColor};
+  border: 0.2rem solid ${whiteColor};
+  height: 0rem;
+  transform: rotate(90deg);
+  width: 2.1rem;
+
+  @media (max-width: 470px) {
+    display: none;
+  }
+`;
+
 export const Wordmark = styled.div`
   svg {
     height: 2.5rem;
     width: auto;
   }
 
-  @media (max-width: 460px) {
+  @media (max-width: 650px) {
     display: none;
   }
 `;
