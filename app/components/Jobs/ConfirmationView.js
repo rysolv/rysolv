@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-import iconDictionary from 'utils/iconDictionary';
+import SuccessUserIcon from 'utils/png/SuccessUser.png';
 
 import {
   IconWrapper,
@@ -10,13 +10,11 @@ import {
   ViewContainer,
 } from './styledComponents';
 
-const SuccessIcon = iconDictionary('successOutline');
-
 const ConfirmationView = () => (
   <Fragment>
     <JobsHeader />
     <ViewContainer isFinalView>
-      <IconWrapper isSuccess>{SuccessIcon}</IconWrapper>
+      <IconWrapper src={SuccessUserIcon} />
       <StyledParagraph>
         Success! Let&#39;s match you with companies.
       </StyledParagraph>

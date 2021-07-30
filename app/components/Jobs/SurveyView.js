@@ -72,10 +72,10 @@ const SurveyView = ({
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <JobsHeader>
-        <ProgressBar step={step} steps={steps} />
-      </JobsHeader>
       <ViewContainer>
+        <JobsHeader>
+          <ProgressBar step={step} steps={steps} />
+        </JobsHeader>
         <div>
           <QuestionWrapper>{question}</QuestionWrapper>
           <DescriptionWrapper>{description}</DescriptionWrapper>

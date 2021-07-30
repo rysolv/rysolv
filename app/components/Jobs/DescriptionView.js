@@ -14,7 +14,6 @@ import {
   DescriptionContent,
   DescriptionSubTitle,
   DescriptionTitle,
-  JobsHeader,
   SampleWrapper,
   StyledFocusDiv,
   StyledGithubButton,
@@ -42,7 +41,6 @@ const DescriptionView = ({ handleStart, isGithubVerified, isSignedIn }) => {
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <JobsHeader />
       <ViewContainer>
         <DescriptionTitle>Let your code speak</DescriptionTitle>
         <DescriptionContent>
@@ -74,7 +72,7 @@ const DescriptionView = ({ handleStart, isGithubVerified, isSignedIn }) => {
             Component={
               <StyledPrimaryButton
                 isSelected
-                label="Get Started"
+                label="Get started"
                 onClick={handleStart}
               />
             }

@@ -14,11 +14,8 @@ import {
   commentHeaderColor,
   darkBlueColor,
   defaultFontFamily,
-  defaultFontSize,
-  fundingOpenBackground,
-  fundingText,
   headerFontSize,
-  hoverLinkColor,
+  blueColor,
   languageBackground,
   languageText,
   lightBlueColor,
@@ -133,19 +130,10 @@ export const DescriptionWrapper = styled.div`
   padding: 1rem;
 `;
 
-export const IconWrapper = styled.div`
+export const IconWrapper = styled.img`
   align-self: center;
-  background: ${fundingOpenBackground};
-  border-radius: 50%;
-  height: 5rem;
-  width: 5rem;
-
-  svg {
-    color: ${fundingText};
-    height: 4rem;
-    margin: 0.5rem auto;
-    width: 4rem;
-  }
+  height: 9.219rem;
+  width: 9.189rem;
 `;
 
 export const JobsContainer = styled.div`
@@ -153,6 +141,7 @@ export const JobsContainer = styled.div`
   flex-direction: column;
   margin: 0 12rem;
   max-width: 120rem;
+  width: 100%;
 
   ${laptop} {
     margin: 0 3rem;
@@ -162,7 +151,7 @@ export const JobsContainer = styled.div`
 export const JobsHeader = styled.div`
   color: ${textColor};
   font-size: ${headerFontSize};
-  margin: 5rem 0 2rem 0;
+  margin-bottom: 5rem;
   width: 100%;
 
   ${mobile} {
@@ -171,11 +160,10 @@ export const JobsHeader = styled.div`
 `;
 
 export const LinkWrapper = styled(Link)`
-  color: ${hoverLinkColor};
+  color: ${blueColor};
 
   &:hover {
-    color: ${hoverLinkColor};
-    text-decoration: underline;
+    color: ${blueColor};
   }
 `;
 
@@ -185,9 +173,11 @@ export const OptionWrapper = styled.div`
 `;
 
 export const QuestionWrapper = styled.div`
-  color: ${textColor};
-  font-size: 2.6rem;
-  font-weight: 500;
+  color: ${darkBlueColor};
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 3.36rem;
+  margin: 3.2rem 0 0.8rem;
 `;
 
 export const SampleWrapper = styled.div`
@@ -218,7 +208,7 @@ export const StyledButton = styled(
     ...restProps
   }) => <Button {...restProps} />,
 )`
-  color: ${lightBlueColor};
+  color: ${darkBlueColor};
   display: ${({
     shouldDisplayBack,
     shouldDisplayCancel,
@@ -228,7 +218,7 @@ export const StyledButton = styled(
       ? 'inherit'
       : 'none'};
   font-family: ${defaultFontFamily};
-  font-size: ${defaultFontSize};
+  font-size: 1.6rem;
   font-weight: 500;
   margin: 1rem;
   padding: 0rem;
@@ -266,12 +256,13 @@ export const StyledGithubButton = styled(GithubButton)`
   height: 4.8rem;
   line-height: 1.936rem;
   text-transform: initial;
-  width: auto;
 `;
 
 export const StyledParagraph = styled.p`
-  font-size: 1.8rem;
-  font-weight: 500;
+  color: ${darkBlueColor};
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
   padding-top: 2rem;
 `;
 
@@ -288,15 +279,24 @@ export const StyledPrimaryAsyncButton = styled(
 export const StyledPrimaryButton = styled(({ isSelected, ...restProps }) => (
   <PrimaryButton {...restProps} />
 ))`
+  align-items: center;
   background-color: ${({ isSelected }) =>
-    isSelected ? lightBlueColor : 'white'};
-  border: 0.1rem solid ${lightBlueColor};
-  color: ${({ isSelected }) => (isSelected ? 'white' : lightBlueColor)};
+    isSelected ? darkBlueColor : whiteColor};
+  border-radius: 0.8rem;
+  border: 0.2rem solid ${darkBlueColor};
+  color: ${({ isSelected }) => (isSelected ? whiteColor : darkBlueColor)};
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  margin: 1rem auto;
   min-width: 20rem;
+  text-transform: initial;
 
   &:hover {
-    background-color: ${lightBlueColor};
-    color: white;
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
   }
 `;
 
@@ -320,10 +320,10 @@ export const ViewContainer = styled.div`
   color: ${textColor};
   display: flex;
   flex-direction: column;
-  font-size: ${defaultFontSize};
+  font-size: 1.6rem;
   justify-content: ${({ isFinalView }) =>
     isFinalView ? 'inherit' : 'space-between'};
-  margin: 0 0 5.6rem;
+  margin: 5rem 0 5.6rem;
   min-height: 50rem;
   padding: 7.5rem 10%;
   text-align: center;

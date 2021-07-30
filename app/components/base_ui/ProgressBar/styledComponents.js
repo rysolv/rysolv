@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import MobileStepper from '@material-ui/core/MobileStepper';
 
-import { landingButtonGreen, textColor } from 'defaultStyleHelper';
+import { blueGrayColor, textColor } from 'defaultStyleHelper';
 
 export const ProgressBarWrapper = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ export const ProgressBarWrapper = styled.div`
 export const StyledLabel = styled.span`
   align-self: center;
   color: ${textColor};
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 500;
   position: absolute;
   right: 20%;
@@ -35,6 +35,7 @@ export const StyledLabel = styled.span`
 `;
 
 export const StyledProgressBar = styled(MobileStepper)`
+  background: inherit;
   justify-content: center;
   width: 100%;
 
@@ -50,7 +51,7 @@ export const StyledProgressBar = styled(MobileStepper)`
   }
 
   .MuiLinearProgress-barColorPrimary {
-    background-color: ${landingButtonGreen};
+    background-color: ${blueGrayColor};
     border-radius: 0.6rem;
     transition-duration: 0.25s;
     transition-property: width;
