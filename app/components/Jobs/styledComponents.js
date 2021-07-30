@@ -322,7 +322,7 @@ export const ViewContainer = styled.div`
   font-size: 1.6rem;
   justify-content: ${({ isFinalView }) =>
     isFinalView ? 'inherit' : 'space-between'};
-  margin: 5rem 0 5.6rem;
+  margin: 5rem 0 0;
   min-height: 50rem;
   padding: 7.5rem 10%;
   text-align: center;
