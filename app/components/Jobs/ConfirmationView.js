@@ -4,7 +4,6 @@ import SuccessUserIcon from 'utils/png/SuccessUser.png';
 
 import {
   IconWrapper,
-  JobsHeader,
   LinkWrapper,
   StyledParagraph,
   ViewContainer,
@@ -12,7 +11,6 @@ import {
 
 const ConfirmationView = () => (
   <Fragment>
-    <JobsHeader />
     <ViewContainer isFinalView>
       <IconWrapper src={SuccessUserIcon} />
       <StyledParagraph>

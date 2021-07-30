@@ -169,7 +169,6 @@ export const LinkWrapper = styled(Link)`
 
 export const OptionWrapper = styled.div`
   margin: 5rem auto;
-  width: 75%;
 `;
 
 export const QuestionWrapper = styled.div`
