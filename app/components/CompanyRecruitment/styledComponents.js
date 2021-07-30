@@ -133,7 +133,7 @@ export const FormWrapper = styled.div`
   display: flex;
   height: auto;
   justify-content: center;
-  margin: 8rem auto;
+  margin: 5.6rem auto;
   max-width: 65rem;
   padding: 6.4rem;
   width: 60%;
@@ -156,10 +156,6 @@ export const FormWrapper = styled.div`
 
   @media (max-width: 500px) {
     padding: 2.6rem 2.8rem 5.052rem;
-  }
-
-  @media (max-width: 370px) {
-    margin: 6rem auto;
   }
 `;
 
