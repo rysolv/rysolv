@@ -24,7 +24,7 @@ const questions = [
     question_text: 'What is your personal website?',
     required: false,
     response_limit: 1,
-    subtext: null,
+    subtext: 'Optional.',
   },
   // preferred languages
   {
@@ -60,7 +60,7 @@ const questions = [
     question_text: 'Upload your resume.',
     required: false,
     response_limit: 1,
-    subtext: null,
+    subtext: 'Optional.',
   },
   // specialty
   {
