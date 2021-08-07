@@ -1,6 +1,7 @@
 const request = require('request').defaults({ encoding: null });
-const { uploadFileS3 } = require('./awsConfig');
+
 const { CustomError, isUrl } = require('../helpers');
+const { uploadFileS3 } = require('./awsConfig');
 
 const base64FromUrl = async url =>
   new Promise((resolve, reject) => {
@@ -31,7 +32,7 @@ const uploadImage = async image => {
 
   const { Location } = await uploadFileS3({
     file: base64Data,
-    type,
+    type: `image/${type}`,
   });
   return { uploadUrl: Location };
 };

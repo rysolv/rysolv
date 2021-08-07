@@ -3,6 +3,8 @@ const AWS = require('aws-sdk');
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const { v4: uuidv4 } = require('uuid');
 
+const { bucketNameDictionary } = require('../constants');
+
 AWS.config.update({ region: process.env.AWS_DEFAULT_REGION });
 
 const production = process.env.NODE_ENV === 'production';
@@ -169,13 +171,15 @@ const updateCognitoEmail = ({ currentEmail, newEmail }) =>
   });
 
 const uploadFileS3 = async ({ file, key = null, type }) => {
-  const fileKey = key || `${process.env.S3_BUCKET_NAME}/${uuidv4()}`;
+  const generalType = type.split('/')[0];
+  const bucketName = bucketNameDictionary[generalType];
+  const fileKey = key || `${bucketName}/${uuidv4()}`;
   const fileBuffer = Buffer.from(file, 'base64');
   const payload = {
     Body: fileBuffer,
     Bucket: process.env.S3_BUCKET_NAME,
     ContentEncoding: 'base64',
-    ContentType: `image/${type}`,
+    ContentType: type,
     Key: fileKey,
   };
   const result = await s3.upload(payload).promise();

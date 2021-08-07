@@ -26,6 +26,7 @@ const SurveyView = ({
   handleCancel,
   handleNav,
   handleSubmit,
+  handleUpdateFiles,
   id,
   limit,
   options,
@@ -33,12 +34,19 @@ const SurveyView = ({
   path,
   placeholder,
   question,
+  required,
   step,
   steps,
 }) => {
   useEffect(() => {
     document.getElementById('surveyQuestion').focus();
   }, []);
+  const nextDisabled = required ? checkInputDisabled(id) : false;
+  const nextLabel = required ? 'Continue' : 'Skip';
+  const submitDisabled = required
+    ? !Object.keys(form).every(input => !checkInputDisabled(input))
+    : false;
+
   const shouldDisplayBack = step > 1;
   const shouldDisplayCancel = step === 1;
   const shouldDisplaySubmit = step === steps;
@@ -46,6 +54,7 @@ const SurveyView = ({
   const optionProps = {
     dispatchChangeInput,
     form,
+    handleUpdateFiles,
     id,
     limit,
     options,
@@ -103,18 +112,16 @@ const SurveyView = ({
             Back
           </StyledButton>
           <StyledButton
-            disabled={checkInputDisabled(id)}
+            disabled={nextDisabled}
             disableRipple
             onClick={() => handleNav(`${path}?question=${step + 1}`)}
             shouldDisplaySubmit={!shouldDisplaySubmit}
           >
-            Continue
+            {nextLabel}
             {NextIcon}
           </StyledButton>
           <StyledButton
-            disabled={
-              !Object.keys(form).every(input => !checkInputDisabled(input))
-            }
+            disabled={submitDisabled}
             disableRipple
             onClick={handleSubmit}
             shouldDisplaySubmit={shouldDisplaySubmit}
@@ -134,6 +141,7 @@ SurveyView.propTypes = {
   handleCancel: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleSubmit: T.func.isRequired,
+  handleUpdateFiles: T.func.isRequired,
   id: T.string.isRequired,
   limit: T.number,
   options: T.array.isRequired,
@@ -141,6 +149,7 @@ SurveyView.propTypes = {
   path: T.string.isRequired,
   placeholder: T.string,
   question: T.string.isRequired,
+  required: T.bool.isRequired,
   step: T.number.isRequired,
   steps: T.number.isRequired,
 };

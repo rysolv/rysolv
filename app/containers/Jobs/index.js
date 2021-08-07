@@ -20,7 +20,7 @@ import {
   resetState,
   submitUserResponse,
 } from './actions';
-import { getQuestion } from './helpers';
+import { convertFileToDataUrl, getQuestion } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import {
@@ -79,6 +79,11 @@ const Jobs = ({
     handleNav(`${path}?question=1`);
   };
   const handleSubmit = () => dispatchSubmitUserResponse({ responseArray });
+  const handleUpdateFiles = async filesArray => {
+    const file = filesArray[0];
+    const fileDataUrl = await convertFileToDataUrl(file);
+    dispatchChangeInput({ field: 'resume', value: fileDataUrl });
+  };
 
   const step = getQuestion();
   const questionProps = questions[step - 1];
@@ -104,6 +109,7 @@ const Jobs = ({
           handleNav,
           handleStart,
           handleSubmit,
+          handleUpdateFiles,
           isGithubVerified,
           isSignedIn,
           loading,

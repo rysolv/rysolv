@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect';
+import omit from 'lodash/omit';
 
 import { snakeToCamel } from 'utils/globalHelpers';
 
-import { optionDictionary } from './helpers';
+import { dataUrlRegex, optionDictionary } from './helpers';
 import { initialState } from './reducer';
 
 const selectJobsDomain = state => state.jobs || initialState;
@@ -19,7 +20,14 @@ const makeSelectJobQuestions = () =>
     makeSelectJobs('questions'),
     (form, questions) => {
       const formattedQuestions = questions.map(
-        ({ limit, questionKey, questionText, responses, subtext }) => ({
+        ({
+          limit,
+          questionKey,
+          questionText,
+          required,
+          responses,
+          subtext,
+        }) => ({
           description: subtext,
           id: snakeToCamel(questionKey),
           limit,
@@ -31,6 +39,7 @@ const makeSelectJobQuestions = () =>
               ? 'Languages'
               : '',
           question: questionText,
+          required,
         }),
       );
       return formattedQuestions;
@@ -44,7 +53,8 @@ const makeSelectJobResponseArray = () =>
     (form, questions) => {
       const responseArray = [];
       if (questions.length) {
-        Object.keys(form).forEach(input => {
+        const tempForm = omit(form, ['resumeFilename']);
+        Object.keys(tempForm).forEach(input => {
           const { value: values } = form[input];
           const [{ id: questionId, questionKey, responses }] = questions.filter(
             ({ questionKey: key }) => input === snakeToCamel(key),
@@ -63,15 +73,30 @@ const makeSelectJobResponseArray = () =>
             });
           }
           if (!Array.isArray(values) && values) {
-            const [{ id: responseId }] = responses.filter(
-              response => response.value === values,
-            );
-            responseArray.push({
-              questionId,
-              questionKey,
-              responseId,
-              value: values,
-            });
+            if (dataUrlRegex.test(values)) {
+              const [{ id: responseId }] = responses.filter(
+                response => response.responseKey === 'resume',
+              );
+              responseArray.push({
+                questionId,
+                questionKey,
+                responseId,
+                value: {
+                  file: values,
+                  filename: form.resumeFilename,
+                },
+              });
+            } else {
+              const [{ id: responseId }] = responses.filter(
+                response => response.value === values,
+              );
+              responseArray.push({
+                questionId,
+                questionKey,
+                responseId,
+                value: values,
+              });
+            }
           }
         });
       }

@@ -10,6 +10,7 @@ const questions = [
     priority: 1,
     question_key: 'us_citizen',
     question_text: 'Are you a US citizen?',
+    required: true,
     response_limit: 1,
     subtext: null,
   },
@@ -21,6 +22,7 @@ const questions = [
     priority: 2,
     question_key: 'experience',
     question_text: 'How many years of experience do you have?',
+    required: true,
     response_limit: 1,
     subtext: 'This can include educational and professional.',
   },
@@ -32,6 +34,7 @@ const questions = [
     priority: 3,
     question_key: 'preferred_location',
     question_text: 'What is your preferred location?',
+    required: true,
     response_limit: 6,
     subtext: 'Select as many as apply.',
   },
@@ -43,6 +46,7 @@ const questions = [
     priority: 5,
     question_key: 'desired_role',
     question_text: 'What is your desired role?',
+    required: true,
     response_limit: 3,
     subtext: 'Select up to 3 roles.',
   },
@@ -54,6 +58,7 @@ const questions = [
     priority: 6,
     question_key: 'target_salary',
     question_text: 'What is your target salary?',
+    required: true,
     response_limit: 1,
     subtext: null,
   },
@@ -65,8 +70,21 @@ const questions = [
     priority: 4,
     question_key: 'preferred_languages',
     question_text: 'What are your strongest languages?',
+    required: true,
     response_limit: 3,
     subtext: 'Select up to 3 languages.',
+  },
+  // resume
+  {
+    id: 'dcf6d0db-b443-48e7-a637-c1679590d184',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 8,
+    question_key: 'resume',
+    question_text: 'Upload your resume.',
+    required: false,
+    response_limit: 1,
+    subtext: null,
   },
   // timeline
   {
@@ -76,6 +94,7 @@ const questions = [
     priority: 7,
     question_key: 'timeline',
     question_text: 'How soon are you looking to be hired?',
+    required: true,
     response_limit: 1,
     subtext: null,
   },
@@ -181,7 +200,16 @@ const responses = [
     response_key: 'remote',
     value: 'Remote',
   },
-  // Specialty
+  // resume
+  {
+    id: 'f831f54f-d964-411c-abb1-68137b705aa0',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'dcf6d0db-b443-48e7-a637-c1679590d184',
+    response_key: 'resume',
+    value: '',
+  },
+  // specialty
   {
     id: '1f7cdcee-33ae-4c21-8269-e76566a98f58',
     created_date: new Date(),

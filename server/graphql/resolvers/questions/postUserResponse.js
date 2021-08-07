@@ -11,6 +11,7 @@ const {
   postUserResponseError,
   postUserResponseSuccess,
 } = require('./constants');
+const { uploadFile } = require('../../../middlewares/fileUpload');
 
 const postUserResponse = async ({ responseArray }, { authError, userId }) => {
   try {
@@ -31,12 +32,14 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
               });
             }
           } else {
+            const { uploadUrl } = value ? await uploadFile(value) : {};
             const data = {
               createdDate: new Date(),
               id: uuidv4(),
               questionId,
               responseId,
               userId,
+              value: uploadUrl,
             };
             await postUserResponseQuery(data);
           }

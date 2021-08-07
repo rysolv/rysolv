@@ -224,6 +224,7 @@ module.exports = buildSchema(`
     limit: Int
     questionKey: String
     questionText: String
+    required: Boolean
     responses: [QuestionResponse]
     subtext: String
   }

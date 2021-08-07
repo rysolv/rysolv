@@ -21,6 +21,7 @@ export const initialState = {
     experience: { value: [] },
     preferredLanguages: { value: [] },
     preferredLocation: { value: [] },
+    resume: { value: '' },
     targetSalary: { value: [] },
     timeline: { value: [] },
     usCitizen: { value: '' },
