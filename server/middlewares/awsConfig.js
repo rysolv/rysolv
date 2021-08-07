@@ -177,7 +177,7 @@ const uploadFileS3 = async ({ file, key = null, type }) => {
   const fileBuffer = Buffer.from(file, 'base64');
   const payload = {
     Body: fileBuffer,
-    Bucket: process.env.S3_BUCKET_NAME,
+    Bucket: bucketName,
     ContentEncoding: 'base64',
     ContentType: type,
     Key: fileKey,

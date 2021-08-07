@@ -2,18 +2,6 @@ const { singleQuery } = require('../baseQueries');
 
 // Generate initial list of questions
 const questions = [
-  // us citizen
-  {
-    id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 1,
-    question_key: 'us_citizen',
-    question_text: 'Are you a US citizen?',
-    required: true,
-    response_limit: 1,
-    subtext: null,
-  },
   // experience
   {
     id: '4bef1f37-f09b-4515-a483-047faa0758cd',
@@ -26,6 +14,30 @@ const questions = [
     response_limit: 1,
     subtext: 'This can include educational and professional.',
   },
+  // personal link
+  {
+    id: '1a859952-a666-46f1-80be-7444261486da',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 9,
+    question_key: 'personal_link',
+    question_text: 'What is your personal website?',
+    required: false,
+    response_limit: 1,
+    subtext: null,
+  },
+  // preferred languages
+  {
+    id: '7d62997d-16a7-43aa-a8af-3120cfb95b28',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 4,
+    question_key: 'preferred_languages',
+    question_text: 'What are your strongest languages?',
+    required: true,
+    response_limit: 3,
+    subtext: 'Select up to 3 languages.',
+  },
   // preferred location
   {
     id: '29a29e9c-798e-4dd1-a8a3-c9029e5b9020',
@@ -37,6 +49,18 @@ const questions = [
     required: true,
     response_limit: 6,
     subtext: 'Select as many as apply.',
+  },
+  // resume
+  {
+    id: 'dcf6d0db-b443-48e7-a637-c1679590d184',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 8,
+    question_key: 'resume',
+    question_text: 'Upload your resume.',
+    required: false,
+    response_limit: 1,
+    subtext: null,
   },
   // specialty
   {
@@ -62,30 +86,6 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
-  // preferred languages
-  {
-    id: '7d62997d-16a7-43aa-a8af-3120cfb95b28',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 4,
-    question_key: 'preferred_languages',
-    question_text: 'What are your strongest languages?',
-    required: true,
-    response_limit: 3,
-    subtext: 'Select up to 3 languages.',
-  },
-  // resume
-  {
-    id: 'dcf6d0db-b443-48e7-a637-c1679590d184',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 8,
-    question_key: 'resume',
-    question_text: 'Upload your resume.',
-    required: false,
-    response_limit: 1,
-    subtext: null,
-  },
   // timeline
   {
     id: '71401a1a-54bc-4816-a6b1-2e2679b57b4b',
@@ -98,26 +98,21 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
+  // us citizen
+  {
+    id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 1,
+    question_key: 'us_citizen',
+    question_text: 'Are you a US citizen?',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
 ];
 
 const responses = [
-  // us citizen
-  {
-    id: '8d9d7dfc-1487-4f4a-9cee-edb9836e0d06',
-    created_date: new Date(),
-    priority: 1,
-    question_id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
-    response_key: 'yes_us_citizen',
-    value: 'Yes',
-  },
-  {
-    id: '8d342d18-d93c-4f9f-9b19-9fd98038a5c4',
-    created_date: new Date(),
-    priority: 2,
-    question_id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
-    response_key: 'no_us_citizen',
-    value: 'No',
-  },
   // experience
   {
     id: '0f49a4a1-4ce2-4a7a-a3f1-8c45f22342dc',
@@ -150,6 +145,15 @@ const responses = [
     question_id: '4bef1f37-f09b-4515-a483-047faa0758cd',
     response_key: '5',
     value: 'More than 5 years',
+  },
+  // personal link
+  {
+    id: '96b9ad3d-ed3b-421e-abf8-4ffd22695c61',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '1a859952-a666-46f1-80be-7444261486da',
+    response_key: 'personal_link',
+    value: '',
   },
   // preferred locations
   {
@@ -356,6 +360,23 @@ const responses = [
     response_key: 'indefinite',
     value: 'Not actively looking',
   },
+  // us citizen
+  {
+    id: '8d9d7dfc-1487-4f4a-9cee-edb9836e0d06',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
+    response_key: 'yes_us_citizen',
+    value: 'Yes',
+  },
+  {
+    id: '8d342d18-d93c-4f9f-9b19-9fd98038a5c4',
+    created_date: new Date(),
+    priority: 2,
+    question_id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
+    response_key: 'no_us_citizen',
+    value: 'No',
+  },
 ];
 
 const seedQuestions = async () => {
@@ -369,10 +390,11 @@ const seedQuestions = async () => {
         priority,
         question_key,
         question_text,
+        required,
         response_limit,
         subtext
       )
-      VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+      VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
     `;
       const values = [
         el.category,
@@ -381,6 +403,7 @@ const seedQuestions = async () => {
         el.priority,
         el.question_key,
         el.question_text,
+        el.required,
         el.response_limit,
         el.subtext,
       ];
