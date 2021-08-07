@@ -19,6 +19,7 @@ export const initialState = {
   form: {
     desiredRole: { value: [] },
     experience: { value: [] },
+    personalLink: { value: '' },
     preferredLanguages: { value: [] },
     preferredLocation: { value: [] },
     resume: { value: '' },

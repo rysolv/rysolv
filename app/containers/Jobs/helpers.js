@@ -24,6 +24,7 @@ export const getQuestion = () => {
 export const optionDictionary = {
   desired_role: 'multipleButton',
   experience: 'multipleButton',
+  personal_link: 'autocomplete',
   preferred_languages: 'autocomplete',
   preferred_location: 'multipleButton',
   resume: 'dragAndDrop',

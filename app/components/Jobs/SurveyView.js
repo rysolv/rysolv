@@ -41,11 +41,6 @@ const SurveyView = ({
   useEffect(() => {
     document.getElementById('surveyQuestion').focus();
   }, []);
-  const nextDisabled = required ? checkInputDisabled(id) : false;
-  const nextLabel = required ? 'Continue' : 'Skip';
-  const submitDisabled = required
-    ? !Object.keys(form).every(input => !checkInputDisabled(input))
-    : false;
 
   const shouldDisplayBack = step > 1;
   const shouldDisplayCancel = step === 1;
@@ -75,6 +70,13 @@ const SurveyView = ({
       else handleNav(`${path}?question=${step + 1}`);
     }
   };
+
+  const nextDisabled = required ? checkInputDisabled(id) : false;
+  const nextLabel = required ? 'Continue' : 'Skip';
+  const submitDisabled = required
+    ? !Object.keys(form).every(input => !checkInputDisabled(input))
+    : false;
+
   return (
     <StyledFocusDiv
       id="surveyQuestion"
