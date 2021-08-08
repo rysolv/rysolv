@@ -3,7 +3,7 @@ import T from 'prop-types';
 
 import DragAndDrop from 'components/DragAndDrop';
 
-const DragAndDropComponent = ({ form, id, handleUpdateFiles }) => (
+const DragAndDropComponent = ({ form, handleUpdateFiles, id }) => (
   <DragAndDrop
     accept=".doc,.docx,.pdf,.txt"
     handleUpdateFiles={handleUpdateFiles}

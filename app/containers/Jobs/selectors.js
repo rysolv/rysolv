@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import omit from 'lodash/omit';
 
 import { snakeToCamel } from 'utils/globalHelpers';
 
@@ -58,8 +57,7 @@ const makeSelectJobResponseArray = () =>
     (form, questions) => {
       const responseArray = [];
       if (questions.length) {
-        const tempForm = omit(form, ['resumeFilename']);
-        Object.keys(tempForm).forEach(async input => {
+        Object.keys(form).forEach(async input => {
           const { value: values } = form[input];
           const [{ id: questionId, questionKey, responses }] = questions.filter(
             ({ questionKey: key }) => input === snakeToCamel(key),

@@ -13,9 +13,6 @@ export const convertFileToDataUrl = async file => {
   return `data:application/pdf;base64,${base64Data}`;
 };
 
-// eslint-disable-next-line no-useless-escape
-export const dataUrlRegex = /^\s*data:([a-z]+\/[a-z0-9\-]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i;
-
 export const getQuestion = () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);

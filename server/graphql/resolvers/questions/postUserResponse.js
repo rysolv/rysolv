@@ -17,6 +17,7 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
     const { languages } = await getUserLanguages({ userId });
+
     await Promise.all(
       responseArray.map(
         async ({ questionId, questionKey, responseId, value }) => {

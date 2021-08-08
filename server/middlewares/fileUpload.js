@@ -10,7 +10,7 @@ const uploadFile = async file => {
 
   const { Location } = await uploadFileS3({
     file: base64Data,
-    type: `application/${type}`,
+    type,
   });
   return { uploadUrl: Location };
 };

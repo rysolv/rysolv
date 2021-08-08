@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
 
-import SuccessUserIcon from 'utils/png/SuccessUser.png';
-
 import {
   IconWrapper,
   LinkWrapper,
@@ -12,7 +10,7 @@ import {
 const ConfirmationView = () => (
   <Fragment>
     <ViewContainer isFinalView>
-      <IconWrapper src={SuccessUserIcon} />
+      <IconWrapper src="https://rysolv.s3.us-east-2.amazonaws.com/SuccessUser.png" />
       <StyledParagraph>
         Success! Let&#39;s match you with companies.
       </StyledParagraph>
