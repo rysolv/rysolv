@@ -1,4 +1,5 @@
 /* eslint-disable indent */
+import React from 'react';
 import styled from 'styled-components';
 import Menu from '@material-ui/core/Menu';
 
@@ -28,7 +29,11 @@ export const HorizontalDivider = styled.div`
   width: 100%;
 `;
 
-export const InternalLink = styled(BaseLink)`
+export const InternalLink = styled(
+  ({ shouldRemoveFirst, shouldRemoveSecond, ...restProps }) => (
+    <BaseLink {...restProps} />
+  ),
+)`
   color: ${whiteColor};
   font-size: 1.6rem;
   font-weight: 500;
