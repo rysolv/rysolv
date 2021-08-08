@@ -17,10 +17,11 @@ import {
   changeInput,
   changeView,
   fetchQuestions,
+  inputError,
   resetState,
   submitUserResponse,
 } from './actions';
-import { convertFileToDataUrl, getQuestion } from './helpers';
+import { convertFileToDataUrl, getQuestion, validateFields } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import {
@@ -35,6 +36,7 @@ const Jobs = ({
   dispatchChangeInput,
   dispatchChangeView,
   dispatchFetchQuestions,
+  dispatchInputError,
   dispatchResetState,
   dispatchSubmitUserResponse,
   error,
@@ -78,7 +80,17 @@ const Jobs = ({
     dispatchChangeView({ view: 1 });
     handleNav(`${path}?question=1`);
   };
-  const handleSubmit = () => dispatchSubmitUserResponse({ responseArray });
+  const handleSubmit = () => {
+    const { isValidated, validationErrors } = validateFields({
+      questions,
+      values: form,
+    });
+    if (isValidated) {
+      dispatchSubmitUserResponse({ responseArray });
+    } else {
+      dispatchInputError({ errors: validationErrors, form });
+    }
+  };
   const handleUpdateFiles = async filesArray => {
     const file = filesArray[0];
     const fileDataUrl = await convertFileToDataUrl(file);
@@ -103,6 +115,7 @@ const Jobs = ({
         propsToPassDown={{
           dispatchChangeInput,
           dispatchChangeView,
+          dispatchInputError,
           error,
           form,
           handleCancel,
@@ -131,6 +144,7 @@ Jobs.propTypes = {
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeView: T.func.isRequired,
   dispatchFetchQuestions: T.func.isRequired,
+  dispatchInputError: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
   dispatchSubmitUserResponse: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
@@ -169,6 +183,7 @@ function mapDispatchToProps(dispatch) {
     dispatchChangeInput: payload => dispatch(changeInput(payload)),
     dispatchChangeView: payload => dispatch(changeView(payload)),
     dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
+    dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchResetState: () => dispatch(resetState()),
     dispatchSubmitUserResponse: payload =>
       dispatch(submitUserResponse(payload)),

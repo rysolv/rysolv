@@ -17,7 +17,6 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
     const { languages } = await getUserLanguages({ userId });
-
     await Promise.all(
       responseArray.map(
         async ({ questionId, questionKey, responseId, value }) => {
@@ -32,14 +31,18 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
               });
             }
           } else {
-            const { uploadUrl } = value ? await uploadFile(value) : {};
+            let formattedValue = null;
+            if (questionKey === 'personal_link') formattedValue = value;
+            if (questionKey === 'resume')
+              formattedValue = await uploadFile(value);
+
             const data = {
               createdDate: new Date(),
               id: uuidv4(),
               questionId,
               responseId,
               userId,
-              value: uploadUrl,
+              value: formattedValue,
             };
             await postUserResponseQuery(data);
           }

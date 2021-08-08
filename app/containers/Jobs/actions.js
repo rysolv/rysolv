@@ -4,6 +4,7 @@ import {
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
+  INPUT_ERROR,
   RESET_STATE,
   SUBMIT_USER_RESPONSE_FAILURE,
   SUBMIT_USER_RESPONSE_SUCCESS,
@@ -42,6 +43,13 @@ export function fetchQuestions(payload) {
   return {
     payload,
     type: FETCH_QUESTIONS,
+  };
+}
+
+export function inputError(payload) {
+  return {
+    payload,
+    type: INPUT_ERROR,
   };
 }
 

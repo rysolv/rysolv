@@ -11,11 +11,13 @@ import {
   SecondaryButton,
 } from 'components/base_ui';
 import {
+  blueColor,
   commentHeaderColor,
   darkBlueColor,
   defaultFontFamily,
+  defaultFontSize,
+  errorRed,
   headerFontSize,
-  blueColor,
   languageBackground,
   languageText,
   lightBlueColor,
@@ -134,6 +136,30 @@ export const IconWrapper = styled.img`
   align-self: center;
   height: 9.219rem;
   width: 9.189rem;
+`;
+
+export const Input = styled.input`
+  background: ${whiteColor};
+  border-radius: 0.7rem;
+  border: 0.2rem solid ${darkBlueColor};
+  font-size: 1.6rem;
+  font-weight: 400;
+  height: 4.9rem;
+  line-height: 1.936rem;
+  margin-top: 0.8rem;
+  outline: none;
+  overflow: hidden;
+  padding: 1.6rem 2.4rem;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+  width: 100%;
+`;
+
+export const InputError = styled.div`
+  color: ${errorRed};
+  font-size: ${defaultFontSize};
+  height: 2.4rem;
+  padding: 0.5rem 0;
+  text-align: left;
 `;
 
 export const JobsContainer = styled.div`
