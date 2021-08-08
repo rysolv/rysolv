@@ -3,7 +3,7 @@ import omit from 'lodash/omit';
 
 import { snakeToCamel } from 'utils/globalHelpers';
 
-import { dataUrlRegex, optionDictionary } from './helpers';
+import { convertFileToDataUrl, optionDictionary } from './helpers';
 import { initialState } from './reducer';
 
 const selectJobsDomain = state => state.jobs || initialState;
@@ -59,48 +59,40 @@ const makeSelectJobResponseArray = () =>
       const responseArray = [];
       if (questions.length) {
         const tempForm = omit(form, ['resumeFilename']);
-        Object.keys(tempForm).forEach(input => {
+        Object.keys(tempForm).forEach(async input => {
           const { value: values } = form[input];
           const [{ id: questionId, questionKey, responses }] = questions.filter(
             ({ questionKey: key }) => input === snakeToCamel(key),
           );
           if (Array.isArray(values)) {
-            values.forEach(value => {
-              const [{ id: responseId }] = responses.filter(
-                response => response.value === value,
+            values.forEach(async value => {
+              const [{ id: responseId, responseKey }] = responses.filter(
+                response =>
+                  response.responseKey === 'resume' || response.value === value,
               );
+              let formattedValue = value;
+              if (responseKey === 'resume')
+                formattedValue = await convertFileToDataUrl(value);
               responseArray.push({
                 questionId,
                 questionKey,
                 responseId,
-                value,
+                value: formattedValue,
               });
             });
           }
           if (!Array.isArray(values) && values) {
-            if (dataUrlRegex.test(values)) {
-              const [{ id: responseId }] = responses.filter(
-                response => response.responseKey === 'resume',
-              );
-              responseArray.push({
-                questionId,
-                questionKey,
-                responseId,
-                value: values,
-              });
-            } else {
-              const [{ id: responseId }] = responses.filter(
-                response =>
-                  response.responseKey === 'personal_link' ||
-                  response.value === values,
-              );
-              responseArray.push({
-                questionId,
-                questionKey,
-                responseId,
-                value: values,
-              });
-            }
+            const [{ id: responseId }] = responses.filter(
+              response =>
+                response.responseKey === 'personal_link' ||
+                response.value === values,
+            );
+            responseArray.push({
+              questionId,
+              questionKey,
+              responseId,
+              value: values,
+            });
           }
         });
       }

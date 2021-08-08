@@ -21,7 +21,7 @@ import {
   resetState,
   submitUserResponse,
 } from './actions';
-import { convertFileToDataUrl, getQuestion, validateFields } from './helpers';
+import { getQuestion, validateFields } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import {
@@ -92,9 +92,7 @@ const Jobs = ({
     }
   };
   const handleUpdateFiles = async filesArray => {
-    const file = filesArray[0];
-    const fileDataUrl = await convertFileToDataUrl(file);
-    dispatchChangeInput({ field: 'resume', value: fileDataUrl });
+    dispatchChangeInput({ field: 'resume', value: filesArray });
   };
 
   const step = getQuestion();

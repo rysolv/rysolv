@@ -32,10 +32,11 @@ const DragAndDrop = ({
   label,
   maxFileSizeInBytes,
   multiple,
+  value,
   ...restProps
 }) => {
   const fileInputField = useRef(null);
-  const [files, setFiles] = useState({});
+  const [files, setFiles] = useState(value);
 
   const handleUploadBtnClick = () => {
     fileInputField.current.click();
@@ -134,6 +135,7 @@ DragAndDrop.propTypes = {
   label: T.string.isRequired,
   maxFileSizeInBytes: T.number,
   multiple: T.bool.isRequired,
+  value: T.array.isRequired,
 };
 
 export default DragAndDrop;

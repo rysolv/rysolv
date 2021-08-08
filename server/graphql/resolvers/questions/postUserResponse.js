@@ -33,8 +33,10 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
           } else {
             let formattedValue = null;
             if (questionKey === 'personal_link') formattedValue = value;
-            if (questionKey === 'resume')
-              formattedValue = await uploadFile(value);
+            if (questionKey === 'resume') {
+              const { uploadUrl } = await uploadFile(value);
+              formattedValue = uploadUrl;
+            }
 
             const data = {
               createdDate: new Date(),

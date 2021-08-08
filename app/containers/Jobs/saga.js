@@ -79,7 +79,12 @@ export function* submitUserResponseSaga({ payload }) {
   `;
   try {
     const graphql = JSON.stringify({ query });
-    yield call(post, '/graphql', graphql);
+    const {
+      data: {
+        postUserResponse: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
     yield put(changeView({ view: 2 }));
     yield put(push('/jobs'));
     yield put(submitUserResponseSuccess());
