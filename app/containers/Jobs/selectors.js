@@ -69,8 +69,15 @@ const makeSelectJobResponseArray = () =>
                   response.responseKey === 'resume' || response.value === value,
               );
               let formattedValue = value;
-              if (responseKey === 'resume')
-                formattedValue = await convertFileToDataUrl(value);
+              if (responseKey === 'resume') {
+                const { name } = value;
+                const filenameArray = name.split('.');
+                const fileExtension = filenameArray[filenameArray.length - 1];
+                formattedValue = {
+                  file: await convertFileToDataUrl(value),
+                  fileExtension,
+                };
+              }
               responseArray.push({
                 questionId,
                 questionKey,

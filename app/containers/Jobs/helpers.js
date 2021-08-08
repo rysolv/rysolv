@@ -1,6 +1,7 @@
 import { validate } from 'utils/validate';
 
 export const convertFileToDataUrl = async file => {
+  const { type } = file;
   const dataUrl = await new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -10,7 +11,7 @@ export const convertFileToDataUrl = async file => {
 
   if (!dataUrl) return 'data:';
   const base64Data = dataUrl.split(',')[1];
-  return `data:application/pdf;base64,${base64Data}`;
+  return `data:${type};base64,${base64Data}`;
 };
 
 export const getQuestion = () => {

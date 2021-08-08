@@ -56,13 +56,22 @@ export function* fetchQuestionsSaga({ payload }) {
 export function* submitUserResponseSaga({ payload }) {
   const { responseArray } = payload;
   const formattedResponse = responseArray.map(
-    ({ questionId, questionKey, responseId, value }) =>
-      `{
+    ({ questionId, questionKey, responseId, value }) => {
+      const { file, fileExtension } = value;
+      const formattedValue =
+        questionKey === 'resume' && value instanceof Object
+          ? `{
+            file: "${file}",
+            fileExtension: "${fileExtension}",
+          }`
+          : `"${value}"`;
+      return `{
       questionId: "${questionId}",
       questionKey: "${questionKey}",
       responseId: "${responseId}",
-      value: "${value}",
-    }`,
+      value: ${formattedValue},
+    }`;
+    },
   );
   const query = `
     mutation {

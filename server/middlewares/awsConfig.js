@@ -170,11 +170,13 @@ const updateCognitoEmail = ({ currentEmail, newEmail }) =>
     );
   });
 
-const uploadFileS3 = async ({ file, key = null, type }) => {
+const uploadFileS3 = async ({ file, fileExtension, key = null, type }) => {
   const generalType = type.split('/')[0];
   const bucketName = bucketNameDictionary[generalType];
-  const fileKey = key || `${bucketName}/${uuidv4()}`;
   const fileBuffer = Buffer.from(file, 'base64');
+  let fileKey = key || `${bucketName}/${uuidv4()}`;
+  if (fileExtension) fileKey = `${fileKey}.${fileExtension}`;
+
   const payload = {
     Body: fileBuffer,
     Bucket: bucketName,

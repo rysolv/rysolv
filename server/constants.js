@@ -1,6 +1,7 @@
 const bucketNameDictionary = {
   application: process.env.S3_RESUME_BUCKET_NAME,
   image: process.env.S3_IMAGE_BUCKET_NAME,
+  text: process.env.S3_RESUME_BUCKET_NAME,
 };
 
 const calculateTotalAmount = amount => (amount * 103 + 30).toFixed();

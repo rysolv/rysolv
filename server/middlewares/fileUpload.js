@@ -1,7 +1,7 @@
 const { CustomError } = require('../helpers');
 const { uploadFileS3 } = require('./awsConfig');
 
-const uploadFile = async file => {
+const uploadFile = async ({ file, fileExtension }) => {
   const [dataPrefix, base64Data] = file.split(',');
   const type = dataPrefix.match(/^data:([^;]*)/)[1];
 
@@ -10,6 +10,7 @@ const uploadFile = async file => {
 
   const { Location } = await uploadFileS3({
     file: base64Data,
+    fileExtension,
     type,
   });
   return { uploadUrl: Location };
