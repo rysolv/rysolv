@@ -17,10 +17,11 @@ import {
   changeInput,
   changeView,
   fetchQuestions,
+  inputError,
   resetState,
   submitUserResponse,
 } from './actions';
-import { getQuestion } from './helpers';
+import { getQuestion, validateFields } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import {
@@ -28,12 +29,14 @@ import {
   makeSelectJobResponseArray,
   makeSelectJobs,
 } from './selectors';
+import { ViewContainer } from './styledComponents';
 
 const Jobs = ({
   activeUser: { isGithubVerified, isQuestionnaireComplete },
   dispatchChangeInput,
   dispatchChangeView,
   dispatchFetchQuestions,
+  dispatchInputError,
   dispatchResetState,
   dispatchSubmitUserResponse,
   error,
@@ -77,7 +80,20 @@ const Jobs = ({
     dispatchChangeView({ view: 1 });
     handleNav(`${path}?question=1`);
   };
-  const handleSubmit = () => dispatchSubmitUserResponse({ responseArray });
+  const handleSubmit = () => {
+    const { isValidated, validationErrors } = validateFields({
+      questions,
+      values: form,
+    });
+    if (isValidated) {
+      dispatchSubmitUserResponse({ responseArray });
+    } else {
+      dispatchInputError({ errors: validationErrors, form });
+    }
+  };
+  const handleUpdateFiles = async filesArray => {
+    dispatchChangeInput({ field: 'resume', value: filesArray });
+  };
 
   const step = getQuestion();
   const questionProps = questions[step - 1];
@@ -87,31 +103,35 @@ const Jobs = ({
   }
 
   return (
-    <AsyncRender
-      asyncData={questions}
-      component={JobsView}
-      error={error}
-      isRequiredData={isRequiredData}
-      loading={loading}
-      propsToPassDown={{
-        dispatchChangeInput,
-        dispatchChangeView,
-        error,
-        form,
-        handleCancel,
-        handleNav,
-        handleStart,
-        handleSubmit,
-        isGithubVerified,
-        isSignedIn,
-        loading,
-        path,
-        step,
-        steps: questions.length,
-        view,
-        ...questionProps,
-      }}
-    />
+    <ViewContainer>
+      <AsyncRender
+        asyncData={questions}
+        component={JobsView}
+        error={error}
+        isRequiredData={isRequiredData}
+        loading={loading}
+        propsToPassDown={{
+          dispatchChangeInput,
+          dispatchChangeView,
+          dispatchInputError,
+          error,
+          form,
+          handleCancel,
+          handleNav,
+          handleStart,
+          handleSubmit,
+          handleUpdateFiles,
+          isGithubVerified,
+          isSignedIn,
+          loading,
+          path,
+          step,
+          steps: questions.length,
+          view,
+          ...questionProps,
+        }}
+      />
+    </ViewContainer>
   );
 };
 
@@ -122,6 +142,7 @@ Jobs.propTypes = {
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeView: T.func.isRequired,
   dispatchFetchQuestions: T.func.isRequired,
+  dispatchInputError: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
   dispatchSubmitUserResponse: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
@@ -160,6 +181,7 @@ function mapDispatchToProps(dispatch) {
     dispatchChangeInput: payload => dispatch(changeInput(payload)),
     dispatchChangeView: payload => dispatch(changeView(payload)),
     dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
+    dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchResetState: () => dispatch(resetState()),
     dispatchSubmitUserResponse: payload =>
       dispatch(submitUserResponse(payload)),

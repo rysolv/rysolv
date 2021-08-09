@@ -11,19 +11,19 @@ import {
   SecondaryButton,
 } from 'components/base_ui';
 import {
+  blueColor,
   commentHeaderColor,
+  darkBlueColor,
   defaultFontFamily,
   defaultFontSize,
-  fundingOpenBackground,
-  fundingText,
+  errorRed,
   headerFontSize,
-  hoverLinkColor,
-  landingButtonGreen,
   languageBackground,
   languageText,
   lightBlueColor,
   lightGreyColor,
   textColor,
+  whiteColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
@@ -56,11 +56,17 @@ export const ButtonWrapper = styled.div`
 export const DescriptionBullets = styled.div`
   align-self: center;
   display: flex;
+  justify-content: space-around;
+  width: 100%;
 
   div {
     display: flex;
     flex-direction: column;
     padding: 0 2rem;
+
+    @media (max-width: 400px) {
+      padding: 0;
+    }
   }
 
   span {
@@ -71,7 +77,7 @@ export const DescriptionBullets = styled.div`
   }
 
   svg {
-    background: ${landingButtonGreen};
+    background: ${darkBlueColor};
     border-radius: 50%;
     color: white;
     height: 2.5rem;
@@ -90,20 +96,33 @@ export const DescriptionContent = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
+  font-weight: 400;
   line-height: 2.4rem;
   text-align: left;
 `;
 
 export const DescriptionSubTitle = styled.b`
-  font-size: 1.6rem;
-  margin: 2rem 0;
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 3.36rem;
+  margin: 3.2rem 0 0.8rem;
   text-align: center;
+
+  ${mobile} {
+    font-size: 2.5rem;
+  }
 `;
 
 export const DescriptionTitle = styled.div`
-  color: ${lightBlueColor};
-  font-size: 3.6rem;
-  font-weight: 300;
+  color: ${darkBlueColor};
+  font-size: 5.6rem;
+  font-weight: 700;
+  line-height: 6.16rem;
+
+  ${mobile} {
+    font-size: 3.2rem;
+    line-height: 3.36rem;
+  }
 `;
 
 export const DescriptionWrapper = styled.div`
@@ -113,35 +132,52 @@ export const DescriptionWrapper = styled.div`
   padding: 1rem;
 `;
 
-export const IconWrapper = styled.div`
+export const IconWrapper = styled.img`
   align-self: center;
-  background: ${fundingOpenBackground};
-  border-radius: 50%;
-  height: 5rem;
-  width: 5rem;
+  height: 9.219rem;
+  width: 9.189rem;
+`;
 
-  svg {
-    color: ${fundingText};
-    height: 4rem;
-    margin: 0.5rem auto;
-    width: 4rem;
-  }
+export const Input = styled.input`
+  background: ${whiteColor};
+  border-radius: 0.7rem;
+  border: 0.2rem solid ${darkBlueColor};
+  font-size: 1.6rem;
+  font-weight: 400;
+  height: 4.9rem;
+  line-height: 1.936rem;
+  margin-top: 0.8rem;
+  outline: none;
+  overflow: hidden;
+  padding: 1.6rem 2.4rem;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+  width: 100%;
+`;
+
+export const InputError = styled.div`
+  color: ${errorRed};
+  font-size: ${defaultFontSize};
+  height: 2.4rem;
+  padding: 0.5rem 0;
+  text-align: left;
 `;
 
 export const JobsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  margin: 0 12rem;
+  max-width: 120rem;
+  width: 100%;
 
-  ${mobile} {
-    width: 100%;
+  ${laptop} {
+    margin: 0 3rem;
   }
 `;
 
 export const JobsHeader = styled.div`
   color: ${textColor};
   font-size: ${headerFontSize};
-  margin: 5rem 0 2rem 0;
+  margin-bottom: 5rem;
   width: 100%;
 
   ${mobile} {
@@ -150,23 +186,23 @@ export const JobsHeader = styled.div`
 `;
 
 export const LinkWrapper = styled(Link)`
-  color: ${hoverLinkColor};
+  color: ${blueColor};
 
   &:hover {
-    color: ${hoverLinkColor};
-    text-decoration: underline;
+    color: ${blueColor};
   }
 `;
 
 export const OptionWrapper = styled.div`
   margin: 5rem auto;
-  width: 75%;
 `;
 
 export const QuestionWrapper = styled.div`
-  color: ${textColor};
-  font-size: 2.6rem;
-  font-weight: 500;
+  color: ${darkBlueColor};
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 3.36rem;
+  margin: 3.2rem 0 0.8rem;
 `;
 
 export const SampleWrapper = styled.div`
@@ -175,6 +211,10 @@ export const SampleWrapper = styled.div`
   opacity: 0.9;
   padding: 2rem;
   position: relative;
+
+  ${mobile} {
+    margin: 2rem -2rem;
+  }
 `;
 
 export const StyledBaseAutocomplete = styled(BaseAutocomplete)`
@@ -193,7 +233,7 @@ export const StyledButton = styled(
     ...restProps
   }) => <Button {...restProps} />,
 )`
-  color: ${lightBlueColor};
+  color: ${darkBlueColor};
   display: ${({
     shouldDisplayBack,
     shouldDisplayCancel,
@@ -203,7 +243,7 @@ export const StyledButton = styled(
       ? 'inherit'
       : 'none'};
   font-family: ${defaultFontFamily};
-  font-size: ${defaultFontSize};
+  font-size: 1.6rem;
   font-weight: 500;
   margin: 1rem;
   padding: 0rem;
@@ -231,12 +271,23 @@ export const StyledFocusDiv = styled.div`
 `;
 
 export const StyledGithubButton = styled(GithubButton)`
-  width: auto;
+  align-items: center;
+  background: ${darkBlueColor};
+  border-radius: 0.8rem;
+  color: ${whiteColor};
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  text-transform: initial;
 `;
 
 export const StyledParagraph = styled.p`
-  font-size: 1.8rem;
-  font-weight: 500;
+  color: ${darkBlueColor};
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
   padding-top: 2rem;
 `;
 
@@ -253,15 +304,24 @@ export const StyledPrimaryAsyncButton = styled(
 export const StyledPrimaryButton = styled(({ isSelected, ...restProps }) => (
   <PrimaryButton {...restProps} />
 ))`
+  align-items: center;
   background-color: ${({ isSelected }) =>
-    isSelected ? lightBlueColor : 'white'};
-  border: 0.1rem solid ${lightBlueColor};
-  color: ${({ isSelected }) => (isSelected ? 'white' : lightBlueColor)};
+    isSelected ? darkBlueColor : whiteColor};
+  border-radius: 0.8rem;
+  border: 0.2rem solid ${darkBlueColor};
+  color: ${({ isSelected }) => (isSelected ? whiteColor : darkBlueColor)};
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  margin: 1rem auto;
   min-width: 20rem;
+  text-transform: initial;
 
   &:hover {
-    background-color: ${lightBlueColor};
-    color: white;
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
   }
 `;
 
@@ -280,23 +340,29 @@ export const StyledSecondaryButton = styled(
 `;
 
 export const ViewContainer = styled.div`
-  background: white;
+  background: ${whiteColor};
+  border-radius: 0.7rem;
   color: ${textColor};
   display: flex;
   flex-direction: column;
-  font-size: ${defaultFontSize};
+  font-size: 1.6rem;
   justify-content: ${({ isFinalView }) =>
     isFinalView ? 'inherit' : 'space-between'};
+  margin: 5rem 0 0;
   min-height: 50rem;
-  padding: 3.8rem 10%;
+  padding: 7.5rem 10%;
   text-align: center;
   width: 100%;
 
   ${laptop} {
-    padding: 3.8rem 2.6rem;
+    padding: 4rem 3.2rem;
   }
 
   ${mobile} {
-    padding: 2rem 0.5rem;
+    padding: 2rem;
+  }
+
+  @media (max-width: 370px) {
+    margin: 0;
   }
 `;

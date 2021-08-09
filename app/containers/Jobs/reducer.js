@@ -7,6 +7,7 @@ import {
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
+  INPUT_ERROR,
   RESET_STATE,
   SUBMIT_USER_RESPONSE_FAILURE,
   SUBMIT_USER_RESPONSE_SUCCESS,
@@ -19,8 +20,10 @@ export const initialState = {
   form: {
     desiredRole: { value: [] },
     experience: { value: [] },
+    personalLink: { value: '', error: '' },
     preferredLanguages: { value: [] },
     preferredLocation: { value: [] },
+    resume: { value: [] },
     targetSalary: { value: [] },
     timeline: { value: [] },
     usCitizen: { value: '' },
@@ -57,6 +60,14 @@ const jobsReducer = produce((draft, { payload, type }) => {
     case FETCH_QUESTIONS: {
       draft.error = null;
       draft.loading = true;
+      break;
+    }
+    case INPUT_ERROR: {
+      const { errors } = payload;
+      const fields = Object.keys(errors);
+      fields.forEach(field => {
+        draft.form[field].error = errors[field] || '';
+      });
       break;
     }
     case RESET_STATE: {

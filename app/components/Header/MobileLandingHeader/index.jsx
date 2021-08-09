@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
 import iconDictionary from 'utils/iconDictionary';
@@ -9,11 +9,14 @@ import {
   InternalLink,
   Logo,
   LogoWrapper,
+  MenuInternalLink,
   MobileHeaderContainer,
   StyledExpandIcon,
   StyledLoginLink,
   StyledMenu,
   StyledSecondaryButton,
+  StyledUserNavBar,
+  VerticalDivider,
   Wordmark,
 } from './styledComponents';
 
@@ -36,7 +39,12 @@ const MenuComponent = props => (
   />
 );
 
-const MobileLandingHeader = ({ handleNav }) => {
+const MobileLandingHeader = ({
+  activeUser,
+  handleNav,
+  handleSignout,
+  isSignedIn,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClose = () => {
     setAnchorEl(null);
@@ -53,11 +61,34 @@ const MobileLandingHeader = ({ handleNav }) => {
         <Wordmark>{SiteWordmark}</Wordmark>
       </LogoWrapper>
       <ButtonWrapper>
-        <StyledSecondaryButton
-          label="Sign up"
-          onClick={() => handleNav('/signup')}
-        />
-        <StyledExpandIcon id="mobileNavDropDown" onClick={() => handleOpen()} />
+        {isSignedIn ? (
+          <Fragment>
+            <InternalLink
+              label="Browse issues"
+              path="/issues"
+              shouldRemoveSecond
+            />
+            <InternalLink
+              label="Add your team"
+              path="/repos/add"
+              shouldRemoveFirst
+            />
+            <VerticalDivider />
+            <StyledUserNavBar
+              activeUser={activeUser}
+              handleNav={handleNav}
+              handleSignout={handleSignout}
+            />
+          </Fragment>
+        ) : (
+          <Fragment>
+            <StyledSecondaryButton
+              label="Sign up"
+              onClick={() => handleNav('/signup')}
+            />
+            <StyledExpandIcon id="mobileNavDropDown" onClick={handleOpen} />
+          </Fragment>
+        )}
       </ButtonWrapper>
       <MenuComponent
         anchorEl={anchorEl}
@@ -69,13 +100,18 @@ const MobileLandingHeader = ({ handleNav }) => {
       >
         <StyledLoginLink label="Log in" path="/signin" />
         <HorizontalDivider />
-        <InternalLink label="Browse issues" path="/issues" />
-        <InternalLink label="Add your team" path="/repos" />
+        <MenuInternalLink label="Browse issues" path="/issues" />
+        <MenuInternalLink label="Add your team" path="/repos" />
       </MenuComponent>
     </MobileHeaderContainer>
   );
 };
 
-MobileLandingHeader.propTypes = { handleNav: T.func.isRequired };
+MobileLandingHeader.propTypes = {
+  activeUser: T.object.isRequired,
+  handleNav: T.func.isRequired,
+  handleSignout: T.func.isRequired,
+  isSignedIn: T.bool.isRequired,
+};
 
 export default MobileLandingHeader;

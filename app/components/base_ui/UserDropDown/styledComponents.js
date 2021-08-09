@@ -31,6 +31,8 @@ export const StyledAvatar = styled.img`
 `;
 
 export const StyledMenu = styled(Menu)`
+  position: absolute !important;
+
   .MuiMenu-paper {
     background-color: ${headerColor};
     border-top-left-radius: 0;

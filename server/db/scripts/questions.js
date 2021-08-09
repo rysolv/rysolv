@@ -2,17 +2,6 @@ const { singleQuery } = require('../baseQueries');
 
 // Generate initial list of questions
 const questions = [
-  // us citizen
-  {
-    id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 1,
-    question_key: 'us_citizen',
-    question_text: 'Are you a US citizen?',
-    response_limit: 1,
-    subtext: null,
-  },
   // experience
   {
     id: '4bef1f37-f09b-4515-a483-047faa0758cd',
@@ -21,8 +10,33 @@ const questions = [
     priority: 2,
     question_key: 'experience',
     question_text: 'How many years of experience do you have?',
+    required: true,
     response_limit: 1,
     subtext: 'This can include educational and professional.',
+  },
+  // personal link
+  {
+    id: '1a859952-a666-46f1-80be-7444261486da',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 9,
+    question_key: 'personal_link',
+    question_text: 'What is your personal website?',
+    required: false,
+    response_limit: 1,
+    subtext: 'Optional.',
+  },
+  // preferred languages
+  {
+    id: '7d62997d-16a7-43aa-a8af-3120cfb95b28',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 4,
+    question_key: 'preferred_languages',
+    question_text: 'What are your strongest languages?',
+    required: true,
+    response_limit: 3,
+    subtext: 'Select up to 3 languages.',
   },
   // preferred location
   {
@@ -32,8 +46,21 @@ const questions = [
     priority: 3,
     question_key: 'preferred_location',
     question_text: 'What is your preferred location?',
+    required: true,
     response_limit: 6,
     subtext: 'Select as many as apply.',
+  },
+  // resume
+  {
+    id: 'dcf6d0db-b443-48e7-a637-c1679590d184',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 8,
+    question_key: 'resume',
+    question_text: 'Upload your resume.',
+    required: false,
+    response_limit: 1,
+    subtext: 'Optional.',
   },
   // specialty
   {
@@ -43,6 +70,7 @@ const questions = [
     priority: 5,
     question_key: 'desired_role',
     question_text: 'What is your desired role?',
+    required: true,
     response_limit: 3,
     subtext: 'Select up to 3 roles.',
   },
@@ -54,19 +82,9 @@ const questions = [
     priority: 6,
     question_key: 'target_salary',
     question_text: 'What is your target salary?',
+    required: true,
     response_limit: 1,
     subtext: null,
-  },
-  // preferred languages
-  {
-    id: '7d62997d-16a7-43aa-a8af-3120cfb95b28',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 4,
-    question_key: 'preferred_languages',
-    question_text: 'What are your strongest languages?',
-    response_limit: 3,
-    subtext: 'Select up to 3 languages.',
   },
   // timeline
   {
@@ -76,29 +94,25 @@ const questions = [
     priority: 7,
     question_key: 'timeline',
     question_text: 'How soon are you looking to be hired?',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // us citizen
+  {
+    id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 1,
+    question_key: 'us_citizen',
+    question_text: 'Are you a US citizen?',
+    required: true,
     response_limit: 1,
     subtext: null,
   },
 ];
 
 const responses = [
-  // us citizen
-  {
-    id: '8d9d7dfc-1487-4f4a-9cee-edb9836e0d06',
-    created_date: new Date(),
-    priority: 1,
-    question_id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
-    response_key: 'yes_us_citizen',
-    value: 'Yes',
-  },
-  {
-    id: '8d342d18-d93c-4f9f-9b19-9fd98038a5c4',
-    created_date: new Date(),
-    priority: 2,
-    question_id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
-    response_key: 'no_us_citizen',
-    value: 'No',
-  },
   // experience
   {
     id: '0f49a4a1-4ce2-4a7a-a3f1-8c45f22342dc',
@@ -131,6 +145,15 @@ const responses = [
     question_id: '4bef1f37-f09b-4515-a483-047faa0758cd',
     response_key: '5',
     value: 'More than 5 years',
+  },
+  // personal link
+  {
+    id: '96b9ad3d-ed3b-421e-abf8-4ffd22695c61',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '1a859952-a666-46f1-80be-7444261486da',
+    response_key: 'personal_link',
+    value: '',
   },
   // preferred locations
   {
@@ -181,7 +204,16 @@ const responses = [
     response_key: 'remote',
     value: 'Remote',
   },
-  // Specialty
+  // resume
+  {
+    id: 'f831f54f-d964-411c-abb1-68137b705aa0',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'dcf6d0db-b443-48e7-a637-c1679590d184',
+    response_key: 'resume',
+    value: '',
+  },
+  // specialty
   {
     id: '1f7cdcee-33ae-4c21-8269-e76566a98f58',
     created_date: new Date(),
@@ -328,6 +360,23 @@ const responses = [
     response_key: 'indefinite',
     value: 'Not actively looking',
   },
+  // us citizen
+  {
+    id: '8d9d7dfc-1487-4f4a-9cee-edb9836e0d06',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
+    response_key: 'yes_us_citizen',
+    value: 'Yes',
+  },
+  {
+    id: '8d342d18-d93c-4f9f-9b19-9fd98038a5c4',
+    created_date: new Date(),
+    priority: 2,
+    question_id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
+    response_key: 'no_us_citizen',
+    value: 'No',
+  },
 ];
 
 const seedQuestions = async () => {
@@ -341,10 +390,20 @@ const seedQuestions = async () => {
         priority,
         question_key,
         question_text,
+        required,
         response_limit,
         subtext
       )
-      VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+      VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      ON CONFLICT (id) DO UPDATE SET
+        category = EXCLUDED.category,
+        created_date = EXCLUDED.created_date,
+        priority = EXCLUDED.priority,
+        question_key = EXCLUDED.question_key,
+        question_text = EXCLUDED.question_text,
+        required = EXCLUDED.required,
+        response_limit = EXCLUDED.response_limit,
+        subtext = EXCLUDED.subtext
     `;
       const values = [
         el.category,
@@ -353,6 +412,7 @@ const seedQuestions = async () => {
         el.priority,
         el.question_key,
         el.question_text,
+        el.required,
         el.response_limit,
         el.subtext,
       ];
@@ -377,6 +437,12 @@ const seedResponses = async () => {
         value
       )
       VALUES($1, $2, $3, $4, $5, $6)
+      ON CONFLICT (id) DO UPDATE SET
+        created_date = EXCLUDED.created_date,
+        priority = EXCLUDED.priority,
+        question_id = EXCLUDED.question_id,
+        response_key = EXCLUDED.response_key,
+        value = EXCLUDED.value
     `;
       const values = [
         el.created_date,
