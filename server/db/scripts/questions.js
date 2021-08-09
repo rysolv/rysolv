@@ -395,6 +395,15 @@ const seedQuestions = async () => {
         subtext
       )
       VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      ON CONFLICT (id) DO UPDATE SET
+        category = EXCLUDED.category,
+        created_date = EXCLUDED.created_date,
+        priority = EXCLUDED.priority,
+        question_key = EXCLUDED.question_key,
+        question_text = EXCLUDED.question_text,
+        required = EXCLUDED.required,
+        response_limit = EXCLUDED.response_limit,
+        subtext = EXCLUDED.subtext
     `;
       const values = [
         el.category,
@@ -428,6 +437,12 @@ const seedResponses = async () => {
         value
       )
       VALUES($1, $2, $3, $4, $5, $6)
+      ON CONFLICT (id) DO UPDATE SET
+        created_date = EXCLUDED.created_date,
+        priority = EXCLUDED.priority,
+        question_id = EXCLUDED.question_id,
+        response_key = EXCLUDED.response_key,
+        value = EXCLUDED.value
     `;
       const values = [
         el.created_date,
