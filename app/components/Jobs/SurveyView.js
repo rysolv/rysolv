@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 
 import { ProgressBar } from 'components/base_ui';
+import { validateOneField } from 'containers/Jobs/helpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import optionDictionary from './Options';
@@ -22,10 +23,12 @@ const NextIcon = iconDictionary('navigateNext');
 const SurveyView = ({
   description,
   dispatchChangeInput,
+  dispatchInputError,
   form,
   handleCancel,
   handleNav,
   handleSubmit,
+  handleUpdateFiles,
   id,
   limit,
   options,
@@ -33,24 +36,14 @@ const SurveyView = ({
   path,
   placeholder,
   question,
+  required,
   step,
   steps,
+  type,
 }) => {
-  useEffect(() => {
-    document.getElementById('surveyQuestion').focus();
-  }, []);
-  const shouldDisplayBack = step > 1;
-  const shouldDisplayCancel = step === 1;
-  const shouldDisplaySubmit = step === steps;
-  const OptionToRender = optionDictionary[optionType];
-  const optionProps = {
-    dispatchChangeInput,
-    form,
-    id,
-    limit,
-    options,
-    placeholder,
-  };
+  const [nextDisabled, setNextDisabled] = useState(false);
+  const [submitDisabled, setSubmitDisabled] = useState(false);
+
   const checkInputDisabled = input => {
     let disabled = true;
     if (Array.isArray(form[input].value)) {
@@ -60,11 +53,57 @@ const SurveyView = ({
     }
     return disabled;
   };
+
+  useEffect(() => {
+    const tempNextDisabled = required
+      ? checkInputDisabled(id) || hasInputErrors
+      : hasInputErrors;
+    const tempSubmitDisabled = required
+      ? !Object.keys(form).every(input => checkInputDisabled(input)) ||
+        hasInputErrors
+      : hasInputErrors;
+
+    setNextDisabled(tempNextDisabled);
+    setSubmitDisabled(tempSubmitDisabled);
+  }, [checkInputDisabled, form, hasInputErrors]);
+
+  useEffect(() => {
+    document.getElementById('surveyQuestion').focus();
+  }, []);
+
+  const shouldDisplayBack = step > 1;
+  const shouldDisplayCancel = step === 1;
+  const shouldDisplaySubmit = step === steps;
+
   const handleKeypress = ({ key }) => {
     if (key === 'Enter' && !checkInputDisabled(id)) {
       if (shouldDisplaySubmit) handleSubmit();
       else handleNav(`${path}?question=${step + 1}`);
     }
+  };
+  const handleValidateInput = ({ field, values }) => {
+    const validationError = validateOneField({ field, required, values }) || '';
+    dispatchInputError({
+      errors: {
+        [id]: validationError,
+      },
+    });
+  };
+  const hasInputErrors = !Object.keys(form).every(
+    input => form[input].error === '' || form[input].error === undefined,
+  );
+
+  const OptionToRender = optionDictionary[optionType];
+  const optionProps = {
+    dispatchChangeInput,
+    form,
+    handleUpdateFiles,
+    handleValidateInput,
+    id,
+    limit,
+    options,
+    placeholder,
+    type,
   };
   return (
     <StyledFocusDiv
@@ -72,10 +111,10 @@ const SurveyView = ({
       onKeyPress={e => handleKeypress(e)}
       tabIndex="0"
     >
-      <JobsHeader>
-        <ProgressBar step={step} steps={steps} />
-      </JobsHeader>
       <ViewContainer>
+        <JobsHeader>
+          <ProgressBar step={step} steps={steps} />
+        </JobsHeader>
         <div>
           <QuestionWrapper>{question}</QuestionWrapper>
           <DescriptionWrapper>{description}</DescriptionWrapper>
@@ -103,7 +142,7 @@ const SurveyView = ({
             Back
           </StyledButton>
           <StyledButton
-            disabled={checkInputDisabled(id)}
+            disabled={nextDisabled}
             disableRipple
             onClick={() => handleNav(`${path}?question=${step + 1}`)}
             shouldDisplaySubmit={!shouldDisplaySubmit}
@@ -112,9 +151,7 @@ const SurveyView = ({
             {NextIcon}
           </StyledButton>
           <StyledButton
-            disabled={
-              !Object.keys(form).every(input => !checkInputDisabled(input))
-            }
+            disabled={submitDisabled}
             disableRipple
             onClick={handleSubmit}
             shouldDisplaySubmit={shouldDisplaySubmit}
@@ -130,10 +167,12 @@ const SurveyView = ({
 SurveyView.propTypes = {
   description: T.string,
   dispatchChangeInput: T.func.isRequired,
+  dispatchInputError: T.func.isRequired,
   form: T.object.isRequired,
   handleCancel: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleSubmit: T.func.isRequired,
+  handleUpdateFiles: T.func.isRequired,
   id: T.string.isRequired,
   limit: T.number,
   options: T.array.isRequired,
@@ -141,8 +180,10 @@ SurveyView.propTypes = {
   path: T.string.isRequired,
   placeholder: T.string,
   question: T.string.isRequired,
+  required: T.bool.isRequired,
   step: T.number.isRequired,
   steps: T.number.isRequired,
+  type: T.string,
 };
 
 export default SurveyView;

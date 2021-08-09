@@ -1,22 +1,16 @@
 import React, { Fragment } from 'react';
 
-import iconDictionary from 'utils/iconDictionary';
-
 import {
   IconWrapper,
-  JobsHeader,
   LinkWrapper,
   StyledParagraph,
   ViewContainer,
 } from './styledComponents';
 
-const SuccessIcon = iconDictionary('successOutline');
-
 const ConfirmationView = () => (
   <Fragment>
-    <JobsHeader />
     <ViewContainer isFinalView>
-      <IconWrapper isSuccess>{SuccessIcon}</IconWrapper>
+      <IconWrapper src="https://rysolv.s3.us-east-2.amazonaws.com/SuccessUser.png" />
       <StyledParagraph>
         Success! Let&#39;s match you with companies.
       </StyledParagraph>

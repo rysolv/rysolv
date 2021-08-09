@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import iconDictionary from 'utils/iconDictionary';
@@ -11,6 +11,7 @@ import {
   LogoWrapper,
   StyledPrimaryButton,
   StyledSecondaryButton,
+  StyledUserNavBar,
   VerticalDivider,
   Wordmark,
 } from './styledComponents';
@@ -18,7 +19,12 @@ import {
 const SiteLogo = iconDictionary('siteLogo');
 const SiteWordmark = iconDictionary('siteWordmark');
 
-const DesktopLandingHeader = ({ handleNav }) => (
+const DesktopLandingHeader = ({
+  activeUser,
+  handleNav,
+  handleSignout,
+  isSignedIn,
+}) => (
   <DesktopHeaderContainer>
     <LogoWrapper onClick={() => handleNav('/')}>
       <Logo>{SiteLogo}</Logo>
@@ -28,18 +34,33 @@ const DesktopLandingHeader = ({ handleNav }) => (
       <InternalLink label="Browse issues" path="/issues" />
       <InternalLink label="Add your team" path="/repos/add" />
       <VerticalDivider />
-      <StyledSecondaryButton
-        label="Sign up"
-        onClick={() => handleNav('/signup')}
-      />
-      <StyledPrimaryButton
-        label="Log in"
-        onClick={() => handleNav('/signin')}
-      />
+      {isSignedIn ? (
+        <StyledUserNavBar
+          activeUser={activeUser}
+          handleNav={handleNav}
+          handleSignout={handleSignout}
+        />
+      ) : (
+        <Fragment>
+          <StyledSecondaryButton
+            label="Sign up"
+            onClick={() => handleNav('/signup')}
+          />
+          <StyledPrimaryButton
+            label="Log in"
+            onClick={() => handleNav('/signin')}
+          />
+        </Fragment>
+      )}
     </ButtonWrapper>
   </DesktopHeaderContainer>
 );
 
-DesktopLandingHeader.propTypes = { handleNav: T.func.isRequired };
+DesktopLandingHeader.propTypes = {
+  activeUser: T.object.isRequired,
+  handleNav: T.func.isRequired,
+  handleSignout: T.func.isRequired,
+  isSignedIn: T.bool.isRequired,
+};
 
 export default DesktopLandingHeader;

@@ -6,6 +6,7 @@ const postUserResponse = async ({
   questionId,
   responseId,
   userId,
+  value,
 }) => {
   const queryText = `
     INSERT INTO user_question_responses(
@@ -13,10 +14,11 @@ const postUserResponse = async ({
       id,
       question_id,
       response_id,
-      user_id
-    ) VALUES ($1, $2, $3, $4, $5)
+      user_id,
+      value
+    ) VALUES ($1, $2, $3, $4, $5, $6)
   `;
-  const values = [createdDate, id, questionId, responseId, userId];
+  const values = [createdDate, id, questionId, responseId, userId, value];
   const { rows } = await singleQuery({ queryText, values });
   return rows;
 };

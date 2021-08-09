@@ -24,6 +24,7 @@ export function* fetchQuestionsSaga({ payload }) {
             limit
             questionKey
             questionText
+            required
             responses {
               id
               responseKey
@@ -55,13 +56,22 @@ export function* fetchQuestionsSaga({ payload }) {
 export function* submitUserResponseSaga({ payload }) {
   const { responseArray } = payload;
   const formattedResponse = responseArray.map(
-    ({ questionId, questionKey, responseId, value }) =>
-      `{
+    ({ questionId, questionKey, responseId, value }) => {
+      const { file, fileExtension } = value;
+      const formattedValue =
+        questionKey === 'resume' && value instanceof Object
+          ? `{
+            file: "${file}",
+            fileExtension: "${fileExtension}",
+          }`
+          : `"${value}"`;
+      return `{
       questionId: "${questionId}",
       questionKey: "${questionKey}",
       responseId: "${responseId}",
-      value: "${value}",
-    }`,
+      value: ${formattedValue},
+    }`;
+    },
   );
   const query = `
     mutation {
@@ -78,7 +88,12 @@ export function* submitUserResponseSaga({ payload }) {
   `;
   try {
     const graphql = JSON.stringify({ query });
-    yield call(post, '/graphql', graphql);
+    const {
+      data: {
+        postUserResponse: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
     yield put(changeView({ view: 2 }));
     yield put(push('/jobs'));
     yield put(submitUserResponseSuccess());

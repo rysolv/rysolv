@@ -7,6 +7,7 @@ const getQuestions = async ({ category }) => {
       q.priority,
       q.question_key AS "questionKey",
       q.question_text AS "questionText",
+      q.required,
       q.response_limit AS "limit",
       q.subtext,
       COALESCE(json_agg((
@@ -28,6 +29,7 @@ const getQuestions = async ({ category }) => {
       q.priority,
       q.question_key,
       q.question_text,
+      q.required,
       q.response_limit,
       q.subtext
     ORDER BY q.priority ASC

@@ -11,6 +11,7 @@ const {
   postUserResponseError,
   postUserResponseSuccess,
 } = require('./constants');
+const { uploadFile } = require('../../../middlewares/fileUpload');
 
 const postUserResponse = async ({ responseArray }, { authError, userId }) => {
   try {
@@ -31,12 +32,20 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
               });
             }
           } else {
+            let formattedValue = null;
+            if (questionKey === 'personal_link') formattedValue = value;
+            if (questionKey === 'resume') {
+              const { uploadUrl } = await uploadFile(value);
+              formattedValue = uploadUrl;
+            }
+
             const data = {
               createdDate: new Date(),
               id: uuidv4(),
               questionId,
               responseId,
               userId,
+              value: formattedValue,
             };
             await postUserResponseQuery(data);
           }

@@ -3,11 +3,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { ModalDialog } from 'components/base_ui';
+import { blueColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile, tablet } = mediaQueriesByDevice;
 
 export const AppBodyWrapper = styled.div`
+  background: ${({ isLandingOrRecruitmentPage }) => isLandingOrRecruitmentPage ? blueColor : 'inherit'};
   flex: 1;
   padding-bottom: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? '0' : '16rem')};
 `;

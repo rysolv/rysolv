@@ -3,7 +3,8 @@ const alterUserQuestionResponseTable = `
   ADD COLUMN created_date TIMESTAMP,
   ADD COLUMN question_id UUID REFERENCES questions(id),
   ADD COLUMN response_id UUID REFERENCES question_responses(id),
-  ADD COLUMN user_id UUID REFERENCES users(id)
+  ADD COLUMN user_id UUID REFERENCES users(id),
+  ADD COLUMN value VARCHAR(100)
 `;
 
 const createUserQuestionResponseTable = `
