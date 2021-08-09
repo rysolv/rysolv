@@ -4,6 +4,7 @@ const express = require('express');
 const graphQlHttp = require('express-graphql');
 const { resolve } = require('path');
 const cookieParser = require('cookie-parser');
+const rateLimit = require('express-rate-limit');
 
 const argv = require('./argv');
 const graphQlResolvers = require('./graphql/resolvers');
@@ -24,6 +25,14 @@ app.use(cookieParser());
 // For those extra large issues
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb' }));
+
+// Set express rate limiter
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 50, // limit each IP to 50 requests per windowMs
+});
+
+app.use(limiter);
 
 // Route requests through GraphQL
 app.use(
