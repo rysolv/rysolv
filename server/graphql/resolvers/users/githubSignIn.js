@@ -14,9 +14,10 @@ const {
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
   getUserWatchList,
+  insertUserEmail,
   transformUser: transformUserQuery,
 } = require('../../../db');
-const { errorLogger, sendEmail } = require('../../../helpers');
+const { analyzeUser, errorLogger, sendEmail } = require('../../../helpers');
 const { generateToken } = require('../../../middlewares/generateToken');
 const { githubSignInError, githubSignUpError } = require('./constants');
 const { requestGithubUser } = require('../../../integrations/github');
@@ -61,6 +62,7 @@ const githubSignIn = async ({ code, origin }, { res }) => {
     const {
       avatar_url,
       email,
+      emailList,
       first_name,
       github_id,
       github_link,
@@ -100,7 +102,17 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       };
       const result = await createUser({ data: newUser });
 
+      // Save down github emails
+      await Promise.all(
+        emailList.map(async ({ email: githubEmail, primary }) => {
+          await insertUserEmail({ email: githubEmail, primary, userId: id });
+        }),
+      );
+
       await assignOwnerToRepo({ githubId: github_id, userId: id });
+
+      // Async call to initiate git_analytics
+      analyzeUser({ userId: id });
 
       if (languages.length) {
         await createLanguage({

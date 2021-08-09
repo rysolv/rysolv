@@ -3,17 +3,19 @@ const fetch = require('node-fetch');
 const { errorLogger } = require('./functions');
 
 const production = process.env.NODE_ENV === 'production';
-const api = production ? process.env.EMAIL_API : process.env.EMAIL_API_LOCAL;
+const api = production
+  ? process.env.ANALYTICS_API
+  : process.env.ANALYTICS_API_LOCAL;
 
-const sendEmail = async ({ body, path }) => {
+const analyzeUser = async ({ userId }) => {
   const requestOptions = {
-    body: JSON.stringify(body),
+    body: JSON.stringify({ userId }),
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
   };
 
   try {
-    const url = `${api}${path}`;
+    const url = `${api}/user/analyze`;
     const res = await fetch(url, requestOptions);
     const { error } = await res.json();
 
@@ -25,4 +27,4 @@ const sendEmail = async ({ body, path }) => {
   }
 };
 
-module.exports = { sendEmail };
+module.exports = { analyzeUser };
