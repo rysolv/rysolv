@@ -1,7 +1,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS git_commits (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     author_email VARCHAR(128),
     author_name VARCHAR(128),
     body TEXT,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS git_commits (
 );
 
 CREATE TABLE IF NOT EXISTS git_files (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     commit_id UUID REFERENCES git_commits(id),
     additions INT,
     deletions INT,
@@ -35,27 +35,25 @@ CREATE TABLE IF NOT EXISTS git_languages (
     line_count INT
 );
 
--- CREATE TABLE IF NOT EXISTS git_repos (
---     id UUID PRIMARY KEY,
---     repo_path INT,
---     git_url INT,
---     github_id VARCHAR(32) UNIQUE
--- );
+CREATE TABLE IF NOT EXISTS git_repos (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    repo_path INT,
+    github_url VARCHAR(128),
+    github_id VARCHAR(32) UNIQUE
+);
 
--- CREATE TABLE IF NOT EXISTS git_organizations (
---   id UUID PRIMARY KEY
---   github_id VARCHAR(32) UNIQUE
--- )
+CREATE TABLE IF NOT EXISTS git_organizations (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  github_url VARCHAR(128),
+  github_id VARCHAR(32) UNIQUE
+);
 
--- CREATE TABLE IF NOT EXISTS git_users (
---   id UUID PRIMARY KEY
---   github_id VARCHAR(32) UNIQUE
--- )
+CREATE TABLE IF NOT EXISTS git_users (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  github_id VARCHAR(32) UNIQUE,
+  github_token VARCHAR(64) UNIQUE,
+  user_id UUID REFERENCES users(id)
+);
 
 CREATE UNIQUE INDEX file_hash on git_files (commit_id, file_name);
 CREATE UNIQUE INDEX user_language on git_languages (user_id, language);
-
-
--- create a git_repos and git_organizations table
--- update the repo_path to point to a repos.id
--- create indexies on git_files(commit_id), git_commits(user_id),
