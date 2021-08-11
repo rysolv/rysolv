@@ -383,6 +383,7 @@ const requestGithubUser = async credentials => {
     github_id: id,
     github_link: html_url,
     github_username: login,
+    githubToken: access_token,
     languages,
     last_name: last_name || '',
   };

@@ -14,6 +14,7 @@ const {
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
   getUserWatchList,
+  insertGitUser,
   insertUserEmail,
   transformUser: transformUserQuery,
 } = require('../../../db');
@@ -67,6 +68,7 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       github_id,
       github_link,
       github_username,
+      githubToken,
       languages,
       last_name,
     } = await requestGithubUser({ client_id, client_secret, code });
@@ -101,6 +103,9 @@ const githubSignIn = async ({ code, origin }, { res }) => {
         username: github_username,
       };
       const result = await createUser({ data: newUser });
+
+      // insert git_user
+      await insertGitUser({ githubId: github_id, githubToken, userId: id });
 
       // Save down github emails
       await Promise.all(
@@ -150,6 +155,9 @@ const githubSignIn = async ({ code, origin }, { res }) => {
     if (isDuplicateGithubId && userId) {
       const data = { modified_date: new Date(), user_type: 'full' };
       await transformUserQuery({ data, userId });
+
+      // insert git_user
+      await insertGitUser({ githubId: github_id, githubToken, userId });
 
       const result = await getUserSettingsQuery({ userId });
       const { issues, repos } = result;

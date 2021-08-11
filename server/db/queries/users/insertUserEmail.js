@@ -1,6 +1,6 @@
 const { singleQuery } = require('../../baseQueries');
 
-const insertUserEmails = async ({ email, primary, userId }) => {
+const insertUserEmail = async ({ email, primary, userId }) => {
   const values = [email, primary, userId];
 
   const queryText = `
@@ -12,4 +12,4 @@ const insertUserEmails = async ({ email, primary, userId }) => {
   return rows;
 };
 
-module.exports = insertUserEmails;
+module.exports = insertUserEmail;
