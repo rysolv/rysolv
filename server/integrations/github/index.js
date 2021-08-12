@@ -344,11 +344,13 @@ const requestGithubToken = credentials =>
     });
 
 const requestGithubUserAccount = token =>
+  // https://docs.github.com/en/rest/reference/users#get-the-authenticated-user
   fetch(`https://api.github.com/user`, {
     headers: { Authorization: `token ${token}` },
   }).then(res => res.json());
 
 const requestGithubUserEmail = token =>
+  // https://docs.github.com/en/rest/reference/users#list-email-addresses-for-the-authenticated-user
   fetch(`https://api.github.com/user/emails`, {
     headers: { Authorization: `token ${token}` },
   }).then(res => res.json());
@@ -376,10 +378,12 @@ const requestGithubUser = async credentials => {
   return {
     avatar_url,
     email: email || secondaryEmail,
+    emailList,
     first_name: first_name || '',
     github_id: id,
     github_link: html_url,
     github_username: login,
+    githubToken: access_token,
     languages,
     last_name: last_name || '',
   };

@@ -14,9 +14,11 @@ const {
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
   getUserWatchList,
+  insertGitUser,
+  insertUserEmail,
   transformUser: transformUserQuery,
 } = require('../../../db');
-const { errorLogger, sendEmail } = require('../../../helpers');
+const { analyzeUser, errorLogger, sendEmail } = require('../../../helpers');
 const { generateToken } = require('../../../middlewares/generateToken');
 const { githubSignInError, githubSignUpError } = require('./constants');
 const { requestGithubUser } = require('../../../integrations/github');
@@ -61,10 +63,12 @@ const githubSignIn = async ({ code, origin }, { res }) => {
     const {
       avatar_url,
       email,
+      emailList,
       first_name,
       github_id,
       github_link,
       github_username,
+      githubToken,
       languages,
       last_name,
     } = await requestGithubUser({ client_id, client_secret, code });
@@ -100,7 +104,20 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       };
       const result = await createUser({ data: newUser });
 
+      // insert git_user
+      await insertGitUser({ githubId: github_id, githubToken, userId: id });
+
+      // Save down github emails
+      await Promise.all(
+        emailList.map(async ({ email: githubEmail, primary }) => {
+          await insertUserEmail({ email: githubEmail, primary, userId: id });
+        }),
+      );
+
       await assignOwnerToRepo({ githubId: github_id, userId: id });
+
+      // Async call to initiate git_analytics
+      analyzeUser({ userId: id });
 
       if (languages.length) {
         await createLanguage({
@@ -138,6 +155,9 @@ const githubSignIn = async ({ code, origin }, { res }) => {
     if (isDuplicateGithubId && userId) {
       const data = { modified_date: new Date(), user_type: 'full' };
       await transformUserQuery({ data, userId });
+
+      // insert git_user
+      await insertGitUser({ githubId: github_id, githubToken, userId });
 
       const result = await getUserSettingsQuery({ userId });
       const { issues, repos } = result;

@@ -12,6 +12,8 @@ const getUserPullRequestDetail = require('./getUserPullRequestDetail');
 const getUsers = require('./getUsers');
 const getUserSettings = require('./getUserSettings');
 const getUserWatchList = require('./getUserWatchList');
+const insertGitUser = require('./insertGitUser');
+const insertUserEmail = require('./insertUserEmail');
 const searchUsers = require('./searchUsers');
 const transformUser = require('./transformUser');
 
@@ -30,6 +32,8 @@ module.exports = {
   getUsers,
   getUserSettings,
   getUserWatchList,
+  insertGitUser,
+  insertUserEmail,
   searchUsers,
   transformUser,
 };
