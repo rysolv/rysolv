@@ -12,15 +12,25 @@ import {
 
 const IssueTopBar = ({
   activeUser,
+  addWatching,
   data,
+  dispatchFetchAttemptList,
+  dispatchFetchPullRequestList,
   dispatchFetchWatchList,
+  dispatchOpenIssueModal,
   dispatchOpenModal,
   handleIncrement,
   isDesktop,
   isSignedIn,
 }) => {
-  const { balance, id: userId } = activeUser;
-  const { fundedAmount, id: issueId, open } = data;
+  const {
+    fundedAmount,
+    id: issueId,
+    isPullRequestMerged,
+    isUserAccepted,
+    open,
+    rep,
+  } = data;
   return (
     <Fragment>
       <StyledIssueHeader>
@@ -32,13 +42,14 @@ const IssueTopBar = ({
           />
           {!isDesktop && (
             <FundIssueButton
-              balance={balance}
               disabled={!open}
               dispatchOpenModal={dispatchOpenModal}
               fundedAmount={fundedAmount}
+              isPullRequestMerged={isPullRequestMerged}
               issueId={issueId}
+              isUserAccepted={isUserAccepted}
               open={open}
-              userId={userId}
+              rep={rep}
             />
           )}
         </IssueBarTopRow>
@@ -46,8 +57,12 @@ const IssueTopBar = ({
         <IssueBarBottomRow>
           <StyledIssueButtonBar
             activeUser={activeUser}
+            addWatching={addWatching}
             data={data}
+            dispatchFetchAttemptList={dispatchFetchAttemptList}
+            dispatchFetchPullRequestList={dispatchFetchPullRequestList}
             dispatchFetchWatchList={dispatchFetchWatchList}
+            dispatchOpenIssueModal={dispatchOpenIssueModal}
             dispatchOpenModal={dispatchOpenModal}
             handleIncrement={handleIncrement}
             isSignedIn={isSignedIn}
@@ -60,8 +75,12 @@ const IssueTopBar = ({
 
 IssueTopBar.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   data: T.object,
+  dispatchFetchAttemptList: T.func,
+  dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
+  dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   handleIncrement: T.func,
   isDesktop: T.bool,

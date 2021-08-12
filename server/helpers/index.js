@@ -1,13 +1,19 @@
-const arrayCheck = result => {
-  if (Array.isArray(result) && result.length > 1) {
-    return result;
-  }
-  if (Array.isArray(result) && result.length === 1) {
-    return result[0];
-  }
-  return null;
-};
+const { analyzeUser } = require('./analyzeUser');
+const {
+  arrayCheck,
+  CustomError,
+  errorLogger,
+  isUrl,
+  validatePayoutUrl,
+} = require('./functions');
+const { sendEmail } = require('./emailHelper');
 
 module.exports = {
+  analyzeUser,
   arrayCheck,
+  CustomError,
+  errorLogger,
+  isUrl,
+  sendEmail,
+  validatePayoutUrl,
 };

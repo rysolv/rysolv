@@ -3,11 +3,9 @@ import styled from 'styled-components';
 import {
   defaultFontFamily,
   defaultFontSize,
-  markdownHeader,
+  headerColor,
   textColor,
 } from 'defaultStyleHelper';
-
-import { SecondaryButton } from '../base_ui';
 
 export const MarkdownContainer = styled.div`
   font-size: ${defaultFontSize};
@@ -20,15 +18,23 @@ export const MarkdownContainer = styled.div`
   a:active,
   .fa,
   .fa:hover {
-    background-color: ${markdownHeader} !important;
+    background-color: ${headerColor} !important;
     color: white;
     * {
-      background-color: ${markdownHeader};
+      background-color: ${headerColor};
     }
   }
 
   .editor-toolbar {
     opacity: 1 !important;
+
+    ::after {
+      content: none;
+    }
+
+    ::before {
+      content: none;
+    }
   }
 
   .CodeMirror,
@@ -43,10 +49,6 @@ export const MarkdownContainer = styled.div`
       min-height: ${props => (props.comment ? '5.5rem' : '20rem')};
     }
   }
-`;
-
-export const StyledSecondaryButton = styled(SecondaryButton)`
-  width: auto;
 `;
 
 export const EditContainer = styled.div`

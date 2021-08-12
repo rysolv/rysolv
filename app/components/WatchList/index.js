@@ -5,7 +5,8 @@ import { ConditionalRender, IconButton } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import EmptyList from './EmptyList';
-import ListComponent from './ListComponent';
+import GeneralListComponent from './GeneralListComponent';
+import PullRequestListComponent from './PullRequestListComponent';
 import {
   IconWrapper,
   StyledTitle,
@@ -16,40 +17,49 @@ const closeIcon = iconDictionary('close');
 
 const WatchList = ({
   handleClose,
-  handleRedirect,
+  handleDeletePullRequest,
+  isSignedIn,
   route,
   tableData,
   title,
   type,
-}) => (
-  <WatchListContainer>
-    <IconWrapper>
-      <IconButton
-        icon={closeIcon}
-        label="Close"
-        onClick={() => handleClose()}
+}) => {
+  const ListComponentToRender =
+    type !== 'pullRequestList'
+      ? GeneralListComponent
+      : PullRequestListComponent;
+  const shouldRender =
+    type !== 'pullRequestList'
+      ? !!tableData.length
+      : !!tableData.pullRequests.length;
+  return (
+    <WatchListContainer>
+      <IconWrapper>
+        <IconButton icon={closeIcon} label="Close" onClick={handleClose} />
+      </IconWrapper>
+      <StyledTitle>{title}</StyledTitle>
+      <ConditionalRender
+        Component={ListComponentToRender}
+        FallbackComponent={<EmptyList type={type} />}
+        propsToPassDown={{
+          handleClose,
+          handleDeletePullRequest,
+          isSignedIn,
+          route,
+          tableData,
+        }}
+        shouldRender={shouldRender}
       />
-    </IconWrapper>
-    <StyledTitle>{title}</StyledTitle>
-    <ConditionalRender
-      Component={
-        <ListComponent
-          handleRedirect={handleRedirect}
-          route={route}
-          tableData={tableData}
-        />
-      }
-      FallbackComponent={<EmptyList type={type} />}
-      shouldRender={!!tableData.length}
-    />
-  </WatchListContainer>
-);
+    </WatchListContainer>
+  );
+};
 
 WatchList.propTypes = {
   handleClose: T.func,
-  handleRedirect: T.func,
+  handleDeletePullRequest: T.func,
+  isSignedIn: T.bool,
   route: T.string,
-  tableData: T.arrayOf(T.object),
+  tableData: T.oneOfType([T.array, T.number, T.object]),
   title: T.string,
   type: T.string,
 };

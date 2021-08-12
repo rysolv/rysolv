@@ -1,111 +1,144 @@
 import React from 'react';
-import styled from 'styled-components';
 
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import Add from '@material-ui/icons/Add';
+import AddBox from '@material-ui/icons/AddBox';
 import AddCircle from '@material-ui/icons/AddCircle';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import Attempt from '@material-ui/icons/ListAlt';
 import Cancel from '@material-ui/icons/Cancel';
+import Check from '@material-ui/icons/Check';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
-import Circle from '@material-ui/icons/FiberManualRecord';
 import Close from '@material-ui/icons/Close';
 import CloseCircle from '@material-ui/icons/HighlightOff';
-import CodeIcon from '@material-ui/icons/Code';
+import Code from '@material-ui/icons/Code';
 import Comments from '@material-ui/icons/Forum';
+import Computer from '@material-ui/icons/Computer';
 import CreditCard from '@material-ui/icons/CreditCard';
-import Delete from '@material-ui/icons/Delete';
-import Dollar from '@material-ui/icons/AttachMoney';
 import Done from '@material-ui/icons/Done';
 import Edit from '@material-ui/icons/Edit';
+import Email from '@material-ui/icons/Email';
 import ErrorIcon from '@material-ui/icons/Error';
 import Exit from '@material-ui/icons/ExitToApp';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Facebook from '@material-ui/icons/Facebook';
+import Flare from '@material-ui/icons/Flare';
 import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
+import Help from '@material-ui/icons/Help';
 import Info from '@material-ui/icons/Info';
+import Language from '@material-ui/icons/Language';
 import Link from '@material-ui/icons/Link';
+import LocalAtm from '@material-ui/icons/LocalAtm';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
-import PublishIcon from '@material-ui/icons/Publish';
+import NavigateBefore from '@material-ui/icons/NavigateBefore';
+import NavigateNext from '@material-ui/icons/NavigateNext';
+import Publish from '@material-ui/icons/Publish';
 import PullRequest from '@material-ui/icons/AccountTree';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
 import Star from '@material-ui/icons/Star';
-import Upvote from '@material-ui/icons/ArrowUpward';
+import Stats from '@material-ui/icons/Equalizer';
+import Twitter from '@material-ui/icons/Twitter';
 import Verified from '@material-ui/icons/VerifiedUser';
-import ViewAll from '@material-ui/icons/NavigateNext';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Warning from '@material-ui/icons/Warning';
-import WebIcon from '@material-ui/icons/Web';
+import Web from '@material-ui/icons/Web';
 
-import SiteLogo from './svg/SiteLogo';
-import Stackoverflow from './svg/Stackoverflow';
-import Paypal from './svg/Paypal';
-import Monocle from './svg/Monocle';
-import Gitlab from './svg/Gitlab';
+import BackgroundHollowCircle from './svg/BackgroundHollowCircle';
+import BackgroundSolidCircle from './svg/BackgroundSolidCircle';
 import CloseMenu from './svg/CloseMenu';
+import Coin from './svg/RysolvCoin';
+import DarkSiteLogo from './svg/DarkSiteLogo';
+import Discord from './svg/Discord';
+import HeaderImageLeft from './svg/HeaderImageLeft';
+import HeaderImageRight from './svg/HeaderImageRight';
+import Javascript from './svg/Javascript';
+import Monocle from './svg/Monocle';
+import Paypal from './svg/Paypal';
+import Python from './svg/Python';
+import ReactIcon from './svg/React';
+import RecruitmentHeaderImageRight from './svg/RecruitmentHeaderImageRight';
+import Ruby from './svg/Ruby';
+import SiteLogo from './svg/SiteLogo';
+import SiteWordmark from './svg/SiteWordmark';
+import Stackoverflow from './svg/Stackoverflow';
 
-export default (name, options) => {
+import { iconSize, iconStyle } from '../defaultStyleHelper';
+
+export default (name, size, style) => {
   const icons = {
     add: Add,
+    addBox: AddBox,
     addCircle: AddCircle,
     attempt: Attempt,
-    backArrow: ArrowBackIcon,
-    backArrowHalf: ArrowBackIosIcon,
+    backArrow: ArrowBack,
+    backArrowHalf: ArrowBackIos,
+    backgroundHollowCircle: BackgroundHollowCircle,
+    backgroundSolidCircle: BackgroundSolidCircle,
     cancel: Cancel,
-    circle: Circle,
+    check: Check,
     close: Close,
     closeCircle: CloseCircle,
     closeMenu: CloseMenu,
-    code: CodeIcon,
+    code: Code,
+    coin: Coin,
     comments: Comments,
+    computer: Computer,
     creditCard: CreditCard,
-    delete: Delete,
-    dollar: Dollar,
+    darkSiteLogo: DarkSiteLogo,
+    discord: Discord,
+    dollarSquare: LocalAtm,
     done: Done,
-    dropdownArrow: ArrowDropDownIcon,
+    dropdownArrow: ArrowDropDown,
     edit: Edit,
+    email: Email,
     exit: Exit,
-    forwardArrowHalf: ArrowForwardIosIcon,
+    expandIcon: ExpandMoreIcon,
+    facebook: Facebook,
+    flare: Flare,
+    forwardArrowHalf: ArrowForwardIos,
     funded: MonetizationOn,
     gift: Gift,
     github: GitHub,
-    gitlab: Gitlab,
+    headerImageLeft: HeaderImageLeft,
+    headerImageRight: HeaderImageRight,
+    help: Help,
     info: Info,
     issue: ErrorIcon,
+    javascript: Javascript,
+    language: Language,
     link: Link,
     monocle: Monocle,
-    organization: WebIcon,
+    navigateBefore: NavigateBefore,
+    navigateNext: NavigateNext,
     paypal: Paypal,
     pullRequest: PullRequest,
+    python: Python,
+    reactIcon: ReactIcon,
+    recruitmentHeaderImageRight: RecruitmentHeaderImageRight,
+    repo: Web,
+    ruby: Ruby,
     search: Search,
     settings: Settings,
     siteLogo: SiteLogo,
+    siteWordmark: SiteWordmark,
     stackoverflow: Stackoverflow,
     star: Star,
+    stats: Stats,
     successOutline: CheckCircleOutline,
-    upload: PublishIcon,
-    upvote: Upvote,
-    user: AccountCircleIcon,
+    twitter: Twitter,
+    upload: Publish,
+    user: AccountCircle,
     verified: Verified,
-    viewAll: ViewAll,
+    visibility: Visibility,
+    visibilityOff: VisibilityOff,
     warning: Warning,
   };
-  // Create style object to apply to SVG Icon
-  const sizing = {};
-  const styling = {};
-  const stylesToApply = Object.assign({}, sizing, styling);
-  const propsToPassDown = Object.assign({}, options);
   const IconToRender = icons[name];
-  // Style Icon by applying to root styles
-  const StyledIcon = styled(IconToRender)({ '&.root': stylesToApply });
-  // Return Styled Icon w/ proper class selection
-  return (
-    <StyledIcon
-      classes={{ root: 'root' }}
-      className="styled-icon"
-      {...propsToPassDown}
-    />
-  );
+  return <IconToRender style={{ ...iconSize[size], ...iconStyle[style] }} />;
 };

@@ -1,35 +1,40 @@
+import React from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
-import { ErrorSuccessBanner } from 'components/base_ui';
+import { ErrorSuccessBanner, SecondaryButton } from 'components/base_ui';
 import IssueAccountManager from 'components/IssueAccountManager';
 import LanguageAutocomplete from 'components/LanguageAutocomplete';
 import Markdown from 'components/Markdown';
 import {
   borderColor,
   buttonRed,
-  codeGrey,
+  commentHeaderColor,
   defaultFontFamily,
   defaultFontSize,
   detailFontSize,
   fundingText,
+  hoverLinkColor,
+  lightBlueColor,
+  styledScrollbar,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { laptop, mobile, tablet } = mediaQueriesByDevice;
+const { laptop, mobile, mobileS, tablet } = mediaQueriesByDevice;
 
 export const CommentWrapper = styled.div`
-  margin: 3rem 3rem 3rem 0;
+  ${styledScrollbar}
 `;
 
 export const DetailContainer = styled.div`
+  align-items: flex-start;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
   justify-content: center;
-  width: 100%;
   padding: 2.5rem 0;
+  width: 100%;
 
   ${tablet} {
     padding: 2.5rem 0;
@@ -39,18 +44,8 @@ export const DetailContainer = styled.div`
   }
 `;
 
-export const Icon = styled.span`
-  align-items: center;
-  display: flex;
-  margin-right: 0.5rem;
-`;
-
-export const IssueDetailContainer = styled.div`
-  width: 100%;
-`;
-
 export const Divider = styled.div`
-  border-bottom: 1px solid ${borderColor};
+  border-bottom: 0.1rem solid ${borderColor};
   color: ${textColor};
   font-size: 2rem;
   font-weight: 500;
@@ -58,14 +53,27 @@ export const Divider = styled.div`
   width: 100%;
 `;
 
-export const ExternalLinkWrapper = styled.a`
-  color: rgba(0, 0, 0, 0.4);
+export const EditIssueWrapper = styled.div`
+  ${mobileS} {
+    width: 100%;
+  }
+`;
+
+export const EmbedIssueWrapper = styled.div`
+  align-items: center;
   display: flex;
-  font-size: 1.4rem;
+  flex-direction: column;
+  margin-top: 0.5rem;
+`;
+
+export const ExternalLinkWrapper = styled.a`
+  color: ${hoverLinkColor};
+  display: flex;
+  font-size: ${defaultFontSize};
   font-weight: 500;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
     cursor: pointer;
   }
 
@@ -74,57 +82,47 @@ export const ExternalLinkWrapper = styled.a`
   }
 `;
 
-export const IssueBodyContainer = styled.div`
-  background-color: white;
-  border-radius: 0.25rem;
-  border: none;
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: top;
-  width: 100%;
-
-  code {
-    background-color: ${codeGrey};
-    font-family: monospace;
-    white-space: pre-wrap;
-    border-bottom-left-radius: 2.5px;
-    border-bottom-right-radius: 2.5px;
-    color: ${textColor};
-  }
-
-  image {
-    width: auto;
-  }
-
-  pre {
-    background-color: ${codeGrey};
-    padding: 0.5rem;
-    max-height: 75rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
+export const Icon = styled.span`
+  align-items: center;
+  display: flex;
+  margin-right: 0.5rem;
 `;
 
-export const IssueBody = styled.div`
+export const InfoItemContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
   font-size: ${defaultFontSize};
-  min-height: 4rem;
-  padding: 0 1rem;
-  width: 100%;
+  justify-content: space-between;
+  margin: 1rem 0;
+`;
 
-  * {
-    color: ${textColor};
-    font-family: inherit;
-    width: 100%;
-  }
+export const InfoItemTitle = styled.div`
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  font-weight: 500;
+  letter-spacing: 0.02rem;
+  line-height: 1.5;
+  padding-right: 1rem;
+  white-space: nowrap;
+`;
+
+export const InfoItemWrapper = styled.div`
+  display: flex;
 `;
 
 export const IssueDetailColumn = styled.div`
   flex-direction: column;
   padding: 2rem;
   width: 100%;
+
   ${tablet} {
     padding: 1rem;
   }
+`;
+
+export const IssueDetailContainer = styled.div`
+  width: 100%;
 `;
 
 export const IssueDetailContentContainer = styled.div`
@@ -139,27 +137,23 @@ export const IssueDetailWrapper = styled.div`
   min-height: 40vh;
   overflow: hidden;
   padding: 0 0 3rem 0;
-`;
-
-export const LanguagesWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: 1.4rem;
-  margin: -1rem 0 1rem 0;
-`;
-
-export const LanguagesTitle = styled.div`
-  color: ${textColor};
-  font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: 0.02rem;
-  line-height: 1.5;
-  padding-right: 1rem;
-  white-space: nowrap;
+  width: 100%;
 `;
 
 export const LeftPanel = styled.div`
   width: 3.5rem;
+`;
+
+export const ManageIssueWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  min-height: 7.5rem;
+  padding: 0 1rem;
+
+  @media (max-width: 610px) {
+    flex-direction: column;
+  }
 `;
 
 export const PostingInfoWrapper = styled.div`
@@ -172,10 +166,34 @@ export const PostingInfoWrapper = styled.div`
   padding: 0.4rem 0;
 `;
 
+export const SharingButtonIcon = styled.div`
+  display: inline-block;
+  fill: none;
+  stroke: #fff;
+
+  svg {
+    height: 1.4rem;
+    margin-right: 0.4rem;
+    width: 1.4rem;
+  }
+`;
+
+export const SharingButtonIconWrapper = styled.div`
+  align-items: center;
+  background: ${({ color }) => color};
+  border-radius: 0.4rem;
+  display: flex;
+  height: 3rem;
+  min-width: 15.5rem;
+  padding: 0.6rem 1.6rem;
+  transition: 25ms ease-out;
+`;
+
 export const SidebarContainer = styled.div`
   flex: 0 0 33.333333%;
   max-width: 33.333333%;
   padding: 0 1rem;
+
   ${laptop} {
     display: none;
   }
@@ -199,6 +217,11 @@ export const StyledButton = styled(Button)`
     margin-right: 1rem;
     width: 2rem;
   }
+
+  ${mobileS} {
+    justify-content: start;
+    width: 100%;
+  }
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
@@ -206,7 +229,15 @@ export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
 `;
 
 export const StyledIssueAccountManager = styled(IssueAccountManager)`
-  margin-bottom: 1rem;
+  margin-top: 2rem;
+
+  ${laptop} {
+    margin-top: 0;
+  }
+
+  ${mobileS} {
+    text-align: left;
+  }
 `;
 
 export const StyledLanguageAutocomplete = styled(LanguageAutocomplete)`
@@ -220,16 +251,68 @@ export const StyledMarkdown = styled(Markdown)`
   padding: 1rem;
 `;
 
+export const StyledSharingLink = styled.a`
+  color: white;
+  display: inline-block;
+  font-family: ${defaultFontFamily};
+  font-size: ${defaultFontSize};
+  margin: 0.5rem;
+  white-space: nowrap;
+
+  &:hover {
+    color: white;
+  }
+`;
+
+export const StyledSecondaryButton = styled(
+  ({ removeMargin, ...restProps }) => <SecondaryButton {...restProps} />,
+)`
+  background-color: white;
+  border: 0.1rem solid ${lightBlueColor};
+  color: ${lightBlueColor};
+  margin: ${({ removeMargin }) => (removeMargin ? '0' : '1rem')};
+
+  &:hover {
+    background-color: white;
+  }
+
+  ${mobile} {
+    margin-right: 0;
+  }
+`;
+
+export const StyledSharingButton = styled(StyledSecondaryButton)`
+  border-radius: 0.4rem;
+  font-size: ${defaultFontSize};
+  height: 3rem;
+  margin: 0.5rem;
+  padding: 0.6rem 1.6rem;
+  text-transform: capitalize;
+  width: 15.5rem;
+
+  .MuiButton-label {
+    display: inline-block;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+`;
+
 export const TopBarWrapper = styled.div`
-  background-color: #f6f8fa;
+  background: ${commentHeaderColor};
   height: 10rem;
 `;
 
-export const UsernameLink = styled.a`
+export const UsernameLink = styled(({ isUserDeleted, ...restProps }) => (
+  <Link {...restProps} />
+))`
   display: inline;
   font-weight: bold;
+  pointer-events: ${({ isUserDeleted }) =>
+    isUserDeleted ? 'none' : 'inherit'};
 
   &:hover {
-    color: #007bff;
+    text-decoration: underline;
   }
 `;

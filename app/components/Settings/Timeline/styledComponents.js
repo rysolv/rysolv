@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 import { BaseDropDownMenu } from 'components/base_ui';
 import {
@@ -8,10 +9,33 @@ import {
   hoverLinkColor,
   textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { laptop } = mediaQueriesByDevice;
+
+export const ExternalTimelineActivity = styled.a`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
 
 export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const InternalTimelineActivity = styled(Link)`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
 
 export const StyledAction = styled.span`
@@ -19,12 +43,12 @@ export const StyledAction = styled.span`
 `;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
-  margin: 0 1rem;
+  margin-left: 1rem;
   width: 15rem;
 `;
 
 export const StyledButton = styled(Button)`
-  color: #007bff;
+  color: ${hoverLinkColor};
   font-family: ${defaultFontFamily};
   font-size: ${defaultFontSize};
   font-weight: 500;
@@ -41,18 +65,13 @@ export const StyledButton = styled(Button)`
   }
 `;
 
-export const TimelineActivity = styled.span`
-  color: #007bff;
-
-  &:hover {
-    color: ${hoverLinkColor};
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`;
-
 export const TimelineContainer = styled.div`
+  display: flex;
   height: 100%;
+
+  ${laptop} {
+    flex-direction: column;
+  }
 `;
 
 export const TimelineContent = styled.div`
@@ -116,4 +135,8 @@ export const TimelineVerticalDivider = styled.div`
   height: 100%;
   position: relative;
   width: 1px;
+`;
+
+export const ActivityContainer = styled.div`
+  width: 100%;
 `;

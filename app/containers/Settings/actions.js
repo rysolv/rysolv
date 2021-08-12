@@ -1,5 +1,12 @@
 import {
+  ACCEPT_BOUNTY_FAILURE,
+  ACCEPT_BOUNTY_SUCCESS,
+  ACCEPT_BOUNTY,
+  CHANGE_EMAIL_FAILURE,
+  CHANGE_EMAIL_SUCCESS,
+  CHANGE_EMAIL,
   CLEAR_ALERTS,
+  CLEAR_ERRORS,
   CLOSE_MODAL_STATE,
   DELETE_USER_FAILURE,
   DELETE_USER_SUCCESS,
@@ -7,20 +14,79 @@ import {
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
-  SUBMIT_PAYMENT,
   INPUT_CHANGE,
+  INPUT_ERROR,
   OPEN_MODAL_STATE,
+  PAYPAL_PAYMENT_FAILURE,
+  PAYPAL_PAYMENT_SUCCESS,
+  PAYPAL_PAYMENT,
+  REMOVE_ATTEMPTING,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
-  REMOVE_ISSUE,
+  REMOVE_WATCHING,
+  RESET_STATE,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
   SAVE_CHANGE,
+  STRIPE_TOKEN_FAILURE,
+  STRIPE_TOKEN_SUCCESS,
+  STRIPE_TOKEN,
+  VERIFY_ACCOUNT_FAILURE,
+  VERIFY_ACCOUNT_SUCCESS,
+  VERIFY_ACCOUNT,
+  WITHDRAW_FUNDS_FAILURE,
+  WITHDRAW_FUNDS_SUCCESS,
+  WITHDRAW_FUNDS,
 } from './constants';
+
+export function acceptBountyFailure(payload) {
+  return {
+    payload,
+    type: ACCEPT_BOUNTY_FAILURE,
+  };
+}
+
+export function acceptBountySuccess(payload) {
+  return {
+    payload,
+    type: ACCEPT_BOUNTY_SUCCESS,
+  };
+}
+
+export function acceptBounty(payload) {
+  return {
+    payload,
+    type: ACCEPT_BOUNTY,
+  };
+}
+
+export function changeEmailFailure(payload) {
+  return {
+    payload,
+    type: CHANGE_EMAIL_FAILURE,
+  };
+}
+
+export function changeEmailSuccess() {
+  return { type: CHANGE_EMAIL_SUCCESS };
+}
+
+export function changeEmail(payload) {
+  return {
+    payload,
+    type: CHANGE_EMAIL,
+  };
+}
 
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
+  };
+}
+
+export function clearErrors() {
+  return {
+    type: CLEAR_ERRORS,
   };
 }
 
@@ -37,18 +103,12 @@ export function deleteUserFailure(payload) {
   };
 }
 
-export function deleteUserSuccess(payload) {
-  return {
-    payload,
-    type: DELETE_USER_SUCCESS,
-  };
+export function deleteUserSuccess() {
+  return { type: DELETE_USER_SUCCESS };
 }
 
-export function deleteUser(payload) {
-  return {
-    payload,
-    type: DELETE_USER,
-  };
+export function deleteUser() {
+  return { type: DELETE_USER };
 }
 
 export function fetchInfoFailure(payload) {
@@ -79,10 +139,45 @@ export function inputChange(payload) {
   };
 }
 
+export function inputError(payload) {
+  return {
+    payload,
+    type: INPUT_ERROR,
+  };
+}
+
 export function openModalState(payload) {
   return {
     payload,
     type: OPEN_MODAL_STATE,
+  };
+}
+
+export function paypalPaymentFailure(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT_FAILURE,
+  };
+}
+
+export function paypalPaymentSuccess(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT_SUCCESS,
+  };
+}
+
+export function paypalPayment(payload) {
+  return {
+    payload,
+    type: PAYPAL_PAYMENT,
+  };
+}
+
+export function removeAttempting(payload) {
+  return {
+    payload,
+    type: REMOVE_ATTEMPTING,
   };
 }
 
@@ -100,11 +195,15 @@ export function removeIssueSuccess(payload) {
   };
 }
 
-export function removeIssue(payload) {
+export function removeWatching(payload) {
   return {
     payload,
-    type: REMOVE_ISSUE,
+    type: REMOVE_WATCHING,
   };
+}
+
+export function resetState() {
+  return { type: RESET_STATE };
 }
 
 export function saveChangeFailure(payload) {
@@ -128,9 +227,65 @@ export function saveChange(payload) {
   };
 }
 
-export function submitPayment(payload) {
+export function stripeTokenFailure(payload) {
   return {
     payload,
-    type: SUBMIT_PAYMENT,
+    type: STRIPE_TOKEN_FAILURE,
+  };
+}
+
+export function stripeTokenSuccess(payload) {
+  return {
+    payload,
+    type: STRIPE_TOKEN_SUCCESS,
+  };
+}
+
+export function stripeToken(payload) {
+  return {
+    payload,
+    type: STRIPE_TOKEN,
+  };
+}
+
+export function verifyAccountFailure(payload) {
+  return {
+    payload,
+    type: VERIFY_ACCOUNT_FAILURE,
+  };
+}
+
+export function verifyAccountSuccess(payload) {
+  return {
+    payload,
+    type: VERIFY_ACCOUNT_SUCCESS,
+  };
+}
+
+export function verifyAccount(payload) {
+  return {
+    payload,
+    type: VERIFY_ACCOUNT,
+  };
+}
+
+export function withdrawFundsFailure(payload) {
+  return {
+    payload,
+    type: WITHDRAW_FUNDS_FAILURE,
+  };
+}
+
+export function withdrawFundsSuccess(payload) {
+  return {
+    payload,
+    type: WITHDRAW_FUNDS_SUCCESS,
+  };
+}
+
+export function withdrawFunds(payload) {
+  return {
+    payload,
+    type: WITHDRAW_FUNDS,
   };
 }

@@ -1,21 +1,26 @@
-const issues = `CREATE TABLE IF NOT EXISTS
-issues(
-  id UUID PRIMARY KEY,
-  created_date TIMESTAMP,
-  modified_date TIMESTAMP,
-  organization_id UUID REFERENCES organizations(id),
-  name VARCHAR(255) NOT NULL,
-  body TEXT NOT NULL,
-  repo VARCHAR(128) NOT NULL,
-  language VARCHAR(128) [],
-  comments UUID [],
-  attempting UUID [],
-  contributor_id UUID REFERENCES users(id),
-  rep SMALLINT DEFAULT 25,
-  watching UUID [],
-  funded_amount FLOAT DEFAULT 0,
-  open BOOLEAN DEFAULT true,
-  type VARCHAR(40) NOT NULL
-)`;
+const alterIssuesTable = `
+  ALTER TABLE issues
+  ADD COLUMN body TEXT NOT NULL,
+  ADD COLUMN contributor_id UUID REFERENCES users(id),
+  ADD COLUMN created_date TIMESTAMP,
+  ADD COLUMN funded_amount FLOAT DEFAULT 0,
+  ADD COLUMN github_comment_count SMALLINT,
+  ADD COLUMN is_deleted BOOLEAN DEFAULT false,
+  ADD COLUMN is_manual BOOLEAN,
+  ADD COLUMN modified_date TIMESTAMP,
+  ADD COLUMN name VARCHAR(256) NOT NULL,
+  ADD COLUMN open BOOLEAN DEFAULT true,
+  ADD COLUMN rep SMALLINT DEFAULT 25,
+  ADD COLUMN repo VARCHAR(128) NOT NULL,
+  ADD COLUMN repo_id UUID REFERENCES repos(id),
+  ADD COLUMN type VARCHAR(40) NOT NULL
+`;
 
-module.exports = issues;
+const createIssuesTable = `
+  CREATE TABLE IF NOT EXISTS
+  issues(
+    id UUID PRIMARY KEY
+  )
+`;
+
+module.exports = { alterIssuesTable, createIssuesTable };

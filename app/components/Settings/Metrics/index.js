@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 
 import { ConditionalRender } from 'components/base_ui';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
+  EmptyPreferredLanguagesComponent,
   PreferredLanguagesComponent,
   PreferredLanguagesEditComponent,
-} from '../PreferredLanguagesComponents';
+} from './PreferredLanguagesComponents';
 import {
   ActivityContainer,
   DetailListItem,
@@ -28,13 +30,14 @@ const UserMetricsView = ({
   createdDate,
   dollarsEarned,
   handleClose,
-  handleDone,
   handleEdit,
+  handleSubmitInputChange,
   isDisabled,
   preferredLanguages,
   rejectedPullRequests,
   setChangePreferredLanguages,
   setValue,
+  value,
 }) => {
   const [detailView, setDetailView] = useState(false);
   const hasNoDecimals = true;
@@ -82,22 +85,28 @@ const UserMetricsView = ({
             &nbsp;Earned
           </DetailListItem>
           <ConditionalRender
-            Component={PreferredLanguagesComponent}
+            Component={
+              <ConditionalRender
+                Component={PreferredLanguagesComponent}
+                FallbackComponent={EmptyPreferredLanguagesComponent}
+                propsToPassDown={{
+                  handleEdit,
+                  isDisabled,
+                  preferredLanguages,
+                  setChangePreferredLanguages,
+                }}
+                shouldRender={!isEmpty(preferredLanguages)}
+              />
+            }
             FallbackComponent={
               <PreferredLanguagesEditComponent
                 handleClose={handleClose}
-                handleDone={handleDone}
-                preferredLanguages={preferredLanguages}
+                handleSubmitInputChange={handleSubmitInputChange}
+                preferredLanguages={value}
                 setChangePreferredLanguages={setChangePreferredLanguages}
                 setValue={setValue}
               />
             }
-            propsToPassDown={{
-              handleEdit,
-              isDisabled,
-              preferredLanguages,
-              setChangePreferredLanguages,
-            }}
             shouldRender={!changePreferredLanguages}
           />
         </UserDetails>
@@ -120,13 +129,14 @@ UserMetricsView.propTypes = {
   createdDate: T.string,
   dollarsEarned: T.number,
   handleClose: T.func,
-  handleDone: T.func,
   handleEdit: T.func.isRequired,
+  handleSubmitInputChange: T.func,
   isDisabled: T.bool,
   preferredLanguages: T.array,
   rejectedPullRequests: T.number,
   setChangePreferredLanguages: T.func,
   setValue: T.func,
+  value: T.oneOfType([T.array, T.number, T.string]),
 };
 
 export default UserMetricsView;

@@ -5,109 +5,147 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
-import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
+import AcceptBountyModal from 'components/AcceptBountyModal';
+import AsyncRender from 'components/AsyncRender';
 import DeleteUserModal from 'components/DeleteUserModal';
 import SettingsView from 'components/Settings';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import {
-  handleCreditCardNumberChange,
-  handleCvcChange,
-  handleDateChange,
-  handleZipChange,
-} from 'utils/globalHelpers';
-import injectSaga from 'utils/injectSaga';
+import PullRequestOverview from 'containers/PullRequests/Overview';
+import { handleZipChange } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
 
 import {
+  acceptBounty,
+  changeEmail,
   clearAlerts,
+  clearErrors,
   closeModalState,
   deleteUser,
   fetchInfo,
   inputChange,
+  inputError,
   openModalState,
-  removeIssue,
+  paypalPayment,
+  removeAttempting,
+  removeWatching,
+  resetState,
   saveChange,
-  submitPayment,
+  stripeToken,
+  withdrawFunds,
 } from './actions';
 import { settingViewDictionary } from './constants';
+import { validateFields, validateOneField } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectSettings, makeSelectSettingsDetail } from './selectors';
 import { SettingsWrapper } from './styledComponents';
 
 const Settings = ({
-  activeUser: { id },
+  activeUser: { id: userId },
   alerts,
   data,
+  data: { balance },
+  dispatchAcceptBounty,
   dispatchCloseModal,
   dispatchFetchInfo,
+  dispatchInputError,
   dispatchOpenModal,
+  dispatchPaypalPayment,
+  dispatchResetState,
   dispatchSaveChange,
-  dispatchSubmitPayment,
+  dispatchStripeToken,
+  dispatchWithdrawFunds,
   error,
   filterValues,
+  handleChangeEmail,
   handleClearAlerts,
+  handleClearErrors,
   handleDeleteUser,
   handleInputChange,
   handleNav,
-  handleRemoveIssue,
+  handleRemoveAttempting,
+  handleRemoveWatching,
+  inputErrors,
   isModalOpen,
   loading,
   match,
   modal,
 }) => {
-  const [creditCardNumber, setCreditCardNumber] = useState('');
-  const [dateValue, setDateValue] = useState('');
-  const [cvcValue, setCvcValue] = useState('');
   const [zipValue, setZipValue] = useState('');
+
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'User Settings';
-    dispatchFetchInfo({ itemId: id });
-  }, [id]);
+    if (userId) dispatchFetchInfo({ userId });
+  }, [userId]);
 
-  const handleSubmitPayment = ({ amount }) => {
-    dispatchSubmitPayment({
-      amount,
-      creditCardNumber,
-      currency: 'usd',
-      cvcValue,
-      dateValue,
-      email: '',
-      zipValue,
+  const handleStripeToken = ({ amount, token, values }) => {
+    const { isValidated, validationErrors } = validateFields({ values });
+    if (isValidated) {
+      dispatchStripeToken({
+        amount,
+        token,
+      });
+    } else {
+      dispatchInputError({ errors: validationErrors });
+    }
+  };
+
+  const handleValidateInput = ({ field, values }) => {
+    const validationError = validateOneField({ field, values }) || '';
+    dispatchInputError({
+      errors: {
+        [field]: validationError,
+      },
     });
+  };
+
+  const handleWithdrawFunds = ({ email, transferValue, values }) => {
+    const { isValidated, validationErrors } = validateFields({ values });
+    if (isValidated) {
+      dispatchWithdrawFunds({ email, transferValue });
+    } else {
+      dispatchInputError({ errors: validationErrors });
+    }
   };
   const {
     params: { view },
   } = match;
   const creditCardProps = {
-    creditCardNumber,
-    cvcValue,
-    dateValue,
-    handleCreditCardNumberChange,
-    handleCvcChange,
-    handleDateChange,
-    handleSubmitPayment,
+    handleStripeToken,
     handleZipChange,
-    setCreditCardNumber,
-    setCvcValue,
-    setDateValue,
     setZipValue,
     zipValue,
   };
   const currentTab = settingViewDictionary[view] || 0;
   const modalPropsDictionary = {
+    acceptBounty: {
+      Component: AcceptBountyModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        bounty: data.selectedBounty,
+        dispatchAcceptBounty,
+        fundingId: data.fundingId,
+        handleClose: dispatchCloseModal,
+        repoName: data.repoName,
+        username: data.username,
+      },
+    },
     deleteUser: {
       Component: DeleteUserModal,
       open: isModalOpen,
       propsToPassDown: {
+        balance,
         handleClose: dispatchCloseModal,
         handleDeleteUser,
-        userId: id,
       },
     },
   };
+  const PullRequestComponent = () => <PullRequestOverview />;
   return (
     <SettingsWrapper>
       <AsyncRender
@@ -120,13 +158,22 @@ const Settings = ({
           alerts,
           creditCardProps,
           currentTab,
+          dispatchAcceptBounty,
           dispatchOpenModal,
+          dispatchPaypalPayment,
           dispatchSaveChange,
           filterValues,
+          handleChangeEmail,
           handleClearAlerts,
+          handleClearErrors,
           handleInputChange,
           handleNav,
-          handleRemoveIssue,
+          handleRemoveAttempting,
+          handleRemoveWatching,
+          handleValidateInput,
+          handleWithdrawFunds,
+          inputErrors,
+          PullRequestComponent,
           view,
         }}
       />
@@ -138,19 +185,28 @@ const Settings = ({
 Settings.propTypes = {
   activeUser: T.object,
   alerts: T.object.isRequired,
-  data: T.object,
+  data: T.object.isRequired,
+  dispatchAcceptBounty: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchInfo: T.func,
+  dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
+  dispatchPaypalPayment: T.func.isRequired,
+  dispatchResetState: T.func.isRequired,
   dispatchSaveChange: T.func,
-  dispatchSubmitPayment: T.func.isRequired,
+  dispatchStripeToken: T.func.isRequired,
+  dispatchWithdrawFunds: T.func.isRequired,
   error: T.oneOfType([T.object, T.bool]).isRequired,
   filterValues: T.object,
+  handleChangeEmail: T.func.isRequired,
   handleClearAlerts: T.func.isRequired,
+  handleClearErrors: T.func.isRequired,
   handleDeleteUser: T.func.isRequired,
-  handleInputChange: T.func,
+  handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
+  handleRemoveAttempting: T.func.isRequired,
+  handleRemoveWatching: T.func.isRequired,
+  inputErrors: T.object.isRequired,
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
@@ -169,6 +225,7 @@ const mapStateToProps = createStructuredSelector({
   data: makeSelectSettingsDetail('account'),
   error: makeSelectSettings('error'),
   filterValues: makeSelectSettings('filter'),
+  inputErrors: makeSelectSettings('inputErrors'),
   isModalOpen: makeSelectSettings('isModalOpen'),
   loading: makeSelectSettings('loading'),
   modal: makeSelectSettings('modal'),
@@ -179,15 +236,23 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Settings
      */
+    dispatchAcceptBounty: payload => dispatch(acceptBounty(payload)),
     dispatchCloseModal: () => dispatch(closeModalState()),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
+    dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
+    dispatchPaypalPayment: payload => dispatch(paypalPayment(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
-    dispatchSubmitPayment: payload => dispatch(submitPayment(payload)),
+    dispatchStripeToken: payload => dispatch(stripeToken(payload)),
+    dispatchWithdrawFunds: payload => dispatch(withdrawFunds(payload)),
+    handleChangeEmail: payload => dispatch(changeEmail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),
-    handleDeleteUser: payload => dispatch(deleteUser(payload)),
+    handleClearErrors: () => dispatch(clearErrors()),
+    handleDeleteUser: () => dispatch(deleteUser()),
     handleInputChange: payload => dispatch(inputChange(payload)),
-    handleRemoveIssue: payload => dispatch(removeIssue(payload)),
+    handleRemoveAttempting: payload => dispatch(removeAttempting(payload)),
+    handleRemoveWatching: payload => dispatch(removeWatching(payload)),
     /**
      * Reducer : Router
      */

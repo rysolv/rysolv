@@ -1,68 +1,105 @@
-import React, { Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { push } from 'connected-react-router';
 
-import { ConditionalRender } from 'components/base_ui';
 import Signup from 'components/Signin/Signup';
-import { signin } from 'containers/Auth/actions';
-import { makeSelectAuth } from 'containers/Auth/selectors';
+import { clearAlerts, signUp } from 'containers/Auth/actions';
+import {
+  makeSelectAuth,
+  makeSelectAuthLoading,
+} from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
-import { inputChange } from '../actions';
-import { makeSelectSignin } from '../selectors';
+import { inputChange, inputError } from '../actions';
+import { validateFields, validateOneField } from '../helpers';
+import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
 import reducer from '../reducer';
 
-// eslint-disable-next-line react/prefer-stateless-function
-export class SignupContainer extends React.PureComponent {
-  componentDidMount() {
+const SignUpContainer = ({
+  alerts: { error },
+  data,
+  dispatchInputError,
+  dispatchSignUp,
+  handleClearAuthAlerts,
+  handleInputChange,
+  loading,
+  signUpDisabled,
+}) => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Sign in';
-  }
+    document.title = 'Sign Up';
+  }, []);
 
-  render() {
-    const { data, handleInputChange, handleSignin, isSignedIn } = this.props;
-    const signinComponent = (
-      <Signup
-        data={data}
-        handleInputChange={handleInputChange}
-        handleSignin={handleSignin}
-        isSignedIn={isSignedIn}
-      />
-    );
-    const redirect = <Redirect to="/issues" />;
+  const { email, firstName, lastName, password, username } = data;
+  const form = 'signUp';
 
-    return (
-      <Fragment>
-        <ConditionalRender
-          Component={signinComponent}
-          FallbackComponent={redirect}
-          shouldRender={!isSignedIn}
-        />
-      </Fragment>
-    );
-  }
-}
+  const handleSignUp = () => {
+    const { isValidated, validationErrors } = validateFields({
+      form,
+      values: data,
+      verifyField: { field: 'password', verifyValue: password.value },
+    });
+    if (isValidated) {
+      dispatchSignUp({
+        email: email.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        password: password.value,
+        username: username.value,
+      });
+    } else {
+      dispatchInputError({ errors: validationErrors, form });
+    }
+  };
 
-SignupContainer.propTypes = {
+  const handleValidateInput = ({ field, verifyField }) => {
+    const validationError =
+      validateOneField({ field, form, values: data, verifyField }) || '';
+    dispatchInputError({
+      errors: {
+        [field]: validationError,
+      },
+      form,
+    });
+  };
+  return (
+    <Signup
+      data={data}
+      error={error}
+      handleClearAuthAlerts={handleClearAuthAlerts}
+      handleInputChange={handleInputChange}
+      handleSignUp={handleSignUp}
+      handleValidateInput={handleValidateInput}
+      loading={loading}
+      signUpDisabled={signUpDisabled}
+    />
+  );
+};
+
+SignUpContainer.propTypes = {
+  alerts: T.object,
   data: T.object,
+  dispatchInputError: T.func,
+  dispatchSignUp: T.func,
+  handleClearAuthAlerts: T.func,
   handleInputChange: T.func,
-  handleSignin: T.func,
-  isSignedIn: T.bool,
+  loading: T.bool,
+  signUpDisabled: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : Auth
    */
-  isSignedIn: makeSelectAuth('isSignedIn'),
+  alerts: makeSelectAuth('alerts'),
+  loading: makeSelectAuthLoading('auth'),
   /*
    * Reducer : Signin
    */
-  data: makeSelectSignin('data'),
+  data: makeSelectSignIn('signUp'),
+  signUpDisabled: makeSelectDisabled('signUp'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -70,14 +107,12 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Auth
      */
-    handleSignin: payload => dispatch(signin(payload)),
-    /*
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
+    dispatchSignUp: payload => dispatch(signUp(payload)),
+    handleClearAuthAlerts: () => dispatch(clearAlerts()),
     /*
      * Reducer : Signin
      */
+    dispatchInputError: payload => dispatch(inputError(payload)),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }
@@ -92,4 +127,4 @@ const withReducer = injectReducer({ key: 'signin', reducer });
 export default compose(
   withReducer,
   withConnect,
-)(SignupContainer);
+)(SignUpContainer);

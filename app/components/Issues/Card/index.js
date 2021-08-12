@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
-import moment from 'moment';
 import T from 'prop-types';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import {
   CommentIcon,
@@ -10,12 +11,11 @@ import {
   IconToolTip,
   LanguageWrapper,
   MonocleIcon,
-  Verified,
   WatchButton,
 } from 'components/base_ui';
 import UpvotePanel from 'components/Upvote';
 import { navHelper } from 'utils/globalHelpers';
-import IconDictionary from 'utils/iconDictionary';
+import iconDictionary from 'utils/iconDictionary';
 
 import {
   IssueCardIconWrapper,
@@ -24,266 +24,259 @@ import {
   IssueFooterIconWrapper,
   IssueLanguageContainer,
   MobileIconDescription,
-  Name,
+  NameLink,
   NameWrapper,
-  OrganizationNameWrapper,
+  RepoNameWrapper,
   StyledIconButton,
+  StyledIssueCard,
   StyledIssueContent,
   StyledIssueFooter,
   StyledIssueHeader,
   StyledIssueText,
   StyledListItem,
+  StyledVerified,
 } from './styledComponents';
+import { issueTags, tagColors } from '../constants';
+import { TagWrapper } from '../styledComponents';
 
-const AttemptingIcon = IconDictionary('attempt');
+const AttemptingIcon = iconDictionary('attempt');
 
 const IssueCard = ({
-  activeUser,
+  activeUser: { id: userId, upvotes: userUpvotes, watching: userWatchList },
+  addWatching,
   data,
   deviceView,
+  dispatchFetchAttemptList,
   dispatchFetchWatchList,
   dispatchOpenModal,
-  handleIncrement,
   handleNav,
   handleUpvote,
+  height,
   isSignedIn,
-}) =>
-  data.map(
-    ({
-      attempting,
-      comments,
-      createdDate,
-      fundedAmount,
-      id,
-      language,
-      name,
-      open,
-      organizationId,
-      organizationName,
-      organizationVerified,
-      rep,
-      watching,
-    }) => {
-      const { balance, id: userId } = activeUser;
-      const isMobile =
-        deviceView === 'mobile' ||
-        deviceView === 'mobileS' ||
-        deviceView === 'mobileXS' ||
-        deviceView === 'mobileXXS';
-      const userWatching =
-        activeUser.watching && !!activeUser.watching.find(el => el.id === id);
-      const upvoted = activeUser.upvotes && activeUser.upvotes.includes(id);
+}) => (
+  <StyledIssueCard height={height}>
+    {data.map(
+      ({
+        attempting,
+        comments,
+        createdDate,
+        fundedAmount,
+        id,
+        isPullRequestMerged,
+        isUserAccepted,
+        language,
+        name,
+        open,
+        rep,
+        repoId,
+        repoName,
+        repoVerified,
+        type,
+        watching,
+      }) => {
+        const colorIndex = issueTags.indexOf(type);
 
-      const DesktopButtonBar = (
-        <Fragment>
-          {open ? (
-            <IssueCardItem
-              onClick={e => navHelper(e, handleNav, `/issues/detail/${id}`)}
-            >
-              <IssueCardIconWrapper>
-                <CommentIcon />
-              </IssueCardIconWrapper>
-              <IssueCardLabelWrapper>
-                {comments.length} Comments
-              </IssueCardLabelWrapper>
-            </IssueCardItem>
-          ) : null}
+        const isMobile =
+          deviceView === 'laptopS' ||
+          deviceView === 'tablet' ||
+          deviceView === 'mobile' ||
+          deviceView === 'mobileS' ||
+          deviceView === 'mobileXS' ||
+          deviceView === 'mobileXXS';
 
-          {open ? (
-            <IssueCardItem
-              onClick={() =>
-                dispatchFetchWatchList({
-                  idArray: attempting,
-                  modalState: 'issueAttemptList',
-                })
-              }
-            >
-              <IssueCardIconWrapper>{AttemptingIcon}</IssueCardIconWrapper>
-              <IssueCardLabelWrapper>
-                {attempting.length} Attempting
-              </IssueCardLabelWrapper>
-            </IssueCardItem>
-          ) : null}
+        const userWatching =
+          userWatchList && userWatchList.find(el => el.id === id);
+        const upvoted = userUpvotes && userUpvotes.includes(id);
 
-          {open ? (
-            <IssueCardItem>
-              <WatchButton
-                dispatchFetchWatchList={dispatchFetchWatchList}
-                dispatchOpenModal={dispatchOpenModal}
-                handleWatch={() =>
-                  handleIncrement({
-                    userId: activeUser.id,
-                    id,
-                    column: 'watching',
-                    remove: userWatching,
+        const DesktopButtonBar = (
+          <Fragment>
+            {open ? (
+              <IssueCardItem>
+                <IssueCardIconWrapper>
+                  <CommentIcon />
+                </IssueCardIconWrapper>
+                <IssueCardLabelWrapper>
+                  <Link to={`/issues/detail/${id}`}>{comments} Comments</Link>
+                </IssueCardLabelWrapper>
+              </IssueCardItem>
+            ) : null}
+
+            {open ? (
+              <IssueCardItem
+                onClick={() =>
+                  dispatchFetchAttemptList({
+                    issueId: id,
+                    modalState: 'issueAttemptList',
                   })
                 }
-                isSignedIn={isSignedIn}
-                label={userWatching ? 'Watching' : 'Watch'}
-                value={watching.length}
-                watching={watching}
-              />
-            </IssueCardItem>
-          ) : null}
-        </Fragment>
-      );
+              >
+                <IssueCardIconWrapper>{AttemptingIcon}</IssueCardIconWrapper>
+                <IssueCardLabelWrapper>
+                  {attempting.length} Attempting
+                </IssueCardLabelWrapper>
+              </IssueCardItem>
+            ) : null}
 
-      const MobileButtonBar = (
-        <Fragment>
-          {open ? (
-            <StyledIconButton
-              label="Comments"
-              onClick={e => navHelper(e, handleNav, `/issues/detail/${id}`)}
-              icon={
-                <Fragment>
-                  <CommentIcon />{' '}
-                  <MobileIconDescription>
-                    {comments.length}
-                  </MobileIconDescription>
-                </Fragment>
-              }
-            />
-          ) : null}
-
-          {open ? (
-            <StyledIconButton
-              label="Attempting"
-              onClick={() =>
-                dispatchFetchWatchList({
-                  idArray: attempting,
-                  modalState: 'issueAttemptList',
-                })
-              }
-              icon={
-                <Fragment>
-                  {AttemptingIcon}{' '}
-                  <MobileIconDescription>
-                    {attempting.length}
-                  </MobileIconDescription>
-                </Fragment>
-              }
-            />
-          ) : null}
-
-          {open ? (
-            <StyledIconButton
-              label={userWatching ? 'Watching' : 'Watch'}
-              onClick={() => {
-                if (!isSignedIn) {
-                  return dispatchOpenModal({ modalState: 'signIn' });
-                }
-                return handleIncrement({
-                  userId: activeUser.id,
-                  id,
-                  column: 'watching',
-                  remove: userWatching,
-                });
-              }}
-              icon={<MonocleIcon />}
-              isWatching={userWatching}
-              shouldBold
-            />
-          ) : null}
-        </Fragment>
-      );
-
-      return (
-        <Fragment key={id}>
-          <StyledListItem>
-            <UpvotePanel
-              dispatchOpenModal={dispatchOpenModal}
-              handleUpvote={handleUpvote}
-              isSignedIn={isSignedIn}
-              issueId={id}
-              rep={rep}
-              upvoted={upvoted}
-              userId={activeUser.id}
-            />
-            <StyledIssueContent>
-              <StyledIssueHeader>
-                <OrganizationNameWrapper
-                  href={`/organizations/detail/${organizationId}`}
-                  onClick={e =>
-                    navHelper(
-                      e,
-                      handleNav,
-                      `/organizations/detail/${organizationId}`,
-                    )
-                  }
-                >
-                  {organizationName}
-
-                  {organizationVerified ? (
-                    <IconToolTip toolTipText="Verified Contributor">
-                      <div>
-                        <Verified />
-                      </div>
-                    </IconToolTip>
-                  ) : (
-                    ''
-                  )}
-                </OrganizationNameWrapper>
-                {moment.utc(createdDate).fromNow()}
-              </StyledIssueHeader>
-              <StyledIssueText>
-                <NameWrapper>
-                  <Name
-                    href={`/issues/detail/${id}`}
-                    onClick={e =>
-                      navHelper(e, handleNav, `/issues/detail/${id}`)
-                    }
-                  >
-                    {name}
-                  </Name>
-                </NameWrapper>
-                <IssueLanguageContainer>
-                  {language.map(el => (
-                    <LanguageWrapper key={`${id}-${el}`} language={el} />
-                  ))}
-                </IssueLanguageContainer>
-              </StyledIssueText>
-
-              <StyledIssueFooter open={open}>
-                <IssueFooterIconWrapper>
-                  <ConditionalRender
-                    Component={DesktopButtonBar}
-                    FallbackComponent={MobileButtonBar}
-                    shouldRender={!isMobile}
-                  />
-                </IssueFooterIconWrapper>
-
-                <ConditionalRender
-                  Component={
-                    <FundIssueButton
-                      balance={balance}
-                      dispatchOpenModal={dispatchOpenModal}
-                      fundedAmount={fundedAmount}
-                      issueId={id}
-                      open={open}
-                      userId={userId}
-                    />
-                  }
-                  FallbackComponent={
-                    <FundingWrapper open={open} value="Issue Closed" medium />
-                  }
-                  shouldRender={open}
+            {open ? (
+              <IssueCardItem>
+                <WatchButton
+                  dispatchFetchWatchList={dispatchFetchWatchList}
+                  dispatchOpenModal={dispatchOpenModal}
+                  handleWatch={() => addWatching({ issueId: id, userId })}
+                  isSignedIn={isSignedIn}
+                  issueId={id}
+                  label={userWatching ? 'Watching' : 'Watch'}
+                  value={watching.length}
                 />
-              </StyledIssueFooter>
-            </StyledIssueContent>
-          </StyledListItem>
-        </Fragment>
-      );
-    },
-  );
+              </IssueCardItem>
+            ) : null}
+          </Fragment>
+        );
+
+        const MobileButtonBar = (
+          <Fragment>
+            {open ? (
+              <StyledIconButton
+                icon={
+                  <Fragment>
+                    <CommentIcon />{' '}
+                    <MobileIconDescription>{comments}</MobileIconDescription>
+                  </Fragment>
+                }
+                label="Comments"
+                onClick={e => navHelper(e, handleNav, `/issues/detail/${id}`)}
+              />
+            ) : null}
+
+            {open ? (
+              <StyledIconButton
+                icon={
+                  <Fragment>
+                    {AttemptingIcon}{' '}
+                    <MobileIconDescription>
+                      {attempting.length}
+                    </MobileIconDescription>
+                  </Fragment>
+                }
+                label="Attempting"
+                onClick={() =>
+                  dispatchFetchAttemptList({
+                    issueId: id,
+                    modalState: 'issueAttemptList',
+                  })
+                }
+              />
+            ) : null}
+
+            {open ? (
+              <StyledIconButton
+                icon={<MonocleIcon />}
+                isWatching={userWatching}
+                label={userWatching ? 'Watching' : 'Watch'}
+                onClick={() => {
+                  if (!isSignedIn) {
+                    return dispatchOpenModal({ modalState: 'signIn' });
+                  }
+                  return addWatching({ issueId: id, userId });
+                }}
+                shouldBold
+              />
+            ) : null}
+          </Fragment>
+        );
+
+        return (
+          <Fragment key={id}>
+            <StyledListItem>
+              <UpvotePanel
+                disabled={!open}
+                dispatchOpenModal={dispatchOpenModal}
+                handleUpvote={handleUpvote}
+                isSignedIn={isSignedIn}
+                issueId={id}
+                rep={rep}
+                upvoted={upvoted}
+                userId={userId}
+              />
+              <StyledIssueContent>
+                <StyledIssueHeader>
+                  <RepoNameWrapper>
+                    <Link to={`/repos/detail/${repoId}`}>{repoName}</Link>
+
+                    {repoVerified ? (
+                      <IconToolTip toolTipText="Verified Contributor">
+                        <StyledVerified />
+                      </IconToolTip>
+                    ) : (
+                      ''
+                    )}
+                  </RepoNameWrapper>
+                  {moment.utc(createdDate).fromNow()}
+                </StyledIssueHeader>
+                <StyledIssueText>
+                  <NameWrapper>
+                    <NameLink to={`/issues/detail/${id}`}>{name}</NameLink>
+                  </NameWrapper>
+                  <IssueLanguageContainer>
+                    {language.map(el => (
+                      <LanguageWrapper key={`${id}-${el}`} language={el} />
+                    ))}
+                    <TagWrapper tagColor={tagColors[colorIndex]}>
+                      {type}
+                    </TagWrapper>
+                  </IssueLanguageContainer>
+                </StyledIssueText>
+
+                <StyledIssueFooter open={open}>
+                  <IssueFooterIconWrapper>
+                    <ConditionalRender
+                      Component={DesktopButtonBar}
+                      FallbackComponent={MobileButtonBar}
+                      shouldRender={!isMobile}
+                    />
+                  </IssueFooterIconWrapper>
+
+                  <ConditionalRender
+                    Component={
+                      <FundIssueButton
+                        dispatchOpenModal={dispatchOpenModal}
+                        fundedAmount={fundedAmount}
+                        isPullRequestMerged={isPullRequestMerged}
+                        issueId={id}
+                        isUserAccepted={isUserAccepted}
+                        open={open}
+                        rep={rep}
+                      />
+                    }
+                    FallbackComponent={
+                      <FundingWrapper open={open} value="Issue Closed" medium />
+                    }
+                    shouldRender={
+                      open || (isPullRequestMerged && isUserAccepted && !open)
+                    }
+                  />
+                </StyledIssueFooter>
+              </StyledIssueContent>
+            </StyledListItem>
+          </Fragment>
+        );
+      },
+    )}
+  </StyledIssueCard>
+);
 
 IssueCard.propTypes = {
+  activeUser: T.object.isRequired,
+  addWatching: T.func.isRequired,
   data: T.array.isRequired,
   deviceView: T.string.isRequired,
+  dispatchFetchAttemptList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
-  handleIncrement: T.func,
   handleNav: T.func.isRequired,
   handleUpvote: T.func.isRequired,
+  height: T.number.isRequired,
+  isSignedIn: T.bool.isRequired,
 };
 
 export default IssueCard;

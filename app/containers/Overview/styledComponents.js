@@ -8,7 +8,6 @@ const { mobile } = mediaQueriesByDevice;
 export const ComponentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 0 10rem 0;
   width: 70%;
 
   ${mobile} {
@@ -48,10 +47,10 @@ export const OverviewHeader = styled.div`
   color: ${textColor};
   display: flex;
   font-size: ${headerFontSize};
-  margin: 5rem 0 2rem 2rem;
+  margin: 5rem 0 2rem 1rem;
   width: 100%;
 
   ${mobile} {
-    margin: 2rem 0 2rem -1rem;
+    margin: 2rem 0;
   }
 `;

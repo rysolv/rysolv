@@ -1,0 +1,2 @@
+ALTER TABLE withdrawal
+ADD COLUMN IF NOT EXISTS withdrawal_date TIMESTAMP

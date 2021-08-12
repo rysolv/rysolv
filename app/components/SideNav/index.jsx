@@ -16,15 +16,16 @@ import {
   StyledListWrapper,
   StyledSideNav,
 } from './styledComponents';
+
 const addIcon = iconDictionary('addCircle');
 const backArrow = iconDictionary('backArrowHalf');
 const forwardArrow = iconDictionary('forwardArrowHalf');
 const issueIcon = iconDictionary('issue');
-const organizationIcon = iconDictionary('organization');
-const userIcon = iconDictionary('user');
+const repoIcon = iconDictionary('repo');
 const uploadIcon = iconDictionary('upload');
+const userIcon = iconDictionary('user');
 
-const SideNav = ({ handleNav, view }) => {
+const SideNav = ({ deviceView, handleNav }) => {
   const path = window.location.pathname;
   const formattedPath = path.replace(/^\/+/, '');
 
@@ -37,11 +38,20 @@ const SideNav = ({ handleNav, view }) => {
   useEffect(() => {
     const { initialValue } = getInitialValue[formattedPath] || 0;
     setCurrentValue(initialValue);
-    switch (view) {
+    switch (deviceView) {
+      case 'desktopL':
+        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        break;
       case 'desktop':
         setDisplaySideNav(!excludedPath.includes(formattedPath));
         break;
+      case 'desktopS':
+        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        break;
       case 'laptop':
+        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        break;
+      case 'laptopS':
         setDisplaySideNav(!excludedPath.includes(formattedPath));
         break;
       case 'tablet':
@@ -62,12 +72,13 @@ const SideNav = ({ handleNav, view }) => {
       default:
         break;
     }
-  }, [view, path]);
+  }, [deviceView, path]);
 
   useEffect(() => {
-    if (view === 'desktop') setOpen(true);
+    const isDesktop = deviceView === 'desktop' || deviceView === 'desktopL';
+    if (isDesktop) setOpen(true);
     else setOpen(false);
-  }, [view]);
+  }, [deviceView]);
 
   const handleClick = (route, tab) => {
     handleNav(route);
@@ -95,11 +106,11 @@ const SideNav = ({ handleNav, view }) => {
           <StyledListWrapper active={currentValue === 1}>
             <ListItem
               button
-              key="Organizations"
-              onClick={() => handleClick('/organizations', 1)}
+              key="Repos"
+              onClick={() => handleClick('/repos', 1)}
             >
-              <ListItemIcon>{organizationIcon}</ListItemIcon>
-              <ListItemText primary="Organizations" />
+              <ListItemIcon>{repoIcon}</ListItemIcon>
+              <ListItemText primary="Repos" />
             </ListItem>
           </StyledListWrapper>
           <StyledListWrapper active={currentValue === 2}>
@@ -126,15 +137,14 @@ const SideNav = ({ handleNav, view }) => {
           <StyledListWrapper active={currentValue === 4}>
             <ListItem
               button
-              key="addOrganizations"
-              onClick={() => handleClick('/organizations/add', 4)}
+              key="addRepos"
+              onClick={() => handleClick('/repos/add', 4)}
             >
               <ListItemIcon>{addIcon}</ListItemIcon>
-              <ListItemText primary="New Organization" />
+              <ListItemText primary="New Repo" />
             </ListItem>
           </StyledListWrapper>
         </List>
-        <Divider />
         <StyledIconButton disableRipple onClick={toggleDrawer} open>
           {open ? backArrow : forwardArrow}
         </StyledIconButton>
@@ -151,8 +161,8 @@ const SideNav = ({ handleNav, view }) => {
 };
 
 SideNav.propTypes = {
+  deviceView: T.string,
   handleNav: T.func,
-  view: T.string,
 };
 
 export default SideNav;

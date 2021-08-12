@@ -22,17 +22,12 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const UserAttempting = ({
-  attempting,
-  handleNav,
-  handleRemoveIssue,
-  userId,
-}) => {
+const UserAttempting = ({ attempting, handleNav, handleRemoveAttempting }) => {
   const [selectedValue, setSelectedValue] = useState('Newest');
   const [searchValue, setSearchValue] = useState('');
   const filterAttempting = () => {
     // eslint-disable-next-line array-callback-return, consistent-return
-    const sortedArray = attempting.sort((a, b) => {
+    const sortedArray = [...attempting].sort((a, b) => {
       if (selectedValue === 'Newest') {
         if (a.modifiedDate < b.modifiedDate) {
           return 1;
@@ -57,11 +52,7 @@ const UserAttempting = ({
   const filteredAttempting = filterAttempting();
   return (
     <Fragment>
-      <BackNav
-        label="Back to Overview"
-        handleNav={handleNav}
-        path="/settings"
-      />
+      <BackNav label="Back to Overview" path="/settings" />
       <HeaderWrapper>
         <StyledH3>All Attempting</StyledH3>
       </HeaderWrapper>
@@ -83,15 +74,12 @@ const UserAttempting = ({
       </SearchContainer>
       <ConditionalRender
         Component={OverviewListComponent}
-        FallbackComponent={
-          <EmptyOverviewListComponent handleNav={handleNav} type="attempting" />
-        }
+        FallbackComponent={<EmptyOverviewListComponent type="attempting" />}
         propsToPassDown={{
           handleNav,
-          handleRemoveIssue,
+          handleRemoveAttempting,
           list: filteredAttempting,
           type: 'attempting',
-          userId,
         }}
         shouldRender={!!filteredAttempting.length}
       />
@@ -102,8 +90,7 @@ const UserAttempting = ({
 UserAttempting.propTypes = {
   attempting: T.array.isRequired,
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
-  userId: T.string.isRequired,
+  handleRemoveAttempting: T.func.isRequired,
 };
 
 export default UserAttempting;

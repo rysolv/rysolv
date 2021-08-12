@@ -22,7 +22,7 @@ const UserIssues = ({ handleNav, issues }) => {
 
   const filterIssues = () => {
     // eslint-disable-next-line array-callback-return, consistent-return
-    const sortedArray = issues.sort((a, b) => {
+    const sortedArray = [...issues].sort((a, b) => {
       if (selectedValue === 'Newest') {
         if (a.modifiedDate < b.modifiedDate) {
           return 1;
@@ -36,7 +36,7 @@ const UserIssues = ({ handleNav, issues }) => {
         return -1;
       }
     });
-    const filteredArray = sortedArray.filter(({ name }) => {
+    const filteredArray = [...sortedArray].filter(({ name }) => {
       if (name.toLowerCase().includes(searchValue.toLowerCase())) {
         return true;
       }
@@ -49,7 +49,7 @@ const UserIssues = ({ handleNav, issues }) => {
   return (
     <Fragment>
       <HeaderWrapper>
-        <StyledH3>Your Issues</StyledH3>
+        <StyledH3 removeMarginTop>Your Issues</StyledH3>
       </HeaderWrapper>
       <SearchContainer>
         <BaseInputWrapper hasMargin={false}>

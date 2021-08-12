@@ -1,32 +1,35 @@
-const users = `CREATE TABLE IF NOT EXISTS
-users(
-  active_pull_requests SMALLINT DEFAULT 0,
-  attempting UUID [],
-  balance FLOAT DEFAULT 0,
-  comments UUID [],
-  completed_pull_requests SMALLINT DEFAULT 0,
-  created_date TIMESTAMP,
-  dollars_earned FLOAT DEFAULT 0,
-  email VARCHAR(128) NOT NULL,
-  first_name VARCHAR(128),
-  github_link VARCHAR(128),
-  id UUID PRIMARY KEY,
-  is_deleted BOOLEAN DEFAULT false,
-  is_online BOOLEAN DEFAULT true,
-  issues UUID [],
-  last_name VARCHAR(128),
-  modified_date TIMESTAMP,
-  organizations UUID [],
-  personal_link VARCHAR(128),
-  preferred_languages VARCHAR(128) [],
-  profile_pic VARCHAR(255),
-  pull_requests UUID [],
-  rejected_pull_requests SMALLINT DEFAULT 0,
-  rep SMALLINT NOT NULL DEFAULT 0,
-  stackoverflow_link VARCHAR(128),
-  upvotes UUID [],
-  username VARCHAR(40),
-  watching UUID []
-)`;
+const alterUsersTable = `
+  ALTER TABLE users
+  ADD COLUMN attempting UUID [] DEFAULT '{}',
+  ADD COLUMN balance FLOAT DEFAULT 0,
+  ADD COLUMN created_date TIMESTAMP,
+  ADD COLUMN dollars_earned FLOAT DEFAULT 0,
+  ADD COLUMN email VARCHAR(128) NOT NULL,
+  ADD COLUMN email_verified BOOLEAN DEFAULT false,
+  ADD COLUMN first_name VARCHAR(128),
+  ADD COLUMN github_id INT DEFAULT NULL,
+  ADD COLUMN github_link VARCHAR(128),
+  ADD COLUMN github_username VARCHAR(39) DEFAULT NULL,
+  ADD COLUMN is_deleted BOOLEAN DEFAULT false,
+  ADD COLUMN last_name VARCHAR(128),
+  ADD COLUMN modified_date TIMESTAMP,
+  ADD COLUMN personal_link VARCHAR(128),
+  ADD COLUMN profile_pic VARCHAR(256),
+  ADD COLUMN provider VARCHAR(7),
+  ADD COLUMN receive_weekly_emails BOOLEAN DEFAULT true,
+  ADD COLUMN rep SMALLINT NOT NULL DEFAULT 25,
+  ADD COLUMN stackoverflow_link VARCHAR(128),
+  ADD COLUMN upvotes UUID [] DEFAULT '{}',
+  ADD COLUMN user_type VARCHAR(7) DEFAULT 'full',
+  ADD COLUMN username VARCHAR(40),
+  ADD CONSTRAINT chkBalance CHECK (balance >= 0)
+`;
 
-module.exports = users;
+const createUsersTable = `
+  CREATE TABLE IF NOT EXISTS
+  users(
+    id UUID PRIMARY KEY
+  )
+`;
+
+module.exports = { alterUsersTable, createUsersTable };

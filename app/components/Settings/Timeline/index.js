@@ -4,6 +4,7 @@ import T from 'prop-types';
 import moment from 'moment';
 
 import { ConditionalRender } from 'components/base_ui';
+import { actionDictionary } from 'containers/Settings/constants';
 import { formatDollarAmount, formatWordString } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -12,10 +13,11 @@ import {
   OverviewListComponent,
 } from '../OverviewList';
 import {
+  ExternalTimelineActivity,
   HeaderContainer,
+  InternalTimelineActivity,
   StyledBaseDropDownMenu,
   StyledButton,
-  TimelineActivity,
   TimelineContainer,
   TimelineContent,
   TimelineDividerContainer,
@@ -28,33 +30,83 @@ import {
   TimelineType,
   TimelineVerticalDivider,
   StyledAction,
+  ActivityContainer,
 } from './styledComponents';
-import { HeaderWrapper, StyledH3 } from '../styledComponents';
+import {
+  EmptyComponentContainer,
+  HeaderWrapper,
+  StyledH3,
+} from '../styledComponents';
+import ProfileComponent from '../Profile';
+import VerifiedAccountsView from '../VerifiedAccounts';
 
-const ViewAllIcon = iconDictionary('viewAll');
+const ViewAllIcon = iconDictionary('navigateNext');
 
 const UserTimelineView = ({
+  activePullRequests,
   activity,
   attempting,
+  changeGithub,
+  changePersonal,
+  changePreferredLanguages,
+  changeStackoverflow,
+  changeUserImage,
+  completedPullRequests,
+  createdDate,
+  displayBottom,
+  dollarsEarned,
   filterValues: { users: usersFilter },
+  firstName,
+  githubLink,
+  githubUsername,
+  handleClose,
+  handleEdit,
   handleInputChange,
   handleNav,
-  handleRemoveIssue,
-  userId,
+  handleRemoveAttempting,
+  handleRemoveWatching,
+  handleSubmitInputChange,
+  handleValidateInput,
+  inputErrors,
+  isDisabled,
+  isGithubVerified,
+  lastName,
+  personalLink,
+  preferredLanguages,
+  profilePic,
+  rejectedPullRequests,
+  rep,
+  setChangeGithub,
+  setChangePersonal,
+  setChangePreferredLanguages,
+  setChangeStackoverflow,
+  setChangeUserImage,
+  setIsDisabled,
+  setValue,
+  stackoverflowLink,
+  value,
   watching,
 }) => {
+  const filterActivity = () => {
+    const filteredArray = activity.filter(({ action }) => {
+      if (usersFilter === 'All' || actionDictionary[usersFilter] === action) {
+        return true;
+      }
+      return false;
+    });
+    return filteredArray;
+  };
+  const filteredActivity = filterActivity();
+
   const AttemptingComponent = () => (
     <ConditionalRender
       Component={OverviewListComponent}
-      FallbackComponent={
-        <EmptyOverviewListComponent handleNav={handleNav} type="attempting" />
-      }
+      FallbackComponent={<EmptyOverviewListComponent type="attempting" />}
       propsToPassDown={{
         handleNav,
-        handleRemoveIssue,
+        handleRemoveAttempting,
         list: attempting.slice(0, 5),
         type: 'attempting',
-        userId,
       }}
       shouldRender={!!attempting.length}
     />
@@ -62,137 +114,242 @@ const UserTimelineView = ({
   const WatchingComponent = () => (
     <ConditionalRender
       Component={OverviewListComponent}
-      FallbackComponent={
-        <EmptyOverviewListComponent handleNav={handleNav} type="watching" />
-      }
+      FallbackComponent={<EmptyOverviewListComponent type="watching" />}
       propsToPassDown={{
         handleNav,
-        handleRemoveIssue,
+        handleRemoveAttempting,
+        handleRemoveWatching,
         list: watching.slice(0, 5),
         type: 'watching',
-        userId,
       }}
       shouldRender={!!watching.length}
     />
   );
 
-  const activityDiv = activity.map((el, index) => {
-    const {
-      action,
-      activityId,
-      date,
-      fundedValue,
-      icon,
-      path,
-      target: { targetType, targetName },
-    } = el;
+  const ActivityComponent = () =>
+    filteredActivity.map(
+      (
+        {
+          action,
+          activityId,
+          date,
+          fundedValue,
+          icon,
+          isInternalLink,
+          path,
+          target: { targetName, targetType },
+        },
+        index,
+      ) => {
+        const shouldRenderFor = targetType === 'account with';
+        const TimelineListItemComponent = (
+          <TimelineListItem key={activityId}>
+            <TimelineDividerContainer>
+              <TimelineVerticalDivider />
+              {icon}
+            </TimelineDividerContainer>
+            <TimelineContent>
+              <TimelineType>
+                <StyledAction>{formatWordString(action)}</StyledAction>&nbsp;
+                {targetType}
+              </TimelineType>
+              <TimelineInfo>
+                <ConditionalRender
+                  Component={
+                    <Fragment>
+                      <TimelineDollar>
+                        {formatDollarAmount(fundedValue)}
+                      </TimelineDollar>
+                      <ConditionalRender
+                        Component={() => ` for `}
+                        shouldRender={!shouldRenderFor}
+                      />
+                    </Fragment>
+                  }
+                  shouldRender={!!fundedValue}
+                />
+                <ConditionalRender
+                  Component={
+                    <InternalTimelineActivity to={path}>
+                      {targetName}
+                    </InternalTimelineActivity>
+                  }
+                  FallbackComponent={
+                    <ExternalTimelineActivity href={path} target="_blank">
+                      {targetName}
+                    </ExternalTimelineActivity>
+                  }
+                  shouldRender={isInternalLink}
+                />
+              </TimelineInfo>
+            </TimelineContent>
+          </TimelineListItem>
+        );
 
-    const TimelineListItemComponent = (
-      <TimelineListItem key={activityId}>
-        <TimelineDividerContainer>
-          <TimelineVerticalDivider />
-          {icon}
-        </TimelineDividerContainer>
-        <TimelineContent>
-          <TimelineType>
-            <StyledAction>{formatWordString(action)}</StyledAction>&nbsp;
-            {targetType}
-          </TimelineType>
-          <TimelineInfo>
-            <ConditionalRender
-              Component={
-                <Fragment>
-                  <TimelineDollar>
-                    {formatDollarAmount(fundedValue)}
-                  </TimelineDollar>
-                  for &nbsp;
-                </Fragment>
-              }
-              shouldRender={!!fundedValue}
-            />
-            <TimelineActivity onClick={() => handleNav(path)}>
-              {targetName}
-            </TimelineActivity>
-          </TimelineInfo>
-        </TimelineContent>
-      </TimelineListItem>
+        if (
+          index === 0 ||
+          moment(date).format('YYYY/MM/DD') !==
+            moment(filteredActivity[index - 1].date).format('YYYY/MM/DD')
+        ) {
+          return (
+            <Fragment key={`list-item-${index}`}>
+              <TimelineHeader>
+                <TimelineTitle>{moment(date).format('MMMM DD')}</TimelineTitle>
+                <TimelineHorizontalDivider />
+              </TimelineHeader>
+              {TimelineListItemComponent}
+            </Fragment>
+          );
+        }
+        return TimelineListItemComponent;
+      },
     );
-
-    if (index === 0 || date !== activity[index - 1].date) {
-      return (
-        <Fragment key={`list-item-${index}`}>
-          <TimelineHeader>
-            <TimelineTitle>{moment(date).format('MMMM DD')}</TimelineTitle>
-            <TimelineHorizontalDivider />
-          </TimelineHeader>
-          {TimelineListItemComponent}
-        </Fragment>
-      );
-    }
-    return TimelineListItemComponent;
-  });
 
   return (
     <TimelineContainer>
-      <div>
-        <HeaderContainer>
-          <StyledH3>Your Attempting</StyledH3>
-          <ConditionalRender
-            Component={
-              <StyledButton
-                disableRipple
-                onClick={() => handleNav('/settings/attempting')}
-              >
-                View All
-                {ViewAllIcon}
-              </StyledButton>
-            }
-            shouldRender={!!attempting.length}
-          />
-        </HeaderContainer>
-        <AttemptingComponent />
-      </div>
-      <div>
-        <HeaderContainer>
-          <StyledH3>Your Watching</StyledH3>
-          <ConditionalRender
-            Component={
-              <StyledButton
-                disableRipple
-                onClick={() => handleNav('/settings/watching')}
-              >
-                View All
-                {ViewAllIcon}
-              </StyledButton>
-            }
-            shouldRender={!!watching.length}
-          />
-        </HeaderContainer>
-        <WatchingComponent />
-      </div>
-      <HeaderWrapper>
-        <StyledH3>All Activity</StyledH3>
-        <StyledBaseDropDownMenu
-          handleChange={value =>
-            handleInputChange({ field: 'users', form: 'filter', value })
-          }
-          selectedValue={usersFilter}
-          values={['All', 'Earned', 'Funded', 'Submitted', 'Withdrew']}
+      <ProfileComponent
+        activePullRequests={activePullRequests}
+        changeGithub={changeGithub}
+        changePersonal={changePersonal}
+        changePreferredLanguages={changePreferredLanguages}
+        changeStackoverflow={changeStackoverflow}
+        changeUserImage={changeUserImage}
+        completedPullRequests={completedPullRequests}
+        createdDate={createdDate}
+        displayBottom={displayBottom}
+        dollarsEarned={dollarsEarned}
+        firstName={firstName}
+        githubLink={githubLink}
+        handleClose={handleClose}
+        handleEdit={handleEdit}
+        handleSubmitInputChange={handleSubmitInputChange}
+        handleValidateInput={handleValidateInput}
+        inputErrors={inputErrors}
+        isDisabled={isDisabled}
+        lastName={lastName}
+        personalLink={personalLink}
+        preferredLanguages={preferredLanguages}
+        profilePic={profilePic}
+        rejectedPullRequests={rejectedPullRequests}
+        rep={rep}
+        setChangeGithub={setChangeGithub}
+        setChangePersonal={setChangePersonal}
+        setChangePreferredLanguages={setChangePreferredLanguages}
+        setChangeStackoverflow={setChangeStackoverflow}
+        setChangeUserImage={setChangeUserImage}
+        setIsDisabled={setIsDisabled}
+        setValue={setValue}
+        stackoverflowLink={stackoverflowLink}
+        value={value}
+      />
+      <ActivityContainer>
+        <VerifiedAccountsView
+          githubUsername={githubUsername}
+          isGithubVerified={isGithubVerified}
         />
-      </HeaderWrapper>
-      {activityDiv}
+        <div>
+          <HeaderContainer>
+            <StyledH3>Your Attempting</StyledH3>
+            <ConditionalRender
+              Component={
+                <StyledButton
+                  disableRipple
+                  onClick={() => handleNav('/settings/attempting')}
+                >
+                  View All
+                  {ViewAllIcon}
+                </StyledButton>
+              }
+              shouldRender={!!attempting.length}
+            />
+          </HeaderContainer>
+          <AttemptingComponent />
+        </div>
+        <div>
+          <HeaderContainer>
+            <StyledH3>Your Watching</StyledH3>
+            <ConditionalRender
+              Component={
+                <StyledButton
+                  disableRipple
+                  onClick={() => handleNav('/settings/watching')}
+                >
+                  View All
+                  {ViewAllIcon}
+                </StyledButton>
+              }
+              shouldRender={!!watching.length}
+            />
+          </HeaderContainer>
+          <WatchingComponent />
+        </div>
+        <HeaderWrapper>
+          <StyledH3>All Activity</StyledH3>
+          <StyledBaseDropDownMenu
+            handleChange={el =>
+              handleInputChange({ field: 'users', form: 'filter', value: el })
+            }
+            selectedValue={usersFilter}
+            values={['All', 'Commented', 'Earned', 'Funded', 'Submitted']}
+          />
+        </HeaderWrapper>
+        <ConditionalRender
+          Component={ActivityComponent}
+          FallbackComponent={
+            <EmptyComponentContainer>
+              No recent activity.
+            </EmptyComponentContainer>
+          }
+          shouldRender={filteredActivity.length > 0}
+        />
+      </ActivityContainer>
     </TimelineContainer>
   );
 };
 
 UserTimelineView.propTypes = {
+  activePullRequests: T.number.isRequired,
   activity: T.array,
   attempting: T.array.isRequired,
+  changeGithub: T.bool.isRequired,
+  changePersonal: T.bool.isRequired,
+  changePreferredLanguages: T.bool.isRequired,
+  changeStackoverflow: T.bool.isRequired,
+  changeUserImage: T.bool.isRequired,
+  completedPullRequests: T.number.isRequired,
+  createdDate: T.string.isRequired,
+  displayBottom: T.bool.isRequired,
+  dollarsEarned: T.number.isRequired,
   filterValues: T.object.isRequired,
+  firstName: T.string.isRequired,
+  githubLink: T.string,
+  githubUsername: T.string,
+  handleClose: T.func.isRequired,
+  handleEdit: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
-  userId: T.string.isRequired,
+  handleRemoveAttempting: T.func.isRequired,
+  handleRemoveWatching: T.func.isRequired,
+  handleSubmitInputChange: T.func.isRequired,
+  handleValidateInput: T.func.isRequired,
+  inputErrors: T.object.isRequired,
+  isDisabled: T.bool.isRequired,
+  isGithubVerified: T.bool.isRequired,
+  lastName: T.string.isRequired,
+  personalLink: T.string,
+  preferredLanguages: T.array.isRequired,
+  profilePic: T.string.isRequired,
+  rejectedPullRequests: T.number.isRequired,
+  rep: T.number.isRequired,
+  setChangeGithub: T.func.isRequired,
+  setChangePersonal: T.func.isRequired,
+  setChangePreferredLanguages: T.func.isRequired,
+  setChangeStackoverflow: T.func.isRequired,
+  setChangeUserImage: T.func.isRequired,
+  setIsDisabled: T.func.isRequired,
+  setValue: T.func.isRequired,
+  stackoverflowLink: T.string,
+  value: T.oneOfType([T.array, T.string]).isRequired,
   watching: T.array.isRequired,
 };
 

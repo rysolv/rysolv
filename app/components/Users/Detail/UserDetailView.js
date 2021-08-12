@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { Star, BackNav } from 'components/base_ui';
+import { BackNav, Coin } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 import { formatUrlLinks } from 'utils/globalHelpers';
 
@@ -10,10 +10,10 @@ import UserTimelineView from './Timeline';
 import {
   DetailContainer,
   DetailViewContainer,
-  OneLinkWrapper,
   LinkIcon,
   LinksWrapper,
   Name,
+  OneLinkWrapper,
   Rep,
   StyledA,
   UserCardWrapper,
@@ -29,16 +29,14 @@ export class UserDetailView extends React.PureComponent {
   render() {
     const {
       data: {
-        activity,
         activePullRequests,
+        activity,
         completedPullRequests,
         createdDate,
         dollarsEarned,
         firstName,
         githubLink,
-        isOnline,
         lastName,
-        modifiedDate,
         personalLink,
         preferredLanguages,
         profilePic,
@@ -48,11 +46,10 @@ export class UserDetailView extends React.PureComponent {
       },
       filterValues,
       handleInputChange,
-      handleNav,
     } = this.props;
     return (
       <DetailContainer>
-        <BackNav label="Back to Users" handleNav={handleNav} path="/users" />
+        <BackNav label="Back to Users" path="/users" />
         <DetailViewContainer>
           <UserCardWrapper>
             <UserImage src={profilePic} />
@@ -86,7 +83,7 @@ export class UserDetailView extends React.PureComponent {
               )}
             </LinksWrapper>
             <Rep>
-              <Star />
+              <Coin />
               &nbsp;<b> {rep}</b>&nbsp;credits
             </Rep>
           </UserCardWrapper>
@@ -96,8 +93,6 @@ export class UserDetailView extends React.PureComponent {
               completedPullRequests={completedPullRequests}
               createdDate={createdDate}
               dollarsEarned={dollarsEarned}
-              isOnline={isOnline}
-              modifiedDate={modifiedDate}
               preferredLanguages={preferredLanguages}
               rejectedPullRequests={rejectedPullRequests}
             />
@@ -105,7 +100,6 @@ export class UserDetailView extends React.PureComponent {
               activity={activity}
               filterValues={filterValues}
               handleInputChange={handleInputChange}
-              handleNav={handleNav}
             />
           </UserContentsWrapper>
         </DetailViewContainer>
@@ -118,7 +112,6 @@ UserDetailView.propTypes = {
   data: T.object.isRequired,
   filterValues: T.object.isRequired,
   handleInputChange: T.func.isRequired,
-  handleNav: T.func.isRequired,
 };
 
 export default UserDetailView;

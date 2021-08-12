@@ -1,25 +1,25 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
-import marked from 'marked';
 import moment from 'moment';
 
 import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
-import { navHelper } from 'utils/globalHelpers';
+import { BodyCard } from 'components/MarkdownRender';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
   CommentWrapper,
   ExternalLinkWrapper,
   Icon,
-  IssueBody,
-  IssueBodyContainer,
-  LanguagesTitle,
-  LanguagesWrapper,
+  InfoItemContainer,
+  InfoItemTitle,
+  InfoItemWrapper,
   PostingInfoWrapper,
   StyledLanguageAutocomplete,
   StyledMarkdown,
   UsernameLink,
 } from './styledComponents';
+import { issueTags, tagColors } from '../constants';
+import { TagWrapper } from '../styledComponents';
 
 const GithubIcon = iconDictionary('github');
 
@@ -28,15 +28,17 @@ const IssueDetailBody = ({
   bodyChange,
   date,
   displayEditView,
-  handleNav,
   language,
   languageChange,
+  repo,
   setBodyChange,
   setLanguageChange,
-  userProfile,
+  setTypeChange,
+  type,
+  typeChange,
+  userProfile: { route, username },
 }) => {
-  const { username } = userProfile;
-  const html = marked(body);
+  const colorIndex = issueTags.indexOf(type);
 
   const EditIssueBodyComponent = (
     <StyledMarkdown edit body={bodyChange} handleInput={setBodyChange} />
@@ -53,10 +55,6 @@ const IssueDetailBody = ({
     />
   );
 
-  const IssueBodyComponent = (
-    <IssueBody dangerouslySetInnerHTML={{ __html: html }} />
-  );
-
   const LanguagesComponent = (
     <Fragment>
       {language.map(el => (
@@ -65,42 +63,64 @@ const IssueDetailBody = ({
     </Fragment>
   );
 
+  const EditTypeComponent = (
+    <InfoItemWrapper>
+      <InfoItemTitle>Type:</InfoItemTitle>
+      <StyledLanguageAutocomplete
+        multiple={false}
+        onChange={(e, { value }) => setTypeChange(value)}
+        type="type"
+        value={{ value: typeChange }}
+      />
+    </InfoItemWrapper>
+  );
+
+  const isUserDeleted = username === '[deleted]';
+
   return (
-    <IssueBodyContainer>
+    <Fragment>
       <PostingInfoWrapper>
         <div>
-          Opened by{' '}
-          <UsernameLink
-            onClick={e => navHelper(e, handleNav, `/users/detail/${username}`)}
-            href={`/users/detail/${username}`}
-          >
+          Opened by&nbsp;
+          <UsernameLink isUserDeleted={isUserDeleted} to={route}>
             {username}
-          </UsernameLink>{' '}
-          on{' '}
+          </UsernameLink>
+          &nbsp;on&nbsp;
           {moment(date)
             .utc()
             .format('M/D/YYYY')}
         </div>
-        <ExternalLinkWrapper>
+        <ExternalLinkWrapper href={repo} target="_blank">
           <Icon>{GithubIcon}</Icon> View on Github
         </ExternalLinkWrapper>
       </PostingInfoWrapper>
       <CommentWrapper>
-        <LanguagesWrapper>
-          <LanguagesTitle>Languages:</LanguagesTitle>
-          <ConditionalRender
-            Component={LanguagesComponent}
-            FallbackComponent={EditLanguagesComponent}
-            shouldRender={!displayEditView}
-          />
-        </LanguagesWrapper>
+        <InfoItemContainer>
+          <InfoItemWrapper>
+            <InfoItemTitle>Languages:</InfoItemTitle>
+            <ConditionalRender
+              Component={LanguagesComponent}
+              FallbackComponent={EditLanguagesComponent}
+              shouldRender={!displayEditView}
+            />
+          </InfoItemWrapper>
+          <InfoItemWrapper>
+            <InfoItemTitle>Tags:</InfoItemTitle>
+            <TagWrapper tagColor={tagColors[colorIndex]}>{type}</TagWrapper>
+          </InfoItemWrapper>
+        </InfoItemContainer>
         <ConditionalRender
-          Component={IssueBodyComponent}
+          Component={EditTypeComponent}
+          shouldRender={displayEditView}
+        />
+        <ConditionalRender
+          Component={BodyCard}
           FallbackComponent={EditIssueBodyComponent}
+          propsToPassDown={{ body }}
           shouldRender={!displayEditView}
         />
       </CommentWrapper>
-    </IssueBodyContainer>
+    </Fragment>
   );
 };
 
@@ -109,11 +129,14 @@ IssueDetailBody.propTypes = {
   bodyChange: T.string,
   date: T.string,
   displayEditView: T.bool,
-  handleNav: T.func,
   language: T.array,
   languageChange: T.array,
+  repo: T.string,
   setBodyChange: T.func,
   setLanguageChange: T.func,
+  setTypeChange: T.func,
+  type: T.string,
+  typeChange: T.string,
   userProfile: T.object,
 };
 

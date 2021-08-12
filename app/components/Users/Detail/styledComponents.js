@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-import { defaultFontSize } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  subTextLightGrey,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -12,7 +16,7 @@ export const DetailContainer = styled.div`
 `;
 
 export const DetailViewContainer = styled.div`
-  color: rgba(0, 0, 0, 0.7);
+  color: ${textColor};
   display: flex;
   padding: 1.6rem 0;
   width: 100%;
@@ -32,7 +36,7 @@ export const LinkIcon = styled.div`
 `;
 
 export const LinksWrapper = styled.div`
-  color: #6a737d;
+  color: ${subTextLightGrey};
   font-size: ${defaultFontSize};
   font-weight: bold;
   margin-left: 0.5rem;
@@ -72,8 +76,8 @@ export const StyledCancelIcon = styled.div`
   display: flex;
   height: 2.4rem;
   place-content: center;
-  width: 2.4rem;
   position: absolute;
+  width: 2.4rem;
 `;
 
 export const StyledFundedIcon = styled.div`
@@ -84,8 +88,8 @@ export const StyledFundedIcon = styled.div`
   display: flex;
   height: 2.4rem;
   place-content: center;
-  width: 2.4rem;
   position: absolute;
+  width: 2.4rem;
 `;
 
 export const StyledGiftIcon = styled.div`
@@ -96,8 +100,8 @@ export const StyledGiftIcon = styled.div`
   display: flex;
   height: 2.4rem;
   place-content: center;
-  width: 2.4rem;
   position: absolute;
+  width: 2.4rem;
 `;
 
 export const StyledPullRequestIcon = styled.div`
@@ -108,8 +112,8 @@ export const StyledPullRequestIcon = styled.div`
   display: flex;
   height: 2.4rem;
   place-content: center;
-  width: 2.4rem;
   position: absolute;
+  width: 2.4rem;
 `;
 
 export const UserCardWrapper = styled.div`
@@ -119,7 +123,7 @@ export const UserCardWrapper = styled.div`
   flex-direction: column;
   height: fit-content;
   padding: 15px 2%;
-  width: fit-content;
+  width: 29.453rem;
 
   ${mobile} {
     width: 100%;
@@ -139,9 +143,10 @@ export const UserContentsWrapper = styled.div`
 `;
 
 export const UserImage = styled.img`
+  height: 25rem;
   margin: 0.5rem;
-  max-height: 25rem;
-  max-width: 25rem;
+  object-fit: cover;
+  width: 25rem;
 
   ${mobile} {
     align-self: center;

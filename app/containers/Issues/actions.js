@@ -7,14 +7,19 @@ import {
   ADD_COMMENT,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
+  ADD_WATCH,
   CHANGE_ISSUE_FILTER,
   CHANGE_ISSUE_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
-  CLEAR_ORGANIZATION,
+  CLEAR_REPO,
   CLOSE_ISSUE_FAILURE,
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
+  CLOSE_MODAL_STATE,
+  DELETE_PULL_REQUEST_FAILURE,
+  DELETE_PULL_REQUEST_SUCCESS,
+  DELETE_PULL_REQUEST,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -24,26 +29,32 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  FETCH_USER_ISSUES_FAILURE,
+  FETCH_USER_ISSUES_SUCCESS,
+  FETCH_USER_ISSUES,
+  GENERATE_IDENTICON,
   IMPORT_ISSUE_FAILURE,
   IMPORT_ISSUE_SUCCESS,
   IMPORT_ISSUE,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  OPEN_MODAL_STATE,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
-  SUBMIT_ACCOUNT_PAYMENT_FAILURE,
-  SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
-  SUBMIT_ACCOUNT_PAYMENT,
-  UPDATE_ORGANIZATION,
+  UPDATE_FUNDED_ISSUE,
+  UPDATE_IS_MANUAL,
+  UPDATE_ISSUE_DETAIL,
+  UPDATE_REPO,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export function addAttemptFailure(payload) {
@@ -102,6 +113,13 @@ export function addWatchSuccess(payload) {
   };
 }
 
+export function addWatch(payload) {
+  return {
+    payload,
+    type: ADD_WATCH,
+  };
+}
+
 export function changeIssueFilter(payload) {
   return {
     payload,
@@ -128,10 +146,10 @@ export function clearForm() {
   };
 }
 
-export function clearOrganization(payload) {
+export function clearRepo(payload) {
   return {
     payload,
-    type: CLEAR_ORGANIZATION,
+    type: CLEAR_REPO,
   };
 }
 
@@ -156,6 +174,33 @@ export function closeIssue(payload) {
   };
 }
 
+export function closeIssueModalState() {
+  return {
+    type: CLOSE_MODAL_STATE,
+  };
+}
+
+export function deletePullRequestFailure(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_FAILURE,
+  };
+}
+
+export function deletePullRequestSuccess(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST_SUCCESS,
+  };
+}
+
+export function deletePullRequest(payload) {
+  return {
+    payload,
+    type: DELETE_PULL_REQUEST,
+  };
+}
+
 export function editIssueFailure(payload) {
   return {
     payload,
@@ -174,6 +219,27 @@ export function editIssue(payload) {
   return {
     payload,
     type: EDIT_ISSUE,
+  };
+}
+
+export function fetchIssueDetailFailure(payload) {
+  return {
+    payload,
+    type: FETCH_ISSUE_DETAIL_FAILURE,
+  };
+}
+
+export function fetchIssueDetailSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_ISSUE_DETAIL_SUCCESS,
+  };
+}
+
+export function fetchIssueDetail(payload) {
+  return {
+    payload,
+    type: FETCH_ISSUE_DETAIL,
   };
 }
 
@@ -197,25 +263,23 @@ export function fetchIssues() {
   };
 }
 
-export function fetchIssueDetailFailure(payload) {
+export function fetchUserIssuesFailure() {
+  return { type: FETCH_USER_ISSUES_FAILURE };
+}
+
+export function fetchUserIssuesSuccess(payload) {
   return {
     payload,
-    type: FETCH_ISSUE_DETAIL_FAILURE,
+    type: FETCH_USER_ISSUES_SUCCESS,
   };
 }
 
-export function fetchIssueDetailSuccess(payload) {
-  return {
-    payload,
-    type: FETCH_ISSUE_DETAIL_SUCCESS,
-  };
+export function fetchUserIssues() {
+  return { type: FETCH_USER_ISSUES };
 }
 
-export function fetchIssueDetail(payload) {
-  return {
-    payload,
-    type: FETCH_ISSUE_DETAIL,
-  };
+export function generateIdenticon() {
+  return { type: GENERATE_IDENTICON };
 }
 
 export function importIssueFailure(payload) {
@@ -260,6 +324,20 @@ export function inputError(payload) {
   };
 }
 
+export function openIssueModalState(payload) {
+  return {
+    payload,
+    type: OPEN_MODAL_STATE,
+  };
+}
+
+export function resetState(payload) {
+  return {
+    payload,
+    type: RESET_STATE,
+  };
+}
+
 export function saveInfoFailure(payload) {
   return {
     payload,
@@ -281,11 +359,8 @@ export function saveInfo(payload) {
   };
 }
 
-export function searchIssuesFailure(payload) {
-  return {
-    payload,
-    type: SEARCH_ISSUES_FAILURE,
-  };
+export function searchIssuesFailure() {
+  return { type: SEARCH_ISSUES_FAILURE };
 }
 
 export function searchIssuesSuccess(payload) {
@@ -302,38 +377,28 @@ export function searchIssues(payload) {
   };
 }
 
-export function submitAccountPaymentFailure(payload) {
+export function updateFundedIssue(payload) {
   return {
     payload,
-    type: SUBMIT_ACCOUNT_PAYMENT_FAILURE,
+    type: UPDATE_FUNDED_ISSUE,
   };
 }
 
-export function submitAccountPaymentSuccess(payload) {
+export function updateIsManual(payload) {
   return {
     payload,
-    type: SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
+    type: UPDATE_IS_MANUAL,
   };
 }
 
-export function submitAccountPayment(payload) {
-  return {
-    payload,
-    type: SUBMIT_ACCOUNT_PAYMENT,
-  };
+export function updateIssueDetail() {
+  return { type: UPDATE_ISSUE_DETAIL };
 }
 
-export function updateOrganization(payload) {
+export function updateRepo(payload) {
   return {
     payload,
-    type: UPDATE_ORGANIZATION,
-  };
-}
-
-export function upvoteIssue(payload) {
-  return {
-    payload,
-    type: UPVOTE_ISSUE,
+    type: UPDATE_REPO,
   };
 }
 
@@ -351,6 +416,16 @@ export function upvoteIssueSuccess(payload) {
   };
 }
 
-export function verifyInfo() {
-  return { type: VERIFY_INFO };
+export function upvoteIssueTemp(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE_TEMP,
+  };
+}
+
+export function upvoteIssue(payload) {
+  return {
+    payload,
+    type: UPVOTE_ISSUE,
+  };
 }

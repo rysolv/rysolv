@@ -104,6 +104,10 @@ module.exports = require('./webpack.base.babel')({
         additional: ['*.chunk.js'],
       },
 
+      //  With 'network-first' all request are sent to the network first and if
+      //  the network request fails consult the cache as a fallback.
+      responseStrategy: 'network-first',
+
       // Removes warning for about `additional` section usage
       safeToUseOptionalCaches: true,
     }),
@@ -116,9 +120,9 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'React Boilerplate',
-      short_name: 'React BP',
-      description: 'My React Boilerplate-based project!',
+      name: 'Rysolv',
+      short_name: 'Rysolv',
+      description: 'Fix issues, get paid.',
       background_color: '#fafafa',
       theme_color: '#b1624d',
       inject: true,

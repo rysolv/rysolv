@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { borderColor, textColor } from 'defaultStyleHelper';
+import {
+  borderColor,
+  defaultFontSize,
+  hoverLinkColor,
+  textColor,
+} from 'defaultStyleHelper';
 
 export const LabelWrapper = styled.div`
   display: inline-flex;
@@ -34,12 +39,16 @@ export const StyledWatchIssueButton = styled.button`
     box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   }
 
+  &:disabled {
+    box-shadow: none;
+  }
+
   &:focus {
     outline: 0;
   }
 
   svg {
-    font-size: 1.4rem;
+    font-size: ${defaultFontSize};
   }
 `;
 
@@ -57,7 +66,7 @@ export const ValueWrapper = styled.div`
   padding: 0.3rem 1rem;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
     cursor: pointer;
   }
 `;

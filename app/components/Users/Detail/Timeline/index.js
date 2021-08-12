@@ -5,15 +5,17 @@ import T from 'prop-types';
 import moment from 'moment';
 
 import { ConditionalRender } from 'components/base_ui';
+import { actionDictionary } from 'containers/Settings/constants';
 import { formatDollarAmount, formatWordString } from 'utils/globalHelpers';
 
 import {
   EmptyMessageContainer,
+  ExternalTimelineActivity,
   HeaderWrapper,
+  InternalTimelineActivity,
   StyledAction,
   StyledBaseDropDownMenu,
   StyledH3,
-  TimelineActivity,
   TimelineContainer,
   TimelineContent,
   TimelineDividerContainer,
@@ -30,67 +32,97 @@ import {
 const UserTimelineView = ({
   activity,
   handleInputChange,
-  handleNav,
   filterValues: { users: usersFilter },
 }) => {
-  const ActivityComponent = activity.map(
-    (
-      {
-        action,
-        activityId,
-        date,
-        fundedValue,
-        icon,
-        path,
-        target: { targetType, targetName },
-      },
-      index,
-    ) => {
-      const TimelineListItemComponent = (
-        <TimelineListItem key={activityId}>
-          <TimelineDividerContainer>
-            <TimelineVerticalDivider />
-            {icon}
-          </TimelineDividerContainer>
-          <TimelineContent>
-            <TimelineType>
-              <StyledAction>{formatWordString(action)}</StyledAction>&nbsp;
-              {targetType}
-            </TimelineType>
-            <TimelineInfo>
-              <ConditionalRender
-                Component={
-                  <Fragment>
-                    <TimelineDollar>
-                      {formatDollarAmount(fundedValue)}
-                    </TimelineDollar>
-                    for &nbsp;
-                  </Fragment>
-                }
-                shouldRender={!!fundedValue}
-              />
-              <TimelineActivity onClick={() => handleNav(path)}>
-                {targetName}
-              </TimelineActivity>
-            </TimelineInfo>
-          </TimelineContent>
-        </TimelineListItem>
-      );
-
-      if (index === 0 || date !== activity[index - 1].date) {
-        return (
-          <Fragment key={`list-item-${index}`}>
-            <TimelineHeader>
-              <TimelineTitle>{moment(date).format('MMMM DD')}</TimelineTitle>
-              <TimelineHorizontalDivider />
-            </TimelineHeader>
-            {TimelineListItemComponent}
-          </Fragment>
-        );
+  const filterActivity = () => {
+    const filteredArray = activity.filter(({ action }) => {
+      if (usersFilter === 'All' || actionDictionary[usersFilter] === action) {
+        return true;
       }
-      return TimelineListItemComponent;
-    },
-  );
+      return false;
+    });
+    return filteredArray;
+  };
+  const filteredActivity = filterActivity();
+
+  const ActivityComponent = () =>
+    filteredActivity.map(
+      (
+        {
+          action,
+          activityId,
+          date,
+          fundedValue,
+          icon,
+          isInternalLink,
+          path,
+          target: { targetName, targetType },
+        },
+        index,
+      ) => {
+        const shouldRenderFor = targetType === 'account with';
+        const TimelineListItemComponent = (
+          <TimelineListItem key={activityId}>
+            <TimelineDividerContainer>
+              <TimelineVerticalDivider />
+              {icon}
+            </TimelineDividerContainer>
+            <TimelineContent>
+              <TimelineType>
+                <StyledAction>{formatWordString(action)}</StyledAction>&nbsp;
+                {targetType}
+              </TimelineType>
+              <TimelineInfo>
+                <ConditionalRender
+                  Component={
+                    <Fragment>
+                      <TimelineDollar>
+                        {formatDollarAmount(fundedValue)}
+                      </TimelineDollar>
+                      <ConditionalRender
+                        Component={() => ` for `}
+                        shouldRender={!shouldRenderFor}
+                      />
+                    </Fragment>
+                  }
+                  shouldRender={!!fundedValue}
+                />
+                <ConditionalRender
+                  Component={
+                    <InternalTimelineActivity to={path}>
+                      {targetName}
+                    </InternalTimelineActivity>
+                  }
+                  FallbackComponent={
+                    <ExternalTimelineActivity href={path} target="_blank">
+                      {targetName}
+                    </ExternalTimelineActivity>
+                  }
+                  shouldRender={isInternalLink}
+                />
+              </TimelineInfo>
+            </TimelineContent>
+          </TimelineListItem>
+        );
+
+        if (
+          index === 0 ||
+          moment(date).format('YYYY/MM/DD') !==
+            moment(filteredActivity[index - 1].date).format('YYYY/MM/DD')
+        ) {
+          return (
+            <Fragment key={`list-item-${index}`}>
+              <TimelineHeader>
+                <TimelineTitle>{moment(date).format('MMMM DD')}</TimelineTitle>
+                <TimelineHorizontalDivider />
+              </TimelineHeader>
+              {TimelineListItemComponent}
+            </Fragment>
+          );
+        }
+        return TimelineListItemComponent;
+      },
+    );
 
   return (
     <TimelineContainer>
@@ -101,7 +133,7 @@ const UserTimelineView = ({
             handleInputChange({ field: 'users', form: 'filter', value })
           }
           selectedValue={usersFilter}
-          values={['All', 'Earned', 'Funded', 'Submitted', 'Withdrew']}
+          values={['All', 'Commented', 'Earned', 'Funded', 'Submitted']}
         />
       </HeaderWrapper>
       <ConditionalRender
@@ -109,7 +141,7 @@ const UserTimelineView = ({
         FallbackComponent={
           <EmptyMessageContainer>No recent activity.</EmptyMessageContainer>
         }
-        shouldRender={activity.length > 0}
+        shouldRender={filteredActivity.length > 0}
       />
     </TimelineContainer>
   );
@@ -119,7 +151,6 @@ UserTimelineView.propTypes = {
   activity: T.array,
   filterValues: T.object.isRequired,
   handleInputChange: T.func.isRequired,
-  handleNav: T.func.isRequired,
 };
 
 export default UserTimelineView;

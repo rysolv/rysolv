@@ -10,31 +10,48 @@ module.exports = buildSchema(`
     fundedValue: Float
     issueId: ID
     issueName: String
-    organizationId: ID
-    organizationName: String
     profilePic: String
     pullRequestId: ID
+    pullRequestName: String
+    pullRequestUrl: String
+    repoId: ID
+    repoName: String
     userId: ID
     username: String
   }
 
-  type ActivityArray {
-    activityArray: [Activity]
+  type AttemptingArray {
+    issueArray: [AttemptingDetail]
+    userArray: [ID]
   }
 
-  input ActivityInput {
-    actionType: String
-    fundedValue: Float
+  type AttemptingDetail {
+    fundedAmount: Float
+    id: ID
+    name: String
+  }
+
+  type Bounty {
+    createdDate: Object
+    fundedAmount: Float
+    id: ID
+    isApproved: Boolean
     issueId: ID
-    organizationId: ID
-    pullRequestId: ID
-    userId: ID
+    name: String
+    pullRequestUrl: String
+    rep: String
+    repoName: String
+    repoPayoutExists: Boolean
+    userAccepted: Boolean
+    userPayout: Float
   }
 
   type Comment {
     body: String
     commentId: ID
     createdDate: Object
+    githubUrl: String
+    isGithubComment: Boolean
     modifiedDate: Object
     profilePic: String
     target: String
@@ -45,131 +62,136 @@ module.exports = buildSchema(`
   input CommentInput {
     body: String!
     target: ID!
-    user: ID!
+  }
+
+  input ContactInput {
+    body: String
+    companyName: String
+    companyUrl: String
+    contactName: String
+    email: String
+    source: String
+  }
+
+  type Error {
+    message: String
+  }
+
+  type Filter {
+    bugTag: Int
+    closedIssues: Int
+    featureTag: Int
+    fundedIssues: Int
+    issueLanguages: [Object]
+    maxBounty: Float
+    maxRepoFunded: Float
+    repoLanguages: [Object]
+    repos: [Object]
+    unfundedIssues: Int
+    userLanguages: [Object]
   }
 
   type ImportData {
+    githubCommentCount: Int
     issueBody: String!
     issueLanguages: [String]
     issueName: String!
     issueUrl: String!
-    organizationDescription: String
-    organizationId: ID
-    organizationLanguages: [String]
-    organizationLogo: String
-    organizationName: String
-    organizationRepo: String
     organizationUrl: String
+    repoDescription: String
+    repoId: ID
+    repoLanguages: [String]
+    repoLogo: String
+    repoName: String
+    repoUrl: String
   }
 
   type ImportPullRequest {
-    apiUrl: String,
-    githubUsername: String,
-    htmlUrl: String,
-    mergeable: Boolean,
-    mergeableState: String,
-    merged: Boolean,
-    open: Boolean,
-    pullNumber: Int,
-    status: String,
-    title: String,
+    githubUsername: String
+    htmlUrl: String
+    mergeable: Boolean
+    mergeableState: String
+    merged: Boolean
+    open: Boolean
+    pullNumber: Int
+    title: String
   }
 
   type Issue {
-    activeAttempts: Int
     attempting: [ID]
-    attempts: Int
+    awardedUser: Object
     body: String
-    comments: [ID]
+    comments: Int
     contributor: [String]
     createdDate: Object
+    exists: Boolean
     fundedAmount: Float
-    id: ID!
+    id: ID
+    isPullRequestMerged: Boolean
+    isUserAccepted: Boolean
     language: [String]
+    message: String
     modifiedDate: Object
     name: String
     open: Boolean
-    organizationId: String
-    organizationName: String
-    organizationVerified: Boolean
-    profilePic: String
+    pullRequests: Int
     rep: Int
     repo: String
+    repoId: String
+    repoName: String
+    repoVerified: Boolean
     type: String
     userId: ID
     username: String
-    watching: [String]
+    watching: [ID]
+  }
+
+  type IssueArray {
+    issues: [Issue]
   }
 
   input IssueInput {
-    attempting: [ID]
-    attempts: Int
     body: String
-    comments: [ID]
-    contributor: String
     fundedAmount: Int
+    githubCommentCount: Int
+    identiconId: ID
+    isManual: Boolean
     language: [String]
     name: String
-    organizationDescription: String
-    organizationId: String
-    organizationLogo: String
-    organizationName: String
-    organizationRepo: String
     organizationUrl: String
     rep: Int
     repo: String
-    watching: [String]
+    repoDescription: String
+    repoId: String
+    repoLogo: String
+    repoName: String
+    repoUrl: String
+    type: String
   }
 
-  type Organization {
-    contributors: [Object]
-    createdDate: Object
-    description: String!
-    id: ID!
-    issues: [Object]
-    logo: String
-    modifiedDate: Object
-    name: String!
-    organizationUrl: String
-    ownerId: ID
-    preferredLanguages: [String]
-    repoUrl: String!
-    totalFunded: Float
-    verified: Boolean
-  }
-
-  input OrganizationInput {
-    organizationDescription: String
-    organizationLogo: String
-    organizationName: String
-    organizationPreferredLanguages: [String]
-    organizationRepo: String
-    organizationUrl: String
-    organizationVerified: Boolean
-    ownerId: ID
+  type Payment {
+    balance: Float
+    fundedAmount: Float
+    message: String
   }
 
   type PullRequest {
-    apiUrl: String
     createdDate: Object!
+    exists: Boolean
+    fundedAmount: Float
     githubUsername: String
     htmlUrl: String
     issueId: ID!
+    issueName: String
     mergeable: Boolean
     mergeableState: String
     merged: Boolean
     modifiedDate: Object!
-    issueName: String
     open: Boolean!
     pullNumber: Int
     pullRequestId: ID!
-    status: String!
     title: String!
     userId: ID!
-  }
-
-  type PullRequestImport {
-    status: String!
   }
 
   type PullRequestArray {
@@ -177,77 +199,175 @@ module.exports = buildSchema(`
   }
 
   input PullRequestInput {
+    githubUsername: String
     htmlUrl: String
     issueId: ID!
-    githubUsername: String
     mergeable: Boolean
     mergeableState: String
     merged: Boolean
     open: Boolean!
     pullNumber: Int
-    status: String!
     title: String!
-    userId: ID!
   }
 
-  type Payment {
-    balance: Float
-    fundedAmount: Float
+  type PullRequestList {
+    htmlUrl: String
+    pullRequestId: ID
+    rep: Int
+    title: String
+    userId: ID
+    username: String
+  }
+
+  type Question {
+    id: ID
+    limit: Int
+    questionKey: String
+    questionText: String
+    required: Boolean
+    responses: [QuestionResponse]
+    subtext: String
+  }
+
+  type QuestionArray {
+    questionArray: [Question]
+  }
+
+  type QuestionResponse {
+    id: ID
+    responseKey: String
+    value: String
+  }
+
+  type Repo {
+    contributors: [Object]
+    createdDate: Object
+    description: String
+    earnedBounties: Float
+    exists: Boolean
+    githubOwners: [String]
+    id: ID!
+    issues: [Object]
+    logo: String
+    maintainerProceeds: Float
+    message: String
+    modifiedDate: Object
+    name: String
+    organizationUrl: String
+    ownerId: ID
+    payoutUrl: String
+    preferredLanguages: [String]
+    repoUrl: String
+    totalFunded: Float
+    verified: Boolean
+  }
+
+  type RepoArray {
+    repos: [Repo]
+  }
+
+  input RepoInput {
+    identiconId: ID
+    importUrl: String
+    isManual: Boolean
+    organizationUrl: String
+    payoutMethod: String
+    payoutUrl: String
+    repoDescription: String
+    repoLanguages: [String]
+    repoLogo: String
+    repoName: String
+    repoUrl: String
+    repoVerified: Boolean
+  }
+
+  type Stats {
+    mostContribution: [Object]!
+    mostEarned: [Object]!
+    mostRep: [Object]!
+    totalAvailable: Float!
+    totalEarned: Float!
+    totalFunded: Float!
+    totalResolved: Int!
+  }
+
+  type Success {
+    message: String
+  }
+
+  type Upvote {
+    issueRep: Int
+    upvotes: [ID]
+    userRep: Int
   }
 
   type User {
     activePullRequests: Int
     attempting: [Object]
     balance: Float
-    comments: [String]
+    bounties: [Bounty]
     completedPullRequests: Int
     createdDate: Object
     dollarsEarned: Int
     email: String!
-    firstName: String!
+    emailVerified: Boolean
+    firstName: String
+    githubId: String
     githubLink: String
+    githubUsername: String
     id: ID!
-    isOnline: Boolean
+    isGithubVerified: Boolean
+    isQuestionnaireComplete: Boolean
     issues: [Object]
-    lastName: String!
+    lastName: String
     modifiedDate: Object
-    organizations: [Object]
+    notifications: Boolean
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
     pullRequests: [String]
+    receiveWeeklyEmails: Boolean
     rejectedPullRequests: Int
     rep: Int
+    repos: [Object]
     stackoverflowLink: String
     upvotes: [ID]
     username: String
     watching: [Object]
   }
 
+  type UserArray {
+    users: [User]
+  }
+
   input UserInput {
-    activePullRequests: Int
     attempting: [ID]
     balance: Float
-    comments: [String]
-    completedPullRequests: Int
     dollarsEarned: Int
     email: String
+    emailVerified: Boolean
     firstName: String
     githubLink: String
-    isOnline: Boolean
+    id: ID
     issues: [String]
     lastName: String
-    organizations: [String]
+    password: String
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
-    pullRequests: [String]
-    rejectedPullRequests: Int
+    receiveWeeklyEmails: Boolean
     rep: Int
+    repos: [String]
     stackoverflowLink: String
     upvotes: [ID]
     username: String
     watching: [String]
+  }
+
+  type Verification {
+    githubUsername: String
+    isGithubVerified: Boolean
+    message: String
   }
 
   type WatchList {
@@ -256,78 +376,126 @@ module.exports = buildSchema(`
     username: String
   }
 
-  type Error {
+  type WatchListArray {
+    issueArray: [WatchListDetail]
+    userArray: [ID]
+  }
+
+  type WatchListDetail {
+    fundedAmount: Float
+    id: ID
+    name: String
+  }
+
+  type Withdrawal {
+    balance: Float
     message: String
   }
 
-  type Success {
-    message: String
-  }
-
-  union ActivityResult = ActivityArray | Error
-  union PullRequestArrayResult = PullRequestArray | Error
-  union PullRequestResult = PullRequest | Error
-  union ImportResult = ImportData | Error
-  union ImportPullRequestResult = ImportPullRequest | Error
-  union IssueResult = Issue | Error
-  union OrganizationResult = Organization | Error
+  union CommentResult = Comment | Error
   union EventResponse = Success | Error
+  union FilterResult = Filter | Error
+  union ImportPullRequestResult = ImportPullRequest | Error
+  union ImportResult = ImportData | Error
+  union IssueArrayResult = IssueArray | Error
+  union IssueResult = Issue | Error
   union PaymentResult = Payment | Error
+  union PullRequestArrayResult = PullRequestArray | Error
+  union QuestionResult = QuestionArray | Error
+  union RepoArrayResult = RepoArray | Error
+  union RepoResult = Repo | Error
+  union SignInResult = User | Error
+  union StatsResult = Stats | Error
+  union ToggleAttemptingResult = AttemptingArray | Error
+  union ToggleWatchingResult = WatchListArray | Error
+  union UpvoteResult = Upvote | Error
+  union UserArrayResult = UserArray | Error
+  union UserResult = User | Error
+  union VerificationResult = Verification | Error
+  union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
-    getActivity(column: String!, id: ID): ActivityResult!
-    getAllActivity: ActivityResult!
-    getComments: [Comment]!
-    getIssues: [Issue!]!
-    getOrganizations: [Organization!]!
-    getUsers: [User!]!
-    getPullRequests: PullRequestArrayResult
+    getFilterOptions: FilterResult!
+    getGithubPullRequests(issueId: ID!): PullRequestArrayResult!
+    getIssueAttemptList(issueId: ID!): [WatchList]!
+    getIssueComments(issueId: ID!): [Comment]!
+    getIssues: IssueArrayResult!
+    getIssueWatchList(issueId: ID!): [WatchList]!
+    getPullRequestList(issueId: ID): [PullRequestList]!
+    getQuestions(category: String!): QuestionResult
+    getRepoActivity(repoId: ID): [Activity]!
+    getRepos: RepoArrayResult!
+    getStats: StatsResult!
+    getUserActivity(userId: ID): [Activity]!
+    getUserIssues: IssueArrayResult!
+    getUserPullRequests: PullRequestArrayResult!
+    getUserRepos: RepoArrayResult!
+    getUsers: UserArrayResult!
+    getUserSettings: UserResult!
 
-    getIssueComments(id: ID!): [Comment]
-    getUserOrganizations(id: ID!): [Organization!]
-    getUserPullRequests(id: ID!): PullRequestArrayResult
+    githubSignIn(code: String!, origin: String!): UserResult!
 
-    getWatchList(idArray: [ID!], type: String!): [WatchList!]
+    oneIssue(id: ID!): IssueResult!
+    oneRepo(id: ID!): RepoResult!
+    oneUser(userId: ID!): UserResult!
+    oneUserSignUp(email: String!): UserResult!
 
-    oneIssue(id: ID!): IssueResult
-    oneOrganization(id: ID!): OrganizationResult
-    oneUser(column: String!, query: ID!): User!
-    onePullRequest(id: ID!): PullRequestResult
+    resendCode(email: String!): EventResponse!
 
-    searchIssues(value: String!): [Issue!]!
-    searchOrganizations(value: String!): [Organization!]!
-    searchUsers(value: String!): [User!]!
+    resetPassword(code: String!, email: String!, password: String!): EventResponse!
+
+    searchIssues(value: String!): [Issue]!
+    searchRepos(value: String!): [Repo]!
+    searchUsers(value: String!): [User]!
+
+    sendLink(email: String!): EventResponse!
   }
 
   type RootMutation {
-    closeIssue(id: ID!, shouldClose: Boolean): String!
+    acceptBounty(fundingId: ID!, userRatio: Float!): EventResponse!
 
-    createActivity(activityInput: ActivityInput): Activity
-    createComment(commentInput: CommentInput): Comment
-    createIssue(issueInput: IssueInput): Issue!
-    createOrganization(organizationInput: OrganizationInput): Organization!
-    createUser(userInput: UserInput): [User!]!
+    addRepoPayout(repoId: ID!, repoInput: RepoInput): EventResponse!
+
+    closeIssue(issueId: ID!, shouldClose: Boolean): EventResponse!
+
+    createComment(commentInput: CommentInput): CommentResult!
+    createIssue(issueInput: IssueInput): IssueResult!
+    createPaypalPayment(amount: Float!, email: String, issueId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
+    createRepo(repoInput: RepoInput): RepoResult!
+    createStripeCharge(amount: Float!, email: String, issueId: ID, token: String!): PaymentResult!
+    createUser(userInput: UserInput): UserResult!
+    createWithdrawal(email: String!, transferValue: Float!): WithdrawalResult!
 
-    deleteIssue(id: ID!): String!
-    deleteOrganization(id:ID!): String!
-    deleteUser(id:ID!): String!
+    deletePullRequest(id:ID!): EventResponse!
+    deleteUser: EventResponse!
 
-    importIssue(url: String!): ImportResult
-    importOrganization(url: String!): ImportResult
-    importPullRequest(url: String!): ImportPullRequestResult
+    importIssue(url: String!): ImportResult!
+    importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
+    importRepo(url: String!): ImportResult!
 
-    submitAccountPayment(issueId: ID!, fundValue: Float!, userId: ID!): PaymentResult!
+    postUserResponse(responseArray: [Object]): EventResponse!
 
-    transformIssue(id: ID!, issueInput: IssueInput): IssueResult!
-    transformOrganization(id: ID!, organizationInput: OrganizationInput): OrganizationResult!
-    transformUser(id: ID!, userInput: UserInput): User!
+    recruitingSignup(contactInput: ContactInput): EventResponse!
+    
+    sendContact(contactInput: ContactInput): EventResponse!
 
-    updateIssueArray(id: ID, column: String, data: String, remove: Boolean): Issue!
-    updateUserArray(id: ID, column: String, data: String, remove: Boolean): User!
+    signIn(password: String!, username: String!): SignInResult!
+    signOut: EventResponse!
 
-    upvoteIssue(id: ID): Issue!
-    userUpvote(id: ID): User!
+    submitAccountPayment(email: String!, issueId: ID!, fundValue: Float!): PaymentResult!
+
+    toggleAttempting(issueId: ID!): ToggleAttemptingResult!
+    toggleWatching(issueId: ID!): ToggleWatchingResult!
+
+    transformIssue(issueId: ID!, issueInput: IssueInput): EventResponse!
+    transformRepo(repoId: ID!, repoInput: RepoInput): EventResponse!
+    transformUser(userInput: UserInput): EventResponse!
+
+    upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
+
+    verifyUserAccount(code: String!): VerificationResult!
+    verifyUserEmail(code: String!, email: String!, userId: ID!): EventResponse!
   }
 
   schema {

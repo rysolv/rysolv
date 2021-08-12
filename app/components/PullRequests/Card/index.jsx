@@ -1,99 +1,104 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import T from 'prop-types';
+import moment from 'moment';
+
+import { formatDollarAmount } from 'utils/globalHelpers';
+import iconDictionary from 'utils/iconDictionary';
 
 import {
-  PullRequestCardWrapper,
-  StyledItem,
-  StyledLabel,
+  ButtomBarContainer,
+  ContentWrapper,
+  DeleteButton,
+  Icon,
+  IssueFundedAmount,
+  IssueMerged,
+  PullRequestCardContainer,
+  PullRequestContent,
+  PullRequestDateWrapper,
+  PullRequestListItem,
+  StatusWrapper,
+  TestIconContainer,
+  TestIconWrapper,
+  TitleWrapper,
+  UrlContainer,
+  UrlWrapper,
 } from './styledComponents';
 
-const PullRequestCard = ({ data }) => {
-  const cardDiv = data.map(
-    ({
-      createdDate,
-      githubUsername,
-      htmlUrl,
-      issueId,
-      issueName,
-      mergeable,
-      mergeableState,
-      merged,
-      modifiedDate,
-      open,
-      pullRequestId,
-      status,
-      title,
-      userId,
-    }) => (
-      <PullRequestCardWrapper key={pullRequestId}>
-        <StyledItem>
-          <StyledLabel>Created date: </StyledLabel>
-          {createdDate}
-        </StyledItem>
-        <StyledItem>
-          <StyledLabel>Github Username: </StyledLabel>
-          {githubUsername}
-        </StyledItem>
-        <StyledItem>
-          <StyledLabel>Html URL: </StyledLabel>
-          {htmlUrl}
-        </StyledItem>
-        <StyledItem>
-          <StyledLabel>Issue ID: </StyledLabel>
-          {issueId}
-        </StyledItem>
-        <StyledItem>
-          <StyledLabel>Issue Name: </StyledLabel>
-          {issueName}
-        </StyledItem>
+const CheckIcon = iconDictionary('check');
+const CloseCircleIcon = iconDictionary('closeCircle');
+const CloseIcon = iconDictionary('close');
+const GithubIcon = iconDictionary('github');
+const IssueIcon = iconDictionary('issue');
 
-        <StyledItem>
-          <StyledLabel>Mergeable: </StyledLabel>
-          {mergeable ? 'true' : 'false'}
-        </StyledItem>
-
-        <StyledItem>
-          <StyledLabel>MergeableState: </StyledLabel>
-          {mergeableState}
-        </StyledItem>
-
-        <StyledItem>
-          <StyledLabel>Merged: </StyledLabel>
-          {merged ? 'true' : 'false'}
-        </StyledItem>
-
-        <StyledItem>
-          <StyledLabel>Modified Date: </StyledLabel>
-          {modifiedDate}
-        </StyledItem>
-        <StyledItem>
-          <StyledLabel>Open: </StyledLabel>
-          {open ? 'true' : 'false'}
-        </StyledItem>
-        <StyledItem>
-          <StyledLabel>PullRequest ID: </StyledLabel>
-          {pullRequestId}
-        </StyledItem>
-        <StyledItem>
-          <StyledLabel>Status: </StyledLabel>
-          {status}
-        </StyledItem>
-        <StyledItem>
-          <StyledLabel>Title: </StyledLabel>
-          {title}
-        </StyledItem>
-        <StyledItem>
-          <StyledLabel>UserId: </StyledLabel>
-          {userId}
-        </StyledItem>
-      </PullRequestCardWrapper>
-    ),
-  );
-  return cardDiv;
-};
+const PullRequestCard = ({ data, handleDelete }) => (
+  <PullRequestCardContainer>
+    {data.map(
+      (
+        {
+          createdDate,
+          fundedAmount,
+          htmlUrl,
+          issueId,
+          mergeableState,
+          merged,
+          pullRequestId,
+          title,
+        },
+        index,
+      ) => {
+        const isMergeable = mergeableState === 'clean';
+        return (
+          <PullRequestListItem key={`list-item-${index}`}>
+            <PullRequestDateWrapper>
+              Created {moment(createdDate).format('M/D/YYYY')}
+            </PullRequestDateWrapper>
+            <PullRequestContent>
+              <ContentWrapper>
+                <TitleWrapper>{title}</TitleWrapper>
+                <UrlContainer>
+                  <StatusWrapper>
+                    <IssueMerged merged={merged}>
+                      {merged ? 'Merged' : 'Open'}
+                    </IssueMerged>
+                    <TestIconContainer>
+                      <TestIconWrapper isMergeable={isMergeable}>
+                        {isMergeable ? CheckIcon : CloseIcon}
+                      </TestIconWrapper>
+                      <div>Tests Passed</div>
+                    </TestIconContainer>
+                  </StatusWrapper>
+                </UrlContainer>
+                <ButtomBarContainer>
+                  <UrlWrapper
+                    addPadding
+                    href={`/issues/detail/${issueId}`}
+                    target="_blank"
+                  >
+                    <Icon>{IssueIcon}</Icon> View Issue
+                  </UrlWrapper>
+                  <UrlWrapper href={htmlUrl} target="_blank">
+                    <Icon>{GithubIcon}</Icon> View on Github
+                  </UrlWrapper>
+                  <DeleteButton onClick={() => handleDelete({ pullRequestId })}>
+                    <Icon>{CloseCircleIcon}</Icon>Cancel
+                  </DeleteButton>
+                </ButtomBarContainer>
+              </ContentWrapper>
+              <IssueFundedAmount>
+                {formatDollarAmount(fundedAmount)}
+              </IssueFundedAmount>
+            </PullRequestContent>
+          </PullRequestListItem>
+        );
+      },
+    )}
+  </PullRequestCardContainer>
+);
 
 PullRequestCard.propTypes = {
   data: T.array.isRequired,
+  handleDelete: T.func.isRequired,
 };
 
 export default PullRequestCard;

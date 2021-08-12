@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { BaseDropDownMenu } from 'components/base_ui';
 import { defaultFontSize, hoverLinkColor, textColor } from 'defaultStyleHelper';
@@ -11,6 +12,26 @@ export const EmptyMessageContainer = styled.div`
   height: 10rem;
   justify-content: center;
   width: 100%;
+`;
+
+export const ExternalTimelineActivity = styled.a`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
+
+export const InternalTimelineActivity = styled(Link)`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
 
 export const HeaderWrapper = styled.div`
@@ -30,7 +51,7 @@ export const StyledAction = styled.span`
 `;
 
 export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
-  margin: 0 1rem;
+  margin-left: 1rem;
   width: 15rem;
 `;
 
@@ -44,16 +65,6 @@ export const StyledFundedIcon = styled.div`
   place-content: center;
   position: absolute;
   width: 2.4rem;
-`;
-
-export const TimelineActivity = styled.span`
-  color: #007bff;
-
-  &:hover {
-    color: ${hoverLinkColor};
-    cursor: pointer;
-    text-decoration: underline;
-  }
 `;
 
 export const TimelineContainer = styled.div`

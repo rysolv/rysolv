@@ -2,8 +2,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { Star, ProfileImage } from 'components/base_ui';
-import { navHelper } from 'utils/globalHelpers';
+import { ImageLinkWrapper } from 'components/base_ui';
 
 import {
   ActiveContainer,
@@ -12,71 +11,52 @@ import {
   ImageContainer,
   IssuesContainer,
   IssuesWrapper,
-  MemberInfoContainer,
   MemberWrapper,
-  NameWrapper,
+  NameLink,
   NumberContainer,
-  OverviewWrapper,
+  RowSection,
+  StyledCoin,
   StyledListSquare,
   StyledSettingWrapper,
   StyledSquare,
   TextContainer,
 } from './styledComponents';
 
-const MobileUserCard = ({ data, deviceView, handleNav }) => {
-  const isMobile = deviceView === 'mobile';
-
+const MobileUserCard = ({ data, deviceView }) => {
+  const isMobileS =
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
   return (
-    <OverviewWrapper>
+    <RowSection>
       {data.map(
         (
-          {
-            attempting,
-            createdDate,
-            id,
-            issues,
-            name,
-            pointsNumber,
-            profilePic,
-          },
+          { attempting, id, issues, pointsNumber, profilePic, username },
           index,
         ) => (
-          <StyledListSquare key={`${name}-${index}`}>
+          <StyledListSquare key={`${username}-${index}`}>
             <StyledSquare>
               <ContentWrapper>
                 <ImageContainer>
-                  <ProfileImage
+                  <ImageLinkWrapper
                     alt="Profile Image"
-                    detailRoute={`/users/detail/${id}`}
-                    handleNav={handleNav}
-                    profilePic={profilePic}
-                    size={isMobile ? '4.75rem' : '7.5rem'}
+                    image={profilePic}
+                    route={`/users/detail/${id}`}
+                    size={isMobileS ? '6.5rem' : '7.5rem'}
                   />
                   <IconWrapper>
-                    <div>
-                      <Star />
-                    </div>
+                    <StyledCoin />
                     <NumberContainer>{pointsNumber}</NumberContainer>
                   </IconWrapper>
                 </ImageContainer>
               </ContentWrapper>
               <TextContainer>
                 <StyledSettingWrapper>
-                  <MemberWrapper>
-                    <NameWrapper
-                      onClick={e =>
-                        navHelper(e, handleNav, `/users/detail/${id}`)
-                      }
-                      href={`/users/detail/${id}`}
-                    >
-                      {name}
-                    </NameWrapper>
-                    <MemberInfoContainer>
-                      Member since {createdDate}
-                    </MemberInfoContainer>
+                  <MemberWrapper isMobileS>
+                    <NameLink to={`/users/detail/${id}`}>{username}</NameLink>
                   </MemberWrapper>
                 </StyledSettingWrapper>
-                <IssuesWrapper>
+                <IssuesWrapper isMobileS>
                   <IssuesContainer>
                     {issues.length} {issues.length === 1 ? `Issue` : `Issues`}
                   </IssuesContainer>
@@ -89,14 +69,13 @@ const MobileUserCard = ({ data, deviceView, handleNav }) => {
           </StyledListSquare>
         ),
       )}
-    </OverviewWrapper>
+    </RowSection>
   );
 };
 
 MobileUserCard.propTypes = {
   data: T.array.isRequired,
   deviceView: T.string.isRequired,
-  handleNav: T.func.isRequired,
 };
 
 export default MobileUserCard;

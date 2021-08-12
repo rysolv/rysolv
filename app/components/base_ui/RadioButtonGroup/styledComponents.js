@@ -4,7 +4,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioButtonGroup from '@material-ui/core/RadioGroup';
 
-import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import { defaultFontSize, lightBlueColor, textColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobileXS, mobileXXS } = mediaQueriesByDevice;
@@ -18,14 +18,14 @@ export const StyledFormControlLabel = styled(({ isActive, ...restProps }) => (
 
   &:first-child {
     border-bottom-left-radius: 3px;
-    border-color: ${({ isActive }) => (isActive ? '#1e88e5' : '#d1d5da')};
+    border-color: ${({ isActive }) => (isActive ? lightBlueColor : '#d1d5da')};
     border-right: ${({ isActive }) => (isActive ? '1px solid #d1d5d' : 'none')};
     border-top-left-radius: 3px;
   }
 
   &:last-child {
     border-bottom-right-radius: 3px;
-    border-color: ${({ isActive }) => (isActive ? '#1e88e5' : '#d1d5da')};
+    border-color: ${({ isActive }) => (isActive ? lightBlueColor : '#d1d5da')};
     border-left: ${({ isActive }) => (isActive ? '1px solid #d1d5d' : 'none')};
     border-top-right-radius: 3px;
   }
@@ -49,7 +49,7 @@ export const StyledRadioButton = styled(Radio)`
   color: ${textColor};
 
   &.checked {
-    color: #1e88e5;
+    color: ${lightBlueColor};
   }
 
   svg {

@@ -6,27 +6,24 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
-import { ModalDialog } from 'components/base_ui';
 import CloseIssueModal from 'components/CloseIssueModal';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
-import PaymentPortalModal from 'components/PaymentsModal';
 import SideNav from 'components/SideNav';
 import SigninModal from 'components/SigninModal';
+import VerifyAccountModal from 'components/VerifyAccountModal';
 import WatchList from 'components/WatchList';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { signin, signout } from 'containers/Auth/actions';
-import {
-  clearAlerts,
-  closeIssue,
-  submitAccountPayment,
-} from 'containers/Issues/actions';
-import { makeSelectIssues } from 'containers/Issues/selectors';
+import { clearAlerts, signIn, signOut } from 'containers/Auth/actions';
+import { closeIssue, deletePullRequest } from 'containers/Issues/actions';
+import PaymentsPortal from 'containers/Payments';
+import { resetState } from 'containers/Signin/actions';
+import { getCookie, setCookie } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { closeModalState, fetchWatchList } from './actions';
+import { closeModalState } from './actions';
 import reducer from './reducer';
 import Routes from './routes';
 import saga from './saga';
@@ -35,135 +32,181 @@ import {
   AppBodyWrapper,
   AppContentWrapper,
   RoutesWrapper,
+  StyledModalDialog,
 } from './styledComponents';
 
-export const Main = ({
-  activeUser,
-  deviceView,
-  dispatchCloseIssue,
-  dispatchCloseModal,
-  error,
-  handleClearAlerts,
-  handleNav,
-  handleSignin,
-  handleSignout,
-  handleSubmitAccountPayment,
-  isModalOpen,
-  isSignedIn,
-  loading,
-  match,
-  modal,
-  paymentAlerts,
-  tableData,
-}) => {
-  const handleCloseIssue = ({ issueId, shouldClose }) => {
-    dispatchCloseModal();
-    dispatchCloseIssue({ issueId, shouldClose });
-  };
-  const handleRedirect = route => {
-    dispatchCloseModal();
-    handleNav(route);
-  };
-  const modalPropsDictionary = {
-    closeIssue: {
-      Component: CloseIssueModal,
-      open: isModalOpen,
-      propsToPassDown: {
-        dispatchCloseIssue,
-        handleClose: dispatchCloseModal,
-        handleCloseIssue,
-        tableData,
+class Main extends React.PureComponent {
+  componentDidMount() {
+    if (!getCookie('returnUser')) {
+      setCookie('returnUser', true, {
+        expires: 'Sun, 19 Jan 2038 00:00:01 GMT;',
+      });
+    }
+  }
+
+  componentDidUpdate({ location: { pathname: prevPathname } }) {
+    const {
+      handleClearAuthAlerts,
+      location: { pathname },
+    } = this.props;
+    const origin = pathname.split('/')[1];
+    const prevOrigin = prevPathname.split('/')[1];
+    if (origin !== prevOrigin) handleClearAuthAlerts();
+  }
+
+  render() {
+    const {
+      activeUser,
+      deviceView,
+      dispatchCloseIssue,
+      dispatchCloseModal,
+      handleDelete,
+      handleNav,
+      handleResetState,
+      handleSignout,
+      isModalOpen,
+      isSignedIn,
+      location,
+      modal,
+      tableData,
+    } = this.props;
+    const handleCloseIssue = ({ issueId, shouldClose }) => {
+      dispatchCloseModal();
+      dispatchCloseIssue({ issueId, shouldClose });
+    };
+    const handleDeletePullRequest = ({ pullRequestId }) => {
+      dispatchCloseModal();
+      handleDelete({ pullRequestId });
+    };
+    const handleRedirect = route => {
+      dispatchCloseModal();
+      handleNav(route);
+    };
+    const { pathname } = window.location;
+    const isLandingOrRecruitmentPage =
+      pathname === '/' || pathname === '/jobs' || pathname === '/recruitment';
+    const isPaymentModal = modal === 'fundIssue';
+    const modalPropsDictionary = {
+      closeIssue: {
+        Component: CloseIssueModal,
+        open: isModalOpen,
+        propsToPassDown: {
+          dispatchCloseIssue,
+          handleClose: dispatchCloseModal,
+          handleCloseIssue,
+          tableData,
+        },
       },
-    },
-    fundIssue: {
-      Component: PaymentPortalModal,
-      open: isModalOpen,
-      propsToPassDown: {
-        handleClearAlerts,
-        handleClose: dispatchCloseModal,
-        handleNav,
-        handleSubmitAccountPayment,
-        isSignedIn,
-        paymentAlerts,
-        ...tableData,
+      fundIssue: {
+        Component: PaymentsPortal,
+        open: isModalOpen,
+        propsToPassDown: {
+          handleClose: dispatchCloseModal,
+          isModal: true,
+          isSignedIn,
+          ...tableData,
+        },
       },
-    },
-    issueAttemptList: {
-      Component: WatchList,
-      open: isModalOpen,
-      propsToPassDown: {
-        handleClose: dispatchCloseModal,
-        handleRedirect,
-        modalState: 'issueAttemptList',
-        route: '/users/detail',
-        tableData,
-        title: 'Attempt List',
-        type: 'issueAttemptList',
+      issueAttemptList: {
+        Component: WatchList,
+        open: isModalOpen,
+        propsToPassDown: {
+          handleClose: dispatchCloseModal,
+          route: '/users/detail',
+          tableData,
+          title: 'Attempt List',
+          type: 'issueAttemptList',
+        },
       },
-    },
-    issueWatchList: {
-      Component: WatchList,
-      open: isModalOpen,
-      propsToPassDown: {
-        handleClose: dispatchCloseModal,
-        handleRedirect,
-        modalState: 'issueWatchList',
-        route: '/users/detail',
-        tableData,
-        title: 'Watch List',
-        type: 'issueWatchList',
+      issueWatchList: {
+        Component: WatchList,
+        open: isModalOpen,
+        propsToPassDown: {
+          handleClose: dispatchCloseModal,
+          route: '/users/detail',
+          tableData,
+          title: 'Watch List',
+          type: 'issueWatchList',
+        },
       },
-    },
-    signIn: {
-      Component: SigninModal,
-      open: isModalOpen,
-      propsToPassDown: {
-        handleClose: dispatchCloseModal,
-        handleRedirect,
+      pullRequestList: {
+        Component: WatchList,
+        open: isModalOpen,
+        propsToPassDown: {
+          handleClose: dispatchCloseModal,
+          handleDeletePullRequest,
+          isSignedIn,
+          route: '/users/detail',
+          tableData,
+          title: 'Pull Requests',
+          type: 'pullRequestList',
+        },
       },
-    },
-  };
-  return (
-    <Fragment>
-      <AppBodyWrapper>
-        <Header
-          activeUser={activeUser}
-          handleNav={handleNav}
-          handleSignin={handleSignin}
-          handleSignout={handleSignout}
-          isSignedIn={isSignedIn}
-          view={deviceView}
-        />
-        <AppContentWrapper>
-          <SideNav handleNav={handleNav} view={deviceView} />
-          <RoutesWrapper>
-            <Routes error={error} loading={loading} match={match} />
-          </RoutesWrapper>
-        </AppContentWrapper>
-      </AppBodyWrapper>
-      <Footer />
-      {modal && <ModalDialog {...modalPropsDictionary[modal]} />}
-    </Fragment>
-  );
-};
+      signIn: {
+        Component: SigninModal,
+        open: isModalOpen,
+        propsToPassDown: {
+          handleClose: dispatchCloseModal,
+          handleRedirect,
+        },
+      },
+      verifyAccount: {
+        Component: VerifyAccountModal,
+        open: isModalOpen,
+        propsToPassDown: {
+          handleClose: dispatchCloseModal,
+          handleRedirect,
+        },
+      },
+    };
+    return (
+      <Fragment>
+        <AppBodyWrapper isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}>
+          <Header
+            activeUser={activeUser}
+            deviceView={deviceView}
+            handleNav={handleNav}
+            handleResetState={handleResetState}
+            handleSignout={handleSignout}
+            isSignedIn={isSignedIn}
+            location={location}
+          />
+          <AppContentWrapper>
+            <SideNav deviceView={deviceView} handleNav={handleNav} />
+            <RoutesWrapper
+              isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}
+            >
+              <Routes />
+            </RoutesWrapper>
+          </AppContentWrapper>
+        </AppBodyWrapper>
+        <Footer />
+        {modal && (
+          <StyledModalDialog
+            isPaymentModal={isPaymentModal}
+            {...modalPropsDictionary[modal]}
+          />
+        )}
+      </Fragment>
+    );
+  }
+}
 
 Main.propTypes = {
-  activeUser: T.object,
-  deviceView: T.string,
+  activeUser: T.object.isRequired,
+  deviceView: T.string.isRequired,
   dispatchCloseIssue: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
-  error: T.object,
-  handleClearAlerts: T.func,
-  handleNav: T.func,
-  handleSignin: T.func,
-  handleSignout: T.func,
-  handleSubmitAccountPayment: T.func,
-  isModalOpen: T.bool,
-  isSignedIn: T.bool,
-  loading: T.bool,
-  match: T.object,
-  modal: T.string,
-  paymentAlerts: T.object,
+  handleClearAuthAlerts: T.func.isRequired,
+  handleDelete: T.func.isRequired,
+  handleNav: T.func.isRequired,
+  handleResetState: T.func.isRequired,
+  handleSignin: T.func.isRequired,
+  handleSignout: T.func.isRequired,
+  isModalOpen: T.bool.isRequired,
+  isSignedIn: T.bool.isRequired,
+  location: T.object.isRequired,
+  modal: T.string.isRequired,
   tableData: T.oneOfType([T.array, T.object, T.number]),
 };
 
@@ -173,10 +216,6 @@ const mapStateToProps = createStructuredSelector({
    */
   activeUser: makeSelectAuth('activeUser'),
   isSignedIn: makeSelectAuth('isSignedIn'),
-  /**
-   * Reducer: Issues
-   */
-  paymentAlerts: makeSelectIssues('paymentAlerts'),
   /**
    * Reducer: Main
    */
@@ -193,24 +232,29 @@ const mapDispatchToProps = dispatch => ({
   /**
    * Auth
    */
-  handleSignin: payload => dispatch(signin(payload)),
-  handleSignout: payload => dispatch(signout(payload)),
+  handleClearAuthAlerts: () => dispatch(clearAlerts()),
+  handleSignin: payload => dispatch(signIn(payload)),
+  handleSignout: () => dispatch(signOut()),
   /**
    * Issues
    */
   dispatchCloseIssue: payload => dispatch(closeIssue(payload)),
-  handleClearAlerts: () => dispatch(clearAlerts()),
-  handleSubmitAccountPayment: payload =>
-    dispatch(submitAccountPayment(payload)),
   /**
    * Main
    */
-  dispatchFetchWatchList: payload => dispatch(fetchWatchList(payload)),
   dispatchCloseModal: () => dispatch(closeModalState()),
+  /*
+   * Reducer : PullRequests
+   */
+  handleDelete: payload => dispatch(deletePullRequest(payload)),
   /*
    * Reducer : Router
    */
   handleNav: route => dispatch(push(route)),
+  /*
+   * Reducer : Signin
+   */
+  handleResetState: () => dispatch(resetState()),
 });
 
 const withConnect = connect(

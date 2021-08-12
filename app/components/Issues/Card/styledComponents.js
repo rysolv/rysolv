@@ -1,13 +1,15 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { IconButton } from 'components/base_ui';
+import { IconButton, Verified } from 'components/base_ui';
 import {
   defaultFontSize,
   detailFontSize,
   hoverLinkColor,
   selectedColor,
   subheaderFontSize,
-  subTextColor,
+  subTextGrey,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
@@ -21,7 +23,7 @@ export const IssueCardIconWrapper = styled.div`
 
 export const IssueCardItem = styled.div`
   align-items: center;
-  color: ${subTextColor};
+  color: ${subTextGrey};
   display: flex;
   font-size: 1.2rem;
   font-weight: 500;
@@ -44,18 +46,19 @@ export const IssueFooterIconWrapper = styled.div`
 `;
 
 export const IssueLanguageContainer = styled.div`
-  margin: 1rem 0;
+  display: flex;
   font-size: ${detailFontSize};
+  margin: 1rem 0;
 `;
 
 export const MobileIconDescription = styled.div`
   padding-left: 0.25rem;
 `;
 
-export const Name = styled.a`
+export const NameLink = styled(Link)`
+  color: ${textColor};
   font-size: ${subheaderFontSize};
   overflow: hidden;
-  color: ${textColor};
 
   &:hover {
     cursor: pointer;
@@ -71,18 +74,28 @@ export const NameWrapper = styled.div`
   margin: 1rem 0;
 `;
 
-export const OrganizationNameWrapper = styled.a`
+export const RepoNameWrapper = styled.div`
   align-items: center;
   color: ${textColor};
   display: flex;
   font-weight: bold;
+
+  &:hover {
+    color: ${hoverLinkColor};
+  }
 `;
 
-export const StyledIconButton = styled(IconButton)`
-  color: ${({ isWatching }) => (isWatching ? selectedColor : subTextColor)};
+export const StyledIconButton = styled(
+  ({ isWatching, shouldBold, ...restProps }) => <IconButton {...restProps} />,
+)`
+  color: ${({ isWatching }) => (isWatching ? selectedColor : subTextGrey)};
   font-weight: 700;
   padding-right: 1rem;
   stroke: ${({ shouldBold }) => (shouldBold ? 'currentColor' : 'none')};
+`;
+
+export const StyledIssueCard = styled.div`
+  min-height: ${({ height }) => `${height}px` || '50rem'};
 `;
 
 export const StyledIssueContent = styled.div`
@@ -95,6 +108,7 @@ export const StyledIssueContent = styled.div`
 `;
 
 export const StyledIssueFooter = styled.div`
+  align-items: center;
   color: ${textColor};
   display: flex;
   font-size: ${detailFontSize};
@@ -128,4 +142,8 @@ export const StyledListItem = styled.li`
   ${mobile} {
     margin: 0 0 1rem 0;
   }
+`;
+
+export const StyledVerified = styled(Verified)`
+  margin: 0 0.5rem;
 `;

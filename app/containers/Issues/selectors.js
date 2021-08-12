@@ -16,7 +16,7 @@ const makeSelectIssuesDisabled = () =>
   createSelector(
     makeSelectIssues('issueData'),
     issueData => {
-      const tempData = omit(issueData, ['importUrl']);
+      const tempData = omit(issueData, ['identiconId', 'importUrl']);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
   );
@@ -33,14 +33,16 @@ const makeSelectIssuesLoading = prop =>
     loading => loading[prop],
   );
 
-const makeSelectOrganizationsDisabled = () =>
+const makeSelectReposDisabled = () =>
   createSelector(
-    makeSelectIssues('organizationData'),
+    makeSelectIssues('repoData'),
     data => {
       const tempData = omit(data, [
-        'organizationId',
+        'identiconId',
         'importUrl',
-        'organizationLogo',
+        'organizationUrl',
+        'repoId',
+        'repoLogo',
       ]);
       return Object.keys(tempData).every(item => tempData[item].value !== '');
     },
@@ -79,21 +81,18 @@ const makeSelectIssueDetailLoading = prop =>
 
 const makeSelectIssuesRequestBody = () =>
   createSelector(
+    makeSelectIssues('isManual'),
     makeSelectIssues('issueData'),
-    makeSelectIssues('organizationData'),
-    (issueData, organizationData) => {
-      const formData = { ...issueData, ...organizationData };
-      return Object.keys(formData).reduce((acc, field) => {
+    makeSelectIssues('repoData'),
+    (isManual, issueData, repoData) => {
+      const formData = { ...issueData, ...repoData };
+      const requestBody = Object.keys(formData).reduce((acc, field) => {
         acc[field] = formData[field].value;
         return acc;
       }, {});
+      if (requestBody.identiconId) requestBody.repoLogo = '';
+      return { isManual, ...requestBody };
     },
-  );
-
-const makeSelectIssuesSearchDisabled = () =>
-  createSelector(
-    makeSelectIssues('search'),
-    ({ searchInput }) => searchInput.value === '',
   );
 
 const makeSelectIssuesStep = prop =>
@@ -113,7 +112,6 @@ export {
   makeSelectIssuesFiltered,
   makeSelectIssuesLoading,
   makeSelectIssuesRequestBody,
-  makeSelectIssuesSearchDisabled,
   makeSelectIssuesStep,
-  makeSelectOrganizationsDisabled,
+  makeSelectReposDisabled,
 };

@@ -12,52 +12,21 @@ import {
 
 const closeIcon = iconDictionary('close');
 
-const PaymentPortalModal = ({
-  balance,
-  fundedAmount,
-  handleClearAlerts,
-  handleClose,
-  handleNav,
-  handleSubmitAccountPayment,
-  isSignedIn,
-  issueId,
-  paymentAlerts,
-  userId,
-}) => (
-  <PaymentPortalContainer>
-    <IconWrapper>
-      <IconButton
-        icon={closeIcon}
-        label="Close"
-        onClick={() => handleClose()}
-      />
-    </IconWrapper>
-    <StyledPaymentPortal
-      balance={balance}
-      fundedAmount={fundedAmount}
-      handleClearAlerts={handleClearAlerts}
-      handleNav={handleNav}
-      handleSubmitAccountPayment={handleSubmitAccountPayment}
-      isSignedIn={isSignedIn}
-      issueId={issueId}
-      paymentAlerts={paymentAlerts}
-      removeBorder
-      userId={userId}
-    />
-  </PaymentPortalContainer>
-);
+const PaymentPortalModal = ({ handleClose, step, ...restProps }) => {
+  const isFirstStep = step === 1;
+  return (
+    <PaymentPortalContainer isFirstStep={isFirstStep}>
+      <IconWrapper isFirstStep={isFirstStep}>
+        <IconButton icon={closeIcon} label="Close" onClick={handleClose} />
+      </IconWrapper>
+      <StyledPaymentPortal step={step} {...restProps} />
+    </PaymentPortalContainer>
+  );
+};
 
 PaymentPortalModal.propTypes = {
-  balance: T.number,
-  fundedAmount: T.number,
-  handleClearAlerts: T.func,
-  handleClose: T.func,
-  handleNav: T.func,
-  handleSubmitAccountPayment: T.func,
-  isSignedIn: T.bool,
-  issueId: T.string,
-  paymentAlerts: T.object,
-  userId: T.string,
+  handleClose: T.func.isRequired,
+  step: T.number.isRequired,
 };
 
 export default PaymentPortalModal;

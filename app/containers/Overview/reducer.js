@@ -1,36 +1,49 @@
-/* eslint-disable array-callback-return */
+/* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
 import {
-  FETCH_ORGANIZATION_OPTIONS_FAILURE,
-  FETCH_ORGANIZATION_OPTIONS_SUCCESS,
-  FETCH_ORGANIZATION_OPTIONS,
+  FETCH_FILTER_OPTIONS_FAILURE,
+  FETCH_FILTER_OPTIONS_SUCCESS,
+  FETCH_FILTER_OPTIONS,
+  RESET_STATE,
 } from './constants';
 
 export const initialState = {
   error: null,
+  filterOptions: {
+    bugTag: 0,
+    closedIssues: 0,
+    featureTag: 0,
+    fundedIssues: 0,
+    issueLanguages: [],
+    maxBounty: 100,
+    maxRepoFunded: 100,
+    repoLanguages: [],
+    repos: [],
+    unfundedIssues: 0,
+    userLanguages: [],
+  },
   loading: false,
-  organizationOptions: [],
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const overviewReducer = produce((draft, { payload, type }) => {
   switch (type) {
-    case FETCH_ORGANIZATION_OPTIONS_FAILURE: {
-      const { error } = payload;
-      draft.error = error;
+    case FETCH_FILTER_OPTIONS_FAILURE: {
       draft.loading = false;
       break;
     }
-    case FETCH_ORGANIZATION_OPTIONS_SUCCESS: {
-      const { getOrganizations } = payload;
+    case FETCH_FILTER_OPTIONS_SUCCESS: {
+      const { filterOptions } = payload;
       draft.loading = false;
-      draft.organizationOptions = getOrganizations;
+      draft.filterOptions = filterOptions;
       break;
     }
-    case FETCH_ORGANIZATION_OPTIONS: {
+    case FETCH_FILTER_OPTIONS: {
       draft.loading = true;
       break;
+    }
+    case RESET_STATE: {
+      return initialState;
     }
   }
 }, initialState);

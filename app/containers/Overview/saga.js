@@ -3,35 +3,50 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { post } from 'utils/request';
 
 import {
-  fetchOrganizationOptionsFailure,
-  fetchOrganizationOptionsSuccess,
+  fetchFilterOptionsFailure,
+  fetchFilterOptionsSuccess,
 } from './actions';
-import { FETCH_ORGANIZATION_OPTIONS } from './constants';
+import { FETCH_FILTER_OPTIONS } from './constants';
 
-export function* fetchOrganizationOptionsSaga() {
+export function* fetchFilterOptionsSaga() {
   const query = `
     query {
-      getOrganizations {
-        name,
+      getFilterOptions {
+        __typename
+        ... on Filter {
+          bugTag
+          closedIssues
+          featureTag
+          fundedIssues
+          issueLanguages
+          maxBounty
+          maxRepoFunded
+          repoLanguages
+          repos
+          unfundedIssues
+          userLanguages
+        }
+        ... on Error {
+          message
+        }
       }
     }
   `;
   try {
-    const organizationsQuery = JSON.stringify({
-      query,
-      variables: {},
-    });
-    const { data: getOrganizations } = yield call(
-      post,
-      '/graphql',
-      organizationsQuery,
+    const graphql = JSON.stringify({ query });
+    const {
+      data: { getFilterOptions: filterOptions },
+    } = yield call(post, '/graphql', graphql);
+    yield put(
+      fetchFilterOptionsSuccess({
+        filterOptions,
+      }),
     );
-    yield put(fetchOrganizationOptionsSuccess(getOrganizations));
   } catch (error) {
-    yield put(fetchOrganizationOptionsFailure({ error }));
+    yield put(fetchFilterOptionsFailure());
   }
 }
 
 export default function* watcherSaga() {
-  yield takeLatest(FETCH_ORGANIZATION_OPTIONS, fetchOrganizationOptionsSaga);
+  yield takeLatest(FETCH_FILTER_OPTIONS, fetchFilterOptionsSaga);
 }

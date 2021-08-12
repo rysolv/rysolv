@@ -6,9 +6,11 @@ export const deviceSizes = {
   mobileS: 395,
   mobile: 600,
   tablet: 768,
+  laptopS: 835,
   laptop: 992,
+  desktopS: 1100,
   desktop: 1200,
-  large: 1440,
+  desktopL: 1440,
 };
 const MEDIA_DECORATOR = '@media';
 
@@ -18,7 +20,9 @@ export const mediaQueriesByDevice = {
   mobileS: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.mobileS}px)`,
   mobile: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.mobile}px)`,
   tablet: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.tablet}px)`,
+  laptopS: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.laptopS}px)`,
   laptop: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.laptop}px)`,
+  desktopS: `${MEDIA_DECORATOR} (min-width: ${deviceSizes.desktopS}px)`,
   desktop: `${MEDIA_DECORATOR} (min-width: ${deviceSizes.desktop}px)`,
-  large: `${MEDIA_DECORATOR} (min-width: ${deviceSizes.large}px)`,
+  desktopL: `${MEDIA_DECORATOR} (min-width: ${deviceSizes.desktopL}px)`,
 };

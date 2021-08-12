@@ -5,16 +5,20 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import { dollarValues } from './constants';
 import { StyledToggleButtonGroup } from './styledComponents';
 
-const DollarValueToggle = ({ fundAmount, handleChange }) => (
+const DollarValueToggle = ({ fundValue, handleChange }) => (
   <div>
     <StyledToggleButtonGroup
       classes={{ grouped: 'grouped' }}
       exclusive
-      value={fundAmount}
-      onChange={handleChange}
+      value={fundValue}
     >
       {dollarValues.map(value => (
-        <ToggleButton key={`toggle-${value}`} value={value}>
+        <ToggleButton
+          key={`toggle-${value}`}
+          classes={{ root: 'button', selected: 'selected' }}
+          onClick={e => handleChange(e, value)}
+          value={value}
+        >
           ${value}
         </ToggleButton>
       ))}
@@ -23,7 +27,7 @@ const DollarValueToggle = ({ fundAmount, handleChange }) => (
 );
 
 DollarValueToggle.propTypes = {
-  fundAmount: T.string,
+  fundValue: T.oneOfType([T.number, T.string]),
   handleChange: T.func,
 };
 

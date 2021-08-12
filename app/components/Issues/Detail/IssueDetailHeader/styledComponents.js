@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
 import { BaseTextInput, Verified } from 'components/base_ui';
-import { defaultFontSize, detailFontSize, textColor } from 'defaultStyleHelper';
+import {
+  defaultFontSize,
+  detailFontSize,
+  hoverLinkColor,
+  textColor,
+} from 'defaultStyleHelper';
 
 export const IssueDetailContainer = styled.div`
   margin-bottom: 2rem;
@@ -14,7 +19,7 @@ export const NameWrapper = styled.div`
   margin-top: 1rem;
 `;
 
-export const OrganizationNameContainer = styled.a`
+export const RepoNameContainer = styled.div`
   align-items: center;
   color: ${textColor};
   display: flex;
@@ -22,7 +27,7 @@ export const OrganizationNameContainer = styled.a`
   font-weight: bold;
 
   &:hover {
-    color: #007bff;
+    color: ${hoverLinkColor};
   }
 `;
 
@@ -47,6 +52,6 @@ export const StyledIssueDetail = styled.div`
 `;
 
 export const StyledVerified = styled(Verified)`
-  padding: 0 0.5rem;
   display: flex;
+  padding: 0 0.5rem;
 `;

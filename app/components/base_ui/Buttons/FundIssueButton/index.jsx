@@ -4,6 +4,8 @@ import T from 'prop-types';
 import iconDictionary from 'utils/iconDictionary';
 import { formatDollarAmount } from 'utils/globalHelpers';
 
+import ConditionalRender from '../../ConditionalRender';
+import { RewardWrapper } from '../../StyledWrappers';
 import {
   AddFundsButton,
   FundAmount,
@@ -14,31 +16,39 @@ import {
 const AddIcon = iconDictionary('add');
 
 const FundIssueButton = ({
-  balance,
   disabled,
   dispatchOpenModal,
   fundedAmount,
+  isPullRequestMerged,
   issueId,
+  isUserAccepted,
   open,
-  userId,
+  rep,
 }) => (
   <FundIssueButtonContainer>
-    <FundAmount>
-      <StyledFundingWrapper
-        open={open}
-        value={formatDollarAmount(fundedAmount)}
-      />
-    </FundAmount>
+    <ConditionalRender
+      Component={<RewardWrapper fundedAmount={fundedAmount} />}
+      FallbackComponent={
+        <FundAmount open={open}>
+          <StyledFundingWrapper
+            open={open}
+            value={formatDollarAmount(fundedAmount)}
+          />
+        </FundAmount>
+      }
+      shouldRender={isPullRequestMerged && isUserAccepted && !open}
+    />
     <AddFundsButton
       disabled={disabled}
+      open={open}
       onClick={() =>
         dispatchOpenModal({
           modalState: 'fundIssue',
           tableData: {
-            balance,
             fundedAmount,
             issueId,
-            userId,
+            open,
+            rep,
           },
         })
       }
@@ -48,14 +58,17 @@ const FundIssueButton = ({
   </FundIssueButtonContainer>
 );
 
+FundIssueButton.defaultProps = { disabled: false };
+
 FundIssueButton.propTypes = {
-  balance: T.number,
   disabled: T.bool,
-  dispatchOpenModal: T.func,
-  fundedAmount: T.number,
-  issueId: T.string,
-  open: T.bool,
-  userId: T.string,
+  dispatchOpenModal: T.func.isRequired,
+  fundedAmount: T.number.isRequired,
+  isPullRequestMerged: T.bool.isRequired,
+  issueId: T.string.isRequired,
+  isUserAccepted: T.bool.isRequired,
+  open: T.bool.isRequired,
+  rep: T.number.isRequired,
 };
 
 export default FundIssueButton;

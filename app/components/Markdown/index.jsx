@@ -1,58 +1,73 @@
-import React from 'react';
-import SimpleMDE from 'simplemde';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
-
+import SimpleMDE from 'simplemde';
 import 'simplemde/dist/simplemde.min.css';
 
-import { MarkdownContainer, EditContainer } from './styledComponents';
+import { EditContainer, MarkdownContainer } from './styledComponents';
 
-class Markdown extends React.PureComponent {
-  componentDidMount() {
-    const textArea = document.getElementById('editor');
-    this.markdown = new SimpleMDE({
+const Markdown = ({
+  body,
+  comment,
+  handleInput,
+  handleSubmit,
+  preview,
+  ...restProps
+}) => {
+  const [markdown, setMarkdown] = useState(null);
+
+  // Configure initial Markdown Editor
+  const createMarkdown = ({ textarea }) => {
+    const newMarkdown = new SimpleMDE({
       autosave: false,
-      element: textArea,
-      initialValue: this.props.body || '',
-      status: false,
+      element: textarea,
+      hideIcons: ['fullscreen', 'guide', 'preview', 'side-by-side'],
+      initialValue: body || '',
       placeholder: 'Type here. Use Markdown or HTML to format.',
-      hideIcons: ['side-by-side', 'fullscreen'],
+      shortcuts: {
+        togglePreview: null,
+      },
+      spellChecker: false,
+      status: false,
     });
 
-    this.markdown.codemirror.options.extraKeys.Tab = false;
-    this.markdown.codemirror.options.extraKeys['Shift-Tab'] = false;
+    const { codemirror } = newMarkdown;
+    codemirror.on('change', () => handleInput(newMarkdown.value()));
+    codemirror.options.extraKeys.Tab = false;
+    codemirror.options.extraKeys['Shift-Tab'] = false;
+    return newMarkdown;
+  };
 
-    // Handle CTRL+Enter submit
-    this.markdown.codemirror.on('keyup', (a, b) => {
-      this.props.handleInput(this.markdown.value());
-      if (b.key === 'Enter' && b.ctrlKey === true) {
-        this.props.handleEnter();
-      }
-    });
-  }
+  // Set Markdown area after DOM renders
+  useEffect(() => {
+    const textarea = document.getElementById('editor');
+    setMarkdown(createMarkdown({ textarea }));
+  }, []);
 
-  componentDidUpdate() {
-    if (this.props.body === '') {
-      this.markdown.value(this.props.body);
-    }
-  }
+  // Clear body after submit
+  useEffect(() => {
+    if (markdown && body === '') markdown.value(body);
+  }, [body]);
 
-  render() {
-    const { comment, ...restProps } = this.props;
-    return (
-      <MarkdownContainer comment={comment} {...restProps}>
-        <EditContainer>
-          <textarea id="editor" />
-        </EditContainer>
-      </MarkdownContainer>
-    );
-  }
-}
+  // Toggle preview
+  useEffect(() => {
+    if (markdown) markdown.togglePreview();
+  }, [preview]);
+
+  return (
+    <MarkdownContainer comment={comment} {...restProps}>
+      <EditContainer>
+        <textarea id="editor" />
+      </EditContainer>
+    </MarkdownContainer>
+  );
+};
 
 Markdown.propTypes = {
   body: T.string,
-  handleInput: T.func,
-  handleEnter: T.func,
   comment: T.bool,
+  handleSubmit: T.func,
+  handleInput: T.func,
+  preview: T.bool,
 };
 
 export default Markdown;

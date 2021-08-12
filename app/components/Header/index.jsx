@@ -1,37 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
+
 import DesktopHeader from './DesktopHeader';
+import DesktopLandingHeader from './DesktopLandingHeader';
+import MobileHeader from './MobileHeader';
+import MobileLandingHeader from './MobileLandingHeader';
 
 const Header = ({
   activeUser,
+  deviceView,
   handleNav,
-  handleSignin,
+  handleResetState,
   handleSignout,
   isSignedIn,
-  view,
+  location,
 }) => {
-  const isMobile = view === 'mobile';
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const isMobile =
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
+  const isMobileOrTabletOrLaptop =
+    isMobile ||
+    deviceView === 'tablet' ||
+    deviceView === 'laptopS' ||
+    deviceView === 'laptop';
+
+  const { pathname } = window.location;
+  const isLandingOrRecruitmentPage =
+    pathname === '/' || pathname === '/jobs' || pathname === '/recruitment';
+
+  const DesktopHeaderToRender = isLandingOrRecruitmentPage
+    ? DesktopLandingHeader
+    : DesktopHeader;
+
+  const MobileHeaderToRender = isLandingOrRecruitmentPage
+    ? MobileLandingHeader
+    : MobileHeader;
+
+  const shouldRender = isLandingOrRecruitmentPage
+    ? !isMobileOrTabletOrLaptop
+    : !isMobile;
+
   return (
-    <DesktopHeader
-      activeUser={activeUser}
-      handleNav={handleNav}
-      handleSignin={handleSignin}
-      handleSignout={handleSignout}
-      isMobile={isMobile}
-      isSignedIn={isSignedIn}
-      view={view}
+    <ConditionalRender
+      Component={DesktopHeaderToRender}
+      FallbackComponent={MobileHeaderToRender}
+      propsToPassDown={{
+        activeUser,
+        deviceView,
+        handleNav,
+        handleResetState,
+        handleSignout,
+        isDrawerOpen,
+        isLandingOrRecruitmentPage,
+        isMobile,
+        isSignedIn,
+        location,
+        setIsDrawerOpen,
+      }}
+      shouldRender={shouldRender}
     />
   );
 };
 
 Header.propTypes = {
-  activeUser: T.object,
-  handleNav: T.func,
-  handleSignin: T.func,
-  handleSignout: T.func,
-  isSignedIn: T.bool,
-  view: T.string,
+  activeUser: T.object.isRequired,
+  deviceView: T.string.isRequired,
+  handleNav: T.func.isRequired,
+  handleResetState: T.func.isRequired,
+  handleSignout: T.func.isRequired,
+  isSignedIn: T.bool.isRequired,
+  location: T.object.isRequired,
 };
 
 export default Header;

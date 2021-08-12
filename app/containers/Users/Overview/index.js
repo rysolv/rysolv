@@ -11,34 +11,35 @@ import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 
-import { fetchUsers, inputChange, searchUsers } from '../actions';
+import { fetchUsers, resetState, searchUsers } from '../actions';
 import {
-  makeSelectUsers,
   makeSelectUsersError,
   makeSelectUsersFormatted,
   makeSelectUsersLoading,
-  makeSelectUsersSearchDisabled,
 } from '../selectors';
 import reducer from '../reducer';
 import saga from '../saga';
 
-// eslint-disable-next-line react/prefer-stateless-function
 const UsersOverview = ({
   deviceView,
-  disabled,
   dispatchFetchUsers,
+  dispatchResetState,
   error,
-  handleInputChange,
   handleNav,
   handleSearchUsers,
   loading,
-  params: { searchValue },
-  search,
+  match,
   users,
 }) => {
+  const {
+    params: { searchValue },
+    path,
+  } = match;
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Users Overview';
+    document.title = 'Users';
     if (searchValue) {
       handleSearchUsers({ value: searchValue });
     } else {
@@ -53,11 +54,8 @@ const UsersOverview = ({
       loading={loading}
       propsToPassDown={{
         deviceView,
-        disabled,
-        handleInputChange,
         handleNav,
-        handleSearchUsers,
-        search,
+        path,
       }}
     />
   );
@@ -65,15 +63,13 @@ const UsersOverview = ({
 
 UsersOverview.propTypes = {
   deviceView: T.string,
-  disabled: T.bool,
   dispatchFetchUsers: T.func,
-  error: T.oneOfType([T.object, T.bool]),
-  handleInputChange: T.func,
-  handleNav: T.func,
+  dispatchResetState: T.func.isRequired,
+  error: T.oneOfType([T.bool, T.string]),
+  handleNav: T.func.isRequired,
   handleSearchUsers: T.func,
   loading: T.bool,
-  params: T.object,
-  search: T.object,
+  match: T.object.isRequired,
   users: T.array,
 };
 
@@ -81,10 +77,8 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Users
    */
-  disabled: makeSelectUsersSearchDisabled(),
   error: makeSelectUsersError('users'),
   loading: makeSelectUsersLoading('users'),
-  search: makeSelectUsers('search'),
   users: makeSelectUsersFormatted('users'),
   /**
    * Reducer : ViewSize
@@ -94,16 +88,16 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    /*
+     * Reducer : Router
+     */
+    handleNav: route => dispatch(push(route)),
     /**
      * Reducer : Users
      */
     dispatchFetchUsers: () => dispatch(fetchUsers()),
-    handleInputChange: payload => dispatch(inputChange(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     handleSearchUsers: payload => dispatch(searchUsers(payload)),
-    /**
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 

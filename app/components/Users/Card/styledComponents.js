@@ -1,16 +1,18 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
+import { Coin } from 'components/base_ui';
 import {
   defaultFontSize,
   detailFontSize,
   hoverLinkColor,
   subheaderFontSize,
-  subTextColor,
+  subTextGrey,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile, mobileS } = mediaQueriesByDevice;
+const { mobileS } = mediaQueriesByDevice;
 
 export const ActiveContainer = styled.div`
   color: #388e3c;
@@ -26,7 +28,7 @@ export const IconWrapper = styled.div`
   display: flex;
   font-size: ${defaultFontSize};
   justify-content: center;
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
 `;
 
 export const ImageContainer = styled.div`
@@ -34,7 +36,7 @@ export const ImageContainer = styled.div`
 `;
 
 export const IssuesContainer = styled.div`
-  color: ${subTextColor};
+  color: ${subTextGrey};
   font-weight: 500;
 `;
 
@@ -42,25 +44,19 @@ export const IssuesWrapper = styled.div`
   display: flex;
   font-size: ${detailFontSize};
   justify-content: space-between;
-  padding-top: 1rem;
-`;
-
-export const MemberInfoContainer = styled.div`
-  color: ${subTextColor};
-  font-size: ${detailFontSize};
-  line-height: 2rem;
+  padding-top: ${({ isMobileS }) => (isMobileS ? '4.1rem' : '1rem')};
 `;
 
 export const MemberWrapper = styled.div`
   align-self: center;
+  padding-top: ${({ isMobileS }) => (isMobileS ? '0.5rem' : '0')};
 `;
 
-export const NameWrapper = styled.a`
+export const NameLink = styled(Link)`
   font-size: ${subheaderFontSize};
 
   &:hover {
     color: ${hoverLinkColor};
-    cursor: pointer;
   }
 `;
 
@@ -70,21 +66,41 @@ export const NumberContainer = styled.div`
   font-weight: 500;
 `;
 
-export const OverviewWrapper = styled.div`
+export const OuterWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  min-height: 50rem;
+  width: 100%;
+`;
+
+export const RowSection = styled.div`
+  align-content: start;
   display: flex;
   flex-direction: row;
   flex-flow: wrap;
-  justify-content: space-between;
-  margin-left: 1rem;
-
-  ${mobile} {
-    justify-content: center;
-    margin-left: 2rem;
-  }
+  justify-content: center;
+  margin-left: 2rem;
+  min-height: 50rem;
 
   ${mobileS} {
     margin-left: 0;
   }
+`;
+
+export const RowSectionWrapper = styled.div`
+  @media (max-width: 769px) {
+    width: ${({ hasOneItem }) => (hasOneItem ? '21.5rem' : '41rem')};
+  }
+  @media (max-width: 600px) {
+    width: ${({ hasOneItem }) => (hasOneItem ? '21.5rem' : '41rem')};
+  }
+  @media (max-width: 444px) {
+    width: 21.5rem;
+  }
+`;
+
+export const StyledCoin = styled(Coin)`
+  margin: 0.5rem;
 `;
 
 export const StyledListSquare = styled.div`
@@ -92,16 +108,13 @@ export const StyledListSquare = styled.div`
   border-radius: 0.2rem;
   border: 0.1rem solid #e0e0e0;
   color: ${textColor};
-  margin: 0 1rem 1rem 0;
+  height: 17.5rem;
+  margin: 0 2rem 2rem 0;
   padding: 0.5rem;
   width: 17.5rem;
 
-  ${mobile} {
-    margin: 0 2rem 2rem 0;
-    width: auto;
-  }
-
   ${mobileS} {
+    height: fit-content;
     margin-right: 0;
     padding: 0 1rem;
     width: 100%;
@@ -116,7 +129,8 @@ export const StyledSettingWrapper = styled.div`
 export const StyledSquare = styled.div`
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: 100%;
+  justify-content: space-between;
 
   ${mobileS} {
     flex-direction: row;

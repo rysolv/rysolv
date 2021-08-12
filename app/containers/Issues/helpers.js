@@ -4,8 +4,8 @@ import { intersection, isEmpty } from 'lodash';
 export const filterIssues = (issues, filterParams) => {
   const {
     language: languageFilter,
-    organization: organizationFilter,
     price: priceFilter,
+    repo: repoFilter,
     status: { closed, funded, unfunded },
     type: { bug, feature },
   } = filterParams;
@@ -16,11 +16,11 @@ export const filterIssues = (issues, filterParams) => {
   let unfundedIssues = [];
 
   const filteredIssues = issues.filter(
-    ({ fundedAmount, language: languages, organizationName }) => {
+    ({ fundedAmount, language: languages, repoName }) => {
       const formattedLanguageFilter = languageFilter.map(({ value }) =>
         value.toLowerCase(),
       );
-      const formattedOrganizationFilter = organizationFilter.map(({ value }) =>
+      const formattedRepoFilter = repoFilter.map(({ value }) =>
         value.toLowerCase(),
       );
       if (
@@ -32,8 +32,8 @@ export const filterIssues = (issues, filterParams) => {
         return false;
       }
       if (
-        !isEmpty(formattedOrganizationFilter) &&
-        !formattedOrganizationFilter.includes(organizationName.toLowerCase())
+        !isEmpty(formattedRepoFilter) &&
+        !formattedRepoFilter.includes(repoName.toLowerCase())
       ) {
         return false;
       }
@@ -59,10 +59,10 @@ export const filterIssues = (issues, filterParams) => {
     );
   }
   if (bug) {
-    bugIssues = filteredIssues.filter(({ type }) => type === 'bug');
+    bugIssues = filteredIssues.filter(({ type }) => type === 'Bug');
   }
   if (feature) {
-    featureIssues = filteredIssues.filter(({ type }) => type === 'feature');
+    featureIssues = filteredIssues.filter(({ type }) => type === 'Feature');
   }
   const arr1 =
     closed || funded || unfunded
@@ -75,14 +75,22 @@ export const filterIssues = (issues, filterParams) => {
 
 export const organizeIssues = (issues, organizeParam) => {
   const sortedArray = issues.sort((a, b) => {
+    if (!a.open) return 1;
+    if (!b.open) return -1;
     if (organizeParam === 'Newest') {
-      if (a.modifiedDate < b.modifiedDate) {
+      if (a.createdDate < b.createdDate) {
         return 1;
       }
       return -1;
     }
     if (organizeParam === 'Most Funded') {
       if (a.fundedAmount < b.fundedAmount) {
+        return 1;
+      }
+      return -1;
+    }
+    if (organizeParam === 'Most Popular') {
+      if (a.rep < b.rep) {
         return 1;
       }
       return -1;

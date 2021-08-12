@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { StyledTooltip } from './styledComponents';
+import { StyledTooltip, StyledTooltipLabel } from './styledComponents';
 
 const TooltipIcon = ({
   Icon,
@@ -24,7 +24,7 @@ const TooltipIcon = ({
       placement="right-start"
       role="tooltip"
       tabIndex="0"
-      title={TooltipContent}
+      title={<StyledTooltipLabel>{TooltipContent}</StyledTooltipLabel>}
       {...restProps}
     >
       {Component}

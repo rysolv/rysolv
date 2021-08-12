@@ -1,7 +1,6 @@
 /* eslint-disable indent */
 /* eslint-disable no-nested-ternary */
 import React from 'react';
-import moment from 'moment';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
@@ -12,30 +11,30 @@ import {
 } from './styledComponents';
 
 const AddIcon = iconDictionary('addCircle');
-const CancelIcon = iconDictionary('cancel');
-const SuccessIcon = iconDictionary('successOutline');
-const CommentIcon = iconDictionary('comments');
-const FundedIcon = iconDictionary('funded');
-const Edit = iconDictionary('edit');
-const GiftIcon = iconDictionary('gift');
 const AttemptIcon = iconDictionary('attempt');
+const CancelIcon = iconDictionary('cancel');
+const CommentIcon = iconDictionary('comments');
+const Edit = iconDictionary('edit');
+const FundedIcon = iconDictionary('funded');
+const GiftIcon = iconDictionary('gift');
 const PullRequestIcon = iconDictionary('pullRequest');
+const SuccessIcon = iconDictionary('successOutline');
 const WatchIcon = iconDictionary('monocle');
 
-const AddWatching = <StyledAddIcon>{WatchIcon}</StyledAddIcon>;
-const RemoveWatching = <StyledRemoveIcon>{WatchIcon}</StyledRemoveIcon>;
 const AddAttempting = <StyledAddIcon>{AttemptIcon}</StyledAddIcon>;
-const RemoveAttempting = <StyledRemoveIcon>{AttemptIcon}</StyledRemoveIcon>;
+const AddComment = <StyledCommentIcon>{CommentIcon}</StyledCommentIcon>;
+const AddWatching = <StyledAddIcon>{WatchIcon}</StyledAddIcon>;
 const Created = <StyledAddIcon>{AddIcon}</StyledAddIcon>;
 const Deleted = <StyledRemoveIcon>{CancelIcon}</StyledRemoveIcon>;
-const AddComment = <StyledCommentIcon>{CommentIcon}</StyledCommentIcon>;
+const Earned = <StyledAddIcon>{GiftIcon}</StyledAddIcon>;
 const Edited = <StyledAddIcon>{Edit}</StyledAddIcon>;
-const Resolved = <StyledAddIcon>{SuccessIcon}</StyledAddIcon>;
+const Funded = <StyledAddIcon>{FundedIcon}</StyledAddIcon>;
 const PullRequest = (
   <StyledPullRequestIcon>{PullRequestIcon}</StyledPullRequestIcon>
 );
-const Funded = <StyledAddIcon>{FundedIcon}</StyledAddIcon>;
-const Earned = <StyledAddIcon>{GiftIcon}</StyledAddIcon>;
+const RemoveAttempting = <StyledRemoveIcon>{AttemptIcon}</StyledRemoveIcon>;
+const RemoveWatching = <StyledRemoveIcon>{WatchIcon}</StyledRemoveIcon>;
+const Resolved = <StyledAddIcon>{SuccessIcon}</StyledAddIcon>;
 
 export const formatActivity = data => {
   const {
@@ -45,10 +44,12 @@ export const formatActivity = data => {
     fundedValue,
     issueId,
     issueName,
-    organizationId,
-    organizationName,
     profilePic,
     pullRequestId,
+    pullRequestName,
+    pullRequestUrl,
+    repoId,
+    repoName,
     userId,
     username,
   } = data;
@@ -56,7 +57,7 @@ export const formatActivity = data => {
   const actionDictionary = {
     add_attempting: { action: 'started attempting', icon: AddAttempting },
     add_watching: { action: 'started watching', icon: AddWatching },
-    close: { action: 'closed issue', icon: Deleted },
+    close: { action: 'closed', icon: Deleted },
     comment: { action: 'commented on', icon: AddComment },
     create: { action: 'created', icon: Created },
     delete: { action: 'deleted', icon: Deleted },
@@ -65,36 +66,38 @@ export const formatActivity = data => {
     open_pr: { action: 'opened pull request', icon: PullRequest },
     remove_attempting: { action: 'stopped attempting', icon: RemoveAttempting },
     remove_watching: { action: 'stopped watching', icon: RemoveWatching },
+    reopen: { action: 'reopened', icon: Created },
     resolve: { action: 'resolved', icon: Resolved },
     update: { action: 'updated', icon: Edited },
   };
 
   const { action, icon } = actionDictionary[actionType];
-  const targetType = issueId
+  const targetType = pullRequestId
+    ? 'pull request'
+    : issueId
     ? 'issue'
-    : organizationId
-    ? 'organization'
-    : 'pull request';
+    : repoId
+    ? 'repo'
+    : userId
+    ? 'account with'
+    : null;
 
-  const route = issueId
-    ? 'issues'
-    : organizationId
-    ? 'organizations'
-    : 'pullrequests';
+  const route = issueId ? 'issues' : repoId ? 'repos' : 'pullrequests';
 
-  const targetId = issueId || organizationId || pullRequestId;
+  const targetId = pullRequestId || issueId || repoId;
 
-  const path = `/${route}/detail/${targetId}`;
+  const isInternalLink = !pullRequestId;
+  const path = pullRequestId ? pullRequestUrl : `/${route}/detail/${targetId}`;
 
-  const targetName = issueName || organizationName;
-  const formattedDate = moment(createdDate).format('YYYY/MM/DD');
+  const targetName = pullRequestName || issueName || repoName;
 
   const formattedActivity = {
     action,
     activityId,
-    date: formattedDate,
+    date: createdDate,
     fundedValue,
     icon,
+    isInternalLink,
     path,
     target: {
       targetId,

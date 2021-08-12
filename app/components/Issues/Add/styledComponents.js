@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 
+import { BaseLink, BaseTextInputWithAdornment } from 'components/base_ui';
 import {
   defaultFontSize,
   detailFontSize,
-  hyperlinkColor,
-  textColor,
+  errorRed,
+  hoverLinkColor,
+  lightBlueColor,
   subheaderFontSize,
+  textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-export const DataWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
+const { mobile } = mediaQueriesByDevice;
 
 export const HorizontalWrapper = styled.div`
   display: flex;
@@ -22,12 +23,16 @@ export const ImportFormContainer = styled.section`
   color: ${textColor};
   font-size: 2.4rem;
   font-weight: 300;
-  height: 50%;
   line-height: 4rem;
   margin: auto;
   padding: 4rem 2rem;
-  text-align: center;
+  text-align: left;
   width: 80%;
+
+  ${mobile} {
+    width: 100%;
+  }
+
   * {
     font-size: ${defaultFontSize};
   }
@@ -35,57 +40,65 @@ export const ImportFormContainer = styled.section`
   .MuiFormHelperText-root {
     font-size: ${detailFontSize};
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const InputFormWrapper = styled.div`
   padding: 0 2rem;
 `;
 
-export const KeyAndValueContainer = styled.div`
+export const MessageWrapper = styled.div`
+  align-items: center;
   display: flex;
+  font-size: 1.6rem;
+  justify-content: center;
+  white-space: pre;
+
+  * {
+    font-size: 1.6rem;
+  }
+
+  svg {
+    margin-right: 0.5rem;
+  }
 `;
 
-export const KeyGroupWrapper = styled.div`
-  padding-right: 2rem;
+export const StyledBaseLink = styled(BaseLink)`
+  &:hover {
+    color: ${hoverLinkColor};
+    text-decoration: underline;
+  }
 `;
 
-export const KeyWrapper = styled.div`
-  color: ${textColor};
-  display: flex;
-  flex-direction: row;
-  font-size: ${defaultFontSize};
-  min-width: 15rem;
-  padding: 2rem 0;
-  text-decoration: underline;
+export const StyledBaseTextInputWithAdornment = styled(
+  BaseTextInputWithAdornment,
+)`
+  margin: 0 !important;
 `;
+
 export const StyledImportError = styled.div`
-  color: red;
+  color: ${errorRed};
   font-size: ${detailFontSize};
   line-height: ${defaultFontSize};
-  padding: 0 1rem;
+  padding: 0 1rem 2rem;
   text-align: left;
 `;
 
-export const StyledMarkdownWrapper = styled.div`
-  padding: 1rem;
-  font-size: 1.2rem;
-  color: ${textColor};
-`;
-
 export const StyledLabel = styled.div`
-  color: ${hyperlinkColor};
+  color: ${lightBlueColor};
   font-size: ${subheaderFontSize};
 
-  :hover {
+  &:hover {
     cursor: pointer;
     text-decoration: underline;
   }
 `;
 
-export const ValueWrapper = styled.div`
-  display: flex;
+export const StyledMarkdownWrapper = styled.div`
   color: ${textColor};
-  flex-direction: row;
-  font-size: ${defaultFontSize};
-  padding: 2rem 0;
+  font-size: 1.2rem;
+  padding: 1rem;
 `;

@@ -1,15 +1,21 @@
 import styled from 'styled-components';
+import FormHelperText from '@material-ui/core/FormHelperText';
+
+import { ErrorSuccessBanner, LanguageWrapper } from 'components/base_ui';
+import { TagWrapper } from 'components/Issues/styledComponents';
+
 import {
   borderColor,
+  cardHeaderFontSize,
   defaultFontSize,
+  headerColor,
   headerFontSize,
   hoverLinkColor,
-  hyperlinkColor,
-  subHeaderColor,
   textColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
-const { desktop, laptop, tablet, mobile, large } = mediaQueriesByDevice;
+
+const { desktop, desktopL, laptop, mobile, tablet } = mediaQueriesByDevice;
 
 export const AddWrapper = styled.div`
   align-items: center;
@@ -20,13 +26,15 @@ export const AddWrapper = styled.div`
 `;
 
 export const AddForm = styled.div`
-  background-color: white;
-  border: 0.1rem solid ${borderColor};
-  width: 80%;
+  background-color: ${({ isVerify }) => (isVerify ? 'transparent' : 'white')};
+  border-radius: ${({ isVerify }) => (isVerify ? '0' : '0.5rem')};
+  border: ${({ isVerify }) =>
+    isVerify ? 'none' : `0.1rem solid ${borderColor}`};
+  margin-top: 1.5rem;
   padding: 1rem;
-  border-radius: 0.5rem;
+  width: 80%;
 
-  ${large} {
+  ${desktopL} {
     width: 70%;
   }
   ${desktop} {
@@ -56,8 +64,8 @@ export const BackLink = styled.div`
   vertical-align: middle;
 
   :hover {
-    cursor: pointer;
     color: ${hoverLinkColor};
+    cursor: pointer;
   }
 `;
 
@@ -65,39 +73,109 @@ export const ButtonGroup = styled.div`
   text-align: center;
 `;
 
-export const LogoContainer = styled.img`
-  display: inline-flex;
-  margin: 0 1rem 0 0;
-  width: 5rem;
-  height: 5rem;
+export const LanguageContainer = styled.div`
+  display: flex;
+  margin: 0.5rem 1rem;
 `;
 
-export const OrganizationNameWrapper = styled.div`
+export const LogoWrapper = styled.img`
+  display: inline-flex;
+  height: 5rem;
+  margin: 0 1rem 0 0;
+  width: 5rem;
+`;
+
+export const RepoName = styled.div`
+  color: ${textColor};
+  font-size: ${cardHeaderFontSize};
+  margin: 0.5rem 0;
+`;
+
+export const RepoNameWrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
 `;
 
-export const SelectedOrganization = styled.div`
-  margin: 0.5rem 0;
+export const SelectedRepo = styled.div`
   font-size: ${headerFontSize};
+  margin: 0.5rem 0;
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin-bottom: 1rem;
+  width: 80%;
+
+  ${desktopL} {
+    width: 70%;
+  }
+  ${desktop} {
+    width: 70%;
+  }
+  ${laptop} {
+    width: 90%;
+  }
+  ${tablet} {
+    width: 90%;
+  }
+  ${mobile} {
+    width: 100%;
+  }
+`;
+
+export const StyledFocusDiv = styled.div`
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const StyledFormHelperText = styled(FormHelperText)`
+  font-size: 1.2rem;
 `;
 
 export const StyledH3 = styled.h3`
-  color: ${subHeaderColor};
-  padding: 1rem 2rem;
+  color: ${headerColor};
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0;
+  padding: ${({ isFirstHeader }) =>
+    isFirstHeader ? '0 0 1rem' : '2rem 0 1rem'};
+`;
+
+export const StyledLanguageWrapper = styled(LanguageWrapper)`
   margin-bottom: 0;
+  margin-right: 1rem;
+`;
+
+export const StyledLink = styled.a`
+  color: ${hoverLinkColor};
+  font-size: ${defaultFontSize};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
+
+export const StyledTagWrapper = styled(TagWrapper)`
+  margin-bottom: 0;
+  margin-right: 1rem;
+  opacity: ${({ isTagSelected }) => (isTagSelected ? '1' : '0.5')};
+
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+  }
+`;
+
+export const Tag = styled.div`
+  display: flex;
+`;
+
+export const TagContainer = styled.div`
+  margin: 0.5rem 1rem;
 `;
 
 export const VerifyWrapper = styled.div`
   padding: 0 2rem;
-`;
-
-export const StyledLink = styled.a`
-  font-size: ${defaultFontSize};
-  color: ${hyperlinkColor};
-
-  &:hover {
-    cursor: pointer;
-    color: ${hoverLinkColor};
-  }
 `;

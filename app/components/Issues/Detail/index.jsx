@@ -2,162 +2,210 @@ import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
 import { BackNav, ConditionalRender } from 'components/base_ui';
-import { CommentCard, NoComment, NewComment } from 'components/Comments';
-import PaymentPortal from 'components/Payments';
+import { NewComment } from 'components/MarkdownRender';
+import Helmet from 'components/Helmet';
 import UpvotePanel from 'components/Upvote';
-import iconDictionary from 'utils/iconDictionary';
 
+import { formatDollarAmount } from 'utils/globalHelpers';
+import iconDictionary from 'utils/iconDictionary';
+import PaymentPortal from 'containers/Payments';
+
+import Comments from './Comments';
 import IssueDetailBody from './IssueDetailBody';
 import IssueDetailHeader from './IssueDetailHeader';
 import IssueTopBar from './IssueTopBar';
+import ShareComponent from './ShareComponent';
 import {
   CommentWrapper,
   DetailContainer,
   Divider,
+  EmbedIssueWrapper,
   IssueDetailColumn,
   IssueDetailContainer,
   IssueDetailContentContainer,
   IssueDetailWrapper,
   LeftPanel,
+  ManageIssueWrapper,
   SidebarContainer,
-  StyledButton,
   StyledErrorSuccessBanner,
-  StyledIssueAccountManager,
+  StyledSharingButton,
   TopBarWrapper,
 } from './styledComponents';
 
-const CloseCircleIcon = iconDictionary('closeCircle');
-const OpenCircleIcon = iconDictionary('successOutline');
+// const CloseCircleIcon = iconDictionary('closeCircle');
+const CodeIcon = iconDictionary('code', {}, 'code');
+// const OpenCircleIcon = iconDictionary('successOutline');
 
 const IssueDetail = ({
   activeUser,
-  activeUser: { balance, id: activeUserId, issues },
+  activeUser: { id: activeUserId },
+  addWatching,
   alerts: { error, success },
   data,
   data: {
+    awardedUser,
     body,
     comments,
     createdDate,
     fundedAmount,
     id: issueId,
+    isPullRequestMerged,
+    isUserAccepted,
     language,
     name,
     open,
-    profilePic,
     rep,
+    repo,
+    type,
     userId,
     username,
   },
   deviceView,
-  dispatchCloseIssue,
-  dispatchEditIssue,
+  // dispatchCloseIssue,
+  // dispatchEditIssue,
+  dispatchFetchAttemptList,
+  dispatchFetchPullRequestList,
   dispatchFetchWatchList,
+  dispatchOpenIssueModal,
   dispatchOpenModal,
   handleClearAlerts,
   handleComment,
   handleIncrement,
-  handleNav,
-  handleSubmitAccountPayment,
   handleUpvote,
   isSignedIn,
-  paymentAlerts,
 }) => {
-  const [displayEditView, setDisplayEditView] = useState(false);
+  // const [displayEditView, setDisplayEditView] = useState(false);
   const [bodyChange, setBodyChange] = useState(body);
   const [languageChange, setLanguageChange] = useState(language);
   const [nameChange, setNameChange] = useState(name);
-  const handleClose = () => {
-    setDisplayEditView(false);
-    setBodyChange(body);
-    setLanguageChange(language);
-    setNameChange(name);
+  const [typeChange, setTypeChange] = useState(type);
+  // const handleClose = () => {
+  //   setDisplayEditView(false);
+  //   setBodyChange(body);
+  //   setLanguageChange(language);
+  //   setNameChange(name);
+  //   setTypeChange(type);
+  // };
+
+  // const handleSave = () => {
+  //   dispatchEditIssue({
+  //     editRequest: {
+  //       body: bodyChange,
+  //       language: languageChange,
+  //       name: nameChange,
+  //       type: typeChange,
+  //     },
+  //     issueId,
+  //   });
+  // };
+
+  // const CloseOpenIssueComponent = (
+  //   <ConditionalRender
+  //     Component={
+  //       <StyledButton
+  //         disableRipple
+  //         onClick={() =>
+  //           dispatchOpenModal({
+  //             modalState: 'closeIssue',
+  //             tableData: { issueId },
+  //           })
+  //         }
+  //         open={open}
+  //       >
+  //         {CloseCircleIcon}
+  //         Close Issue
+  //       </StyledButton>
+  //     }
+  //     FallbackComponent={
+  //       <StyledButton
+  //         disableRipple
+  //         onClick={() =>
+  //           dispatchCloseIssue({
+  //             issueId,
+  //             shouldClose: false,
+  //             userId: activeUserId,
+  //           })
+  //         }
+  //         open={open}
+  //       >
+  //         {OpenCircleIcon}
+  //         Reopen Issue
+  //       </StyledButton>
+  //     }
+  //     shouldRender={open}
+  //   />
+  // );
+
+  // const EditIssueComponent = (
+  //   <StyledIssueAccountManager
+  //     displayEditView={displayEditView}
+  //     handleClose={handleClose}
+  //     handleSave={handleSave}
+  //     setDisplayEditView={setDisplayEditView}
+  //     type="issue"
+  //   />
+  // );
+
+  const EmbedIssueComponent = props => (
+    <Fragment>
+      <ShareComponent fundedAmount={fundedAmount} issueId={issueId} />
+      <StyledSharingButton
+        Icon={CodeIcon}
+        label="Embed"
+        onClick={() =>
+          dispatchOpenIssueModal({
+            modalState: 'embedIssue',
+          })
+        }
+        {...props}
+      />
+    </Fragment>
+  );
+
+  const primaryUser = {
+    route: `/users/detail/${userId}`,
+    username,
   };
 
-  const handleSave = () => {
-    dispatchEditIssue({
-      editRequest: {
-        body: bodyChange,
-        name: nameChange,
-        language: languageChange,
-      },
-      issueId,
-    });
-  };
+  const isDesktop =
+    deviceView === 'desktopS' ||
+    deviceView === 'desktop' ||
+    deviceView === 'desktopL';
 
-  const CloseOpenIssueComponent = (
+  const isMobileOrLaptop =
+    deviceView === 'mobileXXS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobile' ||
+    deviceView === 'tablet' ||
+    deviceView === 'laptopS' ||
+    deviceView === 'laptop';
+
+  const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
+
+  const ManageIssueComponent = () => (
     <ConditionalRender
       Component={
-        <StyledButton
-          disableRipple
-          onClick={() =>
-            dispatchOpenModal({
-              modalState: 'closeIssue',
-              tableData: { issueId },
-            })
-          }
-          open={open}
-        >
-          {CloseCircleIcon}
-          Close Issue
-        </StyledButton>
-      }
-      FallbackComponent={
-        <StyledButton
-          disableRipple
-          onClick={() =>
-            dispatchCloseIssue({
-              issueId,
-              shouldClose: false,
-              userId: activeUserId,
-            })
-          }
-          open={open}
-        >
-          {OpenCircleIcon}
-          Reopen Issue
-        </StyledButton>
+        <Fragment>
+          <Divider>Share Issue</Divider>
+          <ManageIssueWrapper>
+            <EmbedIssueComponent removeMargin />
+            {/* <EditIssueWrapper>{EditIssueComponent}</EditIssueWrapper>
+             {CloseOpenIssueComponent} */}
+          </ManageIssueWrapper>
+        </Fragment>
       }
       shouldRender={open}
     />
   );
-
-  const primaryUser = {
-    alt: username,
-    detailRoute: `/users/detail/${userId}`,
-    profilePic,
-    small: true,
-    username,
-  };
-
-  const generateComments = () =>
-    comments.map(comment => {
-      const user = {
-        alt: comment.username,
-        detailRoute: `/users/detail/${comment.userId}`,
-        profilePic: comment.profilePic,
-        size: '4rem',
-        username: comment.username,
-      };
-      return (
-        <CommentCard
-          key={`${comment.username}-${comment.createdDate}`}
-          body={comment.body}
-          date={comment.createdDate}
-          handleNav={handleNav}
-          userProfile={user}
-        />
-      );
-    });
-
-  const commentsDiv =
-    comments && comments.length > 0 ? generateComments() : <NoComment />;
-
-  const isDesktop = deviceView === 'desktop';
-
-  const upvoted = activeUser.upvotes && activeUser.upvotes.includes(issueId);
   return (
     <IssueDetailContainer>
-      <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
+      <Helmet
+        description={`Earn ${formatDollarAmount(fundedAmount)} on rysolv!`}
+        location={`/issues/detail/${issueId}`}
+        title={name}
+      />
+      <BackNav label="Back to Issues" path="/issues" />
       <ConditionalRender
         Component={
           <StyledErrorSuccessBanner
@@ -166,12 +214,13 @@ const IssueDetail = ({
             success={success}
           />
         }
-        shouldRender={isSignedIn && !!issues.find(({ id }) => issueId === id)}
+        shouldRender={isSignedIn}
       />
       <DetailContainer>
         <IssueDetailWrapper>
           <LeftPanel>
             <UpvotePanel
+              disabled={!open}
               dispatchOpenModal={dispatchOpenModal}
               handleUpvote={handleUpvote}
               isIssueDetail
@@ -186,8 +235,12 @@ const IssueDetail = ({
             <TopBarWrapper>
               <IssueTopBar
                 activeUser={activeUser}
+                addWatching={addWatching}
                 data={data}
+                dispatchFetchAttemptList={dispatchFetchAttemptList}
+                dispatchFetchPullRequestList={dispatchFetchPullRequestList}
                 dispatchFetchWatchList={dispatchFetchWatchList}
+                dispatchOpenIssueModal={dispatchOpenIssueModal}
                 dispatchOpenModal={dispatchOpenModal}
                 handleIncrement={handleIncrement}
                 isDesktop={isDesktop}
@@ -197,9 +250,7 @@ const IssueDetail = ({
             <IssueDetailColumn>
               <IssueDetailHeader
                 data={data}
-                displayEditView={displayEditView}
-                handleNav={handleNav}
-                isSignedIn={isSignedIn}
+                displayEditView={false}
                 nameChange={nameChange}
                 setNameChange={setNameChange}
               />
@@ -209,18 +260,26 @@ const IssueDetail = ({
                   body={body}
                   bodyChange={bodyChange}
                   date={createdDate}
-                  displayEditView={displayEditView}
-                  handleNav={handleNav}
+                  displayEditView={false}
                   language={language}
                   languageChange={languageChange}
+                  repo={repo}
                   setBodyChange={setBodyChange}
                   setLanguageChange={setLanguageChange}
+                  setTypeChange={setTypeChange}
+                  type={type}
+                  typeChange={typeChange}
                   userProfile={primaryUser}
                 />
               </div>
 
+              <ConditionalRender
+                Component={ManageIssueComponent}
+                shouldRender={isMobileOrLaptop}
+              />
+
               <Divider>Comments</Divider>
-              <CommentWrapper>{commentsDiv}</CommentWrapper>
+              <Comments comments={comments} />
 
               <ConditionalRender
                 Component={
@@ -230,7 +289,6 @@ const IssueDetail = ({
                       <NewComment
                         activeUser={activeUser}
                         handleComment={handleComment}
-                        handleNav={handleNav}
                         issueId={issueId}
                       />
                     </CommentWrapper>
@@ -242,37 +300,34 @@ const IssueDetail = ({
           </IssueDetailContentContainer>
         </IssueDetailWrapper>
         <SidebarContainer>
-          <ConditionalRender
-            Component={
-              <StyledIssueAccountManager
-                displayEditView={displayEditView}
-                handleClose={handleClose}
-                handleSave={handleSave}
-                setDisplayEditView={setDisplayEditView}
-                type="issue"
-              />
-            }
-            shouldRender={
-              isSignedIn && !!issues.find(({ id }) => issueId === id)
-            }
-          />
           <PaymentPortal
-            balance={balance}
+            awardedUser={awardedUser}
             fundedAmount={fundedAmount}
-            handleClearAlerts={handleClearAlerts}
-            handleNav={handleNav}
-            handleSubmitAccountPayment={handleSubmitAccountPayment}
+            isPullRequestMerged={isPullRequestMerged}
             isSignedIn={isSignedIn}
             issueId={issueId}
-            paymentAlerts={paymentAlerts}
-            userId={activeUserId}
+            isUserAccepted={isUserAccepted}
+            open={open}
+            rep={rep}
+          />
+          <EmbedIssueWrapper>
+            <ConditionalRender
+              Component={EmbedIssueComponent}
+              shouldRender={open}
+            />
+          </EmbedIssueWrapper>
+          {/* <ConditionalRender
+            Component={EditIssueComponent}
+            shouldRender={
+              isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
+            }
           />
           <ConditionalRender
             Component={CloseOpenIssueComponent}
             shouldRender={
-              isSignedIn && !!issues.find(({ id }) => issueId === id)
+              isSignedIn && issues && !!issues.find(({ id }) => issueId === id)
             }
-          />
+          /> */}
         </SidebarContainer>
       </DetailContainer>
     </IssueDetailContainer>
@@ -281,24 +336,25 @@ const IssueDetail = ({
 
 IssueDetail.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
   data: T.object,
   deviceView: T.string,
-  dispatchCloseIssue: T.func,
-  dispatchEditIssue: T.func,
+  // dispatchCloseIssue: T.func,
+  // dispatchEditIssue: T.func,
+  dispatchFetchAttemptList: T.func,
+  dispatchFetchPullRequestList: T.func,
   dispatchFetchWatchList: T.func,
+  dispatchOpenIssueModal: T.func,
   dispatchOpenModal: T.func,
   handleClearAlerts: T.func,
   handleComment: T.func,
   handleIncrement: T.func,
-  handleNav: T.func,
-  handleSubmitAccountPayment: T.func,
   handleUpvote: T.func,
   isSignedIn: T.bool,
-  paymentAlerts: T.object,
 };
 
 export default IssueDetail;

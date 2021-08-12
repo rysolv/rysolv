@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 export const formatDollarAmount = (value, noDecimals = false) => {
   const numOfDecimals = noDecimals ? 0 : 2;
   const valueWithDecimals = parseFloat(value).toFixed(numOfDecimals);
@@ -10,6 +12,9 @@ export const formatDollarAmount = (value, noDecimals = false) => {
 
   return `$${valueWithDecimals}`;
 };
+
+export const formatPaypalTotal = value =>
+  (Number(value) * 1.03 + 0.3).toFixed(2);
 
 export const formatUrlLinks = value => {
   const { githubLink, personalLink, stackoverflowLink } = value;
@@ -30,6 +35,8 @@ export const formatUrlLinks = value => {
   return value;
 };
 
+export const formatPercentage = value => `${(value * 100).toFixed(0)}%`;
+
 export const formatWordString = string =>
   string.charAt(0).toUpperCase() + string.slice(1);
 
@@ -41,47 +48,33 @@ export const getBase64 = file =>
     reader.onerror = error => reject(error);
   });
 
-export const handleCreditCardNumberChange = (
-  event,
-  newCreditCardNumber,
-  setCreditCardNumber,
-) => {
-  const formattedNumber = newCreditCardNumber.replace(/[^0-9]/g, '');
-  if (formattedNumber.length > 4 && formattedNumber.length <= 8) {
-    setCreditCardNumber(
-      `${formattedNumber.slice(0, 4)} ${formattedNumber.slice(4)}`,
-    );
-  } else if (formattedNumber.length > 8 && formattedNumber.length <= 12) {
-    setCreditCardNumber(
-      `${formattedNumber.slice(0, 4)} ${formattedNumber.slice(
-        4,
-        8,
-      )} ${formattedNumber.slice(8)}`,
-    );
-  } else if (formattedNumber.length > 12 && formattedNumber.length <= 16) {
-    setCreditCardNumber(
-      `${formattedNumber.slice(0, 4)} ${formattedNumber.slice(
-        4,
-        8,
-      )} ${formattedNumber.slice(8, 12)} ${formattedNumber.slice(12)}`,
-    );
-  } else {
-    setCreditCardNumber(formattedNumber);
-  }
+export const getCookie = cookie => {
+  // eslint-disable-next-line no-useless-escape
+  const regexStr = new RegExp(
+    `(?:(?:^|.*;\\s*)${cookie}\\s*\\=\\s*([^;]*).*$)|^.*$`,
+    'g',
+  );
+  const cookieValue = document.cookie.replace(regexStr, '$1');
+  if (cookieValue) return cookieValue;
+  return '';
 };
 
-export const handleDateChange = (event, newDate, setDateValue) => {
-  const formattedDate = newDate.replace(/[^0-9]/g, '');
-  if (formattedDate.length > 2 && formattedDate.length <= 6) {
-    setDateValue(`${formattedDate.slice(0, 2)}/${formattedDate.slice(2)}`);
-  } else {
-    setDateValue(formattedDate);
-  }
-};
+export const getPaymentMethod = url => {
+  const hostDictionary = {
+    github: 'Github Sponsors',
+    opencollective: 'Open Collective',
+    paypal: 'Paypal',
+  };
+  if (url) {
+    const { host } = new URL(url);
+    const urlArray = host.split('.');
 
-export const handleCvcChange = (event, newCvc, setCvcValue) => {
-  const formattedCvc = newCvc.replace(/[^0-9]/g, '');
-  setCvcValue(formattedCvc);
+    let domain = '';
+    if (urlArray.length === 2) [domain] = urlArray;
+    if (urlArray.length === 3) [, domain] = urlArray;
+    return hostDictionary[domain];
+  }
+  return 'Payment Methods';
 };
 
 export const handleZipChange = (event, newZip, setZipValue) => {
@@ -94,4 +87,37 @@ export const navHelper = (e, handleNav, route) => {
     e.preventDefault();
     handleNav(route);
   }
+};
+
+export const removeCookie = cookie => {
+  document.cookie = `${cookie}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+};
+
+export const setCookie = (name, value, options = {}) => {
+  const baseCookie = `${name}=${JSON.stringify(value)}`;
+  const cookieWithOptions = Object.keys(options).reduce((acc, option) => {
+    const cookieOption = `; ${option}=${options[option]}`;
+    return acc + cookieOption;
+  }, baseCookie);
+  document.cookie = `${cookieWithOptions};`;
+};
+
+export const snakeToCamel = str =>
+  str.toLowerCase().replace(/([-_][a-z])/g, group =>
+    group
+      .toUpperCase()
+      .replace('-', '')
+      .replace('_', ''),
+  );
+
+export const useDidUpdateEffect = (effect, inputList = []) => {
+  const didMountRef = useRef(false);
+  const effectRef = useRef();
+
+  effectRef.current = effect;
+
+  useEffect(() => {
+    if (didMountRef.current) effectRef.current();
+    else didMountRef.current = true;
+  }, inputList);
 };

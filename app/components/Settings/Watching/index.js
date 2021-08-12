@@ -22,12 +22,12 @@ import {
 
 const SearchIcon = iconDictionary('search');
 
-const UserWatching = ({ handleNav, handleRemoveIssue, userId, watching }) => {
+const UserWatching = ({ handleNav, handleRemoveWatching, watching }) => {
   const [selectedValue, setSelectedValue] = useState('Newest');
   const [searchValue, setSearchValue] = useState('');
   const filterWatching = () => {
     // eslint-disable-next-line array-callback-return, consistent-return
-    const sortedArray = watching.sort((a, b) => {
+    const sortedArray = [...watching].sort((a, b) => {
       if (selectedValue === 'Newest') {
         if (a.modifiedDate < b.modifiedDate) {
           return 1;
@@ -52,11 +52,7 @@ const UserWatching = ({ handleNav, handleRemoveIssue, userId, watching }) => {
   const filteredWatching = filterWatching();
   return (
     <Fragment>
-      <BackNav
-        label="Back to Overview"
-        handleNav={handleNav}
-        path="/settings"
-      />
+      <BackNav label="Back to Overview" path="/settings" />
       <HeaderWrapper>
         <StyledH3>All Watching</StyledH3>
       </HeaderWrapper>
@@ -78,15 +74,12 @@ const UserWatching = ({ handleNav, handleRemoveIssue, userId, watching }) => {
       </SearchContainer>
       <ConditionalRender
         Component={OverviewListComponent}
-        FallbackComponent={
-          <EmptyOverviewListComponent handleNav={handleNav} type="watching" />
-        }
+        FallbackComponent={<EmptyOverviewListComponent type="watching" />}
         propsToPassDown={{
           handleNav,
-          handleRemoveIssue,
+          handleRemoveWatching,
           list: filteredWatching,
           type: 'watching',
-          userId,
         }}
         shouldRender={!!filteredWatching.length}
       />
@@ -96,8 +89,7 @@ const UserWatching = ({ handleNav, handleRemoveIssue, userId, watching }) => {
 
 UserWatching.propTypes = {
   handleNav: T.func.isRequired,
-  handleRemoveIssue: T.func.isRequired,
-  userId: T.string.isRequired,
+  handleRemoveWatching: T.func.isRequired,
   watching: T.array.isRequired,
 };
 

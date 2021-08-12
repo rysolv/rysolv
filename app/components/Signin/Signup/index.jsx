@@ -2,68 +2,165 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import T from 'prop-types';
 
-import { MainTextInput } from 'components/base_ui';
+import {
+  GithubButton,
+  MainTextInput,
+  PasswordTextInput,
+} from 'components/base_ui';
 
 import {
+  Divider,
+  DividerWrapper,
+  HorizontalWrapper,
   InputFormWrapper,
+  PasswordRequirements,
   SigninWrapper,
-  StyledPrimaryButton,
+  StyledErrorSuccessBanner,
+  StyledPrimaryAsyncButton,
   SubText,
   Title,
+  WordDivider,
 } from '../styledComponents';
 
-// eslint-disable-next-line arrow-body-style
-const Signup = ({ data, handleInputChange, handleSignin }) => {
-  // eslint-disable-next-line no-param-reassign
-  const { email, password } = data;
+const Signup = ({
+  data: { email, firstName, lastName, password, username, verifyPassword },
+  error,
+  handleClearAuthAlerts,
+  handleInputChange,
+  handleSignUp,
+  handleValidateInput,
+  loading,
+  signUpDisabled,
+}) => {
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter' && !signUpDisabled) {
+      handleSignUp();
+    }
+  };
   return (
-    <SigninWrapper>
+    <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
-        <Title>Register</Title>
+        <Title>Get started with Rysolv</Title>
+        {error && (
+          <StyledErrorSuccessBanner
+            error={error}
+            onClose={handleClearAuthAlerts}
+          />
+        )}
+        <GithubButton type="signup" />
+        <DividerWrapper>
+          <Divider />
+          <WordDivider>or</WordDivider>
+        </DividerWrapper>
         <MainTextInput
+          autoComplete="nickname"
+          error={!!username.error}
+          helperText={username.error}
+          label="Username"
+          onBlur={() => handleValidateInput({ field: 'username' })}
+          onChange={e =>
+            handleInputChange({
+              field: 'username',
+              form: 'signUp',
+              value: e.target.value,
+            })
+          }
+          value={username.value}
+        />
+        <MainTextInput
+          autoComplete="email"
           error={!!email.error}
           helperText={email.error}
-          label="email"
+          label="Email"
+          onBlur={() => handleValidateInput({ field: 'email' })}
           onChange={e =>
             handleInputChange({
               field: 'email',
-              form: 'data',
+              form: 'signUp',
               value: e.target.value,
             })
           }
+          type="email"
           value={email.value}
         />
-        <MainTextInput
+        <HorizontalWrapper>
+          <MainTextInput
+            autoComplete="given-name"
+            error={!!firstName.error}
+            helperText={firstName.error}
+            label="First name"
+            onBlur={() => handleValidateInput({ field: 'firstName' })}
+            onChange={e =>
+              handleInputChange({
+                field: 'firstName',
+                form: 'signUp',
+                value: e.target.value,
+              })
+            }
+            value={firstName.value}
+          />
+          <MainTextInput
+            autoComplete="family-name"
+            error={!!lastName.error}
+            helperText={lastName.error}
+            label="Last name"
+            onBlur={() => handleValidateInput({ field: 'lastName' })}
+            onChange={e =>
+              handleInputChange({
+                field: 'lastName',
+                form: 'signUp',
+                value: e.target.value,
+              })
+            }
+            value={lastName.value}
+          />
+        </HorizontalWrapper>
+        <PasswordTextInput
+          autoComplete="new-password"
           error={!!password.error}
           helperText={password.error}
-          label="password"
+          label="Password"
+          onBlur={() => handleValidateInput({ field: 'password' })}
           onChange={e =>
             handleInputChange({
               field: 'password',
-              form: 'data',
+              form: 'signUp',
               value: e.target.value,
             })
           }
           value={password.value}
         />
-        <MainTextInput
-          error={!!password.error}
-          helperText={password.error}
-          label="confirm password"
+        <PasswordRequirements>
+          <li>8 or more characters</li>
+          <li>Include capital and lowercase letter</li>
+          <li>Include one number</li>
+          <li>Include one special character </li>
+        </PasswordRequirements>
+        <PasswordTextInput
+          autoComplete="new-password"
+          error={!!verifyPassword.error}
+          helperText={verifyPassword.error}
+          label="Confirm password"
+          onBlur={() =>
+            handleValidateInput({
+              field: 'verifyPassword',
+              verifyField: { field: 'password', verifyValue: password.value },
+            })
+          }
           onChange={e =>
             handleInputChange({
-              field: 'password',
-              form: 'data',
+              field: 'verifyPassword',
+              form: 'signUp',
               value: e.target.value,
             })
           }
-          value={password.value}
+          value={verifyPassword.value}
         />
-        <StyledPrimaryButton
-          label="Sign Up"
-          onClick={() =>
-            handleSignin({ userId: 'b519b064-b5db-4472-ad1b-00e30bdbfa4c' })
-          }
+        <StyledPrimaryAsyncButton
+          disabled={signUpDisabled}
+          label="Sign up"
+          loading={loading}
+          onClick={handleSignUp}
         />
       </InputFormWrapper>
       <SubText>
@@ -75,8 +172,13 @@ const Signup = ({ data, handleInputChange, handleSignin }) => {
 
 Signup.propTypes = {
   data: T.object.isRequired,
+  error: T.oneOfType([T.bool, T.object]).isRequired,
+  handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
-  handleSignin: T.func.isRequired,
+  handleSignUp: T.func.isRequired,
+  handleValidateInput: T.func.isRequired,
+  loading: T.bool.isRequired,
+  signUpDisabled: T.bool.isRequired,
 };
 
 export default Signup;

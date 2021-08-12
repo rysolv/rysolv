@@ -3,7 +3,6 @@ import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import { BackNav } from 'components/base_ui';
@@ -11,9 +10,12 @@ import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { makeSelectOrganizations } from 'containers/Organizations/selectors';
-import { searchOrganizations } from 'containers/Auth/actions';
-import { incrementStep, clearForm } from '../actions';
+import {
+  clearAlerts,
+  fetchUserIssues,
+  incrementStep,
+  resetState,
+} from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -22,25 +24,31 @@ import {
   makeSelectIssuesStep,
 } from '../selectors';
 import { addIssueDictionary } from '../stepDictionary';
-import { AddWrapper, AddForm } from './styledComponents';
+import {
+  AddForm,
+  AddWrapper,
+  StyledErrorSuccessBanner,
+} from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export class IssuesAdd extends React.PureComponent {
   componentDidMount() {
     document.title = 'Add Issue';
     const {
-      activeUser,
+      activeUser: { isGithubVerified },
+      dispatchFetchUserIssues,
       handleIncrementStep,
-      handleSearchOrganizations,
     } = this.props;
-    const { id } = activeUser;
-    handleSearchOrganizations({ id });
+
+    if (isGithubVerified) {
+      dispatchFetchUserIssues();
+    }
+
     handleIncrementStep({ step: 1, view: 'addIssue' });
   }
 
   componentWillUnmount() {
-    const { dispatchClearForm } = this.props;
-    dispatchClearForm();
+    const { dispatchResetState } = this.props;
+    dispatchResetState();
   }
 
   render() {
@@ -48,14 +56,15 @@ export class IssuesAdd extends React.PureComponent {
 
     const {
       activeUser,
+      alerts: { error, success },
+      handleClearAlerts,
+      handleIncrementStep,
       importSuccess,
       issueData,
-      handleNav,
-      handleIncrementStep,
       loading,
-      organization,
       step,
     } = this.props;
+    const isVerify = step === 4;
     const StepToRender = addIssueDictionary[step];
 
     if (importSuccess) {
@@ -64,15 +73,19 @@ export class IssuesAdd extends React.PureComponent {
 
     return (
       <AddWrapper>
-        <BackNav label="Back to Issues" handleNav={handleNav} path="/issues" />
-        <AddForm>
+        <BackNav label="Back to Issues" path="/issues" />
+        <StyledErrorSuccessBanner
+          error={error}
+          onClose={handleClearAlerts}
+          success={success}
+        />
+        <AddForm isVerify={isVerify}>
           <AsyncRender
-            asyncData={{ issueData, organization }}
+            asyncData={{ issueData }}
             component={StepToRender}
             loading={loading}
             propsToPassDown={{
               activeUser,
-              handleNav,
               importSuccess,
             }}
           />
@@ -83,26 +96,29 @@ export class IssuesAdd extends React.PureComponent {
 }
 
 IssuesAdd.propTypes = {
-  importSuccess: T.bool,
   activeUser: T.object,
-  issueData: T.object,
-  dispatchClearForm: T.func,
+  alerts: T.object,
+  dispatchFetchUserIssues: T.func.isRequired,
+  dispatchResetState: T.func.isRequired,
+  handleClearAlerts: T.func,
   handleIncrementStep: T.func,
-  handleNav: T.func,
-  handleSearchOrganizations: T.func,
+  importSuccess: T.bool,
+  issueData: T.object,
   loading: T.bool.isRequired,
-  organization: T.object,
   step: T.number.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
+  /**
    * Reducer : Issues
    */
+  alerts: makeSelectIssues('alerts'),
   importSuccess: makeSelectIssues('importSuccess'),
   issueData: makeSelectIssues('issueData'),
-  organizationData: makeSelectOrganizations('organizationData'),
-  activeUser: makeSelectAuth('activeUser'),
   loading: makeSelectIssuesLoading('addIssue'),
   step: makeSelectIssuesStep('addIssue'),
 });
@@ -112,11 +128,10 @@ function mapDispatchToProps(dispatch) {
     /**
      * Reducer : Issues
      */
-    dispatchClearForm: () => dispatch(clearForm()),
+    dispatchFetchUserIssues: () => dispatch(fetchUserIssues()),
+    dispatchResetState: () => dispatch(resetState()),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleIncrementStep: payload => dispatch(incrementStep(payload)),
-    handleNav: route => dispatch(push(route)),
-    handleSearchOrganizations: payload =>
-      dispatch(searchOrganizations(payload)),
   };
 }
 

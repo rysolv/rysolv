@@ -1,5 +1,7 @@
-/* eslint-disable array-callback-return */
+/* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
+import { v4 as uuidv4 } from 'uuid';
+import Identicon from 'identicon.js';
 
 import {
   ADD_ATTEMPT_FAILURE,
@@ -10,14 +12,19 @@ import {
   ADD_COMMENT,
   ADD_WATCH_FAILURE,
   ADD_WATCH_SUCCESS,
+  ADD_WATCH,
   CHANGE_ISSUE_FILTER,
   CHANGE_ISSUE_SEARCH,
   CLEAR_ALERTS,
   CLEAR_FORM,
-  CLEAR_ORGANIZATION,
+  CLEAR_REPO,
   CLOSE_ISSUE_FAILURE,
   CLOSE_ISSUE_SUCCESS,
   CLOSE_ISSUE,
+  CLOSE_MODAL_STATE,
+  DELETE_PULL_REQUEST_FAILURE,
+  DELETE_PULL_REQUEST_SUCCESS,
+  DELETE_PULL_REQUEST,
   EDIT_ISSUE_FAILURE,
   EDIT_ISSUE_SUCCESS,
   EDIT_ISSUE,
@@ -27,36 +34,44 @@ import {
   FETCH_ISSUES_FAILURE,
   FETCH_ISSUES_SUCCESS,
   FETCH_ISSUES,
+  FETCH_USER_ISSUES_FAILURE,
+  FETCH_USER_ISSUES_SUCCESS,
+  FETCH_USER_ISSUES,
+  GENERATE_IDENTICON,
   IMPORT_ISSUE_FAILURE,
   IMPORT_ISSUE_SUCCESS,
   IMPORT_ISSUE,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
+  OPEN_MODAL_STATE,
+  RESET_STATE,
   SAVE_INFO_FAILURE,
   SAVE_INFO_SUCCESS,
   SAVE_INFO,
   SEARCH_ISSUES_FAILURE,
   SEARCH_ISSUES_SUCCESS,
   SEARCH_ISSUES,
-  SUBMIT_ACCOUNT_PAYMENT_FAILURE,
-  SUBMIT_ACCOUNT_PAYMENT_SUCCESS,
-  SUBMIT_ACCOUNT_PAYMENT,
-  UPDATE_ORGANIZATION,
+  UPDATE_FUNDED_ISSUE,
+  UPDATE_IS_MANUAL,
+  UPDATE_ISSUE_DETAIL,
+  UPDATE_REPO,
   UPVOTE_ISSUE_FAILURE,
   UPVOTE_ISSUE_SUCCESS,
+  UPVOTE_ISSUE_TEMP,
   UPVOTE_ISSUE,
-  VERIFY_INFO,
 } from './constants';
 
 export const initialState = {
   alerts: { error: false, success: false },
   issueData: {
-    issueName: { error: '', value: '' },
-    issueBody: { error: '', value: '' },
-    issueUrl: { error: '', value: '' },
-    issueLanguages: { error: '', value: [] },
+    autoImportUrl: { error: '', value: '' },
+    githubCommentCount: { error: '', value: 0 },
     importUrl: { error: '', value: '' },
+    issueBody: { error: '', value: '' },
+    issueLanguages: { error: '', value: [] },
+    issueName: { error: '', value: '' },
+    issueUrl: { error: '', value: '' },
   },
   error: {
     importIssue: { error: false, message: '' },
@@ -64,12 +79,13 @@ export const initialState = {
     issues: false,
     searchIssues: false,
     submitAccountPayment: false,
+    userIssues: false,
   },
   filter: {
     language: [],
-    organization: [],
-    overview: 'Newest',
+    overview: 'Most Funded',
     price: [0, 5000],
+    repo: [],
     status: {
       closed: false,
       funded: false,
@@ -81,15 +97,18 @@ export const initialState = {
     },
   },
   importSuccess: false,
+  isManual: false,
+  isModalOpen: false,
+  isNotFound: false,
   issueDetail: {},
   issues: [],
-  isVerified: false,
   loading: {
     addAttempt: false,
     addComment: false,
     addIssue: false,
     addWatch: false,
     closeIssue: false,
+    deletePullRequest: false,
     importIssue: false,
     issueDetail: false,
     issues: false,
@@ -97,16 +116,18 @@ export const initialState = {
     submitAccountPayment: false,
     upvoteIssue: false,
   },
-  organizationData: {
+  modal: '',
+  repoData: {
+    identiconId: { error: '', value: '' },
     importUrl: { error: '', value: '' },
-    organizationDescription: { error: '', value: '' },
-    organizationId: { error: '', value: '' },
-    organizationLogo: { error: '', value: '' },
-    organizationName: { error: '', value: '' },
-    organizationRepo: { error: '', value: '' },
     organizationUrl: { error: '', value: '' },
+    repoDescription: { error: '', value: '' },
+    repoId: { error: '', value: '' },
+    repoLanguages: { error: '', value: '' },
+    repoLogo: { error: '', value: '' },
+    repoName: { error: '', value: '' },
+    repoUrl: { error: '', value: '' },
   },
-  paymentAlerts: { error: false, success: false },
   search: {
     overviewInput: { error: '', value: '' },
     searchInput: { error: '', value: '' },
@@ -115,24 +136,48 @@ export const initialState = {
     addIssue: 1,
     editIssue: 1,
   },
+  userIssues: [],
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const issuesReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case ADD_ATTEMPT_FAILURE: {
-      const { error } = payload;
+      const { error, userId } = payload;
       draft.alerts.error = error;
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.attempting.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.attempting.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.attempting.push(userId);
+        }
+      }
       draft.loading.addAttempt = false;
       break;
     }
     case ADD_ATTEMPT_SUCCESS: {
-      const { attempting } = payload;
-      draft.issueDetail.attempting = attempting;
+      const { issueId, userArray } = payload;
+      draft.issues.map((issue, index) => {
+        if (issue.id === issueId) {
+          draft.issues[index].attempting = userArray;
+        }
+      });
+      if (draft.issueDetail.id) {
+        draft.issueDetail.attempting = userArray;
+      }
       draft.loading.addAttempt = false;
       break;
     }
     case ADD_ATTEMPT: {
+      const { userId } = payload;
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.attempting.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.attempting.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.attempting.push(userId);
+        }
+      }
       draft.loading.addAttempt = true;
       break;
     }
@@ -148,32 +193,73 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.addComment = false;
       break;
     }
-    case ADD_WATCH_FAILURE: {
-      const { error } = payload;
-      draft.alerts.error = error;
-      draft.loading.addWatch = false;
-      break;
-    }
-    case ADD_WATCH_SUCCESS: {
-      const { id, watching } = payload;
-      draft.issues.map((issue, index) => {
-        if (issue.id === id) {
-          draft.issues[index].watching = watching;
-        }
-      });
-      if (draft.issueDetail) {
-        draft.issueDetail.watching = watching;
-      }
-      draft.loading.addWatch = false;
-      break;
-    }
     case ADD_COMMENT: {
       draft.loading.addComment = true;
       break;
     }
+    case ADD_WATCH_FAILURE: {
+      const { error, issueId, userId } = payload;
+      draft.alerts.error = error;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          const userIdIndex = draft.issues[index].watching.indexOf(userId);
+          if (userIdIndex > -1) {
+            draft.issues[index].watching.splice(userIdIndex, 1);
+          } else {
+            draft.issues[index].watching.push(userId);
+          }
+        }
+      });
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.watching.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.watching.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.watching.push(userId);
+        }
+      }
+      draft.loading.addWatch = false;
+      break;
+    }
+    case ADD_WATCH_SUCCESS: {
+      const { issueId, userArray } = payload;
+      draft.issues.map((issue, index) => {
+        if (issue.id === issueId) {
+          draft.issues[index].watching = userArray;
+        }
+      });
+      if (draft.issueDetail.id) {
+        draft.issueDetail.watching = userArray;
+      }
+      draft.loading.addWatch = false;
+      break;
+    }
+    case ADD_WATCH: {
+      const { issueId, userId } = payload;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          const userIdIndex = draft.issues[index].watching.indexOf(userId);
+          if (userIdIndex > -1) {
+            draft.issues[index].watching.splice(userIdIndex, 1);
+          } else {
+            draft.issues[index].watching.push(userId);
+          }
+        }
+      });
+      if (draft.issueDetail.id) {
+        const userIdIndex = draft.issueDetail.watching.indexOf(userId);
+        if (userIdIndex > -1) {
+          draft.issueDetail.watching.splice(userIdIndex, 1);
+        } else {
+          draft.issueDetail.watching.push(userId);
+        }
+      }
+      draft.loading.addWatch = true;
+      break;
+    }
     case CHANGE_ISSUE_FILTER: {
       const { field, value } = payload;
-      if (field === 'language' || field === 'organization') {
+      if (field === 'language' || field === 'repo') {
         draft.filter[field] = [];
         value.map(language => draft.filter[field].push(language));
       } else if (field === 'status' || field === 'type') {
@@ -194,20 +280,18 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       draft.filter = initialState.filter;
-      draft.paymentAlerts = initialState.paymentAlerts;
       draft.search = initialState.search;
       break;
     }
     case CLEAR_FORM: {
       draft.error = initialState.error;
-      draft.issueData = initialState.issueData;
       draft.importSuccess = initialState.importSuccess;
-      draft.organizationData = initialState.organizationData;
-      draft.isVerified = initialState.isVerified;
+      draft.issueData = initialState.issueData;
+      draft.repoData = initialState.repoData;
       break;
     }
-    case CLEAR_ORGANIZATION: {
-      draft.organizationData = initialState.organizationData;
+    case CLEAR_REPO: {
+      draft.repoData = initialState.repoData;
       break;
     }
     case CLOSE_ISSUE_FAILURE: {
@@ -227,6 +311,28 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.closeIssue = true;
       break;
     }
+    case CLOSE_MODAL_STATE: {
+      draft.isModalOpen = initialState.isModalOpen;
+      draft.modal = initialState.modal;
+      break;
+    }
+    case DELETE_PULL_REQUEST_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.deletePullRequest = false;
+      break;
+    }
+    case DELETE_PULL_REQUEST_SUCCESS: {
+      const { message } = payload;
+      draft.alerts.success = { message };
+      draft.issueDetail.pullRequests -= 1;
+      draft.loading.deletePullRequest = false;
+      break;
+    }
+    case DELETE_PULL_REQUEST: {
+      draft.loading.deletePullRequest = true;
+      break;
+    }
     case EDIT_ISSUE_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
@@ -240,7 +346,25 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case EDIT_ISSUE: {
+      draft.alerts = initialState.alerts;
       draft.loading.editIssue = true;
+      break;
+    }
+    case FETCH_ISSUE_DETAIL_FAILURE: {
+      const { error, isNotFound } = payload;
+      draft.error.issueDetail = error.message;
+      draft.isNotFound = isNotFound;
+      draft.loading.issueDetail = false;
+      break;
+    }
+    case FETCH_ISSUE_DETAIL_SUCCESS: {
+      const { issueDetail } = payload;
+      draft.issueDetail = issueDetail;
+      draft.loading.issueDetail = false;
+      break;
+    }
+    case FETCH_ISSUE_DETAIL: {
+      draft.loading.issueDetail = true;
       break;
     }
     case FETCH_ISSUES_FAILURE: {
@@ -250,7 +374,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_ISSUES_SUCCESS: {
-      draft.issues = payload;
+      const { issues } = payload;
+      draft.issues = issues;
       draft.loading.issues = false;
       break;
     }
@@ -258,25 +383,33 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.issues = true;
       break;
     }
-    case FETCH_ISSUE_DETAIL_FAILURE: {
-      const { error } = payload;
-      draft.error.issueDetail = error;
-      draft.loading.issueDetail = false;
+    case FETCH_USER_ISSUES_FAILURE: {
+      draft.error.userIssues = true;
+      draft.loading.userIssues = false;
       break;
     }
-    case FETCH_ISSUE_DETAIL_SUCCESS: {
-      const { oneIssue } = payload;
-      draft.issueDetail = oneIssue;
-      draft.loading.issueDetail = false;
+    case FETCH_USER_ISSUES_SUCCESS: {
+      const { issues } = payload;
+      draft.loading.userIssues = false;
+      draft.userIssues = issues;
       break;
     }
-    case FETCH_ISSUE_DETAIL: {
-      draft.loading.issueDetail = true;
+    case FETCH_USER_ISSUES: {
+      draft.loading.userIssues = true;
+      break;
+    }
+    case GENERATE_IDENTICON: {
+      const identiconId = uuidv4();
+      const identicon = new Identicon(identiconId, 250).toString();
+      draft.repoData.identiconId.value = identiconId;
+      draft.repoData.repoLogo.value = `data:image/png;base64,${identicon}`;
       break;
     }
     case IMPORT_ISSUE_FAILURE: {
       const { error } = payload;
-      draft.error.importIssue = { error: true, message: error.message };
+      draft.alerts.error = error;
+      draft.issueData.autoImportUrl.error = error;
+      draft.issueData.autoImportUrl.value = '';
       draft.loading.importIssue = false;
       break;
     }
@@ -286,8 +419,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
       Object.keys(draft.issueData).map(field => {
         draft.issueData[field].value = importIssue[field];
       });
-      Object.keys(draft.organizationData).map(field => {
-        draft.organizationData[field].value = importIssue[field];
+      Object.keys(draft.repoData).map(field => {
+        draft.repoData[field].value = importIssue[field];
       });
       draft.importSuccess = true;
       break;
@@ -324,6 +457,15 @@ const issuesReducer = produce((draft, { payload, type }) => {
       });
       break;
     }
+    case OPEN_MODAL_STATE: {
+      const { modalState } = payload;
+      draft.isModalOpen = true;
+      draft.modal = modalState;
+      break;
+    }
+    case RESET_STATE: {
+      return initialState;
+    }
     case SAVE_INFO_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
@@ -334,8 +476,8 @@ const issuesReducer = produce((draft, { payload, type }) => {
     case SAVE_INFO_SUCCESS: {
       const { message } = payload;
       draft.alerts.success = { message };
-      draft.loading.addIssue = false;
       draft.importSuccess = false;
+      draft.loading.addIssue = false;
       break;
     }
     case SAVE_INFO: {
@@ -343,15 +485,12 @@ const issuesReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEARCH_ISSUES_FAILURE: {
-      const { error } = payload;
-      draft.error.searchIssues = error;
       draft.loading.searchIssues = false;
-      draft.importSuccess = false;
       break;
     }
     case SEARCH_ISSUES_SUCCESS: {
       const { issues } = payload;
-      draft.issues = issues || null;
+      draft.issues = issues;
       draft.loading.searchIssues = false;
       break;
     }
@@ -359,42 +498,33 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.searchIssues = true;
       break;
     }
-    case SUBMIT_ACCOUNT_PAYMENT_FAILURE: {
-      const { error } = payload;
-      draft.loading.submitAccountPayment = false;
-      draft.paymentAlerts.submitAccountPayment = error;
+    case UPDATE_FUNDED_ISSUE: {
+      const { fundedAmount, isFundedFromOverview, issueId } = payload;
+      if (!isFundedFromOverview) {
+        draft.issueDetail.fundedAmount = fundedAmount;
+      }
+      draft.issues.map(issue => {
+        const { id } = issue;
+        if (id === issueId) issue.fundedAmount = fundedAmount;
+      });
       break;
     }
-    case SUBMIT_ACCOUNT_PAYMENT_SUCCESS: {
-      const { fundedAmount, message } = payload;
-      draft.issueDetail.fundedAmount = fundedAmount;
-      draft.loading.submitAccountPayment = false;
-      draft.paymentAlerts.success = { message };
+    case UPDATE_IS_MANUAL: {
+      const { value } = payload;
+      draft.isManual = value;
       break;
     }
-    case SUBMIT_ACCOUNT_PAYMENT: {
-      draft.loading.submitAccountPayment = true;
+    case UPDATE_ISSUE_DETAIL: {
+      draft.issueDetail.pullRequests += 1;
       break;
     }
-    case UPDATE_ORGANIZATION: {
-      draft.organizationData = payload;
-      break;
-    }
-    case UPVOTE_ISSUE: {
-      draft.loading.upvoteIssue = true;
-      break;
-    }
-    case UPVOTE_ISSUE_SUCCESS: {
-      const { id, rep } = payload;
-      draft.issues.map((issue, index) => {
-        if (issue.id === id) {
-          draft.issues[index].rep = rep;
+    case UPDATE_REPO: {
+      const { repoData } = payload;
+      Object.keys(draft.repoData).map(field => {
+        if (payload[field]) {
+          draft.repoData[field].value = repoData[field].value;
         }
       });
-      if (draft.issueDetail) {
-        draft.issueDetail.rep = rep;
-      }
-      draft.loading.upvoteIssue = false;
       break;
     }
     case UPVOTE_ISSUE_FAILURE: {
@@ -403,8 +533,38 @@ const issuesReducer = produce((draft, { payload, type }) => {
       draft.loading.upvoteIssue = false;
       break;
     }
-    case VERIFY_INFO: {
-      draft.isVerified = !draft.isVerified;
+    case UPVOTE_ISSUE_SUCCESS: {
+      const { issueId, issueRep } = payload;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          draft.issues[index].rep = issueRep;
+        }
+      });
+      if (draft.issueDetail.id) {
+        draft.issueDetail.rep = issueRep;
+      }
+      draft.loading.upvoteIssue = false;
+      break;
+    }
+    case UPVOTE_ISSUE: {
+      draft.alerts = initialState.alerts;
+      draft.loading.upvoteIssue = true;
+      break;
+    }
+    case UPVOTE_ISSUE_TEMP: {
+      const { issueId, upvote } = payload;
+      draft.issues.map(({ id }, index) => {
+        if (id === issueId) {
+          // eslint-disable-next-line no-unused-expressions
+          upvote
+            ? (draft.issues[index].rep += 1)
+            : (draft.issues[index].rep -= 1);
+        }
+      });
+      if (draft.issueDetail.id) {
+        // eslint-disable-next-line no-unused-expressions
+        upvote ? (draft.issueDetail.rep += 1) : (draft.issueDetail.rep -= 1);
+      }
       break;
     }
   }

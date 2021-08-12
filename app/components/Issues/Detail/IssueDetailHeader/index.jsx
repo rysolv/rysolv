@@ -1,29 +1,22 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import { ConditionalRender, IconToolTip } from 'components/base_ui';
-import { navHelper } from 'utils/globalHelpers';
 
 import {
   IssueDetailContainer,
   NameWrapper,
-  OrganizationNameContainer,
+  RepoNameContainer,
   StyledBaseTextInput,
   StyledIssueDetail,
   StyledVerified,
 } from './styledComponents';
 
 const IssueDetailHeader = ({
-  data: {
-    createdDate,
-    name,
-    organizationId,
-    organizationName,
-    organizationVerified,
-  },
+  data: { createdDate, name, repoId, repoName, repoVerified },
   displayEditView,
-  handleNav,
   nameChange,
   setNameChange,
 }) => {
@@ -41,21 +34,16 @@ const IssueDetailHeader = ({
     <Fragment>
       <IssueDetailContainer>
         <StyledIssueDetail>
-          <OrganizationNameContainer
-            href={`/organizations/detail/${organizationId}`}
-            onClick={e =>
-              navHelper(e, handleNav, `/organizations/detail/${organizationId}`)
-            }
-          >
-            {organizationName}
-            {organizationVerified ? (
+          <RepoNameContainer>
+            <Link to={`/repos/detail/${repoId}`}>{repoName}</Link>
+            {repoVerified ? (
               <IconToolTip toolTipText="Verified Contributor">
                 <StyledVerified />
               </IconToolTip>
             ) : (
               ''
             )}
-          </OrganizationNameContainer>
+          </RepoNameContainer>
           <div>
             Issue opened{' '}
             {moment(createdDate)
@@ -78,7 +66,6 @@ const IssueDetailHeader = ({
 IssueDetailHeader.propTypes = {
   data: T.object,
   displayEditView: T.bool,
-  handleNav: T.func,
   nameChange: T.string,
   setNameChange: T.func,
 };

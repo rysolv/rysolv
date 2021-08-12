@@ -1,51 +1,58 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { ErrorSuccessBanner } from 'components/base_ui';
+import { Pagination } from 'components/base_ui';
 
 import EmptyCard from './EmptyCard';
 import IssueCard from './Card';
-import { BannerWrapper } from './styledComponents';
+import { StyledErrorSuccessBanner } from './styledComponents';
 
 const Issues = ({
   activeUser,
+  addWatching,
   alerts: { error, success },
-  clearAlerts,
   data,
   deviceView,
+  dispatchFetchAttemptList,
   dispatchFetchWatchList,
   dispatchOpenModal,
-  handleIncrement,
+  handleClearAlerts,
   handleNav,
   handleUpvote,
+  height,
   isSignedIn,
+  path,
 }) => {
-  const hasData = data.length > 0 && !data.includes(null);
+  const { length } = data;
+  const hasData = length > 0 && !data.includes(null);
   const propsToPassDown = {
     activeUser,
+    addWatching,
     data,
     deviceView,
+    dispatchFetchAttemptList,
     dispatchFetchWatchList,
     dispatchOpenModal,
-    handleIncrement,
     handleNav,
     handleUpvote,
+    height,
     isSignedIn,
+    path,
+    perPage: 15,
+    result: `${length} ${length === 1 ? 'Result' : 'Results'}`,
   };
   const viewToRender = hasData ? (
-    <IssueCard {...propsToPassDown} />
+    <Pagination Component={IssueCard} propsToPassDown={propsToPassDown} />
   ) : (
-    <EmptyCard />
+    <EmptyCard height={height} />
   );
   return (
     <Fragment>
-      <BannerWrapper>
-        <ErrorSuccessBanner
-          error={error}
-          onClose={clearAlerts}
-          success={success}
-        />
-      </BannerWrapper>
+      <StyledErrorSuccessBanner
+        error={error}
+        onClose={handleClearAlerts}
+        success={success}
+      />
       {viewToRender}
     </Fragment>
   );
@@ -53,23 +60,22 @@ const Issues = ({
 
 Issues.propTypes = {
   activeUser: T.object,
+  addWatching: T.func,
   alerts: T.shape({
     error: T.oneOfType([T.bool, T.object]),
     success: T.oneOfType([T.bool, T.object]),
   }),
-  clearAlerts: T.func,
   data: T.array,
   deviceView: T.string.isRequired,
-  disabled: T.bool.isRequired,
+  dispatchFetchAttemptList: T.func,
   dispatchFetchWatchList: T.func,
   dispatchOpenModal: T.func,
-  handleIncrement: T.func,
-  handleInputChange: T.func,
+  handleClearAlerts: T.func,
   handleNav: T.func,
-  handleSearchIssues: T.func,
   handleUpvote: T.func,
+  height: T.number.isRequired,
   isSignedIn: T.bool,
-  search: T.object,
+  path: T.string.isRequired,
 };
 
 export default Issues;

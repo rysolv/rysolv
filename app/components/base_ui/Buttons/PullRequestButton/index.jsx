@@ -13,9 +13,14 @@ import {
 const PullRequestIcon = iconDictionary('pullRequest');
 
 const PullRequestButton = ({
+  activeUserPullRequests,
   disabled,
+  dispatchFetchPullRequestList,
+  dispatchOpenIssueModal,
   dispatchOpenModal,
+  isGithubVerified,
   isSignedIn,
+  issueId,
   pullRequests,
 }) => (
   <PullRequestButtonContainer>
@@ -25,21 +30,39 @@ const PullRequestButton = ({
         if (!isSignedIn) {
           return dispatchOpenModal({ modalState: 'signIn' });
         }
-        return null;
+        if (!isGithubVerified) {
+          return dispatchOpenModal({ modalState: 'verifyAccount' });
+        }
+        return dispatchOpenIssueModal({ modalState: 'addPullRequest' });
       }}
     >
       {PullRequestIcon}
       <LabelWrapper>Submit PR</LabelWrapper>
     </StyledPullRequestButton>
-    <ValueWrapper>{pullRequests.length}</ValueWrapper>
+    <ValueWrapper
+      onClick={() =>
+        dispatchFetchPullRequestList({
+          activeUserPullRequests,
+          issueId,
+          modalState: 'pullRequestList',
+        })
+      }
+    >
+      {pullRequests}
+    </ValueWrapper>
   </PullRequestButtonContainer>
 );
 
 PullRequestButton.propTypes = {
-  disabled: T.bool,
-  dispatchOpenModal: T.func,
-  isSignedIn: T.bool,
-  pullRequests: T.array,
+  activeUserPullRequests: T.array,
+  disabled: T.bool.isRequired,
+  dispatchFetchPullRequestList: T.func.isRequired,
+  dispatchOpenIssueModal: T.func.isRequired,
+  dispatchOpenModal: T.func.isRequired,
+  isGithubVerified: T.bool,
+  isSignedIn: T.bool.isRequired,
+  issueId: T.string.isRequired,
+  pullRequests: T.number.isRequired,
 };
 
 export default PullRequestButton;

@@ -1,24 +1,30 @@
 import styled from 'styled-components';
-import ReCAPTCHA from 'react-google-recaptcha';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 import {
   ErrorSuccessBanner,
-  PaymentModalInputWithAdornment,
+  PaymentTextInput,
   PrimaryAsyncButton,
+  SecondaryButton,
 } from 'components/base_ui';
-
 import {
-  borderColor,
+  buttonRed,
+  commentHeaderColor,
   defaultFontSize,
   dividerBorder,
-  errorRed,
   fundingText,
+  lightBlueColor,
+  rewardColor,
+  successGreen,
+  textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobileXS } = mediaQueriesByDevice;
 
 export const Amount = styled.div`
   align-self: center;
-  font-size: 2.4rem;
+  font-size: ${({ success }) => (success ? '2.8rem' : '2.4rem')};
   font-weight: 500;
 `;
 
@@ -39,7 +45,7 @@ export const BalanceTitle = styled.span`
 `;
 
 export const BalanceWrapper = styled.div`
-  background-color: #f6f8fa;
+  background-color: ${commentHeaderColor};
   border-radius: 0.3rem;
   display: flex;
   justify-content: space-between;
@@ -48,7 +54,25 @@ export const BalanceWrapper = styled.div`
   width: 80%;
 `;
 
+export const ChargeBreakdownWrapper = styled.div`
+  display: flex;
+  font-size: ${defaultFontSize};
+  justify-content: space-between;
+  margin: auto;
+  padding-bottom: 2rem;
+  width: 80%;
+`;
+
+export const ChargeTitle = styled.div`
+  width: inherit;
+`;
+
+export const ChargeValue = styled.div`
+  text-align: end;
+`;
+
 export const ConfirmAmount = styled.div`
+  color: ${({ isNegative }) => (isNegative ? buttonRed : 'inherit')};
   white-space: nowrap;
 `;
 
@@ -85,16 +109,20 @@ export const Divider = styled.div`
 export const DollarValueWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   text-align: center;
 `;
 
 export const Funded = styled.div`
   align-self: center;
-  color: ${({ isFunded }) => (isFunded ? errorRed : fundingText)};
-  font-size: 1.4rem;
+  color: ${({ isFunded }) => (isFunded ? 'rgba(0,0,0,0.4)' : fundingText)};
+  font-size: ${defaultFontSize};
   font-weight: 500;
   padding: 0.5rem;
+`;
+
+export const FundingContainer = styled.div`
+  display: ${({ open }) => (!open ? 'none' : 'inherit')};
 `;
 
 export const HorizontalInputWrapper = styled.div`
@@ -110,14 +138,6 @@ export const InputWrapper = styled.div`
   width: auto;
 `;
 
-export const PaymentContainer = styled.div`
-  background-color: white;
-  border-radius: 0.2rem;
-  border: ${({ removeBorder }) =>
-    removeBorder ? 'none' : `0.1rem solid ${borderColor}`};
-  color: rgba(0, 0, 0, 0.7);
-`;
-
 export const PaymentInformationWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -125,9 +145,11 @@ export const PaymentInformationWrapper = styled.div`
 `;
 
 export const PaypalContainer = styled.div`
+  align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding: 0 2rem 2rem 2rem;
+  padding-bottom: 2rem;
   width: 100%;
 `;
 
@@ -137,25 +159,37 @@ export const OverviewWrapper = styled.div`
   padding: 3rem;
 `;
 
-export const StyledBaseInputWithAdornment = styled(
-  PaymentModalInputWithAdornment,
-)`
+export const RewardWrapper = styled.div`
+  align-items: center;
   align-self: center;
-  font-size: 1.4rem;
-  margin: 0.5rem;
-  width: 80%;
+  color: ${rewardColor};
+  display: flex;
+  font-size: 2.8rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+
+  svg {
+    height: 2.8rem;
+    margin-right: 0.5rem;
+    width: 2.8rem;
+  }
 `;
 
-export const StyledAccountBaseInput = styled(StyledBaseInputWithAdornment)`
-  margin: 0.5rem 0;
-  width: 80%;
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  margin: 1rem;
 `;
 
 export const StyledLabel = styled.div`
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   font-weight: 500;
   padding: 0.5rem 1.5rem;
   text-align: left;
+`;
+
+export const StyledPaymentTextInput = styled(PaymentTextInput)`
+  align-self: center;
+  margin: 0.5rem 0.5rem 1rem;
+  width: 80%;
 `;
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
@@ -163,16 +197,19 @@ export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   width: auto;
 `;
 
-export const StyledReCAPTCHA = styled(ReCAPTCHA)`
-  align-tems: center;
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-  transform: scale(0.8);
-`;
+export const StyledSecondaryButton = styled(SecondaryButton)`
+  background-color: white;
+  border: 0.1rem solid ${lightBlueColor};
+  color: ${lightBlueColor};
+  margin-top: 13.4rem;
 
-export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
-  margin: 1rem;
+  &:hover {
+    background-color: white;
+  }
+
+  svg {
+    margin-right: 0.5rem;
+  }
 `;
 
 export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
@@ -180,14 +217,54 @@ export const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
   justify-content: center;
   white-space: nowrap;
 
+  .button {
+    &:hover {
+      background: #31b589;
+      color: white;
+    }
+  }
+
   .grouped {
     border-radius: inherit;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    color: rgba(0, 0, 0, 0.7);
-    font-size: 1.4rem;
+    color: ${textColor};
+    font-size: ${defaultFontSize};
     margin: 0.5rem;
     padding: 1rem;
   }
+
+  .selected {
+    background: #31b589;
+    color: white;
+  }
+`;
+
+export const SuccessContentWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 6rem 1rem;
+  text-align: center;
+`;
+
+export const SuccessHeader = styled.span`
+  font-size: 2.4rem;
+  margin-bottom: 2.5rem;
+`;
+
+export const SuccessIconWrapper = styled.div`
+  align-items: center;
+  background-color: ${successGreen};
+  color: white;
+  display: flex;
+  font-size: 3rem;
+  height: 10rem;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const SuccessText = styled.span`
+  font-size: ${defaultFontSize};
 `;
 
 export const TextWrapper = styled.div`
@@ -197,6 +274,23 @@ export const TextWrapper = styled.div`
   padding: 2rem 0;
   text-align: left;
   width: 80%;
+`;
+
+export const Title = styled.div`
+  font-weight: ${({ isBold }) => (isBold ? 'bold' : 'normal')};
+  padding: 0.75rem 7.5rem 0.75rem 0;
+  text-align: left;
+  white-space: nowrap;
+
+  ${mobileXS} {
+    padding-right: 4rem;
+  }
+`;
+
+export const Value = styled.div`
+  font-weight: ${({ isBold }) => (isBold ? 'bold' : 'normal')};
+  padding: 0.75rem 0;
+  white-space: nowrap;
 `;
 
 export const YourAccountContainer = styled.div`

@@ -16,19 +16,19 @@ import {
   OverviewListItem,
 } from './styledComponents';
 import { IconButtonContainer } from '../styledComponents';
-import { TimelineActivity } from '../Timeline/styledComponents';
+import { InternalTimelineActivity } from '../Timeline/styledComponents';
 
 const AttemptingIcon = iconDictionary('attempt');
 const WatchingIcon = iconDictionary('monocle');
 
-export const EmptyOverviewListComponent = ({ handleNav, type }) => (
+export const EmptyOverviewListComponent = ({ type }) => (
   <OverviewList>
     <EmptyOverviewListItem>
       <EmptyOverviewListDetail>
         Not {type} any issues.{' '}
-        <TimelineActivity onClick={() => handleNav('/issues')}>
+        <InternalTimelineActivity to="/issues">
           Browse issues
-        </TimelineActivity>{' '}
+        </InternalTimelineActivity>{' '}
         to add to your {type} list.
       </EmptyOverviewListDetail>
     </EmptyOverviewListItem>
@@ -37,10 +37,10 @@ export const EmptyOverviewListComponent = ({ handleNav, type }) => (
 
 export const OverviewListComponent = ({
   handleNav,
-  handleRemoveIssue,
+  handleRemoveAttempting,
+  handleRemoveWatching,
   list,
   type,
-  userId,
 }) => {
   const listIconDictionary = {
     attempting: {
@@ -53,6 +53,17 @@ export const OverviewListComponent = ({
     },
   };
   const { icon, label } = listIconDictionary[type];
+  const handleRemove = ({ id: issueId, column }) => {
+    if (column === 'watching') {
+      handleRemoveWatching({
+        issueId,
+      });
+    } else {
+      handleRemoveAttempting({
+        issueId,
+      });
+    }
+  };
   return (
     <OverviewList>
       {list.map(({ fundedAmount, id, name }) => (
@@ -62,11 +73,9 @@ export const OverviewListComponent = ({
               icon={icon}
               label={label}
               onClick={() =>
-                handleRemoveIssue({
-                  userId,
+                handleRemove({
                   id,
                   column: type,
-                  remove: true,
                 })
               }
             />
@@ -87,15 +96,12 @@ export const OverviewListComponent = ({
   );
 };
 
-EmptyOverviewListComponent.propTypes = {
-  handleNav: T.func,
-  type: T.string,
-};
+EmptyOverviewListComponent.propTypes = { type: T.string };
 
 OverviewListComponent.propTypes = {
   handleNav: T.func,
-  handleRemoveIssue: T.func,
+  handleRemoveAttempting: T.func,
+  handleRemoveWatching: T.func,
   list: T.array,
   type: T.string,
-  userId: T.string,
 };

@@ -1,98 +1,119 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import AsyncRender from 'components/AsyncRender';
-
-import injectSaga from 'utils/injectSaga';
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
-import { importPullRequestDictionary } from '../stepDictionary';
+import injectSaga from 'utils/injectSaga';
 
 import {
-  clearForm,
+  clearAlerts,
   createPullRequest,
+  fetchGithubPullRequests,
   handleStep,
   importPullRequest,
   inputChange,
   inputError,
+  resetState,
 } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
   makeSelectPullRequests,
-  makeSelectPullRequestsError,
   makeSelectPullRequestsLoading,
 } from '../selectors';
+import { importPullRequestDictionary } from '../stepDictionary';
 
-import { ImportPullRequestWrapper } from './styledComponents';
-
-// eslint-disable-next-line react/prefer-stateless-function
 const AddPullRequest = ({
+  activeUser: { isGithubVerified },
+  alerts,
   dispatchCreatePullRequest,
+  dispatchFetchGithubPullRequests,
   dispatchHandleStep,
   dispatchImportPullRequest,
-  error,
+  dispatchResetState,
+  handleClearAlerts,
+  handleClose,
   handleInputChange,
-  dispatchClearForm,
   importData,
-  importLoading,
   issueId,
+  loading,
   step,
-  userId,
+  userPullRequests,
+  userPullRequestsLoading,
 }) => {
-  const StepToRender = importPullRequestDictionary[step];
+  useEffect(() => {
+    if (isGithubVerified) {
+      dispatchFetchGithubPullRequests({ issueId });
+    }
+    return dispatchResetState;
+  }, []);
 
-  const handleImport = () => {
+  const ComponentToRender = importPullRequestDictionary[step];
+
+  const handleImport = ({ url }) => {
     const { importUrl } = importData;
     dispatchImportPullRequest({
-      url: importUrl.value,
+      issueId,
+      url: url || importUrl.value,
     });
   };
   const handleSubmit = () => {
-    dispatchCreatePullRequest({ issueId, userId, importData });
+    dispatchCreatePullRequest({ issueId, importData });
   };
-  return (
-    <ImportPullRequestWrapper>
-      <AsyncRender
-        asyncData={[]}
-        component={StepToRender}
-        loading={importLoading}
-        propsToPassDown={{
-          dispatchHandleStep,
-          error,
-          handleImport,
-          dispatchClearForm,
-          handleInputChange,
-          handleSubmit,
-          importData,
-          importLoading,
-        }}
-      />
-    </ImportPullRequestWrapper>
-  );
+
+  const propsToPassDown = {
+    alerts,
+    dispatchHandleStep,
+    handleClearAlerts,
+    handleClose,
+    handleImport,
+    handleInputChange,
+    handleSubmit,
+    importData,
+    loading,
+    userPullRequests,
+    userPullRequestsLoading,
+  };
+
+  return <ComponentToRender {...propsToPassDown} />;
 };
 
 AddPullRequest.propTypes = {
-  dispatchCreatePullRequest: T.func,
-  dispatchHandleStep: T.func,
-  dispatchImportPullRequest: T.func,
-  error: T.string,
-  handleInputChange: T.func,
-  dispatchClearForm: T.func,
-  importData: T.object,
-  importLoading: T.bool,
-  issueId: T.string,
-  step: T.number,
-  userId: T.string,
+  activeUser: T.object.isRequired,
+  alerts: T.object.isRequired,
+  dispatchCreatePullRequest: T.func.isRequired,
+  dispatchFetchGithubPullRequests: T.func.isRequired,
+  dispatchHandleStep: T.func.isRequired,
+  dispatchImportPullRequest: T.func.isRequired,
+  dispatchResetState: T.func.isRequired,
+  handleClearAlerts: T.func.isRequired,
+  handleClose: T.func.isRequired,
+  handleInputChange: T.func.isRequired,
+  importData: T.object.isRequired,
+  issueId: T.string.isRequired,
+  loading: T.bool.isRequired,
+  step: T.number.isRequired,
+  userPullRequests: T.array.isRequired,
+  userPullRequestsLoading: T.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  step: makeSelectPullRequests('step'),
-  error: makeSelectPullRequestsError('importPullRequest'),
+  /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
+  /*
+   * Reducer : PullRequests
+   */
+  alerts: makeSelectPullRequests('alerts'),
   importData: makeSelectPullRequests('importData'),
-  importLoading: makeSelectPullRequestsLoading('importPullRequest'),
+  loading: makeSelectPullRequestsLoading('default'),
+  step: makeSelectPullRequests('step'),
+  userPullRequests: makeSelectPullRequests('userPullRequests'),
+  userPullRequestsLoading: makeSelectPullRequestsLoading('userPullRequests'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -100,11 +121,14 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : PullRequests
      */
-    dispatchClearForm: () => dispatch(clearForm()),
     dispatchCreatePullRequest: payload => dispatch(createPullRequest(payload)),
+    dispatchFetchGithubPullRequests: payload =>
+      dispatch(fetchGithubPullRequests(payload)),
     dispatchHandleStep: payload => dispatch(handleStep(payload)),
     dispatchImportPullRequest: payload => dispatch(importPullRequest(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
+    dispatchResetState: () => dispatch(resetState()),
+    handleClearAlerts: () => dispatch(clearAlerts()),
     handleInputChange: payload => dispatch(inputChange(payload)),
   };
 }

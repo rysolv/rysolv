@@ -1,104 +1,176 @@
-import React, { Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
-import { PrimaryAsyncButton } from 'components/base_ui';
+import { Card, PrimaryAsyncButton } from 'components/base_ui';
+import { issueTags, tagColors } from 'components/Issues/constants';
 import VerifyForm from 'components/Issues/Add/Verify';
 
-import { incrementStep, saveInfo, verifyInfo, clearForm } from '../actions';
+import {
+  clearForm,
+  generateIdenticon,
+  incrementStep,
+  saveInfo,
+} from '../actions';
 import { makeSelectIssues, makeSelectIssuesRequestBody } from '../selectors';
 import {
   BackLink,
   ButtonGroup,
-  LogoContainer,
-  OrganizationNameWrapper,
-  SelectedOrganization,
+  LanguageContainer,
+  LogoWrapper,
+  RepoName,
+  RepoNameWrapper,
+  StyledFocusDiv,
+  StyledFormHelperText,
   StyledH3,
+  StyledLanguageWrapper,
   StyledLink,
-  VerifyWrapper,
+  StyledTagWrapper,
+  Tag,
+  TagContainer,
 } from './styledComponents';
 
-// eslint-disable-next-line react/prefer-stateless-function
-export class VerifyIssue extends React.PureComponent {
-  render() {
-    const {
-      activeUser,
-      dispatchClearForm,
-      importSuccess,
-      issueData,
-      dispatchIncrementStep,
-      dispatchSaveInfo,
-      handleNav,
-      organizationData,
-      requestBody,
-    } = this.props;
-    const handleSaveInfo = () => {
-      dispatchSaveInfo({ requestBody, activeUser });
-      handleNav('/issues');
-    };
-    const cancelImport = () => {
-      dispatchClearForm();
-      dispatchIncrementStep({ step: 1, view: 'addIssue' });
+const VerifyIssue = ({
+  dispatchClearForm,
+  dispatchIncrementStep,
+  dispatchSaveInfo,
+  handleGenerateIdenticon,
+  importSuccess,
+  issueData,
+  issueData: { issueLanguages },
+  repoData: { repoLogo, repoName, repoUrl },
+  requestBody,
+}) => {
+  const [selectedType, setSelectedType] = useState('');
+  const [typeError, setTypeError] = useState('');
+
+  useEffect(() => {
+    if (!repoLogo.value) handleGenerateIdenticon();
+    document.getElementById('issueAdd').focus();
+  }, []);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-param-reassign
+    requestBody.issueType = selectedType;
+  }, [selectedType]);
+
+  const cancelImport = () => {
+    dispatchClearForm();
+    dispatchIncrementStep({ step: 1, view: 'addIssue' });
+  };
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter') {
+      handleSubmit();
+    }
+  };
+  const handleSubmit = () => {
+    if (!selectedType) {
+      setTypeError('One issue type needs to be selected.');
+    } else {
+      setTypeError('');
+      dispatchSaveInfo({ requestBody });
+    }
+  };
+
+  const mapLanguages = array => {
+    if (array.value.length > 0) {
+      return array.value.map(el => (
+        <StyledLanguageWrapper key={el} language={el} />
+      ));
+    }
+    return 'None listed.';
+  };
+
+  const languageDiv = mapLanguages(issueLanguages);
+
+  const tagDiv = issueTags.map((el, idx) => {
+    const isTagSelected = el === selectedType;
+
+    const handleSelectType = () => {
+      setSelectedType(el);
+      setTypeError('');
     };
     return (
-      <Fragment>
-        <StyledH3>Organization</StyledH3>
-        <VerifyWrapper>
-          <LogoContainer
-            src={organizationData.organizationLogo.value}
-            alt={organizationData.organizationName.value}
-          />
-          <OrganizationNameWrapper>
-            <SelectedOrganization>
-              {organizationData.organizationName.value}
-            </SelectedOrganization>
-            <StyledLink
-              href={organizationData.organizationRepo.value}
-              target="_blank"
-            >
-              {organizationData.organizationRepo.value}
-            </StyledLink>
-          </OrganizationNameWrapper>
-        </VerifyWrapper>
-        <StyledH3>Issue</StyledH3>
-        <VerifyWrapper>
-          <VerifyForm activeUser={activeUser} issueData={issueData} />
-        </VerifyWrapper>
-        <ButtonGroup>
-          {importSuccess ? (
-            <BackLink onClick={() => cancelImport()}>Cancel</BackLink>
-          ) : (
-            <BackLink
-              onClick={() =>
-                dispatchIncrementStep({ step: 3, view: 'addIssue' })
-              }
-            >
-              Edit Issue
-            </BackLink>
-          )}
-
-          <PrimaryAsyncButton
-            disabled={false}
-            label="Submit"
-            onClick={handleSaveInfo}
-          />
-        </ButtonGroup>
-      </Fragment>
+      <StyledTagWrapper
+        key={el}
+        isTagSelected={isTagSelected}
+        onClick={handleSelectType}
+        tagColor={tagColors[idx]}
+      >
+        {el}
+      </StyledTagWrapper>
     );
-  }
-}
+  });
+
+  return (
+    <StyledFocusDiv
+      id="issueAdd"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
+      <StyledH3 isFirstHeader>Repo</StyledH3>
+      <Card>
+        <LogoWrapper alt={repoName.value} src={repoLogo.value} />
+        <RepoNameWrapper>
+          <RepoName>{repoName.value}</RepoName>
+          <StyledLink href={repoUrl.value} target="_blank">
+            {repoUrl.value}
+          </StyledLink>
+        </RepoNameWrapper>
+      </Card>
+      <StyledH3>Issue</StyledH3>
+      <Card>
+        <VerifyForm
+          issueData={issueData}
+          selectedType={selectedType}
+          setSelectedType={setSelectedType}
+          setTypeError={setTypeError}
+          typeError={typeError}
+        />
+      </Card>
+      <StyledH3>Languages</StyledH3>
+      <Card>
+        <LanguageContainer>{languageDiv}</LanguageContainer>
+      </Card>
+      <StyledH3>Select a tag</StyledH3>
+      <Card>
+        <TagContainer>
+          <Tag>{tagDiv}</Tag>
+          <StyledFormHelperText error={!!typeError}>
+            {typeError}
+          </StyledFormHelperText>
+        </TagContainer>
+      </Card>
+      <ButtonGroup>
+        {importSuccess ? (
+          <BackLink onClick={() => cancelImport()}>Cancel</BackLink>
+        ) : (
+          <BackLink
+            onClick={() => dispatchIncrementStep({ step: 3, view: 'addIssue' })}
+          >
+            Edit Issue
+          </BackLink>
+        )}
+
+        <PrimaryAsyncButton
+          disabled={false}
+          label="Submit"
+          onClick={handleSubmit}
+        />
+      </ButtonGroup>
+    </StyledFocusDiv>
+  );
+};
 
 VerifyIssue.propTypes = {
-  activeUser: T.object,
   dispatchClearForm: T.func,
-  importSuccess: T.bool,
-  issueData: T.object,
   dispatchIncrementStep: T.func,
   dispatchSaveInfo: T.func,
-  handleNav: T.func,
-  organizationData: T.object,
+  handleGenerateIdenticon: T.func,
+  importSuccess: T.bool,
+  issueData: T.object,
+  repoData: T.object,
   requestBody: T.object,
 };
 
@@ -107,7 +179,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : Issues
    */
   issueData: makeSelectIssues('issueData'),
-  organizationData: makeSelectIssues('organizationData'),
+  repoData: makeSelectIssues('repoData'),
   requestBody: makeSelectIssuesRequestBody(),
 });
 
@@ -119,11 +191,7 @@ function mapDispatchToProps(dispatch) {
     dispatchClearForm: () => dispatch(clearForm()),
     dispatchIncrementStep: payload => dispatch(incrementStep(payload)),
     dispatchSaveInfo: payload => dispatch(saveInfo(payload)),
-    dispatchVerifyInfo: () => dispatch(verifyInfo()),
-    /**
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
+    handleGenerateIdenticon: () => dispatch(generateIdenticon()),
   };
 }
 

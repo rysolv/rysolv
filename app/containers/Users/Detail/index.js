@@ -3,14 +3,15 @@ import T from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
+import { ConditionalRender } from 'components/base_ui';
+import NotFoundPage from 'components/NotFoundPage';
 import UserDetailView from 'components/Users/Detail/UserDetailView';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-import { fetchInfo, inputChange } from '../actions';
+import { fetchInfo, inputChange, resetState } from '../actions';
 import reducer from '../reducer';
 import saga from '../saga';
 import {
@@ -24,15 +25,18 @@ import { DetailWrapper } from './styledComponents';
 const UsersDetail = ({
   data,
   dispatchFetchInfo,
+  dispatchResetState,
   error,
   filterValues,
   handleInputChange,
-  handleNav,
+  isNotFound,
   loading,
   match: {
     params: { id },
   },
 }) => {
+  useEffect(() => dispatchResetState, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'User Detail';
@@ -41,17 +45,22 @@ const UsersDetail = ({
 
   return (
     <DetailWrapper>
-      <AsyncRender
-        asyncData={data}
-        component={UserDetailView}
-        error={error}
-        isRequiredData
-        loading={loading}
-        propsToPassDown={{
-          filterValues,
-          handleInputChange,
-          handleNav,
-        }}
+      <ConditionalRender
+        Component={
+          <AsyncRender
+            asyncData={data}
+            component={UserDetailView}
+            error={error}
+            isRequiredData
+            loading={loading}
+            propsToPassDown={{
+              filterValues,
+              handleInputChange,
+            }}
+          />
+        }
+        FallbackComponent={NotFoundPage}
+        shouldRender={!isNotFound}
       />
     </DetailWrapper>
   );
@@ -60,10 +69,11 @@ const UsersDetail = ({
 UsersDetail.propTypes = {
   data: T.object,
   dispatchFetchInfo: T.func,
-  error: T.oneOfType([T.object, T.bool]).isRequired,
+  dispatchResetState: T.func.isRequired,
+  error: T.oneOfType([T.bool, T.string]).isRequired,
   filterValues: T.object.isRequired,
   handleInputChange: T.func,
-  handleNav: T.func.isRequired,
+  isNotFound: T.bool.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
 };
@@ -75,6 +85,7 @@ const mapStateToProps = createStructuredSelector({
   data: makeSelectUserDetail(),
   error: makeSelectUsersError('fetchUser'),
   filterValues: makeSelectUsers('filter'),
+  isNotFound: makeSelectUsers('isNotFound'),
   loading: makeSelectUsersLoading('fetchUser'),
 });
 
@@ -84,11 +95,8 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Users
      */
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
+    dispatchResetState: () => dispatch(resetState()),
     handleInputChange: payload => dispatch(inputChange(payload)),
-    /**
-     * Reducer : Router
-     */
-    handleNav: route => dispatch(push(route)),
   };
 }
 

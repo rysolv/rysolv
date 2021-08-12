@@ -1,13 +1,20 @@
 import styled from 'styled-components';
-import { defaultFontSize } from 'defaultStyleHelper';
+import { Link } from 'react-router-dom';
 
-export const StyledBackNav = styled.a`
+import { defaultFontSize, textColor } from 'defaultStyleHelper';
+
+export const StyledBackNav = styled(Link)`
+  align-self: flex-start;
   color: grey;
   display: inline-flex;
-  align-self: flex-start;
-  margin: 1rem 0;
   font-size: ${defaultFontSize};
+  margin: 1rem 0;
+
   &:hover {
-    cursor: pointer;
+    color: ${textColor};
+  }
+
+  svg {
+    margin-right: 0.5rem;
   }
 `;

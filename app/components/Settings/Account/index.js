@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import {
+  CheckboxWithLabel,
   ConditionalRender,
   IconButton,
   MainTextInput,
@@ -30,15 +31,25 @@ const UserAccount = ({
   changeLastName,
   changeUsername,
   dispatchOpenModal,
+  dispatchSaveChange,
   dollarsEarned,
   email,
   firstName,
   handleClose,
-  handleDone,
   handleEdit,
   handleNav,
+  handleSubmitEmailChange,
+  handleSubmitInputChange,
+  handleValidateInput,
+  inputErrors: {
+    email: emailError,
+    firstName: firstNameError,
+    lastName: lastNameError,
+    username: usernameError,
+  },
   isDisabled,
   lastName,
+  receiveWeeklyEmails,
   setChangeEmail,
   setChangeFirstName,
   setChangeLastName,
@@ -50,12 +61,20 @@ const UserAccount = ({
 }) => (
   <AccountContainer>
     <HeaderWrapper>
-      <StyledH3>Account</StyledH3>
+      <StyledH3 removeMarginTop>Account</StyledH3>
     </HeaderWrapper>
     <InputWrapper>
       <MainTextInput
         disabled={!changeFirstName}
+        error={!!firstNameError}
+        helperText={firstNameError}
         label="First Name"
+        onBlur={() =>
+          handleValidateInput({
+            field: 'firstName',
+            values: { firstName: value },
+          })
+        }
         onChange={e => setValue(e.target.value)}
         value={!changeFirstName ? firstName : value}
       />
@@ -87,7 +106,7 @@ const UserAccount = ({
                 icon={DoneIcon}
                 label="Save"
                 onClick={() =>
-                  handleDone({
+                  handleSubmitInputChange({
                     changeInputState: setChangeFirstName,
                     field: 'firstName',
                   })
@@ -102,7 +121,15 @@ const UserAccount = ({
     <InputWrapper>
       <MainTextInput
         disabled={!changeLastName}
+        error={!!lastNameError}
+        helperText={lastNameError}
         label="Last Name"
+        onBlur={() =>
+          handleValidateInput({
+            field: 'lastName',
+            values: { lastName: value },
+          })
+        }
         onChange={e => setValue(e.target.value)}
         value={!changeLastName ? lastName : value}
       />
@@ -134,7 +161,7 @@ const UserAccount = ({
                 icon={DoneIcon}
                 label="Save"
                 onClick={() =>
-                  handleDone({
+                  handleSubmitInputChange({
                     changeInputState: setChangeLastName,
                     field: 'lastName',
                   })
@@ -149,7 +176,15 @@ const UserAccount = ({
     <InputWrapper>
       <MainTextInput
         disabled={!changeUsername}
+        error={!!usernameError}
+        helperText={usernameError}
         label="Username"
+        onBlur={() =>
+          handleValidateInput({
+            field: 'username',
+            values: { username: value },
+          })
+        }
         onChange={e => setValue(e.target.value)}
         value={!changeUsername ? username : value}
       />
@@ -181,7 +216,7 @@ const UserAccount = ({
                 icon={DoneIcon}
                 label="Save"
                 onClick={() =>
-                  handleDone({
+                  handleSubmitInputChange({
                     changeInputState: setChangeUsername,
                     field: 'username',
                   })
@@ -196,7 +231,15 @@ const UserAccount = ({
     <InputWrapper>
       <MainTextInput
         disabled={!changeEmail}
+        error={!!emailError}
+        helperText={emailError}
         label="E-mail"
+        onBlur={() =>
+          handleValidateInput({
+            field: 'email',
+            values: { email: value },
+          })
+        }
         onChange={e => setValue(e.target.value)}
         value={!changeEmail ? email : value}
       />
@@ -227,18 +270,28 @@ const UserAccount = ({
               <IconButton
                 icon={DoneIcon}
                 label="Save"
-                onClick={() =>
-                  handleDone({
-                    changeInputState: setChangeEmail,
-                    field: 'email',
-                  })
-                }
+                onClick={handleSubmitEmailChange}
               />
             </Fragment>
           }
           shouldRender={!changeEmail}
         />
       </IconButtonWrapper>
+    </InputWrapper>
+    <HeaderWrapper>
+      <StyledH3>Email Notifications</StyledH3>
+    </HeaderWrapper>
+    <InputWrapper>
+      <CheckboxWithLabel
+        checked={receiveWeeklyEmails}
+        label="Get weekly notifications for recommended issues"
+        onChange={() => {
+          dispatchSaveChange({
+            field: 'receiveWeeklyEmails',
+            value: !receiveWeeklyEmails,
+          });
+        }}
+      />
     </InputWrapper>
     <HeaderWrapper>
       <StyledH3>Balance</StyledH3>
@@ -269,15 +322,20 @@ UserAccount.propTypes = {
   changeLastName: T.bool,
   changeUsername: T.bool,
   dispatchOpenModal: T.func,
+  dispatchSaveChange: T.func.isRequired,
   dollarsEarned: T.number,
   email: T.string,
   firstName: T.string,
   handleClose: T.func,
-  handleDone: T.func,
   handleEdit: T.func,
   handleNav: T.func,
+  handleSubmitEmailChange: T.func,
+  handleSubmitInputChange: T.func,
+  handleValidateInput: T.func.isRequired,
+  inputErrors: T.object.isRequired,
   isDisabled: T.bool,
   lastName: T.string,
+  receiveWeeklyEmails: T.bool.isRequired,
   setChangeEmail: T.func,
   setChangeFirstName: T.func,
   setChangeLastName: T.func,

@@ -1,16 +1,25 @@
+import React from 'react';
 import styled from 'styled-components';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
 import {
+  BackNav,
   BaseDropDownMenu,
-  BaseInput,
-  PaymentModalInputWithAdornment,
+  BaseTextInput,
+  PaymentTextInput,
   PrimaryAsyncButton,
   SecondaryButton,
 } from 'components/base_ui';
-import { defaultFontSize, textColor } from 'defaultStyleHelper';
+import {
+  commentHeaderColor,
+  defaultFontSize,
+  detailFontSize,
+  hoverLinkColor,
+  lightGreyColor,
+  textColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -29,7 +38,7 @@ export const BalanceAmount = styled.h3`
 `;
 
 export const BalanceSquare = styled.div`
-  background-color: #f6f8fa;
+  background-color: ${commentHeaderColor};
   border-radius: 0.3rem;
   padding: 1.6rem 2.4rem;
   text-align: ${({ isCentered }) => (isCentered ? 'center' : 'left')};
@@ -88,6 +97,17 @@ export const ComponentTitle = styled.div`
   text-decoration: underline;
 `;
 
+export const DisclaimerText = styled.div`
+  color: ${lightGreyColor};
+  font-size: ${detailFontSize};
+  margin: -1rem 0 1rem;
+  width: 50%;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+`;
+
 export const DisplayText = styled.div`
   color: ${textColor};
   display: flex;
@@ -112,6 +132,8 @@ export const FundingContainer = styled.div`
 
 export const HorizontalWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
+  width: 50%;
 `;
 
 export const InputHeader = styled.div`
@@ -126,6 +148,16 @@ export const InputHeader = styled.div`
 
 export const InputWrapper = styled.div`
   margin-bottom: 1.5rem;
+  width: ${({ width }) => width || 'inherit'};
+`;
+
+export const LinkWrapper = styled.a`
+  color: ${hoverLinkColor};
+
+  &:hover {
+    color: ${hoverLinkColor};
+    text-decoration: underline;
+  }
 `;
 
 export const PaymentOptionWrapper = styled.div`
@@ -140,18 +172,11 @@ export const PaymentTitle = styled.div`
   margin: 0.5rem 0;
 `;
 
-export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
-  background-color: #fafbfc;
-  border-radius: 0.3rem;
-  color: rgba(0, 0, 0, 0.7);
-  font-size: 1.4rem;
-  line-height: 2rem;
-  margin-right: 0.5rem;
-  min-height: 34px;
-  width: 100%;
+export const StyledBackNav = styled(BackNav)`
+  margin-bottom: 0;
 `;
 
-export const StyledBaseInput = styled(BaseInput)`
+export const StyledBaseDropDownMenu = styled(BaseDropDownMenu)`
   background-color: #fafbfc;
   border-radius: 0.3rem;
   color: ${textColor};
@@ -159,7 +184,36 @@ export const StyledBaseInput = styled(BaseInput)`
   line-height: 2rem;
   margin-right: 0.5rem;
   min-height: 34px;
-  width: ${({ width }) => width || '100%'};
+  width: 100%;
+`;
+
+export const StyledBaseTextInput = styled(BaseTextInput)`
+  background-color: #fafbfc;
+  border-radius: 0.3rem;
+  color: ${textColor};
+  font-size: ${defaultFontSize};
+  height: 3.4rem;
+  line-height: 2rem;
+  margin: 0;
+  width: 100%;
+
+  .base-input {
+    border-bottom: none;
+  }
+
+  .MuiOutlinedInput-root {
+    height: 100%;
+  }
+
+  .MuiFormHelperText-contained {
+    font-size: 1.1rem;
+    margin-left: 0;
+  }
+`;
+
+export const StyledCheckboxWrapper = styled.div`
+  margin-bottom: -1rem;
+  margin-left: -1rem;
 `;
 
 export const StyledPaper = styled(Paper)`
@@ -169,11 +223,16 @@ export const StyledPaper = styled(Paper)`
   width: 100%;
 `;
 
-export const StyledPaymentModalInputWithAdornment = styled(
-  PaymentModalInputWithAdornment,
-)`
+export const StyledPaymentTextInput = styled(({ textAlign, ...restProps }) => (
+  <PaymentTextInput {...restProps} />
+))`
   margin-bottom: 2rem;
   width: 50%;
+
+  .MuiOutlinedInput-input {
+    padding: 0 1rem;
+    text-align: ${({ textAlign }) => textAlign || 'start'};
+  }
 `;
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
@@ -241,13 +300,14 @@ export const Value = styled.div`
   padding: 0.75rem 0;
 `;
 
-export const WithdrawalInputContainer = styled.div`
-  width: 50%;
-`;
-
 export const WithdrawalInputWrapper = styled.div`
   align-items: center;
   display: ${({ isRow }) => (isRow ? 'flex' : 'block')};
   font-weight: ${({ isThin }) => (isThin ? '400' : '600')};
-  padding: 1rem 0;
+  padding: 0.5rem 0;
+  width: ${({ width }) => width || '50%'};
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 `;

@@ -1,24 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
+
+import { ConditionalRender } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
-import { BaseTextInputWithAdornment } from 'components/base_ui';
+
+import UserIssues from './UserIssues';
 import {
   ImportFormContainer,
+  MessageWrapper,
+  StyledBaseLink,
+  StyledBaseTextInputWithAdornment,
   StyledImportError,
-  StyledLabel,
+  // StyledLabel,
 } from './styledComponents';
 
+const GithubIcon = iconDictionary('github');
 const SearchIcon = iconDictionary('search');
 
 const ImportForm = ({
-  issueData,
-  importIssueLoading,
-  handleIncrementStep,
+  // handleIncrementStep,
   handleInputChange,
   handleSubmit,
   importError,
+  importIssueLoading,
+  isGithubVerified,
+  issueData: { autoImportUrl, importUrl },
+  userIssues,
+  userIssuesLoading,
 }) => {
-  const { importUrl } = issueData;
+  useEffect(() => document.getElementById('issueImport').focus(), []);
+
+  useEffect(() => {
+    const { error, value } = autoImportUrl;
+    if (!error && value) {
+      handleSubmit();
+    }
+  }, [autoImportUrl]);
+
+  const handleKeypress = ({ key }) => {
+    if (key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
   const onChangeHandler = e => {
     handleInputChange({
       field: 'importUrl',
@@ -27,41 +51,67 @@ const ImportForm = ({
     });
   };
 
+  const UnauthenticatedMessage = (
+    <MessageWrapper>
+      {GithubIcon}
+      <StyledBaseLink label="Link your Github account" path="/settings" /> for
+      easier importing.
+    </MessageWrapper>
+  );
+
   return (
-    <ImportFormContainer>
+    <ImportFormContainer
+      id="issueImport"
+      onKeyPress={e => handleKeypress(e)}
+      tabIndex="0"
+    >
       Import GitHub Issue
       <br />
-      <BaseTextInputWithAdornment
-        disabled={importIssueLoading}
+      <StyledBaseTextInputWithAdornment
         adornmentComponent={SearchIcon}
+        disabled={importIssueLoading}
         error={!!importUrl.error}
         helperText={importUrl.error || ''}
         name="url"
-        onClick={handleSubmit}
         onChange={onChangeHandler}
+        onClick={handleSubmit}
+        placeholder="https://www.github.com/rysolv/rysolv/issues/1"
         position="end"
         value={importUrl.value}
       />
       <StyledImportError>
         {importError.error ? importError.message : null}
       </StyledImportError>
-      or
+      <ConditionalRender
+        Component={UserIssues}
+        FallbackComponent={UnauthenticatedMessage}
+        propsToPassDown={{
+          handleInputChange,
+          userIssues,
+          userIssuesLoading,
+        }}
+        shouldRender={isGithubVerified}
+      />
+      {/* or
       <StyledLabel
         onClick={() => handleIncrementStep({ step: 2, view: 'addIssue' })}
       >
         Manual
-      </StyledLabel>
+      </StyledLabel> */}
     </ImportFormContainer>
   );
 };
 
 ImportForm.propTypes = {
-  handleIncrementStep: T.func,
+  // handleIncrementStep: T.func,
   handleInputChange: T.func,
   handleSubmit: T.func,
   importError: T.object,
   importIssueLoading: T.bool,
+  isGithubVerified: T.bool,
   issueData: T.object,
+  userIssues: T.array,
+  userIssuesLoading: T.bool,
 };
 
 export default ImportForm;
