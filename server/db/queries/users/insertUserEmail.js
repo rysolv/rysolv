@@ -5,7 +5,8 @@ const insertUserEmail = async ({ email, primary, userId }) => {
 
   const queryText = `
     INSERT INTO user_emails (email, primary_email, user_id)
-    VALUES($1, $2, $3);
+    VALUES($1, $2, $3)
+    ON CONFLICT (email, user_id) DO NOTHING;
   `;
 
   const { rows } = await singleQuery({ queryText, values });

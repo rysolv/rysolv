@@ -159,6 +159,13 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       // insert git_user
       await insertGitUser({ githubId: github_id, githubToken, userId });
 
+      // Save down github emails
+      await Promise.all(
+        emailList.map(async ({ email: githubEmail, primary }) => {
+          await insertUserEmail({ email: githubEmail, primary, userId });
+        }),
+      );
+
       const result = await getUserSettingsQuery({ userId });
       const { issues, repos } = result;
 

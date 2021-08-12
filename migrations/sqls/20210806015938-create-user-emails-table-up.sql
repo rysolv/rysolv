@@ -4,3 +4,5 @@ CREATE TABLE IF NOT EXISTS user_emails (
     primary_email BOOLEAN,
     user_id UUID REFERENCES users(id)
 );
+
+CREATE UNIQUE INDEX user_emails_index on user_emails (email, user_id);

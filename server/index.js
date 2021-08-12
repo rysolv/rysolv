@@ -32,11 +32,10 @@ const limiter = rateLimit({
   max: 50, // limit each IP to 50 requests per windowMs
 });
 
-app.use(limiter);
-
 // Route requests through GraphQL
 app.use(
   '/graphql',
+  limiter,
   validateToken,
   graphQlHttp((req, res) => ({
     context: {
