@@ -1,2 +1,2 @@
-DROP TABLE IF EXISTS user_emails CASCADE;
+DROP TABLE IF EXISTS user_emails;
 
