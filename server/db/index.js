@@ -71,6 +71,8 @@ const {
   getUsers,
   getUserSettings,
   getUserWatchList,
+  insertGitUser,
+  insertUserEmail,
   searchUsers,
   transformUser,
 } = require('./queries/users');
@@ -133,6 +135,8 @@ module.exports = {
   getUsers,
   getUserSettings,
   getUserWatchList,
+  insertGitUser,
+  insertUserEmail,
   postUserResponse,
   removeAttempting,
   removeWatching,
