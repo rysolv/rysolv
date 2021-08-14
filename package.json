@@ -11,7 +11,7 @@
     "node": "12.0.0"
   },
   "author": "Anna P, Tyler M",
-	"license": "AGPL-3.0-or-later",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
     "analyze": "node ./internals/scripts/analyze.js",
@@ -91,7 +91,7 @@
     "dotenv": "8.2.0",
     "express": "4.16.4",
     "express-graphql": "0.9.0",
-    "express-rate-limit": "^5.3.0",
+    "express-rate-limit": "5.3.0",
     "graphql": "14.6.0",
     "history": "4.9.0",
     "hoist-non-react-statics": "3.3.0",

@@ -67,7 +67,7 @@ export const StyledButton = styled(Button)`
 
 export const TimelineContainer = styled.div`
   display: flex;
-  height: 100%;
+  height: auto;
 
   ${laptop} {
     flex-direction: column;
