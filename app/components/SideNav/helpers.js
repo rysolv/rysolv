@@ -1,5 +1,6 @@
 export const excludedPath = [
   '',
+  'code-ranking',
   'jobs',
   'password-reset',
   'recruitment',

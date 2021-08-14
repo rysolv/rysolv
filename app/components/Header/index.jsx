@@ -31,7 +31,10 @@ const Header = ({
 
   const { pathname } = window.location;
   const isLandingOrRecruitmentPage =
-    pathname === '/' || pathname === '/jobs' || pathname === '/recruitment';
+    pathname === '/' ||
+    pathname === '/code-ranking' ||
+    pathname === '/jobs' ||
+    pathname === '/recruitment';
 
   const DesktopHeaderToRender = isLandingOrRecruitmentPage
     ? DesktopLandingHeader
