@@ -2,42 +2,42 @@ import React from 'react';
 
 import {
   CardContainer,
-  CodeRankingContainer,
-  CodeRankingHeader,
-  CodeRankingText,
+  CodeScoringContainer,
+  CodeScoringHeader,
+  CodeScoringSubheader,
+  CodeScoringText,
   ContentGroup,
-  CodeRankingSubheader,
 } from './styledComponents';
 
-const CodeRanking = () => (
-  <CodeRankingContainer>
+const CodeScoring = () => (
+  <CodeScoringContainer>
     <CardContainer>
       <ContentGroup>
-        <CodeRankingHeader>Ranking code</CodeRankingHeader>
-        <CodeRankingText>
+        <CodeScoringHeader>How We Score Code</CodeScoringHeader>
+        <CodeScoringText>
           No one writes sorting algorithms for work. So why does everyone use
           this to judge new applicants? And why do people waste so much
           cumulative time craming for algorithm interviews? Couldn&apos;t those
           hours be better used?
-        </CodeRankingText>
-        <CodeRankingText>
+        </CodeScoringText>
+        <CodeScoringText>
           What do engineers actually do at work?
           <ul>
             <li>Break assignments into deliverable tasks</li>
             <li>Communicate expectations</li>
             <li>Review code</li>
           </ul>
-        </CodeRankingText>
+        </CodeScoringText>
       </ContentGroup>
       <ContentGroup>
-        <CodeRankingSubheader>
+        <CodeScoringSubheader>
           Good coders code with other good coders
-        </CodeRankingSubheader>
-        <CodeRankingText>
+        </CodeScoringSubheader>
+        <CodeScoringText>
           We&apos;re working on the basic assumption that good developers like
           to work with other good developers.
-        </CodeRankingText>
-        <CodeRankingText>
+        </CodeScoringText>
+        <CodeScoringText>
           Asides from code, we score:
           <ul>
             <li>Commenting on issues</li>
@@ -46,39 +46,39 @@ const CodeRanking = () => (
             <li>Raising issues</li>
             <li>Submitting pull requests</li>
           </ul>
-        </CodeRankingText>
+        </CodeScoringText>
       </ContentGroup>
       <ContentGroup>
-        <CodeRankingSubheader>It&apos;s cumulative</CodeRankingSubheader>
-        <CodeRankingText>
+        <CodeScoringSubheader>It&apos;s cumulative</CodeScoringSubheader>
+        <CodeScoringText>
           Any experience is good experience. We don&apos;t penalize your old
           code.
-        </CodeRankingText>
+        </CodeScoringText>
       </ContentGroup>
       <ContentGroup isLastGroup>
-        <CodeRankingSubheader>Comparing languages</CodeRankingSubheader>
-        <CodeRankingText>
+        <CodeScoringSubheader>Comparing languages</CodeScoringSubheader>
+        <CodeScoringText>
           While our analysis is Lines Of Code (LOC) based, we know that each
           language will vastly differ.
-        </CodeRankingText>
-        <CodeRankingText isIndented>
+        </CodeScoringText>
+        <CodeScoringText isIndented>
           Ex: 5,000 lines of Javascript is probably a handful of React
           components vs. 5,000 lines of SQL is a serious amount of code.
-        </CodeRankingText>
-        <CodeRankingText>
+        </CodeScoringText>
+        <CodeScoringText>
           Instead of a direct comparison, we weigh each language based on the
           average number of lines per language per user in the Rysolv network.
-        </CodeRankingText>
-        <CodeRankingText>
+        </CodeScoringText>
+        <CodeScoringText>
           Using the JavaScript vs. SQL example above, if the average Rysolv
           JavaScript user has witten 20,000 lines of JavaScript and the average
           SQL user has written 800 lines of SQL, a user with 10,000 lines of
           JavaScript and 2,000 lines of SQL will score below average on
           JavaScript and above average on SQL.
-        </CodeRankingText>
+        </CodeScoringText>
       </ContentGroup>
     </CardContainer>
-  </CodeRankingContainer>
+  </CodeScoringContainer>
 );
 
-export default CodeRanking;
+export default CodeScoring;

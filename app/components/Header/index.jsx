@@ -32,7 +32,7 @@ const Header = ({
   const { pathname } = window.location;
   const isLandingOrRecruitmentPage =
     pathname === '/' ||
-    pathname === '/code-ranking' ||
+    pathname === '/how-we-score-code' ||
     pathname === '/jobs' ||
     pathname === '/recruitment';
 

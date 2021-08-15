@@ -8,7 +8,7 @@ import HowTo from 'components/HowTo';
 import NotFoundPage from 'components/NotFoundPage';
 import PrivacyPolicy from 'components/PrivacyPolicy';
 import TermsOfService from 'components/TermsOfService';
-import CodeRanking from 'containers/CodeRanking/Loadable';
+import CodeScoring from 'containers/CodeScoring/Loadable';
 import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
 import Main from 'containers/HomePage/Loadable';
 import IssuesAdd from 'containers/Issues/Add';
@@ -29,7 +29,7 @@ const publicConfig = { isAdmin: false, isPrivate: false };
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
-const PublicCodeRanking = withAuth(publicConfig, CodeRanking);
+const PublicCodeScoring = withAuth(publicConfig, CodeScoring);
 const PublicCompanyRecruitment = withAuth(publicConfig, CompanyRecruitment);
 const PublicContact = withAuth(publicConfig, Contact);
 const PublicFaq = withAuth(publicConfig, Faq);
@@ -52,7 +52,7 @@ const Routes = () => (
   <Switch>
     <Route exact path="/" component={PublicMain} />
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
-    <Route exact path ="/code-ranking" component={PublicCodeRanking} />
+    <Route exact path ="/how-we-score-code" component={PublicCodeScoring} />
     <Route exact path="/contact-us" component={PublicContact} />
     <Route exact path="/faq" component={PublicFaq} />
     <Route exact path="/how-to" component={PublicHowTo} />

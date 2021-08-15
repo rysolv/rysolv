@@ -17,7 +17,8 @@ const ConfirmationView = () => (
       <p>
         Someone will be reaching out to you soon. In the meantime, continue
         growing your profile by resolving{' '}
-        <LinkWrapper to="/issues">issues</LinkWrapper>.
+        <LinkWrapper to="/issues">issues</LinkWrapper>. See how we{' '}
+        <LinkWrapper to="/how-we-score-code">score candidates</LinkWrapper>.
       </p>
     </ViewContainer>
   </Fragment>

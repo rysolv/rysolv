@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 
+import { BaseLink } from 'components/base_ui';
 import {
   blueGrayColor,
   defaultFontSize,
@@ -109,13 +110,12 @@ export const CompanyRecruitmentHeader = styled.div`
 `;
 
 export const CompanyRecruitmentSubheader = styled.div`
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: 400;
   line-height: 2.905rem;
   margin-top: 2rem;
 
   @media (max-width: 500px) {
-    display: ${({ removeOnMobile }) => (removeOnMobile ? 'none' : 'block')};
     font-size: 2rem;
     line-height: 2.848rem;
   }
@@ -274,6 +274,11 @@ export const InputLabel = styled.div`
 
 export const InputWrapper = styled.div`
   margin-bottom: 1rem;
+`;
+
+export const InternalLink = styled(BaseLink)`
+  color: ${whiteColor};
+  text-decoration: underline;
 `;
 
 export const RecruitmentFormContainer = styled.div`

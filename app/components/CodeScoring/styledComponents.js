@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { whiteColor, blueColor, textColor } from 'defaultStyleHelper';
+import { blueColor, textColor, whiteColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptop, mobile } = mediaQueriesByDevice;
@@ -25,7 +25,7 @@ export const CardContainer = styled.div`
   }
 `;
 
-export const CodeRankingContainer = styled.div`
+export const CodeScoringContainer = styled.div`
   margin: 0 12rem;
   max-width: 120rem;
 
@@ -34,7 +34,7 @@ export const CodeRankingContainer = styled.div`
   }
 `;
 
-export const CodeRankingHeader = styled.div`
+export const CodeScoringHeader = styled.div`
   color: ${blueColor};
   font-size: 3.2rem;
   font-weight: 700;
@@ -54,7 +54,7 @@ export const CodeRankingHeader = styled.div`
   }
 `;
 
-export const CodeRankingSubheader = styled(CodeRankingHeader)`
+export const CodeScoringSubheader = styled(CodeScoringHeader)`
   color: ${blueColor};
   font-size: 2.5rem;
   font-weight: 700;
@@ -72,7 +72,7 @@ export const CodeRankingSubheader = styled(CodeRankingHeader)`
   }
 `;
 
-export const CodeRankingText = styled.div`
+export const CodeScoringText = styled.div`
   color: ${textColor};
   font-size: 1.6rem;
   font-weight: 400;
