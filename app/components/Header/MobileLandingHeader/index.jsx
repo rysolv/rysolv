@@ -69,8 +69,8 @@ const MobileLandingHeader = ({
               shouldRemoveSecond
             />
             <InternalLink
-              label="Add your team"
-              path="/repos/add"
+              label="Hire engineers"
+              path="/recruitment"
               shouldRemoveFirst
             />
             <VerticalDivider />
@@ -101,7 +101,7 @@ const MobileLandingHeader = ({
         <StyledLoginLink label="Log in" path="/signin" />
         <HorizontalDivider />
         <MenuInternalLink label="Browse issues" path="/issues" />
-        <MenuInternalLink label="Add your team" path="/repos" />
+        <MenuInternalLink label="Hire engineers" path="/recruitment" />
       </MenuComponent>
     </MobileHeaderContainer>
   );
