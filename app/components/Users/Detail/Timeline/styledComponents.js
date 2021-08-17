@@ -68,7 +68,7 @@ export const StyledFundedIcon = styled.div`
 `;
 
 export const TimelineContainer = styled.div`
-  height: 100%;
+  height: auto;
 `;
 
 export const TimelineContent = styled.div`

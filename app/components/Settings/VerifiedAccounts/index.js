@@ -22,7 +22,7 @@ const VerifiedAccountsView = ({ githubUsername, isGithubVerified }) => {
     : process.env.GITHUB_VERIFY_CLIENT_ID_DEV;
   const VerifyLinkComponent = () => (
     <VerifyLink
-      href={`https://github.com/login/oauth/authorize?scope=user:email%20read:user&client_id=${clientId}`}
+      href={`https://github.com/login/oauth/authorize?scope=repo%20user:email%20read:user&client_id=${clientId}`}
     >
       Connect Github
     </VerifyLink>
