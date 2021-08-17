@@ -13,6 +13,7 @@ import {
   HeaderImageLeftIcon,
   HeaderImageRightIcon,
   HeaderWrapper,
+  InternalLink,
 } from './styledComponents';
 
 const HeaderImageLeft = iconDictionary('headerImageLeft');
@@ -42,8 +43,9 @@ const CompanyRecruitment = ({
             Forget the algorithm tests! Rysolv evaluates a candidate&apos;s
             coding history to find the right engineer for the job.
           </CompanyRecruitmentSubheader>
-          <CompanyRecruitmentSubheader removeOnMobile>
-            We prioritize attributes that really matter to a team.
+          <CompanyRecruitmentSubheader>
+            See how we{' '}
+            <InternalLink label="score candidates" path="/how-we-score-code" />.
           </CompanyRecruitmentSubheader>
         </HeaderGroup>
         <HeaderGroup>
