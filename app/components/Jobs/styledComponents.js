@@ -187,6 +187,7 @@ export const JobsHeader = styled.div`
 
 export const LinkWrapper = styled(Link)`
   color: ${blueColor};
+  text-decoration: underline;
 
   &:hover {
     color: ${blueColor};
