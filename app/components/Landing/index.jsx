@@ -82,7 +82,7 @@ const Landing = ({
               label="Become a Rysolver"
               onClick={() => handleNav('/signup')}
             />
-            <StyledPrimaryButton label="Add your team" onClick={() => handleNav('/repos/add')} />
+            <StyledPrimaryButton label="Hire engineers" onClick={() => handleNav('/recruitment')} />
           </ButtonGroup>
         </LandingWrapper>
         <LandingCardContainer>
