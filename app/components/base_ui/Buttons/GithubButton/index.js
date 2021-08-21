@@ -46,7 +46,7 @@ const GithubButton = ({ type, ...restProps }) => {
   const { clientId, label } = buttonProps[type][isProduction];
   return (
     <StyledGithubButton
-      href={`https://github.com/login/oauth/authorize?scope=repo%20user:email%20read:user&client_id=${clientId}`}
+      href={`https://github.com/login/oauth/authorize?scope=user:email%20read:user&client_id=${clientId}`}
       {...restProps}
     >
       {GithubIcon}
