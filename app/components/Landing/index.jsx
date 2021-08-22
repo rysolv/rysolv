@@ -75,7 +75,7 @@ const Landing = ({
       <div>
         <LandingWrapper>
           <LandingContainerText>
-            A crowdfunding <br />platform for <br /> <span>open source</span>.
+            A platform<br/> where <span>engineers</span><br />come to grow.
           </LandingContainerText>
           <ButtonGroup>
             <StyledSecondaryButton
