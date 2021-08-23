@@ -1,7 +1,7 @@
 {
   "name": "rysolv",
   "version": "0.0.1",
-  "description": "A crowdfunding platform for open source development",
+  "description": "Where engineers come to grow.",
   "repository": {
     "type": "git",
     "url": "git://github.com/rysolv/rysolv.git"
