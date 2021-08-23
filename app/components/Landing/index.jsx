@@ -75,7 +75,7 @@ const Landing = ({
       <div>
         <LandingWrapper>
           <LandingContainerText>
-            A platform<br/> where <span>engineers</span><br />come to grow.
+            Where <span>engineers</span><br />come to grow.
           </LandingContainerText>
           <ButtonGroup>
             <StyledSecondaryButton
