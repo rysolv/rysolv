@@ -3,6 +3,7 @@ import produce from 'immer';
 
 import {
   CHANGE_INPUT,
+  CHANGE_STEP,
   INPUT_ERROR,
   RESET_FORM,
   SEND_FORM_FAILURE,
@@ -26,6 +27,7 @@ export const initialState = {
   },
   loading: false,
   success: false,
+  step: 2,
 };
 
 const companyRecruitmentReducer = produce((draft, { payload, type }) => {
@@ -33,6 +35,11 @@ const companyRecruitmentReducer = produce((draft, { payload, type }) => {
     case CHANGE_INPUT: {
       const { field, value } = payload;
       draft.form[field] = value;
+      break;
+    }
+    case CHANGE_STEP: {
+      const { step } = payload;
+      draft.step = step;
       break;
     }
     case INPUT_ERROR: {
@@ -44,7 +51,11 @@ const companyRecruitmentReducer = produce((draft, { payload, type }) => {
       break;
     }
     case RESET_FORM: {
-      return initialState;
+      draft.error = initialState.error;
+      draft.form = initialState.form;
+      draft.formErrors = initialState.formErrors;
+      draft.success = initialState.success;
+      break;
     }
     case SEND_FORM_FAILURE: {
       draft.loading = false;

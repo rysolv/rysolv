@@ -5,19 +5,26 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 
-import CompanyRecruitmentView from 'components/CompanyRecruitment';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { changeInput, inputError, resetForm, sendForm } from './actions';
+import {
+  changeInput,
+  changeStep,
+  inputError,
+  resetForm,
+  sendForm,
+} from './actions';
 import { validateFields, validateOneField } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectCompanyRecruitment } from './selectors';
 import { ViewContainer } from './styledComponents';
+import viewDictionary from './viewDictionary';
 
 const CompanyRecruitment = ({
   dispatchChangeInput,
+  dispatchChangeStep,
   dispatchInputError,
   dispatchResetForm,
   dispatchSendForm,
@@ -25,6 +32,7 @@ const CompanyRecruitment = ({
   form,
   formErrors,
   loading,
+  step,
   success,
 }) => {
   const handleSendContact = () => {
@@ -45,10 +53,13 @@ const CompanyRecruitment = ({
     });
   };
 
+  const ViewToRender = viewDictionary[step];
+
   return (
     <ViewContainer>
-      <CompanyRecruitmentView
+      <ViewToRender
         dispatchChangeInput={dispatchChangeInput}
+        dispatchChangeStep={dispatchChangeStep}
         dispatchResetForm={dispatchResetForm}
         error={error}
         form={form}
@@ -64,6 +75,7 @@ const CompanyRecruitment = ({
 
 CompanyRecruitment.propTypes = {
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeStep: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchResetForm: T.func.isRequired,
   dispatchSendForm: T.func.isRequired,
@@ -71,6 +83,7 @@ CompanyRecruitment.propTypes = {
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   loading: T.bool.isRequired,
+  step: T.number.isRequired,
   success: T.bool.isRequired,
 };
 
@@ -82,6 +95,7 @@ const mapStateToProps = createStructuredSelector({
   form: makeSelectCompanyRecruitment('form'),
   formErrors: makeSelectCompanyRecruitment('formErrors'),
   loading: makeSelectCompanyRecruitment('loading'),
+  step: makeSelectCompanyRecruitment('step'),
   success: makeSelectCompanyRecruitment('success'),
 });
 
@@ -90,6 +104,7 @@ const mapDispatchToProps = dispatch => ({
    * Reducer : CompanyRecruitment
    */
   dispatchChangeInput: payload => dispatch(changeInput(payload)),
+  dispatchChangeStep: payload => dispatch(changeStep(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),
   dispatchResetForm: () => dispatch(resetForm()),
   dispatchSendForm: payload => dispatch(sendForm(payload)),

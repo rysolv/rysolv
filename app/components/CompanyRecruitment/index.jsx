@@ -23,6 +23,7 @@ const RecruitmentHeaderImageRight = iconDictionary(
 
 const CompanyRecruitment = ({
   dispatchChangeInput,
+  dispatchChangeStep,
   dispatchResetForm,
   error,
   form,
@@ -62,6 +63,7 @@ const CompanyRecruitment = ({
       <FormWrapper>
         <RecruitmentForm
           dispatchChangeInput={dispatchChangeInput}
+          dispatchChangeStep={dispatchChangeStep}
           dispatchResetForm={dispatchResetForm}
           error={error}
           form={form}
@@ -80,6 +82,7 @@ const CompanyRecruitment = ({
 
 CompanyRecruitment.propTypes = {
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeStep: T.func.isRequired,
   dispatchResetForm: T.func.isRequired,
   error: T.bool.isRequired,
   form: T.object.isRequired,
