@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { CalendlyContainer } from './styledComponents';
+
 class Calendly extends React.Component {
   componentDidMount() {
     const head = document.querySelector('head');
@@ -13,13 +15,9 @@ class Calendly extends React.Component {
 
   render() {
     return (
-      <div
+      <CalendlyContainer
         className="calendly-inline-widget"
         data-url="https://calendly.com/annapojawis23/15min"
-        style={{
-          height: '910px',
-          minWidth: '320px',
-        }}
       />
     );
   }

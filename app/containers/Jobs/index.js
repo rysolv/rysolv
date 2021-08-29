@@ -7,6 +7,7 @@ import { push } from 'connected-react-router';
 import { Redirect } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
+import JobsView from 'components/Jobs';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { useDidUpdateEffect } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
@@ -29,7 +30,6 @@ import {
   makeSelectJobs,
 } from './selectors';
 import { ViewContainer } from './styledComponents';
-import viewDictionary from './viewDictionary';
 
 const Jobs = ({
   activeUser: { isGithubVerified, isQuestionnaireComplete },
@@ -48,7 +48,6 @@ const Jobs = ({
   questions,
   responseArray,
   view,
-  step,
 }) => {
   const [isRequiredData, setIsRequiredData] = useState(true);
   useEffect(() => {
@@ -96,12 +95,10 @@ const Jobs = ({
     dispatchChangeInput({ field: 'resume', value: filesArray });
   };
 
-  const ViewToRender = viewDictionary[step];
+  const step = getQuestion();
+  const questionProps = questions[step - 1];
 
-  const questionStep = getQuestion();
-  const questionProps = questions[questionStep - 1];
-
-  if (questionStep && view === 0) {
+  if (step && view === 0) {
     return <Redirect to="/jobs" />;
   }
 
@@ -109,7 +106,7 @@ const Jobs = ({
     <ViewContainer>
       <AsyncRender
         asyncData={questions}
-        component={ViewToRender}
+        component={JobsView}
         error={error}
         isRequiredData={isRequiredData}
         loading={loading}
@@ -128,7 +125,7 @@ const Jobs = ({
           isSignedIn,
           loading,
           path,
-          step: questionStep,
+          step,
           steps: questions.length,
           view,
           ...questionProps,
@@ -137,8 +134,6 @@ const Jobs = ({
     </ViewContainer>
   );
 };
-
-Jobs.defaultProp = { step: 1 };
 
 Jobs.propTypes = {
   activeUser: T.object.isRequired,
@@ -156,7 +151,6 @@ Jobs.propTypes = {
   match: T.object.isRequired,
   questions: T.array.isRequired,
   responseArray: T.array.isRequired,
-  step: T.number.isRequired,
   view: T.number.isRequired,
 };
 
@@ -174,7 +168,6 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectJobs('loading'),
   questions: makeSelectJobQuestions(),
   responseArray: makeSelectJobResponseArray(),
-  step: makeSelectJobs('step'),
   view: makeSelectJobs('view'),
 });
 
