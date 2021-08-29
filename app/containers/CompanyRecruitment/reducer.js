@@ -27,7 +27,7 @@ export const initialState = {
   },
   loading: false,
   success: false,
-  step: 2,
+  step: 1,
 };
 
 const companyRecruitmentReducer = produce((draft, { payload, type }) => {

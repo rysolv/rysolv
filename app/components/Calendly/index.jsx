@@ -1,4 +1,5 @@
 import React from 'react';
+import T from 'prop-types';
 
 import { CalendlyContainer } from './styledComponents';
 
@@ -14,13 +15,23 @@ class Calendly extends React.Component {
   }
 
   render() {
+    const { isCompanyRecruitment } = this.props;
+    const dataUrl = isCompanyRecruitment
+      ? 'https://calendly.com/annapojawis23/15min'
+      : 'https://calendly.com/annapojawis23/15min';
+
     return (
       <CalendlyContainer
         className="calendly-inline-widget"
-        data-url="https://calendly.com/annapojawis23/15min"
+        data-url={dataUrl}
+        isCompanyRecruitment={isCompanyRecruitment}
       />
     );
   }
 }
+
+Calendly.defaultProps = { isCompanyRecruitment: false };
+
+Calendly.propTypes = { isCompanyRecruitment: T.bool };
 
 export default Calendly;

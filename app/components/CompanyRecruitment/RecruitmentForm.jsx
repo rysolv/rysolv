@@ -35,6 +35,8 @@ const RecruitmentForm = ({
     if (error || success) {
       setTimeout(() => {
         if (success) dispatchChangeStep({ step: 2 });
+      }, 300);
+      setTimeout(() => {
         dispatchResetForm();
       }, 6000);
     }

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 
+import CompanyRecruitmentView from 'components/CompanyRecruitment';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -20,7 +21,6 @@ import reducer from './reducer';
 import saga from './saga';
 import { makeSelectCompanyRecruitment } from './selectors';
 import { ViewContainer } from './styledComponents';
-import viewDictionary from './viewDictionary';
 
 const CompanyRecruitment = ({
   dispatchChangeInput,
@@ -35,6 +35,8 @@ const CompanyRecruitment = ({
   step,
   success,
 }) => {
+  useEffect(() => () => dispatchChangeStep({ step: 1 }), []);
+
   const handleSendContact = () => {
     const { isValidated, validationErrors } = validateFields({ values: form });
     if (isValidated) {
@@ -53,11 +55,9 @@ const CompanyRecruitment = ({
     });
   };
 
-  const ViewToRender = viewDictionary[step];
-
   return (
     <ViewContainer>
-      <ViewToRender
+      <CompanyRecruitmentView
         dispatchChangeInput={dispatchChangeInput}
         dispatchChangeStep={dispatchChangeStep}
         dispatchResetForm={dispatchResetForm}
@@ -67,6 +67,7 @@ const CompanyRecruitment = ({
         handleSendContact={handleSendContact}
         handleValidateInput={handleValidateInput}
         loading={loading}
+        step={step}
         success={success}
       />
     </ViewContainer>
