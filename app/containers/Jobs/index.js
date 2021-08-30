@@ -55,7 +55,7 @@ const Jobs = ({
       if (!isQuestionnaireComplete) {
         dispatchFetchQuestions({ category: 'hiring' });
       } else {
-        dispatchChangeView({ view: 2 });
+        dispatchChangeView({ view: 3 });
         setIsRequiredData(false);
       }
     } else {

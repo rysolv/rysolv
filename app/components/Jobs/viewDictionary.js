@@ -1,4 +1,4 @@
-import CalendlyView from '../Calendly';
+import CalendlyView from './CalendlyView';
 import ConfirmationView from './ConfirmationView';
 import DescriptionView from './DescriptionView';
 import SurveyView from './SurveyView';

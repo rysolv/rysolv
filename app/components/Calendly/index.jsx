@@ -1,10 +1,13 @@
 import React from 'react';
 import T from 'prop-types';
 
+import { isCalendlyScheduledEvent } from './helpers';
 import { CalendlyContainer } from './styledComponents';
 
 class Calendly extends React.Component {
   componentDidMount() {
+    const { dispatchChangeView } = this.props;
+
     const head = document.querySelector('head');
     const script = document.createElement('script');
     script.setAttribute(
@@ -12,13 +15,19 @@ class Calendly extends React.Component {
       'https://assets.calendly.com/assets/external/widget.js',
     );
     head.appendChild(script);
+
+    window.addEventListener('message', e => {
+      if (dispatchChangeView && isCalendlyScheduledEvent(e)) {
+        dispatchChangeView({ view: 3 });
+      }
+    });
   }
 
   render() {
     const { isCompanyRecruitment } = this.props;
     const dataUrl = isCompanyRecruitment
-      ? 'https://calendly.com/annapojawis23/15min'
-      : 'https://calendly.com/annapojawis23/15min';
+      ? 'https://calendly.com/rysolv/15-min-company-intro'
+      : 'https://calendly.com/rysolv/15-min-candidate-intro';
 
     return (
       <CalendlyContainer
@@ -32,6 +41,9 @@ class Calendly extends React.Component {
 
 Calendly.defaultProps = { isCompanyRecruitment: false };
 
-Calendly.propTypes = { isCompanyRecruitment: T.bool };
+Calendly.propTypes = {
+  dispatchChangeView: T.func,
+  isCompanyRecruitment: T.bool,
+};
 
 export default Calendly;
