@@ -351,16 +351,16 @@ export const ViewContainer = styled.div`
     isFinalView ? 'inherit' : 'space-between'};
   margin: 5rem 0 0;
   min-height: 50rem;
-  padding: 7.5rem 10%;
+  padding: ${({ isCalendlyView }) => (isCalendlyView ? '0' : '7.5rem 10%')};
   text-align: center;
   width: 100%;
 
   ${laptop} {
-    padding: 4rem 3.2rem;
+    padding: ${({ isCalendlyView }) => (isCalendlyView ? '0' : '4rem 3.2rem')};
   }
 
   ${mobile} {
-    padding: 2rem;
+    padding: ${({ isCalendlyView }) => (isCalendlyView ? '0' : '2rem')};
   }
 
   @media (max-width: 370px) {
