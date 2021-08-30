@@ -156,7 +156,8 @@ const SurveyView = ({
             onClick={handleSubmit}
             shouldDisplaySubmit={shouldDisplaySubmit}
           >
-            Submit
+            Continue
+            {NextIcon}
           </StyledButton>
         </ButtonGroup>
       </ViewContainer>

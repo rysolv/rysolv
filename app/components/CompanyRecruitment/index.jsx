@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
+import Calendly from 'components/Calendly';
 import iconDictionary from 'utils/iconDictionary';
 
 import RecruitmentForm from './RecruitmentForm';
@@ -23,6 +25,7 @@ const RecruitmentHeaderImageRight = iconDictionary(
 
 const CompanyRecruitment = ({
   dispatchChangeInput,
+  dispatchChangeStep,
   dispatchResetForm,
   error,
   form,
@@ -30,6 +33,7 @@ const CompanyRecruitment = ({
   handleSendContact,
   handleValidateInput,
   loading,
+  step,
   success,
 }) => (
   <Fragment>
@@ -59,19 +63,26 @@ const CompanyRecruitment = ({
           </CompanyRecruitmentSubheader>
         </HeaderGroup>
       </HeaderWrapper>
-      <FormWrapper>
-        <RecruitmentForm
-          dispatchChangeInput={dispatchChangeInput}
-          dispatchResetForm={dispatchResetForm}
-          error={error}
-          form={form}
-          formErrors={formErrors}
-          handleSendContact={handleSendContact}
-          handleValidateInput={handleValidateInput}
-          loading={loading}
-          success={success}
-        />
-      </FormWrapper>
+      <ConditionalRender
+        Component={<Calendly isCompanyRecruitment />}
+        FallbackComponent={
+          <FormWrapper>
+            <RecruitmentForm
+              dispatchChangeInput={dispatchChangeInput}
+              dispatchChangeStep={dispatchChangeStep}
+              dispatchResetForm={dispatchResetForm}
+              error={error}
+              form={form}
+              formErrors={formErrors}
+              handleSendContact={handleSendContact}
+              handleValidateInput={handleValidateInput}
+              loading={loading}
+              success={success}
+            />
+          </FormWrapper>
+        }
+        shouldRender={step === 2}
+      />
     </CompanyRecruitmentContainer>
     <HeaderImageRightIcon>{RecruitmentHeaderImageRight}</HeaderImageRightIcon>
     <HeaderImageLeftIcon>{HeaderImageLeft}</HeaderImageLeftIcon>
@@ -80,6 +91,7 @@ const CompanyRecruitment = ({
 
 CompanyRecruitment.propTypes = {
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeStep: T.func.isRequired,
   dispatchResetForm: T.func.isRequired,
   error: T.bool.isRequired,
   form: T.object.isRequired,
@@ -87,6 +99,7 @@ CompanyRecruitment.propTypes = {
   handleSendContact: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   loading: T.bool.isRequired,
+  step: T.number.isRequired,
   success: T.bool.isRequired,
 };
 

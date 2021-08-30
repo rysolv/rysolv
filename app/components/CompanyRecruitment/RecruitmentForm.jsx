@@ -14,6 +14,7 @@ import {
 
 const RecruitmentForm = ({
   dispatchChangeInput,
+  dispatchChangeStep,
   dispatchResetForm,
   error,
   form,
@@ -32,6 +33,9 @@ const RecruitmentForm = ({
 
   useEffect(() => {
     if (error || success) {
+      setTimeout(() => {
+        if (success) dispatchChangeStep({ step: 2 });
+      }, 300);
       setTimeout(() => {
         dispatchResetForm();
       }, 6000);
@@ -109,7 +113,7 @@ const RecruitmentForm = ({
             url.length === 0
           }
           error={error}
-          label="Send"
+          label="Next"
           loading={loading}
           onClick={() => handleSendContact({ company, email, name, url })}
           success={success}
@@ -121,6 +125,7 @@ const RecruitmentForm = ({
 
 RecruitmentForm.propTypes = {
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeStep: T.func.isRequired,
   dispatchResetForm: T.func.isRequired,
   error: T.bool.isRequired,
   form: T.object.isRequired,

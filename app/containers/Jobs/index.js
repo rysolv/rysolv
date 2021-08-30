@@ -55,7 +55,7 @@ const Jobs = ({
       if (!isQuestionnaireComplete) {
         dispatchFetchQuestions({ category: 'hiring' });
       } else {
-        dispatchChangeView({ view: 2 });
+        dispatchChangeView({ view: 3 });
         setIsRequiredData(false);
       }
     } else {
@@ -134,8 +134,6 @@ const Jobs = ({
     </ViewContainer>
   );
 };
-
-Jobs.defaultProp = { step: 1 };
 
 Jobs.propTypes = {
   activeUser: T.object.isRequired,
