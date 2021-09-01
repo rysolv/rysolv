@@ -9,6 +9,7 @@ import NotFoundPage from 'components/NotFoundPage';
 import PrivacyPolicy from 'components/PrivacyPolicy';
 import TermsOfService from 'components/TermsOfService';
 import CodeScoring from 'containers/CodeScoring/Loadable';
+import CompanyDashboard from 'containers/CompanyDashboard/Loadable';
 import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
 import Main from 'containers/HomePage/Loadable';
 import IssuesAdd from 'containers/Issues/Add';
@@ -26,6 +27,7 @@ import VerifyGithub from 'containers/VerifyGithub/Loadable';
 const privateConfig = { isAdmin: false, isPrivate: true };
 const publicConfig = { isAdmin: false, isPrivate: false };
 
+const PrivateCompanyDashboard = withAuth(privateConfig, CompanyDashboard);
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
@@ -54,6 +56,7 @@ const Routes = () => (
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
     <Route exact path ="/how-we-score-code" component={PublicCodeScoring} />
     <Route exact path="/contact-us" component={PublicContact} />
+    <Route exact path="/dashboard" component={PrivateCompanyDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
     <Route exact path="/how-to" component={PublicHowTo} />
     <Route exact path="/issues" component={PublicOverview} />
