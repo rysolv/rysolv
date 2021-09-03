@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
@@ -15,11 +16,16 @@ const RecruitmentHeaderImageRight = iconDictionary(
   'recruitmentHeaderImageRight',
 );
 
-const CompanyDashboard = ({ candidates }) => (
+const CompanyDashboard = ({ candidates, dispatchSaveCandidate }) => (
   <Fragment>
     <CompanyDashboardContainer>
-      {candidates.map(candidate => (
-        <CandidateCard {...candidate} />
+      {candidates.map((candidate, index) => (
+        <CandidateCard
+          key={index}
+          dispatchSaveCandidate={dispatchSaveCandidate}
+          index={index}
+          {...candidate}
+        />
       ))}
     </CompanyDashboardContainer>
     <HeaderImageRightIcon>{RecruitmentHeaderImageRight}</HeaderImageRightIcon>
@@ -27,6 +33,9 @@ const CompanyDashboard = ({ candidates }) => (
   </Fragment>
 );
 
-CompanyDashboard.propTypes = { candidates: T.array.isRequired };
+CompanyDashboard.propTypes = {
+  candidates: T.array.isRequired,
+  dispatchSaveCandidate: T.func.isRequired,
+};
 
 export default CompanyDashboard;

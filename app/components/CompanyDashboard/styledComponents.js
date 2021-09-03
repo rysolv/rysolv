@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export const CompanyDashboardContainer = styled.div``;
+import { whiteColor } from 'defaultStyleHelper';
+
+export const CompanyDashboardContainer = styled.div`
+  background: ${whiteColor};
+`;
 
 export const HeaderImageLeftIcon = styled.div`
   svg {

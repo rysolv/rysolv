@@ -6,28 +6,51 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 
 import CompanyDashboardView from 'components/CompanyDashboard';
+import injectReducer from 'utils/injectReducer';
 
-import { makeSelectCompanyDashboard } from './selectors';
+import { saveCandidate } from './actions';
+import reducer from './reducer';
+import { makeSelectCompanyDashboardCandidates } from './selectors';
 import { ViewContainer } from './styledComponents';
 
-const CompanyDashboard = ({ candidates }) => (
+const CompanyDashboard = ({ candidates, dispatchSaveCandidate }) => (
   <ViewContainer>
-    <CompanyDashboardView candidates={candidates} />
+    <CompanyDashboardView
+      candidates={candidates}
+      dispatchSaveCandidate={dispatchSaveCandidate}
+    />
   </ViewContainer>
 );
 
-CompanyDashboard.propTypes = { candidates: T.array.isRequired };
+CompanyDashboard.propTypes = {
+  candidates: T.array.isRequired,
+  dispatchSaveCandidate: T.func.isRequired,
+};
 
 const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : CompanyDashboard
    */
-  candidates: makeSelectCompanyDashboard('candidates'),
+  candidates: makeSelectCompanyDashboardCandidates(),
+});
+
+const mapDispatchToProps = dispatch => ({
+  /*
+   * Reducer : CompanyDashboard
+   */
+  dispatchSaveCandidate: payload => dispatch(saveCandidate(payload)),
 });
 
 const withConnect = connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 );
 
-export default withRouter(compose(withConnect)(CompanyDashboard));
+const withReducer = injectReducer({ key: 'companyDashboard', reducer });
+
+export default withRouter(
+  compose(
+    withReducer,
+    withConnect,
+  )(CompanyDashboard),
+);
