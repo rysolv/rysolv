@@ -11,7 +11,7 @@ export const InnerCircle = styled.path`
   fill: none;
   stroke-linecap: round;
   stroke-width: 2.8;
-  stroke: #ff9f00;
+  stroke: ${({ circleColor }) => circleColor};
 `;
 
 export const OuterCircle = styled.path`

@@ -4,6 +4,7 @@ import { whiteColor } from 'defaultStyleHelper';
 
 export const CompanyDashboardContainer = styled.div`
   background: ${whiteColor};
+  padding: 5rem;
 `;
 
 export const HeaderImageLeftIcon = styled.div`

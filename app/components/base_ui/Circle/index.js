@@ -1,6 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
+import { generateCircleColor } from './helpers';
 import {
   CircularChart,
   InnerCircle,
@@ -18,10 +19,11 @@ const Circle = ({ percentage, ...restProps }) => (
           a 15.9155 15.9155 0 0 1 0 -31.831"
       />
       <InnerCircle
-        strokeDasharray={`${percentage}, 100`}
+        circleColor={generateCircleColor(percentage)}
         d="M18 2.0845
           a 15.9155 15.9155 0 0 1 0 31.831
           a 15.9155 15.9155 0 0 1 0 -31.831"
+        strokeDasharray={`${percentage}, 100`}
       />
       <Percentage x="18" y="20.35">
         {percentage}%

@@ -9,6 +9,8 @@ import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import Attempt from '@material-ui/icons/ListAlt';
+import Bookmark from '@material-ui/icons/Bookmark';
+import BookmarkBorder from '@material-ui/icons/BookmarkBorder';
 import Cancel from '@material-ui/icons/Cancel';
 import Check from '@material-ui/icons/Check';
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
@@ -38,6 +40,7 @@ import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import NavigateNext from '@material-ui/icons/NavigateNext';
 import Publish from '@material-ui/icons/Publish';
 import PullRequest from '@material-ui/icons/AccountTree';
+import Remove from '@material-ui/icons/Remove';
 import Search from '@material-ui/icons/Search';
 import Settings from '@material-ui/icons/Settings';
 import Star from '@material-ui/icons/Star';
@@ -80,6 +83,8 @@ export default (name, size, style) => {
     backArrowHalf: ArrowBackIos,
     backgroundHollowCircle: BackgroundHollowCircle,
     backgroundSolidCircle: BackgroundSolidCircle,
+    bookmark: Bookmark,
+    bookmarkBorder: BookmarkBorder,
     cancel: Cancel,
     check: Check,
     close: Close,
@@ -121,6 +126,7 @@ export default (name, size, style) => {
     python: Python,
     reactIcon: ReactIcon,
     recruitmentHeaderImageRight: RecruitmentHeaderImageRight,
+    remove: Remove,
     repo: Web,
     ruby: Ruby,
     search: Search,

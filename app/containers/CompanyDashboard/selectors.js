@@ -11,7 +11,7 @@ const makeSelectCompanyDashboardCandidates = () =>
     candidates =>
       candidates.map(({ firstName, lastName, languages, ...restProps }) => ({
         languages: languages.slice(0, 3),
-        name: `${firstName} ${lastName}`,
+        name: `${firstName.charAt(0)}. ${lastName.charAt(0)}.`,
         ...restProps,
       })),
   );

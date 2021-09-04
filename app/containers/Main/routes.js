@@ -27,7 +27,7 @@ import VerifyGithub from 'containers/VerifyGithub/Loadable';
 const privateConfig = { isAdmin: false, isPrivate: true };
 const publicConfig = { isAdmin: false, isPrivate: false };
 
-const PrivateCompanyDashboard = withAuth(privateConfig, CompanyDashboard);
+const PublicCompanyDashboard = withAuth(publicConfig, CompanyDashboard);
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
@@ -56,7 +56,7 @@ const Routes = () => (
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
     <Route exact path ="/how-we-score-code" component={PublicCodeScoring} />
     <Route exact path="/contact-us" component={PublicContact} />
-    <Route exact path="/dashboard" component={PrivateCompanyDashboard} />
+    <Route exact path="/dashboard" component={PublicCompanyDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
     <Route exact path="/how-to" component={PublicHowTo} />
     <Route exact path="/issues" component={PublicOverview} />

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { LanguageWrapper } from 'components/base_ui';
+import { IconButton, LanguageWrapper } from 'components/base_ui';
 import {
   blueColor,
   grayColor,
@@ -44,11 +44,13 @@ export const CandidateCardContainer = styled.div`
   background: ${whiteColor};
   border-radius: 0.8rem;
   border: 0.3rem solid ${({ isSaved }) => (isSaved ? blueColor : grayColor)};
+  box-shadow: 0 0.1rem 0.4rem #182f6a;
   color: ${blueColor};
   display: flex;
   flex-direction: column;
   height: 37.5rem;
   justify-content: space-between;
+  position: relative;
   width: 28.5rem;
 `;
 
@@ -108,6 +110,18 @@ export const ProfilePicWrapper = styled.img`
   height: 5rem;
   margin-right: 0.8rem;
   width: 5rem;
+`;
+
+export const StyledIconButton = styled(IconButton)`
+  margin: 0.4rem;
+  position: absolute;
+  right: 0;
+
+  svg {
+    color: ${({ isSaved }) => (isSaved ? blueColor : grayColor)};
+    height: 2.5rem;
+    width: 2.5rem;
+  }
 `;
 
 export const StyledLanguageWrapper = styled(LanguageWrapper)`
