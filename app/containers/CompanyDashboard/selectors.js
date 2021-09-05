@@ -8,10 +8,10 @@ const selectCompanyDashboardDomain = state =>
 
 const makeSelectCompanyDashboardActiveStep = () =>
   createSelector(
-    makeSelectCompanyDashboard('companyRecruitment'),
+    makeSelectCompanyDashboard('companyMatches'),
     makeSelectCompanyDashboard('selectedPosition'),
-    (companyRecruitment, selectedPosition) =>
-      companyRecruitment[selectedPosition].reduce(
+    (companyMatches, selectedPosition) =>
+      companyMatches[selectedPosition].reduce(
         (acc, { isSaved, isInterviewed, isHired }) => {
           if (acc < 3 && isHired) acc = 3;
           if (acc < 2 && isInterviewed) acc = 2;
@@ -24,10 +24,10 @@ const makeSelectCompanyDashboardActiveStep = () =>
 
 const makeSelectCompanyDashboardCandidates = () =>
   createSelector(
-    makeSelectCompanyDashboard('companyRecruitment'),
+    makeSelectCompanyDashboard('companyMatches'),
     makeSelectCompanyDashboard('selectedPosition'),
-    (companyRecruitment, selectedPosition) =>
-      companyRecruitment[selectedPosition].map(
+    (companyMatches, selectedPosition) =>
+      companyMatches[selectedPosition].map(
         ({ firstName, lastName, languages, ...restProps }) => ({
           languages: languages.slice(0, 3),
           name: `${firstName.charAt(0)}. ${lastName.charAt(0)}.`,
@@ -38,8 +38,8 @@ const makeSelectCompanyDashboardCandidates = () =>
 
 const makeSelectCompanyDashboardPositions = () =>
   createSelector(
-    makeSelectCompanyDashboard('companyRecruitment'),
-    companyRecruitment => Object.keys(companyRecruitment),
+    makeSelectCompanyDashboard('companyMatches'),
+    companyMatches => Object.keys(companyMatches),
   );
 
 const makeSelectCompanyDashboard = prop =>

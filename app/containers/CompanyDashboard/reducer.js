@@ -3,13 +3,16 @@ import produce from 'immer';
 
 import {
   CLOSE_MODAL_STATE,
+  FETCH_COMPANY_MATCHES_FAILURE,
+  FETCH_COMPANY_MATCHES_SUCCESS,
+  FETCH_COMPANY_MATCHES,
   OPEN_MODAL_STATE,
   SAVE_CANDIDATE,
   SELECT_POSITION,
 } from './constants';
 
 export const initialState = {
-  companyRecruitment: {
+  companyMatches: {
     'Fullstack Engineer': [],
     'Junior Front-end Engineer': [
       {
@@ -42,6 +45,23 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       draft.isModalOpen = false;
       break;
     }
+    case FETCH_COMPANY_MATCHES_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      draft.loading = false;
+      break;
+    }
+    case FETCH_COMPANY_MATCHES_SUCCESS: {
+      const { companyMatches } = payload;
+      draft.companyMatches = companyMatches;
+      draft.loading = false;
+      break;
+    }
+    case FETCH_COMPANY_MATCHES: {
+      draft.error = initialState.error;
+      draft.loading = true;
+      break;
+    }
     case OPEN_MODAL_STATE: {
       draft.isModalOpen = true;
       break;
@@ -49,8 +69,8 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case SAVE_CANDIDATE: {
       const { index } = payload;
       const { selectedPosition } = draft;
-      draft.companyRecruitment[selectedPosition][index].isSaved = !draft
-        .companyRecruitment[selectedPosition][index].isSaved;
+      draft.companyMatches[selectedPosition][index].isSaved = !draft
+        .companyMatches[selectedPosition][index].isSaved;
       break;
     }
     case SELECT_POSITION: {
