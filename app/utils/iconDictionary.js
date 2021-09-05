@@ -51,6 +51,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Warning from '@material-ui/icons/Warning';
 import Web from '@material-ui/icons/Web';
+import WorkOutline from '@material-ui/icons/WorkOutline';
 
 import BackgroundHollowCircle from './svg/BackgroundHollowCircle';
 import BackgroundSolidCircle from './svg/BackgroundSolidCircle';
@@ -144,6 +145,7 @@ export default (name, size, style) => {
     visibility: Visibility,
     visibilityOff: VisibilityOff,
     warning: Warning,
+    workOutline: WorkOutline,
   };
   const IconToRender = icons[name];
   return <IconToRender style={{ ...iconSize[size], ...iconStyle[style] }} />;
