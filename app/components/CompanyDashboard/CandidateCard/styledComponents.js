@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import { IconButton, LanguageWrapper } from 'components/base_ui';
 import {
   blueColor,
+  candidateGreyColor,
+  defaultFontSize,
   grayColor,
   textColor,
-  whiteColor,
 } from 'defaultStyleHelper';
 
 export const CandidateCardButton = styled.button`
   align-items: center;
-  background: #f5f5f5;
+  background: ${candidateGreyColor};
   border-bottom-left-radius: 0.8rem;
   border-bottom-right-radius: 0.8rem;
   border: none;
@@ -19,20 +20,11 @@ export const CandidateCardButton = styled.button`
   font-size: 1.6rem;
   justify-content: center;
   padding: 1rem;
-  text-align: center;
   width: 100%;
 
   &:hover {
-    background-color: #f5f5f5;
+    background-color: ${candidateGreyColor};
     cursor: pointer;
-  }
-
-  &:active {
-    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
-  }
-
-  &:focus {
-    outline: 0;
   }
 
   svg {
@@ -41,15 +33,11 @@ export const CandidateCardButton = styled.button`
 `;
 
 export const CandidateCardContainer = styled.div`
-  background: ${whiteColor};
-  border-radius: 0.8rem;
+  border-radius: 0.7rem;
   border: 0.3rem solid ${({ isSaved }) => (isSaved ? blueColor : grayColor)};
-  box-shadow: 0 0.1rem 0.4rem #182f6a;
+  box-shadow: 0 0.1rem 0.4rem ${grayColor};
   color: ${blueColor};
-  display: flex;
-  flex-direction: column;
   height: 37.5rem;
-  justify-content: space-between;
   position: relative;
   width: 28.5rem;
 `;
@@ -63,8 +51,6 @@ export const CandidateCardDataCell = styled.div`
 `;
 
 export const CandidateCardRow = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 50%;
 `;
 
@@ -78,24 +64,24 @@ export const CandidateCardUserInfo = styled.div`
 
 export const Data = styled.div`
   color: ${blueColor};
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   text-transform: capitalize;
 `;
 
 export const Divider = styled.div`
-  background: #f5f5f5;
+  background: ${candidateGreyColor};
   height: 0.2rem;
   width: 100%;
   margin: 1.6rem 0;
 `;
 
-export const NameWrapper = styled.div`
-  font-size: 2.5rem;
-`;
-
-export const PicWrapper = styled.div`
+export const ImageGroup = styled.div`
   display: flex;
   justify-content: center;
+`;
+
+export const NameWrapper = styled.div`
+  font-size: 2.5rem;
 `;
 
 export const PositionWrapper = styled.div`
@@ -106,7 +92,7 @@ export const PositionWrapper = styled.div`
 
 export const ProfilePicWrapper = styled.img`
   border-radius: 50%;
-  border: 0.2rem solid #f5f5f5;
+  border: 0.2rem solid ${candidateGreyColor};
   height: 5rem;
   margin-right: 0.8rem;
   width: 5rem;
@@ -125,12 +111,12 @@ export const StyledIconButton = styled(IconButton)`
 `;
 
 export const StyledLanguageWrapper = styled(LanguageWrapper)`
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
 `;
 
 export const Title = styled.div`
   color: ${grayColor};
-  font-size: 1.4rem;
+  font-size: ${defaultFontSize};
   margin-bottom: 0.4rem;
   text-transform: uppercase;
 `;

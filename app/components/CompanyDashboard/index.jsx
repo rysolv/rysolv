@@ -5,7 +5,7 @@ import T from 'prop-types';
 import { ConditionalRender } from 'components/base_ui';
 
 import CandidateCard from './CandidateCard';
-import CompanyDashboardStepper from './CompanyDashboardStepper';
+import CompanyDashboardTabs from './CompanyDashboardTabs';
 import EmptyCandidateCard from './EmptyCandidateCard';
 import {
   CandidateCardGroup,
@@ -13,22 +13,23 @@ import {
 } from './styledComponents';
 
 const CompanyDashboard = ({
-  activeStep,
   candidates,
+  dispatchChangeFilter,
   dispatchOpenModal,
   dispatchSaveCandidate,
+  filter,
 }) => (
   <CompanyDashboardContainer>
-    <CompanyDashboardStepper
-      activeStep={activeStep}
-      hasCandidates={!!candidates.length}
+    <CompanyDashboardTabs
+      dispatchChangeFilter={dispatchChangeFilter}
+      filter={filter}
     />
     <ConditionalRender
       Component={
         <CandidateCardGroup>
           {candidates.map((candidate, index) => (
             <CandidateCard
-              key={index}
+              key={`candidate-${index}`}
               dispatchOpenModal={dispatchOpenModal}
               dispatchSaveCandidate={dispatchSaveCandidate}
               index={index}
@@ -44,10 +45,11 @@ const CompanyDashboard = ({
 );
 
 CompanyDashboard.propTypes = {
-  activeStep: T.number.isRequired,
   candidates: T.array.isRequired,
+  dispatchChangeFilter: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
+  filter: T.object.isRequired,
 };
 
 export default CompanyDashboard;

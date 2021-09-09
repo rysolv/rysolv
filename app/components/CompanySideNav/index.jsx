@@ -1,13 +1,15 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import T from 'prop-types';
 
 import iconDictionary from 'utils/iconDictionary';
 
 import {
+  ButtonTextWrapper,
   CompanySideNavContainer,
   CompanySideNavHeader,
+  LocationText,
   PositionButton,
-  PositionButtonGroup,
 } from './styledComponents';
 
 const JobIcon = iconDictionary('workOutline');
@@ -18,17 +20,23 @@ const CompanySideNav = ({
   selectedPosition,
 }) => (
   <CompanySideNavContainer>
-    <CompanySideNavHeader>My Jobs</CompanySideNavHeader>
-    <PositionButtonGroup>
-      {positions.map(position => (
+    <CompanySideNavHeader>Positions</CompanySideNavHeader>
+    <div>
+      {positions.map(({ location, title }, index) => (
         <PositionButton
-          icon={JobIcon}
-          isSelected={position === selectedPosition}
-          label={position}
-          onClick={() => dispatchSelectPosition({ position })}
-        />
+          key={`${title}-${index}`}
+          isSelected={selectedPosition === title}
+          onClick={() => dispatchSelectPosition({ position: title })}
+        >
+          {JobIcon}
+          <ButtonTextWrapper>
+            <span>{title}</span>
+            <br />
+            <LocationText>{location}</LocationText>
+          </ButtonTextWrapper>
+        </PositionButton>
       ))}
-    </PositionButtonGroup>
+    </div>
   </CompanySideNavContainer>
 );
 

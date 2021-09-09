@@ -1,7 +1,8 @@
-/* eslint-disable consistent-return, default-case, no-param-reassign */
+/* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
 import {
+  CHANGE_FILTER,
   CLOSE_MODAL_STATE,
   FETCH_COMPANY_MATCHES_FAILURE,
   FETCH_COMPANY_MATCHES_SUCCESS,
@@ -12,35 +13,26 @@ import {
 } from './constants';
 
 export const initialState = {
-  companyMatches: {
-    'Fullstack Engineer': [],
-    'Junior Front-end Engineer': [
-      {
-        firstName: 'Jane',
-        isInterviewRequested: false,
-        isSaved: true,
-        languages: ['JavaScript', 'Python', 'Java'],
-        lastName: 'Doe',
-        lastPosition: 'Software Engineer at Apple',
-        location: 'San Francisco, CA',
-        percentMatch: 80,
-        profilePic:
-          'https://rysolv.s3.us-east-2.amazonaws.com/rysolv/9b156bc2-5ec1-4865-a51a-8a25d0e158b0',
-        salary: '$110,000',
-        type: 'full-time',
-        yearsOfExperience: '2-5 years',
-      },
-    ],
-    'Senior Back-end Engineer': [],
-  },
+  companyMatches: [],
   error: false,
+  filter: {
+    location: '',
+    salary: 0,
+    step: '',
+    type: '',
+  },
   isModalOpen: false,
   loading: false,
-  selectedPosition: 'Junior Front-end Engineer',
+  selectedPosition: '',
 };
 
 const companyDashboardReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case CHANGE_FILTER: {
+      const { field, value } = payload;
+      draft.filter[field] = value;
+      break;
+    }
     case CLOSE_MODAL_STATE: {
       draft.isModalOpen = false;
       break;
@@ -55,6 +47,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       const { companyMatches } = payload;
       draft.companyMatches = companyMatches;
       draft.loading = false;
+      draft.selectedPosition = companyMatches[0].position.title;
       break;
     }
     case FETCH_COMPANY_MATCHES: {
@@ -69,8 +62,11 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case SAVE_CANDIDATE: {
       const { index } = payload;
       const { selectedPosition } = draft;
-      draft.companyMatches[selectedPosition][index].isSaved = !draft
-        .companyMatches[selectedPosition][index].isSaved;
+      draft.companyMatches.map(({ candidates, position }) => {
+        if (position.title === selectedPosition) {
+          candidates[index].isSaved = !candidates[index].isSaved;
+        }
+      });
       break;
     }
     case SELECT_POSITION: {

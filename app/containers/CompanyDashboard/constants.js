@@ -1,3 +1,5 @@
+export const CHANGE_FILTER = 'app/CompanyDashboard/CHANGE_FILTER';
+
 export const CLOSE_MODAL_STATE = 'app/CompanyDashboard/CLOSE_MODAL_STATE';
 
 export const FETCH_COMPANY_MATCHES =

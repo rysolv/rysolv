@@ -1,4 +1,5 @@
 import {
+  CHANGE_FILTER,
   CLOSE_MODAL_STATE,
   FETCH_COMPANY_MATCHES_FAILURE,
   FETCH_COMPANY_MATCHES_SUCCESS,
@@ -7,6 +8,13 @@ import {
   SAVE_CANDIDATE,
   SELECT_POSITION,
 } from './constants';
+
+export function changeFilter(payload) {
+  return {
+    payload,
+    type: CHANGE_FILTER,
+  };
+}
 
 export function closeModalState() {
   return { type: CLOSE_MODAL_STATE };

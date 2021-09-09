@@ -1,52 +1,57 @@
-import React from 'react';
 import styled from 'styled-components';
 
-import { PrimaryButton } from 'components/base_ui';
-import { navyColor, whiteColor } from 'defaultStyleHelper';
+import { blueColor, grayColor, whiteColor } from 'defaultStyleHelper';
+
+export const ButtonTextWrapper = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: auto;
+`;
 
 export const CompanySideNavContainer = styled.div`
-  background: ${navyColor};
-  border-top-left-radius: 0.7rem;
-  border-top-right-radius: 0.7rem;
-  display: flex;
-  flex-direction: column;
-  padding: 6.4rem 10rem;
-  width: 100%;
+  border-radius: 0.7rem;
+  box-shadow: 0 0.1rem 0.4rem ${grayColor};
 `;
 
 export const CompanySideNavHeader = styled.div`
-  color: ${whiteColor};
+  color: ${blueColor};
   font-size: 3.2rem;
   font-weight: 700;
   line-height: 3.36rem;
-  padding-bottom: 1.4rem;
+  padding: 2rem;
 `;
 
-export const PositionButton = styled(({ isSelected, ...restProps }) => (
-  <PrimaryButton {...restProps} />
-))`
-  align-items: center;
+export const LocationText = styled.div`
+  font-size: 1.4rem;
+  font-weight: 400;
+  padding-top: 0.5rem;
+  text-transform: capitalize;
+`;
+
+export const PositionButton = styled.button`
   background-color: ${({ isSelected }) =>
-    isSelected ? whiteColor : 'inherit'};
-  border-radius: 0.8rem;
-  border: 0.2rem solid ${whiteColor};
-  color: ${({ isSelected }) => (isSelected ? navyColor : whiteColor)};
+    isSelected ? blueColor : whiteColor};
+  border: none;
+  color: ${({ isSelected }) => (isSelected ? whiteColor : blueColor)};
   display: flex;
+  font-family: monospace;
   font-size: 1.6rem;
   font-weight: 700;
-  height: 4.8rem;
+  letter-spacing: -0.025rem;
   line-height: 1.936rem;
-  min-width: 20rem;
-  text-transform: initial;
+  padding: 2rem 1rem 2rem 2rem;
+  text-align: left;
+  width: 100%;
 
   &:hover {
-    background-color: ${whiteColor};
-    color: ${navyColor};
+    background-color: ${blueColor};
+    color: ${whiteColor};
+    cursor: pointer;
   }
-`;
 
-export const PositionButtonGroup = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: -1rem;
+  svg {
+    font-size: 1.6rem;
+    margin-right: 0.8rem;
+  }
 `;

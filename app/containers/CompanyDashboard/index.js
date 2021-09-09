@@ -13,6 +13,7 @@ import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import {
+  changeFilter,
   closeModalState,
   fetchCompanyMatches,
   openModalState,
@@ -23,25 +24,27 @@ import reducer from './reducer';
 import saga from './saga';
 import {
   makeSelectCompanyDashboard,
-  makeSelectCompanyDashboardActiveStep,
   makeSelectCompanyDashboardCandidates,
   makeSelectCompanyDashboardPositions,
 } from './selectors';
-import { ViewContainer } from './styledComponents';
+import { VerticalDivider, ViewContainer } from './styledComponents';
 
 const CompanyDashboard = ({
-  activeStep,
   candidates,
+  dispatchChangeFilter,
   dispatchCloseModal,
   dispatchFetchCompanyMatches,
   dispatchOpenModal,
   dispatchSaveCandidate,
   dispatchSelectPosition,
+  filter,
   isModalOpen,
   positions,
   selectedPosition,
 }) => {
-  useEffect(() => dispatchFetchCompanyMatches(), []);
+  useEffect(() => {
+    dispatchFetchCompanyMatches();
+  }, []);
 
   return (
     <ViewContainer>
@@ -50,11 +53,13 @@ const CompanyDashboard = ({
         positions={positions}
         selectedPosition={selectedPosition}
       />
+      <VerticalDivider />
       <CompanyDashboardView
-        activeStep={activeStep}
         candidates={candidates}
+        dispatchChangeFilter={dispatchChangeFilter}
         dispatchOpenModal={dispatchOpenModal}
         dispatchSaveCandidate={dispatchSaveCandidate}
+        filter={filter}
       />
       <ModalDialog
         Component={ScheduleInterviewModal}
@@ -66,13 +71,14 @@ const CompanyDashboard = ({
 };
 
 CompanyDashboard.propTypes = {
-  activeStep: T.number.isRequired,
   candidates: T.array.isRequired,
+  dispatchChangeFilter: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchCompanyMatches: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
   dispatchSelectPosition: T.func.isRequired,
+  filter: T.object.isRequired,
   isModalOpen: T.bool.isRequired,
   positions: T.array.isRequired,
   selectedPosition: T.string.isRequired,
@@ -82,8 +88,8 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : CompanyDashboard
    */
-  activeStep: makeSelectCompanyDashboardActiveStep(),
   candidates: makeSelectCompanyDashboardCandidates(),
+  filter: makeSelectCompanyDashboard('filter'),
   isModalOpen: makeSelectCompanyDashboard('isModalOpen'),
   positions: makeSelectCompanyDashboardPositions(),
   selectedPosition: makeSelectCompanyDashboard('selectedPosition'),
@@ -93,6 +99,7 @@ const mapDispatchToProps = dispatch => ({
   /*
    * Reducer : CompanyDashboard
    */
+  dispatchChangeFilter: payload => dispatch(changeFilter(payload)),
   dispatchCloseModal: () => dispatch(closeModalState()),
   dispatchFetchCompanyMatches: () => dispatch(fetchCompanyMatches()),
   dispatchOpenModal: () => dispatch(openModalState()),

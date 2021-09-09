@@ -64,6 +64,15 @@ module.exports = buildSchema(`
     target: ID!
   }
 
+  type CompanyMatches {
+    candidates: [Object]
+    position: String
+  }
+
+  type CompanyMatchesArray {
+    companyMatchesArray: [CompanyMatches]
+  }
+
   input ContactInput {
     body: String
     companyName: String
@@ -393,6 +402,7 @@ module.exports = buildSchema(`
   }
 
   union CommentResult = Comment | Error
+  union CompanyMatchesResult = CompanyMatchesArray | Error
   union EventResponse = Success | Error
   union FilterResult = Filter | Error
   union ImportPullRequestResult = ImportPullRequest | Error
@@ -415,6 +425,7 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
+    getCompanyMatches: CompanyMatchesResult!
     getFilterOptions: FilterResult!
     getGithubPullRequests(issueId: ID!): PullRequestArrayResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!

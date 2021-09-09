@@ -6,6 +6,7 @@ const {
 const { removeAttempting, toggleAttempting } = require('./queries/attempting');
 const { acceptBounty, verifyPayout } = require('./queries/bounties');
 const { createComment, getIssueComments } = require('./queries/comments');
+const { getCompanyMatches } = require('./queries/company');
 const {
   checkDuplicateIssue,
   closeIssue,
@@ -108,6 +109,7 @@ module.exports = {
   deleteUserLanguages,
   deleteUserPullRequests,
   downvoteIssue,
+  getCompanyMatches,
   getFilterOptions,
   getIssueAttemptList,
   getIssueComments,

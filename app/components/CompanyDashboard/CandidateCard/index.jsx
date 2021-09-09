@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow, react/no-array-index-key */
 import React from 'react';
 import T from 'prop-types';
 
@@ -14,8 +15,8 @@ import {
   CandidateCardUserInfo,
   Data,
   Divider,
+  ImageGroup,
   NameWrapper,
-  PicWrapper,
   PositionWrapper,
   ProfilePicWrapper,
   StyledIconButton,
@@ -60,15 +61,18 @@ const CandidateCard = ({
         onClick={() => dispatchSaveCandidate({ index })}
       />
       <CandidateCardContent>
-        <PicWrapper>
+        <ImageGroup>
           <ProfilePicWrapper src={profilePic} />
           <Circle percentage={percentMatch} />
-        </PicWrapper>
+        </ImageGroup>
         <CandidateCardUserInfo>
           <NameWrapper>{name}</NameWrapper>
           <PositionWrapper>{lastPosition}</PositionWrapper>
-          {languages.map(language => (
-            <StyledLanguageWrapper language={language} />
+          {languages.map((language, index) => (
+            <StyledLanguageWrapper
+              key={`${language}-${index}`}
+              language={language}
+            />
           ))}
         </CandidateCardUserInfo>
         <Divider />
@@ -95,7 +99,7 @@ const CandidateCard = ({
           </CandidateCardRow>
         </CandidateCardRows>
       </CandidateCardContent>
-      <CandidateCardButton onClick={() => dispatchOpenModal()}>
+      <CandidateCardButton onClick={dispatchOpenModal}>
         {ButtonIcon} {ButtonText}
       </CandidateCardButton>
     </CandidateCardContainer>

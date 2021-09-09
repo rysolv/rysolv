@@ -7,9 +7,7 @@ import {
 
 const EmptyCandidateCard = () => (
   <EmptyCandidateCardContainer>
-    <StyledParagraph>
-      No candidates have been found yet fitting the job requirements.
-    </StyledParagraph>
+    <StyledParagraph>No matching candidates.</StyledParagraph>
   </EmptyCandidateCardContainer>
 );
 
