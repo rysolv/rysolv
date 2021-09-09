@@ -24,4 +24,8 @@ export const StyledTabs = styled(Tabs)`
     background-color: ${blueColor};
     height: 0.3rem;
   }
+
+  @media (max-width: 769px) {
+    margin-right: 0;
+  }
 `;

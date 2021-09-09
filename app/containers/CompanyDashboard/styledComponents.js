@@ -10,6 +10,12 @@ export const VerticalDivider = styled.div`
   height: 100%;
   margin: 0 4rem;
   width: 0.1rem;
+
+  @media (max-width: 769px) {
+    height: 0.1rem;
+    margin: 4rem 0;
+    width: 100%;
+  }
 `;
 
 export const ViewContainer = styled.div`
@@ -22,7 +28,7 @@ export const ViewContainer = styled.div`
     padding: 5rem 3rem 5.6rem;
   }
 
-  @media (max-width: 370px) {
-    padding: 0 3rem 5.6rem;
+  @media (max-width: 769px) {
+    flex-direction: column;
   }
 `;
