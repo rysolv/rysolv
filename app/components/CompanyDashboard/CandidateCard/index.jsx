@@ -34,6 +34,7 @@ const CandidateCard = ({
   dispatchSaveCandidate,
   index,
   isInterviewRequested,
+  isLast,
   isSaved,
   languages,
   lastPosition,
@@ -53,7 +54,7 @@ const CandidateCard = ({
   const CardLabel = isSaved ? 'Unshortlist' : 'Shortlist';
 
   return (
-    <CandidateCardContainer isSaved={isSaved}>
+    <CandidateCardContainer isLast={isLast} isSaved={isSaved}>
       <StyledIconButton
         icon={CardIcon}
         isSaved={isSaved}
@@ -111,6 +112,7 @@ CandidateCard.propTypes = {
   dispatchSaveCandidate: T.func.isRequired,
   index: T.number.isRequired,
   isInterviewRequested: T.bool.isRequired,
+  isLast: T.bool.isRequired,
   isSaved: T.bool.isRequired,
   languages: T.array.isRequired,
   lastPosition: T.string.isRequired,

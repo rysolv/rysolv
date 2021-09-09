@@ -38,6 +38,7 @@ export const CandidateCardContainer = styled.div`
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
   color: ${blueColor};
   height: 37.5rem;
+  margin: 0 4rem ${({ isLast }) => (isLast ? '0' : '4rem')} 0;
   position: relative;
   width: 28.5rem;
 `;

@@ -12,6 +12,7 @@ export const ButtonTextWrapper = styled.div`
 export const CompanySideNavContainer = styled.div`
   border-radius: 0.7rem;
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
+  height: 46.3rem;
 `;
 
 export const CompanySideNavHeader = styled.div`

@@ -33,6 +33,7 @@ const CompanyDashboard = ({
               dispatchOpenModal={dispatchOpenModal}
               dispatchSaveCandidate={dispatchSaveCandidate}
               index={index}
+              isLast={candidates.length - 1 === index}
               {...candidate}
             />
           ))}
