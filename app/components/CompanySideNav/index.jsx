@@ -1,46 +1,40 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import T from 'prop-types';
 
-import iconDictionary from 'utils/iconDictionary';
+import { ConditionalRender } from 'components/base_ui';
 
-import {
-  ButtonTextWrapper,
-  CompanySideNavContainer,
-  CompanySideNavHeader,
-  LocationText,
-  PositionButton,
-} from './styledComponents';
-
-const JobIcon = iconDictionary('workOutline');
+import DesktopCompanySideNav from './DesktopCompanySideNav';
+import MobileCompanySideNav from './MobileCompanySideNav';
 
 const CompanySideNav = ({
+  deviceView,
   dispatchSelectPosition,
   positions,
   selectedPosition,
-}) => (
-  <CompanySideNavContainer>
-    <CompanySideNavHeader>Positions</CompanySideNavHeader>
-    <div>
-      {positions.map(({ location, title }, index) => (
-        <PositionButton
-          key={`${title}-${index}`}
-          isSelected={selectedPosition === title}
-          onClick={() => dispatchSelectPosition({ position: title })}
-        >
-          {JobIcon}
-          <ButtonTextWrapper>
-            <span>{title}</span>
-            <br />
-            <LocationText>{location}</LocationText>
-          </ButtonTextWrapper>
-        </PositionButton>
-      ))}
-    </div>
-  </CompanySideNavContainer>
-);
+}) => {
+  const isMobileOrTablet =
+    deviceView === 'tablet' ||
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
+
+  return (
+    <ConditionalRender
+      Component={DesktopCompanySideNav}
+      FallbackComponent={MobileCompanySideNav}
+      propsToPassDown={{
+        dispatchSelectPosition,
+        positions,
+        selectedPosition,
+      }}
+      shouldRender={!isMobileOrTablet}
+    />
+  );
+};
 
 CompanySideNav.propTypes = {
+  deviceView: T.string.isRequired,
   dispatchSelectPosition: T.func.isRequired,
   positions: T.array.isRequired,
   selectedPosition: T.string.isRequired,

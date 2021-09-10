@@ -9,6 +9,7 @@ import { ModalDialog } from 'components/base_ui';
 import CompanyDashboardView from 'components/CompanyDashboard';
 import CompanySideNav from 'components/CompanySideNav';
 import ScheduleInterviewModal from 'components/ScheduleInterviewModal';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -31,6 +32,7 @@ import { VerticalDivider, ViewContainer } from './styledComponents';
 
 const CompanyDashboard = ({
   candidates,
+  deviceView,
   dispatchChangeFilter,
   dispatchCloseModal,
   dispatchFetchCompanyMatches,
@@ -49,6 +51,7 @@ const CompanyDashboard = ({
   return (
     <ViewContainer>
       <CompanySideNav
+        deviceView={deviceView}
         dispatchSelectPosition={dispatchSelectPosition}
         positions={positions}
         selectedPosition={selectedPosition}
@@ -72,6 +75,7 @@ const CompanyDashboard = ({
 
 CompanyDashboard.propTypes = {
   candidates: T.array.isRequired,
+  deviceView: T.string.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchCompanyMatches: T.func.isRequired,
@@ -93,6 +97,10 @@ const mapStateToProps = createStructuredSelector({
   isModalOpen: makeSelectCompanyDashboard('isModalOpen'),
   positions: makeSelectCompanyDashboardPositions(),
   selectedPosition: makeSelectCompanyDashboard('selectedPosition'),
+  /**
+   * Reducer: ViewSizes
+   */
+  deviceView: makeSelectViewSize('deviceView'),
 });
 
 const mapDispatchToProps = dispatch => ({

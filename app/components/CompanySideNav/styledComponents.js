@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { IconButton } from 'components/base_ui';
 import { blueColor, grayColor, whiteColor } from 'defaultStyleHelper';
 
 export const ButtonTextWrapper = styled.div`
@@ -21,8 +22,10 @@ export const CompanySideNavContainer = styled.div`
 
 export const CompanySideNavHeader = styled.div`
   color: ${blueColor};
+  display: flex;
   font-size: 3.2rem;
   font-weight: 700;
+  justify-content: space-between;
   line-height: 3.36rem;
   padding: 2rem;
 `;
@@ -37,6 +40,8 @@ export const LocationText = styled.div`
 export const PositionButton = styled.button`
   background-color: ${({ isSelected }) =>
     isSelected ? blueColor : whiteColor};
+  border-bottom-left-radius: ${({ isLast }) => (isLast ? '0.7rem' : '0')};
+  border-bottom-right-radius: ${({ isLast }) => (isLast ? '0.7rem' : '0')};
   border: none;
   color: ${({ isSelected }) => (isSelected ? whiteColor : blueColor)};
   display: flex;
@@ -58,5 +63,13 @@ export const PositionButton = styled.button`
   svg {
     font-size: 1.6rem;
     margin-right: 0.8rem;
+  }
+`;
+
+export const StyledIconButton = styled(IconButton)`
+  svg {
+    color: ${blueColor};
+    height: 3.2rem;
+    width: 3.2rem;
   }
 `;

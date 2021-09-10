@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 import { IconButton, LanguageWrapper } from 'components/base_ui';
@@ -37,13 +38,16 @@ export const CandidateCardContainer = styled.div`
   border: 0.3rem solid ${({ isSaved }) => (isSaved ? blueColor : grayColor)};
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
   color: ${blueColor};
-  height: 37.5rem;
+  display: flex;
+  flex-direction: column;
   margin: 0 4rem ${({ isLast }) => (isLast ? '0' : '4rem')} 0;
+  min-height: 37.5rem;
   position: relative;
   width: 28.5rem;
 `;
 
 export const CandidateCardContent = styled.div`
+  flex-grow: 1;
   padding: 2rem;
 `;
 
@@ -99,7 +103,9 @@ export const ProfilePicWrapper = styled.img`
   width: 5rem;
 `;
 
-export const StyledIconButton = styled(IconButton)`
+export const StyledIconButton = styled(({ isSaved, ...restProps }) => (
+  <IconButton {...restProps} />
+))`
   margin: 0.4rem;
   position: absolute;
   right: 0;
