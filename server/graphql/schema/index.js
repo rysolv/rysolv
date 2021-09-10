@@ -66,7 +66,7 @@ module.exports = buildSchema(`
 
   type CompanyMatches {
     candidates: [Object]
-    position: String
+    position: Object
   }
 
   type CompanyMatchesArray {
@@ -402,7 +402,6 @@ module.exports = buildSchema(`
   }
 
   union CommentResult = Comment | Error
-  union CompanyMatchesResult = CompanyMatchesArray | Error
   union EventResponse = Success | Error
   union FilterResult = Filter | Error
   union ImportPullRequestResult = ImportPullRequest | Error
@@ -425,7 +424,7 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
-    getCompanyMatches: CompanyMatchesResult!
+    getCompanyMatches: CompanyMatchesArray
     getFilterOptions: FilterResult!
     getGithubPullRequests(issueId: ID!): PullRequestArrayResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!

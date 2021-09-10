@@ -44,10 +44,10 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_COMPANY_MATCHES_SUCCESS: {
-      const { companyMatches } = payload;
-      draft.companyMatches = companyMatches;
+      const { companyMatchesArray } = payload;
+      draft.companyMatches = companyMatchesArray;
       draft.loading = false;
-      draft.selectedPosition = companyMatches[0].position.title;
+      draft.selectedPosition = companyMatchesArray[0].position.title;
       break;
     }
     case FETCH_COMPANY_MATCHES: {
