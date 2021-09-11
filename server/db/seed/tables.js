@@ -5,18 +5,24 @@ const { mapQueryPrint, singleQuery } = require('../baseQueries');
 const {
   alterActivityTable,
   alterAttemptingTable,
+  alterCandidatePositionsTable,
   alterCommentsTable,
+  alterCompaniesTable,
+  alterCompanyPositionsTable,
   alterCronActivityTable,
   alterFundingTable,
+  alterHiringActivityTable,
   alterIssuesTable,
   alterLanguagesTable,
   alterNotificationsTable,
   alterPaymentTable,
+  alterPositionTechStackTable,
   alterPullRequestsTable,
   alterQuestionResponseTable,
   alterQuestionsTable,
   alterRecruitingTable,
   alterReposTable,
+  alterUserCompaniesTable,
   alterUserQuestionResponseTable,
   alterUserReposTable,
   alterUsersTable,
@@ -24,18 +30,24 @@ const {
   alterWithdrawalTable,
   createActivityTable,
   createAttemptingTable,
+  createCandidatePositionsTable,
   createCommentsTable,
+  createCompaniesTable,
+  createCompanyPositionsTable,
   createCronActivityTable,
   createFundingsTable,
+  createHiringActivityTable,
   createIssuesTable,
   createLanguagesTable,
   createNotificationsTable,
   createPaymentsTable,
+  createPositionTechStackTable,
   createPullRequestsTable,
   createQuestionResponseTable,
   createQuestionsTable,
   createRecruitingTable,
   createReposTable,
+  createUserCompaniesTable,
   createUserQuestionResponseTable,
   createUserReposTable,
   createUsersTable,
@@ -47,18 +59,24 @@ const {
 const alterTables = async () => {
   await singleQuery({ queryText: alterActivityTable });
   await singleQuery({ queryText: alterAttemptingTable });
+  await singleQuery({ queryText: alterCandidatePositionsTable });
   await singleQuery({ queryText: alterCommentsTable });
+  await singleQuery({ queryText: alterCompaniesTable });
+  await singleQuery({ queryText: alterCompanyPositionsTable });
   await singleQuery({ queryText: alterCronActivityTable });
   await singleQuery({ queryText: alterFundingTable });
+  await singleQuery({ queryText: alterHiringActivityTable });
   await singleQuery({ queryText: alterIssuesTable });
   await singleQuery({ queryText: alterLanguagesTable });
   await singleQuery({ queryText: alterNotificationsTable });
   await singleQuery({ queryText: alterPaymentTable });
+  await singleQuery({ queryText: alterPositionTechStackTable });
   await singleQuery({ queryText: alterPullRequestsTable });
   await singleQuery({ queryText: alterQuestionResponseTable });
   await singleQuery({ queryText: alterQuestionsTable });
   await singleQuery({ queryText: alterRecruitingTable });
   await singleQuery({ queryText: alterReposTable });
+  await singleQuery({ queryText: alterUserCompaniesTable });
   await singleQuery({ queryText: alterUserQuestionResponseTable });
   await singleQuery({ queryText: alterUserReposTable });
   await singleQuery({ queryText: alterUsersTable });
@@ -70,18 +88,24 @@ const alterTables = async () => {
 const createTables = async () => {
   await singleQuery({ queryText: createActivityTable });
   await singleQuery({ queryText: createAttemptingTable });
+  await singleQuery({ queryText: createCandidatePositionsTable });
   await singleQuery({ queryText: createCommentsTable });
+  await singleQuery({ queryText: createCompaniesTable });
+  await singleQuery({ queryText: createCompanyPositionsTable });
   await singleQuery({ queryText: createCronActivityTable });
   await singleQuery({ queryText: createFundingsTable });
+  await singleQuery({ queryText: createHiringActivityTable });
   await singleQuery({ queryText: createIssuesTable });
   await singleQuery({ queryText: createLanguagesTable });
   await singleQuery({ queryText: createNotificationsTable });
   await singleQuery({ queryText: createPaymentsTable });
+  await singleQuery({ queryText: createPositionTechStackTable });
   await singleQuery({ queryText: createPullRequestsTable });
   await singleQuery({ queryText: createQuestionResponseTable });
   await singleQuery({ queryText: createQuestionsTable });
   await singleQuery({ queryText: createRecruitingTable });
   await singleQuery({ queryText: createReposTable });
+  await singleQuery({ queryText: createUserCompaniesTable });
   await singleQuery({ queryText: createUserQuestionResponseTable });
   await singleQuery({ queryText: createUserReposTable });
   await singleQuery({ queryText: createUsersTable });
