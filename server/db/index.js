@@ -6,7 +6,7 @@ const {
 const { removeAttempting, toggleAttempting } = require('./queries/attempting');
 const { acceptBounty, verifyPayout } = require('./queries/bounties');
 const { createComment, getIssueComments } = require('./queries/comments');
-const { getCompanyMatches } = require('./queries/company');
+const { getCompanyMatches } = require('./queries/companies');
 const {
   checkDuplicateIssue,
   closeIssue,

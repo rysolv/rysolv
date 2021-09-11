@@ -1,8 +1,8 @@
 const alterCandidatePositionsTable = `
   ALTER TABLE candidate_positions
-  ADD COLUMN candidate_id UUID REFERENCES users(id),
   ADD COLUMN percent_match FLOAT,
-  ADD COLUMN position_id UUID REFERENCES company_positions(id)
+  ADD COLUMN position_id UUID REFERENCES company_positions(id),
+  ADD COLUMN user_id UUID REFERENCES users(id)
 `;
 
 const createCandidatePositionsTable = `
