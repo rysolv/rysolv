@@ -1,10 +1,15 @@
 import {
   CHANGE_FILTER,
+  CHANGE_INPUT,
   CLOSE_MODAL_STATE,
   FETCH_COMPANY_MATCHES_FAILURE,
   FETCH_COMPANY_MATCHES_SUCCESS,
   FETCH_COMPANY_MATCHES,
+  NOTIFY_CANDIDATE_FAILURE,
+  NOTIFY_CANDIDATE_SUCCESS,
+  NOTIFY_CANDIDATE,
   OPEN_MODAL_STATE,
+  RESET_MODAL_STATE,
   SAVE_CANDIDATE,
   SELECT_POSITION,
 } from './constants';
@@ -13,6 +18,13 @@ export function changeFilter(payload) {
   return {
     payload,
     type: CHANGE_FILTER,
+  };
+}
+
+export function changeInput(payload) {
+  return {
+    payload,
+    type: CHANGE_INPUT,
   };
 }
 
@@ -38,8 +50,30 @@ export function fetchCompanyMatches() {
   return { type: FETCH_COMPANY_MATCHES };
 }
 
+export function notifyCandidate(payload) {
+  return {
+    payload,
+    type: NOTIFY_CANDIDATE,
+  };
+}
+
+export function notifyCandidateFailure(payload) {
+  return {
+    payload,
+    type: NOTIFY_CANDIDATE_FAILURE,
+  };
+}
+
+export function notifyCandidateSuccess() {
+  return { type: NOTIFY_CANDIDATE_SUCCESS };
+}
+
 export function openModalState() {
   return { type: OPEN_MODAL_STATE };
+}
+
+export function resetModalState() {
+  return { type: RESET_MODAL_STATE };
 }
 
 export function saveCandidate(payload) {

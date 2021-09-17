@@ -5,8 +5,11 @@ import { post } from 'utils/request';
 import {
   fetchCompanyMatchesFailure,
   fetchCompanyMatchesSuccess,
+  notifyCandidateFailure,
+  notifyCandidateSuccess,
+  resetModalState,
 } from './actions';
-import { FETCH_COMPANY_MATCHES } from './constants';
+import { FETCH_COMPANY_MATCHES, NOTIFY_CANDIDATE } from './constants';
 
 export function* fetchCompanyMatchesSaga() {
   const query = `
@@ -35,6 +38,16 @@ export function* fetchCompanyMatchesSaga() {
   }
 }
 
+export function* notifyCandidateSaga() {
+  try {
+    yield put(notifyCandidateSuccess());
+    yield put(resetModalState());
+  } catch (error) {
+    yield put(notifyCandidateFailure({ error }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(FETCH_COMPANY_MATCHES, fetchCompanyMatchesSaga);
+  yield takeLatest(NOTIFY_CANDIDATE, notifyCandidateSaga);
 }

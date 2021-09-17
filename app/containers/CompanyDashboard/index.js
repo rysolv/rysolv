@@ -15,9 +15,11 @@ import injectSaga from 'utils/injectSaga';
 
 import {
   changeFilter,
-  closeModalState,
+  changeInput,
   fetchCompanyMatches,
+  notifyCandidate,
   openModalState,
+  resetModalState,
   saveCandidate,
   selectPosition,
 } from './actions';
@@ -34,12 +36,16 @@ const CompanyDashboard = ({
   candidates,
   deviceView,
   dispatchChangeFilter,
-  dispatchCloseModal,
+  dispatchChangeInput,
   dispatchFetchCompanyMatches,
+  dispatchNotifyCandidate,
   dispatchOpenModal,
+  dispatchResetModalState,
   dispatchSaveCandidate,
   dispatchSelectPosition,
   filter,
+  form,
+  formErrors,
   isModalOpen,
   positions,
   selectedPosition,
@@ -67,7 +73,13 @@ const CompanyDashboard = ({
       <ModalDialog
         Component={ScheduleInterviewModal}
         open={isModalOpen}
-        propsToPassDown={{ dispatchCloseModal }}
+        propsToPassDown={{
+          dispatchChangeInput,
+          dispatchNotifyCandidate,
+          dispatchResetModalState,
+          form,
+          formErrors,
+        }}
       />
     </ViewContainer>
   );
@@ -77,12 +89,16 @@ CompanyDashboard.propTypes = {
   candidates: T.array.isRequired,
   deviceView: T.string.isRequired,
   dispatchChangeFilter: T.func.isRequired,
-  dispatchCloseModal: T.func.isRequired,
+  dispatchChangeInput: T.func.isRequired,
   dispatchFetchCompanyMatches: T.func.isRequired,
+  dispatchNotifyCandidate: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
+  dispatchResetModalState: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
   dispatchSelectPosition: T.func.isRequired,
   filter: T.object.isRequired,
+  form: T.object.isRequired,
+  formErrors: T.object.isRequired,
   isModalOpen: T.bool.isRequired,
   positions: T.array.isRequired,
   selectedPosition: T.string.isRequired,
@@ -94,6 +110,8 @@ const mapStateToProps = createStructuredSelector({
    */
   candidates: makeSelectCompanyDashboardCandidates(),
   filter: makeSelectCompanyDashboard('filter'),
+  form: makeSelectCompanyDashboard('form'),
+  formErrors: makeSelectCompanyDashboard('formErrors'),
   isModalOpen: makeSelectCompanyDashboard('isModalOpen'),
   positions: makeSelectCompanyDashboardPositions(),
   selectedPosition: makeSelectCompanyDashboard('selectedPosition'),
@@ -108,9 +126,11 @@ const mapDispatchToProps = dispatch => ({
    * Reducer : CompanyDashboard
    */
   dispatchChangeFilter: payload => dispatch(changeFilter(payload)),
-  dispatchCloseModal: () => dispatch(closeModalState()),
+  dispatchChangeInput: payload => dispatch(changeInput(payload)),
   dispatchFetchCompanyMatches: () => dispatch(fetchCompanyMatches()),
+  dispatchNotifyCandidate: payload => dispatch(notifyCandidate(payload)),
   dispatchOpenModal: () => dispatch(openModalState()),
+  dispatchResetModalState: () => dispatch(resetModalState()),
   dispatchSaveCandidate: payload => dispatch(saveCandidate(payload)),
   dispatchSelectPosition: payload => dispatch(selectPosition(payload)),
 });

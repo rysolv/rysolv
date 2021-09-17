@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
   defaultFontFamily,
   defaultFontSize,
-  headerColor,
+  candidateGreyColor,
   textColor,
 } from 'defaultStyleHelper';
 
@@ -18,14 +18,19 @@ export const MarkdownContainer = styled.div`
   a:active,
   .fa,
   .fa:hover {
-    background-color: ${headerColor} !important;
-    color: white;
+    background-color: ${candidateGreyColor} !important;
+    color: ${textColor};
+
     * {
-      background-color: ${headerColor};
+      background-color: ${candidateGreyColor};
     }
   }
 
   .editor-toolbar {
+    border-left: 0.1rem solid #ddd;
+    border-radius: 0;
+    border-right: 0.1rem solid #ddd;
+    border-top: 0.1rem solid #ddd;
     opacity: 1 !important;
 
     ::after {
@@ -39,8 +44,8 @@ export const MarkdownContainer = styled.div`
 
   .CodeMirror,
   .CodeMirror-scroll {
-    transition: min-height 0.2s;
     min-height: ${props => (props.comment ? '5rem' : '20rem')};
+    transition: min-height 0.2s;
   }
 
   &:focus-within {
