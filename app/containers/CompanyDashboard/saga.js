@@ -38,7 +38,8 @@ export function* fetchCompanyMatchesSaga() {
   }
 }
 
-export function* notifyCandidateSaga() {
+export function* notifyCandidateSaga({ payload }) {
+  console.log('payload', payload);
   try {
     yield put(notifyCandidateSuccess());
     yield put(resetModalState());

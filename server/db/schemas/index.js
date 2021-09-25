@@ -9,6 +9,8 @@ const fundingSchema = require('./funding');
 const hiringActivitySchema = require('./hiringActivity');
 const issueSchema = require('./issues');
 const languageSchema = require('./languages');
+const messageChainSchema = require('./messageChain');
+const messagesSchema = require('./messages');
 const notificationSchema = require('./notifications');
 const paymentsSchema = require('./payments');
 const positionTechStackSchema = require('./positionTechStack');
@@ -36,6 +38,8 @@ module.exports = {
   ...hiringActivitySchema,
   ...issueSchema,
   ...languageSchema,
+  ...messageChainSchema,
+  ...messagesSchema,
   ...notificationSchema,
   ...paymentsSchema,
   ...positionTechStackSchema,

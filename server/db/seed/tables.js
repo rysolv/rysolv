@@ -14,6 +14,8 @@ const {
   alterHiringActivityTable,
   alterIssuesTable,
   alterLanguagesTable,
+  alterMessageChainTable,
+  alterMessagesTable,
   alterNotificationsTable,
   alterPaymentTable,
   alterPositionTechStackTable,
@@ -39,6 +41,8 @@ const {
   createHiringActivityTable,
   createIssuesTable,
   createLanguagesTable,
+  createMessageChainTable,
+  createMessagesTable,
   createNotificationsTable,
   createPaymentsTable,
   createPositionTechStackTable,
@@ -68,6 +72,8 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterHiringActivityTable });
   await singleQuery({ queryText: alterIssuesTable });
   await singleQuery({ queryText: alterLanguagesTable });
+  await singleQuery({ queryText: alterMessageChainTable });
+  await singleQuery({ queryText: alterMessagesTable });
   await singleQuery({ queryText: alterNotificationsTable });
   await singleQuery({ queryText: alterPaymentTable });
   await singleQuery({ queryText: alterPositionTechStackTable });
@@ -97,6 +103,8 @@ const createTables = async () => {
   await singleQuery({ queryText: createHiringActivityTable });
   await singleQuery({ queryText: createIssuesTable });
   await singleQuery({ queryText: createLanguagesTable });
+  await singleQuery({ queryText: createMessageChainTable });
+  await singleQuery({ queryText: createMessagesTable });
   await singleQuery({ queryText: createNotificationsTable });
   await singleQuery({ queryText: createPaymentsTable });
   await singleQuery({ queryText: createPositionTechStackTable });
