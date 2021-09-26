@@ -43,7 +43,9 @@ const CandidateCard = ({
   percentMatch,
   profilePic,
   salary,
+  selectedPosition,
   type,
+  userId,
   yearsOfExperience,
 }) => {
   const ButtonIcon = isInterviewRequested ? RemoveIcon : AddIcon;
@@ -52,6 +54,8 @@ const CandidateCard = ({
     : `Schedule Interview`;
   const CardIcon = isSaved ? UnsaveIcon : SaveIcon;
   const CardLabel = isSaved ? 'Unshortlist' : 'Shortlist';
+
+  const tableData = { positionId: selectedPosition, userId };
 
   return (
     <CandidateCardContainer isLast={isLast} isSaved={isSaved}>
@@ -100,7 +104,7 @@ const CandidateCard = ({
           </CandidateCardRow>
         </CandidateCardRows>
       </CandidateCardContent>
-      <CandidateCardButton onClick={dispatchOpenModal}>
+      <CandidateCardButton onClick={() => dispatchOpenModal({ tableData })}>
         {ButtonIcon} {ButtonText}
       </CandidateCardButton>
     </CandidateCardContainer>
@@ -121,7 +125,9 @@ CandidateCard.propTypes = {
   percentMatch: T.number.isRequired,
   profilePic: T.string.isRequired,
   salary: T.string.isRequired,
+  selectedPosition: T.string.isRequired,
   type: T.string.isRequired,
+  userId: T.string.isRequired,
   yearsOfExperience: T.string.isRequired,
 };
 

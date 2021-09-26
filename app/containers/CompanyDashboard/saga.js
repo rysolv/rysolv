@@ -39,12 +39,36 @@ export function* fetchCompanyMatchesSaga() {
 }
 
 export function* notifyCandidateSaga({ payload }) {
-  console.log('payload', payload);
+  const { body, positionId, userId } = payload;
+  const query = `
+    mutation{
+      createMessage(messageInput: {
+        body: ${JSON.stringify(body)},
+        positionId: "${positionId}",
+        userId: "${userId}",
+      }) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
   try {
-    yield put(notifyCandidateSuccess());
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        createMessage: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(notifyCandidateSuccess({ message }));
     yield put(resetModalState());
   } catch (error) {
-    yield put(notifyCandidateFailure({ error }));
+    yield put(notifyCandidateFailure({ error: { message: error } }));
   }
 }
 

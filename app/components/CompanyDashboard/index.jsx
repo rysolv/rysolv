@@ -18,6 +18,7 @@ const CompanyDashboard = ({
   dispatchOpenModal,
   dispatchSaveCandidate,
   filter,
+  selectedPosition,
 }) => (
   <CompanyDashboardContainer>
     <CompanyDashboardTabs
@@ -34,6 +35,7 @@ const CompanyDashboard = ({
               dispatchSaveCandidate={dispatchSaveCandidate}
               index={index}
               isLast={candidates.length - 1 === index}
+              selectedPosition={selectedPosition}
               {...candidate}
             />
           ))}
@@ -51,6 +53,7 @@ CompanyDashboard.propTypes = {
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
   filter: T.object.isRequired,
+  selectedPosition: T.string.isRequired,
 };
 
 export default CompanyDashboard;

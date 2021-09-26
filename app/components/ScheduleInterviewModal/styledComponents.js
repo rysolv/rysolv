@@ -40,7 +40,6 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   align-items: center;
   background-color: ${darkBlueColor};
   border-radius: 0.8rem;
-  border: 0.2rem solid ${darkBlueColor};
   color: ${whiteColor};
   display: flex;
   font-size: 1.6rem;

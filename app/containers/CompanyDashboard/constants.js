@@ -2,6 +2,8 @@ export const CHANGE_FILTER = 'app/CompanyDashboard/CHANGE_FILTER';
 
 export const CHANGE_INPUT = 'app/CompanyDashboard/CHANGE_INPUT';
 
+export const CLEAR_ALERTS = 'app/CompanyDashboard/CLEAR_ALERTS';
+
 export const CLOSE_MODAL_STATE = 'app/CompanyDashboard/CLOSE_MODAL_STATE';
 
 export const FETCH_COMPANY_MATCHES =

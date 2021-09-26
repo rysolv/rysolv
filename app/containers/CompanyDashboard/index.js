@@ -16,6 +16,7 @@ import injectSaga from 'utils/injectSaga';
 import {
   changeFilter,
   changeInput,
+  clearAlerts,
   fetchCompanyMatches,
   notifyCandidate,
   openModalState,
@@ -33,10 +34,12 @@ import {
 import { VerticalDivider, ViewContainer } from './styledComponents';
 
 const CompanyDashboard = ({
+  alerts,
   candidates,
   deviceView,
   dispatchChangeFilter,
   dispatchChangeInput,
+  dispatchClearAlerts,
   dispatchFetchCompanyMatches,
   dispatchNotifyCandidate,
   dispatchOpenModal,
@@ -49,6 +52,7 @@ const CompanyDashboard = ({
   isModalOpen,
   positions,
   selectedPosition,
+  tableData,
 }) => {
   useEffect(() => {
     dispatchFetchCompanyMatches();
@@ -69,16 +73,20 @@ const CompanyDashboard = ({
         dispatchOpenModal={dispatchOpenModal}
         dispatchSaveCandidate={dispatchSaveCandidate}
         filter={filter}
+        selectedPosition={selectedPosition}
       />
       <ModalDialog
         Component={ScheduleInterviewModal}
         open={isModalOpen}
         propsToPassDown={{
+          alerts,
           dispatchChangeInput,
+          dispatchClearAlerts,
           dispatchNotifyCandidate,
           dispatchResetModalState,
           form,
           formErrors,
+          tableData,
         }}
       />
     </ViewContainer>
@@ -86,10 +94,12 @@ const CompanyDashboard = ({
 };
 
 CompanyDashboard.propTypes = {
+  alerts: T.object.isRequired,
   candidates: T.array.isRequired,
   deviceView: T.string.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchChangeInput: T.func.isRequired,
+  dispatchClearAlerts: T.func.isRequired,
   dispatchFetchCompanyMatches: T.func.isRequired,
   dispatchNotifyCandidate: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
@@ -102,12 +112,14 @@ CompanyDashboard.propTypes = {
   isModalOpen: T.bool.isRequired,
   positions: T.array.isRequired,
   selectedPosition: T.string.isRequired,
+  tableData: T.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : CompanyDashboard
    */
+  alerts: makeSelectCompanyDashboard('alerts'),
   candidates: makeSelectCompanyDashboardCandidates(),
   filter: makeSelectCompanyDashboard('filter'),
   form: makeSelectCompanyDashboard('form'),
@@ -115,6 +127,7 @@ const mapStateToProps = createStructuredSelector({
   isModalOpen: makeSelectCompanyDashboard('isModalOpen'),
   positions: makeSelectCompanyDashboardPositions(),
   selectedPosition: makeSelectCompanyDashboard('selectedPosition'),
+  tableData: makeSelectCompanyDashboard('tableData'),
   /**
    * Reducer: ViewSizes
    */
@@ -127,9 +140,10 @@ const mapDispatchToProps = dispatch => ({
    */
   dispatchChangeFilter: payload => dispatch(changeFilter(payload)),
   dispatchChangeInput: payload => dispatch(changeInput(payload)),
+  dispatchClearAlerts: () => dispatch(clearAlerts()),
   dispatchFetchCompanyMatches: () => dispatch(fetchCompanyMatches()),
   dispatchNotifyCandidate: payload => dispatch(notifyCandidate(payload)),
-  dispatchOpenModal: () => dispatch(openModalState()),
+  dispatchOpenModal: payload => dispatch(openModalState(payload)),
   dispatchResetModalState: () => dispatch(resetModalState()),
   dispatchSaveCandidate: payload => dispatch(saveCandidate(payload)),
   dispatchSelectPosition: payload => dispatch(selectPosition(payload)),

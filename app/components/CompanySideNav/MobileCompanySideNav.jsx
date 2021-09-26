@@ -42,12 +42,12 @@ const MobileCompanySideNav = ({
       <ConditionalRender
         Component={
           <div>
-            {positions.map(({ location, title }, index) => (
+            {positions.map(({ id, location, title }, index) => (
               <PositionButton
                 key={`${title}-${index}`}
                 isLast={positions.length - 1 === index}
-                isSelected={selectedPosition === title}
-                onClick={() => dispatchSelectPosition({ position: title })}
+                isSelected={id === selectedPosition}
+                onClick={() => dispatchSelectPosition({ id })}
               >
                 {JobIcon}
                 <ButtonTextWrapper>

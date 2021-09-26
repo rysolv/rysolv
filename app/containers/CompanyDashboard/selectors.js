@@ -16,7 +16,7 @@ const makeSelectCompanyDashboardCandidates = () =>
     (companyMatches, filter, selectedPosition) => {
       if (!isEmpty(companyMatches) && !!selectedPosition) {
         const { candidates } = companyMatches.find(
-          ({ position: { title } }) => selectedPosition === title,
+          ({ position: { id } }) => id === selectedPosition,
         );
         const filteredCandidates = filterCandidates(candidates, filter);
         return filteredCandidates.map(

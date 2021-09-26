@@ -178,6 +178,25 @@ module.exports = buildSchema(`
     type: String
   }
 
+  type Message {
+    body: String
+    commentId: ID
+    createdDate: Object
+    githubUrl: String
+    isGithubComment: Boolean
+    modifiedDate: Object
+    profilePic: String
+    target: String
+    userId: ID
+    username: String
+  }
+
+  input MessageInput {
+    body: String
+    positionId: ID
+    userId: ID
+  }
+
   type Payment {
     balance: Float
     fundedAmount: Float
@@ -470,6 +489,7 @@ module.exports = buildSchema(`
 
     createComment(commentInput: CommentInput): CommentResult!
     createIssue(issueInput: IssueInput): IssueResult!
+    createMessage(messageInput: MessageInput): EventResponse!
     createPaypalPayment(amount: Float!, email: String, issueId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
     createRepo(repoInput: RepoInput): RepoResult!

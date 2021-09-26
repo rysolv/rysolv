@@ -9,7 +9,7 @@ import { BannerWrapper, CloseButton, IconWrapper } from './styledComponents';
 
 const CloseIcon = iconDictionary('closeMenu');
 const SuccessIcon = iconDictionary('successOutline');
-const WarningIcon = iconDictionary('warning');
+const WarningIcon = iconDictionary('closeCircle');
 
 const ErrorSuccessBanner = ({ error, onClose, success, ...restProps }) => {
   const errorSuccessMessages = success || error;
@@ -32,7 +32,7 @@ const ErrorSuccessBanner = ({ error, onClose, success, ...restProps }) => {
 
   return (
     <BannerWrapper color={color} displayState={displayState} {...restProps}>
-      <IconWrapper>{icon}</IconWrapper>
+      <IconWrapper color={color}>{icon}</IconWrapper>
       <MessageSection messages={errorSuccessMessages} />
       <CloseButton aria-label="Close" Icon={CloseIcon} onClick={handleClose} />
     </BannerWrapper>

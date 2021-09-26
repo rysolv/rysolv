@@ -1,6 +1,7 @@
 import {
   CHANGE_FILTER,
   CHANGE_INPUT,
+  CLEAR_ALERTS,
   CLOSE_MODAL_STATE,
   FETCH_COMPANY_MATCHES_FAILURE,
   FETCH_COMPANY_MATCHES_SUCCESS,
@@ -26,6 +27,10 @@ export function changeInput(payload) {
     payload,
     type: CHANGE_INPUT,
   };
+}
+
+export function clearAlerts() {
+  return { type: CLEAR_ALERTS };
 }
 
 export function closeModalState() {
@@ -64,12 +69,18 @@ export function notifyCandidateFailure(payload) {
   };
 }
 
-export function notifyCandidateSuccess() {
-  return { type: NOTIFY_CANDIDATE_SUCCESS };
+export function notifyCandidateSuccess(payload) {
+  return {
+    payload,
+    type: NOTIFY_CANDIDATE_SUCCESS,
+  };
 }
 
-export function openModalState() {
-  return { type: OPEN_MODAL_STATE };
+export function openModalState(payload) {
+  return {
+    payload,
+    type: OPEN_MODAL_STATE,
+  };
 }
 
 export function resetModalState() {

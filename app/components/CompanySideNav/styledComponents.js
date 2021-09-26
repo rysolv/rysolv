@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 import { IconButton } from 'components/base_ui';
 import { blueColor, grayColor, whiteColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { tablet } = mediaQueriesByDevice;
 
 export const ButtonTextWrapper = styled.div`
   overflow: hidden;
@@ -41,8 +44,6 @@ export const LocationText = styled.div`
 export const PositionButton = styled.button`
   background-color: ${({ isSelected }) =>
     isSelected ? blueColor : whiteColor};
-  border-bottom-left-radius: ${({ isLast }) => (isLast ? '0.7rem' : '0')};
-  border-bottom-right-radius: ${({ isLast }) => (isLast ? '0.7rem' : '0')};
   border: none;
   color: ${({ isSelected }) => (isSelected ? whiteColor : blueColor)};
   display: flex;
@@ -64,6 +65,11 @@ export const PositionButton = styled.button`
   svg {
     font-size: 1.6rem;
     margin-right: 0.8rem;
+  }
+
+  ${tablet} {
+    border-bottom-left-radius: ${({ isLast }) => (isLast ? '0.7rem' : '0')};
+    border-bottom-right-radius: ${({ isLast }) => (isLast ? '0.7rem' : '0')};
   }
 `;
 
