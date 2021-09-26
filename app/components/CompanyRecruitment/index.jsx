@@ -58,8 +58,8 @@ const CompanyRecruitment = ({
           </CompanyRecruitmentHeader>
           <CompanyRecruitmentSubheader>
             We&apos;re confident we&apos;ll find the right engineers for the
-            job. You only pay 2.5% starting salary at time of hire, and 2.5%
-            after 60 days.
+            job. You only pay 5% starting salary at time of hire, and 5% after
+            60 days.
           </CompanyRecruitmentSubheader>
         </HeaderGroup>
       </HeaderWrapper>
