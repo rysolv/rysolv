@@ -6,7 +6,7 @@ const {
 const { removeAttempting, toggleAttempting } = require('./queries/attempting');
 const { acceptBounty, verifyPayout } = require('./queries/bounties');
 const { createComment, getIssueComments } = require('./queries/comments');
-const { getCompanyMatches } = require('./queries/companies');
+const { createMessage, getCompanyMatches } = require('./queries/companies');
 const {
   checkDuplicateIssue,
   closeIssue,
@@ -99,6 +99,7 @@ module.exports = {
   createComment,
   createIssue,
   createLanguage,
+  createMessage,
   createPullRequest,
   createRecruiting,
   createRepo,
