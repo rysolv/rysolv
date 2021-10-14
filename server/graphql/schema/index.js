@@ -427,6 +427,7 @@ module.exports = buildSchema(`
     getRepos: RepoArrayResult!
     getStats: StatsResult!
     getUserActivity(userId: ID): [Activity]!
+    getUserDashboard: UserResult!
     getUserIssues: IssueArrayResult!
     getUserPullRequests: PullRequestArrayResult!
     getUserRepos: RepoArrayResult!
@@ -477,7 +478,7 @@ module.exports = buildSchema(`
     postUserResponse(responseArray: [Object]): EventResponse!
 
     recruitingSignup(contactInput: ContactInput): EventResponse!
-    
+
     sendContact(contactInput: ContactInput): EventResponse!
 
     signIn(password: String!, username: String!): SignInResult!

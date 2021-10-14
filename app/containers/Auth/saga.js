@@ -155,8 +155,8 @@ export function* githubSignInSaga({ payload }) {
     if (__typename === 'Error') throw new Error(message);
     const routeDictionary = {
       jobs: '/jobs?question=1',
-      signin: '/issues',
-      signup: '/settings',
+      signin: '/dashboard',
+      signup: '/dashboard',
     };
     const route = routeDictionary[origin];
     if (origin === 'jobs') {

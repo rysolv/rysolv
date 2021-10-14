@@ -1,5 +1,6 @@
 const createUser = require('./createUser');
 const deleteUser = require('./deleteUser');
+const getUserDashboard = require('./getUserDashboard');
 const getUserIssues = require('./getUserIssues');
 const getUserRepos = require('./getUserRepos');
 const getUsers = require('./getUsers');
@@ -20,6 +21,7 @@ const verifyUserEmail = require('./verifyUserEmail');
 module.exports = {
   createUser,
   deleteUser,
+  getUserDashboard,
   getUserIssues,
   getUserRepos,
   getUsers,

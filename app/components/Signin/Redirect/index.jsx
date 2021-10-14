@@ -28,7 +28,7 @@ const Redirect = ({ data: { username }, dispatchSignOut, handleNav }) => {
           autoFocus
           disableFocusRipple
           label="Go to My Account"
-          onClick={() => handleNav('/settings')}
+          onClick={() => handleNav('/dashboard')}
         />
         <StyledButton disableFocusRipple onClick={handleSignout}>
           Sign out

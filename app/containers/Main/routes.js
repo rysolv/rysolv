@@ -2,24 +2,25 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import withAuth from 'containers/Auth';
 
+import CodeScoring from 'containers/CodeScoring/Loadable';
+import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
 import Contact from 'components/Contact';
 import Faq from 'components/Faq';
 import HowTo from 'components/HowTo';
-import NotFoundPage from 'components/NotFoundPage';
-import PrivacyPolicy from 'components/PrivacyPolicy';
-import TermsOfService from 'components/TermsOfService';
-import CodeScoring from 'containers/CodeScoring/Loadable';
-import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
-import Main from 'containers/HomePage/Loadable';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
 import Jobs from 'containers/Jobs';
+import Main from 'containers/HomePage/Loadable';
+import NotFoundPage from 'components/NotFoundPage';
 import Overview from 'containers/Overview';
+import PrivacyPolicy from 'components/PrivacyPolicy';
 import ReposAdd from 'containers/Repos/Add';
 import ReposDetail from 'containers/Repos/Detail';
 import Settings from 'containers/Settings';
 import SignIn from 'containers/Signin';
 import Stats from 'containers/Stats/Loadable';
+import TermsOfService from 'components/TermsOfService';
+import UserDashboard from 'containers/UserDashboard';
 import UsersDetail from 'containers/Users/Detail';
 import VerifyGithub from 'containers/VerifyGithub/Loadable';
 
@@ -29,6 +30,7 @@ const publicConfig = { isAdmin: false, isPrivate: false };
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
+const PrivateUserDashboard = withAuth(privateConfig, UserDashboard);
 const PublicCodeScoring = withAuth(publicConfig, CodeScoring);
 const PublicCompanyRecruitment = withAuth(publicConfig, CompanyRecruitment);
 const PublicContact = withAuth(publicConfig, Contact);
@@ -51,9 +53,10 @@ const PublicVerifyGithub = withAuth(publicConfig, VerifyGithub);
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={PublicMain} />
-    <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
     <Route exact path ="/how-we-score-code" component={PublicCodeScoring} />
+    <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/contact-us" component={PublicContact} />
+    <Route exact path="/dashboard" component={PrivateUserDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
     <Route exact path="/how-to" component={PublicHowTo} />
     <Route exact path="/issues" component={PublicOverview} />
