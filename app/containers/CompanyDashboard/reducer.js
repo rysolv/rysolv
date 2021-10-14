@@ -1,14 +1,23 @@
 /* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
+import remove from 'lodash/remove';
 
 import {
   CHANGE_FILTER,
   CHANGE_INPUT,
   CLEAR_ALERTS,
   CLOSE_MODAL_STATE,
+  CREATE_POSITION_FAILURE,
+  CREATE_POSITION_SUCCESS,
+  CREATE_POSITION,
+  DELETE_SKILL,
   FETCH_COMPANY_MATCHES_FAILURE,
   FETCH_COMPANY_MATCHES_SUCCESS,
   FETCH_COMPANY_MATCHES,
+  FETCH_POSITION_QUESTIONS_FAILURE,
+  FETCH_POSITION_QUESTIONS_SUCCESS,
+  FETCH_POSITION_QUESTIONS,
+  INPUT_ERROR,
   NOTIFY_CANDIDATE_FAILURE,
   NOTIFY_CANDIDATE_SUCCESS,
   NOTIFY_CANDIDATE,
@@ -28,10 +37,35 @@ export const initialState = {
     step: '',
     type: '',
   },
-  form: { body: '' },
-  formErrors: { body: '' },
+  form: {
+    createPosition: {
+      description: '',
+      experience: '',
+      hiring_timeframe: '',
+      location: '',
+      role: '',
+      salary: '',
+      skills: [],
+      type: '',
+    },
+    scheduleInterview: { body: '' },
+  },
+  formErrors: {
+    createPosition: {
+      description: '',
+      experience: '',
+      hiring_timeframe: '',
+      location: '',
+      role: '',
+      salary: '',
+      skills: '',
+      type: '',
+    },
+    scheduleInterview: { body: '' },
+  },
   isModalOpen: false,
   loading: false,
+  questions: [],
   selectedPosition: '',
   tableData: {},
 };
@@ -44,8 +78,12 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       break;
     }
     case CHANGE_INPUT: {
-      const { field, value } = payload;
-      draft.form[field] = value;
+      const { field, form, value } = payload;
+      if (field === 'skills') {
+        draft.form[form][field] = !draft.form[form][field];
+      } else {
+        draft.form[form][field] = value;
+      }
       break;
     }
     case CLEAR_ALERTS: {
@@ -55,6 +93,31 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case CLOSE_MODAL_STATE: {
       draft.isModalOpen = initialState.isModalOpen;
       draft.tableData = initialState.tableData;
+      break;
+    }
+    case CREATE_POSITION_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case CREATE_POSITION_SUCCESS: {
+      const { message } = payload;
+      draft.alerts.success = { message };
+      draft.loading = false;
+      break;
+    }
+    case CREATE_POSITION: {
+      draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
+    case DELETE_SKILL: {
+      const { skill: skillToDelete } = payload;
+      remove(
+        draft.form.createPosition.skills,
+        ({ skill }) => skill === skillToDelete,
+      );
       break;
     }
     case FETCH_COMPANY_MATCHES_FAILURE: {
@@ -73,6 +136,28 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case FETCH_COMPANY_MATCHES: {
       draft.error = initialState.error;
       draft.loading = true;
+      break;
+    }
+    case FETCH_POSITION_QUESTIONS_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      break;
+    }
+    case FETCH_POSITION_QUESTIONS_SUCCESS: {
+      const { questions } = payload;
+      draft.questions = questions;
+      break;
+    }
+    case FETCH_POSITION_QUESTIONS: {
+      draft.error = initialState.error;
+      break;
+    }
+    case INPUT_ERROR: {
+      const { errors, form } = payload;
+      const fields = Object.keys(errors);
+      fields.forEach(field => {
+        draft.formErrors[form][field] = errors[field] || '';
+      });
       break;
     }
     case NOTIFY_CANDIDATE_FAILURE: {

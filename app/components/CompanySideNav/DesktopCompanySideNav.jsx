@@ -8,19 +8,25 @@ import {
   ButtonTextWrapper,
   CompanySideNavContainer,
   CompanySideNavHeader,
+  CreatePositionButton,
   LocationText,
   PositionButton,
 } from './styledComponents';
 
+const AddCircleOutlineIcon = iconDictionary('addCircleOutline');
 const JobIcon = iconDictionary('workOutline');
 
 const DesktopCompanySideNav = ({
   dispatchSelectPosition,
+  handleNav,
   positions,
   selectedPosition,
 }) => (
   <CompanySideNavContainer>
     <CompanySideNavHeader>Positions</CompanySideNavHeader>
+    <CreatePositionButton onClick={() => handleNav('/dashboard/add')}>
+      {AddCircleOutlineIcon} Create Position
+    </CreatePositionButton>
     <div>
       {positions.map(({ id, location, title }, index) => (
         <PositionButton
@@ -43,6 +49,7 @@ const DesktopCompanySideNav = ({
 
 DesktopCompanySideNav.propTypes = {
   dispatchSelectPosition: T.func.isRequired,
+  handleNav: T.func.isRequired,
   positions: T.array.isRequired,
   selectedPosition: T.string.isRequired,
 };

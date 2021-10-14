@@ -8,7 +8,6 @@ const {
   alterCandidatePositionsTable,
   alterCommentsTable,
   alterCompaniesTable,
-  alterCompanyPositionsTable,
   alterCronActivityTable,
   alterFundingTable,
   alterHiringActivityTable,
@@ -34,7 +33,6 @@ const {
   createCandidatePositionsTable,
   createCommentsTable,
   createCompaniesTable,
-  createCompanyPositionsTable,
   createCronActivityTable,
   createFundingsTable,
   createHiringActivityTable,
@@ -64,7 +62,6 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterCandidatePositionsTable });
   await singleQuery({ queryText: alterCommentsTable });
   await singleQuery({ queryText: alterCompaniesTable });
-  await singleQuery({ queryText: alterCompanyPositionsTable });
   await singleQuery({ queryText: alterCronActivityTable });
   await singleQuery({ queryText: alterFundingTable });
   await singleQuery({ queryText: alterHiringActivityTable });
@@ -94,7 +91,6 @@ const createTables = async () => {
   await singleQuery({ queryText: createCandidatePositionsTable });
   await singleQuery({ queryText: createCommentsTable });
   await singleQuery({ queryText: createCompaniesTable });
-  await singleQuery({ queryText: createCompanyPositionsTable });
   await singleQuery({ queryText: createCronActivityTable });
   await singleQuery({ queryText: createFundingsTable });
   await singleQuery({ queryText: createHiringActivityTable });

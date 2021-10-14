@@ -71,8 +71,8 @@ export const StyledBaseInput = styled(OutlinedInput)`
 `;
 
 export const StyledBaseTextInput = styled(TextField)`
-  font-size: ${defaultFontSize};
-  margin: 0rem 1rem;
+  font-size: 1.6rem;
+  margin: 0rem;
 
   .base-input {
     border-bottom: ${({ error }) => (error ? errorBorder : inputBorder)};
@@ -113,6 +113,9 @@ export const StyledBaseTextInput = styled(TextField)`
 `;
 
 export const StyledFormControl = styled(FormControl)`
+  display: flex;
+  height: 100%;
+  justify-content: center;
   margin-bottom: 0.7rem;
   width: 100%;
 `;

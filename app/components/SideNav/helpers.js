@@ -1,6 +1,7 @@
 export const excludedPath = [
   '',
   'dashboard',
+  'dashboard/add',
   'how-we-score-code',
   'jobs',
   'password-reset',

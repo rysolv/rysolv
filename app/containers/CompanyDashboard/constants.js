@@ -6,12 +6,29 @@ export const CLEAR_ALERTS = 'app/CompanyDashboard/CLEAR_ALERTS';
 
 export const CLOSE_MODAL_STATE = 'app/CompanyDashboard/CLOSE_MODAL_STATE';
 
+export const CREATE_POSITION = 'app/CompanyDashboard/CREATE_POSITION';
+export const CREATE_POSITION_FAILURE =
+  'app/CompanyDashboard/CREATE_POSITION_FAILURE';
+export const CREATE_POSITION_SUCCESS =
+  'app/CompanyDashboard/CREATE_POSITION_SUCCESS';
+
+export const DELETE_SKILL = 'app/CompnayDashboard/DELETE_SKILL';
+
 export const FETCH_COMPANY_MATCHES =
   'app/CompanyDashboard/FETCH_COMPANY_MATCHES';
 export const FETCH_COMPANY_MATCHES_FAILURE =
   'app/CompanyDashboard/FETCH_COMPANY_MATCHES_FAILURE';
 export const FETCH_COMPANY_MATCHES_SUCCESS =
   'app/CompanyDashboard/FETCH_COMPANY_MATCHES_SUCCESS';
+
+export const FETCH_POSITION_QUESTIONS =
+  'app/CompanyDashboard/FETCH_POSITION_QUESTIONS';
+export const FETCH_POSITION_QUESTIONS_FAILURE =
+  'app/CompanyDashboard/FETCH_POSITION_QUESTIONS_FAILURE';
+export const FETCH_POSITION_QUESTIONS_SUCCESS =
+  'app/CompanyDashboard/FETCH_POSITION_QUESTIONS_SUCCESS';
+
+export const INPUT_ERROR = 'app/CompanyDashboard/INPUT_ERROR';
 
 export const NOTIFY_CANDIDATE = 'app/CompanyDashboard/NOTIFY_CANDIDATE';
 export const NOTIFY_CANDIDATE_FAILURE =

@@ -56,7 +56,7 @@ const Routes = () => (
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
     <Route exact path ="/how-we-score-code" component={PublicCodeScoring} />
     <Route exact path="/contact-us" component={PublicContact} />
-    <Route exact path="/dashboard" component={PrivateCompanyDashboard} />
+    <Route exact path="/dashboard/:view?" component={PrivateCompanyDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
     <Route exact path="/how-to" component={PublicHowTo} />
     <Route exact path="/issues" component={PublicOverview} />

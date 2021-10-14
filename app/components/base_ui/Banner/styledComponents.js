@@ -12,7 +12,7 @@ export const BannerWrapper = styled.div`
   color: ${textColor};
   display: ${({ displayState }) => (displayState ? 'flex' : 'none')};
   font-size: 1.6rem;
-  height: ${({ displayState }) => (displayState ? 'auto' : '0')};
+  height: ${({ displayState }) => (displayState ? '100%' : '0')};
   margin-bottom: ${({ bottomMarginRequired }) => bottomMarginRequired || '0'};
   margin-top: ${({ topMarginRequired }) => topMarginRequired || '0'};
   overflow: hidden;

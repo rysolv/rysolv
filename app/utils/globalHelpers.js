@@ -16,6 +16,12 @@ export const formatDollarAmount = (value, noDecimals = false) => {
 export const formatPaypalTotal = value =>
   (Number(value) * 1.03 + 0.3).toFixed(2);
 
+export const formatToSnakeCase = string => {
+  const strArray = string.split(' ');
+  const formattedArray = strArray.map(str => str.toLowerCase());
+  return formattedArray.join('_');
+};
+
 export const formatUrlLinks = value => {
   const { githubLink, personalLink, stackoverflowLink } = value;
   if (githubLink) {

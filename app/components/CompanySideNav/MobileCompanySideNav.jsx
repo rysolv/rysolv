@@ -9,21 +9,29 @@ import {
   ButtonTextWrapper,
   CompanySideNavContainer,
   CompanySideNavHeader,
+  CreatePositionButton,
   LocationText,
   PositionButton,
   StyledIconButton,
 } from './styledComponents';
 
+const AddCircleOutlineIcon = iconDictionary('addCircleOutline');
 const ExpandLessIcon = iconDictionary('expandLess');
 const ExpandMoreIcon = iconDictionary('expandMore');
 const JobIcon = iconDictionary('workOutline');
 
 const MobileCompanySideNav = ({
   dispatchSelectPosition,
+  handleNav,
   positions,
   selectedPosition,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleSelectPosition = ({ id }) => {
+    dispatchSelectPosition({ id });
+    handleNav('/dashboard');
+  };
 
   return (
     <CompanySideNavContainer isExpanded={isExpanded}>
@@ -39,6 +47,9 @@ const MobileCompanySideNav = ({
           }}
         />
       </CompanySideNavHeader>
+      <CreatePositionButton onClick={() => handleNav('/dashboard/add')}>
+        {AddCircleOutlineIcon} Create Position
+      </CreatePositionButton>
       <ConditionalRender
         Component={
           <div>
@@ -47,7 +58,7 @@ const MobileCompanySideNav = ({
                 key={`${title}-${index}`}
                 isLast={positions.length - 1 === index}
                 isSelected={id === selectedPosition}
-                onClick={() => dispatchSelectPosition({ id })}
+                onClick={() => handleSelectPosition({ id })}
               >
                 {JobIcon}
                 <ButtonTextWrapper>
@@ -67,6 +78,7 @@ const MobileCompanySideNav = ({
 
 MobileCompanySideNav.propTypes = {
   dispatchSelectPosition: T.func.isRequired,
+  handleNav: T.func.isRequired,
   positions: T.array.isRequired,
   selectedPosition: T.string.isRequired,
 };

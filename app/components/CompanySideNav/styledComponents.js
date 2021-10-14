@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
 import { IconButton } from 'components/base_ui';
-import { blueColor, grayColor, whiteColor } from 'defaultStyleHelper';
+import {
+  blueColor,
+  grayColor,
+  lightBlueColor,
+  whiteColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { tablet } = mediaQueriesByDevice;
@@ -31,7 +36,27 @@ export const CompanySideNavHeader = styled.div`
   font-weight: 700;
   justify-content: space-between;
   line-height: 3.36rem;
-  padding: 2rem;
+  padding: 2rem 2rem 0;
+`;
+
+export const CreatePositionButton = styled.button`
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: ${lightBlueColor};
+  display: flex;
+  font-size: 1.6rem;
+  margin: 1rem 2rem 2rem;
+  padding: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  svg {
+    font-size: 2rem;
+    margin-right: 0.8rem;
+  }
 `;
 
 export const LocationText = styled.div`

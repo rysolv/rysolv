@@ -9,6 +9,7 @@ import MobileCompanySideNav from './MobileCompanySideNav';
 const CompanySideNav = ({
   deviceView,
   dispatchSelectPosition,
+  handleNav,
   positions,
   selectedPosition,
 }) => {
@@ -25,6 +26,7 @@ const CompanySideNav = ({
       FallbackComponent={MobileCompanySideNav}
       propsToPassDown={{
         dispatchSelectPosition,
+        handleNav,
         positions,
         selectedPosition,
       }}
@@ -36,6 +38,7 @@ const CompanySideNav = ({
 CompanySideNav.propTypes = {
   deviceView: T.string.isRequired,
   dispatchSelectPosition: T.func.isRequired,
+  handleNav: T.func.isRequired,
   positions: T.array.isRequired,
   selectedPosition: T.string.isRequired,
 };

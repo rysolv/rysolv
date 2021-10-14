@@ -22,8 +22,8 @@ const ScheduleInterviewModal = ({
   dispatchClearAlerts,
   dispatchNotifyCandidate,
   dispatchResetModalState,
-  form,
-  formErrors: { body: bodyError },
+  form: { scheduleInterview },
+  formErrors: { scheduleInterview: scheduleInterviewErrors },
   tableData: { positionId, userId },
 }) => (
   <ScheduleInterviewContainer>
@@ -42,10 +42,16 @@ const ScheduleInterviewModal = ({
       <div>
         <MarkdownHeader>Message</MarkdownHeader>
         <Markdown
-          body={form.body}
-          handleInput={value => dispatchChangeInput({ field: 'body', value })}
+          body={scheduleInterview.body}
+          handleInput={value =>
+            dispatchChangeInput({
+              field: 'body',
+              form: 'scheduleInterview',
+              value,
+            })
+          }
         />
-        <InputError>{bodyError}</InputError>
+        <InputError>{scheduleInterviewErrors.body}</InputError>
       </div>
     </ModalContent>
     <ButtonGroup>
@@ -53,9 +59,11 @@ const ScheduleInterviewModal = ({
         Cancel
       </SecondaryButton>
       <StyledPrimaryButton
-        disabled={!form.body}
+        disabled={!scheduleInterview.body}
         label="Send"
-        onClick={() => dispatchNotifyCandidate({ ...form, positionId, userId })}
+        onClick={() =>
+          dispatchNotifyCandidate({ ...scheduleInterview, positionId, userId })
+        }
       />
     </ButtonGroup>
   </ScheduleInterviewContainer>

@@ -1,3 +1,5 @@
+import { validate } from 'utils/validate';
+
 export const filterCandidates = (candidates, filterParams) => {
   const {
     location: locationFilter,
@@ -16,4 +18,48 @@ export const filterCandidates = (candidates, filterParams) => {
     },
   );
   return filteredCandidates;
+};
+
+export const optionDictionary = {
+  description: {
+    option: 'textarea',
+  },
+  experience: {
+    option: 'autocomplete',
+  },
+  hiring_timeframe: {
+    option: 'autocomplete',
+  },
+  location: {
+    option: 'locationAutocomplete',
+  },
+  role: {
+    option: 'input',
+  },
+  salary: {
+    option: 'autocomplete',
+  },
+  skills: {
+    option: 'radioGroup',
+  },
+  type: {
+    option: 'autocomplete',
+  },
+};
+
+const validationPropsByField = {
+  company: { type: 'stringInput' },
+  email: { type: 'emailInput' },
+  name: { type: 'stringInput' },
+  role: { type: 'stringInput' },
+  url: { type: 'linkInput' },
+};
+
+export const validateOneField = ({ field, values }) => {
+  const value = values[field];
+  return validate({
+    required: true,
+    value,
+    ...validationPropsByField[field],
+  });
 };

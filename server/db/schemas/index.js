@@ -2,7 +2,6 @@ const activitySchema = require('./activity');
 const attemptingSchema = require('./attempting');
 const commentSchema = require('./comments');
 const companyPositionCandidatesSchema = require('./candidatePositions');
-const companyPositionsSchema = require('./companyPositions');
 const companySchema = require('./companies');
 const cronActivitySchema = require('./cronActivity');
 const fundingSchema = require('./funding');
@@ -30,7 +29,6 @@ module.exports = {
   ...attemptingSchema,
   ...commentSchema,
   ...companyPositionCandidatesSchema,
-  ...companyPositionsSchema,
   ...companySchema,
   ...cronActivitySchema,
   ...fundingSchema,

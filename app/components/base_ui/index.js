@@ -17,6 +17,7 @@ export { default as ImageLinkWrapper } from './ImageLinkWrapper';
 export { default as ModalDialog } from './ModalDialog';
 export { default as Pagination } from './Pagination';
 export { default as ProgressBar } from './ProgressBar';
+export { default as Table } from './Table';
 export { default as TooltipIcon } from './TooltipIcon';
 export { default as UserNavBar } from './UserNavBar';
 export { default as WatchButton } from './WatchButton';

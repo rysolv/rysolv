@@ -4,6 +4,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Add from '@material-ui/icons/Add';
 import AddBox from '@material-ui/icons/AddBox';
 import AddCircle from '@material-ui/icons/AddCircle';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
@@ -80,6 +81,7 @@ export default (name, size, style) => {
     add: Add,
     addBox: AddBox,
     addCircle: AddCircle,
+    addCircleOutline: AddCircleOutline,
     attempt: Attempt,
     backArrow: ArrowBack,
     backArrowHalf: ArrowBackIos,
