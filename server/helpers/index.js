@@ -3,6 +3,7 @@ const {
   arrayCheck,
   CustomError,
   errorLogger,
+  generatePositionLevel,
   isUrl,
   validatePayoutUrl,
 } = require('./functions');
@@ -13,6 +14,7 @@ module.exports = {
   arrayCheck,
   CustomError,
   errorLogger,
+  generatePositionLevel,
   isUrl,
   sendEmail,
   validatePayoutUrl,

@@ -25,11 +25,11 @@ import {
   inputError,
   notifyCandidate,
   openModalState,
-  resetModalState,
+  resetFormState,
   saveCandidate,
   selectPosition,
 } from './actions';
-import { validateOneField } from './helpers';
+import { validateFields, validateOneField } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import {
@@ -37,6 +37,7 @@ import {
   makeSelectCompanyDashboardCandidates,
   makeSelectCompanyDashboardPositions,
   makeSelectCompanyDashboardQuestions,
+  makeSelectCompanyDashboardResponseArray,
   makeSelectCompanyDashboardView,
 } from './selectors';
 import { VerticalDivider, ViewContainer } from './styledComponents';
@@ -57,7 +58,7 @@ const CompanyDashboard = ({
   dispatchInputError,
   dispatchNotifyCandidate,
   dispatchOpenModal,
-  dispatchResetModalState,
+  dispatchResetFormState,
   dispatchSaveCandidate,
   dispatchSelectPosition,
   filter,
@@ -68,6 +69,7 @@ const CompanyDashboard = ({
   loading,
   positions,
   questions,
+  responseArray,
   selectedPosition,
   tableData,
   view,
@@ -80,7 +82,12 @@ const CompanyDashboard = ({
   const ComponentToRender = viewDictionary[view];
 
   const handleCreatePosition = () => {
-    dispatchCreatePosition();
+    const { isValidated, validationErrors } = validateFields({ values: form });
+    if (isValidated) {
+      dispatchCreatePosition({ responseArray });
+    } else {
+      dispatchInputError({ errors: validationErrors, form: 'createPosition' });
+    }
   };
 
   const handleValidateInput = ({ field, values }) => {
@@ -104,12 +111,15 @@ const CompanyDashboard = ({
       />
       <VerticalDivider />
       <ComponentToRender
+        alerts={alerts}
         candidates={candidates}
         dispatchChangeFilter={dispatchChangeFilter}
         dispatchChangeInput={dispatchChangeInput}
         dispatchChangeSkillLevel={dispatchChangeSkillLevel}
+        dispatchClearAlerts={dispatchClearAlerts}
         dispatchDeleteSkill={dispatchDeleteSkill}
         dispatchOpenModal={dispatchOpenModal}
+        dispatchResetFormState={dispatchResetFormState}
         dispatchSaveCandidate={dispatchSaveCandidate}
         filter={filter}
         form={form}
@@ -130,7 +140,7 @@ const CompanyDashboard = ({
           dispatchChangeInput,
           dispatchClearAlerts,
           dispatchNotifyCandidate,
-          dispatchResetModalState,
+          dispatchResetFormState,
           form,
           formErrors,
           tableData,
@@ -155,7 +165,7 @@ CompanyDashboard.propTypes = {
   dispatchInputError: T.func.isRequired,
   dispatchNotifyCandidate: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
-  dispatchResetModalState: T.func.isRequired,
+  dispatchResetFormState: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
   dispatchSelectPosition: T.func.isRequired,
   filter: T.object.isRequired,
@@ -166,6 +176,7 @@ CompanyDashboard.propTypes = {
   loading: T.bool.isRequired,
   positions: T.array.isRequired,
   questions: T.array.isRequired,
+  responseArray: T.array.isRequired,
   selectedPosition: T.string.isRequired,
   tableData: T.object.isRequired,
   view: T.string.isRequired,
@@ -184,6 +195,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectCompanyDashboard('loading'),
   positions: makeSelectCompanyDashboardPositions(),
   questions: makeSelectCompanyDashboardQuestions(),
+  responseArray: makeSelectCompanyDashboardResponseArray(),
   selectedPosition: makeSelectCompanyDashboard('selectedPosition'),
   tableData: makeSelectCompanyDashboard('tableData'),
   view: makeSelectCompanyDashboardView(),
@@ -209,7 +221,7 @@ const mapDispatchToProps = dispatch => ({
   dispatchInputError: payload => dispatch(inputError(payload)),
   dispatchNotifyCandidate: payload => dispatch(notifyCandidate(payload)),
   dispatchOpenModal: payload => dispatch(openModalState(payload)),
-  dispatchResetModalState: () => dispatch(resetModalState()),
+  dispatchResetFormState: () => dispatch(resetFormState()),
   dispatchSaveCandidate: payload => dispatch(saveCandidate(payload)),
   dispatchSelectPosition: payload => dispatch(selectPosition(payload)),
   /*

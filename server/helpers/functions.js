@@ -28,6 +28,13 @@ const errorLogger = e => {
   }
 };
 
+// eslint-disable-next-line consistent-return
+const generatePositionLevel = ({ beginner, intermediate, expert }) => {
+  if (beginner) return 1;
+  if (intermediate) return 2;
+  if (expert) return 3;
+};
+
 const isUrl = string => {
   let url;
   try {
@@ -63,6 +70,7 @@ module.exports = {
   arrayCheck,
   CustomError,
   errorLogger,
+  generatePositionLevel,
   isUrl,
   validatePayoutUrl,
 };

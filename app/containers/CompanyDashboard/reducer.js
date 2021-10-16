@@ -24,7 +24,7 @@ import {
   NOTIFY_CANDIDATE_SUCCESS,
   NOTIFY_CANDIDATE,
   OPEN_MODAL_STATE,
-  RESET_MODAL_STATE,
+  RESET_FORM_STATE,
   SAVE_CANDIDATE,
   SELECT_POSITION,
 } from './constants';
@@ -44,7 +44,7 @@ export const initialState = {
       description: '',
       experience: '',
       hiringTimeframe: '',
-      location: '',
+      location: 't',
       role: '',
       salary: '',
       skills: [],
@@ -210,7 +210,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       draft.tableData = tableData || {};
       break;
     }
-    case RESET_MODAL_STATE: {
+    case RESET_FORM_STATE: {
       draft.form = initialState.form;
       draft.formErrors = initialState.formErrors;
       draft.isModalOpen = initialState.isModalOpen;

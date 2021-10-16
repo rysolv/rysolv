@@ -1,4 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
+import { v4 as uuidv4 } from 'uuid';
 
 import { post } from 'utils/request';
 
@@ -11,7 +13,7 @@ import {
   fetchPositionQuestionsSuccess,
   notifyCandidateFailure,
   notifyCandidateSuccess,
-  resetModalState,
+  resetFormState,
 } from './actions';
 import {
   CREATE_POSITION,
@@ -20,10 +22,23 @@ import {
   NOTIFY_CANDIDATE,
 } from './constants';
 
-export function* createPositionSaga() {
+export function* createPositionSaga({ payload }) {
+  const { responseArray } = payload;
+  const formattedResponse = responseArray.map(
+    ({ questionId, questionKey, responseId, value }) => `{
+        questionId: "${questionId}",
+        questionKey: "${questionKey}",
+        responseId: "${responseId}",
+        value: "${value}",
+      }`,
+  );
+  const uuid = uuidv4();
   const query = `
-    query {
-      createPosition {
+    mutation {
+      postUserResponse(
+        companyId: "${uuid}",
+        responseArray: [${formattedResponse}]
+      ) {
         __typename
         ... on Success {
           message
@@ -38,11 +53,12 @@ export function* createPositionSaga() {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        createPosition: { __typename, message },
+        postUserResponse: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(createPositionSuccess({ message }));
+    yield put(push('/dashboard'));
   } catch (error) {
     yield put(createPositionFailure({ error }));
   }
@@ -144,7 +160,7 @@ export function* notifyCandidateSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(notifyCandidateSuccess({ message }));
-    yield put(resetModalState());
+    yield put(resetFormState());
   } catch (error) {
     yield put(notifyCandidateFailure({ error: { message: error } }));
   }

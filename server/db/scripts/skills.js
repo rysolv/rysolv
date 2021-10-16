@@ -39,11 +39,11 @@ const skills = [
   },
 ];
 
-const seedSkills = async () => {
+const seedTechnologies = async () => {
   await Promise.all(
     skills.map(async el => {
       const queryText = `
-      INSERT INTO skills(
+      INSERT INTO technologies(
         id,
         is_framework,
         is_language,
@@ -72,4 +72,4 @@ const seedSkills = async () => {
   );
 };
 
-module.exports = { seedSkills };
+module.exports = { seedTechnologies };

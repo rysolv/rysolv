@@ -85,6 +85,7 @@ export const TableHeaderCell = styled(StyledTableCell)`
   color: ${textColor};
   font-size: 1.4rem;
   height: 3.4rem;
+  text-align: center;
   word-break: initial;
 `;
 

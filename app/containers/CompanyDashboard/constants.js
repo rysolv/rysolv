@@ -40,7 +40,7 @@ export const NOTIFY_CANDIDATE_SUCCESS =
 
 export const OPEN_MODAL_STATE = 'app/CompanyDashboard/OPEN_MODAL_STATE';
 
-export const RESET_MODAL_STATE = 'app/CompanyDashboard/RESET_MODAL_STATE';
+export const RESET_FORM_STATE = 'app/CompanyDashboard/RESET_FORM_STATE';
 
 export const SAVE_CANDIDATE = 'app/CompanyDashboard/SAVE_CANDIDATE';
 

@@ -1,8 +1,17 @@
 const { v4: uuidv4 } = require('uuid');
 
-const { CustomError, errorLogger, sendEmail } = require('../../../helpers');
 const {
+  CustomError,
+  errorLogger,
+  generatePositionLevel,
+  sendEmail,
+} = require('../../../helpers');
+const {
+  createCompany,
+  createCompanyPosition,
   createLanguage,
+  createPositionTechStack,
+  getOneTechnology,
   getUserLanguages,
   postUserResponse: postUserResponseQuery,
   setPreferredLanguage,
@@ -13,11 +22,29 @@ const {
 } = require('./constants');
 const { uploadFile } = require('../../../middlewares/fileUpload');
 
-const postUserResponse = async ({ responseArray }, { authError, userId }) => {
+const postUserResponse = async (
+  { companyId, responseArray },
+  { authError, userId },
+) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
     const { languages } = await getUserLanguages({ userId });
     const positionId = uuidv4();
+
+    if (companyId) {
+      const companyData = {
+        company_name: 'Google',
+        company_url: 'https://google.com',
+        created_date: new Date(),
+        description: 'Test',
+        headquarter_location: 'San Francisco, CA',
+        id: companyId,
+        size: 1000,
+      };
+      const data = { company_id: companyId, id: positionId };
+      await createCompany({ data: companyData });
+      await createCompanyPosition({ data });
+    }
 
     await Promise.all(
       responseArray.map(
@@ -32,9 +59,22 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
                 target: { userId },
               });
             }
+          } else if (questionKey === 'skills') {
+            const { beginner, expert, intermediate, skill } = value;
+            const { technologyId } = getOneTechnology({ technology: skill });
+            await createPositionTechStack({
+              level: generatePositionLevel({ beginner, expert, intermediate }),
+              positionId,
+              technologyId,
+            });
           } else {
             let formattedValue = null;
-            if (questionKey === 'personal_link') formattedValue = value;
+            if (
+              questionKey === 'description' ||
+              questionKey === 'location' ||
+              questionKey === 'personal_link'
+            )
+              formattedValue = value;
             if (questionKey === 'resume') {
               const { uploadUrl } = await uploadFile(value);
               formattedValue = uploadUrl;

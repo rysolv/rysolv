@@ -15,6 +15,7 @@ export const BannerWrapper = styled.div`
   height: ${({ displayState }) => (displayState ? '100%' : '0')};
   margin-bottom: ${({ bottomMarginRequired }) => bottomMarginRequired || '0'};
   margin-top: ${({ topMarginRequired }) => topMarginRequired || '0'};
+  min-height: 4.9rem;
   overflow: hidden;
   padding: ${({ displayState }) => (displayState ? '0.5rem' : '0')};
   transition: all 0.25s;

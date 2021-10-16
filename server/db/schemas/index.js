@@ -9,6 +9,7 @@ const fundingSchema = require('./funding');
 const hiringActivitySchema = require('./hiringActivity');
 const issueSchema = require('./issues');
 const languageSchema = require('./languages');
+const legalContractsSchema = require('./legalContracts');
 const messagesSchema = require('./messages');
 const notificationSchema = require('./notifications');
 const paymentsSchema = require('./payments');
@@ -18,7 +19,7 @@ const questionResponseSchema = require('./questionResponses');
 const questionSchema = require('./questions');
 const recruitingSignup = require('./recruiting_signup');
 const repoSchema = require('./repos');
-const skillsSchema = require('./skills');
+const technologiesSchema = require('./technologies');
 const userCompaniesSchema = require('./userCompanies.js');
 const userQuestionResponseSchema = require('./userQuestionResponses');
 const userReposSchema = require('./userRepos');
@@ -38,6 +39,7 @@ module.exports = {
   ...hiringActivitySchema,
   ...issueSchema,
   ...languageSchema,
+  ...legalContractsSchema,
   ...messagesSchema,
   ...notificationSchema,
   ...paymentsSchema,
@@ -47,7 +49,7 @@ module.exports = {
   ...questionSchema,
   ...recruitingSignup,
   ...repoSchema,
-  ...skillsSchema,
+  ...technologiesSchema,
   ...userCompaniesSchema,
   ...userQuestionResponseSchema,
   ...userReposSchema,

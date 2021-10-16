@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
@@ -6,18 +6,23 @@ import {
   ButtonWrapper,
   CreatePositionContainer,
   CreatePositionHeader,
+  OptionDescription,
   OptionError,
   OptionLabel,
   OptionWrapper,
+  StyledErrorSuccessBanner,
   StyledPrimaryAsyncButton,
   StyledPrimaryButton,
 } from './styledComponents';
 import optionDictionary from './Options';
 
 const CreatePosition = ({
+  alerts: { error },
   dispatchChangeInput,
   dispatchChangeSkillLevel,
+  dispatchClearAlerts,
   dispatchDeleteSkill,
+  dispatchResetFormState,
   form: { createPosition: createPositionForm },
   formErrors: { createPosition: createPositionFormErrors },
   handleCreatePosition,
@@ -26,11 +31,21 @@ const CreatePosition = ({
   loading,
   questions,
 }) => {
+  useEffect(() => dispatchResetFormState, []);
+
   const hasErrors = Object.keys(createPositionFormErrors).some(
     input => !!createPositionFormErrors[input],
   );
   const isComplete = Object.keys(createPositionForm).every(input => {
-    if (input === 'skills') return !isEmpty(createPositionForm[input]);
+    if (input === 'skills') {
+      return (
+        !isEmpty(createPositionForm[input]) &&
+        createPositionForm[input].every(
+          ({ beginner, expert, intermediate }) =>
+            beginner === true || expert === true || intermediate === true,
+        )
+      );
+    }
     return !!createPositionForm[input];
   });
 
@@ -39,6 +54,7 @@ const CreatePosition = ({
   return (
     <CreatePositionContainer>
       <CreatePositionHeader>Create a new position</CreatePositionHeader>
+      <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
       {questions.map(
         ({ description, id, options, optionType, question, ...restProps }) => {
           const OptionToRender = optionDictionary[optionType];
@@ -52,15 +68,14 @@ const CreatePosition = ({
           };
 
           return (
-            <OptionWrapper>
+            <OptionWrapper key={`option-${id}`}>
               <OptionLabel>{question}</OptionLabel>
-              <OptionLabel>{description}</OptionLabel>
+              <OptionDescription>{description}</OptionDescription>
               <OptionToRender
                 dispatchChangeInput={dispatchChangeInput}
                 dispatchDeleteSkill={dispatchDeleteSkill}
                 handleChangeInput={handleChangeInput}
                 id={id}
-                key={`option-${id}`}
                 onBlur={() =>
                   handleValidateInput({
                     field: id,
@@ -94,9 +109,12 @@ const CreatePosition = ({
 };
 
 CreatePosition.propTypes = {
+  alerts: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeSkillLevel: T.func.isRequired,
+  dispatchClearAlerts: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
+  dispatchResetFormState: T.func.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleCreatePosition: T.func.isRequired,

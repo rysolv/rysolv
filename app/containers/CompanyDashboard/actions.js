@@ -19,7 +19,7 @@ import {
   NOTIFY_CANDIDATE_SUCCESS,
   NOTIFY_CANDIDATE,
   OPEN_MODAL_STATE,
-  RESET_MODAL_STATE,
+  RESET_FORM_STATE,
   SAVE_CANDIDATE,
   SELECT_POSITION,
 } from './constants';
@@ -155,8 +155,8 @@ export function openModalState(payload) {
   };
 }
 
-export function resetModalState() {
-  return { type: RESET_MODAL_STATE };
+export function resetFormState() {
+  return { type: RESET_FORM_STATE };
 }
 
 export function saveCandidate(payload) {

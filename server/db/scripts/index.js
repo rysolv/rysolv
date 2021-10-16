@@ -1,6 +1,6 @@
 const pool = require('../connect');
 const { seedQuestions, seedResponses } = require('./questions');
-const { seedSkills } = require('./skills');
+const { seedTechnologies } = require('./skills');
 
 // Populate the Q&A data for jobs
 const generateQuestions = async () => {
@@ -10,13 +10,13 @@ const generateQuestions = async () => {
   return 'Finished running generateQuestions';
 };
 
-const generateSkills = async () => {
-  await seedSkills();
+const generateTechnologies = async () => {
+  await seedTechnologies();
   pool.end();
-  return 'Finished running generateSkills';
+  return 'Finished running generateTechnologies';
 };
 
-module.exports = { generateQuestions, generateSkills };
+module.exports = { generateQuestions, generateTechnologies };
 
 require('make-runnable/custom')({
   printOutputFrame: false,

@@ -1,9 +1,22 @@
+const companyValues = [
+  'company_name',
+  'company_url',
+  'contract_accepted_date',
+  'created_date',
+  'description',
+  'headquarter_location',
+  'id',
+  'size',
+];
+
+const companyPositionValues = ['company_id', 'id'];
+
 const messageValues = [
   'body',
   'created_date',
   'id',
   'position_id',
-  'read',
+  'read_date',
   'user_id',
 ];
 
@@ -12,8 +25,13 @@ const messageReturnValues = `
   messages.created_date AS "createdDate",
   messages.id AS "commentId",
   messages.position_id AS "positionId",
-  messages.read,
+  messages.read_date,
   messages.user_id AS "userId"
 `;
 
-module.exports = { messageReturnValues, messageValues };
+module.exports = {
+  companyValues,
+  companyPositionValues,
+  messageReturnValues,
+  messageValues,
+};

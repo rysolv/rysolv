@@ -73,6 +73,52 @@ const makeSelectCompanyDashboardQuestions = () =>
     },
   );
 
+const makeSelectCompanyDashboardResponseArray = () =>
+  createSelector(
+    makeSelectCompanyDashboard('form'),
+    makeSelectCompanyDashboard('questions'),
+    ({ createPosition }, questions) => {
+      const responseArray = [];
+      if (questions.length) {
+        Object.keys(createPosition).forEach(async input => {
+          const values = createPosition[input];
+          const [{ id: questionId, questionKey, responses }] = questions.filter(
+            ({ questionKey: key }) => input === snakeToCamel(key),
+          );
+          if (Array.isArray(values)) {
+            values.forEach(async value => {
+              const [{ id: responseId }] = responses.filter(
+                response =>
+                  response.responseKey !== 'skills' || response.value === value,
+              );
+              responseArray.push({
+                questionId,
+                questionKey,
+                responseId,
+                value,
+              });
+            });
+          }
+          if (!Array.isArray(values) && values) {
+            const [{ id: responseId }] = responses.filter(
+              response =>
+                response.responseKey !== 'description' ||
+                response.responseKey !== 'location' ||
+                response.value === values,
+            );
+            responseArray.push({
+              questionId,
+              questionKey,
+              responseId,
+              value: values,
+            });
+          }
+        });
+      }
+      return responseArray;
+    },
+  );
+
 const makeSelectCompanyDashboardView = () =>
   createSelector(
     selectCompanyDashboardProps,
@@ -91,5 +137,6 @@ export {
   makeSelectCompanyDashboardCandidates,
   makeSelectCompanyDashboardPositions,
   makeSelectCompanyDashboardQuestions,
+  makeSelectCompanyDashboardResponseArray,
   makeSelectCompanyDashboardView,
 };

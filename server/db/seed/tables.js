@@ -23,7 +23,7 @@ const {
   alterQuestionsTable,
   alterRecruitingTable,
   alterReposTable,
-  alterSkillsTable,
+  alterTechnologiesTable,
   alterUserCompaniesTable,
   alterUserQuestionResponseTable,
   alterUserReposTable,
@@ -50,7 +50,7 @@ const {
   createQuestionsTable,
   createRecruitingTable,
   createReposTable,
-  createSkillsTable,
+  createTechnologiesTable,
   createUserCompaniesTable,
   createUserQuestionResponseTable,
   createUserReposTable,
@@ -81,7 +81,7 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterQuestionsTable });
   await singleQuery({ queryText: alterRecruitingTable });
   await singleQuery({ queryText: alterReposTable });
-  await singleQuery({ queryText: alterSkillsTable});
+  await singleQuery({ queryText: alterTechnologiesTable});
   await singleQuery({ queryText: alterUserCompaniesTable });
   await singleQuery({ queryText: alterUserQuestionResponseTable });
   await singleQuery({ queryText: alterUserReposTable });
@@ -112,7 +112,7 @@ const createTables = async () => {
   await singleQuery({ queryText: createQuestionsTable });
   await singleQuery({ queryText: createRecruitingTable });
   await singleQuery({ queryText: createReposTable });
-  await singleQuery({ queryText: createSkillsTable });
+  await singleQuery({ queryText: createTechnologiesTable });
   await singleQuery({ queryText: createUserCompaniesTable });
   await singleQuery({ queryText: createUserQuestionResponseTable });
   await singleQuery({ queryText: createUserReposTable });

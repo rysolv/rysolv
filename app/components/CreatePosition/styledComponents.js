@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components';
 
-import { PrimaryAsyncButton, PrimaryButton } from 'components/base_ui';
+import {
+  ErrorSuccessBanner,
+  PrimaryAsyncButton,
+  PrimaryButton,
+} from 'components/base_ui';
 import {
   blueColor,
   darkBlueColor,
@@ -23,6 +27,11 @@ const baseButtonStyle = css`
   width: 10rem;
 `;
 
+const baseOptionTextStyle = css`
+  font-weight: 400;
+  line-height: 1.936rem;
+`;
+
 export const ButtonWrapper = styled.div`
   display: flex;
 `;
@@ -37,6 +46,13 @@ export const CreatePositionHeader = styled.div`
   padding: 2rem 0 1rem;
 `;
 
+export const OptionDescription = styled.div`
+  ${baseOptionTextStyle};
+  color: #a9acae;
+  font-size: 1.4rem;
+  margin-top: 1rem;
+`;
+
 export const OptionError = styled.div`
   color: ${errorRed};
   font-size: ${defaultFontSize};
@@ -45,14 +61,18 @@ export const OptionError = styled.div`
 `;
 
 export const OptionLabel = styled.div`
+  ${baseOptionTextStyle};
   color: ${textColor};
   font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 1.936rem;
 `;
 
 export const OptionWrapper = styled.div`
   margin-bottom: 1rem;
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  height: auto;
+  margin-bottom: 3rem;
 `;
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`

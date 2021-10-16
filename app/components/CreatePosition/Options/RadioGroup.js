@@ -8,6 +8,7 @@ import { Autocomplete } from './styledComponents';
 
 const RadioGroup = ({
   handleChangeInput,
+  onBlur,
   options,
   tableData,
   tableProps,
@@ -23,6 +24,7 @@ const RadioGroup = ({
     <Fragment>
       <Autocomplete
         height="4.9rem"
+        onBlur={onBlur}
         onChange={(e, val) => handleAutocomplete(val)}
         options={options}
         value={[]}
@@ -42,6 +44,7 @@ const RadioGroup = ({
 
 RadioGroup.propTypes = {
   handleChangeInput: T.func.isRequired,
+  onBlur: T.func.isRequired,
   options: T.array.isRequired,
   tableData: T.array.isRequired,
   tableProps: T.object.isRequired,

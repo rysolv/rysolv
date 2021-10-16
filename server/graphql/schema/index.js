@@ -504,7 +504,7 @@ module.exports = buildSchema(`
     importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
     importRepo(url: String!): ImportResult!
 
-    postUserResponse(responseArray: [Object]): EventResponse!
+    postUserResponse(companyId: ID, responseArray: [Object]): EventResponse!
 
     recruitingSignup(contactInput: ContactInput): EventResponse!
     

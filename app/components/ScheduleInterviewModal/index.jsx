@@ -21,7 +21,7 @@ const ScheduleInterviewModal = ({
   dispatchChangeInput,
   dispatchClearAlerts,
   dispatchNotifyCandidate,
-  dispatchResetModalState,
+  dispatchResetFormState,
   form: { scheduleInterview },
   formErrors: { scheduleInterview: scheduleInterviewErrors },
   tableData: { positionId, userId },
@@ -55,7 +55,7 @@ const ScheduleInterviewModal = ({
       </div>
     </ModalContent>
     <ButtonGroup>
-      <SecondaryButton disableRipple onClick={dispatchResetModalState}>
+      <SecondaryButton disableRipple onClick={dispatchResetFormState}>
         Cancel
       </SecondaryButton>
       <StyledPrimaryButton
@@ -74,7 +74,7 @@ ScheduleInterviewModal.propTypes = {
   dispatchChangeInput: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchNotifyCandidate: T.func.isRequired,
-  dispatchResetModalState: T.func.isRequired,
+  dispatchResetFormState: T.func.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   tableData: T.object.isRequired,

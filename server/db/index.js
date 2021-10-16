@@ -6,7 +6,12 @@ const {
 const { removeAttempting, toggleAttempting } = require('./queries/attempting');
 const { acceptBounty, verifyPayout } = require('./queries/bounties');
 const { createComment, getIssueComments } = require('./queries/comments');
-const { createMessage, getCompanyMatches } = require('./queries/companies');
+const {
+  createCompany,
+  createCompanyPosition,
+  createMessage,
+  getCompanyMatches,
+} = require('./queries/companies');
 const {
   checkDuplicateIssue,
   closeIssue,
@@ -55,7 +60,11 @@ const {
   transformRepo,
   updateRepoArray,
 } = require('./queries/repos');
-const { getSkills } = require('./queries/skills');
+const {
+  createPositionTechStack,
+  getOneTechnology,
+  getTechnologies,
+} = require('./queries/technologies');
 const { getStats } = require('./queries/stats');
 const { addRepoMembers, deleteRepoMembers } = require('./queries/userRepos');
 const {
@@ -98,9 +107,12 @@ module.exports = {
   closeIssue,
   createActivity,
   createComment,
+  createCompany,
+  createCompanyPosition,
   createIssue,
   createLanguage,
   createMessage,
+  createPositionTechStack,
   createPullRequest,
   createRecruiting,
   createRepo,
@@ -120,6 +132,7 @@ module.exports = {
   getIssueWatchList,
   getOneIssue,
   getOneRepo,
+  getOneTechnology,
   getOneUser,
   getOneUserSignUp,
   getPullRequestList,
@@ -129,8 +142,8 @@ module.exports = {
   getRepoList,
   getRepos,
   getReposWhere,
-  getSkills,
   getStats,
+  getTechnologies,
   getUserActivity,
   getUserAttemptList,
   getUserBounties,
