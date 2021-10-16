@@ -5,13 +5,12 @@ import T from 'prop-types';
 import TableRow from './TableRow';
 import { StyledTableBody } from './styledComponents';
 
-const TableBody = ({ headers, onChange, tableData, tableProps }) => (
+const TableBody = ({ headers, tableData, tableProps }) => (
   <StyledTableBody>
     {tableData.map((rowData, index) => (
       <TableRow
         key={`table-row-${index}`}
         headers={headers}
-        onChange={onChange}
         rowData={rowData}
         {...tableProps}
       />
@@ -21,7 +20,6 @@ const TableBody = ({ headers, onChange, tableData, tableProps }) => (
 
 TableBody.propTypes = {
   headers: T.array.isRequired,
-  onChange: T.func.isRequired,
   tableData: T.arrayOf(T.shape({ id: T.string })).isRequired,
   tableProps: T.object.isRequired,
 };

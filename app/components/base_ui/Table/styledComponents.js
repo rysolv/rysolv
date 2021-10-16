@@ -10,10 +10,18 @@ import TableRow from '@material-ui/core/TableRow';
 import { grayColor, lightBlueColor, textColor } from 'defaultStyleHelper';
 
 export const StyledChip = styled(Chip)`
-  background: #ecf3fc;
+  background-color: #ecf3fc;
   border-radius: 0.7rem;
   color: ${lightBlueColor};
   font-size: 1.4rem;
+
+  &.deletable {
+    background-color: #ecf3fc;
+
+    &:focus {
+      background-color: #ecf3fc;
+    }
+  }
 
   svg {
     color: #a2c6f0;
@@ -27,12 +35,18 @@ export const StyledChip = styled(Chip)`
 `;
 
 export const StyledRadio = styled(Radio)`
-  .MuiSvgIcon-root {
-    color: ${grayColor};
+  color: ${grayColor};
+
+  &.checked {
+    color: ${lightBlueColor};
+
+    &:hover {
+      background: #ecf3fc;
+    }
   }
 
-  .PrivateRadioButtonIcon-layer-6 {
-    color: ${lightBlueColor};
+  &:hover {
+    background: #ecf3fc;
   }
 
   svg {
@@ -79,10 +93,10 @@ export const TableHeaderRow = styled(TableRow)``;
 export const TableInputContainer = styled.div`
   align-items: center;
   display: flex;
+  justify-content: center;
 `;
 
 export const TableWrapper = styled(Paper)`
   box-shadow: none;
-  margin: 0 auto;
-  width: 95%;
+  margin: 2rem auto 0;
 `;

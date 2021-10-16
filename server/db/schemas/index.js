@@ -2,6 +2,7 @@ const activitySchema = require('./activity');
 const attemptingSchema = require('./attempting');
 const commentSchema = require('./comments');
 const companyPositionCandidatesSchema = require('./candidatePositions');
+const companyPositionsSchema = require('./companyPositions');
 const companySchema = require('./companies');
 const cronActivitySchema = require('./cronActivity');
 const fundingSchema = require('./funding');
@@ -17,6 +18,7 @@ const questionResponseSchema = require('./questionResponses');
 const questionSchema = require('./questions');
 const recruitingSignup = require('./recruiting_signup');
 const repoSchema = require('./repos');
+const skillsSchema = require('./skills');
 const userCompaniesSchema = require('./userCompanies.js');
 const userQuestionResponseSchema = require('./userQuestionResponses');
 const userReposSchema = require('./userRepos');
@@ -29,6 +31,7 @@ module.exports = {
   ...attemptingSchema,
   ...commentSchema,
   ...companyPositionCandidatesSchema,
+  ...companyPositionsSchema,
   ...companySchema,
   ...cronActivitySchema,
   ...fundingSchema,
@@ -44,6 +47,7 @@ module.exports = {
   ...questionSchema,
   ...recruitingSignup,
   ...repoSchema,
+  ...skillsSchema,
   ...userCompaniesSchema,
   ...userQuestionResponseSchema,
   ...userReposSchema,

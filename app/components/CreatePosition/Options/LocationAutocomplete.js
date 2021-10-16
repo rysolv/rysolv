@@ -1,12 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import T from 'prop-types';
 
-import {
-  Input,
-  OptionError,
-  OptionLabel,
-  OptionWrapper,
-} from './styledComponents';
+import { Input } from './styledComponents';
 
 let autoComplete;
 
@@ -46,7 +41,7 @@ const handlePlaceSelect = async updateQuery => {
   updateQuery(query);
 };
 
-const LocationAutocompleteOption = ({ error, label, onBlur, value }) => {
+const LocationAutocompleteOption = ({ onBlur, value }) => {
   const [query, setQuery] = useState(value);
   const autoCompleteRef = useRef(null);
 
@@ -60,22 +55,16 @@ const LocationAutocompleteOption = ({ error, label, onBlur, value }) => {
   }, []);
 
   return (
-    <OptionWrapper>
-      <OptionLabel>{label}</OptionLabel>
-      <Input
-        height="4.9rem"
-        onBlur={onBlur}
-        onChange={event => setQuery(event.target.value)}
-        value={query}
-      />
-      <OptionError>{error}</OptionError>
-    </OptionWrapper>
+    <Input
+      height="4.9rem"
+      onBlur={onBlur}
+      onChange={event => setQuery(event.target.value)}
+      value={query}
+    />
   );
 };
 
 LocationAutocompleteOption.propTypes = {
-  error: T.oneOfType([T.bool, T.string]).isRequired,
-  label: T.string.isRequired,
   onBlur: T.func.isRequired,
   value: T.string.isRequired,
 };

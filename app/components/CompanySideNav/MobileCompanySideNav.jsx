@@ -21,17 +21,12 @@ const ExpandMoreIcon = iconDictionary('expandMore');
 const JobIcon = iconDictionary('workOutline');
 
 const MobileCompanySideNav = ({
-  dispatchSelectPosition,
-  handleNav,
+  handleCreatePosition,
+  handleSelectPosition,
   positions,
   selectedPosition,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-
-  const handleSelectPosition = ({ id }) => {
-    dispatchSelectPosition({ id });
-    handleNav('/dashboard');
-  };
 
   return (
     <CompanySideNavContainer isExpanded={isExpanded}>
@@ -47,7 +42,7 @@ const MobileCompanySideNav = ({
           }}
         />
       </CompanySideNavHeader>
-      <CreatePositionButton onClick={() => handleNav('/dashboard/add')}>
+      <CreatePositionButton onClick={handleCreatePosition}>
         {AddCircleOutlineIcon} Create Position
       </CreatePositionButton>
       <ConditionalRender
@@ -77,8 +72,8 @@ const MobileCompanySideNav = ({
 };
 
 MobileCompanySideNav.propTypes = {
-  dispatchSelectPosition: T.func.isRequired,
-  handleNav: T.func.isRequired,
+  handleCreatePosition: T.func.isRequired,
+  handleSelectPosition: T.func.isRequired,
   positions: T.array.isRequired,
   selectedPosition: T.string.isRequired,
 };

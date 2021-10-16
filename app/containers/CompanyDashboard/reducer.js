@@ -1,10 +1,12 @@
 /* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
+import isEmpty from 'lodash/isEmpty';
 import remove from 'lodash/remove';
 
 import {
   CHANGE_FILTER,
   CHANGE_INPUT,
+  CHANGE_SKILL_LEVEL,
   CLEAR_ALERTS,
   CLOSE_MODAL_STATE,
   CREATE_POSITION_FAILURE,
@@ -41,7 +43,7 @@ export const initialState = {
     createPosition: {
       description: '',
       experience: '',
-      hiring_timeframe: '',
+      hiringTimeframe: '',
       location: '',
       role: '',
       salary: '',
@@ -54,7 +56,7 @@ export const initialState = {
     createPosition: {
       description: '',
       experience: '',
-      hiring_timeframe: '',
+      hiringTimeframe: '',
       location: '',
       role: '',
       salary: '',
@@ -80,10 +82,35 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case CHANGE_INPUT: {
       const { field, form, value } = payload;
       if (field === 'skills') {
-        draft.form[form][field] = !draft.form[form][field];
+        const skillsArray = draft.form[form][field].filter(
+          ({ skill }) => skill === value,
+        );
+        if (isEmpty(skillsArray)) {
+          draft.form[form][field].push({
+            beginner: false,
+            expert: false,
+            intermediate: false,
+            skill: value,
+          });
+        }
       } else {
         draft.form[form][field] = value;
       }
+      break;
+    }
+    case CHANGE_SKILL_LEVEL: {
+      const { level, skill: skillToChange } = payload;
+      draft.form.createPosition.skills.map(({ skill, ...restProps }, index) => {
+        if (skill === skillToChange) {
+          draft.form.createPosition.skills[index] = {
+            beginner: false,
+            expert: false,
+            intermediate: false,
+            skill,
+            [level]: !restProps[level],
+          };
+        }
+      });
       break;
     }
     case CLEAR_ALERTS: {

@@ -1,5 +1,5 @@
 const TABLE_HEADERS = {
-  skills: ['Skill', 'Level 1', 'Level 2', 'Level 3'],
+  skills: ['Skill', 'Beginner', 'Intermediate', 'Expert'],
 };
 
 export default TABLE_HEADERS;

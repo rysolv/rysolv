@@ -41,6 +41,7 @@ export const optionDictionary = {
   },
   skills: {
     option: 'radioGroup',
+    type: 'skills',
   },
   type: {
     option: 'autocomplete',

@@ -11,22 +11,50 @@ import { StyledChip, StyledTableRow } from './styledComponents';
 
 const CloseIcon = iconDictionary('close');
 
-const TableRow = ({ dispatchDeleteSkill, headers, onChange, rowData }) => (
+const TableRow = ({
+  dispatchChangeSkillLevel,
+  dispatchDeleteSkill,
+  headers,
+  rowData,
+}) => (
   <StyledTableRow>
     {headers.map((header, index) => {
       const formattedHeader = formatToSnakeCase(header);
       const { [formattedHeader]: cellData } = rowData;
+      const { skill } = rowData;
       const formattedCellData = {
+        beginner: (
+          <TableInput
+            checked={cellData}
+            onChange={() =>
+              dispatchChangeSkillLevel({ skill, level: 'beginner' })
+            }
+          />
+        ),
+        expert: (
+          <TableInput
+            checked={cellData}
+            onChange={() =>
+              dispatchChangeSkillLevel({ skill, level: 'expert' })
+            }
+          />
+        ),
+        intermediate: (
+          <TableInput
+            checked={cellData}
+            onChange={() =>
+              dispatchChangeSkillLevel({ skill, level: 'intermediate' })
+            }
+          />
+        ),
         skill: (
           <StyledChip
+            classes={{ deletable: 'deletable' }}
             deleteIcon={CloseIcon}
             label={cellData}
             onDelete={() => dispatchDeleteSkill({ skill: cellData })}
           />
         ),
-        level_1: <TableInput checked={cellData} onChange={onChange} />,
-        level_2: <TableInput checked={cellData} onChange={onChange} />,
-        level_3: <TableInput checked={cellData} onChange={onChange} />,
       };
       return (
         <TableCell
@@ -39,8 +67,8 @@ const TableRow = ({ dispatchDeleteSkill, headers, onChange, rowData }) => (
 );
 
 TableRow.propTypes = {
+  dispatchChangeSkillLevel: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
-  onChange: T.func.isRequired,
   headers: T.array.isRequired,
   rowData: T.shape({ id: T.string }).isRequired,
 };

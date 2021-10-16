@@ -1,7 +1,14 @@
 import styled, { css } from 'styled-components';
 
 import { PrimaryAsyncButton, PrimaryButton } from 'components/base_ui';
-import { blueColor, darkBlueColor, whiteColor } from 'defaultStyleHelper';
+import {
+  blueColor,
+  darkBlueColor,
+  defaultFontSize,
+  errorRed,
+  textColor,
+  whiteColor,
+} from 'defaultStyleHelper';
 
 const baseButtonStyle = css`
   align-items: center;
@@ -28,6 +35,24 @@ export const CreatePositionHeader = styled.div`
   font-weight: 700;
   line-height: 3.36rem;
   padding: 2rem 0 1rem;
+`;
+
+export const OptionError = styled.div`
+  color: ${errorRed};
+  font-size: ${defaultFontSize};
+  height: 2.4rem;
+  padding: 0.5rem 0;
+`;
+
+export const OptionLabel = styled.div`
+  color: ${textColor};
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.936rem;
+`;
+
+export const OptionWrapper = styled.div`
+  margin-bottom: 1rem;
 `;
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`

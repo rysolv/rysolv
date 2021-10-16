@@ -13,6 +13,16 @@ const CompanySideNav = ({
   positions,
   selectedPosition,
 }) => {
+  const handleCreatePosition = () => {
+    dispatchSelectPosition({ id: '' });
+    handleNav('/dashboard/add');
+  };
+
+  const handleSelectPosition = ({ id }) => {
+    dispatchSelectPosition({ id });
+    handleNav('/dashboard');
+  };
+
   const isMobileOrTablet =
     deviceView === 'tablet' ||
     deviceView === 'mobile' ||
@@ -25,8 +35,8 @@ const CompanySideNav = ({
       Component={DesktopCompanySideNav}
       FallbackComponent={MobileCompanySideNav}
       propsToPassDown={{
-        dispatchSelectPosition,
-        handleNav,
+        handleCreatePosition,
+        handleSelectPosition,
         positions,
         selectedPosition,
       }}

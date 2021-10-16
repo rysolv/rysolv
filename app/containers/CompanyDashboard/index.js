@@ -16,6 +16,7 @@ import injectSaga from 'utils/injectSaga';
 import {
   changeFilter,
   changeInput,
+  changeSkillLevel,
   clearAlerts,
   createPosition,
   deleteSkill,
@@ -47,6 +48,7 @@ const CompanyDashboard = ({
   deviceView,
   dispatchChangeFilter,
   dispatchChangeInput,
+  dispatchChangeSkillLevel,
   dispatchClearAlerts,
   dispatchCreatePosition,
   dispatchDeleteSkill,
@@ -72,7 +74,7 @@ const CompanyDashboard = ({
 }) => {
   useEffect(() => {
     dispatchFetchCompanyMatches();
-    dispatchFetchPositionQuestions({ category: 'position' });
+    dispatchFetchPositionQuestions({ category: 'company_position' });
   }, []);
 
   const ComponentToRender = viewDictionary[view];
@@ -105,6 +107,7 @@ const CompanyDashboard = ({
         candidates={candidates}
         dispatchChangeFilter={dispatchChangeFilter}
         dispatchChangeInput={dispatchChangeInput}
+        dispatchChangeSkillLevel={dispatchChangeSkillLevel}
         dispatchDeleteSkill={dispatchDeleteSkill}
         dispatchOpenModal={dispatchOpenModal}
         dispatchSaveCandidate={dispatchSaveCandidate}
@@ -117,6 +120,7 @@ const CompanyDashboard = ({
         loading={loading}
         questions={questions}
         selectedPosition={selectedPosition}
+        tableData={tableData}
       />
       <ModalDialog
         Component={ScheduleInterviewModal}
@@ -142,6 +146,7 @@ CompanyDashboard.propTypes = {
   deviceView: T.string.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeSkillLevel: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchCreatePosition: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
@@ -194,6 +199,7 @@ const mapDispatchToProps = dispatch => ({
    */
   dispatchChangeFilter: payload => dispatch(changeFilter(payload)),
   dispatchChangeInput: payload => dispatch(changeInput(payload)),
+  dispatchChangeSkillLevel: payload => dispatch(changeSkillLevel(payload)),
   dispatchClearAlerts: () => dispatch(clearAlerts()),
   dispatchCreatePosition: payload => dispatch(createPosition(payload)),
   dispatchDeleteSkill: payload => dispatch(deleteSkill(payload)),

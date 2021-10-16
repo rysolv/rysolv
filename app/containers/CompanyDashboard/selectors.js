@@ -47,20 +47,24 @@ const makeSelectCompanyDashboardQuestions = () =>
     makeSelectCompanyDashboard('questions'),
     (form, questions) => {
       const formattedQuestions = questions.map(
-        ({ questionKey, questionText, required, responses }) => {
+        ({ questionKey, questionText, required, responses, subtext }) => {
           const hasPlaceholder = !!optionDictionary[questionKey].placeholder;
           const { option, placeholder, type } =
             optionDictionary[questionKey] || {};
+          const tableData = form.createPosition[snakeToCamel(questionKey)];
           return {
+            description: subtext,
             id: snakeToCamel(questionKey),
             options: responses.map(({ value }) => ({ value })),
             optionType: option,
             placeholder:
-              hasPlaceholder && !form[snakeToCamel(questionKey)].value.length
+              hasPlaceholder &&
+              !form.createPosition[snakeToCamel(questionKey)].value.length
                 ? placeholder
                 : '',
             question: questionText,
             required,
+            tableData,
             type,
           };
         },

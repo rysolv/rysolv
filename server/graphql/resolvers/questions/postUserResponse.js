@@ -17,6 +17,7 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
     const { languages } = await getUserLanguages({ userId });
+    const positionId = uuidv4();
 
     await Promise.all(
       responseArray.map(
@@ -42,6 +43,7 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
             const data = {
               createdDate: new Date(),
               id: uuidv4(),
+              positionId,
               questionId,
               responseId,
               userId,

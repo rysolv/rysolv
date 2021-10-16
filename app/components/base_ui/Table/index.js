@@ -9,7 +9,7 @@ import TableBody from './TableBody';
 import TableHeaders from './TableHeaders';
 import { TableWrapper } from './styledComponents';
 
-const BaseTable = ({ onChange, tableData, tableProps, type }) => {
+const BaseTable = ({ tableData, tableProps, type }) => {
   const headers = TABLE_HEADERS[type];
 
   return (
@@ -21,7 +21,6 @@ const BaseTable = ({ onChange, tableData, tableProps, type }) => {
           propsToPassDown={{
             headers,
             numColumn: headers.length,
-            onChange,
             tableData,
             tableProps,
           }}
@@ -33,7 +32,6 @@ const BaseTable = ({ onChange, tableData, tableProps, type }) => {
 };
 
 BaseTable.propTypes = {
-  onChange: T.func.isRequired,
   tableData: T.arrayOf(T.object).isRequired,
   tableProps: T.object.isRequired,
   type: T.string.isRequired,

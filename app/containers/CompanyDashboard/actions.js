@@ -1,6 +1,7 @@
 import {
   CHANGE_FILTER,
   CHANGE_INPUT,
+  CHANGE_SKILL_LEVEL,
   CLEAR_ALERTS,
   CLOSE_MODAL_STATE,
   CREATE_POSITION_FAILURE,
@@ -34,6 +35,13 @@ export function changeInput(payload) {
   return {
     payload,
     type: CHANGE_INPUT,
+  };
+}
+
+export function changeSkillLevel(payload) {
+  return {
+    payload,
+    type: CHANGE_SKILL_LEVEL,
   };
 }
 

@@ -5,12 +5,21 @@ import { StyledRadio, TableInputContainer } from './styledComponents';
 
 const TableInput = ({ checked, onChange }) => (
   <TableInputContainer>
-    <StyledRadio checked={checked} onChange={onChange} />
+    <StyledRadio
+      checked={checked}
+      classes={{
+        root: 'root',
+        checked: 'checked',
+      }}
+      color="primary"
+      disableRipple
+      onChange={onChange}
+    />
   </TableInputContainer>
 );
 
 TableInput.propTypes = {
-  checked: T.bool.isRequired,
+  checked: T.bool,
   onChange: T.func.isRequired,
 };
 

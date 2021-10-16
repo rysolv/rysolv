@@ -55,6 +55,7 @@ const {
   transformRepo,
   updateRepoArray,
 } = require('./queries/repos');
+const { getSkills } = require('./queries/skills');
 const { getStats } = require('./queries/stats');
 const { addRepoMembers, deleteRepoMembers } = require('./queries/userRepos');
 const {
@@ -128,6 +129,7 @@ module.exports = {
   getRepoList,
   getRepos,
   getReposWhere,
+  getSkills,
   getStats,
   getUserActivity,
   getUserAttemptList,

@@ -1,12 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import { BaseAutocomplete } from 'components/base_ui';
-import {
-  candidateGreyColor,
-  defaultFontSize,
-  errorRed,
-  textColor,
-} from 'defaultStyleHelper';
+import { candidateGreyColor } from 'defaultStyleHelper';
 
 const baseInputStyle = css`
   background: ${candidateGreyColor};
@@ -57,24 +52,6 @@ export const Autocomplete = styled(BaseAutocomplete)`
 
 export const Input = styled.input`
   ${baseInputStyle};
-`;
-
-export const OptionError = styled.div`
-  color: ${errorRed};
-  font-size: ${defaultFontSize};
-  height: 2.4rem;
-  padding: 0.5rem 0;
-`;
-
-export const OptionLabel = styled.div`
-  color: ${textColor};
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 1.936rem;
-`;
-
-export const OptionWrapper = styled.div`
-  margin-bottom: 1rem;
 `;
 
 export const Textarea = styled.textarea`

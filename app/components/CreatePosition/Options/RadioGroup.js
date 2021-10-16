@@ -1,57 +1,52 @@
-import React, { useState } from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
-import { Table } from 'components/base_ui';
+import { ConditionalRender, Table } from 'components/base_ui';
 
-import {
-  Autocomplete,
-  OptionError,
-  OptionLabel,
-  OptionWrapper,
-} from './styledComponents';
+import { Autocomplete } from './styledComponents';
 
 const RadioGroup = ({
-  error,
-  label,
-  onChange,
+  handleChangeInput,
   options,
   tableData,
   tableProps,
   type,
   value,
 }) => {
-  // eslint-disable-next-line no-unused-vars
-  const [selected, setSelected] = useState(value || []);
+  const handleAutocomplete = val => {
+    const valArray = val.map(el => el.value);
+    handleChangeInput(valArray[0]);
+  };
 
   return (
-    <OptionWrapper>
-      <OptionLabel>{label}</OptionLabel>
+    <Fragment>
       <Autocomplete
         height="4.9rem"
-        onChange={onChange}
+        onChange={(e, val) => handleAutocomplete(val)}
         options={options}
-        value={selected.map(el => ({ value: el.value || el }))}
+        value={[]}
       />
-      <Table
-        onChange={onChange}
-        tableData={tableData}
-        tableProps={tableProps}
-        type={type}
+      <ConditionalRender
+        Component={Table}
+        propsToPassDown={{
+          tableData,
+          tableProps,
+          type,
+        }}
+        shouldRender={!isEmpty(value)}
       />
-      <OptionError>{error}</OptionError>
-    </OptionWrapper>
+    </Fragment>
   );
 };
 
 RadioGroup.propTypes = {
-  error: T.oneOfType([T.bool, T.string]).isRequired,
-  label: T.string.isRequired,
-  onChange: T.func.isRequired,
+  handleChangeInput: T.func.isRequired,
   options: T.array.isRequired,
   tableData: T.array.isRequired,
   tableProps: T.object.isRequired,
   type: T.string.isRequired,
-  value: T.string.isRequired,
+  value: T.array.isRequired,
 };
 
 export default RadioGroup;

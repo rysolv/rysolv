@@ -17,14 +17,14 @@ const AddCircleOutlineIcon = iconDictionary('addCircleOutline');
 const JobIcon = iconDictionary('workOutline');
 
 const DesktopCompanySideNav = ({
-  dispatchSelectPosition,
-  handleNav,
+  handleCreatePosition,
+  handleSelectPosition,
   positions,
   selectedPosition,
 }) => (
   <CompanySideNavContainer>
     <CompanySideNavHeader>Positions</CompanySideNavHeader>
-    <CreatePositionButton onClick={() => handleNav('/dashboard/add')}>
+    <CreatePositionButton onClick={handleCreatePosition}>
       {AddCircleOutlineIcon} Create Position
     </CreatePositionButton>
     <div>
@@ -33,7 +33,7 @@ const DesktopCompanySideNav = ({
           key={`${title}-${index}`}
           isLast={positions.length - 1 === index}
           isSelected={id === selectedPosition}
-          onClick={() => dispatchSelectPosition({ id })}
+          onClick={() => handleSelectPosition({ id })}
         >
           {JobIcon}
           <ButtonTextWrapper>
@@ -48,8 +48,8 @@ const DesktopCompanySideNav = ({
 );
 
 DesktopCompanySideNav.propTypes = {
-  dispatchSelectPosition: T.func.isRequired,
-  handleNav: T.func.isRequired,
+  handleCreatePosition: T.func.isRequired,
+  handleSelectPosition: T.func.isRequired,
   positions: T.array.isRequired,
   selectedPosition: T.string.isRequired,
 };
