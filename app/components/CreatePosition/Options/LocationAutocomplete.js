@@ -5,11 +5,12 @@ import { usePlacesWidget } from 'react-google-autocomplete';
 import { Input, StyledCheckboxWithLabel } from './styledComponents';
 
 const LocationAutocompleteOption = ({
-  dispatchChangeRemoteStatus,
+  additionalInputProps,
   handleChangeInput,
   onBlur,
   value,
 }) => {
+  const { id, question, value: checkboxValue } = additionalInputProps;
   const { current: prevValue } = useRef(value);
   const [tempValue, setTempValue] = useState('');
 
@@ -17,7 +18,8 @@ const LocationAutocompleteOption = ({
     if (prevValue !== value) onBlur();
   }, [prevValue, value]);
 
-  const checked = value.includes('Remote');
+  const isChecked = checkboxValue === 'Yes';
+  const newIsChecked = isChecked ? 'No' : 'Yes';
 
   const { ref } = usePlacesWidget({
     apiKey: process.env.GOOGLE_API_KEY,
@@ -27,10 +29,8 @@ const LocationAutocompleteOption = ({
     },
   });
 
-  const tempValueArray = value.filter(val => val !== 'Remote');
-
   const handlePlacesWidgetFocus = () => {
-    if (tempValue !== '' || tempValueArray.length !== 0) {
+    if (tempValue !== '' || value !== '') {
       handleChangeInput();
       setTempValue('');
     }
@@ -41,24 +41,26 @@ const LocationAutocompleteOption = ({
       <Input
         ref={ref}
         height="4.9rem"
+        onBlur={onBlur}
         onChange={e => setTempValue(e.target.value)}
         onFocus={handlePlacesWidgetFocus}
-        value={tempValueArray[0] || tempValue}
+        value={value}
       />
       <StyledCheckboxWithLabel
-        checked={checked}
-        label="This position is remote"
-        onChange={dispatchChangeRemoteStatus}
+        checked={isChecked}
+        onBlur={onBlur}
+        label={question}
+        onChange={() => handleChangeInput(newIsChecked, id)}
       />
     </div>
   );
 };
 
 LocationAutocompleteOption.propTypes = {
-  dispatchChangeRemoteStatus: T.func.isRequired,
+  additionalInputProps: T.object.isRequired,
   handleChangeInput: T.func.isRequired,
   onBlur: T.func.isRequired,
-  value: T.array.isRequired,
+  value: T.string.isRequired,
 };
 
 export default LocationAutocompleteOption;

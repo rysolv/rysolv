@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
+import { additionalInputDictionary } from 'containers/CompanyDashboard/constants';
+
+import optionDictionary from './Options';
 import {
   ButtonWrapper,
   CreatePositionContainer,
@@ -14,12 +17,10 @@ import {
   StyledPrimaryAsyncButton,
   StyledPrimaryButton,
 } from './styledComponents';
-import optionDictionary from './Options';
 
 const CreatePosition = ({
   alerts: { error },
   dispatchChangeInput,
-  dispatchChangeRemoteStatus,
   dispatchChangeSkillLevel,
   dispatchClearAlerts,
   dispatchDeleteSkill,
@@ -63,41 +64,53 @@ const CreatePosition = ({
       <CreatePositionHeader>Create a new position</CreatePositionHeader>
       <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
       {questions.map(
+        // eslint-disable-next-line array-callback-return, consistent-return
         ({ description, id, options, optionType, question, ...restProps }) => {
-          const OptionToRender = optionDictionary[optionType];
+          if (id !== 'isRemote') {
+            const OptionToRender = optionDictionary[optionType];
 
-          const handleChangeInput = value => {
-            dispatchChangeInput({
-              field: id,
-              form: 'createPosition',
-              value,
-            });
-          };
+            const handleChangeInput = (value, inputField) => {
+              dispatchChangeInput({
+                field: inputField || id,
+                form: 'createPosition',
+                value,
+              });
+            };
 
-          return (
-            <OptionWrapper key={`option-${id}`}>
-              <OptionLabel>{question}</OptionLabel>
-              <OptionDescription>{description}</OptionDescription>
-              <OptionToRender
-                dispatchChangeInput={dispatchChangeInput}
-                dispatchChangeRemoteStatus={dispatchChangeRemoteStatus}
-                dispatchDeleteSkill={dispatchDeleteSkill}
-                handleChangeInput={handleChangeInput}
-                id={id}
-                onBlur={() =>
-                  handleValidateInput({
-                    field: id,
-                    values: createPositionForm,
-                  })
-                }
-                options={options}
-                tableProps={tableProps}
-                value={createPositionForm[id]}
-                {...restProps}
-              />
-              <OptionError>{createPositionFormErrors[id]}</OptionError>
-            </OptionWrapper>
-          );
+            const multiple = id === 'role';
+
+            return (
+              <OptionWrapper key={`option-${id}`}>
+                <OptionLabel>{question}</OptionLabel>
+                <OptionDescription>{description}</OptionDescription>
+                <OptionToRender
+                  additionalInputProps={{
+                    value: createPositionForm[additionalInputDictionary[id]],
+                    ...questions.find(
+                      ({ id: questionId }) =>
+                        additionalInputDictionary[id] === questionId,
+                    ),
+                  }}
+                  dispatchChangeInput={dispatchChangeInput}
+                  dispatchDeleteSkill={dispatchDeleteSkill}
+                  handleChangeInput={handleChangeInput}
+                  id={id}
+                  multiple={multiple}
+                  onBlur={() =>
+                    handleValidateInput({
+                      field: id,
+                      values: createPositionForm,
+                    })
+                  }
+                  options={options}
+                  tableProps={tableProps}
+                  value={createPositionForm[id]}
+                  {...restProps}
+                />
+                <OptionError>{createPositionFormErrors[id]}</OptionError>
+              </OptionWrapper>
+            );
+          }
         },
       )}
       <ButtonWrapper>
@@ -119,7 +132,6 @@ const CreatePosition = ({
 CreatePosition.propTypes = {
   alerts: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
-  dispatchChangeRemoteStatus: T.func.isRequired,
   dispatchChangeSkillLevel: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,

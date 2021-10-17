@@ -16,8 +16,9 @@ const getCompanyPositions = async ({ companyId }) => {
       )
     SELECT json_build_object(
       'location', (SELECT positions.value FROM positions WHERE question_key = 'location'),
+      'isRemote', (SELECT positions.response_key FROM positions WHERE question_key = 'is_remote'),
       'positionId', (SELECT positions.position_id FROM positions limit 1),
-      'role', (SELECT positions.response_key FROM positions WHERE question_key = 'role')
+      'title', (SELECT positions.value FROM positions WHERE question_key = 'title')
     ) AS position;
   `;
   const { rows } = await singleQuery({ queryText, values: [companyId] });

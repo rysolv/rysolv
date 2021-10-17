@@ -2,8 +2,6 @@ export const CHANGE_FILTER = 'app/CompanyDashboard/CHANGE_FILTER';
 
 export const CHANGE_INPUT = 'app/CompanyDashboard/CHANGE_INPUT';
 
-export const CHANGE_REMOTE_STATUS = 'app/CompanyDashboard/CHANGE_REMOTE_STATUS';
-
 export const CHANGE_SKILL_LEVEL = 'app/CompanyDashboard/CHANGE_SKILL_LEVEL';
 
 export const CLEAR_ALERTS = 'app/CompanyDashboard/CLEAR_ALERTS';
@@ -47,3 +45,8 @@ export const RESET_FORM_STATE = 'app/CompanyDashboard/RESET_FORM_STATE';
 export const SAVE_CANDIDATE = 'app/CompanyDashboard/SAVE_CANDIDATE';
 
 export const SELECT_POSITION = 'app/CompanyDashboard/SELECT_POSITION';
+
+// Dictionaries
+export const additionalInputDictionary = {
+  location: 'isRemote',
+};

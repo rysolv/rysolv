@@ -98,6 +98,10 @@ export const PositionButton = styled.button`
   }
 `;
 
+export const PositionTitle = styled.span`
+  text-transform: capitalize;
+`;
+
 export const StyledIconButton = styled(IconButton)`
   svg {
     color: ${blueColor};

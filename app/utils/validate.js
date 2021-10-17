@@ -138,8 +138,7 @@ const validatePayoutUrl = (value, { payoutMethod }) => {
 };
 
 const validatePositionLocationInput = value => {
-  const valueArray = value.filter(el => el !== 'Remote');
-  if (!valueArray.length) {
+  if (!value) {
     return `Must select one non-remote location`;
   }
   return false;
@@ -233,11 +232,17 @@ export const validationDictionary = {
   verifyInput: validateVerifyInput,
 };
 
-export const validate = ({ required, type, value, ...validationProps }) => {
+export const validate = ({
+  additionalInputField,
+  required,
+  type,
+  value,
+  ...validationProps
+}) => {
   if (required && isBlank(value)) {
     return 'Required field';
   }
-  if (!required && isBlank(value)) {
+  if (!additionalInputField && !required && isBlank(value)) {
     return false;
   }
   const validationFunction = validationDictionary[type];

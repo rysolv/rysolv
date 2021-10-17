@@ -72,7 +72,8 @@ const postUserResponse = async (
             if (
               questionKey === 'description' ||
               questionKey === 'location' ||
-              questionKey === 'personal_link'
+              questionKey === 'personal_link' ||
+              questionKey === 'title'
             )
               formattedValue = value;
             if (questionKey === 'resume') {

@@ -3,22 +3,43 @@ import T from 'prop-types';
 
 import { Autocomplete } from './styledComponents';
 
-const AutocompleteOption = ({ handleChangeInput, onBlur, options, value }) => (
-  <Autocomplete
-    height="4.9rem"
-    multiple={false}
-    onBlur={onBlur}
-    onChange={(e, el) => handleChangeInput(el.value)}
-    options={options}
-    value={{ value }}
-  />
-);
+const AutocompleteOption = ({
+  handleChangeInput,
+  multiple,
+  onBlur,
+  options,
+  value,
+}) => {
+  const customHandleChangeInput = val => {
+    if (multiple) {
+      handleChangeInput(val.map(el => el.value));
+    } else {
+      handleChangeInput(val.value);
+    }
+  };
+
+  const formattedValue = Array.isArray(value)
+    ? value.map(el => ({ value: el }))
+    : { value };
+
+  return (
+    <Autocomplete
+      height="4.9rem"
+      multiple={multiple}
+      onBlur={onBlur}
+      onChange={(e, val) => customHandleChangeInput(val)}
+      options={options}
+      value={formattedValue}
+    />
+  );
+};
 
 AutocompleteOption.propTypes = {
   handleChangeInput: T.func.isRequired,
+  multiple: T.bool.isRequired,
   onBlur: T.func.isRequired,
   options: T.array.isRequired,
-  value: T.string.isRequired,
+  value: T.oneOfType([T.array, T.string]).isRequired,
 };
 
 export default AutocompleteOption;

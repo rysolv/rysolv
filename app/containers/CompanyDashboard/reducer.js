@@ -6,7 +6,6 @@ import remove from 'lodash/remove';
 import {
   CHANGE_FILTER,
   CHANGE_INPUT,
-  CHANGE_REMOTE_STATUS,
   CHANGE_SKILL_LEVEL,
   CLEAR_ALERTS,
   CLOSE_MODAL_STATE,
@@ -45,10 +44,12 @@ export const initialState = {
       description: '',
       experience: '',
       hiringTimeframe: '',
-      location: [],
-      role: '',
+      isRemote: 'No',
+      location: '',
+      role: [],
       salary: '',
       skills: [],
+      title: '',
       type: '',
     },
     scheduleInterview: { body: '' },
@@ -62,6 +63,7 @@ export const initialState = {
       role: '',
       salary: '',
       skills: '',
+      title: '',
       type: '',
     },
     scheduleInterview: { body: '' },
@@ -94,23 +96,8 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
             skill: value,
           });
         }
-      } else if (field === 'location') {
-        const valueArray = value ? [value] : [];
-        if (draft.form[form][field].includes('Remote')) {
-          draft.form[form][field] = [...valueArray, 'Remote'];
-        } else {
-          draft.form[form][field] = [...valueArray];
-        }
       } else {
-        draft.form[form][field] = value;
-      }
-      break;
-    }
-    case CHANGE_REMOTE_STATUS: {
-      if (draft.form.createPosition.location.includes('Remote')) {
-        remove(draft.form.createPosition.location, el => el === 'Remote');
-      } else {
-        draft.form.createPosition.location.push('Remote');
+        draft.form[form][field] = value || '';
       }
       break;
     }
@@ -173,7 +160,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       const { companyMatchesArray } = payload;
       draft.companyMatches = companyMatchesArray;
       draft.loading = false;
-      draft.selectedPosition = companyMatchesArray[0].position.id;
+      draft.selectedPosition = companyMatchesArray[0].position.id || '';
       break;
     }
     case FETCH_COMPANY_MATCHES: {

@@ -2,6 +2,7 @@
 import React from 'react';
 import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
@@ -11,6 +12,7 @@ import {
   CreatePositionButton,
   LocationText,
   PositionButton,
+  PositionTitle,
 } from './styledComponents';
 
 const AddCircleOutlineIcon = iconDictionary('addCircleOutline');
@@ -28,7 +30,7 @@ const DesktopCompanySideNav = ({
       {AddCircleOutlineIcon} Create Position
     </CreatePositionButton>
     <div>
-      {positions.map(({ id, location, title }, index) => (
+      {positions.map(({ id, isRemote, location, title }, index) => (
         <PositionButton
           key={`${title}-${index}`}
           isLast={positions.length - 1 === index}
@@ -37,9 +39,15 @@ const DesktopCompanySideNav = ({
         >
           {JobIcon}
           <ButtonTextWrapper>
-            <span>{title}</span>
+            <PositionTitle>{title}</PositionTitle>
             <br />
-            <LocationText>{location}</LocationText>
+            <LocationText>
+              {location}&nbsp;
+              <ConditionalRender
+                Component={<span>(Remote)</span>}
+                shouldRender={isRemote}
+              />
+            </LocationText>
           </ButtonTextWrapper>
         </PositionButton>
       ))}

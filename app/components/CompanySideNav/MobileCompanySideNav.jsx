@@ -12,6 +12,7 @@ import {
   CreatePositionButton,
   LocationText,
   PositionButton,
+  PositionTitle,
   StyledIconButton,
 } from './styledComponents';
 
@@ -48,7 +49,7 @@ const MobileCompanySideNav = ({
       <ConditionalRender
         Component={
           <div>
-            {positions.map(({ id, location, title }, index) => (
+            {positions.map(({ id, isRemote, location, title }, index) => (
               <PositionButton
                 key={`${title}-${index}`}
                 isLast={positions.length - 1 === index}
@@ -57,9 +58,15 @@ const MobileCompanySideNav = ({
               >
                 {JobIcon}
                 <ButtonTextWrapper>
-                  <span>{title}</span>
+                  <PositionTitle>{title}</PositionTitle>
                   <br />
-                  <LocationText>{location}</LocationText>
+                  <LocationText>
+                    {location}&nbsp;
+                    <ConditionalRender
+                      Component={<span>(Remote)</span>}
+                      shouldRender={isRemote}
+                    />
+                  </LocationText>
                 </ButtonTextWrapper>
               </PositionButton>
             ))}
