@@ -6,6 +6,7 @@ import remove from 'lodash/remove';
 import {
   CHANGE_FILTER,
   CHANGE_INPUT,
+  CHANGE_REMOTE_STATUS,
   CHANGE_SKILL_LEVEL,
   CLEAR_ALERTS,
   CLOSE_MODAL_STATE,
@@ -44,7 +45,7 @@ export const initialState = {
       description: '',
       experience: '',
       hiringTimeframe: '',
-      location: 't',
+      location: [],
       role: '',
       salary: '',
       skills: [],
@@ -93,8 +94,23 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
             skill: value,
           });
         }
+      } else if (field === 'location') {
+        const valueArray = value ? [value] : [];
+        if (draft.form[form][field].includes('Remote')) {
+          draft.form[form][field] = [...valueArray, 'Remote'];
+        } else {
+          draft.form[form][field] = [...valueArray];
+        }
       } else {
         draft.form[form][field] = value;
+      }
+      break;
+    }
+    case CHANGE_REMOTE_STATUS: {
+      if (draft.form.createPosition.location.includes('Remote')) {
+        remove(draft.form.createPosition.location, el => el === 'Remote');
+      } else {
+        draft.form.createPosition.location.push('Remote');
       }
       break;
     }

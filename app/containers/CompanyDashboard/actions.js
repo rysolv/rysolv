@@ -1,6 +1,7 @@
 import {
   CHANGE_FILTER,
   CHANGE_INPUT,
+  CHANGE_REMOTE_STATUS,
   CHANGE_SKILL_LEVEL,
   CLEAR_ALERTS,
   CLOSE_MODAL_STATE,
@@ -36,6 +37,10 @@ export function changeInput(payload) {
     payload,
     type: CHANGE_INPUT,
   };
+}
+
+export function changeRemoteStatus() {
+  return { type: CHANGE_REMOTE_STATUS };
 }
 
 export function changeSkillLevel(payload) {

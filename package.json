@@ -117,6 +117,7 @@
     "react-dnd": "7.7.0",
     "react-dnd-html5-backend": "7.7.0",
     "react-dom": "16.8.6",
+    "react-google-autocomplete": "2.4.3",
     "react-google-recaptcha": "2.0.1",
     "react-helmet": "6.1.0",
     "react-intl": "2.8.0",

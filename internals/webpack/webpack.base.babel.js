@@ -121,6 +121,7 @@ module.exports = options => ({
     // inside your code for any environment checks; Terser will automatically
     // drop any unreachable code.
     new webpack.EnvironmentPlugin({
+      GOOGLE_API_KEY: JSON.stringify(process.env.GOOGLE_API_KEY),
       NODE_ENV: 'development',
       RECAPTCHA_SITE_KEY: JSON.stringify(process.env.RECAPTCHA_SITE_KEY),
     }),

@@ -19,6 +19,7 @@ import optionDictionary from './Options';
 const CreatePosition = ({
   alerts: { error },
   dispatchChangeInput,
+  dispatchChangeRemoteStatus,
   dispatchChangeSkillLevel,
   dispatchClearAlerts,
   dispatchDeleteSkill,
@@ -31,7 +32,13 @@ const CreatePosition = ({
   loading,
   questions,
 }) => {
-  useEffect(() => dispatchResetFormState, []);
+  useEffect(
+    () => () => {
+      dispatchClearAlerts();
+      dispatchResetFormState();
+    },
+    [],
+  );
 
   const hasErrors = Object.keys(createPositionFormErrors).some(
     input => !!createPositionFormErrors[input],
@@ -73,6 +80,7 @@ const CreatePosition = ({
               <OptionDescription>{description}</OptionDescription>
               <OptionToRender
                 dispatchChangeInput={dispatchChangeInput}
+                dispatchChangeRemoteStatus={dispatchChangeRemoteStatus}
                 dispatchDeleteSkill={dispatchDeleteSkill}
                 handleChangeInput={handleChangeInput}
                 id={id}
@@ -111,6 +119,7 @@ const CreatePosition = ({
 CreatePosition.propTypes = {
   alerts: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeRemoteStatus: T.func.isRequired,
   dispatchChangeSkillLevel: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,

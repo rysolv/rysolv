@@ -89,7 +89,9 @@ const makeSelectCompanyDashboardResponseArray = () =>
             values.forEach(async value => {
               const [{ id: responseId }] = responses.filter(
                 response =>
-                  response.responseKey !== 'skills' || response.value === value,
+                  response.responseKey !== 'location' ||
+                  response.responseKey !== 'skills' ||
+                  response.value === value,
               );
               responseArray.push({
                 questionId,
@@ -103,7 +105,6 @@ const makeSelectCompanyDashboardResponseArray = () =>
             const [{ id: responseId }] = responses.filter(
               response =>
                 response.responseKey !== 'description' ||
-                response.responseKey !== 'location' ||
                 response.value === values,
             );
             responseArray.push({

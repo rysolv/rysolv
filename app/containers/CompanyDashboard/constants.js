@@ -2,6 +2,8 @@ export const CHANGE_FILTER = 'app/CompanyDashboard/CHANGE_FILTER';
 
 export const CHANGE_INPUT = 'app/CompanyDashboard/CHANGE_INPUT';
 
+export const CHANGE_REMOTE_STATUS = 'app/CompanyDashboard/CHANGE_REMOTE_STATUS';
+
 export const CHANGE_SKILL_LEVEL = 'app/CompanyDashboard/CHANGE_SKILL_LEVEL';
 
 export const CLEAR_ALERTS = 'app/CompanyDashboard/CLEAR_ALERTS';

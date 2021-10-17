@@ -25,12 +25,18 @@ import {
 export function* createPositionSaga({ payload }) {
   const { responseArray } = payload;
   const formattedResponse = responseArray.map(
-    ({ questionId, questionKey, responseId, value }) => `{
+    ({ questionId, questionKey, responseId, value }) => {
+      const formattedValue =
+        questionKey === 'description'
+          ? `${JSON.stringify(value)}`
+          : `"${value}"`;
+      return `{
         questionId: "${questionId}",
         questionKey: "${questionKey}",
         responseId: "${responseId}",
-        value: "${value}",
-      }`,
+        value: ${formattedValue},
+      }`;
+    },
   );
   const uuid = uuidv4();
   const query = `

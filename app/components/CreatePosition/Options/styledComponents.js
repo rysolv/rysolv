@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { BaseAutocomplete } from 'components/base_ui';
+import { BaseAutocomplete, CheckboxWithLabel } from 'components/base_ui';
 import { candidateGreyColor } from 'defaultStyleHelper';
 
 const baseInputStyle = css`
@@ -52,6 +52,26 @@ export const Autocomplete = styled(BaseAutocomplete)`
 
 export const Input = styled.input`
   ${baseInputStyle};
+`;
+
+export const StyledCheckboxWithLabel = styled(CheckboxWithLabel)`
+  .checkbox {
+    margin-right: 0.6rem;
+    padding: 0;
+  }
+
+  &.formControl {
+    margin-top: 0.5rem;
+  }
+
+  .label {
+    font-size: 1.6rem;
+  }
+
+  svg {
+    height: 2.4rem;
+    width: 2.4rem;
+  }
 `;
 
 export const Textarea = styled.textarea`

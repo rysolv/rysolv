@@ -51,6 +51,7 @@ export const optionDictionary = {
 const validationPropsByField = {
   company: { type: 'stringInput' },
   email: { type: 'emailInput' },
+  location: { type: 'positionLocationInput' },
   name: { type: 'stringInput' },
   role: { type: 'stringInput' },
   url: { type: 'linkInput' },

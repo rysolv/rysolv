@@ -19,7 +19,7 @@ const TableInput = ({ checked, onChange }) => (
 );
 
 TableInput.propTypes = {
-  checked: T.bool,
+  checked: T.oneOfType([T.bool, T.string]),
   onChange: T.func.isRequired,
 };
 

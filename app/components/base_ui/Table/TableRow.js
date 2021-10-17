@@ -70,7 +70,7 @@ TableRow.propTypes = {
   dispatchChangeSkillLevel: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
   headers: T.array.isRequired,
-  rowData: T.shape({ id: T.string }).isRequired,
+  rowData: T.object.isRequired,
 };
 
 export default TableRow;

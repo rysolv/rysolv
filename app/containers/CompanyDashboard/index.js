@@ -16,6 +16,7 @@ import injectSaga from 'utils/injectSaga';
 import {
   changeFilter,
   changeInput,
+  changeRemoteStatus,
   changeSkillLevel,
   clearAlerts,
   createPosition,
@@ -49,6 +50,7 @@ const CompanyDashboard = ({
   deviceView,
   dispatchChangeFilter,
   dispatchChangeInput,
+  dispatchChangeRemoteStatus,
   dispatchChangeSkillLevel,
   dispatchClearAlerts,
   dispatchCreatePosition,
@@ -115,6 +117,7 @@ const CompanyDashboard = ({
         candidates={candidates}
         dispatchChangeFilter={dispatchChangeFilter}
         dispatchChangeInput={dispatchChangeInput}
+        dispatchChangeRemoteStatus={dispatchChangeRemoteStatus}
         dispatchChangeSkillLevel={dispatchChangeSkillLevel}
         dispatchClearAlerts={dispatchClearAlerts}
         dispatchDeleteSkill={dispatchDeleteSkill}
@@ -156,6 +159,7 @@ CompanyDashboard.propTypes = {
   deviceView: T.string.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeRemoteStatus: T.func.isRequired,
   dispatchChangeSkillLevel: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchCreatePosition: T.func.isRequired,
@@ -211,6 +215,7 @@ const mapDispatchToProps = dispatch => ({
    */
   dispatchChangeFilter: payload => dispatch(changeFilter(payload)),
   dispatchChangeInput: payload => dispatch(changeInput(payload)),
+  dispatchChangeRemoteStatus: () => dispatch(changeRemoteStatus()),
   dispatchChangeSkillLevel: payload => dispatch(changeSkillLevel(payload)),
   dispatchClearAlerts: () => dispatch(clearAlerts()),
   dispatchCreatePosition: payload => dispatch(createPosition(payload)),

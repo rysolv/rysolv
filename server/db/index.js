@@ -10,7 +10,7 @@ const {
   createCompany,
   createCompanyPosition,
   createMessage,
-  getCompanyMatches,
+  getCompanyPositions,
 } = require('./queries/companies');
 const {
   checkDuplicateIssue,
@@ -123,7 +123,7 @@ module.exports = {
   deleteUserLanguages,
   deleteUserPullRequests,
   downvoteIssue,
-  getCompanyMatches,
+  getCompanyPositions,
   getFilterOptions,
   getIssueAttemptList,
   getIssueComments,
