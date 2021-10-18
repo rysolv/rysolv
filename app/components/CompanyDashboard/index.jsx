@@ -2,15 +2,11 @@
 import React from 'react';
 import T from 'prop-types';
 
+import AsyncRender from 'components/AsyncRender';
 import { ConditionalRender } from 'components/base_ui';
 
-import CandidateCard from './CandidateCard';
-import CompanyDashboardTabs from './CompanyDashboardTabs';
-import EmptyCandidateCard from './EmptyCandidateCard';
-import {
-  CandidateCardGroup,
-  CompanyDashboardContainer,
-} from './styledComponents';
+import ExistingDashboard from './ExistingDashboard';
+import InitialDashboard from './InitialDashboard';
 
 const CompanyDashboard = ({
   candidates,
@@ -18,33 +14,30 @@ const CompanyDashboard = ({
   dispatchOpenModal,
   dispatchSaveCandidate,
   filter,
+  loading,
+  positions,
   selectedPosition,
 }) => (
-  <CompanyDashboardContainer>
-    <CompanyDashboardTabs
-      dispatchChangeFilter={dispatchChangeFilter}
-      filter={filter}
-    />
-    <ConditionalRender
-      Component={
-        <CandidateCardGroup>
-          {candidates.map((candidate, index) => (
-            <CandidateCard
-              key={`candidate-${index}`}
-              dispatchOpenModal={dispatchOpenModal}
-              dispatchSaveCandidate={dispatchSaveCandidate}
-              index={index}
-              isLast={candidates.length - 1 === index}
-              selectedPosition={selectedPosition}
-              {...candidate}
-            />
-          ))}
-        </CandidateCardGroup>
-      }
-      FallbackComponent={EmptyCandidateCard}
-      shouldRender={!!candidates.length}
-    />
-  </CompanyDashboardContainer>
+  <ConditionalRender
+    Component={
+      <AsyncRender
+        asyncData={candidates}
+        component={ExistingDashboard}
+        error={false}
+        isRequiredData={false}
+        loading={loading}
+        propsToPassDown={{
+          dispatchChangeFilter,
+          dispatchOpenModal,
+          dispatchSaveCandidate,
+          filter,
+          selectedPosition,
+        }}
+      />
+    }
+    FallbackComponent={InitialDashboard}
+    shouldRender={positions.length}
+  />
 );
 
 CompanyDashboard.propTypes = {
@@ -53,6 +46,8 @@ CompanyDashboard.propTypes = {
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
   filter: T.object.isRequired,
+  loading: T.bool.isRequired,
+  positions: T.array.isRequired,
   selectedPosition: T.string.isRequired,
 };
 

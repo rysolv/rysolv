@@ -30,8 +30,7 @@ const postUserResponse = async (
     if (authError || !userId) throw new CustomError(authError);
     const { languages } = await getUserLanguages({ userId });
     const positionId = uuidv4();
-
-    if (companyId) {
+    if (!companyId && positionId) {
       const companyData = {
         company_name: 'Google',
         company_url: 'https://google.com',
@@ -41,8 +40,11 @@ const postUserResponse = async (
         id: companyId,
         size: 1000,
       };
-      const data = { company_id: companyId, id: positionId };
       await createCompany({ data: companyData });
+    }
+
+    if (companyId && positionId) {
+      const data = { company_id: companyId, id: positionId };
       await createCompanyPosition({ data });
     }
 

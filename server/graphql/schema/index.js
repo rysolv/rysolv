@@ -64,13 +64,15 @@ module.exports = buildSchema(`
     target: ID!
   }
 
-  type CompanyMatches {
-    candidates: [Object]
-    position: Object
+  type Position {
+    id: String
+    isRemote: Boolean
+    location: String
+    title: String
   }
 
-  type CompanyMatchesArray {
-    companyMatchesArray: [CompanyMatches]
+  type CompanyPositionsArray {
+    positions: [Position]
   }
 
   input ContactInput {
@@ -443,7 +445,7 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
-    getCompanyMatches: CompanyMatchesArray
+    getCompanyPositions(companyId: ID!): CompanyPositionsArray
     getFilterOptions: FilterResult!
     getGithubPullRequests(issueId: ID!): PullRequestArrayResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!

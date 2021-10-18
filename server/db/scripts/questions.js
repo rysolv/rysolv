@@ -231,6 +231,18 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
+  // company_name
+  {
+    id: '732c1caf-248d-4d8b-a90d-1567a3b91a29',
+    category: 'company',
+    created_date: new Date(),
+    priority: 1,
+    question_key: 'name',
+    question_text: 'Company name',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
 ];
 
 const responses = [

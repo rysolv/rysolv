@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { createSelector } from 'reselect';
-import isEmpty from 'lodash/isEmpty';
 
 import { snakeToCamel } from 'utils/globalHelpers';
 
@@ -14,31 +13,18 @@ const selectCompanyDashboardProps = (state, props) => props;
 
 const makeSelectCompanyDashboardCandidates = () =>
   createSelector(
-    makeSelectCompanyDashboard('companyMatches'),
+    makeSelectCompanyDashboard('candidates'),
     makeSelectCompanyDashboard('filter'),
-    makeSelectCompanyDashboard('selectedPosition'),
-    (companyMatches, filter, selectedPosition) => {
-      if (!isEmpty(companyMatches) && !!selectedPosition) {
-        const { candidates } = companyMatches.find(
-          ({ position: { id } }) => id === selectedPosition,
-        );
-        const filteredCandidates = filterCandidates(candidates, filter);
-        return filteredCandidates.map(
-          ({ firstName, lastName, languages, ...restProps }) => ({
-            languages: languages.slice(0, 3),
-            name: `${firstName.charAt(0)}. ${lastName.charAt(0)}.`,
-            ...restProps,
-          }),
-        );
-      }
-      return [];
+    (candidates, filter) => {
+      const filteredCandidates = filterCandidates(candidates, filter);
+      return filteredCandidates.map(
+        ({ firstName, lastName, languages, ...restProps }) => ({
+          languages: languages.slice(0, 3),
+          name: `${firstName.charAt(0)}. ${lastName.charAt(0)}.`,
+          ...restProps,
+        }),
+      );
     },
-  );
-
-const makeSelectCompanyDashboardPositions = () =>
-  createSelector(
-    makeSelectCompanyDashboard('companyMatches'),
-    companyMatches => companyMatches.map(({ position }) => position),
   );
 
 const makeSelectCompanyDashboardQuestions = () =>
@@ -136,7 +122,6 @@ export default selectCompanyDashboardDomain;
 export {
   makeSelectCompanyDashboard,
   makeSelectCompanyDashboardCandidates,
-  makeSelectCompanyDashboardPositions,
   makeSelectCompanyDashboardQuestions,
   makeSelectCompanyDashboardResponseArray,
   makeSelectCompanyDashboardView,

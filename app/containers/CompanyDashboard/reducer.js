@@ -13,9 +13,12 @@ import {
   CREATE_POSITION_SUCCESS,
   CREATE_POSITION,
   DELETE_SKILL,
-  FETCH_COMPANY_MATCHES_FAILURE,
-  FETCH_COMPANY_MATCHES_SUCCESS,
-  FETCH_COMPANY_MATCHES,
+  FETCH_COMPANY_POSITIONS_FAILURE,
+  FETCH_COMPANY_POSITIONS_SUCCESS,
+  FETCH_COMPANY_POSITIONS,
+  FETCH_POSITION_CANDIDATES_FAILURE,
+  FETCH_POSITION_CANDIDATES_SUCCESS,
+  FETCH_POSITION_CANDIDATES,
   FETCH_POSITION_QUESTIONS_FAILURE,
   FETCH_POSITION_QUESTIONS_SUCCESS,
   FETCH_POSITION_QUESTIONS,
@@ -31,7 +34,7 @@ import {
 
 export const initialState = {
   alerts: { error: false, success: false },
-  companyMatches: [],
+  candidates: [],
   error: false,
   filter: {
     location: '',
@@ -70,6 +73,7 @@ export const initialState = {
   },
   isModalOpen: false,
   loading: false,
+  positions: [],
   questions: [],
   selectedPosition: '',
   tableData: {},
@@ -150,20 +154,37 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       );
       break;
     }
-    case FETCH_COMPANY_MATCHES_FAILURE: {
+    case FETCH_COMPANY_POSITIONS_FAILURE: {
       const { error } = payload;
       draft.error = error;
       draft.loading = false;
       break;
     }
-    case FETCH_COMPANY_MATCHES_SUCCESS: {
-      const { companyMatchesArray } = payload;
-      draft.companyMatches = companyMatchesArray;
+    case FETCH_COMPANY_POSITIONS_SUCCESS: {
+      const { positions } = payload;
+      draft.positions = positions;
       draft.loading = false;
-      draft.selectedPosition = companyMatchesArray[0].position.id || '';
+      draft.selectedPosition = positions[0].id || '';
       break;
     }
-    case FETCH_COMPANY_MATCHES: {
+    case FETCH_COMPANY_POSITIONS: {
+      draft.error = initialState.error;
+      draft.loading = true;
+      break;
+    }
+    case FETCH_POSITION_CANDIDATES_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      draft.loading = false;
+      break;
+    }
+    case FETCH_POSITION_CANDIDATES_SUCCESS: {
+      const { candidates } = payload;
+      draft.candidates = candidates;
+      draft.loading = false;
+      break;
+    }
+    case FETCH_POSITION_CANDIDATES: {
       draft.error = initialState.error;
       draft.loading = true;
       break;

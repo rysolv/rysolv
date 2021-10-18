@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { textColor } from 'defaultStyleHelper';
 
-export const EmptyCandidateCardContainer = styled.div`
+export const EmptyCandidateDashboardContainer = styled.div`
   align-items: center;
   display: flex;
   height: 37.5rem;

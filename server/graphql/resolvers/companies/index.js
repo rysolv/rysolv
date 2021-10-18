@@ -1,4 +1,4 @@
 const createMessage = require('./createMessage');
-const getCompanyMatches = require('./getCompanyMatches');
+const getCompanyPositions = require('./getCompanyPositions');
 
-module.exports = { createMessage, getCompanyMatches };
+module.exports = { createMessage, getCompanyPositions };

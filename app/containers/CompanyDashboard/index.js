@@ -20,7 +20,8 @@ import {
   clearAlerts,
   createPosition,
   deleteSkill,
-  fetchCompanyMatches,
+  fetchCompanyPositions,
+  fetchPositionCandidates,
   fetchPositionQuestions,
   inputError,
   notifyCandidate,
@@ -35,7 +36,6 @@ import saga from './saga';
 import {
   makeSelectCompanyDashboard,
   makeSelectCompanyDashboardCandidates,
-  makeSelectCompanyDashboardPositions,
   makeSelectCompanyDashboardQuestions,
   makeSelectCompanyDashboardResponseArray,
   makeSelectCompanyDashboardView,
@@ -53,7 +53,8 @@ const CompanyDashboard = ({
   dispatchClearAlerts,
   dispatchCreatePosition,
   dispatchDeleteSkill,
-  dispatchFetchCompanyMatches,
+  dispatchFetchCompanyPositions,
+  dispatchFetchPositionCandidates,
   dispatchFetchPositionQuestions,
   dispatchInputError,
   dispatchNotifyCandidate,
@@ -75,9 +76,13 @@ const CompanyDashboard = ({
   view,
 }) => {
   useEffect(() => {
-    dispatchFetchCompanyMatches();
+    dispatchFetchCompanyPositions();
     dispatchFetchPositionQuestions({ category: 'company_position' });
   }, []);
+
+  useEffect(() => {
+    dispatchFetchPositionCandidates({ positionId: selectedPosition });
+  }, [selectedPosition]);
 
   const ComponentToRender = viewDictionary[view];
 
@@ -128,6 +133,7 @@ const CompanyDashboard = ({
         handleNav={handleNav}
         handleValidateInput={handleValidateInput}
         loading={loading}
+        positions={positions}
         questions={questions}
         selectedPosition={selectedPosition}
         tableData={tableData}
@@ -160,7 +166,8 @@ CompanyDashboard.propTypes = {
   dispatchClearAlerts: T.func.isRequired,
   dispatchCreatePosition: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
-  dispatchFetchCompanyMatches: T.func.isRequired,
+  dispatchFetchCompanyPositions: T.func.isRequired,
+  dispatchFetchPositionCandidates: T.func.isRequired,
   dispatchFetchPositionQuestions: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchNotifyCandidate: T.func.isRequired,
@@ -193,7 +200,7 @@ const mapStateToProps = createStructuredSelector({
   formErrors: makeSelectCompanyDashboard('formErrors'),
   isModalOpen: makeSelectCompanyDashboard('isModalOpen'),
   loading: makeSelectCompanyDashboard('loading'),
-  positions: makeSelectCompanyDashboardPositions(),
+  positions: makeSelectCompanyDashboard('positions'),
   questions: makeSelectCompanyDashboardQuestions(),
   responseArray: makeSelectCompanyDashboardResponseArray(),
   selectedPosition: makeSelectCompanyDashboard('selectedPosition'),
@@ -215,7 +222,10 @@ const mapDispatchToProps = dispatch => ({
   dispatchClearAlerts: () => dispatch(clearAlerts()),
   dispatchCreatePosition: payload => dispatch(createPosition(payload)),
   dispatchDeleteSkill: payload => dispatch(deleteSkill(payload)),
-  dispatchFetchCompanyMatches: () => dispatch(fetchCompanyMatches()),
+  dispatchFetchCompanyPositions: payload =>
+    dispatch(fetchCompanyPositions(payload)),
+  dispatchFetchPositionCandidates: payload =>
+    dispatch(fetchPositionCandidates(payload)),
   dispatchFetchPositionQuestions: payload =>
     dispatch(fetchPositionQuestions(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),

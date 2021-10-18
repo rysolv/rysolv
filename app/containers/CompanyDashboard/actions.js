@@ -8,9 +8,12 @@ import {
   CREATE_POSITION_SUCCESS,
   CREATE_POSITION,
   DELETE_SKILL,
-  FETCH_COMPANY_MATCHES_FAILURE,
-  FETCH_COMPANY_MATCHES_SUCCESS,
-  FETCH_COMPANY_MATCHES,
+  FETCH_COMPANY_POSITIONS_FAILURE,
+  FETCH_COMPANY_POSITIONS_SUCCESS,
+  FETCH_COMPANY_POSITIONS,
+  FETCH_POSITION_CANDIDATES_FAILURE,
+  FETCH_POSITION_CANDIDATES_SUCCESS,
+  FETCH_POSITION_CANDIDATES,
   FETCH_POSITION_QUESTIONS_FAILURE,
   FETCH_POSITION_QUESTIONS_SUCCESS,
   FETCH_POSITION_QUESTIONS,
@@ -81,22 +84,46 @@ export function deleteSkill(payload) {
   };
 }
 
-export function fetchCompanyMatchesFailure(payload) {
+export function fetchCompanyPositionsFailure(payload) {
   return {
     payload,
-    type: FETCH_COMPANY_MATCHES_FAILURE,
+    type: FETCH_COMPANY_POSITIONS_FAILURE,
   };
 }
 
-export function fetchCompanyMatchesSuccess(payload) {
+export function fetchCompanyPositionsSuccess(payload) {
   return {
     payload,
-    type: FETCH_COMPANY_MATCHES_SUCCESS,
+    type: FETCH_COMPANY_POSITIONS_SUCCESS,
   };
 }
 
-export function fetchCompanyMatches() {
-  return { type: FETCH_COMPANY_MATCHES };
+export function fetchCompanyPositions(payload) {
+  return {
+    payload,
+    type: FETCH_COMPANY_POSITIONS,
+  };
+}
+
+export function fetchPositionCandidatesFailure(payload) {
+  return {
+    payload,
+    type: FETCH_POSITION_CANDIDATES_FAILURE,
+  };
+}
+
+export function fetchPositionCandidatesSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_POSITION_CANDIDATES_SUCCESS,
+  };
+}
+
+export function fetchPositionCandidates(payload) {
+  return {
+    payload,
+    type: FETCH_POSITION_CANDIDATES,
+  };
 }
 
 export function fetchPositionQuestionsFailure(payload) {
