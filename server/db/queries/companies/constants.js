@@ -4,8 +4,8 @@ const companyValues = [
   'contract_accepted_date',
   'created_date',
   'description',
-  'headquarter_location',
   'id',
+  'location',
   'size',
 ];
 

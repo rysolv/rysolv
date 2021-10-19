@@ -2,6 +2,7 @@ const { singleQuery } = require('../baseQueries');
 
 // Generate initial list of questions
 const questions = [
+  // hiring
   // experience
   {
     id: '4bef1f37-f09b-4515-a483-047faa0758cd',
@@ -110,6 +111,7 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
+  // company_position
   // description
   {
     id: '34cc19c1-38e3-43b4-b0e7-5fac04bedec4',
@@ -231,9 +233,34 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
-  // company_name
+  // company
+  // description
   {
-    id: '732c1caf-248d-4d8b-a90d-1567a3b91a29',
+    id: '97e4b49d-b178-48ce-865f-c707ef48c0a5',
+    category: 'company',
+    created_date: new Date(),
+    priority: 5,
+    question_key: 'description',
+    question_text: 'Description',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // location
+  {
+    id: '8b2245ce-709b-4e59-ac31-8a4af3359b89',
+    category: 'company',
+    created_date: new Date(),
+    priority: 3,
+    question_key: 'location',
+    question_text: 'Location',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // name
+  {
+    id: '6fb3d210-6120-4fa1-8771-87d5a7172342',
     category: 'company',
     created_date: new Date(),
     priority: 1,
@@ -243,9 +270,34 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
+  // size
+  {
+    id: 'e83bb9d4-0ef0-490c-8a09-e25a91d6d2ab',
+    category: 'company',
+    created_date: new Date(),
+    priority: 4,
+    question_key: 'size',
+    question_text: 'Company size',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // website
+  {
+    id: 'c114925b-d250-456b-9745-98db88274670',
+    category: 'company',
+    created_date: new Date(),
+    priority: 2,
+    question_key: 'website',
+    question_text: 'Company website',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
 ];
 
 const responses = [
+  // hiring
   // experience
   {
     id: '0f49a4a1-4ce2-4a7a-a3f1-8c45f22342dc',
@@ -510,6 +562,7 @@ const responses = [
     response_key: 'no_us_citizen',
     value: 'No',
   },
+  // company_position
   // description
   {
     id: '8d342d18-d93c-4f9f-9b19-9fd98038a5c4',
@@ -743,6 +796,76 @@ const responses = [
     question_id: '0bfa14b6-283d-4113-ab78-3fc21e21bcda',
     response_key: 'full_time',
     value: 'Full-Time',
+  },
+  // company
+  // description
+  {
+    id: '51c823d3-6961-45c4-85ee-3a13c4a9703d',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '97e4b49d-b178-48ce-865f-c707ef48c0a5',
+    response_key: 'description',
+    value: '',
+  },
+  // location
+  {
+    id: 'ef5428fa-8f93-4c90-9df7-4c34921343ce',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '8b2245ce-709b-4e59-ac31-8a4af3359b89',
+    response_key: 'location',
+    value: '',
+  },
+  // name
+  {
+    id: '2f9d015f-974d-489e-a6e8-aeed96486c90',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '6fb3d210-6120-4fa1-8771-87d5a7172342',
+    response_key: 'name',
+    value: '',
+  },
+  // size
+  {
+    id: 'c0c12949-b98c-4b8e-a424-148b57f3e117',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'e83bb9d4-0ef0-490c-8a09-e25a91d6d2ab',
+    response_key: 'small_startup',
+    value: '1 - 10',
+  },
+  {
+    id: 'bfcddde9-d1c7-492a-91e2-fd6505627817',
+    created_date: new Date(),
+    priority: 2,
+    question_id: 'e83bb9d4-0ef0-490c-8a09-e25a91d6d2ab',
+    response_key: 'startup',
+    value: '11 - 50',
+  },
+  {
+    id: '4ec7075b-957f-4e25-8256-ebdf34e997f5',
+    created_date: new Date(),
+    priority: 3,
+    question_id: 'e83bb9d4-0ef0-490c-8a09-e25a91d6d2ab',
+    response_key: 'mid_sized',
+    value: '51 - 250',
+  },
+  {
+    id: 'b6d518c1-c812-4be9-a178-b80aa2392d29',
+    created_date: new Date(),
+    priority: 4,
+    question_id: 'e83bb9d4-0ef0-490c-8a09-e25a91d6d2ab',
+    response_key: 'large',
+    value: '251 +',
+  },
+  // website
+  {
+    id: 'ffc15427-30ed-449e-a5ad-de9fce7781a9',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'c114925b-d250-456b-9745-98db88274670',
+    response_key: 'website',
+    value: '',
   },
 ];
 

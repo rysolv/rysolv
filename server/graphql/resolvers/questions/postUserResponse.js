@@ -36,8 +36,8 @@ const postUserResponse = async (
         company_url: 'https://google.com',
         created_date: new Date(),
         description: 'Test',
-        headquarter_location: 'San Francisco, CA',
         id: companyId,
+        location: 'San Francisco, CA',
         size: 1000,
       };
       await createCompany({ data: companyData });

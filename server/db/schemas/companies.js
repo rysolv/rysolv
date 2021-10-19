@@ -5,7 +5,7 @@ const alterCompaniesTable = `
   ADD COLUMN contract_accepted_date TIMESTAMP DEFAULT NULL,
   ADD COLUMN created_date TIMESTAMP,
   ADD COLUMN description TEXT,
-  ADD COLUMN headquarter_location VARCHAR(128),
+  ADD COLUMN location VARCHAR(128),
   ADD COLUMN size INT
 `;
 
