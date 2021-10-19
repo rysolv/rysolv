@@ -11,6 +11,7 @@ const {
   createCompanyPosition,
   createMessage,
   getCompanyPositions,
+  getPositionCandidates,
 } = require('./queries/companies');
 const {
   checkDuplicateIssue,
@@ -135,6 +136,7 @@ module.exports = {
   getOneTechnology,
   getOneUser,
   getOneUserSignUp,
+  getPositionCandidates,
   getPullRequestList,
   getQuestions,
   getRepoActivity,

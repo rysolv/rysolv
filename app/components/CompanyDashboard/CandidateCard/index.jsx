@@ -32,20 +32,20 @@ const UnsaveIcon = iconDictionary('bookmark');
 const CandidateCard = ({
   dispatchOpenModal,
   dispatchSaveCandidate,
+  id,
   index,
   isInterviewRequested,
   isLast,
   isSaved,
-  languages,
   lastPosition,
   location,
   name,
   percentMatch,
+  preferredLanguages,
   profilePic,
   salary,
   selectedPosition,
   type,
-  userId,
   yearsOfExperience,
 }) => {
   const ButtonIcon = isInterviewRequested ? RemoveIcon : AddIcon;
@@ -55,7 +55,7 @@ const CandidateCard = ({
   const CardIcon = isSaved ? UnsaveIcon : SaveIcon;
   const CardLabel = isSaved ? 'Unshortlist' : 'Shortlist';
 
-  const tableData = { positionId: selectedPosition, userId };
+  const tableData = { positionId: selectedPosition, userId: id };
 
   return (
     <CandidateCardContainer isLast={isLast} isSaved={isSaved}>
@@ -73,7 +73,7 @@ const CandidateCard = ({
         <CandidateCardUserInfo>
           <NameWrapper>{name}</NameWrapper>
           <PositionWrapper>{lastPosition}</PositionWrapper>
-          {languages.map((language, index) => (
+          {preferredLanguages.map((language, index) => (
             <StyledLanguageWrapper
               key={`${language}-${index}`}
               language={language}
@@ -114,20 +114,20 @@ const CandidateCard = ({
 CandidateCard.propTypes = {
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
+  id: T.string.isRequired,
   index: T.number.isRequired,
   isInterviewRequested: T.bool.isRequired,
   isLast: T.bool.isRequired,
   isSaved: T.bool.isRequired,
-  languages: T.array.isRequired,
   lastPosition: T.string.isRequired,
   location: T.string.isRequired,
   name: T.string.isRequired,
   percentMatch: T.number.isRequired,
+  preferredLanguages: T.array.isRequired,
   profilePic: T.string.isRequired,
   salary: T.string.isRequired,
   selectedPosition: T.string.isRequired,
   type: T.string.isRequired,
-  userId: T.string.isRequired,
   yearsOfExperience: T.string.isRequired,
 };
 

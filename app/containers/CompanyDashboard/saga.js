@@ -9,6 +9,8 @@ import {
   createPositionSuccess,
   fetchCompanyPositionsFailure,
   fetchCompanyPositionsSuccess,
+  fetchPositionCandidatesFailure,
+  fetchPositionCandidatesSuccess,
   fetchPositionQuestionsFailure,
   fetchPositionQuestionsSuccess,
   notifyCandidateFailure,
@@ -18,6 +20,7 @@ import {
 import {
   CREATE_POSITION,
   FETCH_COMPANY_POSITIONS,
+  FETCH_POSITION_CANDIDATES,
   FETCH_POSITION_QUESTIONS,
   NOTIFY_CANDIDATE,
 } from './constants';
@@ -70,7 +73,7 @@ export function* createPositionSaga({ payload }) {
   }
 }
 
-export function* fetchCompanyPositionSaga() {
+export function* fetchCompanyPositionsSaga() {
   const query = `
     query {
       getCompanyPositions(companyId: "5a888461-5ab0-4fd2-9585-a5797e795528") {
@@ -96,6 +99,46 @@ export function* fetchCompanyPositionSaga() {
     yield put(fetchCompanyPositionsSuccess({ positions }));
   } catch (error) {
     yield put(fetchCompanyPositionsFailure({ error }));
+  }
+}
+
+export function* fetchPositionCandidatesSaga({ payload }) {
+  const { positionId } = payload;
+  const query = `
+    query {
+      getPositionCandidates(positionId: "${positionId}") {
+        __typename
+        ... on PositionCandidatesArray {
+          candidates {
+            firstName
+            id
+            isHired
+            isInterviewRequested
+            isSaved
+            lastName
+            lastPosition
+            location
+            percentMatch
+            preferredLanguages
+            profilePic
+            salary
+            type
+            yearsOfExperience
+          }
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        getPositionCandidates: { candidates },
+      },
+    } = yield call(post, '/graphql', graphql);
+    yield put(fetchPositionCandidatesSuccess({ candidates }));
+  } catch (error) {
+    yield put(fetchPositionCandidatesFailure({ error }));
   }
 }
 
@@ -176,7 +219,8 @@ export function* notifyCandidateSaga({ payload }) {
 
 export default function* watcherSaga() {
   yield takeLatest(CREATE_POSITION, createPositionSaga);
-  yield takeLatest(FETCH_COMPANY_POSITIONS, fetchCompanyPositionSaga);
+  yield takeLatest(FETCH_COMPANY_POSITIONS, fetchCompanyPositionsSaga);
+  yield takeLatest(FETCH_POSITION_CANDIDATES, fetchPositionCandidatesSaga);
   yield takeLatest(FETCH_POSITION_QUESTIONS, fetchPositionQuestionsSaga);
   yield takeLatest(NOTIFY_CANDIDATE, notifyCandidateSaga);
 }

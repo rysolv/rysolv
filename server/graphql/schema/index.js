@@ -205,6 +205,10 @@ module.exports = buildSchema(`
     message: String
   }
 
+  type PositionCandidatesArray {
+    candidates: [User]
+  }
+
   type PullRequest {
     createdDate: Object!
     exists: Boolean
@@ -347,11 +351,17 @@ module.exports = buildSchema(`
     githubUsername: String
     id: ID!
     isGithubVerified: Boolean
+    isHired: Boolean
+    isInterviewRequested: Boolean
     isQuestionnaireComplete: Boolean
+    isSaved: Boolean
     issues: [Object]
     lastName: String
+    lastPosition: String
+    location: String
     modifiedDate: Object
     notifications: Boolean
+    percentMatch: Float
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
@@ -360,10 +370,13 @@ module.exports = buildSchema(`
     rejectedPullRequests: Int
     rep: Int
     repos: [Object]
+    salary: String
     stackoverflowLink: String
+    type: String
     upvotes: [ID]
     username: String
     watching: [Object]
+    yearsOfExperience: String
   }
 
   type UserArray {
@@ -452,6 +465,7 @@ module.exports = buildSchema(`
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!
     getIssueWatchList(issueId: ID!): [WatchList]!
+    getPositionCandidates(positionId: ID!): PositionCandidatesArray
     getPullRequestList(issueId: ID): [PullRequestList]!
     getQuestions(category: String!): QuestionResult
     getRepoActivity(repoId: ID): [Activity]!
