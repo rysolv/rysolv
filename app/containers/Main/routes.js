@@ -11,10 +11,11 @@ import TermsOfService from 'components/TermsOfService';
 import CodeScoring from 'containers/CodeScoring/Loadable';
 import CompanyDashboard from 'containers/CompanyDashboard/Loadable';
 import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
-import Main from 'containers/HomePage/Loadable';
+import CompanySignUp from 'containers/CompanySignUp/Loadable';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
 import Jobs from 'containers/Jobs';
+import Main from 'containers/HomePage/Loadable';
 import Overview from 'containers/Overview';
 import ReposAdd from 'containers/Repos/Add';
 import ReposDetail from 'containers/Repos/Detail';
@@ -33,6 +34,7 @@ const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
 const PublicCodeScoring = withAuth(publicConfig, CodeScoring);
 const PublicCompanyRecruitment = withAuth(publicConfig, CompanyRecruitment);
+const PublicCompanySignUp = withAuth(publicConfig, CompanySignUp);
 const PublicContact = withAuth(publicConfig, Contact);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
@@ -76,6 +78,7 @@ const Routes = () => (
     <Route exact path="/signin" component={PublicSignIn} />
     <Route exact path="/signin/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/signup" component={PublicSignIn} />
+    <Route exact path="/signup/company" component={PublicCompanySignUp} />
     <Route exact path="/signup/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/terms-of-service" component={PublicTermsOfService} />

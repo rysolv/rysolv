@@ -65,6 +65,13 @@ export const getCookie = cookie => {
   return '';
 };
 
+export const getQuestion = () => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const question = urlParams.get('question');
+  return Number(question);
+};
+
 export const getPaymentMethod = url => {
   const hostDictionary = {
     github: 'Github Sponsors',

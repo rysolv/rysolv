@@ -8,6 +8,7 @@ export const excludedPath = [
   'recruitment',
   'signin',
   'signup',
+  'signup/company',
 ];
 
 export const getInitialValue = {
