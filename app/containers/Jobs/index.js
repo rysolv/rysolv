@@ -95,8 +95,8 @@ const Jobs = ({
     dispatchChangeInput({ field: 'resume', value: filesArray });
   };
 
-  const questionProps = questions[step - 1];
   const step = getQuestion();
+  const questionProps = questions[step - 1];
 
   if (step && view === 0) {
     return <Redirect to="/jobs" />;

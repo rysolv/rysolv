@@ -19,6 +19,7 @@ import {
   inputError,
   resetState,
   submitCompanyResponse,
+  submitContractAccepted,
 } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -36,8 +37,10 @@ const CompanySignUp = ({
   dispatchInputError,
   dispatchResetState,
   dispatchSubmitCompanyResponse,
+  dispatchSubmitContractAccepted,
   error,
   form,
+  formErrors,
   handleNav,
   loading,
   match: { path },
@@ -45,22 +48,21 @@ const CompanySignUp = ({
   responseArray,
   view,
 }) => {
-  console.log('here');
   useEffect(() => {
     dispatchFetchQuestions({ category: 'company' });
     return dispatchResetState;
   }, []);
 
   const handleCancel = () => {
-    dispatchChangeView({ view: 0 });
-    handleNav(`${path}`);
+    dispatchResetState();
+    handleNav('/signup');
   };
   const handleSubmit = () => {
     dispatchSubmitCompanyResponse({ responseArray });
   };
 
-  const questionProps = questions[step - 1];
   const step = getQuestion();
+  const questionProps = questions[step - 1];
 
   return (
     <ViewContainer>
@@ -74,8 +76,10 @@ const CompanySignUp = ({
           dispatchChangeInput,
           dispatchChangeView,
           dispatchInputError,
+          dispatchSubmitContractAccepted,
           error,
           form,
+          formErrors,
           handleCancel,
           handleNav,
           handleSubmit,
@@ -98,8 +102,10 @@ CompanySignUp.propTypes = {
   dispatchInputError: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
   dispatchSubmitCompanyResponse: T.func.isRequired,
+  dispatchSubmitContractAccepted: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
   form: T.object.isRequired,
+  formErrors: T.object.isRequired,
   handleNav: T.func.isRequired,
   loading: T.bool.isRequired,
   match: T.object.isRequired,
@@ -114,6 +120,7 @@ const mapStateToProps = createStructuredSelector({
    */
   error: makeSelectCompanySignUp('error'),
   form: makeSelectCompanySignUp('form'),
+  formErrors: makeSelectCompanySignUp('formErrors'),
   loading: makeSelectCompanySignUp('loading'),
   questions: makeSelectCompanySignUpQuestions(),
   responseArray: makeSelectCompanyResponseArray(),
@@ -131,6 +138,8 @@ const mapDispatchToProps = dispatch => ({
   dispatchResetState: () => dispatch(resetState()),
   dispatchSubmitCompanyResponse: payload =>
     dispatch(submitCompanyResponse(payload)),
+  dispatchSubmitContractAccepted: payload =>
+    dispatch(submitContractAccepted(payload)),
   /*
    * Reducer : Router
    */

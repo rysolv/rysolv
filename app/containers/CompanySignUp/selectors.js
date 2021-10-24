@@ -71,7 +71,7 @@ const makeSelectCompanySignUpQuestions = () =>
             options: responses.map(({ value }) => ({ value })),
             optionType: option,
             placeholder:
-              hasPlaceholder && !form[snakeToCamel(questionKey)].value.length
+              hasPlaceholder && !form[snakeToCamel(questionKey)].length
                 ? placeholder
                 : '',
             question: questionText,

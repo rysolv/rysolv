@@ -7,8 +7,14 @@ import {
   fetchQuestionsSuccess,
   submitCompanyResponseFailure,
   submitCompanyResponseSuccess,
+  submitContractAcceptedFailure,
+  submitContractAcceptedSuccess,
 } from './actions';
-import { FETCH_QUESTIONS, SUBMIT_COMPANY_RESPONSE } from './constants';
+import {
+  FETCH_QUESTIONS,
+  SUBMIT_COMPANY_RESPONSE,
+  SUBMIT_CONTRACT_ACCEPTED,
+} from './constants';
 
 export function* fetchQuestionsSaga({ payload }) {
   const { category } = payload;
@@ -88,7 +94,37 @@ export function* submitCompanyResponseSaga({ payload }) {
   }
 }
 
+export function* submitContractAcceptedSaga({ payload }) {
+  const { contractAccepted } = payload;
+  const query = `
+      mutation {
+        postContractAccepted(contractAccepted: ${contractAccepted}) {
+          __typename
+          ... on Success {
+            message
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        postContractAccepted: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(submitContractAcceptedSuccess());
+  } catch (error) {
+    yield put(submitContractAcceptedFailure({ error }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(FETCH_QUESTIONS, fetchQuestionsSaga);
   yield takeLatest(SUBMIT_COMPANY_RESPONSE, submitCompanyResponseSaga);
+  yield takeLatest(SUBMIT_CONTRACT_ACCEPTED, submitContractAcceptedSaga);
 }

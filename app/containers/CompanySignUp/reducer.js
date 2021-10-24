@@ -12,6 +12,9 @@ import {
   SUBMIT_COMPANY_RESPONSE_FAILURE,
   SUBMIT_COMPANY_RESPONSE_SUCCESS,
   SUBMIT_COMPANY_RESPONSE,
+  SUBMIT_CONTRACT_ACCEPTED_FAILURE,
+  SUBMIT_CONTRACT_ACCEPTED_SUCCESS,
+  SUBMIT_CONTRACT_ACCEPTED,
 } from './constants';
 
 export const initialState = {
@@ -88,6 +91,21 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SUBMIT_COMPANY_RESPONSE: {
+      draft.error = null;
+      draft.loading = true;
+      break;
+    }
+    case SUBMIT_CONTRACT_ACCEPTED_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      draft.loading = false;
+      break;
+    }
+    case SUBMIT_CONTRACT_ACCEPTED_SUCCESS: {
+      draft.loading = false;
+      break;
+    }
+    case SUBMIT_CONTRACT_ACCEPTED: {
       draft.error = null;
       draft.loading = true;
       break;

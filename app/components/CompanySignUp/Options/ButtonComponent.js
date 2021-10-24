@@ -5,8 +5,8 @@ import T from 'prop-types';
 import { StyledPrimaryButton } from './styledComponents';
 
 export const SingleButton = ({ dispatchChangeInput, form, id, options }) => {
-  const [selected, setSelected] = useState(form[id].value || null);
-  useEffect(() => setSelected(form[id].value || null), [id]);
+  const [selected, setSelected] = useState(form[id] || null);
+  useEffect(() => setSelected(form[id] || null), [id]);
 
   const handleClick = ({ value }) => {
     const tempValue = selected && selected === value ? '' : value;

@@ -9,6 +9,9 @@ import {
   SUBMIT_COMPANY_RESPONSE_FAILURE,
   SUBMIT_COMPANY_RESPONSE_SUCCESS,
   SUBMIT_COMPANY_RESPONSE,
+  SUBMIT_CONTRACT_ACCEPTED_FAILURE,
+  SUBMIT_CONTRACT_ACCEPTED_SUCCESS,
+  SUBMIT_CONTRACT_ACCEPTED,
 } from './constants';
 
 export function changeInput(payload) {
@@ -72,5 +75,23 @@ export function submitCompanyResponse(payload) {
   return {
     payload,
     type: SUBMIT_COMPANY_RESPONSE,
+  };
+}
+
+export function submitContractAcceptedFailure(payload) {
+  return {
+    payload,
+    type: SUBMIT_CONTRACT_ACCEPTED_FAILURE,
+  };
+}
+
+export function submitContractAcceptedSuccess() {
+  return { type: SUBMIT_CONTRACT_ACCEPTED_SUCCESS };
+}
+
+export function submitContractAccepted(payload) {
+  return {
+    payload,
+    type: SUBMIT_CONTRACT_ACCEPTED,
   };
 }

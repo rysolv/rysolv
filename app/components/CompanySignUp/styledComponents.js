@@ -16,8 +16,7 @@ const { laptop, mobile, mobileS } = mediaQueriesByDevice;
 
 export const ButtonGroup = styled.div`
   display: flex;
-  justify-content: ${({ shouldDisplayBack }) =>
-    shouldDisplayBack ? 'space-between' : 'flex-end'};
+  justify-content: space-between;
   width: 100%;
 `;
 
@@ -83,7 +82,7 @@ export const StyledButton = styled(
   font-family: ${defaultFontFamily};
   font-size: 1.6rem;
   font-weight: 500;
-  margin: 1rem;
+  margin: 0;
   padding: 0rem;
   text-transform: none;
 
@@ -93,7 +92,6 @@ export const StyledButton = styled(
 
   svg {
     height: 2rem;
-    margin-right: 1rem;
     width: 2rem;
   }
 

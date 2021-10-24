@@ -11,9 +11,9 @@ const Autocomplete = ({
   options,
   placeholder,
 }) => {
-  const [selected, setSelected] = useState(form[id].value || []);
+  const [selected, setSelected] = useState(form[id] || []);
   useEffect(() => {
-    setSelected(form[id].value || []);
+    setSelected(form[id] || []);
   }, [id]);
 
   const handleChange = value => {

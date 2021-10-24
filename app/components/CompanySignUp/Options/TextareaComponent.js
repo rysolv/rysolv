@@ -12,9 +12,9 @@ export const Textarea = ({
   <StyledTextarea
     height="12.3rem"
     onBlur={() => handleValidateInput({ field: id, values: form })}
-    onChange={e => dispatchChangeInput(e.target.value)}
+    onChange={e => dispatchChangeInput({ field: id, value: e.target.value })}
     type="text"
-    value={form[id].value}
+    value={form[id]}
   />
 );
 

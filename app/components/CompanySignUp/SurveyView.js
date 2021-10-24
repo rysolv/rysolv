@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 
 import { ProgressBar } from 'components/base_ui';
-import { validateOneField } from 'containers/Jobs/helpers';
+import { validateOneField } from 'containers/CompanySignUp/helpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import optionDictionary from './Options';
@@ -25,6 +25,7 @@ const SurveyView = ({
   dispatchChangeInput,
   dispatchInputError,
   form,
+  formErrors,
   handleCancel,
   handleNav,
   handleSubmit,
@@ -43,15 +44,7 @@ const SurveyView = ({
   const [nextDisabled, setNextDisabled] = useState(false);
   const [submitDisabled, setSubmitDisabled] = useState(false);
 
-  const checkInputDisabled = input => {
-    let disabled = true;
-    if (Array.isArray(form[input].value)) {
-      disabled = !form[input].value.length;
-    } else {
-      disabled = form[input].value === '';
-    }
-    return disabled;
-  };
+  const checkInputDisabled = input => form[input] === '';
 
   useEffect(() => {
     const tempNextDisabled = required
@@ -61,7 +54,6 @@ const SurveyView = ({
       ? !Object.keys(form).every(input => checkInputDisabled(input)) ||
         hasInputErrors
       : hasInputErrors;
-
     setNextDisabled(tempNextDisabled);
     setSubmitDisabled(tempSubmitDisabled);
   }, [checkInputDisabled, form, hasInputErrors]);
@@ -88,14 +80,15 @@ const SurveyView = ({
       },
     });
   };
-  const hasInputErrors = !Object.keys(form).every(
-    input => form[input].error === '' || form[input].error === undefined,
+  const hasInputErrors = !Object.keys(formErrors).every(
+    input => formErrors[input] === '',
   );
 
   const OptionToRender = optionDictionary[optionType];
   const optionProps = {
     dispatchChangeInput,
     form,
+    formErrors,
     handleValidateInput,
     id,
     limit,
@@ -168,6 +161,7 @@ SurveyView.propTypes = {
   dispatchChangeInput: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   form: T.object.isRequired,
+  formErrors: T.object.isRequired,
   handleCancel: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleSubmit: T.func.isRequired,

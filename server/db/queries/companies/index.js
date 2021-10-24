@@ -3,6 +3,7 @@ const createCompanyPosition = require('./createCompanyPosition');
 const createMessage = require('./createMessage');
 const getCompanyPositions = require('./getCompanyPositions');
 const getPositionCandidates = require('./getPositionCandidates');
+const postContractAccepted = require('./postContractAccepted');
 
 module.exports = {
   createCompany,
@@ -10,4 +11,5 @@ module.exports = {
   createMessage,
   getCompanyPositions,
   getPositionCandidates,
+  postContractAccepted,
 };

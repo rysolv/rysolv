@@ -6,6 +6,7 @@ import { Input, InputError } from './styledComponents';
 export const SingleInput = ({
   dispatchChangeInput,
   form,
+  formErrors,
   handleValidateInput,
   id,
   placeholder,
@@ -18,15 +19,16 @@ export const SingleInput = ({
       onChange={e => dispatchChangeInput({ field: id, value: e.target.value })}
       placeholder={placeholder}
       type={type}
-      value={form[id].value}
+      value={form[id]}
     />
-    <InputError>{form[id].error}</InputError>
+    <InputError>{formErrors[id]}</InputError>
   </Fragment>
 );
 
 SingleInput.propTypes = {
   dispatchChangeInput: T.func.isRequired,
   form: T.object.isRequired,
+  formErrors: T.object.isRequired,
   handleValidateInput: T.func.isRequired,
   id: T.string.isRequired,
   placeholder: T.string.isRequired,

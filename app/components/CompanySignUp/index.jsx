@@ -10,7 +10,6 @@ const CompanySignUp = ({ view, ...restProps }) => {
     document.title = 'Company Sign Up';
   }, []);
   const ViewToRender = viewDictionary[view];
-
   return (
     <CompanySignUpContainer>
       <ViewToRender {...restProps} />
