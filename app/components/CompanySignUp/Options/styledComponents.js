@@ -1,25 +1,24 @@
-import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { BaseAutocomplete, PrimaryButton } from 'components/base_ui';
+import { BaseAutocomplete } from 'components/base_ui';
 import {
-  darkBlueColor,
+  candidateGreyColor,
   defaultFontSize,
-  errorRed,
-  languageBackground,
-  languageText,
-  whiteColor,
+  lightBlueColor,
+  textColor,
 } from 'defaultStyleHelper';
 
-export const Input = styled.input`
-  background: ${whiteColor};
+const baseInputStyle = css`
+  background: ${candidateGreyColor};
   border-radius: 0.7rem;
-  border: 0.2rem solid ${darkBlueColor};
+  border: none;
+  color: ${textColor};
   font-size: 1.6rem;
   font-weight: 400;
-  height: 4.9rem;
+  height: ${({ height, multiple }) => (multiple ? 'auto' : height)};
   line-height: 1.936rem;
   margin-top: 0.8rem;
+  min-height: ${({ height, multiple }) => (multiple ? height : 'auto')};
   outline: none;
   overflow: hidden;
   padding: 1.6rem 2.4rem;
@@ -27,44 +26,80 @@ export const Input = styled.input`
   width: 100%;
 `;
 
-export const InputError = styled.div`
-  color: ${errorRed};
-  font-size: ${defaultFontSize};
-  height: 2.4rem;
-  padding: 0.5rem 0;
-  text-align: left;
-`;
-
-export const StyledBaseAutocomplete = styled(BaseAutocomplete)`
-  .tag {
-    background-color: ${languageBackground};
-    color: ${languageText};
-    font-size: 1.2rem;
-  }
-`;
-
-export const StyledPrimaryButton = styled(({ isSelected, ...restProps }) => (
-  <PrimaryButton {...restProps} />
-))`
+export const Autocomplete = styled(BaseAutocomplete)`
+  ${baseInputStyle};
   align-items: center;
-  background-color: ${({ isSelected }) =>
-    isSelected ? darkBlueColor : whiteColor};
-  border-radius: 0.8rem;
-  border: 0.2rem solid ${darkBlueColor};
-  color: ${({ isSelected }) => (isSelected ? whiteColor : darkBlueColor)};
   display: flex;
-  font-size: 1.6rem;
-  font-weight: 700;
-  height: 4.8rem;
-  line-height: 1.936rem;
-  margin: 1rem auto;
-  min-width: 20rem;
-  text-transform: initial;
+  padding: 0;
 
-  &:hover {
-    background-color: ${darkBlueColor};
-    color: ${whiteColor};
+  .inputRoot {
+    &:after,
+    &:before {
+      border-bottom: none;
+    }
+    border-bottom: none;
+    padding: 0 2.4rem;
+  }
+
+  .MuiAutocomplete-clearIndicator {
+    display: none;
+  }
+
+  .MuiAutocomplete-endAdornment {
+    right: 1rem;
+  }
+
+  .MuiFormControl-root {
+    margin: 0;
+  }
+
+  .MuiInputBase-input {
+    font-size: 1.6rem;
+  }
+
+  span {
+    font-size: 1.6rem;
+  }
+
+  svg {
+    height: 2.4rem;
+    width: 2.4rem;
+  }
+
+  .tag {
+    background-color: #ecf3fc;
+    border-radius: 0.7rem;
+
+    &.deletable {
+      background-color: #ecf3fc;
+
+      &:focus {
+        background-color: #ecf3fc;
+      }
+    }
+
+    .MuiChip-label {
+      color: ${lightBlueColor};
+      font-size: ${defaultFontSize};
+      font-weight: 400;
+    }
+
+    svg {
+      color: #a2c6f0;
+      height: 2rem;
+      width: 2rem;
+
+      &:hover {
+        color: #a2c6f0;
+      }
+    }
   }
 `;
 
-export const StyledTextarea = styled.textarea``;
+export const Input = styled.input`
+  ${baseInputStyle};
+`;
+
+export const Textarea = styled.textarea`
+  ${baseInputStyle};
+`;

@@ -5,17 +5,17 @@ export const optionDictionary = {
     option: 'textarea',
   },
   location: {
-    option: 'autocomplete',
+    option: 'locationAutocomplete',
   },
   name: {
-    option: 'singleInput',
+    option: 'input',
     placeholder: 'Company name',
   },
   size: {
-    option: 'singleButton',
+    option: 'autocomplete',
   },
   website: {
-    option: 'singleInput',
+    option: 'input',
     placeholder: 'Company website',
   },
 };

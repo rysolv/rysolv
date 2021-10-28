@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { css } from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
+import { ErrorSuccessBanner } from 'components/base_ui';
 import {
   darkBlueColor,
   defaultFontFamily,
+  defaultFontSize,
+  errorRed,
   headerFontSize,
+  lightBlueColor,
   lightGreyColor,
   textColor,
   whiteColor,
@@ -14,10 +18,31 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptop, mobile, mobileS } = mediaQueriesByDevice;
 
+const baseOptionTextStyle = css`
+  font-weight: 400;
+  line-height: 1.936rem;
+`;
+
 export const ButtonGroup = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+`;
+
+export const CheckboxWrapper = styled.div`
+  margin: 3rem 0;
+  text-align: left;
+
+  .PrivateSwitchBase-root-1 {
+    margin: 0 0.8rem 0.25rem 0;
+    padding: 0;
+  }
+
+  svg {
+    color: ${lightBlueColor};
+    height: 2.4rem;
+    width: 2.4rem;
+  }
 `;
 
 export const CompanySignUpContainer = styled.div`
@@ -32,6 +57,10 @@ export const CompanySignUpContainer = styled.div`
   }
 `;
 
+export const ContentGroup = styled.div`
+  width: 75%;
+`;
+
 export const DescriptionWrapper = styled.div`
   color: ${lightGreyColor};
   font-size: 2rem;
@@ -39,7 +68,7 @@ export const DescriptionWrapper = styled.div`
   padding: 1rem;
 `;
 
-export const JobsHeader = styled.div`
+export const FormViewHeader = styled.div`
   color: ${textColor};
   font-size: ${headerFontSize};
   margin-bottom: 5rem;
@@ -48,6 +77,31 @@ export const JobsHeader = styled.div`
   ${mobile} {
     margin: 2rem 0;
   }
+`;
+
+export const LegalTextWrapper = styled.div`
+  margin-top: ${({ isFirst }) => (isFirst ? '1rem' : '2rem')};
+  text-align: justify;
+`;
+
+export const OptionDescription = styled.div`
+  ${baseOptionTextStyle};
+  color: #a9acae;
+  font-size: 1.4rem;
+  margin-top: 1rem;
+`;
+
+export const OptionError = styled.div`
+  color: ${errorRed};
+  font-size: ${defaultFontSize};
+  height: 2.4rem;
+  padding: 0.5rem 0;
+`;
+
+export const OptionLabel = styled.div`
+  ${baseOptionTextStyle};
+  color: ${textColor};
+  font-size: 1.6rem;
 `;
 
 export const OptionWrapper = styled.div`
@@ -100,6 +154,11 @@ export const StyledButton = styled(
   }
 `;
 
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  height: auto;
+  margin-bottom: 3rem;
+`;
+
 export const StyledFocusDiv = styled.div`
   &:focus {
     outline: none;
@@ -117,16 +176,16 @@ export const ViewContainer = styled.div`
     isFinalView ? 'inherit' : 'space-between'};
   margin: 5rem 0 0;
   min-height: 50rem;
-  padding: ${({ isCalendlyView }) => (isCalendlyView ? '0' : '7.5rem 10%')};
+  padding: 7.5rem 10%;
   text-align: center;
   width: 100%;
 
   ${laptop} {
-    padding: ${({ isCalendlyView }) => (isCalendlyView ? '0' : '4rem 3.2rem')};
+    padding: 4rem 3.2rem;
   }
 
   ${mobile} {
-    padding: ${({ isCalendlyView }) => (isCalendlyView ? '0' : '2rem')};
+    padding: 2rem;
   }
 
   @media (max-width: 370px) {

@@ -4,6 +4,7 @@ import produce from 'immer';
 import {
   CHANGE_INPUT,
   CHANGE_VIEW,
+  CLEAR_ALERTS,
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
@@ -18,6 +19,7 @@ import {
 } from './constants';
 
 export const initialState = {
+  alerts: { error: false },
   error: null,
   loading: true,
   form: {
@@ -52,6 +54,10 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
       draft.view = view;
       break;
     }
+    case CLEAR_ALERTS: {
+      draft.alerts = initialState.alerts;
+      break;
+    }
     case FETCH_QUESTIONS_FAILURE: {
       const { error } = payload;
       draft.error = error;
@@ -82,7 +88,7 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
     }
     case SUBMIT_COMPANY_RESPONSE_FAILURE: {
       const { error } = payload;
-      draft.error = error;
+      draft.alerts.error = error;
       draft.loading = false;
       break;
     }
@@ -91,13 +97,13 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SUBMIT_COMPANY_RESPONSE: {
-      draft.error = null;
+      draft.alerts = initialState.alerts;
       draft.loading = true;
       break;
     }
     case SUBMIT_CONTRACT_ACCEPTED_FAILURE: {
       const { error } = payload;
-      draft.error = error;
+      draft.alerts.error = error;
       draft.loading = false;
       break;
     }
@@ -106,7 +112,7 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SUBMIT_CONTRACT_ACCEPTED: {
-      draft.error = null;
+      draft.alerts = initialState.alerts;
       draft.loading = true;
       break;
     }

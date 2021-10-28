@@ -1,11 +1,11 @@
-import { SingleButton } from './ButtonComponent';
-import { SingleInput } from './InputComponent';
-import AutocompleteComponent from './AutocompleteComponent';
-import Textarea from './TextareaComponent';
+import AutocompleteOption from './Autocomplete';
+import InputOption from './Input';
+import LocationAutocompleteOption from './LocationAutocomplete';
+import TextareaOption from './Textarea';
 
 export default {
-  autocomplete: AutocompleteComponent,
-  singleButton: SingleButton,
-  singleInput: SingleInput,
-  textarea: Textarea,
+  autocomplete: AutocompleteOption,
+  input: InputOption,
+  locationAutocomplete: LocationAutocompleteOption,
+  textarea: TextareaOption,
 };

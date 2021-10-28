@@ -1,7 +1,7 @@
 import AgreementView from './AgreementView';
-import SurveyView from './SurveyView';
+import FormView from './FormView';
 
 export default {
-  1: SurveyView,
-  0: AgreementView,
+  0: FormView,
+  1: AgreementView,
 };

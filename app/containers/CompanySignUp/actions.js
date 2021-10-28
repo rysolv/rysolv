@@ -1,6 +1,7 @@
 import {
   CHANGE_INPUT,
   CHANGE_VIEW,
+  CLEAR_ALERTS,
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
@@ -26,6 +27,10 @@ export function changeView(payload) {
     payload,
     type: CHANGE_VIEW,
   };
+}
+
+export function clearAlerts() {
+  return { type: CLEAR_ALERTS };
 }
 
 export function fetchQuestionsFailure(payload) {

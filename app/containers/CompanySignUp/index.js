@@ -8,19 +8,20 @@ import { withRouter } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
 import CompanySignUpView from 'components/CompanySignUp';
-import { getQuestion } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import {
   changeInput,
   changeView,
+  clearAlerts,
   fetchQuestions,
   inputError,
   resetState,
   submitCompanyResponse,
   submitContractAccepted,
 } from './actions';
+import { validateOneField } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import {
@@ -31,8 +32,10 @@ import {
 import { ViewContainer } from './styledComponents';
 
 const CompanySignUp = ({
+  alerts,
   dispatchChangeInput,
   dispatchChangeView,
+  dispatchClearAlerts,
   dispatchFetchQuestions,
   dispatchInputError,
   dispatchResetState,
@@ -43,7 +46,6 @@ const CompanySignUp = ({
   formErrors,
   handleNav,
   loading,
-  match: { path },
   questions,
   responseArray,
   view,
@@ -60,9 +62,14 @@ const CompanySignUp = ({
   const handleSubmit = () => {
     dispatchSubmitCompanyResponse({ responseArray });
   };
-
-  const step = getQuestion();
-  const questionProps = questions[step - 1];
+  const handleValidateInput = ({ field, values }) => {
+    const validationError = validateOneField({ field, values }) || '';
+    dispatchInputError({
+      errors: {
+        [field]: validationError,
+      },
+    });
+  };
 
   return (
     <ViewContainer>
@@ -73,22 +80,18 @@ const CompanySignUp = ({
         isRequiredData
         loading={loading}
         propsToPassDown={{
+          alerts,
           dispatchChangeInput,
           dispatchChangeView,
-          dispatchInputError,
+          dispatchClearAlerts,
           dispatchSubmitContractAccepted,
-          error,
           form,
           formErrors,
           handleCancel,
-          handleNav,
           handleSubmit,
-          loading,
-          path,
-          step,
-          steps: questions.length,
+          handleValidateInput,
+          questions,
           view,
-          ...questionProps,
         }}
       />
     </ViewContainer>
@@ -96,8 +99,10 @@ const CompanySignUp = ({
 };
 
 CompanySignUp.propTypes = {
+  alerts: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeView: T.func.isRequired,
+  dispatchClearAlerts: T.func.isRequired,
   dispatchFetchQuestions: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
@@ -108,7 +113,6 @@ CompanySignUp.propTypes = {
   formErrors: T.object.isRequired,
   handleNav: T.func.isRequired,
   loading: T.bool.isRequired,
-  match: T.object.isRequired,
   questions: T.array.isRequired,
   responseArray: T.array.isRequired,
   view: T.number.isRequired,
@@ -118,6 +122,7 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : CompanySignUp
    */
+  alerts: makeSelectCompanySignUp('alerts'),
   error: makeSelectCompanySignUp('error'),
   form: makeSelectCompanySignUp('form'),
   formErrors: makeSelectCompanySignUp('formErrors'),
@@ -133,6 +138,7 @@ const mapDispatchToProps = dispatch => ({
    */
   dispatchChangeInput: payload => dispatch(changeInput(payload)),
   dispatchChangeView: payload => dispatch(changeView(payload)),
+  dispatchClearAlerts: () => dispatch(clearAlerts()),
   dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),
   dispatchResetState: () => dispatch(resetState()),
