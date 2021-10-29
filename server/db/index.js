@@ -12,7 +12,7 @@ const {
   createMessage,
   getCompanyPositions,
   getPositionCandidates,
-  postContractAcceptedQuery,
+  postContractAccepted,
 } = require('./queries/companies');
 const {
   checkDuplicateIssue,
@@ -158,7 +158,7 @@ module.exports = {
   getUserWatchList,
   insertGitUser,
   insertUserEmail,
-  postContractAcceptedQuery,
+  postContractAccepted,
   postUserResponse,
   removeAttempting,
   removeWatching,

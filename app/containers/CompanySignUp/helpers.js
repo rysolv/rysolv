@@ -24,14 +24,10 @@ const validationPropsByField = {
   website: { type: 'linkInput' },
 };
 
-export const validateFields = ({ questions, values }) =>
+export const validateFields = ({ values }) =>
   Object.keys(values).reduce(
     (acc, field) => {
-      const [{ required }] = questions.filter(
-        question => field === question.id,
-      );
-      const validatedValue =
-        validateOneField({ field, required, values }) || '';
+      const validatedValue = validateOneField({ field, values }) || '';
       if (validatedValue) {
         acc.isValidated = false;
       }
@@ -41,10 +37,10 @@ export const validateFields = ({ questions, values }) =>
     { isValidated: true, validationErrors: {} },
   );
 
-export const validateOneField = ({ field, required, values }) => {
+export const validateOneField = ({ field, values }) => {
   const value = values[field];
   return validate({
-    required,
+    required: true,
     value,
     ...validationPropsByField[field],
   });

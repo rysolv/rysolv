@@ -7,7 +7,6 @@ const {
   sendEmail,
 } = require('../../../helpers');
 const {
-  createCompany,
   createCompanyPosition,
   createLanguage,
   createPositionTechStack,
@@ -30,18 +29,6 @@ const postUserResponse = async (
     if (authError || !userId) throw new CustomError(authError);
     const { languages } = await getUserLanguages({ userId });
     const positionId = uuidv4();
-    if (!companyId && positionId) {
-      const companyData = {
-        company_name: 'Google',
-        company_url: 'https://google.com',
-        created_date: new Date(),
-        description: 'Test',
-        id: companyId,
-        location: 'San Francisco, CA',
-        size: 1000,
-      };
-      await createCompany({ data: companyData });
-    }
 
     if (companyId && positionId) {
       const data = { company_id: companyId, id: positionId };

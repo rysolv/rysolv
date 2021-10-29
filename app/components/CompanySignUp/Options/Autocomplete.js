@@ -34,9 +34,11 @@ const AutocompleteOption = ({
   );
 };
 
+AutocompleteOption.defaultProps = { multiple: false };
+
 AutocompleteOption.propTypes = {
   handleChangeInput: T.func.isRequired,
-  multiple: T.bool.isRequired,
+  multiple: T.bool,
   onBlur: T.func.isRequired,
   options: T.array.isRequired,
   value: T.oneOfType([T.array, T.string]).isRequired,

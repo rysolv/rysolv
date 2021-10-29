@@ -6,15 +6,17 @@ import iconDictionary from 'utils/iconDictionary';
 import optionDictionary from './Options';
 import {
   ButtonGroup,
-  FormViewHeader,
+  DescriptionWrapper,
   OptionDescription,
   OptionError,
   OptionLabel,
   OptionWrapper,
+  QuestionWrapper,
   StyledButton,
   StyledErrorSuccessBanner,
   StyledFocusDiv,
   ViewContainer,
+  ContentGroup,
 } from './styledComponents';
 
 const NextIcon = iconDictionary('navigateNext');
@@ -22,23 +24,30 @@ const NextIcon = iconDictionary('navigateNext');
 const FormView = ({
   alerts: { error },
   dispatchChangeInput,
+  dispatchChangeView,
   dispatchClearAlerts,
-  form,
-  formErrors,
+  formErrors: { companyInfo: companyInfoFormErrors },
+  forms: { companyInfo: companyInfoForm },
   handleCancel,
-  handleSubmit,
   handleValidateInput,
   questions,
 }) => {
-  useEffect(() => dispatchClearAlerts, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    return dispatchClearAlerts;
+  }, []);
 
-  const hasErrors = Object.keys(formErrors).some(input => !!formErrors[input]);
-  const isComplete = Object.keys(form).every(input => !!form[input]);
+  const hasErrors = Object.keys(companyInfoFormErrors).some(
+    input => !!companyInfoFormErrors[input],
+  );
+  const isComplete = Object.keys(companyInfoForm).every(
+    input => !!companyInfoForm[input],
+  );
   const shouldSubmit = !hasErrors && isComplete;
 
   const handleKeypress = ({ key }) => {
     if (key === 'Enter') {
-      if (shouldSubmit) handleSubmit();
+      if (shouldSubmit) dispatchChangeView({ view: 1 });
     }
   };
 
@@ -49,41 +58,55 @@ const FormView = ({
       tabIndex="0"
     >
       <ViewContainer>
-        <FormViewHeader>Tell us a bit about your company.</FormViewHeader>
         <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
-        {questions.map(
-          ({
-            description,
-            id,
-            options,
-            optionType,
-            question,
-            ...restProps
-          }) => {
-            const OptionToRender = optionDictionary[optionType];
+        <QuestionWrapper>Tell us a bit about your company.</QuestionWrapper>
+        <ContentGroup>
+          <DescriptionWrapper>
+            Complete the form to get access to qualified candidates waiting for
+            you.
+          </DescriptionWrapper>
+          {questions.map(
+            ({
+              description,
+              id,
+              options,
+              optionType,
+              question,
+              ...restProps
+            }) => {
+              const OptionToRender = optionDictionary[optionType];
 
-            return (
-              <OptionWrapper key={`option-${id}`}>
-                <OptionLabel>{question}</OptionLabel>
-                <OptionDescription>{description}</OptionDescription>
-                <OptionToRender
-                  dispatchChangeInput={dispatchChangeInput}
-                  id={id}
-                  onBlur={() =>
-                    handleValidateInput({
-                      field: id,
-                      values: form,
-                    })
-                  }
-                  options={options}
-                  value={form[id]}
-                  {...restProps}
-                />
-                <OptionError>{formErrors[id]}</OptionError>
-              </OptionWrapper>
-            );
-          },
-        )}
+              const handleChangeInput = (value, inputField) => {
+                dispatchChangeInput({
+                  field: inputField || id,
+                  form: 'companyInfo',
+                  value,
+                });
+              };
+
+              return (
+                <OptionWrapper key={`option-${id}`}>
+                  <OptionLabel>{question}</OptionLabel>
+                  <OptionDescription>{description}</OptionDescription>
+                  <OptionToRender
+                    handleChangeInput={handleChangeInput}
+                    id={id}
+                    onBlur={() =>
+                      handleValidateInput({
+                        field: id,
+                        values: companyInfoForm,
+                      })
+                    }
+                    options={options}
+                    value={companyInfoForm[id]}
+                    {...restProps}
+                  />
+                  <OptionError>{companyInfoFormErrors[id]}</OptionError>
+                </OptionWrapper>
+              );
+            },
+          )}
+        </ContentGroup>
         <ButtonGroup>
           <StyledButton disableRipple onClick={handleCancel}>
             Cancel
@@ -91,7 +114,7 @@ const FormView = ({
           <StyledButton
             disabled={!shouldSubmit}
             disableRipple
-            onClick={handleSubmit}
+            onClick={() => dispatchChangeView({ view: 1 })}
           >
             Continue
             {NextIcon}
@@ -105,11 +128,11 @@ const FormView = ({
 FormView.propTypes = {
   alerts: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeView: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
-  form: T.object.isRequired,
   formErrors: T.object.isRequired,
+  forms: T.object.isRequired,
   handleCancel: T.func.isRequired,
-  handleSubmit: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   questions: T.array.isRequired,
 };

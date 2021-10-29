@@ -29,12 +29,12 @@ const privateConfig = { isAdmin: false, isPrivate: true };
 const publicConfig = { isAdmin: false, isPrivate: false };
 
 const PrivateCompanyDashboard = withAuth(privateConfig, CompanyDashboard);
+const PrivateCompanySignUp = withAuth(privateConfig, CompanySignUp);
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
 const PublicCodeScoring = withAuth(publicConfig, CodeScoring);
 const PublicCompanyRecruitment = withAuth(publicConfig, CompanyRecruitment);
-const PublicCompanySignUp = withAuth(publicConfig, CompanySignUp);
 const PublicContact = withAuth(publicConfig, Contact);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
@@ -78,7 +78,7 @@ const Routes = () => (
     <Route exact path="/signin" component={PublicSignIn} />
     <Route exact path="/signin/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/signup" component={PublicSignIn} />
-    <Route exact path="/signup/company" component={PublicCompanySignUp} />
+    <Route exact path="/signup/company" component={PrivateCompanySignUp} />
     <Route exact path="/signup/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/terms-of-service" component={PublicTermsOfService} />

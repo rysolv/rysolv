@@ -22,20 +22,24 @@ export const initialState = {
   alerts: { error: false },
   error: null,
   loading: true,
-  form: {
-    contractAccepted: false,
-    description: '',
-    location: '',
-    name: '',
-    size: '',
-    website: '',
+  forms: {
+    companyInfo: {
+      description: '',
+      location: '',
+      name: '',
+      size: '',
+      website: '',
+    },
+    contract: { contractAccepted: false },
   },
   formErrors: {
-    description: '',
-    location: '',
-    name: '',
-    size: '',
-    website: '',
+    companyInfo: {
+      description: '',
+      location: '',
+      name: '',
+      size: '',
+      website: '',
+    },
   },
   questions: [],
   view: 0,
@@ -44,8 +48,8 @@ export const initialState = {
 const companySignUpReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_INPUT: {
-      const { field, value } = payload;
-      draft.form[field] = value;
+      const { field, form, value } = payload;
+      draft.forms[form][field] = value;
       break;
     }
     case CHANGE_VIEW: {
@@ -76,10 +80,10 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
       break;
     }
     case INPUT_ERROR: {
-      const { errors } = payload;
+      const { errors, form } = payload;
       const fields = Object.keys(errors);
       fields.forEach(field => {
-        draft.formErrors[field] = errors[field] || '';
+        draft.formErrors[form][field] = errors[field] || '';
       });
       break;
     }

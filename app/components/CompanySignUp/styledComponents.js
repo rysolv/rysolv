@@ -1,5 +1,4 @@
-import React, { css } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from '@material-ui/core/Button';
 
 import { ErrorSuccessBanner } from 'components/base_ui';
@@ -8,7 +7,6 @@ import {
   defaultFontFamily,
   defaultFontSize,
   errorRed,
-  headerFontSize,
   lightBlueColor,
   lightGreyColor,
   textColor,
@@ -58,25 +56,17 @@ export const CompanySignUpContainer = styled.div`
 `;
 
 export const ContentGroup = styled.div`
-  width: 75%;
+  align-self: center;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  max-width: 50rem;
 `;
 
 export const DescriptionWrapper = styled.div`
   color: ${lightGreyColor};
   font-size: 2rem;
   font-weight: 500;
-  padding: 1rem;
-`;
-
-export const FormViewHeader = styled.div`
-  color: ${textColor};
-  font-size: ${headerFontSize};
-  margin-bottom: 5rem;
-  width: 100%;
-
-  ${mobile} {
-    margin: 2rem 0;
-  }
+  padding: 1rem 0;
 `;
 
 export const LegalTextWrapper = styled.div`
@@ -105,7 +95,8 @@ export const OptionLabel = styled.div`
 `;
 
 export const OptionWrapper = styled.div`
-  margin: 5rem auto;
+  margin-bottom: 1rem;
+  text-align: left;
 `;
 
 export const QuestionWrapper = styled.div`
@@ -116,23 +107,8 @@ export const QuestionWrapper = styled.div`
   margin: 3.2rem 0 0.8rem;
 `;
 
-export const StyledButton = styled(
-  ({
-    shouldDisplayBack,
-    shouldDisplayCancel,
-    shouldDisplaySubmit,
-    ...restProps
-  }) => <Button {...restProps} />,
-)`
+export const StyledButton = styled(Button)`
   color: ${darkBlueColor};
-  display: ${({
-    shouldDisplayBack,
-    shouldDisplayCancel,
-    shouldDisplaySubmit,
-  }) =>
-    shouldDisplayBack || shouldDisplayCancel || shouldDisplaySubmit
-      ? 'inherit'
-      : 'none'};
   font-family: ${defaultFontFamily};
   font-size: 1.6rem;
   font-weight: 500;
@@ -155,8 +131,11 @@ export const StyledButton = styled(
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  align-self: center;
   height: auto;
-  margin-bottom: 3rem;
+  max-width: 50rem;
+  text-align: left;
+  width: 100%;
 `;
 
 export const StyledFocusDiv = styled.div`
@@ -172,9 +151,9 @@ export const ViewContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
-  justify-content: ${({ isFinalView }) =>
-    isFinalView ? 'inherit' : 'space-between'};
-  margin: 5rem 0 0;
+  justify-content: space-between;
+  margin: 5rem auto 0;
+  max-width: 75rem;
   min-height: 50rem;
   padding: 7.5rem 10%;
   text-align: center;

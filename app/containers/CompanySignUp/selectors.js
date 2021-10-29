@@ -7,40 +7,6 @@ import { initialState } from './reducer';
 
 const selectCompanySignUpDomain = state => state.companySignUp || initialState;
 
-const makeSelectCompanyResponseArray = () =>
-  createSelector(
-    makeSelectCompanySignUp('form'),
-    makeSelectCompanySignUp('questions'),
-    (form, questions) => {
-      const responseArray = [];
-      if (questions.length) {
-        Object.keys(form).forEach(async input => {
-          const { value: values } = form[input];
-          const [{ id: questionId, questionKey, responses }] = questions.filter(
-            ({ questionKey: key }) => input === snakeToCamel(key),
-          );
-          if (!Array.isArray(values) && values) {
-            const [{ id: responseId }] = responses.filter(
-              response =>
-                response.responseKey === 'description' ||
-                response.responseKey === 'location' ||
-                response.responseKey === 'name' ||
-                response.responseKey === 'website' ||
-                response.value === values,
-            );
-            responseArray.push({
-              questionId,
-              questionKey,
-              responseId,
-              value: values,
-            });
-          }
-        });
-      }
-      return responseArray;
-    },
-  );
-
 const makeSelectCompanySignUp = prop =>
   createSelector(
     selectCompanySignUpDomain,
@@ -49,9 +15,9 @@ const makeSelectCompanySignUp = prop =>
 
 const makeSelectCompanySignUpQuestions = () =>
   createSelector(
-    makeSelectCompanySignUp('form'),
+    makeSelectCompanySignUp('forms'),
     makeSelectCompanySignUp('questions'),
-    (form, questions) => {
+    ({ companyInfo }, questions) => {
       const formattedQuestions = questions.map(
         ({
           limit,
@@ -71,7 +37,7 @@ const makeSelectCompanySignUpQuestions = () =>
             options: responses.map(({ value }) => ({ value })),
             optionType: option,
             placeholder:
-              hasPlaceholder && !form[snakeToCamel(questionKey)].length
+              hasPlaceholder && !companyInfo[snakeToCamel(questionKey)].length
                 ? placeholder
                 : '',
             question: questionText,
@@ -85,8 +51,4 @@ const makeSelectCompanySignUpQuestions = () =>
   );
 
 export default selectCompanySignUpDomain;
-export {
-  makeSelectCompanyResponseArray,
-  makeSelectCompanySignUp,
-  makeSelectCompanySignUpQuestions,
-};
+export { makeSelectCompanySignUp, makeSelectCompanySignUpQuestions };

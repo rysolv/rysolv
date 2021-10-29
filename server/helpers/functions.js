@@ -35,6 +35,16 @@ const generatePositionLevel = ({ beginner, intermediate, expert }) => {
   if (expert) return 3;
 };
 
+const generateSizeInteger = ({ size }) => {
+  const sizeDictionary = {
+    '1 - 10': 10,
+    '11 - 50': 50,
+    '51 - 250': 250,
+    '251 +': 1000,
+  };
+  return sizeDictionary[size];
+};
+
 const isUrl = string => {
   let url;
   try {
@@ -71,6 +81,7 @@ module.exports = {
   CustomError,
   errorLogger,
   generatePositionLevel,
+  generateSizeInteger,
   isUrl,
   validatePayoutUrl,
 };

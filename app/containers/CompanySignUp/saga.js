@@ -3,12 +3,14 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { post } from 'utils/request';
 
 import {
+  changeView,
   fetchQuestionsFailure,
   fetchQuestionsSuccess,
   submitCompanyResponseFailure,
   submitCompanyResponseSuccess,
   submitContractAcceptedFailure,
   submitContractAcceptedSuccess,
+  submitContractAccepted,
 } from './actions';
 import {
   FETCH_QUESTIONS,
@@ -58,21 +60,22 @@ export function* fetchQuestionsSaga({ payload }) {
 }
 
 export function* submitCompanyResponseSaga({ payload }) {
-  const { responseArray } = payload;
-  const formattedResponse = responseArray.map(
-    ({ questionId, questionKey, responseId, value }) => `{
-        questionId: "${questionId}",
-        questionKey: "${questionKey}",
-        responseId: "${responseId}",
-        value: "${value}",
-      }`,
-  );
+  const { form } = payload;
+  const { contractAccepted, description, location, name, size, website } = form;
   const query = `
       mutation {
-        postUserResponse(responseArray: [${formattedResponse}]) {
+        createCompany(
+          companyInput: {
+            description: ${JSON.stringify(description)},
+            location: "${location}",
+            name: "${name}",
+            size: "${size}",
+            website: "${website}",
+          }
+        ) {
           __typename
-          ... on Success {
-            message
+          ... on Company {
+            companyId
           }
           ... on Error {
             message
@@ -84,21 +87,23 @@ export function* submitCompanyResponseSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        postUserResponse: { __typename, message },
+        createCompany: { __typename, companyId, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(submitCompanyResponseSuccess());
+    yield put(submitContractAccepted({ companyId, contractAccepted }));
   } catch (error) {
-    yield put(submitCompanyResponseFailure({ error }));
+    yield put(changeView({ view: 0 }));
+    yield put(submitCompanyResponseFailure({ error: { message: error } }));
   }
 }
 
 export function* submitContractAcceptedSaga({ payload }) {
-  const { contractAccepted } = payload;
+  const { companyId, contractAccepted } = payload;
   const query = `
       mutation {
-        postContractAccepted(contractAccepted: ${contractAccepted}) {
+        postContractAccepted(companyId: "${companyId}", contractAccepted: ${contractAccepted}) {
           __typename
           ... on Success {
             message
@@ -119,7 +124,7 @@ export function* submitContractAcceptedSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(submitContractAcceptedSuccess());
   } catch (error) {
-    yield put(submitContractAcceptedFailure({ error }));
+    yield put(submitContractAcceptedFailure({ error: { message: error } }));
   }
 }
 

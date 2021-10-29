@@ -64,13 +64,18 @@ module.exports = buildSchema(`
     target: ID!
   }
 
-  type Position {
-    id: String
-    isRemote: Boolean
-    location: String
-    title: String
+  type Company {
+    companyId: String
   }
 
+  input CompanyInput {
+    description: String!
+    location: String!
+    name: String!
+    size: String!
+    website: String!
+  }
+  
   type CompanyPositionsArray {
     positions: [Position]
   }
@@ -203,6 +208,13 @@ module.exports = buildSchema(`
     balance: Float
     fundedAmount: Float
     message: String
+  }
+
+  type Position {
+    id: String
+    isRemote: Boolean
+    location: String
+    title: String
   }
 
   type PositionCandidatesArray {
@@ -436,6 +448,7 @@ module.exports = buildSchema(`
   }
 
   union CommentResult = Comment | Error
+  union CompanyResult = Company | Error
   union EventResponse = Success | Error
   union FilterResult = Filter | Error
   union ImportPullRequestResult = ImportPullRequest | Error
@@ -504,6 +517,7 @@ module.exports = buildSchema(`
     closeIssue(issueId: ID!, shouldClose: Boolean): EventResponse!
 
     createComment(commentInput: CommentInput): CommentResult!
+    createCompany(companyInput: CompanyInput): CompanyResult!
     createIssue(issueInput: IssueInput): IssueResult!
     createMessage(messageInput: MessageInput): EventResponse!
     createPaypalPayment(amount: Float!, email: String, issueId: ID): PaymentResult!
