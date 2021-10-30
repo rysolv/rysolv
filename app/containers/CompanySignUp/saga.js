@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 
 import { post } from 'utils/request';
 
@@ -54,6 +55,7 @@ export function* fetchQuestionsSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(fetchQuestionsSuccess({ questions: questionArray }));
+    yield put(push('/dashboard'));
   } catch (error) {
     yield put(fetchQuestionsFailure({ error }));
   }

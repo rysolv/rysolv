@@ -9,7 +9,9 @@ const CompanySignUp = ({ view, ...restProps }) => {
     window.scrollTo(0, 0);
     document.title = 'Company Sign Up';
   }, []);
+
   const ViewToRender = viewDictionary[view];
+
   return (
     <CompanySignUpContainer>
       <ViewToRender {...restProps} />

@@ -1,6 +1,9 @@
 const { v4: uuidv4 } = require('uuid');
 
-const { createCompany: createCompanyQuery } = require('../../../db');
+const {
+  createCompany: createCompanyQuery,
+  insertUserCompany,
+} = require('../../../db');
 const { createCompanyError } = require('./constants');
 const {
   CustomError,
@@ -23,6 +26,9 @@ const createCompany = async ({ companyInput }, { authError, userId }) => {
       size: generateSizeInteger(size),
     };
     await createCompanyQuery({ data: companyData });
+
+    const userCompanyValues = [companyId, uuidv4(), userId];
+    await insertUserCompany({ values: userCompanyValues });
 
     return {
       __typename: 'Company',
