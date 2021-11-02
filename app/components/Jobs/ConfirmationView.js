@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import {
   IconWrapper,
@@ -8,20 +8,18 @@ import {
 } from './styledComponents';
 
 const ConfirmationView = () => (
-  <Fragment>
-    <ViewContainer isFinalView>
-      <IconWrapper src="https://rysolv.s3.us-east-2.amazonaws.com/SuccessUser.png" />
-      <StyledParagraph>
-        Success! Let&#39;s match you with companies.
-      </StyledParagraph>
-      <p>
-        We look forward to talking with you soon. In the meantime, continue
-        growing your profile by resolving{' '}
-        <LinkWrapper to="/issues">issues</LinkWrapper>. See how we{' '}
-        <LinkWrapper to="/how-we-score-code">score candidates</LinkWrapper>.
-      </p>
-    </ViewContainer>
-  </Fragment>
+  <ViewContainer isFinalView>
+    <IconWrapper src="https://rysolv.s3.us-east-2.amazonaws.com/SuccessUser.png" />
+    <StyledParagraph>
+      Success! Let&#39;s match you with companies.
+    </StyledParagraph>
+    <p>
+      We look forward to talking with you soon. In the meantime, continue
+      growing your profile by resolving{' '}
+      <LinkWrapper to="/issues">issues</LinkWrapper>. See how we{' '}
+      <LinkWrapper to="/how-we-score-code">score candidates</LinkWrapper>.
+    </p>
+  </ViewContainer>
 );
 
 export default ConfirmationView;

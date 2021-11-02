@@ -41,5 +41,5 @@ export const StyledAutocomplete = styled(Autocomplete)`
 `;
 
 export const StyledOption = styled(Typography)`
-  font-size: ${defaultFontSize};
+  font-size: 1.6rem;
 `;

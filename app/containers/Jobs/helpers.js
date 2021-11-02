@@ -14,13 +14,6 @@ export const convertFileToDataUrl = async file => {
   return `data:${type};base64,${base64Data}`;
 };
 
-export const getQuestion = () => {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const question = urlParams.get('question');
-  return Number(question);
-};
-
 export const optionDictionary = {
   desired_role: {
     option: 'multipleButton',

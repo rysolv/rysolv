@@ -9,11 +9,13 @@ import NotFoundPage from 'components/NotFoundPage';
 import PrivacyPolicy from 'components/PrivacyPolicy';
 import TermsOfService from 'components/TermsOfService';
 import CodeScoring from 'containers/CodeScoring/Loadable';
+import CompanyDashboard from 'containers/CompanyDashboard/Loadable';
 import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
-import Main from 'containers/HomePage/Loadable';
+import CompanySignUp from 'containers/CompanySignUp/Loadable';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
 import Jobs from 'containers/Jobs';
+import Main from 'containers/HomePage/Loadable';
 import Overview from 'containers/Overview';
 import ReposAdd from 'containers/Repos/Add';
 import ReposDetail from 'containers/Repos/Detail';
@@ -26,6 +28,8 @@ import VerifyGithub from 'containers/VerifyGithub/Loadable';
 const privateConfig = { isAdmin: false, isPrivate: true };
 const publicConfig = { isAdmin: false, isPrivate: false };
 
+const PrivateCompanyDashboard = withAuth(privateConfig, CompanyDashboard);
+const PrivateCompanySignUp = withAuth(privateConfig, CompanySignUp);
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
@@ -54,6 +58,7 @@ const Routes = () => (
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
     <Route exact path ="/how-we-score-code" component={PublicCodeScoring} />
     <Route exact path="/contact-us" component={PublicContact} />
+    <Route exact path="/dashboard/:view?" component={PrivateCompanyDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
     <Route exact path="/how-to" component={PublicHowTo} />
     <Route exact path="/issues" component={PublicOverview} />
@@ -73,6 +78,7 @@ const Routes = () => (
     <Route exact path="/signin" component={PublicSignIn} />
     <Route exact path="/signin/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/signup" component={PublicSignIn} />
+    <Route exact path="/signup/company" component={PrivateCompanySignUp} />
     <Route exact path="/signup/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/terms-of-service" component={PublicTermsOfService} />

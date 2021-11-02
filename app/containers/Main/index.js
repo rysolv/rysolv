@@ -85,9 +85,12 @@ class Main extends React.PureComponent {
     const { pathname } = window.location;
     const isLandingOrRecruitmentPage =
       pathname === '/' ||
+      pathname === '/dashboard' ||
+      pathname === '/dashboard/add' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
-      pathname === '/recruitment';
+      pathname === '/recruitment' ||
+      pathname === '/signup/company';
     const isPaymentModal = modal === 'fundIssue';
     const modalPropsDictionary = {
       closeIssue: {

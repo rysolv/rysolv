@@ -16,6 +16,12 @@ export const formatDollarAmount = (value, noDecimals = false) => {
 export const formatPaypalTotal = value =>
   (Number(value) * 1.03 + 0.3).toFixed(2);
 
+export const formatToSnakeCase = string => {
+  const strArray = string.split(' ');
+  const formattedArray = strArray.map(str => str.toLowerCase());
+  return formattedArray.join('_');
+};
+
 export const formatUrlLinks = value => {
   const { githubLink, personalLink, stackoverflowLink } = value;
   if (githubLink) {
@@ -57,6 +63,13 @@ export const getCookie = cookie => {
   const cookieValue = document.cookie.replace(regexStr, '$1');
   if (cookieValue) return cookieValue;
   return '';
+};
+
+export const getQuestion = () => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const question = urlParams.get('question');
+  return Number(question);
 };
 
 export const getPaymentMethod = url => {
