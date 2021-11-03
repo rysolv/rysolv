@@ -46,9 +46,8 @@ const DesktopHeader = ({
           <HeaderSearchBar handleNav={handleNav} />
         </LogoWrapper>
         <ButtonsWrapper>
+          <NavLink label="Dashboard" path="/dashboard" />
           <AboutDropdown handleNav={handleNav} />
-          <NavLink label="Get Hired" path="/jobs" shouldRemoveFirst />
-          <NavLink label="Find Issues" path="/issues" />
           <UserActivityDropdown handleNav={handleNav} />
 
           {isSignedIn ? (

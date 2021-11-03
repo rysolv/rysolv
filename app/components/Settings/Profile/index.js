@@ -1,31 +1,18 @@
 import React from 'react';
 import T from 'prop-types';
 
+import { getBase64 } from 'utils/globalHelpers';
+import iconDictionary from 'utils/iconDictionary';
+
 import {
   BaseFileInput,
   Coin,
   ConditionalRender,
   IconButton,
 } from 'components/base_ui';
-import { getBase64 } from 'utils/globalHelpers';
-import iconDictionary from 'utils/iconDictionary';
-
-import {
-  EmptyGithubLinkComponent,
-  GithubEditComponent,
-  GithubLinkComponent,
-} from './GithubLinkComponents';
-import {
-  EmptyPersonalLinkComponent,
-  PersonalEditComponent,
-  PersonalLinkComponent,
-} from './PersonalLinkComponents';
-import {
-  EmptyStackoverflowLinkComponent,
-  StackoverflowEditComponent,
-  StackoverflowLinkComponent,
-} from './StackoverflowLinkComponents';
+import UserLinksComponent from './UserLinksComponent';
 import UserMetricsView from '../Metrics';
+
 import {
   DetailViewContainer,
   EditUserImageWrapper,
@@ -35,7 +22,6 @@ import {
   UserCardWrapper,
   UserImage,
 } from './styledComponents';
-import { LinksWrapper } from '../styledComponents';
 
 const CloseIcon = iconDictionary('close');
 const DoneIcon = iconDictionary('done');
@@ -131,89 +117,29 @@ const ProfileComponent = ({
         <Name>
           {firstName} {lastName}
         </Name>
-        <LinksWrapper>
-          <ConditionalRender
-            Component={
-              <ConditionalRender
-                Component={GithubLinkComponent}
-                FallbackComponent={EmptyGithubLinkComponent}
-                propsToPassDown={{
-                  githubLink,
-                  handleEdit,
-                  isDisabled,
-                  setChangeGithub,
-                }}
-                shouldRender={!!githubLink}
-              />
-            }
-            FallbackComponent={
-              <GithubEditComponent
-                githubLinkError={githubLinkError}
-                handleClose={handleClose}
-                handleSubmitInputChange={handleSubmitInputChange}
-                handleValidateInput={handleValidateInput}
-                setChangeGithub={setChangeGithub}
-                setValue={setValue}
-                value={value}
-              />
-            }
-            shouldRender={!changeGithub}
-          />
-          <ConditionalRender
-            Component={
-              <ConditionalRender
-                Component={PersonalLinkComponent}
-                FallbackComponent={EmptyPersonalLinkComponent}
-                propsToPassDown={{
-                  handleEdit,
-                  isDisabled,
-                  personalLink,
-                  setChangePersonal,
-                }}
-                shouldRender={!!personalLink}
-              />
-            }
-            FallbackComponent={
-              <PersonalEditComponent
-                handleClose={handleClose}
-                handleSubmitInputChange={handleSubmitInputChange}
-                handleValidateInput={handleValidateInput}
-                personalLinkError={personalLinkError}
-                setChangePersonal={setChangePersonal}
-                setValue={setValue}
-                value={value}
-              />
-            }
-            shouldRender={!changePersonal}
-          />
-          <ConditionalRender
-            Component={
-              <ConditionalRender
-                Component={StackoverflowLinkComponent}
-                FallbackComponent={EmptyStackoverflowLinkComponent}
-                propsToPassDown={{
-                  stackoverflowLink,
-                  handleEdit,
-                  isDisabled,
-                  setChangeStackoverflow,
-                }}
-                shouldRender={!!stackoverflowLink}
-              />
-            }
-            FallbackComponent={
-              <StackoverflowEditComponent
-                handleClose={handleClose}
-                handleSubmitInputChange={handleSubmitInputChange}
-                handleValidateInput={handleValidateInput}
-                setChangeStackoverflow={setChangeStackoverflow}
-                setValue={setValue}
-                stackoverflowLinkError={stackoverflowLinkError}
-                value={value}
-              />
-            }
-            shouldRender={!changeStackoverflow}
-          />
-        </LinksWrapper>
+
+        <UserLinksComponent
+          changeGithub={changeGithub}
+          changePersonal={changePersonal}
+          changeStackoverflow={changeStackoverflow}
+          githubLink={githubLink}
+          githubLinkError={githubLinkError}
+          handleClose={handleClose}
+          handleEdit={handleEdit}
+          handleSubmitInputChange={handleSubmitInputChange}
+          handleValidateInput={handleValidateInput}
+          isDisabled={isDisabled}
+          personalLink={personalLink}
+          personalLinkError={personalLinkError}
+          setChangeGithub={setChangeGithub}
+          setChangePersonal={setChangePersonal}
+          setChangeStackoverflow={setChangeStackoverflow}
+          setValue={setValue}
+          stackoverflowLink={stackoverflowLink}
+          stackoverflowLinkError={stackoverflowLinkError}
+          value={value}
+        />
+
         <Rep>
           <Coin />
           &nbsp;<b> {rep}</b>&nbsp;credits

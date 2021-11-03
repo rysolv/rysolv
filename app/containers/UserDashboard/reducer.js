@@ -8,6 +8,9 @@ import {
   FETCH_USER_DASHBOARD_FAILURE,
   FETCH_USER_DASHBOARD_SUCCESS,
   FETCH_USER_DASHBOARD,
+  SET_HIRING_STATUS,
+  SET_HIRING_STATUS_FAILURE,
+  SET_HIRING_STATUS_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -50,6 +53,23 @@ const userDashboardReducer = produce((draft, { payload, type }) => {
       break;
     }
     case FETCH_USER_DASHBOARD: {
+      draft.error = null;
+      draft.loading = true;
+      break;
+    }
+    case SET_HIRING_STATUS_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      draft.loading = false;
+      break;
+    }
+    case SET_HIRING_STATUS_SUCCESS: {
+      const { hiringStatus } = payload;
+      draft.loading = false;
+      draft.user.hiringStatus = hiringStatus;
+      break;
+    }
+    case SET_HIRING_STATUS: {
       draft.error = null;
       draft.loading = true;
       break;

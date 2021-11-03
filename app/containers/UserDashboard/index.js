@@ -11,7 +11,7 @@ import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { dismissBanner, fetchUserDashboard } from './actions';
+import { dismissBanner, fetchUserDashboard, setHiringStatus } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectUserDashboard } from './selectors';
@@ -20,6 +20,7 @@ const UserDashboard = ({
   deviceView,
   dispatchDismissBanner,
   dispatchFetchUserDashboard,
+  dispatchSetHiringStatus,
   displayBanner,
   error,
   handleNav,
@@ -32,6 +33,7 @@ const UserDashboard = ({
     document.title = 'Dashboard';
     dispatchFetchUserDashboard();
   }, []);
+
   return (
     <AsyncRender
       asyncData={user}
@@ -42,6 +44,7 @@ const UserDashboard = ({
       propsToPassDown={{
         deviceView,
         dismissBanner: dispatchDismissBanner,
+        dispatchSetHiringStatus,
         displayBanner,
         handleNav,
         isOverview,
@@ -56,6 +59,7 @@ UserDashboard.propTypes = {
   deviceView: T.string.isRequired,
   dispatchDismissBanner: T.func.isRequired,
   dispatchFetchUserDashboard: T.func.isRequired,
+  dispatchSetHiringStatus: T.func.isRequired,
   displayBanner: T.bool.isRequired,
   error: T.string,
   handleNav: T.func.isRequired,
@@ -85,6 +89,7 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchDismissBanner: () => dispatch(dismissBanner()),
     dispatchFetchUserDashboard: () => dispatch(fetchUserDashboard()),
+    dispatchSetHiringStatus: payload => dispatch(setHiringStatus(payload)),
     handleNav: route => dispatch(push(route)),
   };
 }

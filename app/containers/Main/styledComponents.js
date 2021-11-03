@@ -11,7 +11,7 @@ const { mobile, tablet } = mediaQueriesByDevice;
 export const AppBodyWrapper = styled.div`
   background: ${({ isLandingOrRecruitmentPage }) => isLandingOrRecruitmentPage ? blueColor : 'inherit'};
   flex: 1;
-  padding-bottom: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? '0' : '16rem')};
+  padding-bottom: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? '0' : '8rem')};
 `;
 
 export const AppContentWrapper = styled.div`

@@ -1,12 +1,10 @@
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
-  getOneIssue,
-  getOneRepo,
-  getUserAttemptList,
-  getUserBounties,
-  getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
-  getUserWatchList,
+  getRecommendedIssues,
+  getFilteredIssues,
+  getQuestionAnswerByKey,
+  getSurveyStatus,
 } = require('../../../db');
 const { getUserSettingsError } = require('./constants');
 
@@ -14,13 +12,42 @@ const getUserDashboard = async (_, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    const result = await getUserSettingsQuery({ userId });
+    // Get user info
+    const user = await getUserSettingsQuery({ userId });
 
-    console.log(result);
+    // Get recommended issues
+    const issues = await getRecommendedIssues({ userId });
+    user.issues = issues;
+
+    // Get hiring status
+    const responseKey = await getQuestionAnswerByKey({
+      userId,
+      questionKey: 'timeline',
+    });
+
+    // Get hiring survey status
+    user.surveyComplete = await getSurveyStatus({ userId });
+
+    // If there aren't enough recommended issues
+    // (or no user languages), then supplement with new issues
+    if (issues.length < 20) {
+      const newIssues = await getFilteredIssues({ limit: 20, order: 'new' });
+      issues.push(...newIssues);
+    }
+
+    // User Hiring Staus
+    // Options: active | inactive | undeclared
+    if (responseKey && responseKey === '0_months') {
+      user.hiringStatus = 'active';
+    } else if (responseKey === 'indefinite') {
+      user.hiringStatus = 'inactive';
+    } else {
+      user.hiringStatus = 'undeclared';
+    }
 
     return {
       __typename: 'User',
-      ...result,
+      ...user,
     };
   } catch (error) {
     const { alert } = error;

@@ -315,6 +315,7 @@ module.exports = buildSchema(`
     githubId: String
     githubLink: String
     githubUsername: String
+    hiringStatus: String
     id: ID!
     isGithubVerified: Boolean
     isQuestionnaireComplete: Boolean
@@ -331,6 +332,7 @@ module.exports = buildSchema(`
     rep: Int
     repos: [Object]
     stackoverflowLink: String
+    surveyComplete: Boolean
     upvotes: [ID]
     username: String
     watching: [Object]
@@ -480,7 +482,7 @@ module.exports = buildSchema(`
     recruitingSignup(contactInput: ContactInput): EventResponse!
 
     sendContact(contactInput: ContactInput): EventResponse!
-
+    setHiringStatus(hiringStatus: String!): EventResponse!
     signIn(password: String!, username: String!): SignInResult!
     signOut: EventResponse!
 

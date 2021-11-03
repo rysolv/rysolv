@@ -12,6 +12,7 @@ const resendCode = require('./resendCode');
 const resetPassword = require('./resetPassword');
 const searchUsers = require('./searchUsers');
 const sendLink = require('./sendLink');
+const setHiringStatus = require('./setHiringStatus');
 const signIn = require('./signIn');
 const signOut = require('./signOut');
 const transformUser = require('./transformUser');
@@ -33,6 +34,7 @@ module.exports = {
   resetPassword,
   searchUsers,
   sendLink,
+  setHiringStatus,
   signIn,
   signOut,
   transformUser,
