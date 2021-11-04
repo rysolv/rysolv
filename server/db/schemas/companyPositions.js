@@ -6,7 +6,7 @@ const alterCompanyPositionsTable = `
 const createCompanyPositionsTable = `
   CREATE TABLE IF NOT EXISTS
   company_positions(
-    id UUID PRIMARY KEY
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4()
   )
 `;
 

@@ -7,7 +7,7 @@ const alterUserCompaniesTable = `
 const createUserCompaniesTable = `
   CREATE TABLE IF NOT EXISTS
   user_companies(
-    id UUID PRIMARY KEY
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4()
   )
 `;
 

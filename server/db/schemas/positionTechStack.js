@@ -8,7 +8,7 @@ const alterPositionTechStackTable = `
 const createPositionTechStackTable = `
   CREATE TABLE IF NOT EXISTS
   position_tech_stack(
-    id UUID PRIMARY KEY
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4()
   )
 `;
 
