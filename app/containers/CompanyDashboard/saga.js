@@ -67,7 +67,7 @@ export function* createPositionSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(createPositionSuccess({ message }));
-    yield put(push('/dashboard'));
+    yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(createPositionFailure({ error: { message: error } }));
   }

@@ -85,8 +85,8 @@ class Main extends React.PureComponent {
     const { pathname } = window.location;
     const isLandingOrRecruitmentPage =
       pathname === '/' ||
-      pathname === '/dashboard' ||
-      pathname === '/dashboard/add' ||
+      pathname === '/company/dashboard' ||
+      pathname === '/company/dashboard/add' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/recruitment' ||
