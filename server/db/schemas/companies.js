@@ -12,7 +12,7 @@ const alterCompaniesTable = `
 const createCompaniesTable = `
   CREATE TABLE IF NOT EXISTS
   companies(
-    id UUID PRIMARY KEY
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4()
   )
 `;
 

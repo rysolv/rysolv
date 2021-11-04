@@ -12,7 +12,7 @@ const alterMessagesTable = `
 const createMessagesTable = `
   CREATE TABLE IF NOT EXISTS
   messages(
-    id UUID PRIMARY KEY
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4()
   )
 `;
 
