@@ -49,6 +49,10 @@ const GlobalStyle = createGlobalStyle`
   .noOptions {
     font-size: ${defaultFontSize};
   }
+
+  .pac-container {
+    border: none;
+  }
 `;
 
 export default GlobalStyle;

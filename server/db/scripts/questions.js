@@ -2,6 +2,7 @@ const { singleQuery } = require('../baseQueries');
 
 // Generate initial list of questions
 const questions = [
+  // hiring
   // experience
   {
     id: '4bef1f37-f09b-4515-a483-047faa0758cd',
@@ -110,9 +111,193 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
+  // company_position
+  // description
+  {
+    id: '34cc19c1-38e3-43b4-b0e7-5fac04bedec4',
+    category: 'company_position',
+    created_date: new Date(),
+    priority: 6,
+    question_key: 'description',
+    question_text: 'Job description',
+    required: false,
+    response_limit: 1,
+    subtext: null,
+  },
+  // experience
+  {
+    id: '5c7f171e-aecb-42e1-aad3-6f4f816e3e5b',
+    category: 'company_position',
+    created_date: new Date(),
+    priority: 8,
+    question_key: 'experience',
+    question_text: 'Experience',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // hiring timeframe
+  {
+    id: 'd16765b2-8fd0-4fc7-80d2-b3c511338240',
+    category: 'company_position',
+    created_date: new Date(),
+    priority: 9,
+    question_key: 'hiring_timeframe',
+    question_text: 'Hiring timeframe',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // is_remote
+  {
+    id: '16499d8b-3d54-43ed-b9fb-58c8e99c9fb4',
+    category: 'company_position',
+    created_date: new Date(),
+    priority: 5,
+    question_key: 'is_remote',
+    question_text: 'This position is remote',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // location
+  {
+    id: 'a25c9f54-b436-415e-adc5-72d6c8e5b595',
+    category: 'company_position',
+    created_date: new Date(),
+    priority: 4,
+    question_key: 'location',
+    question_text: 'Location',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // role
+  {
+    id: 'c762dd74-eb92-4830-9f2a-31894a1e33c7',
+    category: 'company_position',
+    created_date: new Date(),
+    priority: 2,
+    question_key: 'role',
+    question_text: 'Position role',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // salary
+  {
+    id: 'c69a9f4b-d188-4c2f-9454-939d5483e905',
+    category: 'company_position',
+    created_date: new Date(),
+    priority: 10,
+    question_key: 'salary',
+    question_text: 'Maximum salary',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // skills
+  {
+    id: '3a9bf308-d093-470f-ae48-1cc901772605',
+    category: 'company_position',
+    created_date: new Date(),
+    priority: 7,
+    question_key: 'skills',
+    question_text: 'Skills',
+    required: true,
+    response_limit: 1,
+    subtext:
+      'Select the top five frameworks/languages that you require an engineer to know.',
+  },
+  // title
+  {
+    id: '68fb1f89-b92f-4f3a-9016-bdd1810f38c5',
+    category: 'company_position',
+    created_date: new Date(),
+    priority: 1,
+    question_key: 'title',
+    question_text: 'Position title',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // type
+  {
+    id: '0bfa14b6-283d-4113-ab78-3fc21e21bcda',
+    category: 'company_position',
+    created_date: new Date(),
+    priority: 3,
+    question_key: 'type',
+    question_text: 'Position type',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // company
+  // description
+  {
+    id: '97e4b49d-b178-48ce-865f-c707ef48c0a5',
+    category: 'company',
+    created_date: new Date(),
+    priority: 5,
+    question_key: 'description',
+    question_text: 'Description',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // location
+  {
+    id: '8b2245ce-709b-4e59-ac31-8a4af3359b89',
+    category: 'company',
+    created_date: new Date(),
+    priority: 3,
+    question_key: 'location',
+    question_text: 'Location',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // name
+  {
+    id: '6fb3d210-6120-4fa1-8771-87d5a7172342',
+    category: 'company',
+    created_date: new Date(),
+    priority: 1,
+    question_key: 'name',
+    question_text: 'Company name',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // size
+  {
+    id: 'e83bb9d4-0ef0-490c-8a09-e25a91d6d2ab',
+    category: 'company',
+    created_date: new Date(),
+    priority: 4,
+    question_key: 'size',
+    question_text: 'Company size',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // website
+  {
+    id: 'c114925b-d250-456b-9745-98db88274670',
+    category: 'company',
+    created_date: new Date(),
+    priority: 2,
+    question_key: 'website',
+    question_text: 'Company website',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
 ];
 
 const responses = [
+  // hiring
   // experience
   {
     id: '0f49a4a1-4ce2-4a7a-a3f1-8c45f22342dc',
@@ -376,6 +561,311 @@ const responses = [
     question_id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
     response_key: 'no_us_citizen',
     value: 'No',
+  },
+  // company_position
+  // description
+  {
+    id: '8d342d18-d93c-4f9f-9b19-9fd98038a5c4',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '34cc19c1-38e3-43b4-b0e7-5fac04bedec4',
+    response_key: 'position_description',
+    value: '',
+  },
+  // experience
+  {
+    id: 'a2edf732-4d73-4014-8c29-9f4f8dc39538',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '5c7f171e-aecb-42e1-aad3-6f4f816e3e5b',
+    response_key: 'junior_experience',
+    value: 'Junior',
+  },
+  {
+    id: 'a3fcab14-5fb7-46c4-8377-c1c1b5330838',
+    created_date: new Date(),
+    priority: 2,
+    question_id: '5c7f171e-aecb-42e1-aad3-6f4f816e3e5b',
+    response_key: 'middle_experience',
+    value: 'Middle',
+  },
+  {
+    id: '97847136-fc95-45cb-995f-e9e36a5e04f6',
+    created_date: new Date(),
+    priority: 3,
+    question_id: '5c7f171e-aecb-42e1-aad3-6f4f816e3e5b',
+    response_key: 'senior_experience',
+    value: 'Senior',
+  },
+  // hiring timeframe
+  {
+    id: '5676c4cb-b9fb-4316-b59f-03fe916ee55a',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'd16765b2-8fd0-4fc7-80d2-b3c511338240',
+    response_key: '0_months',
+    value: 'Immediately',
+  },
+  {
+    id: '6d664be8-8284-466a-82fb-5e5214a5763b',
+    created_date: new Date(),
+    priority: 2,
+    question_id: 'd16765b2-8fd0-4fc7-80d2-b3c511338240',
+    response_key: '3_months',
+    value: 'Next 3 months',
+  },
+  {
+    id: '2b585205-0224-46a6-bc97-90282797f3b7',
+    created_date: new Date(),
+    priority: 3,
+    question_id: 'd16765b2-8fd0-4fc7-80d2-b3c511338240',
+    response_key: '6_months',
+    value: 'Next 6 months',
+  },
+  // is_remote
+  {
+    id: '4f29a45e-c675-49c9-a3db-9d42221c278d',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '16499d8b-3d54-43ed-b9fb-58c8e99c9fb4',
+    response_key: 'yes_is_remote',
+    value: 'Yes',
+  },
+  {
+    id: 'c6a297bd-a2e1-419b-a712-6dae96ce2f0b',
+    created_date: new Date(),
+    priority: 2,
+    question_id: '16499d8b-3d54-43ed-b9fb-58c8e99c9fb4',
+    response_key: 'no_is_remote',
+    value: 'No',
+  },
+  // location
+  {
+    id: '88ae251b-bfe9-4397-998f-1a7b3c846fcf',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'a25c9f54-b436-415e-adc5-72d6c8e5b595',
+    response_key: 'location',
+    value: '',
+  },
+  // role
+  {
+    id: '77e13dde-278a-4348-81c5-4a7b419bb49d',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'c762dd74-eb92-4830-9f2a-31894a1e33c7',
+    response_key: 'front_end',
+    value: 'Front End',
+  },
+  {
+    id: '721b1471-fb81-437b-8563-3950819d46aa',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'c762dd74-eb92-4830-9f2a-31894a1e33c7',
+    response_key: 'back_end',
+    value: 'Back End',
+  },
+  {
+    id: '1856edd4-f2c4-4172-b15b-9c00f2de439c',
+    created_date: new Date(),
+    priority: 2,
+    question_id: 'c762dd74-eb92-4830-9f2a-31894a1e33c7',
+    response_key: 'android',
+    value: 'Android',
+  },
+  {
+    id: '4790677a-301e-4d0f-88f0-6e743ae99f22',
+    created_date: new Date(),
+    priority: 3,
+    question_id: 'c762dd74-eb92-4830-9f2a-31894a1e33c7',
+    response_key: 'ios',
+    value: 'iOS',
+  },
+  {
+    id: '2694f6aa-6206-407c-8bab-69fcf0cdaffa',
+    created_date: new Date(),
+    priority: 4,
+    question_id: 'c762dd74-eb92-4830-9f2a-31894a1e33c7',
+    response_key: 'devops',
+    value: 'Devops',
+  },
+  {
+    id: 'edbb7151-fbb8-40e4-a141-441b3c3a4ed4',
+    created_date: new Date(),
+    priority: 5,
+    question_id: 'c762dd74-eb92-4830-9f2a-31894a1e33c7',
+    response_key: 'machine_learning',
+    value: 'Machine Learning',
+  },
+  {
+    id: '647e2d48-c8d7-4882-945b-4621e6817ab4',
+    created_date: new Date(),
+    priority: 6,
+    question_id: 'c762dd74-eb92-4830-9f2a-31894a1e33c7',
+    response_key: 'firmware',
+    value: 'Embedded/Firmware',
+  },
+  {
+    id: 'b603100e-1d6a-48aa-bf9e-3ed5692f3c95',
+    created_date: new Date(),
+    priority: 7,
+    question_id: 'c762dd74-eb92-4830-9f2a-31894a1e33c7',
+    response_key: 'generalist',
+    value: 'Generalist',
+  },
+  // salary
+  {
+    id: '4cde7a95-2599-4e57-988c-9ad70e9b3344',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'c69a9f4b-d188-4c2f-9454-939d5483e905',
+    response_key: '75',
+    value: '$75,000',
+  },
+  {
+    id: 'd475580e-8597-4c56-a6ad-82a632cb17da',
+    created_date: new Date(),
+    priority: 2,
+    question_id: 'c69a9f4b-d188-4c2f-9454-939d5483e905',
+    response_key: '100',
+    value: '$100,000',
+  },
+  {
+    id: '3bd4e819-32d7-4467-b9d9-30b9d5630e0c',
+    created_date: new Date(),
+    priority: 3,
+    question_id: 'c69a9f4b-d188-4c2f-9454-939d5483e905',
+    response_key: '125',
+    value: '$125,000',
+  },
+  {
+    id: '03ac0f94-c87e-4c09-b47e-a0c8db83d8da',
+    created_date: new Date(),
+    priority: 4,
+    question_id: 'c69a9f4b-d188-4c2f-9454-939d5483e905',
+    response_key: '150',
+    value: '$150,000',
+  },
+  {
+    id: 'dec059ac-40c3-4e3b-9ed5-e0c43a2b7afb',
+    created_date: new Date(),
+    priority: 5,
+    question_id: 'c69a9f4b-d188-4c2f-9454-939d5483e905',
+    response_key: '175',
+    value: '$175,000',
+  },
+  {
+    id: 'fed87f96-32ff-4fce-a3b2-e35351f643fd',
+    created_date: new Date(),
+    priority: 6,
+    question_id: 'c69a9f4b-d188-4c2f-9454-939d5483e905',
+    response_key: '200',
+    value: '$200,000',
+  },
+  // skills
+  {
+    id: '2f33245f-fd9e-48b6-ab0a-4abdc7154517',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '3a9bf308-d093-470f-ae48-1cc901772605',
+    response_key: 'skills',
+    value: '',
+  },
+  // title
+  {
+    id: '9652e19d-43f5-4445-86db-572c88c6d485',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '68fb1f89-b92f-4f3a-9016-bdd1810f38c5',
+    response_key: 'title',
+    value: '',
+  },
+  // type
+  {
+    id: 'e24d4938-c66e-4824-b268-3258ed545fd9',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '0bfa14b6-283d-4113-ab78-3fc21e21bcda',
+    response_key: 'contractor',
+    value: 'Contractor',
+  },
+  {
+    id: 'a103a91e-3ef6-412f-9dc4-599e491179a1',
+    created_date: new Date(),
+    priority: 2,
+    question_id: '0bfa14b6-283d-4113-ab78-3fc21e21bcda',
+    response_key: 'full_time',
+    value: 'Full-Time',
+  },
+  // company
+  // description
+  {
+    id: '51c823d3-6961-45c4-85ee-3a13c4a9703d',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '97e4b49d-b178-48ce-865f-c707ef48c0a5',
+    response_key: 'description',
+    value: '',
+  },
+  // location
+  {
+    id: 'ef5428fa-8f93-4c90-9df7-4c34921343ce',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '8b2245ce-709b-4e59-ac31-8a4af3359b89',
+    response_key: 'location',
+    value: '',
+  },
+  // name
+  {
+    id: '2f9d015f-974d-489e-a6e8-aeed96486c90',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '6fb3d210-6120-4fa1-8771-87d5a7172342',
+    response_key: 'name',
+    value: '',
+  },
+  // size
+  {
+    id: 'c0c12949-b98c-4b8e-a424-148b57f3e117',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'e83bb9d4-0ef0-490c-8a09-e25a91d6d2ab',
+    response_key: 'small_startup',
+    value: '1 - 10',
+  },
+  {
+    id: 'bfcddde9-d1c7-492a-91e2-fd6505627817',
+    created_date: new Date(),
+    priority: 2,
+    question_id: 'e83bb9d4-0ef0-490c-8a09-e25a91d6d2ab',
+    response_key: 'startup',
+    value: '11 - 50',
+  },
+  {
+    id: '4ec7075b-957f-4e25-8256-ebdf34e997f5',
+    created_date: new Date(),
+    priority: 3,
+    question_id: 'e83bb9d4-0ef0-490c-8a09-e25a91d6d2ab',
+    response_key: 'mid_sized',
+    value: '51 - 250',
+  },
+  {
+    id: 'b6d518c1-c812-4be9-a178-b80aa2392d29',
+    created_date: new Date(),
+    priority: 4,
+    question_id: 'e83bb9d4-0ef0-490c-8a09-e25a91d6d2ab',
+    response_key: 'large',
+    value: '251 +',
+  },
+  // website
+  {
+    id: 'ffc15427-30ed-449e-a5ad-de9fce7781a9',
+    created_date: new Date(),
+    priority: 1,
+    question_id: 'c114925b-d250-456b-9745-98db88274670',
+    response_key: 'website',
+    value: '',
   },
 ];
 

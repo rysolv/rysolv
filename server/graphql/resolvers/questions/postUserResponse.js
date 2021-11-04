@@ -1,8 +1,16 @@
 const { v4: uuidv4 } = require('uuid');
 
-const { CustomError, errorLogger, sendEmail } = require('../../../helpers');
 const {
+  CustomError,
+  errorLogger,
+  generatePositionLevel,
+  sendEmail,
+} = require('../../../helpers');
+const {
+  createCompanyPosition,
   createLanguage,
+  createPositionTechStack,
+  getOneTechnology,
   getUserLanguages,
   postUserResponse: postUserResponseQuery,
   setPreferredLanguage,
@@ -13,10 +21,19 @@ const {
 } = require('./constants');
 const { uploadFile } = require('../../../middlewares/fileUpload');
 
-const postUserResponse = async ({ responseArray }, { authError, userId }) => {
+const postUserResponse = async (
+  { companyId, responseArray },
+  { authError, userId },
+) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
     const { languages } = await getUserLanguages({ userId });
+    const positionId = uuidv4();
+
+    if (companyId && positionId) {
+      const data = { company_id: companyId, id: positionId };
+      await createCompanyPosition({ data });
+    }
 
     await Promise.all(
       responseArray.map(
@@ -31,9 +48,23 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
                 target: { userId },
               });
             }
+          } else if (questionKey === 'skills') {
+            const { beginner, expert, intermediate, skill } = value;
+            const { technologyId } = getOneTechnology({ technology: skill });
+            await createPositionTechStack({
+              level: generatePositionLevel({ beginner, expert, intermediate }),
+              positionId,
+              technologyId,
+            });
           } else {
             let formattedValue = null;
-            if (questionKey === 'personal_link') formattedValue = value;
+            if (
+              questionKey === 'description' ||
+              questionKey === 'location' ||
+              questionKey === 'personal_link' ||
+              questionKey === 'title'
+            )
+              formattedValue = value;
             if (questionKey === 'resume') {
               const { uploadUrl } = await uploadFile(value);
               formattedValue = uploadUrl;
@@ -42,6 +73,7 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
             const data = {
               createdDate: new Date(),
               id: uuidv4(),
+              positionId,
               questionId,
               responseId,
               userId,

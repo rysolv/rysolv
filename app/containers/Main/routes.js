@@ -3,7 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 import withAuth from 'containers/Auth';
 
 import CodeScoring from 'containers/CodeScoring/Loadable';
+import CompanyDashboard from 'containers/CompanyDashboard/Loadable';
 import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
+import CompanySignUp from 'containers/CompanySignUp/Loadable';
 import Contact from 'components/Contact';
 import Faq from 'components/Faq';
 import HowTo from 'components/HowTo';
@@ -27,6 +29,8 @@ import VerifyGithub from 'containers/VerifyGithub/Loadable';
 const privateConfig = { isAdmin: false, isPrivate: true };
 const publicConfig = { isAdmin: false, isPrivate: false };
 
+const PrivateCompanyDashboard = withAuth(privateConfig, CompanyDashboard);
+const PrivateCompanySignUp = withAuth(privateConfig, CompanySignUp);
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
@@ -52,11 +56,12 @@ const PublicVerifyGithub = withAuth(publicConfig, VerifyGithub);
 // prettier-ignore
 const Routes = () => (
   <Switch>
-    <Route exact path="/" component={PublicMain} />
     <Route exact path ="/how-we-score-code" component={PublicCodeScoring} />
+    <Route exact path="/" component={PublicMain} />
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/contact-us" component={PublicContact} />
     <Route exact path="/dashboard" component={PrivateUserDashboard} />
+    <Route exact path="/company/dashboard/:view?" component={PrivateCompanyDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
     <Route exact path="/how-to" component={PublicHowTo} />
     <Route exact path="/issues" component={PublicOverview} />
@@ -76,6 +81,7 @@ const Routes = () => (
     <Route exact path="/signin" component={PublicSignIn} />
     <Route exact path="/signin/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/signup" component={PublicSignIn} />
+    <Route exact path="/signup/company" component={PrivateCompanySignUp} />
     <Route exact path="/signup/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/terms-of-service" component={PublicTermsOfService} />

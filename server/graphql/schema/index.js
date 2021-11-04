@@ -64,6 +64,22 @@ module.exports = buildSchema(`
     target: ID!
   }
 
+  type Company {
+    companyId: String
+  }
+
+  input CompanyInput {
+    description: String!
+    location: String!
+    name: String!
+    size: String!
+    website: String!
+  }
+
+  type CompanyPositionsArray {
+    positions: [Position]
+  }
+
   input ContactInput {
     body: String
     companyName: String
@@ -169,10 +185,40 @@ module.exports = buildSchema(`
     type: String
   }
 
+  type Message {
+    body: String
+    commentId: ID
+    createdDate: Object
+    githubUrl: String
+    isGithubComment: Boolean
+    modifiedDate: Object
+    profilePic: String
+    target: String
+    userId: ID
+    username: String
+  }
+
+  input MessageInput {
+    body: String
+    positionId: ID
+    userId: ID
+  }
+
   type Payment {
     balance: Float
     fundedAmount: Float
     message: String
+  }
+
+  type Position {
+    id: String
+    isRemote: Boolean
+    location: String
+    title: String
+  }
+
+  type PositionCandidatesArray {
+    candidates: [User]
   }
 
   type PullRequest {
@@ -318,11 +364,17 @@ module.exports = buildSchema(`
     hiringStatus: String
     id: ID!
     isGithubVerified: Boolean
+    isHired: Boolean
+    isInterviewRequested: Boolean
     isQuestionnaireComplete: Boolean
+    isSaved: Boolean
     issues: [Object]
     lastName: String
+    lastPosition: String
+    location: String
     modifiedDate: Object
     notifications: Boolean
+    percentMatch: Float
     personalLink: String
     preferredLanguages: [String]
     profilePic: String
@@ -331,11 +383,14 @@ module.exports = buildSchema(`
     rejectedPullRequests: Int
     rep: Int
     repos: [Object]
+    salary: String
     stackoverflowLink: String
     surveyComplete: Boolean
+    type: String
     upvotes: [ID]
     username: String
     watching: [Object]
+    yearsOfExperience: String
   }
 
   type UserArray {
@@ -395,6 +450,7 @@ module.exports = buildSchema(`
   }
 
   union CommentResult = Comment | Error
+  union CompanyResult = Company | Error
   union EventResponse = Success | Error
   union FilterResult = Filter | Error
   union ImportPullRequestResult = ImportPullRequest | Error
@@ -417,12 +473,14 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
+    getCompanyPositions(companyId: ID!): CompanyPositionsArray
     getFilterOptions: FilterResult!
     getGithubPullRequests(issueId: ID!): PullRequestArrayResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!
     getIssueWatchList(issueId: ID!): [WatchList]!
+    getPositionCandidates(positionId: ID!): PositionCandidatesArray
     getPullRequestList(issueId: ID): [PullRequestList]!
     getQuestions(category: String!): QuestionResult
     getRepoActivity(repoId: ID): [Activity]!
@@ -462,7 +520,9 @@ module.exports = buildSchema(`
     closeIssue(issueId: ID!, shouldClose: Boolean): EventResponse!
 
     createComment(commentInput: CommentInput): CommentResult!
+    createCompany(companyInput: CompanyInput): CompanyResult!
     createIssue(issueInput: IssueInput): IssueResult!
+    createMessage(messageInput: MessageInput): EventResponse!
     createPaypalPayment(amount: Float!, email: String, issueId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
     createRepo(repoInput: RepoInput): RepoResult!
@@ -477,7 +537,8 @@ module.exports = buildSchema(`
     importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
     importRepo(url: String!): ImportResult!
 
-    postUserResponse(responseArray: [Object]): EventResponse!
+    postContractAccepted(companyId: ID, contractAccepted: Boolean): EventResponse!
+    postUserResponse(companyId: ID, responseArray: [Object]): EventResponse!
 
     recruitingSignup(contactInput: ContactInput): EventResponse!
 

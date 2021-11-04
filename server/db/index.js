@@ -7,6 +7,14 @@ const { removeAttempting, toggleAttempting } = require('./queries/attempting');
 const { acceptBounty, verifyPayout } = require('./queries/bounties');
 const { createComment, getIssueComments } = require('./queries/comments');
 const {
+  createCompany,
+  createCompanyPosition,
+  createMessage,
+  getCompanyPositions,
+  getPositionCandidates,
+  postContractAccepted,
+} = require('./queries/companies');
+const {
   checkDuplicateIssue,
   closeIssue,
   createIssue,
@@ -62,6 +70,11 @@ const {
   transformRepo,
   updateRepoArray,
 } = require('./queries/repos');
+const {
+  createPositionTechStack,
+  getOneTechnology,
+  getTechnologies,
+} = require('./queries/technologies');
 const { getStats } = require('./queries/stats');
 const { addRepoMembers, deleteRepoMembers } = require('./queries/userRepos');
 const {
@@ -80,6 +93,7 @@ const {
   getUserSettings,
   getUserWatchList,
   insertGitUser,
+  insertUserCompany,
   insertUserEmail,
   searchUsers,
   transformUser,
@@ -105,8 +119,12 @@ module.exports = {
   closeIssue,
   createActivity,
   createComment,
+  createCompany,
+  createCompanyPosition,
   createIssue,
   createLanguage,
+  createMessage,
+  createPositionTechStack,
   createPullRequest,
   createRecruiting,
   createRepo,
@@ -117,6 +135,7 @@ module.exports = {
   deleteUserLanguages,
   deleteUserPullRequests,
   downvoteIssue,
+  getCompanyPositions,
   getFilteredIssues,
   getFilterOptions,
   getIssueAttemptList,
@@ -126,9 +145,12 @@ module.exports = {
   getIssueWatchList,
   getOneIssue,
   getOneRepo,
+  getOneTechnology,
   getOneUser,
   getOneUserSignUp,
+  getPositionCandidates,
   getPullRequestList,
+  getQuestionAnswerByKey,
   getQuestions,
   getRecommendedIssues,
   getRepoActivity,
@@ -138,10 +160,10 @@ module.exports = {
   getReposWhere,
   getStats,
   getSurveyStatus,
+  getTechnologies,
   getUserActivity,
   getUserAttemptList,
   getUserBounties,
-  getQuestionAnswerByKey,
   getUserLanguages,
   getUserPullRequestDetail,
   getUserPullRequests,
@@ -149,7 +171,9 @@ module.exports = {
   getUserSettings,
   getUserWatchList,
   insertGitUser,
+  insertUserCompany,
   insertUserEmail,
+  postContractAccepted,
   postUserResponse,
   removeAttempting,
   removeWatching,

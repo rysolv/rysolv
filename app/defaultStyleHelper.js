@@ -3,6 +3,7 @@ export const bodyColor = '#fafafa';
 export const borderColor = '#e0e0e0';
 export const buttonGrey = '#bdbdbd';
 export const buttonRed = '#dc3545';
+export const candidateGreyColor = '#f5f5f5';
 export const codeGrey = '#eceff1';
 export const commentHeaderColor = '#f6f8fa';
 export const darkTextColor = '#263238';
@@ -54,7 +55,7 @@ export const subheaderFontSize = '1.6rem';
 // Borders
 export const dividerBorder = `0.2rem solid #d5d5d5`;
 export const errorBorder = `0.1rem solid #f44336`;
-export const inputBorder = `0.1rem solid ${inputFieldColor}`;
+export const inputBorder = `0.1rem solid ${grayColor}`;
 export const issueBorder = `0.1rem solid ${borderColor}`;
 
 // Scrollbar

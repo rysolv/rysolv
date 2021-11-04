@@ -9,7 +9,7 @@ import { Redirect } from 'react-router-dom';
 import AsyncRender from 'components/AsyncRender';
 import JobsView from 'components/Jobs';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { useDidUpdateEffect } from 'utils/globalHelpers';
+import { getQuestion, useDidUpdateEffect } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -21,7 +21,7 @@ import {
   resetState,
   submitUserResponse,
 } from './actions';
-import { getQuestion, validateFields } from './helpers';
+import { validateFields } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import {

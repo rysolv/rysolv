@@ -3,8 +3,12 @@ import React from 'react';
 import T from 'prop-types';
 import Chip from '@material-ui/core/Chip';
 
+import iconDictionary from 'utils/iconDictionary';
+
 import { MainTextInput } from '../Inputs';
 import { StyledAutocomplete, StyledOption } from './styledComponents';
+
+const CloseIcon = iconDictionary('close');
 
 const BaseAutocomplete = ({
   error,
@@ -42,6 +46,7 @@ const BaseAutocomplete = ({
       item.map((option, index) => (
         <Chip
           classes={{ root: 'tag' }}
+          deleteIcon={CloseIcon}
           label={option.value}
           {...getTagProps({ index })}
         />
