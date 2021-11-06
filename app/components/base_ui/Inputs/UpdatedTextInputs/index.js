@@ -1,4 +1,5 @@
+import UpdatedPasscodeTextInput from './PasscodeTextInput';
 import UpdatedPasswordTextInput from './PasswordTextInput';
 import UpdatedTextInput from './TextInput';
 
-export { UpdatedPasswordTextInput, UpdatedTextInput };
+export { UpdatedPasscodeTextInput, UpdatedPasswordTextInput, UpdatedTextInput };

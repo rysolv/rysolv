@@ -8,6 +8,7 @@ import PasswordTextInput from './PasswordTextInput';
 import PaymentTextInput from './PaymentTextInput';
 import StripeInput from './StripeInput';
 import {
+  UpdatedPasscodeTextInput,
   UpdatedPasswordTextInput,
   UpdatedTextInput,
 } from './UpdatedTextInputs';
@@ -22,6 +23,7 @@ export {
   PasswordTextInput,
   PaymentTextInput,
   StripeInput,
+  UpdatedPasscodeTextInput,
   UpdatedPasswordTextInput,
   UpdatedTextInput,
 };

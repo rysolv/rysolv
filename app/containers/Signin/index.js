@@ -40,7 +40,8 @@ const Signin = ({
   match,
   step,
 }) => {
-  const { company: { companyId } = {} } = activeUser;
+  const { company } = activeUser || {};
+  const { companyId } = company || {};
   const [viewToRender, setViewToRender] = useState(null);
   useEffect(() => dispatchResetState, []);
   useEffect(() => {

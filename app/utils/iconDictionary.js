@@ -25,6 +25,7 @@ import Done from '@material-ui/icons/Done';
 import Edit from '@material-ui/icons/Edit';
 import Email from '@material-ui/icons/Email';
 import ErrorIcon from '@material-ui/icons/Error';
+import ErrorOutline from '@material-ui/icons/ErrorOutline';
 import Exit from '@material-ui/icons/ExitToApp';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -106,6 +107,7 @@ export default (name, size, style) => {
     dropdownArrow: ArrowDropDown,
     edit: Edit,
     email: Email,
+    errorOutline: ErrorOutline,
     exit: Exit,
     expandLess: ExpandLess,
     expandMore: ExpandMore,

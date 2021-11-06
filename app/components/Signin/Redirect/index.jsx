@@ -2,13 +2,13 @@ import React from 'react';
 import T from 'prop-types';
 
 import {
+  ImportantTextWrapper,
   InputFormWrapper,
-  RedirectText,
+  InputSubText,
   SigninWrapper,
   StyledButton,
   StyledPrimaryButton,
   Title,
-  UsernameWrapper,
 } from '../styledComponents';
 
 const Redirect = ({
@@ -24,15 +24,15 @@ const Redirect = ({
   return (
     <SigninWrapper>
       <InputFormWrapper>
-        <Title>Return to your account</Title>
-        <RedirectText>
+        <Title hasSubText>Return to your account</Title>
+        <InputSubText hasFlex>
           You are already logged in as{' '}
-          <UsernameWrapper>{username}</UsernameWrapper>.
-        </RedirectText>
+          <ImportantTextWrapper>{username}</ImportantTextWrapper>.
+        </InputSubText>
         <StyledPrimaryButton
           autoFocus
           disableFocusRipple
-          label="Go to My Dashboard"
+          label="Go to your Dashboard"
           onClick={() => handleNav(path)}
         />
         <StyledButton disableFocusRipple onClick={handleSignout}>

@@ -14,7 +14,6 @@ export const initialState = {
   resetPassword: {
     password: { error: '', value: '' },
     verificationCode: { error: '', value: '' },
-    verifyPassword: { error: '', value: '' },
   },
   resetStep: 1,
   sendLink: {
@@ -30,7 +29,6 @@ export const initialState = {
     lastName: { error: '', value: '' },
     password: { error: '', value: '' },
     username: { error: '', value: '' },
-    verifyPassword: { error: '', value: '' },
   },
   step: 1,
   verify: {

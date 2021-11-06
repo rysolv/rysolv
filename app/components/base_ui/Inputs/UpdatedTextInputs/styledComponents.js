@@ -3,6 +3,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import {
   candidateGreyColor,
+  darkBlueColor,
   defaultFontSize,
   errorRed,
   textColor,
@@ -55,7 +56,32 @@ export const InputLabel = styled.div`
   font-size: 1.6rem;
 `;
 
+export const InputLine = styled.div`
+  background-color: ${({ isActive }) => (isActive ? darkBlueColor : '#a9acae')};
+  height: ${({ isActive }) => (isActive ? '0.2rem' : '0.1rem')};
+  margin-top: ${({ isActive }) => (isActive ? '0.5rem' : '0')};
+  width: 4.8rem;
+`;
+
+export const InputLineContainer = styled.div`
+  margin: 0 0.5rem;
+  width: 4.8rem;
+`;
+
+export const InputText = styled.div`
+  height: 2.6rem;
+  margin-bottom: 0.7rem;
+  text-align: center;
+  width: 4.8rem;
+`;
+
 export const InputWrapper = styled.div`
+  position: relative;
+`;
+
+export const PasscodeInputContainer = styled.div`
+  align-items: center;
+  display: flex;
   position: relative;
 `;
 
@@ -69,4 +95,13 @@ export const StyledIconButton = styled(IconButton)`
     height: 2.4rem;
     width: 2.4rem;
   }
+`;
+
+export const StyledInput = styled.input`
+  font-size: 1.6rem;
+  height: 4.8rem;
+  opacity: 0;
+  position: absolute;
+  width: ${({ maxLength }) => `${48 * maxLength + 10 * maxLength}`}px;
+  z-index: 1;
 `;

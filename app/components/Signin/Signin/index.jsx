@@ -2,18 +2,16 @@ import React from 'react';
 import T from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import {
-  GithubButton,
-  MainTextInput,
-  PasswordTextInput,
-} from 'components/base_ui';
+import { UpdatedTextInput, UpdatedPasswordTextInput } from 'components/base_ui';
 
 import {
   Divider,
   DividerWrapper,
+  InputFormContent,
   InputFormWrapper,
   SigninWrapper,
   StyledErrorSuccessBanner,
+  StyledGithubButton,
   StyledLink,
   StyledPrimaryAsyncButton,
   SubText,
@@ -40,60 +38,60 @@ const Signin = ({
   return (
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
-        <Title>Sign in and get rysolving</Title>
-        {error && (
-          <StyledErrorSuccessBanner
-            error={error}
-            onClose={handleClearAuthAlerts}
+        <Title>Sign in to Rysolv</Title>
+        <InputFormContent>
+          {error && (
+            <StyledErrorSuccessBanner
+              error={error}
+              onClose={handleClearAuthAlerts}
+            />
+          )}
+          <UpdatedTextInput
+            autoComplete="email"
+            error={email.error}
+            label="Email"
+            onBlur={() => handleValidateInput({ field: 'email' })}
+            onChange={e =>
+              handleInputChange({
+                field: 'email',
+                form: 'signIn',
+                value: e.target.value,
+              })
+            }
+            type="email"
+            value={email.value}
           />
-        )}
-        <GithubButton type="signin" />
-        <DividerWrapper>
-          <Divider />
-          <WordDivider>or</WordDivider>
-        </DividerWrapper>
-        <MainTextInput
-          autoComplete="email"
-          error={!!email.error}
-          helperText={email.error}
-          label="Email"
-          onBlur={() => handleValidateInput({ field: 'email' })}
-          onChange={e =>
-            handleInputChange({
-              field: 'email',
-              form: 'signIn',
-              value: e.target.value,
-            })
-          }
-          type="email"
-          value={email.value}
-        />
-        <PasswordTextInput
-          autoComplete="current-password"
-          error={!!password.error}
-          helperText={password.error}
-          label="Password"
-          onBlur={() => handleValidateInput({ field: 'password' })}
-          onChange={e =>
-            handleInputChange({
-              field: 'password',
-              form: 'signIn',
-              value: e.target.value,
-            })
-          }
-          value={password.value}
-        />
-        <StyledLink to="/password-reset">Forgot password?</StyledLink>
-        <StyledPrimaryAsyncButton
-          disabled={signInDisabled}
-          label="Sign in"
-          loading={loading}
-          onClick={handleSignIn}
-        />
+          <UpdatedPasswordTextInput
+            autoComplete="current-password"
+            error={password.error}
+            label="Password"
+            onBlur={() => handleValidateInput({ field: 'password' })}
+            onChange={e =>
+              handleInputChange({
+                field: 'password',
+                form: 'signIn',
+                value: e.target.value,
+              })
+            }
+            value={password.value}
+          />
+          <StyledPrimaryAsyncButton
+            disabled={signInDisabled}
+            label="Sign in"
+            loading={loading}
+            onClick={handleSignIn}
+          />
+          <DividerWrapper>
+            <Divider />
+            <WordDivider>or</WordDivider>
+          </DividerWrapper>
+          <StyledGithubButton type="signin" />
+        </InputFormContent>
+        <StyledLink to="/password-reset">Forgot your password?</StyledLink>
+        <SubText>
+          Don’t have an account? <Link to="/signup">Sign up</Link>
+        </SubText>
       </InputFormWrapper>
-      <SubText>
-        Don’t have an account? <Link to="/signup">Sign up</Link>
-      </SubText>
     </SigninWrapper>
   );
 };
