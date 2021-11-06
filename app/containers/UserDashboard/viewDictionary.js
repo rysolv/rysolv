@@ -1,15 +1,15 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import CompanyDashboardView from 'components/CompanyDashboard';
-import CreatePositionView from 'components/CreatePosition';
+import UserDashboardView from 'components/UserDashboard';
+import UpdateDetails from 'components/UserDashboard/UpdateDetails';
 
 const viewDictionary = key => {
   switch (key) {
-    case 'add':
-      return CreatePositionView;
+    case 'update':
+      return UpdateDetails;
     case 'main':
-      return CompanyDashboardView;
+      return UserDashboardView;
     default:
       return () => <Redirect to="/notfound" />;
   }

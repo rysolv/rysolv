@@ -42,6 +42,7 @@ const UserDashboard = ({ data, dispatchSetHiringStatus, handleNav }) => {
         <ConditionalRender
           Component={HiringHeader}
           propsToPassDown={{
+            handleNav,
             messages: 3,
           }}
           shouldRender={surveyComplete}

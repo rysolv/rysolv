@@ -76,6 +76,8 @@ const CompanyDashboard = ({
   view,
 }) => {
   useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'Dashboard';
     dispatchFetchCompanyPositions();
     dispatchFetchPositionQuestions({ category: 'company_position' });
   }, []);
@@ -84,7 +86,7 @@ const CompanyDashboard = ({
     dispatchFetchPositionCandidates({ positionId: selectedPosition });
   }, [selectedPosition]);
 
-  const ComponentToRender = viewDictionary[view];
+  const ComponentToRender = viewDictionary(view);
 
   const handleCreatePosition = () => {
     const { isValidated, validationErrors } = validateFields({ values: form });

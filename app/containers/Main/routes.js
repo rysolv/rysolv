@@ -59,9 +59,9 @@ const Routes = () => (
     <Route exact path ="/how-we-score-code" component={PublicCodeScoring} />
     <Route exact path="/" component={PublicMain} />
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
-    <Route exact path="/contact-us" component={PublicContact} />
-    <Route exact path="/dashboard" component={PrivateUserDashboard} />
     <Route exact path="/company/dashboard/:view?" component={PrivateCompanyDashboard} />
+    <Route exact path="/contact-us" component={PublicContact} />
+    <Route exact path="/dashboard/:view?" component={PrivateUserDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
     <Route exact path="/how-to" component={PublicHowTo} />
     <Route exact path="/issues" component={PublicOverview} />

@@ -6,7 +6,6 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-import UserDashboardView from 'components/UserDashboard';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -14,7 +13,11 @@ import injectSaga from 'utils/injectSaga';
 import { dismissBanner, fetchUserDashboard, setHiringStatus } from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectUserDashboard } from './selectors';
+import {
+  makeSelectUserDashboard,
+  makeSelectUserDashboardView,
+} from './selectors';
+import viewDictionary from './viewDictionary';
 
 const UserDashboard = ({
   deviceView,
@@ -27,6 +30,7 @@ const UserDashboard = ({
   isOverview,
   loading,
   user,
+  view,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,10 +38,12 @@ const UserDashboard = ({
     dispatchFetchUserDashboard();
   }, []);
 
+  const ComponentToRender = viewDictionary(view);
+
   return (
     <AsyncRender
       asyncData={user}
-      component={UserDashboardView}
+      component={ComponentToRender}
       error={error}
       isRequiredData
       loading={loading}
@@ -66,6 +72,7 @@ UserDashboard.propTypes = {
   isOverview: T.bool,
   loading: T.bool.isRequired,
   user: T.object.isRequired,
+  view: T.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -76,6 +83,7 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectUserDashboard('error'),
   loading: makeSelectUserDashboard('loading'),
   user: makeSelectUserDashboard('user'),
+  view: makeSelectUserDashboardView(),
   /**
    * Reducer : ViewSize
    */
