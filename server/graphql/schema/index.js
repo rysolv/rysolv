@@ -64,11 +64,8 @@ module.exports = buildSchema(`
     target: ID!
   }
 
-  type Company {
-    companyId: String
-  }
-
   input CompanyInput {
+    companyId: ID!
     description: String!
     location: String!
     name: String!
@@ -352,6 +349,7 @@ module.exports = buildSchema(`
     attempting: [Object]
     balance: Float
     bounties: [Bounty]
+    company: Object
     completedPullRequests: Int
     createdDate: Object
     dollarsEarned: Int
@@ -404,6 +402,7 @@ module.exports = buildSchema(`
     firstName: String
     githubLink: String
     id: ID
+    isCompany: Boolean
     issues: [String]
     lastName: String
     password: String
@@ -448,7 +447,6 @@ module.exports = buildSchema(`
   }
 
   union CommentResult = Comment | Error
-  union CompanyResult = Company | Error
   union EventResponse = Success | Error
   union FilterResult = Filter | Error
   union ImportPullRequestResult = ImportPullRequest | Error
@@ -517,7 +515,7 @@ module.exports = buildSchema(`
     closeIssue(issueId: ID!, shouldClose: Boolean): EventResponse!
 
     createComment(commentInput: CommentInput): CommentResult!
-    createCompany(companyInput: CompanyInput): CompanyResult!
+    createCompany(companyInput: CompanyInput): EventResponse!
     createIssue(issueInput: IssueInput): IssueResult!
     createMessage(messageInput: MessageInput): EventResponse!
     createPaypalPayment(amount: Float!, email: String, issueId: ID): PaymentResult!

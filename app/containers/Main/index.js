@@ -90,6 +90,8 @@ class Main extends React.PureComponent {
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/recruitment' ||
+      pathname === '/signin' ||
+      pathname === '/signup' ||
       pathname === '/signup/company';
     const isPaymentModal = modal === 'fundIssue';
     const modalPropsDictionary = {

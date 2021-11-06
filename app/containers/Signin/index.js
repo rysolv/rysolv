@@ -25,6 +25,7 @@ import {
   signInDictionary,
   signUpDictionary,
 } from './stepDictionary';
+import { ViewContainer } from './styledComponents';
 
 const Signin = ({
   activeUser,
@@ -39,14 +40,17 @@ const Signin = ({
   match,
   step,
 }) => {
+  const { company: { companyId } = {} } = activeUser;
   const [viewToRender, setViewToRender] = useState(null);
   useEffect(() => dispatchResetState, []);
   useEffect(() => {
     if (isSignInRoute) {
-      setViewToRender(<Redirect to="/issues" />);
+      const path = companyId ? '/signup/company' : '/issues';
+      setViewToRender(<Redirect to={path} />);
     } else if (isSignUpRoute) {
+      const path = companyId ? '/signup/company' : '/settings';
       dispatchResetRoute();
-      setViewToRender(<Redirect to="/settings" />);
+      setViewToRender(<Redirect to={path} />);
     } else {
       setViewToRender(
         <AsyncRender
@@ -61,7 +65,7 @@ const Signin = ({
         />,
       );
     }
-  }, [isSignedIn, loading]);
+  }, [companyId, isSignedIn, loading]);
   const view = match.path.substr(1);
   const dictionaryToUse = {
     'password-reset': passwordResetComponent,
@@ -74,11 +78,13 @@ const Signin = ({
       : dictionaryToUse[view][step];
 
   return (
-    <ConditionalRender
-      Component={ComponentToRender}
-      FallbackComponent={viewToRender}
-      shouldRender={!isSignedIn}
-    />
+    <ViewContainer>
+      <ConditionalRender
+        Component={ComponentToRender}
+        FallbackComponent={viewToRender}
+        shouldRender={!isSignedIn}
+      />
+    </ViewContainer>
   );
 };
 

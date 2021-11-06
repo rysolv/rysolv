@@ -11,7 +11,12 @@ import {
   UsernameWrapper,
 } from '../styledComponents';
 
-const Redirect = ({ data: { username }, dispatchSignOut, handleNav }) => {
+const Redirect = ({
+  data: { company, username },
+  dispatchSignOut,
+  handleNav,
+}) => {
+  const path = company ? '/dashboard' : '/settings';
   const handleSignout = () => {
     dispatchSignOut();
     handleNav('/signin');
@@ -27,8 +32,8 @@ const Redirect = ({ data: { username }, dispatchSignOut, handleNav }) => {
         <StyledPrimaryButton
           autoFocus
           disableFocusRipple
-          label="Go to My Account"
-          onClick={() => handleNav('/settings')}
+          label="Go to My Dashboard"
+          onClick={() => handleNav(path)}
         />
         <StyledButton disableFocusRipple onClick={handleSignout}>
           Sign out

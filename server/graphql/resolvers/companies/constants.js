@@ -1,4 +1,6 @@
-const createCompanyError = `Something went wrong when signing up. Please try again later.`;
+const createCompanyError = `Something went wrong when saving your company information. Please try again later.`;
+
+const createCompanySuccess = `Your company information has been successfully saved.`;
 
 const createMessageError = `Something went wrong when sending your message.`;
 
@@ -12,6 +14,7 @@ const postContractAcceptedSuccess =
 
 module.exports = {
   createCompanyError,
+  createCompanySuccess,
   createMessageError,
   createMessageSuccess,
   postContractAcceptedError,

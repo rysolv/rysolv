@@ -13,6 +13,7 @@ const {
   getCompanyPositions,
   getPositionCandidates,
   postContractAccepted,
+  updateCompany,
 } = require('./queries/companies');
 const {
   checkDuplicateIssue,
@@ -80,6 +81,7 @@ const {
   getOneUserSignUp,
   getUserAttemptList,
   getUserBounties,
+  getUserCompany,
   getUserPullRequestDetail,
   getUsers,
   getUserSettings,
@@ -151,6 +153,7 @@ module.exports = {
   getUserActivity,
   getUserAttemptList,
   getUserBounties,
+  getUserCompany,
   getUserLanguages,
   getUserPullRequestDetail,
   getUserPullRequests,
@@ -177,6 +180,7 @@ module.exports = {
   transformRepo,
   transformUser,
   transformUserBalance,
+  updateCompany,
   updateRepoArray,
   upvoteIssue,
   verifyPayout,

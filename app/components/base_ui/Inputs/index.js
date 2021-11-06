@@ -7,6 +7,10 @@ import MainTextInput from './MainTextInput';
 import PasswordTextInput from './PasswordTextInput';
 import PaymentTextInput from './PaymentTextInput';
 import StripeInput from './StripeInput';
+import {
+  UpdatedPasswordTextInput,
+  UpdatedTextInput,
+} from './UpdatedTextInputs';
 
 export {
   BaseFileInput,
@@ -18,4 +22,6 @@ export {
   PasswordTextInput,
   PaymentTextInput,
   StripeInput,
+  UpdatedPasswordTextInput,
+  UpdatedTextInput,
 };

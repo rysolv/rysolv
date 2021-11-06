@@ -9,6 +9,7 @@ import { push } from 'connected-react-router';
 import { ModalDialog } from 'components/base_ui';
 import CompanySideNav from 'components/CompanySideNav';
 import ScheduleInterviewModal from 'components/ScheduleInterviewModal';
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -44,6 +45,7 @@ import { VerticalDivider, ViewContainer } from './styledComponents';
 import viewDictionary from './viewDictionary';
 
 const CompanyDashboard = ({
+  activeUser,
   alerts,
   candidates,
   deviceView,
@@ -75,6 +77,10 @@ const CompanyDashboard = ({
   tableData,
   view,
 }) => {
+  const {
+    company: { isContractAccepted, isQuestionnaireComplete } = {},
+  } = activeUser;
+
   useEffect(() => {
     dispatchFetchCompanyPositions();
     dispatchFetchPositionQuestions({ category: 'company_position' });
@@ -83,6 +89,12 @@ const CompanyDashboard = ({
   useEffect(() => {
     dispatchFetchPositionCandidates({ positionId: selectedPosition });
   }, [selectedPosition]);
+
+  useEffect(() => {
+    if (!isContractAccepted || !isQuestionnaireComplete) {
+      handleNav('/signup/company');
+    }
+  }, [isContractAccepted, isQuestionnaireComplete]);
 
   const ComponentToRender = viewDictionary[view];
 
@@ -157,6 +169,7 @@ const CompanyDashboard = ({
 };
 
 CompanyDashboard.propTypes = {
+  activeUser: T.object.isRequired,
   alerts: T.object.isRequired,
   candidates: T.array.isRequired,
   deviceView: T.string.isRequired,
@@ -190,6 +203,10 @@ CompanyDashboard.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
   /*
    * Reducer : CompanyDashboard
    */
