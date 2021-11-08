@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary, prettier/prettier */
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,32 +8,50 @@ import { post } from 'utils/request';
 import {
   createPositionFailure,
   createPositionSuccess,
+  deletePositionFailure,
+  deletePositionSuccess,
+  editPositionFailure,
+  editPositionSuccess,
+  fetchCompanyPositions,
   fetchCompanyPositionsFailure,
   fetchCompanyPositionsSuccess,
   fetchPositionCandidatesFailure,
   fetchPositionCandidatesSuccess,
+  fetchPositionFailure,
   fetchPositionQuestionsFailure,
   fetchPositionQuestionsSuccess,
+  fetchPositionSuccess,
   notifyCandidateFailure,
   notifyCandidateSuccess,
   resetFormState,
 } from './actions';
 import {
   CREATE_POSITION,
+  DELETE_POSITION,
+  EDIT_POSITION,
   FETCH_COMPANY_POSITIONS,
   FETCH_POSITION_CANDIDATES,
   FETCH_POSITION_QUESTIONS,
+  FETCH_POSITION,
   NOTIFY_CANDIDATE,
 } from './constants';
 
 export function* createPositionSaga({ payload }) {
-  const { responseArray } = payload;
+  const { companyId, responseArray } = payload;
+  const positionId = uuidv4();
   const formattedResponse = responseArray.map(
     ({ questionId, questionKey, responseId, value }) => {
       const formattedValue =
         questionKey === 'description'
           ? `${JSON.stringify(value)}`
-          : `"${value}"`;
+          : questionKey === 'skills'
+            ? `{
+              beginner: ${value.beginner},
+              expert: ${value.expert},
+              intermediate: ${value.intermediate},
+              skill: "${value.skill}"
+            }`
+            : `"${value}"`;
       return `{
         questionId: "${questionId}",
         questionKey: "${questionKey}",
@@ -41,11 +60,11 @@ export function* createPositionSaga({ payload }) {
       }`;
     },
   );
-  const uuid = uuidv4();
   const query = `
     mutation {
       postUserResponse(
-        companyId: "${uuid}",
+        companyId: "${companyId}",
+        positionId: "${positionId}",
         responseArray: [${formattedResponse}]
       ) {
         __typename
@@ -67,16 +86,104 @@ export function* createPositionSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(createPositionSuccess({ message }));
+    yield put(fetchCompanyPositions({ companyId }));
     yield put(push('/dashboard'));
   } catch (error) {
     yield put(createPositionFailure({ error: { message: error } }));
   }
 }
 
-export function* fetchCompanyPositionsSaga() {
+export function* deletePositionSaga({ payload }) {
+  const { positionId } = payload;
+  const query = `
+    mutation{
+      deletePosition(positionId: "${positionId}") {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        deletePosition: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(deletePositionSuccess());
+    yield put(push('/dashboard'));
+  } catch (error) {
+    yield put(deletePositionFailure({ error: { message: error } }));
+  }
+}
+
+export function* editPositionSaga({ payload }) {
+  const { companyId, positionId, responseArray } = payload;
+  const formattedResponse = responseArray.map(
+    ({ questionId, questionKey, responseId, value }) => {
+      const formattedValue =
+        questionKey === 'description'
+          ? `${JSON.stringify(value)}`
+          : questionKey === 'skills'
+            ? `{
+              beginner: ${value.beginner},
+              expert: ${value.expert},
+              intermediate: ${value.intermediate},
+              skill: "${value.skill}"
+            }`
+            : `"${value}"`;
+
+      return `{
+        questionId: "${questionId}",
+        questionKey: "${questionKey}",
+        responseId: "${responseId}",
+        value: ${formattedValue},
+      }`;
+    },
+  );
+  const query = `
+    mutation {
+      transformPosition(
+        positionId: "${positionId}",
+        responseArray: [${formattedResponse}]
+      ) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        transformPosition: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(editPositionSuccess());
+    yield put(fetchCompanyPositions({ companyId }));
+    yield put(push('/dashboard'));
+  } catch (error) {
+    yield put(editPositionFailure({ error: { message: error } }));
+  }
+}
+
+export function* fetchCompanyPositionsSaga({ payload }) {
+  const { companyId } = payload;
   const query = `
     query {
-      getCompanyPositions(companyId: "5a888461-5ab0-4fd2-9585-a5797e795528") {
+      getCompanyPositions(companyId: "${companyId}") {
         __typename
         ... on CompanyPositionsArray {
           positions {
@@ -183,6 +290,44 @@ export function* fetchPositionQuestionsSaga({ payload }) {
   }
 }
 
+export function* fetchPositionSaga({ payload }) {
+  const { positionId } = payload;
+  const query = `
+    query {
+      onePosition(positionId: "${positionId}") {
+        __typename
+        ... on Position {
+          description
+          experience
+          hiringTimeframe
+          isRemote
+          location
+          role
+          salary
+          skills
+          title
+          type
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        onePosition: { __typename, message, ...restProps },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchPositionSuccess({ position: restProps }));
+  } catch (error) {
+    yield put(fetchPositionFailure({ error }));
+  }
+}
+
 export function* notifyCandidateSaga({ payload }) {
   const { body, positionId, userId } = payload;
   const query = `
@@ -219,8 +364,11 @@ export function* notifyCandidateSaga({ payload }) {
 
 export default function* watcherSaga() {
   yield takeLatest(CREATE_POSITION, createPositionSaga);
+  yield takeLatest(DELETE_POSITION, deletePositionSaga);
+  yield takeLatest(EDIT_POSITION, editPositionSaga);
   yield takeLatest(FETCH_COMPANY_POSITIONS, fetchCompanyPositionsSaga);
   yield takeLatest(FETCH_POSITION_CANDIDATES, fetchPositionCandidatesSaga);
   yield takeLatest(FETCH_POSITION_QUESTIONS, fetchPositionQuestionsSaga);
+  yield takeLatest(FETCH_POSITION, fetchPositionSaga);
   yield takeLatest(NOTIFY_CANDIDATE, notifyCandidateSaga);
 }

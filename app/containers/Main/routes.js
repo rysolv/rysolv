@@ -56,11 +56,12 @@ const Routes = () => (
   <Switch>
     <Route exact path="/" component={PublicMain} />
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
-    <Route exact path ="/how-we-score-code" component={PublicCodeScoring} />
+    <Route exact path="/company/signup" component={PrivateCompanySignUp} />
     <Route exact path="/contact-us" component={PublicContact} />
     <Route exact path="/dashboard/:view?" component={PrivateCompanyDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
     <Route exact path="/how-to" component={PublicHowTo} />
+    <Route exact path="/how-we-score-code" component={PublicCodeScoring} />
     <Route exact path="/issues" component={PublicOverview} />
     <Route exact path="/issues/add" component={PrivateIssuesAdd} />
     <Route exact path="/issues/detail/:id" component={PublicIssuesDetail} />
@@ -78,7 +79,6 @@ const Routes = () => (
     <Route exact path="/signin" component={PublicSignIn} />
     <Route exact path="/signin/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/signup" component={PublicSignIn} />
-    <Route exact path="/signup/company" component={PrivateCompanySignUp} />
     <Route exact path="/signup/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/stats" component={PublicStats} />
     <Route exact path="/terms-of-service" component={PublicTermsOfService} />

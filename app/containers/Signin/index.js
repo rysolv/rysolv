@@ -46,10 +46,10 @@ const Signin = ({
   useEffect(() => dispatchResetState, []);
   useEffect(() => {
     if (isSignInRoute) {
-      const path = companyId ? '/signup/company' : '/issues';
+      const path = companyId ? '/company/signup' : '/issues';
       setViewToRender(<Redirect to={path} />);
     } else if (isSignUpRoute) {
-      const path = companyId ? '/signup/company' : '/settings';
+      const path = companyId ? '/company/signup' : '/settings';
       dispatchResetRoute();
       setViewToRender(<Redirect to={path} />);
     } else {

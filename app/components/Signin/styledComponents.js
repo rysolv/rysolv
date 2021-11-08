@@ -75,8 +75,8 @@ export const InputFormWrapper = styled.div`
   font-size: 1.6rem;
   justify-content: space-between;
   margin: 5rem auto 0;
-  max-width: 70rem;
-  min-height: 50rem;
+  max-width: 75rem;
+  min-height: 35rem;
   padding: 7.5rem 10%;
   text-align: center;
   width: 100%;
@@ -138,15 +138,12 @@ export const ResendButton = styled(Button)`
 export const SigninWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 5rem;
+  margin: 0 12rem;
+  max-width: 120rem;
   width: 100%;
 
-  &:focus {
-    outline: none;
-  }
-
-  ${mobile} {
-    margin-bottom: 5rem;
+  ${laptop} {
+    margin: 0 3rem;
   }
 `;
 

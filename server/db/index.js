@@ -10,7 +10,9 @@ const {
   createCompany,
   createCompanyPosition,
   createMessage,
+  deletePosition,
   getCompanyPositions,
+  getOnePosition,
   getPositionCandidates,
   postContractAccepted,
   updateCompany,
@@ -65,6 +67,7 @@ const {
 } = require('./queries/repos');
 const {
   createPositionTechStack,
+  deletePositionTechStack,
   getOneTechnology,
   getTechnologies,
 } = require('./queries/technologies');
@@ -123,6 +126,8 @@ module.exports = {
   createRepo,
   createUser,
   createWithdrawal,
+  deletePosition,
+  deletePositionTechStack,
   deletePullRequest,
   deleteRepoMembers,
   deleteUserLanguages,
@@ -136,6 +141,7 @@ module.exports = {
   getIssues,
   getIssueWatchList,
   getOneIssue,
+  getOnePosition,
   getOneRepo,
   getOneTechnology,
   getOneUser,

@@ -51,7 +51,7 @@ const CompanySignUp = ({
   const { companyInfo: companyInfoForm, contract: contractForm } = forms;
   const { contractAccepted } = contractForm;
   const {
-    company: { isContractAccepted, isQuestionnaireComplete } = {},
+    company: { companyId, isContractAccepted, isQuestionnaireComplete } = {},
   } = activeUser;
   const [viewToRender, setViewToRender] = useState(view);
 
@@ -70,12 +70,15 @@ const CompanySignUp = ({
     }
   }, [isContractAccepted, isQuestionnaireComplete]);
 
+  useEffect(() => setViewToRender(view), [view]);
+
   const handleCancel = () => {
     dispatchResetState();
     handleNav('/signup');
   };
   const handleSubmit = () => {
     dispatchSubmitCompanyResponse({
+      companyId,
       form: { ...companyInfoForm, contractAccepted },
     });
   };

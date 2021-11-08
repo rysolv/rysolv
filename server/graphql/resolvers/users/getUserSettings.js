@@ -31,7 +31,7 @@ const getUserSettings = async (_, { authError, userId }) => {
       result.company = {
         companyId: id,
         isContractAccepted: !!contractAcceptedDate,
-        isQuestionnaireComplete: Object.keys(companyProps).every(
+        isQuestionnaireComplete: Object.keys(companyProps).some(
           prop => !!companyProps[prop],
         ),
       };

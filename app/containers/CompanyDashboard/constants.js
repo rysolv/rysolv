@@ -14,7 +14,19 @@ export const CREATE_POSITION_FAILURE =
 export const CREATE_POSITION_SUCCESS =
   'app/CompanyDashboard/CREATE_POSITION_SUCCESS';
 
+export const DELETE_POSITION = 'app/CompanyDashboard/DELETE_POSITION';
+export const DELETE_POSITION_FAILURE =
+  'app/CompanyDashboard/DELETE_POSITION_FAILURE';
+export const DELETE_POSITION_SUCCESS =
+  'app/CompanyDashboard/DELETE_POSITION_SUCCESS';
+
 export const DELETE_SKILL = 'app/CompnayDashboard/DELETE_SKILL';
+
+export const EDIT_POSITION = 'app/CompanyDashboard/EDIT_POSITION';
+export const EDIT_POSITION_FAILURE =
+  'app/CompanyDashboard/EDIT_POSITION_FAILURE';
+export const EDIT_POSITION_SUCCESS =
+  'app/CompanyDashboard/EDIT_POSITION_SUCCESS';
 
 export const FETCH_COMPANY_POSITIONS =
   'app/CompanyDashboard/FETCH_COMPANY_POSITIONS';
@@ -36,6 +48,12 @@ export const FETCH_POSITION_QUESTIONS_FAILURE =
   'app/CompanyDashboard/FETCH_POSITION_QUESTIONS_FAILURE';
 export const FETCH_POSITION_QUESTIONS_SUCCESS =
   'app/CompanyDashboard/FETCH_POSITION_QUESTIONS_SUCCESS';
+
+export const FETCH_POSITION = 'app/CompanyDashboard/FETCH_POSITION';
+export const FETCH_POSITION_FAILURE =
+  'app/CompanyDashboard/FETCH_POSITION_FAILURE';
+export const FETCH_POSITION_SUCCESS =
+  'app/CompanyDashboard/FETCH_POSITION_SUCCESS';
 
 export const INPUT_ERROR = 'app/CompanyDashboard/INPUT_ERROR';
 

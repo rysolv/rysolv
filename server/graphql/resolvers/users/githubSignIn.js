@@ -180,6 +180,13 @@ const githubSignIn = async ({ code, origin }, { res }) => {
         }),
       );
 
+      // Pull user pull request detail
+      const {
+        activePullRequests,
+        completedPullRequests,
+        rejectedPullRequests,
+      } = await getUserPullRequestDetail({ userId });
+
       // Pull user repo detail
       const reposListResult = await Promise.all(
         repos.map(async repoId => {
@@ -187,13 +194,6 @@ const githubSignIn = async ({ code, origin }, { res }) => {
           return reposResult;
         }),
       );
-
-      // Pull user pull request detail
-      const {
-        activePullRequests,
-        completedPullRequests,
-        rejectedPullRequests,
-      } = await getUserPullRequestDetail({ userId });
 
       // Pull user watching detail
       const watchingListResult = await getUserWatchList({ userId });

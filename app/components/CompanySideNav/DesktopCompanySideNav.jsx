@@ -45,7 +45,7 @@ const DesktopCompanySideNav = ({
               {location}&nbsp;
               <ConditionalRender
                 Component={<span>(Remote)</span>}
-                shouldRender={isRemote}
+                shouldRender={isRemote === 'Yes'}
               />
             </LocationText>
           </ButtonTextWrapper>
