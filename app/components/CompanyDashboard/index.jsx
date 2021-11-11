@@ -14,8 +14,10 @@ const CompanyDashboard = ({
   dispatchOpenModal,
   dispatchSaveCandidate,
   filter,
+  handleNav,
   loading,
   positions,
+  positionTitle,
   selectedPosition,
 }) => (
   <ConditionalRender
@@ -31,12 +33,14 @@ const CompanyDashboard = ({
           dispatchOpenModal,
           dispatchSaveCandidate,
           filter,
+          handleNav,
+          positionTitle,
           selectedPosition,
         }}
       />
     }
     FallbackComponent={InitialDashboard}
-    shouldRender={positions.length}
+    shouldRender={!!positions.length}
   />
 );
 
@@ -46,8 +50,10 @@ CompanyDashboard.propTypes = {
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
   filter: T.object.isRequired,
+  handleNav: T.func.isRequired,
   loading: T.bool.isRequired,
   positions: T.array.isRequired,
+  positionTitle: T.string,
   selectedPosition: T.string.isRequired,
 };
 

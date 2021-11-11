@@ -22,13 +22,12 @@ const {
 const { uploadFile } = require('../../../middlewares/fileUpload');
 
 const postUserResponse = async (
-  { companyId, responseArray },
+  { companyId, positionId, responseArray },
   { authError, userId },
 ) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
     const { languages } = await getUserLanguages({ userId });
-    const positionId = uuidv4();
 
     if (companyId && positionId) {
       const data = { company_id: companyId, id: positionId };
@@ -50,7 +49,9 @@ const postUserResponse = async (
             }
           } else if (questionKey === 'skills') {
             const { beginner, expert, intermediate, skill } = value;
-            const { technologyId } = getOneTechnology({ technology: skill });
+            const { technologyId } = await getOneTechnology({
+              technology: skill,
+            });
             await createPositionTechStack({
               level: generatePositionLevel({ beginner, expert, intermediate }),
               positionId,

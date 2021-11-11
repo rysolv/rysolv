@@ -10,9 +10,12 @@ const {
   createCompany,
   createCompanyPosition,
   createMessage,
+  deletePosition,
   getCompanyPositions,
+  getOnePosition,
   getPositionCandidates,
   postContractAccepted,
+  updateCompany,
 } = require('./queries/companies');
 const {
   checkDuplicateIssue,
@@ -64,6 +67,7 @@ const {
 } = require('./queries/repos');
 const {
   createPositionTechStack,
+  deletePositionTechStack,
   getOneTechnology,
   getTechnologies,
 } = require('./queries/technologies');
@@ -80,6 +84,7 @@ const {
   getOneUserSignUp,
   getUserAttemptList,
   getUserBounties,
+  getUserCompany,
   getUserPullRequestDetail,
   getUsers,
   getUserSettings,
@@ -121,6 +126,8 @@ module.exports = {
   createRepo,
   createUser,
   createWithdrawal,
+  deletePosition,
+  deletePositionTechStack,
   deletePullRequest,
   deleteRepoMembers,
   deleteUserLanguages,
@@ -134,6 +141,7 @@ module.exports = {
   getIssues,
   getIssueWatchList,
   getOneIssue,
+  getOnePosition,
   getOneRepo,
   getOneTechnology,
   getOneUser,
@@ -151,6 +159,7 @@ module.exports = {
   getUserActivity,
   getUserAttemptList,
   getUserBounties,
+  getUserCompany,
   getUserLanguages,
   getUserPullRequestDetail,
   getUserPullRequests,
@@ -177,6 +186,7 @@ module.exports = {
   transformRepo,
   transformUser,
   transformUserBalance,
+  updateCompany,
   updateRepoArray,
   upvoteIssue,
   verifyPayout,

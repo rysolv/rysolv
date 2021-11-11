@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
 import CompanySignUpView from 'components/CompanySignUp';
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -30,6 +31,7 @@ import {
 import { ViewContainer } from './styledComponents';
 
 const CompanySignUp = ({
+  activeUser,
   alerts,
   dispatchChangeInput,
   dispatchChangeView,
@@ -39,8 +41,8 @@ const CompanySignUp = ({
   dispatchResetState,
   dispatchSubmitCompanyResponse,
   error,
-  forms,
   formErrors,
+  forms,
   handleNav,
   loading,
   questions,
@@ -48,10 +50,27 @@ const CompanySignUp = ({
 }) => {
   const { companyInfo: companyInfoForm, contract: contractForm } = forms;
   const { contractAccepted } = contractForm;
+  const {
+    company: { companyId, isContractAccepted, isQuestionnaireComplete } = {},
+  } = activeUser;
+  const [viewToRender, setViewToRender] = useState(view);
+
   useEffect(() => {
     dispatchFetchQuestions({ category: 'company' });
     return dispatchResetState;
   }, []);
+
+  useEffect(() => {
+    if (!isContractAccepted && !isQuestionnaireComplete) {
+      setViewToRender(0);
+    } else if (!isContractAccepted && isQuestionnaireComplete) {
+      setViewToRender(1);
+    } else {
+      handleNav('/dashboard');
+    }
+  }, [isContractAccepted, isQuestionnaireComplete]);
+
+  useEffect(() => setViewToRender(view), [view]);
 
   const handleCancel = () => {
     dispatchResetState();
@@ -59,6 +78,7 @@ const CompanySignUp = ({
   };
   const handleSubmit = () => {
     dispatchSubmitCompanyResponse({
+      companyId,
       form: { ...companyInfoForm, contractAccepted },
     });
   };
@@ -91,7 +111,7 @@ const CompanySignUp = ({
           handleSubmit,
           handleValidateInput,
           questions,
-          view,
+          view: viewToRender,
         }}
       />
     </ViewContainer>
@@ -99,6 +119,7 @@ const CompanySignUp = ({
 };
 
 CompanySignUp.propTypes = {
+  activeUser: T.object.isRequired,
   alerts: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeView: T.func.isRequired,
@@ -108,8 +129,8 @@ CompanySignUp.propTypes = {
   dispatchResetState: T.func.isRequired,
   dispatchSubmitCompanyResponse: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
-  forms: T.object.isRequired,
   formErrors: T.object.isRequired,
+  forms: T.object.isRequired,
   handleNav: T.func.isRequired,
   loading: T.bool.isRequired,
   questions: T.array.isRequired,
@@ -117,13 +138,17 @@ CompanySignUp.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
   /*
    * Reducer : CompanySignUp
    */
   alerts: makeSelectCompanySignUp('alerts'),
   error: makeSelectCompanySignUp('error'),
-  forms: makeSelectCompanySignUp('forms'),
   formErrors: makeSelectCompanySignUp('formErrors'),
+  forms: makeSelectCompanySignUp('forms'),
   loading: makeSelectCompanySignUp('loading'),
   questions: makeSelectCompanySignUpQuestions(),
   view: makeSelectCompanySignUp('view'),

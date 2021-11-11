@@ -7,23 +7,6 @@ import { incrementResetStep, incrementStep } from 'containers/Signin/actions';
 import { post } from 'utils/request';
 
 import {
-  FETCH_ACTIVE_USER,
-  GITHUB_SIGN_IN,
-  githubSignInError,
-  githubSignUpError,
-  RESEND_CODE,
-  RESEND_SIGN_UP,
-  RESET_PASSWORD,
-  SEND_LINK,
-  SIGN_IN,
-  SIGN_OUT,
-  SIGN_UP,
-  signInError,
-  signUpError,
-  VERIFY_EMAIL,
-  verifyEmailError,
-} from './constants';
-import {
   fetchActiveUser,
   fetchActiveUserFailure,
   fetchActiveUserSuccess,
@@ -43,6 +26,23 @@ import {
   verifyEmailFailure,
   verifyEmailSuccess,
 } from './actions';
+import {
+  FETCH_ACTIVE_USER,
+  GITHUB_SIGN_IN,
+  githubSignInError,
+  githubSignUpError,
+  RESEND_CODE,
+  RESEND_SIGN_UP,
+  RESET_PASSWORD,
+  SEND_LINK,
+  SIGN_IN,
+  SIGN_OUT,
+  SIGN_UP,
+  signInError,
+  signUpError,
+  VERIFY_EMAIL,
+  verifyEmailError,
+} from './constants';
 
 export function* fetchActiveUserSaga() {
   const query = `
@@ -56,6 +56,7 @@ export function* fetchActiveUserSaga() {
             id
             userAccepted
           }
+          company
           email
           firstName
           githubId
@@ -102,6 +103,7 @@ export function* githubSignInSaga({ payload }) {
         ... on User {
           attempting
           balance
+          company
           email
           firstName
           id
@@ -320,6 +322,7 @@ export function* signInSaga({ payload }) {
         ... on User {
           attempting
           balance
+          company
           email
           firstName
           id
@@ -391,13 +394,14 @@ export function* signOutSaga() {
 }
 
 export function* signUpSaga({ payload }) {
-  const { email, firstName, lastName, password, username } = payload;
+  const { email, firstName, isCompany, lastName, password, username } = payload;
   const query = `
     mutation {
       createUser(
         userInput: {
           email: "${email}"
           firstName: "${firstName}"
+          isCompany: ${isCompany}
           lastName: "${lastName}"
           password: "${password}"
           username: "${username}"
@@ -405,6 +409,7 @@ export function* signUpSaga({ payload }) {
       ) {
         __typename
         ... on User {
+          company
           email
           id
           username

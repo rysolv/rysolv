@@ -1,14 +1,15 @@
 export const excludedPath = [
   '',
+  '/company/signup',
   'dashboard',
   'dashboard/add',
+  'dashboard/edit',
   'how-we-score-code',
   'jobs',
   'password-reset',
   'recruitment',
   'signin',
   'signup',
-  'signup/company',
 ];
 
 export const getInitialValue = {

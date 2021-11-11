@@ -1,29 +1,33 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import T from 'prop-types';
 
 import {
-  GithubButton,
-  MainTextInput,
-  PasswordTextInput,
+  ConditionalRender,
+  UpdatedPasswordTextInput,
+  UpdatedTextInput,
 } from 'components/base_ui';
 
 import {
+  ButtonGroup,
   Divider,
   DividerWrapper,
   HorizontalWrapper,
+  InputFormContent,
   InputFormWrapper,
   PasswordRequirements,
   SigninWrapper,
   StyledErrorSuccessBanner,
+  StyledGithubButton,
   StyledPrimaryAsyncButton,
   SubText,
   Title,
+  UserTypeButton,
   WordDivider,
 } from '../styledComponents';
 
 const Signup = ({
-  data: { email, firstName, lastName, password, username, verifyPassword },
+  data: { email, firstName, lastName, password, username },
   error,
   handleClearAuthAlerts,
   handleInputChange,
@@ -32,140 +36,140 @@ const Signup = ({
   loading,
   signUpDisabled,
 }) => {
+  const [selected, setSelected] = useState('Developer');
+
   const handleKeypress = ({ key }) => {
     if (key === 'Enter' && !signUpDisabled) {
-      handleSignUp();
+      handleSignUp({ isCompany: selected === 'Employer' });
     }
   };
   return (
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
         <Title>Get started with Rysolv</Title>
-        {error && (
-          <StyledErrorSuccessBanner
-            error={error}
-            onClose={handleClearAuthAlerts}
-          />
-        )}
-        <GithubButton type="signup" />
-        <DividerWrapper>
-          <Divider />
-          <WordDivider>or</WordDivider>
-        </DividerWrapper>
-        <MainTextInput
-          autoComplete="nickname"
-          error={!!username.error}
-          helperText={username.error}
-          label="Username"
-          onBlur={() => handleValidateInput({ field: 'username' })}
-          onChange={e =>
-            handleInputChange({
-              field: 'username',
-              form: 'signUp',
-              value: e.target.value,
-            })
-          }
-          value={username.value}
-        />
-        <MainTextInput
-          autoComplete="email"
-          error={!!email.error}
-          helperText={email.error}
-          label="Email"
-          onBlur={() => handleValidateInput({ field: 'email' })}
-          onChange={e =>
-            handleInputChange({
-              field: 'email',
-              form: 'signUp',
-              value: e.target.value,
-            })
-          }
-          type="email"
-          value={email.value}
-        />
-        <HorizontalWrapper>
-          <MainTextInput
-            autoComplete="given-name"
-            error={!!firstName.error}
-            helperText={firstName.error}
-            label="First name"
-            onBlur={() => handleValidateInput({ field: 'firstName' })}
+        <InputFormContent>
+          {error && (
+            <StyledErrorSuccessBanner
+              error={error}
+              onClose={handleClearAuthAlerts}
+            />
+          )}
+          <ButtonGroup>
+            <UserTypeButton
+              disableRipple
+              isSelected={selected === 'Developer'}
+              label="Developer"
+              onClick={() => setSelected('Developer')}
+            />
+            <UserTypeButton
+              disableRipple
+              isSelected={selected === 'Employer'}
+              label="Employer"
+              onClick={() => setSelected('Employer')}
+            />
+          </ButtonGroup>
+          <UpdatedTextInput
+            autoComplete="nickname"
+            error={username.error}
+            label="Username"
+            onBlur={() => handleValidateInput({ field: 'username' })}
             onChange={e =>
               handleInputChange({
-                field: 'firstName',
+                field: 'username',
                 form: 'signUp',
                 value: e.target.value,
               })
             }
-            value={firstName.value}
+            value={username.value}
           />
-          <MainTextInput
-            autoComplete="family-name"
-            error={!!lastName.error}
-            helperText={lastName.error}
-            label="Last name"
-            onBlur={() => handleValidateInput({ field: 'lastName' })}
+          <UpdatedTextInput
+            autoComplete="email"
+            error={email.error}
+            label="Email"
+            onBlur={() => handleValidateInput({ field: 'email' })}
             onChange={e =>
               handleInputChange({
-                field: 'lastName',
+                field: 'email',
                 form: 'signUp',
                 value: e.target.value,
               })
             }
-            value={lastName.value}
+            type="email"
+            value={email.value}
           />
-        </HorizontalWrapper>
-        <PasswordTextInput
-          autoComplete="new-password"
-          error={!!password.error}
-          helperText={password.error}
-          label="Password"
-          onBlur={() => handleValidateInput({ field: 'password' })}
-          onChange={e =>
-            handleInputChange({
-              field: 'password',
-              form: 'signUp',
-              value: e.target.value,
-            })
-          }
-          value={password.value}
-        />
-        <PasswordRequirements>
-          <li>8 or more characters</li>
-          <li>Include capital and lowercase letter</li>
-          <li>Include one number</li>
-          <li>Include one special character </li>
-        </PasswordRequirements>
-        <PasswordTextInput
-          autoComplete="new-password"
-          error={!!verifyPassword.error}
-          helperText={verifyPassword.error}
-          label="Confirm password"
-          onBlur={() =>
-            handleValidateInput({
-              field: 'verifyPassword',
-              verifyField: { field: 'password', verifyValue: password.value },
-            })
-          }
-          onChange={e =>
-            handleInputChange({
-              field: 'verifyPassword',
-              form: 'signUp',
-              value: e.target.value,
-            })
-          }
-          value={verifyPassword.value}
-        />
-        <StyledPrimaryAsyncButton
-          disabled={signUpDisabled}
-          label="Sign up"
-          loading={loading}
-          onClick={handleSignUp}
-        />
+          <HorizontalWrapper>
+            <UpdatedTextInput
+              autoComplete="given-name"
+              error={firstName.error}
+              label="First name"
+              onBlur={() => handleValidateInput({ field: 'firstName' })}
+              onChange={e =>
+                handleInputChange({
+                  field: 'firstName',
+                  form: 'signUp',
+                  value: e.target.value,
+                })
+              }
+              value={firstName.value}
+            />
+            <UpdatedTextInput
+              autoComplete="family-name"
+              error={lastName.error}
+              label="Last name"
+              onBlur={() => handleValidateInput({ field: 'lastName' })}
+              onChange={e =>
+                handleInputChange({
+                  field: 'lastName',
+                  form: 'signUp',
+                  value: e.target.value,
+                })
+              }
+              value={lastName.value}
+            />
+          </HorizontalWrapper>
+          <UpdatedPasswordTextInput
+            autoComplete="new-password"
+            error={password.error}
+            label="Password"
+            onBlur={() => handleValidateInput({ field: 'password' })}
+            onChange={e =>
+              handleInputChange({
+                field: 'password',
+                form: 'signUp',
+                value: e.target.value,
+              })
+            }
+            value={password.value}
+          />
+          <PasswordRequirements>
+            <li>8 or more characters</li>
+            <li>Include capital and lowercase letter</li>
+            <li>Include one number</li>
+            <li>Include one special character </li>
+          </PasswordRequirements>
+          <StyledPrimaryAsyncButton
+            disabled={signUpDisabled}
+            label="Sign up"
+            loading={loading}
+            onClick={() => handleSignUp({ isCompany: selected === 'Employer' })}
+          />
+          <ConditionalRender
+            Component={
+              <Fragment>
+                <DividerWrapper>
+                  <Divider />
+                  <WordDivider>or</WordDivider>
+                </DividerWrapper>
+                <StyledGithubButton type="signup" />
+              </Fragment>
+            }
+            shouldRender={selected === 'Developer'}
+          />
+        </InputFormContent>
+        <SubText>
+          Already have an account? <Link to="/signin">Sign in</Link>
+        </SubText>
       </InputFormWrapper>
-      <SubText>
-        Already have an account? <Link to="/signin">Sign in</Link>
-      </SubText>
     </SigninWrapper>
   );
 };

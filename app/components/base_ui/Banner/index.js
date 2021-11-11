@@ -9,7 +9,7 @@ import { BannerWrapper, CloseButton, IconWrapper } from './styledComponents';
 
 const CloseIcon = iconDictionary('closeMenu');
 const SuccessIcon = iconDictionary('successOutline');
-const WarningIcon = iconDictionary('closeCircle');
+const WarningIcon = iconDictionary('errorOutline');
 
 const ErrorSuccessBanner = ({ error, onClose, success, ...restProps }) => {
   const errorSuccessMessages = success || error;

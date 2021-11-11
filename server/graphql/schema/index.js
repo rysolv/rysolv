@@ -64,11 +64,8 @@ module.exports = buildSchema(`
     target: ID!
   }
 
-  type Company {
-    companyId: String
-  }
-
   input CompanyInput {
+    companyId: ID!
     description: String!
     location: String!
     name: String!
@@ -211,10 +208,17 @@ module.exports = buildSchema(`
   }
 
   type Position {
+    description: String
+    experience: String
+    hiringTimeframe: String
     id: String
-    isRemote: Boolean
+    isRemote: String
     location: String
+    role: [String]
+    salary: String
+    skills: [Object]
     title: String
+    type: String
   }
 
   type PositionCandidatesArray {
@@ -352,6 +356,7 @@ module.exports = buildSchema(`
     attempting: [Object]
     balance: Float
     bounties: [Bounty]
+    company: Object
     completedPullRequests: Int
     createdDate: Object
     dollarsEarned: Int
@@ -404,6 +409,7 @@ module.exports = buildSchema(`
     firstName: String
     githubLink: String
     id: ID
+    isCompany: Boolean
     issues: [String]
     lastName: String
     password: String
@@ -448,7 +454,6 @@ module.exports = buildSchema(`
   }
 
   union CommentResult = Comment | Error
-  union CompanyResult = Company | Error
   union EventResponse = Success | Error
   union FilterResult = Filter | Error
   union ImportPullRequestResult = ImportPullRequest | Error
@@ -456,6 +461,7 @@ module.exports = buildSchema(`
   union IssueArrayResult = IssueArray | Error
   union IssueResult = Issue | Error
   union PaymentResult = Payment | Error
+  union PositionResult = Position | Error
   union PullRequestArrayResult = PullRequestArray | Error
   union QuestionResult = QuestionArray | Error
   union RepoArrayResult = RepoArray | Error
@@ -494,6 +500,7 @@ module.exports = buildSchema(`
     githubSignIn(code: String!, origin: String!): UserResult!
 
     oneIssue(id: ID!): IssueResult!
+    onePosition(positionId: ID!): PositionResult!
     oneRepo(id: ID!): RepoResult!
     oneUser(userId: ID!): UserResult!
     oneUserSignUp(email: String!): UserResult!
@@ -517,7 +524,7 @@ module.exports = buildSchema(`
     closeIssue(issueId: ID!, shouldClose: Boolean): EventResponse!
 
     createComment(commentInput: CommentInput): CommentResult!
-    createCompany(companyInput: CompanyInput): CompanyResult!
+    createCompany(companyInput: CompanyInput): EventResponse!
     createIssue(issueInput: IssueInput): IssueResult!
     createMessage(messageInput: MessageInput): EventResponse!
     createPaypalPayment(amount: Float!, email: String, issueId: ID): PaymentResult!
@@ -535,7 +542,7 @@ module.exports = buildSchema(`
     importRepo(url: String!): ImportResult!
 
     postContractAccepted(companyId: ID, contractAccepted: Boolean): EventResponse!
-    postUserResponse(companyId: ID, responseArray: [Object]): EventResponse!
+    postUserResponse(companyId: ID, positionId: ID, responseArray: [Object]): EventResponse!
 
     recruitingSignup(contactInput: ContactInput): EventResponse!
     
@@ -550,6 +557,7 @@ module.exports = buildSchema(`
     toggleWatching(issueId: ID!): ToggleWatchingResult!
 
     transformIssue(issueId: ID!, issueInput: IssueInput): EventResponse!
+    transformPosition(positionId: ID, responseArray: [Object]): EventResponse!
     transformRepo(repoId: ID!, repoInput: RepoInput): EventResponse!
     transformUser(userInput: UserInput): EventResponse!
 

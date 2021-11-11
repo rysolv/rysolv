@@ -1,7 +1,8 @@
-import CompanyDashboardView from 'components/CompanyDashboard';
-import CreatePositionView from 'components/CreatePosition';
+import { CreatePosition, EditPosition } from 'components/CompanyPosition';
+import CompanyDashboard from 'components/CompanyDashboard';
 
 export default {
-  add: CreatePositionView,
-  main: CompanyDashboardView,
+  add: CreatePosition,
+  edit: EditPosition,
+  main: CompanyDashboard,
 };

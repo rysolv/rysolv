@@ -4,6 +4,7 @@ const {
   getOneRepo,
   getUserAttemptList,
   getUserBounties,
+  getUserCompany,
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
   getUserWatchList,
@@ -17,8 +18,24 @@ const getUserSettings = async (_, { authError, userId }) => {
     const result = await getUserSettingsQuery({ userId });
     const { issues, repos } = result || {};
 
+    const userCompany = await getUserCompany({ userId });
+
     // Pull user attempting detail
     const attemptingListResult = await getUserAttemptList({ userId });
+
+    // Pull user bounties
+    const bounties = await getUserBounties({ userId });
+
+    if (userCompany) {
+      const { contractAcceptedDate, id, ...companyProps } = userCompany;
+      result.company = {
+        companyId: id,
+        isContractAccepted: !!contractAcceptedDate,
+        isQuestionnaireComplete: Object.keys(companyProps).some(
+          prop => !!companyProps[prop],
+        ),
+      };
+    }
 
     // Pull user issue detail
     const issuesListResult = await Promise.all(
@@ -45,9 +62,6 @@ const getUserSettings = async (_, { authError, userId }) => {
 
     // Pull user watching detail
     const watchingListResult = await getUserWatchList({ userId });
-
-    // Pull user bounties
-    const bounties = await getUserBounties({ userId });
 
     result.activePullRequests = activePullRequests;
     result.attempting = attemptingListResult;

@@ -5,32 +5,37 @@ import { Link } from 'react-router-dom';
 
 import {
   ErrorSuccessBanner,
+  GithubButton,
   PrimaryAsyncButton,
   PrimaryButton,
-  SecondaryButton,
 } from 'components/base_ui';
 import {
   borderColor,
-  defaultFontFamily,
+  darkBlueColor,
   defaultFontSize,
-  detailFontSize,
-  errorRed,
-  hoverLinkColor,
+  defaultFontFamily,
   lightBlueColor,
   lightGreyColor,
-  successGreen,
   textColor,
+  whiteColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile, mobileXS } = mediaQueriesByDevice;
+const { mobile, laptop } = mediaQueriesByDevice;
+
+export const ButtonGroup = styled.div`
+  border-radius: 0.8rem;
+  border: 0.2rem solid ${darkBlueColor};
+  margin-bottom: 3.2rem;
+  overflow: clip;
+`;
 
 export const Divider = styled.div`
   align-self: center;
   background-color: ${borderColor};
-  height: 0.1rem;
+  height: 0.2rem;
   margin: 3rem 0 2rem;
-  width: 95%;
+  width: 100%;
 `;
 
 export const DividerWrapper = styled.div`
@@ -39,55 +44,76 @@ export const DividerWrapper = styled.div`
   position: relative;
 `;
 
-export const EmailWrapper = styled.span`
-  color: ${hoverLinkColor};
-`;
-
 export const HorizontalWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 
   ${mobile} {
     flex-direction: column;
   }
 `;
 
-export const InputFormWrapper = styled.form`
+export const ImportantTextWrapper = styled.span`
+  color: ${textColor};
+`;
+
+export const InputFormContent = styled.div`
   align-self: center;
-  background-color: white;
-  border-radius: 0.2rem;
-  border: 0.1rem solid ${borderColor};
   display: flex;
   flex-direction: column;
-  font-size: ${defaultFontSize};
-  padding: 5rem 7rem;
-  width: 47.5rem;
+  max-width: 50rem;
+  width: 100%;
+`;
 
-  ${mobile} {
-    padding: 3rem;
-    width: 90%;
+export const InputFormWrapper = styled.div`
+  background: ${whiteColor};
+  border-radius: 0.7rem;
+  color: ${textColor};
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
+  justify-content: space-between;
+  margin: 5rem auto 0;
+  max-width: 75rem;
+  min-height: 35rem;
+  padding: 7.5rem 10%;
+  text-align: center;
+  width: 100%;
+
+  ${laptop} {
+    padding: 4rem 3.2rem;
   }
 
-  ${mobileXS} {
-    width: 100%;
+  ${mobile} {
+    padding: 2rem;
+  }
+
+  @media (max-width: 370px) {
+    margin: 0;
   }
 `;
 
 export const InputSubText = styled.div`
-  color: ${textColor};
-  font-size: ${defaultFontSize};
-  line-height: 1.5;
-  margin: 1rem;
-  padding: 0.6rem 0;
-  text-align: left;
-  width: 100%;
+  color: ${lightGreyColor};
+  flex: ${({ hasFlex }) => (hasFlex ? 1 : 0)};
+  font-size: 2rem;
+  font-weight: 500;
+  padding: 1rem 0;
+`;
+
+export const PasscodeFormContent = styled(InputFormContent)`
+  align-items: center;
 `;
 
 export const PasswordRequirements = styled.div`
-  color: grey;
-  font-size: ${detailFontSize};
-  margin: -1.4rem 0 1rem 0;
-  padding: 0 1.4rem;
+  color: #a9acae;
+  font-size: ${defaultFontSize};
+  font-weight: 400;
+  line-height: 1.936rem;
+  margin: -1rem 0 1rem 0;
+  padding: 0 0.5rem;
+  text-align: left;
 `;
 
 export const RedirectText = styled.span`
@@ -95,70 +121,68 @@ export const RedirectText = styled.span`
   margin: 1rem 0 2rem;
 `;
 
+export const ResendButton = styled(Button)`
+  color: #a9acae;
+  font-size: ${defaultFontSize};
+  margin: 1rem 0 0;
+  padding: 0;
+  text-align: center;
+  text-transform: initial;
+
+  &:hover {
+    background: white;
+    color: #a9acae;
+  }
+`;
+
 export const SigninWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 5rem;
+  margin: 0 12rem;
+  max-width: 120rem;
   width: 100%;
 
-  &:focus {
-    outline: none;
-  }
-
-  ${mobile} {
-    margin-bottom: 5rem;
+  ${laptop} {
+    margin: 0 3rem;
   }
 `;
 
 export const StyledButton = styled(Button)`
-  align-self: center;
-  color: ${lightGreyColor};
+  color: ${darkBlueColor};
   font-family: ${defaultFontFamily};
-  font-size: ${defaultFontSize};
+  font-size: 1.6rem;
   font-weight: 500;
-  padding: 0;
+  margin: 1rem auto 0;
+  padding: 0rem;
   text-transform: none;
-  width: 95%;
 
-  &:focus,
   &:hover {
     background-color: transparent;
-    color: ${lightBlueColor};
   }
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
   align-self: center;
-  margin-bottom: 2rem;
-  width: 95%;
+  height: auto;
+  margin-bottom: 3.2rem;
+  margin-top: ${({ hasSubText }) => (hasSubText ? '2.4rem' : '0')};
+  text-align: left;
+  width: 100%;
 `;
 
-export const ResendButton = styled(Button)`
-  align-self: flex-end;
-  color: ${hoverLinkColor};
-  font-family: ${defaultFontFamily};
-  font-size: ${defaultFontSize};
-  font-weight: 400;
-  margin-top: -2rem;
-  padding: 0 1rem 0 0;
-  text-transform: none;
-
-  &:hover {
-    background-color: transparent;
-    color: ${hoverLinkColor};
-    text-decoration: underline;
-  }
+export const StyledGithubButton = styled(GithubButton)`
+  margin: 1rem auto;
+  width: 30rem;
 `;
 
 export const StyledLink = styled(Link)`
-  color: ${hoverLinkColor};
-  margin-top: -1.5rem;
-  padding-right: 1rem;
-  text-align: right;
+  color: #a9acae;
+  font-size: ${defaultFontSize};
+  margin: 1rem 0 0;
+  text-align: center;
 
   &:hover {
-    color: ${hoverLinkColor};
-    text-decoration: underline;
+    color: #a9acae;
   }
 `;
 
@@ -167,67 +191,82 @@ export const StyledPrimaryAsyncButton = styled(
     <PrimaryAsyncButton {...restProps} />
   ),
 )`
-  align-self: center;
-  min-width: ${({ hasSecondaryButton }) =>
-    hasSecondaryButton ? 'inherit' : '50%'};
-  width: ${({ hasSecondaryButton }) => (hasSecondaryButton ? errorRed : '95%')};
-`;
-
-export const StyledPrimaryButton = styled(PrimaryButton)`
-  align-self: center;
-  min-width: 50%;
-  width: 95%;
-`;
-
-export const StyledSecondaryButton = styled(SecondaryButton)`
-  background-color: white;
-  border: 0.1rem solid ${lightBlueColor};
-  color: ${lightBlueColor};
+  background: ${darkBlueColor};
+  border-radius: 0.7rem;
+  box-shadow: none;
+  color: ${whiteColor};
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height 1.936rem;
+  margin: 1rem auto;
+  overflow: hidden;
+  text-transform: initial;
+  white-space: nowrap;
+  width: 30rem;
 
   &:hover {
-    background-color: white;
+    background: ${darkBlueColor};
   }
 `;
 
+export const StyledPrimaryButton = styled(StyledPrimaryAsyncButton)``;
+
 export const SubText = styled.div`
-  color: ${textColor};
-  font-size: ${detailFontSize};
-  margin: 1rem 0;
+  color: #a9acae;
+  font-size: ${defaultFontSize};
+  margin: 1rem 0 0;
   text-align: center;
 
   a {
-    color: ${hoverLinkColor};
-    &:hover {
-      text-decoration: underline;
-    }
+    color: ${lightBlueColor};
   }
 `;
 
 export const Title = styled.div`
-  align-self: center;
-  color: ${({ isError, isSuccess }) =>
-    // eslint-disable-next-line no-nested-ternary
-    isError ? errorRed : isSuccess ? successGreen : textColor};
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  color: ${darkBlueColor};
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 3.36rem;
+  margin-bottom: ${({ hasSubText }) => (hasSubText ? '0.8rem' : '3.2rem')};
 `;
 
-export const UsernameWrapper = styled.span`
-  font-weight: 500;
+export const UserTypeButton = styled(({ isSelected, ...restProps }) => (
+  <PrimaryButton {...restProps} />
+))`
+  background: ${({ isSelected }) => (isSelected ? darkBlueColor : whiteColor)};
+  border-radius: 0;
+  color: ${({ isSelected }) => (isSelected ? whiteColor : darkBlueColor)};
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4rem;
+  margin: 0;
+  text-transform: none;
+  width: 50%;
+
+  &:hover {
+    background: ${darkBlueColor};
+    box-shadow: none;
+    color: ${whiteColor};
+  }
 `;
 
 export const VerificationWrapper = styled.div`
+  align-items: center;
   align-self: center;
   display: flex;
   flex-direction: column;
+  height: 11rem;
+  justify-content: center;
   width: 100%;
 `;
 
 export const WordDivider = styled.div`
   background: white;
-  bottom: 20%;
-  color: ${textColor};
-  left: 50%;
-  padding: 0.5rem;
+  bottom: 23%;
+  color: #a9acae;
+  font-size: 1.6rem;
+  padding: 0 5.5rem;
   position: absolute;
+  text-transform: uppercase;
 `;

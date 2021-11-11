@@ -104,7 +104,7 @@ export const QuestionWrapper = styled.div`
   font-size: 3.2rem;
   font-weight: 700;
   line-height: 3.36rem;
-  margin: 3.2rem 0 0.8rem;
+  margin-bottom: 0.8rem;
 `;
 
 export const StyledButton = styled(Button)`
