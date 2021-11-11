@@ -88,8 +88,6 @@ class Main extends React.PureComponent {
       pathname === '/company/dashboard' ||
       pathname === '/company/dashboard/add' ||
       pathname === '/company/signup' ||
-      pathname === '/dashboard' ||
-      pathname === '/dashboard/update' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/password-reset' ||
