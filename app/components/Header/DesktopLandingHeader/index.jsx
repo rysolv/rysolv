@@ -24,37 +24,66 @@ const DesktopLandingHeader = ({
   handleNav,
   handleSignout,
   isSignedIn,
-}) => (
-  <DesktopHeaderContainer>
-    <LogoWrapper onClick={() => handleNav('/')}>
-      <Logo>{SiteLogo}</Logo>
-      <Wordmark>{SiteWordmark}</Wordmark>
-    </LogoWrapper>
-    <ButtonWrapper>
-      <InternalLink label="Dashboard" path="/dashboard" />
-      <InternalLink label="Hire engineers" path="/recruitment" />
-      <VerticalDivider />
-      {isSignedIn ? (
-        <StyledUserNavBar
-          activeUser={activeUser}
-          handleNav={handleNav}
-          handleSignout={handleSignout}
-        />
-      ) : (
+}) => {
+  const { company } = activeUser;
+  let navLinks;
+
+  if (isSignedIn) {
+    if (company) {
+      navLinks = (
         <Fragment>
-          <StyledSecondaryButton
-            label="Sign up"
-            onClick={() => handleNav('/signup')}
-          />
-          <StyledPrimaryButton
-            label="Log in"
-            onClick={() => handleNav('/signin')}
-          />
+          <InternalLink label="Dashboard" path="/company/dashboard" />
+          <InternalLink label="Messages" path="/messages" />
         </Fragment>
-      )}
-    </ButtonWrapper>
-  </DesktopHeaderContainer>
-);
+      );
+    } else {
+      navLinks = (
+        <Fragment>
+          <InternalLink label="Dashboard" path="/dashboard" />
+          <InternalLink label="Messages" path="/messages" />
+        </Fragment>
+      );
+    }
+  } else {
+    navLinks = (
+      <Fragment>
+        <InternalLink label="Hire engineers" path="/recruitment" />
+      </Fragment>
+    );
+  }
+
+  return (
+    <DesktopHeaderContainer>
+      <LogoWrapper onClick={() => handleNav('/')}>
+        <Logo>{SiteLogo}</Logo>
+        <Wordmark>{SiteWordmark}</Wordmark>
+      </LogoWrapper>
+      <ButtonWrapper>
+        {navLinks}
+
+        <VerticalDivider />
+        {isSignedIn ? (
+          <StyledUserNavBar
+            activeUser={activeUser}
+            handleNav={handleNav}
+            handleSignout={handleSignout}
+          />
+        ) : (
+          <Fragment>
+            <StyledSecondaryButton
+              label="Sign up"
+              onClick={() => handleNav('/signup')}
+            />
+            <StyledPrimaryButton
+              label="Log in"
+              onClick={() => handleNav('/signin')}
+            />
+          </Fragment>
+        )}
+      </ButtonWrapper>
+    </DesktopHeaderContainer>
+  );
+};
 
 DesktopLandingHeader.propTypes = {
   activeUser: T.object.isRequired,
