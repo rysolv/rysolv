@@ -17,7 +17,7 @@ const CodeIcon = iconDictionary('code');
 const CoinIcon = iconDictionary('coin');
 
 const AwardedUserView = ({ awardedUser, isUserAccepted, rep }) => {
-  const { htmlUrl, id, profilePic, username } = awardedUser || {};
+  const { htmlUrl, profilePic, username } = awardedUser || {};
   const AwardedUserComponent = () => (
     <AwardedUserWrapper>
       <CoinWrapper>
@@ -27,11 +27,11 @@ const AwardedUserView = ({ awardedUser, isUserAccepted, rep }) => {
       <ImageLinkWrapper
         alt={username}
         image={profilePic}
-        route={`/users/detail/${id}`}
+        route={`/profile/${username}`}
         size="8rem"
       />
       <LinkWrapper>
-        <StyledInternalLink to={`/users/detail/${id}`}>
+        <StyledInternalLink to={`/profile/${username}`}>
           {username}
         </StyledInternalLink>
       </LinkWrapper>

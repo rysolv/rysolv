@@ -1,7 +1,4 @@
 import {
-  DISMISS_BANNER_FAILURE,
-  DISMISS_BANNER_SUCCESS,
-  DISMISS_BANNER,
   FETCH_USER_DASHBOARD_FAILURE,
   FETCH_USER_DASHBOARD_SUCCESS,
   FETCH_USER_DASHBOARD,
@@ -9,26 +6,6 @@ import {
   SET_HIRING_STATUS_FAILURE,
   SET_HIRING_STATUS_SUCCESS,
 } from './constants';
-
-export function dismissBannerFailure(payload) {
-  return {
-    payload,
-    type: DISMISS_BANNER_FAILURE,
-  };
-}
-
-export function dismissBannerSuccess(payload) {
-  return {
-    payload,
-    type: DISMISS_BANNER_SUCCESS,
-  };
-}
-
-export function dismissBanner() {
-  return {
-    type: DISMISS_BANNER,
-  };
-}
 
 export function fetchUserDashboardFailure(payload) {
   return {

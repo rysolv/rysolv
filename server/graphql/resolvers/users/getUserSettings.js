@@ -2,6 +2,7 @@ const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getOneIssue,
   getOneRepo,
+  getSurveyStatus,
   getUserAttemptList,
   getUserBounties,
   getUserPullRequestDetail,
@@ -49,6 +50,9 @@ const getUserSettings = async (_, { authError, userId }) => {
     // Pull user bounties
     const bounties = await getUserBounties({ userId });
 
+    // Get hiring survey status
+    const surveyComplete = await getSurveyStatus({ userId });
+
     result.activePullRequests = activePullRequests;
     result.attempting = attemptingListResult;
     result.bounties = bounties;
@@ -57,6 +61,7 @@ const getUserSettings = async (_, { authError, userId }) => {
     result.notifications = false;
     result.rejectedPullRequests = rejectedPullRequests;
     result.repos = reposListResult;
+    result.surveyComplete = surveyComplete;
     result.watching = watchingListResult;
 
     // Show notification for unaccepted bounties

@@ -100,7 +100,7 @@ const MobileLandingHeader = ({
       >
         <StyledLoginLink label="Log in" path="/signin" />
         <HorizontalDivider />
-        <MenuInternalLink label="Browse issues" path="/issues" />
+        <MenuInternalLink label="Dashboard" path="/dashboard" />
         <MenuInternalLink label="Hire engineers" path="/recruitment" />
       </MenuComponent>
     </MobileHeaderContainer>

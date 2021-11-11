@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
 import {
-  textColor,
   defaultFontFamily,
-  blueColor,
+  navyBlueColor,
   whiteColor,
 } from 'defaultStyleHelper';
 import { PrimaryButton } from 'components/base_ui';
@@ -12,7 +11,7 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile, laptop } = mediaQueriesByDevice;
 
-export const HiringContainer = styled.div`
+export const ButtonContainer = styled.div`
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -24,9 +23,15 @@ export const HiringContainer = styled.div`
   }
 `;
 
+export const HiringContainer = styled.div`
+  background-color: ${navyBlueColor};
+  border-radius: 1rem;
+  color: ${whiteColor};
+  padding: 2rem 3rem 0;
+`;
+
 export const HiringHeader = styled.div`
   font-size: 3rem;
-  margin-top: 3rem;
 `;
 
 export const HiringSubtitle = styled.div`
@@ -36,7 +41,6 @@ export const HiringSubtitle = styled.div`
 `;
 
 export const MessageContainer = styled.div`
-  color: ${textColor};
   display: flex;
   flex-direction: column;
   font-style: ${defaultFontFamily};
@@ -55,13 +59,13 @@ export const MessageHeader = styled.div`
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
-  background: ${blueColor};
-  border: 0.2rem solid ${blueColor};
+  background: ${navyBlueColor};
+  border: 0.2rem solid ${whiteColor};
   color: ${whiteColor};
   font-size: 1.4rem;
   text-transform: uppercase;
 
   &:hover {
-    background: ${blueColor};
+    background: ${navyBlueColor};
   }
 `;

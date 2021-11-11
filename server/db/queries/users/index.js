@@ -8,6 +8,7 @@ const getOneUser = require('./getOneUser');
 const getOneUserSignUp = require('./getOneUserSignUp');
 const getUserAttemptList = require('./getUserAttemptList');
 const getUserBounties = require('./getUserBounties');
+const getUserByUsername = require('./getUserByUsername');
 const getUserPullRequestDetail = require('./getUserPullRequestDetail');
 const getUsers = require('./getUsers');
 const getUserSettings = require('./getUserSettings');
@@ -29,6 +30,7 @@ module.exports = {
   getOneUserSignUp,
   getUserAttemptList,
   getUserBounties,
+  getUserByUsername,
   getUserPullRequestDetail,
   getUsers,
   getUserSettings,

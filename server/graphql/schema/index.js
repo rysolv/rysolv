@@ -366,7 +366,6 @@ module.exports = buildSchema(`
     isGithubVerified: Boolean
     isHired: Boolean
     isInterviewRequested: Boolean
-    isQuestionnaireComplete: Boolean
     isSaved: Boolean
     issues: [Object]
     lastName: String
@@ -489,6 +488,7 @@ module.exports = buildSchema(`
     getUserActivity(userId: ID): [Activity]!
     getUserDashboard: UserResult!
     getUserIssues: IssueArrayResult!
+    getUserProfile(username: String!): UserResult!
     getUserPullRequests: PullRequestArrayResult!
     getUserRepos: RepoArrayResult!
     getUsers: UserArrayResult!
@@ -538,7 +538,8 @@ module.exports = buildSchema(`
     importRepo(url: String!): ImportResult!
 
     postContractAccepted(companyId: ID, contractAccepted: Boolean): EventResponse!
-    postUserResponse(companyId: ID, responseArray: [Object]): EventResponse!
+    postPositionResponse(companyId: ID, responseArray: [Object]): EventResponse!
+    postUserResponse(responseArray: [Object]): EventResponse!
 
     recruitingSignup(contactInput: ContactInput): EventResponse!
 

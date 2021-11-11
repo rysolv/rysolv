@@ -5,13 +5,13 @@ import {
   BannerSubtitle,
   BannerTitle,
   HiringBannerButtons,
-  StyedHiringBanner,
+  StyledHiringBanner,
   StyledHiringLink,
   StyledPrimaryButton,
 } from './styledComponents';
 
 const HiringBanner = ({ dispatchSetHiringStatus, handleNav }) => (
-  <StyedHiringBanner>
+  <StyledHiringBanner>
     <BannerTitle>Let your code speak</BannerTitle>
     <BannerSubtitle>
       We review your code history and match you with the right companies.
@@ -27,7 +27,7 @@ const HiringBanner = ({ dispatchSetHiringStatus, handleNav }) => (
         onClick={() => handleNav('/jobs')}
       />
     </HiringBannerButtons>
-  </StyedHiringBanner>
+  </StyledHiringBanner>
 );
 HiringBanner.propTypes = {
   dispatchSetHiringStatus: T.func.isRequired,

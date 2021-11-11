@@ -10,7 +10,7 @@ import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { dismissBanner, fetchUserDashboard, setHiringStatus } from './actions';
+import { fetchUserDashboard, setHiringStatus } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import {
@@ -21,10 +21,8 @@ import viewDictionary from './viewDictionary';
 
 const UserDashboard = ({
   deviceView,
-  dispatchDismissBanner,
   dispatchFetchUserDashboard,
   dispatchSetHiringStatus,
-  displayBanner,
   error,
   handleNav,
   isOverview,
@@ -49,9 +47,7 @@ const UserDashboard = ({
       loading={loading}
       propsToPassDown={{
         deviceView,
-        dismissBanner: dispatchDismissBanner,
         dispatchSetHiringStatus,
-        displayBanner,
         handleNav,
         isOverview,
       }}
@@ -63,10 +59,8 @@ UserDashboard.defaultProps = { isOverview: false };
 
 UserDashboard.propTypes = {
   deviceView: T.string.isRequired,
-  dispatchDismissBanner: T.func.isRequired,
   dispatchFetchUserDashboard: T.func.isRequired,
   dispatchSetHiringStatus: T.func.isRequired,
-  displayBanner: T.bool.isRequired,
   error: T.string,
   handleNav: T.func.isRequired,
   isOverview: T.bool,
@@ -79,7 +73,6 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : user
    */
-  displayBanner: makeSelectUserDashboard('displayBanner'),
   error: makeSelectUserDashboard('error'),
   loading: makeSelectUserDashboard('loading'),
   user: makeSelectUserDashboard('user'),
@@ -95,7 +88,6 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : User Dashboard
      */
-    dispatchDismissBanner: () => dispatch(dismissBanner()),
     dispatchFetchUserDashboard: () => dispatch(fetchUserDashboard()),
     dispatchSetHiringStatus: payload => dispatch(setHiringStatus(payload)),
     handleNav: route => dispatch(push(route)),

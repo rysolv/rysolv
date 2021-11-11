@@ -23,6 +23,7 @@ import SignIn from 'containers/Signin';
 import Stats from 'containers/Stats/Loadable';
 import TermsOfService from 'components/TermsOfService';
 import UserDashboard from 'containers/UserDashboard';
+import UserProfile from 'containers/UserProfile';
 import UsersDetail from 'containers/Users/Detail';
 import VerifyGithub from 'containers/VerifyGithub/Loadable';
 
@@ -50,14 +51,15 @@ const PublicReposDetail = withAuth(publicConfig, ReposDetail);
 const PublicSignIn = withAuth(publicConfig, SignIn);
 const PublicStats = withAuth(publicConfig, Stats);
 const PublicTermsOfService = withAuth(publicConfig, TermsOfService);
+const PublicUserProfile = withAuth(publicConfig, UserProfile);
 const PublicUsersDetail = withAuth(publicConfig, UsersDetail);
 const PublicVerifyGithub = withAuth(publicConfig, VerifyGithub);
 
 // prettier-ignore
 const Routes = () => (
   <Switch>
-    <Route exact path ="/how-we-score-code" component={PublicCodeScoring} />
     <Route exact path="/" component={PublicMain} />
+    <Route exact path="/how-we-score-code" component={PublicCodeScoring} />
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/company/dashboard/:view?" component={PrivateCompanyDashboard} />
     <Route exact path="/contact-us" component={PublicContact} />
@@ -72,6 +74,7 @@ const Routes = () => (
     <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
+    <Route exact path="/profile/:user" component={PublicUserProfile} />
     <Route exact path="/recruitment" component={PublicCompanyRecruitment} />
     <Route exact path="/repos" component={PublicOverview} />
     <Route exact path="/repos/add" component={PrivateReposAdd} />

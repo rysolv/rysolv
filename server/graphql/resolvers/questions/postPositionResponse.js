@@ -4,64 +4,54 @@ const {
   CustomError,
   errorLogger,
   generatePositionLevel,
-  sendEmail,
 } = require('../../../helpers');
 const {
+  createCompanyPosition,
   createPositionTechStack,
-  getOneTechnology,
   postUserResponse: postUserResponseQuery,
 } = require('../../../db');
 const {
   postUserResponseError,
   postUserResponseSuccess,
 } = require('./constants');
-const { uploadFile } = require('../../../middlewares/fileUpload');
 
-const postUserResponse = async ({ responseArray }, { authError, userId }) => {
-  console.log(responseArray);
+const postPositionResponse = async (
+  { companyId, responseArray },
+  { authError, userId },
+) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
+    const positionId = uuidv4();
 
+    // Create position
+    await createCompanyPosition({ company_id: companyId, id: positionId });
+
+    // Update user_question_responses with position data
     await Promise.all(
       responseArray.map(
         async ({ questionId, questionKey, responseId, value }) => {
-          // Language / Frameworks stored in techstack table
           if (questionKey === 'skills') {
             const { beginner, expert, intermediate, skill } = value;
-            const { technologyId } = getOneTechnology({ technology: skill });
             await createPositionTechStack({
               level: generatePositionLevel({ beginner, expert, intermediate }),
-              technologyId,
+              positionId,
+              technology: skill,
             });
-          } else if (questionKey === 'preferred_languages') {
-            // Removing preferred lang
           } else {
-            let formattedValue = value || null;
-            // Upload resume
-            if (questionKey === 'resume') {
-              const { uploadUrl } = await uploadFile(value);
-              formattedValue = uploadUrl;
-            }
-
             const data = {
               createdDate: new Date(),
               id: uuidv4(),
+              positionId,
               questionId,
               responseId,
               userId,
-              value: formattedValue,
+              value: value || null,
             };
             await postUserResponseQuery(data);
           }
         },
       ),
     );
-
-    // Send welcome to hiring email
-    sendEmail({
-      body: { userId },
-      path: '/s/hiring/signup',
-    });
 
     return {
       __typename: 'Success',
@@ -77,4 +67,4 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
   }
 };
 
-module.exports = postUserResponse;
+module.exports = postPositionResponse;

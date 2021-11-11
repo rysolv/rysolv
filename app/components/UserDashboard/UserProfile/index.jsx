@@ -20,6 +20,7 @@ const UserProfile = ({ data, dispatchSetHiringStatus, handleNav }) => {
     preferredLanguages,
     profilePic,
     surveyComplete,
+    username,
   } = data;
   const hiringOptions = [
     {
@@ -49,7 +50,10 @@ const UserProfile = ({ data, dispatchSetHiringStatus, handleNav }) => {
           options={hiringOptions}
           greyscale={!hiringBool}
         />
-        <StyledPrimaryButton label="my profile" />
+        <StyledPrimaryButton
+          label="my profile"
+          onClick={() => handleNav(`/profile/${username}`)}
+        />
         <ProfileDetailItem>
           {firstName} {lastName}
         </ProfileDetailItem>

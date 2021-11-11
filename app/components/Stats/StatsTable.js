@@ -100,10 +100,10 @@ const StatsTableComponent = ({
               <ImageLinkWrapper
                 alt={username}
                 image={profilePic}
-                route={`/users/detail/${id}`}
+                route={`/profile/${username}`}
                 size="3.5rem"
               />
-              <Username to={`/users/detail/${id}`}>{username}</Username>
+              <Username to={`/profile/${username}`}>{username}</Username>
             </ListDetail>
             <ValueWrapper>
               {value} {hasCoins && <StyledCoin />}

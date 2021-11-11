@@ -18,8 +18,9 @@ export const DashboardWrapper = styled.div`
   font-family: ${defaultFontFamily};
   height: auto;
   justify-content: space-evenly;
-  padding: 2rem;
+  padding: 6rem 2rem 0;
   width: 100%;
+
   ${laptopS} {
     flex-direction: column-reverse;
   }
@@ -51,7 +52,7 @@ export const ProfileColumn = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 4rem 2rem;
+  padding: 0rem 2rem 4rem;
 
   ${laptopS} {
     width: 100%;

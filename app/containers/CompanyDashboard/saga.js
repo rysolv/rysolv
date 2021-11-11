@@ -44,7 +44,7 @@ export function* createPositionSaga({ payload }) {
   const uuid = uuidv4();
   const query = `
     mutation {
-      postUserResponse(
+      postPositionResponse(
         companyId: "${uuid}",
         responseArray: [${formattedResponse}]
       ) {

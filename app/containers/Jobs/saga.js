@@ -4,7 +4,6 @@ import { push } from 'connected-react-router';
 import { post } from 'utils/request';
 
 import {
-  changeView,
   fetchQuestionsFailure,
   fetchQuestionsSuccess,
   submitUserResponseFailure,
@@ -94,8 +93,7 @@ export function* submitUserResponseSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(changeView({ view: 2 }));
-    yield put(push('/jobs'));
+    yield put(push('/dashboard'));
     yield put(submitUserResponseSuccess());
   } catch (error) {
     yield put(push('/jobs'));

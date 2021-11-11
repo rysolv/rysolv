@@ -34,14 +34,16 @@ const UserCard = ({ data, deviceView }) => {
         <RowSection>
           {data.map(
             (
-              { attempting, id, issues, pointsNumber, profilePic, username },
+              { attempting, issues, pointsNumber, profilePic, username },
               index,
             ) => (
               <StyledListSquare key={`${username}-${index}`}>
                 <StyledSquare>
                   <StyledSettingWrapper>
                     <MemberWrapper>
-                      <NameLink to={`/users/detail/${id}`}>{username}</NameLink>
+                      <NameLink to={`/profile/${username}`}>
+                        {username}
+                      </NameLink>
                     </MemberWrapper>
                   </StyledSettingWrapper>
                   <ContentWrapper>
@@ -49,7 +51,7 @@ const UserCard = ({ data, deviceView }) => {
                       <ImageLinkWrapper
                         alt="Profile Image"
                         image={profilePic}
-                        route={`/users/detail/${id}`}
+                        route={`/profile/${username}`}
                         size={isMobileS ? '4.75rem' : '7.5rem'}
                       />
                       <IconWrapper>

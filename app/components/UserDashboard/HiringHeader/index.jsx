@@ -2,6 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import {
+  ButtonContainer,
   HiringContainer,
   HiringHeader,
   HiringSubtitle,
@@ -11,10 +12,10 @@ import {
 } from './styledComponents';
 
 const UserDashboard = ({ handleNav, messages }) => (
-  <div>
+  <HiringContainer>
     <HiringHeader>Hiring Center</HiringHeader>
     <HiringSubtitle>Showcase your skills, get hired</HiringSubtitle>
-    <HiringContainer>
+    <ButtonContainer>
       <MessageContainer>
         <MessageHeader>{messages} Matches</MessageHeader>
         <StyledPrimaryButton
@@ -29,8 +30,8 @@ const UserDashboard = ({ handleNav, messages }) => (
           onClick={() => handleNav('/dashboard/update')}
         />
       </MessageContainer>
-    </HiringContainer>
-  </div>
+    </ButtonContainer>
+  </HiringContainer>
 );
 
 UserDashboard.propTypes = {

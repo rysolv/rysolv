@@ -19,11 +19,10 @@ export const HiringBannerButtons = styled.div`
   align-items: center;
 `;
 
-export const StyedHiringBanner = styled.div`
+export const StyledHiringBanner = styled.div`
   background-color: ${navyBlueColor};
   border-radius: 1rem;
   color: white;
-  margin-top: 4rem;
   padding: 2rem 3rem;
   width: 100%;
 `;
