@@ -27,6 +27,21 @@ const makeSelectCompanyDashboardCandidates = () =>
     },
   );
 
+const makeSelectCompanyDashboardPosition = prop =>
+  createSelector(
+    makeSelectCompanyDashboard('positions'),
+    makeSelectCompanyDashboard('selectedPosition'),
+    (positions, selectedPosition) => {
+      if (!!positions.length && selectedPosition) {
+        const filteredPosition = positions.find(
+          ({ id }) => id === selectedPosition,
+        );
+        return filteredPosition[prop];
+      }
+      return null;
+    },
+  );
+
 const makeSelectCompanyDashboardQuestions = () =>
   createSelector(
     makeSelectCompanyDashboard('form'),
@@ -122,6 +137,7 @@ export default selectCompanyDashboardDomain;
 export {
   makeSelectCompanyDashboard,
   makeSelectCompanyDashboardCandidates,
+  makeSelectCompanyDashboardPosition,
   makeSelectCompanyDashboardQuestions,
   makeSelectCompanyDashboardResponseArray,
   makeSelectCompanyDashboardView,

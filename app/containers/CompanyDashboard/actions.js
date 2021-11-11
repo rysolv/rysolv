@@ -7,16 +7,25 @@ import {
   CREATE_POSITION_FAILURE,
   CREATE_POSITION_SUCCESS,
   CREATE_POSITION,
+  DELETE_POSITION_FAILURE,
+  DELETE_POSITION_SUCCESS,
+  DELETE_POSITION,
   DELETE_SKILL,
+  EDIT_POSITION_FAILURE,
+  EDIT_POSITION_SUCCESS,
+  EDIT_POSITION,
   FETCH_COMPANY_POSITIONS_FAILURE,
   FETCH_COMPANY_POSITIONS_SUCCESS,
   FETCH_COMPANY_POSITIONS,
   FETCH_POSITION_CANDIDATES_FAILURE,
   FETCH_POSITION_CANDIDATES_SUCCESS,
   FETCH_POSITION_CANDIDATES,
+  FETCH_POSITION_FAILURE,
   FETCH_POSITION_QUESTIONS_FAILURE,
   FETCH_POSITION_QUESTIONS_SUCCESS,
   FETCH_POSITION_QUESTIONS,
+  FETCH_POSITION_SUCCESS,
+  FETCH_POSITION,
   INPUT_ERROR,
   NOTIFY_CANDIDATE_FAILURE,
   NOTIFY_CANDIDATE_SUCCESS,
@@ -77,10 +86,46 @@ export function createPosition(payload) {
   };
 }
 
+export function deletePositionFailure(payload) {
+  return {
+    payload,
+    type: DELETE_POSITION_FAILURE,
+  };
+}
+
+export function deletePositionSuccess() {
+  return { type: DELETE_POSITION_SUCCESS };
+}
+
+export function deletePosition(payload) {
+  return {
+    payload,
+    type: DELETE_POSITION,
+  };
+}
+
 export function deleteSkill(payload) {
   return {
     payload,
     type: DELETE_SKILL,
+  };
+}
+
+export function editPositionFailure(payload) {
+  return {
+    payload,
+    type: EDIT_POSITION_FAILURE,
+  };
+}
+
+export function editPositionSuccess() {
+  return { type: EDIT_POSITION_SUCCESS };
+}
+
+export function editPosition(payload) {
+  return {
+    payload,
+    type: EDIT_POSITION,
   };
 }
 
@@ -126,6 +171,13 @@ export function fetchPositionCandidates(payload) {
   };
 }
 
+export function fetchPositionFailure(payload) {
+  return {
+    payload,
+    type: FETCH_POSITION_FAILURE,
+  };
+}
+
 export function fetchPositionQuestionsFailure(payload) {
   return {
     payload,
@@ -144,6 +196,20 @@ export function fetchPositionQuestions(payload) {
   return {
     payload,
     type: FETCH_POSITION_QUESTIONS,
+  };
+}
+
+export function fetchPositionSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_POSITION_SUCCESS,
+  };
+}
+
+export function fetchPosition(payload) {
+  return {
+    payload,
+    type: FETCH_POSITION,
   };
 }
 

@@ -23,6 +23,7 @@ export const CompanySideNavContainer = styled.div`
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
   height: 46.3rem;
   min-width: 27.8rem;
+  overflow-y: scroll;
 
   @media (max-width: 769px) {
     height: auto;

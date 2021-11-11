@@ -12,16 +12,25 @@ import {
   CREATE_POSITION_FAILURE,
   CREATE_POSITION_SUCCESS,
   CREATE_POSITION,
+  DELETE_POSITION_FAILURE,
+  DELETE_POSITION_SUCCESS,
+  DELETE_POSITION,
   DELETE_SKILL,
+  EDIT_POSITION_FAILURE,
+  EDIT_POSITION_SUCCESS,
+  EDIT_POSITION,
   FETCH_COMPANY_POSITIONS_FAILURE,
   FETCH_COMPANY_POSITIONS_SUCCESS,
   FETCH_COMPANY_POSITIONS,
   FETCH_POSITION_CANDIDATES_FAILURE,
   FETCH_POSITION_CANDIDATES_SUCCESS,
   FETCH_POSITION_CANDIDATES,
+  FETCH_POSITION_FAILURE,
   FETCH_POSITION_QUESTIONS_FAILURE,
   FETCH_POSITION_QUESTIONS_SUCCESS,
   FETCH_POSITION_QUESTIONS,
+  FETCH_POSITION_SUCCESS,
+  FETCH_POSITION,
   INPUT_ERROR,
   NOTIFY_CANDIDATE_FAILURE,
   NOTIFY_CANDIDATE_SUCCESS,
@@ -136,12 +145,28 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       break;
     }
     case CREATE_POSITION_SUCCESS: {
-      const { message } = payload;
+      const { message, positionId } = payload;
       draft.alerts.success = { message };
       draft.loading = false;
+      draft.selectedPosition = positionId;
       break;
     }
     case CREATE_POSITION: {
+      draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
+    case DELETE_POSITION_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case DELETE_POSITION_SUCCESS: {
+      draft.loading = false;
+      break;
+    }
+    case DELETE_POSITION: {
       draft.alerts = initialState.alerts;
       draft.loading = true;
       break;
@@ -154,6 +179,21 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       );
       break;
     }
+    case EDIT_POSITION_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading = false;
+      break;
+    }
+    case EDIT_POSITION_SUCCESS: {
+      draft.loading = false;
+      break;
+    }
+    case EDIT_POSITION: {
+      draft.alerts = initialState.alerts;
+      draft.loading = true;
+      break;
+    }
     case FETCH_COMPANY_POSITIONS_FAILURE: {
       const { error } = payload;
       draft.error = error;
@@ -162,9 +202,10 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_COMPANY_POSITIONS_SUCCESS: {
       const { positions } = payload;
-      draft.positions = positions;
       draft.loading = false;
-      draft.selectedPosition = positions[0].id || '';
+      draft.positions = positions;
+      if (!draft.selectedPosition)
+        draft.selectedPosition = positions[0].id || '';
       break;
     }
     case FETCH_COMPANY_POSITIONS: {
@@ -189,6 +230,12 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       draft.loading = true;
       break;
     }
+    case FETCH_POSITION_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      draft.loading = false;
+      break;
+    }
     case FETCH_POSITION_QUESTIONS_FAILURE: {
       const { error } = payload;
       draft.error = error;
@@ -201,6 +248,17 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_POSITION_QUESTIONS: {
       draft.error = initialState.error;
+      break;
+    }
+    case FETCH_POSITION_SUCCESS: {
+      const { position } = payload;
+      draft.form.createPosition = position;
+      draft.loading = false;
+      break;
+    }
+    case FETCH_POSITION: {
+      draft.error = initialState.error;
+      draft.loading = true;
       break;
     }
     case INPUT_ERROR: {

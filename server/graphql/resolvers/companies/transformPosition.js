@@ -1,30 +1,35 @@
 const { v4: uuidv4 } = require('uuid');
 
 const {
+  createPositionTechStack,
+  deletePosition,
+  deletePositionTechStack,
+  getOneTechnology,
+  postUserResponse,
+} = require('../../../db');
+const {
   CustomError,
   errorLogger,
   generatePositionLevel,
-  sendEmail,
 } = require('../../../helpers');
 const {
-  createPositionTechStack,
-  getOneTechnology,
-  postUserResponse: postUserResponseQuery,
-} = require('../../../db');
-const {
-  postUserResponseError,
-  postUserResponseSuccess,
+  transformPositionError,
+  transformPositionSuccess,
 } = require('./constants');
-const { uploadFile } = require('../../../middlewares/fileUpload');
 
-const postUserResponse = async ({ responseArray }, { authError, userId }) => {
+const transformPosition = async (
+  { positionId, responseArray },
+  { authError, userId },
+) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
+
+    await deletePosition({ positionId });
+    await deletePositionTechStack({ positionId });
 
     await Promise.all(
       responseArray.map(
         async ({ questionId, questionKey, responseId, value }) => {
-          // Language / Frameworks stored in techstack table
           if (questionKey === 'skills') {
             const { beginner, expert, intermediate, skill } = value;
             const { technologyId } = await getOneTechnology({
@@ -32,50 +37,37 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
             });
             await createPositionTechStack({
               level: generatePositionLevel({ beginner, expert, intermediate }),
+              positionId,
               technologyId,
             });
-          } else if (questionKey === 'preferred_languages') {
-            // Removing preferred lang
           } else {
-            let formattedValue = value || null;
-            // Upload resume
-            if (questionKey === 'resume') {
-              const { uploadUrl } = await uploadFile(value);
-              formattedValue = uploadUrl;
-            }
-
             const data = {
               createdDate: new Date(),
               id: uuidv4(),
+              positionId,
               questionId,
               responseId,
               userId,
-              value: formattedValue,
+              value,
             };
-            await postUserResponseQuery(data);
+            await postUserResponse(data);
           }
         },
       ),
     );
 
-    // Send welcome to hiring email
-    sendEmail({
-      body: { userId },
-      path: '/s/hiring/signup',
-    });
-
     return {
       __typename: 'Success',
-      message: postUserResponseSuccess,
+      message: transformPositionSuccess,
     };
   } catch (error) {
     const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: alert || postUserResponseError,
+      message: alert || transformPositionError,
     };
   }
 };
 
-module.exports = postUserResponse;
+module.exports = transformPosition;

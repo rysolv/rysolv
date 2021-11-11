@@ -34,10 +34,15 @@ const Header = ({
     pathname === '/' ||
     pathname === '/company/dashboard' ||
     pathname === '/company/dashboard/add' ||
+    pathname === '/company/signup' ||
+    pathname === '/dashboard' ||
+    pathname === '/dashboard/update' ||
     pathname === '/how-we-score-code' ||
     pathname === '/jobs' ||
+    pathname === '/password-reset' ||
     pathname === '/recruitment' ||
-    pathname === '/signup/company';
+    pathname === '/signin' ||
+    pathname === '/signup';
 
   const DesktopHeaderToRender = isLandingOrRecruitmentPage
     ? DesktopLandingHeader

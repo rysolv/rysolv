@@ -16,12 +16,16 @@ const {
 } = require('./constants');
 
 const postPositionResponse = async (
-  { companyId, responseArray },
+  { companyId, positionId, responseArray },
   { authError, userId },
 ) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
-    const positionId = uuidv4();
+
+    if (companyId && positionId) {
+      const data = { company_id: companyId, id: positionId };
+      await createCompanyPosition({ data });
+    }
 
     // Create position
     await createCompanyPosition({ company_id: companyId, id: positionId });

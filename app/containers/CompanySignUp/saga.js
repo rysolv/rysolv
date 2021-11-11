@@ -55,19 +55,19 @@ export function* fetchQuestionsSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(fetchQuestionsSuccess({ questions: questionArray }));
-    yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(fetchQuestionsFailure({ error }));
   }
 }
 
 export function* submitCompanyResponseSaga({ payload }) {
-  const { form } = payload;
+  const { companyId, form } = payload;
   const { contractAccepted, description, location, name, size, website } = form;
   const query = `
       mutation {
         createCompany(
           companyInput: {
+            companyId: "${companyId}",
             description: ${JSON.stringify(description)},
             location: "${location}",
             name: "${name}",
@@ -76,8 +76,8 @@ export function* submitCompanyResponseSaga({ payload }) {
           }
         ) {
           __typename
-          ... on Company {
-            companyId
+          ... on Success {
+            message
           }
           ... on Error {
             message
@@ -89,7 +89,7 @@ export function* submitCompanyResponseSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        createCompany: { __typename, companyId, message },
+        createCompany: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
@@ -125,6 +125,7 @@ export function* submitContractAcceptedSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(submitContractAcceptedSuccess());
+    yield put(push('/dashboard'));
   } catch (error) {
     yield put(submitContractAcceptedFailure({ error: { message: error } }));
   }

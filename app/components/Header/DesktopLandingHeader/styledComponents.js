@@ -22,7 +22,7 @@ export const DesktopHeaderContainer = styled.div`
   background: ${blueColor};
   display: flex;
   justify-content: space-between;
-  padding: 4rem 12rem;
+  padding: 2rem 12rem;
 `;
 
 export const InternalLink = styled(BaseLink)`

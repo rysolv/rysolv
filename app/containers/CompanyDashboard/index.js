@@ -9,6 +9,7 @@ import { push } from 'connected-react-router';
 import { ModalDialog } from 'components/base_ui';
 import CompanySideNav from 'components/CompanySideNav';
 import ScheduleInterviewModal from 'components/ScheduleInterviewModal';
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -19,8 +20,11 @@ import {
   changeSkillLevel,
   clearAlerts,
   createPosition,
+  deletePosition,
   deleteSkill,
+  editPosition,
   fetchCompanyPositions,
+  fetchPosition,
   fetchPositionCandidates,
   fetchPositionQuestions,
   inputError,
@@ -36,6 +40,7 @@ import saga from './saga';
 import {
   makeSelectCompanyDashboard,
   makeSelectCompanyDashboardCandidates,
+  makeSelectCompanyDashboardPosition,
   makeSelectCompanyDashboardQuestions,
   makeSelectCompanyDashboardResponseArray,
   makeSelectCompanyDashboardView,
@@ -44,6 +49,7 @@ import { VerticalDivider, ViewContainer } from './styledComponents';
 import viewDictionary from './viewDictionary';
 
 const CompanyDashboard = ({
+  activeUser,
   alerts,
   candidates,
   deviceView,
@@ -52,8 +58,11 @@ const CompanyDashboard = ({
   dispatchChangeSkillLevel,
   dispatchClearAlerts,
   dispatchCreatePosition,
+  dispatchDeletePosition,
   dispatchDeleteSkill,
+  dispatchEditPosition,
   dispatchFetchCompanyPositions,
+  dispatchFetchPosition,
   dispatchFetchPositionCandidates,
   dispatchFetchPositionQuestions,
   dispatchInputError,
@@ -69,16 +78,21 @@ const CompanyDashboard = ({
   isModalOpen,
   loading,
   positions,
+  positionTitle,
   questions,
   responseArray,
   selectedPosition,
   tableData,
   view,
 }) => {
+  const {
+    company: { companyId, isContractAccepted, isQuestionnaireComplete } = {},
+  } = activeUser;
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Dashboard';
-    dispatchFetchCompanyPositions();
+    dispatchFetchCompanyPositions({ companyId });
     dispatchFetchPositionQuestions({ category: 'company_position' });
   }, []);
 
@@ -86,12 +100,31 @@ const CompanyDashboard = ({
     dispatchFetchPositionCandidates({ positionId: selectedPosition });
   }, [selectedPosition]);
 
-  const ComponentToRender = viewDictionary(view);
+  useEffect(() => {
+    if (!isContractAccepted || !isQuestionnaireComplete) {
+      handleNav('/company/signup');
+    }
+  }, [isContractAccepted, isQuestionnaireComplete]);
+
+  const ComponentToRender = viewDictionary[view];
 
   const handleCreatePosition = () => {
     const { isValidated, validationErrors } = validateFields({ values: form });
     if (isValidated) {
-      dispatchCreatePosition({ responseArray });
+      dispatchCreatePosition({ companyId, responseArray });
+    } else {
+      dispatchInputError({ errors: validationErrors, form: 'createPosition' });
+    }
+  };
+
+  const handleEditPosition = () => {
+    const { isValidated, validationErrors } = validateFields({ values: form });
+    if (isValidated) {
+      dispatchEditPosition({
+        companyId,
+        positionId: selectedPosition,
+        responseArray,
+      });
     } else {
       dispatchInputError({ errors: validationErrors, form: 'createPosition' });
     }
@@ -124,7 +157,9 @@ const CompanyDashboard = ({
         dispatchChangeInput={dispatchChangeInput}
         dispatchChangeSkillLevel={dispatchChangeSkillLevel}
         dispatchClearAlerts={dispatchClearAlerts}
+        dispatchDeletePosition={dispatchDeletePosition}
         dispatchDeleteSkill={dispatchDeleteSkill}
+        dispatchFetchPosition={dispatchFetchPosition}
         dispatchOpenModal={dispatchOpenModal}
         dispatchResetFormState={dispatchResetFormState}
         dispatchSaveCandidate={dispatchSaveCandidate}
@@ -132,10 +167,12 @@ const CompanyDashboard = ({
         form={form}
         formErrors={formErrors}
         handleCreatePosition={handleCreatePosition}
+        handleEditPosition={handleEditPosition}
         handleNav={handleNav}
         handleValidateInput={handleValidateInput}
         loading={loading}
         positions={positions}
+        positionTitle={positionTitle}
         questions={questions}
         selectedPosition={selectedPosition}
         tableData={tableData}
@@ -159,6 +196,7 @@ const CompanyDashboard = ({
 };
 
 CompanyDashboard.propTypes = {
+  activeUser: T.object.isRequired,
   alerts: T.object.isRequired,
   candidates: T.array.isRequired,
   deviceView: T.string.isRequired,
@@ -167,8 +205,11 @@ CompanyDashboard.propTypes = {
   dispatchChangeSkillLevel: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchCreatePosition: T.func.isRequired,
+  dispatchDeletePosition: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
+  dispatchEditPosition: T.func.isRequired,
   dispatchFetchCompanyPositions: T.func.isRequired,
+  dispatchFetchPosition: T.func.isRequired,
   dispatchFetchPositionCandidates: T.func.isRequired,
   dispatchFetchPositionQuestions: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
@@ -184,6 +225,7 @@ CompanyDashboard.propTypes = {
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
   positions: T.array.isRequired,
+  positionTitle: T.string,
   questions: T.array.isRequired,
   responseArray: T.array.isRequired,
   selectedPosition: T.string.isRequired,
@@ -192,6 +234,10 @@ CompanyDashboard.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
   /*
    * Reducer : CompanyDashboard
    */
@@ -203,6 +249,7 @@ const mapStateToProps = createStructuredSelector({
   isModalOpen: makeSelectCompanyDashboard('isModalOpen'),
   loading: makeSelectCompanyDashboard('loading'),
   positions: makeSelectCompanyDashboard('positions'),
+  positionTitle: makeSelectCompanyDashboardPosition('title'),
   questions: makeSelectCompanyDashboardQuestions(),
   responseArray: makeSelectCompanyDashboardResponseArray(),
   selectedPosition: makeSelectCompanyDashboard('selectedPosition'),
@@ -223,9 +270,12 @@ const mapDispatchToProps = dispatch => ({
   dispatchChangeSkillLevel: payload => dispatch(changeSkillLevel(payload)),
   dispatchClearAlerts: () => dispatch(clearAlerts()),
   dispatchCreatePosition: payload => dispatch(createPosition(payload)),
+  dispatchDeletePosition: payload => dispatch(deletePosition(payload)),
   dispatchDeleteSkill: payload => dispatch(deleteSkill(payload)),
+  dispatchEditPosition: payload => dispatch(editPosition(payload)),
   dispatchFetchCompanyPositions: payload =>
     dispatch(fetchCompanyPositions(payload)),
+  dispatchFetchPosition: payload => dispatch(fetchPosition(payload)),
   dispatchFetchPositionCandidates: payload =>
     dispatch(fetchPositionCandidates(payload)),
   dispatchFetchPositionQuestions: payload =>

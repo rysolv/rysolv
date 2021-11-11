@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
 
-import { darkBlueColor, lightBlueColor } from 'defaultStyleHelper';
+import { darkBlueColor, lightBlueColor, textColor } from 'defaultStyleHelper';
 
 export const CandidateCardGroup = styled.div`
   display: flex;
@@ -13,6 +14,15 @@ export const CandidateCardGroup = styled.div`
 
 export const CompanyDashboardContainer = styled.div`
   width: 100%;
+`;
+
+export const CompanyDashboardTitle = styled.div`
+  color: ${textColor};
+  display: flex;
+  font-size: 3.2rem;
+  font-weight: 500;
+  line-height: 3.36rem;
+  padding: 2rem 2rem 1rem;
 `;
 
 export const IconWrapper = styled.img`
@@ -32,6 +42,21 @@ export const LinkWrapper = styled(Link)`
 
   &:hover {
     color: ${lightBlueColor};
+  }
+`;
+
+export const StyledIconButton = styled(IconButton)`
+  align-self: center;
+  display: flex;
+  height: 2.6rem;
+  margin-left: 1.6rem;
+  padding: 0;
+  width: 2.6rem;
+
+  svg {
+    color: ${textColor};
+    height: 2.4rem;
+    width: 2.4rem;
   }
 `;
 

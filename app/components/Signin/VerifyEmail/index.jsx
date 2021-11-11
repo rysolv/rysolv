@@ -2,12 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import T from 'prop-types';
 
-import { MainTextInput } from 'components/base_ui';
+import { UpdatedPasscodeTextInput } from 'components/base_ui';
 
 import {
-  EmailWrapper,
+  ImportantTextWrapper,
   InputFormWrapper,
   InputSubText,
+  PasscodeFormContent,
   ResendButton,
   SigninWrapper,
   StyledErrorSuccessBanner,
@@ -40,50 +41,51 @@ const VerifyEmail = ({
   return (
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
-        <Title>Confirm your email</Title>
-        {(error || success) && (
-          <StyledErrorSuccessBanner
-            error={error}
-            onClose={handleClearAuthAlerts}
-            success={success}
+        <Title hasSubText>Confirm your email</Title>
+        <PasscodeFormContent>
+          {(error || success) && (
+            <StyledErrorSuccessBanner
+              error={error}
+              hasSubText
+              onClose={handleClearAuthAlerts}
+              success={success}
+            />
+          )}
+          <InputSubText>
+            A confirmation email was sent to{' '}
+            <ImportantTextWrapper>{email}</ImportantTextWrapper>.
+          </InputSubText>
+          <VerificationWrapper>
+            <UpdatedPasscodeTextInput
+              autoComplete="one-time-code"
+              error={verificationCode.error}
+              label="Verification code"
+              onBlur={() => handleValidateInput({ field: 'verificationCode' })}
+              onChange={e =>
+                handleInputChange({
+                  field: 'verificationCode',
+                  form: 'verify',
+                  value: e.target.value,
+                })
+              }
+              onComplete={handleVerifyEmail}
+              value={verificationCode.value}
+            />
+          </VerificationWrapper>
+          <StyledPrimaryAsyncButton
+            disabled={verifyDisabled}
+            label="Verify email"
+            loading={loading}
+            onClick={handleVerifyEmail}
           />
-        )}
-        <InputSubText>
-          A confirmation email was sent to <EmailWrapper>{email}</EmailWrapper>.
-        </InputSubText>
-        <VerificationWrapper>
-          <MainTextInput
-            autoComplete="one-time-code"
-            error={!!verificationCode.error}
-            helperText={verificationCode.error}
-            label="Verification code"
-            onBlur={() => handleValidateInput({ field: 'verificationCode' })}
-            onChange={e =>
-              handleInputChange({
-                field: 'verificationCode',
-                form: 'verify',
-                value: e.target.value,
-              })
-            }
-            value={verificationCode.value}
-          />
-          <ResendButton
-            disableRipple
-            onClick={() => handleResendCode({ email })}
-          >
-            Resend code
-          </ResendButton>
-        </VerificationWrapper>
-        <StyledPrimaryAsyncButton
-          disabled={verifyDisabled}
-          label="Verify email"
-          loading={loading}
-          onClick={handleVerifyEmail}
-        />
+        </PasscodeFormContent>
+        <ResendButton disableRipple onClick={() => handleResendCode({ email })}>
+          Resend code
+        </ResendButton>
+        <SubText>
+          Never received a code? <Link to="/contact-us">Contact support</Link>
+        </SubText>
       </InputFormWrapper>
-      <SubText>
-        Never received a code? <Link to="/contact-us">Contact support</Link>
-      </SubText>
     </SigninWrapper>
   );
 };

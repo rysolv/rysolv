@@ -1,18 +1,8 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { CreatePosition, EditPosition } from 'components/CompanyPosition';
+import CompanyDashboard from 'components/CompanyDashboard';
 
-import CompanyDashboardView from 'components/CompanyDashboard';
-import CreatePositionView from 'components/CreatePosition';
-
-const viewDictionary = key => {
-  switch (key) {
-    case 'add':
-      return CreatePositionView;
-    case 'main':
-      return CompanyDashboardView;
-    default:
-      return () => <Redirect to="/notfound" />;
-  }
+export default {
+  add: CreatePosition,
+  edit: EditPosition,
+  main: CompanyDashboard,
 };
-
-export default viewDictionary;

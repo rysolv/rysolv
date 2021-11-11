@@ -35,7 +35,7 @@ const SignUpContainer = ({
   const { email, firstName, lastName, password, username } = data;
   const form = 'signUp';
 
-  const handleSignUp = () => {
+  const handleSignUp = ({ isCompany }) => {
     const { isValidated, validationErrors } = validateFields({
       form,
       values: data,
@@ -45,6 +45,7 @@ const SignUpContainer = ({
       dispatchSignUp({
         email: email.value,
         firstName: firstName.value,
+        isCompany,
         lastName: lastName.value,
         password: password.value,
         username: username.value,

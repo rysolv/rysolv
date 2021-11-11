@@ -98,7 +98,7 @@ export const MobileHeaderContainer = styled.div`
   background: ${blueColor};
   display: flex;
   justify-content: space-between;
-  padding: 4rem 3rem;
+  padding: 2rem 3rem;
 `;
 
 export const StyledExpandIcon = styled(ExpandIcon)`
