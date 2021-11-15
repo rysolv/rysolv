@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+import IconButton from '@material-ui/core/IconButton';
 
-import { IconButton } from 'components/base_ui';
+import { IconButton as BaseIconButton } from 'components/base_ui';
 import {
   blueColor,
+  candidateGreyColor,
   grayColor,
   lightBlueColor,
   whiteColor,
@@ -23,7 +25,7 @@ export const CompanySideNavContainer = styled.div`
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
   height: 46.3rem;
   min-width: 27.8rem;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   @media (max-width: 769px) {
     height: auto;
@@ -103,10 +105,55 @@ export const PositionTitle = styled.span`
   text-transform: capitalize;
 `;
 
-export const StyledIconButton = styled(IconButton)`
+export const StyledEditButton = styled(IconButton)`
+  align-self: center;
+  display: flex;
+  margin-left: 1.6rem;
+  padding: 0;
+
+  &:hover {
+    background: transparent;
+  }
+
+  svg {
+    color: ${blueColor};
+    height: 2rem;
+    width: 2rem;
+  }
+`;
+
+export const StyledIconButton = styled(BaseIconButton)`
+  &:hover {
+    background: transparent;
+  }
+
   svg {
     color: ${blueColor};
     height: 3.2rem;
     width: 3.2rem;
   }
+`;
+
+export const Logo = styled.img`
+  border-radius: 50%;
+  border: 0.2rem solid ${candidateGreyColor};
+  height: 7.5rem;
+  margin-right: 0.8rem;
+  object-fit: cover;
+  width: 7.5rem;
+`;
+
+export const CompanyProfileContainer = styled.div`
+  display: flex;
+  margin-bottom: 2rem;
+  max-width: 28.1rem;
+  place-items: center;
+`;
+
+export const NameWrapper = styled.div`
+  color: ${blueColor};
+  display: flex;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 3.45rem;
 `;

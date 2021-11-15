@@ -48,10 +48,12 @@ export const LinkWrapper = styled(Link)`
 export const StyledIconButton = styled(IconButton)`
   align-self: center;
   display: flex;
-  height: 2.6rem;
   margin-left: 1.6rem;
   padding: 0;
-  width: 2.6rem;
+
+  &:hover {
+    background: transparent;
+  }
 
   svg {
     color: ${textColor};

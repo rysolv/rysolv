@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import { withRouter } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
-import CompanySignUpView from 'components/CompanySignUp';
+import { CreateCompany } from 'components/CompanySignUp';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -48,7 +48,7 @@ const CompanySignUp = ({
   questions,
   view,
 }) => {
-  const { companyInfo: companyInfoForm, contract: contractForm } = forms;
+  const { company: companyForm, contract: contractForm } = forms;
   const { contractAccepted } = contractForm;
   const {
     company: { companyId, isContractAccepted, isQuestionnaireComplete } = {},
@@ -66,7 +66,7 @@ const CompanySignUp = ({
     } else if (!isContractAccepted && isQuestionnaireComplete) {
       setViewToRender(1);
     } else {
-      handleNav('/dashboard');
+      handleNav('/company/dashboard');
     }
   }, [isContractAccepted, isQuestionnaireComplete]);
 
@@ -79,7 +79,7 @@ const CompanySignUp = ({
   const handleSubmit = () => {
     dispatchSubmitCompanyResponse({
       companyId,
-      form: { ...companyInfoForm, contractAccepted },
+      form: { ...companyForm, contractAccepted },
     });
   };
   const handleValidateInput = ({ field, values }) => {
@@ -88,7 +88,7 @@ const CompanySignUp = ({
       errors: {
         [field]: validationError,
       },
-      form: 'companyInfo',
+      form: 'company',
     });
   };
 
@@ -96,7 +96,7 @@ const CompanySignUp = ({
     <ViewContainer>
       <AsyncRender
         asyncData={questions}
-        component={CompanySignUpView}
+        component={CreateCompany}
         error={error}
         isRequiredData
         loading={loading}

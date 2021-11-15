@@ -7,6 +7,7 @@ import DesktopCompanySideNav from './DesktopCompanySideNav';
 import MobileCompanySideNav from './MobileCompanySideNav';
 
 const CompanySideNav = ({
+  company,
   deviceView,
   dispatchSelectPosition,
   handleNav,
@@ -15,7 +16,7 @@ const CompanySideNav = ({
 }) => {
   const handleCreatePosition = () => {
     dispatchSelectPosition({ id: '' });
-    handleNav('/company/dashboard/add');
+    handleNav('/company/dashboard/add-position');
   };
 
   const handleSelectPosition = ({ id }) => {
@@ -35,7 +36,9 @@ const CompanySideNav = ({
       Component={DesktopCompanySideNav}
       FallbackComponent={MobileCompanySideNav}
       propsToPassDown={{
+        company,
         handleCreatePosition,
+        handleNav,
         handleSelectPosition,
         positions,
         selectedPosition,
@@ -46,6 +49,7 @@ const CompanySideNav = ({
 };
 
 CompanySideNav.propTypes = {
+  company: T.object.isRequired,
   deviceView: T.string.isRequired,
   dispatchSelectPosition: T.func.isRequired,
   handleNav: T.func.isRequired,

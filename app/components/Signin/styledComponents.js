@@ -76,7 +76,6 @@ export const InputFormWrapper = styled.div`
   justify-content: space-between;
   margin: 5rem auto 0;
   max-width: 75rem;
-  min-height: 35rem;
   padding: 7.5rem 10%;
   text-align: center;
   width: 100%;

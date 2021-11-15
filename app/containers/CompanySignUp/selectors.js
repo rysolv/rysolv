@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import remove from 'lodash/remove';
 
 import { snakeToCamel } from 'utils/globalHelpers';
 
@@ -17,8 +18,10 @@ const makeSelectCompanySignUpQuestions = () =>
   createSelector(
     makeSelectCompanySignUp('forms'),
     makeSelectCompanySignUp('questions'),
-    ({ companyInfo }, questions) => {
-      const formattedQuestions = questions.map(
+    ({ company }, questions) => {
+      const tempQuestions = [...questions];
+      remove(tempQuestions, ({ questionKey }) => questionKey === 'logo');
+      const formattedQuestions = tempQuestions.map(
         ({
           limit,
           questionKey,
@@ -37,7 +40,7 @@ const makeSelectCompanySignUpQuestions = () =>
             options: responses.map(({ value }) => ({ value })),
             optionType: option,
             placeholder:
-              hasPlaceholder && !companyInfo[snakeToCamel(questionKey)].length
+              hasPlaceholder && !company[snakeToCamel(questionKey)].length
                 ? placeholder
                 : '',
             question: questionText,

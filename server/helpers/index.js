@@ -5,6 +5,7 @@ const {
   errorLogger,
   generatePositionLevel,
   generateSizeInteger,
+  generateSizeString,
   isUrl,
   validatePayoutUrl,
 } = require('./functions');
@@ -17,6 +18,7 @@ module.exports = {
   errorLogger,
   generatePositionLevel,
   generateSizeInteger,
+  generateSizeString,
   isUrl,
   sendEmail,
   validatePayoutUrl,

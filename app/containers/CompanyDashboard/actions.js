@@ -11,21 +11,27 @@ import {
   DELETE_POSITION_SUCCESS,
   DELETE_POSITION,
   DELETE_SKILL,
+  EDIT_COMPANY_FAILURE,
+  EDIT_COMPANY_SUCCESS,
+  EDIT_COMPANY,
   EDIT_POSITION_FAILURE,
   EDIT_POSITION_SUCCESS,
   EDIT_POSITION,
+  FETCH_COMPANY_FAILURE,
   FETCH_COMPANY_POSITIONS_FAILURE,
   FETCH_COMPANY_POSITIONS_SUCCESS,
   FETCH_COMPANY_POSITIONS,
+  FETCH_COMPANY_SUCCESS,
+  FETCH_COMPANY,
   FETCH_POSITION_CANDIDATES_FAILURE,
   FETCH_POSITION_CANDIDATES_SUCCESS,
   FETCH_POSITION_CANDIDATES,
   FETCH_POSITION_FAILURE,
-  FETCH_POSITION_QUESTIONS_FAILURE,
-  FETCH_POSITION_QUESTIONS_SUCCESS,
-  FETCH_POSITION_QUESTIONS,
   FETCH_POSITION_SUCCESS,
   FETCH_POSITION,
+  FETCH_QUESTIONS_FAILURE,
+  FETCH_QUESTIONS_SUCCESS,
+  FETCH_QUESTIONS,
   INPUT_ERROR,
   NOTIFY_CANDIDATE_FAILURE,
   NOTIFY_CANDIDATE_SUCCESS,
@@ -111,6 +117,24 @@ export function deleteSkill(payload) {
   };
 }
 
+export function editCompanyFailure(payload) {
+  return {
+    payload,
+    type: EDIT_COMPANY_FAILURE,
+  };
+}
+
+export function editCompanySuccess() {
+  return { type: EDIT_COMPANY_SUCCESS };
+}
+
+export function editCompany(payload) {
+  return {
+    payload,
+    type: EDIT_COMPANY,
+  };
+}
+
 export function editPositionFailure(payload) {
   return {
     payload,
@@ -126,6 +150,13 @@ export function editPosition(payload) {
   return {
     payload,
     type: EDIT_POSITION,
+  };
+}
+
+export function fetchCompanyFailure(payload) {
+  return {
+    payload,
+    type: FETCH_COMPANY_FAILURE,
   };
 }
 
@@ -147,6 +178,20 @@ export function fetchCompanyPositions(payload) {
   return {
     payload,
     type: FETCH_COMPANY_POSITIONS,
+  };
+}
+
+export function fetchCompanySuccess(payload) {
+  return {
+    payload,
+    type: FETCH_COMPANY_SUCCESS,
+  };
+}
+
+export function fetchCompany(payload) {
+  return {
+    payload,
+    type: FETCH_COMPANY,
   };
 }
 
@@ -178,27 +223,6 @@ export function fetchPositionFailure(payload) {
   };
 }
 
-export function fetchPositionQuestionsFailure(payload) {
-  return {
-    payload,
-    type: FETCH_POSITION_QUESTIONS_FAILURE,
-  };
-}
-
-export function fetchPositionQuestionsSuccess(payload) {
-  return {
-    payload,
-    type: FETCH_POSITION_QUESTIONS_SUCCESS,
-  };
-}
-
-export function fetchPositionQuestions(payload) {
-  return {
-    payload,
-    type: FETCH_POSITION_QUESTIONS,
-  };
-}
-
 export function fetchPositionSuccess(payload) {
   return {
     payload,
@@ -210,6 +234,27 @@ export function fetchPosition(payload) {
   return {
     payload,
     type: FETCH_POSITION,
+  };
+}
+
+export function fetchQuestionsFailure(payload) {
+  return {
+    payload,
+    type: FETCH_QUESTIONS_FAILURE,
+  };
+}
+
+export function fetchQuestionsSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_QUESTIONS_SUCCESS,
+  };
+}
+
+export function fetchQuestions(payload) {
+  return {
+    payload,
+    type: FETCH_QUESTIONS,
   };
 }
 
@@ -248,8 +293,11 @@ export function openModalState(payload) {
   };
 }
 
-export function resetFormState() {
-  return { type: RESET_FORM_STATE };
+export function resetFormState(payload) {
+  return {
+    payload,
+    type: RESET_FORM_STATE,
+  };
 }
 
 export function saveCandidate(payload) {

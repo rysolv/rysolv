@@ -6,6 +6,7 @@ const alterCompaniesTable = `
   ADD COLUMN created_date TIMESTAMP,
   ADD COLUMN description TEXT,
   ADD COLUMN location VARCHAR(128),
+  ADD COLUMN logo VARCHAR(256),
   ADD COLUMN size INT
 `;
 

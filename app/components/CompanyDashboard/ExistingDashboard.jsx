@@ -31,7 +31,10 @@ const ExistingDashboard = ({
     <CompanyDashboardTitle>
       {positionTitle}
       <StyledIconButton
-        onClick={() => handleNav(`/dashboard/edit?id=${selectedPosition}`)}
+        disableRipple
+        onClick={() =>
+          handleNav(`/company/dashboard/edit-position?id=${selectedPosition}`)
+        }
       >
         {EditIcon}
       </StyledIconButton>

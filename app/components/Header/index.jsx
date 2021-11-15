@@ -33,7 +33,9 @@ const Header = ({
   const isLandingOrRecruitmentPage =
     pathname === '/' ||
     pathname === '/company/dashboard' ||
-    pathname === '/company/dashboard/add' ||
+    pathname === '/company/dashboard/add-position' ||
+    pathname === '/company/dashboard/edit-company' ||
+    pathname === '/company/dashboard/edit-position' ||
     pathname === '/company/signup' ||
     pathname === '/dashboard' ||
     pathname === '/dashboard/update' ||
