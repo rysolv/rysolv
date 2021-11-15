@@ -11,8 +11,8 @@ const onePosition = async ({ positionId }, { authError, userId }) => {
     const position = { ...positionData, skills, role };
     const formattedPosition = Object.keys(position).reduce(
       (acc, positionItem) => {
-        if (positionItem === 'hiring_timeframe')
-          acc.hiringTimeframe = position[positionItem];
+        if (positionItem === 'is_open')
+          acc.isOpen = position[positionItem] ? 'Yes' : 'No';
         else if (positionItem === 'is_remote')
           acc.isRemote = position[positionItem];
         else if (positionItem === 'skills') {

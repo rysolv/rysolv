@@ -4,6 +4,7 @@ import T from 'prop-types';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
+  InputFormContent,
   InputFormWrapper,
   SigninWrapper,
   StyledPrimaryButton,
@@ -28,14 +29,16 @@ const ResetPasswordFailure = ({ error: { message }, handleReturnToSignIn }) => {
     >
       <InputFormWrapper>
         <Title hasSubText>Password reset failed</Title>
-        <ResetSubText hasFlex>
-          <IconWrapper isError>{ErrorIcon}</IconWrapper>
-          <MessageWrapper>{message}</MessageWrapper>
-        </ResetSubText>
-        <StyledPrimaryButton
-          label="Return to sign in"
-          onClick={handleReturnToSignIn}
-        />
+        <InputFormContent>
+          <ResetSubText hasFlex>
+            <IconWrapper isError>{ErrorIcon}</IconWrapper>
+            <MessageWrapper>{message}</MessageWrapper>
+          </ResetSubText>
+          <StyledPrimaryButton
+            label="Return to sign in"
+            onClick={handleReturnToSignIn}
+          />
+        </InputFormContent>
       </InputFormWrapper>
     </SigninWrapper>
   );

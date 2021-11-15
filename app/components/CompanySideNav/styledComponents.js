@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import IconButton from '@material-ui/core/IconButton';
 
-import { IconButton } from 'components/base_ui';
 import {
   blueColor,
+  candidateGreyColor,
   grayColor,
   lightBlueColor,
   whiteColor,
@@ -103,10 +104,52 @@ export const PositionTitle = styled.span`
   text-transform: capitalize;
 `;
 
+export const StyledEditButton = styled(IconButton)`
+  align-self: center;
+  display: flex;
+  margin-left: 1.6rem;
+  padding: 0;
+
+  &:hover {
+    background: transparent;
+  }
+
+  svg {
+    color: ${blueColor};
+    height: 2rem;
+    width: 2rem;
+  }
+`;
+
 export const StyledIconButton = styled(IconButton)`
   svg {
     color: ${blueColor};
     height: 3.2rem;
     width: 3.2rem;
   }
+`;
+
+export const Logo = styled.img`
+  border-radius: 50%;
+  border: 0.2rem solid ${candidateGreyColor};
+  height: 7.5rem;
+  margin-right: 0.8rem;
+  object-fit: cover;
+  width: 7.5rem;
+`;
+
+export const CompanyProfileContainer = styled.div`
+  display: flex;
+  margin-bottom: 2rem;
+  max-width: 28.1rem;
+  place-items: center;
+`;
+
+export const NameWrapper = styled.div`
+  color: ${blueColor};
+  display: flex;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 3.45rem;
+  margin: 2rem 0;
 `;

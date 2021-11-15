@@ -45,6 +45,16 @@ const generateSizeInteger = ({ size }) => {
   return sizeDictionary[size];
 };
 
+const generateSizeString = ({ size }) => {
+  const sizeDictionary = {
+    10: '1 - 10',
+    50: '11 - 50',
+    250: '51 - 250',
+    1000: '251 +',
+  };
+  return sizeDictionary[size];
+};
+
 const isUrl = string => {
   let url;
   try {
@@ -82,6 +92,7 @@ module.exports = {
   errorLogger,
   generatePositionLevel,
   generateSizeInteger,
+  generateSizeString,
   isUrl,
   validatePayoutUrl,
 };

@@ -29,8 +29,8 @@ export const optionDictionary = {
   experience: {
     option: 'autocomplete',
   },
-  hiring_timeframe: {
-    option: 'autocomplete',
+  is_open: {
+    option: 'toggle',
   },
   is_remote: {
     option: 'autocomplete',
@@ -38,10 +38,20 @@ export const optionDictionary = {
   location: {
     option: 'locationAutocomplete',
   },
+  logo: {
+    option: 'fileInput',
+  },
+  name: {
+    option: 'input',
+    placeholder: 'Company name',
+  },
   role: {
     option: 'autocomplete',
   },
   salary: {
+    option: 'autocomplete',
+  },
+  size: {
     option: 'autocomplete',
   },
   skills: {
@@ -53,6 +63,10 @@ export const optionDictionary = {
   },
   type: {
     option: 'autocomplete',
+  },
+  website: {
+    option: 'input',
+    placeholder: 'Company website',
   },
 };
 

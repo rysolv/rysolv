@@ -22,7 +22,7 @@ const LocationAutocompleteOption = ({ handleChangeInput, onBlur, value }) => {
 
   const handlePlacesWidgetFocus = () => {
     if (tempValue !== '' || value !== '') {
-      handleChangeInput();
+      handleChangeInput('');
       setTempValue('');
     }
   };
@@ -34,7 +34,7 @@ const LocationAutocompleteOption = ({ handleChangeInput, onBlur, value }) => {
       onBlur={onBlur}
       onChange={e => setTempValue(e.target.value)}
       onFocus={handlePlacesWidgetFocus}
-      value={value}
+      value={tempValue || value}
     />
   );
 };

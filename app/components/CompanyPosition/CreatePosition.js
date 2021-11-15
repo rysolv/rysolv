@@ -20,41 +20,44 @@ import {
 
 const CreatePosition = ({
   alerts: { error },
+  companyPositionQuestions,
   dispatchChangeInput,
   dispatchChangeSkillLevel,
   dispatchClearAlerts,
   dispatchDeleteSkill,
   dispatchResetFormState,
-  form: { createPosition: createPositionForm },
-  formErrors: { createPosition: createPositionFormErrors },
+  dispatchSelectPosition,
+  form: { companyPosition: companyPositionForm },
+  formErrors: { companyPosition: companyPositionFormErrors },
   handleCreatePosition,
   handleNav,
   handleValidateInput,
   loading,
-  questions,
+  positions,
 }) => {
   useEffect(
     () => () => {
+      if (positions.length) dispatchSelectPosition({ id: positions[0].id });
       dispatchClearAlerts();
-      dispatchResetFormState();
+      dispatchResetFormState({ category: 'companyPosition' });
     },
     [],
   );
 
-  const hasErrors = Object.keys(createPositionFormErrors).some(
-    input => !!createPositionFormErrors[input],
+  const hasErrors = Object.keys(companyPositionFormErrors).some(
+    input => !!companyPositionFormErrors[input],
   );
-  const isComplete = Object.keys(createPositionForm).every(input => {
+  const isComplete = Object.keys(companyPositionForm).every(input => {
     if (input === 'skills') {
       return (
-        !isEmpty(createPositionForm[input]) &&
-        createPositionForm[input].every(
+        !isEmpty(companyPositionForm[input]) &&
+        companyPositionForm[input].every(
           ({ beginner, expert, intermediate }) =>
             beginner === true || expert === true || intermediate === true,
         )
       );
     }
-    return !!createPositionForm[input];
+    return !!companyPositionForm[input];
   });
 
   const tableProps = { dispatchChangeSkillLevel, dispatchDeleteSkill };
@@ -63,16 +66,23 @@ const CreatePosition = ({
     <CreatePositionContainer>
       <CreatePositionHeader>Create a new position</CreatePositionHeader>
       <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
-      {questions.map(
-        // eslint-disable-next-line array-callback-return, consistent-return
-        ({ description, id, options, optionType, question, ...restProps }) => {
-          if (id !== 'isRemote') {
+      {companyPositionQuestions.map(
+        ({
+          description,
+          id,
+          options,
+          optionType,
+          question,
+          ...restProps
+          // eslint-disable-next-line array-callback-return, consistent-return
+        }) => {
+          if (id !== 'isActive' && id !== 'isRemote') {
             const OptionToRender = optionDictionary[optionType];
 
             const handleChangeInput = (value, inputField) => {
               dispatchChangeInput({
                 field: inputField || id,
-                form: 'createPosition',
+                form: 'companyPosition',
                 value,
               });
             };
@@ -85,8 +95,8 @@ const CreatePosition = ({
                 <OptionDescription>{description}</OptionDescription>
                 <OptionToRender
                   additionalInputProps={{
-                    value: createPositionForm[additionalInputDictionary[id]],
-                    ...questions.find(
+                    value: companyPositionForm[additionalInputDictionary[id]],
+                    ...companyPositionQuestions.find(
                       ({ id: questionId }) =>
                         additionalInputDictionary[id] === questionId,
                     ),
@@ -99,15 +109,15 @@ const CreatePosition = ({
                   onBlur={() =>
                     handleValidateInput({
                       field: id,
-                      values: createPositionForm,
+                      values: companyPositionForm,
                     })
                   }
                   options={options}
                   tableProps={tableProps}
-                  value={createPositionForm[id]}
+                  value={companyPositionForm[id]}
                   {...restProps}
                 />
-                <OptionError>{createPositionFormErrors[id]}</OptionError>
+                <OptionError>{companyPositionFormErrors[id]}</OptionError>
               </OptionWrapper>
             );
           }
@@ -131,18 +141,20 @@ const CreatePosition = ({
 
 CreatePosition.propTypes = {
   alerts: T.object.isRequired,
+  companyPositionQuestions: T.array.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeSkillLevel: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
   dispatchResetFormState: T.func.isRequired,
+  dispatchSelectPosition: T.func.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleCreatePosition: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   loading: T.bool.isRequired,
-  questions: T.array.isRequired,
+  positions: T.array.isRequired,
 };
 
 export default CreatePosition;

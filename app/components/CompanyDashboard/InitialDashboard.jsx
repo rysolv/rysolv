@@ -15,8 +15,8 @@ const InitialDashboard = () => (
       Looks like you don&#39;t have any positions yet.
     </StyledParagraph>
     <StyledSubParagraph>
-      <LinkWrapper to="/dashboard/add">Create a position</LinkWrapper> to get
-      started.
+      <LinkWrapper to="/dashboard/add-position">Create a position</LinkWrapper>
+      &nbsp;to get started.
     </StyledSubParagraph>
   </InitialDashboardContainer>
 );

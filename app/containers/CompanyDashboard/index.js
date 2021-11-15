@@ -22,11 +22,13 @@ import {
   createPosition,
   deletePosition,
   deleteSkill,
+  editCompany,
   editPosition,
+  fetchCompany,
   fetchCompanyPositions,
   fetchPosition,
   fetchPositionCandidates,
-  fetchPositionQuestions,
+  fetchQuestions,
   inputError,
   notifyCandidate,
   openModalState,
@@ -40,6 +42,7 @@ import saga from './saga';
 import {
   makeSelectCompanyDashboard,
   makeSelectCompanyDashboardCandidates,
+  makeSelectCompanyDashboardLoading,
   makeSelectCompanyDashboardPosition,
   makeSelectCompanyDashboardQuestions,
   makeSelectCompanyDashboardResponseArray,
@@ -52,6 +55,9 @@ const CompanyDashboard = ({
   activeUser,
   alerts,
   candidates,
+  company,
+  companyPositionQuestions,
+  companyQuestions,
   deviceView,
   dispatchChangeFilter,
   dispatchChangeInput,
@@ -60,17 +66,20 @@ const CompanyDashboard = ({
   dispatchCreatePosition,
   dispatchDeletePosition,
   dispatchDeleteSkill,
+  dispatchEditCompany,
   dispatchEditPosition,
+  dispatchFetchCompany,
   dispatchFetchCompanyPositions,
   dispatchFetchPosition,
   dispatchFetchPositionCandidates,
-  dispatchFetchPositionQuestions,
+  dispatchFetchQuestions,
   dispatchInputError,
   dispatchNotifyCandidate,
   dispatchOpenModal,
   dispatchResetFormState,
   dispatchSaveCandidate,
   dispatchSelectPosition,
+  fetchQuestionsLoading,
   filter,
   form,
   formErrors,
@@ -79,7 +88,6 @@ const CompanyDashboard = ({
   loading,
   positions,
   positionTitle,
-  questions,
   responseArray,
   selectedPosition,
   tableData,
@@ -88,10 +96,13 @@ const CompanyDashboard = ({
   const {
     company: { companyId, isContractAccepted, isQuestionnaireComplete } = {},
   } = activeUser;
+  const { company: companyForm } = form;
 
   useEffect(() => {
+    dispatchFetchCompany({ companyId });
     dispatchFetchCompanyPositions({ companyId });
-    dispatchFetchPositionQuestions({ category: 'company_position' });
+    dispatchFetchQuestions({ category: 'company_position' });
+    dispatchFetchQuestions({ category: 'company' });
   }, []);
 
   useEffect(() => {
@@ -109,9 +120,24 @@ const CompanyDashboard = ({
   const handleCreatePosition = () => {
     const { isValidated, validationErrors } = validateFields({ values: form });
     if (isValidated) {
-      dispatchCreatePosition({ companyId, responseArray });
+      dispatchCreatePosition({
+        companyId,
+        responseArray,
+      });
     } else {
-      dispatchInputError({ errors: validationErrors, form: 'createPosition' });
+      dispatchInputError({ errors: validationErrors, form: 'companyPosition' });
+    }
+  };
+
+  const handleEditCompany = () => {
+    const { isValidated, validationErrors } = validateFields({ values: form });
+    if (isValidated) {
+      dispatchEditCompany({
+        companyId,
+        form: companyForm,
+      });
+    } else {
+      dispatchInputError({ errors: validationErrors, form: 'company' });
     }
   };
 
@@ -124,7 +150,7 @@ const CompanyDashboard = ({
         responseArray,
       });
     } else {
-      dispatchInputError({ errors: validationErrors, form: 'createPosition' });
+      dispatchInputError({ errors: validationErrors, form: 'companyPosition' });
     }
   };
 
@@ -134,13 +160,14 @@ const CompanyDashboard = ({
       errors: {
         [field]: validationError,
       },
-      form: 'createPosition',
+      form: 'companyPosition',
     });
   };
 
   return (
     <ViewContainer>
       <CompanySideNav
+        company={company}
         deviceView={deviceView}
         dispatchSelectPosition={dispatchSelectPosition}
         handleNav={handleNav}
@@ -151,6 +178,8 @@ const CompanyDashboard = ({
       <ComponentToRender
         alerts={alerts}
         candidates={candidates}
+        companyPositionQuestions={companyPositionQuestions}
+        companyQuestions={companyQuestions}
         dispatchChangeFilter={dispatchChangeFilter}
         dispatchChangeInput={dispatchChangeInput}
         dispatchChangeSkillLevel={dispatchChangeSkillLevel}
@@ -161,17 +190,19 @@ const CompanyDashboard = ({
         dispatchOpenModal={dispatchOpenModal}
         dispatchResetFormState={dispatchResetFormState}
         dispatchSaveCandidate={dispatchSaveCandidate}
+        dispatchSelectPosition={dispatchSelectPosition}
+        fetchQuestionsLoading={fetchQuestionsLoading}
         filter={filter}
         form={form}
         formErrors={formErrors}
         handleCreatePosition={handleCreatePosition}
+        handleEditCompany={handleEditCompany}
         handleEditPosition={handleEditPosition}
         handleNav={handleNav}
         handleValidateInput={handleValidateInput}
         loading={loading}
         positions={positions}
         positionTitle={positionTitle}
-        questions={questions}
         selectedPosition={selectedPosition}
         tableData={tableData}
       />
@@ -197,6 +228,9 @@ CompanyDashboard.propTypes = {
   activeUser: T.object.isRequired,
   alerts: T.object.isRequired,
   candidates: T.array.isRequired,
+  company: T.object.isRequired,
+  companyPositionQuestions: T.array.isRequired,
+  companyQuestions: T.array.isRequired,
   deviceView: T.string.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchChangeInput: T.func.isRequired,
@@ -205,17 +239,20 @@ CompanyDashboard.propTypes = {
   dispatchCreatePosition: T.func.isRequired,
   dispatchDeletePosition: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
+  dispatchEditCompany: T.func.isRequired,
   dispatchEditPosition: T.func.isRequired,
+  dispatchFetchCompany: T.func.isRequired,
   dispatchFetchCompanyPositions: T.func.isRequired,
   dispatchFetchPosition: T.func.isRequired,
   dispatchFetchPositionCandidates: T.func.isRequired,
-  dispatchFetchPositionQuestions: T.func.isRequired,
+  dispatchFetchQuestions: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchNotifyCandidate: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchResetFormState: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
   dispatchSelectPosition: T.func.isRequired,
+  fetchQuestionsLoading: T.bool.isRequired,
   filter: T.object.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
@@ -224,7 +261,6 @@ CompanyDashboard.propTypes = {
   loading: T.bool.isRequired,
   positions: T.array.isRequired,
   positionTitle: T.string,
-  questions: T.array.isRequired,
   responseArray: T.array.isRequired,
   selectedPosition: T.string.isRequired,
   tableData: T.object.isRequired,
@@ -241,14 +277,19 @@ const mapStateToProps = createStructuredSelector({
    */
   alerts: makeSelectCompanyDashboard('alerts'),
   candidates: makeSelectCompanyDashboardCandidates(),
+  company: makeSelectCompanyDashboard('company'),
+  companyPositionQuestions: makeSelectCompanyDashboardQuestions(
+    'companyPosition',
+  ),
+  companyQuestions: makeSelectCompanyDashboardQuestions('company'),
+  fetchQuestionsLoading: makeSelectCompanyDashboardLoading('fetchQuestions'),
   filter: makeSelectCompanyDashboard('filter'),
   form: makeSelectCompanyDashboard('form'),
   formErrors: makeSelectCompanyDashboard('formErrors'),
   isModalOpen: makeSelectCompanyDashboard('isModalOpen'),
-  loading: makeSelectCompanyDashboard('loading'),
+  loading: makeSelectCompanyDashboardLoading('main'),
   positions: makeSelectCompanyDashboard('positions'),
   positionTitle: makeSelectCompanyDashboardPosition('title'),
-  questions: makeSelectCompanyDashboardQuestions(),
   responseArray: makeSelectCompanyDashboardResponseArray(),
   selectedPosition: makeSelectCompanyDashboard('selectedPosition'),
   tableData: makeSelectCompanyDashboard('tableData'),
@@ -270,18 +311,19 @@ const mapDispatchToProps = dispatch => ({
   dispatchCreatePosition: payload => dispatch(createPosition(payload)),
   dispatchDeletePosition: payload => dispatch(deletePosition(payload)),
   dispatchDeleteSkill: payload => dispatch(deleteSkill(payload)),
+  dispatchEditCompany: payload => dispatch(editCompany(payload)),
   dispatchEditPosition: payload => dispatch(editPosition(payload)),
+  dispatchFetchCompany: payload => dispatch(fetchCompany(payload)),
   dispatchFetchCompanyPositions: payload =>
     dispatch(fetchCompanyPositions(payload)),
   dispatchFetchPosition: payload => dispatch(fetchPosition(payload)),
   dispatchFetchPositionCandidates: payload =>
     dispatch(fetchPositionCandidates(payload)),
-  dispatchFetchPositionQuestions: payload =>
-    dispatch(fetchPositionQuestions(payload)),
+  dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),
   dispatchNotifyCandidate: payload => dispatch(notifyCandidate(payload)),
   dispatchOpenModal: payload => dispatch(openModalState(payload)),
-  dispatchResetFormState: () => dispatch(resetFormState()),
+  dispatchResetFormState: payload => dispatch(resetFormState(payload)),
   dispatchSaveCandidate: payload => dispatch(saveCandidate(payload)),
   dispatchSelectPosition: payload => dispatch(selectPosition(payload)),
   /*
