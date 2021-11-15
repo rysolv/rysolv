@@ -38,6 +38,7 @@ export const ButtonWrapper = styled.div`
 
 export const CreatePositionContainer = styled.div`
   position: relative;
+  width: 100%;
 `;
 
 export const CreatePositionHeader = styled.div`
