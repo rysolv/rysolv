@@ -16,12 +16,12 @@ const CompanySideNav = ({
 }) => {
   const handleCreatePosition = () => {
     dispatchSelectPosition({ id: '' });
-    handleNav('/dashboard/add-position');
+    handleNav('/company/dashboard/add-position');
   };
 
   const handleSelectPosition = ({ id }) => {
     dispatchSelectPosition({ id });
-    handleNav('/dashboard');
+    handleNav('/company/dashboard');
   };
 
   const isMobileOrTablet =

@@ -27,32 +27,31 @@ const userIcon = iconDictionary('user');
 
 const SideNav = ({ deviceView, handleNav }) => {
   const path = window.location.pathname;
-  const formattedPath = path.replace(/^\/+/, '');
-
+  const rootPath = path.split('/')[1];
   const [open, setOpen] = useState(true);
   const [currentValue, setCurrentValue] = useState(0);
   const [displaySideNav, setDisplaySideNav] = useState(
-    !excludedPath.includes(formattedPath),
+    !excludedPath.includes(rootPath),
   );
 
   useEffect(() => {
-    const { initialValue } = getInitialValue[formattedPath] || 0;
+    const { initialValue } = getInitialValue[rootPath] || 0;
     setCurrentValue(initialValue);
     switch (deviceView) {
       case 'desktopL':
-        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        setDisplaySideNav(!excludedPath.includes(rootPath));
         break;
       case 'desktop':
-        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        setDisplaySideNav(!excludedPath.includes(rootPath));
         break;
       case 'desktopS':
-        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        setDisplaySideNav(!excludedPath.includes(rootPath));
         break;
       case 'laptop':
-        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        setDisplaySideNav(!excludedPath.includes(rootPath));
         break;
       case 'laptopS':
-        setDisplaySideNav(!excludedPath.includes(formattedPath));
+        setDisplaySideNav(!excludedPath.includes(rootPath));
         break;
       case 'tablet':
         setDisplaySideNav(false);

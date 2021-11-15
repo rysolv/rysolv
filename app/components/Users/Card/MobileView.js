@@ -30,10 +30,7 @@ const MobileUserCard = ({ data, deviceView }) => {
   return (
     <RowSection>
       {data.map(
-        (
-          { attempting, id, issues, pointsNumber, profilePic, username },
-          index,
-        ) => (
+        ({ attempting, issues, pointsNumber, profilePic, username }, index) => (
           <StyledListSquare key={`${username}-${index}`}>
             <StyledSquare>
               <ContentWrapper>
@@ -41,7 +38,7 @@ const MobileUserCard = ({ data, deviceView }) => {
                   <ImageLinkWrapper
                     alt="Profile Image"
                     image={profilePic}
-                    route={`/users/detail/${id}`}
+                    route={`/profile/${username}`}
                     size={isMobileS ? '6.5rem' : '7.5rem'}
                   />
                   <IconWrapper>
@@ -53,7 +50,7 @@ const MobileUserCard = ({ data, deviceView }) => {
               <TextContainer>
                 <StyledSettingWrapper>
                   <MemberWrapper isMobileS>
-                    <NameLink to={`/users/detail/${id}`}>{username}</NameLink>
+                    <NameLink to={`/profile/${username}`}>{username}</NameLink>
                   </MemberWrapper>
                 </StyledSettingWrapper>
                 <IssuesWrapper isMobileS>

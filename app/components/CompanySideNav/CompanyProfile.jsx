@@ -21,7 +21,7 @@ const CompanyProfile = ({ handleNav, logo, name }) => (
       {name}
       <StyledEditButton
         disableRipple
-        onClick={() => handleNav(`/dashboard/edit-company`)}
+        onClick={() => handleNav(`/company/dashboard/edit-company`)}
       >
         {EditIcon}
       </StyledEditButton>

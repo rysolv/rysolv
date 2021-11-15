@@ -32,11 +32,13 @@ const Header = ({
   const { pathname } = window.location;
   const isLandingOrRecruitmentPage =
     pathname === '/' ||
+    pathname === '/company/dashboard' ||
+    pathname === '/company/dashboard/add-position' ||
+    pathname === '/company/dashboard/edit-company' ||
+    pathname === '/company/dashboard/edit-position' ||
     pathname === '/company/signup' ||
     pathname === '/dashboard' ||
-    pathname === '/dashboard/add-position' ||
-    pathname === '/dashboard/edit-company' ||
-    pathname === '/dashboard/edit-position' ||
+    pathname === '/dashboard/update' ||
     pathname === '/how-we-score-code' ||
     pathname === '/jobs' ||
     pathname === '/password-reset' ||

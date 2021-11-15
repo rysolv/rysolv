@@ -48,11 +48,6 @@ const userReturnValues = `
 const userSettingsReturnValues = `
   ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages",
   CASE WHEN users.github_id IS NOT NULL THEN true ELSE false END AS "isGithubVerified",
-  EXISTS(
-    SELECT user_question_responses.id FROM user_question_responses
-    LEFT JOIN questions ON questions.id = user_question_responses.question_id
-    WHERE user_question_responses.user_id = users.id
-    AND questions.category = 'hiring') AS "isQuestionnaireComplete",
   users.github_id AS "githubId",
   users.github_username AS "githubUsername",
   users.receive_weekly_emails AS "receiveWeeklyEmails",

@@ -17,7 +17,7 @@ const Redirect = ({
   dispatchSignOut,
   handleNav,
 }) => {
-  const path = company ? '/dashboard' : '/settings';
+  const path = company ? '/company/dashboard' : '/dashboard';
   const handleSignout = () => {
     dispatchSignOut();
     handleNav('/signin');

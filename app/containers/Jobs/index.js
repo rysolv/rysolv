@@ -32,7 +32,7 @@ import {
 import { ViewContainer } from './styledComponents';
 
 const Jobs = ({
-  activeUser: { isGithubVerified, isQuestionnaireComplete },
+  activeUser: { isGithubVerified, surveyComplete },
   dispatchChangeInput,
   dispatchChangeView,
   dispatchFetchQuestions,
@@ -52,10 +52,10 @@ const Jobs = ({
   const [isRequiredData, setIsRequiredData] = useState(true);
   useEffect(() => {
     if (isGithubVerified && isSignedIn) {
-      if (!isQuestionnaireComplete) {
+      if (!surveyComplete) {
         dispatchFetchQuestions({ category: 'hiring' });
       } else {
-        dispatchChangeView({ view: 3 });
+        handleNav('/dashboard');
         setIsRequiredData(false);
       }
     } else {

@@ -13,7 +13,7 @@ import {
 } from '../styledComponents';
 
 const NewComment = ({
-  activeUser: { id, profilePic, username },
+  activeUser: { profilePic, username },
   handleComment,
   issueId,
 }) => {
@@ -42,7 +42,7 @@ const NewComment = ({
         <ImageLinkWrapper
           alt={username}
           image={profilePic}
-          route={`/users/detail/${id}`}
+          route={`/profile/${username}`}
         />
       </ProfileImageContainer>
       <NewCommentContainer onKeyDown={e => handleKeydown(e)}>

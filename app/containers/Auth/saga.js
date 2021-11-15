@@ -62,7 +62,7 @@ export function* fetchActiveUserSaga() {
           githubId
           id
           isGithubVerified
-          isQuestionnaireComplete
+          surveyComplete
           issues
           lastName
           notifications
@@ -108,7 +108,7 @@ export function* githubSignInSaga({ payload }) {
           firstName
           id
           isGithubVerified
-          isQuestionnaireComplete
+          surveyComplete
           issues
           lastName
           profilePic
@@ -146,23 +146,18 @@ export function* githubSignInSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        githubSignIn: {
-          __typename,
-          isQuestionnaireComplete,
-          message,
-          ...restProps
-        },
+        githubSignIn: { __typename, surveyComplete, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
     const routeDictionary = {
       jobs: '/jobs?question=1',
-      signin: '/issues',
-      signup: '/settings',
+      signin: '/dashboard',
+      signup: '/dashboard',
     };
     const route = routeDictionary[origin];
     if (origin === 'jobs') {
-      if (isQuestionnaireComplete) {
+      if (surveyComplete) {
         yield put(changeView({ view: 2 }));
       } else {
         yield put(changeView({ view: 1 }));

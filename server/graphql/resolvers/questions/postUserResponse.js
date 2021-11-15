@@ -7,13 +7,9 @@ const {
   sendEmail,
 } = require('../../../helpers');
 const {
-  createCompanyPosition,
-  createLanguage,
   createPositionTechStack,
   getOneTechnology,
-  getUserLanguages,
   postUserResponse: postUserResponseQuery,
-  setPreferredLanguage,
 } = require('../../../db');
 const {
   postUserResponseError,
@@ -21,51 +17,28 @@ const {
 } = require('./constants');
 const { uploadFile } = require('../../../middlewares/fileUpload');
 
-const postUserResponse = async (
-  { companyId, positionId, responseArray },
-  { authError, userId },
-) => {
+const postUserResponse = async ({ responseArray }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
-    const { languages } = await getUserLanguages({ userId });
-
-    if (companyId && positionId) {
-      const data = { company_id: companyId, id: positionId };
-      await createCompanyPosition({ data });
-    }
 
     await Promise.all(
       responseArray.map(
         async ({ questionId, questionKey, responseId, value }) => {
-          if (questionKey === 'preferred_languages') {
-            if (languages && languages.includes(value)) {
-              await setPreferredLanguage({ language: value, userId });
-            } else {
-              await createLanguage({
-                languages: [value],
-                preferred: true,
-                target: { userId },
-              });
-            }
-          } else if (questionKey === 'skills') {
+          // Language / Frameworks stored in techstack table
+          if (questionKey === 'skills') {
             const { beginner, expert, intermediate, skill } = value;
             const { technologyId } = await getOneTechnology({
               technology: skill,
             });
             await createPositionTechStack({
               level: generatePositionLevel({ beginner, expert, intermediate }),
-              positionId,
               technologyId,
             });
+          } else if (questionKey === 'preferred_languages') {
+            // Removing preferred lang
           } else {
-            let formattedValue = null;
-            if (
-              questionKey === 'description' ||
-              questionKey === 'location' ||
-              questionKey === 'personal_link' ||
-              questionKey === 'title'
-            )
-              formattedValue = value;
+            let formattedValue = value || null;
+            // Upload resume
             if (questionKey === 'resume') {
               const { uploadUrl } = await uploadFile(value);
               formattedValue = uploadUrl;
@@ -74,7 +47,6 @@ const postUserResponse = async (
             const data = {
               createdDate: new Date(),
               id: uuidv4(),
-              positionId,
               questionId,
               responseId,
               userId,
@@ -86,6 +58,7 @@ const postUserResponse = async (
       ),
     );
 
+    // Send welcome to hiring email
     sendEmail({
       body: { userId },
       path: '/s/hiring/signup',

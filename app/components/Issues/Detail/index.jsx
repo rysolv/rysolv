@@ -57,7 +57,6 @@ const IssueDetail = ({
     rep,
     repo,
     type,
-    userId,
     username,
   },
   deviceView,
@@ -163,7 +162,7 @@ const IssueDetail = ({
   );
 
   const primaryUser = {
-    route: `/users/detail/${userId}`,
+    route: `/profile/${username}`,
     username,
   };
 

@@ -9,7 +9,7 @@ const alterHiringActivityTable = `
 const createHiringActivityTable = `
   CREATE TABLE IF NOT EXISTS
   hiring_activity(
-    id UUID PRIMARY KEY
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4()
   )
 `;
 

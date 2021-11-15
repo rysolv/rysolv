@@ -68,7 +68,7 @@ export function* createPositionSaga({ payload }) {
   );
   const query = `
     mutation {
-      postUserResponse(
+      postPositionResponse(
         companyId: "${companyId}",
         positionId: "${positionId}",
         responseArray: [${formattedResponse}]
@@ -93,7 +93,7 @@ export function* createPositionSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(createPositionSuccess({ message }));
     yield put(fetchCompanyPositions({ companyId }));
-    yield put(push('/dashboard'));
+    yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(createPositionFailure({ error: { message: error } }));
   }

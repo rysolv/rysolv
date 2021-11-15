@@ -31,7 +31,7 @@ const DesktopLandingHeader = ({
       <Wordmark>{SiteWordmark}</Wordmark>
     </LogoWrapper>
     <ButtonWrapper>
-      <InternalLink label="Browse issues" path="/issues" />
+      <InternalLink label="Dashboard" path="/dashboard" />
       <InternalLink label="Hire engineers" path="/recruitment" />
       <VerticalDivider />
       {isSignedIn ? (

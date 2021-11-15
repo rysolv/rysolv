@@ -51,7 +51,7 @@ const HomePage = ({
   return (
     <ConditionalRender
       Component={HomePageComponent}
-      FallbackComponent={<Redirect to="/issues" />}
+      FallbackComponent={<Redirect to="/dashboard" />}
       shouldRender={!isSignedIn}
     />
   );

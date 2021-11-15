@@ -83,7 +83,7 @@ module.exports = buildSchema(`
     size: String!
     website: String!
   }
-  
+
   type CompanyPositionsArray {
     positions: [Position]
   }
@@ -377,11 +377,11 @@ module.exports = buildSchema(`
     githubId: String
     githubLink: String
     githubUsername: String
+    hiringStatus: String
     id: ID!
     isGithubVerified: Boolean
     isHired: Boolean
     isInterviewRequested: Boolean
-    isQuestionnaireComplete: Boolean
     isSaved: Boolean
     issues: [Object]
     lastName: String
@@ -400,6 +400,7 @@ module.exports = buildSchema(`
     repos: [Object]
     salary: String
     stackoverflowLink: String
+    surveyComplete: Boolean
     type: String
     upvotes: [ID]
     username: String
@@ -503,7 +504,9 @@ module.exports = buildSchema(`
     getRepos: RepoArrayResult!
     getStats: StatsResult!
     getUserActivity(userId: ID): [Activity]!
+    getUserDashboard: UserResult!
     getUserIssues: IssueArrayResult!
+    getUserProfile(username: String!): UserResult!
     getUserPullRequests: PullRequestArrayResult!
     getUserRepos: RepoArrayResult!
     getUsers: UserArrayResult!
@@ -554,12 +557,15 @@ module.exports = buildSchema(`
     importRepo(url: String!): ImportResult!
     
     postContractAccepted(companyId: ID, contractAccepted: Boolean): EventResponse!
+    postPositionResponse(companyId: ID, positionId: ID, responseArray: [Object]): EventResponse!
     postUserResponse(companyId: ID, positionId: ID, responseArray: [Object]): EventResponse!
     
     recruitingSignup(contactInput: ContactInput): EventResponse!
     
     sendContact(contactInput: ContactInput): EventResponse!
-    
+
+    setHiringStatus(hiringStatus: String!): EventResponse!
+  
     signIn(password: String!, username: String!): SignInResult!
     signOut: EventResponse!
     

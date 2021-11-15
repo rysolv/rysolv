@@ -99,6 +99,8 @@ const CompanyDashboard = ({
   const { company: companyForm } = form;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'Dashboard';
     dispatchFetchCompany({ companyId });
     dispatchFetchCompanyPositions({ companyId });
     dispatchFetchQuestions({ category: 'company_position' });
