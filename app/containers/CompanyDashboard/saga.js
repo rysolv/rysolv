@@ -123,7 +123,7 @@ export function* deletePositionSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(deletePositionSuccess());
-    yield put(push('/dashboard'));
+    yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(deletePositionFailure({ error: { message: error } }));
   }
@@ -164,7 +164,7 @@ export function* editCompanySaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(editCompanySuccess());
-    yield put(push('/dashboard'));
+    yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(editCompanyFailure({ error: { message: error } }));
   }
@@ -220,7 +220,7 @@ export function* editPositionSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(editPositionSuccess());
     yield put(fetchCompanyPositions({ companyId }));
-    yield put(push('/dashboard'));
+    yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(editPositionFailure({ error: { message: error } }));
   }

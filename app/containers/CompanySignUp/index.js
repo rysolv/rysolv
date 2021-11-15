@@ -66,7 +66,7 @@ const CompanySignUp = ({
     } else if (!isContractAccepted && isQuestionnaireComplete) {
       setViewToRender(1);
     } else {
-      handleNav('/dashboard');
+      handleNav('/company/dashboard');
     }
   }, [isContractAccepted, isQuestionnaireComplete]);
 

@@ -99,7 +99,7 @@ const EditCompany = ({
           <ButtonWrapper>
             <StyledPrimaryButton
               label="Cancel"
-              onClick={() => handleNav('/dashboard')}
+              onClick={() => handleNav('/company/dashboard')}
             />
             <StyledPrimaryAsyncButton
               disabled={hasErrors || !isComplete}

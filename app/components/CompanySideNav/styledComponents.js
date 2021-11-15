@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 
+import { IconButton as BaseIconButton } from 'components/base_ui';
 import {
   blueColor,
   candidateGreyColor,
@@ -24,7 +25,7 @@ export const CompanySideNavContainer = styled.div`
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
   height: 46.3rem;
   min-width: 27.8rem;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   @media (max-width: 769px) {
     height: auto;
@@ -121,7 +122,11 @@ export const StyledEditButton = styled(IconButton)`
   }
 `;
 
-export const StyledIconButton = styled(IconButton)`
+export const StyledIconButton = styled(BaseIconButton)`
+  &:hover {
+    background: transparent;
+  }
+
   svg {
     color: ${blueColor};
     height: 3.2rem;
@@ -151,5 +156,4 @@ export const NameWrapper = styled.div`
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 3.45rem;
-  margin: 2rem 0;
 `;

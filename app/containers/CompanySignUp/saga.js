@@ -125,7 +125,7 @@ export function* submitContractAcceptedSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(submitContractAcceptedSuccess());
-    yield put(push('/dashboard'));
+    yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(submitContractAcceptedFailure({ error: { message: error } }));
   }

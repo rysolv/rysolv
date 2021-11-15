@@ -76,7 +76,7 @@ const CreatePosition = ({
           ...restProps
           // eslint-disable-next-line array-callback-return, consistent-return
         }) => {
-          if (id !== 'isActive' && id !== 'isRemote') {
+          if (id !== 'isOpen' && id !== 'isRemote') {
             const OptionToRender = optionDictionary[optionType];
 
             const handleChangeInput = (value, inputField) => {

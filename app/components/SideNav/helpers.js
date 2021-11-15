@@ -1,9 +1,6 @@
 export const excludedPath = [
   '',
-  'company/dashboard/add-position',
-  'company/dashboard/edit-company',
-  'company/dashboard/edit-position',
-  'company/signup',
+  'company',
   'dashboard',
   'how-we-score-code',
   'jobs',
