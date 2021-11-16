@@ -79,7 +79,7 @@
     "@stripe/react-stripe-js": "1.1.2",
     "@stripe/stripe-js": "1.8.0",
     "amazon-cognito-identity-js": "4.5.4",
-    "aws-sdk": "2.691.0",
+    "aws-sdk": "2.814.0",
     "chalk": "2.4.2",
     "cognito-express": "2.0.18",
     "compression": "1.7.4",
