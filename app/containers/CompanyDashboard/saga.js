@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary, prettier/prettier */
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,16 +10,20 @@ import {
   createPositionSuccess,
   deletePositionFailure,
   deletePositionSuccess,
+  editCompanyFailure,
+  editCompanySuccess,
   editPositionFailure,
   editPositionSuccess,
+  fetchCompanyFailure,
   fetchCompanyPositions,
   fetchCompanyPositionsFailure,
   fetchCompanyPositionsSuccess,
+  fetchCompanySuccess,
   fetchPositionCandidatesFailure,
   fetchPositionCandidatesSuccess,
   fetchPositionFailure,
-  fetchPositionQuestionsFailure,
-  fetchPositionQuestionsSuccess,
+  fetchQuestionsFailure,
+  fetchQuestionsSuccess,
   fetchPositionSuccess,
   notifyCandidateFailure,
   notifyCandidateSuccess,
@@ -28,10 +32,12 @@ import {
 import {
   CREATE_POSITION,
   DELETE_POSITION,
+  EDIT_COMPANY,
   EDIT_POSITION,
   FETCH_COMPANY_POSITIONS,
+  FETCH_COMPANY,
   FETCH_POSITION_CANDIDATES,
-  FETCH_POSITION_QUESTIONS,
+  FETCH_QUESTIONS,
   FETCH_POSITION,
   NOTIFY_CANDIDATE,
 } from './constants';
@@ -117,9 +123,50 @@ export function* deletePositionSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(deletePositionSuccess());
-    yield put(push('/dashboard'));
+    yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(deletePositionFailure({ error: { message: error } }));
+  }
+}
+
+export function* editCompanySaga({ payload }) {
+  const { companyId, form } = payload;
+  const { description, location, logo, name, size, website } = form;
+  const query = `
+      mutation {
+        transformCompany(
+          companyInput: {
+            companyId: "${companyId}",
+            description: ${JSON.stringify(description)},
+            location: "${location}",
+            logo: "${logo}",
+            name: "${name}",
+            size: "${size}",
+            website: "${website}",
+          }
+        ) {
+          __typename
+          ... on Success {
+            message
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        transformCompany: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(editCompanySuccess());
+    yield put(push('/company/dashboard'));
+  } catch (error) {
+    yield put(editCompanyFailure({ error: { message: error } }));
   }
 }
 
@@ -173,7 +220,7 @@ export function* editPositionSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(editPositionSuccess());
     yield put(fetchCompanyPositions({ companyId }));
-    yield put(push('/dashboard'));
+    yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(editPositionFailure({ error: { message: error } }));
   }
@@ -206,6 +253,40 @@ export function* fetchCompanyPositionsSaga({ payload }) {
     yield put(fetchCompanyPositionsSuccess({ positions }));
   } catch (error) {
     yield put(fetchCompanyPositionsFailure({ error }));
+  }
+}
+
+export function* fetchCompanySaga({ payload }) {
+  const { companyId } = payload;
+  const query = `
+    query {
+      oneCompany(companyId: "${companyId}") {
+        __typename
+        ... on Company {
+          description
+          location
+          logo
+          name
+          size
+          website
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        oneCompany: { __typename, message, ...restProps },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchCompanySuccess({ company: restProps }));
+  } catch (error) {
+    yield put(fetchCompanyFailure({ error }));
   }
 }
 
@@ -249,7 +330,45 @@ export function* fetchPositionCandidatesSaga({ payload }) {
   }
 }
 
-export function* fetchPositionQuestionsSaga({ payload }) {
+export function* fetchPositionSaga({ payload }) {
+  const { positionId } = payload;
+  const query = `
+    query {
+      onePosition(positionId: "${positionId}") {
+        __typename
+        ... on Position {
+          description
+          experience
+          isOpen
+          isRemote
+          location
+          role
+          salary
+          skills
+          title
+          type
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        onePosition: { __typename, message, ...restProps },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchPositionSuccess({ position: restProps }));
+  } catch (error) {
+    yield put(fetchPositionFailure({ error }));
+  }
+}
+
+export function* fetchQuestionsSaga({ payload }) {
   const { category } = payload;
   const query = `
     query{
@@ -284,47 +403,9 @@ export function* fetchPositionQuestionsSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(fetchPositionQuestionsSuccess({ questions: questionArray }));
+    yield put(fetchQuestionsSuccess({ category, questions: questionArray }));
   } catch (error) {
-    yield put(fetchPositionQuestionsFailure({ error }));
-  }
-}
-
-export function* fetchPositionSaga({ payload }) {
-  const { positionId } = payload;
-  const query = `
-    query {
-      onePosition(positionId: "${positionId}") {
-        __typename
-        ... on Position {
-          description
-          experience
-          hiringTimeframe
-          isRemote
-          location
-          role
-          salary
-          skills
-          title
-          type
-        }
-        ... on Error {
-          message
-        }
-      }
-    }
-  `;
-  try {
-    const graphql = JSON.stringify({ query });
-    const {
-      data: {
-        onePosition: { __typename, message, ...restProps },
-      },
-    } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') throw message;
-    yield put(fetchPositionSuccess({ position: restProps }));
-  } catch (error) {
-    yield put(fetchPositionFailure({ error }));
+    yield put(fetchQuestionsFailure({ error }));
   }
 }
 
@@ -365,10 +446,12 @@ export function* notifyCandidateSaga({ payload }) {
 export default function* watcherSaga() {
   yield takeLatest(CREATE_POSITION, createPositionSaga);
   yield takeLatest(DELETE_POSITION, deletePositionSaga);
+  yield takeLatest(EDIT_COMPANY, editCompanySaga);
   yield takeLatest(EDIT_POSITION, editPositionSaga);
   yield takeLatest(FETCH_COMPANY_POSITIONS, fetchCompanyPositionsSaga);
+  yield takeLatest(FETCH_COMPANY, fetchCompanySaga);
   yield takeLatest(FETCH_POSITION_CANDIDATES, fetchPositionCandidatesSaga);
-  yield takeLatest(FETCH_POSITION_QUESTIONS, fetchPositionQuestionsSaga);
+  yield takeEvery(FETCH_QUESTIONS, fetchQuestionsSaga);
   yield takeLatest(FETCH_POSITION, fetchPositionSaga);
   yield takeLatest(NOTIFY_CANDIDATE, notifyCandidateSaga);
 }

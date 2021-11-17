@@ -6,6 +6,7 @@ const companyValues = [
   'description',
   'id',
   'location',
+  'logo',
   'size',
 ];
 

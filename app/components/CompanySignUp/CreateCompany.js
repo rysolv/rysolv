@@ -4,7 +4,7 @@ import T from 'prop-types';
 import { CompanySignUpContainer } from './styledComponents';
 import viewDictionary from './viewDictionary';
 
-const CompanySignUp = ({ view, ...restProps }) => {
+const CreateCompany = ({ view, ...restProps }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Company Sign Up';
@@ -19,6 +19,6 @@ const CompanySignUp = ({ view, ...restProps }) => {
   );
 };
 
-CompanySignUp.propTypes = { view: T.number.isRequired };
+CreateCompany.propTypes = { view: T.number.isRequired };
 
-export default CompanySignUp;
+export default CreateCompany;

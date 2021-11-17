@@ -31,7 +31,7 @@ const LocationAutocompleteOption = ({
 
   const handlePlacesWidgetFocus = () => {
     if (tempValue !== '' || value !== '') {
-      handleChangeInput();
+      handleChangeInput('');
       setTempValue('');
     }
   };
@@ -44,7 +44,7 @@ const LocationAutocompleteOption = ({
         onBlur={onBlur}
         onChange={e => setTempValue(e.target.value)}
         onFocus={handlePlacesWidgetFocus}
-        value={value}
+        value={tempValue || value}
       />
       <StyledCheckboxWithLabel
         checked={isChecked}

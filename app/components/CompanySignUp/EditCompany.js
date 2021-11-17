@@ -1,40 +1,41 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
 
-import iconDictionary from 'utils/iconDictionary';
-
+import AsyncRender from '../AsyncRender';
 import optionDictionary from './Options';
 import {
-  ButtonGroup,
-  DescriptionWrapper,
+  ButtonWrapper,
+  EditCompanyContainer,
+  EditCompanyHeader,
   OptionDescription,
   OptionError,
   OptionLabel,
   OptionWrapper,
-  QuestionWrapper,
-  StyledButton,
   StyledErrorSuccessBanner,
-  StyledFocusDiv,
-  ViewContainer,
-  ContentGroup,
+  StyledPrimaryAsyncButton,
+  StyledPrimaryButton,
 } from './styledComponents';
 
-const NextIcon = iconDictionary('navigateNext');
-
-const FormView = ({
+const EditCompany = ({
   alerts: { error },
+  companyQuestions,
   dispatchChangeInput,
-  dispatchChangeView,
   dispatchClearAlerts,
+  dispatchResetFormState,
+  fetchQuestionsLoading,
+  form: { company: companyForm },
   formErrors: { company: companyFormErrors },
-  forms: { company: companyForm },
-  handleCancel,
+  handleEditCompany,
+  handleNav,
   handleValidateInput,
-  questions,
+  loading,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    return dispatchClearAlerts;
+    return () => {
+      dispatchClearAlerts();
+      dispatchResetFormState({ category: 'company' });
+    };
   }, []);
 
   const hasErrors = Object.keys(companyFormErrors).some(
@@ -43,29 +44,18 @@ const FormView = ({
   const isComplete = Object.keys(companyForm).every(
     input => !!companyForm[input],
   );
-  const shouldSubmit = !hasErrors && isComplete;
-
-  const handleKeypress = ({ key }) => {
-    if (key === 'Enter') {
-      if (shouldSubmit) dispatchChangeView({ view: 1 });
-    }
-  };
 
   return (
-    <StyledFocusDiv
-      id="surveyQuestion"
-      onKeyPress={e => handleKeypress(e)}
-      tabIndex="0"
-    >
-      <ViewContainer>
-        <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
-        <QuestionWrapper>Tell us a bit about your company.</QuestionWrapper>
-        <ContentGroup>
-          <DescriptionWrapper>
-            Complete the form to get access to qualified candidates waiting for
-            you.
-          </DescriptionWrapper>
-          {questions.map(
+    <AsyncRender
+      asyncData={companyQuestions}
+      component={() => (
+        <EditCompanyContainer>
+          <EditCompanyHeader>Edit company</EditCompanyHeader>
+          <StyledErrorSuccessBanner
+            error={error}
+            onClose={dispatchClearAlerts}
+          />
+          {companyQuestions.map(
             ({
               description,
               id,
@@ -106,35 +96,39 @@ const FormView = ({
               );
             },
           )}
-        </ContentGroup>
-        <ButtonGroup>
-          <StyledButton disableRipple onClick={handleCancel}>
-            Cancel
-          </StyledButton>
-          <StyledButton
-            disabled={!shouldSubmit}
-            disableRipple
-            onClick={() => dispatchChangeView({ view: 1 })}
-          >
-            Continue
-            {NextIcon}
-          </StyledButton>
-        </ButtonGroup>
-      </ViewContainer>
-    </StyledFocusDiv>
+          <ButtonWrapper>
+            <StyledPrimaryButton
+              label="Cancel"
+              onClick={() => handleNav('/company/dashboard')}
+            />
+            <StyledPrimaryAsyncButton
+              disabled={hasErrors || !isComplete}
+              label="Edit"
+              loading={loading}
+              onClick={handleEditCompany}
+            />
+          </ButtonWrapper>
+        </EditCompanyContainer>
+      )}
+      isRequiredData
+      loading={fetchQuestionsLoading}
+    />
   );
 };
 
-FormView.propTypes = {
+EditCompany.propTypes = {
   alerts: T.object.isRequired,
+  companyQuestions: T.array.isRequired,
   dispatchChangeInput: T.func.isRequired,
-  dispatchChangeView: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
+  dispatchResetFormState: T.func.isRequired,
+  fetchQuestionsLoading: T.bool.isRequired,
+  form: T.object.isRequired,
   formErrors: T.object.isRequired,
-  forms: T.object.isRequired,
-  handleCancel: T.func.isRequired,
+  handleEditCompany: T.func.isRequired,
+  handleNav: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
-  questions: T.array.isRequired,
+  loading: T.bool.isRequired,
 };
 
-export default FormView;
+export default EditCompany;

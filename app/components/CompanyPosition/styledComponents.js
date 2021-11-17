@@ -36,7 +36,10 @@ export const ButtonWrapper = styled.div`
   display: flex;
 `;
 
-export const CreatePositionContainer = styled.div``;
+export const CreatePositionContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
 
 export const CreatePositionHeader = styled.div`
   color: ${blueColor};
@@ -67,7 +70,12 @@ export const OptionLabel = styled.div`
 `;
 
 export const OptionWrapper = styled.div`
+  align-items: center;
+  display: ${({ $isAbsolute }) => ($isAbsolute ? 'flex' : 'block')};
   margin-bottom: 1rem;
+  position: ${({ $isAbsolute }) => ($isAbsolute ? 'absolute' : 'relative')};
+  right: 0;
+  top: 2rem;
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`

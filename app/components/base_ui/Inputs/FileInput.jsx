@@ -5,11 +5,11 @@ import iconDictionary from 'utils/iconDictionary';
 
 import { FileInputIcon, HiddenInput } from './styledComponents';
 
-const EditIcon = iconDictionary('edit');
+const AddIcon = iconDictionary('photoCamera');
 
-const BaseFileInput = ({ accept, id, onChange }) => (
-  <FileInputIcon htmlFor={id}>
-    {EditIcon}
+const BaseFileInput = ({ accept, id, onChange, ...restProps }) => (
+  <FileInputIcon htmlFor={id} {...restProps}>
+    {AddIcon}
     <HiddenInput
       accept={accept}
       id={id}

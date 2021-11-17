@@ -86,8 +86,11 @@ class Main extends React.PureComponent {
     const isLandingOrRecruitmentPage =
       pathname === '/' ||
       pathname === '/company/dashboard' ||
-      pathname === '/company/dashboard/add' ||
+      pathname === '/company/dashboard/add-position' ||
+      pathname === '/company/dashboard/edit-company' ||
+      pathname === '/company/dashboard/edit-position' ||
       pathname === '/company/signup' ||
+      pathname === '/dashboard' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/password-reset' ||

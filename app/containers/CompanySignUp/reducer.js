@@ -23,7 +23,7 @@ export const initialState = {
   error: null,
   loading: true,
   forms: {
-    companyInfo: {
+    company: {
       description: '',
       location: '',
       name: '',
@@ -33,7 +33,7 @@ export const initialState = {
     contract: { contractAccepted: false },
   },
   formErrors: {
-    companyInfo: {
+    company: {
       description: '',
       location: '',
       name: '',

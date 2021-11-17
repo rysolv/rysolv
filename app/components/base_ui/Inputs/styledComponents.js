@@ -35,8 +35,8 @@ export const FileInputIcon = styled.label`
   }
 
   svg {
-    height: 2rem;
-    width: 2rem;
+    height: 2.4rem;
+    width: 2.4rem;
   }
 `;
 

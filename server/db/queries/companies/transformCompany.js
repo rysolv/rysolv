@@ -2,7 +2,7 @@ const { companyValues } = require('./constants');
 const { formatParameters } = require('../../helpers');
 const { singleQuery } = require('../../baseQueries');
 
-const updateCompany = async ({ id, ...restProps }) => {
+const transformCompany = async ({ id, ...restProps }) => {
   const { parameters, substitution, values } = formatParameters({
     newObject: restProps,
     tableParameters: companyValues,
@@ -16,4 +16,4 @@ const updateCompany = async ({ id, ...restProps }) => {
   await singleQuery({ queryText, values });
 };
 
-module.exports = updateCompany;
+module.exports = transformCompany;

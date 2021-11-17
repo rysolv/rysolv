@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components';
 
-import { BaseAutocomplete } from 'components/base_ui';
+import { BaseAutocomplete, BaseFileInput } from 'components/base_ui';
 import {
   candidateGreyColor,
   defaultFontSize,
   lightBlueColor,
   textColor,
+  whiteColor,
 } from 'defaultStyleHelper';
 
 const baseInputStyle = css`
@@ -96,8 +97,39 @@ export const Autocomplete = styled(BaseAutocomplete)`
   }
 `;
 
+export const FileInputContainer = styled.div`
+  position: relative;
+`;
+
 export const Input = styled.input`
   ${baseInputStyle};
+`;
+
+export const PreviewDisplay = styled.img`
+  background: ${candidateGreyColor};
+  border-radius: 50%;
+  height: 12.5rem;
+  width: 12.5rem;
+`;
+
+export const StyledBaseFileInput = styled(BaseFileInput)`
+  background: transparent;
+  border-color: ${candidateGreyColor};
+  height: 12.5rem;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 12.5rem;
+
+  &:hover {
+    background: transparent;
+  }
+
+  svg {
+    color: ${({ $hasInput }) => ($hasInput ? 'transparent' : whiteColor)};
+    height: 3.4rem;
+    width: 3.4rem;
+  }
 `;
 
 export const Textarea = styled.textarea`

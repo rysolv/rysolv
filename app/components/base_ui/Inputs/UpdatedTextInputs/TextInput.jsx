@@ -40,7 +40,7 @@ const TextInput = ({
 );
 
 TextInput.propTypes = {
-  Adornment: T.elementType,
+  Adornment: T.object,
   error: T.string.isRequired,
   label: T.string.isRequired,
   onBlur: T.func.isRequired,

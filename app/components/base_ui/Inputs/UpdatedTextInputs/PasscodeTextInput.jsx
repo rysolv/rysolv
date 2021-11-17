@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 
 import {
@@ -10,16 +10,18 @@ import {
 } from './styledComponents';
 
 const PasscodeTextInput = ({ length, onChange, onComplete, value }) => {
+  useEffect(() => {
+    if (onComplete && value.length === length) {
+      setTimeout(() => {
+        onComplete();
+      }, 100);
+    }
+  }, [value]);
+
   const handleChangeInput = e => {
     if (e.target.value.match(/^[0-9]*$/)) {
       if (onChange) {
         onChange(e);
-      }
-
-      if (onComplete && e.target.value.length === length) {
-        setTimeout(() => {
-          onComplete(e);
-        }, 100);
       }
     }
   };

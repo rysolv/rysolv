@@ -27,6 +27,12 @@ const makeSelectCompanyDashboardCandidates = () =>
     },
   );
 
+const makeSelectCompanyDashboardLoading = prop =>
+  createSelector(
+    makeSelectCompanyDashboard('loading'),
+    loading => loading[prop],
+  );
+
 const makeSelectCompanyDashboardPosition = prop =>
   createSelector(
     makeSelectCompanyDashboard('positions'),
@@ -42,25 +48,25 @@ const makeSelectCompanyDashboardPosition = prop =>
     },
   );
 
-const makeSelectCompanyDashboardQuestions = () =>
+const makeSelectCompanyDashboardQuestions = prop =>
   createSelector(
     makeSelectCompanyDashboard('form'),
     makeSelectCompanyDashboard('questions'),
     (form, questions) => {
-      const formattedQuestions = questions.map(
+      const selectedQuestions = questions[prop];
+      const formattedQuestions = selectedQuestions.map(
         ({ questionKey, questionText, required, responses, subtext }) => {
           const hasPlaceholder = !!optionDictionary[questionKey].placeholder;
           const { option, placeholder, type } =
             optionDictionary[questionKey] || {};
-          const tableData = form.createPosition[snakeToCamel(questionKey)];
+          const tableData = form[prop][snakeToCamel(questionKey)];
           return {
             description: subtext,
             id: snakeToCamel(questionKey),
             options: responses.map(({ value }) => ({ value })),
             optionType: option,
             placeholder:
-              hasPlaceholder &&
-              !form.createPosition[snakeToCamel(questionKey)].value.length
+              hasPlaceholder && !form[prop][snakeToCamel(questionKey)].length
                 ? placeholder
                 : '',
             question: questionText,
@@ -78,12 +84,16 @@ const makeSelectCompanyDashboardResponseArray = () =>
   createSelector(
     makeSelectCompanyDashboard('form'),
     makeSelectCompanyDashboard('questions'),
-    ({ createPosition }, questions) => {
+    (form, questions) => {
+      const { companyPosition } = form;
+      const { companyPosition: companyPositionQuestions } = questions;
       const responseArray = [];
-      if (questions.length) {
-        Object.keys(createPosition).forEach(async input => {
-          const values = createPosition[input];
-          const [{ id: questionId, questionKey, responses }] = questions.filter(
+      if (companyPositionQuestions.length) {
+        Object.keys(companyPosition).forEach(async input => {
+          const values = companyPosition[input];
+          const [
+            { id: questionId, questionKey, responses },
+          ] = companyPositionQuestions.filter(
             ({ questionKey: key }) => input === snakeToCamel(key),
           );
           if (Array.isArray(values)) {
@@ -137,6 +147,7 @@ export default selectCompanyDashboardDomain;
 export {
   makeSelectCompanyDashboard,
   makeSelectCompanyDashboardCandidates,
+  makeSelectCompanyDashboardLoading,
   makeSelectCompanyDashboardPosition,
   makeSelectCompanyDashboardQuestions,
   makeSelectCompanyDashboardResponseArray,

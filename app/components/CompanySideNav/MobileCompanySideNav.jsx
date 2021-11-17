@@ -1,10 +1,12 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import T from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
 import { ConditionalRender } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
+import CompanyProfile from './CompanyProfile';
 import {
   ButtonTextWrapper,
   CompanySideNavContainer,
@@ -22,7 +24,9 @@ const ExpandMoreIcon = iconDictionary('expandMore');
 const JobIcon = iconDictionary('workOutline');
 
 const MobileCompanySideNav = ({
+  company,
   handleCreatePosition,
+  handleNav,
   handleSelectPosition,
   positions,
   selectedPosition,
@@ -30,56 +34,66 @@ const MobileCompanySideNav = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <CompanySideNavContainer isExpanded={isExpanded}>
-      <CompanySideNavHeader>
-        Positions
-        <StyledIconButton
-          icon={isExpanded ? ExpandLessIcon : ExpandMoreIcon}
-          onClick={() => setIsExpanded(!isExpanded)}
-          tooltipProps={{
-            disableFocusListener: true,
-            disableHoverListener: true,
-            disableTouchListener: true,
-          }}
-        />
-      </CompanySideNavHeader>
-      <CreatePositionButton onClick={handleCreatePosition}>
-        {AddCircleOutlineIcon} Create Position
-      </CreatePositionButton>
+    <div>
       <ConditionalRender
-        Component={
-          <div>
-            {positions.map(({ id, isRemote, location, title }, index) => (
-              <PositionButton
-                key={`${title}-${index}`}
-                isLast={positions.length - 1 === index}
-                isSelected={id === selectedPosition}
-                onClick={() => handleSelectPosition({ id })}
-              >
-                {JobIcon}
-                <ButtonTextWrapper>
-                  <PositionTitle>{title}</PositionTitle>
-                  <br />
-                  <LocationText>
-                    {location}&nbsp;
-                    <ConditionalRender
-                      Component={<span>(Remote)</span>}
-                      shouldRender={isRemote === 'Yes'}
-                    />
-                  </LocationText>
-                </ButtonTextWrapper>
-              </PositionButton>
-            ))}
-          </div>
-        }
-        shouldRender={isExpanded}
+        Component={CompanyProfile}
+        propsToPassDown={{ handleNav, ...company }}
+        shouldRender={!isEmpty(company)}
       />
-    </CompanySideNavContainer>
+      <CompanySideNavContainer isExpanded={isExpanded}>
+        <CompanySideNavHeader>
+          Positions
+          <StyledIconButton
+            disableRipple
+            icon={isExpanded ? ExpandLessIcon : ExpandMoreIcon}
+            onClick={() => setIsExpanded(!isExpanded)}
+            tooltipProps={{
+              disableFocusListener: true,
+              disableHoverListener: true,
+              disableTouchListener: true,
+            }}
+          />
+        </CompanySideNavHeader>
+        <CreatePositionButton onClick={handleCreatePosition}>
+          {AddCircleOutlineIcon} Create Position
+        </CreatePositionButton>
+        <ConditionalRender
+          Component={
+            <div>
+              {positions.map(({ id, isRemote, location, title }, index) => (
+                <PositionButton
+                  key={`${title}-${index}`}
+                  isLast={positions.length - 1 === index}
+                  isSelected={id === selectedPosition}
+                  onClick={() => handleSelectPosition({ id })}
+                >
+                  {JobIcon}
+                  <ButtonTextWrapper>
+                    <PositionTitle>{title}</PositionTitle>
+                    <br />
+                    <LocationText>
+                      {location}&nbsp;
+                      <ConditionalRender
+                        Component={<span>(Remote)</span>}
+                        shouldRender={isRemote === 'Yes'}
+                      />
+                    </LocationText>
+                  </ButtonTextWrapper>
+                </PositionButton>
+              ))}
+            </div>
+          }
+          shouldRender={isExpanded}
+        />
+      </CompanySideNavContainer>
+    </div>
   );
 };
 
 MobileCompanySideNav.propTypes = {
+  company: T.object.isRequired,
   handleCreatePosition: T.func.isRequired,
+  handleNav: T.func.isRequired,
   handleSelectPosition: T.func.isRequired,
   positions: T.array.isRequired,
   selectedPosition: T.string.isRequired,
