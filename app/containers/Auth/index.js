@@ -24,18 +24,18 @@ export default function withAuth(config, Component) {
     loading,
     ...restProps
   }) => {
-    const { isPrivate } = config;
+    const { isCompany, isPrivate } = config;
 
     useEffect(() => {
       const signedIn = getCookie('signedIn');
-      if (!loading && signedIn) {
+      if (!authenticateLoading && signedIn) {
         dispatchFetchActiveUser();
       } else {
         dispatchFetchActiveUserFailure();
       }
     }, []);
 
-    if (!authenticateLoading && isPrivate && !isSignedIn)
+    if (!authenticateLoading && !isCompany && isPrivate && !isSignedIn)
       return <Redirect to="/signin" />;
 
     return (

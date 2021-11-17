@@ -22,13 +22,10 @@ const postPositionResponse = async (
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    if (companyId && positionId) {
-      const data = { company_id: companyId, id: positionId };
-      await createCompanyPosition({ data });
-    }
-
     // Create position
-    await createCompanyPosition({ company_id: companyId, id: positionId });
+    await createCompanyPosition({
+      data: { company_id: companyId, id: positionId },
+    });
 
     // Update user_question_responses with position data
     await Promise.all(

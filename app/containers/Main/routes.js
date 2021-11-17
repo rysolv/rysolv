@@ -28,11 +28,16 @@ import UserProfile from 'containers/UserProfile';
 import UsersDetail from 'containers/Users/Detail';
 import VerifyGithub from 'containers/VerifyGithub/Loadable';
 
+const companyConfig = {
+  isAdmin: false,
+  isCompany: true,
+  isPrivate: true,
+};
 const privateConfig = { isAdmin: false, isPrivate: true };
 const publicConfig = { isAdmin: false, isPrivate: false };
 
-const PrivateCompanyDashboard = withAuth(privateConfig, CompanyDashboard);
-const PrivateCompanySignUp = withAuth(privateConfig, CompanySignUp);
+const PrivateCompanyDashboard = withAuth(companyConfig, CompanyDashboard);
+const PrivateCompanySignUp = withAuth(companyConfig, CompanySignUp);
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateMessages = withAuth(privateConfig, Messages);
 const PrivateReposAdd = withAuth(privateConfig, ReposAdd);

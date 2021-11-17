@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
+import omit from 'lodash/omit';
 
 import AsyncRender from '../AsyncRender';
 import optionDictionary from './Options';
@@ -41,7 +42,8 @@ const EditCompany = ({
   const hasErrors = Object.keys(companyFormErrors).some(
     input => !!companyFormErrors[input],
   );
-  const isComplete = Object.keys(companyForm).every(
+  const formattedCompanyForm = omit(companyForm, ['logo']);
+  const isComplete = Object.keys(formattedCompanyForm).every(
     input => !!companyForm[input],
   );
 

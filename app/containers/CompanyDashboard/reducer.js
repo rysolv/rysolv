@@ -114,6 +114,7 @@ export const initialState = {
     companyPosition: [],
   },
   selectedPosition: '',
+  shouldRefetchCompany: true,
   tableData: {},
 };
 
@@ -271,6 +272,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       draft.company = company;
       draft.form.company = company;
       draft.loading.main = false;
+      draft.shouldRefetchCompany = false;
       break;
     }
     case FETCH_COMPANY: {
@@ -365,6 +367,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       draft.form[category] = initialState.form[category];
       draft.formErrors[category] = initialState.formErrors[category];
       draft.isModalOpen = initialState.isModalOpen;
+      draft.shouldRefetchCompany = true;
       break;
     }
     case SAVE_CANDIDATE: {
