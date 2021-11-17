@@ -11,15 +11,6 @@ const companyValues = [
 
 const companyPositionValues = ['company_id', 'id'];
 
-const messageValues = [
-  'body',
-  'created_date',
-  'id',
-  'position_id',
-  'read_date',
-  'user_id',
-];
-
 const messageReturnValues = `
   messages.body,
   messages.created_date AS "createdDate",
@@ -33,5 +24,4 @@ module.exports = {
   companyValues,
   companyPositionValues,
   messageReturnValues,
-  messageValues,
 };

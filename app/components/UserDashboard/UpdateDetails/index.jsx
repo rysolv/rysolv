@@ -11,8 +11,6 @@ import T from 'prop-types';
 // } from './styledComponents';
 
 const UpdateDetails = ({ data }) => {
-  console.log('rendered');
-
   return <Fragment>Update Details</Fragment>;
 };
 

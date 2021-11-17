@@ -86,6 +86,17 @@ module.exports = buildSchema(`
     source: String
   }
 
+  type Conversation {
+    candidate: Object
+    position: Object
+    company: Object
+    messages: [Object]
+  }
+
+  type ConversationArray {
+    conversations: [Conversation]
+  }
+
   type Error {
     message: String
   }
@@ -198,7 +209,6 @@ module.exports = buildSchema(`
   input MessageInput {
     body: String
     positionId: ID
-    userId: ID
   }
 
   type Payment {
@@ -476,6 +486,7 @@ module.exports = buildSchema(`
   union UserResult = User | Error
   union VerificationResult = Verification | Error
   union WithdrawalResult = Withdrawal | Error
+  union ConversationResult = ConversationArray | Error
 
   type RootQuery {
     getCompanyPositions(companyId: ID!): CompanyPositionsArray
@@ -499,6 +510,7 @@ module.exports = buildSchema(`
     getUserRepos: RepoArrayResult!
     getUsers: UserArrayResult!
     getUserSettings: UserResult!
+    getMessages: ConversationResult!
 
     githubSignIn(code: String!, origin: String!): UserResult!
 

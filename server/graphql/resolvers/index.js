@@ -6,6 +6,7 @@ const commentResolver = require('./comments');
 const companiesResolver = require('./companies');
 const contactResolver = require('./contact');
 const issueResolver = require('./issues');
+const messageResolver = require('./messages');
 const paymentResolver = require('./payments');
 const pullRequestResolver = require('./pullRequests');
 const questionResolver = require('./questions');
@@ -23,6 +24,7 @@ const rootResolver = {
   ...companiesResolver,
   ...contactResolver,
   ...issueResolver,
+  ...messageResolver,
   ...objectScalerType,
   ...paymentResolver,
   ...pullRequestResolver,

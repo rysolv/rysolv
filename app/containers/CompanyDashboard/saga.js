@@ -45,13 +45,13 @@ export function* createPositionSaga({ payload }) {
         questionKey === 'description'
           ? `${JSON.stringify(value)}`
           : questionKey === 'skills'
-            ? `{
+          ? `{
               beginner: ${value.beginner},
               expert: ${value.expert},
               intermediate: ${value.intermediate},
               skill: "${value.skill}"
             }`
-            : `"${value}"`;
+          : `"${value}"`;
       return `{
         questionId: "${questionId}",
         questionKey: "${questionKey}",
@@ -131,13 +131,13 @@ export function* editPositionSaga({ payload }) {
         questionKey === 'description'
           ? `${JSON.stringify(value)}`
           : questionKey === 'skills'
-            ? `{
+          ? `{
               beginner: ${value.beginner},
               expert: ${value.expert},
               intermediate: ${value.intermediate},
               skill: "${value.skill}"
             }`
-            : `"${value}"`;
+          : `"${value}"`;
 
       return `{
         questionId: "${questionId}",
@@ -329,13 +329,13 @@ export function* fetchPositionSaga({ payload }) {
 }
 
 export function* notifyCandidateSaga({ payload }) {
+  // TODO: update payload
   const { body, positionId, userId } = payload;
   const query = `
     mutation{
       createMessage(messageInput: {
         body: ${JSON.stringify(body)},
         positionId: "${positionId}",
-        userId: "${userId}",
       }) {
         __typename
         ... on Success {

@@ -9,7 +9,6 @@ const { createComment, getIssueComments } = require('./queries/comments');
 const {
   createCompany,
   createCompanyPosition,
-  createMessage,
   deletePosition,
   getCompanyPositions,
   getOnePosition,
@@ -40,6 +39,11 @@ const {
   getUserLanguages,
   setPreferredLanguage,
 } = require('./queries/languages');
+const {
+  createMessage,
+  getMessages,
+  setReadMessage,
+} = require('./queries/messages');
 const {
   submitAccountDepositUser,
   submitExternalPayment,
@@ -151,6 +155,7 @@ module.exports = {
   getIssueList,
   getIssues,
   getIssueWatchList,
+  getMessages,
   getOneIssue,
   getOnePosition,
   getOneRepo,
@@ -192,6 +197,7 @@ module.exports = {
   searchRepos,
   searchUsers,
   setPreferredLanguage,
+  setReadMessage,
   submitAccountDepositUser,
   submitExternalPayment,
   submitInternalPayment,

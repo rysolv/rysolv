@@ -9,7 +9,7 @@ import {
   Text,
 } from './styledComponents';
 
-const Message = ({ body, footnote, icon, title }) => (
+const AlertMessage = ({ body, footnote, icon, title }) => (
   <MessageContainer>
     <IconWrapper>{icon}</IconWrapper>
     <Content>
@@ -20,11 +20,11 @@ const Message = ({ body, footnote, icon, title }) => (
   </MessageContainer>
 );
 
-Message.propTypes = {
+AlertMessage.propTypes = {
   body: T.string,
   footnote: T.oneOfType([T.object, T.string]),
   icon: T.element,
   title: T.string,
 };
 
-export default Message;
+export default AlertMessage;
