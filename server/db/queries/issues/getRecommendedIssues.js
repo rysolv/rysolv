@@ -54,9 +54,12 @@ const getRecommendedIssues = async ({ userId }) => {
     WHERE ul.user_id = $1
   `;
   const { rows } = await singleQuery({ queryText, values: [userId] });
-  const [oneRow] = rows;
-  const { topIssues } = oneRow;
-  return topIssues;
+  if (rows.length) {
+    const [oneRow] = rows;
+    const { topIssues } = oneRow;
+    return topIssues;
+  }
+  return [];
 };
 
 module.exports = getRecommendedIssues;
