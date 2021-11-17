@@ -386,6 +386,7 @@ export function* signOutSaga() {
     yield call(removeUserData);
     yield put(signOutResponse());
   }
+  yield put(push('/signin'));
 }
 
 export function* signUpSaga({ payload }) {
