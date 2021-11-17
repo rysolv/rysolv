@@ -134,4 +134,5 @@ export const StyledBaseFileInput = styled(BaseFileInput)`
 
 export const Textarea = styled.textarea`
   ${baseInputStyle};
+  overflow-y: auto;
 `;

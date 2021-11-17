@@ -102,7 +102,7 @@ export const Input = styled.input`
 
 export const StyledCheckboxWithLabel = styled(CheckboxWithLabel)`
   .checkbox {
-    margin-right: 0.6rem;
+    margin-right: 1.2rem;
     padding: 0;
   }
 

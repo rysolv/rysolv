@@ -558,7 +558,7 @@ module.exports = buildSchema(`
     
     postContractAccepted(companyId: ID, contractAccepted: Boolean): EventResponse!
     postPositionResponse(companyId: ID, positionId: ID, responseArray: [Object]): EventResponse!
-    postUserResponse(companyId: ID, positionId: ID, responseArray: [Object]): EventResponse!
+    postUserResponse(responseArray: [Object]): EventResponse!
     
     recruitingSignup(contactInput: ContactInput): EventResponse!
     

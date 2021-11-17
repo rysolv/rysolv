@@ -87,7 +87,7 @@ export function* createPositionSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        postUserResponse: { __typename, message },
+        postPositionResponse: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
