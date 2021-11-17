@@ -45,13 +45,13 @@ export function* createPositionSaga({ payload }) {
         questionKey === 'description'
           ? `${JSON.stringify(value)}`
           : questionKey === 'skills'
-          ? `{
+            ? `{
               beginner: ${value.beginner},
               expert: ${value.expert},
               intermediate: ${value.intermediate},
               skill: "${value.skill}"
             }`
-          : `"${value}"`;
+            : `"${value}"`;
       return `{
         questionId: "${questionId}",
         questionKey: "${questionKey}",
@@ -131,13 +131,13 @@ export function* editPositionSaga({ payload }) {
         questionKey === 'description'
           ? `${JSON.stringify(value)}`
           : questionKey === 'skills'
-          ? `{
+            ? `{
               beginner: ${value.beginner},
               expert: ${value.expert},
               intermediate: ${value.intermediate},
               skill: "${value.skill}"
             }`
-          : `"${value}"`;
+            : `"${value}"`;
 
       return `{
         questionId: "${questionId}",
