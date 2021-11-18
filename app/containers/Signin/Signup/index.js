@@ -3,6 +3,7 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { push } from 'connected-react-router';
 
 import Signup from 'components/Signin/Signup';
 import { clearAlerts, signUp } from 'containers/Auth/actions';
@@ -24,6 +25,7 @@ const SignUpContainer = ({
   dispatchSignUp,
   handleClearAuthAlerts,
   handleInputChange,
+  handleNav,
   loading,
   signUpDisabled,
 }) => {
@@ -71,6 +73,7 @@ const SignUpContainer = ({
       error={error}
       handleClearAuthAlerts={handleClearAuthAlerts}
       handleInputChange={handleInputChange}
+      handleNav={handleNav}
       handleSignUp={handleSignUp}
       handleValidateInput={handleValidateInput}
       loading={loading}
@@ -86,6 +89,7 @@ SignUpContainer.propTypes = {
   dispatchSignUp: T.func,
   handleClearAuthAlerts: T.func,
   handleInputChange: T.func,
+  handleNav: T.func.isRequired,
   loading: T.bool,
   signUpDisabled: T.bool,
 };
@@ -110,6 +114,10 @@ function mapDispatchToProps(dispatch) {
      */
     dispatchSignUp: payload => dispatch(signUp(payload)),
     handleClearAuthAlerts: () => dispatch(clearAlerts()),
+    /*
+     * Reducer : Router
+     */
+    handleNav: route => dispatch(push(route)),
     /*
      * Reducer : Signin
      */

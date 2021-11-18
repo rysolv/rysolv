@@ -4,12 +4,6 @@ import { initialState } from './reducer';
 
 const selectSigninDomain = state => state.signin || initialState;
 
-const makeSelectSignIn = prop =>
-  createSelector(
-    selectSigninDomain,
-    substate => substate[prop],
-  );
-
 const makeSelectDisabled = prop =>
   createSelector(
     makeSelectSignIn(prop),
@@ -17,6 +11,12 @@ const makeSelectDisabled = prop =>
       !Object.keys(data).every(
         item => data[item].error === '' && data[item].value !== '',
       ),
+  );
+
+const makeSelectSignIn = prop =>
+  createSelector(
+    selectSigninDomain,
+    substate => substate[prop],
   );
 
 export { makeSelectDisabled, makeSelectSignIn };
