@@ -33,8 +33,8 @@ const ResetPassword = ({
   return (
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
-        <Title hasSubText>Reset your password</Title>
         <InputFormContent>
+          <Title hasSubText>Reset your password</Title>
           <InputSubText>
             Check your email for a verification code to reset your password. If
             it doesn&#39;t appear within a few minutes, check your spam folder.
@@ -73,22 +73,22 @@ const ResetPassword = ({
             <li>Include one number</li>
             <li>Include one special character </li>
           </PasswordRequirements>
-          <ButtonGroup>
-            <StyledPrimaryAsyncButton
-              disabled={resetPasswordDisabled}
-              hasSecondaryButton
-              label="Reset"
-              loading={loading}
-              onClick={handleResetPassword}
-            />
-            <StyledButton
-              disableRipple
-              onClick={() => dispatchIncrementResetStep({ step: 1 })}
-            >
-              Back
-            </StyledButton>
-          </ButtonGroup>
         </InputFormContent>
+        <ButtonGroup>
+          <StyledPrimaryAsyncButton
+            disabled={resetPasswordDisabled}
+            hasSecondaryButton
+            label="Reset"
+            loading={loading}
+            onClick={handleResetPassword}
+          />
+          <StyledButton
+            disableRipple
+            onClick={() => dispatchIncrementResetStep({ step: 1 })}
+          >
+            Back
+          </StyledButton>
+        </ButtonGroup>
       </InputFormWrapper>
     </SigninWrapper>
   );

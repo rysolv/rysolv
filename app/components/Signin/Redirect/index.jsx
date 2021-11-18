@@ -2,8 +2,9 @@ import React from 'react';
 import T from 'prop-types';
 
 import {
-  InputFormContent,
+  ButtonWrapper,
   ImportantTextWrapper,
+  InputFormContent,
   InputFormWrapper,
   InputSubText,
   SigninWrapper,
@@ -25,12 +26,14 @@ const Redirect = ({
   return (
     <SigninWrapper>
       <InputFormWrapper>
-        <Title hasSubText>Return to your account</Title>
         <InputFormContent>
+          <Title hasSubText>Return to your account</Title>
           <InputSubText hasFlex>
             You are already logged in as{' '}
             <ImportantTextWrapper>{username}</ImportantTextWrapper>.
           </InputSubText>
+        </InputFormContent>
+        <ButtonWrapper>
           <StyledPrimaryButton
             autoFocus
             disableFocusRipple
@@ -40,7 +43,7 @@ const Redirect = ({
           <StyledButton disableFocusRipple onClick={handleSignout}>
             Sign out
           </StyledButton>
-        </InputFormContent>
+        </ButtonWrapper>
       </InputFormWrapper>
     </SigninWrapper>
   );

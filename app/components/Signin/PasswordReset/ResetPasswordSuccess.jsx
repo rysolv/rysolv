@@ -31,17 +31,17 @@ const ResetPasswordSuccess = ({
       tabIndex="0"
     >
       <InputFormWrapper>
-        <Title hasSubText>Password reset successful</Title>
         <InputFormContent>
+          <Title hasSubText>Password reset successful</Title>
           <ResetSubText hasFlex>
             <IconWrapper isSuccess>{SuccessIcon}</IconWrapper>
             <MessageWrapper>{message}</MessageWrapper>
           </ResetSubText>
-          <StyledPrimaryButton
-            label="Return to sign in"
-            onClick={handleReturnToSignIn}
-          />
         </InputFormContent>
+        <StyledPrimaryButton
+          label="Return to sign in"
+          onClick={handleReturnToSignIn}
+        />
       </InputFormWrapper>
     </SigninWrapper>
   );
