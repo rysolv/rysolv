@@ -172,6 +172,7 @@ export function* editCompanySaga({ payload }) {
 
 export function* editPositionSaga({ payload }) {
   const { companyId, positionId, responseArray } = payload;
+  // TODO: maybe fix this nested turnary
   const formattedResponse = responseArray.map(
     ({ questionId, questionKey, responseId, value }) => {
       const formattedValue =
@@ -295,34 +296,27 @@ export function* fetchPositionCandidatesSaga({ payload }) {
   const query = `
     query {
       getPositionCandidates(positionId: "${positionId}") {
-        __typename
-        ... on PositionCandidatesArray {
-          candidates {
-            firstName
-            id
-            isHired
-            isInterviewRequested
-            isSaved
-            lastName
-            lastPosition
-            location
-            percentMatch
-            preferredLanguages
-            profilePic
-            salary
-            type
-            yearsOfExperience
-          }
-        }
+        firstName
+        id
+        isHired
+        isInterviewRequested
+        isSaved
+        languages
+        lastName
+        lastPosition
+        location
+        percentMatch
+        profilePic
+        salary
+        type
+        yearsOfExperience
       }
     }
   `;
   try {
     const graphql = JSON.stringify({ query });
     const {
-      data: {
-        getPositionCandidates: { candidates },
-      },
+      data: { getPositionCandidates: candidates },
     } = yield call(post, '/graphql', graphql);
     yield put(fetchPositionCandidatesSuccess({ candidates }));
   } catch (error) {
@@ -410,17 +404,23 @@ export function* fetchQuestionsSaga({ payload }) {
 }
 
 export function* notifyCandidateSaga({ payload }) {
-  // TODO: update payload
-  const { body, positionId, userId } = payload;
+  const { body, positionId, candidateId } = payload;
   const query = `
     mutation{
       createMessage(messageInput: {
         body: ${JSON.stringify(body)},
         positionId: "${positionId}",
+        toUserId: "${candidateId}",
       }) {
         __typename
-        ... on Success {
-          message
+        ... on MessageResponse {
+          body
+          createdDate
+          firstName
+          lastName
+          profilePic
+          readDate
+          username
         }
         ... on Error {
           message

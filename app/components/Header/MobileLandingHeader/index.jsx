@@ -64,15 +64,11 @@ const MobileLandingHeader = ({
         {isSignedIn ? (
           <Fragment>
             <InternalLink
-              label="Browse issues"
-              path="/issues"
+              label="Dashboard"
+              path="/dashboard"
               shouldRemoveSecond
             />
-            <InternalLink
-              label="Hire engineers"
-              path="/recruitment"
-              shouldRemoveFirst
-            />
+            <InternalLink label="Messages" path="/messages" shouldRemoveFirst />
             <VerticalDivider />
             <StyledUserNavBar
               activeUser={activeUser}

@@ -37,11 +37,11 @@ const MessageView = ({
 
   const { messages } = activeConversation;
 
-  const messageCards = messages
-    .map(({ body, firstName, lastName, createdDate, userId, profilePic }) => {
+  const messageCards = messages.map(
+    ({ body, createdDate, firstName, id, lastName, profilePic, userId }) => {
       const active = userId === activeUserId;
       return (
-        <MessageCard active={active} key={createdDate}>
+        <MessageCard active={active} key={id}>
           <BodyWrapper>
             <MessageHeader>
               <Username>
@@ -56,8 +56,8 @@ const MessageView = ({
           <ProfilePicture src={profilePic} />
         </MessageCard>
       );
-    })
-    .reverse();
+    },
+  );
   return (
     <MessageWrapper>
       <MessageContainer id="messageContainer">{messageCards}</MessageContainer>

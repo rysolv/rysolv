@@ -1,7 +1,30 @@
+const { singleQuery } = require('../../baseQueries');
+
 const getPositionCandidates = async ({ positionId }) => {
-  // TODO: finish this function
-  console.log('positionId', positionId);
-  return [];
+  const queryText = `
+    SELECT DISTINCT ON (u.id)
+      u.id,
+      u.first_name AS "firstName",
+      u.last_name AS "lastName",
+      u.profile_pic AS "profilePic",
+      JSON_OBJECT_AGG(
+          q.question_key,  coalesce(uqr.value, qr.value)
+      ) AS "userQuestions"
+    FROM candidate_positions cp
+      JOIN users u on u.id = cp.user_id
+      JOIN user_question_responses uqr on uqr.user_id = u.id
+      JOIN question_responses qr on qr.id = uqr.response_id
+      JOIN questions q on q.id = uqr.question_id
+    WHERE cp.position_id = $1
+    GROUP BY
+      u.id,
+      u.first_name,
+      u.last_name,
+      u.profile_pic
+  `;
+
+  const { rows } = await singleQuery({ queryText, values: [positionId] });
+  return rows;
 };
 
 module.exports = getPositionCandidates;

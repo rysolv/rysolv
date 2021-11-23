@@ -11,9 +11,10 @@ import {
 } from './constants';
 
 export const initialState = {
+  conversations: [],
   error: null,
   loading: true,
-  conversations: [],
+  messageLoading: true,
 };
 
 const messagesReducer = produce((draft, { payload, type }) => {
@@ -38,19 +39,22 @@ const messagesReducer = produce((draft, { payload, type }) => {
     case SEND_MESSAGE_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading = false;
+      draft.messageLoading = false;
       break;
     }
     case SEND_MESSAGE_SUCCESS: {
-      const { message } = payload;
-      console.log('SEND_MESSAGE_SUCCESS');
-      console.log(message);
-      draft.loading = false;
+      const { newMessage, threadId } = payload;
+      draft.conversations.forEach((el, i) => {
+        if (threadId === el.threadId) {
+          draft.conversations[i].messages.push(newMessage);
+        }
+      });
+      draft.messageLoading = false;
       break;
     }
     case SEND_MESSAGE: {
       draft.error = null;
-      draft.loading = true;
+      draft.messageLoading = true;
       break;
     }
   }

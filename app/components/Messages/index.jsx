@@ -20,13 +20,16 @@ const Messages = ({ activeUser, conversations, dispatchSendMessage }) => {
   const [messageBody, setMessageBody] = useState('');
 
   const { id: activeUserId } = activeUser;
-  const { candidate, company, position } = conversations[activeConversation];
+  const { candidate, company, position, threadId } = conversations[
+    activeConversation
+  ];
 
   const sendMessage = () => {
     dispatchSendMessage({
       body: messageBody,
-      positionId: position.id,
-      userId: activeUserId,
+      candidateId: candidate.userId,
+      positionId: position.positionId,
+      threadId,
     });
     setMessageBody('');
   };

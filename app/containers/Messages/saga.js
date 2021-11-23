@@ -19,8 +19,10 @@ export function* fetchMessagesSaga() {
             conversations {
               candidate
               company
+              lastMessageDate
               messages
               position
+              threadId
             }
           }
           ...on Error {
@@ -45,18 +47,25 @@ export function* fetchMessagesSaga() {
 }
 
 export function* sendMessageSaga({ payload }) {
-  // TODO: update payload
-  const { body, positionId, userId } = payload;
-  console.log('gets here');
+  const { body, positionId, candidateId, threadId } = payload;
   const query = `
     mutation{
       createMessage(messageInput: {
-        body: ${JSON.stringify(body)},
-        positionId: "${positionId}",
+        body: ${JSON.stringify(body)}
+        positionId: "${positionId}"
+        threadId: "${threadId}"
+        toUserId: "${candidateId}"
       }) {
         __typename
-        ... on Success {
-          message
+        ... on MessageResponse {
+          body
+          createdDate
+          firstName
+          id
+          lastName
+          profilePic
+          readDate
+          username
         }
         ... on Error {
           message
@@ -68,11 +77,11 @@ export function* sendMessageSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        createMessage: { __typename, message },
+        createMessage: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(sendMessageSuccess({ message }));
+    yield put(sendMessageSuccess({ newMessage: restProps, threadId }));
   } catch (error) {
     yield put(sendMessageFailure({ error: { message: error } }));
   }

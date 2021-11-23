@@ -99,9 +99,11 @@ module.exports = buildSchema(`
 
   type Conversation {
     candidate: Object
-    position: Object
     company: Object
+    lastMessageDate: Object
     messages: [Object]
+    position: Object
+    threadId: ID
   }
 
   type ConversationArray {
@@ -218,8 +220,21 @@ module.exports = buildSchema(`
   }
 
   input MessageInput {
-    body: String
-    positionId: ID
+    body: String!
+    positionId: ID!
+    toUserId: ID!
+    threadId: ID
+  }
+
+  type MessageResponse {
+    body: String!
+    createdDate: Object!
+    firstName: String!
+    id: ID!
+    lastName: String!
+    profilePic: String!
+    readDate: Object
+    username: String!
   }
 
   type Payment {
@@ -240,10 +255,6 @@ module.exports = buildSchema(`
     skills: [Object]
     title: String
     type: String
-  }
-
-  type PositionCandidatesArray {
-    candidates: [User]
   }
 
   type PullRequest {
@@ -391,6 +402,7 @@ module.exports = buildSchema(`
     id: ID!
     isGithubVerified: Boolean
     isHired: Boolean
+    languages: [String]
     isInterviewRequested: Boolean
     isSaved: Boolean
     issues: [Object]
@@ -477,12 +489,14 @@ module.exports = buildSchema(`
 
   union CommentResult = Comment | Error
   union CompanyResult = Company | Error
+  union ConversationResult = ConversationArray | Error
   union EventResponse = Success | Error
   union FilterResult = Filter | Error
   union ImportPullRequestResult = ImportPullRequest | Error
   union ImportResult = ImportData | Error
   union IssueArrayResult = IssueArray | Error
   union IssueResult = Issue | Error
+  union MessageResult = MessageResponse | Error
   union PaymentResult = Payment | Error
   union PositionResult = Position | Error
   union PullRequestArrayResult = PullRequestArray | Error
@@ -498,7 +512,6 @@ module.exports = buildSchema(`
   union UserResult = User | Error
   union VerificationResult = Verification | Error
   union WithdrawalResult = Withdrawal | Error
-  union ConversationResult = ConversationArray | Error
 
   type RootQuery {
     getCompanyPositions(companyId: ID!): CompanyPositionsArray
@@ -508,7 +521,7 @@ module.exports = buildSchema(`
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!
     getIssueWatchList(issueId: ID!): [WatchList]!
-    getPositionCandidates(positionId: ID!): PositionCandidatesArray
+    getPositionCandidates(positionId: ID!): [User]
     getPullRequestList(issueId: ID): [PullRequestList]!
     getQuestions(category: String!): QuestionResult
     getRepoActivity(repoId: ID): [Activity]!
@@ -553,39 +566,39 @@ module.exports = buildSchema(`
 
     createComment(commentInput: CommentInput): CommentResult!
     createIssue(issueInput: IssueInput): IssueResult!
-    createMessage(messageInput: MessageInput): EventResponse!
+    createMessage(messageInput: MessageInput): MessageResult!
     createPaypalPayment(amount: Float!, email: String, issueId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
     createRepo(repoInput: RepoInput): RepoResult!
     createStripeCharge(amount: Float!, email: String, issueId: ID, token: String!): PaymentResult!
     createUser(userInput: UserInput): UserResult!
     createWithdrawal(email: String!, transferValue: Float!): WithdrawalResult!
-    
+
     deletePullRequest(id:ID!): EventResponse!
     deleteUser: EventResponse!
-    
+
     importIssue(url: String!): ImportResult!
     importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
     importRepo(url: String!): ImportResult!
-    
+
     postContractAccepted(companyId: ID, contractAccepted: Boolean): EventResponse!
     postPositionResponse(companyId: ID, positionId: ID, responseArray: [Object]): EventResponse!
     postUserResponse(responseArray: [Object]): EventResponse!
-    
+
     recruitingSignup(contactInput: ContactInput): EventResponse!
-    
+
     sendContact(contactInput: ContactInput): EventResponse!
 
     setHiringStatus(hiringStatus: String!): EventResponse!
-  
+
     signIn(password: String!, username: String!): SignInResult!
     signOut: EventResponse!
-    
+
     submitAccountPayment(email: String!, issueId: ID!, fundValue: Float!): PaymentResult!
-    
+
     toggleAttempting(issueId: ID!): ToggleAttemptingResult!
     toggleWatching(issueId: ID!): ToggleWatchingResult!
-    
+
     transformCompany(companyInput: CompanyInput): EventResponse!
     transformIssue(issueId: ID!, issueInput: IssueInput): EventResponse!
     transformPosition(positionId: ID, responseArray: [Object]): EventResponse!

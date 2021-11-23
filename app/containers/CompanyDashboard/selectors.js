@@ -19,7 +19,7 @@ const makeSelectCompanyDashboardCandidates = () =>
       const filteredCandidates = filterCandidates(candidates, filter);
       return filteredCandidates.map(
         ({ firstName, lastName, languages, ...restProps }) => ({
-          languages: languages.slice(0, 3),
+          preferredLanguages: languages.slice(0, 3),
           name: `${firstName.charAt(0)}. ${lastName.charAt(0)}.`,
           ...restProps,
         }),

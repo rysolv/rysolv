@@ -106,7 +106,9 @@ const CompanyDashboard = ({
   }, []);
 
   useEffect(() => {
-    dispatchFetchPositionCandidates({ positionId: selectedPosition });
+    if (selectedPosition) {
+      dispatchFetchPositionCandidates({ positionId: selectedPosition });
+    }
   }, [selectedPosition]);
 
   useEffect(() => {

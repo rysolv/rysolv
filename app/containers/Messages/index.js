@@ -28,7 +28,7 @@ const Messages = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Messages';
-    dispatchFetchMessages({ userId: '12345' });
+    dispatchFetchMessages();
   }, []);
 
   return (

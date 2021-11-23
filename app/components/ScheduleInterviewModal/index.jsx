@@ -62,7 +62,11 @@ const ScheduleInterviewModal = ({
         disabled={!scheduleInterview.body}
         label="Send"
         onClick={() =>
-          dispatchNotifyCandidate({ ...scheduleInterview, positionId, userId })
+          dispatchNotifyCandidate({
+            body: scheduleInterview.body,
+            candidateId: userId,
+            positionId,
+          })
         }
       />
     </ButtonGroup>
