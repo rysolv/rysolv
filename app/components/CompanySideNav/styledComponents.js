@@ -5,7 +5,6 @@ import { IconButton as BaseIconButton } from 'components/base_ui';
 import {
   blueColor,
   candidateGreyColor,
-  grayColor,
   lightBlueColor,
   whiteColor,
 } from 'defaultStyleHelper';
@@ -22,7 +21,6 @@ export const ButtonTextWrapper = styled.div`
 
 export const CompanySideNavContainer = styled.div`
   border-radius: 0.7rem;
-  box-shadow: 0 0.1rem 0.4rem ${grayColor};
   height: 46.3rem;
   min-width: 27.8rem;
   overflow-y: auto;
@@ -39,7 +37,7 @@ export const CompanySideNavHeader = styled.div`
   font-weight: 700;
   justify-content: space-between;
   line-height: 3.36rem;
-  padding: 2rem 2rem 0;
+  padding: 2rem 2rem 0 0;
 `;
 
 export const CreatePositionButton = styled.button`
@@ -49,7 +47,7 @@ export const CreatePositionButton = styled.button`
   color: ${lightBlueColor};
   display: flex;
   font-size: 1.6rem;
-  margin: 1rem 2rem 2rem;
+  margin: 1rem 2rem 2rem 0;
   padding: 0;
 
   &:hover {
@@ -80,7 +78,7 @@ export const PositionButton = styled.button`
   font-weight: 700;
   letter-spacing: -0.025rem;
   line-height: 1.936rem;
-  padding: 2rem 1rem 2rem 2rem;
+  padding: 2rem;
   text-align: left;
   width: 100%;
 

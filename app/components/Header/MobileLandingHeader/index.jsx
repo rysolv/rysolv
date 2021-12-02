@@ -64,8 +64,8 @@ const MobileLandingHeader = ({
         {isSignedIn ? (
           <Fragment>
             <InternalLink
-              label="Browse issues"
-              path="/issues"
+              label="Dashboard"
+              path="/company/dashboard"
               shouldRemoveSecond
             />
             <InternalLink

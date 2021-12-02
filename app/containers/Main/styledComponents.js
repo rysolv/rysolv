@@ -10,12 +10,15 @@ const { mobile, tablet } = mediaQueriesByDevice;
 
 export const AppBodyWrapper = styled.div`
   background: ${({ isLandingOrRecruitmentPage }) => isLandingOrRecruitmentPage ? blueColor : 'inherit'};
+  display: flex;
+  flex-direction: column;
   flex: 1;
   padding-bottom: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? '0' : '8rem')};
 `;
 
 export const AppContentWrapper = styled.div`
   display: flex;
+  flex: 1;
 `;
 
 export const RoutesWrapper = styled.section`

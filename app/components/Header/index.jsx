@@ -36,6 +36,7 @@ const Header = ({
     pathname === '/company/dashboard/add-position' ||
     pathname === '/company/dashboard/edit-company' ||
     pathname === '/company/dashboard/edit-position' ||
+    pathname === '/company/settings' ||
     pathname === '/company/signup' ||
     pathname === '/dashboard' ||
     pathname === '/dashboard/update' ||

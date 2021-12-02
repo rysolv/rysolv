@@ -113,7 +113,6 @@ export function* deleteUserSaga() {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(deleteUserSuccess());
-    yield put(push('/'));
     yield put(signOut());
   } catch (error) {
     yield put(closeModalState());

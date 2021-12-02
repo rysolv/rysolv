@@ -15,10 +15,8 @@ export const StyledTab = styled(Tab)`
 `;
 
 export const StyledTabs = styled(Tabs)`
-  border-radius: 0.7rem;
-  box-shadow: 0 0.1rem 0.4rem ${grayColor};
-  margin-right: 1rem;
-  padding: 0 1rem;
+  border-bottom: 0.1rem solid ${grayColor};
+  margin: 0 1rem;
 
   .indicator {
     background-color: ${blueColor};

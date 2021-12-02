@@ -127,19 +127,25 @@ export const StyledLoginLink = styled(BaseLink)`
 `;
 
 export const StyledMenu = styled(Menu)`
-  .MuiMenu-paper {
-    background-color: ${whiteColor};
-    border-radius: 0.4rem;
-    height: 14.3rem;
-    margin-top: 1.9rem;
-    overflow: hidden;
-    width: 17.7rem;
+  .MuiList-padding {
+    height: 100%;
+    width: 100% !important;
   }
 
   .MuiList-root {
     display: flex;
     flex-direction: column;
     padding: 1.5rem 2rem;
+  }
+
+  .MuiMenu-paper {
+    background-color: ${whiteColor};
+    border-radius: 0.4rem;
+    border: 0.2rem solid ${blueColor};
+    height: 14.3rem;
+    margin-top: 1.9rem;
+    overflow: hidden;
+    width: 17.7rem;
   }
 `;
 

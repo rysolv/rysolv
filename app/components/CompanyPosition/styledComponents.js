@@ -72,10 +72,10 @@ export const OptionLabel = styled.div`
 export const OptionWrapper = styled.div`
   align-items: center;
   display: ${({ $isAbsolute }) => ($isAbsolute ? 'flex' : 'block')};
-  margin-bottom: 1rem;
+  margin-top: 1rem;
   position: ${({ $isAbsolute }) => ($isAbsolute ? 'absolute' : 'relative')};
   right: 0;
-  top: 2rem;
+  top: ${({ $isAbsolute }) => ($isAbsolute ? '1rem' : '0')};
 `;
 
 export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
