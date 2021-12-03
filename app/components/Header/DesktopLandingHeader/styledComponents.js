@@ -60,6 +60,18 @@ export const LogoWrapper = styled.div`
   }
 `;
 
+export const MessageLink = styled(BaseLink)`
+  color: ${whiteColor};
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.9rem;
+  padding-right: 0.5rem;
+
+  &:hover {
+    color: ${whiteColor};
+  }
+`;
+
 export const StyledPrimaryButton = styled(PrimaryButton)`
   background: ${darkBlueColor};
   border: 0.2rem solid ${whiteColor};
@@ -104,6 +116,17 @@ export const StyledUserNavBar = styled(UserNavBar)`
   &:hover {
     border-color: ${darkBlueColor};
   }
+`;
+
+export const UnreadMessages = styled.div`
+  background-color: white;
+  border-radius: 50%;
+  color: ${blueColor};
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.9rem;
+  min-width: 1.9rem;
+  text-align: center;
 `;
 
 export const VerticalDivider = styled.div`

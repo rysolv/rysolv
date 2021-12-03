@@ -9,7 +9,7 @@ import {
   HeaderSearchBar,
   UserNavBar,
 } from 'components/base_ui';
-import { defaultFontSize, headerColor, lightBlueColor, textColor } from 'defaultStyleHelper';
+import { blueColor, defaultFontSize, headerColor, lightBlueColor, textColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile, tablet } = mediaQueriesByDevice;
@@ -199,4 +199,15 @@ export const TopBarWrapper = styled.div`
     justify-content: space-between;
     margin-bottom: ${({ isSignedIn }) => (isSignedIn ? '0.5rem' : '0')};
   }
+`;
+
+export const UnreadMessages = styled.div`
+  background-color: white;
+  border-radius: 50%;
+  color: ${blueColor};
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.9rem;
+  min-width: 1.9rem;
+  text-align: center;
 `;

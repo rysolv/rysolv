@@ -94,6 +94,20 @@ export const MenuInternalLink = styled(BaseLink)`
   }
 `;
 
+export const MessageLink = styled(InternalLink)`
+  padding-right: 0.5rem;
+
+  @media (max-width: 750px) {
+    display: ${({ shouldRemoveFirst }) =>
+      shouldRemoveFirst ? 'none' : 'block'};
+  }
+
+  @media (max-width: 470px) {
+    display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
+      shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
+  }
+`;
+
 export const MobileHeaderContainer = styled.div`
   background: ${blueColor};
   display: flex;
@@ -176,6 +190,27 @@ export const StyledUserNavBar = styled(UserNavBar)`
 
   &:hover {
     border-color: ${darkBlueColor};
+  }
+`;
+
+export const UnreadMessages = styled.div`
+  background-color: white;
+  border-radius: 50%;
+  color: ${blueColor};
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.9rem;
+  min-width: 1.9rem;
+  text-align: center;
+
+  @media (max-width: 750px) {
+    display: ${({ shouldRemoveFirst }) =>
+      shouldRemoveFirst ? 'none' : 'block'};
+  }
+
+  @media (max-width: 470px) {
+    display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
+      shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
   }
 `;
 

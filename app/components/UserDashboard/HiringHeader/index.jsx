@@ -11,13 +11,13 @@ import {
   StyledPrimaryButton,
 } from './styledComponents';
 
-const UserDashboard = ({ handleNav, messages }) => (
+const UserDashboard = ({ handleNav, matches }) => (
   <HiringContainer>
     <HiringHeader>Hiring Center</HiringHeader>
     <HiringSubtitle>Showcase your skills, get hired</HiringSubtitle>
     <ButtonContainer>
       <MessageContainer>
-        <MessageHeader>{messages} Matches</MessageHeader>
+        <MessageHeader>{matches} Matches</MessageHeader>
         <StyledPrimaryButton
           label="View Messages"
           onClick={() => handleNav('/messages')}
@@ -36,7 +36,7 @@ const UserDashboard = ({ handleNav, messages }) => (
 
 UserDashboard.propTypes = {
   handleNav: T.func.isRequired,
-  messages: T.number.isRequired,
+  matches: T.number.isRequired,
 };
 
 export default UserDashboard;

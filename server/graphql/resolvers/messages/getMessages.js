@@ -16,9 +16,21 @@ const getMessages = async (_, { authError, userId }) => {
      *  messages: [{}, ...],
      *  position: {},
      *  threadId: UUID,
+     *  unread: BOOLEAN
      * }, ...]
      */
-    const conversations = await getMessagesQuery({ userId });
+    const result = await getMessagesQuery({ userId });
+
+    const conversations = result.map(el => {
+      const { messages } = el;
+      let con = { ...el, unread: false };
+      messages.forEach(({ userId: fromUserId, readDate }) => {
+        if (readDate === null && fromUserId !== userId) {
+          con = { ...el, unread: true };
+        }
+      });
+      return con;
+    });
 
     return {
       __typename: 'ConversationArray',

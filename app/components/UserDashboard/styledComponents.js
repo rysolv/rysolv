@@ -24,6 +24,9 @@ export const DashboardWrapper = styled.div`
   ${laptopS} {
     flex-direction: column-reverse;
   }
+  ${mobile} {
+    padding-top: 0;
+  }
 `;
 
 export const IssuesContainer = styled.div`

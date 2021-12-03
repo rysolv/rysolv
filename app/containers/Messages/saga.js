@@ -7,8 +7,10 @@ import {
   fetchMessagesSuccess,
   sendMessageFailure,
   sendMessageSuccess,
+  setReadReceiptFailure,
+  setReadReceiptSuccess,
 } from './actions';
-import { FETCH_MESSAGES, SEND_MESSAGE } from './constants';
+import { FETCH_MESSAGES, SEND_MESSAGE, SET_READ_RECEIPT } from './constants';
 
 export function* fetchMessagesSaga() {
   const query = `
@@ -23,6 +25,7 @@ export function* fetchMessagesSaga() {
               messages
               position
               threadId
+              unread
             }
           }
           ...on Error {
@@ -66,6 +69,7 @@ export function* sendMessageSaga({ payload }) {
           profilePic
           readDate
           username
+          userId
         }
         ... on Error {
           message
@@ -87,7 +91,39 @@ export function* sendMessageSaga({ payload }) {
   }
 }
 
+export function* setReadReceiptSaga({ payload }) {
+  const { threadId } = payload;
+  const query = `
+    mutation{
+      setReadMessage(threadId: "${threadId}")
+      {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        setReadMessage: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+
+    yield put(setReadReceiptSuccess({ threadId }));
+  } catch (error) {
+    yield put(setReadReceiptFailure({ error: { message: error } }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(FETCH_MESSAGES, fetchMessagesSaga);
   yield takeLatest(SEND_MESSAGE, sendMessageSaga);
+  yield takeLatest(SET_READ_RECEIPT, setReadReceiptSaga);
 }

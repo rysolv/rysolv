@@ -84,3 +84,5 @@ export const SELECT_POSITION = 'app/CompanyDashboard/SELECT_POSITION';
 export const additionalInputDictionary = {
   location: 'isRemote',
 };
+
+export const messageSuccess = 'Your message has been delivered.';

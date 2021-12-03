@@ -37,8 +37,9 @@ import {
   FETCH_COMPANY_POSITIONS,
   FETCH_COMPANY,
   FETCH_POSITION_CANDIDATES,
-  FETCH_QUESTIONS,
   FETCH_POSITION,
+  FETCH_QUESTIONS,
+  messageSuccess,
   NOTIFY_CANDIDATE,
 } from './constants';
 
@@ -308,6 +309,7 @@ export function* fetchPositionCandidatesSaga({ payload }) {
         percentMatch
         profilePic
         salary
+        threadId
         type
         yearsOfExperience
       }
@@ -436,8 +438,8 @@ export function* notifyCandidateSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(notifyCandidateSuccess({ message }));
-    yield put(resetFormState());
+    yield put(notifyCandidateSuccess({ message: messageSuccess }));
+    yield put(resetFormState({category: 'scheduleInterview'}));
   } catch (error) {
     yield put(notifyCandidateFailure({ error: { message: error } }));
   }

@@ -4,11 +4,12 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
+import { makeSelectAuth } from 'containers/Auth/selectors';
 import AsyncRender from 'components/AsyncRender';
-import UserProfileComponent from 'components/UserProfile';
-import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
+import UserProfileComponent from 'components/UserProfile';
 
 import { fetchUserProfile } from './actions';
 import reducer from './reducer';
@@ -19,10 +20,11 @@ import {
 } from './selectors';
 
 const UserProfile = ({
+  activeUser,
   deviceView,
   dispatchFetchUserProfile,
   error,
-  isOverview,
+  isSignedIn,
   loading,
   params,
   user,
@@ -43,24 +45,28 @@ const UserProfile = ({
       error={error}
       isRequiredData
       loading={loading}
-      propsToPassDown={{ deviceView, isOverview }}
+      propsToPassDown={{ activeUser, deviceView, isSignedIn }}
     />
   );
 };
 
-UserProfile.defaultProps = { isOverview: false };
-
 UserProfile.propTypes = {
+  activeUser: T.object,
   deviceView: T.string.isRequired,
   dispatchFetchUserProfile: T.func.isRequired,
   error: T.string,
-  isOverview: T.bool,
+  isSignedIn: T.bool.isRequired,
   loading: T.bool.isRequired,
   params: T.string.isRequired,
   user: T.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
+  /**
+   * Reducer : Auth
+   */
+  activeUser: makeSelectAuth('activeUser'),
+  isSignedIn: makeSelectAuth('isSignedIn'),
   /*
    * Reducer : UserProfile
    */

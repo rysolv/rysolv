@@ -32,6 +32,7 @@ const UnsaveIcon = iconDictionary('bookmark');
 const CandidateCard = ({
   dispatchOpenModal,
   dispatchSaveCandidate,
+  handleNav,
   id,
   index,
   isInterviewRequested,
@@ -45,15 +46,22 @@ const CandidateCard = ({
   profilePic,
   salary,
   selectedPosition,
+  threadId,
   type,
   yearsOfExperience,
 }) => {
   const ButtonIcon = isInterviewRequested ? RemoveIcon : AddIcon;
-  const ButtonText = isInterviewRequested
-    ? `Cancel Interview`
-    : `Schedule Interview`;
+  const ButtonText = threadId ? `View Messages` : `Connect`;
   const CardIcon = isSaved ? UnsaveIcon : SaveIcon;
   const CardLabel = isSaved ? 'Unshortlist' : 'Shortlist';
+
+  const handleClick = () => {
+    if (threadId) {
+      handleNav(`/messages/${threadId}`);
+    } else {
+      dispatchOpenModal({ tableData });
+    }
+  };
 
   const tableData = { positionId: selectedPosition, userId: id };
 
@@ -104,7 +112,7 @@ const CandidateCard = ({
           </CandidateCardRow>
         </CandidateCardRows>
       </CandidateCardContent>
-      <CandidateCardButton onClick={() => dispatchOpenModal({ tableData })}>
+      <CandidateCardButton onClick={() => handleClick()}>
         {ButtonIcon} {ButtonText}
       </CandidateCardButton>
     </CandidateCardContainer>
@@ -114,6 +122,7 @@ const CandidateCard = ({
 CandidateCard.propTypes = {
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
+  handleNav: T.func.isRequired,
   id: T.string.isRequired,
   index: T.number.isRequired,
   isInterviewRequested: T.bool.isRequired,
@@ -127,6 +136,7 @@ CandidateCard.propTypes = {
   profilePic: T.string.isRequired,
   salary: T.string.isRequired,
   selectedPosition: T.string.isRequired,
+  threadId: T.string,
   type: T.string.isRequired,
   yearsOfExperience: T.string.isRequired,
 };

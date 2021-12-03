@@ -62,14 +62,16 @@ export function* fetchActiveUserSaga() {
           githubId
           id
           isGithubVerified
-          surveyComplete
           issues
           lastName
+          matches
           notifications
           profilePic
           pullRequests
           rep
           repos
+          surveyComplete
+          unreadMessages
           upvotes
           username
           watching

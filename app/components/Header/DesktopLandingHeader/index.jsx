@@ -9,9 +9,11 @@ import {
   InternalLink,
   Logo,
   LogoWrapper,
+  MessageLink,
   StyledPrimaryButton,
   StyledSecondaryButton,
   StyledUserNavBar,
+  UnreadMessages,
   VerticalDivider,
   Wordmark,
 } from './styledComponents';
@@ -25,25 +27,21 @@ const DesktopLandingHeader = ({
   handleSignout,
   isSignedIn,
 }) => {
-  const { company } = activeUser;
   let navLinks;
+  const isCompany = !!activeUser.company;
+  const { unreadMessages } = activeUser;
 
   if (isSignedIn) {
-    if (company) {
-      navLinks = (
-        <Fragment>
-          <InternalLink label="Dashboard" path="/company/dashboard" />
-          <InternalLink label="Messages" path="/messages" />
-        </Fragment>
-      );
-    } else {
-      navLinks = (
-        <Fragment>
-          <InternalLink label="Dashboard" path="/dashboard" />
-          <InternalLink label="Messages" path="/messages" />
-        </Fragment>
-      );
-    }
+    navLinks = (
+      <Fragment>
+        <InternalLink
+          label="Dashboard"
+          path={isCompany ? '/company/dashboard' : '/dashboard'}
+        />
+        <MessageLink label="Messages" path="/messages" />
+        {!!unreadMessages && <UnreadMessages>{unreadMessages}</UnreadMessages>}
+      </Fragment>
+    );
   } else {
     navLinks = (
       <Fragment>

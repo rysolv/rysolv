@@ -1,16 +1,13 @@
-const { setReadMessages: setReadMessagesQuery } = require('../../../db');
+const { setReadMessage: setReadMessagesQuery } = require('../../../db');
 const { readMessageError, readMessageSuccess } = require('./constants');
 const { CustomError, errorLogger } = require('../../../helpers');
 
-// Recieve an array of message IDs and mark them as read
-// This handles the case of multiple unread messages that
-// are viewed at the same time
-const setReadMessages = async ({ messageIds }, { authError, userId }) => {
+// Update read_dates for all unread messages
+const setReadMessage = async ({ threadId }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
-    console.log(messageIds);
 
-    await setReadMessagesQuery({ messageIds });
+    await setReadMessagesQuery({ createdDate: new Date(), threadId, userId });
 
     return {
       __typename: 'Success',
@@ -26,4 +23,4 @@ const setReadMessages = async ({ messageIds }, { authError, userId }) => {
   }
 };
 
-module.exports = setReadMessages;
+module.exports = setReadMessage;

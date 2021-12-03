@@ -5,6 +5,9 @@ import {
   SEND_MESSAGE_FAILURE,
   SEND_MESSAGE_SUCCESS,
   SEND_MESSAGE,
+  SET_READ_RECEIPT_FAILURE,
+  SET_READ_RECEIPT_SUCCESS,
+  SET_READ_RECEIPT,
 } from './constants';
 
 export function fetchMessagesFailure(payload) {
@@ -45,5 +48,26 @@ export function sendMessage(payload) {
   return {
     payload,
     type: SEND_MESSAGE,
+  };
+}
+
+export function setReadReceiptFailure(payload) {
+  return {
+    payload,
+    type: SET_READ_RECEIPT_FAILURE,
+  };
+}
+
+export function setReadReceiptSuccess(payload) {
+  return {
+    payload,
+    type: SET_READ_RECEIPT_SUCCESS,
+  };
+}
+
+export function setReadReceipt(payload) {
+  return {
+    payload,
+    type: SET_READ_RECEIPT,
   };
 }

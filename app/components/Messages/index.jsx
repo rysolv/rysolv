@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import T from 'prop-types';
 
 import CompanyProfile from './CompanyProfile';
@@ -14,15 +14,24 @@ import {
   ProfileWrapper,
 } from './styledComponents';
 
-const Messages = ({ activeUser, conversations, dispatchSendMessage }) => {
-  // Set most recent conversation as active
-  const [activeConversation, setActiveConversation] = useState(0);
+const Messages = ({
+  activeConversation,
+  activeUser,
+  conversations,
+  dispatchSendMessage,
+  dispatchSetReadReceipt,
+  handleNav,
+}) => {
   const [messageBody, setMessageBody] = useState('');
 
   const { id: activeUserId } = activeUser;
-  const { candidate, company, position, threadId } = conversations[
+  const { candidate, company, position, threadId, unread } = conversations[
     activeConversation
   ];
+
+  useEffect(() => {
+    if (unread) dispatchSetReadReceipt({ threadId });
+  }, [activeConversation]);
 
   const sendMessage = () => {
     dispatchSendMessage({
@@ -41,7 +50,7 @@ const Messages = ({ activeUser, conversations, dispatchSendMessage }) => {
           activeConversation={activeConversation}
           candidate={candidate}
           conversations={conversations}
-          setActiveConversation={setActiveConversation}
+          handleNav={handleNav}
         />
       </ConversationWrapper>
       <MessageWrapper>
@@ -64,9 +73,12 @@ const Messages = ({ activeUser, conversations, dispatchSendMessage }) => {
 };
 
 Messages.propTypes = {
-  activeUser: T.object,
-  conversations: T.array,
-  dispatchSendMessage: T.func,
+  activeConversation: T.number.isRequired,
+  activeUser: T.object.isRequired,
+  conversations: T.array.isRequired,
+  dispatchSendMessage: T.func.isRequired,
+  dispatchSetReadReceipt: T.func.isRequired,
+  handleNav: T.func.isRequired,
 };
 
 export default Messages;

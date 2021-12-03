@@ -28,6 +28,7 @@ export const HiringContainer = styled.div`
   border-radius: 1rem;
   color: ${whiteColor};
   padding: 2rem 3rem 0;
+  width: 100%;
 `;
 
 export const HiringHeader = styled.div`

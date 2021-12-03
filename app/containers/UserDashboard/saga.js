@@ -24,6 +24,7 @@ export function* fetchUserDashboardSaga() {
             isGithubVerified
             issues
             lastName
+            matches
             notifications
             preferredLanguages
             profilePic
@@ -31,6 +32,7 @@ export function* fetchUserDashboardSaga() {
             rep
             repos
             surveyComplete
+            unreadMessages
             upvotes
             username
             watching

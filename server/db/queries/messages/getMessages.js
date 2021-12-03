@@ -31,8 +31,10 @@ const getMessages = async ({ userId }) => {
         'lastName', u.last_name,
         'profilePic', u.profile_pic,
         'readDate', m.read_date,
+        'userId', u.id,
         'username', u.username
       )
+      ORDER BY m.created_date
     ) AS messages,
     JSONB_BUILD_OBJECT(
       'name', c.company_name,

@@ -81,7 +81,7 @@ const Routes = () => (
     <Route exact path="/issues/search/:searchValue" component={PublicOverview} />
     <Route exact path="/jobs" component={PublicJobs} />
     <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
-    <Route exact path="/messages" component={PrivateMessages} />
+    <Route exact path="/messages/:threadId?" component={PrivateMessages} />
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
     <Route exact path="/profile/:user" component={PublicUserProfile} />

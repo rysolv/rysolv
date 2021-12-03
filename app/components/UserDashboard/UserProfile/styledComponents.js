@@ -4,7 +4,7 @@ import { blueColor, successGreen } from 'defaultStyleHelper';
 
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile } = mediaQueriesByDevice;
+const { mobile, tablet } = mediaQueriesByDevice;
 
 export const AddSkillButton = styled(PrimaryButton)`
   background: transparent;
@@ -35,10 +35,16 @@ export const ProfileDetailItem = styled.div`
 export const ProfilePicture = styled.img`
   border-radius: 50%;
   height: 25rem;
+  margin-bottom: 3rem;
   width: 25rem;
+
+  ${tablet} {
+    margin: 3rem 0;
+  }
 
   ${mobile} {
     height: 15rem;
+    margin: 3rem 0;
     width: 15rem;
   }
 `;

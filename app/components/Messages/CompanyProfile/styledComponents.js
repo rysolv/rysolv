@@ -23,7 +23,7 @@ export const Description = styled.div`
   margin-top: 1rem;
 `;
 
-export const Logo = styled.div`
+export const Logo = styled.img`
   background-color: grey;
   border-radius: 50%;
   height: 10rem;

@@ -1,13 +1,15 @@
 const { singleQuery } = require('../../baseQueries');
 
-const createMessage = async ({ createdDate, messageIds }) => {
+const setReadMessage = async ({ createdDate, threadId, userId }) => {
   const queryText = `
     UPDATE messages
     SET read_date = $1
-    WHERE id IN $2
+    WHERE thread_id = $2
+    AND read_date IS NULL
+    AND from_user_id != $3
   `;
 
-  await singleQuery({ queryText, values: [createdDate, messageIds] });
+  await singleQuery({ queryText, values: [createdDate, threadId, userId] });
 };
 
-module.exports = createMessage;
+module.exports = setReadMessage;

@@ -1,7 +1,7 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { BackNav } from 'components/base_ui';
+import { ConditionalRender, BackNav } from 'components/base_ui';
 import { formatUrlLinks } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -26,20 +26,29 @@ const GithubIcon = iconDictionary('github');
 const PersonalIcon = iconDictionary('link');
 const StackoverflowIcon = iconDictionary('stackoverflow');
 
-const UserProfile = ({ data }) => {
+const UserProfile = ({ activeUser, data, isSignedIn }) => {
   const {
     firstName,
     githubLink,
+    hiringStatus,
     lastName,
     personalLink,
     profilePic,
     stackoverflowLink,
-    hiringStatus,
   } = data;
 
+  const isCompany = activeUser && activeUser.company;
   return (
     <ProfileWrapper>
-      <BackNav label="Back to Dashboard" path="/dashboard" />
+      <ConditionalRender
+        Component={
+          <BackNav
+            label="Back to Dashboard"
+            path={isCompany ? '/company/dashboard' : '/dashboard'}
+          />
+        }
+        shouldRender={isSignedIn}
+      />
       <ProfileContainer>
         <ProfileColumn>
           <ProfilePicture src={profilePic} />
@@ -91,7 +100,9 @@ const UserProfile = ({ data }) => {
 };
 
 UserProfile.propTypes = {
+  activeUser: T.object.isRequired,
   data: T.object.isRequired,
+  isSignedIn: T.bool.isRequired,
 };
 
 export default UserProfile;

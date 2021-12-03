@@ -33,11 +33,12 @@ const createMessage = async ({ data }) => {
         read_date
       )
       SELECT
-        nm.id,
         nm.body,
         nm.created_date AS "createdDate",
+        nm.id,
         nm.read_date AS "readDate",
         u.first_name AS "firstName",
+        u.id AS "userId",
         u.last_name AS "lastName",
         u.profile_pic AS "profilePic",
         u.username

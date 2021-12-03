@@ -19,9 +19,14 @@ import {
   StyledPrimaryButton,
 } from './styledComponents';
 
-const UserDashboard = ({ data, dispatchSetHiringStatus, handleNav }) => {
-  const { hiringStatus, issues, surveyComplete } = data;
-
+const UserDashboard = ({
+  data,
+  dispatchSetHiringStatus,
+  handleNav,
+  deviceView,
+}) => {
+  const { hiringStatus, issues, surveyComplete, matches } = data;
+  const isMobileOrTablet = deviceView === 'mobile' || deviceView === 'tablet';
   const issueCards = issues.map(el => (
     <IssueCard
       data={{
@@ -43,17 +48,21 @@ const UserDashboard = ({ data, dispatchSetHiringStatus, handleNav }) => {
           Component={HiringHeader}
           propsToPassDown={{
             handleNav,
-            messages: 3,
+            matches,
           }}
-          shouldRender={surveyComplete}
+          shouldRender={surveyComplete && !isMobileOrTablet}
         />
         <ConditionalRender
           Component={HiringBanner}
           propsToPassDown={{
-            handleNav,
             dispatchSetHiringStatus,
+            handleNav,
           }}
-          shouldRender={!surveyComplete && hiringStatus === 'undeclared'}
+          shouldRender={
+            !surveyComplete &&
+            hiringStatus === 'undeclared' &&
+            !isMobileOrTablet
+          }
         />
         <IssuesContainer>
           <IssuesHeader>Issues</IssuesHeader>
@@ -68,6 +77,25 @@ const UserDashboard = ({ data, dispatchSetHiringStatus, handleNav }) => {
         </ButtonContainer>
       </LeftColumn>
       <ProfileColumn>
+        {/* Hiring header is moved to profileColumn on mobile */}
+        <ConditionalRender
+          Component={HiringHeader}
+          propsToPassDown={{
+            handleNav,
+            matches,
+          }}
+          shouldRender={surveyComplete && isMobileOrTablet}
+        />
+        <ConditionalRender
+          Component={HiringBanner}
+          propsToPassDown={{
+            handleNav,
+            dispatchSetHiringStatus,
+          }}
+          shouldRender={
+            !surveyComplete && hiringStatus === 'undeclared' && isMobileOrTablet
+          }
+        />
         <UserProfile
           data={data}
           dispatchSetHiringStatus={dispatchSetHiringStatus}
@@ -80,6 +108,7 @@ const UserDashboard = ({ data, dispatchSetHiringStatus, handleNav }) => {
 
 UserDashboard.propTypes = {
   data: T.object.isRequired,
+  deviceView: T.string.isRequired,
   dispatchSetHiringStatus: T.func.isRequired,
   handleNav: T.func.isRequired,
 };

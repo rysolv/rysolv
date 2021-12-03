@@ -156,6 +156,7 @@ export function* fetchInfoSaga({ payload }) {
           isGithubVerified
           issues
           lastName
+          matches
           personalLink
           preferredLanguages
           profilePic
@@ -164,6 +165,7 @@ export function* fetchInfoSaga({ payload }) {
           rep
           repos
           stackoverflowLink
+          unreadMessages
           username
           watching
         }

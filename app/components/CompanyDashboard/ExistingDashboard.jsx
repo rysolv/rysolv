@@ -48,11 +48,12 @@ const ExistingDashboard = ({
         <CandidateCardGroup>
           {data.map((candidate, index) => (
             <CandidateCard
-              key={`candidate-${index}`}
               dispatchOpenModal={dispatchOpenModal}
               dispatchSaveCandidate={dispatchSaveCandidate}
+              handleNav={handleNav}
               index={index}
               isLast={data.length - 1 === index}
+              key={`candidate-${index}`}
               selectedPosition={selectedPosition}
               {...candidate}
             />

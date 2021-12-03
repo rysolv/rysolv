@@ -104,6 +104,7 @@ module.exports = buildSchema(`
     messages: [Object]
     position: Object
     threadId: ID
+    unread: Boolean
   }
 
   type ConversationArray {
@@ -222,8 +223,8 @@ module.exports = buildSchema(`
   input MessageInput {
     body: String!
     positionId: ID!
-    toUserId: ID!
     threadId: ID
+    toUserId: ID!
   }
 
   type MessageResponse {
@@ -235,6 +236,7 @@ module.exports = buildSchema(`
     profilePic: String!
     readDate: Object
     username: String!
+    userId: ID!
   }
 
   type Payment {
@@ -402,13 +404,14 @@ module.exports = buildSchema(`
     id: ID!
     isGithubVerified: Boolean
     isHired: Boolean
-    languages: [String]
     isInterviewRequested: Boolean
     isSaved: Boolean
     issues: [Object]
+    languages: [String]
     lastName: String
     lastPosition: String
     location: String
+    matches: Int
     modifiedDate: Object
     notifications: Boolean
     percentMatch: Float
@@ -423,7 +426,9 @@ module.exports = buildSchema(`
     salary: String
     stackoverflowLink: String
     surveyComplete: Boolean
+    threadId: ID
     type: String
+    unreadMessages: Int
     upvotes: [ID]
     username: String
     watching: [Object]
@@ -590,6 +595,7 @@ module.exports = buildSchema(`
     sendContact(contactInput: ContactInput): EventResponse!
 
     setHiringStatus(hiringStatus: String!): EventResponse!
+    setReadMessage(threadId: String!): EventResponse!
 
     signIn(password: String!, username: String!): SignInResult!
     signOut: EventResponse!
