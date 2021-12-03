@@ -35,8 +35,8 @@ const ForgotPassword = ({
   return (
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
-        <Title hasSubText>Forgot your password?</Title>
         <InputFormContent>
+          <Title hasSubText>Forgot your password?</Title>
           {error && (
             <StyledErrorSuccessBanner
               error={error}
@@ -65,13 +65,13 @@ const ForgotPassword = ({
               value={email.value}
             />
           </TextInputWrapper>
-          <StyledPrimaryAsyncButton
-            disabled={sendLinkDisabled}
-            label="Send code"
-            loading={loading}
-            onClick={handleSendLink}
-          />
         </InputFormContent>
+        <StyledPrimaryAsyncButton
+          disabled={sendLinkDisabled}
+          label="Send code"
+          loading={loading}
+          onClick={handleSendLink}
+        />
       </InputFormWrapper>
     </SigninWrapper>
   );

@@ -30,6 +30,11 @@ export const ButtonGroup = styled.div`
   overflow: clip;
 `;
 
+export const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const Divider = styled.div`
   align-self: center;
   background-color: ${borderColor};
@@ -76,6 +81,7 @@ export const InputFormWrapper = styled.div`
   justify-content: space-between;
   margin: 5rem auto 0;
   max-width: 75rem;
+  min-height: 38rem;
   padding: 7.5rem 10%;
   text-align: center;
   width: 100%;

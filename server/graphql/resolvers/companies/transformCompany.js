@@ -31,6 +31,8 @@ const transformCompany = async ({ companyInput }, { authError, userId }) => {
         const { uploadUrl } = await uploadImage(formattedLogo);
         logo = uploadUrl;
       }
+    } else {
+      logo = undefined;
     }
 
     const companyData = {

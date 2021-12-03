@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import T from 'prop-types';
 
 import {
@@ -7,6 +7,7 @@ import {
   UpdatedPasswordTextInput,
   UpdatedTextInput,
 } from 'components/base_ui';
+import { getParameterByName } from 'utils/globalHelpers';
 
 import {
   ButtonGroup,
@@ -31,16 +32,23 @@ const Signup = ({
   error,
   handleClearAuthAlerts,
   handleInputChange,
+  handleNav,
   handleSignUp,
   handleValidateInput,
   loading,
   signUpDisabled,
 }) => {
-  const [selected, setSelected] = useState('Developer');
+  const [selected, setSelected] = useState('');
+  const location = useLocation();
+
+  useEffect(() => {
+    const type = getParameterByName('type');
+    setSelected(type || 'developer');
+  }, [location]);
 
   const handleKeypress = ({ key }) => {
     if (key === 'Enter' && !signUpDisabled) {
-      handleSignUp({ isCompany: selected === 'Employer' });
+      handleSignUp({ isCompany: selected === 'company' });
     }
   };
   return (
@@ -57,15 +65,15 @@ const Signup = ({
           <ButtonGroup>
             <UserTypeButton
               disableRipple
-              isSelected={selected === 'Developer'}
+              isSelected={selected === 'developer'}
               label="Developer"
-              onClick={() => setSelected('Developer')}
+              onClick={() => handleNav('/signup?type=developer')}
             />
             <UserTypeButton
               disableRipple
-              isSelected={selected === 'Employer'}
+              isSelected={selected === 'company'}
               label="Employer"
-              onClick={() => setSelected('Employer')}
+              onClick={() => handleNav('/signup?type=company')}
             />
           </ButtonGroup>
           <UpdatedTextInput
@@ -179,6 +187,7 @@ Signup.propTypes = {
   error: T.oneOfType([T.bool, T.object]).isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
+  handleNav: T.func.isRequired,
   handleSignUp: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   loading: T.bool.isRequired,

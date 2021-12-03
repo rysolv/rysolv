@@ -47,7 +47,7 @@ const createUser = async ({
       const userCompanyValues = [companyId, id, userId];
       await createCompany({ data });
       await insertUserCompany({ values: userCompanyValues });
-      result = { ...result, companyId };
+      result = { ...result, company: { companyId } };
     }
 
     return {

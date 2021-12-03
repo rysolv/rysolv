@@ -28,17 +28,17 @@ const ResetPasswordFailure = ({ error: { message }, handleReturnToSignIn }) => {
       tabIndex="0"
     >
       <InputFormWrapper>
-        <Title hasSubText>Password reset failed</Title>
         <InputFormContent>
+          <Title hasSubText>Password reset failed</Title>
           <ResetSubText hasFlex>
             <IconWrapper isError>{ErrorIcon}</IconWrapper>
             <MessageWrapper>{message}</MessageWrapper>
           </ResetSubText>
-          <StyledPrimaryButton
-            label="Return to sign in"
-            onClick={handleReturnToSignIn}
-          />
         </InputFormContent>
+        <StyledPrimaryButton
+          label="Return to sign in"
+          onClick={handleReturnToSignIn}
+        />
       </InputFormWrapper>
     </SigninWrapper>
   );
