@@ -119,7 +119,6 @@ export const StyledLoginLink = styled(BaseLink)`
   font-size: 1.376rem;
   font-weight: 700;
   line-height: 1.665rem;
-  padding-left: 0.4rem;
 
   &:hover {
     color: ${darkBlueColor};
@@ -127,6 +126,8 @@ export const StyledLoginLink = styled(BaseLink)`
 `;
 
 export const StyledMenu = styled(Menu)`
+  position: absolute !important;
+
   .MuiList-padding {
     height: 100%;
     width: 100% !important;
@@ -145,6 +146,7 @@ export const StyledMenu = styled(Menu)`
     height: 14.3rem;
     margin-top: 1.9rem;
     overflow: hidden;
+    top: 5.5rem !important;
     width: 17.7rem;
   }
 `;

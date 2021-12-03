@@ -53,7 +53,7 @@ const baseInputTextStyle = css`
 export const ButtonGroup = styled.div`
   display: flex;
   margin-left: 2rem;
-  margin-top: 3.7rem;
+  margin-top: 4.8rem;
 `;
 
 export const CompanySettingsContainer = styled.div`
@@ -123,6 +123,7 @@ export const StyledIconButton = styled(IconButton)`
   align-self: center;
   display: flex;
   margin-left: 1.6rem;
+  margin-top: 2.4rem;
   padding: 0;
 
   &:hover {

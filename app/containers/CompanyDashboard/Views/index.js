@@ -35,10 +35,10 @@ import {
   resetFormState,
   saveCandidate,
   selectPosition,
-} from './actions';
-import { validateFields, validateOneField } from './helpers';
-import reducer from './reducer';
-import saga from './saga';
+} from '../actions';
+import { validateFields, validateOneField } from '../helpers';
+import reducer from '../reducer';
+import saga from '../saga';
 import {
   makeSelectCompanyDashboard,
   makeSelectCompanyDashboardCandidates,
@@ -47,9 +47,9 @@ import {
   makeSelectCompanyDashboardQuestions,
   makeSelectCompanyDashboardResponseArray,
   makeSelectCompanyDashboardView,
-} from './selectors';
-import { VerticalDivider, ViewContainer } from './styledComponents';
-import viewDictionary from './viewDictionary';
+} from '../selectors';
+import { VerticalDivider, ViewContainer } from '../styledComponents';
+import viewDictionary from '../viewDictionary';
 
 const CompanyDashboard = ({
   activeUser,

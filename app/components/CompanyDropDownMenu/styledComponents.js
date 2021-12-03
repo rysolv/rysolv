@@ -9,7 +9,7 @@ import { BaseLink } from '../base_ui/Links';
 export const HorizontalDivider = styled.div`
   border-bottom: 0.1rem solid #000000;
   height: 0rem;
-  margin: -0.2rem 0 1.9rem;
+  margin: 0.4rem 0 1.3rem;
   opacity: 0.2;
   width: 100%;
 `;
@@ -33,7 +33,7 @@ export const StyledLoginButton = styled(Button)`
   justify-content: left;
   line-height: 1.665rem;
   margin-bottom: 1.5rem;
-  padding: 0 0 0 0.4rem;
+  padding: 0;
   text-transform: initial;
 
   &:hover {
@@ -43,6 +43,8 @@ export const StyledLoginButton = styled(Button)`
 `;
 
 export const StyledMenu = styled(Menu)`
+  position: absolute !important;
+
   .MuiList-padding {
     height: 100%;
     width: 100% !important;
@@ -61,6 +63,7 @@ export const StyledMenu = styled(Menu)`
     height: 14.3rem;
     margin-top: 1.9rem;
     overflow: hidden;
+    top: 5.5rem !important;
     width: 17.7rem;
   }
 `;

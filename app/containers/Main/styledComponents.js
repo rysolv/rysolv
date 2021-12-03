@@ -3,17 +3,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { ModalDialog } from 'components/base_ui';
-import { blueColor } from 'defaultStyleHelper';
+import { blueColor, whiteColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile, tablet } = mediaQueriesByDevice;
 
 export const AppBodyWrapper = styled.div`
-  background: ${({ isLandingOrRecruitmentPage }) => isLandingOrRecruitmentPage ? blueColor : 'inherit'};
+  background: ${({ hasBlueBackground }) => hasBlueBackground ? blueColor : whiteColor};
   display: flex;
   flex-direction: column;
   flex: 1;
+  overflow: hidden;
   padding-bottom: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? '0' : '8rem')};
+  position: relative;
 `;
 
 export const AppContentWrapper = styled.div`
@@ -24,6 +26,8 @@ export const AppContentWrapper = styled.div`
 export const RoutesWrapper = styled.section`
   display: flex;
   justify-content: center;
+  margin: auto;
+  max-width: 120rem;
   padding: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? '0' : '0 5% 3.6rem 5%')};
   width: 100%;
 

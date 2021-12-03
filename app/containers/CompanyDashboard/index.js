@@ -7,7 +7,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 
 import { makeSelectAuth } from 'containers/Auth/selectors';
 
-import CompanyDashboardView from './CompanyDashboardView';
+import CompanyDashboardView from './Views';
 
 const CompanyDashboard = ({ activeUser }) => {
   const {

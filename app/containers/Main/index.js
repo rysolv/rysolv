@@ -99,6 +99,14 @@ class Main extends React.PureComponent {
       pathname === '/signin' ||
       pathname === '/signup';
     const isPaymentModal = modal === 'fundIssue';
+    const hasBlueBackground =
+      pathname === '/' ||
+      pathname === '/how-we-score-code' ||
+      pathname === '/jobs' ||
+      pathname === '/password-reset' ||
+      pathname === '/recruitment' ||
+      pathname === '/signin' ||
+      pathname === '/signup';
     const modalPropsDictionary = {
       closeIssue: {
         Component: CloseIssueModal,
@@ -174,7 +182,10 @@ class Main extends React.PureComponent {
     };
     return (
       <Fragment>
-        <AppBodyWrapper isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}>
+        <AppBodyWrapper
+          hasBlueBackground={hasBlueBackground}
+          isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}
+        >
           <Header
             activeUser={activeUser}
             deviceView={deviceView}

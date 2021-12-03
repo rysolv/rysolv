@@ -5,6 +5,7 @@ import iconDictionary from 'utils/iconDictionary';
 
 import {
   ButtonWrapper,
+  ComponentContainer,
   DesktopHeaderContainer,
   InternalLink,
   Logo,
@@ -25,35 +26,37 @@ const DesktopLandingHeader = ({
   handleSignout,
   isSignedIn,
 }) => (
-  <DesktopHeaderContainer>
-    <LogoWrapper onClick={() => handleNav('/')}>
-      <Logo>{SiteLogo}</Logo>
-      <Wordmark>{SiteWordmark}</Wordmark>
-    </LogoWrapper>
-    <ButtonWrapper>
-      <InternalLink label="Dashboard" path="/dashboard" />
-      <InternalLink label="Hire engineers" path="/recruitment" />
-      <VerticalDivider />
-      {isSignedIn ? (
-        <StyledUserNavBar
-          activeUser={activeUser}
-          handleNav={handleNav}
-          handleSignout={handleSignout}
-        />
-      ) : (
-        <Fragment>
-          <StyledSecondaryButton
-            label="Sign up"
-            onClick={() => handleNav('/signup')}
+  <ComponentContainer>
+    <DesktopHeaderContainer>
+      <LogoWrapper onClick={() => handleNav('/')}>
+        <Logo>{SiteLogo}</Logo>
+        <Wordmark>{SiteWordmark}</Wordmark>
+      </LogoWrapper>
+      <ButtonWrapper>
+        <InternalLink label="Dashboard" path="/dashboard" />
+        <InternalLink label="Hire engineers" path="/recruitment" />
+        <VerticalDivider />
+        {isSignedIn ? (
+          <StyledUserNavBar
+            activeUser={activeUser}
+            handleNav={handleNav}
+            handleSignout={handleSignout}
           />
-          <StyledPrimaryButton
-            label="Log in"
-            onClick={() => handleNav('/signin')}
-          />
-        </Fragment>
-      )}
-    </ButtonWrapper>
-  </DesktopHeaderContainer>
+        ) : (
+          <Fragment>
+            <StyledSecondaryButton
+              label="Sign up"
+              onClick={() => handleNav('/signup')}
+            />
+            <StyledPrimaryButton
+              label="Log in"
+              onClick={() => handleNav('/signin')}
+            />
+          </Fragment>
+        )}
+      </ButtonWrapper>
+    </DesktopHeaderContainer>
+  </ComponentContainer>
 );
 
 DesktopLandingHeader.propTypes = {
