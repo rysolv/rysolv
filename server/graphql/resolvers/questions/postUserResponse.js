@@ -8,7 +8,6 @@ const {
 } = require('../../../helpers');
 const {
   createPositionTechStack,
-  getOneTechnology,
   postUserResponse: postUserResponseQuery,
 } = require('../../../db');
 const {
@@ -27,12 +26,9 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
           // Language / Frameworks stored in techstack table
           if (questionKey === 'skills') {
             const { beginner, expert, intermediate, skill } = value;
-            const { technologyId } = await getOneTechnology({
-              technology: skill,
-            });
             await createPositionTechStack({
               level: generatePositionLevel({ beginner, expert, intermediate }),
-              technologyId,
+              technology: skill,
             });
           } else if (questionKey === 'preferred_languages') {
             // Removing preferred lang

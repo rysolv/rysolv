@@ -38,7 +38,7 @@ export const StyledUserNavBar = styled.div`
   padding: 0.25rem 0.5rem;
 
   &:hover {
-    cursor: pointer;
     border-color: #1a2327;
+    cursor: pointer;
   }
 `;
