@@ -1,10 +1,11 @@
 const { singleQuery } = require('../../baseQueries');
 
-const matchCandidates = async ({ positionId }) => {
+const matchCandidates = async ({ positionId, userId }) => {
   const queryText = `
     WITH matching_users AS (
-      SELECT ID FROM users
+      SELECT id FROM users
       WHERE is_deleted = false
+      AND id != $2
       LIMIT 10
     )
     INSERT INTO candidate_positions(
@@ -19,8 +20,10 @@ const matchCandidates = async ({ positionId }) => {
     FROM matching_users
   `;
 
-  const { rows } = await singleQuery({ queryText, values: [positionId] });
-  return rows;
+  await singleQuery({
+    queryText,
+    values: [positionId, userId],
+  });
 };
 
 module.exports = matchCandidates;

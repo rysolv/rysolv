@@ -15,7 +15,6 @@ const getPositionCandidates = async ({ positionId }, { authError, userId }) => {
       languages: ['JavaScript', 'Python', 'Java'],
       lastPosition: 'Lead Software Engineer at Rysolv',
       location: 'San Francisco, CA',
-      percentMatch: 80,
       salary: '$180,000',
       type: 'full-time',
       yearsOfExperience: '2-5 years',
