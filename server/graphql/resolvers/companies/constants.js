@@ -2,6 +2,10 @@ const createMessageError = `Something went wrong when sending your message.`;
 
 const createMessageSuccess = `The candidate has successfully been notified.`;
 
+const matchCandidatesError = 'Something went wrong matching candidates.';
+
+const matchCandidatesSuccess = 'Successfully matched candidates';
+
 const oneCompanyError = `Something went wrong when getting your company.`;
 
 const onePositionError = `Something went wrong when getting this position.`;
@@ -23,6 +27,8 @@ const transformPositionSuccess = `Your position has successfully been edited.`;
 module.exports = {
   createMessageError,
   createMessageSuccess,
+  matchCandidatesError,
+  matchCandidatesSuccess,
   oneCompanyError,
   onePositionError,
   postContractAcceptedError,

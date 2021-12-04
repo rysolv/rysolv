@@ -33,6 +33,9 @@ import {
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
   INPUT_ERROR,
+  MATCH_CANDIDATES_FAILURE,
+  MATCH_CANDIDATES_SUCCESS,
+  MATCH_CANDIDATES,
   NOTIFY_CANDIDATE_FAILURE,
   NOTIFY_CANDIDATE_SUCCESS,
   NOTIFY_CANDIDATE,
@@ -262,6 +265,27 @@ export function inputError(payload) {
   return {
     payload,
     type: INPUT_ERROR,
+  };
+}
+
+export function matchCandidates(payload) {
+  return {
+    payload,
+    type: MATCH_CANDIDATES,
+  };
+}
+
+export function matchCandidatesFailure(payload) {
+  return {
+    payload,
+    type: MATCH_CANDIDATES_FAILURE,
+  };
+}
+
+export function matchCandidatesSuccess(payload) {
+  return {
+    payload,
+    type: MATCH_CANDIDATES_SUCCESS,
   };
 }
 

@@ -16,6 +16,7 @@ const {
   getOnePosition,
   getPositionCandidates,
   insertUserCompany,
+  matchCandidates,
   postContractAccepted,
   transformCompany,
 } = require('./queries/companies');
@@ -193,6 +194,7 @@ module.exports = {
   insertGitUser,
   insertUserCompany,
   insertUserEmail,
+  matchCandidates,
   postContractAccepted,
   postUserResponse,
   removeAttempting,

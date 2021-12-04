@@ -66,6 +66,12 @@ export const FETCH_QUESTIONS_SUCCESS =
 
 export const INPUT_ERROR = 'app/CompanyDashboard/INPUT_ERROR';
 
+export const MATCH_CANDIDATES = 'app/CompanyDashboard/MATCH_CANDIDATES';
+export const MATCH_CANDIDATES_FAILURE =
+  'app/CompanyDashboard/MATCH_CANDIDATES_FAILURE';
+export const MATCH_CANDIDATES_SUCCESS =
+  'app/CompanyDashboard/MATCH_CANDIDATES_SUCCESS';
+
 export const NOTIFY_CANDIDATE = 'app/CompanyDashboard/NOTIFY_CANDIDATE';
 export const NOTIFY_CANDIDATE_FAILURE =
   'app/CompanyDashboard/NOTIFY_CANDIDATE_FAILURE';

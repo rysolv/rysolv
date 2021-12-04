@@ -30,6 +30,7 @@ import {
   fetchPositionCandidates,
   fetchQuestions,
   inputError,
+  matchCandidates,
   notifyCandidate,
   openModalState,
   resetFormState,
@@ -86,6 +87,7 @@ const CompanyDashboard = ({
   handleNav,
   isModalOpen,
   loading,
+  matchCandidatesLoading,
   positions,
   positionTitle,
   responseArray,
@@ -203,6 +205,7 @@ const CompanyDashboard = ({
         handleNav={handleNav}
         handleValidateInput={handleValidateInput}
         loading={loading}
+        matchCandidatesLoading={matchCandidatesLoading}
         positions={positions}
         positionTitle={positionTitle}
         selectedPosition={selectedPosition}
@@ -261,6 +264,7 @@ CompanyDashboard.propTypes = {
   handleNav: T.func.isRequired,
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
+  matchCandidatesLoading: T.bool.isRequired,
   positions: T.array.isRequired,
   positionTitle: T.string,
   responseArray: T.array.isRequired,
@@ -291,6 +295,7 @@ const mapStateToProps = createStructuredSelector({
   formErrors: makeSelectCompanyDashboard('formErrors'),
   isModalOpen: makeSelectCompanyDashboard('isModalOpen'),
   loading: makeSelectCompanyDashboardLoading('main'),
+  matchCandidatesLoading: makeSelectCompanyDashboardLoading('matchCandidates'),
   positions: makeSelectCompanyDashboard('positions'),
   positionTitle: makeSelectCompanyDashboardPosition('title'),
   responseArray: makeSelectCompanyDashboardResponseArray(),
@@ -325,6 +330,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchPositionCandidates(payload)),
   dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),
+  dispatchMatchCandidates: payload => dispatch(matchCandidates(payload)),
   dispatchNotifyCandidate: payload => dispatch(notifyCandidate(payload)),
   dispatchOpenModal: payload => dispatch(openModalState(payload)),
   dispatchResetFormState: payload => dispatch(resetFormState(payload)),

@@ -40,6 +40,9 @@ import {
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
   INPUT_ERROR,
+  MATCH_CANDIDATES_FAILURE,
+  MATCH_CANDIDATES_SUCCESS,
+  MATCH_CANDIDATES,
   NOTIFY_CANDIDATE_FAILURE,
   NOTIFY_CANDIDATE_SUCCESS,
   NOTIFY_CANDIDATE,
@@ -107,6 +110,7 @@ export const initialState = {
   loading: {
     fetchQuestions: true,
     main: false,
+    matchCandidates: false,
   },
   positions: [],
   questions: {
@@ -337,6 +341,23 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       fields.forEach(field => {
         draft.formErrors[form][field] = errors[field] || '';
       });
+      break;
+    }
+    case MATCH_CANDIDATES_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.matchCandidates = false;
+      break;
+    }
+    case MATCH_CANDIDATES_SUCCESS: {
+      const { message } = payload;
+      draft.alerts.success = { message };
+      draft.loading.matchCandidates = false;
+      break;
+    }
+    case MATCH_CANDIDATES: {
+      draft.alerts = initialState.alerts;
+      draft.loading.matchCandidates = true;
       break;
     }
     case NOTIFY_CANDIDATE_FAILURE: {

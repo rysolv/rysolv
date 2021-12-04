@@ -16,6 +16,7 @@ const CompanyDashboard = ({
   filter,
   handleNav,
   loading,
+  matchCandidatesLoading,
   positions,
   positionTitle,
   selectedPosition,
@@ -34,6 +35,7 @@ const CompanyDashboard = ({
           dispatchSaveCandidate,
           filter,
           handleNav,
+          matchCandidatesLoading,
           positionTitle,
           selectedPosition,
         }}
@@ -52,6 +54,7 @@ CompanyDashboard.propTypes = {
   filter: T.object.isRequired,
   handleNav: T.func.isRequired,
   loading: T.bool.isRequired,
+  matchCandidatesLoading: T.bool.isRequired,
   positions: T.array.isRequired,
   positionTitle: T.string,
   selectedPosition: T.string.isRequired,

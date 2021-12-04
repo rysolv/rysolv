@@ -6,6 +6,7 @@ import { ConditionalRender } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import CandidateCard from './CandidateCard';
+import CandidatesLoading from './CandidatesLoading';
 import CompanyDashboardTabs from './CompanyDashboardTabs';
 import EmptyCandidateDashboard from './EmptyCandidateDashboard';
 import {
@@ -24,25 +25,11 @@ const ExistingDashboard = ({
   dispatchSaveCandidate,
   filter,
   handleNav,
+  matchCandidatesLoading,
   positionTitle,
   selectedPosition,
-}) => (
-  <CompanyDashboardContainer>
-    <CompanyDashboardTitle>
-      {positionTitle}
-      <StyledIconButton
-        disableRipple
-        onClick={() =>
-          handleNav(`/company/dashboard/edit-position?id=${selectedPosition}`)
-        }
-      >
-        {EditIcon}
-      </StyledIconButton>
-    </CompanyDashboardTitle>
-    <CompanyDashboardTabs
-      dispatchChangeFilter={dispatchChangeFilter}
-      filter={filter}
-    />
+}) => {
+  const CandidateCards = (
     <ConditionalRender
       Component={
         <CandidateCardGroup>
@@ -63,8 +50,32 @@ const ExistingDashboard = ({
       FallbackComponent={EmptyCandidateDashboard}
       shouldRender={!!data.length}
     />
-  </CompanyDashboardContainer>
-);
+  );
+  return (
+    <CompanyDashboardContainer>
+      <CompanyDashboardTitle>
+        {positionTitle}
+        <StyledIconButton
+          disableRipple
+          onClick={() =>
+            handleNav(`/company/dashboard/edit-position?id=${selectedPosition}`)
+          }
+        >
+          {EditIcon}
+        </StyledIconButton>
+      </CompanyDashboardTitle>
+      <CompanyDashboardTabs
+        dispatchChangeFilter={dispatchChangeFilter}
+        filter={filter}
+      />
+      <ConditionalRender
+        Component={CandidateCards}
+        shouldRender={!matchCandidatesLoading}
+        FallbackComponent={CandidatesLoading}
+      />
+    </CompanyDashboardContainer>
+  );
+};
 
 ExistingDashboard.propTypes = {
   data: T.array.isRequired,
@@ -73,6 +84,7 @@ ExistingDashboard.propTypes = {
   dispatchSaveCandidate: T.func.isRequired,
   filter: T.object.isRequired,
   handleNav: T.func.isRequired,
+  matchCandidatesLoading: T.bool.isRequired,
   positionTitle: T.string.isRequired,
   selectedPosition: T.string.isRequired,
 };

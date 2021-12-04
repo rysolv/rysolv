@@ -22,9 +22,12 @@ import {
   fetchPositionCandidatesFailure,
   fetchPositionCandidatesSuccess,
   fetchPositionFailure,
+  fetchPositionSuccess,
   fetchQuestionsFailure,
   fetchQuestionsSuccess,
-  fetchPositionSuccess,
+  matchCandidates,
+  matchCandidatesFailure,
+  matchCandidatesSuccess,
   notifyCandidateFailure,
   notifyCandidateSuccess,
   resetFormState,
@@ -39,6 +42,7 @@ import {
   FETCH_POSITION_CANDIDATES,
   FETCH_POSITION,
   FETCH_QUESTIONS,
+  MATCH_CANDIDATES,
   messageSuccess,
   NOTIFY_CANDIDATE,
 } from './constants';
@@ -94,6 +98,7 @@ export function* createPositionSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(createPositionSuccess({ message }));
     yield put(fetchCompanyPositions({ companyId }));
+    yield put(matchCandidates({ positionId }));
     yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(createPositionFailure({ error: { message: error } }));
@@ -405,6 +410,35 @@ export function* fetchQuestionsSaga({ payload }) {
   }
 }
 
+export function* matchCandidatesSaga({ payload }) {
+  const { positionId } = payload;
+  const query = `
+    mutation{
+      matchCandidates(positionId: "${positionId}") {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        matchCandidates: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(matchCandidatesSuccess({ message: messageSuccess }));
+  } catch (error) {
+    yield put(matchCandidatesFailure({ error: { message: error } }));
+  }
+}
+
 export function* notifyCandidateSaga({ payload }) {
   const { body, positionId, candidateId } = payload;
   const query = `
@@ -439,13 +473,14 @@ export function* notifyCandidateSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(notifyCandidateSuccess({ message: messageSuccess }));
-    yield put(resetFormState({category: 'scheduleInterview'}));
+    yield put(resetFormState({ category: 'scheduleInterview' }));
   } catch (error) {
     yield put(notifyCandidateFailure({ error: { message: error } }));
   }
 }
 
 export default function* watcherSaga() {
+  yield takeEvery(FETCH_QUESTIONS, fetchQuestionsSaga);
   yield takeLatest(CREATE_POSITION, createPositionSaga);
   yield takeLatest(DELETE_POSITION, deletePositionSaga);
   yield takeLatest(EDIT_COMPANY, editCompanySaga);
@@ -453,7 +488,7 @@ export default function* watcherSaga() {
   yield takeLatest(FETCH_COMPANY_POSITIONS, fetchCompanyPositionsSaga);
   yield takeLatest(FETCH_COMPANY, fetchCompanySaga);
   yield takeLatest(FETCH_POSITION_CANDIDATES, fetchPositionCandidatesSaga);
-  yield takeEvery(FETCH_QUESTIONS, fetchQuestionsSaga);
   yield takeLatest(FETCH_POSITION, fetchPositionSaga);
+  yield takeLatest(MATCH_CANDIDATES, matchCandidatesSaga);
   yield takeLatest(NOTIFY_CANDIDATE, notifyCandidateSaga);
 }

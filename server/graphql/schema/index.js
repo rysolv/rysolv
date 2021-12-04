@@ -586,6 +586,8 @@ module.exports = buildSchema(`
     importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
     importRepo(url: String!): ImportResult!
 
+    matchCandidates(positionId: ID!): EventResponse!
+
     postContractAccepted(companyId: ID, contractAccepted: Boolean): EventResponse!
     postPositionResponse(companyId: ID, positionId: ID, responseArray: [Object]): EventResponse!
     postUserResponse(responseArray: [Object]): EventResponse!
