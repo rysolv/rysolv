@@ -194,13 +194,13 @@ export const StyledUserNavBar = styled(UserNavBar)`
 `;
 
 export const UnreadMessages = styled.div`
-  background-color: white;
+  background-color: ${whiteColor};
   border-radius: 50%;
   color: ${blueColor};
-  font-size: 1.6rem;
-  font-weight: 600;
-  line-height: 1.9rem;
-  min-width: 1.9rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 2rem;
+  min-width: 2rem;
   text-align: center;
 
   @media (max-width: 750px) {

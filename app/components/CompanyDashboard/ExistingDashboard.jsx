@@ -71,7 +71,7 @@ const ExistingDashboard = ({
       <ConditionalRender
         Component={CandidateCards}
         FallbackComponent={CandidatesLoading}
-        shouldRender={!!matchCandidatesLoading}
+        shouldRender={!matchCandidatesLoading}
       />
     </CompanyDashboardContainer>
   );
