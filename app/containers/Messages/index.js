@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
-import { BackNav, ConditionalRender } from 'components/base_ui';
+import { ConditionalRender } from 'components/base_ui';
 import AsyncRender from 'components/AsyncRender';
 import MessageView from 'components/Messages';
 import NoMessages from 'components/Messages/NoMessages';
@@ -18,6 +18,7 @@ import { fetchMessages, sendMessage, setReadReceipt } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectMessages } from './selectors';
+import { ViewContainer } from './styledComponents';
 
 const Messages = ({
   activeUser,
@@ -56,14 +57,9 @@ const Messages = ({
       shouldRender={!!conversations.length}
     />
   );
-  const isCompany = !!activeUser.company;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-      <BackNav
-        label="Back to Dashboard"
-        path={isCompany ? '/company/dashboard' : '/dashboard'}
-      />
+    <ViewContainer>
       <AsyncRender
         asyncData={conversations}
         component={componentToRender}
@@ -80,7 +76,7 @@ const Messages = ({
           setActiveConversation,
         }}
       />
-    </div>
+    </ViewContainer>
   );
 };
 

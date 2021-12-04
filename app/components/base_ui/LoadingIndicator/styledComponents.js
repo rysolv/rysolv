@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { headerColor } from 'defaultStyleHelper';
+
+import { blueColor } from 'defaultStyleHelper';
 
 export const Wrapper = styled.div`
   align-items: center;
@@ -9,6 +10,6 @@ export const Wrapper = styled.div`
   width: 100%;
 
   * {
-    stroke: ${headerColor};
+    stroke: ${blueColor};
   }
 `;
