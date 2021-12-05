@@ -5,6 +5,7 @@ import iconDictionary from 'utils/iconDictionary';
 
 import {
   ButtonWrapper,
+  ComponentContainer,
   DesktopHeaderContainer,
   InternalLink,
   Logo,
@@ -51,35 +52,37 @@ const DesktopLandingHeader = ({
   }
 
   return (
-    <DesktopHeaderContainer>
-      <LogoWrapper onClick={() => handleNav('/')}>
-        <Logo>{SiteLogo}</Logo>
-        <Wordmark>{SiteWordmark}</Wordmark>
-      </LogoWrapper>
-      <ButtonWrapper>
-        {navLinks}
+    <ComponentContainer>
+      <DesktopHeaderContainer>
+        <LogoWrapper onClick={() => handleNav('/')}>
+          <Logo>{SiteLogo}</Logo>
+          <Wordmark>{SiteWordmark}</Wordmark>
+        </LogoWrapper>
+        <ButtonWrapper>
+          {navLinks}
 
-        <VerticalDivider />
-        {isSignedIn ? (
-          <StyledUserNavBar
-            activeUser={activeUser}
-            handleNav={handleNav}
-            handleSignout={handleSignout}
-          />
-        ) : (
-          <Fragment>
-            <StyledSecondaryButton
-              label="Sign up"
-              onClick={() => handleNav('/signup')}
+          <VerticalDivider />
+          {isSignedIn ? (
+            <StyledUserNavBar
+              activeUser={activeUser}
+              handleNav={handleNav}
+              handleSignout={handleSignout}
             />
-            <StyledPrimaryButton
-              label="Log in"
-              onClick={() => handleNav('/signin')}
-            />
-          </Fragment>
-        )}
-      </ButtonWrapper>
-    </DesktopHeaderContainer>
+          ) : (
+            <Fragment>
+              <StyledSecondaryButton
+                label="Sign up"
+                onClick={() => handleNav('/signup')}
+              />
+              <StyledPrimaryButton
+                label="Log in"
+                onClick={() => handleNav('/signin')}
+              />
+            </Fragment>
+          )}
+        </ButtonWrapper>
+      </DesktopHeaderContainer>
+    </ComponentContainer>
   );
 };
 

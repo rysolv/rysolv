@@ -5,7 +5,6 @@ import isEmpty from 'lodash/isEmpty';
 import { additionalInputDictionary } from 'containers/CompanyDashboard/constants';
 import { getParameterByName } from 'utils/globalHelpers';
 
-import AsyncRender from '../AsyncRender';
 import optionDictionary from './Options';
 import {
   ButtonWrapper,
@@ -29,7 +28,6 @@ const EditPosition = ({
   dispatchDeleteSkill,
   dispatchFetchPosition,
   dispatchResetFormState,
-  fetchQuestionsLoading,
   form: { companyPosition: companyPositionForm },
   formErrors: { companyPosition: companyPositionFormErrors },
   handleEditPosition,
@@ -65,94 +63,79 @@ const EditPosition = ({
   const tableProps = { dispatchChangeSkillLevel, dispatchDeleteSkill };
 
   return (
-    <AsyncRender
-      asyncData={companyPositionQuestions}
-      component={() => (
-        <CreatePositionContainer>
-          <CreatePositionHeader>Edit position</CreatePositionHeader>
-          <StyledErrorSuccessBanner
-            error={error}
-            onClose={dispatchClearAlerts}
-          />
-          {companyPositionQuestions.map(
-            ({
-              description,
-              id,
-              options,
-              optionType,
-              question,
-              ...restProps
-              // eslint-disable-next-line array-callback-return, consistent-return
-            }) => {
-              if (id !== 'isRemote') {
-                const OptionToRender = optionDictionary[optionType];
+    <CreatePositionContainer>
+      <CreatePositionHeader>Edit position</CreatePositionHeader>
+      <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
+      {companyPositionQuestions.map(
+        ({
+          description,
+          id,
+          options,
+          optionType,
+          question,
+          ...restProps
+          // eslint-disable-next-line array-callback-return, consistent-return
+        }) => {
+          if (id !== 'isRemote') {
+            const OptionToRender = optionDictionary[optionType];
 
-                const handleChangeInput = (value, inputField) => {
-                  dispatchChangeInput({
-                    field: inputField || id,
-                    form: 'companyPosition',
-                    value,
-                  });
-                };
+            const handleChangeInput = (value, inputField) => {
+              dispatchChangeInput({
+                field: inputField || id,
+                form: 'companyPosition',
+                value,
+              });
+            };
 
-                const multiple = id === 'role';
+            const multiple = id === 'role';
 
-                return (
-                  <OptionWrapper
-                    $isAbsolute={id === 'isOpen'}
-                    key={`option-${id}`}
-                  >
-                    <OptionLabel>{question}</OptionLabel>
-                    <OptionDescription>{description}</OptionDescription>
-                    <OptionToRender
-                      additionalInputProps={{
-                        value:
-                          companyPositionForm[additionalInputDictionary[id]],
-                        ...companyPositionQuestions.find(
-                          ({ id: questionId }) =>
-                            additionalInputDictionary[id] === questionId,
-                        ),
-                      }}
-                      dispatchChangeInput={dispatchChangeInput}
-                      dispatchDeleteSkill={dispatchDeleteSkill}
-                      handleChangeInput={handleChangeInput}
-                      id={id}
-                      multiple={multiple}
-                      onBlur={() =>
-                        handleValidateInput({
-                          field: id,
-                          values: companyPositionForm,
-                        })
-                      }
-                      options={options}
-                      tableProps={tableProps}
-                      value={companyPositionForm[id]}
-                      {...restProps}
-                    />
-                    <OptionError>{companyPositionFormErrors[id]}</OptionError>
-                  </OptionWrapper>
-                );
-              }
-            },
-          )}
-          <ButtonWrapper>
-            <StyledPrimaryButton
-              label="Cancel"
-              onClick={() => handleNav('/company/dashboard')}
-            />
-            <StyledPrimaryAsyncButton
-              disabled={hasErrors || !isComplete}
-              label="Edit"
-              loading={loading}
-              onClick={handleEditPosition}
-            />
-          </ButtonWrapper>
-        </CreatePositionContainer>
+            return (
+              <OptionWrapper $isAbsolute={id === 'isOpen'} key={`option-${id}`}>
+                <OptionLabel>{question}</OptionLabel>
+                <OptionDescription>{description}</OptionDescription>
+                <OptionToRender
+                  additionalInputProps={{
+                    value: companyPositionForm[additionalInputDictionary[id]],
+                    ...companyPositionQuestions.find(
+                      ({ id: questionId }) =>
+                        additionalInputDictionary[id] === questionId,
+                    ),
+                  }}
+                  dispatchChangeInput={dispatchChangeInput}
+                  dispatchDeleteSkill={dispatchDeleteSkill}
+                  handleChangeInput={handleChangeInput}
+                  id={id}
+                  multiple={multiple}
+                  onBlur={() =>
+                    handleValidateInput({
+                      field: id,
+                      values: companyPositionForm,
+                    })
+                  }
+                  options={options}
+                  tableProps={tableProps}
+                  value={companyPositionForm[id]}
+                  {...restProps}
+                />
+                <OptionError>{companyPositionFormErrors[id]}</OptionError>
+              </OptionWrapper>
+            );
+          }
+        },
       )}
-      error={false}
-      isRequiredData
-      loading={fetchQuestionsLoading}
-    />
+      <ButtonWrapper>
+        <StyledPrimaryButton
+          label="Cancel"
+          onClick={() => handleNav('/company/dashboard')}
+        />
+        <StyledPrimaryAsyncButton
+          disabled={hasErrors || !isComplete}
+          label="Edit"
+          loading={loading}
+          onClick={handleEditPosition}
+        />
+      </ButtonWrapper>
+    </CreatePositionContainer>
   );
 };
 
@@ -165,7 +148,6 @@ EditPosition.propTypes = {
   dispatchDeleteSkill: T.func.isRequired,
   dispatchFetchPosition: T.func.isRequired,
   dispatchResetFormState: T.func.isRequired,
-  fetchQuestionsLoading: T.bool.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleEditPosition: T.func.isRequired,

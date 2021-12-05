@@ -244,7 +244,7 @@ export const UserTypeButton = styled(({ isSelected, ...restProps }) => (
   color: ${({ isSelected }) => (isSelected ? whiteColor : darkBlueColor)};
   font-size: 1.6rem;
   font-weight: 700;
-  height: 4rem;
+  height: 4.6rem;
   margin: 0;
   text-transform: none;
   width: 50%;

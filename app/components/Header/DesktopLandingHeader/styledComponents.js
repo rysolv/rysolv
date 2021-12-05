@@ -18,10 +18,15 @@ export const ButtonWrapper = styled.div`
   display: flex;
 `;
 
-export const DesktopHeaderContainer = styled.div`
+export const ComponentContainer = styled.div`
   background: ${blueColor};
+`;
+
+export const DesktopHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: auto;
+  max-width: 120rem;
   padding: 2rem 12rem;
 `;
 
