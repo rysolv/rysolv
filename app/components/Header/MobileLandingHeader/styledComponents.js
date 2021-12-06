@@ -163,7 +163,6 @@ export const StyledMenu = styled(Menu)`
     background-color: ${whiteColor};
     border-radius: 0.4rem;
     box-shadow: 0 0.1rem 0.4rem ${grayColor};
-    height: 14.3rem;
     margin-top: 1.9rem;
     overflow: hidden;
     top: 5.5rem !important;
