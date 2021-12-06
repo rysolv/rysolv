@@ -27,6 +27,10 @@ export const ButtonLink = styled.a`
   }
 `;
 
+export const ComponentContainer = styled.div`
+  background: ${navyBlueColor};
+`;
+
 export const ExternalLink = styled.a`
   margin-left: 2.4rem;
 
@@ -54,9 +58,10 @@ export const ExternalLinkWrapper = styled.div`
 `;
 
 export const FooterContainer = styled.div`
-  background: ${navyBlueColor};
   display: flex;
   justify-content: space-between;
+  margin: auto;
+  max-width: 120rem;
   min-height: 20rem;
   padding: 4.8rem 12rem;
 

@@ -8,6 +8,7 @@ const getPositionCandidates = async ({ positionId }) => {
       u.last_name AS "lastName",
       u.profile_pic AS "profilePic",
       m.thread_id AS "threadId",
+      cp.percent_match AS "percentMatch",
       JSON_OBJECT_AGG(
           q.question_key,  coalesce(uqr.value, qr.value)
       ) AS "userQuestions"
@@ -19,6 +20,7 @@ const getPositionCandidates = async ({ positionId }) => {
       LEFT JOIN messages m ON m.to_user_id = u.id AND m.position_id = $1
     WHERE cp.position_id = $1
     GROUP BY
+      cp.percent_match,
       m.thread_id,
       u.id,
       u.first_name,

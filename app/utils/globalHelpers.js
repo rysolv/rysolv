@@ -13,6 +13,11 @@ export const formatDollarAmount = (value, noDecimals = false) => {
   return `$${valueWithDecimals}`;
 };
 
+export const formatLabel = string => {
+  const splitString = string.replace(/([a-z])([A-Z])/g, '$1 $2');
+  return splitString[0].toUpperCase() + splitString.slice(1);
+};
+
 export const formatPaypalTotal = value =>
   (Number(value) * 1.03 + 0.3).toFixed(2);
 

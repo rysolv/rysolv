@@ -6,7 +6,7 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    await matchCandidatesQuery({ positionId });
+    await matchCandidatesQuery({ positionId, userId });
 
     // TODO: remove timeout
     const PromiseTimeout = delayms =>

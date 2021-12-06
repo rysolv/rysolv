@@ -171,4 +171,5 @@ UserDropDownMenu.propTypes = {
   handleNav: T.func,
   handleSignout: T.func,
 };
+
 export default UserDropDownMenu;

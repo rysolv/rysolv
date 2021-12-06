@@ -5,6 +5,7 @@ import withAuth from 'containers/Auth';
 import CodeScoring from 'containers/CodeScoring/Loadable';
 import CompanyDashboard from 'containers/CompanyDashboard/Loadable';
 import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
+import CompanySettings from 'containers/CompanySettings/Loadable';
 import CompanySignUp from 'containers/CompanySignUp/Loadable';
 import Contact from 'components/Contact';
 import Faq from 'components/Faq';
@@ -37,6 +38,7 @@ const privateConfig = { isAdmin: false, isPrivate: true };
 const publicConfig = { isAdmin: false, isPrivate: false };
 
 const PrivateCompanyDashboard = withAuth(companyConfig, CompanyDashboard);
+const PrivateCompanySettings = withAuth(companyConfig, CompanySettings);
 const PrivateCompanySignUp = withAuth(companyConfig, CompanySignUp);
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateMessages = withAuth(privateConfig, Messages);
@@ -68,6 +70,7 @@ const Routes = () => (
     <Route exact path="/" component={PublicMain} />
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/company/dashboard/:view?" component={PrivateCompanyDashboard} />
+    <Route exact path="/company/settings" component={PrivateCompanySettings} />
     <Route exact path="/company/signup" component={PrivateCompanySignUp} />
     <Route exact path="/contact-us" component={PublicContact} />
     <Route exact path="/dashboard/:view?" component={PrivateUserDashboard} />

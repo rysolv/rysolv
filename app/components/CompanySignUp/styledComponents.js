@@ -129,7 +129,7 @@ export const OptionLabel = styled.div`
 `;
 
 export const OptionWrapper = styled.div`
-  margin-bottom: 1rem;
+  margin-top: 1rem;
   text-align: left;
 `;
 

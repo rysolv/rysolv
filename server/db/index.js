@@ -85,7 +85,6 @@ const {
 const {
   createPositionTechStack,
   deletePositionTechStack,
-  getOneTechnology,
   getPositionTechStack,
   getTechnologies,
 } = require('./queries/technologies');
@@ -166,7 +165,6 @@ module.exports = {
   getOneIssue,
   getOnePosition,
   getOneRepo,
-  getOneTechnology,
   getOneUser,
   getOneUserSignUp,
   getPositionCandidates,

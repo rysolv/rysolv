@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import T from 'prop-types';
 import omit from 'lodash/omit';
 
-import AsyncRender from '../AsyncRender';
 import optionDictionary from './Options';
 import {
   ButtonWrapper,
@@ -23,7 +22,6 @@ const EditCompany = ({
   dispatchChangeInput,
   dispatchClearAlerts,
   dispatchResetFormState,
-  fetchQuestionsLoading,
   form: { company: companyForm },
   formErrors: { company: companyFormErrors },
   handleEditCompany,
@@ -48,73 +46,56 @@ const EditCompany = ({
   );
 
   return (
-    <AsyncRender
-      asyncData={companyQuestions}
-      component={() => (
-        <EditCompanyContainer>
-          <EditCompanyHeader>Edit company</EditCompanyHeader>
-          <StyledErrorSuccessBanner
-            error={error}
-            onClose={dispatchClearAlerts}
-          />
-          {companyQuestions.map(
-            ({
-              description,
-              id,
-              options,
-              optionType,
-              question,
-              ...restProps
-            }) => {
-              const OptionToRender = optionDictionary[optionType];
+    <EditCompanyContainer>
+      <EditCompanyHeader>Edit company</EditCompanyHeader>
+      <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
+      {companyQuestions.map(
+        ({ description, id, options, optionType, question, ...restProps }) => {
+          const OptionToRender = optionDictionary[optionType];
 
-              const handleChangeInput = (value, inputField) => {
-                dispatchChangeInput({
-                  field: inputField || id,
-                  form: 'company',
-                  value,
-                });
-              };
+          const handleChangeInput = (value, inputField) => {
+            dispatchChangeInput({
+              field: inputField || id,
+              form: 'company',
+              value,
+            });
+          };
 
-              return (
-                <OptionWrapper key={`option-${id}`}>
-                  <OptionLabel>{question}</OptionLabel>
-                  <OptionDescription>{description}</OptionDescription>
-                  <OptionToRender
-                    handleChangeInput={handleChangeInput}
-                    id={id}
-                    onBlur={() =>
-                      handleValidateInput({
-                        field: id,
-                        values: companyForm,
-                      })
-                    }
-                    options={options}
-                    value={companyForm[id]}
-                    {...restProps}
-                  />
-                  <OptionError>{companyFormErrors[id]}</OptionError>
-                </OptionWrapper>
-              );
-            },
-          )}
-          <ButtonWrapper>
-            <StyledPrimaryButton
-              label="Cancel"
-              onClick={() => handleNav('/company/dashboard')}
-            />
-            <StyledPrimaryAsyncButton
-              disabled={hasErrors || !isComplete}
-              label="Edit"
-              loading={loading}
-              onClick={handleEditCompany}
-            />
-          </ButtonWrapper>
-        </EditCompanyContainer>
+          return (
+            <OptionWrapper key={`option-${id}`}>
+              <OptionLabel>{question}</OptionLabel>
+              <OptionDescription>{description}</OptionDescription>
+              <OptionToRender
+                handleChangeInput={handleChangeInput}
+                id={id}
+                onBlur={() =>
+                  handleValidateInput({
+                    field: id,
+                    values: companyForm,
+                  })
+                }
+                options={options}
+                value={companyForm[id]}
+                {...restProps}
+              />
+              <OptionError>{companyFormErrors[id]}</OptionError>
+            </OptionWrapper>
+          );
+        },
       )}
-      isRequiredData
-      loading={fetchQuestionsLoading}
-    />
+      <ButtonWrapper>
+        <StyledPrimaryButton
+          label="Cancel"
+          onClick={() => handleNav('/company/dashboard')}
+        />
+        <StyledPrimaryAsyncButton
+          disabled={hasErrors || !isComplete}
+          label="Edit"
+          loading={loading}
+          onClick={handleEditCompany}
+        />
+      </ButtonWrapper>
+    </EditCompanyContainer>
   );
 };
 
@@ -124,7 +105,6 @@ EditCompany.propTypes = {
   dispatchChangeInput: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchResetFormState: T.func.isRequired,
-  fetchQuestionsLoading: T.bool.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleEditCompany: T.func.isRequired,

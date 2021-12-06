@@ -13,7 +13,7 @@ export const VerticalDivider = styled.div`
 
   @media (max-width: 769px) {
     height: 0.1rem;
-    margin: 4rem 0;
+    margin: 0.8rem 0 2rem;
     width: 100%;
   }
 `;

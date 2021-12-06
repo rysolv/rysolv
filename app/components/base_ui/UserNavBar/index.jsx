@@ -1,19 +1,21 @@
 import React, { useState, Fragment } from 'react';
 import T from 'prop-types';
 
-import { Coin, DownArrow } from '../Icons';
+import { DownArrow } from '../Icons';
 import UserDropDownMenu from '../UserDropDown';
+import CompanyDropDownMenu from '../../CompanyDropDownMenu';
 import {
-  IconWrapper,
   Notification,
-  NumberContainer,
   StyledAvatar,
   StyledUserNavBar,
 } from './styledComponents';
 
 const UserNavBar = ({ activeUser, handleNav, handleSignout, ...restProps }) => {
-  const { notifications, profilePic, rep, username } = activeUser;
+  const { company, notifications, profilePic, username } = activeUser;
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const DropDownToRender = company ? CompanyDropDownMenu : UserDropDownMenu;
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -30,15 +32,11 @@ const UserNavBar = ({ activeUser, handleNav, handleSignout, ...restProps }) => {
         onClick={() => handleOpen()}
         {...restProps}
       >
-        <IconWrapper>
-          <Coin />
-          <NumberContainer>{rep}</NumberContainer>
-        </IconWrapper>
         <StyledAvatar alt={username} src={profilePic} />
         <Notification notifications={notifications} />
         <DownArrow />
       </StyledUserNavBar>
-      <UserDropDownMenu
+      <DropDownToRender
         activeUser={activeUser}
         anchorEl={anchorEl}
         handleClose={handleClose}

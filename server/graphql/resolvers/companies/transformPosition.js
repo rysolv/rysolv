@@ -4,7 +4,6 @@ const {
   createPositionTechStack,
   deletePosition,
   deletePositionTechStack,
-  getOneTechnology,
   postUserResponse,
 } = require('../../../db');
 const {
@@ -32,13 +31,10 @@ const transformPosition = async (
         async ({ questionId, questionKey, responseId, value }) => {
           if (questionKey === 'skills') {
             const { beginner, expert, intermediate, skill } = value;
-            const { technologyId } = await getOneTechnology({
-              technology: skill,
-            });
             await createPositionTechStack({
               level: generatePositionLevel({ beginner, expert, intermediate }),
               positionId,
-              technologyId,
+              technology: skill,
             });
           } else {
             const data = {
