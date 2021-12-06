@@ -20,7 +20,6 @@ export const ButtonTextWrapper = styled.div`
 `;
 
 export const CompanySideNavContainer = styled.div`
-  border-radius: 0.7rem;
   min-width: 27.8rem;
   overflow-y: auto;
 

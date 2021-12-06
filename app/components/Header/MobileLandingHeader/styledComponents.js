@@ -212,13 +212,16 @@ export const UnreadMessages = styled.div`
   top: -1.2rem;
 
   @media (max-width: 750px) {
-    display: ${({ shouldRemoveFirst }) =>
-      shouldRemoveFirst ? 'none' : 'block'};
+    top: ${({ shouldRemoveFirst }) =>
+      shouldRemoveFirst ? '-2.5rem' : '-1.2rem'};
+    right: ${({ shouldRemoveFirst }) => (shouldRemoveFirst ? '-8.5rem' : '0')};
   }
 
   @media (max-width: 470px) {
-    display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
-      shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
+    top: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
+      shouldRemoveFirst || shouldRemoveSecond ? '-2.5rem' : '-1.2rem'};
+    right: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
+      shouldRemoveFirst || shouldRemoveSecond ? '-6.4rem' : '0'};
   }
 `;
 
