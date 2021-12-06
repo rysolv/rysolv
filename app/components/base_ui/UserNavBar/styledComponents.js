@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import { navyColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { mobile } = mediaQueriesByDevice;
@@ -30,15 +29,11 @@ export const StyledAvatar = styled.img`
 
 export const StyledUserNavBar = styled.div`
   align-items: center;
-  background-color: ${navyColor};
-  border-radius: 5rem;
-  border: 0.2rem solid ${navyColor};
+  border-radius: 50%;
   display: flex;
   margin: 0.25rem 1rem;
-  padding: 0.25rem 0.5rem;
 
   &:hover {
-    border-color: #1a2327;
     cursor: pointer;
   }
 `;

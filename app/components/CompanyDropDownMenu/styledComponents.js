@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 
-import { blueColor, darkBlueColor, whiteColor } from 'defaultStyleHelper';
+import { darkBlueColor, grayColor, whiteColor } from 'defaultStyleHelper';
 
 import { BaseLink } from '../base_ui/Links';
 
@@ -59,7 +59,7 @@ export const StyledMenu = styled(Menu)`
   .MuiMenu-paper {
     background-color: ${whiteColor};
     border-radius: 0.4rem;
-    border: 0.2rem solid ${blueColor};
+    box-shadow: 0 0.1rem 0.4rem ${grayColor};
     height: 14.3rem;
     margin-top: 1.9rem;
     overflow: hidden;

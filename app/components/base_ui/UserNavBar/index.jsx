@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import T from 'prop-types';
 
-import { DownArrow } from '../Icons';
 import UserDropDownMenu from '../UserDropDown';
 import CompanyDropDownMenu from '../../CompanyDropDownMenu';
 import {
@@ -34,7 +33,6 @@ const UserNavBar = ({ activeUser, handleNav, handleSignout, ...restProps }) => {
       >
         <StyledAvatar alt={username} src={profilePic} />
         <Notification notifications={notifications} />
-        <DownArrow />
       </StyledUserNavBar>
       <DropDownToRender
         activeUser={activeUser}
