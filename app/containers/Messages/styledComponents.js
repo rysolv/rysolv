@@ -9,6 +9,7 @@ export const ViewContainer = styled.div`
   background: ${whiteColor};
   display: flex;
   padding: 5rem 12rem 5.6rem;
+  position: relative;
   width: 100%;
 
   ${laptop} {

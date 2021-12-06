@@ -1,43 +1,56 @@
 import styled from 'styled-components';
 
-export const ConversationCard = styled.div`
-  background-color: ${({ selected }) => (selected ? `#c3dfffa3` : `inherit`)};
-  border-bottom: 1px solid grey;
-  font-weight: ${({ unread }) => (unread ? `bold` : `inherit`)};
-  height: 7rem;
-  overflow: hidden;
-  padding: 1rem;
+import { blueColor, defaultFontSize, whiteColor } from 'defaultStyleHelper';
+
+export const ConversationCard = styled.button`
+  background-color: ${({ isSelected }) =>
+    isSelected ? blueColor : whiteColor};
+  border: none;
+  color: ${({ isSelected }) => (isSelected ? whiteColor : blueColor)};
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.025rem;
+  line-height: 1.936rem;
+  padding: 2rem 1rem 2rem 2rem;
+  text-align: left;
+  width: 100%;
 
   &:hover {
+    background-color: ${blueColor};
+    color: ${whiteColor};
     cursor: pointer;
+  }
+
+  svg {
+    font-size: 1.6rem;
+    margin-right: 0.8rem;
   }
 `;
 
-export const ConversationContainer = styled.div`
-  background-color: white;
-  border: 1px solid grey;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  margin: 1rem;
-  width: 100%;
-`;
-
 export const MessageDate = styled.div`
-  color: grey;
+  font-weight: 400;
+  white-space: nowrap;
 `;
 
 export const MessageHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 0.5rem;
 `;
 
 export const MessageSnippit = styled.div`
-  color: grey;
+  color: #a9acae;
+  font-size: ${defaultFontSize};
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const Recipient = styled.div`
-  margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const Unread = styled.div`

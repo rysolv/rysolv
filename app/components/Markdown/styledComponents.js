@@ -2,13 +2,12 @@ import styled from 'styled-components';
 
 import {
   defaultFontFamily,
-  defaultFontSize,
   candidateGreyColor,
   textColor,
 } from 'defaultStyleHelper';
 
 export const MarkdownContainer = styled.div`
-  font-size: ${defaultFontSize};
+  font-size: 1.6rem;
   margin: 0;
   text-align: left;
   width: 100%;
@@ -27,10 +26,11 @@ export const MarkdownContainer = styled.div`
   }
 
   .editor-toolbar {
-    border-left: 0.1rem solid #ddd;
-    border-radius: 0;
-    border-right: 0.1rem solid #ddd;
-    border-top: 0.1rem solid #ddd;
+    border-left: 0.1rem solid ${candidateGreyColor};
+    border-right: 0.1rem solid ${candidateGreyColor};
+    border-top-left-radius: 0.7rem;
+    border-top-right-radius: 0.7rem;
+    border-top: 0.1rem solid ${candidateGreyColor};
     opacity: 1 !important;
 
     ::after {
@@ -42,8 +42,14 @@ export const MarkdownContainer = styled.div`
     }
   }
 
+  .CodeMirror {
+    border: 0.2rem solid ${candidateGreyColor} !important;
+  }
+
   .CodeMirror,
   .CodeMirror-scroll {
+    border-bottom-left-radius: 0.7rem;
+    border-bottom-right-radius: 0.7rem;
     min-height: ${props => (props.comment ? '5rem' : '20rem')};
     transition: min-height 0.2s;
   }
@@ -60,7 +66,7 @@ export const EditContainer = styled.div`
   & :focus-within {
     .CodeMirror-wrap,
     .editor-toolbar {
-      border-color: #78909c;
+      border-color: ${candidateGreyColor};
     }
   }
 

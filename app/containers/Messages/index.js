@@ -5,19 +5,30 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
-import { ConditionalRender } from 'components/base_ui';
 import AsyncRender from 'components/AsyncRender';
-import MessageView from 'components/Messages';
-import NoMessages from 'components/Messages/NoMessages';
+import { ConditionalRender } from 'components/base_ui';
+import {
+  DesktopMessages,
+  MobileMessages,
+  NoMessages,
+} from 'components/Messages';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { fetchMessages, sendMessage, setReadReceipt } from './actions';
+import {
+  fetchMessages,
+  resetMarkdown,
+  sendMessage,
+  setReadReceipt,
+} from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectMessages } from './selectors';
+import {
+  makeSelectMessages,
+  makeSelectMessagesIsThreadView,
+} from './selectors';
 import { ViewContainer } from './styledComponents';
 
 const Messages = ({
@@ -25,17 +36,21 @@ const Messages = ({
   conversations,
   deviceView,
   dispatchFetchMessages,
+  dispatchResetMarkdown,
   dispatchSendMessage,
   dispatchSetReadReceipt,
   error,
   handleNav,
+  isThreadView,
   loading,
   match: {
     params: { threadId },
   },
+  success,
 }) => {
   // If no URL param, set most recent conversation as active
   const [activeConversation, setActiveConversation] = useState(0);
+  const [messageBody, setMessageBody] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -49,9 +64,27 @@ const Messages = ({
     });
   }, [threadId]);
 
-  const componentToRender = props => (
+  const isMobileOrTabletOrLaptop =
+    deviceView === 'laptop' ||
+    deviceView === 'laptopS' ||
+    deviceView === 'tablet' ||
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
+
+  const DesktopOrMobileComponent = props => (
     <ConditionalRender
-      Component={MessageView}
+      Component={DesktopMessages}
+      FallbackComponent={MobileMessages}
+      propsToPassDown={props}
+      shouldRender={!isMobileOrTabletOrLaptop}
+    />
+  );
+
+  const ComponentToRender = props => (
+    <ConditionalRender
+      Component={DesktopOrMobileComponent}
       FallbackComponent={NoMessages}
       propsToPassDown={props}
       shouldRender={!!conversations.length}
@@ -62,18 +95,24 @@ const Messages = ({
     <ViewContainer>
       <AsyncRender
         asyncData={conversations}
-        component={componentToRender}
-        error={error}
-        loading={loading}
+        component={ComponentToRender}
+        error={error.main}
+        loading={loading.main}
         propsToPassDown={{
           activeConversation,
           activeUser,
           conversations,
-          deviceView,
+          dispatchResetMarkdown,
           dispatchSendMessage,
           dispatchSetReadReceipt,
+          error,
           handleNav,
+          isThreadView,
+          loading,
+          messageBody,
           setActiveConversation,
+          setMessageBody,
+          success,
         }}
       />
     </ViewContainer>
@@ -85,12 +124,15 @@ Messages.propTypes = {
   conversations: T.array.isRequired,
   deviceView: T.string.isRequired,
   dispatchFetchMessages: T.func.isRequired,
+  dispatchResetMarkdown: T.func.isRequired,
   dispatchSendMessage: T.func.isRequired,
   dispatchSetReadReceipt: T.func.isRequired,
-  error: T.string,
+  error: T.object.isRequired,
   handleNav: T.func.isRequired,
-  loading: T.bool.isRequired,
+  isThreadView: T.bool.isRequired,
+  loading: T.object.isRequired,
   match: T.object.isRequired,
+  success: T.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -99,11 +141,13 @@ const mapStateToProps = createStructuredSelector({
    */
   activeUser: makeSelectAuth('activeUser'),
   /*
-   * Reducer : messages
+   * Reducer : Messages
    */
   conversations: makeSelectMessages('conversations'),
   error: makeSelectMessages('error'),
+  isThreadView: makeSelectMessagesIsThreadView(),
   loading: makeSelectMessages('loading'),
+  success: makeSelectMessages('success'),
   /**
    * Reducer : ViewSize
    */
@@ -113,9 +157,10 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     /*
-     * Reducer : messages
+     * Reducer : Messages
      */
     dispatchFetchMessages: () => dispatch(fetchMessages()),
+    dispatchResetMarkdown: () => dispatch(resetMarkdown()),
     dispatchSendMessage: payload => dispatch(sendMessage(payload)),
     dispatchSetReadReceipt: payload => dispatch(setReadReceipt(payload)),
     /**

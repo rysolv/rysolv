@@ -83,13 +83,11 @@ class Main extends React.PureComponent {
       handleNav(route);
     };
     const { pathname } = window.location;
+    const basePathname = pathname.split('/')[1];
     const isLandingOrRecruitmentPage =
+      basePathname === 'company' ||
+      basePathname === 'messages' ||
       pathname === '/' ||
-      pathname === '/company/dashboard' ||
-      pathname === '/company/dashboard/add-position' ||
-      pathname === '/company/dashboard/edit-company' ||
-      pathname === '/company/dashboard/edit-position' ||
-      pathname === '/company/signup' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/password-reset' ||

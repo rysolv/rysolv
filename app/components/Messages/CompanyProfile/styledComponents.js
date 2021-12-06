@@ -1,32 +1,25 @@
 import styled from 'styled-components';
 
-export const CompanyProfileContainer = styled.div`
-  align-items: center;
-  background-color: white;
-  border: 1px solid grey;
-  display: flex;
-  flex-direction: column;
-  height: 30rem;
-  margin: 1rem;
-  padding: 2rem;
-  width: 100%;
+import { lightBlueColor } from 'defaultStyleHelper';
+
+import { CandidateCardContainer } from '../styledComponents';
+
+export const StyledCandidateCardContainer = styled(CandidateCardContainer)`
+  margin-bottom: 4rem;
 `;
 
-export const CompanyName = styled.div`
-  font-size: 2.4rem;
-  text-align: center;
-  width: 100%;
-`;
-
-export const Description = styled.div`
+export const WebsiteLink = styled.a`
+  color: ${lightBlueColor};
   font-size: 1.6rem;
-  margin-top: 1rem;
+  padding-bottom: 1.6rem;
+
+  &:hover {
+    color: ${lightBlueColor};
+  }
 `;
 
-export const Logo = styled.img`
-  background-color: grey;
-  border-radius: 50%;
-  height: 10rem;
-  margin-bottom: 1rem;
-  width: 10rem;
+export const WebsiteWrapper = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

@@ -41,6 +41,7 @@ const {
   createLanguage,
   deleteUserLanguages,
   getUserLanguages,
+  getUserPreferredLanguages,
   setPreferredLanguage,
 } = require('./queries/languages');
 const {
@@ -85,6 +86,7 @@ const {
   createPositionTechStack,
   deletePositionTechStack,
   getOneTechnology,
+  getPositionTechStack,
   getTechnologies,
 } = require('./queries/technologies');
 const { getStats } = require('./queries/stats');
@@ -168,6 +170,7 @@ module.exports = {
   getOneUser,
   getOneUserSignUp,
   getPositionCandidates,
+  getPositionTechStack,
   getPullRequestList,
   getQuestionAnswerByKey,
   getQuestions,
@@ -186,6 +189,7 @@ module.exports = {
   getUserByUsername,
   getUserCompany,
   getUserLanguages,
+  getUserPreferredLanguages,
   getUserPullRequestDetail,
   getUserPullRequests,
   getUsers,

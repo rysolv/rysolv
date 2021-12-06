@@ -1,33 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import T from 'prop-types';
+
+import { ConditionalRender } from 'components/base_ui';
 
 import CompanyProfile from './CompanyProfile';
 import Conversations from './Conversations';
-import MessageView from './MessageView';
+import MessageThread from './MessageThread';
 import PositionProfile from './PositionProfile';
 import UserProfile from './UserProfile';
 
 import {
-  ConversationWrapper,
-  MessageContainer,
-  MessageWrapper,
+  ConversationsWrapper,
   ProfileWrapper,
+  ThreadWrapper,
+  VerticalDivider,
 } from './styledComponents';
 
-const Messages = ({
+const DesktopMessages = ({
   activeConversation,
   activeUser,
   conversations,
+  dispatchResetMarkdown,
   dispatchSendMessage,
   dispatchSetReadReceipt,
+  error,
   handleNav,
+  loading,
+  messageBody,
+  setMessageBody,
+  success,
 }) => {
-  const [messageBody, setMessageBody] = useState('');
-
   const { id: activeUserId } = activeUser;
   const { candidate, company, position, threadId, unread } = conversations[
     activeConversation
   ];
+  const isCompany = !!activeUser.company;
 
   useEffect(() => {
     if (unread) dispatchSetReadReceipt({ threadId });
@@ -44,41 +51,58 @@ const Messages = ({
   };
 
   return (
-    <MessageContainer>
-      <ConversationWrapper>
+    <Fragment>
+      <ConversationsWrapper>
         <Conversations
           activeConversation={activeConversation}
-          candidate={candidate}
           conversations={conversations}
           handleNav={handleNav}
         />
-      </ConversationWrapper>
-      <MessageWrapper>
-        <MessageView
+      </ConversationsWrapper>
+      <VerticalDivider />
+      <ThreadWrapper>
+        <MessageThread
           activeConversation={conversations[activeConversation]}
           activeUserId={activeUserId}
+          dispatchResetMarkdown={dispatchResetMarkdown}
+          error={error}
+          loading={loading}
           messageBody={messageBody}
           sendMessage={sendMessage}
           setMessageBody={setMessageBody}
+          success={success}
         />
-      </MessageWrapper>
-
-      <ProfileWrapper>
-        <CompanyProfile company={company} />
-        <UserProfile user={candidate} />
-        <PositionProfile position={position} />
-      </ProfileWrapper>
-    </MessageContainer>
+        <ProfileWrapper>
+          <ConditionalRender
+            Component={CompanyProfile}
+            propsToPassDown={{ company }}
+            shouldRender={!isCompany}
+          />
+          <ConditionalRender
+            Component={UserProfile}
+            propsToPassDown={{ user: candidate }}
+            shouldRender={isCompany}
+          />
+          <PositionProfile position={position} />
+        </ProfileWrapper>
+      </ThreadWrapper>
+    </Fragment>
   );
 };
 
-Messages.propTypes = {
+DesktopMessages.propTypes = {
   activeConversation: T.number.isRequired,
   activeUser: T.object.isRequired,
   conversations: T.array.isRequired,
+  dispatchResetMarkdown: T.func.isRequired,
   dispatchSendMessage: T.func.isRequired,
   dispatchSetReadReceipt: T.func.isRequired,
+  error: T.object.isRequired,
   handleNav: T.func.isRequired,
+  loading: T.object.isRequired,
+  messageBody: T.string.isRequired,
+  setMessageBody: T.func.isRequired,
+  success: T.bool.isRequired,
 };
 
-export default Messages;
+export default DesktopMessages;

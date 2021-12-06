@@ -10,24 +10,37 @@ import {
   MessageDate,
   MessageHeader,
   MessageWrapper,
+  LowerMessage,
   ProfilePicture,
-  StyledAsyncButton,
   StyledMarkdown,
-  TextInput,
+  StyledProgressButton,
   Username,
 } from './styledComponents';
 
-const MessageView = ({
+const MessageThread = ({
   activeConversation,
   activeUserId,
+  dispatchResetMarkdown,
+  error,
+  loading,
   messageBody,
   sendMessage,
   setMessageBody,
+  success,
 }) => {
   useEffect(() => {
     const div = document.getElementById('messageContainer');
     div.scrollTop = div.scrollHeight - div.clientHeight;
   }, [activeConversation]);
+
+  useEffect(() => {
+    if (error.messagee || success) {
+      setTimeout(() => {
+        dispatchResetMarkdown();
+        setMessageBody('');
+      }, 6000);
+    }
+  }, [error, success]);
 
   const handleKeypress = ({ ctrlKey, key }) => {
     if (ctrlKey && key === 'Enter' && messageBody.length > 0) {
@@ -42,7 +55,7 @@ const MessageView = ({
       const active = userId === activeUserId;
       return (
         <MessageCard active={active} key={id}>
-          <BodyWrapper>
+          <BodyWrapper active={active}>
             <MessageHeader>
               <Username>
                 {firstName} {lastName}
@@ -61,28 +74,35 @@ const MessageView = ({
   return (
     <MessageWrapper>
       <MessageContainer id="messageContainer">{messageCards}</MessageContainer>
-      <TextInput onKeyDown={e => handleKeypress(e)}>
+      <LowerMessage>
         <StyledMarkdown
           body={messageBody}
           handleInput={value => setMessageBody(value)}
+          onKeyDown={e => handleKeypress(e)}
         />
-      </TextInput>
-      <StyledAsyncButton
-        disabled={messageBody.length < 1}
-        label="Send"
-        loading={false}
-        onClick={() => sendMessage()}
-      />
+        <StyledProgressButton
+          disabled={messageBody.length < 1}
+          error={error.message}
+          label="Send"
+          loading={loading.message}
+          onClick={sendMessage}
+          success={success}
+        />
+      </LowerMessage>
     </MessageWrapper>
   );
 };
 
-MessageView.propTypes = {
+MessageThread.propTypes = {
   activeConversation: T.object,
   activeUserId: T.string,
+  dispatchResetMarkdown: T.func.isRequired,
+  error: T.object.isRequired,
+  loading: T.object.isRequired,
   messageBody: T.string,
   sendMessage: T.func,
   setMessageBody: T.func,
+  success: T.bool.isRequired,
 };
 
-export default MessageView;
+export default MessageThread;

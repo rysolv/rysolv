@@ -144,7 +144,6 @@ export const StyledMenu = styled(Menu)`
   .MuiMenu-paper {
     background-color: ${whiteColor};
     border-radius: 0.4rem;
-    height: 14.3rem;
     margin-top: 1.9rem;
     overflow: hidden;
     width: 17.7rem;

@@ -19,8 +19,8 @@ const getMessages = async ({ userId }) => {
       FROM user_question_responses uqr
       JOIN question_responses qr ON qr.id = uqr.response_id
       JOIN questions q ON q.id = uqr.question_id
-      WHERE q.question_key != 'role'
       AND uqr.position_id = m.position_id
+      WHERE q.category = 'company_position'
     ) AS position,
     JSON_AGG(
       JSON_BUILD_OBJECT(
@@ -37,10 +37,12 @@ const getMessages = async ({ userId }) => {
       ORDER BY m.created_date
     ) AS messages,
     JSONB_BUILD_OBJECT(
-      'name', c.company_name,
-      'logo', c.logo,
+      'companyUrl', c.company_url,
       'description', c.description,
-      'companyUrl', c.company_url
+      'location', c.location,
+      'logo', c.logo,
+      'name', c.company_name,
+      'size', c.size
     ) AS company,
     JSON_BUILD_OBJECT (
       'username', candidate_user.username,
@@ -58,17 +60,19 @@ const getMessages = async ({ userId }) => {
     JOIN companies c ON c.id = cp.company_id
     WHERE thread_id IN (SELECT thread_id FROM threads)
     GROUP BY
-      m.thread_id,
-      m.position_id,
       c.company_name,
-      c.logo,
-      c.description,
       c.company_url,
-      candidate_user.username,
+      c.description,
+      c.location,
+      c.logo,
+      c.size,
       candidate_user.first_name,
+      candidate_user.id,
       candidate_user.last_name,
       candidate_user.profile_pic,
-      candidate_user.id
+      candidate_user.username,
+      m.position_id,
+      m.thread_id
     ORDER BY "lastMessageDate" DESC
   `;
 

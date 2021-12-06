@@ -1,6 +1,10 @@
-const { getMessagesError } = require('./constants');
 const { CustomError, errorLogger } = require('../../../helpers');
-const { getMessages: getMessagesQuery } = require('../../../db');
+const {
+  getMessages: getMessagesQuery,
+  getPositionTechStack,
+  getUserPreferredLanguages,
+} = require('../../../db');
+const { getMessagesError } = require('./constants');
 
 const getMessages = async (_, { authError, userId }) => {
   try {
@@ -21,17 +25,35 @@ const getMessages = async (_, { authError, userId }) => {
      */
     const result = await getMessagesQuery({ userId });
 
-    const conversations = result.map(el => {
-      const { messages } = el;
-      let con = { ...el, unread: false };
-      messages.forEach(({ userId: fromUserId, readDate }) => {
-        if (readDate === null && fromUserId !== userId) {
-          con = { ...el, unread: true };
-        }
-      });
-      return con;
-    });
+    const conversations = await Promise.all(
+      result.map(async el => {
+        const { candidate, messages, position } = el;
+        let con = { ...el, unread: false };
+        messages.forEach(({ userId: fromUserId, readDate }) => {
+          if (readDate === null && fromUserId !== userId) {
+            con = { ...el, unread: true };
+          }
+        });
 
+        if (candidate) {
+          const {
+            languages: candidateLanguages,
+          } = await getUserPreferredLanguages({
+            userId: candidate.userId,
+          });
+          candidate.name = `${candidate.firstName} ${candidate.lastName}`;
+          candidate.preferredLanguages = candidateLanguages || [];
+        }
+
+        const {
+          technologies: positionTechnologies,
+        } = await getPositionTechStack({
+          positionId: position.positionId,
+        });
+        position.preferredLanguages = positionTechnologies || [];
+        return con;
+      }),
+    );
     return {
       __typename: 'ConversationArray',
       conversations,
