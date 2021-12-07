@@ -242,6 +242,7 @@ export function* fetchCompanyPositionsSaga({ payload }) {
         ... on CompanyPositionsArray {
           positions {
             id
+            isOpen
             isRemote
             location
             title
