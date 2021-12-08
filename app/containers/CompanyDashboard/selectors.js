@@ -39,10 +39,11 @@ const makeSelectCompanyDashboardPosition = prop =>
     makeSelectCompanyDashboard('selectedPosition'),
     (positions, selectedPosition) => {
       if (!!positions.length && selectedPosition) {
-        const filteredPosition = positions.find(
+        const filteredPosition = positions.filter(
           ({ id }) => id === selectedPosition,
         );
-        return filteredPosition[prop];
+        const positionObject = filteredPosition[0] || {};
+        return positionObject[prop];
       }
       return null;
     },
