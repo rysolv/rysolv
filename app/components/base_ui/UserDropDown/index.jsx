@@ -34,8 +34,8 @@ const UserDropDownMenu = ({ anchorEl, handleClose, handleSignout }) => (
     open={Boolean(anchorEl)}
   >
     <MenuInternalLink label="Account &amp; Settings" path="/settings" />
-    <MenuInternalLink label="Dashboard" path="/dashboard" />
-    <MenuInternalLink label="Messages" path="/messages" />
+    <MenuInternalLink label="Dashboard" path="/dashboard" shouldRemoveSecond />
+    <MenuInternalLink label="Messages" path="/messages" shouldRemoveFirst />
     <HorizontalDivider />
     <StyledLoginButton onClick={handleSignout}>Sign out</StyledLoginButton>
   </MenuComponent>
