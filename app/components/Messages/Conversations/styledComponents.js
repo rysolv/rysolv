@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { blueColor, defaultFontSize, whiteColor } from 'defaultStyleHelper';
+import {
+  blueColor,
+  defaultFontSize,
+  lightBlueColor,
+  whiteColor,
+} from 'defaultStyleHelper';
 
 export const ConversationCard = styled.button`
   background-color: ${({ isSelected }) =>
@@ -12,6 +17,7 @@ export const ConversationCard = styled.button`
   letter-spacing: -0.025rem;
   line-height: 1.936rem;
   padding: 2rem 1rem 2rem 2rem;
+  position: relative;
   text-align: left;
   width: 100%;
 
@@ -54,9 +60,9 @@ export const Recipient = styled.div`
 `;
 
 export const Unread = styled.div`
-  background-color: #9090f5;
-  border-radius: 50%;
+  color: ${lightBlueColor};
   display: ${({ unread }) => (unread ? `inline-flex` : `none`)};
-  height: 1rem;
-  width: 1rem;
+  font-size: 1.6rem;
+  left: 0.5rem;
+  position: absolute;
 `;

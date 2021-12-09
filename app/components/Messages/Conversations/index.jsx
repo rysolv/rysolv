@@ -28,7 +28,8 @@ const Conversation = ({ activeConversation, conversations, handleNav }) => (
         >
           <MessageHeader>
             <Recipient>
-              <Unread unread={unread} /> {firstName} {lastName}
+              <Unread unread={unread}>&#9679;</Unread>
+              {firstName} {lastName}
             </Recipient>
             <MessageDate>{moment(createdDate).format('M/D/YYYY')}</MessageDate>
           </MessageHeader>

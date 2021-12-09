@@ -64,6 +64,8 @@ const Messages = ({
     });
   }, [threadId]);
 
+  const isCompany = !!activeUser.company;
+
   const isMobileOrTabletOrLaptop =
     deviceView === 'laptop' ||
     deviceView === 'laptopS' ||
@@ -107,6 +109,7 @@ const Messages = ({
           dispatchSetReadReceipt,
           error,
           handleNav,
+          isCompany,
           isThreadView,
           loading,
           messageBody,

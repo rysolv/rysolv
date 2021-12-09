@@ -1,83 +1,68 @@
 import styled from 'styled-components';
+import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 
-import {
-  defaultFontSize,
-  headerColor,
-  inputFieldColor,
-} from 'defaultStyleHelper';
+import { darkBlueColor, grayColor, whiteColor } from 'defaultStyleHelper';
 
-export const IconWrapper = styled.div`
-  display: inline-flex;
-  margin: 0 1rem 0 0rem;
+import { BaseLink } from '../Links';
+
+export const HorizontalDivider = styled.div`
+  border-bottom: 0.1rem solid #000000;
+  height: 0rem;
+  margin: 0.4rem 0 1.3rem;
+  opacity: 0.2;
+  width: 100%;
+`;
+
+export const MenuInternalLink = styled(BaseLink)`
+  color: ${darkBlueColor};
+  font-size: 1.376rem;
+  font-weight: 400;
+  line-height: 1.665rem;
+  margin-bottom: 1.5rem;
+
+  &:hover {
+    color: ${darkBlueColor};
+  }
+`;
+
+export const StyledLoginButton = styled(Button)`
+  color: ${darkBlueColor};
+  font-size: 1.376rem;
+  font-weight: 700;
+  justify-content: left;
+  line-height: 1.665rem;
+  margin-bottom: 1.5rem;
   padding: 0;
-  vertical-align: text-top;
-`;
+  text-transform: initial;
 
-export const MenuItemLabel = styled.div`
-  align-items: center;
-  display: inline-flex;
-`;
-
-export const MenuItemValue = styled.div`
-  display: inline-flex;
-`;
-
-export const StyledAvatar = styled.img`
-  border-radius: 50%;
-  height: 3.5rem;
-  margin: 0.5rem 1rem 0.5rem 0;
-  width: 3.5rem;
+  &:hover {
+    background: ${whiteColor};
+    color: ${darkBlueColor};
+  }
 `;
 
 export const StyledMenu = styled(Menu)`
   position: absolute !important;
 
-  .MuiMenu-paper {
-    background-color: ${headerColor};
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-top: none;
-    border: 0.1rem solid #607d8b;
-    color: white;
-    font-size: ${defaultFontSize};
-    overflow: hidden;
+  .MuiList-padding {
+    height: 100%;
+    width: 100% !important;
   }
 
   .MuiList-root {
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 2rem;
   }
-`;
 
-export const StyledMenuItem = styled.li`
-  color: ${({ notifications }) =>
-    notifications ? 'rgb(8,178,110)' : 'inherit'};
-  display: flex;
-  font-weight: ${({ notifications }) => (notifications ? 'bold' : 'inherit')};
-  justify-content: space-between;
-  min-width: 20rem;
-  padding: 1rem;
-
-  &:hover {
-    background-color: #546e7a;
-    color: ${inputFieldColor};
-    cursor: pointer;
+  .MuiMenu-paper {
+    background-color: ${whiteColor};
+    border-radius: 0.4rem;
+    box-shadow: 0 0.1rem 0.4rem ${grayColor};
+    margin-top: 1.9rem;
+    overflow: hidden;
+    top: 5.5rem !important;
+    width: 17.7rem;
   }
-`;
-
-export const StyledUserOverview = styled.div`
-  align-items: center;
-  display: flex;
-  font-size: 1.6rem;
-  font-weight: bold;
-  height: auto;
-  padding: 1rem 1.5rem;
-
-  &:hover {
-    color: ${inputFieldColor};
-  }
-`;
-
-export const StyledMenuContainer = styled.div`
-  border-bottom: 0.1rem solid #607d8b;
 `;
