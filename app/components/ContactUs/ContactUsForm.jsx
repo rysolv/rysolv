@@ -5,37 +5,29 @@ import { ProgressButton } from 'components/base_ui';
 
 import {
   ButtonWrapper,
+  ContactUsFormContainer,
   Input,
   InputError,
   InputLabel,
   InputWrapper,
-  RecruitmentFormContainer,
+  Textarea,
 } from './styledComponents';
 
-const RecruitmentForm = ({
+const ContactUsForm = ({
   dispatchChangeInput,
-  dispatchChangeStep,
   dispatchResetForm,
   error,
   form,
-  formErrors: {
-    company: companyError,
-    email: emailError,
-    name: nameError,
-    url: urlError,
-  },
+  formErrors: { body: bodyError, email: emailError, name: nameError },
   handleSendContact,
   handleValidateInput,
   loading,
   success,
 }) => {
-  const { company, email, name, url } = form;
+  const { body, email, name } = form;
 
   useEffect(() => {
     if (error || success) {
-      setTimeout(() => {
-        if (success) dispatchChangeStep({ step: 2 });
-      }, 300);
       setTimeout(() => {
         dispatchResetForm();
       }, 6000);
@@ -43,7 +35,7 @@ const RecruitmentForm = ({
   }, [error, success]);
 
   return (
-    <RecruitmentFormContainer>
+    <ContactUsFormContainer>
       <InputWrapper>
         <InputLabel>Contact name</InputLabel>
         <Input
@@ -75,57 +67,37 @@ const RecruitmentForm = ({
         <InputError>{emailError}</InputError>
       </InputWrapper>
       <InputWrapper>
-        <InputLabel>Company name</InputLabel>
-        <Input
-          autoComplete="organization"
-          height="4.9rem"
-          onBlur={() => handleValidateInput({ field: 'company', values: form })}
+        <InputLabel>Description</InputLabel>
+        <Textarea
+          height="14.4rem"
+          onBlur={() => handleValidateInput({ field: 'body', values: form })}
           onChange={e =>
-            dispatchChangeInput({ field: 'company', value: e.target.value })
+            dispatchChangeInput({ field: 'body', value: e.target.value })
           }
-          placeholder="Company name"
+          placeholder="Description"
           type="text"
-          value={company}
+          value={body}
         />
-        <InputError>{companyError}</InputError>
-      </InputWrapper>
-      <InputWrapper>
-        <InputLabel>Company website</InputLabel>
-        <Input
-          autoComplete="url"
-          height="4.9rem"
-          onBlur={() => handleValidateInput({ field: 'url', values: form })}
-          onChange={e =>
-            dispatchChangeInput({ field: 'url', value: e.target.value })
-          }
-          placeholder="Company website"
-          type="url"
-          value={url}
-        />
-        <InputError>{urlError}</InputError>
+        <InputError>{bodyError}</InputError>
       </InputWrapper>
       <ButtonWrapper>
         <ProgressButton
           disabled={
-            company.length === 0 ||
-            email.length === 0 ||
-            name.length === 0 ||
-            url.length === 0
+            body.length === 0 || email.length === 0 || name.length === 0
           }
           error={error}
           label="Next"
           loading={loading}
-          onClick={() => handleSendContact({ company, email, name, url })}
+          onClick={() => handleSendContact({ body, email, name })}
           success={success}
         />
       </ButtonWrapper>
-    </RecruitmentFormContainer>
+    </ContactUsFormContainer>
   );
 };
 
-RecruitmentForm.propTypes = {
+ContactUsForm.propTypes = {
   dispatchChangeInput: T.func.isRequired,
-  dispatchChangeStep: T.func.isRequired,
   dispatchResetForm: T.func.isRequired,
   error: T.bool.isRequired,
   form: T.object.isRequired,
@@ -136,4 +108,4 @@ RecruitmentForm.propTypes = {
   success: T.bool.isRequired,
 };
 
-export default RecruitmentForm;
+export default ContactUsForm;

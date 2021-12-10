@@ -1,10 +1,9 @@
 import { validate } from 'utils/validate';
 
 const validationPropsByField = {
-  company: { type: 'stringInput' },
+  body: { type: 'stringInput' },
   email: { type: 'emailInput' },
   name: { type: 'stringInput' },
-  url: { type: 'linkInput' },
 };
 
 export const validateFields = ({ values }) =>

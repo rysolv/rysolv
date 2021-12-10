@@ -6,15 +6,15 @@ import { sendFormFailure, sendFormSuccess } from './actions';
 import { SEND_FORM } from './constants';
 
 export function* sendFormSaga({ payload }) {
-  const { company, email, name, url } = payload;
+  const { body, email, name } = payload;
   const query = `
     mutation {
-      recruitingSignup(
+      sendContact(
         contactInput: {
-          companyName: "${company}"
-          companyUrl: "${url}"
+          body: ${JSON.stringify(body)}
           contactName: "${name}"
           email: ${JSON.stringify(email)}
+          source: "contact"
         }
       ) {
         __typename
@@ -31,7 +31,7 @@ export function* sendFormSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        recruitingSignup: { __typename, message },
+        sendContact: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;

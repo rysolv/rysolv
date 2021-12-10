@@ -1,6 +1,5 @@
 import {
   CHANGE_INPUT,
-  CHANGE_STEP,
   INPUT_ERROR,
   RESET_FORM,
   SEND_FORM_FAILURE,
@@ -12,13 +11,6 @@ export function changeInput(payload) {
   return {
     payload,
     type: CHANGE_INPUT,
-  };
-}
-
-export function changeStep(payload) {
-  return {
-    payload,
-    type: CHANGE_STEP,
   };
 }
 

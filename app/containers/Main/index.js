@@ -88,6 +88,7 @@ class Main extends React.PureComponent {
       basePathname === 'company' ||
       basePathname === 'messages' ||
       pathname === '/' ||
+      pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/password-reset' ||
@@ -97,6 +98,7 @@ class Main extends React.PureComponent {
     const isPaymentModal = modal === 'fundIssue';
     const hasBlueBackground =
       pathname === '/' ||
+      pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/password-reset' ||

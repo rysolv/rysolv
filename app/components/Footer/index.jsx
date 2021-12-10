@@ -25,13 +25,12 @@ const Footer = () => (
       <InternalLinkWrapper>
         <LinkColumn>
           <InternalLink label="How it works" path="/how-to" />
-          <InternalLink label="Recruiting" path="/recruitment" />
+          <InternalLink label="Contact us" path="/contact-us" />
           <InternalLink label="Privacy policy" path="/privacy-policy" />
         </LinkColumn>
         <LinkColumn>
           <InternalLink label="Terms and conditions" path="/terms-of-service" />
           <InternalLink label="FAQ" path="/faq" />
-          <InternalLink label="Contact us" path="/contact-us" />
         </LinkColumn>
       </InternalLinkWrapper>
       <ExternalLinkWrapper>

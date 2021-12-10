@@ -4,10 +4,9 @@ import withAuth from 'containers/Auth';
 
 import CodeScoring from 'containers/CodeScoring/Loadable';
 import CompanyDashboard from 'containers/CompanyDashboard/Loadable';
-import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
 import CompanySettings from 'containers/CompanySettings/Loadable';
 import CompanySignUp from 'containers/CompanySignUp/Loadable';
-import Contact from 'components/Contact';
+import ContactUs from 'containers/ContactUs/Loadable';
 import Faq from 'components/Faq';
 import HowTo from 'components/HowTo';
 import IssuesAdd from 'containers/Issues/Add';
@@ -46,8 +45,7 @@ const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
 const PrivateUserDashboard = withAuth(privateConfig, UserDashboard);
 const PublicCodeScoring = withAuth(publicConfig, CodeScoring);
-const PublicCompanyRecruitment = withAuth(publicConfig, CompanyRecruitment);
-const PublicContact = withAuth(publicConfig, Contact);
+const PublicContactUs = withAuth(publicConfig, ContactUs);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
 const PublicIssuesDetail = withAuth(publicConfig, IssuesDetail);
@@ -72,7 +70,7 @@ const Routes = () => (
     <Route exact path="/company/dashboard/:view?" component={PrivateCompanyDashboard} />
     <Route exact path="/company/settings" component={PrivateCompanySettings} />
     <Route exact path="/company/signup" component={PrivateCompanySignUp} />
-    <Route exact path="/contact-us" component={PublicContact} />
+    <Route exact path="/contact-us" component={PublicContactUs} />
     <Route exact path="/dashboard/:view?" component={PrivateUserDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
     <Route exact path="/how-to" component={PublicHowTo} />
@@ -88,7 +86,6 @@ const Routes = () => (
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
     <Route exact path="/profile/:user" component={PublicUserProfile} />
-    <Route exact path="/recruitment" component={PublicCompanyRecruitment} />
     <Route exact path="/repos" component={PublicOverview} />
     <Route exact path="/repos/add" component={PrivateReposAdd} />
     <Route exact path="/repos/detail/:id" component={PublicReposDetail} />

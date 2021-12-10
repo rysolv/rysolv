@@ -1,12 +1,14 @@
 import styled, { css } from 'styled-components';
 
-import { BaseLink } from 'components/base_ui';
 import {
   blueGrayColor,
   defaultFontSize,
   errorRed,
   whiteColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { laptop } = mediaQueriesByDevice;
 
 const baseInputStyle = css`
   background: ${whiteColor};
@@ -24,65 +26,24 @@ const baseInputStyle = css`
   width: 100%;
 `;
 
-export const BackgroundHollowCircleBottomIcon = styled.div`
-  svg {
-    left: -6.4rem;
-    position: absolute;
-    top: 382.4rem;
-  }
-
-  @media (max-width: 600px) {
-    display: none;
-  }
-`;
-
-export const BackgroundHollowCircleTopIcon = styled.div`
-  svg {
-    left: 92rem;
-    position: absolute;
-    top: 249.9rem;
-  }
-`;
-
-export const BackgroundSolidCircleIcon = styled.div`
-  svg {
-    left: 50%;
-    position: absolute;
-    top: 95.7rem;
-    transform: translateX(-50%);
-  }
-
-  @media (max-width: 1200px) {
-    svg {
-      top: 208.9rem;
-    }
-  }
-
-  @media (max-width: 1030px) {
-    svg {
-      top: 220.9rem;
-    }
-  }
-
-  @media (max-width: 860px) {
-    svg {
-      display: none;
-    }
-  }
-`;
-
 export const ButtonWrapper = styled.div`
   margin-top: 4.8rem;
   text-align: center;
   width: 100%;
 `;
 
-export const CompanyRecruitmentContainer = styled.div`
+export const ContactUsContainer = styled.div`
   color: ${whiteColor};
+  display: flex;
   height: 100%;
   padding: 5rem 12rem 0;
   position: relative;
+  width: 100%;
   z-index: 1;
+
+  ${laptop} {
+    flex-direction: column;
+  }
 
   @media (max-width: 700px) {
     padding: 5rem 3rem 0;
@@ -93,7 +54,12 @@ export const CompanyRecruitmentContainer = styled.div`
   }
 `;
 
-export const CompanyRecruitmentHeader = styled.div`
+export const ContactUsFormContainer = styled.div`
+  max-width: 58rem;
+  width: 100%;
+`;
+
+export const ContactUsHeader = styled.div`
   font-size: 3.6rem;
   font-weight: 700;
   line-height: 3.873rem;
@@ -109,7 +75,7 @@ export const CompanyRecruitmentHeader = styled.div`
   }
 `;
 
-export const CompanyRecruitmentSubheader = styled.div`
+export const ContactUsSubheader = styled.div`
   font-size: 2rem;
   font-weight: 400;
   line-height: 2.905rem;
@@ -133,20 +99,12 @@ export const FormWrapper = styled.div`
   display: flex;
   height: auto;
   justify-content: center;
-  margin: 5.6rem auto;
   max-width: 65rem;
   padding: 6.4rem;
-  width: 60%;
+  width: 50%;
 
-  @media (max-width: 1242px) {
-    width: 70%;
-  }
-
-  @media (max-width: 1192px) {
-    width: 75%;
-  }
-
-  @media (max-width: 1092px) {
+  ${laptop} {
+    margin: 5.6rem auto 0;
     width: 80%;
   }
 
@@ -160,7 +118,11 @@ export const FormWrapper = styled.div`
 `;
 
 export const HeaderGroup = styled.div`
-  margin-bottom: 3rem;
+  margin-right: 4rem;
+
+  ${laptop} {
+    margin-right: 0;
+  }
 `;
 
 export const HeaderImageLeftIcon = styled.div`
@@ -236,17 +198,9 @@ export const HeaderImageRightIcon = styled.div`
 export const HeaderWrapper = styled.div`
   margin: auto;
   max-width: 85rem;
-  width: 60%;
+  width: 50%;
 
-  @media (max-width: 1242px) {
-    width: 70%;
-  }
-
-  @media (max-width: 1192px) {
-    width: 75%;
-  }
-
-  @media (max-width: 1092px) {
+  ${laptop} {
     width: 80%;
   }
 
@@ -276,12 +230,7 @@ export const InputWrapper = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const InternalLink = styled(BaseLink)`
-  color: ${whiteColor};
-  text-decoration: underline;
-`;
-
-export const RecruitmentFormContainer = styled.div`
-  max-width: 58rem;
-  width: 100%;
+export const Textarea = styled.textarea`
+  ${baseInputStyle};
+  overflow-y: auto;
 `;
