@@ -7,10 +7,12 @@ export const excludedPath = [
   'jobs',
   'messages',
   'password-reset',
+  'privacy-policy',
   'profile',
   'recruitment',
   'signin',
   'signup',
+  'terms-of-service',
 ];
 
 export const getInitialValue = {
