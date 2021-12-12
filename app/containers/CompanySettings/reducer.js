@@ -4,21 +4,34 @@ import produce from 'immer';
 import {
   CHANGE_INPUT,
   CLOSE_MODAL_STATE,
-  DELETE_USER_FAILURE,
-  DELETE_USER_SUCCESS,
-  DELETE_USER,
   EDIT_USER_FAILURE,
   EDIT_USER_SUCCESS,
   EDIT_USER,
+  FETCH_CONTRACT_FAILURE,
+  FETCH_CONTRACT_SUCCESS,
+  FETCH_CONTRACT,
   FETCH_USER_FAILURE,
   FETCH_USER_SUCCESS,
   FETCH_USER,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  SUBMIT_CONTRACT_ACCEPTED_FAILURE,
+  SUBMIT_CONTRACT_ACCEPTED_SUCCESS,
+  SUBMIT_CONTRACT_ACCEPTED,
+  UPDATE_PAYMENT_METHOD_FAILURE,
+  UPDATE_PAYMENT_METHOD_SUCCESS,
+  UPDATE_PAYMENT_METHOD,
 } from './constants';
 
 export const initialState = {
   companyUser: {},
+  contract: {
+    body: '',
+    contractAccepted: false,
+    subtitle: '',
+    title: '',
+  },
+  contractLoading: false,
   error: null,
   form: {
     email: '',
@@ -40,28 +53,13 @@ export const initialState = {
 const companySettingsReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case CHANGE_INPUT: {
-      const { field, value } = payload;
-      draft.form[field] = value;
+      const { form, field, value } = payload;
+      draft[form][field] = value;
       break;
     }
     case CLOSE_MODAL_STATE: {
       draft.isModalOpen = initialState.isModalOpen;
       draft.modal = initialState.modal;
-      break;
-    }
-    case DELETE_USER_FAILURE: {
-      const { error } = payload;
-      draft.error = error;
-      draft.loading = false;
-      break;
-    }
-    case DELETE_USER_SUCCESS: {
-      draft.loading = false;
-      break;
-    }
-    case DELETE_USER: {
-      draft.error = null;
-      draft.loading = true;
       break;
     }
     case EDIT_USER_FAILURE: {
@@ -77,6 +75,23 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     case EDIT_USER: {
       draft.error = null;
       draft.loading = true;
+      break;
+    }
+    case FETCH_CONTRACT_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      draft.contractLoading = false;
+      break;
+    }
+    case FETCH_CONTRACT_SUCCESS: {
+      const { contract } = payload;
+      draft.contract = { contractAccepted: false, ...contract };
+      draft.contractLoading = false;
+      break;
+    }
+    case FETCH_CONTRACT: {
+      draft.error = null;
+      draft.contractLoading = true;
       break;
     }
     case FETCH_USER_FAILURE: {
@@ -109,6 +124,36 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
       const { modalState } = payload;
       draft.isModalOpen = true;
       draft.modal = modalState;
+      break;
+    }
+    case SUBMIT_CONTRACT_ACCEPTED_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      draft.loading = false;
+      break;
+    }
+    case SUBMIT_CONTRACT_ACCEPTED_SUCCESS: {
+      draft.loading = false;
+      break;
+    }
+    case SUBMIT_CONTRACT_ACCEPTED: {
+      draft.error = null;
+      draft.loading = true;
+      break;
+    }
+    case UPDATE_PAYMENT_METHOD_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      draft.loading = false;
+      break;
+    }
+    case UPDATE_PAYMENT_METHOD_SUCCESS: {
+      draft.loading = false;
+      break;
+    }
+    case UPDATE_PAYMENT_METHOD: {
+      draft.error = null;
+      draft.loading = true;
       break;
     }
   }

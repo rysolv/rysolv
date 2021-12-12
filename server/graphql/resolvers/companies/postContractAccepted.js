@@ -8,14 +8,14 @@ const {
 } = require('./constants');
 
 const postContractAccepted = async (
-  { companyId, contractAccepted },
+  { companyId, plan },
   { authError, userId },
 ) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    if (companyId && contractAccepted) {
-      await postContractAcceptedQuery({ companyId });
+    if (companyId && plan) {
+      await postContractAcceptedQuery({ companyId, plan });
     } else {
       throw new Error(
         'In order to use our service, you must agree to our Terms and Conditions.',

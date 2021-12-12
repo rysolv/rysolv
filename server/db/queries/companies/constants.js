@@ -1,7 +1,6 @@
 const companyValues = [
   'company_name',
   'company_url',
-  'contract_accepted_date',
   'created_date',
   'description',
   'id',

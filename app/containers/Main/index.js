@@ -90,11 +90,11 @@ class Main extends React.PureComponent {
       pathname === '/company/dashboard/edit-company' ||
       pathname === '/company/dashboard/edit-position' ||
       pathname === '/company/settings' ||
+      pathname === '/company/settings/payments' ||
       pathname === '/company/signup' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/password-reset' ||
-      pathname === '/recruitment' ||
       pathname === '/signin' ||
       pathname === '/signup';
     const isPaymentModal = modal === 'fundIssue';
@@ -103,7 +103,7 @@ class Main extends React.PureComponent {
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/password-reset' ||
-      pathname === '/recruitment' ||
+      pathname === '/company/signup' ||
       pathname === '/signin' ||
       pathname === '/signup';
     const modalPropsDictionary = {

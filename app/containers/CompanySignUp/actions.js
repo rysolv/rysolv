@@ -2,6 +2,9 @@ import {
   CHANGE_INPUT,
   CHANGE_VIEW,
   CLEAR_ALERTS,
+  FETCH_CONTRACT_FAILURE,
+  FETCH_CONTRACT_SUCCESS,
+  FETCH_CONTRACT,
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
@@ -31,6 +34,24 @@ export function changeView(payload) {
 
 export function clearAlerts() {
   return { type: CLEAR_ALERTS };
+}
+
+export function fetchContractFailure(payload) {
+  return {
+    payload,
+    type: FETCH_CONTRACT_FAILURE,
+  };
+}
+
+export function fetchContractSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_CONTRACT_SUCCESS,
+  };
+}
+
+export function fetchContract() {
+  return { type: FETCH_CONTRACT };
 }
 
 export function fetchQuestionsFailure(payload) {

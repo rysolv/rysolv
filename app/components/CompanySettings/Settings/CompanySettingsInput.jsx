@@ -43,7 +43,7 @@ const InputOption = ({
   };
 
   return (
-    <InputContainer>
+    <InputContainer edit={edit}>
       <InputWrapper>
         <InputLabel>{formatLabel(field)}</InputLabel>
         <InputDescription />
@@ -66,7 +66,7 @@ const InputOption = ({
         FallbackComponent={
           <ButtonGroup>
             <StyledPrimaryButton label="Cancel" onClick={handleCancel} />
-            <StyledPrimaryAsyncButton label="Edit" onClick={handleEdit} />
+            <StyledPrimaryAsyncButton label="Save" onClick={handleEdit} />
           </ButtonGroup>
         }
         shouldRender={!edit}
@@ -79,7 +79,7 @@ InputOption.propTypes = {
   error: T.string.isRequired,
   field: T.string.isRequired,
   handleChangeInput: T.func.isRequired,
-  handleEditUser: T.string.isRequired,
+  handleEditUser: T.func.isRequired,
   onBlur: T.func.isRequired,
   value: T.string.isRequired,
 };

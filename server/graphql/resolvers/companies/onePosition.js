@@ -42,7 +42,7 @@ const onePosition = async ({ positionId }, { authError, userId }) => {
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: alert || onePositionError,
+      message: onePositionError,
     };
   }
 };

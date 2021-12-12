@@ -4,6 +4,12 @@ export const CHANGE_VIEW = 'app/CompanySignUp/CHANGE_VIEW';
 
 export const CLEAR_ALERTS = 'app/CompanySignUp/CLEAR_ALERTS';
 
+export const FETCH_CONTRACT = 'app/CompanySignUp/FETCH_CONTRACT';
+export const FETCH_CONTRACT_FAILURE =
+  'app/CompanySignUp/FETCH_CONTRACT_FAILURE';
+export const FETCH_CONTRACT_SUCCESS =
+  'app/CompanySignUp/FETCH_CONTRACT_SUCCESS';
+
 export const FETCH_QUESTIONS = 'app/CompanySignUp/FETCH_QUESTIONS';
 export const FETCH_QUESTIONS_FAILURE =
   'app/CompanySignUp/FETCH_QUESTIONS_FAILURE';

@@ -70,7 +70,7 @@ const Routes = () => (
     <Route exact path="/" component={PublicMain} />
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/company/dashboard/:view?" component={PrivateCompanyDashboard} />
-    <Route exact path="/company/settings" component={PrivateCompanySettings} />
+    <Route exact path="/company/settings/:view?" component={PrivateCompanySettings} />
     <Route exact path="/company/signup" component={PrivateCompanySignUp} />
     <Route exact path="/contact-us" component={PublicContact} />
     <Route exact path="/dashboard/:view?" component={PrivateUserDashboard} />
