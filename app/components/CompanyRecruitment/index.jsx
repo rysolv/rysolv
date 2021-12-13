@@ -3,33 +3,24 @@ import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
 import Calendly from 'components/Calendly';
-import iconDictionary from 'utils/iconDictionary';
 
+import PricingGrid from './PricingGrid';
 import RecruitmentForm from './RecruitmentForm';
 import {
   CompanyRecruitmentContainer,
   CompanyRecruitmentHeader,
-  CompanyRecruitmentSubheader,
   FormWrapper,
-  HeaderGroup,
-  HeaderImageLeftIcon,
-  HeaderImageRightIcon,
-  HeaderWrapper,
-  InternalLink,
 } from './styledComponents';
 
-const HeaderImageLeft = iconDictionary('headerImageLeft');
-const RecruitmentHeaderImageRight = iconDictionary(
-  'recruitmentHeaderImageRight',
-);
-
 const CompanyRecruitment = ({
+  deviceView,
   dispatchChangeInput,
   dispatchChangeStep,
   dispatchResetForm,
   error,
   form,
   formErrors,
+  handleSelectPlan,
   handleSendContact,
   handleValidateInput,
   loading,
@@ -38,31 +29,13 @@ const CompanyRecruitment = ({
 }) => (
   <Fragment>
     <CompanyRecruitmentContainer>
-      <HeaderWrapper>
-        <HeaderGroup>
-          <CompanyRecruitmentHeader>
-            Join the future of hiring
-          </CompanyRecruitmentHeader>
-          <CompanyRecruitmentSubheader>
-            Forget the algorithm tests! Rysolv evaluates a candidate&apos;s
-            coding history to find the right engineer for the job.
-          </CompanyRecruitmentSubheader>
-          <CompanyRecruitmentSubheader>
-            See how we{' '}
-            <InternalLink label="score candidates" path="/how-we-score-code" />.
-          </CompanyRecruitmentSubheader>
-        </HeaderGroup>
-        <HeaderGroup>
-          <CompanyRecruitmentHeader>
-            Only pay for placement
-          </CompanyRecruitmentHeader>
-          <CompanyRecruitmentSubheader>
-            We&apos;re confident we&apos;ll find the right engineers for the
-            job. You only pay 5% starting salary at time of hire, and 5% after
-            60 days.
-          </CompanyRecruitmentSubheader>
-        </HeaderGroup>
-      </HeaderWrapper>
+      <CompanyRecruitmentHeader> Pricing!</CompanyRecruitmentHeader>
+      <PricingGrid
+        buttonText="Get Started"
+        deviceView={deviceView}
+        handleSelectPlan={handleSelectPlan}
+      />
+      <CompanyRecruitmentHeader> Talk to us!</CompanyRecruitmentHeader>
       <ConditionalRender
         Component={<Calendly isCompanyRecruitment />}
         FallbackComponent={
@@ -84,18 +57,18 @@ const CompanyRecruitment = ({
         shouldRender={step === 2}
       />
     </CompanyRecruitmentContainer>
-    <HeaderImageRightIcon>{RecruitmentHeaderImageRight}</HeaderImageRightIcon>
-    <HeaderImageLeftIcon>{HeaderImageLeft}</HeaderImageLeftIcon>
   </Fragment>
 );
 
 CompanyRecruitment.propTypes = {
+  deviceView: T.string.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeStep: T.func.isRequired,
   dispatchResetForm: T.func.isRequired,
   error: T.bool.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
+  handleSelectPlan: T.func.isRequired,
   handleSendContact: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   loading: T.bool.isRequired,

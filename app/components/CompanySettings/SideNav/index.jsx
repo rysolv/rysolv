@@ -3,19 +3,23 @@ import T from 'prop-types';
 
 import { InternalLink, SettingsContainer } from './styledComponents';
 
-const CompanySettingsSideNav = ({ handleNav }) => (
+const CompanySettingsSideNav = ({ selected }) => (
   <SettingsContainer>
     <InternalLink
       label="Account &amp; Settings"
-      onClick={() => handleNav('/company/settings')}
+      selected={selected === 'main'}
+      to="/company/settings"
     />
     <InternalLink
-      label="Pricing"
-      onClick={() => handleNav('/company/settings/pricing')}
+      label="Payments"
+      selected={selected === 'payments'}
+      to="/company/settings/payments"
     />
   </SettingsContainer>
 );
 
-CompanySettingsSideNav.propTypes = { handleNav: T.func.isRequired };
+CompanySettingsSideNav.propTypes = {
+  selected: T.string.isRequired,
+};
 
 export default CompanySettingsSideNav;

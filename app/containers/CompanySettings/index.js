@@ -3,13 +3,15 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { push } from 'connected-react-router';
 import { withRouter } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
-import CompanySettingsSideNav from 'components/CompanySettingsSideNav';
-import DeleteUserModal from 'components/DeleteUserModal';
+import CompanyContractConfirmationModal from 'components/CompanyContractModal/confirmationView';
+import CompanyContractModal from 'components/CompanyContractModal';
+import CompanyPaymentModal from 'components/CompanyPaymentModal';
+import CompanySettingsSideNav from 'components/CompanySettings/SideNav';
+
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -17,11 +19,13 @@ import injectSaga from 'utils/injectSaga';
 import {
   changeInput,
   closeModalState,
-  deleteUser,
   editUser,
+  fetchContract,
   fetchUser,
   inputError,
   openModalState,
+  submitContractAccepted,
+  updatePaymentMethod,
 } from './actions';
 import { validateOneField } from './helpers';
 import reducer from './reducer';
@@ -36,23 +40,26 @@ import viewDictionary from './viewDictionary';
 const CompanySettings = ({
   activeUser,
   companyUser,
+  contract,
   dispatchChangeInput,
   dispatchCloseModal,
-  dispatchDeleteUser,
   dispatchEditUser,
+  dispatchFetchContract,
   dispatchFetchUser,
   dispatchInputError,
   dispatchOpenModal,
+  dispatchSubmitContractAccepted,
+  dispatchUpdatePaymentMethod,
   error,
   form,
   formErrors,
-  handleNav,
   isModalOpen,
   loading,
   modal,
   view,
 }) => {
-  const { id } = activeUser;
+  const { id, company } = activeUser;
+  const { companyId, contract: currentPlan, paymentConfirmed } = company;
 
   useEffect(() => {
     if (id) dispatchFetchUser({ userId: id });
@@ -73,6 +80,11 @@ const CompanySettings = ({
     }
   };
 
+  const handleSelectPlan = ({ plan }) => {
+    dispatchFetchContract({ plan });
+    dispatchOpenModal({ modalState: 'contract' });
+  };
+
   const handleValidateInput = ({ field, values }) => {
     const validationError = validateOneField({ field, values }) || '';
     dispatchInputError({
@@ -83,11 +95,33 @@ const CompanySettings = ({
   };
 
   const modalPropsDictionary = {
-    deleteUser: {
-      Component: DeleteUserModal,
+    contract: {
+      Component: CompanyContractModal,
       open: isModalOpen,
       propsToPassDown: {
-        handleDeleteUser: dispatchDeleteUser,
+        alerts: { error },
+        companyId,
+        contract,
+        dispatchChangeInput,
+        dispatchSubmitContractAccepted,
+        handleClose: dispatchCloseModal,
+        paymentConfirmed,
+      },
+    },
+    payment: {
+      Component: CompanyPaymentModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        dispatchUpdatePaymentMethod,
+        handleClose: dispatchCloseModal,
+        paymentConfirmed,
+      },
+    },
+    confirmation: {
+      Component: CompanyContractConfirmationModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        contract,
         handleClose: dispatchCloseModal,
       },
     },
@@ -95,7 +129,7 @@ const CompanySettings = ({
 
   return (
     <ViewContainer>
-      <CompanySettingsSideNav handleNav={handleNav} />
+      <CompanySettingsSideNav selected={view} />
       <VerticalDivider />
       <AsyncRender
         asyncData={companyUser}
@@ -104,13 +138,16 @@ const CompanySettings = ({
         isRequiredData
         loading={loading}
         propsToPassDown={{
+          currentPlan,
           dispatchChangeInput,
-          dispatchOpenModal,
           dispatchFetchUser,
+          dispatchOpenModal,
           form,
           formErrors,
           handleEditUser,
+          handleSelectPlan,
           handleValidateInput,
+          paymentConfirmed,
         }}
       />
       {isModalOpen && <ModalDialog {...modalPropsDictionary[modal]} />}
@@ -121,17 +158,19 @@ const CompanySettings = ({
 CompanySettings.propTypes = {
   activeUser: T.object.isRequired,
   companyUser: T.object.isRequired,
+  contract: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
-  dispatchDeleteUser: T.func.isRequired,
   dispatchEditUser: T.func.isRequired,
+  dispatchFetchContract: T.func.isRequired,
   dispatchFetchUser: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
-  error: T.oneOfType([T.bool, T.string]).isRequired,
+  dispatchSubmitContractAccepted: T.func.isRequired,
+  dispatchUpdatePaymentMethod: T.func.isRequired,
+  error: T.oneOfType([T.bool, T.string]),
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
-  handleNav: T.func.isRequired,
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
   modal: T.string.isRequired,
@@ -147,6 +186,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : CompanySettings
    */
   companyUser: makeSelectCompanySettings('companyUser'),
+  contract: makeSelectCompanySettings('contract'),
   error: makeSelectCompanySettings('error'),
   form: makeSelectCompanySettings('form'),
   formErrors: makeSelectCompanySettings('formErrors'),
@@ -162,15 +202,14 @@ const mapDispatchToProps = dispatch => ({
    */
   dispatchChangeInput: payload => dispatch(changeInput(payload)),
   dispatchCloseModal: () => dispatch(closeModalState()),
-  dispatchDeleteUser: () => dispatch(deleteUser()),
   dispatchEditUser: payload => dispatch(editUser(payload)),
+  dispatchFetchContract: payload => dispatch(fetchContract(payload)),
   dispatchFetchUser: payload => dispatch(fetchUser(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),
   dispatchOpenModal: payload => dispatch(openModalState(payload)),
-  /**
-   * Reducer : Router
-   */
-  handleNav: route => dispatch(push(route)),
+  dispatchSubmitContractAccepted: payload =>
+    dispatch(submitContractAccepted(payload)),
+  dispatchUpdatePaymentMethod: () => dispatch(updatePaymentMethod()),
 });
 
 const withConnect = connect(
