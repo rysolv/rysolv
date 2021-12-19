@@ -2,11 +2,11 @@ const createMessageError = `Something went wrong when sending your message.`;
 
 const createMessageSuccess = `The candidate has successfully been notified.`;
 
-const getContractError = 'Something went wrong getting the hiring contract';
+const getContractError = `Something went wrong when getting the hiring contract.`;
 
-const matchCandidatesError = 'Something went wrong matching candidates.';
+const matchCandidatesError = `Something went wrong when matching candidates for this position.`;
 
-const matchCandidatesSuccess = 'Successfully matched candidates';
+const matchCandidatesSuccess = `You have successfully matched with candidates for this position.`;
 
 const oneCompanyError = `Something went wrong when getting your company.`;
 
@@ -18,10 +18,6 @@ const postContractAcceptedError =
 const postContractAcceptedSuccess =
   'You have successfully agreed to our Terms and Conditions.';
 
-const setPaymentError = 'Failed to update payment method.';
-
-const setPaymentSuccess = 'Successfully updated payment method';
-
 const transformCompanyError = `Something went wrong when saving your company information. Please try again later.`;
 
 const transformCompanySuccess = `Your company information has been successfully saved.`;
@@ -29,6 +25,10 @@ const transformCompanySuccess = `Your company information has been successfully 
 const transformPositionError = `Something went wrong when editing this position.`;
 
 const transformPositionSuccess = `Your position has successfully been edited.`;
+
+const updatePaymentMethodError = `Something went wrong when updating your payment method. Please try again later.`;
+
+const updatePaymentMethodSuccess = `Your payment method has been successfully updated.`;
 
 module.exports = {
   createMessageError,
@@ -40,10 +40,10 @@ module.exports = {
   onePositionError,
   postContractAcceptedError,
   postContractAcceptedSuccess,
-  setPaymentError,
-  setPaymentSuccess,
   transformCompanyError,
   transformCompanySuccess,
   transformPositionError,
   transformPositionSuccess,
+  updatePaymentMethodError,
+  updatePaymentMethodSuccess,
 };

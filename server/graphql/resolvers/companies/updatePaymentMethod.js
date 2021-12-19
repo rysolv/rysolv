@@ -1,6 +1,8 @@
-/* eslint-disable camelcase */
 const { CustomError, errorLogger } = require('../../../helpers');
-const { setPaymentError, setPaymentSuccess } = require('./constants');
+const {
+  updatePaymentMethodError,
+  updatePaymentMethodSuccess,
+} = require('./constants');
 
 const updatePaymentMethod = async (_, { authError, userId }) => {
   try {
@@ -8,13 +10,13 @@ const updatePaymentMethod = async (_, { authError, userId }) => {
 
     return {
       __typename: 'Success',
-      message: setPaymentSuccess,
+      message: updatePaymentMethodSuccess,
     };
   } catch (error) {
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: setPaymentError,
+      message: updatePaymentMethodError,
     };
   }
 };

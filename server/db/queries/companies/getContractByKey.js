@@ -2,7 +2,7 @@ const { singleQuery } = require('../../baseQueries');
 
 const getContractByKey = async ({ key }) => {
   const queryText = `
-    SELECT body, title,	subtitle, version, contract_key AS key
+    SELECT body, contract_key AS key, subtitle, title, version
     FROM legal_contracts
     WHERE contract_key = $1
     ORDER BY version DESC

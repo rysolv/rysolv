@@ -153,14 +153,3 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
     color: ${whiteColor};
   }
 `;
-
-export const StyledDeleteButton = styled(StyledPrimaryButton)`
-  border-color: ${errorRed};
-  color: ${errorRed};
-  margin-top: 1rem;
-  width: auto;
-
-  &:hover {
-    background-color: ${errorRed};
-  }
-`;

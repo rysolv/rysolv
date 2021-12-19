@@ -2,7 +2,6 @@ import React from 'react';
 import T from 'prop-types';
 
 import CompanySettingsInput from './CompanySettingsInput';
-
 import {
   CompanySettingsContainer,
   CompanySettingsHeader,

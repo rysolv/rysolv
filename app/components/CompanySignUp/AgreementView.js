@@ -22,15 +22,15 @@ const NextIcon = iconDictionary('navigateNext');
 
 const AgreementView = ({
   alerts: { error },
+  contract,
   dispatchChangeInput,
   dispatchChangeView,
   dispatchClearAlerts,
   forms: { contract: contractForm },
   handleSubmit,
-  contract,
 }) => {
+  const { body, subtitle, title } = contract;
   const { contractAccepted } = contractForm;
-  const { title, body, subtitle } = contract;
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

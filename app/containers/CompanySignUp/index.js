@@ -58,8 +58,8 @@ const CompanySignUp = ({
   const [viewToRender, setViewToRender] = useState(view);
 
   useEffect(() => {
-    dispatchFetchQuestions({ category: 'company' });
     dispatchFetchContract();
+    dispatchFetchQuestions({ category: 'company' });
     return dispatchResetState;
   }, []);
 

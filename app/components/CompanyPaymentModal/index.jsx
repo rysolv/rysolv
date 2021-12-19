@@ -20,10 +20,10 @@ const CompanyPaymentModal = ({
     </QuestionWrapper>
     <ContentGroup>Payment method:</ContentGroup>
     <ButtonGroup>
-      <StyledButton disableRipple onClick={() => handleClose()}>
+      <StyledButton disableRipple onClick={handleClose}>
         Cancel
       </StyledButton>
-      <StyledButton disableRipple onClick={() => dispatchUpdatePaymentMethod()}>
+      <StyledButton disableRipple onClick={dispatchUpdatePaymentMethod}>
         Confirm
       </StyledButton>
     </ButtonGroup>

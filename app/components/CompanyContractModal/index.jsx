@@ -45,7 +45,7 @@ const ContractModal = ({
         </CheckboxWrapper>
       </ContentGroup>
       <ButtonGroup>
-        <StyledButton disableRipple onClick={() => handleClose()}>
+        <StyledButton disableRipple onClick={handleClose}>
           Cancel
         </StyledButton>
         <StyledButton

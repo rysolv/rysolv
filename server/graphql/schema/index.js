@@ -529,12 +529,14 @@ module.exports = buildSchema(`
 
   type RootQuery {
     getCompanyPositions(companyId: ID!): CompanyPositionsArray
+    getContract(plan: String!): ContractResult!
     getFilterOptions: FilterResult!
     getGithubPullRequests(issueId: ID!): PullRequestArrayResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!
     getIssueWatchList(issueId: ID!): [WatchList]!
+    getMessages: ConversationResult!
     getPositionCandidates(positionId: ID!): [User]
     getPullRequestList(issueId: ID): [PullRequestList]!
     getQuestions(category: String!): QuestionResult
@@ -543,14 +545,12 @@ module.exports = buildSchema(`
     getStats: StatsResult!
     getUserActivity(userId: ID): [Activity]!
     getUserDashboard: UserResult!
-    getContract(plan: String!): ContractResult!
     getUserIssues: IssueArrayResult!
     getUserProfile(username: String!): UserResult!
     getUserPullRequests: PullRequestArrayResult!
     getUserRepos: RepoArrayResult!
     getUsers: UserArrayResult!
     getUserSettings: UserResult!
-    getMessages: ConversationResult!
 
     githubSignIn(code: String!, origin: String!): UserResult!
 

@@ -11,7 +11,6 @@ import CompanyContractConfirmationModal from 'components/CompanyContractModal/co
 import CompanyContractModal from 'components/CompanyContractModal';
 import CompanyPaymentModal from 'components/CompanyPaymentModal';
 import CompanySettingsSideNav from 'components/CompanySettings/SideNav';
-
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';

@@ -16,7 +16,7 @@ const getUserCompany = async ({ userId }) => {
     FROM companies c
     JOIN user_companies uc ON c.id = uc.company_id
     LEFT JOIN signed_contracts sc ON sc.company_id = c.id
-    LEFT JOIN legal_contracts lc on lc.id = sc.contract_id
+    LEFT JOIN legal_contracts lc ON lc.id = sc.contract_id
     WHERE uc.user_id = $1
     ORDER BY sc.created_date DESC
     LIMIT 1

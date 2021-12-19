@@ -29,8 +29,8 @@ export function* fetchContractSaga() {
         __typename
         ... on Contract {
           body
-          title
           subtitle
+          title
           version
         }
         ... on Error {
