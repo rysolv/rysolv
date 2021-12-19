@@ -3,10 +3,16 @@ const { groupValues, userSettingsReturnValues } = require('./constants');
 
 const getUserSettings = async ({ userId }) => {
   const queryText = `
+    WITH skills AS ( 
+      SELECT COALESCE(array_agg(json_build_object('id', pts.id, 'level', pts.level, 'shortName', t.short_name)), '{}') AS skills
+      FROM position_tech_stack pts
+      JOIN technologies t ON pts.technology_id = t.id
+      WHERE pts.user_id = $1
+    )
     SELECT
-      ${userSettingsReturnValues}
+      ${userSettingsReturnValues},
+      (SELECT * FROM skills)
     FROM users
-      LEFT JOIN languages ON languages.user_id = users.id
     WHERE
       users.id = $1
       AND users.is_deleted = false

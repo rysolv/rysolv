@@ -20,7 +20,7 @@ export const DELETE_POSITION_FAILURE =
 export const DELETE_POSITION_SUCCESS =
   'app/CompanyDashboard/DELETE_POSITION_SUCCESS';
 
-export const DELETE_SKILL = 'app/CompnayDashboard/DELETE_SKILL';
+export const DELETE_SKILL = 'app/CompanyDashboard/DELETE_SKILL';
 
 export const EDIT_COMPANY = 'app/CompanyDashboard/EDIT_COMPANY';
 export const EDIT_COMPANY_FAILURE = 'app/CompanyDashboard/EDIT_COMPANY_FAILURE';

@@ -203,7 +203,7 @@ export function* editPositionSaga({ payload }) {
   );
   const query = `
     mutation {
-      transformPosition(
+      transformPositionResponse(
         positionId: "${positionId}",
         responseArray: [${formattedResponse}]
       ) {
@@ -221,7 +221,7 @@ export function* editPositionSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        transformPosition: { __typename, message },
+        transformPositionResponse: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
@@ -242,7 +242,7 @@ export function* fetchCompanyPositionsSaga({ payload }) {
         ... on CompanyPositionsArray {
           positions {
             id
-            isOpen
+            isActive
             isRemote
             location
             title
@@ -341,7 +341,7 @@ export function* fetchPositionSaga({ payload }) {
         ... on Position {
           description
           experience
-          isOpen
+          isActive
           isRemote
           location
           role

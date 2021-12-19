@@ -20,9 +20,9 @@ const transformCompanyError = `Something went wrong when saving your company inf
 
 const transformCompanySuccess = `Your company information has been successfully saved.`;
 
-const transformPositionError = `Something went wrong when editing this position.`;
+const transformPositionResponseError = `Something went wrong when editing this position.`;
 
-const transformPositionSuccess = `Your position has successfully been edited.`;
+const transformPositionResponseSuccess = `Your position has successfully been edited.`;
 
 module.exports = {
   createMessageError,
@@ -35,6 +35,6 @@ module.exports = {
   postContractAcceptedSuccess,
   transformCompanyError,
   transformCompanySuccess,
-  transformPositionError,
-  transformPositionSuccess,
+  transformPositionResponseError,
+  transformPositionResponseSuccess,
 };

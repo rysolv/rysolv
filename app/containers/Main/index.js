@@ -86,7 +86,9 @@ class Main extends React.PureComponent {
     const basePathname = pathname.split('/')[1];
     const isLandingOrRecruitmentPage =
       basePathname === 'company' ||
+      basePathname === 'dashboard' ||
       basePathname === 'messages' ||
+      basePathname === 'profile' ||
       pathname === '/' ||
       pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||

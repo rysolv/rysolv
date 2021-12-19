@@ -48,7 +48,6 @@ const {
   createPullRequestsTable,
   createQuestionResponseTable,
   createQuestionsTable,
-  createRecruitingTable,
   createReposTable,
   createTechnologiesTable,
   createUserCompaniesTable,
@@ -110,7 +109,6 @@ const createTables = async () => {
   await singleQuery({ queryText: createPullRequestsTable });
   await singleQuery({ queryText: createQuestionResponseTable });
   await singleQuery({ queryText: createQuestionsTable });
-  await singleQuery({ queryText: createRecruitingTable });
   await singleQuery({ queryText: createReposTable });
   await singleQuery({ queryText: createTechnologiesTable });
   await singleQuery({ queryText: createUserCompaniesTable });

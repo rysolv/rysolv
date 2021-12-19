@@ -5,7 +5,7 @@ const oneCompany = require('./oneCompany');
 const onePosition = require('./onePosition');
 const postContractAccepted = require('./postContractAccepted');
 const transformCompany = require('./transformCompany');
-const transformPosition = require('./transformPosition');
+const transformPositionResponse = require('./transformPositionResponse');
 
 module.exports = {
   getCompanyPositions,
@@ -15,5 +15,5 @@ module.exports = {
   onePosition,
   postContractAccepted,
   transformCompany,
-  transformPosition,
+  transformPositionResponse,
 };

@@ -1,6 +1,8 @@
 import {
   CHANGE_INPUT,
+  CHANGE_SKILL_LEVEL,
   CHANGE_VIEW,
+  DELETE_SKILL,
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
@@ -18,10 +20,24 @@ export function changeInput(payload) {
   };
 }
 
+export function changeSkillLevel(payload) {
+  return {
+    payload,
+    type: CHANGE_SKILL_LEVEL,
+  };
+}
+
 export function changeView(payload) {
   return {
     payload,
     type: CHANGE_VIEW,
+  };
+}
+
+export function deleteSkill(payload) {
+  return {
+    payload,
+    type: DELETE_SKILL,
   };
 }
 

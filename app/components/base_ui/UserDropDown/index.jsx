@@ -42,7 +42,7 @@ const UserDropDownMenu = ({ anchorEl, handleClose, handleSignout }) => (
 );
 
 UserDropDownMenu.propTypes = {
-  anchorEl: T.object.isRequired,
+  anchorEl: T.object,
   handleClose: T.func.isRequired,
   handleSignout: T.func.isRequired,
 };

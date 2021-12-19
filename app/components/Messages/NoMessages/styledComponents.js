@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { darkBlueColor, lightBlueColor } from 'defaultStyleHelper';
+import { darkBlueColor, lightBlueColor, textColor } from 'defaultStyleHelper';
 
 export const IconWrapper = styled.img`
   align-self: center;
@@ -32,5 +32,6 @@ export const StyledParagraph = styled.p`
 `;
 
 export const StyledSubParagraph = styled.p`
+  color: ${textColor};
   font-size: 1.6rem;
 `;

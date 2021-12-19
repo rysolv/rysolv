@@ -28,6 +28,7 @@ const makeSelectJobQuestions = () =>
           subtext,
         }) => {
           const hasPlaceholder = !!optionDictionary[questionKey].placeholder;
+          const tableData = form[snakeToCamel(questionKey)];
           const { option, placeholder, type } =
             optionDictionary[questionKey] || {};
           return {
@@ -37,11 +38,12 @@ const makeSelectJobQuestions = () =>
             options: responses.map(({ value }) => ({ value })),
             optionType: option,
             placeholder:
-              hasPlaceholder && !form[snakeToCamel(questionKey)].value.length
+              hasPlaceholder && !form[snakeToCamel(questionKey)].length
                 ? placeholder
                 : '',
             question: questionText,
             required,
+            tableData,
             type,
           };
         },
@@ -90,6 +92,7 @@ const makeSelectJobResponseArray = () =>
             const [{ id: responseId }] = responses.filter(
               response =>
                 response.responseKey === 'personal_link' ||
+                response.responseKey !== 'preferred_location' ||
                 response.value === values,
             );
             responseArray.push({

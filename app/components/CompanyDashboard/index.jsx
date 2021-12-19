@@ -24,9 +24,9 @@ const CompanyDashboard = ({
   const filteredPosition = positions.filter(
     ({ id }) => id === selectedPosition,
   );
-  const { isOpen } = filteredPosition[0] || {};
+  const { isActive } = filteredPosition[0] || {};
   const DashboardToRender =
-    isOpen === 'No' ? ClosedDashboard : ExistingDashboard;
+    isActive === 'No' ? ClosedDashboard : ExistingDashboard;
 
   return (
     <ConditionalRender

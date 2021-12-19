@@ -1,116 +1,132 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
 
-import HiringBanner from './HiringBanner';
-import HiringHeader from './HiringHeader';
-import IssueCard from '../Issues/DashboardCard';
-import UserProfile from './UserProfile';
-
+import Notification from './Notification';
+import UserDashboardSideNav from './UserDashboardSideNav';
+import RecommendedIssues from './RecommendedIssues';
 import {
-  ButtonContainer,
-  DashboardWrapper,
-  IssuesContainer,
-  IssuesHeader,
-  IssuesSubtitle,
-  LeftColumn,
-  ProfileColumn,
-  StyledPrimaryButton,
+  UserDashboardContainer,
+  UserDashboardContent,
+  UserDashboardHeader,
 } from './styledComponents';
 
 const UserDashboard = ({
-  data,
+  deviceView,
+  dispatchOpenModal,
   dispatchSetHiringStatus,
   handleNav,
-  deviceView,
+  user,
 }) => {
-  const { hiringStatus, issues, surveyComplete, matches } = data;
-  const isMobileOrTablet = deviceView === 'mobile' || deviceView === 'tablet';
-  const issueCards = issues.map(el => (
-    <IssueCard
-      data={{
-        comments: el.comments,
-        createdDate: el.createdDate,
-        githubLink: el.githubLink,
-        id: el.id,
-        language: [el.language],
-        repoId: el.repoId,
-        repoName: el.repoName,
-        title: el.name,
-      }}
-    />
-  ));
+  const [isNotificationOpen, setIsNotificationOpen] = useState(true);
+  const { firstName, hiringStatus, issues, matches, unreadMessages } = user;
+
+  const isMobileOrTablet =
+    deviceView === 'mobileXXS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobile' ||
+    deviceView === 'tablet';
+
+  const NotificationComponentToRender = () => {
+    if (hiringStatus !== 'active' && unreadMessages === 0)
+      return (
+        <Notification
+          handleClick={() =>
+            dispatchSetHiringStatus({ hiringStatus: 'active' })
+          }
+          setIsNotificationOpen={setIsNotificationOpen}
+          type="activeProfile"
+        />
+      );
+    if (hiringStatus === 'active' && unreadMessages > 0)
+      return (
+        <Notification
+          handleClick={() => handleNav('/messages')}
+          matches={matches}
+          setIsNotificationOpen={setIsNotificationOpen}
+          type="unreadMessages"
+        />
+      );
+    return (
+      <Notification
+        handleClick={() => dispatchSetHiringStatus({ hiringStatus: 'active' })}
+        setIsNotificationOpen={setIsNotificationOpen}
+        type="activeProfile"
+      />
+    );
+  };
+
   return (
-    <DashboardWrapper>
-      <LeftColumn>
-        <ConditionalRender
-          Component={HiringHeader}
-          propsToPassDown={{
-            handleNav,
-            matches,
-          }}
-          shouldRender={surveyComplete && !isMobileOrTablet}
-        />
-        <ConditionalRender
-          Component={HiringBanner}
-          propsToPassDown={{
-            dispatchSetHiringStatus,
-            handleNav,
-          }}
-          shouldRender={
-            !surveyComplete &&
-            hiringStatus === 'undeclared' &&
-            !isMobileOrTablet
-          }
-        />
-        <IssuesContainer>
-          <IssuesHeader>Issues</IssuesHeader>
-          <IssuesSubtitle>Solve Issues, improve your skills</IssuesSubtitle>
-          {issueCards}
-        </IssuesContainer>
-        <ButtonContainer>
-          <StyledPrimaryButton
-            label="browse all issues"
-            onClick={() => handleNav('/issues')}
-          />
-        </ButtonContainer>
-      </LeftColumn>
-      <ProfileColumn>
-        {/* Hiring header is moved to profileColumn on mobile */}
-        <ConditionalRender
-          Component={HiringHeader}
-          propsToPassDown={{
-            handleNav,
-            matches,
-          }}
-          shouldRender={surveyComplete && isMobileOrTablet}
-        />
-        <ConditionalRender
-          Component={HiringBanner}
-          propsToPassDown={{
-            handleNav,
-            dispatchSetHiringStatus,
-          }}
-          shouldRender={
-            !surveyComplete && hiringStatus === 'undeclared' && isMobileOrTablet
-          }
-        />
-        <UserProfile
-          data={data}
-          dispatchSetHiringStatus={dispatchSetHiringStatus}
-          handleNav={handleNav}
-        />
-      </ProfileColumn>
-    </DashboardWrapper>
+    <UserDashboardContainer>
+      <ConditionalRender
+        Component={
+          <Fragment>
+            <div>
+              <UserDashboardHeader>Welcome, {firstName}!</UserDashboardHeader>
+              <UserDashboardContent>
+                <ConditionalRender
+                  Component={NotificationComponentToRender}
+                  shouldRender={
+                    isNotificationOpen &&
+                    (hiringStatus !== 'active' || !!unreadMessages)
+                  }
+                />
+                <UserDashboardSideNav
+                  dispatchOpenModal={dispatchOpenModal}
+                  dispatchSetHiringStatus={dispatchSetHiringStatus}
+                  handleNav={handleNav}
+                  user={user}
+                />
+              </UserDashboardContent>
+            </div>
+            <RecommendedIssues
+              dispatchOpenModal={dispatchOpenModal}
+              handleNav={handleNav}
+              issues={issues}
+            />
+          </Fragment>
+        }
+        FallbackComponent={
+          <Fragment>
+            <div>
+              <UserDashboardHeader>Welcome, {firstName}!</UserDashboardHeader>
+              <UserDashboardContent>
+                <ConditionalRender
+                  Component={NotificationComponentToRender}
+                  shouldRender={
+                    isNotificationOpen &&
+                    (hiringStatus !== 'active' || !!unreadMessages)
+                  }
+                />
+                <RecommendedIssues
+                  dispatchOpenModal={dispatchOpenModal}
+                  handleNav={handleNav}
+                  issues={issues}
+                />
+              </UserDashboardContent>
+            </div>
+            <UserDashboardSideNav
+              dispatchOpenModal={dispatchOpenModal}
+              dispatchSetHiringStatus={dispatchSetHiringStatus}
+              handleNav={handleNav}
+              user={user}
+            />
+          </Fragment>
+        }
+        shouldRender={isMobileOrTablet}
+      />
+    </UserDashboardContainer>
   );
 };
 
 UserDashboard.propTypes = {
-  data: T.object.isRequired,
   deviceView: T.string.isRequired,
+  dispatchOpenModal: T.func.isRequired,
   dispatchSetHiringStatus: T.func.isRequired,
   handleNav: T.func.isRequired,
+  user: T.object.isRequired,
 };
 
 export default UserDashboard;

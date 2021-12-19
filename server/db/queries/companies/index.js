@@ -1,6 +1,6 @@
 const createCompany = require('./createCompany');
 const createCompanyPosition = require('./createCompanyPosition');
-const deletePosition = require('./deletePosition');
+const deletePositionResponse = require('./deletePositionResponse');
 const deleteUserCompanies = require('./deleteUserCompanies');
 const getCompanyPositions = require('./getCompanyPositions');
 const getOneCompany = require('./getOneCompany');
@@ -14,7 +14,7 @@ const transformCompany = require('./transformCompany');
 module.exports = {
   createCompany,
   createCompanyPosition,
-  deletePosition,
+  deletePositionResponse,
   deleteUserCompanies,
   getCompanyPositions,
   getOneCompany,

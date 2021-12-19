@@ -2,7 +2,7 @@ const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getMessages: getMessagesQuery,
   getPositionTechStack,
-  getUserPreferredLanguages,
+  getUserTechStack,
 } = require('../../../db');
 const { getMessagesError } = require('./constants');
 
@@ -36,13 +36,12 @@ const getMessages = async (_, { authError, userId }) => {
         });
 
         if (candidate) {
-          const {
-            languages: candidateLanguages,
-          } = await getUserPreferredLanguages({
+          const { skills } = await getUserTechStack({
             userId: candidate.userId,
           });
+          const skillsArray = skills.map(({ shortName }) => shortName);
+          candidate.preferredLanguages = skillsArray;
           candidate.name = `${candidate.firstName} ${candidate.lastName}`;
-          candidate.preferredLanguages = candidateLanguages || [];
         }
 
         const {

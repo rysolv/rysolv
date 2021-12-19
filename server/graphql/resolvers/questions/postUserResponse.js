@@ -29,9 +29,8 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
             await createPositionTechStack({
               level: generatePositionLevel({ beginner, expert, intermediate }),
               technology: skill,
+              userId,
             });
-          } else if (questionKey === 'preferred_languages') {
-            // Removing preferred lang
           } else {
             let formattedValue = value || null;
             // Upload resume

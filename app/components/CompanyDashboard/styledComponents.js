@@ -71,5 +71,6 @@ export const StyledParagraph = styled.p`
 `;
 
 export const StyledSubParagraph = styled.p`
+  color: ${textColor};
   font-size: 1.6rem;
 `;
