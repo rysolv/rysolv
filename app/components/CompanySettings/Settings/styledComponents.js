@@ -80,7 +80,7 @@ export const InputContainer = styled.div`
   margin-top: 0.8rem;
 
   ${mobile} {
-    flex-direction: ${({ edit }) => (edit ? 'column' : 'row')};
+    flex-direction: ${({ $isEdit }) => ($isEdit ? 'column' : 'row')};
   }
 `;
 

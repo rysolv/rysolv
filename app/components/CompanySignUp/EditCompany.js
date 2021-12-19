@@ -90,7 +90,7 @@ const EditCompany = ({
         />
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
-          label="Save"
+          label="Edit"
           loading={loading}
           onClick={handleEditCompany}
         />
