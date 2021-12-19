@@ -5,6 +5,9 @@ import {
   CHANGE_INPUT,
   CHANGE_VIEW,
   CLEAR_ALERTS,
+  FETCH_CONTRACT_FAILURE,
+  FETCH_CONTRACT_SUCCESS,
+  FETCH_CONTRACT,
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
@@ -20,6 +23,11 @@ import {
 
 export const initialState = {
   alerts: { error: false },
+  contract: {
+    body: '',
+    key: '',
+    title: '',
+  },
   error: null,
   loading: true,
   forms: {
@@ -60,6 +68,23 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
     }
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
+      break;
+    }
+    case FETCH_CONTRACT_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      draft.loading = false;
+      break;
+    }
+    case FETCH_CONTRACT_SUCCESS: {
+      const { contract } = payload;
+      draft.loading = false;
+      draft.contract = contract;
+      break;
+    }
+    case FETCH_CONTRACT: {
+      draft.error = null;
+      draft.loading = true;
       break;
     }
     case FETCH_QUESTIONS_FAILURE: {

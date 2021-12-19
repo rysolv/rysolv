@@ -1,17 +1,23 @@
 import {
   CHANGE_INPUT,
   CLOSE_MODAL_STATE,
-  DELETE_USER_FAILURE,
-  DELETE_USER_SUCCESS,
-  DELETE_USER,
   EDIT_USER_FAILURE,
   EDIT_USER_SUCCESS,
   EDIT_USER,
+  FETCH_CONTRACT_FAILURE,
+  FETCH_CONTRACT_SUCCESS,
+  FETCH_CONTRACT,
   FETCH_USER_FAILURE,
   FETCH_USER_SUCCESS,
   FETCH_USER,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  SUBMIT_CONTRACT_ACCEPTED_FAILURE,
+  SUBMIT_CONTRACT_ACCEPTED_SUCCESS,
+  SUBMIT_CONTRACT_ACCEPTED,
+  UPDATE_PAYMENT_METHOD_FAILURE,
+  UPDATE_PAYMENT_METHOD_SUCCESS,
+  UPDATE_PAYMENT_METHOD,
 } from './constants';
 
 export function changeInput(payload) {
@@ -23,24 +29,6 @@ export function changeInput(payload) {
 
 export function closeModalState() {
   return { type: CLOSE_MODAL_STATE };
-}
-
-export function deleteUserFailure(payload) {
-  return {
-    payload,
-    type: DELETE_USER_FAILURE,
-  };
-}
-
-export function deleteUserSuccess(payload) {
-  return {
-    payload,
-    type: DELETE_USER_SUCCESS,
-  };
-}
-
-export function deleteUser() {
-  return { type: DELETE_USER };
 }
 
 export function editUserFailure(payload) {
@@ -61,6 +49,27 @@ export function editUser(payload) {
   return {
     payload,
     type: EDIT_USER,
+  };
+}
+
+export function fetchContractFailure(payload) {
+  return {
+    payload,
+    type: FETCH_CONTRACT_FAILURE,
+  };
+}
+
+export function fetchContractSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_CONTRACT_SUCCESS,
+  };
+}
+
+export function fetchContract(payload) {
+  return {
+    payload,
+    type: FETCH_CONTRACT,
   };
 }
 
@@ -97,4 +106,37 @@ export function openModalState(payload) {
     payload,
     type: OPEN_MODAL_STATE,
   };
+}
+
+export function submitContractAcceptedFailure(payload) {
+  return {
+    payload,
+    type: SUBMIT_CONTRACT_ACCEPTED_FAILURE,
+  };
+}
+
+export function submitContractAcceptedSuccess() {
+  return { type: SUBMIT_CONTRACT_ACCEPTED_SUCCESS };
+}
+
+export function submitContractAccepted(payload) {
+  return {
+    payload,
+    type: SUBMIT_CONTRACT_ACCEPTED,
+  };
+}
+
+export function updatePaymentMethodFailure(payload) {
+  return {
+    payload,
+    type: UPDATE_PAYMENT_METHOD_FAILURE,
+  };
+}
+
+export function updatePaymentMethodSuccess() {
+  return { type: UPDATE_PAYMENT_METHOD_SUCCESS };
+}
+
+export function updatePaymentMethod() {
+  return { type: UPDATE_PAYMENT_METHOD };
 }

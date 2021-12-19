@@ -6,7 +6,7 @@ import { blueColor } from 'defaultStyleHelper';
 export const InternalLink = styled(BaseLink)`
   color: ${blueColor};
   font-size: 1.6rem;
-  font-weight: 500;
+  font-weight: ${({ selected }) => (selected ? '700' : '500')};
   line-height: 1.9rem;
   padding-bottom: 2.2rem;
 
