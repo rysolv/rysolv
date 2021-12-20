@@ -13,8 +13,8 @@ import {
   setHiringStatusFailure,
   setHiringStatusSuccess,
   updateUserFailure,
-  updateUserResponsesFailure,
-  updateUserResponsesSuccess,
+  updateUserSkillsFailure,
+  updateUserSkillsSuccess,
   updateUserSuccess,
 } from './actions';
 import {
@@ -22,8 +22,8 @@ import {
   FETCH_USER_DASHBOARD,
   FETCH_USER_RESPONSE,
   SET_HIRING_STATUS,
+  UPDATE_USER_SKILLS,
   UPDATE_USER,
-  UPDATE_USER_RESPONSES,
 } from './constants';
 
 export function* fetchQuestionsSaga({ payload }) {
@@ -177,6 +177,46 @@ export function* setHiringStatusSaga({ payload }) {
   }
 }
 
+export function* updateUserSkillsSaga({ payload }) {
+  const { skills } = payload;
+  const formattedResponse = skills.map(
+    ({ beginner, expert, intermediate, skill }) => `{
+      beginner: ${beginner},
+      expert: ${expert},
+      intermediate: ${intermediate},
+      skill: "${skill}"
+    }`,
+  );
+  const query = `
+    mutation {
+      transformUserSkills(
+        skillsArray: [${formattedResponse}]
+      ) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        transformUserSkills: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(updateUserSkillsSuccess());
+    yield put(closeModalState());
+  } catch (error) {
+    yield put(updateUserSkillsFailure({ error: { message: error } }));
+  }
+}
+
 export function* updateUserSaga({ payload }) {
   const { githubLink, personalLink, stackoverflowLink } = payload;
   const query = `
@@ -211,63 +251,11 @@ export function* updateUserSaga({ payload }) {
   }
 }
 
-export function* updateUserResponsesSaga({ payload }) {
-  const { responseArray } = payload;
-  const formattedResponse = responseArray.map(
-    ({ questionId, questionKey, responseId, value }) => {
-      const formattedValue =
-        questionKey === 'skills'
-          ? `{
-            beginner: ${value.beginner},
-            expert: ${value.expert},
-            intermediate: ${value.intermediate},
-            skill: "${value.skill}"
-          }`
-          : `"${value}"`;
-
-      return `{
-        questionId: "${questionId}",
-        questionKey: "${questionKey}",
-        responseId: "${responseId}",
-        value: ${formattedValue},
-      }`;
-    },
-  );
-  const query = `
-    mutation {
-      transformUserResponse(
-        responseArray: [${formattedResponse}]
-      ) {
-        __typename
-        ... on Success {
-          message
-        }
-        ... on Error {
-          message
-        }
-      }
-    }
-  `;
-  try {
-    const graphql = JSON.stringify({ query });
-    const {
-      data: {
-        transformUserResponse: { __typename, message },
-      },
-    } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') throw message;
-    yield put(updateUserResponsesSuccess());
-    yield put(closeModalState());
-  } catch (error) {
-    yield put(updateUserResponsesFailure({ error: { message: error } }));
-  }
-}
-
 export default function* watcherSaga() {
   yield takeLatest(FETCH_QUESTIONS, fetchQuestionsSaga);
   yield takeLatest(FETCH_USER_DASHBOARD, fetchUserDashboardSaga);
   yield takeLatest(FETCH_USER_RESPONSE, fetchUserResponseSaga);
   yield takeLatest(SET_HIRING_STATUS, setHiringStatusSaga);
-  yield takeLatest(UPDATE_USER_RESPONSES, updateUserResponsesSaga);
+  yield takeLatest(UPDATE_USER_SKILLS, updateUserSkillsSaga);
   yield takeLatest(UPDATE_USER, updateUserSaga);
 }

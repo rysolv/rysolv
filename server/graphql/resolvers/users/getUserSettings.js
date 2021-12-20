@@ -1,3 +1,5 @@
+const isEmpty = require('lodash/isEmpty');
+
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getOneIssue,
@@ -84,6 +86,18 @@ const getUserSettings = async (_, { authError, userId }) => {
         result.notifications = true;
       }
     });
+
+    if (!isEmpty(result.skills)) {
+      const skillsArray = result.skills.map(({ level, shortName }) => ({
+        beginner: level === 1,
+        expert: level === 3,
+        intermediate: level === 2,
+        skill: shortName,
+      }));
+      result.skills = skillsArray;
+    } else {
+      result.skills = [];
+    }
 
     return {
       __typename: 'User',

@@ -44,12 +44,12 @@ const SettingsView = ({
     issues,
     lastName,
     personalLink,
-    preferredLanguages,
     profilePic,
     receiveWeeklyEmails,
     rejectedPullRequests,
     rep,
     repos,
+    skills,
     stackoverflowLink,
     username,
     watching,
@@ -77,9 +77,6 @@ const SettingsView = ({
   const [changeGithub, setChangeGithub] = useState(false);
   const [changeLastName, setChangeLastName] = useState(false);
   const [changePersonal, setChangePersonal] = useState(false);
-  const [changePreferredLanguages, setChangePreferredLanguages] = useState(
-    false,
-  );
   const [changeStackoverflow, setChangeStackoverflow] = useState(false);
   const [changeUserImage, setChangeUserImage] = useState(false);
   const [changeUsername, setChangeUsername] = useState(false);
@@ -220,11 +217,11 @@ const SettingsView = ({
         attempting={attempting}
         changeGithub={changeGithub}
         changePersonal={changePersonal}
-        changePreferredLanguages={changePreferredLanguages}
         changeStackoverflow={changeStackoverflow}
         changeUserImage={changeUserImage}
         completedPullRequests={completedPullRequests}
         createdDate={createdDate}
+        dispatchOpenModal={dispatchOpenModal}
         displayBottom={displayBottom}
         dollarsEarned={dollarsEarned}
         filterValues={filterValues}
@@ -244,17 +241,16 @@ const SettingsView = ({
         isGithubVerified={isGithubVerified}
         lastName={lastName}
         personalLink={personalLink}
-        preferredLanguages={preferredLanguages}
         profilePic={profilePic}
         rejectedPullRequests={rejectedPullRequests}
         rep={rep}
         setChangeGithub={setChangeGithub}
         setChangePersonal={setChangePersonal}
-        setChangePreferredLanguages={setChangePreferredLanguages}
         setChangeStackoverflow={setChangeStackoverflow}
         setChangeUserImage={setChangeUserImage}
         setIsDisabled={setIsDisabled}
         setValue={setValue}
+        skills={skills}
         stackoverflowLink={stackoverflowLink}
         value={value}
         watching={watching}

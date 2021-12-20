@@ -5,15 +5,23 @@ import {
   CHANGE_EMAIL_FAILURE,
   CHANGE_EMAIL_SUCCESS,
   CHANGE_EMAIL,
+  CHANGE_SKILL_LEVEL,
   CLEAR_ALERTS,
   CLEAR_ERRORS,
   CLOSE_MODAL_STATE,
+  DELETE_SKILL,
   DELETE_USER_FAILURE,
   DELETE_USER_SUCCESS,
   DELETE_USER,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
+  FETCH_QUESTIONS_FAILURE,
+  FETCH_QUESTIONS_SUCCESS,
+  FETCH_QUESTIONS,
+  FETCH_USER_RESPONSE_FAILURE,
+  FETCH_USER_RESPONSE_SUCCESS,
+  FETCH_USER_RESPONSE,
   INPUT_CHANGE,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
@@ -24,6 +32,7 @@ import {
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
   REMOVE_WATCHING,
+  RESET_FORM_STATE,
   RESET_STATE,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
@@ -31,6 +40,9 @@ import {
   STRIPE_TOKEN_FAILURE,
   STRIPE_TOKEN_SUCCESS,
   STRIPE_TOKEN,
+  UPDATE_USER_SKILLS_FAILURE,
+  UPDATE_USER_SKILLS_SUCCESS,
+  UPDATE_USER_SKILLS,
   VERIFY_ACCOUNT_FAILURE,
   VERIFY_ACCOUNT_SUCCESS,
   VERIFY_ACCOUNT,
@@ -78,6 +90,13 @@ export function changeEmail(payload) {
   };
 }
 
+export function changeSkillLevel(payload) {
+  return {
+    payload,
+    type: CHANGE_SKILL_LEVEL,
+  };
+}
+
 export function clearAlerts() {
   return {
     type: CLEAR_ALERTS,
@@ -93,6 +112,13 @@ export function clearErrors() {
 export function closeModalState() {
   return {
     type: CLOSE_MODAL_STATE,
+  };
+}
+
+export function deleteSkill(payload) {
+  return {
+    payload,
+    type: DELETE_SKILL,
   };
 }
 
@@ -130,6 +156,45 @@ export function fetchInfo(payload) {
     payload,
     type: FETCH_INFO,
   };
+}
+
+export function fetchQuestionsFailure(payload) {
+  return {
+    payload,
+    type: FETCH_QUESTIONS_FAILURE,
+  };
+}
+
+export function fetchQuestionsSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_QUESTIONS_SUCCESS,
+  };
+}
+
+export function fetchQuestions(payload) {
+  return {
+    payload,
+    type: FETCH_QUESTIONS,
+  };
+}
+
+export function fetchUserResponseFailure(payload) {
+  return {
+    payload,
+    type: FETCH_USER_RESPONSE_FAILURE,
+  };
+}
+
+export function fetchUserResponseSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_USER_RESPONSE_SUCCESS,
+  };
+}
+
+export function fetchUserResponse() {
+  return { type: FETCH_USER_RESPONSE };
 }
 
 export function inputChange(payload) {
@@ -202,6 +267,10 @@ export function removeWatching(payload) {
   };
 }
 
+export function resetFormState() {
+  return { type: RESET_FORM_STATE };
+}
+
 export function resetState() {
   return { type: RESET_STATE };
 }
@@ -259,6 +328,27 @@ export function verifyAccountSuccess(payload) {
   return {
     payload,
     type: VERIFY_ACCOUNT_SUCCESS,
+  };
+}
+
+export function updateUserSkills(payload) {
+  return {
+    payload,
+    type: UPDATE_USER_SKILLS,
+  };
+}
+
+export function updateUserSkillsFailure(payload) {
+  return {
+    payload,
+    type: UPDATE_USER_SKILLS_FAILURE,
+  };
+}
+
+export function updateUserSkillsSuccess(payload) {
+  return {
+    payload,
+    type: UPDATE_USER_SKILLS_SUCCESS,
   };
 }
 

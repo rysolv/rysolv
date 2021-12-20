@@ -26,7 +26,7 @@ const UpdateSkillsModal = ({
   form,
   formErrors,
   handleClose,
-  handleUpdateUserResponses,
+  handleUpdateUserSkills,
   handleValidateInput,
   options,
   user,
@@ -71,7 +71,7 @@ const UpdateSkillsModal = ({
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
           label={label}
-          onClick={handleUpdateUserResponses}
+          onClick={handleUpdateUserSkills}
         />
       </ButtonWrapper>
     </ModalContainer>
@@ -89,7 +89,7 @@ UpdateSkillsModal.propTypes = {
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleClose: T.func.isRequired,
-  handleUpdateUserResponses: T.func.isRequired,
+  handleUpdateUserSkills: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   options: T.array.isRequired,
   user: T.object.isRequired,

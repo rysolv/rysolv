@@ -52,6 +52,10 @@ const transformUserResponseError = `Something went wrong when saving your respon
 
 const transformUserResponseSuccess = `Your responses have been successfully saved.`;
 
+const transformUserSkillsError = `Something went wrong when saving your skills.`;
+
+const transformUserSkillsSuccess = `Your skills have been successfully saved.`;
+
 const transformUserSuccess = `Your account has been successfully updated.`;
 
 const verifyUserAccountError = `Something went wrong when verifying your Github account.`;
@@ -89,6 +93,8 @@ module.exports = {
   transformUserError,
   transformUserResponseError,
   transformUserResponseSuccess,
+  transformUserSkillsError,
+  transformUserSkillsSuccess,
   transformUserSuccess,
   verifyUserAccountError,
   verifyUserAccountSuccess,

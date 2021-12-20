@@ -27,7 +27,7 @@ import {
   resetFormState,
   setHiringStatus,
   updateUser,
-  updateUserResponses,
+  updateUserSkills,
 } from './actions';
 import { validateFields, validateOneField } from './helpers';
 import reducer from './reducer';
@@ -36,7 +36,6 @@ import {
   makeSelectUserDashboard,
   makeSelectUserDashboardLoading,
   makeSelectUserDashboardQuestions,
-  makeSelectUserDashboardResponseArray,
   makeSelectUserDashboardView,
 } from './selectors';
 import { ViewContainer } from './styledComponents';
@@ -58,7 +57,7 @@ const UserDashboard = ({
   dispatchResetFormState,
   dispatchSetHiringStatus,
   dispatchUpdateUser,
-  dispatchUpdateUserResponses,
+  dispatchUpdateUserSkills,
   error,
   form,
   formErrors,
@@ -68,7 +67,6 @@ const UserDashboard = ({
   loading,
   modal,
   questions,
-  responseArray,
   skills,
   user,
   view,
@@ -103,12 +101,12 @@ const UserDashboard = ({
     }
   };
 
-  const handleUpdateUserResponses = () => {
+  const handleUpdateUserSkills = () => {
     const field = 'skills';
     const validationError =
       validateOneField({ field, values: applicationForm }) || '';
     if (!validationError) {
-      dispatchUpdateUserResponses({ responseArray });
+      dispatchUpdateUserSkills({ skills: applicationForm.skills });
     } else {
       dispatchInputError({
         errors: { [field]: validationError },
@@ -141,7 +139,7 @@ const UserDashboard = ({
         form: profileForm,
         formErrors: profileFormErrors,
         handleClose: dispatchCloseModal,
-        handleUpdateUser,
+        handleUpdateUserSkills,
         handleValidateInput,
         skills,
         user,
@@ -162,7 +160,7 @@ const UserDashboard = ({
         form: applicationForm,
         formErrors: applicationFormErrors,
         handleClose: dispatchCloseModal,
-        handleUpdateUserResponses,
+        handleUpdateUserSkills,
         handleValidateInput,
         skills,
         user,
@@ -223,7 +221,7 @@ UserDashboard.propTypes = {
   dispatchResetFormState: T.func.isRequired,
   dispatchSetHiringStatus: T.func.isRequired,
   dispatchUpdateUser: T.func.isRequired,
-  dispatchUpdateUserResponses: T.func.isRequired,
+  dispatchUpdateUserSkills: T.func.isRequired,
   error: T.oneOfType([T.bool, T.object]),
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
@@ -233,7 +231,6 @@ UserDashboard.propTypes = {
   loading: T.bool.isRequired,
   modal: T.string.isRequired,
   questions: T.array.isRequired,
-  responseArray: T.array.isRequired,
   skills: T.array.isRequired,
   user: T.object.isRequired,
   view: T.string.isRequired,
@@ -251,7 +248,6 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectUserDashboardLoading('fetchUserDashboard'),
   modal: makeSelectUserDashboard('modal'),
   questions: makeSelectUserDashboardQuestions(),
-  responseArray: makeSelectUserDashboardResponseArray(),
   skills: makeSelectUserDashboard('skills'),
   user: makeSelectUserDashboard('user'),
   view: makeSelectUserDashboardView(),
@@ -279,8 +275,7 @@ function mapDispatchToProps(dispatch) {
     dispatchResetFormState: () => dispatch(resetFormState()),
     dispatchSetHiringStatus: payload => dispatch(setHiringStatus(payload)),
     dispatchUpdateUser: payload => dispatch(updateUser(payload)),
-    dispatchUpdateUserResponses: payload =>
-      dispatch(updateUserResponses(payload)),
+    dispatchUpdateUserSkills: payload => dispatch(updateUserSkills(payload)),
     /**
      * Reducer : Router
      */

@@ -25,9 +25,9 @@ import {
   SET_HIRING_STATUS_SUCCESS,
   SET_HIRING_STATUS,
   UPDATE_USER_FAILURE,
-  UPDATE_USER_RESPONSES_FAILURE,
-  UPDATE_USER_RESPONSES_SUCCESS,
-  UPDATE_USER_RESPONSES,
+  UPDATE_USER_SKILLS_FAILURE,
+  UPDATE_USER_SKILLS_SUCCESS,
+  UPDATE_USER_SKILLS,
   UPDATE_USER_SUCCESS,
   UPDATE_USER,
 } from './constants';
@@ -79,7 +79,7 @@ export const initialState = {
     fetchUserResponse: false,
     setHiringStatus: false,
     updateUser: false,
-    updateUserResponses: false,
+    updateUserSkills: false,
   },
   modal: '',
   questions: [],
@@ -92,7 +92,7 @@ const userDashboardReducer = produce((draft, { payload, type }) => {
     case CHANGE_INPUT: {
       const { field, form, value } = payload;
       if (field === 'skills') {
-        const skillsArray = draft.form.aplication[field].filter(
+        const skillsArray = draft.form.application[field].filter(
           ({ skill }) => skill === value,
         );
         if (isEmpty(skillsArray)) {
@@ -241,20 +241,20 @@ const userDashboardReducer = produce((draft, { payload, type }) => {
       draft.loading.updateUser = false;
       break;
     }
-    case UPDATE_USER_RESPONSES_FAILURE: {
+    case UPDATE_USER_SKILLS_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.updateUserResponses = false;
+      draft.loading.updateUserSkills = false;
       break;
     }
-    case UPDATE_USER_RESPONSES_SUCCESS: {
-      draft.loading.updateUserResponses = false;
+    case UPDATE_USER_SKILLS_SUCCESS: {
+      draft.loading.updateUserSkills = false;
       draft.user.skills = draft.form.application.skills;
       break;
     }
-    case UPDATE_USER_RESPONSES: {
+    case UPDATE_USER_SKILLS: {
       draft.alerts.error = false;
-      draft.loading.updateUserResponses = true;
+      draft.loading.updateUserSkills = true;
       break;
     }
     case UPDATE_USER_SUCCESS: {

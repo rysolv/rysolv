@@ -620,6 +620,7 @@ module.exports = buildSchema(`
     transformRepo(repoId: ID!, repoInput: RepoInput): EventResponse!
     transformUser(userInput: UserInput): EventResponse!
     transformUserResponse(responseArray: [Object]): EventResponse!
+    transformUserSkills(skillsArray: [Object]): EventResponse!
 
     upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
 

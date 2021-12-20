@@ -48,11 +48,11 @@ const UserTimelineView = ({
   attempting,
   changeGithub,
   changePersonal,
-  changePreferredLanguages,
   changeStackoverflow,
   changeUserImage,
   completedPullRequests,
   createdDate,
+  dispatchOpenModal,
   displayBottom,
   dollarsEarned,
   filterValues: { users: usersFilter },
@@ -72,17 +72,16 @@ const UserTimelineView = ({
   isGithubVerified,
   lastName,
   personalLink,
-  preferredLanguages,
   profilePic,
   rejectedPullRequests,
   rep,
   setChangeGithub,
   setChangePersonal,
-  setChangePreferredLanguages,
   setChangeStackoverflow,
   setChangeUserImage,
   setIsDisabled,
   setValue,
+  skills,
   stackoverflowLink,
   value,
   watching,
@@ -211,11 +210,11 @@ const UserTimelineView = ({
         activePullRequests={activePullRequests}
         changeGithub={changeGithub}
         changePersonal={changePersonal}
-        changePreferredLanguages={changePreferredLanguages}
         changeStackoverflow={changeStackoverflow}
         changeUserImage={changeUserImage}
         completedPullRequests={completedPullRequests}
         createdDate={createdDate}
+        dispatchOpenModal={dispatchOpenModal}
         displayBottom={displayBottom}
         dollarsEarned={dollarsEarned}
         firstName={firstName}
@@ -228,17 +227,16 @@ const UserTimelineView = ({
         isDisabled={isDisabled}
         lastName={lastName}
         personalLink={personalLink}
-        preferredLanguages={preferredLanguages}
         profilePic={profilePic}
         rejectedPullRequests={rejectedPullRequests}
         rep={rep}
         setChangeGithub={setChangeGithub}
         setChangePersonal={setChangePersonal}
-        setChangePreferredLanguages={setChangePreferredLanguages}
         setChangeStackoverflow={setChangeStackoverflow}
         setChangeUserImage={setChangeUserImage}
         setIsDisabled={setIsDisabled}
         setValue={setValue}
+        skills={skills}
         stackoverflowLink={stackoverflowLink}
         value={value}
       />
@@ -313,11 +311,11 @@ UserTimelineView.propTypes = {
   attempting: T.array.isRequired,
   changeGithub: T.bool.isRequired,
   changePersonal: T.bool.isRequired,
-  changePreferredLanguages: T.bool.isRequired,
   changeStackoverflow: T.bool.isRequired,
   changeUserImage: T.bool.isRequired,
   completedPullRequests: T.number.isRequired,
   createdDate: T.string.isRequired,
+  dispatchOpenModal: T.func.isRequired,
   displayBottom: T.bool.isRequired,
   dollarsEarned: T.number.isRequired,
   filterValues: T.object.isRequired,
@@ -337,17 +335,16 @@ UserTimelineView.propTypes = {
   isGithubVerified: T.bool.isRequired,
   lastName: T.string.isRequired,
   personalLink: T.string,
-  preferredLanguages: T.array.isRequired,
   profilePic: T.string.isRequired,
   rejectedPullRequests: T.number.isRequired,
   rep: T.number.isRequired,
   setChangeGithub: T.func.isRequired,
   setChangePersonal: T.func.isRequired,
-  setChangePreferredLanguages: T.func.isRequired,
   setChangeStackoverflow: T.func.isRequired,
   setChangeUserImage: T.func.isRequired,
   setIsDisabled: T.func.isRequired,
   setValue: T.func.isRequired,
+  skills: T.array.isRequired,
   stackoverflowLink: T.string,
   value: T.oneOfType([T.array, T.string]).isRequired,
   watching: T.array.isRequired,

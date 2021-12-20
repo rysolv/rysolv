@@ -19,6 +19,7 @@ const signIn = require('./signIn');
 const signOut = require('./signOut');
 const transformUser = require('./transformUser');
 const transformUserResponse = require('./transformUserResponse');
+const transformUserSkills = require('./transformUserSkills');
 const verifyUserAccount = require('./verifyUserAccount');
 const verifyUserEmail = require('./verifyUserEmail');
 
@@ -44,6 +45,7 @@ module.exports = {
   signOut,
   transformUser,
   transformUserResponse,
+  transformUserSkills,
   verifyUserAccount,
   verifyUserEmail,
 };

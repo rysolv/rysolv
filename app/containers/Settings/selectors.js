@@ -32,5 +32,27 @@ const makeSelectSettingsDetail = () =>
     },
   );
 
+const makeSelectSettingsSkillsQuestion = () =>
+  createSelector(
+    makeSelectSettings('questions'),
+    questions => {
+      // eslint-disable-next-line array-callback-return, consistent-return
+      const formattedQuestions = questions.reduce(
+        (acc, { questionKey, responses }) => {
+          if (questionKey === 'skills') {
+            acc.options = responses.map(({ value }) => ({ value }));
+          }
+          return acc;
+        },
+        {},
+      );
+      return formattedQuestions;
+    },
+  );
+
 export default selectSettingsDomain;
-export { makeSelectSettings, makeSelectSettingsDetail };
+export {
+  makeSelectSettings,
+  makeSelectSettingsDetail,
+  makeSelectSettingsSkillsQuestion,
+};

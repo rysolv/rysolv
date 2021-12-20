@@ -20,9 +20,9 @@ import {
   SET_HIRING_STATUS_SUCCESS,
   SET_HIRING_STATUS,
   UPDATE_USER_FAILURE,
-  UPDATE_USER_RESPONSES_FAILURE,
-  UPDATE_USER_RESPONSES_SUCCESS,
-  UPDATE_USER_RESPONSES,
+  UPDATE_USER_SKILLS_FAILURE,
+  UPDATE_USER_SKILLS_SUCCESS,
+  UPDATE_USER_SKILLS,
   UPDATE_USER_SUCCESS,
   UPDATE_USER,
 } from './constants';
@@ -159,21 +159,21 @@ export function updateUserFailure(payload) {
   };
 }
 
-export function updateUserResponsesFailure(payload) {
+export function updateUserSkillsFailure(payload) {
   return {
     payload,
-    type: UPDATE_USER_RESPONSES_FAILURE,
+    type: UPDATE_USER_SKILLS_FAILURE,
   };
 }
 
-export function updateUserResponsesSuccess() {
-  return { type: UPDATE_USER_RESPONSES_SUCCESS };
+export function updateUserSkillsSuccess() {
+  return { type: UPDATE_USER_SKILLS_SUCCESS };
 }
 
-export function updateUserResponses(payload) {
+export function updateUserSkills(payload) {
   return {
     payload,
-    type: UPDATE_USER_RESPONSES,
+    type: UPDATE_USER_SKILLS,
   };
 }
 

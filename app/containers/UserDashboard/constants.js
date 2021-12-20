@@ -42,8 +42,8 @@ export const UPDATE_USER = 'app/UserDashboard/UPDATE_USER';
 export const UPDATE_USER_FAILURE = 'app/UserDashboard/UPDATE_USER_FAILURE';
 export const UPDATE_USER_SUCCESS = 'app/UserDashboard/UPDATE_USER_SUCCESS';
 
-export const UPDATE_USER_RESPONSES = 'app/UserDashboard/UPDATE_USER_RESPONSES';
-export const UPDATE_USER_RESPONSES_FAILURE =
-  'app/UserDashboard/UPDATE_USER_RESPONSES_FAILURE';
-export const UPDATE_USER_RESPONSES_SUCCESS =
-  'app/UserDashboard/UPDATE_USER_RESPONSES_SUCCESS';
+export const UPDATE_USER_SKILLS = 'app/UserDashboard/UPDATE_USER_SKILLS';
+export const UPDATE_USER_SKILLS_FAILURE =
+  'app/UserDashboard/UPDATE_USER_SKILLS_FAILURE';
+export const UPDATE_USER_SKILLS_SUCCESS =
+  'app/UserDashboard/UPDATE_USER_SKILLS_SUCCESS';

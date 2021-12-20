@@ -2,28 +2,16 @@ import React from 'react';
 import T from 'prop-types';
 
 import { IconButton, LanguageWrapper } from 'components/base_ui';
-import LanguageAutocomplete from 'components/LanguageAutocomplete';
 import iconDictionary from 'utils/iconDictionary';
 
-import {
-  Language,
-  LanguageListItem,
-  StyledLanguageAutocomplete,
-} from './styledComponents';
-import {
-  IconButtonContainer,
-  IconButtonGroup,
-  LinksWrapper,
-} from '../styledComponents';
+import { Language, LanguageListItem } from './styledComponents';
+import { IconButtonContainer, LinksWrapper } from '../styledComponents';
 
-const CloseIcon = iconDictionary('close');
-const DoneIcon = iconDictionary('done');
 const EditIcon = iconDictionary('edit');
 
 export const EmptyPreferredLanguagesComponent = ({
-  handleEdit,
+  dispatchOpenModal,
   isDisabled,
-  setChangePreferredLanguages,
 }) => (
   <LanguageListItem>
     <LinksWrapper>Add languages</LinksWrapper>
@@ -32,66 +20,21 @@ export const EmptyPreferredLanguagesComponent = ({
         disabled={isDisabled}
         icon={EditIcon}
         label="Edit"
-        onClick={() =>
-          handleEdit({
-            changeInputState: setChangePreferredLanguages,
-            currentValue: [],
-          })
-        }
+        onClick={() => dispatchOpenModal({ modalState: 'updateSkills' })}
       />
     </IconButtonContainer>
   </LanguageListItem>
 );
 
-export const PreferredLanguagesEditComponent = ({
-  handleClose,
-  handleSubmitInputChange,
-  preferredLanguages,
-  setChangePreferredLanguages,
-  setValue,
-}) => (
-  <LanguageListItem>
-    <StyledLanguageAutocomplete>
-      <LanguageAutocomplete
-        onChange={(e, value) => setValue(() => value.map(el => el.value))}
-        value={preferredLanguages.map(el => ({
-          value: el,
-        }))}
-      />
-    </StyledLanguageAutocomplete>
-
-    <IconButtonGroup>
-      <IconButton
-        icon={CloseIcon}
-        label="Close"
-        onClick={() =>
-          handleClose({ changeInputState: setChangePreferredLanguages })
-        }
-      />
-      <IconButton
-        icon={DoneIcon}
-        label="Save"
-        onClick={() =>
-          handleSubmitInputChange({
-            changeInputState: setChangePreferredLanguages,
-            field: 'preferredLanguages',
-          })
-        }
-      />
-    </IconButtonGroup>
-  </LanguageListItem>
-);
-
 export const PreferredLanguagesComponent = ({
-  handleEdit,
+  dispatchOpenModal,
   isDisabled,
-  preferredLanguages,
-  setChangePreferredLanguages,
+  skills,
 }) => (
   <LanguageListItem>
     <Language>
-      {preferredLanguages.map(language => (
-        <LanguageWrapper key={`list-item-${language}`} language={language} />
+      {skills.map(({ skill }) => (
+        <LanguageWrapper key={`list-item-${skill}`} language={skill} />
       ))}
     </Language>
     <IconButtonContainer>
@@ -99,34 +42,19 @@ export const PreferredLanguagesComponent = ({
         disabled={isDisabled}
         icon={EditIcon}
         label="Edit"
-        onClick={() =>
-          handleEdit({
-            changeInputState: setChangePreferredLanguages,
-            currentValue: preferredLanguages,
-          })
-        }
+        onClick={() => dispatchOpenModal({ modalState: 'updateSkills' })}
       />
     </IconButtonContainer>
   </LanguageListItem>
 );
 
 EmptyPreferredLanguagesComponent.propTypes = {
-  handleEdit: T.func,
+  dispatchOpenModal: T.func.isRequired,
   isDisabled: T.bool,
-  setChangePreferredLanguages: T.func,
-};
-
-PreferredLanguagesEditComponent.propTypes = {
-  handleClose: T.func,
-  handleSubmitInputChange: T.func,
-  preferredLanguages: T.oneOfType([T.array, T.number, T.string]),
-  setChangePreferredLanguages: T.func,
-  setValue: T.func,
 };
 
 PreferredLanguagesComponent.propTypes = {
-  handleEdit: T.func,
+  dispatchOpenModal: T.func.isRequired,
   isDisabled: T.bool,
-  preferredLanguages: T.array,
-  setChangePreferredLanguages: T.func,
+  skills: T.array,
 };

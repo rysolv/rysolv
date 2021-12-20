@@ -29,8 +29,9 @@ const Footer = () => (
           <InternalLink label="Privacy policy" path="/privacy-policy" />
         </LinkColumn>
         <LinkColumn>
-          <InternalLink label="Terms and conditions" path="/terms-of-service" />
           <InternalLink label="FAQ" path="/faq" />
+          <InternalLink label="Pricing" path="/pricing" />
+          <InternalLink label="Terms and conditions" path="/terms-of-service" />
         </LinkColumn>
       </InternalLinkWrapper>
       <ExternalLinkWrapper>

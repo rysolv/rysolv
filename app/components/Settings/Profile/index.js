@@ -30,11 +30,11 @@ const ProfileComponent = ({
   activePullRequests,
   changeGithub,
   changePersonal,
-  changePreferredLanguages,
   changeStackoverflow,
   changeUserImage,
   completedPullRequests,
   createdDate,
+  dispatchOpenModal,
   displayBottom,
   dollarsEarned,
   firstName,
@@ -47,17 +47,16 @@ const ProfileComponent = ({
   isDisabled,
   lastName,
   personalLink,
-  preferredLanguages,
   profilePic,
   rejectedPullRequests,
   rep,
   setChangeGithub,
   setChangePersonal,
-  setChangePreferredLanguages,
   setChangeStackoverflow,
   setChangeUserImage,
   setIsDisabled,
   setValue,
+  skills,
   stackoverflowLink,
   value,
 }) => {
@@ -146,19 +145,13 @@ const ProfileComponent = ({
         </Rep>
         <UserMetricsView
           activePullRequests={activePullRequests}
-          changePreferredLanguages={changePreferredLanguages}
           completedPullRequests={completedPullRequests}
           createdDate={createdDate}
+          dispatchOpenModal={dispatchOpenModal}
           dollarsEarned={dollarsEarned}
-          handleClose={handleClose}
-          handleEdit={handleEdit}
-          handleSubmitInputChange={handleSubmitInputChange}
           isDisabled={isDisabled}
-          preferredLanguages={preferredLanguages}
           rejectedPullRequests={rejectedPullRequests}
-          setChangePreferredLanguages={setChangePreferredLanguages}
-          setValue={setValue}
-          value={value}
+          skills={skills}
         />
       </UserCardWrapper>
     </DetailViewContainer>
@@ -169,11 +162,11 @@ ProfileComponent.propTypes = {
   activePullRequests: T.number.isRequired,
   changeGithub: T.bool.isRequired,
   changePersonal: T.bool.isRequired,
-  changePreferredLanguages: T.bool.isRequired,
   changeStackoverflow: T.bool.isRequired,
   changeUserImage: T.bool.isRequired,
   completedPullRequests: T.number.isRequired,
   createdDate: T.string.isRequired,
+  dispatchOpenModal: T.func.isRequired,
   displayBottom: T.bool.isRequired,
   dollarsEarned: T.number.isRequired,
   firstName: T.string.isRequired,
@@ -186,17 +179,16 @@ ProfileComponent.propTypes = {
   isDisabled: T.bool.isRequired,
   lastName: T.string.isRequired,
   personalLink: T.string,
-  preferredLanguages: T.array.isRequired,
   profilePic: T.string.isRequired,
   rejectedPullRequests: T.number.isRequired,
   rep: T.number.isRequired,
   setChangeGithub: T.func.isRequired,
   setChangePersonal: T.func.isRequired,
-  setChangePreferredLanguages: T.func.isRequired,
   setChangeStackoverflow: T.func.isRequired,
   setChangeUserImage: T.func.isRequired,
   setIsDisabled: T.func.isRequired,
   setValue: T.func.isRequired,
+  skills: T.array.isRequired,
   stackoverflowLink: T.string,
   value: T.oneOfType([T.array, T.string]).isRequired,
 };
