@@ -20,7 +20,14 @@ const UserDashboard = ({
   user,
 }) => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(true);
-  const { firstName, hiringStatus, issues, matches, unreadMessages } = user;
+  const {
+    firstName,
+    hiringStatus,
+    issues,
+    matches,
+    surveyComplete,
+    unreadMessages,
+  } = user;
 
   const isMobileOrTablet =
     deviceView === 'mobileXXS' ||
@@ -30,7 +37,7 @@ const UserDashboard = ({
     deviceView === 'tablet';
 
   const NotificationComponentToRender = () => {
-    if (hiringStatus !== 'active' && unreadMessages === 0)
+    if (hiringStatus === 'undeclared' && !surveyComplete)
       return (
         <Notification
           handleClick={() =>
@@ -49,13 +56,7 @@ const UserDashboard = ({
           type="unreadMessages"
         />
       );
-    return (
-      <Notification
-        handleClick={() => dispatchSetHiringStatus({ hiringStatus: 'active' })}
-        setIsNotificationOpen={setIsNotificationOpen}
-        type="activeProfile"
-      />
-    );
+    return null;
   };
 
   return (
@@ -68,10 +69,7 @@ const UserDashboard = ({
               <UserDashboardContent>
                 <ConditionalRender
                   Component={NotificationComponentToRender}
-                  shouldRender={
-                    isNotificationOpen &&
-                    (hiringStatus !== 'active' || !!unreadMessages)
-                  }
+                  shouldRender={isNotificationOpen}
                 />
                 <UserDashboardSideNav
                   dispatchOpenModal={dispatchOpenModal}
