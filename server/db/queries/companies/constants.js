@@ -7,6 +7,7 @@ const companyValues = [
   'id',
   'location',
   'logo',
+  'modified_date',
   'payment_method',
   'payment_set_date',
   'size',

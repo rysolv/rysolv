@@ -7,6 +7,7 @@ const {
 const { createStripeCustomer } = require('../../../integrations');
 
 const {
+  getOneCompany,
   getOneUserLite,
   transformCompany: transformCompanyQuery,
 } = require('../../../db');
@@ -23,48 +24,50 @@ const transformCompany = async ({ companyInput }, { authError, userId }) => {
       companyId,
       description,
       location,
+      logo,
       name,
       size,
       website,
     } = companyInput;
-    let { logo } = companyInput;
-
-    if (logo) {
-      const formattedLogo = logo;
-      const protocol = formattedLogo.substring(0, 5);
-
-      if (formattedLogo && protocol !== 'https') {
-        const { uploadUrl } = await uploadImage(formattedLogo);
-        logo = uploadUrl;
-      }
-    } else {
-      logo = undefined;
-    }
-
     const { email, firstName, lastName } = await getOneUserLite({ userId });
-
-    // Create Stripe customer
-    const { id: stripeId } = await createStripeCustomer({
-      companyId,
-      email,
-      location,
-      name,
-      url: website,
-      user: `${firstName} ${lastName}`,
-      userId,
-    });
 
     const companyData = {
       company_name: name,
       company_url: website,
-      created_date: new Date(),
-      customer_id: stripeId,
       description,
       id: companyId,
       location,
-      logo,
+      modified_date: new Date(),
       size: generateSizeInteger({ size }),
     };
+
+    // Upload image if logo is returned
+    if (logo && logo !== 'null') {
+      const protocol = logo.substring(0, 5);
+
+      if (protocol !== 'https') {
+        const { uploadUrl } = await uploadImage(logo);
+        companyData.logo = uploadUrl;
+      }
+    } else {
+      companyData.logo = undefined;
+    }
+
+    // Create Stripe customer
+    const { customerId } = await getOneCompany({ companyId });
+    if (!customerId) {
+      const { id: stripeId } = await createStripeCustomer({
+        companyId,
+        email,
+        location,
+        name,
+        url: website,
+        user: `${firstName} ${lastName}`,
+        userId,
+      });
+      companyData.customer_id = stripeId;
+    }
+
     await transformCompanyQuery({ ...companyData });
 
     return {

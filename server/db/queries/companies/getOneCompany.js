@@ -7,6 +7,7 @@ const getOneCompany = async ({ companyId }) => {
       company_url AS website,
       customer_id AS "customerId",
       description,
+      id,
       location,
       logo,
       payment_method AS "paymentMethod",

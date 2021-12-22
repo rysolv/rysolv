@@ -6,7 +6,7 @@ const {
   exchangePlaidToken,
   setPaymentIntent,
 } = require('../../../integrations');
-const { getUserCompany } = require('../../../db');
+const { getUserCompany, transformCompany } = require('../../../db');
 
 const updatePaymentMethod = async (
   { provider, token, metadata },
@@ -15,7 +15,7 @@ const updatePaymentMethod = async (
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    const { customerId } = await getUserCompany({ userId });
+    const { customerId, id } = await getUserCompany({ userId });
 
     if (provider === 'stripe') {
       const { brand, mask } = metadata;
@@ -25,7 +25,11 @@ const updatePaymentMethod = async (
 
       // Update account mask
       const stub = `${brand} Card ending in ${mask}`;
-      console.log(stub);
+      await transformCompany({
+        id,
+        modified_date: new Date(),
+        payment_method: stub,
+      });
     }
     if (provider === 'plaid') {
       const { accountId, accountName, bank, mask } = metadata;
@@ -38,7 +42,11 @@ const updatePaymentMethod = async (
 
       // Update account mask
       const stub = `${accountName} - ${bank} account ending in ${mask}`;
-      console.log(stub);
+      await transformCompany({
+        id,
+        modified_date: new Date(),
+        payment_method: stub,
+      });
     }
 
     return {
