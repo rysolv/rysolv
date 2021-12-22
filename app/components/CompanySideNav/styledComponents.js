@@ -21,8 +21,8 @@ export const ButtonTextWrapper = styled.div`
 
 export const CompanySideNavContainer = styled.div`
   border-radius: 0.7rem;
-  min-width: 27.8rem;
   overflow-y: auto;
+  min-width: 28rem;
 
   @media (max-width: 769px) {
     height: auto;

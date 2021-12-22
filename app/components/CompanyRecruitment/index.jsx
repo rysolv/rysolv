@@ -33,6 +33,7 @@ const CompanyRecruitment = ({
       <PricingGrid
         buttonText="Get Started"
         deviceView={deviceView}
+        focus
         handleSelectPlan={handleSelectPlan}
       />
       <CompanyRecruitmentHeader> Talk to us!</CompanyRecruitmentHeader>

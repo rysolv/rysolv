@@ -39,7 +39,7 @@ const getUserSettings = async (_, { authError, userId }) => {
         contract,
         isContractAccepted: !!contractAcceptedDate,
         // TODO: confirm payment method
-        paymentConfirmed: false,
+        paymentConfirmed: true,
         isQuestionnaireComplete: Object.keys(companyProps).some(
           prop => !!companyProps[prop],
         ),

@@ -1,18 +1,19 @@
 import React from 'react';
 import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
+import PricingGrid from 'components/CompanyRecruitment/PricingGrid';
+
 import {
   CompanySettingsContainer,
   CompanySettingsHeader,
+  HorizontalDivider,
+  SettingsLabel,
+  SettingsLabelContainer,
+  StyledButton,
 } from '../styledComponents';
 
-import {
-  PlanContainer,
-  PlanHeader,
-  PricingSubTitle,
-  PricingTitle,
-  StyledPrimaryButton,
-} from './styledComponents';
+import { CurrentPaymentMethod } from './styledComponents';
 
 const CompanyPayments = ({
   currentPlan,
@@ -21,48 +22,49 @@ const CompanyPayments = ({
   paymentConfirmed,
 }) => (
   <CompanySettingsContainer>
-    <CompanySettingsHeader>Payment Method</CompanySettingsHeader>
+    <CompanySettingsHeader>Payments &amp; Subscription</CompanySettingsHeader>
 
-    <StyledPrimaryButton
-      label={paymentConfirmed ? 'Update Payment Method' : 'Add Payment Method'}
-      onClick={() => dispatchOpenModal({ modalState: 'payment' })}
+    <SettingsLabelContainer>
+      <SettingsLabel>Payment Method</SettingsLabel>
+      <StyledButton
+        disableRipple
+        onClick={() => dispatchOpenModal({ modalState: 'payment' })}
+      >
+        {paymentConfirmed ? 'Update Payment Method' : 'Add Payment Method'}
+      </StyledButton>
+    </SettingsLabelContainer>
+    <HorizontalDivider />
+
+    <ConditionalRender
+      Component={
+        <CurrentPaymentMethod>
+          Wells Fargo Account ending in XX8115
+        </CurrentPaymentMethod>
+      }
+      FallbackComponent={
+        <CurrentPaymentMethod>No payment method selected</CurrentPaymentMethod>
+      }
+      shouldRender={paymentConfirmed}
     />
 
-    <CompanySettingsHeader>Plan</CompanySettingsHeader>
+    <SettingsLabelContainer>
+      <SettingsLabel>Subscription</SettingsLabel>
+    </SettingsLabelContainer>
+    <HorizontalDivider />
 
-    <PlanContainer>
-      <PlanHeader>
-        <PricingTitle>Startup</PricingTitle>
-        <PricingSubTitle>Building a team</PricingSubTitle>
-      </PlanHeader>
-      <StyledPrimaryButton
-        label={currentPlan === 'startup' ? 'Current' : 'Select'}
-        onClick={() => handleSelectPlan({ plan: 'startup' })}
-        selected={currentPlan === 'startup'}
-      />
-    </PlanContainer>
-    <PlanContainer>
-      <PlanHeader>
-        <PricingTitle>Standard</PricingTitle>
-        <PricingSubTitle>Growing companies</PricingSubTitle>
-      </PlanHeader>
-      <StyledPrimaryButton
-        label={currentPlan === 'standard' ? 'Current' : 'Select'}
-        onClick={() => handleSelectPlan({ plan: 'standard' })}
-        selected={currentPlan === 'standard'}
-      />
-    </PlanContainer>
-    <PlanContainer>
-      <PlanHeader>
-        <PricingTitle>Enterprise</PricingTitle>
-        <PricingSubTitle>Unlimited Hires</PricingSubTitle>
-      </PlanHeader>
-      <StyledPrimaryButton
-        label={currentPlan === 'enterprise' ? 'Current' : 'Select'}
-        onClick={() => handleSelectPlan({ plan: 'enterprise' })}
-        selected={currentPlan === 'enterprise'}
-      />
-    </PlanContainer>
+    <PricingGrid
+      buttonText="Upgrade"
+      currentPlan={currentPlan}
+      handleSelectPlan={handleSelectPlan}
+    />
+
+    <SettingsLabelContainer>
+      <SettingsLabel>Invoices</SettingsLabel>
+    </SettingsLabelContainer>
+    <HorizontalDivider />
+    <CurrentPaymentMethod>
+      No charges have been posted to your account
+    </CurrentPaymentMethod>
   </CompanySettingsContainer>
 );
 

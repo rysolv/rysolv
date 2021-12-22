@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { post } from 'utils/request';
@@ -7,6 +8,8 @@ import {
   editUserSuccess,
   fetchContractFailure,
   fetchContractSuccess,
+  fetchPlaidTokenFailure,
+  fetchPlaidTokenSuccess,
   fetchUserFailure,
   fetchUserSuccess,
   openModalState,
@@ -19,6 +22,7 @@ import {
 import {
   EDIT_USER,
   FETCH_CONTRACT,
+  FETCH_PLAID_TOKEN,
   FETCH_USER,
   SUBMIT_CONTRACT_ACCEPTED,
   UPDATE_PAYMENT_METHOD,
@@ -92,6 +96,34 @@ export function* editUserSaga({ payload }) {
   }
 }
 
+export function* fetchPlaidTokenSaga() {
+  const query = `
+    query{
+      getPlaidToken{
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        getPlaidToken: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchPlaidTokenSuccess({ token: message }));
+  } catch (error) {
+    yield put(fetchPlaidTokenFailure({ error }));
+  }
+}
+
 export function* fetchUserSaga({ payload }) {
   const { userId } = payload;
   const query = `
@@ -149,7 +181,7 @@ export function* submitContractAcceptedSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(submitContractAcceptedSuccess());
     if (paymentConfirmed) {
-      yield put(openModalState({ modalState: 'confirmation' }));
+      yield put(openModalState({ modalState: 'contractConfirmation' }));
     } else {
       yield put(openModalState({ modalState: 'payment' }));
     }
@@ -158,20 +190,43 @@ export function* submitContractAcceptedSaga({ payload }) {
   }
 }
 
-export function* updatePaymentMethodSaga() {
+export function* updatePaymentMethodSaga({ payload }) {
+  console.log(payload);
+  const { metadata, provider, token } = payload;
+
+  const { account_id, institution, account, last4, brand } = metadata;
+
+  console.log(account_id, institution, account);
+  const accountDetails =
+    provider === 'stripe'
+      ? `{
+          brand: "${brand}",
+          mask: "${last4}"
+        }`
+      : `{
+            accountId: "${account_id}",
+            accountName: "${account.name}",
+            bank: "${institution.name}",
+            mask: "${account.mask}"
+         }`;
+
   const query = `
-      mutation {
-        updatePaymentMethod {
-          __typename
-          ... on Success {
-            message
-          }
-          ... on Error {
-            message
-          }
+    mutation {
+      updatePaymentMethod(
+        metadata: ${accountDetails}
+        provider: "${provider}"
+        token: "${token}"
+      ) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
         }
       }
-    `;
+    }
+  `;
   try {
     const graphql = JSON.stringify({ query });
     const {
@@ -181,7 +236,7 @@ export function* updatePaymentMethodSaga() {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(updatePaymentMethodSuccess());
-    yield put(openModalState({ modalState: 'confirmation' }));
+    yield put(openModalState({ modalState: 'paymentConfirmation' }));
   } catch (error) {
     yield put(updatePaymentMethodFailure({ error: { message: error } }));
   }
@@ -190,6 +245,7 @@ export function* updatePaymentMethodSaga() {
 export default function* watcherSaga() {
   yield takeLatest(EDIT_USER, editUserSaga);
   yield takeLatest(FETCH_CONTRACT, fetchContractSaga);
+  yield takeLatest(FETCH_PLAID_TOKEN, fetchPlaidTokenSaga);
   yield takeLatest(FETCH_USER, fetchUserSaga);
   yield takeLatest(SUBMIT_CONTRACT_ACCEPTED, submitContractAcceptedSaga);
   yield takeLatest(UPDATE_PAYMENT_METHOD, updatePaymentMethodSaga);

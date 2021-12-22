@@ -7,10 +7,11 @@ import {
   ButtonGroup,
   CheckboxWrapper,
   ContentGroup,
-  DescriptionWrapper,
+  HorizontalDivider,
   LegalTextWrapper,
-  QuestionWrapper,
   StyledButton,
+  Subtitle,
+  Title,
   ViewContainer,
 } from './styledComponents';
 
@@ -26,9 +27,10 @@ const ContractModal = ({
 
   return (
     <ViewContainer>
-      <QuestionWrapper>{title}</QuestionWrapper>
+      <Title>{title}</Title>
+      <HorizontalDivider />
       <ContentGroup>
-        <DescriptionWrapper>{subtitle}</DescriptionWrapper>
+        <Subtitle>{subtitle}</Subtitle>
         <LegalTextWrapper isFirst>{body}</LegalTextWrapper>
         <CheckboxWrapper>
           <Checkbox

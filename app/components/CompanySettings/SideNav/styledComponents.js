@@ -15,9 +15,9 @@ export const InternalLink = styled(BaseLink)`
   }
 `;
 
-export const SettingsContainer = styled.div`
+export const SideNavContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 27.8rem;
+  min-width: 28rem;
   padding: 2rem 0 1rem;
 `;

@@ -5,8 +5,9 @@ import {
   ButtonGroup,
   ContentGroup,
   DescriptionWrapper,
-  QuestionWrapper,
+  HorizontalDivider,
   StyledButton,
+  Title,
   ViewContainer,
 } from './styledComponents';
 
@@ -15,7 +16,8 @@ const ContractConfirmationModal = ({ contract, handleClose }) => {
 
   return (
     <ViewContainer>
-      <QuestionWrapper>Your account has been upgraded!</QuestionWrapper>
+      <Title>Your account has been upgraded!</Title>
+      <HorizontalDivider />
       <ContentGroup>
         <DescriptionWrapper>
           You are now on the {title} plan.

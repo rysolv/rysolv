@@ -25,7 +25,13 @@ import {
 
 const CheckIcon = iconDictionary('check');
 
-const PricingGrid = ({ buttonText, deviceView, handleSelectPlan }) => {
+const PricingGrid = ({
+  buttonText,
+  currentPlan,
+  deviceView,
+  focus,
+  handleSelectPlan,
+}) => {
   const isMobile = [
     'tablet',
     'mobile',
@@ -61,7 +67,8 @@ const PricingGrid = ({ buttonText, deviceView, handleSelectPlan }) => {
               <StyledInterval>starting salary</StyledInterval>
             </StyledCostWrapper>
             <StyledPrimaryButton
-              label={buttonText}
+              disabled={currentPlan === 'startup'}
+              label={currentPlan === 'startup' ? 'Current' : buttonText}
               onClick={() => handleSelectPlan({ plan: 'startup' })}
             />
             <StyledSubtext>Terms &amp; Conditions Apply</StyledSubtext>
@@ -70,8 +77,8 @@ const PricingGrid = ({ buttonText, deviceView, handleSelectPlan }) => {
       </ColumnWrapper>
 
       {/* STANDARD */}
-      <ColumnWrapper focus={!isMobile}>
-        <PricingHeader focus={!isMobile}>
+      <ColumnWrapper focus={!isMobile && focus}>
+        <PricingHeader focus={!isMobile && focus}>
           <PricingTitle>Standard</PricingTitle>
           <PricingSubTitle>Growing companies</PricingSubTitle>
         </PricingHeader>
@@ -98,7 +105,8 @@ const PricingGrid = ({ buttonText, deviceView, handleSelectPlan }) => {
               <StyledInterval>/ month</StyledInterval>
             </StyledCostWrapper>
             <StyledPrimaryButton
-              label={buttonText}
+              disabled={currentPlan === 'standard'}
+              label={currentPlan === 'standard' ? 'Current' : buttonText}
               onClick={() => handleSelectPlan({ plan: 'standard' })}
             />
             <StyledSubtext>Terms &amp; Conditions Apply</StyledSubtext>
@@ -135,7 +143,8 @@ const PricingGrid = ({ buttonText, deviceView, handleSelectPlan }) => {
               <StyledInterval>/ month</StyledInterval>
             </StyledCostWrapper>
             <StyledPrimaryButton
-              label={buttonText}
+              disabled={currentPlan === 'enterprise'}
+              label={currentPlan === 'enterprise' ? 'Current' : buttonText}
               onClick={() => handleSelectPlan({ plan: 'enterprise' })}
             />
             <StyledSubtext>Terms &amp; Conditions Apply</StyledSubtext>
@@ -148,7 +157,9 @@ const PricingGrid = ({ buttonText, deviceView, handleSelectPlan }) => {
 
 PricingGrid.propTypes = {
   buttonText: T.string.isRequired,
-  deviceView: T.string.isRequired,
+  currentPlan: T.string,
+  deviceView: T.string,
+  focus: T.bool,
   handleSelectPlan: T.func.isRequired,
 };
 

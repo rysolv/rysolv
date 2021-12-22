@@ -25,15 +25,13 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const ColumnWrapper = styled.div`
-  width: ${({ focus }) => (focus ? '32rem' : '30rem')};
-  margin: ${({ focus }) => (focus ? '1rem 1.5rem 0' : '3rem 1rem 3rem')};
-
   border-radius: 1rem;
   box-shadow: ${({ focus }) =>
     focus ? `0.1rem 0.5rem 1rem ${grayColor}` : `0 0.1rem 0.4rem ${grayColor}`};
-
-  overflow: hidden;
   color: ${textColor};
+  margin: ${({ focus }) => (focus ? '0 1.5rem 0' : '2rem 1rem 3rem')};
+  overflow: hidden;
+  width: ${({ focus }) => (focus ? '27rem' : '25rem')};
 
   ${mobile} {
     margin: 1.5rem 1rem;
@@ -69,6 +67,7 @@ export const PricingBody = styled.div`
 export const PricingGridContainer = styled.div`
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 
   ${mobile} {
     flex-wrap: wrap;

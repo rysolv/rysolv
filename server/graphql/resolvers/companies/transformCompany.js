@@ -3,7 +3,13 @@ const {
   errorLogger,
   generateSizeInteger,
 } = require('../../../helpers');
-const { transformCompany: transformCompanyQuery } = require('../../../db');
+
+const { createStripeCustomer } = require('../../../integrations');
+
+const {
+  getOneUserLite,
+  transformCompany: transformCompanyQuery,
+} = require('../../../db');
 const {
   transformCompanyError,
   transformCompanySuccess,
@@ -35,10 +41,24 @@ const transformCompany = async ({ companyInput }, { authError, userId }) => {
       logo = undefined;
     }
 
+    const { email, firstName, lastName } = await getOneUserLite({ userId });
+
+    // Create Stripe customer
+    const { id: stripeId } = await createStripeCustomer({
+      companyId,
+      email,
+      location,
+      name,
+      url: website,
+      user: `${firstName} ${lastName}`,
+      userId,
+    });
+
     const companyData = {
       company_name: name,
       company_url: website,
       created_date: new Date(),
+      customer_id: stripeId,
       description,
       id: companyId,
       location,

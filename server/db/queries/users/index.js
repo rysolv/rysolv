@@ -5,6 +5,7 @@ const checkExistingGithubAccount = require('./checkExistingGithubAccount');
 const checkGithubIdMatch = require('./checkGithubIdMatch');
 const createUser = require('./createUser');
 const getOneUser = require('./getOneUser');
+const getOneUserLite = require('./getOneUserLite');
 const getOneUserSignUp = require('./getOneUserSignUp');
 const getUserAttemptList = require('./getUserAttemptList');
 const getUserBounties = require('./getUserBounties');
@@ -27,6 +28,7 @@ module.exports = {
   checkGithubIdMatch,
   createUser,
   getOneUser,
+  getOneUserLite,
   getOneUserSignUp,
   getUserAttemptList,
   getUserBounties,

@@ -23,14 +23,15 @@ import {
 } from './constants';
 
 export function* fetchContractSaga() {
+  // Hard coded to startup for initial account creation
   const query = `
     query{
-      getContract(plan: "enterprise") {
+      getContract(plan: "startup") {
         __typename
         ... on Contract {
           body
-          title
           subtitle
+          title
           version
         }
         ... on Error {
