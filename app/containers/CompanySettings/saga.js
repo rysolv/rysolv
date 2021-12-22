@@ -1,26 +1,40 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { signOut } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
-  closeModalState,
-  deleteUserFailure,
-  deleteUserSuccess,
   editUserFailure,
   editUserSuccess,
+  fetchContractFailure,
+  fetchContractSuccess,
   fetchUserFailure,
   fetchUserSuccess,
+  openModalState,
+  submitContractAcceptedFailure,
+  submitContractAcceptedSuccess,
+  updatePaymentMethodFailure,
+  updatePaymentMethodSuccess,
 } from './actions';
-import { DELETE_USER, EDIT_USER, FETCH_USER } from './constants';
+import {
+  EDIT_USER,
+  FETCH_CONTRACT,
+  FETCH_USER,
+  SUBMIT_CONTRACT_ACCEPTED,
+  UPDATE_PAYMENT_METHOD,
+} from './constants';
 
-export function* deleteUserSaga() {
+export function* fetchContractSaga({ payload }) {
+  const { plan } = payload;
   const query = `
-    mutation{
-      deleteUser {
+    query{
+      getContract(plan: "${plan}") {
         __typename
-        ... on Success {
-          message
+        ... on Contract {
+          body
+          key
+          subtitle
+          title
+          version
         }
         ... on Error {
           message
@@ -32,15 +46,13 @@ export function* deleteUserSaga() {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        deleteUser: { __typename, message },
+        getContract: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(deleteUserSuccess());
-    yield put(signOut());
+    yield put(fetchContractSuccess({ contract: restProps }));
   } catch (error) {
-    yield put(closeModalState());
-    yield put(deleteUserFailure({ error: { message: error } }));
+    yield put(fetchContractFailure({ error: { message: error } }));
   }
 }
 
@@ -111,8 +123,73 @@ export function* fetchUserSaga({ payload }) {
   }
 }
 
+export function* submitContractAcceptedSaga({ payload }) {
+  const { companyId, paymentConfirmed, plan } = payload;
+  const query = `
+      mutation {
+        postContractAccepted(companyId: "${companyId}", plan: "${plan}") {
+          __typename
+          ... on Success {
+            message
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        postContractAccepted: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(submitContractAcceptedSuccess());
+    if (paymentConfirmed) {
+      yield put(openModalState({ modalState: 'confirmation' }));
+    } else {
+      yield put(openModalState({ modalState: 'payment' }));
+    }
+  } catch (error) {
+    yield put(submitContractAcceptedFailure({ error: { message: error } }));
+  }
+}
+
+export function* updatePaymentMethodSaga() {
+  const query = `
+      mutation {
+        updatePaymentMethod {
+          __typename
+          ... on Success {
+            message
+          }
+          ... on Error {
+            message
+          }
+        }
+      }
+    `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        updatePaymentMethod: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(updatePaymentMethodSuccess());
+    yield put(openModalState({ modalState: 'confirmation' }));
+  } catch (error) {
+    yield put(updatePaymentMethodFailure({ error: { message: error } }));
+  }
+}
+
 export default function* watcherSaga() {
-  yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(EDIT_USER, editUserSaga);
+  yield takeLatest(FETCH_CONTRACT, fetchContractSaga);
   yield takeLatest(FETCH_USER, fetchUserSaga);
+  yield takeLatest(SUBMIT_CONTRACT_ACCEPTED, submitContractAcceptedSaga);
+  yield takeLatest(UPDATE_PAYMENT_METHOD, updatePaymentMethodSaga);
 }

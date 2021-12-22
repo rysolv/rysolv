@@ -37,7 +37,8 @@ const SignUpContainer = ({
   const { email, firstName, lastName, password, username } = data;
   const form = 'signUp';
 
-  const handleSignUp = ({ isCompany }) => {
+  const handleSignUp = ({ selected }) => {
+    const isCompany = selected === 'company';
     const { isValidated, validationErrors } = validateFields({
       form,
       values: data,

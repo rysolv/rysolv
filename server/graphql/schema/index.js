@@ -97,6 +97,14 @@ module.exports = buildSchema(`
     source: String
   }
 
+  type Contract {
+    body: String!
+    key: String!
+    subtitle: String!
+    title: String!
+    version: Int!
+  }
+
   type Conversation {
     candidate: Object
     company: Object
@@ -501,6 +509,7 @@ module.exports = buildSchema(`
 
   union CommentResult = Comment | Error
   union CompanyResult = Company | Error
+  union ContractResult = Contract | Error
   union ConversationResult = ConversationArray | Error
   union EventResponse = Success | Error
   union FilterResult = Filter | Error
@@ -527,6 +536,7 @@ module.exports = buildSchema(`
 
   type RootQuery {
     getCompanyPositions(companyId: ID!): CompanyPositionsArray
+    getContract(plan: String!): ContractResult!
     getFilterOptions: FilterResult!
     getGithubPullRequests(issueId: ID!): PullRequestArrayResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!
@@ -597,7 +607,7 @@ module.exports = buildSchema(`
 
     matchCandidates(positionId: ID!): EventResponse!
 
-    postContractAccepted(companyId: ID, contractAccepted: Boolean): EventResponse!
+    postContractAccepted(companyId: ID, plan: String): EventResponse!
     postPositionResponse(companyId: ID, positionId: ID, responseArray: [Object]): EventResponse!
     postUserResponse(responseArray: [Object]): EventResponse!
 
@@ -623,6 +633,7 @@ module.exports = buildSchema(`
     transformUserSkills(skillsArray: [Object]): EventResponse!
 
     upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
+    updatePaymentMethod: EventResponse!
 
     verifyUserAccount(code: String!): VerificationResult!
     verifyUserEmail(code: String!, email: String!, userId: ID!): EventResponse!

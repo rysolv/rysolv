@@ -16,6 +16,7 @@ import {
   changeInput,
   changeView,
   clearAlerts,
+  fetchContract,
   fetchQuestions,
   inputError,
   resetState,
@@ -33,9 +34,11 @@ import { ViewContainer } from './styledComponents';
 const CompanySignUp = ({
   activeUser,
   alerts,
+  contract,
   dispatchChangeInput,
   dispatchChangeView,
   dispatchClearAlerts,
+  dispatchFetchContract,
   dispatchFetchQuestions,
   dispatchInputError,
   dispatchResetState,
@@ -48,14 +51,14 @@ const CompanySignUp = ({
   questions,
   view,
 }) => {
-  const { company: companyForm, contract: contractForm } = forms;
-  const { contractAccepted } = contractForm;
+  const { company: companyForm } = forms;
   const {
     company: { companyId, isContractAccepted, isQuestionnaireComplete } = {},
   } = activeUser;
   const [viewToRender, setViewToRender] = useState(view);
 
   useEffect(() => {
+    dispatchFetchContract();
     dispatchFetchQuestions({ category: 'company' });
     return dispatchResetState;
   }, []);
@@ -76,12 +79,14 @@ const CompanySignUp = ({
     dispatchResetState();
     handleNav('/signup');
   };
+
   const handleSubmit = () => {
     dispatchSubmitCompanyResponse({
       companyId,
-      form: { ...companyForm, contractAccepted },
+      form: { ...companyForm, plan: 'startup' },
     });
   };
+
   const handleValidateInput = ({ field, values }) => {
     const validationError = validateOneField({ field, values }) || '';
     dispatchInputError({
@@ -102,11 +107,12 @@ const CompanySignUp = ({
         loading={loading}
         propsToPassDown={{
           alerts,
+          contract,
           dispatchChangeInput,
           dispatchChangeView,
           dispatchClearAlerts,
-          forms,
           formErrors,
+          forms,
           handleCancel,
           handleSubmit,
           handleValidateInput,
@@ -121,9 +127,11 @@ const CompanySignUp = ({
 CompanySignUp.propTypes = {
   activeUser: T.object.isRequired,
   alerts: T.object.isRequired,
+  contract: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeView: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
+  dispatchFetchContract: T.func.isRequired,
   dispatchFetchQuestions: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
@@ -146,6 +154,7 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : CompanySignUp
    */
   alerts: makeSelectCompanySignUp('alerts'),
+  contract: makeSelectCompanySignUp('contract'),
   error: makeSelectCompanySignUp('error'),
   formErrors: makeSelectCompanySignUp('formErrors'),
   forms: makeSelectCompanySignUp('forms'),
@@ -161,6 +170,7 @@ const mapDispatchToProps = dispatch => ({
   dispatchChangeInput: payload => dispatch(changeInput(payload)),
   dispatchChangeView: payload => dispatch(changeView(payload)),
   dispatchClearAlerts: () => dispatch(clearAlerts()),
+  dispatchFetchContract: () => dispatch(fetchContract()),
   dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),
   dispatchResetState: () => dispatch(resetState()),

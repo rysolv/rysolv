@@ -5,19 +5,53 @@ import { post } from 'utils/request';
 
 import {
   changeView,
+  fetchContractFailure,
+  fetchContractSuccess,
   fetchQuestionsFailure,
   fetchQuestionsSuccess,
   submitCompanyResponseFailure,
   submitCompanyResponseSuccess,
+  submitContractAccepted,
   submitContractAcceptedFailure,
   submitContractAcceptedSuccess,
-  submitContractAccepted,
 } from './actions';
 import {
+  FETCH_CONTRACT,
   FETCH_QUESTIONS,
   SUBMIT_COMPANY_RESPONSE,
   SUBMIT_CONTRACT_ACCEPTED,
 } from './constants';
+
+export function* fetchContractSaga() {
+  const query = `
+    query{
+      getContract(plan: "enterprise") {
+        __typename
+        ... on Contract {
+          body
+          subtitle
+          title
+          version
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        getContract: { __typename, message, ...restProps },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchContractSuccess({ contract: restProps }));
+  } catch (error) {
+    yield put(fetchContractFailure({ error }));
+  }
+}
 
 export function* fetchQuestionsSaga({ payload }) {
   const { category } = payload;
@@ -62,7 +96,7 @@ export function* fetchQuestionsSaga({ payload }) {
 
 export function* submitCompanyResponseSaga({ payload }) {
   const { companyId, form } = payload;
-  const { contractAccepted, description, location, name, size, website } = form;
+  const { description, location, name, plan, size, website } = form;
   const query = `
       mutation {
         transformCompany(
@@ -94,7 +128,7 @@ export function* submitCompanyResponseSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(submitCompanyResponseSuccess());
-    yield put(submitContractAccepted({ companyId, contractAccepted }));
+    yield put(submitContractAccepted({ companyId, plan }));
   } catch (error) {
     yield put(changeView({ view: 0 }));
     yield put(submitCompanyResponseFailure({ error: { message: error } }));
@@ -102,10 +136,10 @@ export function* submitCompanyResponseSaga({ payload }) {
 }
 
 export function* submitContractAcceptedSaga({ payload }) {
-  const { companyId, contractAccepted } = payload;
+  const { companyId, plan } = payload;
   const query = `
       mutation {
-        postContractAccepted(companyId: "${companyId}", contractAccepted: ${contractAccepted}) {
+        postContractAccepted(companyId: "${companyId}", plan: "${plan}") {
           __typename
           ... on Success {
             message
@@ -132,6 +166,7 @@ export function* submitContractAcceptedSaga({ payload }) {
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(FETCH_CONTRACT, fetchContractSaga);
   yield takeLatest(FETCH_QUESTIONS, fetchQuestionsSaga);
   yield takeLatest(SUBMIT_COMPANY_RESPONSE, submitCompanyResponseSaga);
   yield takeLatest(SUBMIT_CONTRACT_ACCEPTED, submitContractAcceptedSaga);

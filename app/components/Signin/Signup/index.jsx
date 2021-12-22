@@ -48,7 +48,7 @@ const Signup = ({
 
   const handleKeypress = ({ key }) => {
     if (key === 'Enter' && !signUpDisabled) {
-      handleSignUp({ isCompany: selected === 'company' });
+      handleSignUp({ selected });
     }
   };
   return (
@@ -159,7 +159,7 @@ const Signup = ({
             disabled={signUpDisabled}
             label="Sign up"
             loading={loading}
-            onClick={() => handleSignUp({ isCompany: selected === 'company' })}
+            onClick={() => handleSignUp({ selected })}
           />
           <ConditionalRender
             Component={
@@ -171,7 +171,7 @@ const Signup = ({
                 <StyledGithubButton type="signup" />
               </Fragment>
             }
-            shouldRender={selected === 'Developer'}
+            shouldRender={selected === 'developer'}
           />
         </InputFormContent>
         <SubText>

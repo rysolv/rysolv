@@ -102,11 +102,11 @@ class Main extends React.PureComponent {
     const isPaymentModal = modal === 'fundIssue';
     const hasBlueBackground =
       pathname === '/' ||
+      pathname === '/company/signup' ||
       pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/password-reset' ||
-      pathname === '/recruitment' ||
       pathname === '/signin' ||
       pathname === '/signup';
     const modalPropsDictionary = {

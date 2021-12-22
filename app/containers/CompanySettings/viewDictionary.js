@@ -1,6 +1,6 @@
-// import CompanyPayments from 'components/CompanyPayments';
-import CompanySettings from 'components/CompanySettings';
+import { CompanyPayments, CompanySettings } from 'components/CompanySettings';
 
 export default {
   main: CompanySettings,
+  payments: CompanyPayments,
 };

@@ -30,13 +30,21 @@ const getUserSettings = async (_, { authError, userId }) => {
     const bounties = await getUserBounties({ userId });
 
     if (userCompany) {
-      const { contractAcceptedDate, id, ...companyProps } = userCompany;
+      const {
+        contract,
+        contractAcceptedDate,
+        id,
+        ...companyProps
+      } = userCompany;
       result.company = {
         companyId: id,
+        contract,
         isContractAccepted: !!contractAcceptedDate,
         isQuestionnaireComplete: Object.keys(companyProps).some(
           prop => !!companyProps[prop],
         ),
+        // TODO: confirm payment method
+        paymentConfirmed: false,
       };
     }
 

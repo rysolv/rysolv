@@ -1,12 +1,20 @@
 const { singleQuery } = require('../../baseQueries');
 
-const postContractAccepted = async ({ companyId }) => {
-  const values = [companyId, new Date()];
+const postContractAccepted = async ({ companyId, plan }) => {
   const queryText = `
-    UPDATE companies SET
-    contract_accepted_date = $2
-    WHERE id = $1
+    INSERT INTO signed_contracts (
+      company_id, created_date, contract_id
+    ) VALUES (
+      $1,
+      $2,
+      (
+        SELECT lc.id FROM legal_contracts lc
+        WHERE lc.contract_key = $3
+        ORDER BY version ASC
+      )
+    )
   `;
+  const values = [companyId, new Date(), plan];
   await singleQuery({ queryText, values });
 };
 

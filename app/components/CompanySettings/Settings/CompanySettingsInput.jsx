@@ -43,7 +43,7 @@ const InputOption = ({
   };
 
   return (
-    <InputContainer>
+    <InputContainer $isEdit={edit}>
       <InputWrapper>
         <InputLabel>{formatLabel(field)}</InputLabel>
         <InputDescription />
@@ -79,7 +79,7 @@ InputOption.propTypes = {
   error: T.string.isRequired,
   field: T.string.isRequired,
   handleChangeInput: T.func.isRequired,
-  handleEditUser: T.string.isRequired,
+  handleEditUser: T.func.isRequired,
   onBlur: T.func.isRequired,
   value: T.string.isRequired,
 };
