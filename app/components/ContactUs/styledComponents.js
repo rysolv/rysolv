@@ -114,17 +114,6 @@ export const HeaderGroup = styled.div`
   }
 `;
 
-export const HeaderImageLeftIcon = styled.div`
-  svg {
-    bottom: 20rem;
-    left: -0.21rem;
-    position: absolute;
-  }
-  @media (max-width: 1290px) {
-    display: none;
-  }
-`;
-
 export const HeaderImageRightIcon = styled.div`
   svg {
     position: absolute;

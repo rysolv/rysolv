@@ -10,12 +10,10 @@ import {
   ContactUsSubheader,
   FormWrapper,
   HeaderGroup,
-  HeaderImageLeftIcon,
   HeaderImageRightIcon,
   HeaderWrapper,
 } from './styledComponents';
 
-const HeaderImageLeft = iconDictionary('headerImageLeft');
 const HeaderImageRight = iconDictionary('recruitmentHeaderImageRight');
 
 const ContactUs = ({
@@ -57,7 +55,6 @@ const ContactUs = ({
       </FormWrapper>
     </ContactUsContainer>
     <HeaderImageRightIcon>{HeaderImageRight}</HeaderImageRightIcon>
-    <HeaderImageLeftIcon>{HeaderImageLeft}</HeaderImageLeftIcon>
   </Fragment>
 );
 
