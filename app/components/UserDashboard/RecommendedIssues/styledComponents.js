@@ -83,15 +83,6 @@ export const RecommendedIssuesHeader = styled.div`
   line-height: 2.905rem;
 `;
 
-export const StyledLink = styled(Link)`
-  color: ${blueColor};
-  font-weight: 700;
-
-  &:hover {
-    color: ${blueColor};
-  }
-`;
-
 export const StyledButton = styled(Button)`
   color: ${lightBlueColor};
   font-size: 1.6rem;
@@ -105,6 +96,15 @@ export const StyledButton = styled(Button)`
     background: transparent;
     color: ${lightBlueColor};
     text-decoration: underline;
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  color: ${blueColor};
+  font-weight: 700;
+
+  &:hover {
+    color: ${blueColor};
   }
 `;
 
@@ -128,15 +128,15 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   }
 `;
 
-export const StyledSubParagraph = styled.p`
-  color: ${textColor};
-  font-size: 1.6rem;
-`;
-
 export const SolveIssueButton = styled(StyledPrimaryButton)`
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
   bottom: 0;
   position: absolute;
   right: 0;
+`;
+
+export const StyledSubParagraph = styled.p`
+  color: ${textColor};
+  font-size: 1.6rem;
 `;

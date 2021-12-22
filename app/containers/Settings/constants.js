@@ -24,15 +24,15 @@ export const FETCH_INFO = 'app/Settings/FETCH_INFO';
 export const FETCH_INFO_FAILURE = 'app/Settings/FETCH_INFO_FAILURE';
 export const FETCH_INFO_SUCCESS = 'app/Settings/FETCH_INFO_SUCCESS';
 
+export const FETCH_QUESTIONS = 'app/Settings/FETCH_QUESTIONS';
 export const FETCH_QUESTIONS_FAILURE = 'app/Settings/FETCH_QUESTIONS_FAILURE';
 export const FETCH_QUESTIONS_SUCCESS = 'app/Settings/FETCH_QUESTIONS_SUCCESS';
-export const FETCH_QUESTIONS = 'app/Settings/FETCH_QUESTIONS';
 
+export const FETCH_USER_RESPONSE = 'app/Settings/FETCH_USER_RESPONSE';
 export const FETCH_USER_RESPONSE_FAILURE =
   'app/Settings/FETCH_USER_RESPONSE_FAILURE';
 export const FETCH_USER_RESPONSE_SUCCESS =
   'app/Settings/FETCH_USER_RESPONSE_SUCCESS';
-export const FETCH_USER_RESPONSE = 'app/Settings/FETCH_USER_RESPONSE';
 
 export const INPUT_CHANGE = 'app/Settings/INPUT_CHANGE';
 

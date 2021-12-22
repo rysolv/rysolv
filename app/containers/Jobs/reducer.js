@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
-import remove from 'lodash/remove';
 import isEmpty from 'lodash/isEmpty';
+import remove from 'lodash/remove';
 
 import {
   CHANGE_INPUT,

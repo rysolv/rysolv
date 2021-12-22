@@ -15,11 +15,9 @@ import {
   IconButtonWrapper,
   ProfilePicture,
   SkillsContainer,
-  SkillsWrapper,
   StyledIconButton,
   StyledPrimaryButton,
   UserDashboardSideNavContainer,
-  UserProfileWrapper,
 } from './styledComponents';
 
 const GithubIcon = iconDictionary('github');
@@ -62,7 +60,7 @@ const UserDashboardSideNav = ({
   return (
     <UserDashboardSideNavContainer>
       <ProfilePicture src={profilePic} />
-      <UserProfileWrapper>
+      <div>
         <ActionWrapper>
           <ActiveWrapper>
             <ActiveLabelWrapper>
@@ -127,18 +125,18 @@ const UserDashboardSideNav = ({
               Our algorithm helps companies match with candidates who have
               profiles that indicate they meet their tech requirements.
             </ActiveText>
-            <SkillsWrapper>
+            <div>
               {skills.map(({ skill }) => (
                 <LanguageWrapper key={skill} language={skill} />
               ))}
-            </SkillsWrapper>
+            </div>
             <StyledPrimaryButton
               label={skillsButtonLabel}
               onClick={() => dispatchOpenModal({ modalState: 'updateSkills' })}
             />
           </SkillsContainer>
         </ActionWrapper>
-      </UserProfileWrapper>
+      </div>
     </UserDashboardSideNavContainer>
   );
 };

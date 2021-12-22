@@ -5,7 +5,6 @@ import { ConditionalRender } from 'components/base_ui';
 
 import NoRecommendedIssues from './NoRecommendedIssues';
 import RecommendedIssueCard from './RecommendedIssueCard';
-
 import {
   IssuesWrapper,
   RecommendedIssuesContainer,
@@ -49,12 +48,3 @@ RecommendedIssues.propTypes = {
 };
 
 export default RecommendedIssues;
-
-//   //       comments: el.comments,
-//   //       createdDate: el.createdDate,
-//   //       githubLink: el.githubLink,
-//   //       id: el.id,
-//   //       language: [el.language],
-//   //       repoId: el.repoId,
-//   //       repoName: el.repoName,
-//   //       title: el.name,

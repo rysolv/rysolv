@@ -317,27 +317,6 @@ export function stripeToken(payload) {
   };
 }
 
-export function verifyAccountFailure(payload) {
-  return {
-    payload,
-    type: VERIFY_ACCOUNT_FAILURE,
-  };
-}
-
-export function verifyAccountSuccess(payload) {
-  return {
-    payload,
-    type: VERIFY_ACCOUNT_SUCCESS,
-  };
-}
-
-export function updateUserSkills(payload) {
-  return {
-    payload,
-    type: UPDATE_USER_SKILLS,
-  };
-}
-
 export function updateUserSkillsFailure(payload) {
   return {
     payload,
@@ -349,6 +328,27 @@ export function updateUserSkillsSuccess(payload) {
   return {
     payload,
     type: UPDATE_USER_SKILLS_SUCCESS,
+  };
+}
+
+export function updateUserSkills(payload) {
+  return {
+    payload,
+    type: UPDATE_USER_SKILLS,
+  };
+}
+
+export function verifyAccountFailure(payload) {
+  return {
+    payload,
+    type: VERIFY_ACCOUNT_FAILURE,
+  };
+}
+
+export function verifyAccountSuccess(payload) {
+  return {
+    payload,
+    type: VERIFY_ACCOUNT_SUCCESS,
   };
 }
 

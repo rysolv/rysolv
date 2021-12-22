@@ -3,6 +3,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { PrimaryButton } from 'components/base_ui';
 import {
+  blueColor,
   candidateGreyColor,
   darkBlueColor,
   errorRed,
@@ -45,20 +46,6 @@ const baseInputStyle = css`
   width: 100%;
 `;
 
-export const ProfilePicture = styled.img`
-  border-radius: 50%;
-  border: 0.2rem solid ${candidateGreyColor};
-  height: 25rem;
-  width: 25rem;
-`;
-
-export const SkillsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 1.6rem;
-  width: 100%;
-`;
-
 export const ActionWrapper = styled.div`
   ${baseInputStyle};
   max-width: 40rem;
@@ -73,31 +60,31 @@ export const ActiveCircle = styled.div`
 
 export const ActiveLabel = styled.div`
   align-items: center;
+  color: ${blueColor};
   display: flex;
   font-size: 1.6rem;
   font-weight: 700;
   justify-content: space-between;
   line-height: 2.208rem;
   width: auto;
-  color: #163486;
-`;
-
-export const ActiveText = styled.div`
-  font-weight: 400;
-  line-height: 1.936rem;
-  color: #a9acae;
-  font-size: 1.4rem;
-  margin: 1rem 0;
 `;
 
 export const ActiveLabelWrapper = styled.div`
-  display: flex;
   align-items: center;
+  display: flex;
+`;
+
+export const ActiveText = styled.div`
+  color: #a9acae;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.936rem;
+  margin: 1rem 0;
 `;
 
 export const ActiveWrapper = styled.div`
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: space-between;
 `;
 
@@ -105,6 +92,20 @@ export const IconButtonWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin: ${({ $hasLinks }) => ($hasLinks ? '1rem 0' : '0')};
+`;
+
+export const ProfilePicture = styled.img`
+  border-radius: 50%;
+  border: 0.2rem solid ${candidateGreyColor};
+  height: 25rem;
+  width: 25rem;
+`;
+
+export const SkillsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
+  width: 100%;
 `;
 
 export const StyledIconButton = styled(IconButton)`
@@ -137,8 +138,6 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   }
 `;
 
-export const SkillsWrapper = styled.div``;
-
 export const UserDashboardSideNavContainer = styled.div`
   align-items: center;
   display: flex;
@@ -150,5 +149,3 @@ export const UserDashboardSideNavContainer = styled.div`
     margin-left: 0;
   }
 `;
-
-export const UserProfileWrapper = styled.div``;

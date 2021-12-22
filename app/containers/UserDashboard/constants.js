@@ -8,11 +8,11 @@ export const CLOSE_MODAL_STATE = 'app/UserDashboard/CLOSE_MODAL_STATE';
 
 export const DELETE_SKILL = 'app/UserDashboard/DELETE_SKILL';
 
+export const FETCH_QUESTIONS = 'app/UserDashboard/FETCH_QUESTIONS';
 export const FETCH_QUESTIONS_FAILURE =
   'app/UserDashboard/FETCH_QUESTIONS_FAILURE';
 export const FETCH_QUESTIONS_SUCCESS =
   'app/UserDashboard/FETCH_QUESTIONS_SUCCESS';
-export const FETCH_QUESTIONS = 'app/UserDashboard/FETCH_QUESTIONS';
 
 export const FETCH_USER_DASHBOARD = 'app/UserDashboard/FETCH_USER_DASHBOARD';
 export const FETCH_USER_DASHBOARD_FAILURE =
@@ -20,11 +20,11 @@ export const FETCH_USER_DASHBOARD_FAILURE =
 export const FETCH_USER_DASHBOARD_SUCCESS =
   'app/UserDashboard/FETCH_USER_DASHBOARD_SUCCESS';
 
+export const FETCH_USER_RESPONSE = 'app/UserDashboard/FETCH_USER_RESPONSE';
 export const FETCH_USER_RESPONSE_FAILURE =
   'app/UserDashboard/FETCH_USER_RESPONSE_FAILURE';
 export const FETCH_USER_RESPONSE_SUCCESS =
   'app/UserDashboard/FETCH_USER_RESPONSE_SUCCESS';
-export const FETCH_USER_RESPONSE = 'app/UserDashboard/FETCH_USER_RESPONSE';
 
 export const INPUT_ERROR = 'app/UserDashboard/INPUT_ERROR';
 
