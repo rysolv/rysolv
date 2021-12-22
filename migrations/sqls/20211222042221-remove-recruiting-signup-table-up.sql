@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS recruiting_signup CASCADE;
+DROP TABLE IF EXISTS recruiting_signup;
