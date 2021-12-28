@@ -7,6 +7,7 @@ export const excludedPath = [
   'jobs',
   'messages',
   'password-reset',
+  'pricing',
   'privacy-policy',
   'profile',
   'recruitment',
