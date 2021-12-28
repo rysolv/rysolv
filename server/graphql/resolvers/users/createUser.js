@@ -43,7 +43,7 @@ const createUser = async ({
     if (isCompany) {
       const companyId = uuidv4();
       const id = uuidv4();
-      const data = { id: companyId };
+      const data = { created_date: new Date(), id: companyId };
       const userCompanyValues = [companyId, id, userId];
       await createCompany({ data });
       await insertUserCompany({ values: userCompanyValues });

@@ -544,6 +544,7 @@ module.exports = buildSchema(`
     getIssues: IssueArrayResult!
     getIssueWatchList(issueId: ID!): [WatchList]!
     getMessages: ConversationResult!
+    getPlaidToken: EventResponse!
     getPositionCandidates(positionId: ID!): [User]
     getPullRequestList(issueId: ID): [PullRequestList]!
     getQuestions(category: String!): QuestionResult
@@ -633,7 +634,7 @@ module.exports = buildSchema(`
     transformUserSkills(skillsArray: [Object]): EventResponse!
 
     upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
-    updatePaymentMethod: EventResponse!
+    updatePaymentMethod(provider: String, token: String, metadata: Object ): EventResponse!
 
     verifyUserAccount(code: String!): VerificationResult!
     verifyUserEmail(code: String!, email: String!, userId: ID!): EventResponse!

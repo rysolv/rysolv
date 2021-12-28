@@ -4,15 +4,18 @@ const { singleQuery } = require('../../baseQueries');
 const getUserCompany = async ({ userId }) => {
   const queryText = `
     SELECT
-      c.company_name AS "name",
-      c.company_url AS "website",
-      c.created_date,
+      c.company_name AS name,
+      c.company_url AS website,
+      c.customer_id AS "customerId",
       c.description,
       c.id,
       c.location,
+      c.logo,
+      c.payment_method AS "paymentMethod",
+      c.payment_set_date AS "paymentSetDate",
       c.size,
-      sc.created_date AS "contractAcceptedDate",
-      lc.contract_key AS "contract"
+      lc.contract_key AS "contract",
+      sc.created_date AS "contractAcceptedDate"
     FROM companies c
     JOIN user_companies uc ON c.id = uc.company_id
     LEFT JOIN signed_contracts sc ON sc.company_id = c.id

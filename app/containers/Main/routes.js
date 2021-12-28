@@ -16,7 +16,7 @@ import Main from 'containers/HomePage/Loadable';
 import Messages from 'containers/Messages';
 import NotFoundPage from 'components/NotFoundPage';
 import Overview from 'containers/Overview';
-import Pricing from 'components/Pricing';
+import Pricing from 'containers/Pricing';
 import PrivacyPolicy from 'components/PrivacyPolicy';
 import ReposAdd from 'containers/Repos/Add';
 import ReposDetail from 'containers/Repos/Detail';

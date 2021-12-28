@@ -1,10 +1,10 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { InternalLink, SettingsContainer } from './styledComponents';
+import { InternalLink, SideNavContainer } from './styledComponents';
 
 const CompanySettingsSideNav = ({ selected }) => (
-  <SettingsContainer>
+  <SideNavContainer>
     <InternalLink
       label="Account &amp; Settings"
       selected={selected === 'main'}
@@ -15,7 +15,7 @@ const CompanySettingsSideNav = ({ selected }) => (
       selected={selected === 'payments'}
       to="/company/settings/payments"
     />
-  </SettingsContainer>
+  </SideNavContainer>
 );
 
 CompanySettingsSideNav.propTypes = {

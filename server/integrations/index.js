@@ -1,23 +1,9 @@
-const {
-  getGithubIssueComments,
-  getSingleIssue,
-  getSingleOrganization,
-  getSinglePullRequest,
-  getSingleRepo,
-  getUserGithubIssues,
-  getUserGithubPullRequests,
-  getUserGithubRepos,
-  requestGithubUser,
-} = require('./github');
+const github = require('./github');
+const stripe = require('./stripe');
+const plaid = require('./plaid');
 
 module.exports = {
-  getGithubIssueComments,
-  getSingleIssue,
-  getSingleOrganization,
-  getSinglePullRequest,
-  getSingleRepo,
-  getUserGithubIssues,
-  getUserGithubPullRequests,
-  getUserGithubRepos,
-  requestGithubUser,
+  ...github,
+  ...plaid,
+  ...stripe,
 };

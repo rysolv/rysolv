@@ -47,19 +47,19 @@ export const DescriptionWrapper = styled.div`
   font-size: 2rem;
   font-weight: 500;
   padding: 1rem 0;
+  text-align: left;
+`;
+
+export const HorizontalDivider = styled.div`
+  background: ${whiteColor};
+  border-bottom: 0.1rem solid rgb(211 211 211 / 70%);
+  height: 0.1rem;
+  margin: 1.5rem 0;
 `;
 
 export const LegalTextWrapper = styled.div`
   margin-top: ${({ isFirst }) => (isFirst ? '1rem' : '2rem')};
   text-align: justify;
-`;
-
-export const QuestionWrapper = styled.div`
-  color: ${darkBlueColor};
-  font-size: 3.2rem;
-  font-weight: 700;
-  line-height: 3.36rem;
-  margin-bottom: 0.8rem;
 `;
 
 export const StyledButton = styled(Button)`
@@ -83,6 +83,20 @@ export const StyledButton = styled(Button)`
   ${mobileS} {
     justify-content: start;
   }
+`;
+
+export const Subtitle = styled.div`
+  color: ${lightGreyColor};
+  font-size: 2rem;
+  font-weight: 500;
+  padding: 1rem 0;
+`;
+
+export const Title = styled.div`
+  color: ${darkBlueColor};
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 3.36rem;
 `;
 
 export const ViewContainer = styled.div`

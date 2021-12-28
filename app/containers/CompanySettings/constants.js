@@ -12,6 +12,12 @@ export const FETCH_CONTRACT_FAILURE =
 export const FETCH_CONTRACT_SUCCESS =
   'app/CompanySettings/FETCH_CONTRACT_SUCCESS';
 
+export const FETCH_PLAID_TOKEN = 'app/CompanySignUp/FETCH_PLAID_TOKEN';
+export const FETCH_PLAID_TOKEN_FAILURE =
+  'app/CompanySignUp/FETCH_PLAID_TOKEN_FAILURE';
+export const FETCH_PLAID_TOKEN_SUCCESS =
+  'app/CompanySignUp/FETCH_PLAID_TOKEN_SUCCESS';
+
 export const FETCH_USER = 'app/CompanySettings/FETCH_USER';
 export const FETCH_USER_FAILURE = 'app/CompanySettings/FETCH_USER_FAILURE';
 export const FETCH_USER_SUCCESS = 'app/CompanySettings/FETCH_USER_SUCCESS';

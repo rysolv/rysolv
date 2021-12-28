@@ -10,7 +10,7 @@ export const excludedPath = [
   'pricing',
   'privacy-policy',
   'profile',
-  'recruitment',
+  'pricing',
   'signin',
   'signup',
   'terms-of-service',

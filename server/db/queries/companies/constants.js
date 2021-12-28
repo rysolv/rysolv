@@ -2,10 +2,14 @@ const companyValues = [
   'company_name',
   'company_url',
   'created_date',
+  'customer_id',
   'description',
   'id',
   'location',
   'logo',
+  'modified_date',
+  'payment_method',
+  'payment_set_date',
   'size',
 ];
 

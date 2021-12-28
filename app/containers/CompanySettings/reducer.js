@@ -10,6 +10,9 @@ import {
   FETCH_CONTRACT_FAILURE,
   FETCH_CONTRACT_SUCCESS,
   FETCH_CONTRACT,
+  FETCH_PLAID_TOKEN_FAILURE,
+  FETCH_PLAID_TOKEN_SUCCESS,
+  FETCH_PLAID_TOKEN,
   FETCH_USER_FAILURE,
   FETCH_USER_SUCCESS,
   FETCH_USER,
@@ -53,6 +56,7 @@ export const initialState = {
     updatePaymentMethod: false,
   },
   modal: '',
+  plaidToken: null,
 };
 
 const companySettingsReducer = produce((draft, { payload, type }) => {
@@ -65,6 +69,7 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     case CLOSE_MODAL_STATE: {
       draft.isModalOpen = initialState.isModalOpen;
       draft.modal = initialState.modal;
+      draft.plaidToken = null;
       break;
     }
     case EDIT_USER_FAILURE: {
@@ -97,6 +102,20 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     case FETCH_CONTRACT: {
       draft.error = null;
       draft.loading.fetchContract = true;
+      break;
+    }
+    case FETCH_PLAID_TOKEN_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      break;
+    }
+    case FETCH_PLAID_TOKEN_SUCCESS: {
+      const { token } = payload;
+      draft.plaidToken = token;
+      break;
+    }
+    case FETCH_PLAID_TOKEN: {
+      draft.error = null;
       break;
     }
     case FETCH_USER_FAILURE: {
