@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
-import PricingGrid from 'components/CompanyRecruitment/PricingGrid';
+import PricingGrid from 'components/CompanyPricing/PricingGrid';
 
 import {
   CompanySettingsContainer,

@@ -4,7 +4,6 @@ import withAuth from 'containers/Auth';
 
 import CodeScoring from 'containers/CodeScoring/Loadable';
 import CompanyDashboard from 'containers/CompanyDashboard/Loadable';
-import CompanyRecruitment from 'containers/CompanyRecruitment/Loadable';
 import CompanySettings from 'containers/CompanySettings/Loadable';
 import CompanySignUp from 'containers/CompanySignUp/Loadable';
 import Contact from 'components/Contact';
@@ -17,6 +16,7 @@ import Main from 'containers/HomePage/Loadable';
 import Messages from 'containers/Messages';
 import NotFoundPage from 'components/NotFoundPage';
 import Overview from 'containers/Overview';
+import Pricing from 'containers/Pricing';
 import PrivacyPolicy from 'components/PrivacyPolicy';
 import ReposAdd from 'containers/Repos/Add';
 import ReposDetail from 'containers/Repos/Detail';
@@ -46,7 +46,6 @@ const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
 const PrivateSettings = withAuth(privateConfig, Settings);
 const PrivateUserDashboard = withAuth(privateConfig, UserDashboard);
 const PublicCodeScoring = withAuth(publicConfig, CodeScoring);
-const PublicCompanyRecruitment = withAuth(publicConfig, CompanyRecruitment);
 const PublicContact = withAuth(publicConfig, Contact);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
@@ -55,6 +54,7 @@ const PublicJobs = withAuth(publicConfig, Jobs);
 const PublicMain = withAuth(publicConfig, Main);
 const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
 const PublicOverview = withAuth(publicConfig, Overview);
+const PublicPricing = withAuth(publicConfig, Pricing);
 const PublicPrivacyPolicy = withAuth(publicConfig, PrivacyPolicy);
 const PublicReposDetail = withAuth(publicConfig, ReposDetail);
 const PublicSignIn = withAuth(publicConfig, SignIn);
@@ -86,9 +86,9 @@ const Routes = () => (
     <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/messages/:threadId?" component={PrivateMessages} />
     <Route exact path="/password-reset" component={PublicSignIn} />
+    <Route exact path="/pricing" component={PublicPricing} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
     <Route exact path="/profile/:user" component={PublicUserProfile} />
-    <Route exact path="/recruitment" component={PublicCompanyRecruitment} />
     <Route exact path="/repos" component={PublicOverview} />
     <Route exact path="/repos/add" component={PrivateReposAdd} />
     <Route exact path="/repos/detail/:id" component={PublicReposDetail} />

@@ -141,7 +141,7 @@ export function* fetchUserSaga({ payload }) {
         }
       }
     }
-`;
+  `;
   try {
     const graphql = JSON.stringify({ query });
     const {
@@ -191,12 +191,9 @@ export function* submitContractAcceptedSaga({ payload }) {
 }
 
 export function* updatePaymentMethodSaga({ payload }) {
-  console.log(payload);
   const { metadata, provider, token } = payload;
-
   const { account_id, institution, account, last4, brand } = metadata;
 
-  console.log(account_id, institution, account);
   const accountDetails =
     provider === 'stripe'
       ? `{

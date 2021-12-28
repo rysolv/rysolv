@@ -7,7 +7,7 @@ export const excludedPath = [
   'messages',
   'password-reset',
   'profile',
-  'recruitment',
+  'pricing',
   'signin',
   'signup',
 ];
