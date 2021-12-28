@@ -55,7 +55,7 @@ const AsyncRender = ({
 AsyncRender.defaultProps = { isRequiredData: false, propsToPassDown: {} };
 
 AsyncRender.propTypes = {
-  asyncData: T.oneOfType([T.array, T.object]),
+  asyncData: T.oneOfType([T.array, T.object, T.string]),
   component: T.oneOfType([T.func, T.object]),
   error: T.oneOfType([T.bool, T.object, T.string]),
   isRequiredData: T.bool,

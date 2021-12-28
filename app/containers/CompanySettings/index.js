@@ -7,7 +7,8 @@ import { withRouter } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
-import CompanyContractConfirmationModal from 'components/CompanyContractModal/confirmationView';
+import ContractConfirmationModal from 'components/CompanyContractModal/confirmationView';
+import PaymentConfirmationModal from 'components/CompanyPaymentModal/confirmationView';
 import CompanyContractModal from 'components/CompanyContractModal';
 import CompanyPaymentModal from 'components/CompanyPaymentModal';
 import CompanySettingsSideNav from 'components/CompanySettings/SideNav';
@@ -20,6 +21,7 @@ import {
   closeModalState,
   editUser,
   fetchContract,
+  fetchPlaidToken,
   fetchUser,
   inputError,
   openModalState,
@@ -45,6 +47,7 @@ const CompanySettings = ({
   dispatchCloseModal,
   dispatchEditUser,
   dispatchFetchContract,
+  dispatchFetchPlaidToken,
   dispatchFetchUser,
   dispatchInputError,
   dispatchOpenModal,
@@ -56,6 +59,7 @@ const CompanySettings = ({
   isModalOpen,
   loading,
   modal,
+  plaidToken,
   view,
 }) => {
   const { id, company } = activeUser;
@@ -112,16 +116,27 @@ const CompanySettings = ({
       Component: CompanyPaymentModal,
       open: isModalOpen,
       propsToPassDown: {
+        dispatchFetchPlaidToken,
         dispatchUpdatePaymentMethod,
         handleClose: dispatchCloseModal,
         paymentConfirmed,
+        plaidToken,
+        setStripeError: () => console.log('STRIPE ERROR. THIS IS TEMPORARY'),
+        setPlaidError: () => console.log('PLAID ERROR. THIS IS TEMPORARY'),
       },
     },
-    confirmation: {
-      Component: CompanyContractConfirmationModal,
+    contractConfirmation: {
+      Component: ContractConfirmationModal,
       open: isModalOpen,
       propsToPassDown: {
         contract,
+        handleClose: dispatchCloseModal,
+      },
+    },
+    paymentConfirmation: {
+      Component: PaymentConfirmationModal,
+      open: isModalOpen,
+      propsToPassDown: {
         handleClose: dispatchCloseModal,
       },
     },
@@ -163,6 +178,7 @@ CompanySettings.propTypes = {
   dispatchCloseModal: T.func.isRequired,
   dispatchEditUser: T.func.isRequired,
   dispatchFetchContract: T.func.isRequired,
+  dispatchFetchPlaidToken: T.func.isRequired,
   dispatchFetchUser: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
@@ -174,6 +190,7 @@ CompanySettings.propTypes = {
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
   modal: T.string.isRequired,
+  plaidToken: T.string,
   view: T.string.isRequired,
 };
 
@@ -187,6 +204,7 @@ const mapStateToProps = createStructuredSelector({
    */
   companyUser: makeSelectCompanySettings('companyUser'),
   contract: makeSelectCompanySettings('contract'),
+  plaidToken: makeSelectCompanySettings('plaidToken'),
   error: makeSelectCompanySettings('error'),
   form: makeSelectCompanySettings('form'),
   formErrors: makeSelectCompanySettings('formErrors'),
@@ -204,12 +222,14 @@ const mapDispatchToProps = dispatch => ({
   dispatchCloseModal: () => dispatch(closeModalState()),
   dispatchEditUser: payload => dispatch(editUser(payload)),
   dispatchFetchContract: payload => dispatch(fetchContract(payload)),
+  dispatchFetchPlaidToken: payload => dispatch(fetchPlaidToken(payload)),
   dispatchFetchUser: payload => dispatch(fetchUser(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),
   dispatchOpenModal: payload => dispatch(openModalState(payload)),
   dispatchSubmitContractAccepted: payload =>
     dispatch(submitContractAccepted(payload)),
-  dispatchUpdatePaymentMethod: () => dispatch(updatePaymentMethod()),
+  dispatchUpdatePaymentMethod: payload =>
+    dispatch(updatePaymentMethod(payload)),
 });
 
 const withConnect = connect(

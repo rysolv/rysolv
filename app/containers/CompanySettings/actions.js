@@ -7,6 +7,9 @@ import {
   FETCH_CONTRACT_FAILURE,
   FETCH_CONTRACT_SUCCESS,
   FETCH_CONTRACT,
+  FETCH_PLAID_TOKEN_FAILURE,
+  FETCH_PLAID_TOKEN_SUCCESS,
+  FETCH_PLAID_TOKEN,
   FETCH_USER_FAILURE,
   FETCH_USER_SUCCESS,
   FETCH_USER,
@@ -73,6 +76,24 @@ export function fetchContract(payload) {
   };
 }
 
+export function fetchPlaidTokenFailure(payload) {
+  return {
+    payload,
+    type: FETCH_PLAID_TOKEN_FAILURE,
+  };
+}
+
+export function fetchPlaidTokenSuccess(payload) {
+  return {
+    payload,
+    type: FETCH_PLAID_TOKEN_SUCCESS,
+  };
+}
+
+export function fetchPlaidToken() {
+  return { type: FETCH_PLAID_TOKEN };
+}
+
 export function fetchUserFailure(payload) {
   return {
     payload,
@@ -137,6 +158,9 @@ export function updatePaymentMethodSuccess() {
   return { type: UPDATE_PAYMENT_METHOD_SUCCESS };
 }
 
-export function updatePaymentMethod() {
-  return { type: UPDATE_PAYMENT_METHOD };
+export function updatePaymentMethod(payload) {
+  return {
+    payload,
+    type: UPDATE_PAYMENT_METHOD,
+  };
 }

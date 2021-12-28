@@ -9,7 +9,7 @@ export const excludedPath = [
   'password-reset',
   'privacy-policy',
   'profile',
-  'recruitment',
+  'pricing',
   'signin',
   'signup',
   'terms-of-service',
