@@ -47,4 +47,14 @@ const groupValues = `
   repos.repo_url
 `;
 
-module.exports = { groupValues, repoReturnValues, repoValues };
+const reposGroupValues = `
+  ${groupValues},
+  l."preferredLanguages"
+`;
+
+module.exports = {
+  groupValues,
+  repoReturnValues,
+  reposGroupValues,
+  repoValues,
+};
