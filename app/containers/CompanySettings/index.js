@@ -63,7 +63,12 @@ const CompanySettings = ({
   view,
 }) => {
   const { id, company } = activeUser;
-  const { companyId, contract: currentPlan, paymentConfirmed } = company;
+  const {
+    companyId,
+    contract: currentPlan,
+    paymentConfirmed,
+    paymentMethod,
+  } = company;
 
   useEffect(() => {
     if (id) dispatchFetchUser({ userId: id });
@@ -163,6 +168,7 @@ const CompanySettings = ({
           handleSelectPlan,
           handleValidateInput,
           paymentConfirmed,
+          paymentMethod,
         }}
       />
       {isModalOpen && <ModalDialog {...modalPropsDictionary[modal]} />}
