@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 
 import { ProgressBar } from 'components/base_ui';
+import { additionalInputDictionary } from 'containers/Jobs/constants';
 import { validateOneField } from 'containers/Jobs/helpers';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -23,8 +24,11 @@ const NextIcon = iconDictionary('navigateNext');
 const SurveyView = ({
   description,
   dispatchChangeInput,
+  dispatchChangeSkillLevel,
+  dispatchDeleteSkill,
   dispatchInputError,
   form,
+  formErrors,
   handleCancel,
   handleNav,
   handleSubmit,
@@ -36,9 +40,11 @@ const SurveyView = ({
   path,
   placeholder,
   question,
+  questions,
   required,
   step,
   steps,
+  tableData,
   type,
 }) => {
   const [nextDisabled, setNextDisabled] = useState(false);
@@ -46,10 +52,10 @@ const SurveyView = ({
 
   const checkInputDisabled = input => {
     let disabled = true;
-    if (Array.isArray(form[input].value)) {
-      disabled = !form[input].value.length;
+    if (Array.isArray(form[input])) {
+      disabled = !form[input].length;
     } else {
-      disabled = form[input].value === '';
+      disabled = form[input] === '';
     }
     return disabled;
   };
@@ -75,6 +81,13 @@ const SurveyView = ({
   const shouldDisplayCancel = step === 1;
   const shouldDisplaySubmit = step === steps;
 
+  const handleChangeInput = (value, inputField) => {
+    dispatchChangeInput({
+      field: inputField || id,
+      value,
+    });
+  };
+
   const handleKeypress = ({ key }) => {
     if (key === 'Enter' && !checkInputDisabled(id)) {
       if (shouldDisplaySubmit) handleSubmit();
@@ -90,19 +103,30 @@ const SurveyView = ({
     });
   };
   const hasInputErrors = !Object.keys(form).every(
-    input => form[input].error === '' || form[input].error === undefined,
+    input => formErrors[input] === '' || formErrors[input] === undefined,
   );
+
+  const tableProps = { dispatchChangeSkillLevel, dispatchDeleteSkill };
 
   const OptionToRender = optionDictionary[optionType];
   const optionProps = {
-    dispatchChangeInput,
+    additionalInputProps: {
+      value: form[additionalInputDictionary[id]],
+      ...questions.find(
+        ({ id: questionId }) => additionalInputDictionary[id] === questionId,
+      ),
+    },
     form,
+    formErrors,
+    handleChangeInput,
     handleUpdateFiles,
     handleValidateInput,
     id,
     limit,
     options,
     placeholder,
+    tableData,
+    tableProps,
     type,
   };
   return (
@@ -168,8 +192,11 @@ const SurveyView = ({
 SurveyView.propTypes = {
   description: T.string,
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeSkillLevel: T.func.isRequired,
+  dispatchDeleteSkill: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   form: T.object.isRequired,
+  formErrors: T.object.isRequired,
   handleCancel: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleSubmit: T.func.isRequired,
@@ -181,9 +208,11 @@ SurveyView.propTypes = {
   path: T.string.isRequired,
   placeholder: T.string,
   question: T.string.isRequired,
+  questions: T.array.isRequired,
   required: T.bool.isRequired,
   step: T.number.isRequired,
   steps: T.number.isRequired,
+  tableData: T.array.isRequired,
   type: T.string,
 };
 

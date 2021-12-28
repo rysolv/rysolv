@@ -1,5 +1,7 @@
 import { validate } from 'utils/validate';
 
+import { additionalInputDictionary } from './constants';
+
 export const convertFileToDataUrl = async file => {
   const { type } = file;
   const dataUrl = await new Promise((resolve, reject) => {
@@ -21,26 +23,29 @@ export const optionDictionary = {
   experience: {
     option: 'multipleButton',
   },
+  is_active: {
+    option: 'singleButton',
+  },
+  is_remote: {
+    option: 'autocomplete',
+  },
   personal_link: {
     option: 'singleInput',
     placeholder: 'https://mypersonalwebsite.com',
     type: 'url',
   },
-  preferred_languages: {
-    option: 'autocomplete',
-    placeholder: 'Languages',
-  },
   preferred_location: {
-    option: 'multipleButton',
+    option: 'locationAutocomplete',
   },
   resume: {
     option: 'dragAndDrop',
   },
+  skills: {
+    option: 'radioGroup',
+    type: 'skills',
+  },
   target_salary: {
     option: 'singleButton',
-  },
-  timeline: {
-    option: 'multipleButton',
   },
   us_citizen: {
     option: 'singleButton',
@@ -49,6 +54,7 @@ export const optionDictionary = {
 
 const validationPropsByField = {
   personalLink: { type: 'linkInput' },
+  preferredLocation: { type: 'positionLocationInput' },
 };
 
 export const validateFields = ({ questions, values }) =>
@@ -69,9 +75,11 @@ export const validateFields = ({ questions, values }) =>
   );
 
 export const validateOneField = ({ field, required, values }) => {
-  const { value } = values[field];
+  const isFieldRequired = !(values[additionalInputDictionary[field]] === 'Yes');
+  const value = values[field];
   return validate({
-    required,
+    additionalInputField: !!values[additionalInputDictionary[field]],
+    required: isFieldRequired || required,
     value,
     ...validationPropsByField[field],
   });

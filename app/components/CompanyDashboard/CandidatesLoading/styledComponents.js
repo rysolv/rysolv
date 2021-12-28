@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-import { darkBlueColor } from 'defaultStyleHelper';
+import { LoadingIndicator } from 'components/base_ui';
+import { blueColor } from 'defaultStyleHelper';
 
 export const CandidateLoadingContainer = styled.div`
   display: flex;
@@ -9,8 +10,13 @@ export const CandidateLoadingContainer = styled.div`
   text-align: center;
 `;
 
-export const Title = styled.p`
-  color: ${darkBlueColor};
-  font-size: 2.4rem;
-  font-weight: 700;
+export const StyledLoadingIndicator = styled(LoadingIndicator)`
+  height: 10rem;
+`;
+
+export const Subtext = styled.div`
+  color: ${blueColor};
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 3.45rem;
 `;

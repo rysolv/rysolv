@@ -30,7 +30,7 @@ const MobileHeader = ({
   setIsDrawerOpen,
 }) => {
   const isCompany = !!activeUser.company;
-  const { company, unreadMessages } = activeUser;
+  const { unreadMessages } = activeUser;
 
   return (
     <Fragment>

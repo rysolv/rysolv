@@ -13,6 +13,12 @@ const makeSelectCompanySettings = prop =>
     substate => substate[prop],
   );
 
+const makeSelectCompanySettingsLoading = prop =>
+  createSelector(
+    makeSelectCompanySettings('loading'),
+    loading => loading[prop],
+  );
+
 const makeSelectCompanySettingsView = () =>
   createSelector(
     selectCompanySettingsProps,
@@ -20,4 +26,8 @@ const makeSelectCompanySettingsView = () =>
   );
 
 export default selectCompanySettingsDomain;
-export { makeSelectCompanySettings, makeSelectCompanySettingsView };
+export {
+  makeSelectCompanySettings,
+  makeSelectCompanySettingsLoading,
+  makeSelectCompanySettingsView,
+};

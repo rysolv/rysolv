@@ -1,5 +1,7 @@
-/* eslint-disable consistent-return, default-case, no-param-reassign */
+/* eslint-disable array-callback-return, consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
+import isEmpty from 'lodash/isEmpty';
+import remove from 'lodash/remove';
 
 import {
   ACCEPT_BOUNTY_FAILURE,
@@ -8,15 +10,23 @@ import {
   CHANGE_EMAIL_FAILURE,
   CHANGE_EMAIL_SUCCESS,
   CHANGE_EMAIL,
+  CHANGE_SKILL_LEVEL,
   CLEAR_ALERTS,
   CLEAR_ERRORS,
   CLOSE_MODAL_STATE,
+  DELETE_SKILL,
   DELETE_USER_FAILURE,
   DELETE_USER_SUCCESS,
   DELETE_USER,
   FETCH_INFO_FAILURE,
   FETCH_INFO_SUCCESS,
   FETCH_INFO,
+  FETCH_QUESTIONS_FAILURE,
+  FETCH_QUESTIONS_SUCCESS,
+  FETCH_QUESTIONS,
+  FETCH_USER_RESPONSE_FAILURE,
+  FETCH_USER_RESPONSE_SUCCESS,
+  FETCH_USER_RESPONSE,
   INPUT_CHANGE,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
@@ -25,6 +35,7 @@ import {
   PAYPAL_PAYMENT,
   REMOVE_ISSUE_FAILURE,
   REMOVE_ISSUE_SUCCESS,
+  RESET_FORM_STATE,
   RESET_STATE,
   SAVE_CHANGE_FAILURE,
   SAVE_CHANGE_SUCCESS,
@@ -32,6 +43,9 @@ import {
   STRIPE_TOKEN_FAILURE,
   STRIPE_TOKEN_SUCCESS,
   STRIPE_TOKEN,
+  UPDATE_USER_SKILLS_FAILURE,
+  UPDATE_USER_SKILLS_SUCCESS,
+  UPDATE_USER_SKILLS,
   VERIFY_ACCOUNT_FAILURE,
   VERIFY_ACCOUNT_SUCCESS,
   VERIFY_ACCOUNT,
@@ -49,6 +63,9 @@ export const initialState = {
     overview: 'Newest',
     users: 'All',
   },
+  form: {
+    skills: [],
+  },
   inputErrors: {
     depositValue: '',
     email: '',
@@ -64,6 +81,8 @@ export const initialState = {
   isModalOpen: false,
   loading: true,
   modal: '',
+  questions: [],
+  skills: [],
 };
 
 const settingsReducer = produce((draft, { payload, type }) => {
@@ -105,6 +124,21 @@ const settingsReducer = produce((draft, { payload, type }) => {
       draft.loading = true;
       break;
     }
+    case CHANGE_SKILL_LEVEL: {
+      const { level, skill: skillToChange } = payload;
+      draft.form.skills.map(({ skill, ...restProps }, index) => {
+        if (skill === skillToChange) {
+          draft.form.skills[index] = {
+            beginner: false,
+            expert: false,
+            intermediate: false,
+            skill,
+            [level]: !restProps[level],
+          };
+        }
+      });
+      break;
+    }
     case CLEAR_ALERTS: {
       draft.alerts = initialState.alerts;
       draft.inputErrors = initialState.inputErrors;
@@ -117,6 +151,11 @@ const settingsReducer = produce((draft, { payload, type }) => {
     case CLOSE_MODAL_STATE: {
       draft.isModalOpen = initialState.isModalOpen;
       draft.modal = initialState.modal;
+      break;
+    }
+    case DELETE_SKILL: {
+      const { skill: skillToDelete } = payload;
+      remove(draft.form.skills, ({ skill }) => skill === skillToDelete);
       break;
     }
     case DELETE_USER_FAILURE: {
@@ -150,13 +189,50 @@ const settingsReducer = produce((draft, { payload, type }) => {
       draft.loading = true;
       break;
     }
+    case FETCH_QUESTIONS_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      break;
+    }
+    case FETCH_QUESTIONS_SUCCESS: {
+      const { questions } = payload;
+      draft.questions = questions;
+      break;
+    }
+    case FETCH_QUESTIONS: {
+      draft.error = false;
+      break;
+    }
+    case FETCH_USER_RESPONSE_FAILURE: {
+      const { error } = payload;
+      draft.error = error;
+      break;
+    }
+    case FETCH_USER_RESPONSE_SUCCESS: {
+      const { user } = payload;
+      draft.form.skills = user.skills;
+      break;
+    }
+    case FETCH_USER_RESPONSE: {
+      draft.error = false;
+      break;
+    }
     case INPUT_CHANGE: {
       const { field, form, value } = payload;
       if (form === 'filter') {
         draft[form][field] = value;
-      } else if (field === 'preferredLanguages') {
-        draft[form][field].value = [];
-        value.map(language => draft[form][field].value.push(language.value));
+      } else if (field === 'skills') {
+        const skillsArray = draft.form[field].filter(
+          ({ skill }) => skill === value,
+        );
+        if (isEmpty(skillsArray)) {
+          draft.form[field].push({
+            beginner: false,
+            expert: false,
+            intermediate: false,
+            skill: value,
+          });
+        }
       } else {
         draft[form][field].value = value;
       }
@@ -220,6 +296,10 @@ const settingsReducer = produce((draft, { payload, type }) => {
       draft.loading = false;
       break;
     }
+    case RESET_FORM_STATE: {
+      draft.form = initialState.form;
+      break;
+    }
     case RESET_STATE: {
       return initialState;
     }
@@ -257,6 +337,19 @@ const settingsReducer = produce((draft, { payload, type }) => {
     case STRIPE_TOKEN: {
       draft.alerts = initialState.alerts;
       draft.loading = true;
+      break;
+    }
+    case UPDATE_USER_SKILLS_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      break;
+    }
+    case UPDATE_USER_SKILLS_SUCCESS: {
+      draft.account.skills = draft.form.skills;
+      break;
+    }
+    case UPDATE_USER_SKILLS: {
+      draft.alerts.error = false;
       break;
     }
     case VERIFY_ACCOUNT_FAILURE: {

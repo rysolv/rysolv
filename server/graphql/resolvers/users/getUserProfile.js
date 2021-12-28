@@ -10,10 +10,14 @@ const getUserProfile = async ({ username }) => {
     // Get hiring status
     const responseKey = await getQuestionAnswerByKey({
       userId: user.id,
-      questionKey: 'timeline',
+      questionKey: 'is_active',
     });
-    if (responseKey && responseKey === '0_months') {
+    if (responseKey && responseKey === 'yes_is_active') {
       user.hiringStatus = 'active';
+    } else if (responseKey === 'no_is_active') {
+      user.hiringStatus = 'inactive';
+    } else {
+      user.hiringStatus = 'undeclared';
     }
 
     return {

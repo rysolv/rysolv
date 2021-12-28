@@ -75,7 +75,7 @@ export const initialState = {
     companyPosition: {
       description: '',
       experience: '',
-      isOpen: 'Yes',
+      isActive: 'Yes',
       isRemote: 'No',
       location: '',
       role: [],

@@ -28,7 +28,7 @@ const ContractConfirmationModal = ({ contract, handleClose }) => {
         </DescriptionWrapper>
       </ContentGroup>
       <ButtonGroup>
-        <StyledButton disableRipple onClick={() => handleClose()}>
+        <StyledButton disableRipple onClick={handleClose}>
           Close
         </StyledButton>
       </ButtonGroup>

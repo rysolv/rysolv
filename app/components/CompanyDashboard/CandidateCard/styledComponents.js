@@ -38,8 +38,6 @@ export const CandidateCardContainer = styled.div`
   border: 0.3rem solid ${({ isSaved }) => (isSaved ? blueColor : grayColor)};
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
   color: ${blueColor};
-  display: flex;
-  flex-direction: column;
   margin: 0 4rem ${({ isLast }) => (isLast ? '0' : '4rem')} 0;
   min-height: 37.5rem;
   position: relative;

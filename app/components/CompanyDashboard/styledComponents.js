@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { darkBlueColor, lightBlueColor, textColor } from 'defaultStyleHelper';
 
 export const CandidateCardGroup = styled.div`
+  align-items: start;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -70,5 +71,6 @@ export const StyledParagraph = styled.p`
 `;
 
 export const StyledSubParagraph = styled.p`
+  color: ${textColor};
   font-size: 1.6rem;
 `;

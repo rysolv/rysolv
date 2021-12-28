@@ -1,12 +1,14 @@
-/* eslint-disable camelcase */
 const { CustomError, errorLogger } = require('../../../helpers');
-const { setPaymentError, setPaymentSuccess } = require('./constants');
 const {
   createBankAccount,
   exchangePlaidToken,
   setPaymentIntent,
 } = require('../../../integrations');
 const { getUserCompany, transformCompany } = require('../../../db');
+const {
+  updatePaymentMethodError,
+  updatePaymentMethodSuccess,
+} = require('./constants');
 
 const updatePaymentMethod = async (
   { provider, token, metadata },
@@ -51,13 +53,13 @@ const updatePaymentMethod = async (
 
     return {
       __typename: 'Success',
-      message: setPaymentSuccess,
+      message: updatePaymentMethodSuccess,
     };
   } catch (error) {
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: setPaymentError,
+      message: updatePaymentMethodError,
     };
   }
 };

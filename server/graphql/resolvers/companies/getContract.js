@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const { CustomError, errorLogger } = require('../../../helpers');
 const { getContractByKey } = require('../../../db');
 const { getContractError } = require('./constants');

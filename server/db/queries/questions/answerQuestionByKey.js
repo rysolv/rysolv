@@ -1,7 +1,7 @@
-const { v4: uuidv4 } = require('uuid');
 const { singleQuery } = require('../../baseQueries');
 
 const answerQuestionByKey = async ({
+  category,
   questionKey,
   responseKey,
   userId,
@@ -9,26 +9,25 @@ const answerQuestionByKey = async ({
 }) => {
   const queryText = `
     WITH question AS (
-      SELECT ID FROM questions WHERE question_key = $1
+      SELECT ID FROM questions WHERE category = $1 AND question_key = $2
     )
-    INSERT INTO user_question_responses
-    (id, created_date, question_id, response_id, user_id, value)
-    VALUES (
-      $2,
+    UPDATE user_question_responses
+    SET (created_date, response_id, value)
+    = (
       $3,
-      (SELECT ID FROM question),
       (
         SELECT qr.id FROM question_responses qr
         WHERE qr.question_id = (SELECT id FROM question)
         AND response_key = $4
       ),
-      $5,
       $6
     )
+    WHERE question_id = (SELECT id FROM question)
+    AND user_id = $5
   `;
   const values = [
+    category,
     questionKey,
-    uuidv4(),
     new Date(),
     responseKey,
     userId,

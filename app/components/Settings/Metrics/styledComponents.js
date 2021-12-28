@@ -55,10 +55,6 @@ export const RankingContainer = styled.div`
   flex-direction: column;
 `;
 
-export const StyledLanguageAutocomplete = styled.div`
-  width: 80%;
-`;
-
 export const StyledUserBarTitle = styled.div`
   font-size: 1.8rem;
   padding: 0.5rem 0;

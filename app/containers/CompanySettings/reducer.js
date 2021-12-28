@@ -34,7 +34,6 @@ export const initialState = {
     subtitle: '',
     title: '',
   },
-  contractLoading: false,
   error: null,
   form: {
     email: '',
@@ -49,7 +48,13 @@ export const initialState = {
     username: '',
   },
   isModalOpen: false,
-  loading: true,
+  loading: {
+    editUser: false,
+    fetchContract: false,
+    fetchUser: true,
+    submitContractAccepted: false,
+    updatePaymentMethod: false,
+  },
   modal: '',
   plaidToken: null,
 };
@@ -70,33 +75,33 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     case EDIT_USER_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading = false;
+      draft.loading.editUser = false;
       break;
     }
     case EDIT_USER_SUCCESS: {
-      draft.loading = false;
+      draft.loading.editUser = false;
       break;
     }
     case EDIT_USER: {
       draft.error = null;
-      draft.loading = true;
+      draft.loading.editUser = true;
       break;
     }
     case FETCH_CONTRACT_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.contractLoading = false;
+      draft.loading.fetchContract = false;
       break;
     }
     case FETCH_CONTRACT_SUCCESS: {
       const { contract } = payload;
       draft.contract = { contractAccepted: false, ...contract };
-      draft.contractLoading = false;
+      draft.loading.fetchContract = false;
       break;
     }
     case FETCH_CONTRACT: {
       draft.error = null;
-      draft.contractLoading = true;
+      draft.loading.fetchContract = true;
       break;
     }
     case FETCH_PLAID_TOKEN_FAILURE: {
@@ -116,19 +121,19 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     case FETCH_USER_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading = false;
+      draft.loading.fetchUser = false;
       break;
     }
     case FETCH_USER_SUCCESS: {
       const { user } = payload;
       draft.companyUser = user;
       draft.form = user;
-      draft.loading = false;
+      draft.loading.fetchUser = false;
       break;
     }
     case FETCH_USER: {
       draft.error = null;
-      draft.loading = true;
+      draft.loading.fetchUser = true;
       break;
     }
     case INPUT_ERROR: {
@@ -148,31 +153,31 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     case SUBMIT_CONTRACT_ACCEPTED_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading = false;
+      draft.loading.submitContractAccepted = false;
       break;
     }
     case SUBMIT_CONTRACT_ACCEPTED_SUCCESS: {
-      draft.loading = false;
+      draft.loading.submitContractAccepted = false;
       break;
     }
     case SUBMIT_CONTRACT_ACCEPTED: {
       draft.error = null;
-      draft.loading = true;
+      draft.loading.submitContractAccepted = true;
       break;
     }
     case UPDATE_PAYMENT_METHOD_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading = false;
+      draft.loading.updatePaymentMethod = false;
       break;
     }
     case UPDATE_PAYMENT_METHOD_SUCCESS: {
-      draft.loading = false;
+      draft.loading.updatePaymentMethod = false;
       break;
     }
     case UPDATE_PAYMENT_METHOD: {
       draft.error = null;
-      draft.loading = true;
+      draft.loading.updatePaymentMethod = true;
       break;
     }
   }

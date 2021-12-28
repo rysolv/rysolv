@@ -1,12 +1,16 @@
-import { MultipleButton, SingleButton } from './ButtonComponent';
-import { SingleInput } from './InputComponent';
-import AutocompleteComponent from './AutocompleteComponent';
-import DragAndDropComponent from './DragAndDropComponent';
+import { MultipleButton, SingleButton } from './Button';
+import { SingleInput } from './Input';
+import AutocompleteOption from './Autocomplete';
+import DragAndDropOption from './DragAndDrop';
+import LocationAutocompleteOption from './LocationAutocomplete';
+import RadioGroupOption from './RadioGroup';
 
 export default {
-  autocomplete: AutocompleteComponent,
-  dragAndDrop: DragAndDropComponent,
+  autocomplete: AutocompleteOption,
+  dragAndDrop: DragAndDropOption,
+  locationAutocomplete: LocationAutocompleteOption,
   multipleButton: MultipleButton,
+  radioGroup: RadioGroupOption,
   singleButton: SingleButton,
   singleInput: SingleInput,
 };

@@ -11,6 +11,7 @@ const getCompanyPositions = async ({ companyId }, { authError, userId }) => {
     const formattedPositions = positions.map(
       ({ positionId, positionData }) => ({
         id: positionId,
+        isActive: positionData.is_active,
         isRemote: positionData.is_remote,
         location: positionData.location
           .replace(/[0-9]/g, '')

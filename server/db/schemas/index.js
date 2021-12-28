@@ -17,7 +17,6 @@ const positionTechStackSchema = require('./positionTechStack');
 const pullRequestSchema = require('./pullRequest');
 const questionResponseSchema = require('./questionResponses');
 const questionSchema = require('./questions');
-const recruitingSignup = require('./recruiting_signup');
 const repoSchema = require('./repos');
 const technologiesSchema = require('./technologies');
 const userCompaniesSchema = require('./userCompanies.js');
@@ -47,7 +46,6 @@ module.exports = {
   ...pullRequestSchema,
   ...questionResponseSchema,
   ...questionSchema,
-  ...recruitingSignup,
   ...repoSchema,
   ...technologiesSchema,
   ...userCompaniesSchema,

@@ -12,6 +12,7 @@ const pullRequestResolver = require('./pullRequests');
 const questionResolver = require('./questions');
 const repoResolver = require('./repos');
 const statsResolver = require('./stats');
+const technologiesResolver = require('./technologies');
 const userResolver = require('./users');
 const watchingResolver = require('./watching');
 const withdrawalResolver = require('./withdrawal');
@@ -31,6 +32,7 @@ const rootResolver = {
   ...questionResolver,
   ...repoResolver,
   ...statsResolver,
+  ...technologiesResolver,
   ...userResolver,
   ...watchingResolver,
   ...withdrawalResolver,

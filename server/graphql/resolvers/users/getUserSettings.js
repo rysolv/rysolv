@@ -1,3 +1,5 @@
+const isEmpty = require('lodash/isEmpty');
+
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getOneIssue,
@@ -29,8 +31,8 @@ const getUserSettings = async (_, { authError, userId }) => {
 
     if (userCompany) {
       const {
-        contractAcceptedDate,
         contract,
+        contractAcceptedDate,
         id,
         ...companyProps
       } = userCompany;
@@ -38,11 +40,11 @@ const getUserSettings = async (_, { authError, userId }) => {
         companyId: id,
         contract,
         isContractAccepted: !!contractAcceptedDate,
-        // TODO: confirm payment method
-        paymentConfirmed: true,
         isQuestionnaireComplete: Object.keys(companyProps).some(
           prop => !!companyProps[prop],
         ),
+        // TODO: confirm payment method
+        paymentConfirmed: false,
       };
     }
 
@@ -92,6 +94,18 @@ const getUserSettings = async (_, { authError, userId }) => {
         result.notifications = true;
       }
     });
+
+    if (!isEmpty(result.skills)) {
+      const skillsArray = result.skills.map(({ level, shortName }) => ({
+        beginner: level === 1,
+        expert: level === 3,
+        intermediate: level === 2,
+        skill: shortName,
+      }));
+      result.skills = skillsArray;
+    } else {
+      result.skills = [];
+    }
 
     return {
       __typename: 'User',

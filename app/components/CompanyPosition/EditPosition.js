@@ -90,7 +90,10 @@ const EditPosition = ({
             const multiple = id === 'role';
 
             return (
-              <OptionWrapper $isAbsolute={id === 'isOpen'} key={`option-${id}`}>
+              <OptionWrapper
+                $isAbsolute={id === 'isActive'}
+                key={`option-${id}`}
+              >
                 <OptionLabel>{question}</OptionLabel>
                 <OptionDescription>{description}</OptionDescription>
                 <OptionToRender
@@ -130,7 +133,7 @@ const EditPosition = ({
         />
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
-          label="Save"
+          label="Edit"
           loading={loading}
           onClick={handleEditPosition}
         />

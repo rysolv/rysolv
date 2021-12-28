@@ -5,6 +5,7 @@ import {
   FETCH_MESSAGES_FAILURE,
   FETCH_MESSAGES_SUCCESS,
   FETCH_MESSAGES,
+  RESET_MARKDOWN,
   SEND_MESSAGE_FAILURE,
   SEND_MESSAGE_SUCCESS,
   SEND_MESSAGE,
@@ -15,34 +16,44 @@ import {
 
 export const initialState = {
   conversations: [],
-  error: null,
-  loading: true,
-  messageLoading: true,
+  error: {
+    main: false,
+    message: false,
+  },
+  loading: {
+    main: true,
+    message: false,
+  },
+  success: false,
 };
 
 const messagesReducer = produce((draft, { payload, type }) => {
   switch (type) {
     case FETCH_MESSAGES_FAILURE: {
       const { error } = payload;
-      draft.error = error;
-      draft.loading = false;
+      draft.error.main = error;
+      draft.loading.main = false;
       break;
     }
     case FETCH_MESSAGES_SUCCESS: {
       const { conversations } = payload;
-      draft.loading = false;
+      draft.loading.main = false;
       draft.conversations = conversations;
       break;
     }
     case FETCH_MESSAGES: {
-      draft.error = null;
-      draft.loading = true;
+      draft.error.main = false;
+      draft.loading.main = true;
+      break;
+    }
+    case RESET_MARKDOWN: {
+      draft.error.message = initialState.error.message;
+      draft.success = initialState.success;
       break;
     }
     case SEND_MESSAGE_FAILURE: {
-      const { error } = payload;
-      draft.error = error;
-      draft.messageLoading = false;
+      draft.error.message = true;
+      draft.loading.message = false;
       break;
     }
     case SEND_MESSAGE_SUCCESS: {
@@ -52,17 +63,19 @@ const messagesReducer = produce((draft, { payload, type }) => {
           draft.conversations[i].messages.push(newMessage);
         }
       });
-      draft.messageLoading = false;
+      draft.loading.message = false;
+      draft.success = true;
       break;
     }
     case SEND_MESSAGE: {
-      draft.error = null;
-      draft.messageLoading = true;
+      draft.error.message = initialState.error.message;
+      draft.loading.message = true;
+      draft.success = initialState.sucess;
       break;
     }
     case SET_READ_RECEIPT_FAILURE: {
       const { error } = payload;
-      draft.error = error;
+      draft.error.main = error;
       break;
     }
     case SET_READ_RECEIPT_SUCCESS: {
@@ -72,11 +85,10 @@ const messagesReducer = produce((draft, { payload, type }) => {
           draft.conversations[i].unread = false;
         }
       });
-      draft.messageLoading = false;
       break;
     }
     case SET_READ_RECEIPT: {
-      draft.error = null;
+      draft.error.main = false;
       break;
     }
   }

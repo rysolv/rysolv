@@ -10,6 +10,7 @@ import AcceptBountyModal from 'components/AcceptBountyModal';
 import AsyncRender from 'components/AsyncRender';
 import DeleteUserModal from 'components/DeleteUserModal';
 import SettingsView from 'components/Settings';
+import UpdateSkillsModal from 'components/UpdateSkillsModal';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import PullRequestOverview from 'containers/PullRequests/Overview';
 import { handleZipChange } from 'utils/globalHelpers';
@@ -19,27 +20,37 @@ import injectSaga from 'utils/injectSaga';
 import {
   acceptBounty,
   changeEmail,
+  changeSkillLevel,
   clearAlerts,
   clearErrors,
   closeModalState,
+  deleteSkill,
   deleteUser,
   fetchInfo,
+  fetchQuestions,
+  fetchUserResponse,
   inputChange,
   inputError,
   openModalState,
   paypalPayment,
   removeAttempting,
   removeWatching,
+  resetFormState,
   resetState,
   saveChange,
   stripeToken,
+  updateUserSkills,
   withdrawFunds,
 } from './actions';
 import { settingViewDictionary } from './constants';
 import { validateFields, validateOneField } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectSettings, makeSelectSettingsDetail } from './selectors';
+import {
+  makeSelectSettings,
+  makeSelectSettingsDetail,
+  makeSelectSettingsSkillsQuestion,
+} from './selectors';
 import { SettingsWrapper } from './styledComponents';
 
 const Settings = ({
@@ -48,17 +59,24 @@ const Settings = ({
   data,
   data: { balance },
   dispatchAcceptBounty,
+  dispatchChangeSkillLevel,
   dispatchCloseModal,
+  dispatchDeleteSkill,
   dispatchFetchInfo,
+  dispatchFetchQuestions,
+  dispatchFetchUserResponse,
   dispatchInputError,
   dispatchOpenModal,
   dispatchPaypalPayment,
+  dispatchResetFormState,
   dispatchResetState,
   dispatchSaveChange,
   dispatchStripeToken,
+  dispatchUpdateUserSkills,
   dispatchWithdrawFunds,
   error,
   filterValues,
+  form,
   handleChangeEmail,
   handleClearAlerts,
   handleClearErrors,
@@ -72,10 +90,15 @@ const Settings = ({
   loading,
   match,
   modal,
+  skillsQuestion,
+  skills,
 }) => {
   const [zipValue, setZipValue] = useState('');
 
-  useEffect(() => dispatchResetState, []);
+  useEffect(() => {
+    dispatchFetchQuestions({ category: 'hiring' });
+    return dispatchResetState;
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -92,6 +115,18 @@ const Settings = ({
       });
     } else {
       dispatchInputError({ errors: validationErrors });
+    }
+  };
+
+  const handleUpdateUserSkills = () => {
+    const field = 'skills';
+    const validationError = validateOneField({ field, values: form }) || '';
+    if (!validationError) {
+      dispatchUpdateUserSkills({ ...form });
+    } else {
+      dispatchInputError({
+        errors: { [field]: validationError },
+      });
     }
   };
 
@@ -112,9 +147,11 @@ const Settings = ({
       dispatchInputError({ errors: validationErrors });
     }
   };
+
   const {
     params: { view },
   } = match;
+
   const creditCardProps = {
     handleStripeToken,
     handleZipChange,
@@ -122,6 +159,7 @@ const Settings = ({
     zipValue,
   };
   const currentTab = settingViewDictionary[view] || 0;
+
   const modalPropsDictionary = {
     acceptBounty: {
       Component: AcceptBountyModal,
@@ -142,6 +180,27 @@ const Settings = ({
         balance,
         handleClose: dispatchCloseModal,
         handleDeleteUser,
+      },
+    },
+    updateSkills: {
+      Component: UpdateSkillsModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        alerts,
+        dispatchChangeInput: handleInputChange,
+        dispatchChangeSkillLevel,
+        dispatchClearAlerts: handleClearAlerts,
+        dispatchDeleteSkill,
+        dispatchFetchUserResponse,
+        dispatchResetFormState,
+        form,
+        formErrors: inputErrors,
+        handleClose: dispatchCloseModal,
+        handleUpdateUserSkills,
+        handleValidateInput,
+        skills,
+        user: data,
+        ...skillsQuestion,
       },
     },
   };
@@ -187,17 +246,24 @@ Settings.propTypes = {
   alerts: T.object.isRequired,
   data: T.object.isRequired,
   dispatchAcceptBounty: T.func.isRequired,
+  dispatchChangeSkillLevel: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
+  dispatchDeleteSkill: T.func.isRequired,
   dispatchFetchInfo: T.func,
+  dispatchFetchQuestions: T.func.isRequired,
+  dispatchFetchUserResponse: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchPaypalPayment: T.func.isRequired,
+  dispatchResetFormState: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
   dispatchSaveChange: T.func,
   dispatchStripeToken: T.func.isRequired,
+  dispatchUpdateUserSkills: T.func.isRequired,
   dispatchWithdrawFunds: T.func.isRequired,
-  error: T.oneOfType([T.object, T.bool]).isRequired,
+  error: T.oneOfType([T.bool, T.object]).isRequired,
   filterValues: T.object,
+  form: T.object.isRequired,
   handleChangeEmail: T.func.isRequired,
   handleClearAlerts: T.func.isRequired,
   handleClearErrors: T.func.isRequired,
@@ -211,6 +277,8 @@ Settings.propTypes = {
   loading: T.bool.isRequired,
   match: T.object.isRequired,
   modal: T.string.isRequired,
+  skillsQuestion: T.object.isRequired,
+  skills: T.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -225,10 +293,13 @@ const mapStateToProps = createStructuredSelector({
   data: makeSelectSettingsDetail('account'),
   error: makeSelectSettings('error'),
   filterValues: makeSelectSettings('filter'),
+  form: makeSelectSettings('form'),
   inputErrors: makeSelectSettings('inputErrors'),
   isModalOpen: makeSelectSettings('isModalOpen'),
   loading: makeSelectSettings('loading'),
   modal: makeSelectSettings('modal'),
+  skillsQuestion: makeSelectSettingsSkillsQuestion(),
+  skills: makeSelectSettings('skills'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -237,14 +308,20 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Settings
      */
     dispatchAcceptBounty: payload => dispatch(acceptBounty(payload)),
+    dispatchChangeSkillLevel: payload => dispatch(changeSkillLevel(payload)),
     dispatchCloseModal: () => dispatch(closeModalState()),
+    dispatchDeleteSkill: payload => dispatch(deleteSkill(payload)),
     dispatchFetchInfo: payload => dispatch(fetchInfo(payload)),
+    dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
+    dispatchFetchUserResponse: () => dispatch(fetchUserResponse()),
     dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     dispatchPaypalPayment: payload => dispatch(paypalPayment(payload)),
+    dispatchResetFormState: () => dispatch(resetFormState()),
     dispatchResetState: () => dispatch(resetState()),
     dispatchSaveChange: payload => dispatch(saveChange(payload)),
     dispatchStripeToken: payload => dispatch(stripeToken(payload)),
+    dispatchUpdateUserSkills: payload => dispatch(updateUserSkills(payload)),
     dispatchWithdrawFunds: payload => dispatch(withdrawFunds(payload)),
     handleChangeEmail: payload => dispatch(changeEmail(payload)),
     handleClearAlerts: () => dispatch(clearAlerts()),

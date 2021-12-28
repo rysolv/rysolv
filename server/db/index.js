@@ -9,7 +9,7 @@ const { createComment, getIssueComments } = require('./queries/comments');
 const {
   createCompany,
   createCompanyPosition,
-  deletePosition,
+  deletePositionResponse,
   deleteUserCompanies,
   getCompanyPositions,
   getContractByKey,
@@ -38,12 +38,7 @@ const {
   transformIssue,
   upvoteIssue,
 } = require('./queries/issues');
-const {
-  createLanguage,
-  deleteUserLanguages,
-  getUserLanguages,
-  setPreferredLanguage,
-} = require('./queries/languages');
+const { createLanguage } = require('./queries/languages');
 const {
   createMessage,
   getMessages,
@@ -69,7 +64,6 @@ const {
   getQuestionAnswerByKey,
   postUserResponse,
 } = require('./queries/questions');
-const { createRecruiting } = require('./queries/recruiting');
 const {
   checkDuplicateRepo,
   createRepo,
@@ -84,8 +78,12 @@ const {
 } = require('./queries/repos');
 const {
   createPositionTechStack,
+  createUserTechStack,
   deletePositionTechStack,
+  deleteUserTechStack,
+  getPositionTechStack,
   getTechnologies,
+  getUserTechStack,
 } = require('./queries/technologies');
 const { getStats } = require('./queries/stats');
 const { addRepoMembers, deleteRepoMembers } = require('./queries/userRepos');
@@ -96,6 +94,7 @@ const {
   checkExistingGithubAccount,
   checkGithubIdMatch,
   createUser,
+  deleteUserResponse,
   getOneUser,
   getOneUserLite,
   getOneUserSignUp,
@@ -104,6 +103,7 @@ const {
   getUserByUsername,
   getUserCompany,
   getUserPullRequestDetail,
+  getUserResponse,
   getUsers,
   getUserSettings,
   getUserWatchList,
@@ -140,17 +140,18 @@ module.exports = {
   createMessage,
   createPositionTechStack,
   createPullRequest,
-  createRecruiting,
   createRepo,
   createUser,
+  createUserTechStack,
   createWithdrawal,
-  deletePosition,
+  deletePositionResponse,
   deletePositionTechStack,
   deletePullRequest,
   deleteRepoMembers,
   deleteUserCompanies,
-  deleteUserLanguages,
   deleteUserPullRequests,
+  deleteUserResponse,
+  deleteUserTechStack,
   downvoteIssue,
   getCompanyPositions,
   getContractByKey,
@@ -170,6 +171,7 @@ module.exports = {
   getOneUserLite,
   getOneUserSignUp,
   getPositionCandidates,
+  getPositionTechStack,
   getPullRequestList,
   getQuestionAnswerByKey,
   getQuestions,
@@ -187,11 +189,12 @@ module.exports = {
   getUserBounties,
   getUserByUsername,
   getUserCompany,
-  getUserLanguages,
   getUserPullRequestDetail,
   getUserPullRequests,
+  getUserResponse,
   getUsers,
   getUserSettings,
+  getUserTechStack,
   getUserWatchList,
   insertGitUser,
   insertUserCompany,
@@ -204,7 +207,6 @@ module.exports = {
   searchIssues,
   searchRepos,
   searchUsers,
-  setPreferredLanguage,
   setReadMessage,
   submitAccountDepositUser,
   submitExternalPayment,

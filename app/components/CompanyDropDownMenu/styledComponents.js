@@ -1,8 +1,10 @@
+/* eslint-disable prettier/prettier */
+import React from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 
-import { blueColor, darkBlueColor, whiteColor } from 'defaultStyleHelper';
+import { darkBlueColor, grayColor, whiteColor } from 'defaultStyleHelper';
 
 import { BaseLink } from '../base_ui/Links';
 
@@ -14,8 +16,14 @@ export const HorizontalDivider = styled.div`
   width: 100%;
 `;
 
-export const MenuInternalLink = styled(BaseLink)`
+export const MenuInternalLink = styled(
+  ({ shouldRemoveFirst, shouldRemoveSecond, ...restProps }) => (
+    <BaseLink {...restProps} />
+  ),
+)`
   color: ${darkBlueColor};
+  display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
+    shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
   font-size: 1.376rem;
   font-weight: 400;
   line-height: 1.665rem;
@@ -23,6 +31,15 @@ export const MenuInternalLink = styled(BaseLink)`
 
   &:hover {
     color: ${darkBlueColor};
+  }
+
+  @media (max-width: 750px) {
+    display: ${({ shouldRemoveSecond }) =>
+    shouldRemoveSecond ? 'none' : 'block'};
+  }
+
+  @media (max-width: 470px) {
+    display: block;
   }
 `;
 
@@ -59,8 +76,7 @@ export const StyledMenu = styled(Menu)`
   .MuiMenu-paper {
     background-color: ${whiteColor};
     border-radius: 0.4rem;
-    border: 0.2rem solid ${blueColor};
-    height: 14.3rem;
+    box-shadow: 0 0.1rem 0.4rem ${grayColor};
     margin-top: 1.9rem;
     overflow: hidden;
     top: 5.5rem !important;

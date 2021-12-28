@@ -1,3 +1,5 @@
+const isEmpty = require('lodash/isEmpty');
+
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getUserSettings: getUserSettingsQuery,
@@ -17,12 +19,12 @@ const getUserDashboard = async (_, { authError, userId }) => {
 
     // Get recommended issues
     const issues = await getRecommendedIssues({ userId });
-    user.issues = issues;
+    user.issues = issues || [];
 
     // Get hiring status
     const responseKey = await getQuestionAnswerByKey({
       userId,
-      questionKey: 'timeline',
+      questionKey: 'is_active',
     });
 
     // Get hiring survey status
@@ -30,19 +32,31 @@ const getUserDashboard = async (_, { authError, userId }) => {
 
     // If there aren't enough recommended issues
     // (or no user languages), then supplement with new issues
-    if (issues.length < 20) {
+    if (user.issues.length < 20) {
       const newIssues = await getFilteredIssues({ limit: 20, order: 'new' });
-      issues.push(...newIssues);
+      user.issues.push(...newIssues);
     }
 
     // User Hiring Staus
     // Options: active | inactive | undeclared
-    if (responseKey && responseKey === '0_months') {
+    if (responseKey && responseKey === 'yes_is_active') {
       user.hiringStatus = 'active';
-    } else if (responseKey === 'indefinite') {
+    } else if (responseKey === 'no_is_active') {
       user.hiringStatus = 'inactive';
     } else {
       user.hiringStatus = 'undeclared';
+    }
+
+    if (!isEmpty(user.skills)) {
+      const skillsArray = user.skills.map(({ level, shortName }) => ({
+        beginner: level === 1,
+        expert: level === 3,
+        intermediate: level === 2,
+        skill: shortName,
+      }));
+      user.skills = skillsArray;
+    } else {
+      user.skills = [];
     }
 
     return {

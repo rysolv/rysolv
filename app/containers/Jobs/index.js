@@ -7,7 +7,7 @@ import { push } from 'connected-react-router';
 import { Redirect } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
-import JobsView from 'components/Jobs';
+import { CreateJobApplication } from 'components/Jobs';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { getQuestion, useDidUpdateEffect } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
@@ -15,7 +15,9 @@ import injectSaga from 'utils/injectSaga';
 
 import {
   changeInput,
+  changeSkillLevel,
   changeView,
+  deleteSkill,
   fetchQuestions,
   inputError,
   resetState,
@@ -34,13 +36,16 @@ import { ViewContainer } from './styledComponents';
 const Jobs = ({
   activeUser: { isGithubVerified, surveyComplete },
   dispatchChangeInput,
+  dispatchChangeSkillLevel,
   dispatchChangeView,
+  dispatchDeleteSkill,
   dispatchFetchQuestions,
   dispatchInputError,
   dispatchResetState,
   dispatchSubmitUserResponse,
   error,
   form,
+  formErrors,
   handleNav,
   isSignedIn,
   loading,
@@ -49,6 +54,8 @@ const Jobs = ({
   responseArray,
   view,
 }) => {
+  const tempQuestions = questions.filter(({ id }) => id !== 'isRemote');
+
   const [isRequiredData, setIsRequiredData] = useState(true);
   useEffect(() => {
     if (isGithubVerified && isSignedIn) {
@@ -96,7 +103,7 @@ const Jobs = ({
   };
 
   const step = getQuestion();
-  const questionProps = questions[step - 1];
+  const questionProps = tempQuestions[step - 1];
 
   if (step && view === 0) {
     return <Redirect to="/jobs" />;
@@ -106,16 +113,19 @@ const Jobs = ({
     <ViewContainer>
       <AsyncRender
         asyncData={questions}
-        component={JobsView}
+        component={CreateJobApplication}
         error={error}
         isRequiredData={isRequiredData}
         loading={loading}
         propsToPassDown={{
           dispatchChangeInput,
+          dispatchChangeSkillLevel,
           dispatchChangeView,
+          dispatchDeleteSkill,
           dispatchInputError,
           error,
           form,
+          formErrors,
           handleCancel,
           handleNav,
           handleStart,
@@ -125,8 +135,9 @@ const Jobs = ({
           isSignedIn,
           loading,
           path,
+          questions,
           step,
-          steps: questions.length,
+          steps: tempQuestions.length,
           view,
           ...questionProps,
         }}
@@ -138,13 +149,16 @@ const Jobs = ({
 Jobs.propTypes = {
   activeUser: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeSkillLevel: T.func.isRequired,
   dispatchChangeView: T.func.isRequired,
+  dispatchDeleteSkill: T.func.isRequired,
   dispatchFetchQuestions: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
   dispatchSubmitUserResponse: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
   form: T.object.isRequired,
+  formErrors: T.object.isRequired,
   handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
   loading: T.bool.isRequired,
@@ -165,6 +179,7 @@ const mapStateToProps = createStructuredSelector({
    */
   error: makeSelectJobs('error'),
   form: makeSelectJobs('form'),
+  formErrors: makeSelectJobs('formErrors'),
   loading: makeSelectJobs('loading'),
   questions: makeSelectJobQuestions(),
   responseArray: makeSelectJobResponseArray(),
@@ -177,7 +192,9 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Jobs
      */
     dispatchChangeInput: payload => dispatch(changeInput(payload)),
+    dispatchChangeSkillLevel: payload => dispatch(changeSkillLevel(payload)),
     dispatchChangeView: payload => dispatch(changeView(payload)),
+    dispatchDeleteSkill: payload => dispatch(deleteSkill(payload)),
     dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchResetState: () => dispatch(resetState()),

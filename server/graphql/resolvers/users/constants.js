@@ -7,6 +7,8 @@ const deleteUserError = `Something went wrong when deleting your account.`;
 
 const deleteUserSuccess = `Your account has been successfully deleted.`;
 
+const getUserResponseError = `Something went wrong when getting your responses.`;
+
 const getUsersError = `Something went wrong when getting users.`;
 
 const getUserSettingsError = `Something went wrong when getting your account information.`;
@@ -32,6 +34,10 @@ const resetPasswordSuccess = `Your password has been successfully reset.`;
 
 const sendLinkError = `Something went wrong when sending a verification code to your email address.`;
 
+const setHiringStatusError = `Something went wrong when updating your hiring status.`;
+
+const setHiringStatusSuccess = `You have successfully updated your hiring status.`;
+
 const sendLinkSuccess = `A verification code has been sent to your email address.`;
 
 const signInError = `Something went wrong when signing you in. Please try again later.`;
@@ -41,6 +47,14 @@ const signOutError = `Something went wrong when signing you out.`;
 const signOutSuccess = 'You have been successfully signed out.';
 
 const transformUserError = `Something went wrong when updating your account.`;
+
+const transformUserResponseError = `Something went wrong when saving your responses.`;
+
+const transformUserResponseSuccess = `Your responses have been successfully saved.`;
+
+const transformUserSkillsError = `Something went wrong when saving your skills.`;
+
+const transformUserSkillsSuccess = `Your skills have been successfully saved.`;
 
 const transformUserSuccess = `Your account has been successfully updated.`;
 
@@ -57,6 +71,7 @@ module.exports = {
   deletedUserImage,
   deleteUserError,
   deleteUserSuccess,
+  getUserResponseError,
   getUsersError,
   getUserSettingsError,
   githubNotVerifiedError,
@@ -70,10 +85,16 @@ module.exports = {
   resetPasswordSuccess,
   sendLinkError,
   sendLinkSuccess,
+  setHiringStatusError,
+  setHiringStatusSuccess,
   signInError,
   signOutError,
   signOutSuccess,
   transformUserError,
+  transformUserResponseError,
+  transformUserResponseSuccess,
+  transformUserSkillsError,
+  transformUserSkillsSuccess,
   transformUserSuccess,
   verifyUserAccountError,
   verifyUserAccountSuccess,

@@ -34,6 +34,12 @@ const CompanyDropDownMenu = ({ anchorEl, handleClose, handleSignout }) => (
     open={Boolean(anchorEl)}
   >
     <MenuInternalLink label="Account &amp; Settings" path="/company/settings" />
+    <MenuInternalLink
+      label="Dashboard"
+      path="/company/dashboard"
+      shouldRemoveSecond
+    />
+    <MenuInternalLink label="Messages" path="/messages" shouldRemoveFirst />
     <MenuInternalLink label="Payments" path="/company/settings/payments" />
     <HorizontalDivider />
     <StyledLoginButton onClick={handleSignout}>Sign out</StyledLoginButton>

@@ -110,6 +110,9 @@ export const handleZipChange = (event, newZip, setZipValue) => {
   setZipValue(formattedZip);
 };
 
+export const interpolate = (string, values) =>
+  string.replace(/{{(.*?)}}/gm, (match, key) => values[key] || match);
+
 export const navHelper = (e, handleNav, route) => {
   if (!e.ctrlKey) {
     e.preventDefault();

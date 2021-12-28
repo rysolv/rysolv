@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary, prettier/prettier */
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
@@ -63,7 +64,14 @@ export function* submitUserResponseSaga({ payload }) {
             file: "${file}",
             fileExtension: "${fileExtension}",
           }`
-          : `"${value}"`;
+          : questionKey === 'skills'
+            ? `{
+              beginner: ${value.beginner},
+              expert: ${value.expert},
+              intermediate: ${value.intermediate},
+              skill: "${value.skill}"
+            }`
+            : `"${value}"`;
       return `{
       questionId: "${questionId}",
       questionKey: "${questionKey}",

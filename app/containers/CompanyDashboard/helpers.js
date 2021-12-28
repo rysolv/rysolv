@@ -29,7 +29,7 @@ export const optionDictionary = {
   experience: {
     option: 'autocomplete',
   },
-  is_open: {
+  is_active: {
     option: 'toggle',
   },
   is_remote: {

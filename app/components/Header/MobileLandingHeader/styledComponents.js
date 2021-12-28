@@ -11,8 +11,9 @@ import {
 } from 'components/base_ui';
 import {
   blueColor,
-  blueGrayColor,
   darkBlueColor,
+  grayColor,
+  lightBlueColor,
   whiteColor,
 } from 'defaultStyleHelper';
 
@@ -95,6 +96,7 @@ export const MenuInternalLink = styled(BaseLink)`
 `;
 
 export const MessageLink = styled(InternalLink)`
+  margin-right: 1.2rem;
   padding-right: 0.5rem;
 
   @media (max-width: 750px) {
@@ -106,6 +108,10 @@ export const MessageLink = styled(InternalLink)`
     display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
       shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
   }
+`;
+
+export const MessageWrapper = styled.div`
+  position: relative;
 `;
 
 export const MobileHeaderContainer = styled.div`
@@ -156,8 +162,7 @@ export const StyledMenu = styled(Menu)`
   .MuiMenu-paper {
     background-color: ${whiteColor};
     border-radius: 0.4rem;
-    border: 0.2rem solid ${blueColor};
-    height: 14.3rem;
+    box-shadow: 0 0.1rem 0.4rem ${grayColor};
     margin-top: 1.9rem;
     overflow: hidden;
     top: 5.5rem !important;
@@ -185,40 +190,38 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
 `;
 
 export const StyledUserNavBar = styled(UserNavBar)`
-  background-color: ${blueGrayColor};
-  border: 0.2rem solid ${darkBlueColor};
-  color: ${whiteColor};
-  font-size: 1.6rem;
-  margin: 0 0 0 2.2rem;
+  margin: 0 0 0 1.2rem;
 
   img {
     height: 4rem;
     width: 4rem;
   }
-
-  &:hover {
-    border-color: ${darkBlueColor};
-  }
 `;
 
 export const UnreadMessages = styled.div`
-  background-color: white;
+  background-color: ${lightBlueColor};
   border-radius: 50%;
-  color: ${blueColor};
-  font-size: 1.6rem;
-  font-weight: 600;
-  line-height: 1.9rem;
-  min-width: 1.9rem;
+  color: ${whiteColor};
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 2rem;
+  min-width: 2rem;
+  position: absolute;
+  right: 0;
   text-align: center;
+  top: -1.2rem;
 
   @media (max-width: 750px) {
-    display: ${({ shouldRemoveFirst }) =>
-      shouldRemoveFirst ? 'none' : 'block'};
+    top: ${({ shouldRemoveFirst }) =>
+      shouldRemoveFirst ? '-2.5rem' : '-1.2rem'};
+    right: ${({ shouldRemoveFirst }) => (shouldRemoveFirst ? '-8.5rem' : '0')};
   }
 
   @media (max-width: 470px) {
-    display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
-      shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
+    top: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
+      shouldRemoveFirst || shouldRemoveSecond ? '-2.5rem' : '-1.2rem'};
+    right: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
+      shouldRemoveFirst || shouldRemoveSecond ? '-6.4rem' : '0'};
   }
 `;
 

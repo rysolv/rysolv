@@ -78,8 +78,8 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_CONTRACT_SUCCESS: {
       const { contract } = payload;
-      draft.loading = false;
       draft.contract = contract;
+      draft.loading = false;
       break;
     }
     case FETCH_CONTRACT: {

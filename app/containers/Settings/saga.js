@@ -14,11 +14,14 @@ import {
   changeEmailError,
   DELETE_USER,
   FETCH_INFO,
+  FETCH_QUESTIONS,
+  FETCH_USER_RESPONSE,
   PAYPAL_PAYMENT,
   REMOVE_ATTEMPTING,
   REMOVE_WATCHING,
   SAVE_CHANGE,
   STRIPE_TOKEN,
+  UPDATE_USER_SKILLS,
   VERIFY_ACCOUNT,
   verifyUserAccountError,
   WITHDRAW_FUNDS,
@@ -33,6 +36,10 @@ import {
   deleteUserSuccess,
   fetchInfoFailure,
   fetchInfoSuccess,
+  fetchQuestionsFailure,
+  fetchQuestionsSuccess,
+  fetchUserResponseFailure,
+  fetchUserResponseSuccess,
   paypalPaymentFailure,
   paypalPaymentSuccess,
   removeIssueFailure,
@@ -42,6 +49,8 @@ import {
   saveChangeSuccess,
   stripeTokenFailure,
   stripeTokenSuccess,
+  updateUserSkillsFailure,
+  updateUserSkillsSuccess,
   verifyAccountFailure,
   verifyAccountSuccess,
   withdrawFundsFailure,
@@ -157,12 +166,12 @@ export function* fetchInfoSaga({ payload }) {
           lastName
           matches
           personalLink
-          preferredLanguages
           profilePic
           receiveWeeklyEmails
           rejectedPullRequests
           rep
           repos
+          skills
           stackoverflowLink
           unreadMessages
           username
@@ -202,6 +211,75 @@ export function* fetchInfoSaga({ payload }) {
     yield put(fetchInfoSuccess({ user: restProps }));
   } catch (error) {
     yield put(fetchInfoFailure({ error: { message: error } }));
+  }
+}
+
+export function* fetchQuestionsSaga({ payload }) {
+  const { category } = payload;
+  const query = `
+    query{
+      getQuestions(category: "${category}") {
+        __typename
+        ... on QuestionArray {
+          questionArray {
+            id
+            limit
+            questionKey
+            questionText
+            required
+            responses {
+              id
+              responseKey
+              value
+            }
+            subtext
+          }
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        getQuestions: { __typename, message, questionArray },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchQuestionsSuccess({ questions: questionArray }));
+  } catch (error) {
+    yield put(fetchQuestionsFailure({ error: { message: error } }));
+  }
+}
+
+export function* fetchUserResponseSaga() {
+  const query = `
+    query {
+      getUserResponse {
+        __typename
+        ... on User {
+          skills
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        getUserResponse: { __typename, message, ...restProps },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchUserResponseSuccess({ user: restProps }));
+  } catch (error) {
+    yield put(fetchUserResponseFailure({ error: { message: error } }));
   }
 }
 
@@ -309,9 +387,7 @@ export function* removeWatchingSaga({ payload }) {
 export function* saveChangeSaga({ payload }) {
   const { field, value } = payload;
   let formattedValue;
-  if (field === 'preferredLanguages') {
-    formattedValue = JSON.stringify(value);
-  } else if (field === 'receiveWeeklyEmails') {
+  if (field === 'receiveWeeklyEmails') {
     formattedValue = value;
   } else {
     formattedValue = `"${value}"`;
@@ -385,6 +461,46 @@ export function* stripeTokenSaga({ payload }) {
     yield put(updateActiveUser({ balance }));
   } catch (error) {
     yield put(stripeTokenFailure({ error: { message: error } }));
+  }
+}
+
+export function* updateUserSkillsSaga({ payload }) {
+  const { skills } = payload;
+  const formattedResponse = skills.map(
+    ({ beginner, expert, intermediate, skill }) => `{
+      beginner: ${beginner},
+      expert: ${expert},
+      intermediate: ${intermediate},
+      skill: "${skill}"
+    }`,
+  );
+  const query = `
+    mutation {
+      transformUserSkills(
+        skillsArray: [${formattedResponse}]
+      ) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        transformUserSkills: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(updateUserSkillsSuccess());
+    yield put(closeModalState());
+  } catch (error) {
+    yield put(updateUserSkillsFailure({ error: { message: error } }));
   }
 }
 
@@ -465,11 +581,14 @@ export default function* watcherSaga() {
   yield takeLatest(CHANGE_EMAIL, changeEmailSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(FETCH_INFO, fetchInfoSaga);
+  yield takeLatest(FETCH_QUESTIONS, fetchQuestionsSaga);
+  yield takeLatest(FETCH_USER_RESPONSE, fetchUserResponseSaga);
   yield takeLatest(PAYPAL_PAYMENT, paypalPaymentSaga);
   yield takeLatest(REMOVE_ATTEMPTING, removeAttemptingSaga);
   yield takeLatest(REMOVE_WATCHING, removeWatchingSaga);
   yield takeLatest(SAVE_CHANGE, saveChangeSaga);
   yield takeLatest(STRIPE_TOKEN, stripeTokenSaga);
+  yield takeLatest(UPDATE_USER_SKILLS, updateUserSkillsSaga);
   yield takeLatest(VERIFY_ACCOUNT, verifyAccountSaga);
   yield takeLatest(WITHDRAW_FUNDS, withdrawFundsSaga);
 }

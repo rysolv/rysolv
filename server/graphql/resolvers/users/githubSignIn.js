@@ -6,8 +6,8 @@ const {
   assignOwnerToRepo,
   checkDuplicateGithubId,
   checkDuplicateUserEmail,
-  createLanguage,
   createUser,
+  createUserTechStack,
   getOneIssue,
   getOneRepo,
   getUserAttemptList,
@@ -18,7 +18,12 @@ const {
   insertUserEmail,
   transformUser: transformUserQuery,
 } = require('../../../db');
-const { analyzeUser, errorLogger, sendEmail } = require('../../../helpers');
+const {
+  analyzeUser,
+  errorLogger,
+  generatePositionLevel,
+  sendEmail,
+} = require('../../../helpers');
 const { generateToken } = require('../../../middlewares/generateToken');
 const { githubSignInError, githubSignUpError } = require('./constants');
 const { requestGithubUser } = require('../../../integrations/github');
@@ -120,11 +125,12 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       analyzeUser({ userId: id });
 
       if (languages.length) {
-        await createLanguage({
-          languages,
-          target: {
-            userId: id,
-          },
+        languages.map(async value => {
+          await createUserTechStack({
+            level: generatePositionLevel(),
+            technology: value,
+            userId,
+          });
         });
       }
 

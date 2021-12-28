@@ -1,52 +1,50 @@
 import styled from 'styled-components';
 
 import {
-  defaultFontSize,
-  headerFontSize,
-  hoverLinkColor,
+  blueColor,
+  lightBlueColor,
   textColor,
+  whiteColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile } = mediaQueriesByDevice;
+const { laptop } = mediaQueriesByDevice;
 
 export const ContentWrapper = styled.div`
-  background: white;
   color: ${textColor};
-  display: flex;
-  flex-direction: column;
-  font-size: ${defaultFontSize};
-  padding: 2.6rem 3.8rem;
-  width: 100%;
+  font-size: 1.6rem;
 `;
 
 export const LinkWrapper = styled.a`
-  color: ${hoverLinkColor};
+  color: ${lightBlueColor};
 
   &:hover {
-    color: ${hoverLinkColor};
-    text-decoration: underline;
-  }
-`;
-
-export const PrivacyPolicyContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-
-  ${mobile} {
-    margin: 0 1rem;
+    color: ${lightBlueColor};
   }
 `;
 
 export const PrivacyPolicyHeader = styled.div`
-  color: ${textColor};
+  align-self: center;
+  color: ${blueColor};
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 3.36rem;
+  padding: 2rem 0 1rem;
+`;
+
+export const StyledP = styled.p`
+  font-weight: 400;
+  line-height: 2.4rem;
+`;
+
+export const ViewContainer = styled.div`
+  background: ${whiteColor};
   display: flex;
-  font-size: ${headerFontSize};
-  margin: 5rem 0 2rem 0;
+  flex-direction: column;
+  padding: 5rem 12rem 5.6rem;
   width: 100%;
 
-  ${mobile} {
-    margin: 2rem 0;
+  ${laptop} {
+    padding: 5rem 3rem 5.6rem;
   }
 `;

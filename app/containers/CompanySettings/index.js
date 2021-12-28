@@ -12,7 +12,6 @@ import PaymentConfirmationModal from 'components/CompanyPaymentModal/confirmatio
 import CompanyContractModal from 'components/CompanyContractModal';
 import CompanyPaymentModal from 'components/CompanyPaymentModal';
 import CompanySettingsSideNav from 'components/CompanySettings/SideNav';
-
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -34,6 +33,7 @@ import reducer from './reducer';
 import saga from './saga';
 import {
   makeSelectCompanySettings,
+  makeSelectCompanySettingsLoading,
   makeSelectCompanySettingsView,
 } from './selectors';
 import { VerticalDivider, ViewContainer } from './styledComponents';
@@ -209,7 +209,7 @@ const mapStateToProps = createStructuredSelector({
   form: makeSelectCompanySettings('form'),
   formErrors: makeSelectCompanySettings('formErrors'),
   isModalOpen: makeSelectCompanySettings('isModalOpen'),
-  loading: makeSelectCompanySettings('loading'),
+  loading: makeSelectCompanySettingsLoading('fetchUser'),
   modal: makeSelectCompanySettings('modal'),
   view: makeSelectCompanySettingsView(),
 });

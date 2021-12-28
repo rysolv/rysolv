@@ -83,27 +83,30 @@ class Main extends React.PureComponent {
       handleNav(route);
     };
     const { pathname } = window.location;
+    const basePathname = pathname.split('/')[1];
     const isLandingOrRecruitmentPage =
+      basePathname === 'company' ||
+      basePathname === 'dashboard' ||
+      basePathname === 'messages' ||
+      basePathname === 'profile' ||
       pathname === '/' ||
-      pathname === '/company/dashboard' ||
-      pathname === '/company/dashboard/add-position' ||
-      pathname === '/company/dashboard/edit-company' ||
-      pathname === '/company/dashboard/edit-position' ||
-      pathname === '/company/settings' ||
-      pathname === '/company/settings/payments' ||
-      pathname === '/company/signup' ||
+      pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/password-reset' ||
+      pathname === '/privacy-policy' ||
+      pathname === '/recruitment' ||
       pathname === '/signin' ||
-      pathname === '/signup';
+      pathname === '/signup' ||
+      pathname === '/terms-of-service';
     const isPaymentModal = modal === 'fundIssue';
     const hasBlueBackground =
       pathname === '/' ||
+      pathname === '/company/signup' ||
+      pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
       pathname === '/password-reset' ||
-      pathname === '/company/signup' ||
       pathname === '/signin' ||
       pathname === '/signup';
     const modalPropsDictionary = {

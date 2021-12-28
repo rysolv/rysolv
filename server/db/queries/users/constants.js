@@ -46,7 +46,6 @@ const userReturnValues = `
 `;
 
 const userSettingsReturnValues = `
-  ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages",
   CASE WHEN users.github_id IS NOT NULL THEN true ELSE false END AS "isGithubVerified",
   users.github_id AS "githubId",
   users.github_username AS "githubUsername",

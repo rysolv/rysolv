@@ -7,7 +7,7 @@ const oneCompany = require('./oneCompany');
 const onePosition = require('./onePosition');
 const postContractAccepted = require('./postContractAccepted');
 const transformCompany = require('./transformCompany');
-const transformPosition = require('./transformPosition');
+const transformPositionResponse = require('./transformPositionResponse');
 const updatePaymentMethod = require('./updatePaymentMethod');
 
 module.exports = {
@@ -20,6 +20,6 @@ module.exports = {
   onePosition,
   postContractAccepted,
   transformCompany,
-  transformPosition,
+  transformPositionResponse,
   updatePaymentMethod,
 };

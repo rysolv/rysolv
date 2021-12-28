@@ -37,7 +37,6 @@ const CreatePosition = ({
 }) => {
   useEffect(
     () => () => {
-      if (positions.length) dispatchSelectPosition({ id: positions[0].id });
       dispatchClearAlerts();
       dispatchResetFormState({ category: 'companyPosition' });
     },
@@ -60,6 +59,11 @@ const CreatePosition = ({
     return !!companyPositionForm[input];
   });
 
+  const handleCancel = () => {
+    if (positions.length) dispatchSelectPosition({ id: positions[0].id });
+    handleNav('/company/dashboard');
+  };
+
   const tableProps = { dispatchChangeSkillLevel, dispatchDeleteSkill };
 
   return (
@@ -76,7 +80,7 @@ const CreatePosition = ({
           ...restProps
           // eslint-disable-next-line array-callback-return, consistent-return
         }) => {
-          if (id !== 'isOpen' && id !== 'isRemote') {
+          if (id !== 'isActive' && id !== 'isRemote') {
             const OptionToRender = optionDictionary[optionType];
 
             const handleChangeInput = (value, inputField) => {
@@ -124,10 +128,7 @@ const CreatePosition = ({
         },
       )}
       <ButtonWrapper>
-        <StyledPrimaryButton
-          label="Cancel"
-          onClick={() => handleNav('/company/dashboard')}
-        />
+        <StyledPrimaryButton label="Cancel" onClick={handleCancel} />
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
           label="Create"

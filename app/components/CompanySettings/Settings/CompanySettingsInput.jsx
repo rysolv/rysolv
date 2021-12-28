@@ -43,7 +43,7 @@ const InputOption = ({
   };
 
   return (
-    <InputContainer edit={edit}>
+    <InputContainer $isEdit={edit}>
       <InputWrapper>
         <InputLabel>{formatLabel(field)}</InputLabel>
         <InputDescription />
@@ -66,7 +66,7 @@ const InputOption = ({
         FallbackComponent={
           <ButtonGroup>
             <StyledPrimaryButton label="Cancel" onClick={handleCancel} />
-            <StyledPrimaryAsyncButton label="Save" onClick={handleEdit} />
+            <StyledPrimaryAsyncButton label="Edit" onClick={handleEdit} />
           </ButtonGroup>
         }
         shouldRender={!edit}

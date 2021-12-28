@@ -11,6 +11,7 @@ import {
   LogoWrapper,
   MenuInternalLink,
   MessageLink,
+  MessageWrapper,
   MobileHeaderContainer,
   StyledExpandIcon,
   StyledLoginLink,
@@ -73,13 +74,18 @@ const MobileLandingHeader = ({
               path={isCompany ? '/company/dashboard' : '/dashboard'}
               shouldRemoveSecond
             />
-            <MessageLink label="Messages" path="/messages" shouldRemoveFirst />
-
-            {!!unreadMessages && (
-              <UnreadMessages shouldRemoveFirst>
-                {unreadMessages}
-              </UnreadMessages>
-            )}
+            <MessageWrapper>
+              <MessageLink
+                label="Messages"
+                path="/messages"
+                shouldRemoveFirst
+              />
+              {!!unreadMessages && (
+                <UnreadMessages shouldRemoveFirst>
+                  {unreadMessages}
+                </UnreadMessages>
+              )}
+            </MessageWrapper>
             <VerticalDivider />
             <StyledUserNavBar
               activeUser={activeUser}
@@ -107,7 +113,6 @@ const MobileLandingHeader = ({
       >
         <StyledLoginLink label="Log in" path="/signin" />
         <HorizontalDivider />
-        <MenuInternalLink label="Dashboard" path="/dashboard" />
         <MenuInternalLink label="Hire engineers" path="/recruitment" />
       </MenuComponent>
     </MobileHeaderContainer>

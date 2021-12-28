@@ -1,10 +1,14 @@
 /* eslint-disable no-param-reassign */
 const {
-  createLanguage,
-  deleteUserLanguages,
+  createUserTechStack,
+  deleteUserTechStack,
   transformUser: transformUserQuery,
 } = require('../../../db');
-const { CustomError, errorLogger } = require('../../../helpers');
+const {
+  CustomError,
+  errorLogger,
+  generatePositionLevel,
+} = require('../../../helpers');
 const { transformUserError, transformUserSuccess } = require('./constants');
 const { updateCognitoEmail } = require('../../../middlewares/awsConfig');
 const { uploadImage } = require('../../../middlewares/imageUpload');
@@ -50,12 +54,14 @@ const transformUser = async (
     };
 
     if (userInput.preferredLanguages) {
-      await deleteUserLanguages({ userId });
-      await createLanguage({
-        languages: userInput.preferredLanguages,
-        target: {
+      await deleteUserTechStack({ userId });
+      userInput.preferredLanguages.map(async value => {
+        const { beginner, expert, intermediate, skill } = value;
+        await createUserTechStack({
+          level: generatePositionLevel({ beginner, expert, intermediate }),
+          technology: skill,
           userId,
-        },
+        });
       });
     } else {
       await transformUserQuery({ data, userId });

@@ -9,7 +9,6 @@ import { formatDollarAmount } from 'utils/globalHelpers';
 import {
   EmptyPreferredLanguagesComponent,
   PreferredLanguagesComponent,
-  PreferredLanguagesEditComponent,
 } from './PreferredLanguagesComponents';
 import {
   ActivityContainer,
@@ -25,19 +24,13 @@ import {
 
 const UserMetricsView = ({
   activePullRequests,
-  changePreferredLanguages,
   completedPullRequests,
   createdDate,
+  dispatchOpenModal,
   dollarsEarned,
-  handleClose,
-  handleEdit,
-  handleSubmitInputChange,
   isDisabled,
-  preferredLanguages,
   rejectedPullRequests,
-  setChangePreferredLanguages,
-  setValue,
-  value,
+  skills,
 }) => {
   const [detailView, setDetailView] = useState(false);
   const hasNoDecimals = true;
@@ -85,29 +78,14 @@ const UserMetricsView = ({
             &nbsp;Earned
           </DetailListItem>
           <ConditionalRender
-            Component={
-              <ConditionalRender
-                Component={PreferredLanguagesComponent}
-                FallbackComponent={EmptyPreferredLanguagesComponent}
-                propsToPassDown={{
-                  handleEdit,
-                  isDisabled,
-                  preferredLanguages,
-                  setChangePreferredLanguages,
-                }}
-                shouldRender={!isEmpty(preferredLanguages)}
-              />
-            }
-            FallbackComponent={
-              <PreferredLanguagesEditComponent
-                handleClose={handleClose}
-                handleSubmitInputChange={handleSubmitInputChange}
-                preferredLanguages={value}
-                setChangePreferredLanguages={setChangePreferredLanguages}
-                setValue={setValue}
-              />
-            }
-            shouldRender={!changePreferredLanguages}
+            Component={PreferredLanguagesComponent}
+            FallbackComponent={EmptyPreferredLanguagesComponent}
+            propsToPassDown={{
+              dispatchOpenModal,
+              isDisabled,
+              skills,
+            }}
+            shouldRender={!isEmpty(skills)}
           />
         </UserDetails>
       </RankingContainer>
@@ -124,19 +102,13 @@ const UserMetricsView = ({
 
 UserMetricsView.propTypes = {
   activePullRequests: T.number,
-  changePreferredLanguages: T.bool,
   completedPullRequests: T.number,
   createdDate: T.string,
+  dispatchOpenModal: T.func.isRequired,
   dollarsEarned: T.number,
-  handleClose: T.func,
-  handleEdit: T.func.isRequired,
-  handleSubmitInputChange: T.func,
   isDisabled: T.bool,
-  preferredLanguages: T.array,
   rejectedPullRequests: T.number,
-  setChangePreferredLanguages: T.func,
-  setValue: T.func,
-  value: T.oneOfType([T.array, T.number, T.string]),
+  skills: T.array,
 };
 
 export default UserMetricsView;

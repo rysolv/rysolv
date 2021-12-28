@@ -80,7 +80,7 @@ export const InputContainer = styled.div`
   margin-top: 0.8rem;
 
   ${mobile} {
-    flex-direction: ${({ edit }) => (edit ? 'column' : 'row')};
+    flex-direction: ${({ $isEdit }) => ($isEdit ? 'column' : 'row')};
   }
 `;
 
@@ -151,16 +151,5 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   &:hover {
     background-color: ${darkBlueColor};
     color: ${whiteColor};
-  }
-`;
-
-export const StyledDeleteButton = styled(StyledPrimaryButton)`
-  border-color: ${errorRed};
-  color: ${errorRed};
-  margin-top: 1rem;
-  width: auto;
-
-  &:hover {
-    background-color: ${errorRed};
   }
 `;

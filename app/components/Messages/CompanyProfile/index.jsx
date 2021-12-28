@@ -1,26 +1,71 @@
 import React from 'react';
 import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
+
 import {
-  CompanyName,
-  CompanyProfileContainer,
-  Description,
-  Logo,
+  CandidateCardContent,
+  CandidateCardDataCell,
+  CandidateCardRow,
+  CandidateCardRows,
+  CandidateCardUserInfo,
+  Data,
+  Divider,
+  ImageGroup,
+  NameWrapper,
+  PositionWrapper,
+  ProfilePicWrapper,
+  Title,
+} from '../styledComponents';
+import {
+  WebsiteLink,
+  WebsiteWrapper,
+  StyledCandidateCardContainer,
 } from './styledComponents';
 
-const CompanyProfile = ({ company }) => {
-  const { description, name, logo } = company;
+const CompanyCard = ({ company }) => {
+  const { companyUrl, description, location, logo, name, size } = company;
+
   return (
-    <CompanyProfileContainer>
-      <Logo src={logo} />
-      <CompanyName>{name}</CompanyName>
-      <Description>{description}</Description>
-    </CompanyProfileContainer>
+    <StyledCandidateCardContainer>
+      <CandidateCardContent>
+        <ConditionalRender
+          Component={
+            <ImageGroup>
+              <ProfilePicWrapper src={logo} />
+            </ImageGroup>
+          }
+          shouldRender={!!logo}
+        />
+        <CandidateCardUserInfo>
+          <NameWrapper>{name}</NameWrapper>
+          <PositionWrapper>{description}</PositionWrapper>
+          <WebsiteWrapper>
+            <WebsiteLink href={companyUrl} target="_blank">
+              https://www.kumanukumanukumanukumanukumanukumanu.com
+            </WebsiteLink>
+          </WebsiteWrapper>
+        </CandidateCardUserInfo>
+        <Divider />
+        <CandidateCardRows>
+          <CandidateCardRow>
+            <CandidateCardDataCell>
+              <Title>Location</Title>
+              <Data>{location}</Data>
+            </CandidateCardDataCell>
+          </CandidateCardRow>
+          <CandidateCardRow>
+            <CandidateCardDataCell>
+              <Title>Size</Title>
+              <Data>{size}</Data>
+            </CandidateCardDataCell>
+          </CandidateCardRow>
+        </CandidateCardRows>
+      </CandidateCardContent>
+    </StyledCandidateCardContainer>
   );
 };
 
-CompanyProfile.propTypes = {
-  company: T.object,
-};
+CompanyCard.propTypes = { company: T.object.isRequired };
 
-export default CompanyProfile;
+export default CompanyCard;

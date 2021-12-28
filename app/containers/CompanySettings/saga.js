@@ -18,7 +18,6 @@ import {
   updatePaymentMethodFailure,
   updatePaymentMethodSuccess,
 } from './actions';
-
 import {
   EDIT_USER,
   FETCH_CONTRACT,
@@ -57,7 +56,7 @@ export function* fetchContractSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(fetchContractSuccess({ contract: restProps }));
   } catch (error) {
-    yield put(fetchContractFailure({ error }));
+    yield put(fetchContractFailure({ error: { message: error } }));
   }
 }
 
@@ -157,7 +156,7 @@ export function* fetchUserSaga({ payload }) {
 }
 
 export function* submitContractAcceptedSaga({ payload }) {
-  const { companyId, plan, paymentConfirmed } = payload;
+  const { companyId, paymentConfirmed, plan } = payload;
   const query = `
       mutation {
         postContractAccepted(companyId: "${companyId}", plan: "${plan}") {

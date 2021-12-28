@@ -11,6 +11,7 @@ import {
   Logo,
   LogoWrapper,
   MessageLink,
+  MessageWrapper,
   StyledPrimaryButton,
   StyledSecondaryButton,
   StyledUserNavBar,
@@ -39,14 +40,18 @@ const DesktopLandingHeader = ({
           label="Dashboard"
           path={isCompany ? '/company/dashboard' : '/dashboard'}
         />
-        <MessageLink label="Messages" path="/messages" />
-        {!!unreadMessages && <UnreadMessages>{unreadMessages}</UnreadMessages>}
+        <MessageWrapper>
+          <MessageLink label="Messages" path="/messages" />
+          {!!unreadMessages && (
+            <UnreadMessages>{unreadMessages}</UnreadMessages>
+          )}
+        </MessageWrapper>
       </Fragment>
     );
   } else {
     navLinks = (
       <Fragment>
-        <InternalLink label="Dashboard" path="/dashboard" />
+        <InternalLink label="Hire engineers" path="/recruitment" />
       </Fragment>
     );
   }

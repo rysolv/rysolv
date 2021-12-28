@@ -1,79 +1,120 @@
-import styled from 'styled-components';
-import { PrimaryButton } from 'components/base_ui';
+import styled, { css } from 'styled-components';
 
-import { textColor, defaultFontFamily, blueColor } from 'defaultStyleHelper';
-
+import {
+  ErrorSuccessBanner,
+  PrimaryAsyncButton,
+  PrimaryButton,
+} from 'components/base_ui';
+import {
+  blueColor,
+  darkBlueColor,
+  defaultFontSize,
+  errorRed,
+  textColor,
+  whiteColor,
+} from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile, laptopS } = mediaQueriesByDevice;
+const { tablet } = mediaQueriesByDevice;
 
-export const ButtonContainer = styled.div`
-  padding-top: 3rem;
-  text-align: center;
-`;
-
-export const DashboardWrapper = styled.div`
-  color: ${textColor};
-  display: flex;
-  font-family: ${defaultFontFamily};
-  height: auto;
-  justify-content: space-evenly;
-  padding: 6rem 2rem 0;
-  width: 100%;
-
-  ${laptopS} {
-    flex-direction: column-reverse;
-  }
-  ${mobile} {
-    padding-top: 0;
-  }
-`;
-
-export const IssuesContainer = styled.div`
-  margin-top: 5rem;
-`;
-
-export const IssuesHeader = styled.div`
-  font-size: 3rem;
-  margin-bottom: 1rem;
-`;
-export const IssuesSubtitle = styled.div`
-  font-family: monospace;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-`;
-
-export const LeftColumn = styled.div`
-  width: 65%;
-
-  ${laptopS} {
-    width: 100%;
-  }
-`;
-
-export const ProfileColumn = styled.div`
+const baseButtonStyle = css`
   align-items: center;
+  border-radius: 0.8rem;
   display: flex;
-  flex-direction: column;
-  padding: 0rem 2rem 4rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  margin: 0;
+  text-transform: initial;
+  width: 10rem;
+`;
 
-  ${laptopS} {
-    width: 100%;
-  }
+const baseOptionTextStyle = css`
+  font-weight: 400;
+  line-height: 1.936rem;
+`;
 
-  ${mobile} {
-    padding: 2rem 0;
+export const ButtonWrapper = styled.div`
+  display: flex;
+`;
+
+export const OptionDescription = styled.div`
+  ${baseOptionTextStyle};
+  color: #a9acae;
+  font-size: 1.4rem;
+  margin-top: 1rem;
+`;
+
+export const OptionError = styled.div`
+  color: ${errorRed};
+  font-size: ${defaultFontSize};
+  height: 2.4rem;
+  padding: 0.5rem 0;
+`;
+
+export const OptionLabel = styled.div`
+  ${baseOptionTextStyle};
+  color: ${textColor};
+  font-size: 1.6rem;
+`;
+
+export const OptionWrapper = styled.div`
+  align-items: center;
+  margin-top: 1rem;
+  right: 0;
+`;
+
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  height: auto;
+  margin-bottom: 3rem;
+`;
+
+export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
+  ${baseButtonStyle};
+  background-color: ${darkBlueColor};
+  color: ${whiteColor};
+  margin-left: 1rem;
+
+  &:hover {
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
   }
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
-  background: transparent;
-  border: 0.2rem solid ${blueColor};
-  color: ${blueColor};
-  font-size: 1.4rem;
-  text-transform: uppercase;
+  ${baseButtonStyle};
+  background-color: ${whiteColor};
+  border: 0.2rem solid ${darkBlueColor};
+  color: ${darkBlueColor};
+  margin-right: 1rem;
 
   &:hover {
-    background: transparent;
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
   }
+`;
+
+export const UserDashboardContainer = styled.div`
+  display: flex;
+  position: relative;
+  width: 100%;
+
+  ${tablet} {
+    flex-direction: column;
+  }
+`;
+
+export const UserDashboardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 8.3rem);
+`;
+
+export const UserDashboardHeader = styled.div`
+  color: ${blueColor};
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 3.36rem;
+  padding: 0 0 3rem;
 `;

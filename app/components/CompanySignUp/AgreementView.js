@@ -29,8 +29,8 @@ const AgreementView = ({
   forms: { contract: contractForm },
   handleSubmit,
 }) => {
+  const { body, subtitle, title } = contract;
   const { contractAccepted } = contractForm;
-  const { title, body, subtitle } = contract;
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

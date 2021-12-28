@@ -1,10 +1,10 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import T from 'prop-types';
 
 import AsyncRender from 'components/AsyncRender';
 import { ConditionalRender } from 'components/base_ui';
 
+import ClosedDashboard from './ClosedDashboard';
 import ExistingDashboard from './ExistingDashboard';
 import InitialDashboard from './InitialDashboard';
 
@@ -20,31 +20,40 @@ const CompanyDashboard = ({
   positions,
   positionTitle,
   selectedPosition,
-}) => (
-  <ConditionalRender
-    Component={
-      <AsyncRender
-        asyncData={candidates}
-        component={ExistingDashboard}
-        error={false}
-        isRequiredData={false}
-        loading={loading}
-        propsToPassDown={{
-          dispatchChangeFilter,
-          dispatchOpenModal,
-          dispatchSaveCandidate,
-          filter,
-          handleNav,
-          matchCandidatesLoading,
-          positionTitle,
-          selectedPosition,
-        }}
-      />
-    }
-    FallbackComponent={InitialDashboard}
-    shouldRender={!!positions.length}
-  />
-);
+}) => {
+  const filteredPosition = positions.filter(
+    ({ id }) => id === selectedPosition,
+  );
+  const { isActive } = filteredPosition[0] || {};
+  const DashboardToRender =
+    isActive === 'No' ? ClosedDashboard : ExistingDashboard;
+
+  return (
+    <ConditionalRender
+      Component={
+        <AsyncRender
+          asyncData={candidates}
+          component={DashboardToRender}
+          error={false}
+          isRequiredData={false}
+          loading={loading}
+          propsToPassDown={{
+            dispatchChangeFilter,
+            dispatchOpenModal,
+            dispatchSaveCandidate,
+            filter,
+            handleNav,
+            matchCandidatesLoading,
+            positionTitle,
+            selectedPosition,
+          }}
+        />
+      }
+      FallbackComponent={InitialDashboard}
+      shouldRender={!!positions.length}
+    />
+  );
+};
 
 CompanyDashboard.propTypes = {
   candidates: T.array.isRequired,

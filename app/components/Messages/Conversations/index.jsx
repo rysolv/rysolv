@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import moment from 'moment';
 import T from 'prop-types';
 
 import {
   ConversationCard,
-  ConversationContainer,
   MessageDate,
   MessageHeader,
   MessageSnippit,
@@ -12,9 +11,9 @@ import {
   Unread,
 } from './styledComponents';
 
-const Conversation = ({ activeConversation, conversations, handleNav }) => {
-  const conversationCards = conversations.map(
-    ({ candidate, messages, unread, threadId }, i) => {
+const Conversation = ({ activeConversation, conversations, handleNav }) => (
+  <Fragment>
+    {conversations.map(({ candidate, messages, unread, threadId }, i) => {
       const { firstName, lastName } = candidate;
       const { body, createdDate, firstName: messageFirstName } = messages[
         messages.length - 1
@@ -22,14 +21,15 @@ const Conversation = ({ activeConversation, conversations, handleNav }) => {
 
       return (
         <ConversationCard
+          isSelected={activeConversation === i}
           key={createdDate}
           onClick={() => handleNav(`/messages/${threadId}`)}
-          selected={activeConversation === i}
           unread={unread}
         >
           <MessageHeader>
             <Recipient>
-              <Unread unread={unread} /> {firstName} {lastName}
+              <Unread unread={unread}>&#9679;</Unread>
+              {firstName} {lastName}
             </Recipient>
             <MessageDate>{moment(createdDate).format('M/D/YYYY')}</MessageDate>
           </MessageHeader>
@@ -40,11 +40,9 @@ const Conversation = ({ activeConversation, conversations, handleNav }) => {
           </MessageSnippit>
         </ConversationCard>
       );
-    },
-  );
-
-  return <ConversationContainer>{conversationCards}</ConversationContainer>;
-};
+    })}
+  </Fragment>
+);
 
 Conversation.propTypes = {
   activeConversation: T.number.isRequired,
