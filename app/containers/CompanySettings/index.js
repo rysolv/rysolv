@@ -59,6 +59,7 @@ const CompanySettings = ({
   isModalOpen,
   loading,
   modal,
+  modalLoading,
   plaidToken,
   view,
 }) => {
@@ -124,10 +125,11 @@ const CompanySettings = ({
         dispatchFetchPlaidToken,
         dispatchUpdatePaymentMethod,
         handleClose: dispatchCloseModal,
+        modalLoading,
         paymentConfirmed,
         plaidToken,
-        setStripeError: () => console.log('STRIPE ERROR. THIS IS TEMPORARY'),
         setPlaidError: () => console.log('PLAID ERROR. THIS IS TEMPORARY'),
+        setStripeError: () => console.log('STRIPE ERROR. THIS IS TEMPORARY'),
       },
     },
     contractConfirmation: {
@@ -196,6 +198,7 @@ CompanySettings.propTypes = {
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
   modal: T.string.isRequired,
+  modalLoading: T.bool.isRequired,
   plaidToken: T.string,
   view: T.string.isRequired,
 };
@@ -216,6 +219,7 @@ const mapStateToProps = createStructuredSelector({
   formErrors: makeSelectCompanySettings('formErrors'),
   isModalOpen: makeSelectCompanySettings('isModalOpen'),
   loading: makeSelectCompanySettingsLoading('fetchUser'),
+  modalLoading: makeSelectCompanySettingsLoading('modal'),
   modal: makeSelectCompanySettings('modal'),
   view: makeSelectCompanySettingsView(),
 });

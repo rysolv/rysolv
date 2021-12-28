@@ -52,8 +52,8 @@ export const initialState = {
     editUser: false,
     fetchContract: false,
     fetchUser: true,
+    modal: false,
     submitContractAccepted: false,
-    updatePaymentMethod: false,
   },
   modal: '',
   plaidToken: null,
@@ -168,16 +168,16 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     case UPDATE_PAYMENT_METHOD_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading.updatePaymentMethod = false;
+      draft.loading.modal = false;
       break;
     }
     case UPDATE_PAYMENT_METHOD_SUCCESS: {
-      draft.loading.updatePaymentMethod = false;
+      draft.loading.modal = false;
       break;
     }
     case UPDATE_PAYMENT_METHOD: {
       draft.error = null;
-      draft.loading.updatePaymentMethod = true;
+      draft.loading.modal = true;
       break;
     }
   }
