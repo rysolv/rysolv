@@ -9,7 +9,8 @@ const answerQuestionByKey = async ({
 }) => {
   const queryText = `
     WITH question AS (
-      SELECT ID FROM questions WHERE category = $1 AND question_key = $2
+      SELECT ID FROM questions WHERE category = $1
+      AND question_key = $2
     )
     UPDATE user_question_responses
     SET (created_date, response_id, value)

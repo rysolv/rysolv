@@ -28,15 +28,13 @@ const errorLogger = e => {
   }
 };
 
-const generatePositionLevel = ({
-  beginner = false,
-  intermediate = true,
-  expert = false,
-  // eslint-disable-next-line consistent-return
-}) => {
+const generatePositionLevel = levels => {
+  const { beginner, intermediate, expert } = levels || {};
   if (beginner) return 1;
   if (intermediate) return 2;
   if (expert) return 3;
+  // Default to intermediate
+  return 2;
 };
 
 const generateSizeInteger = ({ size }) => {
