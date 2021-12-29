@@ -19,7 +19,7 @@ const getPositionCandidates = async ({ positionId, saved }) => {
       JOIN users u ON u.id = cp.user_id
       JOIN user_question_responses uqr ON uqr.user_id = u.id
       JOIN question_responses qr ON qr.id = uqr.response_id
-      JOIN questions q ON q.id = uqr.question_id
+      JOIN questions q ON q.id = uqr.question_id AND q.category = 'hiring'
       LEFT JOIN messages m ON m.to_user_id = u.id AND m.position_id = $1
     WHERE cp.position_id = $1
     ${filter}

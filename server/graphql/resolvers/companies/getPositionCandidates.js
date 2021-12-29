@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getPositionCandidates: getPositionCandidatesQuery,
@@ -14,18 +15,28 @@ const getPositionCandidates = async (
 
     // TODO: query all this stuff
     const mock = {
-      isHired: false,
-      isInterviewRequested: false,
       languages: ['JavaScript', 'Python', 'Java'],
-      lastPosition: 'Lead Software Engineer at Rysolv',
       location: 'San Francisco, CA',
-      salary: '$180,000',
       type: 'full-time',
-      yearsOfExperience: '2-5 years',
     };
     const candidates = await getPositionCandidatesQuery({ positionId, saved });
 
-    const result = candidates.map(el => ({ ...el, ...mock }));
+    // Format Candidates object
+    const result = candidates.reduce((acc, el) => {
+      const { userQuestions } = el;
+      const { target_salary, type, experience, is_active } = userQuestions;
+
+      if (is_active === 'Yes') {
+        acc.push({
+          ...el,
+          ...mock,
+          salary: target_salary,
+          type,
+          yearsOfExperience: experience,
+        });
+      }
+      return acc;
+    }, []);
 
     return result;
   } catch (error) {
