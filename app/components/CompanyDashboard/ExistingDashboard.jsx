@@ -38,7 +38,6 @@ const ExistingDashboard = ({
               dispatchOpenModal={dispatchOpenModal}
               dispatchSaveCandidate={dispatchSaveCandidate}
               handleNav={handleNav}
-              index={index}
               isLast={data.length - 1 === index}
               key={`candidate-${index}`}
               selectedPosition={selectedPosition}

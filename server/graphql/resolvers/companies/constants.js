@@ -18,6 +18,10 @@ const postContractAcceptedError =
 const postContractAcceptedSuccess =
   'You have successfully agreed to our Terms and Conditions.';
 
+const saveCandidateError = `Something went wrong when saving this candidate.`;
+
+const saveCandidateSuccess = `Candidate saved.`;
+
 const transformCompanyError = `Something went wrong when saving your company information. Please try again later.`;
 
 const transformCompanySuccess = `Your company information has been successfully saved.`;
@@ -40,6 +44,8 @@ module.exports = {
   onePositionError,
   postContractAcceptedError,
   postContractAcceptedSuccess,
+  saveCandidateError,
+  saveCandidateSuccess,
   transformCompanyError,
   transformCompanySuccess,
   transformPositionResponseError,

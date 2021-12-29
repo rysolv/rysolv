@@ -34,7 +34,6 @@ const CandidateCard = ({
   dispatchSaveCandidate,
   handleNav,
   id,
-  index,
   isInterviewRequested,
   isLast,
   isSaved,
@@ -71,7 +70,12 @@ const CandidateCard = ({
         icon={CardIcon}
         isSaved={isSaved}
         label={CardLabel}
-        onClick={() => dispatchSaveCandidate({ index })}
+        onClick={() =>
+          dispatchSaveCandidate({
+            candidateId: id,
+            positionId: selectedPosition,
+          })
+        }
       />
       <CandidateCardContent>
         <ImageGroup>
@@ -124,7 +128,6 @@ CandidateCard.propTypes = {
   dispatchSaveCandidate: T.func.isRequired,
   handleNav: T.func.isRequired,
   id: T.string.isRequired,
-  index: T.number.isRequired,
   isInterviewRequested: T.bool.isRequired,
   isLast: T.bool.isRequired,
   isSaved: T.bool.isRequired,

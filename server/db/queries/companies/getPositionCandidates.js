@@ -1,6 +1,8 @@
 const { singleQuery } = require('../../baseQueries');
 
-const getPositionCandidates = async ({ positionId }) => {
+const getPositionCandidates = async ({ positionId, saved }) => {
+  const filter = saved ? 'AND cp.saved = true' : '';
+
   const queryText = `
     SELECT DISTINCT ON (u.id)
       u.id,
@@ -9,6 +11,7 @@ const getPositionCandidates = async ({ positionId }) => {
       u.profile_pic AS "profilePic",
       m.thread_id AS "threadId",
       cp.percent_match AS "percentMatch",
+      cp.saved as "isSaved",
       JSON_OBJECT_AGG(
           q.question_key,  coalesce(uqr.value, qr.value)
       ) AS "userQuestions"
@@ -19,8 +22,10 @@ const getPositionCandidates = async ({ positionId }) => {
       JOIN questions q ON q.id = uqr.question_id
       LEFT JOIN messages m ON m.to_user_id = u.id AND m.position_id = $1
     WHERE cp.position_id = $1
+    ${filter}
     GROUP BY
       cp.percent_match,
+      cp.saved,
       m.thread_id,
       u.id,
       u.first_name,

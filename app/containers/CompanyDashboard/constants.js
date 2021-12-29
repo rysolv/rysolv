@@ -82,6 +82,10 @@ export const OPEN_MODAL_STATE = 'app/CompanyDashboard/OPEN_MODAL_STATE';
 
 export const RESET_FORM_STATE = 'app/CompanyDashboard/RESET_FORM_STATE';
 
+export const SAVE_CANDIDATE_FAILURE =
+  'app/CompanyDashboard/SAVE_CANDIDATE_FAILURE';
+export const SAVE_CANDIDATE_SUCCESS =
+  'app/CompanyDashboard/SAVE_CANDIDATE_SUCCESS';
 export const SAVE_CANDIDATE = 'app/CompanyDashboard/SAVE_CANDIDATE';
 
 export const SELECT_POSITION = 'app/CompanyDashboard/SELECT_POSITION';

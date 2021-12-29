@@ -10,6 +10,7 @@ const getPositionCandidates = require('./getPositionCandidates');
 const insertUserCompany = require('./insertUserCompany');
 const matchCandidates = require('./matchCandidates');
 const postContractAccepted = require('./postContractAccepted');
+const saveCandidate = require('./saveCandidate');
 const transformCompany = require('./transformCompany');
 
 module.exports = {
@@ -25,5 +26,6 @@ module.exports = {
   insertUserCompany,
   matchCandidates,
   postContractAccepted,
+  saveCandidate,
   transformCompany,
 };

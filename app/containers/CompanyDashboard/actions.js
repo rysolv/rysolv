@@ -41,6 +41,8 @@ import {
   NOTIFY_CANDIDATE,
   OPEN_MODAL_STATE,
   RESET_FORM_STATE,
+  SAVE_CANDIDATE_FAILURE,
+  SAVE_CANDIDATE_SUCCESS,
   SAVE_CANDIDATE,
   SELECT_POSITION,
 } from './constants';
@@ -321,6 +323,20 @@ export function resetFormState(payload) {
   return {
     payload,
     type: RESET_FORM_STATE,
+  };
+}
+
+export function saveCandidateFailure(payload) {
+  return {
+    payload,
+    type: SAVE_CANDIDATE_FAILURE,
+  };
+}
+
+export function saveCandidateSuccess(payload) {
+  return {
+    payload,
+    type: SAVE_CANDIDATE_SUCCESS,
   };
 }
 

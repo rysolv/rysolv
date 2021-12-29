@@ -109,9 +109,13 @@ const CompanyDashboard = ({
 
   useEffect(() => {
     if (selectedPosition) {
-      dispatchFetchPositionCandidates({ positionId: selectedPosition });
+      const { step } = filter;
+      dispatchFetchPositionCandidates({
+        positionId: selectedPosition,
+        saved: step === 'saved',
+      });
     }
-  }, [selectedPosition]);
+  }, [selectedPosition, filter]);
 
   useEffect(() => {
     if (shouldRefetchCompany) {

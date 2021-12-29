@@ -545,7 +545,7 @@ module.exports = buildSchema(`
     getIssueWatchList(issueId: ID!): [WatchList]!
     getMessages: ConversationResult!
     getPlaidToken: EventResponse!
-    getPositionCandidates(positionId: ID!): [User]
+    getPositionCandidates(positionId: ID!, saved: Boolean): [User]
     getPullRequestList(issueId: ID): [PullRequestList]!
     getQuestions(category: String!): QuestionResult
     getRepoActivity(repoId: ID): [Activity]!
@@ -611,6 +611,8 @@ module.exports = buildSchema(`
     postContractAccepted(companyId: ID, plan: String): EventResponse!
     postPositionResponse(companyId: ID, positionId: ID, responseArray: [Object]): EventResponse!
     postUserResponse(responseArray: [Object]): EventResponse!
+
+    saveCandidate(candidateId: ID!, positionId: ID!): EventResponse!
 
     sendContact(contactInput: ContactInput): EventResponse!
 

@@ -48,6 +48,8 @@ import {
   NOTIFY_CANDIDATE,
   OPEN_MODAL_STATE,
   RESET_FORM_STATE,
+  SAVE_CANDIDATE_FAILURE,
+  SAVE_CANDIDATE_SUCCESS,
   SAVE_CANDIDATE,
   SELECT_POSITION,
 } from './constants';
@@ -111,6 +113,7 @@ export const initialState = {
     fetchQuestions: true,
     main: false,
     matchCandidates: false,
+    saveCandidate: false,
   },
   positions: [],
   questions: {
@@ -391,14 +394,22 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       draft.shouldRefetchCompany = true;
       break;
     }
-    case SAVE_CANDIDATE: {
-      const { index } = payload;
-      const { selectedPosition } = draft;
-      draft.companyMatches.map(({ candidates, position }) => {
-        if (position.id === selectedPosition) {
-          candidates[index].isSaved = !candidates[index].isSaved;
-        }
+    case SAVE_CANDIDATE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.saveCandidate = false;
+      break;
+    }
+    case SAVE_CANDIDATE_SUCCESS: {
+      const { candidateId } = payload;
+      draft.candidates.map((el, i) => {
+        if (el.id === candidateId) draft.candidates[i].isSaved = !el.isSaved;
       });
+      draft.loading.saveCandidate = false;
+      break;
+    }
+    case SAVE_CANDIDATE: {
+      draft.loading.saveCandidate = true;
       break;
     }
     case SELECT_POSITION: {

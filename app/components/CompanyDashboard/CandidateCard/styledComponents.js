@@ -35,7 +35,7 @@ export const CandidateCardButton = styled.button`
 
 export const CandidateCardContainer = styled.div`
   border-radius: 0.7rem;
-  border: 0.3rem solid ${({ isSaved }) => (isSaved ? blueColor : grayColor)};
+  border: ${({ isSaved }) => (isSaved ? `0.3rem solid ${blueColor}` : 'none')};
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
   color: ${blueColor};
   margin: 0 4rem ${({ isLast }) => (isLast ? '0' : '4rem')} 0;
