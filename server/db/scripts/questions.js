@@ -581,8 +581,8 @@ const responses = [
     created_date: new Date(),
     priority: 2,
     question_id: '5c7f171e-aecb-42e1-aad3-6f4f816e3e5b',
-    response_key: 'middle_experience',
-    value: 'Middle',
+    response_key: 'midlevel_experience',
+    value: 'Mid-Level',
   },
   {
     id: '97847136-fc95-45cb-995f-e9e36a5e04f6',
