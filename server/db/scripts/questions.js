@@ -22,7 +22,7 @@ const questions = [
     created_date: new Date(),
     priority: 8,
     question_key: 'is_active',
-    question_text: 'Are you actively looking for a new job?',
+    question_text: 'Are you actively looking for work?',
     required: true,
     response_limit: 1,
     subtext: null,
@@ -360,7 +360,7 @@ const responses = [
   {
     id: '2abcd529-6fb2-40c3-8969-d7990568b95d',
     created_date: new Date(),
-    priority: 1,
+    priority: 2,
     question_id: '71401a1a-54bc-4816-a6b1-2e2679b57b4b',
     response_key: 'no_is_active',
     value: 'No',
@@ -368,7 +368,7 @@ const responses = [
   {
     id: '0c553a85-d783-4184-8453-fb8e99a659a7',
     created_date: new Date(),
-    priority: 2,
+    priority: 1,
     question_id: '71401a1a-54bc-4816-a6b1-2e2679b57b4b',
     response_key: 'yes_is_active',
     value: 'Yes',
@@ -596,7 +596,7 @@ const responses = [
   {
     id: '6d664be8-8284-466a-82fb-5e5214a5763b',
     created_date: new Date(),
-    priority: 1,
+    priority: 2,
     question_id: 'd16765b2-8fd0-4fc7-80d2-b3c511338240',
     response_key: 'no_is_active',
     value: 'No',
@@ -604,7 +604,7 @@ const responses = [
   {
     id: '2b585205-0224-46a6-bc97-90282797f3b7',
     created_date: new Date(),
-    priority: 2,
+    priority: 1,
     question_id: 'd16765b2-8fd0-4fc7-80d2-b3c511338240',
     response_key: 'yes_is_active',
     value: 'Yes',

@@ -15,6 +15,8 @@ const createUserTechStack = async ({ level, technology, userId }) => {
       (SELECT id FROM tech_id),
       $3
     )
+    ON CONFLICT (user_id, technology_id)
+    DO UPDATE SET level = EXCLUDED.level
   `;
   await singleQuery({ queryText, values });
 };

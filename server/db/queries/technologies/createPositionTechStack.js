@@ -15,6 +15,8 @@ const createPositionTechStack = async ({ level, positionId, technology }) => {
       $2,
       (SELECT id FROM tech_id)
     )
+    ON CONFLICT (position_id, technology_id)
+    DO UPDATE SET level = EXCLUDED.level
   `;
   await singleQuery({ queryText, values });
 };

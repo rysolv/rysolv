@@ -212,7 +212,7 @@ SurveyView.propTypes = {
   required: T.bool.isRequired,
   step: T.number.isRequired,
   steps: T.number.isRequired,
-  tableData: T.array.isRequired,
+  tableData: T.oneOfType([T.array, T.string]).isRequired,
   type: T.string,
 };
 

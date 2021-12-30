@@ -2,11 +2,11 @@ const isEmpty = require('lodash/isEmpty');
 
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
-  getUserSettings: getUserSettingsQuery,
-  getRecommendedIssues,
   getFilteredIssues,
   getQuestionAnswerByKey,
+  getRecommendedIssues,
   getSurveyStatus,
+  getUserSettings: getUserSettingsQuery,
 } = require('../../../db');
 const { getUserSettingsError } = require('./constants');
 
