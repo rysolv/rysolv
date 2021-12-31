@@ -18,6 +18,7 @@ import injectSaga from 'utils/injectSaga';
 
 import {
   changeInput,
+  clearAlerts,
   closeModalState,
   editUser,
   fetchContract,
@@ -25,6 +26,7 @@ import {
   fetchUser,
   inputError,
   openModalState,
+  setModalError,
   submitContractAccepted,
   updatePaymentMethod,
 } from './actions';
@@ -44,6 +46,7 @@ const CompanySettings = ({
   companyUser,
   contract,
   dispatchChangeInput,
+  dispatchClearAlerts,
   dispatchCloseModal,
   dispatchEditUser,
   dispatchFetchContract,
@@ -51,6 +54,7 @@ const CompanySettings = ({
   dispatchFetchUser,
   dispatchInputError,
   dispatchOpenModal,
+  dispatchSetModalError,
   dispatchSubmitContractAccepted,
   dispatchUpdatePaymentMethod,
   error,
@@ -59,6 +63,7 @@ const CompanySettings = ({
   isModalOpen,
   loading,
   modal,
+  modalError,
   modalLoading,
   plaidToken,
   view,
@@ -122,14 +127,15 @@ const CompanySettings = ({
       Component: CompanyPaymentModal,
       open: isModalOpen,
       propsToPassDown: {
+        dispatchClearAlerts,
         dispatchFetchPlaidToken,
+        dispatchSetModalError,
         dispatchUpdatePaymentMethod,
         handleClose: dispatchCloseModal,
+        modalError,
         modalLoading,
         paymentConfirmed,
         plaidToken,
-        setPlaidError: () => console.log('PLAID ERROR. THIS IS TEMPORARY'),
-        setStripeError: () => console.log('STRIPE ERROR. THIS IS TEMPORARY'),
       },
     },
     contractConfirmation: {
@@ -183,6 +189,7 @@ CompanySettings.propTypes = {
   companyUser: T.object.isRequired,
   contract: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
+  dispatchClearAlerts: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchEditUser: T.func.isRequired,
   dispatchFetchContract: T.func.isRequired,
@@ -190,6 +197,7 @@ CompanySettings.propTypes = {
   dispatchFetchUser: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
+  dispatchSetModalError: T.func.isRequired,
   dispatchSubmitContractAccepted: T.func.isRequired,
   dispatchUpdatePaymentMethod: T.func.isRequired,
   error: T.oneOfType([T.bool, T.string]),
@@ -198,6 +206,7 @@ CompanySettings.propTypes = {
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
   modal: T.string.isRequired,
+  modalError: T.object.isRequired,
   modalLoading: T.bool.isRequired,
   plaidToken: T.string,
   view: T.string.isRequired,
@@ -213,14 +222,15 @@ const mapStateToProps = createStructuredSelector({
    */
   companyUser: makeSelectCompanySettings('companyUser'),
   contract: makeSelectCompanySettings('contract'),
-  plaidToken: makeSelectCompanySettings('plaidToken'),
   error: makeSelectCompanySettings('error'),
   form: makeSelectCompanySettings('form'),
   formErrors: makeSelectCompanySettings('formErrors'),
   isModalOpen: makeSelectCompanySettings('isModalOpen'),
   loading: makeSelectCompanySettingsLoading('fetchUser'),
-  modalLoading: makeSelectCompanySettingsLoading('modal'),
   modal: makeSelectCompanySettings('modal'),
+  modalError: makeSelectCompanySettings('modalError'),
+  modalLoading: makeSelectCompanySettingsLoading('modal'),
+  plaidToken: makeSelectCompanySettings('plaidToken'),
   view: makeSelectCompanySettingsView(),
 });
 
@@ -229,6 +239,7 @@ const mapDispatchToProps = dispatch => ({
    * Reducer : CompanySettings
    */
   dispatchChangeInput: payload => dispatch(changeInput(payload)),
+  dispatchClearAlerts: () => dispatch(clearAlerts()),
   dispatchCloseModal: () => dispatch(closeModalState()),
   dispatchEditUser: payload => dispatch(editUser(payload)),
   dispatchFetchContract: payload => dispatch(fetchContract(payload)),
@@ -236,6 +247,7 @@ const mapDispatchToProps = dispatch => ({
   dispatchFetchUser: payload => dispatch(fetchUser(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),
   dispatchOpenModal: payload => dispatch(openModalState(payload)),
+  dispatchSetModalError: payload => dispatch(setModalError(payload)),
   dispatchSubmitContractAccepted: payload =>
     dispatch(submitContractAccepted(payload)),
   dispatchUpdatePaymentMethod: payload =>

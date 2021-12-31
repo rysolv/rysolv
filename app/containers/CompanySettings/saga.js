@@ -56,7 +56,7 @@ export function* fetchContractSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(fetchContractSuccess({ contract: restProps }));
   } catch (error) {
-    yield put(fetchContractFailure({ error: { message: error } }));
+    yield put(fetchContractFailure({ error }));
   }
 }
 
@@ -185,7 +185,7 @@ export function* submitContractAcceptedSaga({ payload }) {
       yield put(openModalState({ modalState: 'payment' }));
     }
   } catch (error) {
-    yield put(submitContractAcceptedFailure({ error: { message: error } }));
+    yield put(submitContractAcceptedFailure({ error }));
   }
 }
 
@@ -234,7 +234,7 @@ export function* updatePaymentMethodSaga({ payload }) {
     yield put(updatePaymentMethodSuccess());
     yield put(openModalState({ modalState: 'paymentConfirmation' }));
   } catch (error) {
-    yield put(updatePaymentMethodFailure({ error: { message: error } }));
+    yield put(updatePaymentMethodFailure({ error }));
   }
 }
 

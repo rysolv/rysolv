@@ -3,6 +3,7 @@ import produce from 'immer';
 
 import {
   CHANGE_INPUT,
+  CLEAR_ALERTS,
   CLOSE_MODAL_STATE,
   EDIT_USER_FAILURE,
   EDIT_USER_SUCCESS,
@@ -18,6 +19,7 @@ import {
   FETCH_USER,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  SET_MODAL_ERROR,
   SUBMIT_CONTRACT_ACCEPTED_FAILURE,
   SUBMIT_CONTRACT_ACCEPTED_SUCCESS,
   SUBMIT_CONTRACT_ACCEPTED,
@@ -56,6 +58,7 @@ export const initialState = {
     submitContractAccepted: false,
   },
   modal: '',
+  modalError: { error: false, success: false },
   plaidToken: null,
 };
 
@@ -64,6 +67,12 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     case CHANGE_INPUT: {
       const { form, field, value } = payload;
       draft[form][field] = value;
+      break;
+    }
+    case CLEAR_ALERTS: {
+      draft.error = initialState.error;
+      draft.formErrors = initialState.formErrors;
+      draft.modalError = initialState.modalError;
       break;
     }
     case CLOSE_MODAL_STATE: {
@@ -89,7 +98,7 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_CONTRACT_FAILURE: {
       const { error } = payload;
-      draft.error = error;
+      draft.modalError.error = { message: error };
       draft.loading.fetchContract = false;
       break;
     }
@@ -150,9 +159,14 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
       draft.modal = modalState;
       break;
     }
+    case SET_MODAL_ERROR: {
+      const { error } = payload;
+      draft.modalError.error = { message: error };
+      break;
+    }
     case SUBMIT_CONTRACT_ACCEPTED_FAILURE: {
       const { error } = payload;
-      draft.error = error;
+      draft.modalError.error = { message: error };
       draft.loading.submitContractAccepted = false;
       break;
     }
@@ -167,7 +181,7 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     }
     case UPDATE_PAYMENT_METHOD_FAILURE: {
       const { error } = payload;
-      draft.error = error;
+      draft.modalError.error = { message: error };
       draft.loading.modal = false;
       break;
     }
