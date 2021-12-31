@@ -1,5 +1,7 @@
 export const CHANGE_INPUT = 'app/CompanySettings/CHANGE_INPUT';
 
+export const CLEAR_ALERTS = 'app/CompanySettings/CLEAR_ALERTS';
+
 export const CLOSE_MODAL_STATE = 'app/CompanySettings/CLOSE_MODAL_STATE';
 
 export const EDIT_USER = 'app/CompanySettings/EDIT_USER';
@@ -25,6 +27,8 @@ export const FETCH_USER_SUCCESS = 'app/CompanySettings/FETCH_USER_SUCCESS';
 export const INPUT_ERROR = 'app/CompanySettings/INPUT_ERROR';
 
 export const OPEN_MODAL_STATE = 'app/CompanySettings/OPEN_MODAL_STATE';
+
+export const SET_MODAL_ERROR = 'app/CompanySettings/SET_MODAL_ERROR';
 
 export const SUBMIT_CONTRACT_ACCEPTED =
   'app/CompanySettings/SUBMIT_CONTRACT_ACCEPTED';

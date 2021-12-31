@@ -10,6 +10,7 @@ import {
 
 import { StripeInput } from 'components/base_ui';
 
+import { stripeError } from '../constants';
 import { DetailText, StyledPrimaryButton } from '../styledComponents';
 
 import {
@@ -19,7 +20,10 @@ import {
   StyledPaymentTextInput,
 } from './styledComponents';
 
-const CreditCardView = ({ dispatchUpdatePaymentMethod, setStripeError }) => {
+const CreditCardView = ({
+  dispatchSetModalError,
+  dispatchUpdatePaymentMethod,
+}) => {
   const [zip, setZip] = useState('');
   const stripe = useStripe();
   const elements = useElements();
@@ -38,7 +42,9 @@ const CreditCardView = ({ dispatchUpdatePaymentMethod, setStripeError }) => {
         token: id,
       });
     } else {
-      setStripeError({ message: error.message });
+      // Using standardized 'Something went wrong' errors for now
+      // Stripe provides more detailed errors
+      dispatchSetModalError({ error: stripeError });
     }
   };
 
@@ -98,8 +104,8 @@ const CreditCardView = ({ dispatchUpdatePaymentMethod, setStripeError }) => {
 };
 
 CreditCardView.propTypes = {
+  dispatchSetModalError: T.func,
   dispatchUpdatePaymentMethod: T.func,
-  setStripeError: T.func,
 };
 
 export default CreditCardView;
