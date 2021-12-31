@@ -31,6 +31,7 @@ import {
   notifyCandidateFailure,
   notifyCandidateSuccess,
   resetFormState,
+  saveCandidateSuccess,
 } from './actions';
 import {
   CREATE_POSITION,
@@ -45,6 +46,7 @@ import {
   MATCH_CANDIDATES,
   messageSuccess,
   NOTIFY_CANDIDATE,
+  SAVE_CANDIDATE,
 } from './constants';
 
 export function* createPositionSaga({ payload }) {
@@ -299,10 +301,10 @@ export function* fetchCompanySaga({ payload }) {
 }
 
 export function* fetchPositionCandidatesSaga({ payload }) {
-  const { positionId } = payload;
+  const { positionId, saved } = payload;
   const query = `
     query {
-      getPositionCandidates(positionId: "${positionId}") {
+      getPositionCandidates(positionId: "${positionId}", saved: ${!!saved}) {
         firstName
         id
         isHired
@@ -480,6 +482,35 @@ export function* notifyCandidateSaga({ payload }) {
   }
 }
 
+export function* saveCandidateSaga({ payload }) {
+  const { candidateId, positionId } = payload;
+  const query = `
+    mutation {
+      saveCandidate(candidateId: "${candidateId}", positionId: "${positionId}") {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        saveCandidate: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(saveCandidateSuccess({ candidateId }));
+  } catch (error) {
+    yield put(fetchPositionFailure({ error }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeEvery(FETCH_QUESTIONS, fetchQuestionsSaga);
   yield takeLatest(CREATE_POSITION, createPositionSaga);
@@ -492,4 +523,5 @@ export default function* watcherSaga() {
   yield takeLatest(FETCH_POSITION, fetchPositionSaga);
   yield takeLatest(MATCH_CANDIDATES, matchCandidatesSaga);
   yield takeLatest(NOTIFY_CANDIDATE, notifyCandidateSaga);
+  yield takeLatest(SAVE_CANDIDATE, saveCandidateSaga);
 }

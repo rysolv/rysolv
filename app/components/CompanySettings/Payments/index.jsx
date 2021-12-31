@@ -22,6 +22,7 @@ const CompanyPayments = ({
   dispatchOpenModal,
   handleSelectPlan,
   paymentConfirmed,
+  paymentMethod,
 }) => (
   <CompanySettingsContainer>
     <CompanySettingsHeader>Payments &amp; Subscription</CompanySettingsHeader>
@@ -37,11 +38,7 @@ const CompanyPayments = ({
       </PaymentLabelWrapper>
       <HorizontalDivider />
       <ConditionalRender
-        Component={
-          <CurrentPaymentMethod>
-            Wells Fargo Account ending in XX8115
-          </CurrentPaymentMethod>
-        }
+        Component={<CurrentPaymentMethod>{paymentMethod}</CurrentPaymentMethod>}
         FallbackComponent={
           <CurrentPaymentMethod $isCentered>
             No payment method added.
@@ -78,6 +75,7 @@ CompanyPayments.propTypes = {
   dispatchOpenModal: T.func.isRequired,
   handleSelectPlan: T.func.isRequired,
   paymentConfirmed: T.bool.isRequired,
+  paymentMethod: T.string.isRequired,
 };
 
 export default CompanyPayments;

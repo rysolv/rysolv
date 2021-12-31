@@ -1,4 +1,4 @@
 export const dashboardTabsDictionary = {
-  'All Matches': 0,
-  Shortlisted: 1,
+  all: 0,
+  saved: 1,
 };

@@ -3,7 +3,12 @@ const {
   getPositionCandidates: getPositionCandidatesQuery,
 } = require('../../../db');
 
-const getPositionCandidates = async ({ positionId }, { authError, userId }) => {
+// Get all candidates for a position
+// If saved==true, only select the shortlisted candidates
+const getPositionCandidates = async (
+  { positionId, saved },
+  { authError, userId },
+) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
@@ -11,7 +16,6 @@ const getPositionCandidates = async ({ positionId }, { authError, userId }) => {
     const mock = {
       isHired: false,
       isInterviewRequested: false,
-      isSaved: true,
       languages: ['JavaScript', 'Python', 'Java'],
       lastPosition: 'Lead Software Engineer at Rysolv',
       location: 'San Francisco, CA',
@@ -19,7 +23,7 @@ const getPositionCandidates = async ({ positionId }, { authError, userId }) => {
       type: 'full-time',
       yearsOfExperience: '2-5 years',
     };
-    const candidates = await getPositionCandidatesQuery({ positionId });
+    const candidates = await getPositionCandidatesQuery({ positionId, saved });
 
     const result = candidates.map(el => ({ ...el, ...mock }));
 
