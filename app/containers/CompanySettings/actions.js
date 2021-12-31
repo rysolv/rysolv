@@ -1,5 +1,6 @@
 import {
   CHANGE_INPUT,
+  CLEAR_ALERTS,
   CLOSE_MODAL_STATE,
   EDIT_USER_FAILURE,
   EDIT_USER_SUCCESS,
@@ -15,6 +16,7 @@ import {
   FETCH_USER,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
+  SET_MODAL_ERROR,
   SUBMIT_CONTRACT_ACCEPTED_FAILURE,
   SUBMIT_CONTRACT_ACCEPTED_SUCCESS,
   SUBMIT_CONTRACT_ACCEPTED,
@@ -28,6 +30,10 @@ export function changeInput(payload) {
     payload,
     type: CHANGE_INPUT,
   };
+}
+
+export function clearAlerts() {
+  return { type: CLEAR_ALERTS };
 }
 
 export function closeModalState() {
@@ -126,6 +132,13 @@ export function openModalState(payload) {
   return {
     payload,
     type: OPEN_MODAL_STATE,
+  };
+}
+
+export function setModalError(payload) {
+  return {
+    payload,
+    type: SET_MODAL_ERROR,
   };
 }
 

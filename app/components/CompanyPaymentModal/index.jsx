@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 
-import { ConditionalRender } from 'components/base_ui';
+import { ConditionalRender, ErrorSuccessBanner } from 'components/base_ui';
 import AsyncRender from 'components/AsyncRender';
 
 import CreditCardView from './CreditCardView';
@@ -20,14 +20,15 @@ import {
 } from './styledComponents';
 
 const CompanyPaymentModal = ({
+  dispatchClearAlerts,
   dispatchFetchPlaidToken,
+  dispatchSetModalError,
   dispatchUpdatePaymentMethod,
   handleClose,
+  modalError: { error, success },
   modalLoading,
   paymentConfirmed,
   plaidToken,
-  setPlaidError,
-  setStripeError,
 }) => {
   const [method, setMethod] = useState('card');
 
@@ -40,6 +41,13 @@ const CompanyPaymentModal = ({
       <ConditionalRender
         Component={
           <>
+            <ErrorSuccessBanner
+              bottomMarginRequired="1rem"
+              error={error}
+              onClose={dispatchClearAlerts}
+              success={success}
+              topMarginRequired="1rem"
+            />
             <Title>{paymentConfirmed ? 'Update' : 'Add'} Payment Method</Title>
             <HorizontalDivider />
 
@@ -64,8 +72,8 @@ const CompanyPaymentModal = ({
               <ConditionalRender
                 Component={
                   <CreditCardView
+                    dispatchSetModalError={dispatchSetModalError}
                     dispatchUpdatePaymentMethod={dispatchUpdatePaymentMethod}
-                    setStripeError={setStripeError}
                   />
                 }
                 FallbackComponent={
@@ -74,9 +82,9 @@ const CompanyPaymentModal = ({
                       asyncData={plaidToken}
                       component={PlaidLink}
                       propsToPassDown={{
+                        dispatchSetModalError,
                         dispatchUpdatePaymentMethod,
                         plaidToken,
-                        setPlaidError,
                       }}
                     />
                     <DetailText>Payment authoized with Plaid</DetailText>
@@ -101,14 +109,15 @@ const CompanyPaymentModal = ({
 };
 
 CompanyPaymentModal.propTypes = {
+  dispatchClearAlerts: T.func.isRequired,
   dispatchFetchPlaidToken: T.func.isRequired,
+  dispatchSetModalError: T.func.isRequired,
   dispatchUpdatePaymentMethod: T.func.isRequired,
   handleClose: T.func.isRequired,
+  modalError: T.object.isRequired,
   modalLoading: T.bool.isRequired,
   paymentConfirmed: T.bool.isRequired,
   plaidToken: T.string,
-  setPlaidError: T.func.isRequired,
-  setStripeError: T.func.isRequired,
 };
 
 export default CompanyPaymentModal;
