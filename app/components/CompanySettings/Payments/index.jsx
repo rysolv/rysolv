@@ -65,6 +65,7 @@ const CompanyPayments = ({
         buttonText="Upgrade"
         currentPlan={currentPlan}
         handleSelectPlan={handleSelectPlan}
+        isSettingRoute
       />
     </PaymentContainer>
   </CompanySettingsContainer>

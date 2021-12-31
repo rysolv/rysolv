@@ -5,7 +5,6 @@ import {
   blueColor,
   candidateGreyColor,
   defaultFontFamily,
-  grayColor,
   lightBlueColor,
   textColor,
 } from 'defaultStyleHelper';
@@ -20,14 +19,20 @@ export const CurrentPaymentMethod = styled.div`
 `;
 
 export const HorizontalDivider = styled.div`
-  background: ${grayColor};
-  height: 0.1rem;
-  margin-bottom: 1.6rem;
-  width: 100%;
+  border-bottom-width: 0;
+  border-color: ${candidateGreyColor};
+  border-style: dashed;
+  border-top-width: 0.2rem;
+  flex-grow: 1;
+  margin: 0.4rem 0 1.6rem;
 `;
 
 export const PaymentContainer = styled.div`
   margin-top: ${({ $isFirst }) => ($isFirst ? '1.8rem' : '4.2rem')};
+
+  @media (max-width: 769px) {
+    margin-top: ${({ $isFirst }) => ($isFirst ? '1rem' : '3.4rem')};
+  }
 `;
 
 export const PaymentLabel = styled.div`
@@ -52,6 +57,7 @@ export const StyledButton = styled(Button)`
   margin: 0;
   padding: 0rem;
   text-transform: none;
+  line-height: 0;
 
   &:hover {
     background: transparent;

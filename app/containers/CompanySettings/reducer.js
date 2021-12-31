@@ -98,8 +98,8 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_CONTRACT_FAILURE: {
       const { error } = payload;
-      draft.modalError.error = { message: error };
       draft.loading.fetchContract = false;
+      draft.modalError.error = { message: error };
       break;
     }
     case FETCH_CONTRACT_SUCCESS: {
@@ -166,8 +166,8 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     }
     case SUBMIT_CONTRACT_ACCEPTED_FAILURE: {
       const { error } = payload;
-      draft.modalError.error = { message: error };
       draft.loading.submitContractAccepted = false;
+      draft.modalError.error = { message: error };
       break;
     }
     case SUBMIT_CONTRACT_ACCEPTED_SUCCESS: {
@@ -181,8 +181,8 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     }
     case UPDATE_PAYMENT_METHOD_FAILURE: {
       const { error } = payload;
-      draft.modalError.error = { message: error };
       draft.loading.modal = false;
+      draft.modalError.error = { message: error };
       break;
     }
     case UPDATE_PAYMENT_METHOD_SUCCESS: {

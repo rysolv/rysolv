@@ -123,6 +123,14 @@ const CompanySettings = ({
         paymentConfirmed,
       },
     },
+    contractConfirmation: {
+      Component: ContractConfirmationModal,
+      open: isModalOpen,
+      propsToPassDown: {
+        contract,
+        handleClose: dispatchCloseModal,
+      },
+    },
     payment: {
       Component: CompanyPaymentModal,
       open: isModalOpen,
@@ -136,14 +144,6 @@ const CompanySettings = ({
         modalLoading,
         paymentConfirmed,
         plaidToken,
-      },
-    },
-    contractConfirmation: {
-      Component: ContractConfirmationModal,
-      open: isModalOpen,
-      propsToPassDown: {
-        contract,
-        handleClose: dispatchCloseModal,
       },
     },
     paymentConfirmation: {

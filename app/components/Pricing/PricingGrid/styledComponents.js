@@ -2,8 +2,9 @@ import styled, { css } from 'styled-components';
 
 import { PrimaryButton } from 'components/base_ui';
 import {
+  blueGrayColor,
+  darkBlueColor,
   grayColor,
-  lightBlueColor,
   textColor,
   whiteColor,
 } from 'defaultStyleHelper';
@@ -27,13 +28,12 @@ export const BulletTextWrapper = styled.div`
 `;
 
 export const IconWrapper = styled.div`
-  color: ${lightBlueColor};
+  color: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
   margin-right: 0.6rem;
 
   path {
     stroke-width: 0.2rem;
-    stroke: ${lightBlueColor};
-  }
+    stroke: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
 
   svg {
     height: 2rem;
@@ -52,7 +52,7 @@ export const PricingBody = styled.div`
 
 export const PricingCard = styled.div`
   border-radius: 0.7rem;
-  border: ${({ focus }) => (focus ? `0.2rem solid ${lightBlueColor}` : 'none')};
+  border: ${({ focus }) => (focus ? `0.2rem solid ${darkBlueColor}` : 'none')};
   box-shadow: ${({ focus }) =>
     focus ? `0 0.4rem 0.7rem ${grayColor}` : `0 0.1rem 0.4rem ${grayColor}`};
   color: ${textColor};
@@ -83,7 +83,7 @@ export const PricingGridContainer = styled.div`
 `;
 
 export const PricingHeader = styled.div`
-  background: ${lightBlueColor};
+  background: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
   border-top-left-radius: ${({ focus }) => (focus ? 0 : '0.7rem')};
   border-top-right-radius: ${({ focus }) => (focus ? 0 : '0.7rem')};
   color: ${whiteColor};
@@ -95,6 +95,7 @@ export const PricingSubTitle = styled.div`
   font-size: 1.6rem;
   font-weight: 700;
   line-height: 2.208rem;
+  white-space: nowrap;
 `;
 
 export const PricingTitle = styled.div`
@@ -102,6 +103,7 @@ export const PricingTitle = styled.div`
   font-weight: 700;
   line-height: 3.45rem;
 `;
+
 export const StyledBullets = styled.div`
   display: flex;
   font-size: 1.6rem;
@@ -109,9 +111,10 @@ export const StyledBullets = styled.div`
 `;
 
 export const StyledCost = styled.div`
-  font-size: 3.2rem;
+  font-size: ${({ isSettingRoute }) => (isSettingRoute ? '2.5rem' : '3.2rem')};
   font-weight: 700;
   line-height: 3.36rem;
+  white-space: nowrap;
 `;
 
 export const StyledCostWrapper = styled.div`
@@ -124,16 +127,18 @@ export const StyledInterval = styled.div`
   align-self: end;
   line-height: 2.4rem;
   margin-left: 0.6rem;
+  white-space: nowrap;
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
   ${baseButtonStyle};
-  background: ${lightBlueColor};
+  background: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
   color: ${whiteColor};
   margin: auto;
+  width: ${({ isSettingRoute }) => (isSettingRoute ? '15rem' : '20rem')};
 
   &:hover {
-    background: ${lightBlueColor};
+    background: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
     color: ${whiteColor};
   }
 `;

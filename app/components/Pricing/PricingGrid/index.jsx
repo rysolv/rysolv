@@ -27,6 +27,7 @@ const PricingGrid = ({
   deviceView,
   focus,
   handleSelectPlan,
+  isSettingRoute,
 }) => {
   const isMobile = [
     'tablet',
@@ -61,11 +62,12 @@ const PricingGrid = ({
           </div>
           <div>
             <StyledCostWrapper>
-              <StyledCost>10%</StyledCost>
+              <StyledCost isSettingRoute={isSettingRoute}>10%</StyledCost>
               <StyledInterval>of starting salary</StyledInterval>
             </StyledCostWrapper>
             <StyledPrimaryButton
               disabled={currentPlan === 'startup'}
+              isSettingRoute={isSettingRoute}
               label={currentPlan === 'startup' ? 'Current' : buttonText}
               onClick={() => handleSelectPlan({ plan: 'startup' })}
             />
@@ -102,12 +104,13 @@ const PricingGrid = ({
           </div>
           <div>
             <StyledCostWrapper>
-              <StyledCost>$2,495</StyledCost>
+              <StyledCost isSettingRoute={isSettingRoute}>$2,495</StyledCost>
               <StyledInterval>/ month</StyledInterval>
             </StyledCostWrapper>
             <StyledPrimaryButton
               disabled={currentPlan === 'standard'}
-              focus={focus}
+              focus={!isMobile && focus}
+              isSettingRoute={isSettingRoute}
               label={currentPlan === 'standard' ? 'Current' : buttonText}
               onClick={() => handleSelectPlan({ plan: 'standard' })}
             />
@@ -144,11 +147,12 @@ const PricingGrid = ({
           </div>
           <div>
             <StyledCostWrapper>
-              <StyledCost>$4,950</StyledCost>
+              <StyledCost isSettingRoute={isSettingRoute}>$4,950</StyledCost>
               <StyledInterval>/ month</StyledInterval>
             </StyledCostWrapper>
             <StyledPrimaryButton
               disabled={currentPlan === 'enterprise'}
+              isSettingRoute={isSettingRoute}
               label={currentPlan === 'enterprise' ? 'Current' : buttonText}
               onClick={() => handleSelectPlan({ plan: 'enterprise' })}
             />
@@ -159,12 +163,15 @@ const PricingGrid = ({
   );
 };
 
+PricingGrid.defaultProps = { isSettingRoute: false };
+
 PricingGrid.propTypes = {
   buttonText: T.string.isRequired,
-  currentPlan: T.string,
-  deviceView: T.string,
-  focus: T.bool,
+  currentPlan: T.string.isRequired,
+  deviceView: T.string.isRequired,
+  focus: T.bool.isRequired,
   handleSelectPlan: T.func.isRequired,
+  isSettingRoute: T.bool,
 };
 
 export default PricingGrid;
