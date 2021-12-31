@@ -14,6 +14,7 @@ const {
   alterHiringActivityTable,
   alterIssuesTable,
   alterLanguagesTable,
+  alterLegalContractsTable,
   alterMessagesTable,
   alterNotificationsTable,
   alterPaymentTable,
@@ -22,6 +23,7 @@ const {
   alterQuestionResponseTable,
   alterQuestionsTable,
   alterReposTable,
+  alterSignedContractsTable,
   alterTechnologiesTable,
   alterUserCompaniesTable,
   alterUserQuestionResponseTable,
@@ -40,6 +42,7 @@ const {
   createHiringActivityTable,
   createIssuesTable,
   createLanguagesTable,
+  createLegalContractsTable,
   createMessagesTable,
   createNotificationsTable,
   createPaymentsTable,
@@ -48,6 +51,7 @@ const {
   createQuestionResponseTable,
   createQuestionsTable,
   createReposTable,
+  createSignedContractsTable,
   createTechnologiesTable,
   createUserCompaniesTable,
   createUserQuestionResponseTable,
@@ -70,6 +74,7 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterHiringActivityTable });
   await singleQuery({ queryText: alterIssuesTable });
   await singleQuery({ queryText: alterLanguagesTable });
+  await singleQuery({ queryText: alterLegalContractsTable });
   await singleQuery({ queryText: alterMessagesTable });
   await singleQuery({ queryText: alterNotificationsTable });
   await singleQuery({ queryText: alterPaymentTable });
@@ -78,6 +83,7 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterQuestionResponseTable });
   await singleQuery({ queryText: alterQuestionsTable });
   await singleQuery({ queryText: alterReposTable });
+  await singleQuery({ queryText: alterSignedContractsTable });
   await singleQuery({ queryText: alterTechnologiesTable});
   await singleQuery({ queryText: alterUserCompaniesTable });
   await singleQuery({ queryText: alterUserQuestionResponseTable });
@@ -100,6 +106,7 @@ const createTables = async () => {
   await singleQuery({ queryText: createHiringActivityTable });
   await singleQuery({ queryText: createIssuesTable });
   await singleQuery({ queryText: createLanguagesTable });
+  await singleQuery({ queryText: createLegalContractsTable });
   await singleQuery({ queryText: createMessagesTable });
   await singleQuery({ queryText: createNotificationsTable });
   await singleQuery({ queryText: createPaymentsTable });
@@ -108,6 +115,7 @@ const createTables = async () => {
   await singleQuery({ queryText: createQuestionResponseTable });
   await singleQuery({ queryText: createQuestionsTable });
   await singleQuery({ queryText: createReposTable });
+  await singleQuery({ queryText: createSignedContractsTable });
   await singleQuery({ queryText: createTechnologiesTable });
   await singleQuery({ queryText: createUserCompaniesTable });
   await singleQuery({ queryText: createUserQuestionResponseTable });

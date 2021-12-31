@@ -5,9 +5,7 @@ import iconDictionary from 'utils/iconDictionary';
 
 import {
   BulletTextWrapper,
-  BulletWraper,
-  ButtonWrapper,
-  ColumnWrapper,
+  PricingCard,
   IconWrapper,
   PricingBody,
   PricingGridContainer,
@@ -17,10 +15,8 @@ import {
   StyledBullets,
   StyledCost,
   StyledCostWrapper,
-  StyledDollarSign,
   StyledInterval,
   StyledPrimaryButton,
-  StyledSubtext,
 } from './styledComponents';
 
 const CheckIcon = iconDictionary('check');
@@ -43,103 +39,112 @@ const PricingGrid = ({
   return (
     <PricingGridContainer>
       {/* STARTUP */}
-      <ColumnWrapper>
+      <PricingCard>
         <PricingHeader>
           <PricingTitle>Startup</PricingTitle>
           <PricingSubTitle>Building a team</PricingSubTitle>
         </PricingHeader>
         <PricingBody>
-          <BulletWraper>
+          <div>
             <StyledBullets>
               <IconWrapper>{CheckIcon}</IconWrapper>
               <BulletTextWrapper>Create positions for free</BulletTextWrapper>
             </StyledBullets>
             <StyledBullets>
-              <IconWrapper>{CheckIcon}</IconWrapper> Get matched with candidates
+              <IconWrapper>{CheckIcon}</IconWrapper>
+              <BulletTextWrapper>Get matched with candidates</BulletTextWrapper>
             </StyledBullets>
             <StyledBullets>
-              <IconWrapper>{CheckIcon}</IconWrapper> Only pay after hiring
+              <IconWrapper>{CheckIcon}</IconWrapper>
+              <BulletTextWrapper>Only pay after hiring</BulletTextWrapper>
             </StyledBullets>
-          </BulletWraper>
-          <ButtonWrapper>
+          </div>
+          <div>
             <StyledCostWrapper>
               <StyledCost>10%</StyledCost>
-              <StyledInterval>starting salary</StyledInterval>
+              <StyledInterval>of starting salary</StyledInterval>
             </StyledCostWrapper>
             <StyledPrimaryButton
               disabled={currentPlan === 'startup'}
               label={currentPlan === 'startup' ? 'Current' : buttonText}
               onClick={() => handleSelectPlan({ plan: 'startup' })}
             />
-            <StyledSubtext>Terms &amp; Conditions Apply</StyledSubtext>
-          </ButtonWrapper>
+          </div>
         </PricingBody>
-      </ColumnWrapper>
+      </PricingCard>
 
       {/* STANDARD */}
-      <ColumnWrapper focus={!isMobile && focus}>
+      <PricingCard focus={!isMobile && focus}>
         <PricingHeader focus={!isMobile && focus}>
           <PricingTitle>Standard</PricingTitle>
           <PricingSubTitle>Growing companies</PricingSubTitle>
         </PricingHeader>
         <PricingBody>
-          <BulletWraper>
+          <div>
             <StyledBullets>
-              <IconWrapper>{CheckIcon}</IconWrapper> 0% placement fee
+              <IconWrapper focus={!isMobile && focus}>{CheckIcon}</IconWrapper>
+              <BulletTextWrapper>0% placement fee</BulletTextWrapper>
             </StyledBullets>
             <StyledBullets>
-              <IconWrapper>{CheckIcon}</IconWrapper> Full candidate profiles
+              <IconWrapper focus={!isMobile && focus}>{CheckIcon}</IconWrapper>
+              <BulletTextWrapper>Full candidate profiles</BulletTextWrapper>
             </StyledBullets>
             <StyledBullets>
-              <IconWrapper>{CheckIcon}</IconWrapper> Match with new candidates
-              first
+              <IconWrapper focus={!isMobile && focus}>{CheckIcon}</IconWrapper>
+              <BulletTextWrapper>
+                Match with new candidates first
+              </BulletTextWrapper>
             </StyledBullets>
             <StyledBullets>
-              <IconWrapper>{CheckIcon}</IconWrapper> Up to 25 hires per year
+              <IconWrapper focus={!isMobile && focus}>{CheckIcon}</IconWrapper>
+              <BulletTextWrapper>Up to 25 hires per year</BulletTextWrapper>
             </StyledBullets>
-          </BulletWraper>
-          <ButtonWrapper>
+          </div>
+          <div>
             <StyledCostWrapper>
-              <StyledDollarSign>$</StyledDollarSign>
-              <StyledCost>2,495</StyledCost>
+              <StyledCost>$2,495</StyledCost>
               <StyledInterval>/ month</StyledInterval>
             </StyledCostWrapper>
             <StyledPrimaryButton
               disabled={currentPlan === 'standard'}
+              focus={focus}
               label={currentPlan === 'standard' ? 'Current' : buttonText}
               onClick={() => handleSelectPlan({ plan: 'standard' })}
             />
-            <StyledSubtext>Terms &amp; Conditions Apply</StyledSubtext>
-          </ButtonWrapper>
+          </div>
         </PricingBody>
-      </ColumnWrapper>
+      </PricingCard>
 
       {/* ENTERPRISE */}
-      <ColumnWrapper>
+      <PricingCard isLast>
         <PricingHeader>
           <PricingTitle>Enterprise</PricingTitle>
-          <PricingSubTitle>Unlimited Hires</PricingSubTitle>
+          <PricingSubTitle>Unlimited hires</PricingSubTitle>
         </PricingHeader>
         <PricingBody>
-          <BulletWraper>
+          <div>
             <StyledBullets>
-              <IconWrapper>{CheckIcon}</IconWrapper> 0% placement fee
+              <IconWrapper>{CheckIcon}</IconWrapper>
+              <BulletTextWrapper>0% placement fee</BulletTextWrapper>
             </StyledBullets>
             <StyledBullets>
-              <IconWrapper>{CheckIcon}</IconWrapper> Access to vetted candidates
+              <IconWrapper>{CheckIcon}</IconWrapper>
+              <BulletTextWrapper>Access to vetted candidates</BulletTextWrapper>
             </StyledBullets>
             <StyledBullets>
-              <IconWrapper>{CheckIcon}</IconWrapper> Priority support
+              <IconWrapper>{CheckIcon}</IconWrapper>
+              <BulletTextWrapper>Priority support</BulletTextWrapper>
             </StyledBullets>
             <StyledBullets>
-              <IconWrapper>{CheckIcon}</IconWrapper> Tailored candidate
-              interviews
+              <IconWrapper>{CheckIcon}</IconWrapper>
+              <BulletTextWrapper>
+                Tailored candidate interviews
+              </BulletTextWrapper>
             </StyledBullets>
-          </BulletWraper>
-          <ButtonWrapper>
+          </div>
+          <div>
             <StyledCostWrapper>
-              <StyledDollarSign>$</StyledDollarSign>
-              <StyledCost>4,950</StyledCost>
+              <StyledCost>$4,950</StyledCost>
               <StyledInterval>/ month</StyledInterval>
             </StyledCostWrapper>
             <StyledPrimaryButton
@@ -147,10 +152,9 @@ const PricingGrid = ({
               label={currentPlan === 'enterprise' ? 'Current' : buttonText}
               onClick={() => handleSelectPlan({ plan: 'enterprise' })}
             />
-            <StyledSubtext>Terms &amp; Conditions Apply</StyledSubtext>
-          </ButtonWrapper>
+          </div>
         </PricingBody>
-      </ColumnWrapper>
+      </PricingCard>
     </PricingGridContainer>
   );
 };

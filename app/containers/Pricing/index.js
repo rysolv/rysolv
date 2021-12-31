@@ -6,8 +6,8 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { withRouter } from 'react-router-dom';
 
+import PricingView from 'components/Pricing';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
-import CompanyPricingView from 'components/CompanyPricing';
 
 import { ViewContainer } from './styledComponents';
 
@@ -18,7 +18,7 @@ const Pricing = ({ deviceView, handleNav }) => {
 
   return (
     <ViewContainer>
-      <CompanyPricingView
+      <PricingView
         deviceView={deviceView}
         handleSelectPlan={handleSelectPlan}
       />
