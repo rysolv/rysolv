@@ -8,7 +8,7 @@ import {
   PricingSubText,
 } from './styledComponents';
 
-const Pricing = ({ deviceView, handleSelectPlan }) => (
+const Pricing = ({ handleSelectPlan }) => (
   <PricingContainer>
     <PricingHeader>Pricing plans</PricingHeader>
     <PricingSubText>
@@ -16,16 +16,12 @@ const Pricing = ({ deviceView, handleSelectPlan }) => (
     </PricingSubText>
     <PricingGrid
       buttonText="Get started"
-      deviceView={deviceView}
       focus
       handleSelectPlan={handleSelectPlan}
     />
   </PricingContainer>
 );
 
-Pricing.propTypes = {
-  deviceView: T.string.isRequired,
-  handleSelectPlan: T.func.isRequired,
-};
+Pricing.propTypes = { handleSelectPlan: T.func.isRequired };
 
 export default Pricing;

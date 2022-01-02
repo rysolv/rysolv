@@ -28,7 +28,7 @@ const CompanyPayments = ({
     <CompanySettingsHeader>Payments &amp; Subscription</CompanySettingsHeader>
     <PaymentContainer $isFirst>
       <PaymentLabelWrapper>
-        <PaymentLabel>Payment Method</PaymentLabel>
+        <PaymentLabel>Payment method</PaymentLabel>
         <StyledButton
           disableRipple
           onClick={() => dispatchOpenModal({ modalState: 'payment' })}

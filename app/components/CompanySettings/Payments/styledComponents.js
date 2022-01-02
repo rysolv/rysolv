@@ -20,7 +20,7 @@ export const CurrentPaymentMethod = styled.div`
 
 export const HorizontalDivider = styled.div`
   border-bottom-width: 0;
-  border-color: ${candidateGreyColor};
+  border-color: #e1e2e3;
   border-style: dashed;
   border-top-width: 0.2rem;
   flex-grow: 1;
@@ -40,6 +40,7 @@ export const PaymentLabel = styled.div`
   font-size: 1.6rem;
   font-weight: 500;
   line-height: 1.9rem;
+  margin-right: 1.6rem;
 `;
 
 export const PaymentLabelWrapper = styled.div`
@@ -54,10 +55,11 @@ export const StyledButton = styled(Button)`
   font-family: ${defaultFontFamily};
   font-size: 1.6rem;
   font-weight: 500;
+  line-height: 1.9rem;
   margin: 0;
   padding: 0rem;
+  text-align: right;
   text-transform: none;
-  line-height: 0;
 
   &:hover {
     background: transparent;

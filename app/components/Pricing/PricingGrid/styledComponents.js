@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import styled, { css } from 'styled-components';
 
 import { PrimaryButton } from 'components/base_ui';
@@ -34,10 +35,26 @@ export const IconWrapper = styled.div`
   path {
     stroke-width: 0.2rem;
     stroke: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
+  }
 
   svg {
-    height: 2rem;
-    width: 2rem;
+    height: ${({ isSettingRoute }) => (isSettingRoute ? '1em' : '2rem')};
+    width: ${({ isSettingRoute }) => (isSettingRoute ? '1em' : '2rem')};
+  }
+
+  @media (max-width: 1198px) {
+    svg {
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+
+  @media (max-width: 829px) {
+    color: ${blueGrayColor};
+
+    path {
+      stroke: ${blueGrayColor};
+    }
   }
 `;
 
@@ -61,9 +78,21 @@ export const PricingCard = styled.div`
   height: ${({ focus }) => (focus ? '53.7rem' : '50.4rem')};
   width: calc(100% / 3.2);
 
+  @media (max-width: 1198px) {
+    height: ${({ focus, isSettingRoute }) =>
+      // eslint-disable-next-line no-nested-ternary
+      isSettingRoute ? '44.8rem' : focus ? '53.7rem' : '50.4rem'};
+    margin-bottom: ${({ isLast, isSettingRoute }) =>
+      isSettingRoute && !isLast ? '1.6rem' : 0};
+    width: ${({ isSettingRoute }) =>
+      isSettingRoute ? '30.558rem' : 'calc(100% / 3.2)'};
+  }
+
   @media (max-width: 829px) {
-    margin-bottom: ${({ isLast }) => (isLast ? 0 : '1.6rem')};
+    border: none;
+    box-shadow: 0 0.1rem 0.4rem ${grayColor};
     height: ${({ focus }) => (focus ? '48.1rem' : '44.8rem')};
+    margin-bottom: ${({ isLast }) => (isLast ? 0 : '1.6rem')};
     width: 30.558rem;
   }
 
@@ -77,6 +106,11 @@ export const PricingGridContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
+  @media (max-width: 1198px) {
+    flex-direction: ${({ isSettingRoute }) =>
+      isSettingRoute ? 'column' : 'row'};
+  }
+
   @media (max-width: 829px) {
     flex-direction: column;
   }
@@ -89,6 +123,12 @@ export const PricingHeader = styled.div`
   color: ${whiteColor};
   padding: 2.4rem;
   text-align: center;
+
+  @media (max-width: 829px) {
+    background: ${blueGrayColor};
+    border-top-left-radius: 0.7rem;
+    border-top-right-radius: 0.7rem;
+  }
 `;
 
 export const PricingSubTitle = styled.div`
@@ -115,6 +155,10 @@ export const StyledCost = styled.div`
   font-weight: 700;
   line-height: 3.36rem;
   white-space: nowrap;
+
+  @media (max-width: 1198px) {
+    font-size: 3.2rem;
+  }
 `;
 
 export const StyledCostWrapper = styled.div`
@@ -140,5 +184,17 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   &:hover {
     background: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
     color: ${whiteColor};
+  }
+
+  @media (max-width: 1198px) {
+    width: 20rem;
+  }
+
+  @media (max-width: 829px) {
+    background: ${blueGrayColor};
+
+    &:hover {
+      background: ${blueGrayColor};
+    }
   }
 `;
