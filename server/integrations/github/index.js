@@ -91,7 +91,7 @@ const getSingleIssue = async ({ issueNumber, organization, repo }) => {
 
     const issueInput = {
       githubCommentCount: comments,
-      issueBody: body, // Required
+      issueBody: body || '', // Required
       issueName: title, // Required
       issueUrl: html_url, // Required
       organizationUrl: repository_url, // Required
