@@ -27,7 +27,6 @@ const makeSelectUserDashboardQuestions = () =>
     ({ application }, questions) => {
       const formattedQuestions = questions.map(
         ({ questionKey, questionText, required, responses, subtext }) => {
-          console.log('questionKey', questionKey);
           const hasPlaceholder = !!optionDictionary[questionKey].placeholder;
           const { option, placeholder, type } =
             optionDictionary[questionKey] || {};

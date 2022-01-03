@@ -1,4 +1,5 @@
 /* eslint-disable indent */
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { PrimaryButton } from 'components/base_ui';
@@ -164,7 +165,9 @@ export const StyledInterval = styled.div`
   white-space: nowrap;
 `;
 
-export const StyledPrimaryButton = styled(PrimaryButton)`
+export const StyledPrimaryButton = styled(
+  ({ isSettingRoute, ...restProps }) => <PrimaryButton {...restProps} />,
+)`
   ${baseButtonStyle};
   background: ${lightBlueColor};
   color: ${whiteColor};
