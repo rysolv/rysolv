@@ -80,19 +80,19 @@ const PricingGrid = ({
       <PricingBody>
         <div>
           <StyledBullets>
-            <IconWrapper focus={focus} isSettingRoute={isSettingRoute}>
+            <IconWrapper isSettingRoute={isSettingRoute}>
               {CheckIcon}
             </IconWrapper>
             <BulletTextWrapper>0% placement fee</BulletTextWrapper>
           </StyledBullets>
           <StyledBullets>
-            <IconWrapper focus={focus} isSettingRoute={isSettingRoute}>
+            <IconWrapper isSettingRoute={isSettingRoute}>
               {CheckIcon}
             </IconWrapper>
             <BulletTextWrapper>Full candidate profiles</BulletTextWrapper>
           </StyledBullets>
           <StyledBullets>
-            <IconWrapper focus={focus} isSettingRoute={isSettingRoute}>
+            <IconWrapper isSettingRoute={isSettingRoute}>
               {CheckIcon}
             </IconWrapper>
             <BulletTextWrapper>
@@ -100,7 +100,7 @@ const PricingGrid = ({
             </BulletTextWrapper>
           </StyledBullets>
           <StyledBullets>
-            <IconWrapper focus={focus} isSettingRoute={isSettingRoute}>
+            <IconWrapper isSettingRoute={isSettingRoute}>
               {CheckIcon}
             </IconWrapper>
             <BulletTextWrapper>Up to 25 hires per year</BulletTextWrapper>
@@ -113,7 +113,6 @@ const PricingGrid = ({
           </StyledCostWrapper>
           <StyledPrimaryButton
             disabled={currentPlan === 'standard'}
-            focus={focus}
             isSettingRoute={isSettingRoute}
             label={currentPlan === 'standard' ? 'Current' : buttonText}
             onClick={() => handleSelectPlan({ plan: 'standard' })}

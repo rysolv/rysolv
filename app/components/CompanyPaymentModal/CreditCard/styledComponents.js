@@ -49,13 +49,16 @@ export const OptionError = styled.div`
 
 export const OptionLabel = styled.div`
   ${baseOptionTextStyle};
+  align-self: start;
   color: ${textColor};
   font-size: 1.6rem;
 `;
 
 export const OptionWrapper = styled.div`
   align-items: center;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 1rem 0;
   width: ${({ width }) => width || '100%'};
 `;

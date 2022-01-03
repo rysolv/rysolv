@@ -66,6 +66,10 @@ export const LegalTextWrapper = styled.div`
 export const ModalContainer = styled.div`
   padding: 2rem;
   width: 50rem;
+
+  @media (max-width: 560px) {
+    width: auto;
+  }
 `;
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
