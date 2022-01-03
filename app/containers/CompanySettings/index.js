@@ -7,10 +7,14 @@ import { withRouter } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
-import ContractConfirmationModal from 'components/CompanyContractModal/confirmationView';
-import PaymentConfirmationModal from 'components/CompanyPaymentModal/confirmationView';
-import CompanyContractModal from 'components/CompanyContractModal';
-import CompanyPaymentModal from 'components/CompanyPaymentModal';
+import {
+  CompanyContract,
+  CompanyContractConfirmation,
+} from 'components/CompanyContractModal';
+import {
+  CompanyPayment,
+  CompanyPaymentConfirmation,
+} from 'components/CompanyPaymentModal';
 import CompanySettingsSideNav from 'components/CompanySettings/SideNav';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
@@ -26,7 +30,8 @@ import {
   fetchUser,
   inputError,
   openModalState,
-  setModalError,
+  resetModalState,
+  setModalAlerts,
   submitContractAccepted,
   updatePaymentMethod,
 } from './actions';
@@ -54,7 +59,8 @@ const CompanySettings = ({
   dispatchFetchUser,
   dispatchInputError,
   dispatchOpenModal,
-  dispatchSetModalError,
+  dispatchResetModalState,
+  dispatchSetModalAlerts,
   dispatchSubmitContractAccepted,
   dispatchUpdatePaymentMethod,
   error,
@@ -63,7 +69,7 @@ const CompanySettings = ({
   isModalOpen,
   loading,
   modal,
-  modalError,
+  modalAlerts,
   modalLoading,
   plaidToken,
   view,
@@ -111,20 +117,21 @@ const CompanySettings = ({
 
   const modalPropsDictionary = {
     contract: {
-      Component: CompanyContractModal,
+      Component: CompanyContract,
       open: isModalOpen,
       propsToPassDown: {
         alerts: { error },
         companyId,
         contract,
         dispatchChangeInput,
+        dispatchResetModalState,
         dispatchSubmitContractAccepted,
         handleClose: dispatchCloseModal,
         paymentConfirmed,
       },
     },
     contractConfirmation: {
-      Component: ContractConfirmationModal,
+      Component: CompanyContractConfirmation,
       open: isModalOpen,
       propsToPassDown: {
         contract,
@@ -132,22 +139,23 @@ const CompanySettings = ({
       },
     },
     payment: {
-      Component: CompanyPaymentModal,
+      Component: CompanyPayment,
       open: isModalOpen,
       propsToPassDown: {
         dispatchClearAlerts,
         dispatchFetchPlaidToken,
-        dispatchSetModalError,
+        dispatchResetModalState,
+        dispatchSetModalAlerts,
         dispatchUpdatePaymentMethod,
         handleClose: dispatchCloseModal,
-        modalError,
+        modalAlerts,
         modalLoading,
         paymentConfirmed,
         plaidToken,
       },
     },
     paymentConfirmation: {
-      Component: PaymentConfirmationModal,
+      Component: CompanyPaymentConfirmation,
       open: isModalOpen,
       propsToPassDown: {
         handleClose: dispatchCloseModal,
@@ -197,7 +205,8 @@ CompanySettings.propTypes = {
   dispatchFetchUser: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
-  dispatchSetModalError: T.func.isRequired,
+  dispatchResetModalState: T.func.isRequired,
+  dispatchSetModalAlerts: T.func.isRequired,
   dispatchSubmitContractAccepted: T.func.isRequired,
   dispatchUpdatePaymentMethod: T.func.isRequired,
   error: T.oneOfType([T.bool, T.string]),
@@ -206,7 +215,7 @@ CompanySettings.propTypes = {
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
   modal: T.string.isRequired,
-  modalError: T.object.isRequired,
+  modalAlerts: T.object.isRequired,
   modalLoading: T.bool.isRequired,
   plaidToken: T.string,
   view: T.string.isRequired,
@@ -228,7 +237,7 @@ const mapStateToProps = createStructuredSelector({
   isModalOpen: makeSelectCompanySettings('isModalOpen'),
   loading: makeSelectCompanySettingsLoading('fetchUser'),
   modal: makeSelectCompanySettings('modal'),
-  modalError: makeSelectCompanySettings('modalError'),
+  modalAlerts: makeSelectCompanySettings('modalAlerts'),
   modalLoading: makeSelectCompanySettingsLoading('modal'),
   plaidToken: makeSelectCompanySettings('plaidToken'),
   view: makeSelectCompanySettingsView(),
@@ -247,7 +256,8 @@ const mapDispatchToProps = dispatch => ({
   dispatchFetchUser: payload => dispatch(fetchUser(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),
   dispatchOpenModal: payload => dispatch(openModalState(payload)),
-  dispatchSetModalError: payload => dispatch(setModalError(payload)),
+  dispatchResetModalState: () => dispatch(resetModalState()),
+  dispatchSetModalAlerts: payload => dispatch(setModalAlerts(payload)),
   dispatchSubmitContractAccepted: payload =>
     dispatch(submitContractAccepted(payload)),
   dispatchUpdatePaymentMethod: payload =>

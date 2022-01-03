@@ -28,7 +28,9 @@ export const INPUT_ERROR = 'app/CompanySettings/INPUT_ERROR';
 
 export const OPEN_MODAL_STATE = 'app/CompanySettings/OPEN_MODAL_STATE';
 
-export const SET_MODAL_ERROR = 'app/CompanySettings/SET_MODAL_ERROR';
+export const RESET_MODAL_STATE = 'app/CompanySettings/RESET_MODAL_STATE';
+
+export const SET_MODAL_ALERTS = 'app/CompanySettings/SET_MODAL_ALERTS';
 
 export const SUBMIT_CONTRACT_ACCEPTED =
   'app/CompanySettings/SUBMIT_CONTRACT_ACCEPTED';

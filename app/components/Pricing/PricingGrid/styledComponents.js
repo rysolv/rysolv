@@ -3,9 +3,8 @@ import styled, { css } from 'styled-components';
 
 import { PrimaryButton } from 'components/base_ui';
 import {
-  blueGrayColor,
-  darkBlueColor,
   grayColor,
+  lightBlueColor,
   textColor,
   whiteColor,
 } from 'defaultStyleHelper';
@@ -29,12 +28,12 @@ export const BulletTextWrapper = styled.div`
 `;
 
 export const IconWrapper = styled.div`
-  color: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
+  color: ${lightBlueColor};
   margin-right: 0.6rem;
 
   path {
     stroke-width: 0.2rem;
-    stroke: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
+    stroke: ${lightBlueColor};
   }
 
   svg {
@@ -46,14 +45,6 @@ export const IconWrapper = styled.div`
     svg {
       height: 2rem;
       width: 2rem;
-    }
-  }
-
-  @media (max-width: 829px) {
-    color: ${blueGrayColor};
-
-    path {
-      stroke: ${blueGrayColor};
     }
   }
 `;
@@ -69,7 +60,7 @@ export const PricingBody = styled.div`
 
 export const PricingCard = styled.div`
   border-radius: 0.7rem;
-  border: ${({ focus }) => (focus ? `0.2rem solid ${darkBlueColor}` : 'none')};
+  border: ${({ focus }) => (focus ? `0.2rem solid ${lightBlueColor}` : 'none')};
   box-shadow: ${({ focus }) =>
     focus ? `0 0.4rem 0.7rem ${grayColor}` : `0 0.1rem 0.4rem ${grayColor}`};
   color: ${textColor};
@@ -117,7 +108,7 @@ export const PricingGridContainer = styled.div`
 `;
 
 export const PricingHeader = styled.div`
-  background: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
+  background: ${lightBlueColor};
   border-top-left-radius: ${({ focus }) => (focus ? 0 : '0.7rem')};
   border-top-right-radius: ${({ focus }) => (focus ? 0 : '0.7rem')};
   color: ${whiteColor};
@@ -125,7 +116,6 @@ export const PricingHeader = styled.div`
   text-align: center;
 
   @media (max-width: 829px) {
-    background: ${blueGrayColor};
     border-top-left-radius: 0.7rem;
     border-top-right-radius: 0.7rem;
   }
@@ -176,25 +166,17 @@ export const StyledInterval = styled.div`
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
   ${baseButtonStyle};
-  background: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
+  background: ${lightBlueColor};
   color: ${whiteColor};
   margin: auto;
   width: ${({ isSettingRoute }) => (isSettingRoute ? '15rem' : '20rem')};
 
   &:hover {
-    background: ${({ focus }) => (focus ? darkBlueColor : blueGrayColor)};
+    background: ${lightBlueColor};
     color: ${whiteColor};
   }
 
   @media (max-width: 1198px) {
     width: 20rem;
-  }
-
-  @media (max-width: 829px) {
-    background: ${blueGrayColor};
-
-    &:hover {
-      background: ${blueGrayColor};
-    }
   }
 `;

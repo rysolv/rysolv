@@ -4,18 +4,18 @@ import T from 'prop-types';
 import { Checkbox } from 'components/base_ui';
 
 import {
-  ButtonGroup,
+  ButtonWrapper,
   CheckboxWrapper,
   ContentGroup,
-  HorizontalDivider,
+  DescriptionWrapper,
   LegalTextWrapper,
-  StyledButton,
-  Subtitle,
-  Title,
-  ViewContainer,
+  ModalContainer,
+  StyledPrimaryAsyncButton,
+  StyledPrimaryButton,
+  StyledTitle,
 } from './styledComponents';
 
-const ContractModal = ({
+const CompanyContract = ({
   companyId,
   contract,
   dispatchChangeInput,
@@ -26,31 +26,28 @@ const ContractModal = ({
   const { body, contractAccepted, key, subtitle, title } = contract;
 
   return (
-    <ViewContainer>
-      <Title>{title}</Title>
-      <HorizontalDivider />
+    <ModalContainer>
+      <StyledTitle>{title}</StyledTitle>
       <ContentGroup>
-        <Subtitle>{subtitle}</Subtitle>
-        <LegalTextWrapper isFirst>{body}</LegalTextWrapper>
+        <DescriptionWrapper>{subtitle}</DescriptionWrapper>
+        <LegalTextWrapper>{body}</LegalTextWrapper>
         <CheckboxWrapper>
           <Checkbox
             checked={contractAccepted}
-            onChange={() =>
+            onChange={(e, value) =>
               dispatchChangeInput({
                 field: 'contractAccepted',
                 form: 'contract',
-                value: !contractAccepted,
+                value,
               })
             }
           />
           <span>I agree to the above Terms and Conditions.</span>
         </CheckboxWrapper>
       </ContentGroup>
-      <ButtonGroup>
-        <StyledButton disableRipple onClick={handleClose}>
-          Cancel
-        </StyledButton>
-        <StyledButton
+      <ButtonWrapper>
+        <StyledPrimaryButton label="Cancel" onClick={handleClose} />
+        <StyledPrimaryAsyncButton
           disabled={!contractAccepted}
           disableRipple
           onClick={() =>
@@ -60,15 +57,14 @@ const ContractModal = ({
               plan: key,
             })
           }
-        >
-          Confirm
-        </StyledButton>
-      </ButtonGroup>
-    </ViewContainer>
+          label="Confirm"
+        />
+      </ButtonWrapper>
+    </ModalContainer>
   );
 };
 
-ContractModal.propTypes = {
+CompanyContract.propTypes = {
   companyId: T.string.isRequired,
   contract: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
@@ -77,4 +73,4 @@ ContractModal.propTypes = {
   paymentConfirmed: T.bool.isRequired,
 };
 
-export default ContractModal;
+export default CompanyContract;

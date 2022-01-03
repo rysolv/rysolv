@@ -1,22 +1,30 @@
-import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
+import styled, { css } from 'styled-components';
 
+import { PrimaryAsyncButton, PrimaryButton } from 'components/base_ui';
 import {
+  blueColor,
   darkBlueColor,
-  defaultFontFamily,
   lightBlueColor,
   lightGreyColor,
   textColor,
   whiteColor,
 } from 'defaultStyleHelper';
-import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobileS } = mediaQueriesByDevice;
-
-export const ButtonGroup = styled.div`
+const baseButtonStyle = css`
+  align-items: center;
+  border-radius: 0.8rem;
   display: flex;
-  justify-content: space-between;
-  width: 100%;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  margin: 0;
+  text-transform: initial;
+  width: 10rem;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
 `;
 
 export const CheckboxWrapper = styled.div`
@@ -37,6 +45,7 @@ export const CheckboxWrapper = styled.div`
 
 export const ContentGroup = styled.div`
   align-self: center;
+  color: ${textColor};
   font-size: 1.6rem;
   line-height: 2.4rem;
   max-width: 50rem;
@@ -47,66 +56,55 @@ export const DescriptionWrapper = styled.div`
   font-size: 2rem;
   font-weight: 500;
   padding: 1rem 0;
-  text-align: left;
-`;
-
-export const HorizontalDivider = styled.div`
-  background: ${whiteColor};
-  border-bottom: 0.1rem solid rgb(211 211 211 / 70%);
-  height: 0.1rem;
-  margin: 1.5rem 0;
 `;
 
 export const LegalTextWrapper = styled.div`
-  margin-top: ${({ isFirst }) => (isFirst ? '1rem' : '2rem')};
+  margin-top: 1rem;
   text-align: justify;
 `;
 
-export const StyledButton = styled(Button)`
-  color: ${darkBlueColor};
-  font-family: ${defaultFontFamily};
-  font-size: 1.6rem;
-  font-weight: 500;
-  margin: 0;
-  padding: 0rem;
-  text-transform: none;
+export const ModalContainer = styled.div`
+  padding: 2rem;
+  width: 50rem;
+`;
+
+export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
+  ${baseButtonStyle};
+  background-color: ${darkBlueColor};
+  color: ${whiteColor};
+  margin-left: 1rem;
 
   &:hover {
-    background-color: transparent;
-  }
-
-  svg {
-    height: 2rem;
-    width: 2rem;
-  }
-
-  ${mobileS} {
-    justify-content: start;
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
   }
 `;
 
-export const Subtitle = styled.div`
-  color: ${lightGreyColor};
-  font-size: 2rem;
-  font-weight: 500;
-  padding: 1rem 0;
-`;
-
-export const Title = styled.div`
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  ${baseButtonStyle};
+  background-color: ${whiteColor};
+  border: 0.2rem solid ${darkBlueColor};
   color: ${darkBlueColor};
-  font-size: 2.4rem;
+  margin-right: 1rem;
+
+  &:hover {
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
+  }
+`;
+
+export const StyledTitle = styled.h3`
+  color: ${blueColor};
+  font-size: ${({ isConfirmation }) => (isConfirmation ? '2.5rem' : '3.2rem')};
   font-weight: 700;
   line-height: 3.36rem;
+  margin: 0;
+  padding: 2rem 0 1rem;
 `;
 
-export const ViewContainer = styled.div`
-  background: ${whiteColor};
+export const TextWrapper = styled.div`
   color: ${textColor};
-  display: flex;
-  flex-direction: column;
   font-size: 1.6rem;
-  justify-content: space-between;
-  padding: 3rem;
-  text-align: center;
-  width: 100%;
+  line-height: 2.4rem;
+  padding: ${({ isFirst }) => (isFirst ? `0.6rem 0` : `0.8rem 0 3.4rem`)};
 `;
