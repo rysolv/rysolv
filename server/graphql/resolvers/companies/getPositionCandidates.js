@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const { CustomError, errorLogger } = require('../../../helpers');
+const { matchLanguages } = require('../../../helpers');
 const {
   getPositionCandidates: getPositionCandidatesQuery,
 } = require('../../../db');
@@ -13,25 +14,20 @@ const getPositionCandidates = async (
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    // TODO: query all this stuff
-    const mock = {
-      languages: ['JavaScript', 'Python', 'Java'],
-      location: 'San Francisco, CA',
-      type: 'full-time',
-    };
     const candidates = await getPositionCandidatesQuery({ positionId, saved });
 
     // Format Candidates object
     const result = candidates.reduce((acc, el) => {
-      const { userQuestions } = el;
-      const { target_salary, type, experience, is_active } = userQuestions;
+      const { userQuestions, userLanguages, positionLanguages } = el;
+      const { target_salary, experience, is_active } = userQuestions;
 
       if (is_active === 'Yes') {
         acc.push({
           ...el,
-          ...mock,
+          languages: matchLanguages({ userLanguages, positionLanguages }),
+          location: 'San Francisco, CA',
           salary: target_salary,
-          type,
+          type: 'full-time',
           yearsOfExperience: experience,
         });
       }

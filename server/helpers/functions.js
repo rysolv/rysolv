@@ -67,6 +67,33 @@ const isUrl = string => {
   return url.protocol === 'http:' || url.protocol === 'https:';
 };
 
+const matchLanguages = ({ userLanguages, positionLanguages }) => {
+  // Takes two arrays ex: [{name: 'JavaScript', level: 3}, {name: ruby...}]
+  // Returns an array of up to 3 languages. Prioritize matching position
+  // languages, followed by user skill level.
+  const objSort = obj =>
+    obj.sort((a, b) => {
+      if (a.level < b.level) return 1;
+      if (a.level > b.level) return -1;
+      return 0;
+    });
+  const positionLanguageArray = objSort(positionLanguages).map(el => el.name);
+  const userLanguageArray = objSort(userLanguages).map(el => el.name);
+
+  const languages = [];
+
+  positionLanguageArray.forEach(el => {
+    if (userLanguageArray.includes(el) && languages.length <= 3) {
+      const i = userLanguageArray.indexOf(el);
+      if (i !== -1) userLanguageArray.splice(i, 1);
+      languages.push(el);
+    }
+  });
+
+  while (languages.length < 3) languages.push(userLanguageArray.shift());
+  return languages;
+};
+
 const validatePayoutUrl = ({ payoutMethod, payoutUrl }) => {
   const payoutMethodDictionary = {
     'Github Sponsors': 'github',
@@ -96,5 +123,6 @@ module.exports = {
   generateSizeInteger,
   generateSizeString,
   isUrl,
+  matchLanguages,
   validatePayoutUrl,
 };
