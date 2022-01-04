@@ -47,13 +47,12 @@ const UpdateSkillsModal = ({
         beginner === true || expert === true || intermediate === true,
     );
 
-  const label = user.skills.length ? 'Edit' : 'Add';
-
+  const hasSkills = user.skills.length;
   const tableProps = { dispatchChangeSkillLevel, dispatchDeleteSkill };
 
   return (
     <ModalContainer>
-      <StyledTitle>{label} skills</StyledTitle>
+      <StyledTitle>{hasSkills ? 'Edit' : 'Add'} skills</StyledTitle>
       <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
       <OptionWrapper>
         <OptionLabel>List your most proficient skills.</OptionLabel>
@@ -70,7 +69,7 @@ const UpdateSkillsModal = ({
         <StyledPrimaryButton label="Cancel" onClick={handleClose} />
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
-          label={label}
+          label={hasSkills ? 'Save' : 'Add'}
           onClick={handleUpdateUserSkills}
         />
       </ButtonWrapper>

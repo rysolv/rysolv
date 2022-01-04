@@ -7,7 +7,7 @@ const {
   sendEmail,
 } = require('../../../helpers');
 const {
-  createPositionTechStack,
+  createUserTechStack,
   postUserResponse: postUserResponseQuery,
 } = require('../../../db');
 const {
@@ -26,7 +26,7 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
           // Language / Frameworks stored in techstack table
           if (questionKey === 'skills') {
             const { beginner, expert, intermediate, skill } = value;
-            await createPositionTechStack({
+            await createUserTechStack({
               level: generatePositionLevel({ beginner, expert, intermediate }),
               technology: skill,
               userId,

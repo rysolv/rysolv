@@ -25,7 +25,6 @@ import {
 } from './styledComponents';
 
 const AddIcon = iconDictionary('add');
-const RemoveIcon = iconDictionary('remove');
 const SaveIcon = iconDictionary('bookmarkBorder');
 const UnsaveIcon = iconDictionary('bookmark');
 
@@ -34,7 +33,6 @@ const CandidateCard = ({
   dispatchSaveCandidate,
   handleNav,
   id,
-  isInterviewRequested,
   isLast,
   isSaved,
   lastPosition,
@@ -49,7 +47,6 @@ const CandidateCard = ({
   type,
   yearsOfExperience,
 }) => {
-  const ButtonIcon = isInterviewRequested ? RemoveIcon : AddIcon;
   const ButtonText = threadId ? `View Messages` : `Connect`;
   const CardIcon = isSaved ? UnsaveIcon : SaveIcon;
   const CardLabel = isSaved ? 'Unshortlist' : 'Shortlist';
@@ -84,7 +81,7 @@ const CandidateCard = ({
         </ImageGroup>
         <CandidateCardUserInfo>
           <NameWrapper>{name}</NameWrapper>
-          <PositionWrapper>{lastPosition}</PositionWrapper>
+          {lastPosition && <PositionWrapper>{lastPosition}</PositionWrapper>}
           {preferredLanguages.map((language, index) => (
             <StyledLanguageWrapper
               key={`${language}-${index}`}
@@ -117,7 +114,7 @@ const CandidateCard = ({
         </CandidateCardRows>
       </CandidateCardContent>
       <CandidateCardButton onClick={() => handleClick()}>
-        {ButtonIcon} {ButtonText}
+        {AddIcon} {ButtonText}
       </CandidateCardButton>
     </CandidateCardContainer>
   );
@@ -128,7 +125,6 @@ CandidateCard.propTypes = {
   dispatchSaveCandidate: T.func.isRequired,
   handleNav: T.func.isRequired,
   id: T.string.isRequired,
-  isInterviewRequested: T.bool.isRequired,
   isLast: T.bool.isRequired,
   isSaved: T.bool.isRequired,
   lastPosition: T.string.isRequired,

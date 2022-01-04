@@ -75,11 +75,13 @@ export const validateFields = ({ questions, values }) =>
   );
 
 export const validateOneField = ({ field, required, values }) => {
-  const isFieldRequired = !(values[additionalInputDictionary[field]] === 'Yes');
+  const isFieldRequired = additionalInputDictionary[field]
+    ? !(values[additionalInputDictionary[field]] === 'Yes')
+    : required;
   const value = values[field];
   return validate({
     additionalInputField: !!values[additionalInputDictionary[field]],
-    required: isFieldRequired || required,
+    required: isFieldRequired,
     value,
     ...validationPropsByField[field],
   });

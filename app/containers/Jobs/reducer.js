@@ -24,7 +24,7 @@ export const initialState = {
   form: {
     desiredRole: [],
     experience: [],
-    isActive: 'No',
+    isActive: '',
     isRemote: 'No',
     personalLink: '',
     preferredLocation: '',

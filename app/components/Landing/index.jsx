@@ -75,14 +75,19 @@ const Landing = ({
       <div>
         <LandingWrapper>
           <LandingContainerText>
-            Where <span>engineers</span><br />come to grow.
+            Where <span>engineers</span>
+            <br />
+            come to grow.
           </LandingContainerText>
           <ButtonGroup>
             <StyledSecondaryButton
               label="Become a Rysolver"
               onClick={() => handleNav('/signup')}
             />
-            <StyledPrimaryButton label="Hire engineers" onClick={() => handleNav('/recruitment')} />
+            <StyledPrimaryButton
+              label="Hire engineers"
+              onClick={() => handleNav('/pricing')}
+            />
           </ButtonGroup>
         </LandingWrapper>
         <LandingCardContainer>

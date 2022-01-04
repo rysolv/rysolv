@@ -34,6 +34,9 @@ const LocationAutocompleteOption = ({
       handleChangeInput(place.formatted_address);
       setTempValue('');
     },
+    options: {
+      fields: ['address_components', 'formatted_address', 'utc_offset_minutes'],
+    },
   });
 
   const handlePlacesWidgetFocus = () => {

@@ -417,8 +417,6 @@ module.exports = buildSchema(`
     id: ID!
     isActive: String
     isGithubVerified: Boolean
-    isHired: Boolean
-    isInterviewRequested: Boolean
     isSaved: Boolean
     issues: [Object]
     languages: [String]

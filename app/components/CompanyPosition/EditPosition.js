@@ -133,7 +133,7 @@ const EditPosition = ({
         />
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
-          label="Edit"
+          label="Save"
           loading={loading}
           onClick={handleEditPosition}
         />
