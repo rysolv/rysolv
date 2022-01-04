@@ -66,7 +66,7 @@ const InputOption = ({
         FallbackComponent={
           <ButtonGroup>
             <StyledPrimaryButton label="Cancel" onClick={handleCancel} />
-            <StyledPrimaryAsyncButton label="Edit" onClick={handleEdit} />
+            <StyledPrimaryAsyncButton label="Save" onClick={handleEdit} />
           </ButtonGroup>
         }
         shouldRender={!edit}

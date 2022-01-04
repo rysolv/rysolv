@@ -307,8 +307,6 @@ export function* fetchPositionCandidatesSaga({ payload }) {
       getPositionCandidates(positionId: "${positionId}", saved: ${!!saved}) {
         firstName
         id
-        isHired
-        isInterviewRequested
         isSaved
         languages
         lastName

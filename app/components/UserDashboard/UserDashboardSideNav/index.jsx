@@ -45,8 +45,12 @@ const UserDashboardSideNav = ({
   const activeButtonPath = surveyComplete ? '/dashboard/update' : '/jobs';
 
   const handleChangeInput = val => {
-    const newHiringStatus = val ? 'active' : 'inactive';
-    dispatchSetHiringStatus({ hiringStatus: newHiringStatus });
+    if (surveyComplete) {
+      const newHiringStatus = val ? 'active' : 'inactive';
+      dispatchSetHiringStatus({ hiringStatus: newHiringStatus });
+    } else {
+      handleNav('/jobs');
+    }
   };
 
   const isActive = hiringStatus === 'active';
@@ -65,7 +69,9 @@ const UserDashboardSideNav = ({
           <ActiveWrapper>
             <ActiveLabelWrapper>
               <ActiveCircle $isActive={isActive}>&#9679;</ActiveCircle>
-              <ActiveLabel>I&#39;m actively looking</ActiveLabel>
+              <ActiveLabel>
+                {isActive ? 'Actively looking' : 'Not actively looking'}
+              </ActiveLabel>
             </ActiveLabelWrapper>
             <ToggleOption
               handleChangeInput={handleChangeInput}
