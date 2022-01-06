@@ -125,7 +125,7 @@ export const StyledAppBar = styled(
 `;
 
 export const StyledHeaderLink = styled(BaseLink)`
-  color: white;
+  color: ${whiteColor};
   font-size: ${defaultFontSize};
   font-weight: 500;
   margin: 0 1rem;

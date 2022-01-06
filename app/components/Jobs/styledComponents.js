@@ -418,6 +418,10 @@ export const StyledPrimaryButton = styled(({ isSelected, ...restProps }) => (
   min-width: 20rem;
   text-transform: initial;
 
+  &:disabled {
+    border: none;
+  }
+
   &:hover {
     background-color: ${darkBlueColor};
     color: ${whiteColor};

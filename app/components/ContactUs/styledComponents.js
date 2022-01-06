@@ -36,7 +36,7 @@ export const ContactUsContainer = styled.div`
   color: ${whiteColor};
   display: flex;
   height: 100%;
-  padding: 5rem 12rem 0;
+  padding: 5rem 12rem 5.6rem;
   position: relative;
   width: 100%;
   z-index: 1;
