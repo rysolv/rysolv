@@ -13,7 +13,7 @@ const companyValues = [
   'size',
 ];
 
-const companyPositionValues = ['company_id', 'id'];
+const companyPositionValues = ['company_id', 'created_date', 'id'];
 
 const messageReturnValues = `
   messages.body,

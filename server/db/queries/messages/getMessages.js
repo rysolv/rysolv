@@ -2,6 +2,7 @@ const { singleQuery } = require('../../baseQueries');
 
 const getMessages = async ({ userId }) => {
   const queryText = `
+  WITH messages AS (
     WITH threads AS (
       SELECT DISTINCT(m.thread_id)
       FROM messages m
@@ -74,6 +75,12 @@ const getMessages = async ({ userId }) => {
       m.position_id,
       m.thread_id
     ORDER BY "lastMessageDate" DESC
+  )
+  SELECT * FROM messages
+	WHERE position IS NOT NULL
+	AND messages IS NOT NULL
+	AND company IS NOT NULL
+	AND candidate IS NOT NULL
   `;
 
   const { rows } = await singleQuery({ queryText, values: [userId] });

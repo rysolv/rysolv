@@ -24,7 +24,7 @@ const postPositionResponse = async (
 
     // Create position
     await createCompanyPosition({
-      data: { company_id: companyId, id: positionId },
+      data: { company_id: companyId, created_date: new Date(), id: positionId },
     });
 
     // Update user_question_responses with position data

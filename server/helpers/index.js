@@ -1,25 +1,9 @@
-const { analyzeUser } = require('./analyzeUser');
-const {
-  arrayCheck,
-  CustomError,
-  errorLogger,
-  generatePositionLevel,
-  generateSizeInteger,
-  generateSizeString,
-  isUrl,
-  validatePayoutUrl,
-} = require('./functions');
-const { sendEmail } = require('./emailHelper');
+const analyzeUser = require('./analyzeUser');
+const emailHelper = require('./emailHelper');
+const functions = require('./functions');
 
 module.exports = {
-  analyzeUser,
-  arrayCheck,
-  CustomError,
-  errorLogger,
-  generatePositionLevel,
-  generateSizeInteger,
-  generateSizeString,
-  isUrl,
-  sendEmail,
-  validatePayoutUrl,
+  ...analyzeUser,
+  ...emailHelper,
+  ...functions,
 };

@@ -76,7 +76,7 @@ CompanyPayments.propTypes = {
   dispatchOpenModal: T.func.isRequired,
   handleSelectPlan: T.func.isRequired,
   paymentConfirmed: T.bool.isRequired,
-  paymentMethod: T.string.isRequired,
+  paymentMethod: T.string,
 };
 
 export default CompanyPayments;

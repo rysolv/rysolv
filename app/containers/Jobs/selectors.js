@@ -60,7 +60,7 @@ const makeSelectJobResponseArray = () =>
       const responseArray = [];
       if (questions.length) {
         Object.keys(form).forEach(async input => {
-          const { value: values } = form[input];
+          const values = form[input];
           const [{ id: questionId, questionKey, responses }] = questions.filter(
             ({ questionKey: key }) => input === snakeToCamel(key),
           );
@@ -68,7 +68,9 @@ const makeSelectJobResponseArray = () =>
             values.forEach(async value => {
               const [{ id: responseId, responseKey }] = responses.filter(
                 response =>
-                  response.responseKey === 'resume' || response.value === value,
+                  response.responseKey === 'resume' ||
+                  response.responseKey === 'skill' ||
+                  response.value === value,
               );
               let formattedValue = value;
               if (responseKey === 'resume') {
@@ -92,7 +94,7 @@ const makeSelectJobResponseArray = () =>
             const [{ id: responseId }] = responses.filter(
               response =>
                 response.responseKey === 'personal_link' ||
-                response.responseKey !== 'preferred_location' ||
+                response.responseKey === 'preferred_locations' ||
                 response.value === values,
             );
             responseArray.push({

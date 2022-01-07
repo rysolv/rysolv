@@ -112,7 +112,6 @@ class Main extends React.PureComponent {
       pathname === '/password-reset' ||
       pathname === '/pricing' ||
       pathname === '/privacy-policy' ||
-      pathname === '/recruitment' ||
       pathname === '/signin' ||
       pathname === '/signup' ||
       pathname === '/terms-of-service';

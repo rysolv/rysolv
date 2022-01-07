@@ -37,14 +37,12 @@ const UpdateLinksModal = ({
   const hasErrors = Object.keys(formErrors).some(input => !!formErrors[input]);
   const isComplete = Object.keys(form).some(input => !!form[input]);
 
-  const label =
-    user.githubLink || user.personalLink || user.stackoverflowLink
-      ? 'Edit'
-      : 'Add';
+  const hasLinks =
+    user.githubLink || user.personalLink || user.stackoverflowLink;
 
   return (
     <ModalContainer>
-      <StyledTitle>{label} links</StyledTitle>
+      <StyledTitle>{hasLinks ? 'Edit' : 'Add'} links</StyledTitle>
       <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
       <OptionWrapper>
         <OptionLabel>Github link</OptionLabel>
@@ -80,7 +78,7 @@ const UpdateLinksModal = ({
         <StyledPrimaryButton label="Cancel" onClick={handleClose} />
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
-          label={label}
+          label={hasLinks ? 'Save' : 'Add'}
           onClick={handleUpdateUser}
         />
       </ButtonWrapper>
