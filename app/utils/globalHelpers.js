@@ -1,5 +1,31 @@
 import { useEffect, useRef } from 'react';
 
+export const converDataUrlToBlob = dataUrl => {
+  const array = dataUrl.split(',');
+  const mime = array[0].match(/:(.*?);/)[1];
+  const blob = atob(array[1]);
+  let n = blob.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = blob.charCodeAt(n);
+  }
+  return { blob: new Blob([u8arr], { type: mime }), mime };
+};
+
+export const convertFileToDataUrl = async file => {
+  const { type } = file;
+  const dataUrl = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
+  if (!dataUrl) return 'data:';
+  const base64Data = dataUrl.split(',')[1];
+  return `data:${type};base64,${base64Data}`;
+};
+
 export const formatDollarAmount = (value, noDecimals = false) => {
   const numOfDecimals = noDecimals ? 0 : 2;
   const valueWithDecimals = parseFloat(value).toFixed(numOfDecimals);

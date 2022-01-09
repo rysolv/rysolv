@@ -1,5 +1,7 @@
+/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
 import { ProgressBar } from 'components/base_ui';
 import { additionalInputDictionary } from 'containers/Jobs/constants';
@@ -65,8 +67,18 @@ const SurveyView = ({
       ? checkInputDisabled(id) || hasInputErrors
       : hasInputErrors;
     const tempSubmitDisabled = required
-      ? !Object.keys(form).every(input => checkInputDisabled(input)) ||
-        hasInputErrors
+      ? !Object.keys(form).every(input => {
+        if (input === 'skills') {
+          return (
+            !isEmpty(form[input]) &&
+              form[input].every(
+                ({ beginner, expert, intermediate }) =>
+                  beginner === true || expert === true || intermediate === true,
+              )
+          );
+        }
+        return checkInputDisabled(input);
+      }) || hasInputErrors
       : hasInputErrors;
 
     setNextDisabled(tempNextDisabled);

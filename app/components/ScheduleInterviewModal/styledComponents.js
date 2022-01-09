@@ -11,8 +11,6 @@ import {
   whiteColor,
 } from 'defaultStyleHelper';
 
-export const ScheduleInterviewContainer = styled.div``;
-
 export const ButtonGroup = styled.div`
   background: ${candidateGreyColor};
   display: flex;
@@ -21,6 +19,38 @@ export const ButtonGroup = styled.div`
 `;
 
 export const InputError = styled.div``;
+
+export const MarkdownHeader = styled.div`
+  font-size: 1.6rem;
+  color: ${textColor};
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+`;
+
+export const ModalContainer = styled.div`
+  width: 50rem;
+
+  @media (max-width: 560px) {
+    width: auto;
+  }
+`;
+
+export const ModalContent = styled.div`
+  padding: 2rem;
+`;
+
+export const ModalHeader = styled.div`
+  color: ${blueColor};
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 3.36rem;
+`;
+
+export const ModalSubheader = styled.div`
+  color: ${textColor};
+  font-size: 1.6rem;
+  padding: 0.8rem 0 1.6rem;
+`;
 
 export const SecondaryButton = styled(Button)`
   color: ${darkBlueColor};
@@ -54,28 +84,4 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
     background-color: ${darkBlueColor};
     color: ${whiteColor};
   }
-`;
-
-export const ModalContent = styled.div`
-  padding: 2rem;
-`;
-
-export const ModalHeader = styled.div`
-  color: ${blueColor};
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 3.36rem;
-`;
-
-export const ModalSubheader = styled.div`
-  color: ${textColor};
-  font-size: 1.6rem;
-  padding: 0.8rem 0 1.6rem;
-`;
-
-export const MarkdownHeader = styled.div`
-  font-size: 1.6rem;
-  color: ${textColor};
-  margin-bottom: 0.4rem;
-  font-weight: 700;
 `;

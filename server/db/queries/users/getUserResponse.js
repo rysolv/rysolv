@@ -15,10 +15,23 @@ const getUserResponse = async ({ userId }) => {
       JOIN question_responses qr ON qr.id = uqr.response_id
       JOIN questions q ON q.id = uqr.question_id
       WHERE q.category = 'hiring'
+      AND q.question_key != 'desired_role'
+      AND uqr.user_id = $1
+    ),
+    desiredRole AS (
+      SELECT
+        array_agg(
+          COALESCE(uqr.value, qr.value)
+        ) AS "desiredRole"
+      FROM user_question_responses uqr
+      JOIN question_responses qr ON qr.id = uqr.response_id
+      JOIN questions q ON q.id = uqr.question_id
+      WHERE q.question_key = 'desired_role'
       AND uqr.user_id = $1
     )
     SELECT 
       (SELECT * FROM userData),
+      (SELECT * FROM desiredRole),
       (SELECT * FROM skills)
   `;
   const { rows } = await singleQuery({ queryText, values: [userId] });

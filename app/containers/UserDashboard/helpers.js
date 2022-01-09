@@ -13,11 +13,6 @@ export const optionDictionary = {
   is_remote: {
     option: 'autocomplete',
   },
-  personal_link: {
-    option: 'singleInput',
-    placeholder: 'https://mypersonalwebsite.com',
-    type: 'url',
-  },
   preferred_location: {
     option: 'locationAutocomplete',
   },

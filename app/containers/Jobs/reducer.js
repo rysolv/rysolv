@@ -26,7 +26,6 @@ export const initialState = {
     experience: [],
     isActive: '',
     isRemote: 'No',
-    personalLink: '',
     preferredLocation: '',
     resume: [],
     skills: [],
@@ -34,7 +33,6 @@ export const initialState = {
     usCitizen: '',
   },
   formErrors: {
-    personalLink: '',
     preferredLocation: '',
   },
   questions: [],

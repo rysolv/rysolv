@@ -144,6 +144,14 @@ const resetCognitoPassword = ({ code, email, password }) =>
     });
   });
 
+const retrieveFileS3 = ({ key, type }) => {
+  const payload = {
+    Bucket: bucketNameDictionary[type],
+    Key: key,
+  };
+  return s3.getObject(payload).promise();
+};
+
 // Create new user in cognito (return userId)
 const updateCognitoEmail = ({ currentEmail, newEmail }) =>
   new Promise((resolve, reject) => {
@@ -209,6 +217,7 @@ module.exports = {
   registerCognitoUser,
   resendConfirmationCode,
   resetCognitoPassword,
+  retrieveFileS3,
   updateCognitoEmail,
   uploadFileS3,
   verifyCognitoEmail,

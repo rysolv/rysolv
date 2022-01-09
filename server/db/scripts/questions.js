@@ -39,18 +39,6 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
-  // personal link
-  {
-    id: '1a859952-a666-46f1-80be-7444261486da',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 9,
-    question_key: 'personal_link',
-    question_text: 'What is your personal website?',
-    required: false,
-    response_limit: 1,
-    subtext: 'Optional.',
-  },
   // preferred location
   {
     id: '29a29e9c-798e-4dd1-a8a3-c9029e5b9020',
@@ -389,15 +377,6 @@ const responses = [
     question_id: 'f90ae70b-dd4a-4c40-8fb4-3dd095e45673',
     response_key: 'no_is_remote',
     value: 'No',
-  },
-  // personal link
-  {
-    id: '96b9ad3d-ed3b-421e-abf8-4ffd22695c61',
-    created_date: new Date(),
-    priority: 1,
-    question_id: '1a859952-a666-46f1-80be-7444261486da',
-    response_key: 'personal_link',
-    value: '',
   },
   // preferred locations
   {

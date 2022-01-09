@@ -19,6 +19,7 @@ export const CandidateCardButton = styled.button`
   color: ${blueColor};
   display: flex;
   font-size: 1.6rem;
+  height: 5.175rem;
   justify-content: center;
   padding: 1rem;
   width: 100%;
@@ -38,6 +39,8 @@ export const CandidateCardContainer = styled.div`
   border: ${({ isSaved }) => (isSaved ? `0.3rem solid ${blueColor}` : 'none')};
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
   color: ${blueColor};
+  display: flex;
+  flex-direction: column;
   margin: 0 4rem ${({ isLast }) => (isLast ? '0' : '4rem')} 0;
   min-height: 37.5rem;
   position: relative;
@@ -45,7 +48,7 @@ export const CandidateCardContainer = styled.div`
 `;
 
 export const CandidateCardContent = styled.div`
-  flex-grow: 1;
+  flex: 1;
   padding: 2rem;
 `;
 

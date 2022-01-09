@@ -1,9 +1,13 @@
+/* eslint-disable indent, no-nested-ternary */
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 
 import { post } from 'utils/request';
 
 import {
   closeModalState,
+  editUserResponseFailure,
+  editUserResponseSuccess,
   fetchQuestionsFailure,
   fetchQuestionsSuccess,
   fetchUserDashboardFailure,
@@ -12,19 +16,77 @@ import {
   fetchUserResponseSuccess,
   setHiringStatusFailure,
   setHiringStatusSuccess,
-  updateUserFailure,
+  updateUserLinksFailure,
+  updateUserLinksSuccess,
   updateUserSkillsFailure,
   updateUserSkillsSuccess,
-  updateUserSuccess,
 } from './actions';
 import {
+  EDIT_USER_RESPONSE,
   FETCH_QUESTIONS,
   FETCH_USER_DASHBOARD,
   FETCH_USER_RESPONSE,
   SET_HIRING_STATUS,
   UPDATE_USER_SKILLS,
-  UPDATE_USER,
+  UPDATE_USER_LINKS,
 } from './constants';
+
+export function* editUserResponseSaga({ payload }) {
+  const { responseArray } = payload;
+  const formattedResponse = responseArray.map(
+    ({ questionId, questionKey, responseId, value }) => {
+      const { file, fileExtension } = value;
+      const formattedValue =
+        questionKey === 'resume' && value instanceof Object
+          ? `{
+            file: "${file}",
+            fileExtension: "${fileExtension}",
+          }`
+          : questionKey === 'skills'
+          ? `{
+            beginner: ${value.beginner},
+            expert: ${value.expert},
+            intermediate: ${value.intermediate},
+            skill: "${value.skill}"
+          }`
+          : `"${value}"`;
+      return `{
+        questionId: "${questionId}",
+        questionKey: "${questionKey}",
+        responseId: "${responseId}",
+        value: ${formattedValue},
+      }`;
+    },
+  );
+  const query = `
+    mutation {
+      transformUserResponse(
+        responseArray: [${formattedResponse}]
+      ) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        transformUserResponse: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(editUserResponseSuccess());
+    yield put(push('/dashboard'));
+  } catch (error) {
+    yield put(editUserResponseFailure({ error: { message: error } }));
+  }
+}
 
 export function* fetchQuestionsSaga({ payload }) {
   const { category } = payload;
@@ -116,7 +178,15 @@ export function* fetchUserResponseSaga() {
       getUserResponse {
         __typename
         ... on User {
+          desiredRole
+          experience
+          isActive
+          isRemote
+          preferredLocation
+          resume
           skills
+          targetSalary
+          usCitizen
         }
         ... on Error {
           message
@@ -217,7 +287,7 @@ export function* updateUserSkillsSaga({ payload }) {
   }
 }
 
-export function* updateUserSaga({ payload }) {
+export function* updateUserLinksSaga({ payload }) {
   const { githubLink, personalLink, stackoverflowLink } = payload;
   const query = `
     mutation {
@@ -244,18 +314,19 @@ export function* updateUserSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(updateUserSuccess());
+    yield put(updateUserLinksSuccess());
     yield put(closeModalState());
   } catch (error) {
-    yield put(updateUserFailure({ error: { message: error } }));
+    yield put(updateUserLinksFailure({ error: { message: error } }));
   }
 }
 
 export default function* watcherSaga() {
+  yield takeLatest(EDIT_USER_RESPONSE, editUserResponseSaga);
   yield takeLatest(FETCH_QUESTIONS, fetchQuestionsSaga);
   yield takeLatest(FETCH_USER_DASHBOARD, fetchUserDashboardSaga);
   yield takeLatest(FETCH_USER_RESPONSE, fetchUserResponseSaga);
   yield takeLatest(SET_HIRING_STATUS, setHiringStatusSaga);
+  yield takeLatest(UPDATE_USER_LINKS, updateUserLinksSaga);
   yield takeLatest(UPDATE_USER_SKILLS, updateUserSkillsSaga);
-  yield takeLatest(UPDATE_USER, updateUserSaga);
 }

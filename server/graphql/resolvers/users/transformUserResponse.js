@@ -15,6 +15,7 @@ const {
   transformUserResponseError,
   transformUserResponseSuccess,
 } = require('./constants');
+const { uploadFile } = require('../../../middlewares/fileUpload');
 
 const transformUserResponse = async (
   { responseArray },
@@ -37,13 +38,20 @@ const transformUserResponse = async (
               userId,
             });
           } else {
+            let formattedValue = value || null;
+            // Upload resume
+            if (questionKey === 'resume') {
+              const { uploadUrl } = await uploadFile(value);
+              formattedValue = uploadUrl;
+            }
+
             const data = {
               createdDate: new Date(),
               id: uuidv4(),
               questionId,
               responseId,
               userId,
-              value,
+              value: formattedValue,
             };
             await postUserResponse(data);
           }

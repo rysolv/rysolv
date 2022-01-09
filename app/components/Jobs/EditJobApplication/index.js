@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 
 import { ConditionalRender } from 'components/base_ui';
 import { additionalInputDictionary } from 'containers/Jobs/constants';
@@ -27,9 +26,9 @@ const EditJobApplication = ({
   dispatchResetFormState,
   form,
   formErrors,
+  handleEditUserResponse,
   handleNav,
   handleUpdateFiles,
-  handleUpdateUserResponses,
   handleValidateInput,
   loading,
   questions,
@@ -44,16 +43,8 @@ const EditJobApplication = ({
 
   const hasErrors = Object.keys(formErrors).some(input => !!formErrors[input]);
   const isComplete = Object.keys(form).every(input => {
-    if (input === 'skills') {
-      return (
-        !isEmpty(form[input]) &&
-        form[input].every(
-          ({ beginner, expert, intermediate }) =>
-            beginner === true || expert === true || intermediate === true,
-        )
-      );
-    }
-    return !!form[input];
+    if (input !== 'resume') return !!form[input];
+    return true;
   });
 
   return (
@@ -109,9 +100,7 @@ const EditJobApplication = ({
                 />
                 <ConditionalRender
                   Component={<OptionError>{formErrors[id]}</OptionError>}
-                  shouldRender={
-                    id !== 'personalLink' && id !== 'preferredLocation'
-                  }
+                  shouldRender={id !== 'preferredLocation'}
                 />
               </OptionWrapper>
             );
@@ -127,7 +116,7 @@ const EditJobApplication = ({
           disabled={hasErrors || !isComplete}
           label="Save"
           loading={loading}
-          onClick={handleUpdateUserResponses}
+          onClick={handleEditUserResponse}
         />
       </ButtonWrapper>
     </CreateJobApplicationContainer>
@@ -142,9 +131,9 @@ EditJobApplication.propTypes = {
   dispatchResetFormState: T.func.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
+  handleEditUserResponse: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleUpdateFiles: T.func.isRequired,
-  handleUpdateUserResponses: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   loading: T.bool.isRequired,
   questions: T.array.isRequired,

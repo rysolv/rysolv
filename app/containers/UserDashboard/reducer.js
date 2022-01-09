@@ -3,12 +3,17 @@ import produce from 'immer';
 import isEmpty from 'lodash/isEmpty';
 import remove from 'lodash/remove';
 
+import { converDataUrlToBlob } from 'utils/globalHelpers';
+
 import {
   CHANGE_INPUT,
   CHANGE_SKILL_LEVEL,
   CLEAR_ALERTS,
   CLOSE_MODAL_STATE,
   DELETE_SKILL,
+  EDIT_USER_RESPONSE_FAILURE,
+  EDIT_USER_RESPONSE_SUCCESS,
+  EDIT_USER_RESPONSE,
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
@@ -24,12 +29,12 @@ import {
   SET_HIRING_STATUS_FAILURE,
   SET_HIRING_STATUS_SUCCESS,
   SET_HIRING_STATUS,
-  UPDATE_USER_FAILURE,
+  UPDATE_USER_LINKS_FAILURE,
+  UPDATE_USER_LINKS_SUCCESS,
+  UPDATE_USER_LINKS,
   UPDATE_USER_SKILLS_FAILURE,
   UPDATE_USER_SKILLS_SUCCESS,
   UPDATE_USER_SKILLS,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER,
 } from './constants';
 
 export const initialState = {
@@ -41,7 +46,6 @@ export const initialState = {
       experience: [],
       isActive: 'No',
       isRemote: 'No',
-      personalLink: '',
       preferredLocation: '',
       resume: [],
       skills: [],
@@ -59,7 +63,6 @@ export const initialState = {
       desiredRole: '',
       experience: '',
       isActive: '',
-      personalLink: '',
       preferredLocation: '',
       resume: '',
       skills: '',
@@ -74,11 +77,12 @@ export const initialState = {
   },
   isModalOpen: false,
   loading: {
+    editUserResponse: false,
     fetchQuestions: false,
     fetchUserDashboard: true,
     fetchUserResponse: false,
     setHiringStatus: false,
-    updateUser: false,
+    updateUserLinks: false,
     updateUserSkills: false,
   },
   modal: '',
@@ -140,6 +144,21 @@ const userDashboardReducer = produce((draft, { payload, type }) => {
       );
       break;
     }
+    case EDIT_USER_RESPONSE_FAILURE: {
+      const { error } = payload;
+      draft.alerts.error = error;
+      draft.loading.editUserResponse = false;
+      break;
+    }
+    case EDIT_USER_RESPONSE_SUCCESS: {
+      draft.loading.editUserResponse = false;
+      break;
+    }
+    case EDIT_USER_RESPONSE: {
+      draft.alerts.error = false;
+      draft.loading.editUserResponse = true;
+      break;
+    }
     case FETCH_QUESTIONS_FAILURE: {
       const { error } = payload;
       draft.error = error;
@@ -186,7 +205,14 @@ const userDashboardReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_USER_RESPONSE_SUCCESS: {
       const { user } = payload;
-      draft.form.application = { ...draft.form.application, ...user };
+      const { resume, ...restProps } = user;
+      if (resume) {
+        const { blob, mime } = converDataUrlToBlob(resume);
+        draft.form.application.resume = [
+          new File([blob], 'Resume', { type: mime }),
+        ];
+      }
+      draft.form.application = { ...draft.form.application, ...restProps };
       draft.loading.fetchUserResponse = false;
       draft.user = { ...draft.user, ...user };
       break;
@@ -235,10 +261,22 @@ const userDashboardReducer = produce((draft, { payload, type }) => {
       draft.loading.setHiringStatus = true;
       break;
     }
-    case UPDATE_USER_FAILURE: {
+    case UPDATE_USER_LINKS_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.updateUser = false;
+      draft.loading.updateUserLinks = false;
+      break;
+    }
+    case UPDATE_USER_LINKS_SUCCESS: {
+      draft.loading.updateUserLinks = false;
+      draft.user.githubLink = draft.form.profile.githubLink;
+      draft.user.personalLink = draft.form.profile.personalLink;
+      draft.user.stackoverflowLink = draft.form.profile.stackoverflowLink;
+      break;
+    }
+    case UPDATE_USER_LINKS: {
+      draft.alerts.error = false;
+      draft.loading.updateUserLinks = true;
       break;
     }
     case UPDATE_USER_SKILLS_FAILURE: {
@@ -255,18 +293,6 @@ const userDashboardReducer = produce((draft, { payload, type }) => {
     case UPDATE_USER_SKILLS: {
       draft.alerts.error = false;
       draft.loading.updateUserSkills = true;
-      break;
-    }
-    case UPDATE_USER_SUCCESS: {
-      draft.loading.updateUser = false;
-      draft.user.githubLink = draft.form.profile.githubLink;
-      draft.user.personalLink = draft.form.profile.personalLink;
-      draft.user.stackoverflowLink = draft.form.profile.stackoverflowLink;
-      break;
-    }
-    case UPDATE_USER: {
-      draft.alerts.error = false;
-      draft.loading.updateUser = true;
       break;
     }
   }

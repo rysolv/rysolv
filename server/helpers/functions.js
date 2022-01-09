@@ -28,6 +28,14 @@ const errorLogger = e => {
   }
 };
 
+const formatToCamelCase = str =>
+  str.toLowerCase().replace(/([-_][a-z])/g, group =>
+    group
+      .toUpperCase()
+      .replace('-', '')
+      .replace('_', ''),
+  );
+
 const generatePositionLevel = levels => {
   const { beginner, intermediate, expert } = levels || {};
   if (beginner) return 1;
@@ -119,6 +127,7 @@ module.exports = {
   arrayCheck,
   CustomError,
   errorLogger,
+  formatToCamelCase,
   generatePositionLevel,
   generateSizeInteger,
   generateSizeString,

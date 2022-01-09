@@ -7,11 +7,8 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import { ConditionalRender } from 'components/base_ui';
-import {
-  DesktopMessages,
-  MobileMessages,
-  NoMessages,
-} from 'components/Messages';
+import MessagesView from 'components/Messages';
+import NoMessages from 'components/Messages/NoMessages';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
@@ -50,7 +47,6 @@ const Messages = ({
 }) => {
   // If no URL param, set most recent conversation as active
   const [activeConversation, setActiveConversation] = useState(0);
-  const [messageBody, setMessageBody] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,27 +62,9 @@ const Messages = ({
 
   const isCompany = !!activeUser.company;
 
-  const isMobileOrTabletOrLaptop =
-    deviceView === 'laptop' ||
-    deviceView === 'laptopS' ||
-    deviceView === 'tablet' ||
-    deviceView === 'mobile' ||
-    deviceView === 'mobileS' ||
-    deviceView === 'mobileXS' ||
-    deviceView === 'mobileXXS';
-
-  const DesktopOrMobileComponent = props => (
-    <ConditionalRender
-      Component={DesktopMessages}
-      FallbackComponent={MobileMessages}
-      propsToPassDown={props}
-      shouldRender={!isMobileOrTabletOrLaptop}
-    />
-  );
-
   const ComponentToRender = props => (
     <ConditionalRender
-      Component={DesktopOrMobileComponent}
+      Component={MessagesView}
       FallbackComponent={NoMessages}
       propsToPassDown={props}
       shouldRender={!!conversations.length}
@@ -104,6 +82,7 @@ const Messages = ({
           activeConversation,
           activeUser,
           conversations,
+          deviceView,
           dispatchResetMarkdown,
           dispatchSendMessage,
           dispatchSetReadReceipt,
@@ -112,9 +91,7 @@ const Messages = ({
           isCompany,
           isThreadView,
           loading,
-          messageBody,
           setActiveConversation,
-          setMessageBody,
           success,
         }}
       />

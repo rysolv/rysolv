@@ -19,6 +19,7 @@ import {
   fetchCompanyPositionsFailure,
   fetchCompanyPositionsSuccess,
   fetchCompanySuccess,
+  fetchPositionCandidates,
   fetchPositionCandidatesFailure,
   fetchPositionCandidatesSuccess,
   fetchPositionFailure,
@@ -101,6 +102,7 @@ export function* createPositionSaga({ payload }) {
     yield put(createPositionSuccess({ message, positionId }));
     yield put(fetchCompanyPositions({ companyId }));
     yield put(matchCandidates({ positionId }));
+    yield put(fetchPositionCandidates({ positionId }));
     yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(createPositionFailure({ error: { message: error } }));

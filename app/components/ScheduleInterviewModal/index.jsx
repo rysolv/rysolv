@@ -7,13 +7,13 @@ import Markdown from 'components/Markdown';
 import {
   ButtonGroup,
   InputError,
-  ScheduleInterviewContainer,
-  SecondaryButton,
-  StyledPrimaryButton,
+  MarkdownHeader,
+  ModalContainer,
   ModalContent,
   ModalHeader,
   ModalSubheader,
-  MarkdownHeader,
+  SecondaryButton,
+  StyledPrimaryButton,
 } from './styledComponents';
 
 const ScheduleInterviewModal = ({
@@ -26,7 +26,7 @@ const ScheduleInterviewModal = ({
   formErrors: { scheduleInterview: scheduleInterviewErrors },
   tableData: { positionId, userId },
 }) => (
-  <ScheduleInterviewContainer>
+  <ModalContainer>
     <ModalContent>
       <ModalHeader>Notify Candidate</ModalHeader>
       <ErrorSuccessBanner
@@ -70,7 +70,7 @@ const ScheduleInterviewModal = ({
         }
       />
     </ButtonGroup>
-  </ScheduleInterviewContainer>
+  </ModalContainer>
 );
 
 ScheduleInterviewModal.propTypes = {
