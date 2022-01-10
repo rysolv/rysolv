@@ -459,6 +459,7 @@ export function* notifyCandidateSaga({ payload }) {
           lastName
           profilePic
           readDate
+          threadId
           username
         }
         ... on Error {
@@ -471,11 +472,11 @@ export function* notifyCandidateSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        createMessage: { __typename, message },
+        createMessage: { __typename, message, threadId },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(notifyCandidateSuccess({ message: messageSuccess }));
+    yield put(notifyCandidateSuccess({ candidateId, message: messageSuccess, threadId }));
     yield put(resetFormState({ category: 'scheduleInterview' }));
   } catch (error) {
     yield put(notifyCandidateFailure({ error: { message: error } }));

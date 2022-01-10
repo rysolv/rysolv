@@ -243,8 +243,9 @@ module.exports = buildSchema(`
     lastName: String!
     profilePic: String!
     readDate: Object
-    username: String!
+    threadId: ID
     userId: ID!
+    username: String!
   }
 
   type Payment {

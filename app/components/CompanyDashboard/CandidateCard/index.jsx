@@ -81,7 +81,7 @@ const CandidateCard = ({
         </ImageGroup>
         <CandidateCardUserInfo>
           <NameWrapper>{name}</NameWrapper>
-          {lastPosition && <PositionWrapper>{lastPosition}</PositionWrapper>}
+          <PositionWrapper>{lastPosition}</PositionWrapper>
           {preferredLanguages.map((language, index) => (
             <StyledLanguageWrapper
               key={`${language}-${index}`}
@@ -113,12 +113,14 @@ const CandidateCard = ({
           </CandidateCardRow>
         </CandidateCardRows>
       </CandidateCardContent>
-      <CandidateCardButton onClick={() => handleClick()}>
+      <CandidateCardButton onClick={handleClick}>
         {AddIcon} {ButtonText}
       </CandidateCardButton>
     </CandidateCardContainer>
   );
 };
+
+CandidateCard.defaultProps = { lastPosition: '' };
 
 CandidateCard.propTypes = {
   dispatchOpenModal: T.func.isRequired,
@@ -127,7 +129,7 @@ CandidateCard.propTypes = {
   id: T.string.isRequired,
   isLast: T.bool.isRequired,
   isSaved: T.bool.isRequired,
-  lastPosition: T.string.isRequired,
+  lastPosition: T.string,
   location: T.string.isRequired,
   name: T.string.isRequired,
   percentMatch: T.number.isRequired,

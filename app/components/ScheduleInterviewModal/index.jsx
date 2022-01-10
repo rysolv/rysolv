@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 
 import { ErrorSuccessBanner } from 'components/base_ui';
@@ -25,53 +25,57 @@ const ScheduleInterviewModal = ({
   form: { scheduleInterview },
   formErrors: { scheduleInterview: scheduleInterviewErrors },
   tableData: { positionId, userId },
-}) => (
-  <ModalContainer>
-    <ModalContent>
-      <ModalHeader>Notify Candidate</ModalHeader>
-      <ErrorSuccessBanner
-        bottomMarginRequired="1rem"
-        error={error}
-        onClose={dispatchClearAlerts}
-        success={success}
-        topMarginRequired="1rem"
-      />
-      <ModalSubheader>
-        The candidate will receive a message from you.
-      </ModalSubheader>
-      <div>
-        <MarkdownHeader>Message</MarkdownHeader>
-        <Markdown
-          body={scheduleInterview.body}
-          handleInput={value =>
-            dispatchChangeInput({
-              field: 'body',
-              form: 'scheduleInterview',
-              value,
+}) => {
+  useEffect(() => dispatchClearAlerts, []);
+
+  return (
+    <ModalContainer>
+      <ModalContent>
+        <ModalHeader>Notify Candidate</ModalHeader>
+        <ErrorSuccessBanner
+          bottomMarginRequired="1rem"
+          error={error}
+          onClose={dispatchClearAlerts}
+          success={success}
+          topMarginRequired="1rem"
+        />
+        <ModalSubheader>
+          The candidate will receive a message from you.
+        </ModalSubheader>
+        <div>
+          <MarkdownHeader>Message</MarkdownHeader>
+          <Markdown
+            body={scheduleInterview.body}
+            handleInput={value =>
+              dispatchChangeInput({
+                field: 'body',
+                form: 'scheduleInterview',
+                value,
+              })
+            }
+          />
+          <InputError>{scheduleInterviewErrors.body}</InputError>
+        </div>
+      </ModalContent>
+      <ButtonGroup>
+        <SecondaryButton disableRipple onClick={dispatchResetFormState}>
+          Cancel
+        </SecondaryButton>
+        <StyledPrimaryButton
+          disabled={!scheduleInterview.body}
+          label="Send"
+          onClick={() =>
+            dispatchNotifyCandidate({
+              body: scheduleInterview.body,
+              candidateId: userId,
+              positionId,
             })
           }
         />
-        <InputError>{scheduleInterviewErrors.body}</InputError>
-      </div>
-    </ModalContent>
-    <ButtonGroup>
-      <SecondaryButton disableRipple onClick={dispatchResetFormState}>
-        Cancel
-      </SecondaryButton>
-      <StyledPrimaryButton
-        disabled={!scheduleInterview.body}
-        label="Send"
-        onClick={() =>
-          dispatchNotifyCandidate({
-            body: scheduleInterview.body,
-            candidateId: userId,
-            positionId,
-          })
-        }
-      />
-    </ButtonGroup>
-  </ModalContainer>
-);
+      </ButtonGroup>
+    </ModalContainer>
+  );
+};
 
 ScheduleInterviewModal.propTypes = {
   alerts: T.object.isRequired,
