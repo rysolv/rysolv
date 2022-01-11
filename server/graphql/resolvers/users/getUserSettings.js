@@ -97,11 +97,11 @@ const getUserSettings = async (_, { authError, userId }) => {
     });
 
     if (!isEmpty(result.skills)) {
-      const skillsArray = result.skills.map(({ level, shortName }) => ({
+      const skillsArray = result.skills.map(({ level, name }) => ({
         beginner: level === 1,
         expert: level === 3,
         intermediate: level === 2,
-        skill: shortName,
+        skill: name,
       }));
       result.skills = skillsArray;
     } else {

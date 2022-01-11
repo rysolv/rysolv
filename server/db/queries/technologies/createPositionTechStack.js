@@ -5,8 +5,8 @@ const createPositionTechStack = async ({ level, positionId, technology }) => {
   const values = [level, positionId, technology];
   const queryText = `
     WITH tech_id as (
-      SELECT id FROM technologies
-      WHERE short_name = $3
+      SELECT t.id FROM technologies t
+      WHERE t.name = $3
     )
     INSERT INTO
     position_tech_stack(level, position_id, technology_id)

@@ -48,11 +48,11 @@ const getUserDashboard = async (_, { authError, userId }) => {
     }
 
     if (!isEmpty(user.skills)) {
-      const skillsArray = user.skills.map(({ level, shortName }) => ({
+      const skillsArray = user.skills.map(({ level, name }) => ({
         beginner: level === 1,
         expert: level === 3,
         intermediate: level === 2,
-        skill: shortName,
+        skill: name,
       }));
       user.skills = skillsArray;
     } else {

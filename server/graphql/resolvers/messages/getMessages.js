@@ -39,7 +39,7 @@ const getMessages = async (_, { authError, userId }) => {
           const { skills } = await getUserTechStack({
             userId: candidate.userId,
           });
-          const skillsArray = skills.map(({ shortName }) => shortName);
+          const skillsArray = skills.map(({ name }) => name);
           candidate.preferredLanguages = skillsArray;
           candidate.name = `${candidate.firstName} ${candidate.lastName}`;
         }

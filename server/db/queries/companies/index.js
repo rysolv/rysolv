@@ -2,6 +2,7 @@ const createCompany = require('./createCompany');
 const createCompanyPosition = require('./createCompanyPosition');
 const deletePositionResponse = require('./deletePositionResponse');
 const deleteUserCompanies = require('./deleteUserCompanies');
+const getAllCandidates = require('./getAllCandidates');
 const getCompanyPositions = require('./getCompanyPositions');
 const getContractByKey = require('./getContractByKey');
 const getOneCompany = require('./getOneCompany');
@@ -18,6 +19,7 @@ module.exports = {
   createCompanyPosition,
   deletePositionResponse,
   deleteUserCompanies,
+  getAllCandidates,
   getCompanyPositions,
   getContractByKey,
   getOneCompany,

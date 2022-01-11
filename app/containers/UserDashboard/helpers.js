@@ -31,6 +31,9 @@ export const optionDictionary = {
   target_salary: {
     option: 'autocomplete',
   },
+  type: {
+    option: 'autocomplete',
+  },
   us_citizen: {
     option: 'autocomplete',
   },

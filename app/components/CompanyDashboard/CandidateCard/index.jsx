@@ -127,7 +127,7 @@ CandidateCard.propTypes = {
   id: T.string.isRequired,
   isLast: T.bool.isRequired,
   isSaved: T.bool.isRequired,
-  lastPosition: T.string.isRequired,
+  lastPosition: T.string,
   location: T.string.isRequired,
   name: T.string.isRequired,
   percentMatch: T.number.isRequired,

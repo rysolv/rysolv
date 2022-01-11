@@ -12,11 +12,11 @@ const getUserResponse = async (_, { authError, userId }) => {
     const formattedUser = Object.keys(user).reduce((acc, userItem) => {
       if (userItem === 'skills') {
         if (user[userItem]) {
-          const skillsArray = user[userItem].map(({ level, shortName }) => ({
+          const skillsArray = user[userItem].map(({ level, name }) => ({
             beginner: level === 1,
             expert: level === 3,
             intermediate: level === 2,
-            skill: shortName,
+            skill: name,
           }));
           acc.skills = skillsArray;
         } else {

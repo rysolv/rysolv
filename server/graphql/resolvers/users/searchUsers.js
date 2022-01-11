@@ -11,9 +11,7 @@ const searchUsers = async ({ value }) => {
     await Promise.all(
       users.map(async ({ id }, index) => {
         const { skills } = await getUserTechStack({ userId: id });
-        users[index].preferredLanguages = skills.map(
-          ({ shortName }) => shortName,
-        );
+        users[index].preferredLanguages = skills.map(({ name }) => name);
       }),
     );
 

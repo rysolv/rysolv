@@ -88,7 +88,7 @@ const questions = [
     response_limit: 1,
     subtext: 'Select up to 3 languages.',
   },
-  // specialty
+  // desired role
   {
     id: 'eb292e4a-96f8-444e-953c-f29f726abd6e',
     category: 'hiring',
@@ -123,6 +123,18 @@ const questions = [
     required: true,
     response_limit: 1,
     subtext: null,
+  },
+  // type: contractor/full_time
+  {
+    id: '8582c14b-70ac-4ca8-8a4d-fa37cc9bec55',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 8,
+    question_key: 'type',
+    question_text: 'Why type of position are you looking for?',
+    required: true,
+    response_limit: 2,
+    subtext: 'Select as many as apply.',
   },
   // company_position
   // description
@@ -389,6 +401,23 @@ const responses = [
     question_id: 'f90ae70b-dd4a-4c40-8fb4-3dd095e45673',
     response_key: 'no_is_remote',
     value: 'No',
+  },
+  // type: contractor/full_time
+  {
+    id: 'efecc1aa-8ef0-4cec-9bf8-5da2e89da9d9',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '8582c14b-70ac-4ca8-8a4d-fa37cc9bec55',
+    response_key: 'full_time',
+    value: 'Full-Time',
+  },
+  {
+    id: '6d240be6-b0f5-4eb4-a036-555d183e1f11',
+    created_date: new Date(),
+    priority: 2,
+    question_id: '8582c14b-70ac-4ca8-8a4d-fa37cc9bec55',
+    response_key: 'contractor',
+    value: 'Contractor',
   },
   // personal link
   {

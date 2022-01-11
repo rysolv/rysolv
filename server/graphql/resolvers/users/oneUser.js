@@ -16,7 +16,7 @@ const oneUser = async ({ userId }) => {
     userDetail.completedPullRequests = completedPullRequests;
     userDetail.rejectedPullRequests = rejectedPullRequests;
 
-    const skillsArray = skills.map(({ shortName }) => shortName);
+    const skillsArray = skills.map(({ name }) => name);
     userDetail.preferredLanguages = skillsArray;
 
     return {
