@@ -370,8 +370,12 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       break;
     }
     case NOTIFY_CANDIDATE_SUCCESS: {
-      const { message } = payload;
+      const { candidateId, message, threadId } = payload;
       draft.alerts.success = { message };
+      const candidateIndex = draft.candidates.findIndex(
+        ({ id }) => candidateId === id,
+      );
+      draft.candidates[candidateIndex].threadId = threadId;
       draft.loading.main = false;
       break;
     }

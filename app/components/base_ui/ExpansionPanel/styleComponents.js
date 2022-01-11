@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanel from '@material-ui/core/Accordion';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';

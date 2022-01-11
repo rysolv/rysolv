@@ -4,6 +4,9 @@ import {
   CLEAR_ALERTS,
   CLOSE_MODAL_STATE,
   DELETE_SKILL,
+  EDIT_USER_RESPONSE_FAILURE,
+  EDIT_USER_RESPONSE_SUCCESS,
+  EDIT_USER_RESPONSE,
   FETCH_QUESTIONS_FAILURE,
   FETCH_QUESTIONS_SUCCESS,
   FETCH_QUESTIONS,
@@ -19,12 +22,12 @@ import {
   SET_HIRING_STATUS_FAILURE,
   SET_HIRING_STATUS_SUCCESS,
   SET_HIRING_STATUS,
-  UPDATE_USER_FAILURE,
+  UPDATE_USER_LINKS_FAILURE,
+  UPDATE_USER_LINKS_SUCCESS,
+  UPDATE_USER_LINKS,
   UPDATE_USER_SKILLS_FAILURE,
   UPDATE_USER_SKILLS_SUCCESS,
   UPDATE_USER_SKILLS,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER,
 } from './constants';
 
 export function changeInput(payload) {
@@ -53,6 +56,27 @@ export function deleteSkill(payload) {
   return {
     payload,
     type: DELETE_SKILL,
+  };
+}
+
+export function editUserResponseFailure(payload) {
+  return {
+    payload,
+    type: EDIT_USER_RESPONSE_FAILURE,
+  };
+}
+
+export function editUserResponseSuccess(payload) {
+  return {
+    payload,
+    type: EDIT_USER_RESPONSE_SUCCESS,
+  };
+}
+
+export function editUserResponse(payload) {
+  return {
+    payload,
+    type: EDIT_USER_RESPONSE,
   };
 }
 
@@ -152,10 +176,21 @@ export function setHiringStatus(payload) {
   };
 }
 
-export function updateUserFailure(payload) {
+export function updateUserLinksFailure(payload) {
   return {
     payload,
-    type: UPDATE_USER_FAILURE,
+    type: UPDATE_USER_LINKS_FAILURE,
+  };
+}
+
+export function updateUserLinksSuccess() {
+  return { type: UPDATE_USER_LINKS_SUCCESS };
+}
+
+export function updateUserLinks(payload) {
+  return {
+    payload,
+    type: UPDATE_USER_LINKS,
   };
 }
 
@@ -174,16 +209,5 @@ export function updateUserSkills(payload) {
   return {
     payload,
     type: UPDATE_USER_SKILLS,
-  };
-}
-
-export function updateUserSuccess() {
-  return { type: UPDATE_USER_SUCCESS };
-}
-
-export function updateUser(payload) {
-  return {
-    payload,
-    type: UPDATE_USER,
   };
 }

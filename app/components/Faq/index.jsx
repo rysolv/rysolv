@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
+import MuiExpansionPanel from '@material-ui/core/Accordion';
 
 import {
   AnswerWrapper,

@@ -243,8 +243,9 @@ module.exports = buildSchema(`
     lastName: String!
     profilePic: String!
     readDate: Object
-    username: String!
+    threadId: ID
     userId: ID!
+    username: String!
   }
 
   type Payment {
@@ -406,9 +407,11 @@ module.exports = buildSchema(`
     company: Object
     completedPullRequests: Int
     createdDate: Object
+    desiredRole: [String]
     dollarsEarned: Int
     email: String!
     emailVerified: Boolean
+    experience: String
     firstName: String
     githubId: String
     githubLink: String
@@ -417,6 +420,7 @@ module.exports = buildSchema(`
     id: ID!
     isActive: String
     isGithubVerified: Boolean
+    isRemote: String
     isSaved: Boolean
     issues: [Object]
     languages: [String]
@@ -429,20 +433,24 @@ module.exports = buildSchema(`
     percentMatch: Float
     personalLink: String
     preferredLanguages: [String]
+    preferredLocation: String
     profilePic: String
     pullRequests: [String]
     receiveWeeklyEmails: Boolean
     rejectedPullRequests: Int
     rep: Int
     repos: [Object]
+    resume: String
     salary: String
     skills: [Object]
     stackoverflowLink: String
     surveyComplete: Boolean
+    targetSalary: String
     threadId: ID
     type: String
     unreadMessages: Int
     upvotes: [ID]
+    usCitizen: String
     username: String
     watching: [Object]
     yearsOfExperience: String

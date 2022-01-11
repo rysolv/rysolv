@@ -2,41 +2,26 @@ import React from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 import { withRouter } from 'react-router-dom';
 
-import makeSelectViewSize from 'containers/ViewSize/selectors';
-import CompanyPricingView from 'components/CompanyPricing';
+import PricingView from 'components/Pricing';
 
 import { ViewContainer } from './styledComponents';
 
-const Pricing = ({ deviceView, handleNav }) => {
+const Pricing = ({ handleNav }) => {
   const handleSelectPlan = () => {
     handleNav('/signup?type=company');
   };
 
   return (
     <ViewContainer>
-      <CompanyPricingView
-        deviceView={deviceView}
-        handleSelectPlan={handleSelectPlan}
-      />
+      <PricingView handleSelectPlan={handleSelectPlan} />
     </ViewContainer>
   );
 };
 
-Pricing.propTypes = {
-  deviceView: T.string.isRequired,
-  handleNav: T.func.isRequired,
-};
-
-const mapStateToProps = createStructuredSelector({
-  /**
-   * Reducer: ViewSizes
-   */
-  deviceView: makeSelectViewSize('deviceView'),
-});
+Pricing.propTypes = { handleNav: T.func.isRequired };
 
 const mapDispatchToProps = dispatch => ({
   /*
@@ -46,7 +31,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const withConnect = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 );
 

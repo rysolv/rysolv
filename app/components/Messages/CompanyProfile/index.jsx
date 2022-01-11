@@ -42,7 +42,7 @@ const CompanyCard = ({ company }) => {
           <PositionWrapper>{description}</PositionWrapper>
           <WebsiteWrapper>
             <WebsiteLink href={companyUrl} target="_blank">
-              https://www.kumanukumanukumanukumanukumanukumanu.com
+              {companyUrl}
             </WebsiteLink>
           </WebsiteWrapper>
         </CandidateCardUserInfo>

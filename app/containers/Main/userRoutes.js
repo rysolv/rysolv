@@ -1,11 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import withAuth from 'containers/Auth';
 
+import withAuth from 'containers/Auth';
 import CodeScoring from 'containers/CodeScoring/Loadable';
-import CompanyDashboard from 'containers/CompanyDashboard/Loadable';
-import CompanySettings from 'containers/CompanySettings/Loadable';
-import CompanySignUp from 'containers/CompanySignUp/Loadable';
 import ContactUs from 'containers/ContactUs/Loadable';
 import Faq from 'components/Faq';
 import HowTo from 'components/HowTo';
@@ -29,17 +26,9 @@ import UserProfile from 'containers/UserProfile';
 import UsersDetail from 'containers/Users/Detail';
 import VerifyGithub from 'containers/VerifyGithub/Loadable';
 
-const companyConfig = {
-  isAdmin: false,
-  isCompany: true,
-  isPrivate: true,
-};
 const privateConfig = { isAdmin: false, isPrivate: true };
 const publicConfig = { isAdmin: false, isPrivate: false };
 
-const PrivateCompanyDashboard = withAuth(companyConfig, CompanyDashboard);
-const PrivateCompanySettings = withAuth(companyConfig, CompanySettings);
-const PrivateCompanySignUp = withAuth(companyConfig, CompanySignUp);
 const PrivateIssuesAdd = withAuth(privateConfig, IssuesAdd);
 const PrivateMessages = withAuth(privateConfig, Messages);
 const PrivateReposAdd = withAuth(privateConfig, ReposAdd);
@@ -65,13 +54,10 @@ const PublicUsersDetail = withAuth(publicConfig, UsersDetail);
 const PublicVerifyGithub = withAuth(publicConfig, VerifyGithub);
 
 // prettier-ignore
-const Routes = () => (
+const UserRoutes = () => (
   <Switch>
     <Route exact path="/" component={PublicMain} />
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
-    <Route exact path="/company/dashboard/:view?" component={PrivateCompanyDashboard} />
-    <Route exact path="/company/settings/:view?" component={PrivateCompanySettings} />
-    <Route exact path="/company/signup" component={PrivateCompanySignUp} />
     <Route exact path="/contact-us" component={PublicContactUs} />
     <Route exact path="/dashboard/:view?" component={PrivateUserDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
@@ -107,4 +93,4 @@ const Routes = () => (
   </Switch>
 );
 
-export default Routes;
+export default UserRoutes;

@@ -16,7 +16,8 @@ import {
   FETCH_USER,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
-  SET_MODAL_ERROR,
+  RESET_MODAL_STATE,
+  SET_MODAL_ALERTS,
   SUBMIT_CONTRACT_ACCEPTED_FAILURE,
   SUBMIT_CONTRACT_ACCEPTED_SUCCESS,
   SUBMIT_CONTRACT_ACCEPTED,
@@ -135,10 +136,14 @@ export function openModalState(payload) {
   };
 }
 
-export function setModalError(payload) {
+export function resetModalState() {
+  return { type: RESET_MODAL_STATE };
+}
+
+export function setModalAlerts(payload) {
   return {
     payload,
-    type: SET_MODAL_ERROR,
+    type: SET_MODAL_ALERTS,
   };
 }
 

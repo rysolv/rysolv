@@ -27,39 +27,6 @@ import {
   UPDATE_PAYMENT_METHOD,
 } from './constants';
 
-export function* fetchContractSaga({ payload }) {
-  const { plan } = payload;
-  const query = `
-    query{
-      getContract(plan: "${plan}") {
-        __typename
-        ... on Contract {
-          body
-          key
-          subtitle
-          title
-          version
-        }
-        ... on Error {
-          message
-        }
-      }
-    }
-  `;
-  try {
-    const graphql = JSON.stringify({ query });
-    const {
-      data: {
-        getContract: { __typename, message, ...restProps },
-      },
-    } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') throw message;
-    yield put(fetchContractSuccess({ contract: restProps }));
-  } catch (error) {
-    yield put(fetchContractFailure({ error }));
-  }
-}
-
 export function* editUserSaga({ payload }) {
   const { field, value } = payload;
   const query = `
@@ -92,6 +59,39 @@ export function* editUserSaga({ payload }) {
     );
   } catch (error) {
     yield put(editUserFailure({ error: { message: error } }));
+  }
+}
+
+export function* fetchContractSaga({ payload }) {
+  const { plan } = payload;
+  const query = `
+    query{
+      getContract(plan: "${plan}") {
+        __typename
+        ... on Contract {
+          body
+          key
+          subtitle
+          title
+          version
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        getContract: { __typename, message, ...restProps },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(fetchContractSuccess({ contract: restProps }));
+  } catch (error) {
+    yield put(fetchContractFailure({ error }));
   }
 }
 
