@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import T from 'prop-types';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
@@ -25,7 +25,7 @@ const repoIcon = iconDictionary('repo');
 const uploadIcon = iconDictionary('upload');
 const userIcon = iconDictionary('user');
 
-const SideNav = ({ deviceView, handleNav }) => {
+const SideNav = ({ deviceView, handleNav, isCompany }) => {
   const path = window.location.pathname;
   const rootPath = path.split('/')[1];
   const [open, setOpen] = useState(true);
@@ -122,27 +122,34 @@ const SideNav = ({ deviceView, handleNav }) => {
               <ListItemText primary="Users" />
             </ListItem>
           </StyledListWrapper>
-          <Divider />
-          <StyledListWrapper active={currentValue === 3}>
-            <ListItem
-              button
-              key="addIssues"
-              onClick={() => handleClick('/issues/add', 3)}
-            >
-              <ListItemIcon>{uploadIcon}</ListItemIcon>
-              <ListItemText primary="New Issue" />
-            </ListItem>
-          </StyledListWrapper>
-          <StyledListWrapper active={currentValue === 4}>
-            <ListItem
-              button
-              key="addRepos"
-              onClick={() => handleClick('/repos/add', 4)}
-            >
-              <ListItemIcon>{addIcon}</ListItemIcon>
-              <ListItemText primary="New Repo" />
-            </ListItem>
-          </StyledListWrapper>
+          <ConditionalRender
+            Component={
+              <Fragment>
+                <Divider />
+                <StyledListWrapper active={currentValue === 3}>
+                  <ListItem
+                    button
+                    key="addIssues"
+                    onClick={() => handleClick('/issues/add', 3)}
+                  >
+                    <ListItemIcon>{uploadIcon}</ListItemIcon>
+                    <ListItemText primary="New Issue" />
+                  </ListItem>
+                </StyledListWrapper>
+                <StyledListWrapper active={currentValue === 4}>
+                  <ListItem
+                    button
+                    key="addRepos"
+                    onClick={() => handleClick('/repos/add', 4)}
+                  >
+                    <ListItemIcon>{addIcon}</ListItemIcon>
+                    <ListItemText primary="New Repo" />
+                  </ListItem>
+                </StyledListWrapper>
+              </Fragment>
+            }
+            shouldRender={!isCompany}
+          />
         </List>
         <StyledIconButton disableRipple onClick={toggleDrawer} open>
           {open ? backArrow : forwardArrow}
@@ -160,8 +167,9 @@ const SideNav = ({ deviceView, handleNav }) => {
 };
 
 SideNav.propTypes = {
-  deviceView: T.string,
-  handleNav: T.func,
+  deviceView: T.string.isRequired,
+  handleNav: T.func.isRequired,
+  isCompany: T.bool.isRequired,
 };
 
 export default SideNav;

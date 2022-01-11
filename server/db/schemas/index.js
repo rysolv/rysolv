@@ -18,6 +18,7 @@ const pullRequestSchema = require('./pullRequest');
 const questionResponseSchema = require('./questionResponses');
 const questionSchema = require('./questions');
 const repoSchema = require('./repos');
+const signedContractsSchema = require('./signedContracts');
 const technologiesSchema = require('./technologies');
 const userCompaniesSchema = require('./userCompanies.js');
 const userQuestionResponseSchema = require('./userQuestionResponses');
@@ -47,6 +48,7 @@ module.exports = {
   ...questionResponseSchema,
   ...questionSchema,
   ...repoSchema,
+  ...signedContractsSchema,
   ...technologiesSchema,
   ...userCompaniesSchema,
   ...userQuestionResponseSchema,

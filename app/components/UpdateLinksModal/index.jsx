@@ -22,7 +22,7 @@ const UpdateLinksModal = ({
   form,
   formErrors,
   handleClose,
-  handleUpdateUser,
+  handleUpdateUserLinks,
   handleValidateInput,
   user,
 }) => {
@@ -79,7 +79,7 @@ const UpdateLinksModal = ({
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
           label={hasLinks ? 'Save' : 'Add'}
-          onClick={handleUpdateUser}
+          onClick={handleUpdateUserLinks}
         />
       </ButtonWrapper>
     </ModalContainer>
@@ -94,7 +94,7 @@ UpdateLinksModal.propTypes = {
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleClose: T.func.isRequired,
-  handleUpdateUser: T.func.isRequired,
+  handleUpdateUserLinks: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   user: T.object.isRequired,
 };

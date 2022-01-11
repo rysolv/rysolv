@@ -1,84 +1,66 @@
-import styled from 'styled-components';
-import Button from '@material-ui/core/Button';
-
-import { PrimaryButton } from 'components/base_ui';
+import styled, { css } from 'styled-components';
 
 import {
+  ErrorSuccessBanner,
+  PrimaryAsyncButton,
+  PrimaryButton,
+} from 'components/base_ui';
+import {
+  blueColor,
   darkBlueColor,
-  defaultFontFamily,
-  detailFontSize,
   lightGreyColor,
   textColor,
   whiteColor,
 } from 'defaultStyleHelper';
-import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobileS } = mediaQueriesByDevice;
-
-export const ContentGroup = styled.div`
-  align-self: center;
-  padding: 1rem;
-  width: 44rem;
-`;
-
-export const DescriptionWrapper = styled.div`
-  color: ${lightGreyColor};
-  font-size: 2rem;
-  font-weight: 500;
-  padding: 1rem 0;
-  text-align: left;
-`;
-
-export const DetailText = styled.div`
-  font-size: ${detailFontSize};
-`;
-
-export const PaymentSelector = styled.div`
+const baseButtonStyle = css`
+  align-items: center;
+  border-radius: 0.8rem;
   display: flex;
-  justify-content: space-evenly;
-`;
-
-export const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`;
-
-export const HorizontalDivider = styled.div`
-  background: ${whiteColor};
-  border-bottom: 0.1rem solid rgb(211 211 211 / 70%);
-  height: 0.1rem;
-  margin: 1.5rem 0;
-`;
-
-export const StyledButton = styled(Button)`
-  color: ${darkBlueColor};
-  font-family: ${defaultFontFamily};
   font-size: 1.6rem;
-  font-weight: ${({ selected }) => (selected ? '700' : '500')};
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
   margin: 0;
-  padding: 0rem;
-  text-transform: none;
+  text-transform: initial;
+  width: 10rem;
+`;
 
-  &:hover {
-    background-color: transparent;
-  }
+export const Asterisk = styled.span`
+  margin-right: 0.6rem;
+  margin-top: 0.3rem;
+`;
 
-  svg {
-    height: 2rem;
-    width: 2rem;
-  }
+export const ButtonWrapper = styled.div`
+  display: flex;
+`;
 
-  ${mobileS} {
-    justify-content: start;
+export const DisclaimerWrapper = styled.div`
+  color: ${lightGreyColor};
+  display: flex;
+  font-size: 1.6rem;
+  margin-top: 1.6rem;
+`;
+
+export const ModalContainer = styled.div`
+  padding: 2rem;
+  width: 50rem;
+
+  @media (max-width: 560px) {
+    width: auto;
   }
 `;
 
-export const StyledPrimaryButton = styled(PrimaryButton)`
+export const StyledErrorSuccessBanner = styled(ErrorSuccessBanner)`
+  height: auto;
+  margin-bottom: 3rem;
+`;
+
+export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
+  ${baseButtonStyle};
   background-color: ${darkBlueColor};
   color: ${whiteColor};
-  padding: 1rem;
-  width: 60%;
+  margin-left: 1rem;
 
   &:hover {
     background-color: ${darkBlueColor};
@@ -86,22 +68,31 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   }
 `;
 
-export const Title = styled.div`
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  ${baseButtonStyle};
+  background-color: ${whiteColor};
+  border: 0.2rem solid ${darkBlueColor};
   color: ${darkBlueColor};
-  font-size: 2.4rem;
-  font-weight: 700;
-  line-height: 3.36rem;
+  margin-right: 1rem;
+
+  &:hover {
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
+  }
 `;
 
-export const ViewContainer = styled.div`
-  background: ${whiteColor};
+export const StyledTitle = styled.h3`
+  color: ${blueColor};
+  font-size: ${({ isConfirmation }) => (isConfirmation ? '2.5rem' : '3.2rem')};
+  font-weight: 700;
+  line-height: 3.36rem;
+  margin: 0;
+  padding: 2rem 0 1rem;
+`;
+
+export const TextWrapper = styled.div`
   color: ${textColor};
-  display: flex;
-  flex-direction: column;
   font-size: 1.6rem;
-  justify-content: space-between;
-  min-width: 40rem;
-  padding: 3rem;
-  text-align: center;
-  width: 100%;
+  line-height: 2.4rem;
+  padding: 0.6rem 0 3.4rem;
 `;

@@ -39,6 +39,10 @@ export const ButtonWrapper = styled.div`
   display: flex;
 `;
 
+export const LeftContainer = styled.div`
+  width: 70%;
+`;
+
 export const OptionDescription = styled.div`
   ${baseOptionTextStyle};
   color: #a9acae;

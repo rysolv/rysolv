@@ -19,6 +19,7 @@ import {
   fetchCompanyPositionsFailure,
   fetchCompanyPositionsSuccess,
   fetchCompanySuccess,
+  fetchPositionCandidates,
   fetchPositionCandidatesFailure,
   fetchPositionCandidatesSuccess,
   fetchPositionFailure,
@@ -101,6 +102,7 @@ export function* createPositionSaga({ payload }) {
     yield put(createPositionSuccess({ message, positionId }));
     yield put(fetchCompanyPositions({ companyId }));
     yield put(matchCandidates({ positionId }));
+    yield put(fetchPositionCandidates({ positionId }));
     yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(createPositionFailure({ error: { message: error } }));
@@ -457,6 +459,7 @@ export function* notifyCandidateSaga({ payload }) {
           lastName
           profilePic
           readDate
+          threadId
           username
         }
         ... on Error {
@@ -469,11 +472,11 @@ export function* notifyCandidateSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        createMessage: { __typename, message },
+        createMessage: { __typename, message, threadId },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(notifyCandidateSuccess({ message: messageSuccess }));
+    yield put(notifyCandidateSuccess({ candidateId, message: messageSuccess, threadId }));
     yield put(resetFormState({ category: 'scheduleInterview' }));
   } catch (error) {
     yield put(notifyCandidateFailure({ error: { message: error } }));

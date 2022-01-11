@@ -3,11 +3,11 @@ import React from 'react';
 import T from 'prop-types';
 import { usePlaidLink } from 'react-plaid-link';
 
-import { plaidError } from './constants';
-import { StyledPrimaryButton } from './styledComponents';
+import { plaidError } from '../constants';
+import { StyledButton } from './styledComponents';
 
-const CompanyPaymentModal = ({
-  dispatchSetModalError,
+const PlaidLink = ({
+  dispatchSetModalAlerts,
   dispatchUpdatePaymentMethod,
   plaidToken,
 }) => {
@@ -25,29 +25,27 @@ const CompanyPaymentModal = ({
       if (err) {
         // Using standardized 'Something went wrong' errors for now
         // Plaid provides sanitized errors in (error.display_message)
-        dispatchSetModalError({ error: plaidError });
+        dispatchSetModalAlerts({ error: plaidError });
       }
     },
     token: plaidToken,
     receivedRedirectUri: null,
   };
 
-  // Exports { open, exit, ready } funtions
+  // Exports { exit, open, ready } funtions
   const { open } = usePlaidLink(config);
 
   return (
-    <StyledPrimaryButton
-      disabled={!open}
-      onClick={() => open()}
-      label="Link bank account"
-    />
+    <StyledButton disableRipple disabled={!open} onClick={open}>
+      Connect a bank account
+    </StyledButton>
   );
 };
 
-CompanyPaymentModal.propTypes = {
-  dispatchSetModalError: T.func.isRequired,
+PlaidLink.propTypes = {
+  dispatchSetModalAlerts: T.func.isRequired,
   dispatchUpdatePaymentMethod: T.func.isRequired,
   plaidToken: T.string.isRequired,
 };
 
-export default CompanyPaymentModal;
+export default PlaidLink;

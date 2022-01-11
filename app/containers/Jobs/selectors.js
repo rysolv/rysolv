@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { snakeToCamel } from 'utils/globalHelpers';
+import { convertFileToDataUrl, snakeToCamel } from 'utils/globalHelpers';
 
-import { convertFileToDataUrl, optionDictionary } from './helpers';
+import { optionDictionary } from './helpers';
 import { initialState } from './reducer';
 
 const selectJobsDomain = state => state.jobs || initialState;
@@ -93,7 +93,6 @@ const makeSelectJobResponseArray = () =>
           if (!Array.isArray(values) && values) {
             const [{ id: responseId }] = responses.filter(
               response =>
-                response.responseKey === 'personal_link' ||
                 response.responseKey === 'preferred_locations' ||
                 response.value === values,
             );

@@ -8,6 +8,12 @@ export const CLOSE_MODAL_STATE = 'app/UserDashboard/CLOSE_MODAL_STATE';
 
 export const DELETE_SKILL = 'app/UserDashboard/DELETE_SKILL';
 
+export const EDIT_USER_RESPONSE = 'app/UserDashboard/EDIT_USER_RESPONSE';
+export const EDIT_USER_RESPONSE_FAILURE =
+  'app/UserDashboard/EDIT_USER_RESPONSE_FAILURE';
+export const EDIT_USER_RESPONSE_SUCCESS =
+  'app/UserDashboard/EDIT_USER_RESPONSE_SUCCESS';
+
 export const FETCH_QUESTIONS = 'app/UserDashboard/FETCH_QUESTIONS';
 export const FETCH_QUESTIONS_FAILURE =
   'app/UserDashboard/FETCH_QUESTIONS_FAILURE';
@@ -38,9 +44,11 @@ export const SET_HIRING_STATUS_SUCCESS =
 
 export const RESET_FORM_STATE = 'app/UserDashboard/RESET_FORM_STATE';
 
-export const UPDATE_USER = 'app/UserDashboard/UPDATE_USER';
-export const UPDATE_USER_FAILURE = 'app/UserDashboard/UPDATE_USER_FAILURE';
-export const UPDATE_USER_SUCCESS = 'app/UserDashboard/UPDATE_USER_SUCCESS';
+export const UPDATE_USER_LINKS = 'app/UserDashboard/UPDATE_USER_LINKS';
+export const UPDATE_USER_LINKS_FAILURE =
+  'app/UserDashboard/UPDATE_USER_LINKS_FAILURE';
+export const UPDATE_USER_LINKS_SUCCESS =
+  'app/UserDashboard/UPDATE_USER_LINKS_SUCCESS';
 
 export const UPDATE_USER_SKILLS = 'app/UserDashboard/UPDATE_USER_SKILLS';
 export const UPDATE_USER_SKILLS_FAILURE =

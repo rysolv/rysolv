@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import T from 'prop-types';
 
 import iconDictionary from 'utils/iconDictionary';
@@ -37,6 +37,8 @@ const DragAndDrop = ({
 }) => {
   const fileInputField = useRef(null);
   const [files, setFiles] = useState(value);
+
+  useEffect(() => setFiles(value), [value]);
 
   const handleUploadBtnClick = () => {
     fileInputField.current.click();

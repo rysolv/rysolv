@@ -7,6 +7,7 @@ import Notification from './Notification';
 import UserDashboardSideNav from './UserDashboardSideNav';
 import RecommendedIssues from './RecommendedIssues';
 import {
+  LeftContainer,
   UserDashboardContainer,
   UserDashboardContent,
   UserDashboardHeader,
@@ -88,7 +89,7 @@ const UserDashboard = ({
         }
         FallbackComponent={
           <Fragment>
-            <div>
+            <LeftContainer>
               <UserDashboardHeader>Welcome, {firstName}!</UserDashboardHeader>
               <UserDashboardContent>
                 <ConditionalRender
@@ -104,7 +105,7 @@ const UserDashboard = ({
                   issues={issues}
                 />
               </UserDashboardContent>
-            </div>
+            </LeftContainer>
             <UserDashboardSideNav
               dispatchOpenModal={dispatchOpenModal}
               dispatchSetHiringStatus={dispatchSetHiringStatus}

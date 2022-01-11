@@ -2,20 +2,6 @@ import { validate } from 'utils/validate';
 
 import { additionalInputDictionary } from './constants';
 
-export const convertFileToDataUrl = async file => {
-  const { type } = file;
-  const dataUrl = await new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-
-  if (!dataUrl) return 'data:';
-  const base64Data = dataUrl.split(',')[1];
-  return `data:${type};base64,${base64Data}`;
-};
-
 export const optionDictionary = {
   desired_role: {
     option: 'multipleButton',
@@ -28,11 +14,6 @@ export const optionDictionary = {
   },
   is_remote: {
     option: 'autocomplete',
-  },
-  personal_link: {
-    option: 'singleInput',
-    placeholder: 'https://mypersonalwebsite.com',
-    type: 'url',
   },
   preferred_location: {
     option: 'locationAutocomplete',
@@ -53,7 +34,6 @@ export const optionDictionary = {
 };
 
 const validationPropsByField = {
-  personalLink: { type: 'linkInput' },
   preferredLocation: { type: 'positionLocationInput' },
 };
 

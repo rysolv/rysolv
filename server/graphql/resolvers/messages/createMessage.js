@@ -7,12 +7,13 @@ const createMessage = async ({ messageInput }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
+    const threadId = messageInput.threadId || uuidv4();
     const data = {
       body: messageInput.body || '',
       createdDate: new Date(),
       fromUserId: userId,
       positionId: messageInput.positionId,
-      threadId: messageInput.threadId || uuidv4(),
+      threadId,
       toUserId: messageInput.toUserId,
     };
     const newMessage = await createMessageQuery({ data });
@@ -22,6 +23,7 @@ const createMessage = async ({ messageInput }, { authError, userId }) => {
     return {
       __typename: 'MessageResponse',
       ...newMessage,
+      threadId,
     };
   } catch (error) {
     const { alert } = error;

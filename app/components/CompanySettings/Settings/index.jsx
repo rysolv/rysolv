@@ -15,7 +15,7 @@ const CompanySettings = ({
   handleValidateInput,
 }) => (
   <CompanySettingsContainer>
-    <CompanySettingsHeader>User Details</CompanySettingsHeader>
+    <CompanySettingsHeader>User details</CompanySettingsHeader>
     {Object.keys(form).map(field => {
       const handleChangeInput = value => {
         dispatchChangeInput({

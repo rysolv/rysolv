@@ -34,7 +34,7 @@ import {
 import { ViewContainer } from './styledComponents';
 
 const Jobs = ({
-  activeUser: { isGithubVerified, surveyComplete },
+  activeUser: { company, isGithubVerified, surveyComplete },
   dispatchChangeInput,
   dispatchChangeSkillLevel,
   dispatchChangeView,
@@ -102,6 +102,8 @@ const Jobs = ({
     dispatchChangeInput({ field: 'resume', value: filesArray });
   };
 
+  const isCompany = !!company;
+
   const step = getQuestion();
   const questionProps = tempQuestions[step - 1];
 
@@ -131,6 +133,7 @@ const Jobs = ({
           handleStart,
           handleSubmit,
           handleUpdateFiles,
+          isCompany,
           isGithubVerified,
           isSignedIn,
           loading,

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { snakeToCamel } from 'utils/globalHelpers';
+import { convertFileToDataUrl, snakeToCamel } from 'utils/globalHelpers';
 
 import { optionDictionary } from './helpers';
 import { initialState } from './reducer';
@@ -51,6 +51,64 @@ const makeSelectUserDashboardQuestions = () =>
     },
   );
 
+const makeSelectUserDashboardResponseArray = () =>
+  createSelector(
+    makeSelectUserDashboard('form'),
+    makeSelectUserDashboard('questions'),
+    (form, questions) => {
+      const { application } = form;
+      const responseArray = [];
+      if (questions.length) {
+        Object.keys(application).forEach(async input => {
+          const values = application[input];
+          const [{ id: questionId, questionKey, responses }] = questions.filter(
+            ({ questionKey: key }) => input === snakeToCamel(key),
+          );
+          if (Array.isArray(values)) {
+            values.forEach(async value => {
+              const [{ id: responseId, responseKey }] = responses.filter(
+                response =>
+                  response.responseKey === 'resume' ||
+                  response.responseKey === 'skill' ||
+                  response.value === value,
+              );
+              let formattedValue = value;
+              if (responseKey === 'resume') {
+                const { name } = value;
+                const filenameArray = name.split('.');
+                const fileExtension = filenameArray[filenameArray.length - 1];
+                formattedValue = {
+                  file: await convertFileToDataUrl(value),
+                  fileExtension,
+                };
+              }
+              responseArray.push({
+                questionId,
+                questionKey,
+                responseId,
+                value: formattedValue,
+              });
+            });
+          }
+          if (!Array.isArray(values) && values) {
+            const [{ id: responseId }] = responses.filter(
+              response =>
+                response.responseKey === 'preferred_locations' ||
+                response.value === values,
+            );
+            responseArray.push({
+              questionId,
+              questionKey,
+              responseId,
+              value: values,
+            });
+          }
+        });
+      }
+      return responseArray;
+    },
+  );
+
 const makeSelectUserDashboardView = () =>
   createSelector(
     selectUserDashboardProps,
@@ -62,5 +120,6 @@ export {
   makeSelectUserDashboard,
   makeSelectUserDashboardLoading,
   makeSelectUserDashboardQuestions,
+  makeSelectUserDashboardResponseArray,
   makeSelectUserDashboardView,
 };

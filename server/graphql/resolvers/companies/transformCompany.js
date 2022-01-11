@@ -2,10 +2,9 @@ const {
   CustomError,
   errorLogger,
   generateSizeInteger,
+  isUrl,
 } = require('../../../helpers');
-
 const { createStripeCustomer } = require('../../../integrations');
-
 const {
   getOneCompany,
   getOneUserLite,
@@ -33,7 +32,7 @@ const transformCompany = async ({ companyInput }, { authError, userId }) => {
 
     const companyData = {
       company_name: name,
-      company_url: website,
+      company_url: isUrl(website) ? website : `https://${website}`,
       description,
       id: companyId,
       location,

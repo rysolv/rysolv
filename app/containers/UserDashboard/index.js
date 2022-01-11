@@ -19,6 +19,7 @@ import {
   clearAlerts,
   closeModalState,
   deleteSkill,
+  editUserResponse,
   fetchQuestions,
   fetchUserDashboard,
   fetchUserResponse,
@@ -26,7 +27,7 @@ import {
   openModalState,
   resetFormState,
   setHiringStatus,
-  updateUser,
+  updateUserLinks,
   updateUserSkills,
 } from './actions';
 import { validateFields, validateOneField } from './helpers';
@@ -36,6 +37,7 @@ import {
   makeSelectUserDashboard,
   makeSelectUserDashboardLoading,
   makeSelectUserDashboardQuestions,
+  makeSelectUserDashboardResponseArray,
   makeSelectUserDashboardView,
 } from './selectors';
 import { ViewContainer } from './styledComponents';
@@ -49,6 +51,7 @@ const UserDashboard = ({
   dispatchClearAlerts,
   dispatchCloseModal,
   dispatchDeleteSkill,
+  dispatchEditUserResponse,
   dispatchFetchQuestions,
   dispatchFetchUserDashboard,
   dispatchFetchUserResponse,
@@ -56,7 +59,7 @@ const UserDashboard = ({
   dispatchOpenModal,
   dispatchResetFormState,
   dispatchSetHiringStatus,
-  dispatchUpdateUser,
+  dispatchUpdateUserLinks,
   dispatchUpdateUserSkills,
   error,
   form,
@@ -67,6 +70,7 @@ const UserDashboard = ({
   loading,
   modal,
   questions,
+  responseArray,
   skills,
   user,
   view,
@@ -86,16 +90,31 @@ const UserDashboard = ({
 
   const ComponentToRender = viewDictionary(view);
 
-  const handleUpdateFiles = async filesArray => {
-    dispatchChangeInput({ field: 'resume', value: filesArray });
+  const handleEditUserResponse = () => {
+    const { isValidated, validationErrors } = validateFields({
+      values: applicationForm,
+    });
+    if (isValidated) {
+      dispatchEditUserResponse({ responseArray });
+    } else {
+      dispatchInputError({ errors: validationErrors, form: 'application' });
+    }
   };
 
-  const handleUpdateUser = () => {
+  const handleUpdateFiles = async filesArray => {
+    dispatchChangeInput({
+      field: 'resume',
+      form: 'application',
+      value: filesArray,
+    });
+  };
+
+  const handleUpdateUserLinks = () => {
     const { isValidated, validationErrors } = validateFields({
       values: profileForm,
     });
     if (isValidated) {
-      dispatchUpdateUser({ ...profileForm });
+      dispatchUpdateUserLinks({ ...profileForm });
     } else {
       dispatchInputError({ errors: validationErrors, form: 'profile' });
     }
@@ -188,9 +207,10 @@ const UserDashboard = ({
           dispatchSetHiringStatus,
           form: applicationForm,
           formErrors: applicationFormErrors,
+          handleEditUserResponse,
           handleNav,
           handleUpdateFiles,
-          handleUpdateUser,
+          handleUpdateUserLinks,
           handleValidateInput,
           isOverview,
           loading,
@@ -213,6 +233,7 @@ UserDashboard.propTypes = {
   dispatchClearAlerts: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
+  dispatchEditUserResponse: T.func.isRequired,
   dispatchFetchQuestions: T.func.isRequired,
   dispatchFetchUserDashboard: T.func.isRequired,
   dispatchFetchUserResponse: T.func.isRequired,
@@ -220,7 +241,7 @@ UserDashboard.propTypes = {
   dispatchOpenModal: T.func.isRequired,
   dispatchResetFormState: T.func.isRequired,
   dispatchSetHiringStatus: T.func.isRequired,
-  dispatchUpdateUser: T.func.isRequired,
+  dispatchUpdateUserLinks: T.func.isRequired,
   dispatchUpdateUserSkills: T.func.isRequired,
   error: T.oneOfType([T.bool, T.object]),
   form: T.object.isRequired,
@@ -231,6 +252,7 @@ UserDashboard.propTypes = {
   loading: T.bool.isRequired,
   modal: T.string.isRequired,
   questions: T.array.isRequired,
+  responseArray: T.array.isRequired,
   skills: T.array.isRequired,
   user: T.object.isRequired,
   view: T.string.isRequired,
@@ -248,6 +270,7 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectUserDashboardLoading('fetchUserDashboard'),
   modal: makeSelectUserDashboard('modal'),
   questions: makeSelectUserDashboardQuestions(),
+  responseArray: makeSelectUserDashboardResponseArray(),
   skills: makeSelectUserDashboard('skills'),
   user: makeSelectUserDashboard('user'),
   view: makeSelectUserDashboardView(),
@@ -267,6 +290,7 @@ function mapDispatchToProps(dispatch) {
     dispatchClearAlerts: () => dispatch(clearAlerts()),
     dispatchCloseModal: () => dispatch(closeModalState()),
     dispatchDeleteSkill: payload => dispatch(deleteSkill(payload)),
+    dispatchEditUserResponse: payload => dispatch(editUserResponse(payload)),
     dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
     dispatchFetchUserDashboard: () => dispatch(fetchUserDashboard()),
     dispatchFetchUserResponse: () => dispatch(fetchUserResponse()),
@@ -274,7 +298,7 @@ function mapDispatchToProps(dispatch) {
     dispatchOpenModal: payload => dispatch(openModalState(payload)),
     dispatchResetFormState: () => dispatch(resetFormState()),
     dispatchSetHiringStatus: payload => dispatch(setHiringStatus(payload)),
-    dispatchUpdateUser: payload => dispatch(updateUser(payload)),
+    dispatchUpdateUserLinks: payload => dispatch(updateUserLinks(payload)),
     dispatchUpdateUserSkills: payload => dispatch(updateUserSkills(payload)),
     /**
      * Reducer : Router

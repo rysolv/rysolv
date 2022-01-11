@@ -22,7 +22,8 @@ const LocationAutocompleteOption = ({
   const [tempValue, setTempValue] = useState('');
 
   useEffect(() => {
-    if (prevValue !== value) handleValidateInput({ field: id, values: form });
+    if (prevValue !== value)
+      handleValidateInput({ field: id, formType: 'application', values: form });
   }, [prevValue, value]);
 
   const isChecked = form[checkboxId] === 'Yes';
@@ -51,7 +52,13 @@ const LocationAutocompleteOption = ({
       <Input
         ref={ref}
         height="4.9rem"
-        onBlur={() => handleValidateInput({ field: id, values: form })}
+        onBlur={() =>
+          handleValidateInput({
+            field: id,
+            formType: 'application',
+            values: form,
+          })
+        }
         onChange={e => setTempValue(e.target.value)}
         onFocus={handlePlacesWidgetFocus}
         value={tempValue || value}
@@ -59,7 +66,13 @@ const LocationAutocompleteOption = ({
       <StyledCheckboxWithLabel
         checked={isChecked}
         label={question}
-        onBlur={() => handleValidateInput({ field: checkboxId, values: form })}
+        onBlur={() =>
+          handleValidateInput({
+            field: checkboxId,
+            formType: 'application',
+            values: form,
+          })
+        }
         onChange={() => handleChangeInput(newIsChecked, checkboxId)}
       />
       <InputError>{formErrors[id]}</InputError>

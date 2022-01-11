@@ -19,7 +19,8 @@ import {
   FETCH_USER,
   INPUT_ERROR,
   OPEN_MODAL_STATE,
-  SET_MODAL_ERROR,
+  RESET_MODAL_STATE,
+  SET_MODAL_ALERTS,
   SUBMIT_CONTRACT_ACCEPTED_FAILURE,
   SUBMIT_CONTRACT_ACCEPTED_SUCCESS,
   SUBMIT_CONTRACT_ACCEPTED,
@@ -58,7 +59,7 @@ export const initialState = {
     submitContractAccepted: false,
   },
   modal: '',
-  modalError: { error: false, success: false },
+  modalAlerts: { error: false, success: false },
   plaidToken: null,
 };
 
@@ -72,7 +73,7 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     case CLEAR_ALERTS: {
       draft.error = initialState.error;
       draft.formErrors = initialState.formErrors;
-      draft.modalError = initialState.modalError;
+      draft.modalAlerts = initialState.modalAlerts;
       break;
     }
     case CLOSE_MODAL_STATE: {
@@ -98,8 +99,8 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     }
     case FETCH_CONTRACT_FAILURE: {
       const { error } = payload;
-      draft.modalError.error = { message: error };
       draft.loading.fetchContract = false;
+      draft.modalAlerts.error = { message: error };
       break;
     }
     case FETCH_CONTRACT_SUCCESS: {
@@ -159,15 +160,19 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
       draft.modal = modalState;
       break;
     }
-    case SET_MODAL_ERROR: {
+    case RESET_MODAL_STATE: {
+      draft.modalAlerts = initialState.modalAlerts;
+      break;
+    }
+    case SET_MODAL_ALERTS: {
       const { error } = payload;
-      draft.modalError.error = { message: error };
+      draft.modalAlerts.error = { message: error };
       break;
     }
     case SUBMIT_CONTRACT_ACCEPTED_FAILURE: {
       const { error } = payload;
-      draft.modalError.error = { message: error };
       draft.loading.submitContractAccepted = false;
+      draft.modalAlerts.error = { message: error };
       break;
     }
     case SUBMIT_CONTRACT_ACCEPTED_SUCCESS: {
@@ -181,8 +186,8 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     }
     case UPDATE_PAYMENT_METHOD_FAILURE: {
       const { error } = payload;
-      draft.modalError.error = { message: error };
       draft.loading.modal = false;
+      draft.modalAlerts.error = { message: error };
       break;
     }
     case UPDATE_PAYMENT_METHOD_SUCCESS: {
