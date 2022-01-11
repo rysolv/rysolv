@@ -21,11 +21,11 @@ const getUserResponse = async (_, { authError, userId }) => {
       Object.keys(user).map(async userItem => {
         if (userItem === 'skills') {
           if (user[userItem]) {
-            const skillsArray = user[userItem].map(({ level, shortName }) => ({
+            const skillsArray = user[userItem].map(({ level, name }) => ({
               beginner: level === 1,
               expert: level === 3,
               intermediate: level === 2,
-              skill: shortName,
+              skill: name,
             }));
             formattedUser.skills = skillsArray;
           } else {

@@ -17,11 +17,11 @@ const onePosition = async ({ positionId }, { authError, userId }) => {
         else if (positionItem === 'skills') {
           if (position[positionItem]) {
             const skillsArray = position[positionItem].map(
-              ({ level, shortName }) => ({
+              ({ level, name }) => ({
                 beginner: level === 1,
                 expert: level === 3,
                 intermediate: level === 2,
-                skill: shortName,
+                skill: name,
               }),
             );
             acc.skills = skillsArray;

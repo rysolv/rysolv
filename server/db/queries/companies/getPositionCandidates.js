@@ -4,19 +4,19 @@ const getPositionCandidates = async ({ positionId, saved }) => {
   const filter = saved ? 'AND cp.saved = true' : '';
 
   const queryText = `
-  WITH position AS (
+    WITH position AS (
+      SELECT
+        cp.id AS "position_id",
+        JSON_AGG(
+          DISTINCT JSONB_BUILD_OBJECT('name', t.name, 'level', pts.level)
+        )::jsonb AS "position_languages"
+      FROM company_positions cp
+        JOIN position_tech_stack pts ON pts.position_id = cp.id
+        JOIN technologies t ON pts.technology_id = t.id
+      WHERE cp.id = $1
+      GROUP BY cp.id
+    )
     SELECT
-      cp.id AS "position_id",
-      JSON_AGG(
-        DISTINCT JSONB_BUILD_OBJECT('name', t.name, 'level',pts.level)
-      )::jsonb AS "position_languages"
-    FROM company_positions cp
-      JOIN position_tech_stack pts ON pts.position_id = cp.id
-      JOIN technologies t ON pts.technology_id = t.id
-    WHERE cp.id = $1
-    GROUP BY cp.id
-  )
-    SELECT distinct on (u.id)
       cp.percent_match AS "percentMatch",
       cp.saved as "isSaved",
       m.thread_id AS "threadId",
@@ -52,7 +52,8 @@ const getPositionCandidates = async ({ positionId, saved }) => {
       u.first_name,
       u.id,
       u.last_name,
-      u.profile_pic;
+      u.profile_pic
+    ORDER BY cp.percent_match DESC;
   `;
 
   const { rows } = await singleQuery({ queryText, values: [positionId] });

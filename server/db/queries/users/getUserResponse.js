@@ -2,8 +2,8 @@ const { singleQuery } = require('../../baseQueries');
 
 const getUserResponse = async ({ userId }) => {
   const queryText = `
-    WITH skills AS ( 
-      SELECT COALESCE(array_agg(json_build_object('id', pts.id, 'level', pts.level, 'shortName', t.short_name)), '{}') AS skills
+    WITH skills AS (
+      SELECT COALESCE(array_agg(json_build_object('id', pts.id, 'level', pts.level, 'name', t.name)), '{}') AS skills
       FROM position_tech_stack pts
       JOIN technologies t ON pts.technology_id = t.id
       WHERE pts.user_id = $1
@@ -29,7 +29,7 @@ const getUserResponse = async ({ userId }) => {
       WHERE q.question_key = 'desired_role'
       AND uqr.user_id = $1
     )
-    SELECT 
+    SELECT
       (SELECT * FROM userData),
       (SELECT * FROM desiredRole),
       (SELECT * FROM skills)

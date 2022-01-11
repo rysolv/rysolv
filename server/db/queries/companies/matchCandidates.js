@@ -1,29 +1,39 @@
 const { singleQuery } = require('../../baseQueries');
 
-const matchCandidates = async ({ positionId, userId }) => {
-  const queryText = `
-    WITH matching_users AS (
-      SELECT distinct on (u.id) u.id FROM users u
-	    JOIN user_question_responses uqr ON uqr.user_id = u.id
-	    WHERE u.is_deleted = false
-	    AND u.id != $2
-	    LIMIT 10
-    )
+const matchCandidates = async ({ candidates, positionId }) => {
+  const deleteQuery = `
+    DELETE FROM candidate_positions
+    WHERE position_id = $1
+    AND saved IS false;
+  `;
+
+  const insertQuery = `
     INSERT INTO candidate_positions(
-      percent_match,
+      match_criteria,
       position_id,
+      percent_match,
       user_id
     )
     SELECT
-      (random() * 50 + 50)::int,
-      $1,
-      id
-    FROM matching_users
+      (candidates ->> 'matchCriteria')::jsonb as match_criteria,
+      $2 as position_id,
+      (candidates ->> 'percentMatch')::double precision as percent_match,
+      (candidates ->> 'id')::uuid as user_id
+    FROM jsonb_array_elements($1) candidates
+    ON CONFLICT (user_id, position_id)
+    DO UPDATE SET
+      match_criteria = EXCLUDED.match_criteria,
+      percent_match = EXCLUDED.percent_match;
   `;
 
   await singleQuery({
-    queryText,
-    values: [positionId, userId],
+    queryText: deleteQuery,
+    values: [positionId],
+  });
+
+  await singleQuery({
+    queryText: insertQuery,
+    values: [JSON.stringify(candidates), positionId],
   });
 };
 

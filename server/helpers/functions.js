@@ -98,7 +98,8 @@ const matchLanguages = ({ userLanguages, positionLanguages }) => {
     }
   });
 
-  while (languages.length < 3) languages.push(userLanguageArray.shift());
+  while (userLanguageArray.length > 0 && languages.length < 3)
+    languages.push(userLanguageArray.shift());
   return languages;
 };
 
