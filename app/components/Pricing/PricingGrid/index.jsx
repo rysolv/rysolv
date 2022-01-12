@@ -176,7 +176,7 @@ PricingGrid.defaultProps = { currentPlan: '', isSettingRoute: false };
 PricingGrid.propTypes = {
   buttonText: T.string.isRequired,
   currentPlan: T.string,
-  focus: T.bool.isRequired,
+  focus: T.bool,
   handleSelectPlan: T.func.isRequired,
   isSettingRoute: T.bool,
 };

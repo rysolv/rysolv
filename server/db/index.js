@@ -5,6 +5,7 @@ const comments = require('./queries/comments');
 const companies = require('./queries/companies');
 const issues = require('./queries/issues');
 const languages = require('./queries/languages');
+const locations = require('./queries/locations');
 const messages = require('./queries/messages');
 const payments = require('./queries/payments');
 const pullRequests = require('./queries/pullRequests');
@@ -25,6 +26,7 @@ module.exports = {
   ...companies,
   ...issues,
   ...languages,
+  ...locations,
   ...messages,
   ...payments,
   ...pullRequests,

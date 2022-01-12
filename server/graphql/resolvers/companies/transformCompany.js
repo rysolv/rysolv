@@ -6,6 +6,7 @@ const {
 } = require('../../../helpers');
 const { createStripeCustomer } = require('../../../integrations');
 const {
+  // createLocation,
   getOneCompany,
   getOneUserLite,
   transformCompany: transformCompanyQuery,
@@ -30,12 +31,23 @@ const transformCompany = async ({ companyInput }, { authError, userId }) => {
     } = companyInput;
     const { email, firstName, lastName } = await getOneUserLite({ userId });
 
+    // @TODO: Location
+    // if (location) {
+    //   const { countryCode, country, formattedAddress, utcOffset } = location;
+    //   await createLocation({
+    //     companyId,
+    //     countryCode,
+    //     country,
+    //     formattedAddress,
+    //     utcOffset,
+    //   });
+    // }
+
     const companyData = {
       company_name: name,
       company_url: isUrl(website) ? website : `https://${website}`,
       description,
       id: companyId,
-      location,
       modified_date: new Date(),
       size: generateSizeInteger({ size }),
     };

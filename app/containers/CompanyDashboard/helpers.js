@@ -22,6 +22,8 @@ export const filterCandidates = (candidates, filterParams) => {
   return filteredCandidates;
 };
 
+// @TODO: Locations
+// remove is_remote
 export const optionDictionary = {
   description: {
     option: 'textarea',
@@ -57,6 +59,9 @@ export const optionDictionary = {
   skills: {
     option: 'radioGroup',
     type: 'skills',
+  },
+  timezone: {
+    option: 'autocomplete',
   },
   title: {
     option: 'input',

@@ -12,10 +12,30 @@ const LocationAutocompleteOption = ({ handleChangeInput, onBlur, value }) => {
     if (prevValue !== value) onBlur();
   }, [prevValue, value]);
 
+  // @TODO: Location
   const { ref } = usePlacesWidget({
     apiKey: process.env.GOOGLE_API_KEY,
-    onPlaceSelected: place => {
-      handleChangeInput(place.formatted_address);
+    onPlaceSelected: ({
+      address_components: addressComponents,
+      formatted_address: formattedAddress,
+      utc_offset_minutes: utcOffset,
+    }) => {
+      const locationData = {
+        formattedAddress,
+        utcOffset,
+      };
+
+      addressComponents.forEach(el => {
+        if (el.types.includes('country')) {
+          locationData.country = el.long_name;
+          locationData.countryCode = el.short_name;
+        }
+      });
+
+      // TODO: Send this object to the backend
+      console.log(locationData);
+
+      handleChangeInput(formattedAddress);
       setTempValue('');
     },
     options: {

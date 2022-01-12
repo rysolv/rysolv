@@ -1,5 +1,7 @@
 const { singleQuery } = require('../../baseQueries');
 
+// @TODO: Locations
+// Remove 'left' from join on locations
 const getMessages = async ({ userId }) => {
   const queryText = `
   WITH messages AS (
@@ -40,7 +42,7 @@ const getMessages = async ({ userId }) => {
     JSONB_BUILD_OBJECT(
       'companyUrl', c.company_url,
       'description', c.description,
-      'location', c.location,
+      'location', l.formatted_address,
       'logo', c.logo,
       'name', c.company_name,
       'size', c.size
@@ -59,12 +61,12 @@ const getMessages = async ({ userId }) => {
       AND candidate_user.id != $1
     JOIN company_positions cp ON cp.id = m.position_id
     JOIN companies c ON c.id = cp.company_id
+    LEFT JOIN locations l on l.company_id = c.id
     WHERE thread_id IN (SELECT thread_id FROM threads)
     GROUP BY
       c.company_name,
       c.company_url,
       c.description,
-      c.location,
       c.logo,
       c.size,
       candidate_user.first_name,
@@ -72,6 +74,7 @@ const getMessages = async ({ userId }) => {
       candidate_user.last_name,
       candidate_user.profile_pic,
       candidate_user.username,
+      l.formatted_address,
       m.position_id,
       m.thread_id
     ORDER BY "lastMessageDate" DESC

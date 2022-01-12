@@ -5,7 +5,6 @@ const companyValues = [
   'customer_id',
   'description',
   'id',
-  'location',
   'logo',
   'modified_date',
   'payment_method',

@@ -27,6 +27,8 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
+    const t1 = new Date();
+
     // Get position details
     const {
       positionKeys,
@@ -154,6 +156,15 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
     if (candidates.length) {
       await matchCandidatesQuery({ candidates, positionId });
     }
+
+    // Allow time for the animation
+    const t2 = new Date();
+    const time = t2 - t1;
+    const PromiseTimeout = delayms =>
+      new Promise(resolve => {
+        setTimeout(resolve, delayms);
+      });
+    if (time < 2000) await PromiseTimeout(2000 - time);
 
     return {
       __typename: 'Success',

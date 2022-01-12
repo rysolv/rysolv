@@ -2,6 +2,8 @@ import { validate } from 'utils/validate';
 
 import { additionalInputDictionary } from './constants';
 
+// @TODO: Locations
+// remove is_remote
 export const optionDictionary = {
   desired_role: {
     option: 'multipleButton',
@@ -27,6 +29,9 @@ export const optionDictionary = {
   },
   target_salary: {
     option: 'singleButton',
+  },
+  timezone: {
+    option: 'autocomplete',
   },
   us_citizen: {
     option: 'singleButton',

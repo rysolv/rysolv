@@ -5,7 +5,6 @@ const alterCompaniesTable = `
   ADD COLUMN created_date TIMESTAMP,
   ADD COLUMN customer_id VARCHAR(64) UNIQUE,
   ADD COLUMN description TEXT,
-  ADD COLUMN location VARCHAR(128),
   ADD COLUMN logo VARCHAR(256),
   ADD COLUMN modified_date TIMESTAMP,
   ADD COLUMN payment_method VARCHAR(128),

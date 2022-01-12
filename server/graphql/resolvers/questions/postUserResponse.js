@@ -24,6 +24,17 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
       responseArray.map(
         async ({ questionId, questionKey, responseId, value }) => {
           // Language / Frameworks stored in techstack table
+          // @TODO: Location
+          // if (location) {
+          //   const { countryCode, country, formattedAddress, utcOffset } = location;
+          //   await createLocation({
+          //     companyId,
+          //     countryCode,
+          //     country,
+          //     formattedAddress,
+          //     utcOffset,
+          //   });
+          // } else
           if (questionKey === 'skills') {
             const { beginner, expert, intermediate, skill } = value;
             await createUserTechStack({

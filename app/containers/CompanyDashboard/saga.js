@@ -230,8 +230,9 @@ export function* editPositionSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(editPositionSuccess());
-    yield put(matchCandidates({ positionId }));
     yield put(fetchCompanyPositions({ companyId }));
+    yield put(matchCandidates({ positionId }));
+    yield put(fetchPositionCandidates({ positionId }));
     yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(editPositionFailure({ error: { message: error } }));

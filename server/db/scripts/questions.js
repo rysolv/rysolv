@@ -2,104 +2,7 @@ const { singleQuery } = require('../baseQueries');
 
 // Generate initial list of questions
 const questions = [
-  // hiring
-  // experience
-  {
-    id: '4bef1f37-f09b-4515-a483-047faa0758cd',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 2,
-    question_key: 'experience',
-    question_text: 'How many years of experience do you have?',
-    required: true,
-    response_limit: 1,
-    subtext: 'This can include educational and professional.',
-  },
-  // is_active
-  {
-    id: '71401a1a-54bc-4816-a6b1-2e2679b57b4b',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 8,
-    question_key: 'is_active',
-    question_text: 'Are you actively looking for work?',
-    required: true,
-    response_limit: 1,
-    subtext: null,
-  },
-  // is remote
-  {
-    id: 'f90ae70b-dd4a-4c40-8fb4-3dd095e45673',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 4,
-    question_key: 'is_remote',
-    question_text: 'I am looking for a remote position.',
-    required: true,
-    response_limit: 1,
-    subtext: null,
-  },
-  // preferred location
-  {
-    id: '29a29e9c-798e-4dd1-a8a3-c9029e5b9020',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 3,
-    question_key: 'preferred_location',
-    question_text: 'What is your preferred location?',
-    required: true,
-    response_limit: 1,
-    subtext:
-      'If you are looking for a remote position, select your current location.',
-  },
-  // resume
-  {
-    id: 'dcf6d0db-b443-48e7-a637-c1679590d184',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 9,
-    question_key: 'resume',
-    question_text: 'Upload your resume.',
-    required: false,
-    response_limit: 1,
-    subtext: 'Optional.',
-  },
-  // skills
-  {
-    id: '7d62997d-16a7-43aa-a8af-3120cfb95b28',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 5,
-    question_key: 'skills',
-    question_text: 'What are your strongest skills?',
-    required: true,
-    response_limit: 1,
-    subtext: 'Select up to 3 languages.',
-  },
-  // desired role
-  {
-    id: 'eb292e4a-96f8-444e-953c-f29f726abd6e',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 6,
-    question_key: 'desired_role',
-    question_text: 'What is your desired role?',
-    required: true,
-    response_limit: 3,
-    subtext: 'Select up to 3 roles.',
-  },
-  // target salary
-  {
-    id: '32eee9df-e3f8-4288-9671-d69981c6554d',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 7,
-    question_key: 'target_salary',
-    question_text: 'What is your target salary?',
-    required: true,
-    response_limit: 1,
-    subtext: null,
-  },
+  // user hiring
   // us citizen
   {
     id: 'a1c3ce83-14fc-405f-9888-3fa20d5acd72',
@@ -112,19 +15,128 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
+  // is_active
+  {
+    id: '71401a1a-54bc-4816-a6b1-2e2679b57b4b',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 2,
+    question_key: 'is_active',
+    question_text: 'Are you actively looking for work?',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // experience
+  {
+    id: '4bef1f37-f09b-4515-a483-047faa0758cd',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 3,
+    question_key: 'experience',
+    question_text: 'How many years of experience do you have?',
+    required: true,
+    response_limit: 1,
+    subtext: 'This can include educational and professional.',
+  },
+  // preferred location
+  {
+    id: '29a29e9c-798e-4dd1-a8a3-c9029e5b9020',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 4,
+    question_key: 'preferred_location',
+    question_text: 'Where are you located?',
+    required: true,
+    response_limit: 1,
+    subtext: 'All positions are remote.',
+  },
+  // user timezone
+  {
+    id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 5,
+    question_key: 'timezone',
+    question_text: 'In which timezones would you like to work?',
+    required: true,
+    response_limit: 1,
+    subtext: 'Distance from your current location.',
+  },
+  // @TODO: Location
+  // is remote (remove me)
+  {
+    id: 'f90ae70b-dd4a-4c40-8fb4-3dd095e45673',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 6,
+    question_key: 'is_remote',
+    question_text: 'I am looking for a remote position.',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // skills
+  {
+    id: '7d62997d-16a7-43aa-a8af-3120cfb95b28',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 7,
+    question_key: 'skills',
+    question_text: 'What are your strongest skills?',
+    required: true,
+    response_limit: 1,
+    subtext: 'Select up to 3 languages.',
+  },
+  // desired role
+  {
+    id: 'eb292e4a-96f8-444e-953c-f29f726abd6e',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 8,
+    question_key: 'desired_role',
+    question_text: 'What is your desired role?',
+    required: true,
+    response_limit: 3,
+    subtext: 'Select up to 3 roles.',
+  },
   // type: contractor/full_time
   {
     id: '8582c14b-70ac-4ca8-8a4d-fa37cc9bec55',
     category: 'hiring',
     created_date: new Date(),
-    priority: 8,
+    priority: 9,
     question_key: 'type',
     question_text: 'Why type of position are you looking for?',
     required: true,
     response_limit: 2,
     subtext: 'Select as many as apply.',
   },
-  // company_position
+  // target salary
+  {
+    id: '32eee9df-e3f8-4288-9671-d69981c6554d',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 10,
+    question_key: 'target_salary',
+    question_text: 'What is your target salary?',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  // resume
+  {
+    id: 'dcf6d0db-b443-48e7-a637-c1679590d184',
+    category: 'hiring',
+    created_date: new Date(),
+    priority: 11,
+    question_key: 'resume',
+    question_text: 'Upload your resume.',
+    required: false,
+    response_limit: 1,
+    subtext: 'Optional.',
+  },
+  // ****************  company_position  ****************
   // description
   {
     id: '34cc19c1-38e3-43b4-b0e7-5fac04bedec4',
@@ -161,7 +173,8 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
-  // is_remote
+  // @TODO: Location
+  // is_remote (to be removed)
   {
     id: '16499d8b-3d54-43ed-b9fb-58c8e99c9fb4',
     category: 'company_position',
@@ -181,6 +194,17 @@ const questions = [
     priority: 4,
     question_key: 'location',
     question_text: 'Location',
+    required: true,
+    response_limit: 1,
+    subtext: null,
+  },
+  {
+    id: '282b9bd0-bb71-4926-8360-b46041a159d3',
+    category: 'company_position',
+    created_date: new Date(),
+    priority: 5,
+    question_key: 'timezone',
+    question_text: 'What are the preferred timezones for this position?',
     required: true,
     response_limit: 1,
     subtext: null,
@@ -246,7 +270,7 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
-  // company
+  // ****************  company  *****************
   // description
   {
     id: '97e4b49d-b178-48ce-865f-c707ef48c0a5',
@@ -565,6 +589,79 @@ const responses = [
     response_key: 'no_us_citizen',
     value: 'No',
   },
+  // user timezone
+  {
+    id: '9a30fdef-fdac-4f0f-b878-a0c905407779',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
+    response_key: '1',
+    value: '+/- 2 hours',
+  },
+  {
+    id: '0f49a4a1-4ce2-4a7a-a3f1-8c45f22342dc',
+    created_date: new Date(),
+    priority: 2,
+    question_id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
+    response_key: '2',
+    value: '+/- 2 hours',
+  },
+  {
+    id: 'fc438b2e-4c65-4999-b436-5dac12df0078',
+    created_date: new Date(),
+    priority: 3,
+    question_id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
+    response_key: '3',
+    value: '+/- 3 hours',
+  },
+  {
+    id: '748768f5-088d-4020-8f65-4fe82b5ce58d',
+    created_date: new Date(),
+    priority: 4,
+    question_id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
+    response_key: '4',
+    value: '+/- 4 hours',
+  },
+  {
+    id: 'b6766b86-2bc5-4125-bc58-b3157626c3cc',
+    created_date: new Date(),
+    priority: 5,
+    question_id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
+    response_key: '5',
+    value: '+/- 5 hours',
+  },
+  {
+    id: '9026feae-7e44-4b5e-b083-92f1e4070e91',
+    created_date: new Date(),
+    priority: 6,
+    question_id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
+    response_key: '6',
+    value: '+/- 6 hours',
+  },
+  {
+    id: '172d0da0-6941-4aff-8914-818b831a2ae2',
+    created_date: new Date(),
+    priority: 7,
+    question_id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
+    response_key: '7',
+    value: '+/- 7 hours',
+  },
+  {
+    id: 'cc9be7f8-38c8-40e8-9c90-766865e0e613',
+    created_date: new Date(),
+    priority: 8,
+    question_id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
+    response_key: '8',
+    value: '+/- 8 hours',
+  },
+  {
+    id: 'e8777003-0bac-4528-b4b5-d1ea72ef5f65',
+    created_date: new Date(),
+    priority: 9,
+    question_id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
+    response_key: '12',
+    value: 'Any timezone',
+  },
   // company_position
   // description
   {
@@ -810,6 +907,79 @@ const responses = [
     question_id: '8b2245ce-709b-4e59-ac31-8a4af3359b89',
     response_key: 'location',
     value: '',
+  },
+  // user timezone
+  {
+    id: 'f9dfe088-8951-4958-93ff-bbe5fcdfc69a',
+    created_date: new Date(),
+    priority: 1,
+    question_id: '282b9bd0-bb71-4926-8360-b46041a159d3',
+    response_key: '1',
+    value: '+/- 2 hours',
+  },
+  {
+    id: '13f8a20f-a2f6-4582-9f0e-895772cc0bf8',
+    created_date: new Date(),
+    priority: 2,
+    question_id: '282b9bd0-bb71-4926-8360-b46041a159d3',
+    response_key: '2',
+    value: '+/- 2 hours',
+  },
+  {
+    id: 'cd166e8e-66b6-405d-8c8f-f29512bf5c81',
+    created_date: new Date(),
+    priority: 3,
+    question_id: '282b9bd0-bb71-4926-8360-b46041a159d3',
+    response_key: '3',
+    value: '+/- 3 hours',
+  },
+  {
+    id: '21debded-6814-4c0c-9dee-9c0e99d28163',
+    created_date: new Date(),
+    priority: 4,
+    question_id: '282b9bd0-bb71-4926-8360-b46041a159d3',
+    response_key: '4',
+    value: '+/- 4 hours',
+  },
+  {
+    id: '46808014-d054-454a-ba84-39a2edac770a',
+    created_date: new Date(),
+    priority: 5,
+    question_id: '282b9bd0-bb71-4926-8360-b46041a159d3',
+    response_key: '5',
+    value: '+/- 5 hours',
+  },
+  {
+    id: '82459c0b-6d69-4953-8447-3bd4a8ab1c77',
+    created_date: new Date(),
+    priority: 6,
+    question_id: '282b9bd0-bb71-4926-8360-b46041a159d3',
+    response_key: '6',
+    value: '+/- 6 hours',
+  },
+  {
+    id: '8a3e42ef-8ef9-4119-9041-765e3edda9cc',
+    created_date: new Date(),
+    priority: 7,
+    question_id: '282b9bd0-bb71-4926-8360-b46041a159d3',
+    response_key: '7',
+    value: '+/- 7 hours',
+  },
+  {
+    id: '74700c0e-57e9-4a1a-b0a2-1a297dd1d60d',
+    created_date: new Date(),
+    priority: 8,
+    question_id: '282b9bd0-bb71-4926-8360-b46041a159d3',
+    response_key: '8',
+    value: '+/- 8 hours',
+  },
+  {
+    id: '75535d37-d56b-48cc-ae06-a55c23699d3e',
+    created_date: new Date(),
+    priority: 9,
+    question_id: '282b9bd0-bb71-4926-8360-b46041a159d3',
+    response_key: '12',
+    value: 'Any timezone',
   },
   // logo
   {
