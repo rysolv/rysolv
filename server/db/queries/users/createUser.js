@@ -9,7 +9,7 @@ const createUser = async ({ data }) => {
     tableParameters: userValues,
   });
   const queryText = `INSERT INTO
-    users( ${parameters} )
+    users(${parameters})
     VALUES(${substitution})
     RETURNING
       CASE WHEN github_id IS NOT NULL THEN true ELSE false END AS "isGithubVerified",

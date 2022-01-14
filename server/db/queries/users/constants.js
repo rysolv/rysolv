@@ -14,6 +14,7 @@ const userValues = [
   'last_name',
   'modified_date',
   'personal_link',
+  'profile_pic_blur',
   'profile_pic',
   'provider',
   'receive_weekly_emails',

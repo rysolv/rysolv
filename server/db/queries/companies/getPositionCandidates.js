@@ -15,7 +15,19 @@ const getPositionCandidates = async ({ positionId, saved }) => {
         JOIN technologies t ON pts.technology_id = t.id
       WHERE cp.id = $1
       GROUP BY cp.id
-    )
+    ),
+  company AS (
+    SELECT
+      c.payment_method,
+      lc.contract_key
+    FROM company_positions cp
+    JOIN companies c on c.id = cp.company_id
+    JOIN signed_contracts sc ON c.id = sc.company_id
+      JOIN legal_contracts lc ON sc.contract_id = lc.id
+    WHERE cp.id = $1
+    ORDER BY sc.created_date DESC
+    LIMIT 1
+  )
     SELECT
       cp.percent_match AS "percentMatch",
       cp.saved as "isSaved",
@@ -26,6 +38,9 @@ const getPositionCandidates = async ({ positionId, saved }) => {
       u.id,
       u.last_name AS "lastName",
       u.profile_pic AS "profilePic",
+      u.profile_pic_blur AS "profilePicBlur",
+      (SELECT c.payment_method AS "paymentMethod" FROM company c),
+      (SELECT c.contract_key AS "contractKey" FROM company c),
       JSON_AGG(
         DISTINCT JSONB_BUILD_OBJECT('name', t.name, 'level',pts.level)
       )::jsonb AS "userLanguages",
@@ -52,7 +67,8 @@ const getPositionCandidates = async ({ positionId, saved }) => {
       u.first_name,
       u.id,
       u.last_name,
-      u.profile_pic
+      u.profile_pic,
+      u.profile_pic_blur
     ORDER BY cp.percent_match DESC;
   `;
 
