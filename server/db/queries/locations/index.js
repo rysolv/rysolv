@@ -1,5 +1,3 @@
 const createLocation = require('./createLocation');
 
-module.exports = {
-  createLocation,
-};
+module.exports = { createLocation };
