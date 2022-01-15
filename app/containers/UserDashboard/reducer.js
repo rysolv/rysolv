@@ -45,7 +45,6 @@ export const initialState = {
       desiredRole: [],
       experience: [],
       isActive: 'No',
-      isRemote: 'No',
       preferredLocation: {},
       resume: [],
       skills: [],

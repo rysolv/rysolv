@@ -27,19 +27,6 @@ const questions = [
     response_limit: 1,
     subtext: null,
   },
-  // @TODO: Location
-  // is remote (remove me)
-  {
-    id: 'f90ae70b-dd4a-4c40-8fb4-3dd095e45673',
-    category: 'hiring',
-    created_date: new Date(),
-    priority: 6,
-    question_key: 'is_remote',
-    question_text: 'I am looking for a remote position.',
-    required: true,
-    response_limit: 1,
-    subtext: null,
-  },
   // preferred location
   {
     id: '29a29e9c-798e-4dd1-a8a3-c9029e5b9020',
@@ -169,19 +156,6 @@ const questions = [
     priority: 9,
     question_key: 'is_active',
     question_text: 'Open',
-    required: true,
-    response_limit: 1,
-    subtext: null,
-  },
-  // @TODO: Location
-  // is_remote (to be removed)
-  {
-    id: '16499d8b-3d54-43ed-b9fb-58c8e99c9fb4',
-    category: 'company_position',
-    created_date: new Date(),
-    priority: 5,
-    question_key: 'is_remote',
-    question_text: 'This position is remote',
     required: true,
     response_limit: 1,
     subtext: null,
@@ -398,23 +372,6 @@ const responses = [
     response_key: 'yes_is_active',
     value: 'Yes',
   },
-  // is_remote
-  {
-    id: 'baefd25b-ed93-48cb-a41b-2c9b6fceb4ed',
-    created_date: new Date(),
-    priority: 1,
-    question_id: 'f90ae70b-dd4a-4c40-8fb4-3dd095e45673',
-    response_key: 'yes_is_remote',
-    value: 'Yes',
-  },
-  {
-    id: '33308649-58dd-4679-af06-2ccd845842e5',
-    created_date: new Date(),
-    priority: 2,
-    question_id: 'f90ae70b-dd4a-4c40-8fb4-3dd095e45673',
-    response_key: 'no_is_remote',
-    value: 'No',
-  },
   // preferred locations
   {
     id: '399d5ac5-740c-419d-9e96-34e2c83ddd19',
@@ -563,7 +520,7 @@ const responses = [
     priority: 1,
     question_id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
     response_key: '1',
-    value: '+/- 2 hours',
+    value: '+/- 1 hours',
   },
   {
     id: '0f49a4a1-4ce2-4a7a-a3f1-8c45f22342dc',
@@ -715,23 +672,6 @@ const responses = [
     response_key: 'yes_is_active',
     value: 'Yes',
   },
-  // is_remote
-  {
-    id: '4f29a45e-c675-49c9-a3db-9d42221c278d',
-    created_date: new Date(),
-    priority: 1,
-    question_id: '16499d8b-3d54-43ed-b9fb-58c8e99c9fb4',
-    response_key: 'yes_is_remote',
-    value: 'Yes',
-  },
-  {
-    id: 'c6a297bd-a2e1-419b-a712-6dae96ce2f0b',
-    created_date: new Date(),
-    priority: 2,
-    question_id: '16499d8b-3d54-43ed-b9fb-58c8e99c9fb4',
-    response_key: 'no_is_remote',
-    value: 'No',
-  },
   // location
   {
     id: '88ae251b-bfe9-4397-998f-1a7b3c846fcf',
@@ -871,7 +811,7 @@ const responses = [
     priority: 1,
     question_id: '282b9bd0-bb71-4926-8360-b46041a159d3',
     response_key: '1',
-    value: '+/- 2 hours',
+    value: '+/- 1 hours',
   },
   {
     id: '13f8a20f-a2f6-4582-9f0e-895772cc0bf8',

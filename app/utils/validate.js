@@ -224,17 +224,11 @@ export const validationDictionary = {
   verifyInput: validateVerifyInput,
 };
 
-export const validate = ({
-  additionalInputField,
-  required,
-  type,
-  value,
-  ...validationProps
-}) => {
+export const validate = ({ required, type, value, ...validationProps }) => {
   if (required && isBlank(value)) {
     return 'Required field';
   }
-  if (!additionalInputField && !required && isBlank(value)) {
+  if (!required && isBlank(value)) {
     return false;
   }
   const validationFunction = validationDictionary[type];

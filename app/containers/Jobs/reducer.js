@@ -25,7 +25,6 @@ export const initialState = {
     desiredRole: [],
     experience: [],
     isActive: '',
-    isRemote: 'No',
     preferredLocation: {},
     resume: [],
     skills: [],

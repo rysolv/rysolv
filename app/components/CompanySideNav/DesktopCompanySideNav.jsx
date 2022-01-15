@@ -40,7 +40,7 @@ const DesktopCompanySideNav = ({
         {AddCircleOutlineIcon} Create Position
       </CreatePositionButton>
       <div>
-        {positions.map(({ id, isRemote, location, title }, index) => (
+        {positions.map(({ id, isRemote = 'Yes', location, title }, index) => (
           <PositionButton
             key={`${title}-${index}`}
             isLast={positions.length - 1 === index}

@@ -54,8 +54,6 @@ const Jobs = ({
   responseArray,
   view,
 }) => {
-  const tempQuestions = questions.filter(({ id }) => id !== 'isRemote');
-
   const [isRequiredData, setIsRequiredData] = useState(true);
   useEffect(() => {
     if (isGithubVerified && isSignedIn) {
@@ -105,7 +103,7 @@ const Jobs = ({
   const isCompany = !!company;
 
   const step = getQuestion();
-  const questionProps = tempQuestions[step - 1];
+  const questionProps = questions[step - 1];
 
   if (step && view === 0) {
     return <Redirect to="/jobs" />;
@@ -138,9 +136,8 @@ const Jobs = ({
           isSignedIn,
           loading,
           path,
-          questions,
           step,
-          steps: tempQuestions.length,
+          steps: questions.length,
           view,
           ...questionProps,
         }}

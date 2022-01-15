@@ -3,7 +3,6 @@ import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
 import { ConditionalRender } from 'components/base_ui';
-import { additionalInputDictionary } from 'containers/Jobs/constants';
 
 import optionDictionary from '../Options';
 import {
@@ -67,7 +66,7 @@ const EditJobApplication = ({
           ...restProps
           // eslint-disable-next-line array-callback-return, consistent-return
         }) => {
-          if (id !== 'isRemote' && id !== 'skills') {
+          if (id !== 'skills') {
             const OptionToRender = optionDictionary[optionType];
 
             const handleChangeInput = (value, inputField) => {
@@ -85,13 +84,6 @@ const EditJobApplication = ({
                 <OptionLabel>{question}</OptionLabel>
                 <OptionDescription>{description}</OptionDescription>
                 <OptionToRender
-                  additionalInputProps={{
-                    value: form[additionalInputDictionary[id]],
-                    ...questions.find(
-                      ({ id: questionId }) =>
-                        additionalInputDictionary[id] === questionId,
-                    ),
-                  }}
                   dispatchChangeInput={dispatchChangeInput}
                   form={form}
                   formErrors={formErrors}

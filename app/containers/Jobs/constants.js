@@ -19,8 +19,3 @@ export const SUBMIT_USER_RESPONSE_FAILURE =
   'app/Jobs/SUBMIT_USER_RESPONSE_FAILURE';
 export const SUBMIT_USER_RESPONSE_SUCCESS =
   'app/Jobs/SUBMIT_USER_RESPONSE_SUCCESS';
-
-// Dictionaries
-export const additionalInputDictionary = {
-  preferredLocation: 'isRemote',
-};

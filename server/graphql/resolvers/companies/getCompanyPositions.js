@@ -12,7 +12,6 @@ const getCompanyPositions = async ({ companyId }, { authError, userId }) => {
       ({ location, positionId, positionData }) => ({
         id: positionId,
         isActive: positionData.is_active,
-        isRemote: positionData.is_remote,
         location: location.replace(/[0-9]/g, '').replace(' ,', ','),
         title: positionData.title,
       }),

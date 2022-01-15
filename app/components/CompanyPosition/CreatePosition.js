@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
-import { additionalInputDictionary } from 'containers/CompanyDashboard/constants';
-
 import optionDictionary from './Options';
 import {
   ButtonWrapper,
@@ -83,7 +81,7 @@ const CreatePosition = ({
           ...restProps
           // eslint-disable-next-line array-callback-return, consistent-return
         }) => {
-          if (id !== 'isActive' && id !== 'isRemote') {
+          if (id !== 'isActive') {
             const OptionToRender = optionDictionary[optionType];
 
             const handleChangeInput = (value, inputField) => {
@@ -101,13 +99,6 @@ const CreatePosition = ({
                 <OptionLabel>{question}</OptionLabel>
                 <OptionDescription>{description}</OptionDescription>
                 <OptionToRender
-                  additionalInputProps={{
-                    value: companyPositionForm[additionalInputDictionary[id]],
-                    ...companyPositionQuestions.find(
-                      ({ id: questionId }) =>
-                        additionalInputDictionary[id] === questionId,
-                    ),
-                  }}
                   dispatchChangeInput={dispatchChangeInput}
                   dispatchDeleteSkill={dispatchDeleteSkill}
                   handleChangeInput={handleChangeInput}
