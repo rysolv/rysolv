@@ -19,6 +19,14 @@ export const ButtonTextWrapper = styled.div`
   width: auto;
 `;
 
+export const CompanyProfileContainer = styled.div`
+  display: flex;
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+  max-width: 28.1rem;
+  place-items: center;
+`;
+
 export const CompanySideNavContainer = styled.div`
   min-width: 27.8rem;
   overflow-y: auto;
@@ -63,6 +71,31 @@ export const LocationText = styled.div`
   font-weight: 400;
   padding-top: 0.5rem;
   text-transform: capitalize;
+`;
+
+export const Logo = styled.img`
+  border-radius: 50%;
+  border: 0.2rem solid ${candidateGreyColor};
+  height: 7.5rem;
+  margin-right: 0.8rem;
+  object-fit: cover;
+  width: 7.5rem;
+`;
+
+export const NameText = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: calc(100% - 2rem);
+`;
+
+export const NameWrapper = styled.div`
+  color: ${blueColor};
+  display: flex;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 3.45rem;
+  width: 100%;
 `;
 
 export const PositionButton = styled.button`
@@ -128,28 +161,4 @@ export const StyledIconButton = styled(BaseIconButton)`
     height: 3.2rem;
     width: 3.2rem;
   }
-`;
-
-export const Logo = styled.img`
-  border-radius: 50%;
-  border: 0.2rem solid ${candidateGreyColor};
-  height: 7.5rem;
-  margin-right: 0.8rem;
-  object-fit: cover;
-  width: 7.5rem;
-`;
-
-export const CompanyProfileContainer = styled.div`
-  display: flex;
-  margin-bottom: 2rem;
-  max-width: 28.1rem;
-  place-items: center;
-`;
-
-export const NameWrapper = styled.div`
-  color: ${blueColor};
-  display: flex;
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 3.45rem;
 `;

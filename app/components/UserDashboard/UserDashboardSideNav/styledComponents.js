@@ -1,3 +1,4 @@
+import React from 'react';
 import styled, { css } from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -90,8 +91,23 @@ export const ActiveWrapper = styled.div`
 
 export const IconButtonWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   margin: ${({ $hasLinks }) => ($hasLinks ? '1rem 0' : '0')};
+`;
+
+export const LinkText = styled.div`
+  margin-left: 0.6rem;
+  max-width: 25.528rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+export const LinkWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  margin-bottom: 0.6rem;
 `;
 
 export const ProfilePicture = styled.img`
@@ -116,7 +132,7 @@ export const StyledIconButton = styled(IconButton)`
   width: 3.4rem;
 
   &:hover {
-    background: transparent;
+    background: #ecf3fc;
   }
 
   svg {
@@ -126,11 +142,13 @@ export const StyledIconButton = styled(IconButton)`
   }
 `;
 
-export const StyledPrimaryButton = styled(PrimaryButton)`
+export const StyledPrimaryButton = styled(
+  ({ $customTopMargin, ...restProps }) => <PrimaryButton {...restProps} />,
+)`
   ${baseButtonStyle};
   background-color: ${darkBlueColor};
   color: ${whiteColor};
-  margin-top: 3rem;
+  margin-top: ${({ $customTopMargin }) => $customTopMargin || '3rem'};
 
   &:hover {
     background-color: ${darkBlueColor};

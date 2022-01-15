@@ -40,16 +40,15 @@ const Signin = ({
   match,
   step,
 }) => {
-  const { company } = activeUser || {};
-  const { companyId } = company || {};
+  const isCompany = !!activeUser.company;
   const [viewToRender, setViewToRender] = useState(null);
   useEffect(() => dispatchResetState, []);
   useEffect(() => {
     if (isSignInRoute) {
-      const path = companyId ? '/company/dashboard' : '/dashboard';
+      const path = isCompany ? '/company/dashboard' : '/dashboard';
       setViewToRender(<Redirect to={path} />);
     } else if (isSignUpRoute) {
-      const path = companyId ? '/company/dashboard' : '/settings';
+      const path = isCompany ? '/company/dashboard' : '/settings';
       dispatchResetRoute();
       setViewToRender(<Redirect to={path} />);
     } else {
@@ -66,7 +65,7 @@ const Signin = ({
         />,
       );
     }
-  }, [companyId, isSignedIn, loading]);
+  }, [isCompany, isSignedIn, loading]);
   const view = match.path.substr(1);
   const dictionaryToUse = {
     'password-reset': passwordResetComponent,

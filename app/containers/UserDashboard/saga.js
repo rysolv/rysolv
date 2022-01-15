@@ -264,6 +264,40 @@ export function* setHiringStatusSaga({ payload }) {
   }
 }
 
+export function* updateUserLinksSaga({ payload }) {
+  const { githubLink, personalLink, stackoverflowLink } = payload;
+  const query = `
+    mutation {
+      transformUser(userInput: {
+        githubLink: "${githubLink}" 
+        personalLink: "${personalLink}"
+        stackoverflowLink: "${stackoverflowLink}"
+      }) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        transformUser: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(updateUserLinksSuccess());
+    yield put(closeModalState());
+  } catch (error) {
+    yield put(updateUserLinksFailure({ error: { message: error } }));
+  }
+}
+
 export function* updateUserSkillsSaga({ payload }) {
   const { skills } = payload;
   const formattedResponse = skills.map(
@@ -301,40 +335,6 @@ export function* updateUserSkillsSaga({ payload }) {
     yield put(closeModalState());
   } catch (error) {
     yield put(updateUserSkillsFailure({ error: { message: error } }));
-  }
-}
-
-export function* updateUserLinksSaga({ payload }) {
-  const { githubLink, personalLink, stackoverflowLink } = payload;
-  const query = `
-    mutation {
-      transformUser(userInput: {
-        githubLink: "${githubLink}" 
-        personalLink: "${personalLink}"
-        stackoverflowLink: "${stackoverflowLink}"
-      }) {
-        __typename
-        ... on Success {
-          message
-        }
-        ... on Error {
-          message
-        }
-      }
-    }
-  `;
-  try {
-    const graphql = JSON.stringify({ query });
-    const {
-      data: {
-        transformUser: { __typename, message },
-      },
-    } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') throw message;
-    yield put(updateUserLinksSuccess());
-    yield put(closeModalState());
-  } catch (error) {
-    yield put(updateUserLinksFailure({ error: { message: error } }));
   }
 }
 
