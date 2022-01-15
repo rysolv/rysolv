@@ -4,7 +4,7 @@ const { transformUser: transformUserQuery } = require('../../../db');
 const { verifyCognitoEmail } = require('../../../middlewares/awsConfig');
 const { verifyUserEmailError, verifyUserEmailSuccess } = require('./constants');
 
-const verifyUserEmail = async ({ code, email, userId }, { res }) => {
+const verifyUserEmail = async ({ code, companyId, email, userId }, { res }) => {
   try {
     // Verify email code with Cognito
     await verifyCognitoEmail({ code, email });
@@ -25,10 +25,17 @@ const verifyUserEmail = async ({ code, email, userId }, { res }) => {
       maxAge: process.env.COOKIE_EXPIRATION,
     });
 
-    sendEmail({
-      body: { userId },
-      path: '/s/users/welcome',
-    });
+    if (companyId) {
+      sendEmail({
+        body: { userId },
+        path: '/s/users/welcome',
+      });
+    } else {
+      sendEmail({
+        body: { userId },
+        path: '/s/company/welcome',
+      });
+    }
 
     return {
       __typename: 'Success',
