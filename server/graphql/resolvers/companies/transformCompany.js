@@ -1,16 +1,16 @@
 const {
+  createLocation,
+  getOneCompany,
+  getOneUserLite,
+  transformCompany: transformCompanyQuery,
+} = require('../../../db');
+const { createStripeCustomer } = require('../../../integrations');
+const {
   CustomError,
   errorLogger,
   generateSizeInteger,
   isUrl,
 } = require('../../../helpers');
-const { createStripeCustomer } = require('../../../integrations');
-const {
-  // createLocation,
-  getOneCompany,
-  getOneUserLite,
-  transformCompany: transformCompanyQuery,
-} = require('../../../db');
 const {
   transformCompanyError,
   transformCompanySuccess,
@@ -31,17 +31,14 @@ const transformCompany = async ({ companyInput }, { authError, userId }) => {
     } = companyInput;
     const { email, firstName, lastName } = await getOneUserLite({ userId });
 
-    // @TODO: Location
-    // if (location) {
-    //   const { countryCode, country, formattedAddress, utcOffset } = location;
-    //   await createLocation({
-    //     companyId,
-    //     countryCode,
-    //     country,
-    //     formattedAddress,
-    //     utcOffset,
-    //   });
-    // }
+    const { countryCode, country, formattedAddress, utcOffset } = location;
+    await createLocation({
+      companyId,
+      countryCode,
+      country,
+      formattedAddress,
+      utcOffset,
+    });
 
     const companyData = {
       company_name: name,

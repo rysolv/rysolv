@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary, prettier/prettier */
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { v4 as uuidv4 } from 'uuid';
@@ -55,17 +54,33 @@ export function* createPositionSaga({ payload }) {
   const positionId = uuidv4();
   const formattedResponse = responseArray.map(
     ({ questionId, questionKey, responseId, value }) => {
-      const formattedValue =
-        questionKey === 'description'
-          ? `${JSON.stringify(value)}`
-          : questionKey === 'skills'
-            ? `{
+      const generateFormattedValue = () => {
+        switch (questionKey) {
+          case 'description': {
+            return `${JSON.stringify(value)}`;
+          }
+          case 'location': {
+            return `{
+              country: "${value.country}",
+              countryCode: "${value.countryCode}",
+              formattedAddress: "${value.formattedAddress}",
+              utcOffset: ${value.utcOffset}
+            }`;
+          }
+          case 'skills': {
+            return `{
               beginner: ${value.beginner},
               expert: ${value.expert},
               intermediate: ${value.intermediate},
               skill: "${value.skill}"
-            }`
-            : `"${value}"`;
+            }`;
+          }
+          default: {
+            return `"${value}"`;
+          }
+        }
+      };
+      const formattedValue = generateFormattedValue();
       return `{
         questionId: "${questionId}",
         questionKey: "${questionKey}",
@@ -142,29 +157,35 @@ export function* deletePositionSaga({ payload }) {
 export function* editCompanySaga({ payload }) {
   const { companyId, form } = payload;
   const { description, location, logo, name, size, website } = form;
+  const formattedLocation = `{
+    country: "${location.country}",
+    countryCode: "${location.countryCode}",
+    formattedAddress: "${location.formattedAddress}",
+    utcOffset: ${location.utcOffset}
+  }`;
   const query = `
-      mutation {
-        transformCompany(
-          companyInput: {
-            companyId: "${companyId}",
-            description: ${JSON.stringify(description)},
-            location: "${location}",
-            logo: "${logo}",
-            name: "${name}",
-            size: "${size}",
-            website: "${website}",
-          }
-        ) {
-          __typename
-          ... on Success {
-            message
-          }
-          ... on Error {
-            message
-          }
+    mutation {
+      transformCompany(
+        companyInput: {
+          companyId: "${companyId}",
+          description: ${JSON.stringify(description)},
+          location: ${formattedLocation},
+          logo: "${logo}",
+          name: "${name}",
+          size: "${size}",
+          website: "${website}",
+        }
+      ) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
         }
       }
-    `;
+    }
+  `;
   try {
     const graphql = JSON.stringify({ query });
     const {
@@ -182,21 +203,35 @@ export function* editCompanySaga({ payload }) {
 
 export function* editPositionSaga({ payload }) {
   const { companyId, positionId, responseArray } = payload;
-  // TODO: maybe fix this nested turnary
   const formattedResponse = responseArray.map(
     ({ questionId, questionKey, responseId, value }) => {
-      const formattedValue =
-        questionKey === 'description'
-          ? `${JSON.stringify(value)}`
-          : questionKey === 'skills'
-            ? `{
+      const generateFormattedValue = () => {
+        switch (questionKey) {
+          case 'description': {
+            return `${JSON.stringify(value)}`;
+          }
+          case 'location': {
+            return `{
+              country: "${value.country}",
+              countryCode: "${value.countryCode}",
+              formattedAddress: "${value.formattedAddress}",
+              utcOffset: ${value.utcOffset}
+            }`;
+          }
+          case 'skills': {
+            return `{
               beginner: ${value.beginner},
               expert: ${value.expert},
               intermediate: ${value.intermediate},
               skill: "${value.skill}"
-            }`
-            : `"${value}"`;
-
+            }`;
+          }
+          default: {
+            return `"${value}"`;
+          }
+        }
+      };
+      const formattedValue = generateFormattedValue();
       return `{
         questionId: "${questionId}",
         questionKey: "${questionKey}",
@@ -351,6 +386,7 @@ export function* fetchPositionSaga({ payload }) {
           role
           salary
           skills
+          timezone
           title
           type
         }
@@ -478,7 +514,13 @@ export function* notifyCandidateSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(notifyCandidateSuccess({ candidateId, message: messageSuccess, threadId }));
+    yield put(
+      notifyCandidateSuccess({
+        candidateId,
+        message: messageSuccess,
+        threadId,
+      }),
+    );
     yield put(resetFormState({ category: 'scheduleInterview' }));
   } catch (error) {
     yield put(notifyCandidateFailure({ error: { message: error } }));

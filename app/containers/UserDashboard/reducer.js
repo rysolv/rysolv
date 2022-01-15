@@ -46,10 +46,11 @@ export const initialState = {
       experience: [],
       isActive: 'No',
       isRemote: 'No',
-      preferredLocation: '',
+      preferredLocation: {},
       resume: [],
       skills: [],
       targetSalary: [],
+      type: [],
       usCitizen: '',
     },
     profile: {
@@ -67,6 +68,7 @@ export const initialState = {
       resume: '',
       skills: '',
       targetSalary: '',
+      type: '',
       usCitizen: '',
     },
     profile: {

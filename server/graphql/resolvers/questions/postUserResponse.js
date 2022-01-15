@@ -7,6 +7,7 @@ const {
   sendEmail,
 } = require('../../../helpers');
 const {
+  createLocation,
   createUserTechStack,
   postUserResponse: postUserResponseQuery,
 } = require('../../../db');
@@ -23,19 +24,16 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
     await Promise.all(
       responseArray.map(
         async ({ questionId, questionKey, responseId, value }) => {
-          // Language / Frameworks stored in techstack table
-          // @TODO: Location
-          // if (location) {
-          //   const { countryCode, country, formattedAddress, utcOffset } = location;
-          //   await createLocation({
-          //     companyId,
-          //     countryCode,
-          //     country,
-          //     formattedAddress,
-          //     utcOffset,
-          //   });
-          // } else
-          if (questionKey === 'skills') {
+          if (questionKey === 'preferred_location') {
+            const { countryCode, country, formattedAddress, utcOffset } = value;
+            await createLocation({
+              country,
+              countryCode,
+              formattedAddress,
+              userId,
+              utcOffset,
+            });
+          } else if (questionKey === 'skills') {
             const { beginner, expert, intermediate, skill } = value;
             await createUserTechStack({
               level: generatePositionLevel({ beginner, expert, intermediate }),

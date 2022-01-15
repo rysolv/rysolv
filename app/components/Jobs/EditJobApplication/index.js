@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
 import { ConditionalRender } from 'components/base_ui';
 import { additionalInputDictionary } from 'containers/Jobs/constants';
@@ -43,7 +44,12 @@ const EditJobApplication = ({
 
   const hasErrors = Object.keys(formErrors).some(input => !!formErrors[input]);
   const isComplete = Object.keys(form).every(input => {
-    if (input !== 'resume') return !!form[input];
+    if (input === 'preferredLocation') {
+      return !isEmpty(form[input]);
+    }
+    if (input !== 'resume') {
+      return !!form[input];
+    }
     return true;
   });
 
@@ -72,7 +78,7 @@ const EditJobApplication = ({
               });
             };
 
-            const multiple = id === 'desiredRole';
+            const multiple = id === 'desiredRole' || id === 'type';
 
             return (
               <OptionWrapper key={`option-${id}`}>

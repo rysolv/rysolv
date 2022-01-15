@@ -26,10 +26,12 @@ export const initialState = {
     experience: [],
     isActive: '',
     isRemote: 'No',
-    preferredLocation: '',
+    preferredLocation: {},
     resume: [],
     skills: [],
     targetSalary: [],
+    timezone: '',
+    type: [],
     usCitizen: '',
   },
   formErrors: {

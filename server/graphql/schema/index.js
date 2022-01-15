@@ -67,7 +67,7 @@ module.exports = buildSchema(`
   type Company {
     companyId: ID
     description: String
-    location: String
+    location: Object
     logo: String
     name: String
     size: String
@@ -77,7 +77,7 @@ module.exports = buildSchema(`
   input CompanyInput {
     companyId: ID!
     description: String!
-    location: String!
+    location: Object!
     logo: String
     name: String!
     size: String!
@@ -260,10 +260,11 @@ module.exports = buildSchema(`
     id: String
     isActive: String
     isRemote: String
-    location: String
+    location: Object
     role: [String]
     salary: String
     skills: [Object]
+    timezone: String
     title: String
     type: String
   }
@@ -433,7 +434,7 @@ module.exports = buildSchema(`
     percentMatch: Float
     personalLink: String
     preferredLanguages: [String]
-    preferredLocation: String
+    preferredLocation: Object
     profilePic: String
     pullRequests: [String]
     receiveWeeklyEmails: Boolean
@@ -447,7 +448,8 @@ module.exports = buildSchema(`
     surveyComplete: Boolean
     targetSalary: String
     threadId: ID
-    type: String
+    timezone: String
+    type: [String]
     unreadMessages: Int
     upvotes: [ID]
     usCitizen: String

@@ -33,7 +33,7 @@ export const initialState = {
   forms: {
     company: {
       description: '',
-      location: '',
+      location: {},
       name: '',
       size: '',
       website: '',

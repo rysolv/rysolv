@@ -47,6 +47,9 @@ const CreatePosition = ({
     input => !!companyPositionFormErrors[input],
   );
   const isComplete = Object.keys(companyPositionForm).every(input => {
+    if (input === 'location') {
+      return !isEmpty(companyPositionForm[input]);
+    }
     if (input === 'skills') {
       return (
         !isEmpty(companyPositionForm[input]) &&

@@ -76,7 +76,6 @@ export const optionDictionary = {
 };
 
 const validationPropsByField = {
-  location: { type: 'positionLocationInput' },
   title: { type: 'stringInput' },
 };
 

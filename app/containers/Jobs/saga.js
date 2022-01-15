@@ -58,20 +58,36 @@ export function* submitUserResponseSaga({ payload }) {
   const formattedResponse = responseArray.map(
     ({ questionId, questionKey, responseId, value }) => {
       const { file, fileExtension } = value;
-      const formattedValue =
-        questionKey === 'resume' && value instanceof Object
-          ? `{
-            file: "${file}",
-            fileExtension: "${fileExtension}",
-          }`
-          : questionKey === 'skills'
-            ? `{
+      const generateFormattedValue = () => {
+        switch (questionKey) {
+          case 'preferred_location': {
+            return `{
+              country: "${value.country}",
+              countryCode: "${value.countryCode}",
+              formattedAddress: "${value.formattedAddress}",
+              utcOffset: ${value.utcOffset}
+            }`;
+          }
+          case 'resume': {
+            return `{
+              file: "${file}",
+              fileExtension: "${fileExtension}",
+            }`;
+          }
+          case 'skills': {
+            return `{
               beginner: ${value.beginner},
               expert: ${value.expert},
               intermediate: ${value.intermediate},
               skill: "${value.skill}"
-            }`
-            : `"${value}"`;
+            }`;
+          }
+          default: {
+            return `"${value}"`;
+          }
+        }
+      };
+      const formattedValue = generateFormattedValue();
       return `{
       questionId: "${questionId}",
       questionKey: "${questionKey}",

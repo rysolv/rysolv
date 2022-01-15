@@ -54,8 +54,18 @@ const SurveyView = ({
 
   const checkInputDisabled = input => {
     let disabled = true;
-    if (Array.isArray(form[input])) {
+    if (input === 'skills') {
+      disabled = (
+        isEmpty(form[input]) ||
+          !form[input].every(
+            ({ beginner, expert, intermediate }) =>
+              beginner === true || expert === true || intermediate === true,
+          )
+      );
+    } else if (input === 'desiredRole' || input === 'experience' || input === 'resume' || input === 'targetSalary' || input === 'type') {
       disabled = !form[input].length;
+    } else if (input === 'preferredLocation') {
+      disabled = isEmpty(form[input]);
     } else {
       disabled = form[input] === '';
     }
@@ -224,7 +234,7 @@ SurveyView.propTypes = {
   required: T.bool.isRequired,
   step: T.number.isRequired,
   steps: T.number.isRequired,
-  tableData: T.oneOfType([T.array, T.string]).isRequired,
+  tableData: T.oneOfType([T.array, T.object, T.string]).isRequired,
   type: T.string,
 };
 

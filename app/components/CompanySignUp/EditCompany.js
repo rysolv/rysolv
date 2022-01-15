@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
 
 import optionDictionary from './Options';
@@ -41,9 +42,12 @@ const EditCompany = ({
     input => !!companyFormErrors[input],
   );
   const formattedCompanyForm = omit(companyForm, ['logo']);
-  const isComplete = Object.keys(formattedCompanyForm).every(
-    input => !!companyForm[input],
-  );
+  const isComplete = Object.keys(formattedCompanyForm).every(input => {
+    if (input === 'location') {
+      return !isEmpty(formattedCompanyForm[input]);
+    }
+    return !!companyForm[input];
+  });
 
   return (
     <EditCompanyContainer>

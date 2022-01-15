@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import T from 'prop-types';
 import { usePlacesWidget } from 'react-google-autocomplete';
+import isEmpty from 'lodash/isEmpty';
 
 import {
   Input,
@@ -19,7 +20,7 @@ const LocationAutocompleteOption = ({
   const { id: checkboxId, question } = additionalInputProps;
   const value = form[id];
   const { current: prevValue } = useRef(value);
-  const [tempValue, setTempValue] = useState('');
+  const [tempValue, setTempValue] = useState({});
 
   useEffect(() => {
     if (prevValue !== value)
@@ -29,7 +30,6 @@ const LocationAutocompleteOption = ({
   const isChecked = form[checkboxId] === 'Yes';
   const newIsChecked = isChecked ? 'No' : 'Yes';
 
-  // @TODO: Location
   const { ref } = usePlacesWidget({
     apiKey: process.env.GOOGLE_API_KEY,
     onPlaceSelected: ({
@@ -49,11 +49,8 @@ const LocationAutocompleteOption = ({
         }
       });
 
-      // TODO: Send this object to the backend
-      console.log(locationData);
-
-      handleChangeInput(formattedAddress);
-      setTempValue('');
+      handleChangeInput(locationData);
+      setTempValue({});
     },
     options: {
       fields: ['address_components', 'formatted_address', 'utc_offset_minutes'],
@@ -61,9 +58,9 @@ const LocationAutocompleteOption = ({
   });
 
   const handlePlacesWidgetFocus = () => {
-    if (tempValue !== '' || value !== '') {
-      handleChangeInput('');
-      setTempValue('');
+    if (!isEmpty(tempValue) || !isEmpty(value)) {
+      handleChangeInput({});
+      setTempValue({});
     }
   };
 
@@ -79,9 +76,9 @@ const LocationAutocompleteOption = ({
             values: form,
           })
         }
-        onChange={e => setTempValue(e.target.value)}
+        onChange={e => setTempValue({ formattedAddress: e.target.value })}
         onFocus={handlePlacesWidgetFocus}
-        value={tempValue || value}
+        value={tempValue.formattedAddress || value.formattedAddress || ''}
       />
       <StyledCheckboxWithLabel
         checked={isChecked}

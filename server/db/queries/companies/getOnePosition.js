@@ -2,19 +2,17 @@ const { singleQuery } = require('../../baseQueries');
 
 const getOnePosition = async ({ positionId }) => {
   const queryText = `
-    WITH skills AS (
-      SELECT array_agg(json_build_object(
-        'id', pts.id,
-        'level', pts.level,
-        'name', t.name,
-        'shortName', t.short_name,
-        'language', t.is_language,
-        'framework', t.is_framework
-      )) AS skills
-      FROM position_tech_stack pts
-      JOIN technologies t ON pts.technology_id = t.id
-      WHERE pts.position_id = $1
-    ), positionData AS (
+    WITH location AS (
+      SELECT json_build_object(
+        'country', l.country,
+        'countryCode', l.country_code,
+        'formattedAddress', l.formatted_address,
+        'utcOffset', l.utc_offset_minutes
+      ) AS location
+      FROM locations l
+      WHERE l.position_id = $1
+    ),
+    positionData AS (
       SELECT json_object_agg(
         q.question_key,  COALESCE(uqr.value, qr.value)
       ) AS "positionData",
@@ -38,8 +36,22 @@ const getOnePosition = async ({ positionId }) => {
       JOIN questions q ON q.id = uqr.question_id
       WHERE q.question_key = 'role'
       AND uqr.position_id = $1
+    ),
+    skills AS (
+      SELECT array_agg(json_build_object(
+        'id', pts.id,
+        'level', pts.level,
+        'name', t.name,
+        'shortName', t.short_name,
+        'language', t.is_language,
+        'framework', t.is_framework
+      )) AS skills
+      FROM position_tech_stack pts
+      JOIN technologies t ON pts.technology_id = t.id
+      WHERE pts.position_id = $1
     )
     SELECT
+      (SELECT * FROM location),
       (SELECT "positionData" FROM positionData),
       (SELECT "positionKeys" FROM positionData),
       (SELECT "role" FROM role),

@@ -12,7 +12,13 @@ const getUserResponse = async (_, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    const { desiredRole, skills, userData } = await getUserResponseQuery({
+    const {
+      desiredRole,
+      preferredLocation,
+      skills,
+      type,
+      userData,
+    } = await getUserResponseQuery({
       userId,
     });
     const user = { ...userData, skills };
@@ -46,6 +52,8 @@ const getUserResponse = async (_, { authError, userId }) => {
       __typename: 'User',
       ...formattedUser,
       desiredRole,
+      preferredLocation,
+      type,
     };
   } catch (error) {
     errorLogger(error);

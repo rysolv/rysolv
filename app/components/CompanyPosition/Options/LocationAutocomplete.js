@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import T from 'prop-types';
 import { usePlacesWidget } from 'react-google-autocomplete';
+import isEmpty from 'lodash/isEmpty';
 
 import { Input, StyledCheckboxWithLabel } from './styledComponents';
 
@@ -12,7 +13,7 @@ const LocationAutocompleteOption = ({
 }) => {
   const { id, question, value: checkboxValue } = additionalInputProps;
   const { current: prevValue } = useRef(value);
-  const [tempValue, setTempValue] = useState('');
+  const [tempValue, setTempValue] = useState({});
 
   useEffect(() => {
     if (prevValue !== value) onBlur();
@@ -21,7 +22,6 @@ const LocationAutocompleteOption = ({
   const isChecked = checkboxValue === 'Yes';
   const newIsChecked = isChecked ? 'No' : 'Yes';
 
-  // @TODO: Location
   const { ref } = usePlacesWidget({
     apiKey: process.env.GOOGLE_API_KEY,
     onPlaceSelected: ({
@@ -41,10 +41,8 @@ const LocationAutocompleteOption = ({
         }
       });
 
-      console.log(locationData);
-
-      handleChangeInput(formattedAddress);
-      setTempValue('');
+      handleChangeInput(locationData);
+      setTempValue({});
     },
     options: {
       fields: ['address_components', 'formatted_address', 'utc_offset_minutes'],
@@ -52,9 +50,9 @@ const LocationAutocompleteOption = ({
   });
 
   const handlePlacesWidgetFocus = () => {
-    if (tempValue !== '' || value !== '') {
-      handleChangeInput('');
-      setTempValue('');
+    if (!isEmpty(tempValue) || !isEmpty(value)) {
+      handleChangeInput({});
+      setTempValue({});
     }
   };
 
@@ -64,9 +62,9 @@ const LocationAutocompleteOption = ({
         ref={ref}
         height="4.9rem"
         onBlur={onBlur}
-        onChange={e => setTempValue(e.target.value)}
+        onChange={e => setTempValue({ formattedAddress: e.target.value })}
         onFocus={handlePlacesWidgetFocus}
-        value={tempValue || value}
+        value={tempValue.formattedAddress || value.formattedAddress || ''}
       />
       <StyledCheckboxWithLabel
         checked={isChecked}

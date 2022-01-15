@@ -7,8 +7,10 @@ const onePosition = async ({ positionId }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    const { positionData, skills, role } = await getOnePosition({ positionId });
-    const position = { ...positionData, skills, role };
+    const { location, positionData, role, skills } = await getOnePosition({
+      positionId,
+    });
+    const position = { ...positionData, location, skills, role };
     const formattedPosition = Object.keys(position).reduce(
       (acc, positionItem) => {
         if (positionItem === 'is_active') acc.isActive = position[positionItem];

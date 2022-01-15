@@ -137,13 +137,6 @@ const validatePayoutUrl = (value, { payoutMethod }) => {
   }
 };
 
-const validatePositionLocationInput = value => {
-  if (!value) {
-    return `Must select one non-remote location`;
-  }
-  return false;
-};
-
 export const validateRepoUrl = value => {
   const url = value.split('/');
   const containsHttps = url.includes('https:');
@@ -225,7 +218,6 @@ export const validationDictionary = {
   linkInput: validateLink,
   passwordInput: validatePassword,
   payoutUrlInput: validatePayoutUrl,
-  positionLocationInput: validatePositionLocationInput,
   stackoverflowLinkInput: validateStackoverflowLink,
   stringInput: validateString,
   usernameInput: validateUsername,

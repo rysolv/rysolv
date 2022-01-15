@@ -33,13 +33,12 @@ export const optionDictionary = {
   timezone: {
     option: 'autocomplete',
   },
+  type: {
+    option: 'multipleButton',
+  },
   us_citizen: {
     option: 'singleButton',
   },
-};
-
-const validationPropsByField = {
-  preferredLocation: { type: 'positionLocationInput' },
 };
 
 export const validateFields = ({ questions, values }) =>
@@ -68,6 +67,5 @@ export const validateOneField = ({ field, required, values }) => {
     additionalInputField: !!values[additionalInputDictionary[field]],
     required: isFieldRequired,
     value,
-    ...validationPropsByField[field],
   });
 };
