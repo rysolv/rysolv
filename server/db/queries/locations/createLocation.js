@@ -1,3 +1,4 @@
+/* eslint-disable indent, no-nested-ternary */
 const { singleQuery } = require('../../baseQueries');
 
 const createLocation = async ({
@@ -18,6 +19,13 @@ const createLocation = async ({
     userId,
     utcOffset,
   ];
+
+  const onConflict = companyId
+    ? 'company_id'
+    : positionId
+    ? 'position_id'
+    : 'user_id';
+
   const queryText = `
     INSERT INTO locations(
       company_id,
@@ -29,8 +37,8 @@ const createLocation = async ({
       utc_offset_minutes
     )
     VALUES($1, $2, $3, $4, $5, $6, $7)
-    ON CONFLICT (company_id, position_id, user_id)
-    DO UPDATE SET 
+    ON CONFLICT (${onConflict})
+    DO UPDATE SET
       country = EXCLUDED.country,
       country_code = EXCLUDED.country_code,
       formatted_address = EXCLUDED.formatted_address,
