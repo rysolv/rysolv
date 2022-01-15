@@ -350,7 +350,7 @@ const responses = [
   // hiring
   // experience
   {
-    id: '0f49a4a1-4ce2-4a7a-a3f1-8c45f22342dc',
+    id: '89c1a788-7eb0-4293-a06d-e67c022f8054',
     created_date: new Date(),
     priority: 1,
     question_id: '4bef1f37-f09b-4515-a483-047faa0758cd',
@@ -563,7 +563,7 @@ const responses = [
     priority: 1,
     question_id: '6f3a3385-c5be-4908-bb2c-b35dbed12947',
     response_key: '1',
-    value: '+/- 2 hours',
+    value: '+/- 1 hours',
   },
   {
     id: '0f49a4a1-4ce2-4a7a-a3f1-8c45f22342dc',
@@ -871,7 +871,7 @@ const responses = [
     priority: 1,
     question_id: '282b9bd0-bb71-4926-8360-b46041a159d3',
     response_key: '1',
-    value: '+/- 2 hours',
+    value: '+/- 1 hours',
   },
   {
     id: '13f8a20f-a2f6-4582-9f0e-895772cc0bf8',
