@@ -86,7 +86,6 @@ export const NameText = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: calc(100% - 2rem);
 `;
 
 export const NameWrapper = styled.div`
