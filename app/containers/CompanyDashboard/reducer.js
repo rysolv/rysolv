@@ -78,7 +78,6 @@ export const initialState = {
       description: '',
       experience: '',
       isActive: 'Yes',
-      isRemote: 'No',
       location: {},
       role: [],
       salary: '',

@@ -14,8 +14,6 @@ const onePosition = async ({ positionId }, { authError, userId }) => {
     const formattedPosition = Object.keys(position).reduce(
       (acc, positionItem) => {
         if (positionItem === 'is_active') acc.isActive = position[positionItem];
-        else if (positionItem === 'is_remote')
-          acc.isRemote = position[positionItem];
         else if (positionItem === 'skills') {
           if (position[positionItem]) {
             const skillsArray = position[positionItem].map(

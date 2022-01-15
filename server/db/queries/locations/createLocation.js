@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary, indent */
+/* eslint-disable indent, no-nested-ternary */
 const { singleQuery } = require('../../baseQueries');
 
 const createLocation = async ({

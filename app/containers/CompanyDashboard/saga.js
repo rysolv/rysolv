@@ -284,7 +284,6 @@ export function* fetchCompanyPositionsSaga({ payload }) {
           positions {
             id
             isActive
-            isRemote
             location
             title
           }
@@ -381,7 +380,6 @@ export function* fetchPositionSaga({ payload }) {
           description
           experience
           isActive
-          isRemote
           location
           role
           salary

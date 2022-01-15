@@ -4,7 +4,6 @@ import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
 import { ProgressBar } from 'components/base_ui';
-import { additionalInputDictionary } from 'containers/Jobs/constants';
 import { validateOneField } from 'containers/Jobs/helpers';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -42,7 +41,6 @@ const SurveyView = ({
   path,
   placeholder,
   question,
-  questions,
   required,
   step,
   steps,
@@ -55,14 +53,19 @@ const SurveyView = ({
   const checkInputDisabled = input => {
     let disabled = true;
     if (input === 'skills') {
-      disabled = (
+      disabled =
         isEmpty(form[input]) ||
-          !form[input].every(
-            ({ beginner, expert, intermediate }) =>
-              beginner === true || expert === true || intermediate === true,
-          )
-      );
-    } else if (input === 'desiredRole' || input === 'experience' || input === 'resume' || input === 'targetSalary' || input === 'type') {
+        !form[input].every(
+          ({ beginner, expert, intermediate }) =>
+            beginner === true || expert === true || intermediate === true,
+        );
+    } else if (
+      input === 'desiredRole' ||
+      input === 'experience' ||
+      input === 'resume' ||
+      input === 'targetSalary' ||
+      input === 'type'
+    ) {
       disabled = !form[input].length;
     } else if (input === 'preferredLocation') {
       disabled = isEmpty(form[input]);
@@ -132,12 +135,6 @@ const SurveyView = ({
 
   const OptionToRender = optionDictionary[optionType];
   const optionProps = {
-    additionalInputProps: {
-      value: form[additionalInputDictionary[id]],
-      ...questions.find(
-        ({ id: questionId }) => additionalInputDictionary[id] === questionId,
-      ),
-    },
     form,
     formErrors,
     handleChangeInput,
@@ -230,7 +227,6 @@ SurveyView.propTypes = {
   path: T.string.isRequired,
   placeholder: T.string,
   question: T.string.isRequired,
-  questions: T.array.isRequired,
   required: T.bool.isRequired,
   step: T.number.isRequired,
   steps: T.number.isRequired,

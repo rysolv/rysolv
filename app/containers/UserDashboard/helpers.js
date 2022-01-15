@@ -12,9 +12,6 @@ export const optionDictionary = {
   is_active: {
     option: 'autocomplete',
   },
-  is_remote: {
-    option: 'autocomplete',
-  },
   preferred_location: {
     option: 'locationAutocomplete',
   },

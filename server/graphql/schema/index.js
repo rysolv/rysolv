@@ -259,7 +259,6 @@ module.exports = buildSchema(`
     experience: String
     id: String
     isActive: String
-    isRemote: String
     location: Object
     role: [String]
     salary: String
@@ -421,7 +420,6 @@ module.exports = buildSchema(`
     id: ID!
     isActive: String
     isGithubVerified: Boolean
-    isRemote: String
     isSaved: Boolean
     issues: [Object]
     languages: [String]

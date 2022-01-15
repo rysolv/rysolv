@@ -1,9 +1,5 @@
 import { validate } from 'utils/validate';
 
-import { additionalInputDictionary } from './constants';
-
-// @TODO: Locations
-// remove is_remote
 export const optionDictionary = {
   desired_role: {
     option: 'multipleButton',
@@ -13,9 +9,6 @@ export const optionDictionary = {
   },
   is_active: {
     option: 'singleButton',
-  },
-  is_remote: {
-    option: 'autocomplete',
   },
   preferred_location: {
     option: 'locationAutocomplete',
@@ -59,13 +52,9 @@ export const validateFields = ({ questions, values }) =>
   );
 
 export const validateOneField = ({ field, required, values }) => {
-  const isFieldRequired = additionalInputDictionary[field]
-    ? !(values[additionalInputDictionary[field]] === 'Yes')
-    : required;
   const value = values[field];
   return validate({
-    additionalInputField: !!values[additionalInputDictionary[field]],
-    required: isFieldRequired,
+    required,
     value,
   });
 };

@@ -197,7 +197,6 @@ export function* fetchUserResponseSaga() {
           desiredRole
           experience
           isActive
-          isRemote
           preferredLocation
           resume
           skills

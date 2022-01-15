@@ -3,21 +3,15 @@ import T from 'prop-types';
 import { usePlacesWidget } from 'react-google-autocomplete';
 import isEmpty from 'lodash/isEmpty';
 
-import {
-  Input,
-  InputError,
-  StyledCheckboxWithLabel,
-} from '../styledComponents';
+import { Input, InputError } from '../styledComponents';
 
 const LocationAutocompleteOption = ({
-  additionalInputProps,
   form,
   formErrors,
   handleChangeInput,
   handleValidateInput,
   id,
 }) => {
-  const { id: checkboxId, question } = additionalInputProps;
   const value = form[id];
   const { current: prevValue } = useRef(value);
   const [tempValue, setTempValue] = useState({});
@@ -26,9 +20,6 @@ const LocationAutocompleteOption = ({
     if (prevValue !== value)
       handleValidateInput({ field: id, formType: 'application', values: form });
   }, [prevValue, value]);
-
-  const isChecked = form[checkboxId] === 'Yes';
-  const newIsChecked = isChecked ? 'No' : 'Yes';
 
   const { ref } = usePlacesWidget({
     apiKey: process.env.GOOGLE_API_KEY,
@@ -80,25 +71,12 @@ const LocationAutocompleteOption = ({
         onFocus={handlePlacesWidgetFocus}
         value={tempValue.formattedAddress || value.formattedAddress || ''}
       />
-      <StyledCheckboxWithLabel
-        checked={isChecked}
-        label={question}
-        onBlur={() =>
-          handleValidateInput({
-            field: checkboxId,
-            formType: 'application',
-            values: form,
-          })
-        }
-        onChange={() => handleChangeInput(newIsChecked, checkboxId)}
-      />
       <InputError>{formErrors[id]}</InputError>
     </div>
   );
 };
 
 LocationAutocompleteOption.propTypes = {
-  additionalInputProps: T.object.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleChangeInput: T.func.isRequired,
