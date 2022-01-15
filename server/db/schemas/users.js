@@ -15,6 +15,7 @@ const alterUsersTable = `
   ADD COLUMN modified_date TIMESTAMP,
   ADD COLUMN personal_link VARCHAR(128),
   ADD COLUMN profile_pic VARCHAR(256),
+  ADD COLUMN profile_pic_blur VARCHAR(256),
   ADD COLUMN provider VARCHAR(7),
   ADD COLUMN receive_weekly_emails BOOLEAN DEFAULT true,
   ADD COLUMN rep SMALLINT NOT NULL DEFAULT 25,

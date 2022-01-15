@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+const Jimp = require('jimp');
+
 const {
   createUserTechStack,
   deleteUserTechStack,
@@ -25,8 +27,17 @@ const transformUser = async (
       const protocol = formattedProfilePic.substring(0, 5);
 
       if (formattedProfilePic && protocol !== 'https') {
+        // Upload standard image
         const { uploadUrl } = await uploadImage(formattedProfilePic);
+
+        // Upload blurred image
+        const image = await Jimp.read(uploadUrl);
+        image.blur(15);
+        const base64 = await image.getBase64Async(Jimp.AUTO);
+        const { uploadUrl: blurUrl } = await uploadImage(base64);
+
         userInput.profilePic = uploadUrl;
+        userInput.profilePicBlur = blurUrl;
       }
     }
 
@@ -47,6 +58,7 @@ const transformUser = async (
       last_name: userInput.lastName,
       modified_date: new Date(),
       personal_link: userInput.personalLink,
+      profile_pic_blur: userInput.profilePicBlur,
       profile_pic: userInput.profilePic,
       receive_weekly_emails: userInput.receiveWeeklyEmails,
       stackoverflow_link: userInput.stackoverflowLink,
