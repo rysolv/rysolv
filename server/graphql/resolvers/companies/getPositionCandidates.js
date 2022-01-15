@@ -18,15 +18,37 @@ const getPositionCandidates = async (
 
     // Format Candidates object
     const result = candidates.reduce((acc, el) => {
-      const { userQuestions, userLanguages, positionLanguages } = el;
+      const {
+        contractKey,
+        firstName,
+        id,
+        isSaved,
+        lastName,
+        paymentMethod,
+        percentMatch,
+        positionLanguages,
+        profilePic,
+        profilePicBlur,
+        threadId,
+        userLanguages,
+        userQuestions,
+      } = el;
+      const shouldBlur = contractKey === 'startup' || !paymentMethod;
+
       const { target_salary, experience, is_active } = userQuestions;
 
       if (is_active === 'Yes') {
         acc.push({
-          ...el,
+          firstName: shouldBlur ? `${firstName.charAt(0)}.` : firstName,
+          id,
+          isSaved,
           languages: matchLanguages({ userLanguages, positionLanguages }),
+          lastName: shouldBlur ? `${lastName.charAt(0)}.` : lastName,
           location: 'San Francisco, CA',
+          percentMatch,
+          profilePic: shouldBlur ? profilePicBlur : profilePic,
           salary: target_salary,
+          threadId,
           type: 'full-time',
           yearsOfExperience: experience,
         });
