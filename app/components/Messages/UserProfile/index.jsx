@@ -21,14 +21,14 @@ import { StyledCandidateCardContainer } from './styledComponents';
 
 const CandidateCard = ({ user }) => {
   const {
+    experience,
     lastPosition,
     location,
     name,
     preferredLanguages,
     profilePic,
-    salary,
+    target_salary: salary,
     type,
-    yearsOfExperience,
   } = user;
 
   return (
@@ -52,7 +52,7 @@ const CandidateCard = ({ user }) => {
           <CandidateCardRow>
             <CandidateCardDataCell isTop>
               <Title>Experience</Title>
-              <Data>{yearsOfExperience}</Data>
+              <Data>{experience}</Data>
             </CandidateCardDataCell>
             <CandidateCardDataCell>
               <Title>Salary</Title>

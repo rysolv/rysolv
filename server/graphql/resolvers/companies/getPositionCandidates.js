@@ -24,6 +24,7 @@ const getPositionCandidates = async (
         id,
         isSaved,
         lastName,
+        location,
         paymentMethod,
         percentMatch,
         positionLanguages,
@@ -32,6 +33,7 @@ const getPositionCandidates = async (
         threadId,
         userLanguages,
         userQuestions,
+        type,
       } = el;
       const shouldBlur = contractKey === 'startup' || !paymentMethod;
 
@@ -44,12 +46,12 @@ const getPositionCandidates = async (
           isSaved,
           languages: matchLanguages({ userLanguages, positionLanguages }),
           lastName: shouldBlur ? `${lastName.charAt(0)}.` : lastName,
-          location: 'San Francisco, CA',
+          location,
           percentMatch,
           profilePic: shouldBlur ? profilePicBlur : profilePic,
           salary: target_salary,
           threadId,
-          type: 'full-time',
+          type: type.length > 1 ? type.join(', ') : type[0],
           yearsOfExperience: experience,
         });
       }

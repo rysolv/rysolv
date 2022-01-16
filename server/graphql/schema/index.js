@@ -447,7 +447,7 @@ module.exports = buildSchema(`
     targetSalary: String
     threadId: ID
     timezone: String
-    type: [String]
+    type: String
     unreadMessages: Int
     upvotes: [ID]
     usCitizen: String
