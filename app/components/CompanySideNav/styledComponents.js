@@ -8,9 +8,6 @@ import {
   lightBlueColor,
   whiteColor,
 } from 'defaultStyleHelper';
-import { mediaQueriesByDevice } from 'utils/breakpoints';
-
-const { tablet } = mediaQueriesByDevice;
 
 export const ButtonTextWrapper = styled.div`
   overflow: hidden;
@@ -121,11 +118,6 @@ export const PositionButton = styled.button`
   svg {
     font-size: 1.6rem;
     margin-right: 0.8rem;
-  }
-
-  ${tablet} {
-    border-bottom-left-radius: ${({ isLast }) => (isLast ? '0.7rem' : '0')};
-    border-bottom-right-radius: ${({ isLast }) => (isLast ? '0.7rem' : '0')};
   }
 `;
 

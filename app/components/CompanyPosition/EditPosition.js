@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-
-import { getParameterByName } from 'utils/globalHelpers';
 
 import optionDictionary from './Options';
 import {
@@ -25,24 +23,13 @@ const EditPosition = ({
   dispatchChangeSkillLevel,
   dispatchClearAlerts,
   dispatchDeleteSkill,
-  dispatchFetchPosition,
-  dispatchResetFormState,
+  editPositionLoading,
   form: { companyPosition: companyPositionForm },
   formErrors: { companyPosition: companyPositionFormErrors },
   handleEditPosition,
   handleNav,
   handleValidateInput,
-  loading,
 }) => {
-  useEffect(() => {
-    const positionId = getParameterByName('id');
-    dispatchFetchPosition({ positionId });
-    return () => {
-      dispatchClearAlerts();
-      dispatchResetFormState({ category: 'companyPosition' });
-    };
-  }, []);
-
   const hasErrors = Object.keys(companyPositionFormErrors).some(
     input => !!companyPositionFormErrors[input],
   );
@@ -116,7 +103,7 @@ const EditPosition = ({
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
           label="Save"
-          loading={loading}
+          loading={editPositionLoading}
           onClick={handleEditPosition}
         />
       </ButtonWrapper>
@@ -131,14 +118,12 @@ EditPosition.propTypes = {
   dispatchChangeSkillLevel: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
-  dispatchFetchPosition: T.func.isRequired,
-  dispatchResetFormState: T.func.isRequired,
+  editPositionLoading: T.bool.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleEditPosition: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
-  loading: T.bool.isRequired,
 };
 
 export default EditPosition;

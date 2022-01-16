@@ -68,8 +68,11 @@ export function changeSkillLevel(payload) {
   };
 }
 
-export function clearAlerts() {
-  return { type: CLEAR_ALERTS };
+export function clearAlerts(payload) {
+  return {
+    payload,
+    type: CLEAR_ALERTS,
+  };
 }
 
 export function closeModalState() {
@@ -277,18 +280,12 @@ export function matchCandidates(payload) {
   };
 }
 
-export function matchCandidatesFailure(payload) {
-  return {
-    payload,
-    type: MATCH_CANDIDATES_FAILURE,
-  };
+export function matchCandidatesFailure() {
+  return { type: MATCH_CANDIDATES_FAILURE };
 }
 
-export function matchCandidatesSuccess(payload) {
-  return {
-    payload,
-    type: MATCH_CANDIDATES_SUCCESS,
-  };
+export function matchCandidatesSuccess() {
+  return { type: MATCH_CANDIDATES_SUCCESS };
 }
 
 export function notifyCandidate(payload) {

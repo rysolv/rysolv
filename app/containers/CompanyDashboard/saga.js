@@ -18,7 +18,6 @@ import {
   fetchCompanyPositionsFailure,
   fetchCompanyPositionsSuccess,
   fetchCompanySuccess,
-  fetchPositionCandidates,
   fetchPositionCandidatesFailure,
   fetchPositionCandidatesSuccess,
   fetchPositionFailure,
@@ -31,6 +30,7 @@ import {
   notifyCandidateFailure,
   notifyCandidateSuccess,
   resetFormState,
+  saveCandidateFailure,
   saveCandidateSuccess,
 } from './actions';
 import {
@@ -114,10 +114,9 @@ export function* createPositionSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(createPositionSuccess({ message, positionId }));
+    yield put(createPositionSuccess({ positionId }));
     yield put(fetchCompanyPositions({ companyId }));
     yield put(matchCandidates({ positionId }));
-    yield put(fetchPositionCandidates({ positionId }));
     yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(createPositionFailure({ error: { message: error } }));
@@ -267,7 +266,6 @@ export function* editPositionSaga({ payload }) {
     yield put(editPositionSuccess());
     yield put(fetchCompanyPositions({ companyId }));
     yield put(matchCandidates({ positionId }));
-    yield put(fetchPositionCandidates({ positionId }));
     yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(editPositionFailure({ error: { message: error } }));
@@ -472,9 +470,9 @@ export function* matchCandidatesSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(matchCandidatesSuccess({ message: messageSuccess }));
+    yield put(matchCandidatesSuccess());
   } catch (error) {
-    yield put(matchCandidatesFailure({ error: { message: error } }));
+    yield put(matchCandidatesFailure());
   }
 }
 
@@ -550,7 +548,7 @@ export function* saveCandidateSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(saveCandidateSuccess({ candidateId }));
   } catch (error) {
-    yield put(fetchPositionFailure({ error }));
+    yield put(saveCandidateFailure({ error: { message: error } }));
   }
 }
 
