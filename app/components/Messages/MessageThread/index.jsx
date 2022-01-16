@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
-import moment from 'moment';
 import T from 'prop-types';
+import DOMPurify from 'dompurify';
+import marked from 'marked';
+import moment from 'moment';
 
 import {
   BodyWrapper,
+  LowerMessage,
   MessageBody,
   MessageCard,
   MessageContainer,
   MessageDate,
   MessageHeader,
   MessageWrapper,
-  LowerMessage,
   ProfilePicture,
   StyledMarkdown,
-  StyledProgressButton,
+  StyledPrimaryAsyncButton,
   Username,
 } from './styledComponents';
 
@@ -53,6 +55,9 @@ const MessageThread = ({
   const messageCards = messages.map(
     ({ body, createdDate, firstName, id, lastName, profilePic, userId }) => {
       const active = userId === activeUserId;
+      const html = marked(body);
+      const cleanHtml = DOMPurify.sanitize(html);
+
       return (
         <MessageCard active={active} key={id}>
           <BodyWrapper active={active}>
@@ -64,7 +69,7 @@ const MessageThread = ({
                 {moment(createdDate).format('M/D/YYYY')}
               </MessageDate>
             </MessageHeader>
-            <MessageBody>{body}</MessageBody>
+            <MessageBody dangerouslySetInnerHTML={{ __html: cleanHtml }} />
           </BodyWrapper>
           <ProfilePicture src={profilePic} />
         </MessageCard>
@@ -80,13 +85,11 @@ const MessageThread = ({
           handleInput={value => setMessageBody(value)}
           onKeyDown={e => handleKeypress(e)}
         />
-        <StyledProgressButton
+        <StyledPrimaryAsyncButton
           disabled={messageBody.length < 1}
-          error={error.message}
           label="Send"
           loading={loading.message}
           onClick={sendMessage}
-          success={success}
         />
       </LowerMessage>
     </MessageWrapper>

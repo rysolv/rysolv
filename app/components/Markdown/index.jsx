@@ -43,11 +43,6 @@ const Markdown = ({
     setMarkdown(createMarkdown({ textarea }));
   }, []);
 
-  // Clear body after submit
-  useEffect(() => {
-    if (markdown && body === '') markdown.value(body);
-  }, [body]);
-
   // Toggle preview
   useEffect(() => {
     if (markdown) markdown.togglePreview();

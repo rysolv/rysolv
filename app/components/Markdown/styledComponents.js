@@ -26,11 +26,14 @@ export const MarkdownContainer = styled.div`
   }
 
   .editor-toolbar {
+    align-items: center;
     border-left: 0.1rem solid ${candidateGreyColor};
     border-right: 0.1rem solid ${candidateGreyColor};
     border-top-left-radius: 0.7rem;
     border-top-right-radius: 0.7rem;
     border-top: 0.1rem solid ${candidateGreyColor};
+    display: flex;
+    height: 4.9rem;
     opacity: 1 !important;
 
     ::after {

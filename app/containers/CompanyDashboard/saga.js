@@ -57,7 +57,7 @@ export function* createPositionSaga({ payload }) {
       const generateFormattedValue = () => {
         switch (questionKey) {
           case 'description': {
-            return `${JSON.stringify(value)}`;
+            return JSON.stringify(value);
           }
           case 'location': {
             return `{
