@@ -1,7 +1,6 @@
 import React from 'react';
 import T from 'prop-types';
 
-import AsyncRender from 'components/AsyncRender';
 import { ConditionalRender } from 'components/base_ui';
 
 import ClosedDashboard from './ClosedDashboard';
@@ -15,7 +14,6 @@ const CompanyDashboard = ({
   dispatchSaveCandidate,
   filter,
   handleNav,
-  loading,
   matchCandidatesLoading,
   positions,
   positionTitle,
@@ -30,26 +28,19 @@ const CompanyDashboard = ({
 
   return (
     <ConditionalRender
-      Component={
-        <AsyncRender
-          asyncData={candidates}
-          component={DashboardToRender}
-          error={false}
-          isRequiredData={false}
-          loading={loading}
-          propsToPassDown={{
-            dispatchChangeFilter,
-            dispatchOpenModal,
-            dispatchSaveCandidate,
-            filter,
-            handleNav,
-            matchCandidatesLoading,
-            positionTitle,
-            selectedPosition,
-          }}
-        />
-      }
+      Component={DashboardToRender}
       FallbackComponent={InitialDashboard}
+      propsToPassDown={{
+        candidates,
+        dispatchChangeFilter,
+        dispatchOpenModal,
+        dispatchSaveCandidate,
+        filter,
+        handleNav,
+        matchCandidatesLoading,
+        positionTitle,
+        selectedPosition,
+      }}
       shouldRender={!!positions.length}
     />
   );
@@ -62,7 +53,6 @@ CompanyDashboard.propTypes = {
   dispatchSaveCandidate: T.func.isRequired,
   filter: T.object.isRequired,
   handleNav: T.func.isRequired,
-  loading: T.bool.isRequired,
   matchCandidatesLoading: T.bool.isRequired,
   positions: T.array.isRequired,
   positionTitle: T.string,

@@ -17,16 +17,16 @@ import {
 } from './styledComponents';
 
 const ScheduleInterviewModal = ({
-  alerts: { error, success },
   dispatchChangeInput,
   dispatchClearAlerts,
   dispatchNotifyCandidate,
   dispatchResetFormState,
   form: { scheduleInterview },
   formErrors: { scheduleInterview: scheduleInterviewErrors },
+  messageAlerts: { error, success },
   tableData: { positionId, userId },
 }) => {
-  useEffect(() => dispatchClearAlerts, []);
+  useEffect(() => () => dispatchClearAlerts('messageAlerts'), []);
 
   return (
     <ModalContainer>
@@ -35,7 +35,7 @@ const ScheduleInterviewModal = ({
         <ErrorSuccessBanner
           bottomMarginRequired="1rem"
           error={error}
-          onClose={dispatchClearAlerts}
+          onClose={() => dispatchClearAlerts('messageAlerts')}
           success={success}
           topMarginRequired="1rem"
         />
@@ -78,13 +78,13 @@ const ScheduleInterviewModal = ({
 };
 
 ScheduleInterviewModal.propTypes = {
-  alerts: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchNotifyCandidate: T.func.isRequired,
   dispatchResetFormState: T.func.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
+  messageAlerts: T.object.isRequired,
   tableData: T.object.isRequired,
 };
 

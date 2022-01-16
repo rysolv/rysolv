@@ -100,11 +100,6 @@ export const Input = styled.input`
   ${baseInputStyle};
 `;
 
-export const Textarea = styled.textarea`
-  ${baseInputStyle};
-  overflow-y: auto;
-`;
-
 export const BasicSwitchRoot = styled.span`
   font-size: 0;
   position: relative;

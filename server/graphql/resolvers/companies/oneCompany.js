@@ -12,12 +12,6 @@ const oneCompany = async ({ companyId }, { authError, userId }) => {
     const { size } = companyData;
     const formattedSize = generateSizeString({ size });
 
-    // @TODO: Location
-    // Remove when company location is stored in locations table
-    if (companyData.location === null) {
-      companyData.location = 'New York, NY, USA';
-    }
-
     return {
       __typename: 'Company',
       ...companyData,

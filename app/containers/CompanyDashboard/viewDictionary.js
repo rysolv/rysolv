@@ -1,5 +1,5 @@
-import { CreatePosition } from 'components/CompanyPosition';
-import CompanyDashboard from 'components/CompanyDashboard';
+import CreatePosition from './Views/CreatePosition';
+import CompanyDashboard from './Views/CompanyDashboard';
 import EditCompany from './Views/EditCompany';
 import EditPosition from './Views/EditPosition';
 

@@ -62,7 +62,7 @@ const LocationAutocompleteOption = ({ handleChangeInput, onBlur, value }) => {
 LocationAutocompleteOption.propTypes = {
   handleChangeInput: T.func.isRequired,
   onBlur: T.func.isRequired,
-  value: T.string.isRequired,
+  value: T.object.isRequired,
 };
 
 export default LocationAutocompleteOption;

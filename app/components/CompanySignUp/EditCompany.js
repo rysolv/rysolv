@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
@@ -22,22 +22,13 @@ const EditCompany = ({
   companyQuestions,
   dispatchChangeInput,
   dispatchClearAlerts,
-  dispatchResetFormState,
+  editCompanyLoading,
   form: { company: companyForm },
   formErrors: { company: companyFormErrors },
   handleEditCompany,
   handleNav,
   handleValidateInput,
-  loading,
 }) => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    return () => {
-      dispatchClearAlerts();
-      dispatchResetFormState({ category: 'company' });
-    };
-  }, []);
-
   const hasErrors = Object.keys(companyFormErrors).some(
     input => !!companyFormErrors[input],
   );
@@ -95,7 +86,7 @@ const EditCompany = ({
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
           label="Save"
-          loading={loading}
+          loading={editCompanyLoading}
           onClick={handleEditCompany}
         />
       </ButtonWrapper>
@@ -108,13 +99,12 @@ EditCompany.propTypes = {
   companyQuestions: T.array.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
-  dispatchResetFormState: T.func.isRequired,
+  editCompanyLoading: T.bool.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleEditCompany: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
-  loading: T.bool.isRequired,
 };
 
 export default EditCompany;

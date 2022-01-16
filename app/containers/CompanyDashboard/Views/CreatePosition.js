@@ -5,16 +5,15 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import AsyncRender from 'components/AsyncRender';
-import { EditPosition as EditPositionView } from 'components/CompanyPosition';
-import { getParameterByName } from 'utils/globalHelpers';
+import { CreatePosition as CreatePositionView } from 'components/CompanyPosition';
 
 import {
   changeSkillLevel,
+  createPosition,
   deleteSkill,
-  editPosition,
-  fetchPosition,
   fetchQuestions,
   inputError,
+  selectPosition,
 } from '../actions';
 import { validateFields, validateOneField } from '../helpers';
 import {
@@ -24,7 +23,7 @@ import {
   makeSelectCompanyDashboardResponseArray,
 } from '../selectors';
 
-const EditPosition = ({
+const CreatePosition = ({
   activeUser,
   alerts,
   companyPositionQuestions,
@@ -32,26 +31,23 @@ const EditPosition = ({
   dispatchChangeSkillLevel,
   dispatchClearAlerts,
   dispatchDeleteSkill,
-  dispatchEditPosition,
-  dispatchFetchPosition,
+  dispatchCreatePosition,
   dispatchFetchQuestions,
   dispatchInputError,
   dispatchResetFormState,
-  editPositionLoading,
-  fetchPositionLoading,
+  dispatchSelectPosition,
   fetchQuestionsLoading,
   form,
   formErrors,
   handleNav,
+  createPositionLoading,
+  positions,
   responseArray,
-  selectedPosition,
 }) => {
   const { company: { companyId } = {} } = activeUser;
   const { companyPosition: companyPositionForm } = form;
 
   useEffect(() => {
-    const positionId = getParameterByName('id');
-    dispatchFetchPosition({ positionId });
     dispatchFetchQuestions({ category: 'company_position' });
     return () => {
       dispatchClearAlerts();
@@ -59,14 +55,13 @@ const EditPosition = ({
     };
   }, []);
 
-  const handleEditPosition = () => {
+  const handleCreatePosition = () => {
     const { isValidated, validationErrors } = validateFields({
       values: companyPositionForm,
     });
     if (isValidated) {
-      dispatchEditPosition({
+      dispatchCreatePosition({
         companyId,
-        positionId: selectedPosition,
         responseArray,
       });
     } else {
@@ -87,10 +82,10 @@ const EditPosition = ({
   return (
     <AsyncRender
       asyncData={companyPositionQuestions}
-      component={EditPositionView}
+      component={CreatePositionView}
       error={false}
       isRequiredData
-      loading={fetchPositionLoading || fetchQuestionsLoading}
+      loading={fetchQuestionsLoading}
       propsToPassDown={{
         alerts,
         companyPositionQuestions,
@@ -98,38 +93,39 @@ const EditPosition = ({
         dispatchChangeSkillLevel,
         dispatchClearAlerts,
         dispatchDeleteSkill,
-        editPositionLoading,
+        dispatchSelectPosition,
         form,
         formErrors,
-        handleEditPosition,
+        handleCreatePosition,
         handleNav,
         handleValidateInput,
+        createPositionLoading,
+        positions,
       }}
     />
   );
 };
 
-EditPosition.propTypes = {
+CreatePosition.propTypes = {
   activeUser: T.object.isRequired,
   alerts: T.object.isRequired,
   companyPositionQuestions: T.array.isRequired,
+  createPositionLoading: T.bool.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeSkillLevel: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
+  dispatchCreatePosition: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
-  dispatchEditPosition: T.func.isRequired,
-  dispatchFetchPosition: T.func.isRequired,
   dispatchFetchQuestions: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchResetFormState: T.func.isRequired,
-  editPositionLoading: T.bool.isRequired,
-  fetchPositionLoading: T.bool.isRequired,
+  dispatchSelectPosition: T.func.isRequired,
   fetchQuestionsLoading: T.bool.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleNav: T.func.isRequired,
+  positions: T.array.isRequired,
   responseArray: T.array.isRequired,
-  selectedPosition: T.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -140,8 +136,7 @@ const mapStateToProps = createStructuredSelector({
   companyPositionQuestions: makeSelectCompanyDashboardQuestions(
     'companyPosition',
   ),
-  editPositionLoading: makeSelectCompanyDashboardLoading('editPosition'),
-  fetchPositionLoading: makeSelectCompanyDashboardLoading('fetchPosition'),
+  createPositionLoading: makeSelectCompanyDashboardLoading('createPosition'),
   fetchQuestionsLoading: makeSelectCompanyDashboardLoading('fetchQuestions'),
   form: makeSelectCompanyDashboard('form'),
   formErrors: makeSelectCompanyDashboard('formErrors'),
@@ -153,11 +148,11 @@ const mapDispatchToProps = dispatch => ({
    * Reducer : CompanyDashboard
    */
   dispatchChangeSkillLevel: payload => dispatch(changeSkillLevel(payload)),
+  dispatchCreatePosition: payload => dispatch(createPosition(payload)),
   dispatchDeleteSkill: payload => dispatch(deleteSkill(payload)),
-  dispatchEditPosition: payload => dispatch(editPosition(payload)),
-  dispatchFetchPosition: payload => dispatch(fetchPosition(payload)),
   dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),
+  dispatchSelectPosition: payload => dispatch(selectPosition(payload)),
 });
 
 const withConnect = connect(
@@ -165,4 +160,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(EditPosition);
+export default compose(withConnect)(CreatePosition);

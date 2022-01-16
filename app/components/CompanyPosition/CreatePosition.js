@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
@@ -19,28 +19,19 @@ import {
 const CreatePosition = ({
   alerts: { error },
   companyPositionQuestions,
+  createPositionLoading,
   dispatchChangeInput,
   dispatchChangeSkillLevel,
   dispatchClearAlerts,
   dispatchDeleteSkill,
-  dispatchResetFormState,
   dispatchSelectPosition,
   form: { companyPosition: companyPositionForm },
   formErrors: { companyPosition: companyPositionFormErrors },
   handleCreatePosition,
   handleNav,
   handleValidateInput,
-  loading,
   positions,
 }) => {
-  useEffect(
-    () => () => {
-      dispatchClearAlerts();
-      dispatchResetFormState({ category: 'companyPosition' });
-    },
-    [],
-  );
-
   const hasErrors = Object.keys(companyPositionFormErrors).some(
     input => !!companyPositionFormErrors[input],
   );
@@ -126,7 +117,7 @@ const CreatePosition = ({
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
           label="Create"
-          loading={loading}
+          loading={createPositionLoading}
           onClick={handleCreatePosition}
         />
       </ButtonWrapper>
@@ -137,18 +128,17 @@ const CreatePosition = ({
 CreatePosition.propTypes = {
   alerts: T.object.isRequired,
   companyPositionQuestions: T.array.isRequired,
+  createPositionLoading: T.bool.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchChangeSkillLevel: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchDeleteSkill: T.func.isRequired,
-  dispatchResetFormState: T.func.isRequired,
   dispatchSelectPosition: T.func.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleCreatePosition: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
-  loading: T.bool.isRequired,
   positions: T.array.isRequired,
 };
 

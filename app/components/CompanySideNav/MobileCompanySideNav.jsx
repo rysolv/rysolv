@@ -64,7 +64,6 @@ const MobileCompanySideNav = ({
                 ({ id, isRemote = 'Yes', location, title }, index) => (
                   <PositionButton
                     key={`${title}-${index}`}
-                    isLast={positions.length - 1 === index}
                     isSelected={id === selectedPosition}
                     onClick={() => handleSelectPosition({ id })}
                   >

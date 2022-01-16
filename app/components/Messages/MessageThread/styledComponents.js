@@ -1,14 +1,27 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { ProgressButton } from 'components/base_ui';
 import Markdown from 'components/Markdown';
 import {
   candidateGreyColor,
+  darkBlueColor,
   defaultFontSize,
-  styledScrollbar,
   textColor,
   whiteColor,
 } from 'defaultStyleHelper';
+
+const baseButtonStyle = css`
+  align-items: center;
+  border-radius: 0.8rem;
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  margin: 0;
+  text-transform: initial;
+  width: 18.4rem;
+`;
 
 export const BodyWrapper = styled.div`
   background: ${({ active }) => (active ? whiteColor : candidateGreyColor)};
@@ -27,6 +40,13 @@ export const BodyWrapper = styled.div`
   max-width: 40rem;
 `;
 
+export const LowerMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+  margin-top: 2rem;
+`;
+
 export const MessageCard = styled.div`
   align-items: center;
   color: ${textColor};
@@ -39,7 +59,6 @@ export const MessageCard = styled.div`
 `;
 
 export const MessageContainer = styled.div`
-  ${styledScrollbar}
   display: flex;
   flex-direction: column;
   height: 70%;
@@ -63,7 +82,7 @@ export const MessageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
+  width: calc(100% - 25rem);
 `;
 
 export const ProfilePicture = styled.img`
@@ -77,9 +96,17 @@ export const StyledMarkdown = styled(Markdown)`
   width: 100%;
 `;
 
-export const StyledProgressButton = styled(ProgressButton)`
+export const StyledPrimaryAsyncButton = styled(ProgressButton)`
+  ${baseButtonStyle};
+  background-color: ${darkBlueColor};
+  color: ${whiteColor};
   margin-left: auto;
   margin-top: 2rem;
+
+  &:hover {
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
+  }
 `;
 
 export const Username = styled.div`
@@ -88,11 +115,4 @@ export const Username = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-`;
-
-export const LowerMessage = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 1rem;
-  margin-top: 2rem;
 `;
