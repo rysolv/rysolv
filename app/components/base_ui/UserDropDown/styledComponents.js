@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -16,11 +15,7 @@ export const HorizontalDivider = styled.div`
   width: 100%;
 `;
 
-export const MenuInternalLink = styled(
-  ({ shouldRemoveFirst, shouldRemoveSecond, ...restProps }) => (
-    <BaseLink {...restProps} />
-  ),
-)`
+export const MenuInternalLink = styled(BaseLink)`
   color: ${darkBlueColor};
   display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
     shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
