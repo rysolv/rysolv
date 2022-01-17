@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -25,12 +25,12 @@ const RedirectContainer = ({
 }) => {
   const isCompany = !!activeUser.company;
 
-  if (isSignInRoute) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  if (isSignInRoute || isSignUpRoute) {
     const path = isCompany ? '/company/dashboard' : '/dashboard';
-    return <Redirect to={path} />;
-  }
-  if (isSignUpRoute) {
-    const path = isCompany ? '/company/dashboard' : '/settings';
     return <Redirect to={path} />;
   }
   return (
