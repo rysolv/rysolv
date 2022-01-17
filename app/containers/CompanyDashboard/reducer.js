@@ -370,6 +370,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     }
     case MATCH_CANDIDATES_SUCCESS: {
       draft.loading.matchCandidates = false;
+      draft.shouldRefetchCandidates = true;
       break;
     }
     case MATCH_CANDIDATES: {
