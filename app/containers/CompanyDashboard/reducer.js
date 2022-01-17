@@ -141,6 +141,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case CHANGE_FILTER: {
       const { field, value } = payload;
       draft.filter[field] = value;
+      draft.shouldRefetchCandidates = true;
       break;
     }
     case CHANGE_INPUT: {
@@ -200,6 +201,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       const { positionId } = payload;
       draft.loading.createPosition = false;
       draft.selectedPosition = positionId;
+      draft.shouldRefetchCandidates = true;
       break;
     }
     case CREATE_POSITION: {
@@ -254,6 +256,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     }
     case EDIT_POSITION_SUCCESS: {
       draft.loading.editPosition = false;
+      draft.shouldRefetchCandidates = true;
       break;
     }
     case EDIT_POSITION: {
@@ -367,7 +370,6 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     }
     case MATCH_CANDIDATES_SUCCESS: {
       draft.loading.matchCandidates = false;
-      draft.shouldRefetchCandidates = true;
       break;
     }
     case MATCH_CANDIDATES: {
@@ -429,6 +431,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case SELECT_POSITION: {
       const { id } = payload;
       draft.selectedPosition = id;
+      draft.shouldRefetchCandidates = true;
       break;
     }
   }

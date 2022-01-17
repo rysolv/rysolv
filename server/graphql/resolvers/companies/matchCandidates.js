@@ -31,6 +31,7 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
 
     // Get position details
     const {
+      location: reqLocation,
       positionKeys,
       roleKeys: reqRoles,
       skills: reqLanguages,
@@ -41,6 +42,7 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
     const {
       experience: reqExperience,
       salary: reqSalary,
+      timezone: reqTimezone,
       type: reqType,
     } = positionKeys;
 
@@ -51,13 +53,15 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
       ({
         id,
         userLanguages,
+        userLocation,
         userResponses,
         userRoles,
-        userType = ['contractor', 'full_time'], // @TODO
+        userType,
       }) => {
         const {
           experience: userExperience,
           target_salary: userSalary,
+          timezone: userTimezone,
         } = userResponses;
 
         // Adjust ratios to prioritize different criteria
@@ -73,7 +77,33 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
         };
 
         // ******************************* Check Location ************************************
-        // TODO - add to location table
+        // Matching: location & timezone
+        const { utcOffset: reqUtcOffset } = reqLocation;
+
+        const { utcOffset: userUtcOffset } = userLocation;
+
+        // User is within position's time preference
+        let userLocationMatch = false;
+
+        // Position is within the user's time preference
+        let reqLocationMatch = false;
+
+        const userTimezoneNum = Number(userTimezone);
+        const reqTimezoneNum = Number(reqTimezone);
+        const userTimezoneDifference = Math.abs(
+          (userUtcOffset - reqUtcOffset) / 60,
+        );
+
+        if (userTimezoneNum >= userTimezoneDifference) {
+          userLocationMatch = true;
+        }
+        if (reqTimezoneNum >= userTimezoneDifference) {
+          reqLocationMatch = true;
+        }
+
+        if (userLocationMatch && reqLocationMatch) {
+          matchCriteria.location = true;
+        }
 
         // ******************************* Check Experience **********************************
         // Matching: senior_experience, '1 - 2 years', etc.
@@ -88,7 +118,7 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
         }
 
         // ******************************* Check Languages ***********************************
-        // Matching: {language: ' level
+        // Matching: language, framworks
         // If the language matches, give 0.5pts, if the skill matches/exceeds give 1.0pt
         let frameworkCount = 0;
         let frameworkMatch = 0;
