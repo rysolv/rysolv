@@ -36,20 +36,36 @@ export function* editUserResponseSaga({ payload }) {
   const formattedResponse = responseArray.map(
     ({ questionId, questionKey, responseId, value }) => {
       const { file, fileExtension } = value;
-      const formattedValue =
-        questionKey === 'resume' && value instanceof Object
-          ? `{
-            file: "${file}",
-            fileExtension: "${fileExtension}",
-          }`
-          : questionKey === 'skills'
-          ? `{
-            beginner: ${value.beginner},
-            expert: ${value.expert},
-            intermediate: ${value.intermediate},
-            skill: "${value.skill}"
-          }`
-          : `"${value}"`;
+      const generateFormattedValue = () => {
+        switch (questionKey) {
+          case 'preferred_location': {
+            return `{
+              country: "${value.country}",
+              countryCode: "${value.countryCode}",
+              formattedAddress: "${value.formattedAddress}",
+              utcOffset: ${value.utcOffset}
+            }`;
+          }
+          case 'resume': {
+            return `{
+              file: "${file}",
+              fileExtension: "${fileExtension}",
+            }`;
+          }
+          case 'skills': {
+            return `{
+              beginner: ${value.beginner},
+              expert: ${value.expert},
+              intermediate: ${value.intermediate},
+              skill: "${value.skill}"
+            }`;
+          }
+          default: {
+            return `"${value}"`;
+          }
+        }
+      };
+      const formattedValue = generateFormattedValue();
       return `{
         questionId: "${questionId}",
         questionKey: "${questionKey}",
@@ -181,11 +197,12 @@ export function* fetchUserResponseSaga() {
           desiredRole
           experience
           isActive
-          isRemote
           preferredLocation
           resume
           skills
           targetSalary
+          timezone
+          type
           usCitizen
         }
         ... on Error {
@@ -247,6 +264,40 @@ export function* setHiringStatusSaga({ payload }) {
   }
 }
 
+export function* updateUserLinksSaga({ payload }) {
+  const { githubLink, personalLink, stackoverflowLink } = payload;
+  const query = `
+    mutation {
+      transformUser(userInput: {
+        githubLink: "${githubLink}" 
+        personalLink: "${personalLink}"
+        stackoverflowLink: "${stackoverflowLink}"
+      }) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        transformUser: { __typename, message },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(updateUserLinksSuccess());
+    yield put(closeModalState());
+  } catch (error) {
+    yield put(updateUserLinksFailure({ error: { message: error } }));
+  }
+}
+
 export function* updateUserSkillsSaga({ payload }) {
   const { skills } = payload;
   const formattedResponse = skills.map(
@@ -284,40 +335,6 @@ export function* updateUserSkillsSaga({ payload }) {
     yield put(closeModalState());
   } catch (error) {
     yield put(updateUserSkillsFailure({ error: { message: error } }));
-  }
-}
-
-export function* updateUserLinksSaga({ payload }) {
-  const { githubLink, personalLink, stackoverflowLink } = payload;
-  const query = `
-    mutation {
-      transformUser(userInput: {
-        githubLink: "${githubLink}" 
-        personalLink: "${personalLink}"
-        stackoverflowLink: "${stackoverflowLink}"
-      }) {
-        __typename
-        ... on Success {
-          message
-        }
-        ... on Error {
-          message
-        }
-      }
-    }
-  `;
-  try {
-    const graphql = JSON.stringify({ query });
-    const {
-      data: {
-        transformUser: { __typename, message },
-      },
-    } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') throw message;
-    yield put(updateUserLinksSuccess());
-    yield put(closeModalState());
-  } catch (error) {
-    yield put(updateUserLinksFailure({ error: { message: error } }));
   }
 }
 

@@ -10,7 +10,7 @@ import {
   FETCH_WATCH_LIST_RESPONSE,
   FETCH_WATCH_LIST,
   OPEN_MODAL_STATE,
-  RESET_STATE,
+  RESET_USER_STATE,
   UPDATE_PAYMENT_MODAL,
 } from './constants';
 
@@ -61,7 +61,7 @@ const mainReducer = produce((draft, { payload, type }) => {
       draft.tableData = tableData || [];
       break;
     }
-    case RESET_STATE: {
+    case RESET_USER_STATE: {
       return initialState;
     }
     case UPDATE_PAYMENT_MODAL: {

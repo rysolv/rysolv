@@ -17,16 +17,31 @@ import {
 } from './styledComponents';
 
 const ScheduleInterviewModal = ({
-  alerts: { error, success },
   dispatchChangeInput,
   dispatchClearAlerts,
   dispatchNotifyCandidate,
   dispatchResetFormState,
   form: { scheduleInterview },
   formErrors: { scheduleInterview: scheduleInterviewErrors },
+  handleClose,
+  messageAlerts: { error, success },
   tableData: { positionId, userId },
 }) => {
-  useEffect(() => dispatchClearAlerts, []);
+  useEffect(() => () => dispatchClearAlerts('messageAlerts'), []);
+
+  useEffect(() => {
+    if (error || success) {
+      setTimeout(() => {
+        dispatchClearAlerts('messageAlerts');
+        dispatchResetFormState({ category: 'scheduleInterview' });
+      }, 6000);
+    }
+  }, [error, success]);
+
+  const handleCancel = () => {
+    dispatchResetFormState({ category: 'scheduleInterview' });
+    handleClose();
+  };
 
   return (
     <ModalContainer>
@@ -35,7 +50,7 @@ const ScheduleInterviewModal = ({
         <ErrorSuccessBanner
           bottomMarginRequired="1rem"
           error={error}
-          onClose={dispatchClearAlerts}
+          onClose={() => dispatchClearAlerts('messageAlerts')}
           success={success}
           topMarginRequired="1rem"
         />
@@ -58,7 +73,7 @@ const ScheduleInterviewModal = ({
         </div>
       </ModalContent>
       <ButtonGroup>
-        <SecondaryButton disableRipple onClick={dispatchResetFormState}>
+        <SecondaryButton disableRipple onClick={handleCancel}>
           Cancel
         </SecondaryButton>
         <StyledPrimaryButton
@@ -78,13 +93,14 @@ const ScheduleInterviewModal = ({
 };
 
 ScheduleInterviewModal.propTypes = {
-  alerts: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchNotifyCandidate: T.func.isRequired,
   dispatchResetFormState: T.func.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
+  handleClose: T.func.isRequired,
+  messageAlerts: T.object.isRequired,
   tableData: T.object.isRequired,
 };
 

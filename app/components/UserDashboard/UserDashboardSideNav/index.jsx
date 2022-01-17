@@ -1,7 +1,9 @@
 import React from 'react';
 import T from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
 import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
+import { formatUrlLinks } from 'utils/globalHelpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import { ToggleOption } from '../Options';
@@ -13,6 +15,8 @@ import {
   ActiveText,
   ActiveWrapper,
   IconButtonWrapper,
+  LinkText,
+  LinkWrapper,
   ProfilePicture,
   SkillsContainer,
   StyledIconButton,
@@ -94,30 +98,44 @@ const UserDashboardSideNav = ({
           <IconButtonWrapper $hasLinks={hasLinks}>
             <ConditionalRender
               Component={
-                <StyledIconButton href={githubLink} target="_blank">
-                  {GithubIcon}
-                </StyledIconButton>
+                <LinkWrapper>
+                  <StyledIconButton href={githubLink} target="_blank">
+                    {GithubIcon}
+                  </StyledIconButton>
+                  <LinkText>{formatUrlLinks({ githubLink })}</LinkText>
+                </LinkWrapper>
               }
               shouldRender={!!githubLink}
             />
             <ConditionalRender
               Component={
-                <StyledIconButton href={personalLink} target="_blank">
-                  {PersonalIcon}
-                </StyledIconButton>
+                <LinkWrapper>
+                  <StyledIconButton href={personalLink} target="_blank">
+                    {PersonalIcon}
+                  </StyledIconButton>
+                  <LinkText>{formatUrlLinks({ personalLink })}</LinkText>
+                </LinkWrapper>
               }
               shouldRender={!!personalLink}
             />
             <ConditionalRender
               Component={
-                <StyledIconButton href={stackoverflowLink} target="_blank">
-                  {StackoverflowIcon}
-                </StyledIconButton>
+                <LinkWrapper>
+                  <StyledIconButton href={stackoverflowLink} target="_blank">
+                    {StackoverflowIcon}
+                  </StyledIconButton>
+                  <div>{formatUrlLinks({ stackoverflowLink })}</div>
+                </LinkWrapper>
               }
               shouldRender={!!stackoverflowLink}
             />
           </IconButtonWrapper>
           <StyledPrimaryButton
+            $customTopMargin={
+              !!githubLink || !!personalLink || !!stackoverflowLink
+                ? '2.4rem'
+                : '3rem'
+            }
             label={linksButtonLabel}
             onClick={() => dispatchOpenModal({ modalState: 'updateLinks' })}
           />
@@ -137,6 +155,7 @@ const UserDashboardSideNav = ({
               ))}
             </div>
             <StyledPrimaryButton
+              $customTopMargin={!isEmpty(skills) ? '2.5rem' : '3rem'}
               label={skillsButtonLabel}
               onClick={() => dispatchOpenModal({ modalState: 'updateSkills' })}
             />

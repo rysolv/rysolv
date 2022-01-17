@@ -27,7 +27,7 @@ export const CardContainer = styled.div`
 
 export const CodeScoringContainer = styled.div`
   margin: 0 12rem;
-  max-width: 120rem;
+  max-width: 140rem;
 
   ${laptop} {
     margin: 0 3rem;

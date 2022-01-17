@@ -1,15 +1,13 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { Textarea } from './styledComponents';
+import Markdown from 'components/Markdown';
 
 const TextareaOption = ({ handleChangeInput, onBlur, value }) => (
-  <Textarea
-    height="12.3rem"
+  <Markdown
+    body={value}
+    handleInput={val => handleChangeInput(val)}
     onBlur={onBlur}
-    onChange={e => handleChangeInput(e.target.value)}
-    type="text"
-    value={value}
   />
 );
 

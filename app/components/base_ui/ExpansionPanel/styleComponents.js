@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import ExpansionPanel from '@material-ui/core/Accordion';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/AccordionDetails';
+import ExpansionPanelSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 
 import { defaultFontSize, textColor } from 'defaultStyleHelper';

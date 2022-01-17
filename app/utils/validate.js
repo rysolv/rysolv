@@ -137,13 +137,6 @@ const validatePayoutUrl = (value, { payoutMethod }) => {
   }
 };
 
-const validatePositionLocationInput = value => {
-  if (!value) {
-    return `Must select one non-remote location`;
-  }
-  return false;
-};
-
 export const validateRepoUrl = value => {
   const url = value.split('/');
   const containsHttps = url.includes('https:');
@@ -225,24 +218,17 @@ export const validationDictionary = {
   linkInput: validateLink,
   passwordInput: validatePassword,
   payoutUrlInput: validatePayoutUrl,
-  positionLocationInput: validatePositionLocationInput,
   stackoverflowLinkInput: validateStackoverflowLink,
   stringInput: validateString,
   usernameInput: validateUsername,
   verifyInput: validateVerifyInput,
 };
 
-export const validate = ({
-  additionalInputField,
-  required,
-  type,
-  value,
-  ...validationProps
-}) => {
+export const validate = ({ required, type, value, ...validationProps }) => {
   if (required && isBlank(value)) {
     return 'Required field';
   }
-  if (!additionalInputField && !required && isBlank(value)) {
+  if (!required && isBlank(value)) {
     return false;
   }
   const validationFunction = validationDictionary[type];

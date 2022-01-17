@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 
 const {
+  createLocation,
   createUserTechStack,
   deleteUserResponse,
   deleteUserTechStack,
@@ -30,7 +31,16 @@ const transformUserResponse = async (
     await Promise.all(
       responseArray.map(
         async ({ questionId, questionKey, responseId, value }) => {
-          if (questionKey === 'skills') {
+          if (questionKey === 'preferred_location') {
+            const { countryCode, country, formattedAddress, utcOffset } = value;
+            await createLocation({
+              country,
+              countryCode,
+              formattedAddress,
+              userId,
+              utcOffset,
+            });
+          } else if (questionKey === 'skills') {
             const { beginner, expert, intermediate, skill } = value;
             await createUserTechStack({
               level: generatePositionLevel({ beginner, expert, intermediate }),

@@ -15,6 +15,7 @@ const {
   alterIssuesTable,
   alterLanguagesTable,
   alterLegalContractsTable,
+  alterLocationsTable,
   alterMessagesTable,
   alterNotificationsTable,
   alterPaymentTable,
@@ -43,6 +44,7 @@ const {
   createIssuesTable,
   createLanguagesTable,
   createLegalContractsTable,
+  createLocationsTable,
   createMessagesTable,
   createNotificationsTable,
   createPaymentsTable,
@@ -75,6 +77,7 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterIssuesTable });
   await singleQuery({ queryText: alterLanguagesTable });
   await singleQuery({ queryText: alterLegalContractsTable });
+  await singleQuery({ queryText: alterLocationsTable });
   await singleQuery({ queryText: alterMessagesTable });
   await singleQuery({ queryText: alterNotificationsTable });
   await singleQuery({ queryText: alterPaymentTable });
@@ -84,7 +87,7 @@ const alterTables = async () => {
   await singleQuery({ queryText: alterQuestionsTable });
   await singleQuery({ queryText: alterReposTable });
   await singleQuery({ queryText: alterSignedContractsTable });
-  await singleQuery({ queryText: alterTechnologiesTable});
+  await singleQuery({ queryText: alterTechnologiesTable });
   await singleQuery({ queryText: alterUserCompaniesTable });
   await singleQuery({ queryText: alterUserQuestionResponseTable });
   await singleQuery({ queryText: alterUserReposTable });
@@ -107,6 +110,7 @@ const createTables = async () => {
   await singleQuery({ queryText: createIssuesTable });
   await singleQuery({ queryText: createLanguagesTable });
   await singleQuery({ queryText: createLegalContractsTable });
+  await singleQuery({ queryText: createLocationsTable });
   await singleQuery({ queryText: createMessagesTable });
   await singleQuery({ queryText: createNotificationsTable });
   await singleQuery({ queryText: createPaymentsTable });
@@ -129,24 +133,28 @@ const createTables = async () => {
 const dropAllTables = async () => {
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS activity cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS attempting cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS candidate_positions cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS comments cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS companies cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS cronActivity cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS funding cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS hiring_activity cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS issues cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS languages cascade' });
-  await singleQuery({
-    queryText: 'DROP TABLE IF EXISTS notifications cascade',
-  });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS legal_contracts cascade'});
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS locations cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS messages cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS notifications cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS payments cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS position_tech_stack cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS pullRequests cascade' });
-  await singleQuery({
-    queryText: 'DROP TABLE IF EXISTS question_responses cascade',
-  });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS question_responses cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS questions cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS repos cascade' });
-  await singleQuery({
-    queryText: 'DROP TABLE IF EXISTS user_question_responses cascade',
-  });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS signed_contracts cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS technologies cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS user_companies cascade' });
+  await singleQuery({ queryText: 'DROP TABLE IF EXISTS user_question_responses cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS user_repos cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS users cascade' });
   await singleQuery({ queryText: 'DROP TABLE IF EXISTS watching cascade' });
@@ -159,16 +167,25 @@ const printTables = async () => {
     'SELECT * FROM activity',
     'SELECT * FROM attempting',
     'SELECT * FROM comments',
+    'SELECT * FROM companies',
+    'SELECT * FROM company_positions',
     'SELECT * FROM cronActivity',
     'SELECT * FROM funding',
+    'SELECT * FROM hiring_activity',
     'SELECT * FROM issues',
     'SELECT * FROM languages',
+    'SELECT * FROM legal_contracts',
+    'SELECT * FROM locations',
+    'SELECT * FROM messages',
     'SELECT * FROM notifications',
     'SELECT * from payments',
+    'SELECT * FROM position_tech_stack',
     'SELECT * FROM pullRequests',
     'SELECT * FROM question_responses',
     'SELECT * FROM questions',
     'SELECT * FROM repos',
+    'SELECT * FROM signed_contracts',
+    'SELECT * FROM technologies',
     'SELECT * FROM user_question_responses',
     'SELECT * FROM user_repos',
     'SELECT * FROM users',

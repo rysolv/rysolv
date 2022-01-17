@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
 import iconDictionary from 'utils/iconDictionary';
 
@@ -40,9 +41,12 @@ const FormView = ({
   const hasErrors = Object.keys(companyFormErrors).some(
     input => !!companyFormErrors[input],
   );
-  const isComplete = Object.keys(companyForm).every(
-    input => !!companyForm[input],
-  );
+  const isComplete = Object.keys(companyForm).every(input => {
+    if (input === 'location') {
+      return !isEmpty(companyForm[input]);
+    }
+    return !!companyForm[input];
+  });
   const shouldSubmit = !hasErrors && isComplete;
 
   const handleKeypress = ({ key }) => {

@@ -1,7 +1,5 @@
 import { validate } from 'utils/validate';
 
-import { additionalInputDictionary } from './constants';
-
 export const optionDictionary = {
   desired_role: {
     option: 'multipleButton',
@@ -11,9 +9,6 @@ export const optionDictionary = {
   },
   is_active: {
     option: 'singleButton',
-  },
-  is_remote: {
-    option: 'autocomplete',
   },
   preferred_location: {
     option: 'locationAutocomplete',
@@ -28,13 +23,15 @@ export const optionDictionary = {
   target_salary: {
     option: 'singleButton',
   },
+  timezone: {
+    option: 'autocomplete',
+  },
+  type: {
+    option: 'multipleButton',
+  },
   us_citizen: {
     option: 'singleButton',
   },
-};
-
-const validationPropsByField = {
-  preferredLocation: { type: 'positionLocationInput' },
 };
 
 export const validateFields = ({ questions, values }) =>
@@ -55,14 +52,9 @@ export const validateFields = ({ questions, values }) =>
   );
 
 export const validateOneField = ({ field, required, values }) => {
-  const isFieldRequired = additionalInputDictionary[field]
-    ? !(values[additionalInputDictionary[field]] === 'Yes')
-    : required;
   const value = values[field];
   return validate({
-    additionalInputField: !!values[additionalInputDictionary[field]],
-    required: isFieldRequired,
+    required,
     value,
-    ...validationPropsByField[field],
   });
 };

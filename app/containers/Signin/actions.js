@@ -3,7 +3,6 @@ import {
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
-  RESET_PASSWORD_STATE,
   RESET_STATE,
 } from './constants';
 
@@ -35,10 +34,9 @@ export function inputError(payload) {
   };
 }
 
-export function resetPasswordState() {
-  return { type: RESET_PASSWORD_STATE };
-}
-
-export function resetState() {
-  return { type: RESET_STATE };
+export function resetState(payload) {
+  return {
+    payload,
+    type: RESET_STATE,
+  };
 }

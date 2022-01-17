@@ -1,7 +1,5 @@
 import { validate } from 'utils/validate';
 
-import { additionalInputDictionary } from './constants';
-
 export const filterCandidates = (candidates, filterParams) => {
   const {
     location: locationFilter,
@@ -22,6 +20,8 @@ export const filterCandidates = (candidates, filterParams) => {
   return filteredCandidates;
 };
 
+// @TODO: Locations
+// remove is_remote
 export const optionDictionary = {
   description: {
     option: 'textarea',
@@ -31,9 +31,6 @@ export const optionDictionary = {
   },
   is_active: {
     option: 'toggle',
-  },
-  is_remote: {
-    option: 'autocomplete',
   },
   location: {
     option: 'locationAutocomplete',
@@ -58,6 +55,9 @@ export const optionDictionary = {
     option: 'radioGroup',
     type: 'skills',
   },
+  timezone: {
+    option: 'autocomplete',
+  },
   title: {
     option: 'input',
   },
@@ -71,7 +71,6 @@ export const optionDictionary = {
 };
 
 const validationPropsByField = {
-  location: { type: 'positionLocationInput' },
   title: { type: 'stringInput' },
 };
 
@@ -89,13 +88,9 @@ export const validateFields = ({ values }) =>
   );
 
 export const validateOneField = ({ field, values }) => {
-  const required = !(
-    field === 'location' && values[additionalInputDictionary[field]] === 'Yes'
-  );
   const value = values[field];
   return validate({
-    additionalInputField: !!values[additionalInputDictionary[field]],
-    required,
+    required: true,
     value,
     ...validationPropsByField[field],
   });

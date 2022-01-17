@@ -144,7 +144,7 @@ export const SigninWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 12rem;
-  max-width: 120rem;
+  max-width: 140rem;
   width: 100%;
 
   ${laptop} {

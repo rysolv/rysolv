@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 
 import {
   BaseAutocomplete,
-  CheckboxWithLabel,
   GithubButton,
   PrimaryAsyncButton,
   PrimaryButton,
@@ -244,7 +243,7 @@ export const JobsContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 12rem;
-  max-width: 120rem;
+  max-width: 140rem;
   width: 100%;
 
   ${laptop} {
@@ -340,26 +339,6 @@ export const StyledButton = styled(
 
   ${mobileS} {
     justify-content: start;
-  }
-`;
-
-export const StyledCheckboxWithLabel = styled(CheckboxWithLabel)`
-  .checkbox {
-    margin-right: 1.2rem;
-    padding: 0;
-  }
-
-  &.formControl {
-    margin-top: 0.5rem;
-  }
-
-  .label {
-    font-size: 1.6rem;
-  }
-
-  svg {
-    height: 2.4rem;
-    width: 2.4rem;
   }
 `;
 

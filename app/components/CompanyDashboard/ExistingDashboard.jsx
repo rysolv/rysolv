@@ -19,7 +19,7 @@ import {
 const EditIcon = iconDictionary('edit');
 
 const ExistingDashboard = ({
-  data,
+  candidates,
   dispatchChangeFilter,
   dispatchOpenModal,
   dispatchSaveCandidate,
@@ -33,12 +33,12 @@ const ExistingDashboard = ({
     <ConditionalRender
       Component={
         <CandidateCardGroup>
-          {data.map((candidate, index) => (
+          {candidates.map((candidate, index) => (
             <CandidateCard
               dispatchOpenModal={dispatchOpenModal}
               dispatchSaveCandidate={dispatchSaveCandidate}
               handleNav={handleNav}
-              isLast={data.length - 1 === index}
+              isLast={candidates.length - 1 === index}
               key={`candidate-${index}`}
               selectedPosition={selectedPosition}
               {...candidate}
@@ -47,7 +47,7 @@ const ExistingDashboard = ({
         </CandidateCardGroup>
       }
       FallbackComponent={EmptyCandidateDashboard}
-      shouldRender={!!data.length}
+      shouldRender={!!candidates.length}
     />
   );
   return (
@@ -77,7 +77,7 @@ const ExistingDashboard = ({
 };
 
 ExistingDashboard.propTypes = {
-  data: T.array.isRequired,
+  candidates: T.array.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,

@@ -49,7 +49,7 @@ const AutocompleteOption = ({
   );
 };
 
-AutocompleteOption.defaultProps = { limit: 3 };
+AutocompleteOption.defaultProps = { limit: 3, multiple: false };
 
 AutocompleteOption.propTypes = {
   form: T.object.isRequired,
@@ -57,7 +57,7 @@ AutocompleteOption.propTypes = {
   handleValidateInput: T.func.isRequired,
   id: T.string.isRequired,
   limit: T.number,
-  multiple: T.bool.isRequired,
+  multiple: T.bool,
   options: T.array.isRequired,
 };
 

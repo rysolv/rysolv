@@ -10,14 +10,12 @@ import {
   makeSelectAuth,
   makeSelectAuthLoading,
 } from 'containers/Auth/selectors';
-import injectReducer from 'utils/injectReducer';
 
 import { inputChange, inputError } from '../actions';
 import { validateFields, validateOneField } from '../helpers';
 import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
-import reducer from '../reducer';
 
-const VerifyContainer = ({
+const VerifyView = ({
   activeUser,
   alerts: { error, success },
   dispatchInputError,
@@ -63,6 +61,7 @@ const VerifyContainer = ({
       form,
     });
   };
+
   return (
     <VerifyEmail
       activeUser={activeUser}
@@ -80,7 +79,7 @@ const VerifyContainer = ({
   );
 };
 
-VerifyContainer.propTypes = {
+VerifyView.propTypes = {
   activeUser: T.object.isRequired,
   alerts: T.object.isRequired,
   dispatchInputError: T.func.isRequired,
@@ -128,9 +127,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'signin', reducer });
-
-export default compose(
-  withReducer,
-  withConnect,
-)(VerifyContainer);
+export default compose(withConnect)(VerifyView);

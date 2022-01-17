@@ -27,7 +27,7 @@ export const RoutesWrapper = styled.section`
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  max-width: 120rem;
+  max-width: 140rem;
   padding: ${({ isLandingOrRecruitmentPage }) => (isLandingOrRecruitmentPage ? '0' : '0 5% 3.6rem 5%')};
   width: 100%;
 

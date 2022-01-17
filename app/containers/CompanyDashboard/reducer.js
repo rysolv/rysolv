@@ -68,7 +68,7 @@ export const initialState = {
   form: {
     company: {
       description: '',
-      location: '',
+      location: {},
       logo: '',
       name: '',
       size: '',
@@ -78,11 +78,11 @@ export const initialState = {
       description: '',
       experience: '',
       isActive: 'Yes',
-      isRemote: 'No',
-      location: '',
+      location: {},
       role: [],
       salary: '',
       skills: [],
+      timezone: '',
       title: '',
       type: '',
     },
@@ -103,6 +103,7 @@ export const initialState = {
       role: '',
       salary: '',
       skills: '',
+      timezone: '',
       title: '',
       type: '',
     },
@@ -110,17 +111,27 @@ export const initialState = {
   },
   isModalOpen: false,
   loading: {
+    createPosition: false,
+    deletePosition: false,
+    editCompany: false,
+    editPosition: false,
+    fetchCompany: false,
+    fetchCompanyPositions: true,
+    fetchPosition: false,
+    fetchPositionCandidates: false,
     fetchQuestions: true,
-    main: false,
     matchCandidates: false,
+    notifyCandidate: false,
     saveCandidate: false,
   },
+  messageAlerts: { error: false, success: false },
   positions: [],
   questions: {
     company: [],
     companyPosition: [],
   },
   selectedPosition: '',
+  shouldRefetchCandidates: true,
   shouldRefetchCompany: true,
   tableData: {},
 };
@@ -130,6 +141,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case CHANGE_FILTER: {
       const { field, value } = payload;
       draft.filter[field] = value;
+      draft.shouldRefetchCandidates = true;
       break;
     }
     case CHANGE_INPUT: {
@@ -169,7 +181,9 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       break;
     }
     case CLEAR_ALERTS: {
-      draft.alerts = initialState.alerts;
+      const { alertType } = payload;
+      if (alertType) draft[alertType] = initialState[alertType];
+      else draft.alerts = initialState.alerts;
       break;
     }
     case CLOSE_MODAL_STATE: {
@@ -180,34 +194,34 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case CREATE_POSITION_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.main = false;
+      draft.loading.createPosition = false;
       break;
     }
     case CREATE_POSITION_SUCCESS: {
-      const { message, positionId } = payload;
-      draft.alerts.success = { message };
-      draft.loading.main = false;
+      const { positionId } = payload;
+      draft.loading.createPosition = false;
       draft.selectedPosition = positionId;
+      draft.shouldRefetchCandidates = true;
       break;
     }
     case CREATE_POSITION: {
       draft.alerts = initialState.alerts;
-      draft.loading.main = true;
+      draft.loading.createPosition = true;
       break;
     }
     case DELETE_POSITION_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.main = false;
+      draft.loading.deletePosition = false;
       break;
     }
     case DELETE_POSITION_SUCCESS: {
-      draft.loading.main = false;
+      draft.loading.deletePosition = false;
       break;
     }
     case DELETE_POSITION: {
       draft.alerts = initialState.alerts;
-      draft.loading.main = true;
+      draft.loading.deletePosition = true;
       break;
     }
     case DELETE_SKILL: {
@@ -221,104 +235,108 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case EDIT_COMPANY_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.main = false;
+      draft.loading.editCompany = false;
       break;
     }
     case EDIT_COMPANY_SUCCESS: {
       draft.company = draft.form.company;
-      draft.loading.main = false;
+      draft.loading.editCompany = false;
       break;
     }
     case EDIT_COMPANY: {
       draft.alerts = initialState.alerts;
-      draft.loading.main = true;
+      draft.loading.editCompany = true;
       break;
     }
     case EDIT_POSITION_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading.main = false;
+      draft.loading.editPosition = false;
       break;
     }
     case EDIT_POSITION_SUCCESS: {
-      draft.loading.main = false;
+      draft.loading.editPosition = false;
+      draft.shouldRefetchCandidates = true;
       break;
     }
     case EDIT_POSITION: {
       draft.alerts = initialState.alerts;
-      draft.loading.main = true;
+      draft.loading.editPosition = true;
       break;
     }
     case FETCH_COMPANY_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading.main = false;
+      draft.loading.fetchCompany = false;
       break;
     }
     case FETCH_COMPANY_POSITIONS_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading.main = false;
+      draft.loading.fetchCompanyPositions = false;
       break;
     }
     case FETCH_COMPANY_POSITIONS_SUCCESS: {
       const { positions } = payload;
-      draft.loading.main = false;
+      draft.loading.fetchCompanyPositions = false;
       draft.positions = positions;
-      if (!draft.selectedPosition)
-        draft.selectedPosition = positions[0].id || '';
+      if (!draft.selectedPosition) {
+        if (!isEmpty(positions)) draft.selectedPosition = positions[0].id;
+        else draft.selectedPosition = '';
+      }
       break;
     }
     case FETCH_COMPANY_POSITIONS: {
       draft.error = initialState.error;
-      draft.loading.main = true;
+      draft.loading.fetchCompanyPositions = true;
       break;
     }
     case FETCH_COMPANY_SUCCESS: {
       const { company } = payload;
       draft.company = company;
       draft.form.company = company;
-      draft.loading.main = false;
+      draft.loading.fetchCompany = false;
       draft.shouldRefetchCompany = false;
       break;
     }
     case FETCH_COMPANY: {
       draft.error = initialState.error;
-      draft.loading.main = true;
+      draft.loading.fetchCompany = true;
       break;
     }
     case FETCH_POSITION_CANDIDATES_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading.main = false;
+      draft.loading.fetchPositionCandidates = false;
       break;
     }
     case FETCH_POSITION_CANDIDATES_SUCCESS: {
       const { candidates } = payload;
       draft.candidates = candidates;
-      draft.loading.main = false;
+      draft.loading.fetchPositionCandidates = false;
+      draft.shouldRefetchCandidates = false;
       break;
     }
     case FETCH_POSITION_CANDIDATES: {
       draft.error = initialState.error;
-      draft.loading.main = true;
+      draft.loading.fetchPositionCandidates = true;
       break;
     }
     case FETCH_POSITION_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading.main = false;
+      draft.loading.fetchPosition = false;
       break;
     }
     case FETCH_POSITION_SUCCESS: {
       const { position } = payload;
       draft.form.companyPosition = position;
-      draft.loading.main = false;
+      draft.loading.fetchPosition = false;
       break;
     }
     case FETCH_POSITION: {
       draft.error = initialState.error;
-      draft.loading.main = true;
+      draft.loading.fetchPosition = true;
       break;
     }
     case FETCH_QUESTIONS_FAILURE: {
@@ -347,41 +365,36 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       break;
     }
     case MATCH_CANDIDATES_FAILURE: {
-      const { error } = payload;
-      draft.alerts.error = error;
       draft.loading.matchCandidates = false;
       break;
     }
     case MATCH_CANDIDATES_SUCCESS: {
-      const { message } = payload;
-      draft.alerts.success = { message };
       draft.loading.matchCandidates = false;
       break;
     }
     case MATCH_CANDIDATES: {
-      draft.alerts = initialState.alerts;
       draft.loading.matchCandidates = true;
       break;
     }
     case NOTIFY_CANDIDATE_FAILURE: {
       const { error } = payload;
-      draft.alerts.error = error;
-      draft.loading.main = false;
+      draft.loading.notifyCandidate = false;
+      draft.messageAlerts.error = error;
       break;
     }
     case NOTIFY_CANDIDATE_SUCCESS: {
       const { candidateId, message, threadId } = payload;
-      draft.alerts.success = { message };
       const candidateIndex = draft.candidates.findIndex(
         ({ id }) => candidateId === id,
       );
       draft.candidates[candidateIndex].threadId = threadId;
-      draft.loading.main = false;
+      draft.loading.notifyCandidate = false;
+      draft.messageAlerts.success = { message };
       break;
     }
     case NOTIFY_CANDIDATE: {
-      draft.alerts = initialState.alerts;
-      draft.loading.main = true;
+      draft.loading.notifyCandidate = true;
+      draft.messageAlerts = initialState.messageAlerts;
       break;
     }
     case OPEN_MODAL_STATE: {
@@ -392,10 +405,9 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     }
     case RESET_FORM_STATE: {
       const { category } = payload;
+      if (category === 'company') draft.shouldRefetchCompany = true;
       draft.form[category] = initialState.form[category];
       draft.formErrors[category] = initialState.formErrors[category];
-      draft.isModalOpen = initialState.isModalOpen;
-      draft.shouldRefetchCompany = true;
       break;
     }
     case SAVE_CANDIDATE_FAILURE: {
@@ -419,6 +431,7 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case SELECT_POSITION: {
       const { id } = payload;
       draft.selectedPosition = id;
+      draft.shouldRefetchCandidates = true;
       break;
     }
   }

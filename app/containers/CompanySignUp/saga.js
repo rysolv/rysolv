@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
+import { updateActiveUser } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
@@ -98,13 +99,19 @@ export function* fetchQuestionsSaga({ payload }) {
 export function* submitCompanyResponseSaga({ payload }) {
   const { companyId, form } = payload;
   const { description, location, name, plan, size, website } = form;
+  const formattedLocation = `{
+    country: "${location.country}",
+    countryCode: "${location.countryCode}",
+    formattedAddress: "${location.formattedAddress}",
+    utcOffset: ${location.utcOffset}
+  }`;
   const query = `
       mutation {
         transformCompany(
           companyInput: {
             companyId: "${companyId}",
             description: ${JSON.stringify(description)},
-            location: "${location}",
+            location: ${formattedLocation},
             name: "${name}",
             size: "${size}",
             website: "${website}",
@@ -160,6 +167,12 @@ export function* submitContractAcceptedSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(submitContractAcceptedSuccess());
+    yield put(
+      updateActiveUser({
+        isContractAccepted: true,
+        isQuestionnaireComplete: true,
+      }),
+    );
     yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(submitContractAcceptedFailure({ error: { message: error } }));

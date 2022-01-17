@@ -8,15 +8,20 @@ import {
   lightBlueColor,
   whiteColor,
 } from 'defaultStyleHelper';
-import { mediaQueriesByDevice } from 'utils/breakpoints';
-
-const { tablet } = mediaQueriesByDevice;
 
 export const ButtonTextWrapper = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: auto;
+`;
+
+export const CompanyProfileContainer = styled.div`
+  display: flex;
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+  max-width: 28.1rem;
+  place-items: center;
 `;
 
 export const CompanySideNavContainer = styled.div`
@@ -65,6 +70,30 @@ export const LocationText = styled.div`
   text-transform: capitalize;
 `;
 
+export const Logo = styled.img`
+  border-radius: 50%;
+  border: 0.2rem solid ${candidateGreyColor};
+  height: 7.5rem;
+  margin-right: 0.8rem;
+  object-fit: cover;
+  width: 7.5rem;
+`;
+
+export const NameText = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+export const NameWrapper = styled.div`
+  color: ${blueColor};
+  display: flex;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 3.45rem;
+  width: calc(100% - ${({ hasImage }) => (hasImage ? '8rem' : '2rem')});
+`;
+
 export const PositionButton = styled.button`
   background-color: ${({ isSelected }) =>
     isSelected ? blueColor : whiteColor};
@@ -89,11 +118,6 @@ export const PositionButton = styled.button`
   svg {
     font-size: 1.6rem;
     margin-right: 0.8rem;
-  }
-
-  ${tablet} {
-    border-bottom-left-radius: ${({ isLast }) => (isLast ? '0.7rem' : '0')};
-    border-bottom-right-radius: ${({ isLast }) => (isLast ? '0.7rem' : '0')};
   }
 `;
 
@@ -128,28 +152,4 @@ export const StyledIconButton = styled(BaseIconButton)`
     height: 3.2rem;
     width: 3.2rem;
   }
-`;
-
-export const Logo = styled.img`
-  border-radius: 50%;
-  border: 0.2rem solid ${candidateGreyColor};
-  height: 7.5rem;
-  margin-right: 0.8rem;
-  object-fit: cover;
-  width: 7.5rem;
-`;
-
-export const CompanyProfileContainer = styled.div`
-  display: flex;
-  margin-bottom: 2rem;
-  max-width: 28.1rem;
-  place-items: center;
-`;
-
-export const NameWrapper = styled.div`
-  color: ${blueColor};
-  display: flex;
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 3.45rem;
 `;

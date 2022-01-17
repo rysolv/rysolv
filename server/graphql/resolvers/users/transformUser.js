@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-
 const Jimp = require('jimp');
+
 const {
   createUserTechStack,
   deleteUserTechStack,

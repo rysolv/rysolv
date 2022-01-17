@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary, prettier/prettier */
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { v4 as uuidv4 } from 'uuid';
@@ -19,7 +18,6 @@ import {
   fetchCompanyPositionsFailure,
   fetchCompanyPositionsSuccess,
   fetchCompanySuccess,
-  fetchPositionCandidates,
   fetchPositionCandidatesFailure,
   fetchPositionCandidatesSuccess,
   fetchPositionFailure,
@@ -32,6 +30,7 @@ import {
   notifyCandidateFailure,
   notifyCandidateSuccess,
   resetFormState,
+  saveCandidateFailure,
   saveCandidateSuccess,
 } from './actions';
 import {
@@ -55,17 +54,33 @@ export function* createPositionSaga({ payload }) {
   const positionId = uuidv4();
   const formattedResponse = responseArray.map(
     ({ questionId, questionKey, responseId, value }) => {
-      const formattedValue =
-        questionKey === 'description'
-          ? `${JSON.stringify(value)}`
-          : questionKey === 'skills'
-            ? `{
+      const generateFormattedValue = () => {
+        switch (questionKey) {
+          case 'description': {
+            return JSON.stringify(value);
+          }
+          case 'location': {
+            return `{
+              country: "${value.country}",
+              countryCode: "${value.countryCode}",
+              formattedAddress: "${value.formattedAddress}",
+              utcOffset: ${value.utcOffset}
+            }`;
+          }
+          case 'skills': {
+            return `{
               beginner: ${value.beginner},
               expert: ${value.expert},
               intermediate: ${value.intermediate},
               skill: "${value.skill}"
-            }`
-            : `"${value}"`;
+            }`;
+          }
+          default: {
+            return `"${value}"`;
+          }
+        }
+      };
+      const formattedValue = generateFormattedValue();
       return `{
         questionId: "${questionId}",
         questionKey: "${questionKey}",
@@ -99,10 +114,9 @@ export function* createPositionSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(createPositionSuccess({ message, positionId }));
+    yield put(createPositionSuccess({ positionId }));
     yield put(fetchCompanyPositions({ companyId }));
     yield put(matchCandidates({ positionId }));
-    yield put(fetchPositionCandidates({ positionId }));
     yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(createPositionFailure({ error: { message: error } }));
@@ -142,29 +156,35 @@ export function* deletePositionSaga({ payload }) {
 export function* editCompanySaga({ payload }) {
   const { companyId, form } = payload;
   const { description, location, logo, name, size, website } = form;
+  const formattedLocation = `{
+    country: "${location.country}",
+    countryCode: "${location.countryCode}",
+    formattedAddress: "${location.formattedAddress}",
+    utcOffset: ${location.utcOffset}
+  }`;
   const query = `
-      mutation {
-        transformCompany(
-          companyInput: {
-            companyId: "${companyId}",
-            description: ${JSON.stringify(description)},
-            location: "${location}",
-            logo: "${logo}",
-            name: "${name}",
-            size: "${size}",
-            website: "${website}",
-          }
-        ) {
-          __typename
-          ... on Success {
-            message
-          }
-          ... on Error {
-            message
-          }
+    mutation {
+      transformCompany(
+        companyInput: {
+          companyId: "${companyId}",
+          description: ${JSON.stringify(description)},
+          location: ${formattedLocation},
+          logo: "${logo}",
+          name: "${name}",
+          size: "${size}",
+          website: "${website}",
+        }
+      ) {
+        __typename
+        ... on Success {
+          message
+        }
+        ... on Error {
+          message
         }
       }
-    `;
+    }
+  `;
   try {
     const graphql = JSON.stringify({ query });
     const {
@@ -182,21 +202,35 @@ export function* editCompanySaga({ payload }) {
 
 export function* editPositionSaga({ payload }) {
   const { companyId, positionId, responseArray } = payload;
-  // TODO: maybe fix this nested turnary
   const formattedResponse = responseArray.map(
     ({ questionId, questionKey, responseId, value }) => {
-      const formattedValue =
-        questionKey === 'description'
-          ? `${JSON.stringify(value)}`
-          : questionKey === 'skills'
-            ? `{
+      const generateFormattedValue = () => {
+        switch (questionKey) {
+          case 'description': {
+            return `${JSON.stringify(value)}`;
+          }
+          case 'location': {
+            return `{
+              country: "${value.country}",
+              countryCode: "${value.countryCode}",
+              formattedAddress: "${value.formattedAddress}",
+              utcOffset: ${value.utcOffset}
+            }`;
+          }
+          case 'skills': {
+            return `{
               beginner: ${value.beginner},
               expert: ${value.expert},
               intermediate: ${value.intermediate},
               skill: "${value.skill}"
-            }`
-            : `"${value}"`;
-
+            }`;
+          }
+          default: {
+            return `"${value}"`;
+          }
+        }
+      };
+      const formattedValue = generateFormattedValue();
       return `{
         questionId: "${questionId}",
         questionKey: "${questionKey}",
@@ -230,8 +264,8 @@ export function* editPositionSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(editPositionSuccess());
-    yield put(matchCandidates({ positionId }));
     yield put(fetchCompanyPositions({ companyId }));
+    yield put(matchCandidates({ positionId }));
     yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(editPositionFailure({ error: { message: error } }));
@@ -248,7 +282,6 @@ export function* fetchCompanyPositionsSaga({ payload }) {
           positions {
             id
             isActive
-            isRemote
             location
             title
           }
@@ -345,11 +378,11 @@ export function* fetchPositionSaga({ payload }) {
           description
           experience
           isActive
-          isRemote
           location
           role
           salary
           skills
+          timezone
           title
           type
         }
@@ -437,9 +470,9 @@ export function* matchCandidatesSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(matchCandidatesSuccess({ message: messageSuccess }));
+    yield put(matchCandidatesSuccess());
   } catch (error) {
-    yield put(matchCandidatesFailure({ error: { message: error } }));
+    yield put(matchCandidatesFailure());
   }
 }
 
@@ -477,7 +510,13 @@ export function* notifyCandidateSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(notifyCandidateSuccess({ candidateId, message: messageSuccess, threadId }));
+    yield put(
+      notifyCandidateSuccess({
+        candidateId,
+        message: messageSuccess,
+        threadId,
+      }),
+    );
     yield put(resetFormState({ category: 'scheduleInterview' }));
   } catch (error) {
     yield put(notifyCandidateFailure({ error: { message: error } }));
@@ -509,7 +548,7 @@ export function* saveCandidateSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(saveCandidateSuccess({ candidateId }));
   } catch (error) {
-    yield put(fetchPositionFailure({ error }));
+    yield put(saveCandidateFailure({ error: { message: error } }));
   }
 }
 

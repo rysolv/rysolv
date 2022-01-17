@@ -5,39 +5,44 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
-import { getCookie } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import { LoadingIndicator } from 'components/base_ui';
 
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectAuthLoading } from './selectors';
+import { makeSelectAuth, makeSelectAuthLoading } from './selectors';
 
 export default function withAuth(config, Component) {
-  const Auth = ({ authenticateLoading, ...restProps }) => {
+  const Auth = ({ authenticateLoading, isSignedIn, ...restProps }) => {
     const { isPrivate } = config;
     const { pathname } = window.location;
     const basePathname = pathname.split('/')[1];
     const isSignInPath = basePathname === 'signin' || basePathname === 'signup';
-    const IsSignedIn = getCookie('signedIn');
 
     while (authenticateLoading) {
       return <LoadingIndicator />;
     }
-    if (isPrivate && IsSignedIn && isSignInPath)
+    if (isPrivate && isSignedIn && isSignInPath) {
       return <Redirect to="/signin" />;
-    if (isPrivate && !IsSignedIn) return <Redirect to="/signin" />;
+    }
+    if (isPrivate && !isSignedIn) {
+      return <Redirect to="/signin" />;
+    }
     return <Component {...restProps} />;
   };
 
-  Auth.propTypes = { authenticateLoading: T.bool.isRequired };
+  Auth.propTypes = {
+    authenticateLoading: T.bool.isRequired,
+    isSignedIn: T.bool.isRequired,
+  };
 
   const mapStateToProps = createStructuredSelector({
     /**
      * Reducer: Auth
      */
     authenticateLoading: makeSelectAuthLoading('authenticateUser'),
+    isSignedIn: makeSelectAuth('isSignedIn'),
   });
 
   const withConnect = connect(

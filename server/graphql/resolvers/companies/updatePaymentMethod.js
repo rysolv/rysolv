@@ -19,6 +19,7 @@ const updatePaymentMethod = async (
 
     // Fetch stripe customer_id
     const { customerId, id } = await getUserCompany({ userId });
+    let stub;
 
     if (provider === 'stripe') {
       const { brand, mask } = metadata;
@@ -27,12 +28,7 @@ const updatePaymentMethod = async (
       await setPaymentIntent({ customerId, provider, token });
 
       // Update account mask
-      const stub = `${brand} Card ending in ${mask}`;
-      await transformCompany({
-        id,
-        modified_date: new Date(),
-        payment_method: stub,
-      });
+      stub = `${brand} Card ending in ${mask}`;
     }
     if (provider === 'plaid') {
       const { accountId, accountName, bank, mask } = metadata;
@@ -44,13 +40,15 @@ const updatePaymentMethod = async (
       await createBankAccount({ customerId, token: bankToken });
 
       // Update account mask
-      const stub = `${accountName} - ${bank} account ending in ${mask}`;
-      await transformCompany({
-        id,
-        modified_date: new Date(),
-        payment_method: stub,
-      });
+      stub = `${accountName} - ${bank} account ending in ${mask}`;
     }
+
+    await transformCompany({
+      id,
+      modified_date: new Date(),
+      payment_method: stub,
+      payment_set_date: new Date(),
+    });
 
     // Send payment updated email
     sendEmail({

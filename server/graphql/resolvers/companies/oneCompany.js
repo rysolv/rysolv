@@ -11,6 +11,7 @@ const oneCompany = async ({ companyId }, { authError, userId }) => {
     const companyData = await getOneCompany({ companyId });
     const { size } = companyData;
     const formattedSize = generateSizeString({ size });
+
     return {
       __typename: 'Company',
       ...companyData,

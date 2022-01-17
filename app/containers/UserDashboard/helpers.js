@@ -1,5 +1,7 @@
 import { validate } from 'utils/validate';
 
+// @TODO: Locations
+// remove is_remote
 export const optionDictionary = {
   desired_role: {
     option: 'autocomplete',
@@ -8,9 +10,6 @@ export const optionDictionary = {
     option: 'autocomplete',
   },
   is_active: {
-    option: 'autocomplete',
-  },
-  is_remote: {
     option: 'autocomplete',
   },
   preferred_location: {
@@ -24,6 +23,9 @@ export const optionDictionary = {
     type: 'skills',
   },
   target_salary: {
+    option: 'autocomplete',
+  },
+  timezone: {
     option: 'autocomplete',
   },
   type: {

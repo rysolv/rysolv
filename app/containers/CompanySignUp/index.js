@@ -27,6 +27,7 @@ import reducer from './reducer';
 import saga from './saga';
 import {
   makeSelectCompanySignUp,
+  makeSelectCompanySignUpLoading,
   makeSelectCompanySignUpQuestions,
 } from './selectors';
 import { ViewContainer } from './styledComponents';
@@ -44,10 +45,11 @@ const CompanySignUp = ({
   dispatchResetState,
   dispatchSubmitCompanyResponse,
   error,
+  fetchContractLoading,
+  fetchQuestionsLoading,
   formErrors,
   forms,
   handleNav,
-  loading,
   questions,
   view,
 }) => {
@@ -104,7 +106,7 @@ const CompanySignUp = ({
         component={CreateCompany}
         error={error}
         isRequiredData
-        loading={loading}
+        loading={fetchQuestionsLoading || fetchContractLoading}
         propsToPassDown={{
           alerts,
           contract,
@@ -137,10 +139,11 @@ CompanySignUp.propTypes = {
   dispatchResetState: T.func.isRequired,
   dispatchSubmitCompanyResponse: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
+  fetchContractLoading: T.bool.isRequired,
+  fetchQuestionsLoading: T.bool.isRequired,
   formErrors: T.object.isRequired,
   forms: T.object.isRequired,
   handleNav: T.func.isRequired,
-  loading: T.bool.isRequired,
   questions: T.array.isRequired,
   view: T.number.isRequired,
 };
@@ -156,9 +159,10 @@ const mapStateToProps = createStructuredSelector({
   alerts: makeSelectCompanySignUp('alerts'),
   contract: makeSelectCompanySignUp('contract'),
   error: makeSelectCompanySignUp('error'),
+  fetchContractLoading: makeSelectCompanySignUpLoading('fetchContract'),
+  fetchQuestionsLoading: makeSelectCompanySignUpLoading('fetchQuestions'),
   formErrors: makeSelectCompanySignUp('formErrors'),
   forms: makeSelectCompanySignUp('forms'),
-  loading: makeSelectCompanySignUp('loading'),
   questions: makeSelectCompanySignUpQuestions(),
   view: makeSelectCompanySignUp('view'),
 });

@@ -90,8 +90,8 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       const date = new Date();
       const id = uuidv4();
 
-      let imageUrl;
       let blurUrl;
+      let imageUrl;
 
       if (!avatar_url) {
         // Upload avatar
@@ -117,8 +117,8 @@ const githubSignIn = async ({ code, origin }, { res }) => {
         const base64 = await image.getBase64Async(Jimp.AUTO);
         const { uploadUrl: uploadBlurUrl } = await uploadImage(base64);
 
-        imageUrl = uploadUrl;
         blurUrl = uploadBlurUrl;
+        imageUrl = uploadUrl;
       }
 
       const newUser = {

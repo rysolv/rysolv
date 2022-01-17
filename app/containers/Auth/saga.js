@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { resetState } from 'containers/Main/actions';
+import { resetUserState } from 'containers/Main/actions';
 import { changeView } from 'containers/Jobs/actions';
 import { incrementResetStep, incrementStep } from 'containers/Signin/actions';
 import { post } from 'utils/request';
@@ -186,7 +186,7 @@ export function* githubSignInSaga({ payload }) {
 }
 
 export function* removeUserData() {
-  yield put(resetState());
+  yield put(resetUserState());
 }
 
 export function* resendCodeSaga({ payload }) {

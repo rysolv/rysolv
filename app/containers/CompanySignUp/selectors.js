@@ -14,6 +14,12 @@ const makeSelectCompanySignUp = prop =>
     substate => substate[prop],
   );
 
+const makeSelectCompanySignUpLoading = prop =>
+  createSelector(
+    makeSelectCompanySignUp('loading'),
+    loading => loading[prop],
+  );
+
 const makeSelectCompanySignUpQuestions = () =>
   createSelector(
     makeSelectCompanySignUp('forms'),
@@ -54,4 +60,8 @@ const makeSelectCompanySignUpQuestions = () =>
   );
 
 export default selectCompanySignUpDomain;
-export { makeSelectCompanySignUp, makeSelectCompanySignUpQuestions };
+export {
+  makeSelectCompanySignUp,
+  makeSelectCompanySignUpLoading,
+  makeSelectCompanySignUpQuestions,
+};

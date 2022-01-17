@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -10,6 +10,11 @@ import PricingView from 'components/Pricing';
 import { ViewContainer } from './styledComponents';
 
 const Pricing = ({ handleNav }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'Pricing Plans';
+  }, []);
+
   const handleSelectPlan = () => {
     handleNav('/signup?type=company');
   };

@@ -45,11 +45,11 @@ export const initialState = {
       desiredRole: [],
       experience: [],
       isActive: 'No',
-      isRemote: 'No',
-      preferredLocation: '',
+      preferredLocation: {},
       resume: [],
       skills: [],
       targetSalary: [],
+      type: [],
       usCitizen: '',
     },
     profile: {
@@ -67,6 +67,7 @@ export const initialState = {
       resume: '',
       skills: '',
       targetSalary: '',
+      type: '',
       usCitizen: '',
     },
     profile: {
@@ -78,9 +79,9 @@ export const initialState = {
   isModalOpen: false,
   loading: {
     editUserResponse: false,
-    fetchQuestions: false,
+    fetchQuestions: true,
     fetchUserDashboard: true,
-    fetchUserResponse: false,
+    fetchUserResponse: true,
     setHiringStatus: false,
     updateUserLinks: false,
     updateUserSkills: false,

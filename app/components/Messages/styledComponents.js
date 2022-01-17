@@ -85,6 +85,9 @@ export const PositionWrapper = styled.div`
   color: ${textColor};
   font-size: 1.6rem;
   margin: 0.8rem 0 1.6rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const ProfilePicWrapper = styled.img`

@@ -81,7 +81,11 @@ const DesktopMessages = ({
           <ConditionalRender
             Component={UserProfile}
             propsToPassDown={{ user: candidate }}
-            shouldRender={isCompany}
+            shouldRender={
+              isCompany &&
+              candidate.name !== 'Deleted User' &&
+              candidate.user !== '[deleted]'
+            }
           />
           <PositionProfile position={position} />
         </ProfileWrapper>

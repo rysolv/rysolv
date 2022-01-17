@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -9,12 +9,7 @@ import { resetPassword } from 'containers/Auth/actions';
 import { makeSelectAuthLoading } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
-import {
-  incrementResetStep,
-  inputChange,
-  inputError,
-  resetPasswordState,
-} from '../actions';
+import { incrementResetStep, inputChange, inputError } from '../actions';
 import { validateFields, validateOneField } from '../helpers';
 import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
 import reducer from '../reducer';
@@ -25,13 +20,11 @@ const ResetPassword = ({
   dispatchIncrementResetStep,
   dispatchInputError,
   dispatchResetPassword,
-  dispatchResetState,
   handleInputChange,
   loading,
   resetPasswordDisabled,
   sendLinkData: { email },
 }) => {
-  useEffect(() => dispatchResetState, []);
   const form = 'resetPassword';
 
   const handleResetPassword = () => {
@@ -79,7 +72,6 @@ ResetPassword.propTypes = {
   dispatchIncrementResetStep: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchResetPassword: T.func.isRequired,
-  dispatchResetState: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   loading: T.bool.isRequired,
   resetPasswordDisabled: T.bool.isRequired,
@@ -109,7 +101,6 @@ const mapDispatchToProps = dispatch => ({
    */
   dispatchIncrementResetStep: payload => dispatch(incrementResetStep(payload)),
   dispatchInputError: payload => dispatch(inputError(payload)),
-  dispatchResetState: () => dispatch(resetPasswordState()),
   handleInputChange: payload => dispatch(inputChange(payload)),
 });
 

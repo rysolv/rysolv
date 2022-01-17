@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -27,6 +27,11 @@ const ContactUs = ({
   loading,
   success,
 }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'Contact Us';
+  }, []);
+
   const handleSendContact = () => {
     const { isValidated, validationErrors } = validateFields({ values: form });
     if (isValidated) {

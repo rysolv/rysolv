@@ -90,9 +90,5 @@ export const SAVE_CANDIDATE = 'app/CompanyDashboard/SAVE_CANDIDATE';
 
 export const SELECT_POSITION = 'app/CompanyDashboard/SELECT_POSITION';
 
-// Dictionaries
-export const additionalInputDictionary = {
-  location: 'isRemote',
-};
-
+// Messages
 export const messageSuccess = 'Your message has been delivered.';

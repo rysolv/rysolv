@@ -60,27 +60,28 @@ const MobileCompanySideNav = ({
         <ConditionalRender
           Component={
             <div>
-              {positions.map(({ id, isRemote, location, title }, index) => (
-                <PositionButton
-                  key={`${title}-${index}`}
-                  isLast={positions.length - 1 === index}
-                  isSelected={id === selectedPosition}
-                  onClick={() => handleSelectPosition({ id })}
-                >
-                  {JobIcon}
-                  <ButtonTextWrapper>
-                    <PositionTitle>{title}</PositionTitle>
-                    <br />
-                    <LocationText>
-                      {location}&nbsp;
-                      <ConditionalRender
-                        Component={<span>(Remote)</span>}
-                        shouldRender={isRemote === 'Yes'}
-                      />
-                    </LocationText>
-                  </ButtonTextWrapper>
-                </PositionButton>
-              ))}
+              {positions.map(
+                ({ id, isRemote = 'Yes', location, title }, index) => (
+                  <PositionButton
+                    key={`${title}-${index}`}
+                    isSelected={id === selectedPosition}
+                    onClick={() => handleSelectPosition({ id })}
+                  >
+                    {JobIcon}
+                    <ButtonTextWrapper>
+                      <PositionTitle>{title}</PositionTitle>
+                      <br />
+                      <LocationText>
+                        {location}&nbsp;
+                        <ConditionalRender
+                          Component={<span>(Remote)</span>}
+                          shouldRender={isRemote === 'Yes'}
+                        />
+                      </LocationText>
+                    </ButtonTextWrapper>
+                  </PositionButton>
+                ),
+              )}
             </div>
           }
           shouldRender={isExpanded}
