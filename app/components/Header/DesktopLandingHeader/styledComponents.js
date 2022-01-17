@@ -8,8 +8,8 @@ import {
 } from 'components/base_ui';
 import {
   blueColor,
-  blueGrayColor,
   darkBlueColor,
+  lightBlueColor,
   whiteColor,
 } from 'defaultStyleHelper';
 
@@ -18,11 +18,16 @@ export const ButtonWrapper = styled.div`
   display: flex;
 `;
 
-export const DesktopHeaderContainer = styled.div`
+export const ComponentContainer = styled.div`
   background: ${blueColor};
+`;
+
+export const DesktopHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 4rem 12rem;
+  margin: auto;
+  max-width: 140rem;
+  padding: 2rem 12rem;
 `;
 
 export const InternalLink = styled(BaseLink)`
@@ -60,6 +65,23 @@ export const LogoWrapper = styled.div`
   }
 `;
 
+export const MessageLink = styled(BaseLink)`
+  color: ${whiteColor};
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.9rem;
+  margin-right: 1.2rem;
+  padding-right: 0.5rem;
+
+  &:hover {
+    color: ${whiteColor};
+  }
+`;
+
+export const MessageWrapper = styled.div`
+  position: relative;
+`;
+
 export const StyledPrimaryButton = styled(PrimaryButton)`
   background: ${darkBlueColor};
   border: 0.2rem solid ${whiteColor};
@@ -90,20 +112,26 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
 `;
 
 export const StyledUserNavBar = styled(UserNavBar)`
-  background-color: ${blueGrayColor};
-  border: 0.2rem solid ${darkBlueColor};
-  color: ${whiteColor};
-  font-size: 1.6rem;
-  margin: 0 0 0 2.2rem;
+  margin: 0 0 0 1.2rem;
 
   img {
     height: 4rem;
     width: 4rem;
   }
+`;
 
-  &:hover {
-    border-color: ${darkBlueColor};
-  }
+export const UnreadMessages = styled.div`
+  background-color: ${lightBlueColor};
+  border-radius: 50%;
+  color: ${whiteColor};
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 2rem;
+  min-width: 2rem;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: -1.2rem;
 `;
 
 export const VerticalDivider = styled.div`

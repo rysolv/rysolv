@@ -54,6 +54,7 @@ const ForgotPassword = ({
       form,
     });
   };
+
   return (
     <ForgotPasswordView
       data={data}

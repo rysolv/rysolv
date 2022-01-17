@@ -2,7 +2,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import BaseTextInput from './BaseTextInput';
-import { Spacer, StyledFormControl } from './styledComponents';
+import { StyledFormControl } from './styledComponents';
 
 const MainTextInput = ({
   disabled,
@@ -25,7 +25,6 @@ const MainTextInput = ({
       value={value}
       {...restProps}
     />
-    <Spacer />
   </StyledFormControl>
 );
 

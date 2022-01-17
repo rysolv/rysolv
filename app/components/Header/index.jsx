@@ -3,9 +3,7 @@ import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
 
-import DesktopHeader from './DesktopHeader';
 import DesktopLandingHeader from './DesktopLandingHeader';
-import MobileHeader from './MobileHeader';
 import MobileLandingHeader from './MobileLandingHeader';
 
 const Header = ({
@@ -23,35 +21,17 @@ const Header = ({
     deviceView === 'mobileS' ||
     deviceView === 'mobileXS' ||
     deviceView === 'mobileXXS';
+
   const isMobileOrTabletOrLaptop =
     isMobile ||
     deviceView === 'tablet' ||
     deviceView === 'laptopS' ||
     deviceView === 'laptop';
 
-  const { pathname } = window.location;
-  const isLandingOrRecruitmentPage =
-    pathname === '/' ||
-    pathname === '/how-we-score-code' ||
-    pathname === '/jobs' ||
-    pathname === '/recruitment';
-
-  const DesktopHeaderToRender = isLandingOrRecruitmentPage
-    ? DesktopLandingHeader
-    : DesktopHeader;
-
-  const MobileHeaderToRender = isLandingOrRecruitmentPage
-    ? MobileLandingHeader
-    : MobileHeader;
-
-  const shouldRender = isLandingOrRecruitmentPage
-    ? !isMobileOrTabletOrLaptop
-    : !isMobile;
-
   return (
     <ConditionalRender
-      Component={DesktopHeaderToRender}
-      FallbackComponent={MobileHeaderToRender}
+      Component={DesktopLandingHeader}
+      FallbackComponent={MobileLandingHeader}
       propsToPassDown={{
         activeUser,
         deviceView,
@@ -59,13 +39,12 @@ const Header = ({
         handleResetState,
         handleSignout,
         isDrawerOpen,
-        isLandingOrRecruitmentPage,
         isMobile,
         isSignedIn,
         location,
         setIsDrawerOpen,
       }}
-      shouldRender={shouldRender}
+      shouldRender={!isMobileOrTabletOrLaptop}
     />
   );
 };

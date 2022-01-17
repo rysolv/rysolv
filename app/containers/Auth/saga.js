@@ -1,28 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { resetState } from 'containers/Main/actions';
+import { resetUserState } from 'containers/Main/actions';
 import { changeView } from 'containers/Jobs/actions';
 import { incrementResetStep, incrementStep } from 'containers/Signin/actions';
 import { post } from 'utils/request';
 
-import {
-  FETCH_ACTIVE_USER,
-  GITHUB_SIGN_IN,
-  githubSignInError,
-  githubSignUpError,
-  RESEND_CODE,
-  RESEND_SIGN_UP,
-  RESET_PASSWORD,
-  SEND_LINK,
-  SIGN_IN,
-  SIGN_OUT,
-  SIGN_UP,
-  signInError,
-  signUpError,
-  VERIFY_EMAIL,
-  verifyEmailError,
-} from './constants';
 import {
   fetchActiveUser,
   fetchActiveUserFailure,
@@ -43,6 +26,23 @@ import {
   verifyEmailFailure,
   verifyEmailSuccess,
 } from './actions';
+import {
+  FETCH_ACTIVE_USER,
+  GITHUB_SIGN_IN,
+  githubSignInError,
+  githubSignUpError,
+  RESEND_CODE,
+  RESEND_SIGN_UP,
+  RESET_PASSWORD,
+  SEND_LINK,
+  SIGN_IN,
+  SIGN_OUT,
+  SIGN_UP,
+  signInError,
+  signUpError,
+  VERIFY_EMAIL,
+  verifyEmailError,
+} from './constants';
 
 export function* fetchActiveUserSaga() {
   const query = `
@@ -56,19 +56,22 @@ export function* fetchActiveUserSaga() {
             id
             userAccepted
           }
+          company
           email
           firstName
           githubId
           id
           isGithubVerified
-          isQuestionnaireComplete
           issues
           lastName
+          matches
           notifications
           profilePic
           pullRequests
           rep
           repos
+          surveyComplete
+          unreadMessages
           upvotes
           username
           watching
@@ -102,11 +105,12 @@ export function* githubSignInSaga({ payload }) {
         ... on User {
           attempting
           balance
+          company
           email
           firstName
           id
           isGithubVerified
-          isQuestionnaireComplete
+          surveyComplete
           issues
           lastName
           profilePic
@@ -144,23 +148,18 @@ export function* githubSignInSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        githubSignIn: {
-          __typename,
-          isQuestionnaireComplete,
-          message,
-          ...restProps
-        },
+        githubSignIn: { __typename, surveyComplete, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
     const routeDictionary = {
       jobs: '/jobs?question=1',
-      signin: '/issues',
-      signup: '/settings',
+      signin: '/dashboard',
+      signup: '/dashboard',
     };
     const route = routeDictionary[origin];
     if (origin === 'jobs') {
-      if (isQuestionnaireComplete) {
+      if (surveyComplete) {
         yield put(changeView({ view: 2 }));
       } else {
         yield put(changeView({ view: 1 }));
@@ -187,7 +186,7 @@ export function* githubSignInSaga({ payload }) {
 }
 
 export function* removeUserData() {
-  yield put(resetState());
+  yield put(resetUserState());
 }
 
 export function* resendCodeSaga({ payload }) {
@@ -320,6 +319,7 @@ export function* signInSaga({ payload }) {
         ... on User {
           attempting
           balance
+          company
           email
           firstName
           id
@@ -388,16 +388,18 @@ export function* signOutSaga() {
     yield call(removeUserData);
     yield put(signOutResponse());
   }
+  yield put(push('/signin'));
 }
 
 export function* signUpSaga({ payload }) {
-  const { email, firstName, lastName, password, username } = payload;
+  const { email, firstName, isCompany, lastName, password, username } = payload;
   const query = `
     mutation {
       createUser(
         userInput: {
           email: "${email}"
           firstName: "${firstName}"
+          isCompany: ${isCompany}
           lastName: "${lastName}"
           password: "${password}"
           username: "${username}"
@@ -405,6 +407,7 @@ export function* signUpSaga({ payload }) {
       ) {
         __typename
         ... on User {
+          company
           email
           id
           username

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 
@@ -12,6 +12,7 @@ import {
 } from 'components/base_ui';
 import {
   blueColor,
+  candidateGreyColor,
   commentHeaderColor,
   darkBlueColor,
   defaultFontFamily,
@@ -28,6 +29,94 @@ import {
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptop, mobile, mobileS } = mediaQueriesByDevice;
+
+const baseInputStyle = css`
+  background: ${candidateGreyColor};
+  border-radius: 0.7rem;
+  border: none;
+  color: ${textColor};
+  font-size: 1.6rem;
+  font-weight: 400;
+  height: ${({ height, multiple }) => (multiple ? 'auto' : height)};
+  line-height: 1.936rem;
+  margin-top: 0.8rem;
+  min-height: ${({ height, multiple }) => (multiple ? height : 'auto')};
+  outline: none;
+  overflow: hidden;
+  padding: 1.6rem 2.4rem;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+  width: 100%;
+`;
+
+export const Autocomplete = styled(BaseAutocomplete)`
+  ${baseInputStyle};
+  align-items: center;
+  display: flex;
+  padding: 0;
+
+  .inputRoot {
+    &:after,
+    &:before {
+      border-bottom: none;
+    }
+    border-bottom: none;
+    padding: 0 2.4rem;
+  }
+
+  .MuiAutocomplete-clearIndicator {
+    display: none;
+  }
+
+  .MuiAutocomplete-endAdornment {
+    right: 1rem;
+  }
+
+  .MuiFormControl-root {
+    margin: 0;
+  }
+
+  .MuiInputBase-input {
+    font-size: 1.6rem;
+  }
+
+  span {
+    font-size: 1.6rem;
+  }
+
+  svg {
+    height: 2.4rem;
+    width: 2.4rem;
+  }
+
+  .tag {
+    background-color: #ecf3fc;
+    border-radius: 0.7rem;
+
+    &.deletable {
+      background-color: #ecf3fc;
+
+      &:focus {
+        background-color: #ecf3fc;
+      }
+    }
+
+    .MuiChip-label {
+      color: ${lightBlueColor};
+      font-size: ${defaultFontSize};
+      font-weight: 400;
+    }
+
+    svg {
+      color: #a2c6f0;
+      height: 2rem;
+      width: 2rem;
+
+      &:hover {
+        color: #a2c6f0;
+      }
+    }
+  }
+`;
 
 export const BottomFade = styled.div`
   background: linear-gradient(
@@ -139,19 +228,7 @@ export const IconWrapper = styled.img`
 `;
 
 export const Input = styled.input`
-  background: ${whiteColor};
-  border-radius: 0.7rem;
-  border: 0.2rem solid ${darkBlueColor};
-  font-size: 1.6rem;
-  font-weight: 400;
-  height: 4.9rem;
-  line-height: 1.936rem;
-  margin-top: 0.8rem;
-  outline: none;
-  overflow: hidden;
-  padding: 1.6rem 2.4rem;
-  transform: matrix(1, 0, 0, 1, 0, 0);
-  width: 100%;
+  ${baseInputStyle};
 `;
 
 export const InputError = styled.div`
@@ -166,7 +243,7 @@ export const JobsContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 12rem;
-  max-width: 120rem;
+  max-width: 140rem;
   width: 100%;
 
   ${laptop} {
@@ -319,6 +396,10 @@ export const StyledPrimaryButton = styled(({ isSelected, ...restProps }) => (
   margin: 1rem auto;
   min-width: 20rem;
   text-transform: initial;
+
+  &:disabled {
+    border: none;
+  }
 
   &:hover {
     background-color: ${darkBlueColor};

@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
 
+import iconDictionary from 'utils/iconDictionary';
+
 import {
+  InputFormContent,
   InputFormWrapper,
   SigninWrapper,
   StyledPrimaryButton,
   Title,
 } from '../styledComponents';
-import { DescriptionText } from './styledComponents';
+import { IconWrapper, MessageWrapper, ResetSubText } from './styledComponents';
+
+const SuccessIcon = iconDictionary('successOutline');
 
 const ResetPasswordSuccess = ({
   handleReturnToSignIn,
@@ -26,8 +31,13 @@ const ResetPasswordSuccess = ({
       tabIndex="0"
     >
       <InputFormWrapper>
-        <Title isSuccess>Password reset successfully</Title>
-        <DescriptionText>{message}</DescriptionText>
+        <InputFormContent>
+          <Title hasSubText>Password reset successful</Title>
+          <ResetSubText hasFlex>
+            <IconWrapper isSuccess>{SuccessIcon}</IconWrapper>
+            <MessageWrapper>{message}</MessageWrapper>
+          </ResetSubText>
+        </InputFormContent>
         <StyledPrimaryButton
           label="Return to sign in"
           onClick={handleReturnToSignIn}

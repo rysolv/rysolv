@@ -1,11 +1,15 @@
 const { v4: uuidv4 } = require('uuid');
 
-const { CustomError, errorLogger, sendEmail } = require('../../../helpers');
 const {
-  createLanguage,
-  getUserLanguages,
+  CustomError,
+  errorLogger,
+  generatePositionLevel,
+  sendEmail,
+} = require('../../../helpers');
+const {
+  createLocation,
+  createUserTechStack,
   postUserResponse: postUserResponseQuery,
-  setPreferredLanguage,
 } = require('../../../db');
 const {
   postUserResponseError,
@@ -16,24 +20,29 @@ const { uploadFile } = require('../../../middlewares/fileUpload');
 const postUserResponse = async ({ responseArray }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
-    const { languages } = await getUserLanguages({ userId });
 
     await Promise.all(
       responseArray.map(
         async ({ questionId, questionKey, responseId, value }) => {
-          if (questionKey === 'preferred_languages') {
-            if (languages && languages.includes(value)) {
-              await setPreferredLanguage({ language: value, userId });
-            } else {
-              await createLanguage({
-                languages: [value],
-                preferred: true,
-                target: { userId },
-              });
-            }
+          if (questionKey === 'preferred_location') {
+            const { countryCode, country, formattedAddress, utcOffset } = value;
+            await createLocation({
+              country,
+              countryCode,
+              formattedAddress,
+              userId,
+              utcOffset,
+            });
+          } else if (questionKey === 'skills') {
+            const { beginner, expert, intermediate, skill } = value;
+            await createUserTechStack({
+              level: generatePositionLevel({ beginner, expert, intermediate }),
+              technology: skill,
+              userId,
+            });
           } else {
-            let formattedValue = null;
-            if (questionKey === 'personal_link') formattedValue = value;
+            let formattedValue = value || null;
+            // Upload resume
             if (questionKey === 'resume') {
               const { uploadUrl } = await uploadFile(value);
               formattedValue = uploadUrl;
@@ -53,6 +62,7 @@ const postUserResponse = async ({ responseArray }, { authError, userId }) => {
       ),
     );
 
+    // Send welcome to hiring email
     sendEmail({
       body: { userId },
       path: '/s/hiring/signup',

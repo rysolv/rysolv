@@ -7,7 +7,7 @@
 
 import React, { Fragment, useEffect } from 'react';
 
-import Message from 'components/Message';
+import AlertMessage from 'components/AlertMessage';
 
 import { LinkWrapper, NotFoundIcon } from './styledComponents';
 
@@ -23,7 +23,7 @@ const NotFound = () => {
   );
   return (
     <Fragment>
-      <Message
+      <AlertMessage
         body="We're sorry, we couldn't find the page you requested."
         footnote={FootnoteComponent}
         icon={<NotFoundIcon>404</NotFoundIcon>}

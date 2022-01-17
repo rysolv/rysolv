@@ -15,7 +15,13 @@ import VerifyAccountModal from 'components/VerifyAccountModal';
 import WatchList from 'components/WatchList';
 import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { clearAlerts, signIn, signOut } from 'containers/Auth/actions';
+import {
+  clearAlerts,
+  fetchActiveUser,
+  fetchActiveUserFailure,
+  signIn,
+  signOut,
+} from 'containers/Auth/actions';
 import { closeIssue, deletePullRequest } from 'containers/Issues/actions';
 import PaymentsPortal from 'containers/Payments';
 import { resetState } from 'containers/Signin/actions';
@@ -24,8 +30,8 @@ import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import { closeModalState } from './actions';
+import CompanyRoutes from './companyRoutes';
 import reducer from './reducer';
-import Routes from './routes';
 import saga from './saga';
 import { makeSelectMain } from './selectors';
 import {
@@ -34,13 +40,23 @@ import {
   RoutesWrapper,
   StyledModalDialog,
 } from './styledComponents';
+import UserRoutes from './userRoutes';
 
 class Main extends React.PureComponent {
   componentDidMount() {
-    if (!getCookie('returnUser')) {
+    const {
+      dispatchFetchActiveUser,
+      dispatchFetchActiveUserFailure,
+    } = this.props;
+    const signedIn = getCookie('signedIn');
+    if (signedIn) {
+      dispatchFetchActiveUser();
+    } else if (!getCookie('returnUser')) {
       setCookie('returnUser', true, {
         expires: 'Sun, 19 Jan 2038 00:00:01 GMT;',
       });
+    } else {
+      dispatchFetchActiveUserFailure();
     }
   }
 
@@ -83,12 +99,32 @@ class Main extends React.PureComponent {
       handleNav(route);
     };
     const { pathname } = window.location;
+    const basePathname = pathname.split('/')[1];
     const isLandingOrRecruitmentPage =
+      basePathname === 'company' ||
+      basePathname === 'dashboard' ||
+      basePathname === 'messages' ||
+      basePathname === 'profile' ||
       pathname === '/' ||
+      pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||
       pathname === '/jobs' ||
-      pathname === '/recruitment';
+      pathname === '/password-reset' ||
+      pathname === '/pricing' ||
+      pathname === '/privacy-policy' ||
+      pathname === '/signin' ||
+      pathname === '/signup' ||
+      pathname === '/terms-of-service';
     const isPaymentModal = modal === 'fundIssue';
+    const hasBlueBackground =
+      pathname === '/' ||
+      pathname === '/company/signup' ||
+      pathname === '/contact-us' ||
+      pathname === '/how-we-score-code' ||
+      pathname === '/jobs' ||
+      pathname === '/password-reset' ||
+      pathname === '/signin' ||
+      pathname === '/signup';
     const modalPropsDictionary = {
       closeIssue: {
         Component: CloseIssueModal,
@@ -162,9 +198,16 @@ class Main extends React.PureComponent {
         },
       },
     };
+
+    const isCompany = !!activeUser.company;
+    const Routes = isCompany ? CompanyRoutes : UserRoutes;
+
     return (
       <Fragment>
-        <AppBodyWrapper isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}>
+        <AppBodyWrapper
+          hasBlueBackground={hasBlueBackground}
+          isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}
+        >
           <Header
             activeUser={activeUser}
             deviceView={deviceView}
@@ -175,7 +218,11 @@ class Main extends React.PureComponent {
             location={location}
           />
           <AppContentWrapper>
-            <SideNav deviceView={deviceView} handleNav={handleNav} />
+            <SideNav
+              deviceView={deviceView}
+              handleNav={handleNav}
+              isCompany={isCompany}
+            />
             <RoutesWrapper
               isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}
             >
@@ -200,6 +247,8 @@ Main.propTypes = {
   deviceView: T.string.isRequired,
   dispatchCloseIssue: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
+  dispatchFetchActiveUser: T.func.isRequired,
+  dispatchFetchActiveUserFailure: T.func.isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleDelete: T.func.isRequired,
   handleNav: T.func.isRequired,
@@ -235,6 +284,8 @@ const mapDispatchToProps = dispatch => ({
   /**
    * Auth
    */
+  dispatchFetchActiveUser: () => dispatch(fetchActiveUser()),
+  dispatchFetchActiveUserFailure: () => dispatch(fetchActiveUserFailure()),
   handleClearAuthAlerts: () => dispatch(clearAlerts()),
   handleSignin: payload => dispatch(signIn(payload)),
   handleSignout: () => dispatch(signOut()),

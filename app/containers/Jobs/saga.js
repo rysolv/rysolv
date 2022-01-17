@@ -1,10 +1,10 @@
+/* eslint-disable no-nested-ternary, prettier/prettier */
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { post } from 'utils/request';
 
 import {
-  changeView,
   fetchQuestionsFailure,
   fetchQuestionsSuccess,
   submitUserResponseFailure,
@@ -58,13 +58,36 @@ export function* submitUserResponseSaga({ payload }) {
   const formattedResponse = responseArray.map(
     ({ questionId, questionKey, responseId, value }) => {
       const { file, fileExtension } = value;
-      const formattedValue =
-        questionKey === 'resume' && value instanceof Object
-          ? `{
-            file: "${file}",
-            fileExtension: "${fileExtension}",
-          }`
-          : `"${value}"`;
+      const generateFormattedValue = () => {
+        switch (questionKey) {
+          case 'preferred_location': {
+            return `{
+              country: "${value.country}",
+              countryCode: "${value.countryCode}",
+              formattedAddress: "${value.formattedAddress}",
+              utcOffset: ${value.utcOffset}
+            }`;
+          }
+          case 'resume': {
+            return `{
+              file: "${file}",
+              fileExtension: "${fileExtension}",
+            }`;
+          }
+          case 'skills': {
+            return `{
+              beginner: ${value.beginner},
+              expert: ${value.expert},
+              intermediate: ${value.intermediate},
+              skill: "${value.skill}"
+            }`;
+          }
+          default: {
+            return `"${value}"`;
+          }
+        }
+      };
+      const formattedValue = generateFormattedValue();
       return `{
       questionId: "${questionId}",
       questionKey: "${questionKey}",
@@ -94,8 +117,7 @@ export function* submitUserResponseSaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(changeView({ view: 2 }));
-    yield put(push('/jobs'));
+    yield put(push('/dashboard'));
     yield put(submitUserResponseSuccess());
   } catch (error) {
     yield put(push('/jobs'));

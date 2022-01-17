@@ -2,16 +2,23 @@ import React from 'react';
 import T from 'prop-types';
 
 import {
+  ButtonWrapper,
+  ImportantTextWrapper,
+  InputFormContent,
   InputFormWrapper,
-  RedirectText,
+  InputSubText,
   SigninWrapper,
   StyledButton,
   StyledPrimaryButton,
   Title,
-  UsernameWrapper,
 } from '../styledComponents';
 
-const Redirect = ({ data: { username }, dispatchSignOut, handleNav }) => {
+const Redirect = ({
+  data: { company, username },
+  dispatchSignOut,
+  handleNav,
+}) => {
+  const path = company ? '/company/dashboard' : '/dashboard';
   const handleSignout = () => {
     dispatchSignOut();
     handleNav('/signin');
@@ -19,20 +26,24 @@ const Redirect = ({ data: { username }, dispatchSignOut, handleNav }) => {
   return (
     <SigninWrapper>
       <InputFormWrapper>
-        <Title>Return to your account</Title>
-        <RedirectText>
-          You are already logged in as{' '}
-          <UsernameWrapper>{username}</UsernameWrapper>.
-        </RedirectText>
-        <StyledPrimaryButton
-          autoFocus
-          disableFocusRipple
-          label="Go to My Account"
-          onClick={() => handleNav('/settings')}
-        />
-        <StyledButton disableFocusRipple onClick={handleSignout}>
-          Sign out
-        </StyledButton>
+        <InputFormContent>
+          <Title hasSubText>Return to your account</Title>
+          <InputSubText hasFlex>
+            You are already logged in as{' '}
+            <ImportantTextWrapper>{username}</ImportantTextWrapper>.
+          </InputSubText>
+        </InputFormContent>
+        <ButtonWrapper>
+          <StyledPrimaryButton
+            autoFocus
+            disableFocusRipple
+            label="Go to your Dashboard"
+            onClick={() => handleNav(path)}
+          />
+          <StyledButton disableFocusRipple onClick={handleSignout}>
+            Sign out
+          </StyledButton>
+        </ButtonWrapper>
       </InputFormWrapper>
     </SigninWrapper>
   );

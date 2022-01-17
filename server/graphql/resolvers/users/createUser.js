@@ -1,8 +1,11 @@
 const Identicon = require('identicon.js');
+const { v4: uuidv4 } = require('uuid');
 
 const {
   checkDuplicateUserEmail,
+  createCompany,
   createUser: createUserQuery,
+  insertUserCompany,
 } = require('../../../db');
 const { createUserError } = require('./constants');
 const { errorLogger } = require('../../../helpers');
@@ -10,7 +13,7 @@ const { registerCognitoUser } = require('../../../middlewares/awsConfig');
 const { uploadImage } = require('../../../middlewares/imageUpload');
 
 const createUser = async ({
-  userInput: { email, firstName, lastName, password, username },
+  userInput: { email, firstName, isCompany, lastName, password, username },
 }) => {
   try {
     await checkDuplicateUserEmail({ email });
@@ -35,7 +38,18 @@ const createUser = async ({
       user_type: 'full',
       username,
     };
-    const result = await createUserQuery({ data: newUser });
+    let result = await createUserQuery({ data: newUser });
+
+    if (isCompany) {
+      const companyId = uuidv4();
+      const id = uuidv4();
+      const data = { created_date: new Date(), id: companyId };
+      const userCompanyValues = [companyId, id, userId];
+      await createCompany({ data });
+      await insertUserCompany({ values: userCompanyValues });
+      result = { ...result, company: { companyId } };
+    }
+
     return {
       __typename: 'User',
       ...result,

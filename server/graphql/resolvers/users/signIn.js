@@ -6,6 +6,7 @@ const {
   getOneIssue,
   getOneRepo,
   getUserAttemptList,
+  getUserCompany,
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
   getUserWatchList,
@@ -35,8 +36,21 @@ const signIn = async ({ password, username }, { res }) => {
     const result = await getUserSettingsQuery({ userId });
     const { issues, repos } = result;
 
+    const userCompany = await getUserCompany({ userId });
+
     // Pull user attempting detail
     const attemptingListResult = await getUserAttemptList({ userId });
+
+    if (userCompany) {
+      const { contractAcceptedDate, id, ...companyProps } = userCompany;
+      result.company = {
+        companyId: id,
+        isContractAccepted: !!contractAcceptedDate,
+        isQuestionnaireComplete: Object.keys(companyProps).some(
+          prop => !!companyProps[prop],
+        ),
+      };
+    }
 
     // Pull user issue detail
     const issuesListResult = await Promise.all(

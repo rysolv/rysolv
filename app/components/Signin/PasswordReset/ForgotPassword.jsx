@@ -1,16 +1,18 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { MainTextInput } from 'components/base_ui';
+import { UpdatedTextInput } from 'components/base_ui';
 
 import {
+  InputFormContent,
   InputFormWrapper,
+  InputSubText,
   SigninWrapper,
   StyledErrorSuccessBanner,
   StyledPrimaryAsyncButton,
   Title,
 } from '../styledComponents';
-import { DescriptionText } from './styledComponents';
+import { TextInputWrapper } from './styledComponents';
 
 const ForgotPassword = ({
   data: { email },
@@ -33,36 +35,40 @@ const ForgotPassword = ({
   return (
     <SigninWrapper onKeyDown={e => handleKeypress(e)}>
       <InputFormWrapper>
-        <Title>Forgot your password?</Title>
-        {error && (
-          <StyledErrorSuccessBanner
-            error={error}
-            onClose={handleClearAuthAlerts}
-          />
-        )}
-        <DescriptionText>
-          Enter your user account&#39;s email address, and we will send you a
-          code to reset your password.
-        </DescriptionText>
-        <MainTextInput
-          autoComplete="email"
-          error={!!email.error}
-          helperText={email.error}
-          label="Email"
-          onBlur={() => handleValidateInput({ field: 'email' })}
-          onChange={e =>
-            handleInputChange({
-              field: 'email',
-              form: 'sendLink',
-              value: e.target.value,
-            })
-          }
-          type="email"
-          value={email.value}
-        />
+        <InputFormContent>
+          <Title hasSubText>Forgot your password?</Title>
+          {error && (
+            <StyledErrorSuccessBanner
+              error={error}
+              hasSubText
+              onClose={handleClearAuthAlerts}
+            />
+          )}
+          <InputSubText>
+            Enter your user account&#39;s email address, and we will send you a
+            code to reset your password.
+          </InputSubText>
+          <TextInputWrapper>
+            <UpdatedTextInput
+              autoComplete="email"
+              error={email.error}
+              label="Email"
+              onBlur={() => handleValidateInput({ field: 'email' })}
+              onChange={e =>
+                handleInputChange({
+                  field: 'email',
+                  form: 'sendLink',
+                  value: e.target.value,
+                })
+              }
+              type="email"
+              value={email.value}
+            />
+          </TextInputWrapper>
+        </InputFormContent>
         <StyledPrimaryAsyncButton
           disabled={sendLinkDisabled}
-          label="Send Code"
+          label="Send code"
           loading={loading}
           onClick={handleSendLink}
         />

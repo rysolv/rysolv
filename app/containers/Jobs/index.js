@@ -7,21 +7,23 @@ import { push } from 'connected-react-router';
 import { Redirect } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
-import JobsView from 'components/Jobs';
+import { CreateJobApplication } from 'components/Jobs';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { useDidUpdateEffect } from 'utils/globalHelpers';
+import { getQuestion, useDidUpdateEffect } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import {
   changeInput,
+  changeSkillLevel,
   changeView,
+  deleteSkill,
   fetchQuestions,
   inputError,
   resetState,
   submitUserResponse,
 } from './actions';
-import { getQuestion, validateFields } from './helpers';
+import { validateFields } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import {
@@ -32,15 +34,18 @@ import {
 import { ViewContainer } from './styledComponents';
 
 const Jobs = ({
-  activeUser: { isGithubVerified, isQuestionnaireComplete },
+  activeUser: { company, isGithubVerified, surveyComplete },
   dispatchChangeInput,
+  dispatchChangeSkillLevel,
   dispatchChangeView,
+  dispatchDeleteSkill,
   dispatchFetchQuestions,
   dispatchInputError,
   dispatchResetState,
   dispatchSubmitUserResponse,
   error,
   form,
+  formErrors,
   handleNav,
   isSignedIn,
   loading,
@@ -52,10 +57,10 @@ const Jobs = ({
   const [isRequiredData, setIsRequiredData] = useState(true);
   useEffect(() => {
     if (isGithubVerified && isSignedIn) {
-      if (!isQuestionnaireComplete) {
+      if (!surveyComplete) {
         dispatchFetchQuestions({ category: 'hiring' });
       } else {
-        dispatchChangeView({ view: 3 });
+        handleNav('/dashboard');
         setIsRequiredData(false);
       }
     } else {
@@ -95,6 +100,8 @@ const Jobs = ({
     dispatchChangeInput({ field: 'resume', value: filesArray });
   };
 
+  const isCompany = !!company;
+
   const step = getQuestion();
   const questionProps = questions[step - 1];
 
@@ -106,21 +113,25 @@ const Jobs = ({
     <ViewContainer>
       <AsyncRender
         asyncData={questions}
-        component={JobsView}
+        component={CreateJobApplication}
         error={error}
         isRequiredData={isRequiredData}
         loading={loading}
         propsToPassDown={{
           dispatchChangeInput,
+          dispatchChangeSkillLevel,
           dispatchChangeView,
+          dispatchDeleteSkill,
           dispatchInputError,
           error,
           form,
+          formErrors,
           handleCancel,
           handleNav,
           handleStart,
           handleSubmit,
           handleUpdateFiles,
+          isCompany,
           isGithubVerified,
           isSignedIn,
           loading,
@@ -138,13 +149,16 @@ const Jobs = ({
 Jobs.propTypes = {
   activeUser: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeSkillLevel: T.func.isRequired,
   dispatchChangeView: T.func.isRequired,
+  dispatchDeleteSkill: T.func.isRequired,
   dispatchFetchQuestions: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   dispatchResetState: T.func.isRequired,
   dispatchSubmitUserResponse: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
   form: T.object.isRequired,
+  formErrors: T.object.isRequired,
   handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
   loading: T.bool.isRequired,
@@ -165,6 +179,7 @@ const mapStateToProps = createStructuredSelector({
    */
   error: makeSelectJobs('error'),
   form: makeSelectJobs('form'),
+  formErrors: makeSelectJobs('formErrors'),
   loading: makeSelectJobs('loading'),
   questions: makeSelectJobQuestions(),
   responseArray: makeSelectJobResponseArray(),
@@ -177,7 +192,9 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Jobs
      */
     dispatchChangeInput: payload => dispatch(changeInput(payload)),
+    dispatchChangeSkillLevel: payload => dispatch(changeSkillLevel(payload)),
     dispatchChangeView: payload => dispatch(changeView(payload)),
+    dispatchDeleteSkill: payload => dispatch(deleteSkill(payload)),
     dispatchFetchQuestions: payload => dispatch(fetchQuestions(payload)),
     dispatchInputError: payload => dispatch(inputError(payload)),
     dispatchResetState: () => dispatch(resetState()),

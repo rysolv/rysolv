@@ -1,10 +1,16 @@
 /* eslint-disable no-param-reassign */
+const Jimp = require('jimp');
+
 const {
-  createLanguage,
-  deleteUserLanguages,
+  createUserTechStack,
+  deleteUserTechStack,
   transformUser: transformUserQuery,
 } = require('../../../db');
-const { CustomError, errorLogger } = require('../../../helpers');
+const {
+  CustomError,
+  errorLogger,
+  generatePositionLevel,
+} = require('../../../helpers');
 const { transformUserError, transformUserSuccess } = require('./constants');
 const { updateCognitoEmail } = require('../../../middlewares/awsConfig');
 const { uploadImage } = require('../../../middlewares/imageUpload');
@@ -21,8 +27,17 @@ const transformUser = async (
       const protocol = formattedProfilePic.substring(0, 5);
 
       if (formattedProfilePic && protocol !== 'https') {
+        // Upload standard image
         const { uploadUrl } = await uploadImage(formattedProfilePic);
+
+        // Upload blurred image
+        const image = await Jimp.read(uploadUrl);
+        image.blur(15);
+        const base64 = await image.getBase64Async(Jimp.AUTO);
+        const { uploadUrl: blurUrl } = await uploadImage(base64);
+
         userInput.profilePic = uploadUrl;
+        userInput.profilePicBlur = blurUrl;
       }
     }
 
@@ -43,6 +58,7 @@ const transformUser = async (
       last_name: userInput.lastName,
       modified_date: new Date(),
       personal_link: userInput.personalLink,
+      profile_pic_blur: userInput.profilePicBlur,
       profile_pic: userInput.profilePic,
       receive_weekly_emails: userInput.receiveWeeklyEmails,
       stackoverflow_link: userInput.stackoverflowLink,
@@ -50,12 +66,14 @@ const transformUser = async (
     };
 
     if (userInput.preferredLanguages) {
-      await deleteUserLanguages({ userId });
-      await createLanguage({
-        languages: userInput.preferredLanguages,
-        target: {
+      await deleteUserTechStack({ userId });
+      userInput.preferredLanguages.map(async value => {
+        const { beginner, expert, intermediate, skill } = value;
+        await createUserTechStack({
+          level: generatePositionLevel({ beginner, expert, intermediate }),
+          technology: skill,
           userId,
-        },
+        });
       });
     } else {
       await transformUserQuery({ data, userId });

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 
 import { filterIssues, organizeIssues, searchIssues } from './helpers';
 import { initialState } from './reducer';

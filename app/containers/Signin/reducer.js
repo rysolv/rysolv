@@ -1,11 +1,13 @@
 /* eslint-disable array-callback-return */
 import produce from 'immer';
+
+import { RESET_USER_STATE } from 'containers/Main/constants';
+
 import {
   INCREMENT_RESET_STEP,
   INCREMENT_STEP,
   INPUT_CHANGE,
   INPUT_ERROR,
-  RESET_PASSWORD_STATE,
   RESET_STATE,
 } from './constants';
 
@@ -14,7 +16,6 @@ export const initialState = {
   resetPassword: {
     password: { error: '', value: '' },
     verificationCode: { error: '', value: '' },
-    verifyPassword: { error: '', value: '' },
   },
   resetStep: 1,
   sendLink: {
@@ -30,7 +31,6 @@ export const initialState = {
     lastName: { error: '', value: '' },
     password: { error: '', value: '' },
     username: { error: '', value: '' },
-    verifyPassword: { error: '', value: '' },
   },
   step: 1,
   verify: {
@@ -65,12 +65,10 @@ const signinReducer = produce((draft, { payload, type }) => {
       });
       break;
     }
-    case RESET_PASSWORD_STATE: {
-      draft.alerts = initialState.alerts;
-      draft.resetPassword = initialState.resetPassword;
-      break;
-    }
     case RESET_STATE: {
+      return initialState;
+    }
+    case RESET_USER_STATE: {
       return initialState;
     }
   }

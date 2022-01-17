@@ -3,6 +3,8 @@ import T from 'prop-types';
 import SimpleMDE from 'simplemde';
 import 'simplemde/dist/simplemde.min.css';
 
+import { usePrevious } from 'utils/globalHelpers';
+
 import { EditContainer, MarkdownContainer } from './styledComponents';
 
 const Markdown = ({
@@ -43,10 +45,12 @@ const Markdown = ({
     setMarkdown(createMarkdown({ textarea }));
   }, []);
 
-  // Clear body after submit
+  // Use to clear the markdown body
+  const previousBody = usePrevious(body);
   useEffect(() => {
-    if (markdown && body === '') markdown.value(body);
-  }, [body]);
+    if (markdown && previousBody && previousBody !== body && body === '')
+      markdown.value(body);
+  }, [body, previousBody]);
 
   // Toggle preview
   useEffect(() => {

@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-import { snakeToCamel } from 'utils/globalHelpers';
+import { convertFileToDataUrl, snakeToCamel } from 'utils/globalHelpers';
 
-import { convertFileToDataUrl, optionDictionary } from './helpers';
+import { optionDictionary } from './helpers';
 import { initialState } from './reducer';
 
 const selectJobsDomain = state => state.jobs || initialState;
@@ -28,6 +28,7 @@ const makeSelectJobQuestions = () =>
           subtext,
         }) => {
           const hasPlaceholder = !!optionDictionary[questionKey].placeholder;
+          const tableData = form[snakeToCamel(questionKey)];
           const { option, placeholder, type } =
             optionDictionary[questionKey] || {};
           return {
@@ -37,11 +38,12 @@ const makeSelectJobQuestions = () =>
             options: responses.map(({ value }) => ({ value })),
             optionType: option,
             placeholder:
-              hasPlaceholder && !form[snakeToCamel(questionKey)].value.length
+              hasPlaceholder && !form[snakeToCamel(questionKey)].length
                 ? placeholder
                 : '',
             question: questionText,
             required,
+            tableData,
             type,
           };
         },
@@ -58,7 +60,7 @@ const makeSelectJobResponseArray = () =>
       const responseArray = [];
       if (questions.length) {
         Object.keys(form).forEach(async input => {
-          const { value: values } = form[input];
+          const values = form[input];
           const [{ id: questionId, questionKey, responses }] = questions.filter(
             ({ questionKey: key }) => input === snakeToCamel(key),
           );
@@ -66,7 +68,9 @@ const makeSelectJobResponseArray = () =>
             values.forEach(async value => {
               const [{ id: responseId, responseKey }] = responses.filter(
                 response =>
-                  response.responseKey === 'resume' || response.value === value,
+                  response.responseKey === 'resume' ||
+                  response.responseKey === 'skill' ||
+                  response.value === value,
               );
               let formattedValue = value;
               if (responseKey === 'resume') {
@@ -89,7 +93,7 @@ const makeSelectJobResponseArray = () =>
           if (!Array.isArray(values) && values) {
             const [{ id: responseId }] = responses.filter(
               response =>
-                response.responseKey === 'personal_link' ||
+                response.responseKey === 'preferred_locations' ||
                 response.value === values,
             );
             responseArray.push({

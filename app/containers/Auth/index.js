@@ -1,59 +1,40 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { ConditionalRender, LoadingIndicator } from 'components/base_ui';
 
-import { getCookie } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
+import { LoadingIndicator } from 'components/base_ui';
 
-import { fetchActiveUser, fetchActiveUserFailure } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectAuth, makeSelectAuthLoading } from './selectors';
 
 export default function withAuth(config, Component) {
-  const Auth = ({
-    authenticateLoading,
-    dispatchFetchActiveUser,
-    dispatchFetchActiveUserFailure,
-    isSignedIn,
-    loading,
-    ...restProps
-  }) => {
+  const Auth = ({ authenticateLoading, isSignedIn, ...restProps }) => {
     const { isPrivate } = config;
+    const { pathname } = window.location;
+    const basePathname = pathname.split('/')[1];
+    const isSignInPath = basePathname === 'signin' || basePathname === 'signup';
 
-    useEffect(() => {
-      const signedIn = getCookie('signedIn');
-      if (!loading && signedIn) {
-        dispatchFetchActiveUser();
-      } else {
-        dispatchFetchActiveUserFailure();
-      }
-    }, []);
-
-    if (!authenticateLoading && isPrivate && !isSignedIn)
+    while (authenticateLoading) {
+      return <LoadingIndicator />;
+    }
+    if (isPrivate && isSignedIn && isSignInPath) {
       return <Redirect to="/signin" />;
-
-    return (
-      <ConditionalRender
-        Component={Component}
-        FallbackComponent={LoadingIndicator}
-        propsToPassDown={{ ...restProps }}
-        shouldRender={!authenticateLoading}
-      />
-    );
+    }
+    if (isPrivate && !isSignedIn) {
+      return <Redirect to="/signin" />;
+    }
+    return <Component {...restProps} />;
   };
 
   Auth.propTypes = {
-    authenticateLoading: T.bool,
-    dispatchFetchActiveUser: T.func,
-    dispatchFetchActiveUserFailure: T.func,
+    authenticateLoading: T.bool.isRequired,
     isSignedIn: T.bool.isRequired,
-    loading: T.bool,
   };
 
   const mapStateToProps = createStructuredSelector({
@@ -62,20 +43,11 @@ export default function withAuth(config, Component) {
      */
     authenticateLoading: makeSelectAuthLoading('authenticateUser'),
     isSignedIn: makeSelectAuth('isSignedIn'),
-    loading: makeSelectAuthLoading('auth'),
-  });
-
-  const mapDispatchToProps = dispatch => ({
-    /**
-     * Auth
-     */
-    dispatchFetchActiveUser: () => dispatch(fetchActiveUser()),
-    dispatchFetchActiveUserFailure: () => dispatch(fetchActiveUserFailure()),
   });
 
   const withConnect = connect(
     mapStateToProps,
-    mapDispatchToProps,
+    null,
   );
 
   const withReducer = injectReducer({ key: 'auth', reducer });

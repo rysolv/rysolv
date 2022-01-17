@@ -1,9 +1,13 @@
+const isEmpty = require('lodash/isEmpty');
+
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getOneIssue,
   getOneRepo,
+  getSurveyStatus,
   getUserAttemptList,
   getUserBounties,
+  getUserCompany,
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
   getUserWatchList,
@@ -17,8 +21,33 @@ const getUserSettings = async (_, { authError, userId }) => {
     const result = await getUserSettingsQuery({ userId });
     const { issues, repos } = result || {};
 
+    const userCompany = await getUserCompany({ userId });
+
     // Pull user attempting detail
     const attemptingListResult = await getUserAttemptList({ userId });
+
+    // Pull user bounties
+    const bounties = await getUserBounties({ userId });
+
+    if (userCompany) {
+      const {
+        contract,
+        contractAcceptedDate,
+        id,
+        paymentMethod,
+        ...companyProps
+      } = userCompany;
+      result.company = {
+        companyId: id,
+        contract,
+        isContractAccepted: !!contractAcceptedDate,
+        isQuestionnaireComplete: Object.keys(companyProps).some(
+          prop => !!companyProps[prop],
+        ),
+        paymentConfirmed: !!paymentMethod,
+        paymentMethod,
+      };
+    }
 
     // Pull user issue detail
     const issuesListResult = await Promise.all(
@@ -46,8 +75,8 @@ const getUserSettings = async (_, { authError, userId }) => {
     // Pull user watching detail
     const watchingListResult = await getUserWatchList({ userId });
 
-    // Pull user bounties
-    const bounties = await getUserBounties({ userId });
+    // Get hiring survey status
+    const surveyComplete = await getSurveyStatus({ userId });
 
     result.activePullRequests = activePullRequests;
     result.attempting = attemptingListResult;
@@ -57,6 +86,7 @@ const getUserSettings = async (_, { authError, userId }) => {
     result.notifications = false;
     result.rejectedPullRequests = rejectedPullRequests;
     result.repos = reposListResult;
+    result.surveyComplete = surveyComplete;
     result.watching = watchingListResult;
 
     // Show notification for unaccepted bounties
@@ -65,6 +95,18 @@ const getUserSettings = async (_, { authError, userId }) => {
         result.notifications = true;
       }
     });
+
+    if (!isEmpty(result.skills)) {
+      const skillsArray = result.skills.map(({ level, name }) => ({
+        beginner: level === 1,
+        expert: level === 3,
+        intermediate: level === 2,
+        skill: name,
+      }));
+      result.skills = skillsArray;
+    } else {
+      result.skills = [];
+    }
 
     return {
       __typename: 'User',

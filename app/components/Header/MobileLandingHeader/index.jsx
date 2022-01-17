@@ -10,12 +10,15 @@ import {
   Logo,
   LogoWrapper,
   MenuInternalLink,
+  MessageLink,
+  MessageWrapper,
   MobileHeaderContainer,
   StyledExpandIcon,
   StyledLoginLink,
   StyledMenu,
   StyledSecondaryButton,
   StyledUserNavBar,
+  UnreadMessages,
   VerticalDivider,
   Wordmark,
 } from './styledComponents';
@@ -54,6 +57,9 @@ const MobileLandingHeader = ({
     setAnchorEl(document.getElementById('mobileNavDropDown'));
   };
 
+  const isCompany = !!activeUser.company;
+  const { unreadMessages } = activeUser;
+
   return (
     <MobileHeaderContainer>
       <LogoWrapper onClick={() => handleNav('/')}>
@@ -64,15 +70,22 @@ const MobileLandingHeader = ({
         {isSignedIn ? (
           <Fragment>
             <InternalLink
-              label="Browse issues"
-              path="/issues"
+              label="Dashboard"
+              path={isCompany ? '/company/dashboard' : '/dashboard'}
               shouldRemoveSecond
             />
-            <InternalLink
-              label="Hire engineers"
-              path="/recruitment"
-              shouldRemoveFirst
-            />
+            <MessageWrapper>
+              <MessageLink
+                label="Messages"
+                path="/messages"
+                shouldRemoveFirst
+              />
+              {!!unreadMessages && (
+                <UnreadMessages shouldRemoveFirst>
+                  {unreadMessages}
+                </UnreadMessages>
+              )}
+            </MessageWrapper>
             <VerticalDivider />
             <StyledUserNavBar
               activeUser={activeUser}
@@ -100,8 +113,7 @@ const MobileLandingHeader = ({
       >
         <StyledLoginLink label="Log in" path="/signin" />
         <HorizontalDivider />
-        <MenuInternalLink label="Browse issues" path="/issues" />
-        <MenuInternalLink label="Hire engineers" path="/recruitment" />
+        <MenuInternalLink label="Hire engineers" path="/pricing" />
       </MenuComponent>
     </MobileHeaderContainer>
   );

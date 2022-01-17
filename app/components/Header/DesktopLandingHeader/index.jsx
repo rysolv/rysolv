@@ -5,13 +5,17 @@ import iconDictionary from 'utils/iconDictionary';
 
 import {
   ButtonWrapper,
+  ComponentContainer,
   DesktopHeaderContainer,
   InternalLink,
   Logo,
   LogoWrapper,
+  MessageLink,
+  MessageWrapper,
   StyledPrimaryButton,
   StyledSecondaryButton,
   StyledUserNavBar,
+  UnreadMessages,
   VerticalDivider,
   Wordmark,
 } from './styledComponents';
@@ -24,37 +28,68 @@ const DesktopLandingHeader = ({
   handleNav,
   handleSignout,
   isSignedIn,
-}) => (
-  <DesktopHeaderContainer>
-    <LogoWrapper onClick={() => handleNav('/')}>
-      <Logo>{SiteLogo}</Logo>
-      <Wordmark>{SiteWordmark}</Wordmark>
-    </LogoWrapper>
-    <ButtonWrapper>
-      <InternalLink label="Browse issues" path="/issues" />
-      <InternalLink label="Hire engineers" path="/recruitment" />
-      <VerticalDivider />
-      {isSignedIn ? (
-        <StyledUserNavBar
-          activeUser={activeUser}
-          handleNav={handleNav}
-          handleSignout={handleSignout}
+}) => {
+  let navLinks;
+  const isCompany = !!activeUser.company;
+  const { unreadMessages } = activeUser;
+
+  if (isSignedIn) {
+    navLinks = (
+      <Fragment>
+        <InternalLink
+          label="Dashboard"
+          path={isCompany ? '/company/dashboard' : '/dashboard'}
         />
-      ) : (
-        <Fragment>
-          <StyledSecondaryButton
-            label="Sign up"
-            onClick={() => handleNav('/signup')}
-          />
-          <StyledPrimaryButton
-            label="Log in"
-            onClick={() => handleNav('/signin')}
-          />
-        </Fragment>
-      )}
-    </ButtonWrapper>
-  </DesktopHeaderContainer>
-);
+        <MessageWrapper>
+          <MessageLink label="Messages" path="/messages" />
+          {!!unreadMessages && (
+            <UnreadMessages>{unreadMessages}</UnreadMessages>
+          )}
+        </MessageWrapper>
+      </Fragment>
+    );
+  } else {
+    navLinks = (
+      <Fragment>
+        <InternalLink label="Hire engineers" path="/pricing" />
+      </Fragment>
+    );
+  }
+
+  return (
+    <ComponentContainer>
+      <DesktopHeaderContainer>
+        <LogoWrapper onClick={() => handleNav('/')}>
+          <Logo>{SiteLogo}</Logo>
+          <Wordmark>{SiteWordmark}</Wordmark>
+        </LogoWrapper>
+        <ButtonWrapper>
+          {navLinks}
+
+          <VerticalDivider />
+          {isSignedIn ? (
+            <StyledUserNavBar
+              activeUser={activeUser}
+              handleNav={handleNav}
+              handleSignout={handleSignout}
+            />
+          ) : (
+            <Fragment>
+              <StyledSecondaryButton
+                label="Sign up"
+                onClick={() => handleNav('/signup')}
+              />
+              <StyledPrimaryButton
+                label="Log in"
+                onClick={() => handleNav('/signin')}
+              />
+            </Fragment>
+          )}
+        </ButtonWrapper>
+      </DesktopHeaderContainer>
+    </ComponentContainer>
+  );
+};
 
 DesktopLandingHeader.propTypes = {
   activeUser: T.object.isRequired,

@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react';
 import T from 'prop-types';
 
+import iconDictionary from 'utils/iconDictionary';
+
 import {
+  InputFormContent,
   InputFormWrapper,
   SigninWrapper,
   StyledPrimaryButton,
   Title,
 } from '../styledComponents';
-import { DescriptionText } from './styledComponents';
+import { IconWrapper, MessageWrapper, ResetSubText } from './styledComponents';
+
+const ErrorIcon = iconDictionary('errorOutline');
 
 const ResetPasswordFailure = ({ error: { message }, handleReturnToSignIn }) => {
   useEffect(() => document.getElementById('resetFailed').focus(), []);
@@ -23,8 +28,13 @@ const ResetPasswordFailure = ({ error: { message }, handleReturnToSignIn }) => {
       tabIndex="0"
     >
       <InputFormWrapper>
-        <Title isError>Password reset failed</Title>
-        <DescriptionText>{message}</DescriptionText>
+        <InputFormContent>
+          <Title hasSubText>Password reset failed</Title>
+          <ResetSubText hasFlex>
+            <IconWrapper isError>{ErrorIcon}</IconWrapper>
+            <MessageWrapper>{message}</MessageWrapper>
+          </ResetSubText>
+        </InputFormContent>
         <StyledPrimaryButton
           label="Return to sign in"
           onClick={handleReturnToSignIn}

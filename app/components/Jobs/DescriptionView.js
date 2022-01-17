@@ -26,7 +26,12 @@ const Edit = iconDictionary('edit');
 const Github = iconDictionary('github');
 const Star = iconDictionary('star');
 
-const DescriptionView = ({ handleStart, isGithubVerified, isSignedIn }) => {
+const DescriptionView = ({
+  handleStart,
+  isCompany,
+  isGithubVerified,
+  isSignedIn,
+}) => {
   useEffect(() => {
     document.getElementById('surveyDescription').focus();
   }, []);
@@ -35,6 +40,21 @@ const DescriptionView = ({ handleStart, isGithubVerified, isSignedIn }) => {
       handleStart();
     }
   };
+
+  const UserButtonComponent = (
+    <ConditionalRender
+      Component={
+        <StyledPrimaryButton
+          isSelected
+          label="Get started"
+          onClick={handleStart}
+        />
+      }
+      FallbackComponent={<StyledGithubButton type="jobs" />}
+      shouldRender={isSignedIn && isGithubVerified}
+    />
+  );
+
   return (
     <StyledFocusDiv
       id="surveyDescription"
@@ -69,15 +89,14 @@ const DescriptionView = ({ handleStart, isGithubVerified, isSignedIn }) => {
         </SampleWrapper>
         <ButtonWrapper>
           <ConditionalRender
-            Component={
+            Component={UserButtonComponent}
+            FallbackComponent={
               <StyledPrimaryButton
-                isSelected
-                label="Get started"
-                onClick={handleStart}
+                disabled
+                label="Unavailable on company accounts"
               />
             }
-            FallbackComponent={<StyledGithubButton type="jobs" />}
-            shouldRender={isSignedIn && isGithubVerified}
+            shouldRender={!isCompany}
           />
         </ButtonWrapper>
       </ViewContainer>
@@ -89,6 +108,7 @@ DescriptionView.defaultProp = { isGithubVerified: false };
 
 DescriptionView.propTypes = {
   handleStart: T.func.isRequired,
+  isCompany: T.bool.isRequired,
   isGithubVerified: T.bool,
   isSignedIn: T.bool.isRequired,
 };

@@ -1,10 +1,11 @@
 /* eslint-disable consistent-return, no-useless-escape */
 import capitalize from 'lodash/capitalize';
+import isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
 export const isBlank = value =>
-  isUndefined(value) || isNull(value) || isEmptyString(value);
+  isUndefined(value) || isNull(value) || isEmpty(value) || isEmptyString(value);
 
 const isEmptyString = str => {
   if (typeof str === 'string') {

@@ -1,5 +1,7 @@
+/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 
 import { ProgressBar } from 'components/base_ui';
 import { validateOneField } from 'containers/Jobs/helpers';
@@ -23,8 +25,11 @@ const NextIcon = iconDictionary('navigateNext');
 const SurveyView = ({
   description,
   dispatchChangeInput,
+  dispatchChangeSkillLevel,
+  dispatchDeleteSkill,
   dispatchInputError,
   form,
+  formErrors,
   handleCancel,
   handleNav,
   handleSubmit,
@@ -39,6 +44,7 @@ const SurveyView = ({
   required,
   step,
   steps,
+  tableData,
   type,
 }) => {
   const [nextDisabled, setNextDisabled] = useState(false);
@@ -46,10 +52,25 @@ const SurveyView = ({
 
   const checkInputDisabled = input => {
     let disabled = true;
-    if (Array.isArray(form[input].value)) {
-      disabled = !form[input].value.length;
+    if (input === 'skills') {
+      disabled =
+        isEmpty(form[input]) ||
+        !form[input].every(
+          ({ beginner, expert, intermediate }) =>
+            beginner === true || expert === true || intermediate === true,
+        );
+    } else if (
+      input === 'desiredRole' ||
+      input === 'experience' ||
+      input === 'resume' ||
+      input === 'targetSalary' ||
+      input === 'type'
+    ) {
+      disabled = !form[input].length;
+    } else if (input === 'preferredLocation') {
+      disabled = isEmpty(form[input]);
     } else {
-      disabled = form[input].value === '';
+      disabled = form[input] === '';
     }
     return disabled;
   };
@@ -59,8 +80,18 @@ const SurveyView = ({
       ? checkInputDisabled(id) || hasInputErrors
       : hasInputErrors;
     const tempSubmitDisabled = required
-      ? !Object.keys(form).every(input => checkInputDisabled(input)) ||
-        hasInputErrors
+      ? !Object.keys(form).every(input => {
+        if (input === 'skills') {
+          return (
+            !isEmpty(form[input]) &&
+              form[input].every(
+                ({ beginner, expert, intermediate }) =>
+                  beginner === true || expert === true || intermediate === true,
+              )
+          );
+        }
+        return checkInputDisabled(input);
+      }) || hasInputErrors
       : hasInputErrors;
 
     setNextDisabled(tempNextDisabled);
@@ -74,6 +105,13 @@ const SurveyView = ({
   const shouldDisplayBack = step > 1;
   const shouldDisplayCancel = step === 1;
   const shouldDisplaySubmit = step === steps;
+
+  const handleChangeInput = (value, inputField) => {
+    dispatchChangeInput({
+      field: inputField || id,
+      value,
+    });
+  };
 
   const handleKeypress = ({ key }) => {
     if (key === 'Enter' && !checkInputDisabled(id)) {
@@ -90,19 +128,24 @@ const SurveyView = ({
     });
   };
   const hasInputErrors = !Object.keys(form).every(
-    input => form[input].error === '' || form[input].error === undefined,
+    input => formErrors[input] === '' || formErrors[input] === undefined,
   );
+
+  const tableProps = { dispatchChangeSkillLevel, dispatchDeleteSkill };
 
   const OptionToRender = optionDictionary[optionType];
   const optionProps = {
-    dispatchChangeInput,
     form,
+    formErrors,
+    handleChangeInput,
     handleUpdateFiles,
     handleValidateInput,
     id,
     limit,
     options,
     placeholder,
+    tableData,
+    tableProps,
     type,
   };
   return (
@@ -168,8 +211,11 @@ const SurveyView = ({
 SurveyView.propTypes = {
   description: T.string,
   dispatchChangeInput: T.func.isRequired,
+  dispatchChangeSkillLevel: T.func.isRequired,
+  dispatchDeleteSkill: T.func.isRequired,
   dispatchInputError: T.func.isRequired,
   form: T.object.isRequired,
+  formErrors: T.object.isRequired,
   handleCancel: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleSubmit: T.func.isRequired,
@@ -184,6 +230,7 @@ SurveyView.propTypes = {
   required: T.bool.isRequired,
   step: T.number.isRequired,
   steps: T.number.isRequired,
+  tableData: T.oneOfType([T.array, T.object, T.string]).isRequired,
   type: T.string,
 };
 

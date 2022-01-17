@@ -2,13 +2,12 @@ import styled from 'styled-components';
 
 import {
   defaultFontFamily,
-  defaultFontSize,
-  headerColor,
+  candidateGreyColor,
   textColor,
 } from 'defaultStyleHelper';
 
 export const MarkdownContainer = styled.div`
-  font-size: ${defaultFontSize};
+  font-size: 1.6rem;
   margin: 0;
   text-align: left;
   width: 100%;
@@ -18,14 +17,23 @@ export const MarkdownContainer = styled.div`
   a:active,
   .fa,
   .fa:hover {
-    background-color: ${headerColor} !important;
-    color: white;
+    background-color: ${candidateGreyColor} !important;
+    color: ${textColor};
+
     * {
-      background-color: ${headerColor};
+      background-color: ${candidateGreyColor};
     }
   }
 
   .editor-toolbar {
+    align-items: center;
+    border-left: 0.1rem solid ${candidateGreyColor};
+    border-right: 0.1rem solid ${candidateGreyColor};
+    border-top-left-radius: 0.7rem;
+    border-top-right-radius: 0.7rem;
+    border-top: 0.1rem solid ${candidateGreyColor};
+    display: flex;
+    height: 4.9rem;
     opacity: 1 !important;
 
     ::after {
@@ -37,10 +45,16 @@ export const MarkdownContainer = styled.div`
     }
   }
 
+  .CodeMirror {
+    border: 0.2rem solid ${candidateGreyColor} !important;
+  }
+
   .CodeMirror,
   .CodeMirror-scroll {
-    transition: min-height 0.2s;
+    border-bottom-left-radius: 0.7rem;
+    border-bottom-right-radius: 0.7rem;
     min-height: ${props => (props.comment ? '5rem' : '20rem')};
+    transition: min-height 0.2s;
   }
 
   &:focus-within {
@@ -55,7 +69,7 @@ export const EditContainer = styled.div`
   & :focus-within {
     .CodeMirror-wrap,
     .editor-toolbar {
-      border-color: #78909c;
+      border-color: ${candidateGreyColor};
     }
   }
 

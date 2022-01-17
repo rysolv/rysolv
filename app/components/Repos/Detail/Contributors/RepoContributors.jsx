@@ -14,21 +14,21 @@ import {
 const RepoContributors = ({ contributors, handleNav }) => (
   <ul>
     {contributors.map(
-      ({ firstName, id, isOwner, lastName, profilePic, username }) => (
+      ({ firstName, isOwner, lastName, profilePic, username }) => (
         <ContributorListItem key={username}>
           <ContributorContent>
             <ContributorImageWrapper>
               <ImageLinkWrapper
                 alt={username}
                 image={profilePic}
-                route={`/users/detail/${id}`}
+                route={`/profile/${username}`}
                 size="4.8rem"
               />
             </ContributorImageWrapper>
             <ContributorDetails>
               <span>
                 <ContributorName
-                  onClick={() => handleNav(`/users/detail/${id}`)}
+                  onClick={() => handleNav(`/profile/${username}`)}
                 >
                   {firstName} {lastName}
                 </ContributorName>{' '}

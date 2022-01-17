@@ -226,7 +226,7 @@ export const FeedbackContainer = styled.div`
   display: flex;
   height: 47.5rem;
   margin: 24.4rem auto 5.6rem;
-  max-width: 120rem;
+  max-width: 140rem;
   padding: 6.4rem 7.5rem;
 
   @media (max-width: 1000px) {
@@ -255,7 +255,7 @@ export const FeedbackSubheader = styled.div`
 export const FundingContainer = styled.div`
   display: flex;
   margin: 21.9rem auto 0;
-  max-width: 120rem;
+  max-width: 140rem;
 
   @media (max-width: 1263px) {
     align-items: center;

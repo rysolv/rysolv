@@ -64,6 +64,30 @@ module.exports = buildSchema(`
     target: ID!
   }
 
+  type Company {
+    companyId: ID
+    description: String
+    location: Object
+    logo: String
+    name: String
+    size: String
+    website: String
+  }
+
+  input CompanyInput {
+    companyId: ID!
+    description: String!
+    location: Object!
+    logo: String
+    name: String!
+    size: String!
+    website: String!
+  }
+
+  type CompanyPositionsArray {
+    positions: [Position]
+  }
+
   input ContactInput {
     body: String
     companyName: String
@@ -71,6 +95,28 @@ module.exports = buildSchema(`
     contactName: String
     email: String
     source: String
+  }
+
+  type Contract {
+    body: String!
+    key: String!
+    subtitle: String!
+    title: String!
+    version: Int!
+  }
+
+  type Conversation {
+    candidate: Object
+    company: Object
+    lastMessageDate: Object
+    messages: [Object]
+    position: Object
+    threadId: ID
+    unread: Boolean
+  }
+
+  type ConversationArray {
+    conversations: [Conversation]
   }
 
   type Error {
@@ -169,10 +215,57 @@ module.exports = buildSchema(`
     type: String
   }
 
+  type Message {
+    body: String
+    commentId: ID
+    createdDate: Object
+    githubUrl: String
+    isGithubComment: Boolean
+    modifiedDate: Object
+    profilePic: String
+    target: String
+    userId: ID
+    username: String
+  }
+
+  input MessageInput {
+    body: String!
+    positionId: ID!
+    threadId: ID
+    toUserId: ID!
+  }
+
+  type MessageResponse {
+    body: String!
+    createdDate: Object!
+    firstName: String!
+    id: ID!
+    lastName: String!
+    profilePic: String!
+    readDate: Object
+    threadId: ID
+    userId: ID!
+    username: String!
+  }
+
   type Payment {
     balance: Float
     fundedAmount: Float
     message: String
+  }
+
+  type Position {
+    description: String
+    experience: String
+    id: String
+    isActive: String
+    location: Object
+    role: [String]
+    salary: String
+    skills: [Object]
+    timezone: String
+    title: String
+    type: String
   }
 
   type PullRequest {
@@ -295,6 +388,11 @@ module.exports = buildSchema(`
     message: String
   }
 
+  type Technology {
+    id: ID
+    value: String
+  }
+
   type Upvote {
     issueRep: Int
     upvotes: [ID]
@@ -306,34 +404,56 @@ module.exports = buildSchema(`
     attempting: [Object]
     balance: Float
     bounties: [Bounty]
+    company: Object
     completedPullRequests: Int
     createdDate: Object
+    desiredRole: [String]
     dollarsEarned: Int
     email: String!
     emailVerified: Boolean
+    experience: String
     firstName: String
     githubId: String
     githubLink: String
     githubUsername: String
+    hiringStatus: String
     id: ID!
+    isActive: String
     isGithubVerified: Boolean
-    isQuestionnaireComplete: Boolean
+    isSaved: Boolean
     issues: [Object]
+    languages: [String]
     lastName: String
+    lastPosition: String
+    location: String
+    matches: Int
     modifiedDate: Object
     notifications: Boolean
+    percentMatch: Float
     personalLink: String
     preferredLanguages: [String]
+    preferredLocation: Object
     profilePic: String
     pullRequests: [String]
     receiveWeeklyEmails: Boolean
     rejectedPullRequests: Int
     rep: Int
     repos: [Object]
+    resume: String
+    salary: String
+    skills: [Object]
     stackoverflowLink: String
+    surveyComplete: Boolean
+    targetSalary: String
+    threadId: ID
+    timezone: String
+    type: Object
+    unreadMessages: Int
     upvotes: [ID]
+    usCitizen: String
     username: String
     watching: [Object]
+    yearsOfExperience: String
   }
 
   type UserArray {
@@ -349,6 +469,7 @@ module.exports = buildSchema(`
     firstName: String
     githubLink: String
     id: ID
+    isCompany: Boolean
     issues: [String]
     lastName: String
     password: String
@@ -393,13 +514,18 @@ module.exports = buildSchema(`
   }
 
   union CommentResult = Comment | Error
+  union CompanyResult = Company | Error
+  union ContractResult = Contract | Error
+  union ConversationResult = ConversationArray | Error
   union EventResponse = Success | Error
   union FilterResult = Filter | Error
   union ImportPullRequestResult = ImportPullRequest | Error
   union ImportResult = ImportData | Error
   union IssueArrayResult = IssueArray | Error
   union IssueResult = Issue | Error
+  union MessageResult = MessageResponse | Error
   union PaymentResult = Payment | Error
+  union PositionResult = Position | Error
   union PullRequestArrayResult = PullRequestArray | Error
   union QuestionResult = QuestionArray | Error
   union RepoArrayResult = RepoArray | Error
@@ -415,27 +541,38 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
+    getCompanyPositions(companyId: ID!): CompanyPositionsArray
+    getContract(plan: String!): ContractResult!
     getFilterOptions: FilterResult!
     getGithubPullRequests(issueId: ID!): PullRequestArrayResult!
     getIssueAttemptList(issueId: ID!): [WatchList]!
     getIssueComments(issueId: ID!): [Comment]!
     getIssues: IssueArrayResult!
     getIssueWatchList(issueId: ID!): [WatchList]!
+    getMessages: ConversationResult!
+    getPlaidToken: EventResponse!
+    getPositionCandidates(positionId: ID!, saved: Boolean): [User]
     getPullRequestList(issueId: ID): [PullRequestList]!
     getQuestions(category: String!): QuestionResult
     getRepoActivity(repoId: ID): [Activity]!
     getRepos: RepoArrayResult!
     getStats: StatsResult!
+    getTechnologies: [Technology]
     getUserActivity(userId: ID): [Activity]!
+    getUserDashboard: UserResult!
     getUserIssues: IssueArrayResult!
+    getUserProfile(username: String!): UserResult!
     getUserPullRequests: PullRequestArrayResult!
     getUserRepos: RepoArrayResult!
+    getUserResponse: UserResult!
     getUsers: UserArrayResult!
     getUserSettings: UserResult!
 
     githubSignIn(code: String!, origin: String!): UserResult!
 
+    oneCompany(companyId: ID!): CompanyResult!
     oneIssue(id: ID!): IssueResult!
+    onePosition(positionId: ID!): PositionResult!
     oneRepo(id: ID!): RepoResult!
     oneUser(userId: ID!): UserResult!
     oneUserSignUp(email: String!): UserResult!
@@ -460,6 +597,7 @@ module.exports = buildSchema(`
 
     createComment(commentInput: CommentInput): CommentResult!
     createIssue(issueInput: IssueInput): IssueResult!
+    createMessage(messageInput: MessageInput): MessageResult!
     createPaypalPayment(amount: Float!, email: String, issueId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
     createRepo(repoInput: RepoInput): RepoResult!
@@ -474,11 +612,18 @@ module.exports = buildSchema(`
     importPullRequest(issueId: ID!, url: String!): ImportPullRequestResult!
     importRepo(url: String!): ImportResult!
 
+    matchCandidates(positionId: ID!): EventResponse!
+
+    postContractAccepted(companyId: ID, plan: String): EventResponse!
+    postPositionResponse(companyId: ID, positionId: ID, responseArray: [Object]): EventResponse!
     postUserResponse(responseArray: [Object]): EventResponse!
 
-    recruitingSignup(contactInput: ContactInput): EventResponse!
-    
+    saveCandidate(candidateId: ID!, positionId: ID!): EventResponse!
+
     sendContact(contactInput: ContactInput): EventResponse!
+
+    setHiringStatus(hiringStatus: String!): EventResponse!
+    setReadMessage(threadId: String!): EventResponse!
 
     signIn(password: String!, username: String!): SignInResult!
     signOut: EventResponse!
@@ -488,11 +633,16 @@ module.exports = buildSchema(`
     toggleAttempting(issueId: ID!): ToggleAttemptingResult!
     toggleWatching(issueId: ID!): ToggleWatchingResult!
 
+    transformCompany(companyInput: CompanyInput): EventResponse!
     transformIssue(issueId: ID!, issueInput: IssueInput): EventResponse!
+    transformPositionResponse(positionId: ID, responseArray: [Object]): EventResponse!
     transformRepo(repoId: ID!, repoInput: RepoInput): EventResponse!
     transformUser(userInput: UserInput): EventResponse!
+    transformUserResponse(responseArray: [Object]): EventResponse!
+    transformUserSkills(skillsArray: [Object]): EventResponse!
 
     upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
+    updatePaymentMethod(provider: String, token: String, metadata: Object ): EventResponse!
 
     verifyUserAccount(code: String!): VerificationResult!
     verifyUserEmail(code: String!, email: String!, userId: ID!): EventResponse!

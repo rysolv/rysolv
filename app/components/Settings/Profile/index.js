@@ -1,31 +1,18 @@
 import React from 'react';
 import T from 'prop-types';
 
+import { getBase64 } from 'utils/globalHelpers';
+import iconDictionary from 'utils/iconDictionary';
+
 import {
   BaseFileInput,
   Coin,
   ConditionalRender,
   IconButton,
 } from 'components/base_ui';
-import { getBase64 } from 'utils/globalHelpers';
-import iconDictionary from 'utils/iconDictionary';
-
-import {
-  EmptyGithubLinkComponent,
-  GithubEditComponent,
-  GithubLinkComponent,
-} from './GithubLinkComponents';
-import {
-  EmptyPersonalLinkComponent,
-  PersonalEditComponent,
-  PersonalLinkComponent,
-} from './PersonalLinkComponents';
-import {
-  EmptyStackoverflowLinkComponent,
-  StackoverflowEditComponent,
-  StackoverflowLinkComponent,
-} from './StackoverflowLinkComponents';
+import UserLinksComponent from './UserLinksComponent';
 import UserMetricsView from '../Metrics';
+
 import {
   DetailViewContainer,
   EditUserImageWrapper,
@@ -35,7 +22,6 @@ import {
   UserCardWrapper,
   UserImage,
 } from './styledComponents';
-import { LinksWrapper } from '../styledComponents';
 
 const CloseIcon = iconDictionary('close');
 const DoneIcon = iconDictionary('done');
@@ -44,11 +30,11 @@ const ProfileComponent = ({
   activePullRequests,
   changeGithub,
   changePersonal,
-  changePreferredLanguages,
   changeStackoverflow,
   changeUserImage,
   completedPullRequests,
   createdDate,
+  dispatchOpenModal,
   displayBottom,
   dollarsEarned,
   firstName,
@@ -61,17 +47,16 @@ const ProfileComponent = ({
   isDisabled,
   lastName,
   personalLink,
-  preferredLanguages,
   profilePic,
   rejectedPullRequests,
   rep,
   setChangeGithub,
   setChangePersonal,
-  setChangePreferredLanguages,
   setChangeStackoverflow,
   setChangeUserImage,
   setIsDisabled,
   setValue,
+  skills,
   stackoverflowLink,
   value,
 }) => {
@@ -131,108 +116,42 @@ const ProfileComponent = ({
         <Name>
           {firstName} {lastName}
         </Name>
-        <LinksWrapper>
-          <ConditionalRender
-            Component={
-              <ConditionalRender
-                Component={GithubLinkComponent}
-                FallbackComponent={EmptyGithubLinkComponent}
-                propsToPassDown={{
-                  githubLink,
-                  handleEdit,
-                  isDisabled,
-                  setChangeGithub,
-                }}
-                shouldRender={!!githubLink}
-              />
-            }
-            FallbackComponent={
-              <GithubEditComponent
-                githubLinkError={githubLinkError}
-                handleClose={handleClose}
-                handleSubmitInputChange={handleSubmitInputChange}
-                handleValidateInput={handleValidateInput}
-                setChangeGithub={setChangeGithub}
-                setValue={setValue}
-                value={value}
-              />
-            }
-            shouldRender={!changeGithub}
-          />
-          <ConditionalRender
-            Component={
-              <ConditionalRender
-                Component={PersonalLinkComponent}
-                FallbackComponent={EmptyPersonalLinkComponent}
-                propsToPassDown={{
-                  handleEdit,
-                  isDisabled,
-                  personalLink,
-                  setChangePersonal,
-                }}
-                shouldRender={!!personalLink}
-              />
-            }
-            FallbackComponent={
-              <PersonalEditComponent
-                handleClose={handleClose}
-                handleSubmitInputChange={handleSubmitInputChange}
-                handleValidateInput={handleValidateInput}
-                personalLinkError={personalLinkError}
-                setChangePersonal={setChangePersonal}
-                setValue={setValue}
-                value={value}
-              />
-            }
-            shouldRender={!changePersonal}
-          />
-          <ConditionalRender
-            Component={
-              <ConditionalRender
-                Component={StackoverflowLinkComponent}
-                FallbackComponent={EmptyStackoverflowLinkComponent}
-                propsToPassDown={{
-                  stackoverflowLink,
-                  handleEdit,
-                  isDisabled,
-                  setChangeStackoverflow,
-                }}
-                shouldRender={!!stackoverflowLink}
-              />
-            }
-            FallbackComponent={
-              <StackoverflowEditComponent
-                handleClose={handleClose}
-                handleSubmitInputChange={handleSubmitInputChange}
-                handleValidateInput={handleValidateInput}
-                setChangeStackoverflow={setChangeStackoverflow}
-                setValue={setValue}
-                stackoverflowLinkError={stackoverflowLinkError}
-                value={value}
-              />
-            }
-            shouldRender={!changeStackoverflow}
-          />
-        </LinksWrapper>
+
+        <UserLinksComponent
+          changeGithub={changeGithub}
+          changePersonal={changePersonal}
+          changeStackoverflow={changeStackoverflow}
+          githubLink={githubLink}
+          githubLinkError={githubLinkError}
+          handleClose={handleClose}
+          handleEdit={handleEdit}
+          handleSubmitInputChange={handleSubmitInputChange}
+          handleValidateInput={handleValidateInput}
+          isDisabled={isDisabled}
+          personalLink={personalLink}
+          personalLinkError={personalLinkError}
+          setChangeGithub={setChangeGithub}
+          setChangePersonal={setChangePersonal}
+          setChangeStackoverflow={setChangeStackoverflow}
+          setValue={setValue}
+          stackoverflowLink={stackoverflowLink}
+          stackoverflowLinkError={stackoverflowLinkError}
+          value={value}
+        />
+
         <Rep>
           <Coin />
           &nbsp;<b> {rep}</b>&nbsp;credits
         </Rep>
         <UserMetricsView
           activePullRequests={activePullRequests}
-          changePreferredLanguages={changePreferredLanguages}
           completedPullRequests={completedPullRequests}
           createdDate={createdDate}
+          dispatchOpenModal={dispatchOpenModal}
           dollarsEarned={dollarsEarned}
-          handleClose={handleClose}
-          handleEdit={handleEdit}
-          handleSubmitInputChange={handleSubmitInputChange}
           isDisabled={isDisabled}
-          preferredLanguages={preferredLanguages}
           rejectedPullRequests={rejectedPullRequests}
-          setChangePreferredLanguages={setChangePreferredLanguages}
-          setValue={setValue}
-          value={value}
+          skills={skills}
         />
       </UserCardWrapper>
     </DetailViewContainer>
@@ -243,11 +162,11 @@ ProfileComponent.propTypes = {
   activePullRequests: T.number.isRequired,
   changeGithub: T.bool.isRequired,
   changePersonal: T.bool.isRequired,
-  changePreferredLanguages: T.bool.isRequired,
   changeStackoverflow: T.bool.isRequired,
   changeUserImage: T.bool.isRequired,
   completedPullRequests: T.number.isRequired,
   createdDate: T.string.isRequired,
+  dispatchOpenModal: T.func.isRequired,
   displayBottom: T.bool.isRequired,
   dollarsEarned: T.number.isRequired,
   firstName: T.string.isRequired,
@@ -260,17 +179,16 @@ ProfileComponent.propTypes = {
   isDisabled: T.bool.isRequired,
   lastName: T.string.isRequired,
   personalLink: T.string,
-  preferredLanguages: T.array.isRequired,
   profilePic: T.string.isRequired,
   rejectedPullRequests: T.number.isRequired,
   rep: T.number.isRequired,
   setChangeGithub: T.func.isRequired,
   setChangePersonal: T.func.isRequired,
-  setChangePreferredLanguages: T.func.isRequired,
   setChangeStackoverflow: T.func.isRequired,
   setChangeUserImage: T.func.isRequired,
   setIsDisabled: T.func.isRequired,
   setValue: T.func.isRequired,
+  skills: T.array.isRequired,
   stackoverflowLink: T.string,
   value: T.oneOfType([T.array, T.string]).isRequired,
 };

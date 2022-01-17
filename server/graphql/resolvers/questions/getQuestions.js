@@ -1,11 +1,9 @@
-const { v4: uuidv4 } = require('uuid');
-
 const { CustomError, errorLogger } = require('../../../helpers');
 const {
   getQuestions: getQuestionsQuery,
-  getUserLanguages,
+  getTechnologies,
 } = require('../../../db');
-const { defaultLanguages, getQuestionsError } = require('./constants');
+const { getQuestionsError } = require('./constants');
 
 const getQuestions = async ({ category }, { authError, userId }) => {
   try {
@@ -13,17 +11,16 @@ const getQuestions = async ({ category }, { authError, userId }) => {
 
     const result = await getQuestionsQuery({ category });
 
-    if (category === 'hiring') {
-      const { languages } = await getUserLanguages({ userId });
-      const languagesToUse = languages || defaultLanguages;
-      const languageRespones = languagesToUse.map(el => ({
-        id: uuidv4(),
-        responseKey: 'language',
-        value: el,
+    if (category === 'company_position' || category === 'hiring') {
+      const technologies = await getTechnologies();
+      const technologyResponses = technologies.map(({ id, value }) => ({
+        id,
+        responseKey: 'skill',
+        value,
       }));
       result.forEach((question, i) => {
-        if (question.questionKey === 'preferred_languages') {
-          result[i].responses = languageRespones;
+        if (question.questionKey === 'skills') {
+          result[i].responses = technologyResponses;
         }
       });
     }

@@ -8,7 +8,8 @@ const {
 } = require('./constants');
 const {
   deleteRepoMembers,
-  deleteUserLanguages,
+  deleteUserCompanies,
+  deleteUserTechStack,
   deleteUserPullRequests,
   getUserSettings,
   removeAttempting,
@@ -36,6 +37,7 @@ const deleteUser = async (_, { authError, email, provider, userId }) => {
       last_name: 'User',
       modified_date: new Date(), // update modified date
       personal_link: '',
+      profile_pic_blur: deletedUserImage,
       profile_pic: deletedUserImage,
       provider: null,
       pull_requests: [],
@@ -55,7 +57,8 @@ const deleteUser = async (_, { authError, email, provider, userId }) => {
     }
 
     await deleteRepoMembers({ userId });
-    await deleteUserLanguages({ userId });
+    await deleteUserCompanies({ userId });
+    await deleteUserTechStack({ userId });
     await deleteUserPullRequests({ userId });
     await removeAttempting({ userId });
     await removeWatching({ userId });

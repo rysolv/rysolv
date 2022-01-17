@@ -28,61 +28,67 @@ const DesktopHeader = ({
   isSignedIn,
   location,
   setIsDrawerOpen,
-}) => (
-  <Fragment>
-    <StyledAppBar
-      color="default"
-      isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}
-      position="relative"
-    >
-      <Container>
-        <LogoWrapper>
-          <Logo
-            deviceView={deviceView}
-            isMobile={isMobile}
-            open={isDrawerOpen}
-            setOpen={setIsDrawerOpen}
-          />
-          <HeaderSearchBar handleNav={handleNav} />
-        </LogoWrapper>
-        <ButtonsWrapper>
-          <AboutDropdown handleNav={handleNav} />
-          <NavLink label="Get Hired" path="/jobs" shouldRemoveFirst />
-          <NavLink label="Find Issues" path="/issues" />
-          <UserActivityDropdown handleNav={handleNav} />
+}) => {
+  const isCompany = !!activeUser.company;
 
-          {isSignedIn ? (
-            <UserNavBar
-              activeUser={activeUser}
-              handleNav={handleNav}
-              handleSignout={handleSignout}
+  return (
+    <Fragment>
+      <StyledAppBar
+        color="default"
+        isLandingOrRecruitmentPage={isLandingOrRecruitmentPage}
+        position="relative"
+      >
+        <Container>
+          <LogoWrapper>
+            <Logo
+              deviceView={deviceView}
+              isMobile={isMobile}
+              open={isDrawerOpen}
+              setOpen={setIsDrawerOpen}
             />
-          ) : (
-            <Fragment>
-              <StyledHeaderLink
-                label="Sign Up"
-                onClick={handleResetState}
-                path="/signup"
+            <HeaderSearchBar handleNav={handleNav} />
+          </LogoWrapper>
+          <ButtonsWrapper>
+            <NavLink
+              label="Dashboard"
+              path={isCompany ? '/company/dashboard' : '/dashboard'}
+            />
+            <AboutDropdown handleNav={handleNav} />
+            <UserActivityDropdown handleNav={handleNav} />
+
+            {isSignedIn ? (
+              <UserNavBar
+                activeUser={activeUser}
+                handleNav={handleNav}
+                handleSignout={handleSignout}
               />
-              <StyledHeaderLink
-                label="Sign In"
-                onClick={handleResetState}
-                path="/signin"
-              />
-            </Fragment>
-          )}
-        </ButtonsWrapper>
-      </Container>
-    </StyledAppBar>
-    <MobileDrawerComponent
-      handleNav={handleNav}
-      isDrawerOpen={isDrawerOpen}
-      isSignedIn={isSignedIn}
-      location={location}
-      setIsDrawerOpen={() => setIsDrawerOpen(!isDrawerOpen)}
-    />
-  </Fragment>
-);
+            ) : (
+              <Fragment>
+                <StyledHeaderLink
+                  label="Sign Up"
+                  onClick={handleResetState}
+                  path="/signup"
+                />
+                <StyledHeaderLink
+                  label="Sign In"
+                  onClick={handleResetState}
+                  path="/signin"
+                />
+              </Fragment>
+            )}
+          </ButtonsWrapper>
+        </Container>
+      </StyledAppBar>
+      <MobileDrawerComponent
+        handleNav={handleNav}
+        isDrawerOpen={isDrawerOpen}
+        isSignedIn={isSignedIn}
+        location={location}
+        setIsDrawerOpen={() => setIsDrawerOpen(!isDrawerOpen)}
+      />
+    </Fragment>
+  );
+};
 
 DesktopHeader.propTypes = {
   activeUser: T.object.isRequired,

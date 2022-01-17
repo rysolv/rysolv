@@ -40,6 +40,7 @@ export const LinksWrapper = styled.div`
   font-size: ${defaultFontSize};
   font-weight: bold;
   margin-left: 0.5rem;
+  width: 100%;
 `;
 
 export const Name = styled.div`

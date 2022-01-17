@@ -3,7 +3,7 @@ import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
 import { LoadingIndicator } from 'components/base_ui';
-import Message from 'components/Message';
+import AlertMessage from 'components/AlertMessage';
 import iconDictionary from 'utils/iconDictionary';
 
 import { IconWrapper, LinkWrapper } from './styledComponents';
@@ -30,7 +30,7 @@ const AsyncRender = ({
   }
   if (error) {
     return (
-      <Message
+      <AlertMessage
         body="We couldn't load the content for this page. Please try again later."
         footnote={FootnoteComponent}
         icon={<IconWrapper>{WarningIcon}</IconWrapper>}
@@ -43,7 +43,7 @@ const AsyncRender = ({
     return <ComponentToRender data={asyncData} {...propsToPassDown} />;
   }
   return (
-    <Message
+    <AlertMessage
       body="Please try reloading the page to see if this resolves the problem."
       footnote={FootnoteComponent}
       icon={<IconWrapper>{WarningIcon}</IconWrapper>}
@@ -55,7 +55,7 @@ const AsyncRender = ({
 AsyncRender.defaultProps = { isRequiredData: false, propsToPassDown: {} };
 
 AsyncRender.propTypes = {
-  asyncData: T.oneOfType([T.array, T.object]),
+  asyncData: T.oneOfType([T.array, T.object, T.string]),
   component: T.oneOfType([T.func, T.object]),
   error: T.oneOfType([T.bool, T.object, T.string]),
   isRequiredData: T.bool,

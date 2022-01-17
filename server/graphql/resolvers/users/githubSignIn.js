@@ -1,4 +1,5 @@
 /* eslint-disable camelcase, consistent-return */
+const Jimp = require('jimp');
 const { v4: uuidv4 } = require('uuid');
 const Identicon = require('identicon.js');
 
@@ -6,8 +7,8 @@ const {
   assignOwnerToRepo,
   checkDuplicateGithubId,
   checkDuplicateUserEmail,
-  createLanguage,
   createUser,
+  createUserTechStack,
   getOneIssue,
   getOneRepo,
   getUserAttemptList,
@@ -18,7 +19,12 @@ const {
   insertUserEmail,
   transformUser: transformUserQuery,
 } = require('../../../db');
-const { analyzeUser, errorLogger, sendEmail } = require('../../../helpers');
+const {
+  analyzeUser,
+  errorLogger,
+  generatePositionLevel,
+  sendEmail,
+} = require('../../../helpers');
 const { generateToken } = require('../../../middlewares/generateToken');
 const { githubSignInError, githubSignUpError } = require('./constants');
 const { requestGithubUser } = require('../../../integrations/github');
@@ -84,8 +90,37 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       const date = new Date();
       const id = uuidv4();
 
-      const imageToUpload = avatar_url || new Identicon(id, 250).toString();
-      const { uploadUrl } = await uploadImage(imageToUpload);
+      let blurUrl;
+      let imageUrl;
+
+      if (!avatar_url) {
+        // Upload avatar
+        const { uploadUrl } = await uploadImage(avatar_url);
+
+        // Upload blurred image
+        const image = await Jimp.read(avatar_url);
+        image.blur(15);
+        const base64 = await image.getBase64Async(Jimp.AUTO);
+        const { uploadUrl: uploadBlurUrl } = await uploadImage(base64);
+
+        imageUrl = uploadUrl;
+        blurUrl = uploadBlurUrl;
+      } else {
+        // Create identicon
+        const { uploadUrl } = await uploadImage(
+          new Identicon(id, 250).toString(),
+        );
+
+        // Upload blurred image
+        const image = await Jimp.read(uploadUrl);
+        image.blur(15);
+        const base64 = await image.getBase64Async(Jimp.AUTO);
+        const { uploadUrl: uploadBlurUrl } = await uploadImage(base64);
+
+        blurUrl = uploadBlurUrl;
+        imageUrl = uploadUrl;
+      }
+
       const newUser = {
         created_date: date,
         email_verified: true,
@@ -97,7 +132,8 @@ const githubSignIn = async ({ code, origin }, { res }) => {
         id,
         last_name,
         modified_date: date,
-        profile_pic: uploadUrl,
+        profile_pic_blur: blurUrl,
+        profile_pic: imageUrl,
         provider,
         user_type: 'full',
         username: github_username,
@@ -120,11 +156,12 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       analyzeUser({ userId: id });
 
       if (languages.length) {
-        await createLanguage({
-          languages,
-          target: {
-            userId: id,
-          },
+        languages.map(async value => {
+          await createUserTechStack({
+            level: generatePositionLevel(),
+            technology: value,
+            userId,
+          });
         });
       }
 
@@ -180,6 +217,13 @@ const githubSignIn = async ({ code, origin }, { res }) => {
         }),
       );
 
+      // Pull user pull request detail
+      const {
+        activePullRequests,
+        completedPullRequests,
+        rejectedPullRequests,
+      } = await getUserPullRequestDetail({ userId });
+
       // Pull user repo detail
       const reposListResult = await Promise.all(
         repos.map(async repoId => {
@@ -187,13 +231,6 @@ const githubSignIn = async ({ code, origin }, { res }) => {
           return reposResult;
         }),
       );
-
-      // Pull user pull request detail
-      const {
-        activePullRequests,
-        completedPullRequests,
-        rejectedPullRequests,
-      } = await getUserPullRequestDetail({ userId });
 
       // Pull user watching detail
       const watchingListResult = await getUserWatchList({ userId });

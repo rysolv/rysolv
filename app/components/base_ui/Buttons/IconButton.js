@@ -29,10 +29,12 @@ const IconButton = ({
   </Tooltip>
 );
 
+IconButton.defaultProps = { disabled: false, label: '', tooltipProps: {} };
+
 IconButton.propTypes = {
   disabled: T.bool,
   icon: T.object.isRequired,
-  label: T.string.isRequired,
+  label: T.string,
   onClick: T.func.isRequired,
   tooltipProps: T.object,
 };

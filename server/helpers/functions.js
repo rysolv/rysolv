@@ -28,6 +28,43 @@ const errorLogger = e => {
   }
 };
 
+const formatToCamelCase = str =>
+  str.toLowerCase().replace(/([-_][a-z])/g, group =>
+    group
+      .toUpperCase()
+      .replace('-', '')
+      .replace('_', ''),
+  );
+
+const generatePositionLevel = levels => {
+  const { beginner, intermediate, expert } = levels || {};
+  if (beginner) return 1;
+  if (intermediate) return 2;
+  if (expert) return 3;
+  // Default to intermediate
+  return 2;
+};
+
+const generateSizeInteger = ({ size }) => {
+  const sizeDictionary = {
+    '1 - 10': 10,
+    '11 - 50': 50,
+    '51 - 250': 250,
+    '251 +': 1000,
+  };
+  return sizeDictionary[size];
+};
+
+const generateSizeString = ({ size }) => {
+  const sizeDictionary = {
+    10: '1 - 10',
+    50: '11 - 50',
+    250: '51 - 250',
+    1000: '251 +',
+  };
+  return sizeDictionary[size];
+};
+
 const isUrl = string => {
   let url;
   try {
@@ -36,6 +73,34 @@ const isUrl = string => {
     return false;
   }
   return url.protocol === 'http:' || url.protocol === 'https:';
+};
+
+const matchLanguages = ({ userLanguages, positionLanguages }) => {
+  // Takes two arrays ex: [{name: 'JavaScript', level: 3}, {name: ruby...}]
+  // Returns an array of up to 3 languages. Prioritize matching position
+  // languages, followed by user skill level.
+  const objSort = obj =>
+    obj.sort((a, b) => {
+      if (a.level < b.level) return 1;
+      if (a.level > b.level) return -1;
+      return 0;
+    });
+  const positionLanguageArray = objSort(positionLanguages).map(el => el.name);
+  const userLanguageArray = objSort(userLanguages).map(el => el.name);
+
+  const languages = [];
+
+  positionLanguageArray.forEach(el => {
+    if (userLanguageArray.includes(el) && languages.length <= 3) {
+      const i = userLanguageArray.indexOf(el);
+      if (i !== -1) userLanguageArray.splice(i, 1);
+      languages.push(el);
+    }
+  });
+
+  while (userLanguageArray.length > 0 && languages.length < 3)
+    languages.push(userLanguageArray.shift());
+  return languages;
 };
 
 const validatePayoutUrl = ({ payoutMethod, payoutUrl }) => {
@@ -63,6 +128,11 @@ module.exports = {
   arrayCheck,
   CustomError,
   errorLogger,
+  formatToCamelCase,
+  generatePositionLevel,
+  generateSizeInteger,
+  generateSizeString,
   isUrl,
+  matchLanguages,
   validatePayoutUrl,
 };

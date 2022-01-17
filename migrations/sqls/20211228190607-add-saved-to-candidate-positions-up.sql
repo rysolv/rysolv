@@ -1,0 +1,1 @@
+ALTER TABLE candidate_positions ADD COLUMN IF NOT EXISTS saved BOOLEAN DEFAULT false;

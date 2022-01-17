@@ -7,10 +7,8 @@ const searchUsers = async ({ value }) => {
     SELECT
       ${userReturnValues},
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(attempting.issue_id)), NULL) AS attempting,
-      ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages"
     FROM users
       LEFT JOIN attempting ON attempting.user_id = users.id
-      LEFT JOIN languages ON languages.user_id = users.id
     WHERE
       is_deleted = false AND email_verified = true AND user_type = 'full' AND
       (

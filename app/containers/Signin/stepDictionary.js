@@ -1,9 +1,6 @@
-import PasswordReset from './PasswordReset';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import Verify from './Verify';
-
-export const passwordResetComponent = PasswordReset;
+import SignIn from './Views/SignIn';
+import SignUp from './Views/SignUp';
+import Verify from './Views/Verify';
 
 export const signInDictionary = {
   1: SignIn,

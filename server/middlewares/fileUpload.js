@@ -1,5 +1,14 @@
 const { CustomError } = require('../helpers');
-const { uploadFileS3 } = require('./awsConfig');
+const { retrieveFileS3, uploadFileS3 } = require('./awsConfig');
+
+const retrieveFile = async ({ key }) => {
+  const type = 'text';
+  const { Body, ContentType } = await retrieveFileS3({ key, type });
+  return {
+    contentType: ContentType,
+    file: Body.toString('base64'),
+  };
+};
 
 const uploadFile = async ({ file, fileExtension }) => {
   const [dataPrefix, base64Data] = file.split(',');
@@ -16,4 +25,4 @@ const uploadFile = async ({ file, fileExtension }) => {
   return { uploadUrl: Location };
 };
 
-module.exports = { uploadFile };
+module.exports = { retrieveFile, uploadFile };

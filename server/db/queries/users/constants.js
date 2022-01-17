@@ -14,6 +14,7 @@ const userValues = [
   'last_name',
   'modified_date',
   'personal_link',
+  'profile_pic_blur',
   'profile_pic',
   'provider',
   'receive_weekly_emails',
@@ -46,16 +47,12 @@ const userReturnValues = `
 `;
 
 const userSettingsReturnValues = `
-  ARRAY_REMOVE(ARRAY_AGG(DISTINCT(languages.language)), NULL) AS "preferredLanguages",
   CASE WHEN users.github_id IS NOT NULL THEN true ELSE false END AS "isGithubVerified",
-  EXISTS(
-    SELECT user_question_responses.id FROM user_question_responses
-    LEFT JOIN questions ON questions.id = user_question_responses.question_id
-    WHERE user_question_responses.user_id = users.id
-    AND questions.category = 'hiring') AS "isQuestionnaireComplete",
   users.github_id AS "githubId",
   users.github_username AS "githubUsername",
   users.receive_weekly_emails AS "receiveWeeklyEmails",
+  (SELECT COUNT(DISTINCT(thread_id)) FROM messages WHERE read_date IS NULL AND to_user_id = $1) AS "unreadMessages",
+  (SELECT COUNT(DISTINCT(thread_id)) FROM messages WHERE to_user_id = $1) AS "matches",
   (SELECT COALESCE(ARRAY_AGG(DISTINCT(pullrequest_id)), '{}') FROM pullrequests WHERE is_deleted = false AND user_id = $1) AS "pullRequests",
   (SELECT COALESCE(ARRAY_AGG(DISTINCT(id)), '{}') FROM repos WHERE is_deleted = false AND owner_id = $1) AS "repos",
   ${userReturnValues}

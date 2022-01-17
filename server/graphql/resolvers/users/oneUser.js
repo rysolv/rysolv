@@ -4,7 +4,7 @@ const { oneUserError } = require('./constants');
 
 const oneUser = async ({ userId }) => {
   try {
-    const userDetail = await getOneUser({ userId });
+    const { skills, ...userDetail } = await getOneUser({ userId });
     if (!userDetail) throw new CustomError(`Not found`);
 
     const {
@@ -15,6 +15,9 @@ const oneUser = async ({ userId }) => {
     userDetail.activePullRequests = activePullRequests;
     userDetail.completedPullRequests = completedPullRequests;
     userDetail.rejectedPullRequests = rejectedPullRequests;
+
+    const skillsArray = skills.map(({ name }) => name);
+    userDetail.preferredLanguages = skillsArray;
 
     return {
       __typename: 'User',

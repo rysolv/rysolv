@@ -10,6 +10,7 @@ const ModalDialog = ({ Component, open, propsToPassDown, ...restProps }) => {
       BackdropProps={{ classes: { root: 'backdrop' } }}
       classes={{ paper: 'paper' }}
       disableAutoFocus
+      disableEnforceFocus
       open={open}
       onClose={handleClose}
       {...restProps}

@@ -1,19 +1,9 @@
-const { analyzeUser } = require('./analyzeUser');
-const {
-  arrayCheck,
-  CustomError,
-  errorLogger,
-  isUrl,
-  validatePayoutUrl,
-} = require('./functions');
-const { sendEmail } = require('./emailHelper');
+const analyzeUser = require('./analyzeUser');
+const emailHelper = require('./emailHelper');
+const functions = require('./functions');
 
 module.exports = {
-  analyzeUser,
-  arrayCheck,
-  CustomError,
-  errorLogger,
-  isUrl,
-  sendEmail,
-  validatePayoutUrl,
+  ...analyzeUser,
+  ...emailHelper,
+  ...functions,
 };

@@ -1,159 +1,41 @@
-const {
-  createActivity,
-  getRepoActivity,
-  getUserActivity,
-} = require('./queries/activity');
-const { removeAttempting, toggleAttempting } = require('./queries/attempting');
-const { acceptBounty, verifyPayout } = require('./queries/bounties');
-const { createComment, getIssueComments } = require('./queries/comments');
-const {
-  checkDuplicateIssue,
-  closeIssue,
-  createIssue,
-  downvoteIssue,
-  getFilterOptions,
-  getIssueAttemptList,
-  getIssueList,
-  getIssues,
-  getIssueWatchList,
-  getOneIssue,
-  searchIssues,
-  transformIssue,
-  upvoteIssue,
-} = require('./queries/issues');
-const {
-  createLanguage,
-  deleteUserLanguages,
-  getUserLanguages,
-  setPreferredLanguage,
-} = require('./queries/languages');
-const {
-  submitAccountDepositUser,
-  submitExternalPayment,
-  submitInternalPayment,
-} = require('./queries/payments');
-const {
-  checkDuplicatePullRequest,
-  createPullRequest,
-  deletePullRequest,
-  deleteUserPullRequests,
-  getPullRequestList,
-  getUserPullRequests,
-} = require('./queries/pullRequests');
-const { getQuestions, postUserResponse } = require('./queries/questions');
-const { createRecruiting } = require('./queries/recruiting');
-const {
-  checkDuplicateRepo,
-  createRepo,
-  getOneRepo,
-  getRepoContributors,
-  getRepoList,
-  getRepos,
-  getReposWhere,
-  searchRepos,
-  transformRepo,
-  updateRepoArray,
-} = require('./queries/repos');
-const { getStats } = require('./queries/stats');
-const { addRepoMembers, deleteRepoMembers } = require('./queries/userRepos');
-const {
-  assignOwnerToRepo,
-  checkDuplicateGithubId,
-  checkDuplicateUserEmail,
-  checkExistingGithubAccount,
-  checkGithubIdMatch,
-  createUser,
-  getOneUser,
-  getOneUserSignUp,
-  getUserAttemptList,
-  getUserBounties,
-  getUserPullRequestDetail,
-  getUsers,
-  getUserSettings,
-  getUserWatchList,
-  insertGitUser,
-  insertUserEmail,
-  searchUsers,
-  transformUser,
-} = require('./queries/users');
-const { removeWatching, toggleWatching } = require('./queries/watching');
-const {
-  createWithdrawal,
-  transformUserBalance,
-} = require('./queries/withdrawal');
+const activity = require('./queries/activity');
+const attempting = require('./queries/attempting');
+const bounties = require('./queries/bounties');
+const comments = require('./queries/comments');
+const companies = require('./queries/companies');
+const issues = require('./queries/issues');
+const languages = require('./queries/languages');
+const locations = require('./queries/locations');
+const messages = require('./queries/messages');
+const payments = require('./queries/payments');
+const pullRequests = require('./queries/pullRequests');
+const questions = require('./queries/questions');
+const repos = require('./queries/repos');
+const stats = require('./queries/stats');
+const technologies = require('./queries/technologies');
+const userRepos = require('./queries/userRepos');
+const users = require('./queries/users');
+const watching = require('./queries/watching');
+const withdrawal = require('./queries/withdrawal');
 
 module.exports = {
-  acceptBounty,
-  addRepoMembers,
-  assignOwnerToRepo,
-  checkDuplicateGithubId,
-  checkDuplicateIssue,
-  checkDuplicatePullRequest,
-  checkDuplicateRepo,
-  checkDuplicateUserEmail,
-  checkExistingGithubAccount,
-  checkGithubIdMatch,
-  closeIssue,
-  createActivity,
-  createComment,
-  createIssue,
-  createLanguage,
-  createPullRequest,
-  createRecruiting,
-  createRepo,
-  createUser,
-  createWithdrawal,
-  deletePullRequest,
-  deleteRepoMembers,
-  deleteUserLanguages,
-  deleteUserPullRequests,
-  downvoteIssue,
-  getFilterOptions,
-  getIssueAttemptList,
-  getIssueComments,
-  getIssueList,
-  getIssues,
-  getIssueWatchList,
-  getOneIssue,
-  getOneRepo,
-  getOneUser,
-  getOneUserSignUp,
-  getPullRequestList,
-  getQuestions,
-  getRepoActivity,
-  getRepoContributors,
-  getRepoList,
-  getRepos,
-  getReposWhere,
-  getStats,
-  getUserActivity,
-  getUserAttemptList,
-  getUserBounties,
-  getUserLanguages,
-  getUserPullRequestDetail,
-  getUserPullRequests,
-  getUsers,
-  getUserSettings,
-  getUserWatchList,
-  insertGitUser,
-  insertUserEmail,
-  postUserResponse,
-  removeAttempting,
-  removeWatching,
-  searchIssues,
-  searchRepos,
-  searchUsers,
-  setPreferredLanguage,
-  submitAccountDepositUser,
-  submitExternalPayment,
-  submitInternalPayment,
-  toggleAttempting,
-  toggleWatching,
-  transformIssue,
-  transformRepo,
-  transformUser,
-  transformUserBalance,
-  updateRepoArray,
-  upvoteIssue,
-  verifyPayout,
+  ...activity,
+  ...attempting,
+  ...bounties,
+  ...comments,
+  ...companies,
+  ...issues,
+  ...languages,
+  ...locations,
+  ...messages,
+  ...payments,
+  ...pullRequests,
+  ...questions,
+  ...repos,
+  ...stats,
+  ...technologies,
+  ...userRepos,
+  ...users,
+  ...watching,
+  ...withdrawal,
 };

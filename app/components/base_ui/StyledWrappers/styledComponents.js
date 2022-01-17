@@ -5,8 +5,7 @@ import {
   fundingClosedBackground,
   fundingOpenBackground,
   fundingText,
-  languageBackground,
-  languageText,
+  lightBlueColor,
   rewardBackground,
   rewardColor,
 } from 'defaultStyleHelper';
@@ -104,13 +103,14 @@ export const StyledFundingWrapper = styled.div`
 `;
 
 export const StyledLanguageWrapper = styled.div`
-  background-color: ${languageBackground};
-  border-radius: 0.25rem;
-  color: ${languageText};
+  background-color: #ecf3fc;
+  border-radius: 0.7rem;
+  color: ${lightBlueColor};
   display: inline-flex;
-  font-size: inherit;
+  font-size: ${defaultFontSize};
   margin: 0 0.5rem 0.5rem 0;
-  padding: 0.5rem;
+  min-height: 3.2rem;
+  padding: 0.75rem 1.6rem;
 `;
 
 export const StyledRewardWrapper = styled.div`

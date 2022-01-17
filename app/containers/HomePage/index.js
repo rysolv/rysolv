@@ -19,6 +19,7 @@ import { makeSelectHomePage } from './selectors';
 import { HomePageContainer } from './styledComponents';
 
 const HomePage = ({
+  activeUser,
   dispatchFetchHomePageStats,
   dispatchResetFeedback,
   dispatchSendContact,
@@ -33,6 +34,9 @@ const HomePage = ({
     dispatchFetchHomePageStats();
     document.title = 'Rysolv';
   }, []);
+
+  const isCompany = !!activeUser.company;
+  const pathToRedirect = isCompany ? '/company/dashboard' : '/dashboard';
 
   const HomePageComponent = (
     <HomePageContainer>
@@ -51,13 +55,14 @@ const HomePage = ({
   return (
     <ConditionalRender
       Component={HomePageComponent}
-      FallbackComponent={<Redirect to="/issues" />}
+      FallbackComponent={<Redirect to={pathToRedirect} />}
       shouldRender={!isSignedIn}
     />
   );
 };
 
 HomePage.propTypes = {
+  activeUser: T.object.isRequired,
   dispatchFetchHomePageStats: T.func.isRequired,
   dispatchResetFeedback: T.func.isRequired,
   dispatchSendContact: T.func.isRequired,
@@ -73,6 +78,7 @@ const mapStateToProps = createStructuredSelector({
   /**
    * Reducer : Auth
    */
+  activeUser: makeSelectAuth('activeUser'),
   isSignedIn: makeSelectAuth('isSignedIn'),
   /*
    * Reducer : HomePage

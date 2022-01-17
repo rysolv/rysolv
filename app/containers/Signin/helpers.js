@@ -3,7 +3,6 @@ import { validate } from 'utils/validate';
 const validationPropsByField = {
   resetPassword: {
     password: { type: 'passwordInput' },
-    verifyPassword: { type: 'verifyInput' },
   },
   sendLink: {
     email: { type: 'emailInput' },
@@ -17,7 +16,6 @@ const validationPropsByField = {
     lastName: { maxLength: 30, type: 'stringInput' },
     password: { type: 'passwordInput' },
     username: { maxLength: 20, type: 'usernameInput' },
-    verifyPassword: { type: 'verifyInput' },
   },
   verify: {},
 };

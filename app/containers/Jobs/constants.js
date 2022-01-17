@@ -1,6 +1,10 @@
 export const CHANGE_INPUT = 'app/Jobs/CHANGE_INPUT';
 
+export const CHANGE_SKILL_LEVEL = 'app/Jobs/CHANGE_SKILL_LEVEL';
+
 export const CHANGE_VIEW = 'app/Jobs/CHANGE_VIEW';
+
+export const DELETE_SKILL = 'app/Jobs/DELETE_SKILL';
 
 export const FETCH_QUESTIONS = 'app/Jobs/FETCH_QUESTIONS';
 export const FETCH_QUESTIONS_FAILURE = 'app/Jobs/FETCH_QUESTIONS_FAILURE';
