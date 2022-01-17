@@ -23,6 +23,7 @@ const postContractAccepted = async (
     }
 
     // Send contract accepted email
+    // Note: if this is the first contract, send the welcome email
     sendEmail({
       body: { companyId },
       path: '/s/company/contractAccepted',

@@ -55,7 +55,7 @@ const updatePaymentMethod = async (
     // Send payment updated email
     sendEmail({
       body: { companyId: id },
-      path: '/s/company/contractAccepted',
+      path: '/s/company/updatePayment',
     });
 
     return {
