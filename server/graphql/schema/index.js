@@ -112,6 +112,7 @@ module.exports = buildSchema(`
     messages: [Object]
     position: Object
     threadId: ID
+    toUserId: ID
     unread: Boolean
   }
 

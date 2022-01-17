@@ -67,7 +67,8 @@ const getMessages = async ({ userId }) => {
         json_object_agg(q.question_key,  COALESCE(uqr.value, qr.value))::jsonb
         ||
         json_build_object('type', ARRAY_AGG(DISTINCT qr.value) FILTER (WHERE q.question_key = 'type'))::jsonb
-        AS candidate
+        AS candidate,
+        ARRAY_AGG(DISTINCT u.id) AS to_user
       FROM messages m
       JOIN users u ON m.from_user_id = u.id
       JOIN users candidate_user ON candidate_user.id IN (m.from_user_id, m.to_user_id)
@@ -100,6 +101,7 @@ const getMessages = async ({ userId }) => {
     )
     SELECT
       (SELECT JSONB_AGG(elem ORDER BY elem ->> 'createdDate' ASC) FROM jsonb_array_elements(m.message_array) elem) AS messages,
+      (SELECT id FROM unnest(m.to_user) id WHERE id !=$1 LIMIT 1) AS "toUserId",
       m.candidate,
       m.company,
       m.last_message_date,

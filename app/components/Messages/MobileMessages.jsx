@@ -27,9 +27,14 @@ const MobileMessages = ({
   success,
 }) => {
   const { id: activeUserId } = activeUser;
-  const { candidate, company, position, threadId, unread } = conversations[
-    activeConversation
-  ];
+  const {
+    candidate,
+    company,
+    position,
+    threadId,
+    toUserId,
+    unread,
+  } = conversations[activeConversation];
   const isCompany = !!activeUser.company;
   const threadTitle = `${isCompany ? candidate.name : company.name} - ${
     position.title
@@ -42,7 +47,7 @@ const MobileMessages = ({
   const sendMessage = () => {
     dispatchSendMessage({
       body: messageBody,
-      candidateId: candidate.userId,
+      candidateId: toUserId,
       positionId: position.positionId,
       threadId,
     });

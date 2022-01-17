@@ -25,6 +25,7 @@ export function* fetchMessagesSaga() {
               messages
               position
               threadId
+              toUserId
               unread
             }
           }

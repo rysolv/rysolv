@@ -31,9 +31,14 @@ const DesktopMessages = ({
   success,
 }) => {
   const { id: activeUserId } = activeUser;
-  const { candidate, company, position, threadId, unread } = conversations[
-    activeConversation
-  ];
+  const {
+    candidate,
+    company,
+    position,
+    threadId,
+    toUserId,
+    unread,
+  } = conversations[activeConversation];
   const isCompany = !!activeUser.company;
 
   useEffect(() => {
@@ -43,7 +48,7 @@ const DesktopMessages = ({
   const sendMessage = () => {
     dispatchSendMessage({
       body: messageBody,
-      candidateId: candidate.userId,
+      candidateId: toUserId,
       positionId: position.positionId,
       threadId,
     });
