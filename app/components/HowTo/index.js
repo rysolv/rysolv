@@ -27,7 +27,7 @@ const HowTo = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'How To';
+    document.title = 'How It Works';
     const location = window.location.hash;
     if (location === '#bounties') bountyRef.current.scrollIntoView();
   }, []);

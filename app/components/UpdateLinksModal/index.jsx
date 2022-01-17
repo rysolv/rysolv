@@ -24,6 +24,7 @@ const UpdateLinksModal = ({
   handleClose,
   handleUpdateUserLinks,
   handleValidateInput,
+  updateLinksLoading,
   user,
 }) => {
   useEffect(
@@ -35,7 +36,6 @@ const UpdateLinksModal = ({
   );
 
   const hasErrors = Object.keys(formErrors).some(input => !!formErrors[input]);
-  const isComplete = Object.keys(form).some(input => !!form[input]);
 
   const hasLinks =
     user.githubLink || user.personalLink || user.stackoverflowLink;
@@ -77,8 +77,9 @@ const UpdateLinksModal = ({
       <ButtonWrapper>
         <StyledPrimaryButton label="Cancel" onClick={handleClose} />
         <StyledPrimaryAsyncButton
-          disabled={hasErrors || !isComplete}
+          disabled={hasErrors}
           label={hasLinks ? 'Save' : 'Add'}
+          loading={updateLinksLoading}
           onClick={handleUpdateUserLinks}
         />
       </ButtonWrapper>
@@ -96,6 +97,7 @@ UpdateLinksModal.propTypes = {
   handleClose: T.func.isRequired,
   handleUpdateUserLinks: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
+  updateLinksLoading: T.bool.isRequired,
   user: T.object.isRequired,
 };
 

@@ -18,7 +18,7 @@ const InputOption = ({
       dispatchChangeInput({ field: id, form: 'profile', value: e.target.value })
     }
     type="text"
-    value={form[id]}
+    value={form[id] || ''}
   />
 );
 

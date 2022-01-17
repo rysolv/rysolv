@@ -1,13 +1,13 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { EditJobApplication } from 'components/Jobs';
-import UserDashboardView from 'components/UserDashboard';
+import EditJobApplicationView from './Views/EditJobApplication';
+import UserDashboardView from './Views/UserDashboard';
 
 const viewDictionary = key => {
   switch (key) {
     case 'update':
-      return EditJobApplication;
+      return EditJobApplicationView;
     case 'main':
       return UserDashboardView;
     default:

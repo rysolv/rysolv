@@ -49,7 +49,7 @@ const questions = [
     question_text: 'What are your strongest skills?',
     required: true,
     response_limit: 1,
-    subtext: 'Select up to 3 languages.',
+    subtext: null,
   },
   // resume
   {

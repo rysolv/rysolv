@@ -29,6 +29,7 @@ const UpdateSkillsModal = ({
   handleUpdateUserSkills,
   handleValidateInput,
   options,
+  updateSkillsLoading,
   user,
 }) => {
   useEffect(() => {
@@ -70,6 +71,7 @@ const UpdateSkillsModal = ({
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
           label={hasSkills ? 'Save' : 'Add'}
+          loading={updateSkillsLoading}
           onClick={handleUpdateUserSkills}
         />
       </ButtonWrapper>
@@ -91,6 +93,7 @@ UpdateSkillsModal.propTypes = {
   handleUpdateUserSkills: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
   options: T.array.isRequired,
+  updateSkillsLoading: T.bool.isRequired,
   user: T.object.isRequired,
 };
 

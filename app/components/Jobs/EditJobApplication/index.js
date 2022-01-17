@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
@@ -22,25 +22,15 @@ const EditJobApplication = ({
   alerts: { error },
   dispatchChangeInput,
   dispatchClearAlerts,
-  dispatchFetchUserResponse,
-  dispatchResetFormState,
+  editUserResponseLoading,
   form,
   formErrors,
   handleEditUserResponse,
   handleNav,
   handleUpdateFiles,
   handleValidateInput,
-  loading,
   questions,
 }) => {
-  useEffect(() => {
-    dispatchFetchUserResponse();
-    return () => {
-      dispatchClearAlerts();
-      dispatchResetFormState();
-    };
-  }, []);
-
   const hasErrors = Object.keys(formErrors).some(input => !!formErrors[input]);
   const isComplete = Object.keys(form).every(input => {
     if (input === 'preferredLocation') {
@@ -113,7 +103,7 @@ const EditJobApplication = ({
         <StyledPrimaryAsyncButton
           disabled={hasErrors || !isComplete}
           label="Save"
-          loading={loading}
+          loading={editUserResponseLoading}
           onClick={handleEditUserResponse}
         />
       </ButtonWrapper>
@@ -125,15 +115,13 @@ EditJobApplication.propTypes = {
   alerts: T.object.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
-  dispatchFetchUserResponse: T.func.isRequired,
-  dispatchResetFormState: T.func.isRequired,
+  editUserResponseLoading: T.bool.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleEditUserResponse: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleUpdateFiles: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
-  loading: T.bool.isRequired,
   questions: T.array.isRequired,
 };
 

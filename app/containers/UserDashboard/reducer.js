@@ -79,9 +79,9 @@ export const initialState = {
   isModalOpen: false,
   loading: {
     editUserResponse: false,
-    fetchQuestions: false,
+    fetchQuestions: true,
     fetchUserDashboard: true,
-    fetchUserResponse: false,
+    fetchUserResponse: true,
     setHiringStatus: false,
     updateUserLinks: false,
     updateUserSkills: false,
