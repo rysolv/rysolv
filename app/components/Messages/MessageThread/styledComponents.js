@@ -10,6 +10,9 @@ import {
   textColor,
   whiteColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { laptop } = mediaQueriesByDevice;
 
 const baseButtonStyle = css`
   align-items: center;
@@ -99,6 +102,10 @@ export const MessageWrapper = styled.div`
   flex-direction: column;
   height: 100%;
   width: calc(100% - 25rem);
+
+  ${laptop} {
+    width: 100%;
+  }
 `;
 
 export const ProfilePicture = styled.img`
