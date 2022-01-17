@@ -36,6 +36,7 @@ const EditCompany = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Edit Company';
     dispatchFetchQuestions({ category: 'company' });
     return () => {
       dispatchClearAlerts();

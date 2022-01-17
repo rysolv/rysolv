@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 
 import CompanySettingsInput from './CompanySettingsInput';
@@ -13,37 +13,44 @@ const CompanySettings = ({
   formErrors,
   handleEditUser,
   handleValidateInput,
-}) => (
-  <CompanySettingsContainer>
-    <CompanySettingsHeader>User details</CompanySettingsHeader>
-    {Object.keys(form).map(field => {
-      const handleChangeInput = value => {
-        dispatchChangeInput({
-          form: 'form',
-          field,
-          value,
-        });
-      };
+}) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'Account & Settings';
+  }, []);
 
-      return (
-        <CompanySettingsInput
-          error={formErrors[field]}
-          field={field}
-          handleChangeInput={handleChangeInput}
-          handleEditUser={handleEditUser}
-          key={`input-${field}`}
-          onBlur={() =>
-            handleValidateInput({
-              field,
-              values: form,
-            })
-          }
-          value={form[field]}
-        />
-      );
-    })}
-  </CompanySettingsContainer>
-);
+  return (
+    <CompanySettingsContainer>
+      <CompanySettingsHeader>User details</CompanySettingsHeader>
+      {Object.keys(form).map(field => {
+        const handleChangeInput = value => {
+          dispatchChangeInput({
+            form: 'form',
+            field,
+            value,
+          });
+        };
+
+        return (
+          <CompanySettingsInput
+            error={formErrors[field]}
+            field={field}
+            handleChangeInput={handleChangeInput}
+            handleEditUser={handleEditUser}
+            key={`input-${field}`}
+            onBlur={() =>
+              handleValidateInput({
+                field,
+                values: form,
+              })
+            }
+            value={form[field]}
+          />
+        );
+      })}
+    </CompanySettingsContainer>
+  );
+};
 
 CompanySettings.propTypes = {
   dispatchChangeInput: T.func.isRequired,

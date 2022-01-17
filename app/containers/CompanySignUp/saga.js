@@ -99,13 +99,19 @@ export function* fetchQuestionsSaga({ payload }) {
 export function* submitCompanyResponseSaga({ payload }) {
   const { companyId, form } = payload;
   const { description, location, name, plan, size, website } = form;
+  const formattedLocation = `{
+    country: "${location.country}",
+    countryCode: "${location.countryCode}",
+    formattedAddress: "${location.formattedAddress}",
+    utcOffset: ${location.utcOffset}
+  }`;
   const query = `
       mutation {
         transformCompany(
           companyInput: {
             companyId: "${companyId}",
             description: ${JSON.stringify(description)},
-            location: "${location}",
+            location: ${formattedLocation},
             name: "${name}",
             size: "${size}",
             website: "${website}",

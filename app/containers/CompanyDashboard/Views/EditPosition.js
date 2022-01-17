@@ -51,6 +51,8 @@ const EditPosition = ({
 
   useEffect(() => {
     const positionId = getParameterByName('id');
+    window.scrollTo(0, 0);
+    document.title = 'Edit Position';
     dispatchFetchPosition({ positionId });
     dispatchFetchQuestions({ category: 'company_position' });
     return () => {

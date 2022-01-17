@@ -67,7 +67,7 @@ const transformCompany = async ({ companyInput }, { authError, userId }) => {
       const { id: stripeId } = await createStripeCustomer({
         companyId,
         email,
-        location,
+        location: formattedAddress,
         name,
         url: website,
         user: `${firstName} ${lastName}`,
