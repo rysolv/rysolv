@@ -31,8 +31,9 @@ const getMessages = async ({ userId }) => {
           WHERE q.category = 'company_position'
           GROUP BY l.formatted_address
         ) AS position,
-        ARRAY_AGG(
-          JSON_BUILD_OBJECT(
+        JSONB_AGG(
+          DISTINCT
+          JSONB_BUILD_OBJECT(
             'body', m.body,
             'createdDate', m.created_date,
             'firstName', u.first_name,
@@ -43,7 +44,6 @@ const getMessages = async ({ userId }) => {
             'userId', u.id,
             'username', u.username
           )::jsonb
-          ORDER BY m.created_date
         ) AS message_array,
         JSONB_BUILD_OBJECT(
           'companyUrl', c.company_url,
@@ -99,12 +99,12 @@ const getMessages = async ({ userId }) => {
       ORDER BY last_message_date DESC
     )
     SELECT
-      ARRAY((SELECT DISTINCT * FROM unnest(m.message_array))) AS messages,
+      (SELECT JSONB_AGG(elem ORDER BY elem ->> 'createdDate' ASC) FROM jsonb_array_elements(m.message_array) elem) AS messages,
       m.candidate,
       m.company,
       m.last_message_date,
       m.position,
-      m.thread_id
+      m.thread_id AS "threadId"
     FROM messages m
     WHERE position IS NOT NULL
     AND m.message_array IS NOT NULL
