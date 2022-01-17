@@ -48,6 +48,8 @@ const CreatePosition = ({
   const { companyPosition: companyPositionForm } = form;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'Create Position';
     dispatchFetchQuestions({ category: 'company_position' });
     return () => {
       dispatchClearAlerts();
