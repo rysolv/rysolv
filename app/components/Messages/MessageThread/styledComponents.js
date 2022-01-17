@@ -84,7 +84,6 @@ export const MessageBody = styled.div`
   width: 100%;
 
   * {
-    background: white;
     color: ${textColor};
     font-family: inherit;
     max-width: 100%;
