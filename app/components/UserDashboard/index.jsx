@@ -41,9 +41,7 @@ const UserDashboard = ({
     if (hiringStatus === 'undeclared' && !surveyComplete)
       return (
         <Notification
-          handleClick={() =>
-            dispatchSetHiringStatus({ hiringStatus: 'active' })
-          }
+          handleClick={() => handleNav('/jobs')}
           setIsNotificationOpen={setIsNotificationOpen}
           type="activeProfile"
         />
