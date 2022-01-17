@@ -20,7 +20,7 @@ const createMessage = async ({ messageInput }, { authError, userId }) => {
 
     // Send Email notifitations (async)
     sendEmail({
-      body: { userId },
+      body: { userId: messageInput.toUserId },
       path: '/s/messages/new',
     });
 
