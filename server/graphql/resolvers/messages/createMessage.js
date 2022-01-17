@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const { createMessage: createMessageQuery } = require('../../../db');
 const { createMessageError } = require('./constants');
-const { CustomError, errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger, sendEmail } = require('../../../helpers');
 
 const createMessage = async ({ messageInput }, { authError, userId }) => {
   try {
@@ -19,6 +19,10 @@ const createMessage = async ({ messageInput }, { authError, userId }) => {
     const newMessage = await createMessageQuery({ data });
 
     // Send Email notifitations (async)
+    sendEmail({
+      body: { userId },
+      path: '/s/messages/new',
+    });
 
     return {
       __typename: 'MessageResponse',
