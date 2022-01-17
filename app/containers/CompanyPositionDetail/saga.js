@@ -16,11 +16,16 @@ export function* fetchPositionDetailSaga({ payload }) {
         __typename
         ... on Position {
           description
+          experience
+          id
+          isActive
           location
-          logo
-          name
-          size
-          website
+          role
+          salary
+          skills
+          timezone
+          title
+          type
         }
         ... on Error {
           message
@@ -32,11 +37,11 @@ export function* fetchPositionDetailSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        onePosition: { __typename, message, position },
+        onePosition: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(fetchPositionDetailSuccess({ position }));
+    yield put(fetchPositionDetailSuccess({ position: restProps }));
   } catch (error) {
     yield put(fetchPositionDetailFailure());
   }

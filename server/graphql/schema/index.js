@@ -257,7 +257,7 @@ module.exports = buildSchema(`
   type Position {
     description: String
     experience: String
-    id: String
+    id: ID
     isActive: String
     location: Object
     role: [String]
