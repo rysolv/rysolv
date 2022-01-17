@@ -4,40 +4,39 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import ForgotPasswordView from 'components/Signin/PasswordReset/ForgotPassword';
-import { clearAlerts, sendLink } from 'containers/Auth/actions';
+import Signin from 'components/Signin/Signin';
+import { clearAlerts, signIn } from 'containers/Auth/actions';
 import {
   makeSelectAuth,
   makeSelectAuthLoading,
 } from 'containers/Auth/selectors';
-import injectReducer from 'utils/injectReducer';
 
 import { inputChange, inputError } from '../actions';
 import { validateFields, validateOneField } from '../helpers';
-import reducer from '../reducer';
 import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
 
-const ForgotPassword = ({
+const SignInView = ({
   alerts: { error },
   data,
-  data: { email },
+  data: { email, password },
   dispatchInputError,
-  dispatchSendLink,
+  dispatchSignIn,
   handleClearAuthAlerts,
   handleInputChange,
   loading,
-  sendLinkDisabled,
+  signInDisabled,
 }) => {
-  const form = 'sendLink';
+  const form = 'signIn';
 
-  const handleSendLink = () => {
+  const handleSignIn = () => {
     const { isValidated, validationErrors } = validateFields({
       form,
       values: data,
     });
     if (isValidated) {
-      dispatchSendLink({
-        email: email.value,
+      dispatchSignIn({
+        password: password.value,
+        username: email.value,
       });
     } else {
       dispatchInputError({ errors: validationErrors, form });
@@ -56,28 +55,28 @@ const ForgotPassword = ({
   };
 
   return (
-    <ForgotPasswordView
+    <Signin
       data={data}
       error={error}
       handleClearAuthAlerts={handleClearAuthAlerts}
       handleInputChange={handleInputChange}
-      handleSendLink={handleSendLink}
+      handleSignIn={handleSignIn}
       handleValidateInput={handleValidateInput}
       loading={loading}
-      sendLinkDisabled={sendLinkDisabled}
+      signInDisabled={signInDisabled}
     />
   );
 };
 
-ForgotPassword.propTypes = {
+SignInView.propTypes = {
   alerts: T.object.isRequired,
   data: T.object.isRequired,
   dispatchInputError: T.func.isRequired,
-  dispatchSendLink: T.func.isRequired,
+  dispatchSignIn: T.func.isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleInputChange: T.func.isRequired,
   loading: T.bool.isRequired,
-  sendLinkDisabled: T.bool.isRequired,
+  signInDisabled: T.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -89,8 +88,8 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : Signin
    */
-  data: makeSelectSignIn('sendLink'),
-  sendLinkDisabled: makeSelectDisabled('sendLink'),
+  data: makeSelectSignIn('signIn'),
+  signInDisabled: makeSelectDisabled('signIn'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -98,7 +97,7 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Auth
      */
-    dispatchSendLink: payload => dispatch(sendLink(payload)),
+    dispatchSignIn: payload => dispatch(signIn(payload)),
     handleClearAuthAlerts: () => dispatch(clearAlerts()),
     /*
      * Reducer : Signin
@@ -113,9 +112,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'signin', reducer });
-
-export default compose(
-  withReducer,
-  withConnect,
-)(ForgotPassword);
+export default compose(withConnect)(SignInView);

@@ -10,36 +10,30 @@ import { clearAlerts } from 'containers/Auth/actions';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 
-import { resetState } from '../actions';
 import reducer from '../reducer';
 
 const ResetPasswordFailure = ({
   alerts: { error },
-  dispatchResetState,
   handleClearAuthAlerts,
   handleNav,
 }) => {
   useEffect(
     () => () => {
-      dispatchResetState();
       handleClearAuthAlerts();
     },
     [],
   );
-  const handleReturnToSignIn = () => {
-    handleNav('/signin');
-  };
+
   return (
     <ResetPasswordFailureView
       error={error}
-      handleReturnToSignIn={handleReturnToSignIn}
+      handleReturnToSignIn={() => handleNav('/signin')}
     />
   );
 };
 
 ResetPasswordFailure.propTypes = {
   alerts: T.object.isRequired,
-  dispatchResetState: T.func.isRequired,
   handleClearAuthAlerts: T.func.isRequired,
   handleNav: T.func.isRequired,
 };
@@ -60,10 +54,6 @@ const mapDispatchToProps = dispatch => ({
    * Reducer : Router
    */
   handleNav: route => dispatch(push(route)),
-  /*
-   * Reducer : Signin
-   */
-  dispatchResetState: () => dispatch(resetState()),
 });
 
 const withConnect = connect(

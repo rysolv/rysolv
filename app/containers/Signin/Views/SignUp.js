@@ -3,50 +3,57 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { push } from 'connected-react-router';
 
-import ForgotPasswordView from 'components/Signin/PasswordReset/ForgotPassword';
-import { clearAlerts, sendLink } from 'containers/Auth/actions';
+import Signup from 'components/Signin/Signup';
+import { clearAlerts, signUp } from 'containers/Auth/actions';
 import {
   makeSelectAuth,
   makeSelectAuthLoading,
 } from 'containers/Auth/selectors';
-import injectReducer from 'utils/injectReducer';
 
 import { inputChange, inputError } from '../actions';
 import { validateFields, validateOneField } from '../helpers';
-import reducer from '../reducer';
 import { makeSelectDisabled, makeSelectSignIn } from '../selectors';
 
-const ForgotPassword = ({
+const SignUpView = ({
   alerts: { error },
   data,
-  data: { email },
   dispatchInputError,
-  dispatchSendLink,
+  dispatchSignUp,
   handleClearAuthAlerts,
   handleInputChange,
+  handleNav,
   loading,
-  sendLinkDisabled,
+  signUpDisabled,
 }) => {
-  const form = 'sendLink';
+  const { email, firstName, lastName, password, username } = data;
+  const form = 'signUp';
 
-  const handleSendLink = () => {
+  const handleSignUp = ({ selected }) => {
+    const isCompany = selected === 'company';
     const { isValidated, validationErrors } = validateFields({
       form,
       values: data,
+      verifyField: { field: 'password', verifyValue: password.value },
     });
     if (isValidated) {
-      dispatchSendLink({
+      dispatchSignUp({
         email: email.value,
+        firstName: firstName.value,
+        isCompany,
+        lastName: lastName.value,
+        password: password.value,
+        username: username.value,
       });
     } else {
       dispatchInputError({ errors: validationErrors, form });
     }
   };
 
-  const handleValidateInput = ({ field }) => {
+  const handleValidateInput = ({ field, verifyField }) => {
     const validationError =
-      validateOneField({ field, form, values: data }) || '';
+      validateOneField({ field, form, values: data, verifyField }) || '';
     dispatchInputError({
       errors: {
         [field]: validationError,
@@ -56,28 +63,30 @@ const ForgotPassword = ({
   };
 
   return (
-    <ForgotPasswordView
+    <Signup
       data={data}
       error={error}
       handleClearAuthAlerts={handleClearAuthAlerts}
       handleInputChange={handleInputChange}
-      handleSendLink={handleSendLink}
+      handleNav={handleNav}
+      handleSignUp={handleSignUp}
       handleValidateInput={handleValidateInput}
       loading={loading}
-      sendLinkDisabled={sendLinkDisabled}
+      signUpDisabled={signUpDisabled}
     />
   );
 };
 
-ForgotPassword.propTypes = {
-  alerts: T.object.isRequired,
-  data: T.object.isRequired,
-  dispatchInputError: T.func.isRequired,
-  dispatchSendLink: T.func.isRequired,
-  handleClearAuthAlerts: T.func.isRequired,
-  handleInputChange: T.func.isRequired,
-  loading: T.bool.isRequired,
-  sendLinkDisabled: T.bool.isRequired,
+SignUpView.propTypes = {
+  alerts: T.object,
+  data: T.object,
+  dispatchInputError: T.func,
+  dispatchSignUp: T.func,
+  handleClearAuthAlerts: T.func,
+  handleInputChange: T.func,
+  handleNav: T.func.isRequired,
+  loading: T.bool,
+  signUpDisabled: T.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -89,8 +98,8 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : Signin
    */
-  data: makeSelectSignIn('sendLink'),
-  sendLinkDisabled: makeSelectDisabled('sendLink'),
+  data: makeSelectSignIn('signUp'),
+  signUpDisabled: makeSelectDisabled('signUp'),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -98,8 +107,12 @@ function mapDispatchToProps(dispatch) {
     /*
      * Reducer : Auth
      */
-    dispatchSendLink: payload => dispatch(sendLink(payload)),
+    dispatchSignUp: payload => dispatch(signUp(payload)),
     handleClearAuthAlerts: () => dispatch(clearAlerts()),
+    /*
+     * Reducer : Router
+     */
+    handleNav: route => dispatch(push(route)),
     /*
      * Reducer : Signin
      */
@@ -113,9 +126,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'signin', reducer });
-
-export default compose(
-  withReducer,
-  withConnect,
-)(ForgotPassword);
+export default compose(withConnect)(SignUpView);

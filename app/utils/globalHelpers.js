@@ -178,3 +178,13 @@ export const useDidUpdateEffect = (effect, inputList = []) => {
     else didMountRef.current = true;
   }, inputList);
 };
+
+export const usePrevious = value => {
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+
+  return ref.current;
+};

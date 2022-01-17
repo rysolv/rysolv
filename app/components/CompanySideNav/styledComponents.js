@@ -91,7 +91,7 @@ export const NameWrapper = styled.div`
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 3.45rem;
-  width: 100%;
+  width: calc(100% - ${({ hasImage }) => (hasImage ? '8rem' : '2rem')});
 `;
 
 export const PositionButton = styled.button`

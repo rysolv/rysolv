@@ -29,7 +29,6 @@ export const initialState = {
     title: '',
   },
   error: null,
-  loading: true,
   forms: {
     company: {
       description: '',
@@ -49,6 +48,12 @@ export const initialState = {
       website: '',
     },
   },
+  loading: {
+    fetchContract: true,
+    fetchQuestions: true,
+    submitCompanyResponse: false,
+    submitContract: false,
+  },
   questions: [],
   view: 0,
 };
@@ -62,7 +67,6 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
     }
     case CHANGE_VIEW: {
       const { view } = payload;
-      draft.loading = false;
       draft.view = view;
       break;
     }
@@ -73,35 +77,35 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
     case FETCH_CONTRACT_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading = false;
+      draft.loading.fetchContract = false;
       break;
     }
     case FETCH_CONTRACT_SUCCESS: {
       const { contract } = payload;
       draft.contract = contract;
-      draft.loading = false;
+      draft.loading.fetchContract = false;
       break;
     }
     case FETCH_CONTRACT: {
       draft.error = null;
-      draft.loading = true;
+      draft.loading.fetchContract = true;
       break;
     }
     case FETCH_QUESTIONS_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading = false;
+      draft.loading.fetchQuestions = false;
       break;
     }
     case FETCH_QUESTIONS_SUCCESS: {
       const { questions } = payload;
-      draft.loading = false;
+      draft.loading.fetchQuestions = false;
       draft.questions = questions;
       break;
     }
     case FETCH_QUESTIONS: {
       draft.error = null;
-      draft.loading = true;
+      draft.loading.fetchQuestions = true;
       break;
     }
     case INPUT_ERROR: {
@@ -118,31 +122,31 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
     case SUBMIT_COMPANY_RESPONSE_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading = false;
+      draft.loading.submitCompanyResponse = false;
       break;
     }
     case SUBMIT_COMPANY_RESPONSE_SUCCESS: {
-      draft.loading = false;
+      draft.loading.submitCompanyResponse = false;
       break;
     }
     case SUBMIT_COMPANY_RESPONSE: {
       draft.alerts = initialState.alerts;
-      draft.loading = true;
+      draft.loading.submitCompanyResponse = true;
       break;
     }
     case SUBMIT_CONTRACT_ACCEPTED_FAILURE: {
       const { error } = payload;
       draft.alerts.error = error;
-      draft.loading = false;
+      draft.loading.submitContract = false;
       break;
     }
     case SUBMIT_CONTRACT_ACCEPTED_SUCCESS: {
-      draft.loading = false;
+      draft.loading.submitContract = false;
       break;
     }
     case SUBMIT_CONTRACT_ACCEPTED: {
       draft.alerts = initialState.alerts;
-      draft.loading = true;
+      draft.loading.submitContract = true;
       break;
     }
   }

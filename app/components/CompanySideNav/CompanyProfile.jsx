@@ -15,20 +15,27 @@ import {
 
 const EditIcon = iconDictionary('edit');
 
-const CompanyProfile = ({ handleNav, logo, name }) => (
-  <CompanyProfileContainer>
-    <ConditionalRender Component={<Logo src={logo} />} shouldRender={!!logo} />
-    <NameWrapper>
-      <NameText>{name}</NameText>
-      <StyledEditButton
-        disableRipple
-        onClick={() => handleNav(`/company/dashboard/edit-company`)}
-      >
-        {EditIcon}
-      </StyledEditButton>
-    </NameWrapper>
-  </CompanyProfileContainer>
-);
+const CompanyProfile = ({ handleNav, logo, name }) => {
+  const hasImage = !!logo;
+
+  return (
+    <CompanyProfileContainer>
+      <ConditionalRender
+        Component={<Logo src={logo} />}
+        shouldRender={hasImage}
+      />
+      <NameWrapper hasImage={hasImage}>
+        <NameText>{name}</NameText>
+        <StyledEditButton
+          disableRipple
+          onClick={() => handleNav(`/company/dashboard/edit-company`)}
+        >
+          {EditIcon}
+        </StyledEditButton>
+      </NameWrapper>
+    </CompanyProfileContainer>
+  );
+};
 
 CompanyProfile.propTypes = {
   handleNav: T.func.isRequired,

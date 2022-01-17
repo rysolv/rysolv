@@ -93,7 +93,7 @@ const CompanyDashboard = ({
           </Fragment>
         )}
         error={false}
-        isRequiredData
+        isRequiredData={false}
         loading={fetchCompanyLoading || fetchCompanyPositionsLoading}
       />
     </ViewContainer>

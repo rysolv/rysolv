@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
+import { updateActiveUser } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
@@ -160,6 +161,12 @@ export function* submitContractAcceptedSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(submitContractAcceptedSuccess());
+    yield put(
+      updateActiveUser({
+        isContractAccepted: true,
+        isQuestionnaireComplete: true,
+      }),
+    );
     yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(submitContractAcceptedFailure({ error: { message: error } }));

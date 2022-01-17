@@ -277,8 +277,10 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       const { positions } = payload;
       draft.loading.fetchCompanyPositions = false;
       draft.positions = positions;
-      if (!draft.selectedPosition)
-        draft.selectedPosition = positions[0].id || '';
+      if (!draft.selectedPosition) {
+        if (!isEmpty(positions)) draft.selectedPosition = positions[0].id;
+        else draft.selectedPosition = '';
+      }
       break;
     }
     case FETCH_COMPANY_POSITIONS: {
