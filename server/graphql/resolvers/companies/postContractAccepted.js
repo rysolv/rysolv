@@ -1,4 +1,4 @@
-const { CustomError, errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger, sendEmail } = require('../../../helpers');
 const {
   postContractAccepted: postContractAcceptedQuery,
 } = require('../../../db');
@@ -21,6 +21,13 @@ const postContractAccepted = async (
         'In order to use our service, you must agree to our Terms and Conditions.',
       );
     }
+
+    // Send contract accepted email
+    // Note: if this is the first contract, send the welcome email
+    sendEmail({
+      body: { companyId },
+      path: '/s/company/contractAccepted',
+    });
 
     return {
       __typename: 'Success',

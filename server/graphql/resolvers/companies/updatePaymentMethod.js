@@ -1,4 +1,4 @@
-const { CustomError, errorLogger } = require('../../../helpers');
+const { CustomError, errorLogger, sendEmail } = require('../../../helpers');
 const {
   createBankAccount,
   exchangePlaidToken,
@@ -17,6 +17,7 @@ const updatePaymentMethod = async (
   try {
     if (authError || !userId) throw new CustomError(authError);
 
+    // Fetch stripe customer_id
     const { customerId, id } = await getUserCompany({ userId });
 
     if (provider === 'stripe') {
@@ -50,6 +51,12 @@ const updatePaymentMethod = async (
         payment_method: stub,
       });
     }
+
+    // Send payment updated email
+    sendEmail({
+      body: { companyId: id },
+      path: '/s/company/updatePayment',
+    });
 
     return {
       __typename: 'Success',
