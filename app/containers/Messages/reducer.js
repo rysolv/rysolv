@@ -70,7 +70,7 @@ const messagesReducer = produce((draft, { payload, type }) => {
     case SEND_MESSAGE: {
       draft.error.message = initialState.error.message;
       draft.loading.message = true;
-      draft.success = initialState.sucess;
+      draft.success = initialState.success;
       break;
     }
     case SET_READ_RECEIPT_FAILURE: {

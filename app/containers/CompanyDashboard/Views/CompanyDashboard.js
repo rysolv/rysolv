@@ -14,6 +14,7 @@ import injectSaga from 'utils/injectSaga';
 
 import {
   changeFilter,
+  closeModalState,
   fetchPositionCandidates,
   notifyCandidate,
   openModalState,
@@ -33,6 +34,7 @@ const CompanyDashboard = ({
   dispatchChangeFilter,
   dispatchChangeInput,
   dispatchClearAlerts,
+  dispatchCloseModal,
   dispatchFetchPositionCandidates,
   dispatchNotifyCandidate,
   dispatchOpenModal,
@@ -95,6 +97,7 @@ const CompanyDashboard = ({
           dispatchResetFormState,
           form,
           formErrors,
+          handleClose: dispatchCloseModal,
           messageAlerts,
           tableData,
         }}
@@ -108,6 +111,7 @@ CompanyDashboard.propTypes = {
   dispatchChangeFilter: T.func.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
+  dispatchCloseModal: T.func.isRequired,
   dispatchFetchPositionCandidates: T.func.isRequired,
   dispatchNotifyCandidate: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
@@ -154,6 +158,7 @@ const mapDispatchToProps = dispatch => ({
    * Reducer : CompanyDashboard
    */
   dispatchChangeFilter: payload => dispatch(changeFilter(payload)),
+  dispatchCloseModal: () => dispatch(closeModalState()),
   dispatchFetchPositionCandidates: payload =>
     dispatch(fetchPositionCandidates(payload)),
   dispatchNotifyCandidate: payload => dispatch(notifyCandidate(payload)),

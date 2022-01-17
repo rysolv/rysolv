@@ -6,6 +6,7 @@ import {
   candidateGreyColor,
   darkBlueColor,
   defaultFontSize,
+  lightBlueColor,
   textColor,
   whiteColor,
 } from 'defaultStyleHelper';
@@ -76,7 +77,23 @@ export const MessageHeader = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-export const MessageBody = styled.div``;
+export const MessageBody = styled.div`
+  min-height: 4rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+
+  * {
+    background: white;
+    color: ${textColor};
+    font-family: inherit;
+    max-width: 100%;
+  }
+
+  a {
+    color: ${lightBlueColor};
+  }
+`;
 
 export const MessageWrapper = styled.div`
   display: flex;

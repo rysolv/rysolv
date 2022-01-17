@@ -36,7 +36,7 @@ const MessageThread = ({
   }, [activeConversation]);
 
   useEffect(() => {
-    if (error.messagee || success) {
+    if (error.message || success) {
       setTimeout(() => {
         dispatchResetMarkdown();
         setMessageBody('');

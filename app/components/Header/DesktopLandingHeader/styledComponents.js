@@ -26,7 +26,7 @@ export const DesktopHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: auto;
-  max-width: 120rem;
+  max-width: 140rem;
   padding: 2rem 12rem;
 `;
 
