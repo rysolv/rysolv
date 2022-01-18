@@ -13,12 +13,17 @@ const CompanyDashboardTabs = ({ dispatchChangeFilter, filter: { step } }) => (
   >
     <StyledTab
       classes={{ selected: 'selected' }}
-      label="1. All Matches"
+      label="Applied"
+      onClick={() => dispatchChangeFilter({ field: 'step', value: 'applied' })}
+    />
+    <StyledTab
+      classes={{ selected: 'selected' }}
+      label="Recommended"
       onClick={() => dispatchChangeFilter({ field: 'step', value: 'all' })}
     />
     <StyledTab
       classes={{ selected: 'selected' }}
-      label="2. Shortlisted"
+      label="Shortlisted"
       onClick={() => dispatchChangeFilter({ field: 'step', value: 'saved' })}
     />
   </StyledTabs>
