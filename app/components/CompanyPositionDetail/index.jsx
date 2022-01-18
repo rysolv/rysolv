@@ -85,7 +85,7 @@ const CompanyPositionDetail = ({ company, position }) => {
           <ContentLabel>Position</ContentLabel>
         </ContentLabelWrapper>
         <HorizontalDivider />
-        <ContentContainer hasBackground>
+        <ContentContainer>
           <LabelValueGroup>
             <LabelValueWrapper width="48%">
               <Label>Experience</Label>
