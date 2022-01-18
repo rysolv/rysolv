@@ -40,14 +40,10 @@ export const ContactUsContainer = styled.div`
   position: relative;
   width: 100%;
   z-index: 1;
+
   ${laptop} {
     flex-direction: column;
-  }
-  @media (max-width: 700px) {
-    padding: 5rem 3rem 0;
-  }
-  @media (max-width: 370px) {
-    padding: 0 3rem;
+    padding: 5rem 3rem 5.6rem;
   }
 `;
 
