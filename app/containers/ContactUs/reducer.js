@@ -49,8 +49,8 @@ const contactUsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case SEND_FORM_FAILURE: {
-      draft.loading = false;
       draft.error = true;
+      draft.loading = false;
       break;
     }
     case SEND_FORM_SUCCESS: {

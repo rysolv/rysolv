@@ -57,6 +57,7 @@ export const CandidateCardDataCell = styled.div`
 `;
 
 export const CandidateCardRow = styled.div`
+  margin-right: 0.4rem;
   width: 50%;
 `;
 

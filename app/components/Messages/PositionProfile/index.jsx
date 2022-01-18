@@ -17,10 +17,11 @@ import {
   Title,
 } from '../styledComponents';
 
-const PositionCard = ({ position }) => {
+const PositionCard = ({ handleNav, position }) => {
   const {
     description,
     location,
+    positionId,
     preferredLanguages,
     role,
     salary,
@@ -30,7 +31,10 @@ const PositionCard = ({ position }) => {
 
   return (
     <CandidateCardContainer>
-      <CandidateCardContent>
+      <CandidateCardContent
+        isPosition
+        onClick={() => handleNav(`/positions?id=${positionId}`)}
+      >
         <CandidateCardUserInfo>
           <NameWrapper>{title}</NameWrapper>
           <PositionWrapper>{description}</PositionWrapper>
@@ -69,6 +73,9 @@ const PositionCard = ({ position }) => {
   );
 };
 
-PositionCard.propTypes = { position: T.object.isRequired };
+PositionCard.propTypes = {
+  handleNav: T.func.isRequired,
+  position: T.object.isRequired,
+};
 
 export default PositionCard;

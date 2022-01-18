@@ -2,7 +2,13 @@ const { singleQuery } = require('../../baseQueries');
 
 const getOnePosition = async ({ positionId }) => {
   const queryText = `
-    WITH location AS (
+    WITH companyId AS (
+      SELECT c.id AS "companyId"
+      FROM companies c
+      JOIN company_positions cp ON cp.company_id = c.id
+      WHERE cp.id = $1
+    ),
+    location AS (
       SELECT json_build_object(
         'country', l.country,
         'countryCode', l.country_code,
@@ -51,6 +57,7 @@ const getOnePosition = async ({ positionId }) => {
       WHERE pts.position_id = $1
     )
     SELECT
+      (SELECT * FROM companyId),
       (SELECT * FROM location),
       (SELECT "positionData" FROM positionData),
       (SELECT "positionKeys" FROM positionData),

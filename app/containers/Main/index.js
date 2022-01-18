@@ -104,6 +104,7 @@ class Main extends React.PureComponent {
       basePathname === 'company' ||
       basePathname === 'dashboard' ||
       basePathname === 'messages' ||
+      basePathname === 'positions' ||
       basePathname === 'profile' ||
       pathname === '/' ||
       pathname === '/contact-us' ||
