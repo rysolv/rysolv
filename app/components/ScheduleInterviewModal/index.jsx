@@ -23,7 +23,6 @@ const ScheduleInterviewModal = ({
   dispatchResetFormState,
   form: { scheduleInterview },
   formErrors: { scheduleInterview: scheduleInterviewErrors },
-  handleClose,
   messageAlerts: { error, success },
   tableData: { positionId, userId },
 }) => {
@@ -37,11 +36,6 @@ const ScheduleInterviewModal = ({
       }, 6000);
     }
   }, [error, success]);
-
-  const handleCancel = () => {
-    dispatchResetFormState({ category: 'scheduleInterview' });
-    handleClose();
-  };
 
   return (
     <ModalContainer>
@@ -73,7 +67,12 @@ const ScheduleInterviewModal = ({
         </div>
       </ModalContent>
       <ButtonGroup>
-        <SecondaryButton disableRipple onClick={handleCancel}>
+        <SecondaryButton
+          disableRipple
+          onClick={() =>
+            dispatchResetFormState({ category: 'scheduleInterview' })
+          }
+        >
           Cancel
         </SecondaryButton>
         <StyledPrimaryButton
@@ -99,7 +98,6 @@ ScheduleInterviewModal.propTypes = {
   dispatchResetFormState: T.func.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
-  handleClose: T.func.isRequired,
   messageAlerts: T.object.isRequired,
   tableData: T.object.isRequired,
 };

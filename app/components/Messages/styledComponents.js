@@ -21,6 +21,10 @@ export const CandidateCardContainer = styled.div`
 export const CandidateCardContent = styled.div`
   flex-grow: 1;
   padding: 2rem;
+
+  &:hover {
+    cursor: ${({ isPosition }) => (isPosition ? 'pointer' : 'auto')};
+  }
 `;
 
 export const CandidateCardDataCell = styled.div`
@@ -31,6 +35,7 @@ export const CandidateCardDataCell = styled.div`
 export const CandidateCardRow = styled.div`
   display: flex;
   flex-direction: column;
+  margin-right: 0.4rem;
   width: 50%;
 `;
 

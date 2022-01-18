@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { post } from 'utils/request';
 
 import {
+  closeModalState,
   createPositionFailure,
   createPositionSuccess,
   deletePositionFailure,
@@ -44,7 +45,6 @@ import {
   FETCH_POSITION,
   FETCH_QUESTIONS,
   MATCH_CANDIDATES,
-  messageSuccess,
   NOTIFY_CANDIDATE,
   SAVE_CANDIDATE,
 } from './constants';
@@ -513,11 +513,11 @@ export function* notifyCandidateSaga({ payload }) {
     yield put(
       notifyCandidateSuccess({
         candidateId,
-        message: messageSuccess,
         threadId,
       }),
     );
     yield put(resetFormState({ category: 'scheduleInterview' }));
+    yield put(closeModalState());
   } catch (error) {
     yield put(notifyCandidateFailure({ error: { message: error } }));
   }

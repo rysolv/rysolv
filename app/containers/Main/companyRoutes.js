@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import withAuth from 'containers/Auth';
 import CodeScoring from 'containers/CodeScoring/Loadable';
 import CompanyDashboard from 'containers/CompanyDashboard/Loadable';
+import CompanyPositionDetail from 'containers/CompanyPositionDetail/Loadable';
 import CompanySettings from 'containers/CompanySettings/Loadable';
 import CompanySignUp from 'containers/CompanySignUp/Loadable';
 import ContactUs from 'containers/ContactUs/Loadable';
@@ -37,6 +38,10 @@ const PrivateCompanySettings = withAuth(companyConfig, CompanySettings);
 const PrivateCompanySignUp = withAuth(companyConfig, CompanySignUp);
 const PrivateMessages = withAuth(privateConfig, Messages);
 const PublicCodeScoring = withAuth(publicConfig, CodeScoring);
+const PublicCompanyPositionDetail = withAuth(
+  publicConfig,
+  CompanyPositionDetail,
+);
 const PublicContactUs = withAuth(publicConfig, ContactUs);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
@@ -71,6 +76,7 @@ const CompanyRoutes = () => (
     <Route exact path="/jobs" component={PublicJobs} />
     <Route exact path="/messages/:threadId?" component={PrivateMessages} />
     <Route exact path="/password-reset" component={PublicSignIn} />
+    <Route exact path="/positions" component={PublicCompanyPositionDetail} />
     <Route exact path="/pricing" component={PublicPricing} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
     <Route exact path="/profile/:user" component={PublicUserProfile} />
