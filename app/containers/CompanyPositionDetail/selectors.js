@@ -5,6 +5,12 @@ import { initialState } from './reducer';
 const selectCompanyPositionDetailDomain = state =>
   state.companyPositionDetail || initialState;
 
+const makeSelectCompanyPositionDetailLoading = prop =>
+  createSelector(
+    makeSelectCompanyPositionDetail('loading'),
+    loading => loading[prop],
+  );
+
 const makeSelectCompanyPositionDetail = prop =>
   createSelector(
     selectCompanyPositionDetailDomain,
@@ -12,4 +18,7 @@ const makeSelectCompanyPositionDetail = prop =>
   );
 
 export default selectCompanyPositionDetailDomain;
-export { makeSelectCompanyPositionDetail };
+export {
+  makeSelectCompanyPositionDetail,
+  makeSelectCompanyPositionDetailLoading,
+};

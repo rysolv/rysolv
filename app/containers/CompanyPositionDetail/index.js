@@ -14,17 +14,22 @@ import injectSaga from 'utils/injectSaga';
 import { fetchPositionDetail } from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectCompanyPositionDetail } from './selectors';
+import {
+  makeSelectCompanyPositionDetail,
+  makeSelectCompanyPositionDetailLoading,
+} from './selectors';
 import { ViewContainer } from './styledComponents';
 
 const CompanyPositionDetail = ({
+  company,
   dispatchFetchPositionDetail,
   error,
-  loading,
+  fetchCompanyLoading,
+  fetchPositionDetailLoading,
   position,
 }) => {
+  const positionId = getParameterByName('id');
   useEffect(() => {
-    const positionId = getParameterByName('id');
     window.scrollTo(0, 0);
     document.title = 'Position Detail';
     dispatchFetchPositionDetail({ positionId });
@@ -37,17 +42,19 @@ const CompanyPositionDetail = ({
         component={CompanyPositionDetailView}
         error={error}
         isRequiredData
-        loading={loading}
-        propsToPassDown={{ position }}
+        loading={fetchCompanyLoading || fetchPositionDetailLoading}
+        propsToPassDown={{ company, position }}
       />
     </ViewContainer>
   );
 };
 
 CompanyPositionDetail.propTypes = {
+  company: T.object.isRequired,
   dispatchFetchPositionDetail: T.func.isRequired,
   error: T.bool.isRequired,
-  loading: T.bool.isRequired,
+  fetchCompanyLoading: T.bool.isRequired,
+  fetchPositionDetailLoading: T.bool.isRequired,
   position: T.object.isRequired,
 };
 
@@ -55,8 +62,12 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : CompanyPositionDetail
    */
+  company: makeSelectCompanyPositionDetail('company'),
   error: makeSelectCompanyPositionDetail('error'),
-  loading: makeSelectCompanyPositionDetail('loading'),
+  fetchCompanyLoading: makeSelectCompanyPositionDetailLoading('fetchCompany'),
+  fetchPositionDetailLoading: makeSelectCompanyPositionDetailLoading(
+    'fetchPositionDetail',
+  ),
   position: makeSelectCompanyPositionDetail('position'),
 });
 

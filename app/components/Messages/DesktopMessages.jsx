@@ -87,7 +87,7 @@ const DesktopMessages = ({
               candidate.user !== '[deleted]'
             }
           />
-          <PositionProfile position={position} />
+          <PositionProfile handleNav={handleNav} position={position} />
         </ProfileWrapper>
       </ThreadWrapper>
     </Fragment>
