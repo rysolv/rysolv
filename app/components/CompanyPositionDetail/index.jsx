@@ -10,10 +10,12 @@ import {
   ContentLabel,
   ContentLabelWrapper,
   Description,
+  HeaderWrapper,
   HorizontalDivider,
   Label,
   LabelValueGroup,
   LabelValueWrapper,
+  LocationWrapper,
   Logo,
   NameWrapper,
   PositionDetailContainer,
@@ -44,13 +46,23 @@ const CompanyPositionDetail = ({ company, position }) => {
   return (
     <PositionDetailContainer>
       <PositionDetailHeader>
-        <ConditionalRender
-          Component={<Logo src={logo} />}
-          shouldRender={!!logo}
-        />
-        <NameWrapper>
-          {name} - {title}
-        </NameWrapper>
+        <HeaderWrapper>
+          <ConditionalRender
+            Component={<Logo src={logo} />}
+            shouldRender={!!logo}
+          />
+          <NameWrapper>
+            <div>
+              {name} - {title}
+            </div>
+            <LocationWrapper shouldRemove>
+              {positionFormattedAddress}, {timezone} &#9679; Remote
+            </LocationWrapper>
+          </NameWrapper>
+        </HeaderWrapper>
+        <LocationWrapper>
+          {positionFormattedAddress}, {timezone} &#9679; Remote
+        </LocationWrapper>
       </PositionDetailHeader>
       <PositionDetailContent $isFirst>
         <ContentLabelWrapper>
@@ -102,13 +114,6 @@ const CompanyPositionDetail = ({ company, position }) => {
             <LabelValueWrapper width="48%">
               <Label>Type</Label>
               <Value>{type}</Value>
-            </LabelValueWrapper>
-            <LabelValueWrapper width="48%">
-              <Label>Position location</Label>
-              <Value allowWrap>
-                {positionFormattedAddress} <br />
-                (Remote, {timezone})
-              </Value>
             </LabelValueWrapper>
           </LabelValueGroup>
         </ContentContainer>

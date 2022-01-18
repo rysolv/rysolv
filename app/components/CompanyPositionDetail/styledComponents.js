@@ -60,6 +60,11 @@ export const Description = styled.div`
   }
 `;
 
+export const HeaderWrapper = styled.div`
+  align-items: center;
+  display: flex;
+`;
+
 export const HorizontalDivider = styled.div`
   border-bottom-width: 0;
   border-color: #e1e2e3;
@@ -90,6 +95,21 @@ export const LabelValueWrapper = styled.div`
   }
 `;
 
+export const LocationWrapper = styled.div`
+  color: #c4c4c4;
+  display: ${({ shouldRemove }) => (shouldRemove ? 'block' : 'none')};
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 2.905rem;
+  text-transform: uppercase;
+
+  @media (max-width: 480px) {
+    display: ${({ shouldRemove }) => (shouldRemove ? 'none' : 'block')};
+    line-height: 2.4rem;
+    margin-top: 0.8rem;
+  }
+`;
+
 export const Logo = styled.img`
   border-radius: 50%;
   border: 0.2rem solid ${candidateGreyColor};
@@ -114,9 +134,7 @@ export const PositionDetailContent = styled.div`
 `;
 
 export const PositionDetailHeader = styled.div`
-  align-items: center;
   color: ${blueColor};
-  display: flex;
   font-size: 3.2rem;
   font-weight: 700;
   line-height: 3.36rem;
