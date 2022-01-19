@@ -14,8 +14,8 @@ export const initialState = {
   company: {},
   error: false,
   loading: {
-    fetchCompany: true,
-    fetchPositionDetail: true,
+    fetchCompany: false,
+    fetchPositionDetail: false,
   },
   position: {},
 };
