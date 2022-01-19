@@ -1,12 +1,10 @@
 /* eslint-disable camelcase */
-const { CustomError, errorLogger } = require('../../../helpers');
+const { errorLogger } = require('../../../helpers');
 const { getOnePosition } = require('../../../db');
 const { onePositionError } = require('./constants');
 
-const onePosition = async ({ positionId }, { authError, userId }) => {
+const onePosition = async ({ positionId }) => {
   try {
-    if (authError || !userId) throw new CustomError(authError);
-
     const {
       companyId,
       location,

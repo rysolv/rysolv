@@ -41,11 +41,15 @@ const getPositionCandidates = async (
 
       if (is_active === 'Yes') {
         acc.push({
-          firstName: shouldBlur ? `${firstName.charAt(0)}.` : firstName,
+          firstName: shouldBlur
+            ? `${firstName.charAt(0).toUpperCase()}.`
+            : firstName,
           id,
           isSaved,
           languages: matchLanguages({ userLanguages, positionLanguages }),
-          lastName: shouldBlur ? `${lastName.charAt(0)}.` : lastName,
+          lastName: shouldBlur
+            ? `${lastName.charAt(0).toUpperCase()}.`
+            : lastName,
           location,
           percentMatch,
           profilePic: shouldBlur ? profilePicBlur : profilePic,
