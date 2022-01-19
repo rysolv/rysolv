@@ -22,27 +22,15 @@ import {
 const MessageThread = ({
   activeConversation,
   activeUserId,
-  dispatchResetMarkdown,
-  error,
   loading,
   messageBody,
   sendMessage,
   setMessageBody,
-  success,
 }) => {
   useEffect(() => {
     const div = document.getElementById('messageContainer');
     div.scrollTop = div.scrollHeight - div.clientHeight;
   }, [activeConversation]);
-
-  useEffect(() => {
-    if (error.message || success) {
-      setTimeout(() => {
-        dispatchResetMarkdown();
-        setMessageBody('');
-      }, 6000);
-    }
-  }, [error, success]);
 
   const handleKeypress = ({ ctrlKey, key }) => {
     if (ctrlKey && key === 'Enter' && messageBody.length > 0) {
@@ -99,13 +87,10 @@ const MessageThread = ({
 MessageThread.propTypes = {
   activeConversation: T.object,
   activeUserId: T.string,
-  dispatchResetMarkdown: T.func.isRequired,
-  error: T.object.isRequired,
   loading: T.object.isRequired,
   messageBody: T.string,
   sendMessage: T.func,
   setMessageBody: T.func,
-  success: T.bool.isRequired,
 };
 
 export default MessageThread;

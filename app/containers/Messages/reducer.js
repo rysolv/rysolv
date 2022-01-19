@@ -5,7 +5,6 @@ import {
   FETCH_MESSAGES_FAILURE,
   FETCH_MESSAGES_SUCCESS,
   FETCH_MESSAGES,
-  RESET_MARKDOWN,
   SEND_MESSAGE_FAILURE,
   SEND_MESSAGE_SUCCESS,
   SEND_MESSAGE,
@@ -24,7 +23,6 @@ export const initialState = {
     main: true,
     message: false,
   },
-  success: false,
 };
 
 const messagesReducer = produce((draft, { payload, type }) => {
@@ -46,11 +44,6 @@ const messagesReducer = produce((draft, { payload, type }) => {
       draft.loading.main = true;
       break;
     }
-    case RESET_MARKDOWN: {
-      draft.error.message = initialState.error.message;
-      draft.success = initialState.success;
-      break;
-    }
     case SEND_MESSAGE_FAILURE: {
       draft.error.message = true;
       draft.loading.message = false;
@@ -64,13 +57,11 @@ const messagesReducer = produce((draft, { payload, type }) => {
         }
       });
       draft.loading.message = false;
-      draft.success = true;
       break;
     }
     case SEND_MESSAGE: {
       draft.error.message = initialState.error.message;
       draft.loading.message = true;
-      draft.success = initialState.success;
       break;
     }
     case SET_READ_RECEIPT_FAILURE: {

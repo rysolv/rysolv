@@ -20,7 +20,6 @@ const DesktopMessages = ({
   activeConversation,
   activeUser,
   conversations,
-  dispatchResetMarkdown,
   dispatchSendMessage,
   dispatchSetReadReceipt,
   error,
@@ -28,7 +27,6 @@ const DesktopMessages = ({
   loading,
   messageBody,
   setMessageBody,
-  success,
 }) => {
   const { id: activeUserId } = activeUser;
   const {
@@ -69,13 +67,11 @@ const DesktopMessages = ({
         <MessageThread
           activeConversation={conversations[activeConversation]}
           activeUserId={activeUserId}
-          dispatchResetMarkdown={dispatchResetMarkdown}
           error={error}
           loading={loading}
           messageBody={messageBody}
           sendMessage={sendMessage}
           setMessageBody={setMessageBody}
-          success={success}
         />
         <ProfileWrapper>
           <ConditionalRender
@@ -103,7 +99,6 @@ DesktopMessages.propTypes = {
   activeConversation: T.number.isRequired,
   activeUser: T.object.isRequired,
   conversations: T.array.isRequired,
-  dispatchResetMarkdown: T.func.isRequired,
   dispatchSendMessage: T.func.isRequired,
   dispatchSetReadReceipt: T.func.isRequired,
   error: T.object.isRequired,
@@ -111,7 +106,6 @@ DesktopMessages.propTypes = {
   loading: T.object.isRequired,
   messageBody: T.string.isRequired,
   setMessageBody: T.func.isRequired,
-  success: T.bool.isRequired,
 };
 
 export default DesktopMessages;
