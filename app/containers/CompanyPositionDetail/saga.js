@@ -41,7 +41,7 @@ export function* fetchCompanySaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(fetchCompanySuccess({ company: restProps }));
   } catch (error) {
-    yield put(fetchCompanyFailure({ error }));
+    yield put(fetchCompanyFailure());
   }
 }
 

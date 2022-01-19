@@ -8,6 +8,7 @@ const getContractByKey = require('./getContractByKey');
 const getOneCompany = require('./getOneCompany');
 const getOnePosition = require('./getOnePosition');
 const getPositionCandidates = require('./getPositionCandidates');
+const getPositions = require('./getPositions');
 const insertUserCompany = require('./insertUserCompany');
 const matchCandidates = require('./matchCandidates');
 const postContractAccepted = require('./postContractAccepted');
@@ -25,6 +26,7 @@ module.exports = {
   getOneCompany,
   getOnePosition,
   getPositionCandidates,
+  getPositions,
   insertUserCompany,
   matchCandidates,
   postContractAccepted,

@@ -7,11 +7,8 @@ import {
   FETCH_POSITION_DETAIL,
 } from './constants';
 
-export function fetchCompanyFailure(payload) {
-  return {
-    payload,
-    type: FETCH_COMPANY_FAILURE,
-  };
+export function fetchCompanyFailure() {
+  return { type: FETCH_COMPANY_FAILURE };
 }
 
 export function fetchCompanySuccess(payload) {
@@ -28,11 +25,8 @@ export function fetchCompany(payload) {
   };
 }
 
-export function fetchPositionDetailFailure(payload) {
-  return {
-    payload,
-    type: FETCH_POSITION_DETAIL_FAILURE,
-  };
+export function fetchPositionDetailFailure() {
+  return { type: FETCH_POSITION_DETAIL_FAILURE };
 }
 
 export function fetchPositionDetailSuccess(payload) {
