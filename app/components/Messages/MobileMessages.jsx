@@ -15,7 +15,6 @@ const MobileMessages = ({
   activeConversation,
   activeUser,
   conversations,
-  dispatchResetMarkdown,
   dispatchSendMessage,
   dispatchSetReadReceipt,
   error,
@@ -24,7 +23,6 @@ const MobileMessages = ({
   loading,
   messageBody,
   setMessageBody,
-  success,
 }) => {
   const { id: activeUserId } = activeUser;
   const {
@@ -75,13 +73,11 @@ const MobileMessages = ({
           <MessageThread
             activeConversation={conversations[activeConversation]}
             activeUserId={activeUserId}
-            dispatchResetMarkdown={dispatchResetMarkdown}
             error={error}
             loading={loading}
             messageBody={messageBody}
             sendMessage={sendMessage}
             setMessageBody={setMessageBody}
-            success={success}
           />
         }
         shouldRender={!isThreadView}
@@ -94,7 +90,6 @@ MobileMessages.propTypes = {
   activeConversation: T.number.isRequired,
   activeUser: T.object.isRequired,
   conversations: T.array.isRequired,
-  dispatchResetMarkdown: T.func.isRequired,
   dispatchSendMessage: T.func.isRequired,
   dispatchSetReadReceipt: T.func.isRequired,
   error: T.object.isRequired,
@@ -103,7 +98,6 @@ MobileMessages.propTypes = {
   loading: T.object.isRequired,
   messageBody: T.string.isRequired,
   setMessageBody: T.func.isRequired,
-  success: T.bool.isRequired,
 };
 
 export default MobileMessages;

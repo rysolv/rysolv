@@ -14,12 +14,7 @@ import { makeSelectAuth } from 'containers/Auth/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import {
-  fetchMessages,
-  resetMarkdown,
-  sendMessage,
-  setReadReceipt,
-} from './actions';
+import { fetchMessages, sendMessage, setReadReceipt } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import {
@@ -33,7 +28,6 @@ const Messages = ({
   conversations,
   deviceView,
   dispatchFetchMessages,
-  dispatchResetMarkdown,
   dispatchSendMessage,
   dispatchSetReadReceipt,
   error,
@@ -43,7 +37,6 @@ const Messages = ({
   match: {
     params: { threadId },
   },
-  success,
 }) => {
   // If no URL param, set most recent conversation as active
   const [activeConversation, setActiveConversation] = useState(0);
@@ -83,7 +76,6 @@ const Messages = ({
           activeUser,
           conversations,
           deviceView,
-          dispatchResetMarkdown,
           dispatchSendMessage,
           dispatchSetReadReceipt,
           error,
@@ -92,7 +84,6 @@ const Messages = ({
           isThreadView,
           loading,
           setActiveConversation,
-          success,
         }}
       />
     </ViewContainer>
@@ -104,7 +95,6 @@ Messages.propTypes = {
   conversations: T.array.isRequired,
   deviceView: T.string.isRequired,
   dispatchFetchMessages: T.func.isRequired,
-  dispatchResetMarkdown: T.func.isRequired,
   dispatchSendMessage: T.func.isRequired,
   dispatchSetReadReceipt: T.func.isRequired,
   error: T.object.isRequired,
@@ -112,7 +102,6 @@ Messages.propTypes = {
   isThreadView: T.bool.isRequired,
   loading: T.object.isRequired,
   match: T.object.isRequired,
-  success: T.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -127,7 +116,6 @@ const mapStateToProps = createStructuredSelector({
   error: makeSelectMessages('error'),
   isThreadView: makeSelectMessagesIsThreadView(),
   loading: makeSelectMessages('loading'),
-  success: makeSelectMessages('success'),
   /**
    * Reducer : ViewSize
    */
@@ -140,7 +128,6 @@ function mapDispatchToProps(dispatch) {
      * Reducer : Messages
      */
     dispatchFetchMessages: () => dispatch(fetchMessages()),
-    dispatchResetMarkdown: () => dispatch(resetMarkdown()),
     dispatchSendMessage: payload => dispatch(sendMessage(payload)),
     dispatchSetReadReceipt: payload => dispatch(setReadReceipt(payload)),
     /**
