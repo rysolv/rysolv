@@ -379,6 +379,7 @@ export function* fetchPositionSaga({ payload }) {
           experience
           isActive
           location
+          postToJobBoard
           role
           salary
           skills

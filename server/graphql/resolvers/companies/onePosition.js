@@ -20,6 +20,8 @@ const onePosition = async ({ positionId }, { authError, userId }) => {
     const formattedPosition = Object.keys(position).reduce(
       (acc, positionItem) => {
         if (positionItem === 'is_active') acc.isActive = position[positionItem];
+        else if (positionItem === 'post_to_job_board')
+          acc.postToJobBoard = position[positionItem];
         else if (positionItem === 'skills') {
           if (position[positionItem]) {
             const skillsArray = position[positionItem].map(

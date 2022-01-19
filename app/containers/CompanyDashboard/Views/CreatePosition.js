@@ -44,7 +44,7 @@ const CreatePosition = ({
   positions,
   responseArray,
 }) => {
-  const { company: { companyId } = {} } = activeUser;
+  const { company: { companyId, isPaidSubscription } = {} } = activeUser;
   const { companyPosition: companyPositionForm } = form;
 
   useEffect(() => {
@@ -91,6 +91,7 @@ const CreatePosition = ({
       propsToPassDown={{
         alerts,
         companyPositionQuestions,
+        createPositionLoading,
         dispatchChangeInput,
         dispatchChangeSkillLevel,
         dispatchClearAlerts,
@@ -101,7 +102,7 @@ const CreatePosition = ({
         handleCreatePosition,
         handleNav,
         handleValidateInput,
-        createPositionLoading,
+        isPaidSubscription,
         positions,
       }}
     />

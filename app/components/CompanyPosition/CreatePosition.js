@@ -23,6 +23,7 @@ const CreatePosition = ({
   dispatchChangeInput,
   dispatchChangeSkillLevel,
   dispatchClearAlerts,
+  isPaidSubscription,
   dispatchDeleteSkill,
   dispatchSelectPosition,
   form: { companyPosition: companyPositionForm },
@@ -63,16 +64,11 @@ const CreatePosition = ({
       <CreatePositionHeader>Create a new position</CreatePositionHeader>
       <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
       {companyPositionQuestions.map(
-        ({
-          description,
-          id,
-          options,
-          optionType,
-          question,
-          ...restProps
-          // eslint-disable-next-line array-callback-return, consistent-return
-        }) => {
-          if (id !== 'isActive') {
+        ({ description, id, options, optionType, question, ...restProps }) => {
+          if (
+            id !== 'isActive' &&
+            !(id === 'postToJobBoard' && !isPaidSubscription)
+          ) {
             const OptionToRender = optionDictionary[optionType];
 
             const handleChangeInput = (value, inputField) => {
@@ -86,7 +82,10 @@ const CreatePosition = ({
             const multiple = id === 'role';
 
             return (
-              <OptionWrapper key={`option-${id}`}>
+              <OptionWrapper
+                key={`option-${id}`}
+                $isFlex={id === 'postToJobBoard'}
+              >
                 <OptionLabel>{question}</OptionLabel>
                 <OptionDescription>{description}</OptionDescription>
                 <OptionToRender
@@ -110,6 +109,7 @@ const CreatePosition = ({
               </OptionWrapper>
             );
           }
+          return null;
         },
       )}
       <ButtonWrapper>
@@ -139,6 +139,7 @@ CreatePosition.propTypes = {
   handleCreatePosition: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
+  isPaidSubscription: T.bool.isRequired,
   positions: T.array.isRequired,
 };
 

@@ -262,6 +262,7 @@ module.exports = buildSchema(`
     id: ID
     isActive: String
     location: Object
+    postToJobBoard: String
     role: [String]
     salary: String
     skills: [Object]
