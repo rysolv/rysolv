@@ -109,7 +109,7 @@ class Main extends React.PureComponent {
       pathname === '/' ||
       pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||
-      pathname === '/jobs' ||
+      pathname === '/jobs/application' ||
       pathname === '/password-reset' ||
       pathname === '/pricing' ||
       pathname === '/privacy-policy' ||
@@ -122,7 +122,7 @@ class Main extends React.PureComponent {
       pathname === '/company/signup' ||
       pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||
-      pathname === '/jobs' ||
+      pathname === '/jobs/application' ||
       pathname === '/password-reset' ||
       pathname === '/signin' ||
       pathname === '/signup';

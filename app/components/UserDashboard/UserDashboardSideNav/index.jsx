@@ -46,14 +46,16 @@ const UserDashboardSideNav = ({
   const activeButtonLabel = surveyComplete
     ? 'Edit application'
     : 'Start application';
-  const activeButtonPath = surveyComplete ? '/dashboard/update' : '/jobs';
+  const activeButtonPath = surveyComplete
+    ? '/dashboard/update'
+    : '/jobs/application';
 
   const handleChangeInput = val => {
     if (surveyComplete) {
       const newHiringStatus = val ? 'active' : 'inactive';
       dispatchSetHiringStatus({ hiringStatus: newHiringStatus });
     } else {
-      handleNav('/jobs');
+      handleNav('/jobs/application');
     }
   };
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary, prettier/prettier */
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
@@ -120,7 +119,7 @@ export function* submitUserResponseSaga({ payload }) {
     yield put(push('/dashboard'));
     yield put(submitUserResponseSuccess());
   } catch (error) {
-    yield put(push('/jobs'));
+    yield put(push('/jobs/application'));
     yield put(submitUserResponseFailure({ error }));
   }
 }

@@ -11,7 +11,8 @@ import ContactUs from 'containers/ContactUs/Loadable';
 import Faq from 'components/Faq';
 import HowTo from 'components/HowTo';
 import IssuesDetail from 'containers/Issues/Detail';
-import Jobs from 'containers/Jobs';
+import JobApplication from 'containers/JobApplication/Loadable';
+import JobsBoard from 'containers/JobsBoard/Loadable';
 import Main from 'containers/HomePage/Loadable';
 import Messages from 'containers/Messages';
 import NotFoundPage from 'components/NotFoundPage';
@@ -46,7 +47,8 @@ const PublicContactUs = withAuth(publicConfig, ContactUs);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
 const PublicIssuesDetail = withAuth(publicConfig, IssuesDetail);
-const PublicJobs = withAuth(publicConfig, Jobs);
+const PublicJobApplication = withAuth(publicConfig, JobApplication);
+const PublicJobsBoard = withAuth(publicConfig, JobsBoard);
 const PublicMain = withAuth(publicConfig, Main);
 const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
 const PublicOverview = withAuth(publicConfig, Overview);
@@ -73,8 +75,9 @@ const CompanyRoutes = () => (
     <Route exact path="/issues" component={PublicOverview} />
     <Route exact path="/issues/detail/:id" component={PublicIssuesDetail} />
     <Route exact path="/issues/search/:searchValue" component={PublicOverview} />
-    <Route exact path="/jobs" component={PublicJobs} />
     <Route exact path="/messages/:threadId?" component={PrivateMessages} />
+    <Route exact path="/jobs" component={PublicJobsBoard} />
+    <Route exact path="/jobs/application" component={PublicJobApplication} />
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/positions" component={PublicCompanyPositionDetail} />
     <Route exact path="/pricing" component={PublicPricing} />

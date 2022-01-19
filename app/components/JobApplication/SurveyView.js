@@ -4,7 +4,7 @@ import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
 import { ProgressBar } from 'components/base_ui';
-import { validateOneField } from 'containers/Jobs/helpers';
+import { validateOneField } from 'containers/JobApplication/helpers';
 import iconDictionary from 'utils/iconDictionary';
 
 import optionDictionary from './Options';
