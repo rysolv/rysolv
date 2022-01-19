@@ -555,7 +555,7 @@ module.exports = buildSchema(`
     getMessages: ConversationResult!
     getPlaidToken: EventResponse!
     getPositionCandidates(positionId: ID!, saved: Boolean): [User]
-    getPositions: [Postions]!
+    getPositions: [Position]!
     getPullRequestList(issueId: ID): [PullRequestList]!
     getQuestions(category: String!): QuestionResult
     getRepoActivity(repoId: ID): [Activity]!
