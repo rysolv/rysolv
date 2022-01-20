@@ -22,7 +22,7 @@ export const mediaQueriesByDevice = {
   tablet: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.tablet}px)`,
   laptopS: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.laptopS}px)`,
   laptop: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.laptop}px)`,
-  desktopS: `${MEDIA_DECORATOR} (min-width: ${deviceSizes.desktopS}px)`,
-  desktop: `${MEDIA_DECORATOR} (min-width: ${deviceSizes.desktop}px)`,
+  desktopS: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.desktopS}px)`,
+  desktop: `${MEDIA_DECORATOR} (max-width: ${deviceSizes.desktop}px)`,
   desktopL: `${MEDIA_DECORATOR} (min-width: ${deviceSizes.desktopL}px)`,
 };

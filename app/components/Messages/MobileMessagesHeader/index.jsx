@@ -6,6 +6,7 @@ import iconDictionary from 'utils/iconDictionary';
 
 import {
   HeaderWrapper,
+  LinkWraper,
   StyledIconButton,
   ThreadDescription,
 } from './styledComponents';
@@ -14,13 +15,13 @@ const BackArrowIcon = iconDictionary('backArrowHalf');
 
 const MobileMessagesHeader = ({ handleNav, isThreadView, threadTitle }) => (
   <ConditionalRender
-    Component={<HeaderWrapper>Messaging</HeaderWrapper>}
+    Component={<HeaderWrapper>Messages</HeaderWrapper>}
     FallbackComponent={
       <HeaderWrapper>
-        <StyledIconButton disableRipple onClick={() => handleNav('/messages')}>
-          {BackArrowIcon}
-        </StyledIconButton>
-        Messaging
+        <LinkWraper disableRipple onClick={() => handleNav('/messages')}>
+          <StyledIconButton>{BackArrowIcon}</StyledIconButton>
+          Messages
+        </LinkWraper>
         <ThreadDescription>{threadTitle}</ThreadDescription>
       </HeaderWrapper>
     }

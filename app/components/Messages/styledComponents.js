@@ -8,6 +8,9 @@ import {
   grayColor,
   textColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { laptop } = mediaQueriesByDevice;
 
 export const CandidateCardContainer = styled.div`
   border-radius: 0.7rem;
@@ -52,6 +55,7 @@ export const ConversationsWrapper = styled.div`
   flex-direction: column;
   height: 100%;
   max-width: ${({ isMobile }) => (isMobile ? '100%' : '27.8rem')};
+  min-height: 65vh;
   width: ${({ isMobile }) => (isMobile ? '100%' : '22%')};
 `;
 
@@ -78,8 +82,15 @@ export const MessageContainer = styled.div`
   font-size: ${defaultFontSize};
 `;
 
-export const MobileMessagesContainer = styled.div`
-  width: 100%;
+export const MessageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: calc(100% - 25rem);
+
+  ${laptop} {
+    width: 100%;
+  }
 `;
 
 export const NameWrapper = styled.div`
@@ -103,19 +114,8 @@ export const ProfilePicWrapper = styled.img`
   width: 5rem;
 `;
 
-export const ProfileWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 4rem;
-`;
-
 export const StyledLanguageWrapper = styled(LanguageWrapper)`
   font-size: ${defaultFontSize};
-`;
-
-export const ThreadWrapper = styled.div`
-  display: flex;
-  width: 72%;
 `;
 
 export const Title = styled.div`
@@ -123,11 +123,4 @@ export const Title = styled.div`
   font-size: ${defaultFontSize};
   margin-bottom: 0.4rem;
   text-transform: uppercase;
-`;
-
-export const VerticalDivider = styled.div`
-  background: ${grayColor};
-  height: 100%;
-  margin-right: 4rem;
-  width: 0.1rem;
 `;

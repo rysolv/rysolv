@@ -58,7 +58,7 @@ const Markdown = ({
   }, [preview]);
 
   return (
-    <MarkdownContainer comment={comment} {...restProps}>
+    <MarkdownContainer mobile={comment} {...restProps}>
       <EditContainer>
         <textarea id="editor" />
       </EditContainer>

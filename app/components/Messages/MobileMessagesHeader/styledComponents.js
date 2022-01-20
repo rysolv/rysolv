@@ -5,22 +5,21 @@ import { blueColor, textColor } from 'defaultStyleHelper';
 
 export const HeaderWrapper = styled.div`
   align-items: center;
+  border-bottom: 1px solid #e3e3e3;
   color: ${blueColor};
   display: flex;
   font-size: 2rem;
   font-weight: 700;
   height: 4rem;
-  left: 3rem;
+  margin-bottom: 0.5rem;
   overflow: hidden;
-  position: absolute;
-  right: 3rem;
   text-overflow: ellipsis;
   top: 0;
   white-space: nowrap;
 `;
 
 export const StyledIconButton = styled(IconButton)`
-  padding-left: 0;
+  padding: 0;
 
   &:hover {
     background: transparent;
@@ -42,4 +41,9 @@ export const ThreadDescription = styled.span`
   height: 100%;
   line-height: 1.936rem;
   padding: 0.4rem 0 0 1.2rem;
+`;
+
+export const LinkWraper = styled.div`
+  align-items: center;
+  display: flex;
 `;

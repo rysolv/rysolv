@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { whiteColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { laptop } = mediaQueriesByDevice;
+const { desktop, laptop } = mediaQueriesByDevice;
 
 export const ViewContainer = styled.div`
   background: ${whiteColor};
@@ -12,8 +12,12 @@ export const ViewContainer = styled.div`
   position: relative;
   width: 100%;
 
-  ${laptop} {
+  ${desktop} {
     padding: 5rem 3rem 5.6rem;
+  }
+
+  ${laptop} {
+    padding: 0 3rem 5.6rem;
   }
 
   @media (max-width: 769px) {
