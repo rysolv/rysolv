@@ -7,7 +7,6 @@ import Conversations from '../Conversations';
 import MarkdownContainer from '../MarkdownContainer';
 import MessageThread from '../MessageThread';
 import MobileMessagesHeader from '../MobileMessagesHeader';
-
 import { ConversationsWrapper } from '../styledComponents';
 import {
   MessageWrapper,

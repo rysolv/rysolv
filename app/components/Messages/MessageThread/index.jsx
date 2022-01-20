@@ -15,11 +15,7 @@ import {
   Username,
 } from './styledComponents';
 
-const MessageThread = ({
-  activeConversation,
-  activeUserId,
-  mobile = false,
-}) => {
+const MessageThread = ({ activeConversation, activeUserId, mobile }) => {
   useEffect(() => {
     const div = document.getElementById('messageContainer');
     div.scrollTop = div.scrollHeight - div.clientHeight;
@@ -58,9 +54,11 @@ const MessageThread = ({
   );
 };
 
+MessageThread.defaultProps = { mobile: false };
+
 MessageThread.propTypes = {
-  activeConversation: T.object,
-  activeUserId: T.string,
+  activeConversation: T.object.isRequired,
+  activeUserId: T.string.isRequired,
   mobile: T.bool,
 };
 

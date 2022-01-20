@@ -18,8 +18,8 @@ const MobileMessagesHeader = ({ handleNav, isThreadView, threadTitle }) => (
     Component={<HeaderWrapper>Messages</HeaderWrapper>}
     FallbackComponent={
       <HeaderWrapper>
-        <LinkWraper disableRipple onClick={() => handleNav('/messages')}>
-          <StyledIconButton>{BackArrowIcon}</StyledIconButton>
+        <LinkWraper onClick={() => handleNav('/messages')}>
+          <StyledIconButton disableRipple>{BackArrowIcon}</StyledIconButton>
           Messages
         </LinkWraper>
         <ThreadDescription>{threadTitle}</ThreadDescription>

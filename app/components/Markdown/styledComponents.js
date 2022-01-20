@@ -53,8 +53,8 @@ export const MarkdownContainer = styled.div`
   .CodeMirror-scroll {
     border-bottom-left-radius: 0.7rem;
     border-bottom-right-radius: 0.7rem;
-    max-height: ${props => (props.mobile ? '20rem' : '50rem')};
-    min-height: ${props => (props.mobile ? '5rem' : '20rem')};
+    max-height: ${({ mobile }) => (mobile ? '20rem' : '50rem')};
+    min-height: ${({ mobile }) => (mobile ? '5rem' : '20rem')};
   }
 `;
 

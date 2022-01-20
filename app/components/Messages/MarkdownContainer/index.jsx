@@ -10,7 +10,7 @@ import {
 const MarkdownContainer = ({
   loading,
   messageBody,
-  mobile = false,
+  mobile,
   sendMessage,
   setMessageBody,
 }) => {
@@ -38,12 +38,14 @@ const MarkdownContainer = ({
   );
 };
 
+MarkdownContainer.defaultProps = { mobile: false };
+
 MarkdownContainer.propTypes = {
   loading: T.object.isRequired,
-  messageBody: T.string,
+  messageBody: T.string.isRequired,
   mobile: T.bool,
-  sendMessage: T.func,
-  setMessageBody: T.func,
+  sendMessage: T.func.isRequired,
+  setMessageBody: T.func.isRequired,
 };
 
 export default MarkdownContainer;

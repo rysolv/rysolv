@@ -7,11 +7,10 @@ import Conversations from '../Conversations';
 import MarkdownContainer from '../MarkdownContainer';
 import MessageThread from '../MessageThread';
 import MobileMessagesHeader from '../MobileMessagesHeader';
-
 import { ConversationsWrapper, MessageWrapper } from '../styledComponents';
 import { TabletContainer } from './styledComponents';
 
-const MobileMessages = ({
+const TabletMessages = ({
   activeConversation,
   activeUser,
   conversations,
@@ -90,7 +89,7 @@ const MobileMessages = ({
   );
 };
 
-MobileMessages.propTypes = {
+TabletMessages.propTypes = {
   activeConversation: T.number.isRequired,
   activeUser: T.object.isRequired,
   conversations: T.array.isRequired,
@@ -104,4 +103,4 @@ MobileMessages.propTypes = {
   setMessageBody: T.func.isRequired,
 };
 
-export default MobileMessages;
+export default TabletMessages;

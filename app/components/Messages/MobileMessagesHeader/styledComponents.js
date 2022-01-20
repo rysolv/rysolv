@@ -5,7 +5,6 @@ import { blueColor, textColor } from 'defaultStyleHelper';
 
 export const HeaderWrapper = styled.div`
   align-items: center;
-  border-bottom: 1px solid #e3e3e3;
   color: ${blueColor};
   display: flex;
   font-size: 2rem;
@@ -18,7 +17,17 @@ export const HeaderWrapper = styled.div`
   white-space: nowrap;
 `;
 
+export const LinkWraper = styled.div`
+  align-items: center;
+  display: flex;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export const StyledIconButton = styled(IconButton)`
+  margin-right: 1.2rem;
   padding: 0;
 
   &:hover {
@@ -41,9 +50,4 @@ export const ThreadDescription = styled.span`
   height: 100%;
   line-height: 1.936rem;
   padding: 0.4rem 0 0 1.2rem;
-`;
-
-export const LinkWraper = styled.div`
-  align-items: center;
-  display: flex;
 `;

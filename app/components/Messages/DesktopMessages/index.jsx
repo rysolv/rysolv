@@ -9,7 +9,6 @@ import MarkdownContainer from '../MarkdownContainer';
 import MessageThread from '../MessageThread';
 import PositionProfile from '../PositionProfile';
 import UserProfile from '../UserProfile';
-
 import { ConversationsWrapper, MessageWrapper } from '../styledComponents';
 import {
   ProfileWrapper,

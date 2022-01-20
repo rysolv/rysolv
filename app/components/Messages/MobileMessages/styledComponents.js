@@ -12,7 +12,7 @@ export const MessageWrapper = styled.div`
 `;
 
 export const MobileInputWrapper = styled.div`
-  bottom: 5px;
+  bottom: 0.5rem;
   height: auto;
   left: 0;
   min-height: 19.1rem;
