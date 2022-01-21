@@ -2,7 +2,6 @@ import {
   FETCH_MESSAGES_FAILURE,
   FETCH_MESSAGES_SUCCESS,
   FETCH_MESSAGES,
-  RESET_MARKDOWN,
   SEND_MESSAGE_FAILURE,
   SEND_MESSAGE_SUCCESS,
   SEND_MESSAGE,
@@ -29,10 +28,6 @@ export function fetchMessages() {
   return {
     type: FETCH_MESSAGES,
   };
-}
-
-export function resetMarkdown() {
-  return { type: RESET_MARKDOWN };
 }
 
 export function sendMessageFailure(payload) {

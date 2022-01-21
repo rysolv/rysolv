@@ -68,7 +68,7 @@ const getMessages = async ({ userId }) => {
         ||
         json_build_object('type', ARRAY_AGG(DISTINCT qr.value) FILTER (WHERE q.question_key = 'type'))::jsonb
         AS candidate,
-        ARRAY_AGG(DISTINCT u.id) AS to_user
+        ARRAY_AGG(DISTINCT ARRAY[m.to_user_id, m.from_user_id]) AS to_user
       FROM messages m
       JOIN users u ON m.from_user_id = u.id
       JOIN users candidate_user ON candidate_user.id IN (m.from_user_id, m.to_user_id)
