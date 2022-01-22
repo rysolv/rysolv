@@ -10,7 +10,7 @@ import {
 export const initialState = {
   error: false,
   loading: {
-    fetchJobsBoard: false,
+    fetchJobsBoard: true,
   },
   jobs: [],
 };

@@ -257,11 +257,15 @@ module.exports = buildSchema(`
 
   type Position {
     companyId: ID
+    companyLogo: String
+    companyName: String
+    createdDate: Object
     description: String
     experience: String
     id: ID
     isActive: String
     location: Object
+    positionData: Object
     postToJobBoard: String
     role: [String]
     salary: String

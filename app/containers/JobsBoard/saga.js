@@ -9,30 +9,23 @@ export function* fetchJobsBoardSaga() {
   const query = `
     query {
       getPositions {
-        companyId
-        description
-        experience
+        companyLogo
+        companyName
+        createdDate
         id
-        isActive
         location
+        positionData
         role
-        salary
         skills
-        timezone
-        title
-        type
       }
     }
   `;
   try {
     const graphql = JSON.stringify({ query });
     const {
-      data: {
-        getPositions: { __typename, message, ...restProps },
-      },
+      data: { getPositions },
     } = yield call(post, '/graphql', graphql);
-    if (__typename === 'Error') throw message;
-    yield put(fetchJobsBoardSuccess({ jobs: restProps }));
+    yield put(fetchJobsBoardSuccess({ jobs: getPositions }));
   } catch (error) {
     yield put(fetchJobsBoardFailure());
   }

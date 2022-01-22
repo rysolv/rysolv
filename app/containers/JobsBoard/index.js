@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
+import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import JobsBoardView from 'components/JobsBoard';
@@ -20,6 +21,7 @@ const JobsBoard = ({
   dispatchFetchJobsBoard,
   error,
   fetchJobsBoardLoading,
+  handleNav,
   jobs,
 }) => {
   useEffect(() => {
@@ -36,7 +38,7 @@ const JobsBoard = ({
         error={error}
         isRequiredData
         loading={fetchJobsBoardLoading}
-        propsToPassDown={{ jobs }}
+        propsToPassDown={{ handleNav, jobs }}
       />
     </ViewContainer>
   );
@@ -46,6 +48,7 @@ JobsBoard.propTypes = {
   dispatchFetchJobsBoard: T.func.isRequired,
   error: T.bool.isRequired,
   fetchJobsBoardLoading: T.bool.isRequired,
+  handleNav: T.func.isRequired,
   jobs: T.array.isRequired,
 };
 
@@ -63,6 +66,10 @@ const mapDispatchToProps = dispatch => ({
    * Reducer : JobsBoard
    */
   dispatchFetchJobsBoard: () => dispatch(fetchJobsBoard()),
+  /**
+   * Reducer : Router
+   */
+  handleNav: route => dispatch(push(route)),
 });
 
 const withConnect = connect(
