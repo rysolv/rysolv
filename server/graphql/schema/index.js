@@ -414,6 +414,7 @@ module.exports = buildSchema(`
     email: String!
     emailVerified: Boolean
     experience: String
+    chartData: Object
     firstName: String
     githubId: String
     githubLink: String

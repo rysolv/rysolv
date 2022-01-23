@@ -38,6 +38,7 @@ import Info from '@material-ui/icons/Info';
 import Language from '@material-ui/icons/Language';
 import Link from '@material-ui/icons/Link';
 import LocalAtm from '@material-ui/icons/LocalAtm';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import NavigateNext from '@material-ui/icons/NavigateNext';
@@ -126,6 +127,7 @@ export default (name, size, style) => {
     javascript: Javascript,
     language: Language,
     link: Link,
+    location: LocationOnIcon,
     monocle: Monocle,
     navigateBefore: NavigateBefore,
     navigateNext: NavigateNext,

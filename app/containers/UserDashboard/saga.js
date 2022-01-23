@@ -167,6 +167,7 @@ export function* fetchUserDashboardSaga() {
             stackoverflowLink
             surveyComplete
             unreadMessages
+            username
           }
           ...on Error {
             message
@@ -269,7 +270,7 @@ export function* updateUserLinksSaga({ payload }) {
   const query = `
     mutation {
       transformUser(userInput: {
-        githubLink: "${githubLink}" 
+        githubLink: "${githubLink}"
         personalLink: "${personalLink}"
         stackoverflowLink: "${stackoverflowLink}"
       }) {

@@ -1,5 +1,10 @@
 const { CustomError, errorLogger } = require('../../../helpers');
-const { getUserByUsername, getQuestionAnswerByKey } = require('../../../db');
+const {
+  getQuestionAnswerByKey,
+  getTopLanguages,
+  getUserByUsername,
+  getWeeklyCommits,
+} = require('../../../db');
 const { oneUserError } = require('./constants');
 
 const getUserProfile = async ({ username }) => {
@@ -19,6 +24,45 @@ const getUserProfile = async ({ username }) => {
     } else {
       user.hiringStatus = 'undeclared';
     }
+
+    // Get weekly commits
+    const weeklyCommits = await getWeeklyCommits({ userId: '123' });
+    const weeks = [];
+    const cumulative = [];
+    weeklyCommits.forEach(({ week, commits }) => {
+      weeks.push(week);
+      cumulative.push(commits);
+    });
+
+    // Get top languages
+    const languageByCommits = await getTopLanguages({ userId: '123' });
+
+    user.chartData = {
+      commits: { labels: weeks, data: cumulative },
+      languageByCommits,
+      githubStats: {
+        commits: 1301,
+        contributedTo: 3,
+        pullRequests: 88,
+        stars: 44,
+      },
+    };
+
+    user.desiredRole = ['Dev-Ops', 'Machine Learning', 'Back-end'];
+    user.title = 'Senior engineer at Rysolv';
+    user.location = 'San Francisco, CA, USA';
+    user.about =
+      "Hey I'm tyler and I do cool dev stuff. Founded rysolv.com, a crowdfunding platform for open-source development. Worked for Kumanu for a while";
+
+    user.topLanguages = languageByCommits;
+
+    user.skills = [
+      { name: 'JavaScript', level: 3 },
+      { name: 'React', level: 3 },
+      { name: 'Python', level: 2 },
+      { name: 'TypeScript', level: 2 },
+      { name: 'Go', level: 1 },
+    ];
 
     return {
       __typename: 'User',

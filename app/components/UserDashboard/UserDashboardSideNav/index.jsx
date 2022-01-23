@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
@@ -42,7 +43,9 @@ const UserDashboardSideNav = ({
     skills,
     stackoverflowLink,
     surveyComplete,
+    username,
   } = user;
+
   const activeButtonLabel = surveyComplete
     ? 'Edit application'
     : 'Start application';
@@ -68,6 +71,7 @@ const UserDashboardSideNav = ({
   return (
     <UserDashboardSideNavContainer>
       <ProfilePicture src={profilePic} />
+      <Link to={`/profile/${username}`}>Profile</Link>
       <div>
         <ActionWrapper>
           <ActiveWrapper>

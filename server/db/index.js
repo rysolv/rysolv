@@ -3,6 +3,7 @@ const attempting = require('./queries/attempting');
 const bounties = require('./queries/bounties');
 const comments = require('./queries/comments');
 const companies = require('./queries/companies');
+const git = require('./queries/git');
 const issues = require('./queries/issues');
 const languages = require('./queries/languages');
 const locations = require('./queries/locations');
@@ -24,6 +25,7 @@ module.exports = {
   ...bounties,
   ...comments,
   ...companies,
+  ...git,
   ...issues,
   ...languages,
   ...locations,

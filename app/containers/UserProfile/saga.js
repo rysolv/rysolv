@@ -12,12 +12,16 @@ export function* fetchUserProfileSaga({ payload }) {
       getUserProfile(username: "${username}") {
         __typename
         ...on User {
+          chartData
+          desiredRole
           firstName
           githubLink
           hiringStatus
           lastName
+          location
           personalLink
           profilePic
+          skills
           stackoverflowLink
           username
         }

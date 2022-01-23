@@ -18,6 +18,7 @@ import {
   makeSelectUserProfile,
   makeSelectUserProfileParams,
 } from './selectors';
+import { ViewContainer } from './styledComponents';
 
 const UserProfile = ({
   activeUser,
@@ -39,14 +40,16 @@ const UserProfile = ({
   }, [user]);
 
   return (
-    <AsyncRender
-      asyncData={user}
-      component={UserProfileComponent}
-      error={error}
-      isRequiredData
-      loading={loading}
-      propsToPassDown={{ activeUser, deviceView, isSignedIn }}
-    />
+    <ViewContainer>
+      <AsyncRender
+        asyncData={user}
+        component={UserProfileComponent}
+        error={error}
+        isRequiredData
+        loading={loading}
+        propsToPassDown={{ activeUser, deviceView, isSignedIn }}
+      />
+    </ViewContainer>
   );
 };
 
