@@ -3,14 +3,14 @@ import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
 
-import CompanyProfile from './CompanyProfile';
-import Conversations from './Conversations';
-import MessageThread from './MessageThread';
-import PositionProfile from './PositionProfile';
-import UserProfile from './UserProfile';
-
+import CompanyProfile from '../CompanyProfile';
+import Conversations from '../Conversations';
+import MarkdownContainer from '../MarkdownContainer';
+import MessageThread from '../MessageThread';
+import PositionProfile from '../PositionProfile';
+import UserProfile from '../UserProfile';
+import { ConversationsWrapper, MessageWrapper } from '../styledComponents';
 import {
-  ConversationsWrapper,
   ProfileWrapper,
   ThreadWrapper,
   VerticalDivider,
@@ -64,15 +64,20 @@ const DesktopMessages = ({
       </ConversationsWrapper>
       <VerticalDivider />
       <ThreadWrapper>
-        <MessageThread
-          activeConversation={conversations[activeConversation]}
-          activeUserId={activeUserId}
-          error={error}
-          loading={loading}
-          messageBody={messageBody}
-          sendMessage={sendMessage}
-          setMessageBody={setMessageBody}
-        />
+        <MessageWrapper>
+          <MessageThread
+            activeConversation={conversations[activeConversation]}
+            activeUserId={activeUserId}
+            error={error}
+          />
+          <MarkdownContainer
+            loading={loading}
+            messageBody={messageBody}
+            sendMessage={sendMessage}
+            setMessageBody={setMessageBody}
+          />
+        </MessageWrapper>
+
         <ProfileWrapper>
           <ConditionalRender
             Component={CompanyProfile}

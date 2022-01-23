@@ -33,7 +33,6 @@ const CompanyDropDownMenu = ({ anchorEl, handleClose, handleSignout }) => (
     onClose={handleClose}
     open={Boolean(anchorEl)}
   >
-    <MenuInternalLink label="Account &amp; Settings" path="/company/settings" />
     <MenuInternalLink
       label="Dashboard"
       path="/company/dashboard"
@@ -41,6 +40,7 @@ const CompanyDropDownMenu = ({ anchorEl, handleClose, handleSignout }) => (
     />
     <MenuInternalLink label="Messages" path="/messages" shouldRemoveFirst />
     <MenuInternalLink label="Payments" path="/company/settings/payments" />
+    <MenuInternalLink label="Account &amp; Settings" path="/company/settings" />
     <HorizontalDivider />
     <StyledLoginButton onClick={handleSignout}>Sign out</StyledLoginButton>
   </MenuComponent>
