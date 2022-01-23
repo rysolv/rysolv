@@ -46,7 +46,7 @@ const NewComment = ({
         />
       </ProfileImageContainer>
       <NewCommentContainer onKeyDown={e => handleKeydown(e)}>
-        <Markdown body={body} comment handleInput={setBody} preview={preview} />
+        <Markdown body={body} mobile handleInput={setBody} preview={preview} />
         {body.length > 0 && (
           <StyledSecondaryButton
             label={preview ? 'Edit' : 'Preview'}

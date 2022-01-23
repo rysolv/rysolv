@@ -1,10 +1,7 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { ProgressButton } from 'components/base_ui';
-import Markdown from 'components/Markdown';
 import {
   candidateGreyColor,
-  darkBlueColor,
   defaultFontSize,
   lightBlueColor,
   textColor,
@@ -12,20 +9,7 @@ import {
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { laptop } = mediaQueriesByDevice;
-
-const baseButtonStyle = css`
-  align-items: center;
-  border-radius: 0.8rem;
-  display: flex;
-  font-size: 1.6rem;
-  font-weight: 700;
-  height: 4.8rem;
-  line-height: 1.936rem;
-  margin: 0;
-  text-transform: initial;
-  width: 18.4rem;
-`;
+const { tablet } = mediaQueriesByDevice;
 
 export const BodyWrapper = styled.div`
   background: ${({ active }) => (active ? whiteColor : candidateGreyColor)};
@@ -37,18 +21,15 @@ export const BodyWrapper = styled.div`
   height: ${({ height, multiple }) => (multiple ? 'auto' : height)};
   line-height: 1.936rem;
   margin: 0.8rem;
+  max-width: 40rem;
   min-height: ${({ height, multiple }) => (multiple ? height : 'auto')};
   padding: 1.6rem 2.4rem;
   transform: matrix(1, 0, 0, 1, 0, 0);
   width: 70%;
-  max-width: 40rem;
-`;
 
-export const LowerMessage = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 1rem;
-  margin-top: 2rem;
+  ${tablet} {
+    width: 100%;
+  }
 `;
 
 export const MessageCard = styled.div`
@@ -65,7 +46,7 @@ export const MessageCard = styled.div`
 export const MessageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 50vh;
+  height: ${({ mobile }) => (mobile ? 'calc(100% - 23.1rem)' : '50vh')};
   overflow-y: auto;
   width: 100%;
 `;
@@ -97,39 +78,10 @@ export const MessageBody = styled.div`
   }
 `;
 
-export const MessageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: calc(100% - 25rem);
-
-  ${laptop} {
-    width: 100%;
-  }
-`;
-
 export const ProfilePicture = styled.img`
   border-radius: 50%;
   height: 4rem;
   width: 4rem;
-`;
-
-export const StyledMarkdown = styled(Markdown)`
-  min-height: 21.3rem;
-  width: 100%;
-`;
-
-export const StyledPrimaryAsyncButton = styled(ProgressButton)`
-  ${baseButtonStyle};
-  background-color: ${darkBlueColor};
-  color: ${whiteColor};
-  margin-left: auto;
-  margin-top: 2rem;
-
-  &:hover {
-    background-color: ${darkBlueColor};
-    color: ${whiteColor};
-  }
 `;
 
 export const Username = styled.div`
