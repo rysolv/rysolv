@@ -8,25 +8,34 @@ import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
 import JobsBoardView from 'components/JobsBoard';
+import { getParameterByName } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { fetchJobsBoard } from './actions';
+import { changeFilter, fetchJobsBoard } from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectJobsBoard, makeSelectJobsBoardLoading } from './selectors';
+import {
+  makeSelectJobsBoard,
+  makeSelectJobsBoardList,
+  makeSelectJobsBoardLoading,
+} from './selectors';
 import { ViewContainer } from './styledComponents';
 
 const JobsBoard = ({
   dispatchFetchJobsBoard,
+  dispatchChangeFilter,
   error,
   fetchJobsBoardLoading,
+  filter,
   handleNav,
   jobs,
 }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Jobs Board';
+    const searchTerm = getParameterByName('search');
+    dispatchChangeFilter({ filter: searchTerm || '' });
     dispatchFetchJobsBoard();
   }, []);
 
@@ -36,18 +45,20 @@ const JobsBoard = ({
         asyncData={jobs}
         component={JobsBoardView}
         error={error}
-        isRequiredData
+        isRequiredData={false}
         loading={fetchJobsBoardLoading}
-        propsToPassDown={{ handleNav, jobs }}
+        propsToPassDown={{ dispatchChangeFilter, filter, handleNav, jobs }}
       />
     </ViewContainer>
   );
 };
 
 JobsBoard.propTypes = {
+  dispatchChangeFilter: T.func.isRequired,
   dispatchFetchJobsBoard: T.func.isRequired,
   error: T.bool.isRequired,
   fetchJobsBoardLoading: T.bool.isRequired,
+  filter: T.string.isRequired,
   handleNav: T.func.isRequired,
   jobs: T.array.isRequired,
 };
@@ -58,13 +69,15 @@ const mapStateToProps = createStructuredSelector({
    */
   error: makeSelectJobsBoard('error'),
   fetchJobsBoardLoading: makeSelectJobsBoardLoading('fetchJobsBoard'),
-  jobs: makeSelectJobsBoard('jobs'),
+  filter: makeSelectJobsBoard('filter'),
+  jobs: makeSelectJobsBoardList(),
 });
 
 const mapDispatchToProps = dispatch => ({
   /*
    * Reducer : JobsBoard
    */
+  dispatchChangeFilter: payload => dispatch(changeFilter(payload)),
   dispatchFetchJobsBoard: () => dispatch(fetchJobsBoard()),
   /**
    * Reducer : Router

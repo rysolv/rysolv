@@ -65,6 +65,7 @@ const UserRoutes = () => (
   <Switch>
     <Route exact path="/" component={PublicMain} />
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
+    <Route exact path="/apply" component={PublicJobApplication} />
     <Route exact path="/contact-us" component={PublicContactUs} />
     <Route exact path="/dashboard/:view?" component={PrivateUserDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
@@ -76,7 +77,6 @@ const UserRoutes = () => (
     <Route exact path="/issues/detail/:id" component={PublicIssuesDetail} />
     <Route exact path="/issues/search/:searchValue" component={PublicOverview} />
     <Route exact path='/jobs' component={PublicJobsBoard} />
-    <Route exact path="/jobs/application" component={PublicJobApplication} />
     <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/messages/:threadId?" component={PrivateMessages} />
     <Route exact path="/password-reset" component={PublicSignIn} />

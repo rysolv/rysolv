@@ -1,12 +1,30 @@
 import styled, { css } from 'styled-components';
 
+import { PrimaryButton } from 'components/base_ui';
 import {
   blueColor,
   candidateGreyColor,
+  darkBlueColor,
   lightBlueColor,
   textColor,
   whiteColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
+
+const baseButtonStyle = css`
+  align-items: center;
+  border-radius: 0.8rem;
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  margin: 0;
+  text-transform: initial;
+  width: 10rem;
+`;
 
 const baseLabelStyle = css`
   color: ${blueColor};
@@ -134,11 +152,35 @@ export const PositionDetailContent = styled.div`
 `;
 
 export const PositionDetailHeader = styled.div`
+  align-items: center;
   color: ${blueColor};
+  display: flex;
   font-size: 3.2rem;
   font-weight: 700;
+  justify-content: space-between;
   line-height: 3.36rem;
   padding: 2rem 0;
+
+  ${mobile} {
+    flex-direction: column;
+  }
+`;
+
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  ${baseButtonStyle}
+  background-color: ${darkBlueColor};
+  color: ${whiteColor};
+  margin-left: 1.6rem;
+
+  &:hover {
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
+  }
+
+  ${mobile} {
+    margin: 3rem 0 0;
+    width: 100%;
+  }
 `;
 
 export const Value = styled.div`

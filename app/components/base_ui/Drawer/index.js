@@ -116,7 +116,7 @@ const BaseDrawer = ({
           <ListItem
             button
             key="job-application"
-            onClick={() => handleClick('/jobs/application', 7)}
+            onClick={() => handleClick('/apply', 7)}
           >
             <ListItemIcon>{dollarIcon}</ListItemIcon>
             <StyledListItemText

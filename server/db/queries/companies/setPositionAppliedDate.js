@@ -1,9 +1,9 @@
 const { singleQuery } = require('../../baseQueries');
 
-const saveCandidate = async ({ candidateId, positionId }) => {
+const setPositionAppliedDate = async ({ candidateId, positionId }) => {
   const queryText = `
     UPDATE candidate_positions
-    SET saved = now()
+    SET applied = now()
     WHERE user_id = $1
     AND position_id = $2
   `;
@@ -14,4 +14,4 @@ const saveCandidate = async ({ candidateId, positionId }) => {
   });
 };
 
-module.exports = saveCandidate;
+module.exports = setPositionAppliedDate;

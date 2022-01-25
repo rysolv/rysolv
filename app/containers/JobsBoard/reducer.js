@@ -2,6 +2,7 @@
 import produce from 'immer';
 
 import {
+  CHANGE_FILTER,
   FETCH_JOBS_BOARD_FAILURE,
   FETCH_JOBS_BOARD_SUCCESS,
   FETCH_JOBS_BOARD,
@@ -9,6 +10,7 @@ import {
 
 export const initialState = {
   error: false,
+  filter: '',
   loading: {
     fetchJobsBoard: true,
   },
@@ -17,6 +19,11 @@ export const initialState = {
 
 const jobsBoardReducer = produce((draft, { payload, type }) => {
   switch (type) {
+    case CHANGE_FILTER: {
+      const { filter } = payload;
+      draft.filter = filter;
+      break;
+    }
     case FETCH_JOBS_BOARD_FAILURE: {
       draft.error = true;
       draft.loading.fetchJobsBoard = false;

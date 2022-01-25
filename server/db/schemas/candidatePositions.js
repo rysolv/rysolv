@@ -1,10 +1,11 @@
 const alterCandidatePositionsTable = `
   ALTER TABLE candidate_positions
-  ADD COLUMN match_criteria JSONB,
+  ADD COLUMN applied TIMESTAMP DEFAULT NULL,
   ADD COLUMN created_date TIMESTAMP DEFAULT now(),
+  ADD COLUMN match_criteria JSONB,
   ADD COLUMN percent_match FLOAT,
   ADD COLUMN position_id UUID REFERENCES company_positions(id),
-  ADD COLUMN saved BOOLEAN DEFAULT false,
+  ADD COLUMN saved TIMESTAMP DEFAULT NULL,
   ADD COLUMN user_id UUID REFERENCES users(id);
 `;
 

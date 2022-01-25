@@ -3,13 +3,21 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { post } from 'utils/request';
 
 import {
+  closeModalState,
   fetchCompany,
   fetchCompanyFailure,
   fetchCompanySuccess,
   fetchPositionDetailFailure,
   fetchPositionDetailSuccess,
+  notifyCompanyFailure,
+  notifyCompanySuccess,
+  resetFormState,
 } from './actions';
-import { FETCH_COMPANY, FETCH_POSITION_DETAIL } from './constants';
+import {
+  FETCH_COMPANY,
+  FETCH_POSITION_DETAIL,
+  NOTIFY_COMPANY,
+} from './constants';
 
 export function* fetchCompanySaga({ payload }) {
   const { companyId } = payload;
@@ -46,15 +54,16 @@ export function* fetchCompanySaga({ payload }) {
 }
 
 export function* fetchPositionDetailSaga({ payload }) {
-  const { positionId } = payload;
+  const { positionId, userId } = payload;
   const query = `
     query {
-      onePosition(positionId: "${positionId}") {
+      onePosition(positionId: "${positionId}", userId: "${userId}") {
         __typename
         ... on Position {
           companyId
           description
           experience
+          hasApplied
           id
           isActive
           location
@@ -86,7 +95,49 @@ export function* fetchPositionDetailSaga({ payload }) {
   }
 }
 
+export function* notifyCompanySaga({ payload }) {
+  const { body, positionId } = payload;
+  const query = `
+    mutation{
+      createMessage(messageInput: {
+        body: ${JSON.stringify(body)},
+        positionId: "${positionId}",
+      }) {
+        __typename
+        ... on MessageResponse {
+          body
+          createdDate
+          firstName
+          lastName
+          profilePic
+          readDate
+          threadId
+          username
+        }
+        ... on Error {
+          message
+        }
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        createMessage: { __typename, message, threadId },
+      },
+    } = yield call(post, '/graphql', graphql);
+    if (__typename === 'Error') throw message;
+    yield put(notifyCompanySuccess({ threadId }));
+    yield put(resetFormState());
+    yield put(closeModalState());
+  } catch (error) {
+    yield put(notifyCompanyFailure({ error: { message: error } }));
+  }
+}
+
 export default function* watcherSaga() {
   yield takeLatest(FETCH_COMPANY, fetchCompanySaga);
   yield takeLatest(FETCH_POSITION_DETAIL, fetchPositionDetailSaga);
+  yield takeLatest(NOTIFY_COMPANY, notifyCompanySaga);
 }

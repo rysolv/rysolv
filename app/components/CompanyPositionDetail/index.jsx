@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import DOMPurify from 'dompurify';
 import marked from 'marked';
@@ -21,15 +21,24 @@ import {
   PositionDetailContainer,
   PositionDetailContent,
   PositionDetailHeader,
+  StyledPrimaryButton,
   Value,
 } from './styledComponents';
 
-const CompanyPositionDetail = ({ company, position }) => {
+const CompanyPositionDetail = ({
+  company,
+  dispatchOpenModal,
+  isSignedIn,
+  position,
+  surveyComplete,
+}) => {
+  const [modalState, setModalState] = useState('');
   const { logo, name, size, website } = company;
   const { formattedAddress } = company.location || {};
   const {
     description,
     experience,
+    hasApplied,
     location,
     role,
     salary,
@@ -43,26 +52,39 @@ const CompanyPositionDetail = ({ company, position }) => {
   const html = marked(description);
   const cleanHtml = DOMPurify.sanitize(html);
 
+  useEffect(() => {
+    if (isSignedIn && surveyComplete) setModalState('apply');
+    if (isSignedIn && !surveyComplete) setModalState('incomplete');
+    if (!isSignedIn) setModalState('signin');
+  }, []);
+
   return (
     <PositionDetailContainer>
       <PositionDetailHeader>
-        <HeaderWrapper>
-          <ConditionalRender
-            Component={<Logo src={logo} />}
-            shouldRender={!!logo}
-          />
-          <NameWrapper>
-            <div>
-              {name} - {title}
-            </div>
-            <LocationWrapper shouldRemove>
-              {positionFormattedAddress}, {timezone} &#9679; Remote
-            </LocationWrapper>
-          </NameWrapper>
-        </HeaderWrapper>
-        <LocationWrapper>
-          {positionFormattedAddress}, {timezone} &#9679; Remote
-        </LocationWrapper>
+        <div>
+          <HeaderWrapper>
+            <ConditionalRender
+              Component={<Logo src={logo} />}
+              shouldRender={!!logo}
+            />
+            <NameWrapper>
+              <div>
+                {name} - {title}
+              </div>
+              <LocationWrapper shouldRemove>
+                {positionFormattedAddress}, {timezone} &#9679; Remote
+              </LocationWrapper>
+            </NameWrapper>
+          </HeaderWrapper>
+          <LocationWrapper>
+            {positionFormattedAddress}, {timezone} &#9679; Remote
+          </LocationWrapper>
+        </div>
+        <StyledPrimaryButton
+          disabled={hasApplied}
+          label={hasApplied ? 'Applied' : 'Apply'}
+          onClick={() => dispatchOpenModal({ modalState })}
+        />
       </PositionDetailHeader>
       <PositionDetailContent $isFirst>
         <ContentLabelWrapper>
@@ -144,7 +166,10 @@ const CompanyPositionDetail = ({ company, position }) => {
 
 CompanyPositionDetail.propTypes = {
   company: T.object.isRequired,
+  dispatchOpenModal: T.func.isRequired,
+  isSignedIn: T.bool.isRequired,
   position: T.object.isRequired,
+  surveyComplete: T.bool.isRequired,
 };
 
 export default CompanyPositionDetail;

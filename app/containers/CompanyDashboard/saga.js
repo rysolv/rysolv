@@ -337,10 +337,10 @@ export function* fetchCompanySaga({ payload }) {
 }
 
 export function* fetchPositionCandidatesSaga({ payload }) {
-  const { positionId, saved } = payload;
+  const { positionId, step } = payload;
   const query = `
     query {
-      getPositionCandidates(positionId: "${positionId}", saved: ${!!saved}) {
+      getPositionCandidates(positionId: "${positionId}", step: "${step}") {
         firstName
         id
         isSaved

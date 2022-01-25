@@ -106,7 +106,7 @@ const JobApplication = ({
   const questionProps = questions[step - 1];
 
   if (step && view === 0) {
-    return <Redirect to="/jobs/application" />;
+    return <Redirect to="/apply" />;
   }
 
   return (

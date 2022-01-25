@@ -153,7 +153,7 @@ export function* githubSignInSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
     const routeDictionary = {
-      jobs: '/jobs/application?question=1',
+      jobs: '/apply?question=1',
       signin: '/dashboard',
       signup: '/dashboard',
     };
@@ -174,7 +174,7 @@ export function* githubSignInSaga({ payload }) {
         ? githubSignInError
         : githubSignUpError;
     const routeDictionary = {
-      jobs: '/jobs/application',
+      jobs: '/apply',
       signin: '/signin',
       signup: '/signup',
     };

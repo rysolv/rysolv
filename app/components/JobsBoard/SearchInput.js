@@ -7,22 +7,22 @@ import {
   StyledPrimaryAsyncButton,
 } from './styledComponents';
 
-const SearchInput = ({ handleChangeInput, onBlur, value }) => (
+const SearchInput = ({ handleChangeFilter, handleChangeInput, value }) => (
   <SearchInputContainer>
     <Input
       height="4.9rem"
-      onBlur={onBlur}
       onChange={e => handleChangeInput(e.target.value)}
       type="text"
+      placeholder="Search by role, skill, etc."
       value={value}
     />
-    <StyledPrimaryAsyncButton onClick={() => {}} label="Search" />
+    <StyledPrimaryAsyncButton onClick={handleChangeFilter} label="Search" />
   </SearchInputContainer>
 );
 
 SearchInput.propTypes = {
+  handleChangeFilter: T.func.isRequired,
   handleChangeInput: T.func.isRequired,
-  onBlur: T.func.isRequired,
   value: T.string.isRequired,
 };
 

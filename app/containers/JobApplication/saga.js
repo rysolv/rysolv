@@ -119,7 +119,7 @@ export function* submitUserResponseSaga({ payload }) {
     yield put(push('/dashboard'));
     yield put(submitUserResponseSuccess());
   } catch (error) {
-    yield put(push('/jobs/application'));
+    yield put(push('/apply'));
     yield put(submitUserResponseFailure({ error }));
   }
 }

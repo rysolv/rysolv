@@ -108,6 +108,7 @@ class Main extends React.PureComponent {
       basePathname === 'positions' ||
       basePathname === 'profile' ||
       pathname === '/' ||
+      pathname === '/apply' ||
       pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||
       pathname === '/password-reset' ||
@@ -119,10 +120,10 @@ class Main extends React.PureComponent {
     const isPaymentModal = modal === 'fundIssue';
     const hasBlueBackground =
       pathname === '/' ||
+      pathname === '/apply' ||
       pathname === '/company/signup' ||
       pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||
-      pathname === '/jobs/application' ||
       pathname === '/password-reset' ||
       pathname === '/signin' ||
       pathname === '/signup';

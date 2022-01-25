@@ -1,7 +1,9 @@
 const { singleQuery } = require('../../baseQueries');
 
-const getPositionCandidates = async ({ positionId, saved }) => {
-  const filter = saved ? 'AND cp.saved = true' : '';
+const getPositionCandidates = async ({ positionId, step }) => {
+  let filter = '';
+  if (step === 'applied') filter = 'AND cp.applied IS NOT NULL';
+  if (step === 'saved') filter = 'AND cp.saved IS NOT NULL';
 
   const queryText = `
     WITH position AS (
