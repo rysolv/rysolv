@@ -3,6 +3,8 @@ export const excludedPath = [
   'company',
   'contact-us',
   'dashboard',
+  'faq',
+  'how-to',
   'how-we-score-code',
   'jobs',
   'messages',
