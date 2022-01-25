@@ -3,7 +3,7 @@ const { errorLogger } = require('../../../helpers');
 const { getOnePosition } = require('../../../db');
 const { onePositionError } = require('./constants');
 
-const onePosition = async ({ positionId, userId }) => {
+const onePosition = async ({ positionId }, { userId }) => {
   try {
     const {
       companyId,

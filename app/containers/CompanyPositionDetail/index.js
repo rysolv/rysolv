@@ -56,12 +56,12 @@ const CompanyPositionDetail = ({
   notifyCompanyLoading,
   position,
 }) => {
-  const { id, surveyComplete } = activeUser;
+  const { surveyComplete } = activeUser;
   const positionId = getParameterByName('id');
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Position Detail';
-    dispatchFetchPositionDetail({ positionId, userId: id });
+    dispatchFetchPositionDetail({ positionId });
   }, []);
 
   const modalPropsDictionary = {

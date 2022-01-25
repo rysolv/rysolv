@@ -581,7 +581,7 @@ module.exports = buildSchema(`
 
     oneCompany(companyId: ID!): CompanyResult!
     oneIssue(id: ID!): IssueResult!
-    onePosition(positionId: ID!, userId: ID): PositionResult!
+    onePosition(positionId: ID!): PositionResult!
     oneRepo(id: ID!): RepoResult!
     oneUser(userId: ID!): UserResult!
     oneUserSignUp(email: String!): UserResult!

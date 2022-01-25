@@ -54,10 +54,10 @@ export function* fetchCompanySaga({ payload }) {
 }
 
 export function* fetchPositionDetailSaga({ payload }) {
-  const { positionId, userId } = payload;
+  const { positionId } = payload;
   const query = `
     query {
-      onePosition(positionId: "${positionId}", userId: "${userId}") {
+      onePosition(positionId: "${positionId}") {
         __typename
         ... on Position {
           companyId
