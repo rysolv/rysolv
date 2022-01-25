@@ -13,7 +13,7 @@ const getTopLanguages = async ({ userId }) => {
       and language is not null
     group by gf.language
     order by commits desc
-    limit 5
+    limit 8
   `;
   const { rows } = await singleQuery({ queryText });
   return rows;

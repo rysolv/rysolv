@@ -24,8 +24,26 @@ const SkillsWrapper = ({ skills }) => {
     const charge = [];
     const label = labelDictionary[level];
 
-    for (let i = 0; i < Number(level); i++) {
-      charge.push(<Cell key={`${name}-${i}`} />);
+    if (Number(level) === 3) {
+      charge.push([
+        <Cell key={`${name}-1`} />,
+        <Cell key={`${name}-2`} />,
+        <Cell key={`${name}-3`} />,
+      ]);
+    }
+    if (Number(level) === 2) {
+      charge.push([
+        <Cell grey key={`${name}-1`} />,
+        <Cell key={`${name}-2`} />,
+        <Cell key={`${name}-3`} />,
+      ]);
+    }
+    if (Number(level) === 1) {
+      charge.push([
+        <Cell grey key={`${name}-1`} />,
+        <Cell grey key={`${name}-2`} />,
+        <Cell key={`${name}-3`} />,
+      ]);
     }
 
     return (

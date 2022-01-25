@@ -6,6 +6,8 @@ import iconDictionary from 'utils/iconDictionary';
 
 import CommitChart from './CommitChart';
 import SkillsWrapper from './SkillsWrapper';
+import LanguageChart from './LanguageChart';
+import SummaryChart from './SummaryChart';
 
 import {
   AboutContainer,
@@ -82,26 +84,23 @@ const UserProfile = ({ activeUser, data }) => {
         <ProfileSection>
           <AboutContainer>
             Hey I&apos;m tyler and I do cool dev stuff. Founded rysolv.com, a
-            crowdfunding platform for open-source development. Worked for Kumanu
-            for a while;
+            crowdfunding platform for open-source development.
             <br />
             <br />
             Also worked at Kumanu for a while. Backend engineer. JavaScript /
-            Python. Some machine learning stuff.
+            Python.
           </AboutContainer>
         </ProfileSection>
 
         {/* Commit chart */}
         <ProfileSection>
           <CommitChart commits={commits} />
+        </ProfileSection>
+
+        <ProfileSection>
           <DetailCharts>
-            <div>
-              <p>Commits: 1203</p>
-              <p>Pull requests: 308</p>
-              <p>Total stars: 102</p>
-              <p>Contibuted to: 44</p>
-            </div>
-            <img src={require('./temp.png')} alt="hi" />
+            <SummaryChart githubStats={githubStats} />
+            <LanguageChart languages={languageByCommits} />
           </DetailCharts>
         </ProfileSection>
 

@@ -3,27 +3,37 @@ import React from 'react';
 import T from 'prop-types';
 
 import {
-  LanguageContainer,
   LanguageBar,
-  Commits,
+  LanguageContainer,
   LanguageRow,
+  Percentage,
+  TitleRow,
 } from './styledComponents';
 
-const SkillsWrapper = ({ skills }) => {
-  const skillComponents = skills.map(({ name, commits }) => {
+const LanguageChart = ({ languages }) => {
+  const graph = languages.map(({ commits, language }) => {
+    const width = (commits / 2500) * 100;
     return (
-      <LanguageRow key={name}>
-        <LanguageBar>JavaScript</LanguageBar>
-        <Commits>1,203</Commits>
+      <LanguageRow key={language}>
+        <LanguageBar width={width}>{language}</LanguageBar>
+        <Percentage>{`${parseFloat(width).toFixed(1)}%`}</Percentage>
       </LanguageRow>
     );
   });
 
-  return <LanguageContainer>{skillComponents}</LanguageContainer>;
+  return (
+    <LanguageContainer>
+      <TitleRow>
+        <div>Commits by Language</div>
+        <div>%</div>
+      </TitleRow>
+      {graph}
+    </LanguageContainer>
+  );
 };
 
-SkillsWrapper.propTypes = {
-  skills: T.array,
+LanguageChart.propTypes = {
+  languages: T.array,
 };
 
-export default SkillsWrapper;
+export default LanguageChart;

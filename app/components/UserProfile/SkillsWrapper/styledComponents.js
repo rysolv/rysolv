@@ -13,9 +13,9 @@ export const BatteryLabel = styled.div`
 `;
 
 export const Cell = styled.div`
+  background: ${({ grey }) => (grey ? '#d7d7d7' : darkBlueColor)};
   height: 1rem;
   width: 3rem;
-  background: ${darkBlueColor};
   margin: 0 0.1rem;
 `;
 

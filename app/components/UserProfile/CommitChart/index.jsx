@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Chart from 'chart.js';
 import T from 'prop-types';
 
-import { StyledCanvas } from './styledComponents';
+import { ChartContainer, StyledCanvas } from './styledComponents';
 
 const CommitChart = ({ commits }) => {
   const { labels, data } = commits;
@@ -19,14 +19,19 @@ const CommitChart = ({ commits }) => {
           {
             label: 'commits',
             data,
-            backgroundColor: ['rgba(75, 192, 192, 0.2)'],
-            borderColor: ['rgba(75, 192, 192, 1)'],
+            backgroundColor: ['rgb(53 115 255 / 20%)'],
+            borderColor: ['rgb(53 115 255 / 100%)'],
             borderWidth: 1,
             fill: true,
           },
         ],
       },
       options: {
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
         scales: {
           y: {
             beginAtZero: true,
@@ -35,7 +40,12 @@ const CommitChart = ({ commits }) => {
       },
     });
   }, []);
-  return <StyledCanvas id="commit-chart" />;
+  return (
+    <ChartContainer>
+      Total Commits
+      <StyledCanvas id="commit-chart" />
+    </ChartContainer>
+  );
 };
 
 CommitChart.propTypes = {

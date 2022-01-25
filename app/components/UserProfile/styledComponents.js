@@ -45,6 +45,7 @@ export const ContributionContainer = styled.div``;
 
 export const DetailCharts = styled.div`
   display: flex;
+  margin-top: 2rem;
 
   ${laptop} {
     flex-direction: column;
