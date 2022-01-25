@@ -12,9 +12,9 @@ import {
   QuestionWrapper,
   StyledA,
   StyledBaseExpansionPanel,
-  StyledFaqContainer,
   StyledQuestionContainer,
   TopQuestionIntro,
+  ViewContainer,
 } from './styledComponent';
 
 const ExpansionPanel = withStyles({
@@ -40,8 +40,9 @@ const Faq = () => {
     window.scrollTo(0, 0);
     document.title = 'FAQ';
   }, []);
+
   return (
-    <StyledFaqContainer>
+    <ViewContainer>
       <FaqHeader>FAQ</FaqHeader>
       <StyledQuestionContainer>
         <QuestionIntroWrapper>
@@ -166,7 +167,7 @@ const Faq = () => {
           </QuestionGroup>
         </QuestionWrapper>
       </StyledQuestionContainer>
-    </StyledFaqContainer>
+    </ViewContainer>
   );
 };
 

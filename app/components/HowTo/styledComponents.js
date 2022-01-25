@@ -7,10 +7,11 @@ import {
   headerFontSize,
   hoverLinkColor,
   textColor,
+  whiteColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile, tablet } = mediaQueriesByDevice;
+const { mobile, laptop, tablet } = mediaQueriesByDevice;
 
 export const HeaderDescription = styled.div`
   width: 85%;
@@ -23,7 +24,7 @@ export const HeaderDescription = styled.div`
 export const HeaderWrapper = styled.div`
   color: ${textColor};
   font-size: ${headerFontSize};
-  margin: 5rem 0 2rem 0;
+  margin: 2rem 0;
   text-align: left;
   width: 100%;
 
@@ -134,16 +135,6 @@ export const StyledExternalLink = styled.a`
   }
 `;
 
-export const StyledHowContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-
-  ${mobile} {
-    margin: 0 1rem;
-  }
-`;
-
 export const StyledImageWrapper = styled(ImageWrapper)`
   box-shadow: none;
   height: auto;
@@ -155,5 +146,17 @@ export const StyledInternalLink = styled(Link)`
 
   &:hover {
     text-decoration: underline;
+  }
+`;
+
+export const ViewContainer = styled.div`
+  background: ${whiteColor};
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 12rem 5.6rem;
+  width: 100%;
+
+  ${laptop} {
+    padding: 5rem 3rem 5.6rem;
   }
 `;
