@@ -128,9 +128,9 @@ export function* notifyCompanySaga({ payload }) {
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
+    yield put(closeModalState());
     yield put(notifyCompanySuccess());
     yield put(resetFormState());
-    yield put(closeModalState());
   } catch (error) {
     yield put(notifyCompanyFailure({ error: { message: error } }));
   }

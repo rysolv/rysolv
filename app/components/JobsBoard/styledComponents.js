@@ -42,9 +42,7 @@ const baseInputStyle = css`
 `;
 
 export const CommonKeywordsWrapper = styled.div`
-  margin-bottom: 3.2rem;
-  margin-left: -0.4rem;
-  margin-top: 1.6rem;
+  margin: 1.6rem 0 3.2rem -0.4rem;
 `;
 
 export const Input = styled.input`
@@ -111,8 +109,8 @@ export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   }
 
   @media (max-width: 453px) {
-    width: 100%;
     margin-left: 0;
     margin-top: 1.6rem;
+    width: 100%;
   }
 `;

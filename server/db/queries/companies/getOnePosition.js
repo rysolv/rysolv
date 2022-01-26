@@ -1,22 +1,22 @@
 const { singleQuery } = require('../../baseQueries');
 
 const getOnePosition = async ({ positionId, userId }) => {
-  const getIfUserApplied = userId
+  const getHasApplied = userId
     ? `
-  hasApplied AS (
-    SELECT CASE WHEN candidate_positions.applied_date IS NOT NULL THEN true ELSE false END AS "hasApplied"
-    FROM candidate_positions
-    JOIN company_positions ON company_positions.id = candidate_positions.position_id
-    WHERE company_positions.id = $1
-    AND candidate_positions.user_id = $2
-  ),`
+    hasApplied AS (
+      SELECT CASE WHEN candidate_positions.applied_date IS NOT NULL THEN true ELSE false END AS "hasApplied"
+      FROM candidate_positions
+      JOIN company_positions ON company_positions.id = candidate_positions.position_id
+      WHERE company_positions.id = $1
+      AND candidate_positions.user_id = $2
+    ),`
     : '';
-  const getIfUserApplied2 = userId ? '(SELECT * from hasApplied),' : '';
+  const selectHasApplied = userId ? '(SELECT * from hasApplied),' : '';
   const values = userId ? [positionId, userId] : [positionId];
 
   const queryText = `
     WITH
-    ${getIfUserApplied}
+    ${getHasApplied}
     companyId AS (
       SELECT c.id AS "companyId"
       FROM companies c
@@ -72,7 +72,7 @@ const getOnePosition = async ({ positionId, userId }) => {
       WHERE pts.position_id = $1
     )
     SELECT
-      ${getIfUserApplied2}
+      ${selectHasApplied}
       (SELECT * FROM companyId),
       (SELECT * FROM location),
       (SELECT "positionData" FROM positionData),

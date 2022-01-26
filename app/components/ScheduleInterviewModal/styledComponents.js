@@ -21,10 +21,10 @@ export const ButtonGroup = styled.div`
 export const InputError = styled.div``;
 
 export const MarkdownHeader = styled.div`
-  font-size: 1.6rem;
   color: ${textColor};
-  margin-bottom: 0.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
+  margin-bottom: 0.4rem;
 `;
 
 export const ModalContainer = styled.div`

@@ -92,8 +92,8 @@ export const JobCompany = styled.div`
 `;
 
 export const JobCompanyWrapper = styled.div`
-  display: flex;
   align-items: center;
+  display: flex;
 `;
 
 export const JobContent = styled.div`

@@ -76,11 +76,11 @@ const UserRoutes = () => (
     <Route exact path="/issues/add" component={PrivateIssuesAdd} />
     <Route exact path="/issues/detail/:id" component={PublicIssuesDetail} />
     <Route exact path="/issues/search/:searchValue" component={PublicOverview} />
-    <Route exact path='/jobs' component={PublicJobsBoard} />
+    <Route exact path="/jobs" component={PublicJobsBoard} />
+    <Route exact path="/jobs/:positionId" component={PublicCompanyPositionDetail} />
     <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/messages/:threadId?" component={PrivateMessages} />
     <Route exact path="/password-reset" component={PublicSignIn} />
-    <Route exact path="/jobs/:positionId" component={PublicCompanyPositionDetail} />
     <Route exact path="/pricing" component={PublicPricing} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
     <Route exact path="/profile/:user" component={PublicUserProfile} />

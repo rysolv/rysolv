@@ -93,8 +93,8 @@ const companyPositionDetailReducer = produce((draft, { payload, type }) => {
       break;
     }
     case NOTIFY_COMPANY_SUCCESS: {
-      draft.position.hasApplied = true;
       draft.loading.notifyCompany = false;
+      draft.position.hasApplied = true;
       break;
     }
     case NOTIFY_COMPANY: {

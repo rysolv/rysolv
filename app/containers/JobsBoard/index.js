@@ -3,8 +3,8 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { withRouter } from 'react-router-dom';
 import { push } from 'connected-react-router';
+import { withRouter } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
 import JobsBoardView from 'components/JobsBoard';

@@ -83,8 +83,8 @@ const CreatePosition = ({
 
             return (
               <OptionWrapper
-                key={`option-${id}`}
                 $isFlex={id === 'postToJobBoard'}
+                key={`option-${id}`}
               >
                 <OptionLabel>{question}</OptionLabel>
                 <OptionDescription>{description}</OptionDescription>

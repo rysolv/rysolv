@@ -12,11 +12,8 @@ export function changeFilter(payload) {
   };
 }
 
-export function fetchJobsBoardFailure(payload) {
-  return {
-    payload,
-    type: FETCH_JOBS_BOARD_FAILURE,
-  };
+export function fetchJobsBoardFailure() {
+  return { type: FETCH_JOBS_BOARD_FAILURE };
 }
 
 export function fetchJobsBoardSuccess(payload) {
