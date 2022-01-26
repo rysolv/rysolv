@@ -28,6 +28,7 @@ import {
 const CompanyPositionDetail = ({
   company,
   dispatchOpenModal,
+  isCompany,
   isSignedIn,
   position,
   surveyComplete,
@@ -51,6 +52,10 @@ const CompanyPositionDetail = ({
 
   const html = marked(description);
   const cleanHtml = DOMPurify.sanitize(html);
+
+  const disabled = isCompany || hasApplied;
+  const userLabel = hasApplied ? 'Applied' : 'Apply';
+  const buttonLabel = isCompany ? 'Unavailable on company accounts' : userLabel;
 
   useEffect(() => {
     if (isSignedIn && surveyComplete) setModalState('apply');
@@ -81,8 +86,9 @@ const CompanyPositionDetail = ({
           </LocationWrapper>
         </div>
         <StyledPrimaryButton
-          disabled={hasApplied}
-          label={hasApplied ? 'Applied' : 'Apply'}
+          disabled={disabled}
+          isCompany={isCompany}
+          label={buttonLabel}
           onClick={() => dispatchOpenModal({ modalState })}
         />
       </PositionDetailHeader>
@@ -167,6 +173,7 @@ const CompanyPositionDetail = ({
 CompanyPositionDetail.propTypes = {
   company: T.object.isRequired,
   dispatchOpenModal: T.func.isRequired,
+  isCompany: T.bool.isRequired,
   isSignedIn: T.bool.isRequired,
   position: T.object.isRequired,
   surveyComplete: T.bool.isRequired,

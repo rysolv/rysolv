@@ -1,3 +1,4 @@
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 import { PrimaryButton } from 'components/base_ui';
@@ -23,7 +24,6 @@ const baseButtonStyle = css`
   line-height: 1.936rem;
   margin: 0;
   text-transform: initial;
-  width: 10rem;
 `;
 
 const baseLabelStyle = css`
@@ -81,6 +81,12 @@ export const Description = styled.div`
 export const HeaderWrapper = styled.div`
   align-items: center;
   display: flex;
+  margin-bottom: 1rem;
+  margin-right: 1.6rem;
+
+  ${mobile} {
+    margin-right: 0;
+  }
 `;
 
 export const HorizontalDivider = styled.div`
@@ -155,11 +161,12 @@ export const PositionDetailHeader = styled.div`
   align-items: center;
   color: ${blueColor};
   display: flex;
+  flex-wrap: wrap;
   font-size: 3.2rem;
   font-weight: 700;
   justify-content: space-between;
   line-height: 3.36rem;
-  padding: 2rem 0;
+  padding: 2rem 0 1rem;
 
   ${mobile} {
     align-items: normal;
@@ -167,11 +174,14 @@ export const PositionDetailHeader = styled.div`
   }
 `;
 
-export const StyledPrimaryButton = styled(PrimaryButton)`
+export const StyledPrimaryButton = styled(({ isCompany, ...restProps }) => (
+  <PrimaryButton {...restProps} />
+))`
   ${baseButtonStyle}
   background-color: ${darkBlueColor};
   color: ${whiteColor};
-  margin-left: 1.6rem;
+  margin-bottom: 1rem;
+  width: ${({ isCompany }) => (isCompany ? 'auto' : '10rem')};
 
   &:hover {
     background-color: ${darkBlueColor};
@@ -179,7 +189,7 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   }
 
   ${mobile} {
-    margin: 3rem 0 0;
+    margin: 2rem 0 0;
     width: 100%;
   }
 `;

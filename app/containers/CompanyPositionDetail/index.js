@@ -64,6 +64,8 @@ const CompanyPositionDetail = ({
     dispatchFetchPositionDetail({ positionId });
   }, []);
 
+  const isCompany = !!activeUser.company;
+
   const modalPropsDictionary = {
     apply: {
       Component: ApplyJobModal,
@@ -110,6 +112,7 @@ const CompanyPositionDetail = ({
           propsToPassDown={{
             company,
             dispatchOpenModal,
+            isCompany,
             isSignedIn,
             position,
             surveyComplete,
