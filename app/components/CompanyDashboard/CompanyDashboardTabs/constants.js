@@ -1,5 +1,5 @@
 export const dashboardTabsDictionary = {
-  all: 0,
-  saved: 1,
-  applied: 2,
+  all: 1,
+  applied: 0,
+  saved: 2,
 };

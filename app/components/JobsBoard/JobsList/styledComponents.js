@@ -7,6 +7,9 @@ import {
   textColor,
   whiteColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { laptop, mobile } = mediaQueriesByDevice;
 
 const baseInputStyle = css`
   background: ${candidateGreyColor};
@@ -44,6 +47,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
 `;
 
 export const HorizontalDivider = styled.div`
@@ -51,6 +55,7 @@ export const HorizontalDivider = styled.div`
   border-color: #e1e2e3;
   border-style: dashed;
   border-top-width: 0.2rem;
+  display: ${({ isLast }) => (!isLast ? 'block' : 'none')};
   flex-grow: 1;
   margin: 0.4rem 0 1.6rem;
 `;
@@ -70,48 +75,79 @@ export const JobCard = styled.div`
   background: ${whiteColor};
   display: flex;
   position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  ${laptop} {
+    padding: 1.6rem 0;
+  }
 `;
 
 export const JobCompany = styled.div`
   color: ${blueColor};
   font-size: 2rem;
   font-weight: 700;
-  line-height: 3.45rem;
+`;
+
+export const JobCompanyWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const JobContent = styled.div`
   display: flex;
+  width: 100%;
 `;
 
 export const JobsListContainer = styled.div``;
 
 export const JobLocation = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
+
+  span {
+    margin-right: 0.3rem;
+  }
 `;
 
 export const JobLogo = styled.img`
-  ${baseLogoStyle}
+  ${baseLogoStyle};
+
+  ${mobile} {
+    display: none;
+  }
 `;
 
 export const JobLogoWrapper = styled.div`
-  ${baseLogoStyle}
+  ${baseLogoStyle};
   align-items: center;
   display: flex;
   font-size: 4.6rem;
   justify-content: center;
+
+  ${mobile} {
+    display: none;
+  }
 `;
 
 export const JobSalary = styled.div`
   margin-right: 1.4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
+
+  span {
+    margin-right: 0.3rem;
+  }
 `;
 
 export const JobTitle = styled.div`
   color: ${blueColor};
   font-size: 2rem;
   font-weight: 700;
-  line-height: 3.45rem;
-  margin-left: 0.3rem;
 `;
 
 export const KeywordWrapper = styled.div`
@@ -121,6 +157,8 @@ export const KeywordWrapper = styled.div`
 
 export const MiddleContentWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  margin-left: 0.2rem;
   margin: 0.6rem 0;
 `;
 
@@ -150,11 +188,12 @@ export const StyledParagraph = styled.p`
 `;
 
 export const TextWrapper = styled.div`
-  padding: 0.6rem 0.2rem 0;
+  padding: 0.4rem 0.2rem 0;
 `;
 
 export const TopContentWrapper = styled.div`
   align-items: center;
   display: flex;
-  white-space: nowrap;
+  flex-flow: wrap;
+  margin-left: 0.4rem;
 `;

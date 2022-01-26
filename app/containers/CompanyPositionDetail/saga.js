@@ -124,11 +124,11 @@ export function* notifyCompanySaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        createMessage: { __typename, message, threadId },
+        createMessage: { __typename, message },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
-    yield put(notifyCompanySuccess({ threadId }));
+    yield put(notifyCompanySuccess());
     yield put(resetFormState());
     yield put(closeModalState());
   } catch (error) {

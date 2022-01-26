@@ -1,30 +1,29 @@
 import React from 'react';
 import T from 'prop-types';
 
-import { PrimaryButton } from 'components/base_ui';
-
 import {
-  ButtonGroup,
-  SigninContainer,
-  StyledBodyMessage,
+  ButtonWrapper,
+  ModalContainer,
   StyledPrimaryButton,
+  StyledSecondaryButton,
   StyledTitle,
+  TextWrapper,
 } from './styledComponents';
 
 const SigninModal = ({ handleClose, handleRedirect }) => (
-  <SigninContainer>
+  <ModalContainer>
     <StyledTitle>Sign in to continue...</StyledTitle>
-    <StyledBodyMessage>
+    <TextWrapper>
       You must be signed in your Rysolv account to use this feature.
-    </StyledBodyMessage>
-    <ButtonGroup>
-      <StyledPrimaryButton label="Cancel" onClick={handleClose} />
-      <PrimaryButton
-        label="Sign In"
+    </TextWrapper>
+    <ButtonWrapper>
+      <StyledSecondaryButton label="Close" onClick={handleClose} />
+      <StyledPrimaryButton
+        label="Sign in"
         onClick={() => handleRedirect('/signin')}
       />
-    </ButtonGroup>
-  </SigninContainer>
+    </ButtonWrapper>
+  </ModalContainer>
 );
 
 SigninModal.propTypes = {

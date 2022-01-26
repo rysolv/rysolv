@@ -93,6 +93,10 @@ export const KeywordTag = styled.div`
 
 export const SearchInputContainer = styled.div`
   display: flex;
+
+  @media (max-width: 453px) {
+    flex-direction: column;
+  }
 `;
 
 export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
@@ -104,5 +108,11 @@ export const StyledPrimaryAsyncButton = styled(PrimaryAsyncButton)`
   &:hover {
     background-color: ${darkBlueColor};
     color: ${whiteColor};
+  }
+
+  @media (max-width: 453px) {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 1.6rem;
   }
 `;

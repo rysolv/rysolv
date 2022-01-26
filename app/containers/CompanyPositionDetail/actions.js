@@ -73,11 +73,8 @@ export function notifyCompanyFailure(payload) {
   };
 }
 
-export function notifyCompanySuccess(payload) {
-  return {
-    payload,
-    type: NOTIFY_COMPANY_SUCCESS,
-  };
+export function notifyCompanySuccess() {
+  return { type: NOTIFY_COMPANY_SUCCESS };
 }
 
 export function notifyCompany(payload) {

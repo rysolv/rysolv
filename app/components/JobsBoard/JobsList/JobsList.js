@@ -10,6 +10,7 @@ import {
   HorizontalDivider,
   JobCard,
   JobCompany,
+  JobCompanyWrapper,
   JobContent,
   JobLocation,
   JobLogo,
@@ -28,23 +29,26 @@ import { KeywordTag } from '../styledComponents';
 const JobsList = ({ handleNav, jobs, setSearchTerm }) => (
   <JobsListContainer>
     {jobs.map(
-      ({
-        companyLogo,
-        companyName,
-        createdDate,
-        id,
-        location,
-        positionData: { salary, title },
-        role,
-        skills,
-      }) => {
+      (
+        {
+          companyLogo,
+          companyName,
+          createdDate,
+          id,
+          location,
+          positionData: { salary, title },
+          role,
+          skills,
+        },
+        index,
+      ) => {
         const firstLetterOfTitle = title.charAt(0);
         const formattedSkills = skills.map(({ name }) => name);
         const keywordArray = [...role, ...formattedSkills];
 
         return (
-          <Fragment>
-            <JobCard key={`job-${id}`}>
+          <Fragment key={`job-${id}`}>
+            <JobCard>
               <ConditionalRender
                 Component={<JobLogo src={companyLogo} />}
                 FallbackComponent={
@@ -59,8 +63,10 @@ const JobsList = ({ handleNav, jobs, setSearchTerm }) => (
                       {title}
                     </JobTitle>
                     &nbsp;
-                    <TextWrapper>at</TextWrapper>&nbsp;
-                    <JobCompany>{companyName}</JobCompany>
+                    <JobCompanyWrapper>
+                      <TextWrapper>at</TextWrapper>&nbsp;
+                      <JobCompany>{companyName}</JobCompany>
+                    </JobCompanyWrapper>
                   </TopContentWrapper>
                   <MiddleContentWrapper>
                     <JobSalary>
@@ -92,7 +98,7 @@ const JobsList = ({ handleNav, jobs, setSearchTerm }) => (
                 <PostedDate>{generatePostedDate(createdDate)}</PostedDate>
               </JobContent>
             </JobCard>
-            <HorizontalDivider />
+            <HorizontalDivider isLast={jobs.length - 1 === index} />
           </Fragment>
         );
       },

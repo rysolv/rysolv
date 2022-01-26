@@ -162,6 +162,7 @@ export const PositionDetailHeader = styled.div`
   padding: 2rem 0;
 
   ${mobile} {
+    align-items: normal;
     flex-direction: column;
   }
 `;

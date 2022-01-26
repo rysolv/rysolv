@@ -80,7 +80,7 @@ const CompanyPositionDetail = ({
         positionId,
       },
     },
-    complete: {
+    incomplete: {
       Component: CompleteApplicationModal,
       open: isModalOpen,
       propsToPassDown: {

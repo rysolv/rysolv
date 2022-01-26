@@ -49,6 +49,7 @@ export const ModalHeader = styled.div`
 export const ModalSubheader = styled.div`
   color: ${textColor};
   font-size: 1.6rem;
+  line-height: 2.4rem;
   padding: 0.8rem 0 1.6rem;
 `;
 

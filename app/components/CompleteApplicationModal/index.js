@@ -4,27 +4,34 @@ import T from 'prop-types';
 import {
   ButtonWrapper,
   ModalContainer,
-  StyledBodyMessage,
-  StyledPrimaryAsyncButton,
   StyledPrimaryButton,
+  StyledSecondaryButton,
   StyledTitle,
+  TextWrapper,
 } from './styledComponents';
 
-const CompleteApplicationModal = ({ handleClose, handleNav }) => (
-  <ModalContainer>
-    <StyledTitle>Complete application to continue...</StyledTitle>
-    <StyledBodyMessage>
-      You must complete the job application to apply to this position.
-    </StyledBodyMessage>
-    <ButtonWrapper>
-      <StyledPrimaryButton label="Cancel" onClick={handleClose} />
-      <StyledPrimaryAsyncButton
-        label="Start application"
-        onClick={() => handleNav('/apply')}
-      />
-    </ButtonWrapper>
-  </ModalContainer>
-);
+const CompleteApplicationModal = ({ handleClose, handleNav }) => {
+  const handleStartApplication = () => {
+    handleClose();
+    handleNav('/apply');
+  };
+
+  return (
+    <ModalContainer>
+      <StyledTitle>Complete application to continue...</StyledTitle>
+      <TextWrapper>
+        You must complete the job application to apply to this position.
+      </TextWrapper>
+      <ButtonWrapper>
+        <StyledSecondaryButton label="Cancel" onClick={handleClose} />
+        <StyledPrimaryButton
+          label="Start application"
+          onClick={handleStartApplication}
+        />
+      </ButtonWrapper>
+    </ModalContainer>
+  );
+};
 
 CompleteApplicationModal.propTypes = {
   handleClose: T.func.isRequired,

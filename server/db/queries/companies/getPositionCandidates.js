@@ -31,8 +31,8 @@ const getPositionCandidates = async ({ positionId, step }) => {
       LIMIT 1
     )
     SELECT
+      (SELECT CASE WHEN cp.saved IS NOT NULL THEN true ELSE false END AS "isSaved"),
       cp.percent_match AS "percentMatch",
-      cp.saved as "isSaved",
       l.formatted_address AS "location",
       m.thread_id AS "threadId",
       p.position_id,
