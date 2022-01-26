@@ -79,7 +79,7 @@ const CompanyRoutes = () => (
     <Route exact path="/messages/:threadId?" component={PrivateMessages} />
     <Route exact path="/jobs" component={PublicJobsBoard} />
     <Route exact path="/password-reset" component={PublicSignIn} />
-    <Route exact path="/positions" component={PublicCompanyPositionDetail} />
+    <Route exact path="/jobs/:positionId" component={PublicCompanyPositionDetail} />
     <Route exact path="/pricing" component={PublicPricing} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
     <Route exact path="/profile/:user" component={PublicUserProfile} />

@@ -59,7 +59,7 @@ const JobsList = ({ handleNav, jobs, setSearchTerm }) => (
               <JobContent>
                 <ContentWrapper>
                   <TopContentWrapper>
-                    <JobTitle onClick={() => handleNav(`/positions?id=${id}`)}>
+                    <JobTitle onClick={() => handleNav(`/jobs/${id}`)}>
                       {title}
                     </JobTitle>
                     &nbsp;

@@ -13,7 +13,6 @@ import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
 import CompanyPositionDetailView from 'components/CompanyPositionDetail';
 import { makeSelectAuth } from 'containers/Auth/selectors';
-import { getParameterByName } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -30,6 +29,7 @@ import reducer from './reducer';
 import saga from './saga';
 import {
   makeSelectCompanyPositionDetail,
+  makeSelectCompanyPositionDetailId,
   makeSelectCompanyPositionDetailLoading,
 } from './selectors';
 import { ViewContainer } from './styledComponents';
@@ -55,9 +55,9 @@ const CompanyPositionDetail = ({
   modal,
   notifyCompanyLoading,
   position,
+  positionId,
 }) => {
   const { surveyComplete } = activeUser;
-  const positionId = getParameterByName('id');
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Position Detail';
@@ -142,6 +142,7 @@ CompanyPositionDetail.propTypes = {
   modal: T.string.isRequired,
   notifyCompanyLoading: T.bool.isRequired,
   position: T.object.isRequired,
+  positionId: T.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -165,6 +166,7 @@ const mapStateToProps = createStructuredSelector({
   modal: makeSelectCompanyPositionDetail('modal'),
   notifyCompanyLoading: makeSelectCompanyPositionDetailLoading('notifyCompany'),
   position: makeSelectCompanyPositionDetail('position'),
+  positionId: makeSelectCompanyPositionDetailId(),
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -33,7 +33,7 @@ const PositionCard = ({ handleNav, position }) => {
     <CandidateCardContainer>
       <CandidateCardContent
         isPosition
-        onClick={() => handleNav(`/positions?id=${positionId}`)}
+        onClick={() => handleNav(`/jobs/${positionId}`)}
       >
         <CandidateCardUserInfo>
           <NameWrapper>{title}</NameWrapper>
