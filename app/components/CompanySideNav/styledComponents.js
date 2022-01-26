@@ -100,7 +100,6 @@ export const PositionButton = styled.button`
   border: none;
   color: ${({ isSelected }) => (isSelected ? whiteColor : blueColor)};
   display: flex;
-  font-family: monospace;
   font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: -0.025rem;
@@ -118,6 +117,7 @@ export const PositionButton = styled.button`
   svg {
     font-size: 1.6rem;
     margin-right: 0.8rem;
+    margin-top: 0.2rem;
   }
 `;
 
