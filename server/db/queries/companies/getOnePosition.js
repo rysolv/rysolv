@@ -4,7 +4,7 @@ const getOnePosition = async ({ positionId, userId }) => {
   const getIfUserApplied = userId
     ? `
   hasApplied AS (
-    SELECT CASE WHEN candidate_positions.applied IS NOT NULL THEN true ELSE false END AS "hasApplied"
+    SELECT CASE WHEN candidate_positions.applied_date IS NOT NULL THEN true ELSE false END AS "hasApplied"
     FROM candidate_positions
     JOIN company_positions ON company_positions.id = candidate_positions.position_id
     WHERE company_positions.id = $1
