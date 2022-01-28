@@ -31,9 +31,12 @@ export const HorizontalDivider = styled.div`
 `;
 
 export const InternalLink = styled(
-  ({ shouldRemoveFirst, shouldRemoveSecond, ...restProps }) => (
-    <BaseLink {...restProps} />
-  ),
+  ({
+    shouldRemoveFirst,
+    shouldRemoveSecond,
+    shouldRemoveThird,
+    ...restProps
+  }) => <BaseLink {...restProps} />,
 )`
   color: ${whiteColor};
   font-size: 1.6rem;
@@ -45,14 +48,21 @@ export const InternalLink = styled(
     color: ${whiteColor};
   }
 
-  @media (max-width: 750px) {
+  @media (max-width: 800px) {
     display: ${({ shouldRemoveFirst }) =>
       shouldRemoveFirst ? 'none' : 'block'};
   }
 
-  @media (max-width: 470px) {
+  @media (max-width: 750px) {
     display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
       shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
+  }
+
+  @media (max-width: 470px) {
+    display: ${({ shouldRemoveFirst, shouldRemoveSecond, shouldRemoveThird }) =>
+      shouldRemoveFirst || shouldRemoveSecond || shouldRemoveThird
+        ? 'none'
+        : 'block'};
   }
 `;
 
@@ -99,14 +109,21 @@ export const MessageLink = styled(InternalLink)`
   margin-right: 1.2rem;
   padding-right: 0.5rem;
 
-  @media (max-width: 750px) {
+  @media (max-width: 800px) {
     display: ${({ shouldRemoveFirst }) =>
       shouldRemoveFirst ? 'none' : 'block'};
   }
 
-  @media (max-width: 470px) {
+  @media (max-width: 750px) {
     display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
       shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
+  }
+
+  @media (max-width: 470px) {
+    display: ${({ shouldRemoveFirst, shouldRemoveSecond, shouldRemoveThird }) =>
+      shouldRemoveFirst || shouldRemoveSecond || shouldRemoveThird
+        ? 'none'
+        : 'block'};
   }
 `;
 
@@ -211,17 +228,28 @@ export const UnreadMessages = styled.div`
   text-align: center;
   top: -1.2rem;
 
-  @media (max-width: 750px) {
+  @media (max-width: 800px) {
     top: ${({ shouldRemoveFirst }) =>
       shouldRemoveFirst ? '-2.5rem' : '-1.2rem'};
     right: ${({ shouldRemoveFirst }) => (shouldRemoveFirst ? '-8.5rem' : '0')};
   }
 
-  @media (max-width: 470px) {
+  @media (max-width: 750px) {
     top: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
       shouldRemoveFirst || shouldRemoveSecond ? '-2.5rem' : '-1.2rem'};
     right: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
-      shouldRemoveFirst || shouldRemoveSecond ? '-6.4rem' : '0'};
+      shouldRemoveFirst || shouldRemoveSecond ? '-8.5rem' : '0'};
+  }
+
+  @media (max-width: 470px) {
+    top: ${({ shouldRemoveFirst, shouldRemoveSecond, shouldRemoveThird }) =>
+      shouldRemoveFirst || shouldRemoveSecond || shouldRemoveThird
+        ? '-2.5rem'
+        : '-1.2rem'};
+    right: ${({ shouldRemoveFirst, shouldRemoveSecond, shouldRemoveThird }) =>
+      shouldRemoveFirst || shouldRemoveSecond || shouldRemoveThird
+        ? '-6.4rem'
+        : '0'};
   }
 `;
 

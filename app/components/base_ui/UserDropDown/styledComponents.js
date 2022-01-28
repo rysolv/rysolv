@@ -17,8 +17,8 @@ export const HorizontalDivider = styled.div`
 
 export const MenuInternalLink = styled(BaseLink)`
   color: ${darkBlueColor};
-  display: ${({ shouldRemoveFirst, shouldRemoveSecond }) =>
-    shouldRemoveFirst || shouldRemoveSecond ? 'none' : 'block'};
+  display: ${({ shouldRemoveFirst, shouldRemoveSecond, shouldRemoveThird }) =>
+    shouldRemoveFirst || shouldRemoveSecond || shouldRemoveThird ? 'none' : 'block'};
   font-size: 1.376rem;
   font-weight: 400;
   line-height: 1.665rem;
@@ -28,9 +28,14 @@ export const MenuInternalLink = styled(BaseLink)`
     color: ${darkBlueColor};
   }
 
+  @media (max-width: 800px) {
+    display: ${({ shouldRemoveSecond, shouldRemoveThird }) =>
+    shouldRemoveSecond || shouldRemoveThird ? 'none' : 'block'};
+  }
+
   @media (max-width: 750px) {
-    display: ${({ shouldRemoveSecond }) =>
-    shouldRemoveSecond ? 'none' : 'block'};
+    display: ${({ shouldRemoveThird }) =>
+    shouldRemoveThird ? 'none' : 'block'};
   }
 
   @media (max-width: 470px) {

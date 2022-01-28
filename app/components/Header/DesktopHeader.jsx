@@ -53,6 +53,7 @@ const DesktopHeader = ({
               label="Dashboard"
               path={isCompany ? '/company/dashboard' : '/dashboard'}
             />
+            <NavLink label="Jobs" path="/jobs" />
             <AboutDropdown handleNav={handleNav} />
             <UserActivityDropdown handleNav={handleNav} />
 

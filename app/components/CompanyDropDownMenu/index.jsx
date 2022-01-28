@@ -36,8 +36,9 @@ const CompanyDropDownMenu = ({ anchorEl, handleClose, handleSignout }) => (
     <MenuInternalLink
       label="Dashboard"
       path="/company/dashboard"
-      shouldRemoveSecond
+      shouldRemoveThird
     />
+    <MenuInternalLink label="Jobs" path="/jobs" shouldRemoveSecond />
     <MenuInternalLink label="Messages" path="/messages" shouldRemoveFirst />
     <MenuInternalLink label="Payments" path="/company/settings/payments" />
     <MenuInternalLink label="Account &amp; Settings" path="/company/settings" />
