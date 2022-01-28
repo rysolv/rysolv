@@ -61,7 +61,7 @@ const CompanyDashboard = ({
       const { step } = filter;
       dispatchFetchPositionCandidates({
         positionId: selectedPosition,
-        saved: step === 'saved',
+        step,
       });
     }
   }, [selectedPosition, filter]);

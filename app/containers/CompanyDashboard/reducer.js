@@ -79,6 +79,7 @@ export const initialState = {
       experience: '',
       isActive: 'Yes',
       location: {},
+      postToJobBoard: 'Yes',
       role: [],
       salary: '',
       skills: [],

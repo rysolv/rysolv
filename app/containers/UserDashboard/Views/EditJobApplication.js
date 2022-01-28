@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
 import AsyncRender from 'components/AsyncRender';
-import { EditJobApplication as EditJobApplicationView } from 'components/Jobs';
+import { EditJobApplication as EditJobApplicationView } from 'components/JobApplication';
 
 import {
   changeInput,

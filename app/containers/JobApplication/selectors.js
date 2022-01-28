@@ -5,18 +5,19 @@ import { convertFileToDataUrl, snakeToCamel } from 'utils/globalHelpers';
 import { optionDictionary } from './helpers';
 import { initialState } from './reducer';
 
-const selectJobsDomain = state => state.jobs || initialState;
+const selectJobApplicationDomain = state =>
+  state.jobApplication || initialState;
 
-const makeSelectJobs = prop =>
+const makeSelectJobApplication = prop =>
   createSelector(
-    selectJobsDomain,
+    selectJobApplicationDomain,
     substate => substate[prop],
   );
 
-const makeSelectJobQuestions = () =>
+const makeSelectJobApplicationQuestions = () =>
   createSelector(
-    makeSelectJobs('form'),
-    makeSelectJobs('questions'),
+    makeSelectJobApplication('form'),
+    makeSelectJobApplication('questions'),
     (form, questions) => {
       const formattedQuestions = questions.map(
         ({
@@ -52,10 +53,10 @@ const makeSelectJobQuestions = () =>
     },
   );
 
-const makeSelectJobResponseArray = () =>
+const makeSelectJobApplicationResponseArray = () =>
   createSelector(
-    makeSelectJobs('form'),
-    makeSelectJobs('questions'),
+    makeSelectJobApplication('form'),
+    makeSelectJobApplication('questions'),
     (form, questions) => {
       const responseArray = [];
       if (questions.length) {
@@ -109,5 +110,9 @@ const makeSelectJobResponseArray = () =>
     },
   );
 
-export default selectJobsDomain;
-export { makeSelectJobQuestions, makeSelectJobResponseArray, makeSelectJobs };
+export default selectJobApplicationDomain;
+export {
+  makeSelectJobApplication,
+  makeSelectJobApplicationQuestions,
+  makeSelectJobApplicationResponseArray,
+};

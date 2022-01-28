@@ -71,7 +71,8 @@ export const OptionLabel = styled.div`
 
 export const OptionWrapper = styled.div`
   align-items: center;
-  display: ${({ $isAbsolute }) => ($isAbsolute ? 'flex' : 'block')};
+  display: ${({ $isAbsolute, $isFlex }) =>
+    $isAbsolute || $isFlex ? 'flex' : 'block'};
   margin-top: 1rem;
   position: ${({ $isAbsolute }) => ($isAbsolute ? 'absolute' : 'relative')};
   right: 0;

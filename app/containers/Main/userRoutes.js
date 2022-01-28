@@ -9,7 +9,8 @@ import Faq from 'components/Faq';
 import HowTo from 'components/HowTo';
 import IssuesAdd from 'containers/Issues/Add';
 import IssuesDetail from 'containers/Issues/Detail';
-import Jobs from 'containers/Jobs';
+import JobApplication from 'containers/JobApplication/Loadable';
+import JobsBoard from 'containers/JobsBoard/Loadable';
 import Main from 'containers/HomePage/Loadable';
 import Messages from 'containers/Messages';
 import NotFoundPage from 'components/NotFoundPage';
@@ -44,7 +45,8 @@ const PublicContactUs = withAuth(publicConfig, ContactUs);
 const PublicFaq = withAuth(publicConfig, Faq);
 const PublicHowTo = withAuth(publicConfig, HowTo);
 const PublicIssuesDetail = withAuth(publicConfig, IssuesDetail);
-const PublicJobs = withAuth(publicConfig, Jobs);
+const PublicJobApplication = withAuth(publicConfig, JobApplication);
+const PublicJobsBoard = withAuth(publicConfig, JobsBoard);
 const PublicMain = withAuth(publicConfig, Main);
 const PublicNotFoundPage = withAuth(publicConfig, NotFoundPage);
 const PublicOverview = withAuth(publicConfig, Overview);
@@ -63,6 +65,7 @@ const UserRoutes = () => (
   <Switch>
     <Route exact path="/" component={PublicMain} />
     <Route exact path="/account/verify-github" component={PublicVerifyGithub} />
+    <Route exact path="/apply" component={PublicJobApplication} />
     <Route exact path="/contact-us" component={PublicContactUs} />
     <Route exact path="/dashboard/:view?" component={PrivateUserDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
@@ -73,11 +76,11 @@ const UserRoutes = () => (
     <Route exact path="/issues/add" component={PrivateIssuesAdd} />
     <Route exact path="/issues/detail/:id" component={PublicIssuesDetail} />
     <Route exact path="/issues/search/:searchValue" component={PublicOverview} />
-    <Route exact path="/jobs" component={PublicJobs} />
+    <Route exact path="/jobs" component={PublicJobsBoard} />
+    <Route exact path="/jobs/:positionId" component={PublicCompanyPositionDetail} />
     <Route exact path="/jobs/verify-github" component={PublicVerifyGithub} />
     <Route exact path="/messages/:threadId?" component={PrivateMessages} />
     <Route exact path="/password-reset" component={PublicSignIn} />
-    <Route exact path="/positions" component={PublicCompanyPositionDetail} />
     <Route exact path="/pricing" component={PublicPricing} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
     <Route exact path="/profile/:user" component={PublicUserProfile} />

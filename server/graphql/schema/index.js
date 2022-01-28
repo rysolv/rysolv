@@ -233,7 +233,7 @@ module.exports = buildSchema(`
     body: String!
     positionId: ID!
     threadId: ID
-    toUserId: ID!
+    toUserId: ID
   }
 
   type MessageResponse {
@@ -257,11 +257,17 @@ module.exports = buildSchema(`
 
   type Position {
     companyId: ID
+    companyLogo: String
+    companyName: String
+    createdDate: Object
     description: String
     experience: String
+    hasApplied: Boolean
     id: ID
     isActive: String
     location: Object
+    positionData: Object
+    postToJobBoard: String
     role: [String]
     salary: String
     skills: [Object]
@@ -553,7 +559,8 @@ module.exports = buildSchema(`
     getIssueWatchList(issueId: ID!): [WatchList]!
     getMessages: ConversationResult!
     getPlaidToken: EventResponse!
-    getPositionCandidates(positionId: ID!, saved: Boolean): [User]
+    getPositionCandidates(positionId: ID!, step: String): [User]
+    getPositions: [Position]!
     getPullRequestList(issueId: ID): [PullRequestList]!
     getQuestions(category: String!): QuestionResult
     getRepoActivity(repoId: ID): [Activity]!

@@ -2,6 +2,7 @@ const getCompanyPositions = require('./getCompanyPositions');
 const getContract = require('./getContract');
 const getPlaidToken = require('./getPlaidToken');
 const getPositionCandidates = require('./getPositionCandidates');
+const getPositions = require('./getPositions');
 const matchCandidates = require('./matchCandidates');
 const oneCompany = require('./oneCompany');
 const onePosition = require('./onePosition');
@@ -16,6 +17,7 @@ module.exports = {
   getContract,
   getPlaidToken,
   getPositionCandidates,
+  getPositions,
   matchCandidates,
   oneCompany,
   onePosition,

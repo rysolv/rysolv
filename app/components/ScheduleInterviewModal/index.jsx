@@ -46,7 +46,7 @@ const ScheduleInterviewModal = ({
   return (
     <ModalContainer>
       <ModalContent>
-        <ModalHeader>Notify Candidate</ModalHeader>
+        <ModalHeader>Notify candidate</ModalHeader>
         <ErrorSuccessBanner
           bottomMarginRequired="1rem"
           error={error}

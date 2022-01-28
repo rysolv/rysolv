@@ -3,7 +3,7 @@ const { singleQuery } = require('../../baseQueries');
 const saveCandidate = async ({ candidateId, positionId }) => {
   const queryText = `
     UPDATE candidate_positions
-    SET saved = NOT saved
+    SET saved = CASE WHEN saved IS NOT NULL THEN NULL ELSE now() END
     WHERE user_id = $1
     AND position_id = $2
   `;

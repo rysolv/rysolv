@@ -8,13 +8,13 @@ const {
 // Get all candidates for a position
 // If saved==true, only select the shortlisted candidates
 const getPositionCandidates = async (
-  { positionId, saved },
+  { positionId, step },
   { authError, userId },
 ) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    const candidates = await getPositionCandidatesQuery({ positionId, saved });
+    const candidates = await getPositionCandidatesQuery({ positionId, step });
 
     // Format Candidates object
     const result = candidates.reduce((acc, el) => {

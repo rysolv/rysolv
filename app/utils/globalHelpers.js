@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import moment from 'moment';
 
 export const converDataUrlToBlob = dataUrl => {
   const array = dataUrl.split(',');
@@ -76,6 +77,13 @@ export const formatPercentage = value => `${(value * 100).toFixed(0)}%`;
 
 export const formatWordString = string =>
   string.charAt(0).toUpperCase() + string.slice(1);
+
+export const generatePostedDate = date => {
+  const createdDate = moment(date).utc();
+  const currDate = moment().utc();
+  const diff = currDate.diff(createdDate, 'days');
+  return `${diff}d`;
+};
 
 export const getBase64 = file =>
   new Promise((resolve, reject) => {

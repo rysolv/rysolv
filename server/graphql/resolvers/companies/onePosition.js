@@ -3,21 +3,32 @@ const { errorLogger } = require('../../../helpers');
 const { getOnePosition } = require('../../../db');
 const { onePositionError } = require('./constants');
 
-const onePosition = async ({ positionId }) => {
+const onePosition = async ({ positionId }, { userId }) => {
   try {
     const {
       companyId,
+      hasApplied,
       location,
       positionData,
       role,
       skills,
     } = await getOnePosition({
       positionId,
+      userId,
     });
-    const position = { ...positionData, companyId, location, skills, role };
+    const position = {
+      ...positionData,
+      companyId,
+      hasApplied,
+      location,
+      skills,
+      role,
+    };
     const formattedPosition = Object.keys(position).reduce(
       (acc, positionItem) => {
         if (positionItem === 'is_active') acc.isActive = position[positionItem];
+        else if (positionItem === 'post_to_job_board')
+          acc.postToJobBoard = position[positionItem];
         else if (positionItem === 'skills') {
           if (position[positionItem]) {
             const skillsArray = position[positionItem].map(
