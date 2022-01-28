@@ -32,8 +32,6 @@ const transformPositionResponseSuccess = `Your position has successfully been ed
 
 const updatePaymentMethodError = `Something went wrong when updating your payment method. Please try again later.`;
 
-const updatePaymentMethodSuccess = `Your payment method has been successfully updated.`;
-
 module.exports = {
   createMessageError,
   createMessageSuccess,
@@ -51,5 +49,4 @@ module.exports = {
   transformPositionResponseError,
   transformPositionResponseSuccess,
   updatePaymentMethodError,
-  updatePaymentMethodSuccess,
 };

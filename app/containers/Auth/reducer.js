@@ -206,6 +206,7 @@ const authReducer = produce((draft, { payload, type }) => {
         isContractAccepted,
         isGithubVerified,
         isQuestionnaireComplete,
+        paymentMethod,
         profilePic,
         pullRequestId,
         removeUpvote,
@@ -230,6 +231,10 @@ const authReducer = produce((draft, { payload, type }) => {
       }
       if (isQuestionnaireComplete) {
         draft.activeUser.company.isQuestionnaireComplete = isQuestionnaireComplete;
+      }
+      if (paymentMethod) {
+        draft.activeUser.company.paymentConfirmed = !!paymentMethod;
+        draft.activeUser.company.paymentMethod = paymentMethod;
       }
       if (profilePic) {
         draft.activeUser.profilePic = profilePic;

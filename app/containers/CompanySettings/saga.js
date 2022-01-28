@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import { call, put, takeLatest } from 'redux-saga/effects';
 
+import { updateActiveUser } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
@@ -214,8 +215,8 @@ export function* updatePaymentMethodSaga({ payload }) {
         token: "${token}"
       ) {
         __typename
-        ... on Success {
-          message
+        ... on Payment {
+          paymentMethod
         }
         ... on Error {
           message
@@ -227,12 +228,13 @@ export function* updatePaymentMethodSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        updatePaymentMethod: { __typename, message },
+        updatePaymentMethod: { __typename, message, paymentMethod },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw message;
     yield put(updatePaymentMethodSuccess());
     yield put(openModalState({ modalState: 'paymentConfirmation' }));
+    yield put(updateActiveUser({ paymentMethod }));
   } catch (error) {
     yield put(updatePaymentMethodFailure({ error }));
   }

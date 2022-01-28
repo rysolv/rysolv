@@ -253,6 +253,7 @@ module.exports = buildSchema(`
     balance: Float
     fundedAmount: Float
     message: String
+    paymentMethod: String
   }
 
   type Position {
@@ -651,7 +652,7 @@ module.exports = buildSchema(`
     transformUserSkills(skillsArray: [Object]): EventResponse!
 
     upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
-    updatePaymentMethod(provider: String, token: String, metadata: Object ): EventResponse!
+    updatePaymentMethod(provider: String, token: String, metadata: Object ): PaymentResult!
 
     verifyUserAccount(code: String!): VerificationResult!
     verifyUserEmail(code: String!, email: String!, userId: ID!): EventResponse!

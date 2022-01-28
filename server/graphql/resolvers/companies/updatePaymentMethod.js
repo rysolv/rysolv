@@ -5,10 +5,7 @@ const {
   setPaymentIntent,
 } = require('../../../integrations');
 const { getUserCompany, transformCompany } = require('../../../db');
-const {
-  updatePaymentMethodError,
-  updatePaymentMethodSuccess,
-} = require('./constants');
+const { updatePaymentMethodError } = require('./constants');
 
 const updatePaymentMethod = async (
   { provider, token, metadata },
@@ -57,8 +54,8 @@ const updatePaymentMethod = async (
     });
 
     return {
-      __typename: 'Success',
-      message: updatePaymentMethodSuccess,
+      __typename: 'Payment',
+      paymentMethod: stub,
     };
   } catch (error) {
     errorLogger(error);
