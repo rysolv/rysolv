@@ -12,11 +12,14 @@ import EmptyCandidateDashboard from './EmptyCandidateDashboard';
 import {
   CandidateCardGroup,
   CompanyDashboardContainer,
+  CompanyDashboardHeader,
   CompanyDashboardTitle,
+  PublicPositionButton,
   StyledIconButton,
 } from './styledComponents';
 
 const EditIcon = iconDictionary('edit');
+const PublicIcon = iconDictionary('public');
 
 const ExistingDashboard = ({
   candidates,
@@ -52,17 +55,26 @@ const ExistingDashboard = ({
   );
   return (
     <CompanyDashboardContainer>
-      <CompanyDashboardTitle>
-        {positionTitle}
-        <StyledIconButton
-          disableRipple
-          onClick={() =>
-            handleNav(`/company/dashboard/edit-position?id=${selectedPosition}`)
-          }
+      <CompanyDashboardHeader>
+        <CompanyDashboardTitle>
+          {positionTitle}
+          <StyledIconButton
+            disableRipple
+            onClick={() =>
+              handleNav(
+                `/company/dashboard/edit-position?id=${selectedPosition}`,
+              )
+            }
+          >
+            {EditIcon}
+          </StyledIconButton>
+        </CompanyDashboardTitle>
+        <PublicPositionButton
+          onClick={() => handleNav(`/jobs/${selectedPosition}`)}
         >
-          {EditIcon}
-        </StyledIconButton>
-      </CompanyDashboardTitle>
+          {PublicIcon} View public position
+        </PublicPositionButton>
+      </CompanyDashboardHeader>
       <CompanyDashboardTabs
         dispatchChangeFilter={dispatchChangeFilter}
         filter={filter}

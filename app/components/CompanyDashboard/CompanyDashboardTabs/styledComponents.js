@@ -16,7 +16,7 @@ export const StyledTab = styled(Tab)`
 
 export const StyledTabs = styled(Tabs)`
   border-bottom: 0.1rem solid ${grayColor};
-  margin: 0 1rem;
+  margin: 0;
 
   .indicator {
     background-color: ${blueColor};

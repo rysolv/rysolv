@@ -42,6 +42,7 @@ import MonetizationOn from '@material-ui/icons/MonetizationOn';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import NavigateNext from '@material-ui/icons/NavigateNext';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import Public from '@material-ui/icons/Public';
 import Publish from '@material-ui/icons/Publish';
 import PullRequest from '@material-ui/icons/AccountTree';
 import Remove from '@material-ui/icons/Remove';
@@ -131,6 +132,7 @@ export default (name, size, style) => {
     navigateNext: NavigateNext,
     paypal: Paypal,
     photoCamera: PhotoCamera,
+    public: Public,
     pullRequest: PullRequest,
     python: Python,
     reactIcon: ReactIcon,

@@ -55,7 +55,7 @@ const MobileCompanySideNav = ({
           />
         </CompanySideNavHeader>
         <CreatePositionButton onClick={handleCreatePosition}>
-          {AddCircleOutlineIcon} Create Position
+          {AddCircleOutlineIcon} Create position
         </CreatePositionButton>
         <ConditionalRender
           Component={

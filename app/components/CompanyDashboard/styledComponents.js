@@ -17,13 +17,21 @@ export const CompanyDashboardContainer = styled.div`
   width: 100%;
 `;
 
+export const CompanyDashboardHeader = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1rem 0;
+`;
+
 export const CompanyDashboardTitle = styled.div`
   color: ${textColor};
   display: flex;
   font-size: 3.2rem;
   font-weight: 500;
   line-height: 3.36rem;
-  padding: 2rem 2rem 1rem;
+  padding-right: 1.6rem;
+  padding-top: 1rem;
 `;
 
 export const IconWrapper = styled.img`
@@ -43,6 +51,26 @@ export const LinkWrapper = styled(Link)`
 
   &:hover {
     color: ${lightBlueColor};
+  }
+`;
+
+export const PublicPositionButton = styled.button`
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: ${lightBlueColor};
+  display: flex;
+  font-size: 1.6rem;
+  padding: 1rem 0 0;
+  white-space: nowrap;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  svg {
+    font-size: 2rem;
+    margin-right: 0.8rem;
   }
 `;
 
