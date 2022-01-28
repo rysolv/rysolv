@@ -25,7 +25,7 @@ const RecommendedIssues = ({ dispatchOpenModal, handleNav, issues }) => {
   return (
     <RecommendedIssuesContainer>
       <RecommendedIssuesHeader>
-        Solve issues, improve your skills
+        Solve issues to improve your profile
       </RecommendedIssuesHeader>
       <ConditionalRender
         Component={() => RecommendedIssueComponent}

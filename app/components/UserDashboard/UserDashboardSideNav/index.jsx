@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import T from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
@@ -22,11 +21,13 @@ import {
   SkillsContainer,
   StyledIconButton,
   StyledPrimaryButton,
+  StyledProfileLink,
   UserDashboardSideNavContainer,
 } from './styledComponents';
 
 const GithubIcon = iconDictionary('github');
 const PersonalIcon = iconDictionary('link');
+const PublicIcon = iconDictionary('public');
 const StackoverflowIcon = iconDictionary('stackoverflow');
 
 const UserDashboardSideNav = ({
@@ -71,7 +72,9 @@ const UserDashboardSideNav = ({
   return (
     <UserDashboardSideNavContainer>
       <ProfilePicture src={profilePic} />
-      <Link to={`/profile/${username}`}>Profile</Link>
+      <StyledProfileLink to={`/profile/${username}`}>
+        {PublicIcon}&nbsp;View public profile
+      </StyledProfileLink>
       <div>
         <ActionWrapper>
           <ActiveWrapper>

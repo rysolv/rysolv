@@ -6,37 +6,63 @@ import iconDictionary from 'utils/iconDictionary';
 
 import {
   IconWrapper,
+  LabelWrapper,
   SummaryContainer,
   SummaryRow,
   TitleRow,
+  Total,
 } from './styledComponents';
 
+const averageCommitIcon = iconDictionary('sigma');
+const commitIcon = iconDictionary('addCircleOutline');
 const pullRequestIcon = iconDictionary('pullRequest');
 const repoIcon = iconDictionary('repo');
+const starIcon = iconDictionary('star');
 
 const SummaryChart = ({ githubStats }) => {
   const {
-    stars,
+    averageCommit,
     commits,
     contributedTo,
     pullRequests,
-    avgCommit,
+    stars,
   } = githubStats;
   return (
     <SummaryContainer>
       <TitleRow>
         <div>Summary</div>
       </TitleRow>
-
-      <SummaryRow>Commits</SummaryRow>
-      <SummaryRow>Total Stars</SummaryRow>
       <SummaryRow>
-        <IconWrapper>{repoIcon}</IconWrapper>Contributed To
+        <LabelWrapper>
+          <IconWrapper>{commitIcon}</IconWrapper>Commits
+        </LabelWrapper>
+        <Total>{commits}</Total>
       </SummaryRow>
       <SummaryRow>
-        <IconWrapper>{pullRequestIcon}</IconWrapper>Pull Requests
+        <LabelWrapper>
+          <IconWrapper>{starIcon}</IconWrapper>Total Stars
+        </LabelWrapper>
+        <Total>{stars}</Total>
       </SummaryRow>
-      <SummaryRow>Average Commit</SummaryRow>
+      <SummaryRow>
+        <LabelWrapper>
+          <IconWrapper>{repoIcon}</IconWrapper>Contributed To
+        </LabelWrapper>
+        <Total>{contributedTo}</Total>
+      </SummaryRow>
+      <SummaryRow>
+        <LabelWrapper>
+          <IconWrapper>{pullRequestIcon}</IconWrapper>Pull Requests
+        </LabelWrapper>
+        <Total>{pullRequests}</Total>
+      </SummaryRow>
+      <SummaryRow>
+        <LabelWrapper>
+          <IconWrapper>{averageCommitIcon}</IconWrapper>
+          Average Commit
+        </LabelWrapper>
+        <Total>{averageCommit}</Total>
+      </SummaryRow>
     </SummaryContainer>
   );
 };

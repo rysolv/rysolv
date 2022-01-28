@@ -1,12 +1,14 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import {
+  candidateGreyColor,
   darkBlueColor,
   defaultFontSize,
-  grayColor,
-  candidateGreyColor,
   textColor,
+  whiteColor,
 } from 'defaultStyleHelper';
+
+import { PrimaryButton } from 'components/base_ui';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptop, tablet } = mediaQueriesByDevice;
@@ -15,45 +17,52 @@ export const AboutContainer = styled.div`
   background: #f5f5f5;
   border-radius: 0.5rem;
   font-family: monospace;
+  margin-bottom: 3rem;
   min-height: 10rem;
   padding: 3rem;
   width: 100%;
-  margin-bottom: 3rem;
+`;
+
+const baseButtonStyle = css`
+  align-items: center;
+  border-radius: 0.8rem;
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  text-transform: initial;
 `;
 
 export const ContentColumn = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  width: 70%;
   padding: 5rem;
+  width: 70%;
 
   ${tablet} {
-    width: 100%;
     padding: 3rem 0;
+    width: 100%;
   }
 `;
 
-export const ContributionCard = styled.div`
-  width: 100%;
-  padding: 1rem;
-  margin: 1rem 0 0;
-  box-shadow: 0 0.1rem 0.4rem ${grayColor};
-`;
-
-export const ContributionContainer = styled.div``;
-
 export const DetailCharts = styled.div`
   display: flex;
-  margin-top: 2rem;
 
   ${laptop} {
     flex-direction: column;
   }
 `;
 
-export const IconWrapper = styled.div`
+export const FallBackCard = styled.div`
+  background: ${candidateGreyColor};
+  padding: 1.6rem;
+`;
+
+export const IconLink = styled.a`
   margin: 0 1rem;
+
   svg {
     height: 2.5rem;
     width: 2.5rem;
@@ -81,12 +90,12 @@ export const ProfileColumn = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  width: 30%;
   padding: 0 2rem;
+  width: 30%;
 
   ${tablet} {
-    width: 100%;
     padding: 0;
+    width: 100%;
   }
 `;
 
@@ -116,8 +125,8 @@ export const RoleContainer = styled.div`
 `;
 
 export const SocialLinkWrapper = styled.div`
-  margin: 1rem 0;
   display: flex;
+  margin: 1rem 0;
 `;
 
 export const StyledHeader = styled.h3`
@@ -131,8 +140,19 @@ export const StyledName = styled.h1`
   color: ${darkBlueColor};
   font-size: 3.2rem;
   font-weight: 700;
-  text-align: center;
   margin: 2rem 0 0;
+  text-align: center;
+`;
+
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  ${baseButtonStyle};
+  background-color: ${darkBlueColor};
+  color: ${whiteColor};
+
+  &:hover {
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
+  }
 `;
 
 export const StyledSubtitle = styled.h2`

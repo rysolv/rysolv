@@ -1,28 +1,40 @@
 import styled from 'styled-components';
 
+import { darkBlueColor } from 'defaultStyleHelper';
+
+export const IconWrapper = styled.div`
+  width: 2.5rem;
+
+  svg {
+    height: 1.8rem;
+    width: 1.8rem;
+  }
+`;
+
+export const LabelWrapper = styled.div`
+  align-items: flex-end;
+  display: flex;
+`;
+
 export const SummaryContainer = styled.div`
+  margin-top: 2.4rem;
+  padding-right: 4rem;
   width: 100%;
 `;
 
 export const SummaryRow = styled.div`
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin-top: 0.5rem;
 `;
 
-export const Percentage = styled.div``;
+export const Total = styled.div``;
 
 export const TitleRow = styled.div`
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  color: ${darkBlueColor};
+  display: flex;
   font-weight: bold;
-`;
-
-export const IconWrapper = styled.div`
-  margin: 0 1rem;
-  svg {
-    height: 2rem;
-    width: 2rem;
-  }
+  justify-content: space-between;
 `;

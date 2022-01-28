@@ -17,6 +17,8 @@ export function* fetchUserProfileSaga({ payload }) {
           firstName
           githubLink
           hiringStatus
+          hiringStatus
+          isSignedIn
           lastName
           location
           personalLink
@@ -41,7 +43,7 @@ export function* fetchUserProfileSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(fetchUserProfileSuccess({ user: restProps }));
   } catch (error) {
-    yield put(fetchUserProfileFailure({ error: { message: error } }));
+    yield put(fetchUserProfileFailure({ error }));
   }
 }
 

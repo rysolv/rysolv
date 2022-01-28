@@ -58,6 +58,12 @@ const transformUserSkillsSuccess = `Your skills have been successfully saved.`;
 
 const transformUserSuccess = `Your account has been successfully updated.`;
 
+const updateProfileError = 'Something went wrong updating your user profile';
+
+const updateProfileSuccess = 'Your profile has been successfully updated.';
+
+const userProfileError = 'Something went wrong fetching your profile';
+
 const verifyUserAccountError = `Something went wrong when verifying your Github account.`;
 
 const verifyUserAccountSuccess = `Your Github account has been successfully verified.`;
@@ -96,6 +102,9 @@ module.exports = {
   transformUserSkillsError,
   transformUserSkillsSuccess,
   transformUserSuccess,
+  updateProfileError,
+  updateProfileSuccess,
+  userProfileError,
   verifyUserAccountError,
   verifyUserAccountSuccess,
   verifyUserEmailError,

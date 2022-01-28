@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
-import { LanguageWrapper } from 'components/base_ui';
+import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import CommitChart from './CommitChart';
-import SkillsWrapper from './SkillsWrapper';
 import LanguageChart from './LanguageChart';
+import PullRequestCard from './PullRequestCard';
+import RepoCard from './RepoCard';
+import SkillsWrapper from './SkillsWrapper';
 import SummaryChart from './SummaryChart';
 
 import {
   AboutContainer,
   ContentColumn,
-  ContributionCard,
-  ContributionContainer,
   DetailCharts,
-  IconWrapper,
+  FallBackCard,
+  IconLink,
   LocationIconWrapper,
   LocationName,
   LocationWrapper,
@@ -26,28 +27,50 @@ import {
   SocialLinkWrapper,
   StyledHeader,
   StyledName,
+  StyledPrimaryButton,
   StyledSubtitle,
   UserProfileContainer,
 } from './styledComponents';
 
-const locationIcon = iconDictionary('location');
 const GithubIcon = iconDictionary('github');
+const locationIcon = iconDictionary('location');
 const PersonalIcon = iconDictionary('link');
 const StackoverflowIcon = iconDictionary('stackoverflow');
 
-const UserProfile = ({ activeUser, data }) => {
+const UserProfile = ({ data, handleNav }) => {
   const {
-    firstName,
-    lastName,
-    profilePic,
-    desiredRole,
+    about,
     chartData,
+    desiredRole,
+    firstName,
+    githubLink,
+    hiringStatus,
+    isSignedIn,
+    lastName,
     location,
+    personalLink,
+    profilePic,
     skills,
+    stackoverflowLink,
+    title,
   } = data;
 
-  const { commits, languageByCommits, githubStats } = chartData;
-  console.log(data);
+  const {
+    commits,
+    githubStats,
+    languageByCommits,
+    pullRequestStats,
+    repoStats,
+  } = chartData;
+
+  const surveyFallback = isSignedIn ? (
+    <StyledPrimaryButton
+      label="Complete Survey"
+      onClick={() => handleNav('/dashboard/update')}
+    />
+  ) : (
+    <Fragment />
+  );
 
   return (
     <UserProfileContainer>
@@ -56,40 +79,57 @@ const UserProfile = ({ activeUser, data }) => {
         <StyledName>
           {firstName} {lastName}
         </StyledName>
-        <StyledSubtitle>Senior Engineer at Rysolv</StyledSubtitle>
 
-        <LocationWrapper>
-          <LocationIconWrapper>{locationIcon}</LocationIconWrapper>
-          <LocationName>{location}</LocationName>
-        </LocationWrapper>
+        <ConditionalRender
+          Component={
+            <Fragment>
+              <StyledSubtitle>{title}</StyledSubtitle>
 
-        <RoleContainer>
-          {desiredRole.map(role => (
-            <LanguageWrapper key={role} language={role} />
-          ))}
-        </RoleContainer>
+              <LocationWrapper>
+                <LocationIconWrapper>{locationIcon}</LocationIconWrapper>
+                <LocationName>{location}</LocationName>
+              </LocationWrapper>
 
-        <SocialLinkWrapper>
-          <IconWrapper>{GithubIcon}</IconWrapper>
-          <IconWrapper>{PersonalIcon}</IconWrapper>
-          <IconWrapper>{StackoverflowIcon}</IconWrapper>
-        </SocialLinkWrapper>
+              <RoleContainer>
+                {desiredRole.map(role => (
+                  <LanguageWrapper key={role} language={role} />
+                ))}
+              </RoleContainer>
 
-        <StyledHeader>Top Skills</StyledHeader>
-        <SkillsWrapper skills={skills} />
+              <SocialLinkWrapper>
+                {githubLink && (
+                  <IconLink href={githubLink} target="_blank">
+                    {GithubIcon}
+                  </IconLink>
+                )}
+                {personalLink && (
+                  <IconLink href={personalLink} target="_blank">
+                    {PersonalIcon}
+                  </IconLink>
+                )}
+                {stackoverflowLink && (
+                  <IconLink href={stackoverflowLink} target="_blank">
+                    {StackoverflowIcon}
+                  </IconLink>
+                )}
+              </SocialLinkWrapper>
+
+              <StyledHeader>Top Skills</StyledHeader>
+              <SkillsWrapper skills={skills} />
+            </Fragment>
+          }
+          FallbackComponent={surveyFallback}
+          shouldRender={hiringStatus && hiringStatus !== 'undeclared'}
+        />
       </ProfileColumn>
 
       <ContentColumn>
         {/* User Intro */}
         <ProfileSection>
-          <AboutContainer>
-            Hey I&apos;m tyler and I do cool dev stuff. Founded rysolv.com, a
-            crowdfunding platform for open-source development.
-            <br />
-            <br />
-            Also worked at Kumanu for a while. Backend engineer. JavaScript /
-            Python.
-          </AboutContainer>
+          <ConditionalRender
+            Component={<AboutContainer>{about}</AboutContainer>}
+            shouldRender={!!about}
+          />
         </ProfileSection>
 
         {/* Commit chart */}
@@ -107,22 +147,23 @@ const UserProfile = ({ activeUser, data }) => {
         {/* Top repos */}
         <ProfileSection>
           <StyledHeader>Top Repos</StyledHeader>
-          <div>
-            <ContributionCard>
-              Rysolv 85 stars, 33 forks, 10 contributors
-            </ContributionCard>
-          </div>
+          <ConditionalRender
+            Component={<RepoCard repoStats={repoStats} />}
+            FallbackComponent={<FallBackCard>No repos found.</FallBackCard>}
+            shouldRender={!!repoStats.length}
+          />
         </ProfileSection>
 
         {/* Contribution List */}
         <ProfileSection>
           <StyledHeader>Recent Contributions</StyledHeader>
-          <ContributionContainer>
-            <ContributionCard>
-              Closed some_big_issue on my-blog
-            </ContributionCard>
-            <ContributionCard>completed 100 days of code</ContributionCard>
-          </ContributionContainer>
+          <ConditionalRender
+            Component={<PullRequestCard pullRequestStats={pullRequestStats} />}
+            FallbackComponent={
+              <FallBackCard>No pull requests found.</FallBackCard>
+            }
+            shouldRender={!!pullRequestStats.length}
+          />
         </ProfileSection>
       </ContentColumn>
     </UserProfileContainer>
@@ -130,8 +171,8 @@ const UserProfile = ({ activeUser, data }) => {
 };
 
 UserProfile.propTypes = {
-  activeUser: T.object,
   data: T.object.isRequired,
+  handleNav: T.func.isRequired,
 };
 
 export default UserProfile;

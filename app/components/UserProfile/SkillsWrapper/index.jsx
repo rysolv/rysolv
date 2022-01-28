@@ -5,12 +5,12 @@ import T from 'prop-types';
 import { LanguageWrapper } from 'components/base_ui';
 
 import {
-  SkillsContainer,
-  SkillCard,
   Battery,
-  BatteryWrapper,
   BatteryLabel,
+  BatteryWrapper,
   Cell,
+  SkillCard,
+  SkillsContainer,
 } from './styledComponents';
 
 const labelDictionary = {

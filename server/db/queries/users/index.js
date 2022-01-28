@@ -12,6 +12,7 @@ const getUserAttemptList = require('./getUserAttemptList');
 const getUserBounties = require('./getUserBounties');
 const getUserByUsername = require('./getUserByUsername');
 const getUserCompany = require('./getUserCompany');
+const getUserProfile = require('./getUserProfile');
 const getUserPullRequestDetail = require('./getUserPullRequestDetail');
 const getUserResponse = require('./getUserResponse');
 const getUsers = require('./getUsers');
@@ -21,6 +22,7 @@ const insertGitUser = require('./insertGitUser');
 const insertUserEmail = require('./insertUserEmail');
 const searchUsers = require('./searchUsers');
 const transformUser = require('./transformUser');
+const updateUserProfile = require('./updateUserProfile');
 
 module.exports = {
   assignOwnerToRepo,
@@ -37,6 +39,7 @@ module.exports = {
   getUserBounties,
   getUserByUsername,
   getUserCompany,
+  getUserProfile,
   getUserPullRequestDetail,
   getUserResponse,
   getUsers,
@@ -46,4 +49,5 @@ module.exports = {
   insertUserEmail,
   searchUsers,
   transformUser,
+  updateUserProfile,
 };
