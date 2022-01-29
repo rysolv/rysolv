@@ -8,3 +8,8 @@ export const ChartContainer = styled.div`
 `;
 
 export const StyledCanvas = styled.canvas``;
+
+export const TitleRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

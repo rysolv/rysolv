@@ -3,19 +3,20 @@ const { singleQuery } = require('../../baseQueries');
 // Get commits per language for the last 12 months
 const getTopLanguages = async ({ userId }) => {
   const queryText = `
-    select
-      count(gc.commit_hash) as commits,
+    SELECT
+      COUNT(gc.commit_hash) AS commits,
       gf.language
-    from git_files gf
-    join git_commits gc on gf.commit_id = gc.id
-    where
-      gc.commit_date > now() - '12 months'::interval
-      and language is not null
-    group by gf.language
-    order by commits desc
-    limit 8
+    FROM git_files gf
+    JOIN git_commits gc ON gf.commit_id = gc.id
+    WHERE
+      gc.user_id = $1
+      AND gc.commit_date > now() - '12 months'::interval
+      AND language IS NOT NULL
+    GROUP BY gf.language
+    ORDER BY commits desc
+    LIMIT 8
   `;
-  const { rows } = await singleQuery({ queryText });
+  const { rows } = await singleQuery({ queryText, values: [userId] });
   return rows;
 };
 

@@ -1,4 +1,4 @@
 const getTopLanguages = require('./getTopLanguages');
-const getWeeklyCommits = require('./getWeeklyCommits');
+const getCommitStats = require('./getCommitStats');
 
-module.exports = { getTopLanguages, getWeeklyCommits };
+module.exports = { getTopLanguages, getCommitStats };

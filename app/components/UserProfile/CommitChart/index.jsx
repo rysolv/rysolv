@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Chart from 'chart.js';
 import T from 'prop-types';
 
-import { ChartContainer, StyledCanvas } from './styledComponents';
+import { ChartContainer, StyledCanvas, TitleRow } from './styledComponents';
 
 const CommitChart = ({ commits }) => {
   const { labels, data } = commits;
@@ -17,12 +17,12 @@ const CommitChart = ({ commits }) => {
         labels,
         datasets: [
           {
-            label: 'commits',
-            data,
             backgroundColor: ['rgb(53 115 255 / 20%)'],
             borderColor: ['rgb(53 115 255 / 100%)'],
             borderWidth: 1,
+            data,
             fill: true,
+            label: 'commits',
           },
         ],
       },
@@ -42,7 +42,10 @@ const CommitChart = ({ commits }) => {
   }, []);
   return (
     <ChartContainer>
-      Total Commits
+      <TitleRow>
+        <div>Total Commits</div>
+        <div>Last 12 months</div>
+      </TitleRow>
       <StyledCanvas id="commit-chart" />
     </ChartContainer>
   );

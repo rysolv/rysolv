@@ -1,70 +1,92 @@
 const { errorLogger } = require('../../../helpers');
 const {
+  getCommitStats,
+  getGitUser,
   getTopLanguages,
-  getWeeklyCommits,
   updateUserProfile: updateProfileQuery,
 } = require('../../../db');
+
+const { getUserStats } = require('../../../integrations');
+
 const { updateProfileError, updateProfileSuccess } = require('./constants');
 
 const updateUserProfile = async ({ userId }) => {
   try {
     const userProfile = { userId };
 
-    // Get weekly commits
-    const weeklyCommits = await getWeeklyCommits({ userId });
-    const weeks = [];
-    const cumulative = [];
-    weeklyCommits.forEach(({ week, commits }) => {
-      weeks.push(week);
-      cumulative.push(commits);
+    // Get git user
+    const { githubToken, githubUsername } = await getGitUser({
+      userId,
     });
+
+    // Get weekly commits
+    const {
+      averageLines,
+      commits,
+      contributedTo,
+      totalCommits,
+      weeks,
+    } = await getCommitStats({ userId });
 
     // Get top languages
     const languageByCommits = await getTopLanguages({ userId });
 
     // Create ChartData Object
     const chartData = {
-      commits: { labels: weeks, data: cumulative },
+      commits: { labels: weeks, data: commits },
       languageByCommits,
     };
 
+    // Get user repos
+    // TODO: Use GQL api for repos / PRs. Better data.
+    // Also, look for PR events, not comments
+    const { pullRequests, repos, pullRequestCount } = await getUserStats({
+      username: githubUsername,
+      userToken: githubToken,
+    });
+
+    const pullRequestStats = pullRequests.map(el => {
+      const repoName = el.repository_url.split('/repos/')[1];
+      return {
+        additions: 0,
+        comments: el.comments,
+        deletions: 0,
+        githubLink: el.html_url,
+        repoName,
+        title: el.title,
+      };
+    });
+
+    let totalStars = 0;
+    const repoStats = repos.map(el => {
+      totalStars += el.stargazers_count;
+      return {
+        contributors: 0,
+        description: el.description,
+        githubLink: el.html_url,
+        pullRequests: 0,
+        repoName: el.full_name,
+        stars: el.stargazers_count,
+      };
+    });
+
+    repoStats.sort((a, b) => {
+      if (a.stars < b.stars) return 1;
+      if (a.stars > b.stars) return -1;
+      return 0;
+    });
+
+    chartData.repoStats = repoStats.slice(0, 3);
+    chartData.pullRequestStats = pullRequestStats.slice(0, 3);
+
     // Fetch Github Data
     chartData.githubStats = {
-      averageCommit: 844,
-      commits: 1301,
-      contributedTo: 3,
-      pullRequests: 88,
-      stars: 44,
+      averageCommit: averageLines,
+      commits: totalCommits,
+      contributedTo,
+      pullRequests: pullRequestCount,
+      stars: totalStars,
     };
-    chartData.repoStats = [
-      {
-        contributors: 8,
-        description:
-          'A crowdfunding platform where users can sponsor outstanding issues in open source projects and earn bounties by resolving them.',
-        githubLink: 'https://github.com/rysolv/rysolv',
-        pullRequests: 161,
-        repoName: 'rysolv/rysolv',
-        stars: 52,
-      },
-      {
-        contributors: 15,
-        description: 'The Noisebridge Infrastucture',
-        githubLink: 'https://github.com/noisebridge/infrastructure',
-        pullRequests: 216,
-        repoName: 'noisebridge/infrastructure',
-        stars: 20,
-      },
-    ];
-    chartData.pullRequestStats = [
-      {
-        additions: 337,
-        comments: 8,
-        deletions: 342,
-        githubLink: 'https://github.com/rysolv/rysolv/pull/186',
-        repoName: 'rysolv/rysolv',
-        title: 'Hotfix: auth infinite spinning fix',
-      },
-    ];
 
     userProfile.chartData = chartData;
 
