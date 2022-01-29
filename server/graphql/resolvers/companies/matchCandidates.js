@@ -76,6 +76,8 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
           type: false,
         };
 
+        const candidateMatch = {};
+
         // ******************************* Check Location ************************************
         // Matching: location & timezone
         const { utcOffset: reqUtcOffset } = reqLocation;
@@ -102,7 +104,7 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
         }
 
         if (userLocationMatch && reqLocationMatch) {
-          matchCriteria.location = true;
+          candidateMatch.location = true;
         }
 
         // ******************************* Check Experience **********************************
@@ -114,7 +116,7 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
           senior_experience: 2,
         };
         if (userExperience >= expDictionary[reqExperience]) {
-          matchCriteria.experience = true;
+          candidateMatch.experience = true;
         }
 
         // ******************************* Check Languages ***********************************
@@ -141,8 +143,11 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
           });
         });
 
-        matchCriteria.frameworks *= frameworkMatch / frameworkCount || 0;
-        matchCriteria.languages *= languageMatch / languageCount || 0;
+        candidateMatch.frameworks =
+          matchCriteria.frameworks * (frameworkMatch / frameworkCount) || 0;
+
+        candidateMatch.languages =
+          matchCriteria.languages * (languageMatch / languageCount) || 0;
 
         // ******************************* Check Roles ***************************************
         // Matching: front_end, back_end, ios, etc.
@@ -151,13 +156,14 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
           userRoles.includes(el) ? 1 : 0,
         );
         const matchSum = matchingRoles.reduce((a, b) => a + b, 0);
-        matchCriteria.roles *= matchSum / reqRoles.length;
+        candidateMatch.roles =
+          matchCriteria.roles * (matchSum / reqRoles.length);
 
         // ******************************* Check Position Type *******************************
         // Matching: userType:['full_time', 'contractor'], reqType: 'full_time'
         // Result: true/false
         if (userType.includes(reqType)) {
-          matchCriteria.type = true;
+          candidateMatch.type = true;
         }
 
         // ******************************* Check Salary **************************************
@@ -166,20 +172,26 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
         const salaryMatch = +userSalary <= +reqSalary;
         const salaryClose = +userSalary - 25 <= +reqSalary;
 
-        if (salaryMatch) matchCriteria.salary *= 1;
-        else if (salaryClose) matchCriteria.salary *= 0.5;
-        else matchCriteria.salary = 0;
+        if (salaryMatch) candidateMatch.salary = matchCriteria.salary * 1;
+        else if (salaryClose)
+          candidateMatch.salary = matchCriteria.salary * 0.5;
+        else candidateMatch.salary = 0;
 
         // Sum numerical categories
         const total =
-          matchCriteria.frameworks +
-          matchCriteria.languages +
-          matchCriteria.roles +
-          matchCriteria.salary;
+          candidateMatch.frameworks +
+          candidateMatch.languages +
+          candidateMatch.roles +
+          candidateMatch.salary;
 
         const percentMatch = Math.ceil(total * 100);
 
-        return { id, matchCriteria, percentMatch };
+        candidateMatch.frameworks /= matchCriteria.frameworks;
+        candidateMatch.languages /= matchCriteria.languages;
+        candidateMatch.roles /= matchCriteria.roles;
+        candidateMatch.salary /= matchCriteria.salary;
+
+        return { id, matchCriteria: candidateMatch, percentMatch };
       },
     );
 

@@ -32,6 +32,7 @@ const getPositionCandidates = async ({ positionId, step }) => {
     )
     SELECT
       (SELECT CASE WHEN cp.saved_date IS NOT NULL THEN true ELSE false END AS "isSaved"),
+      cp.match_criteria AS "matchCriteria",
       cp.percent_match AS "percentMatch",
       l.formatted_address AS "location",
       m.thread_id AS "threadId",
@@ -64,6 +65,7 @@ const getPositionCandidates = async ({ positionId, step }) => {
     WHERE cp.position_id = (SELECT position_id FROM position)
     ${filter}
     GROUP BY
+      cp.match_criteria,
       cp.percent_match,
       cp.saved_date,
       l.formatted_address,

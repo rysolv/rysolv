@@ -1,10 +1,10 @@
 /* eslint-disable no-shadow, react/no-array-index-key */
-import React from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
 
+import CandidateMatchModal from 'components/CandidateMatchModal';
 import iconDictionary from 'utils/iconDictionary';
 
-import { Circle } from 'components/base_ui';
 import {
   CandidateCardButton,
   CandidateCardContainer,
@@ -13,12 +13,14 @@ import {
   CandidateCardRow,
   CandidateCardRows,
   CandidateCardUserInfo,
+  CircleGroup,
   Data,
   Divider,
   ImageGroup,
   NameWrapper,
   PositionWrapper,
   ProfilePicWrapper,
+  StyledCircle,
   StyledIconButton,
   StyledLanguageWrapper,
   Title,
@@ -37,6 +39,7 @@ const CandidateCard = ({
   isSaved,
   lastPosition,
   location,
+  matchCriteria,
   name,
   percentMatch,
   preferredLanguages,
@@ -47,6 +50,8 @@ const CandidateCard = ({
   type,
   yearsOfExperience,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const ButtonText = threadId ? `View Messages` : `Connect`;
   const CardIcon = isSaved ? UnsaveIcon : SaveIcon;
   const CardLabel = isSaved ? 'Unshortlist' : 'Shortlist';
@@ -58,6 +63,10 @@ const CandidateCard = ({
       dispatchOpenModal({ tableData });
     }
   };
+
+  const sortedCriteria = Object.entries(matchCriteria)
+    .sort(([, a], [, b]) => b - a)
+    .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
 
   const tableData = { positionId: selectedPosition, userId: id };
 
@@ -77,7 +86,23 @@ const CandidateCard = ({
       <CandidateCardContent>
         <ImageGroup>
           <ProfilePicWrapper src={profilePic} />
-          <Circle percentage={percentMatch} />
+          <CircleGroup>
+            <StyledCircle
+              onBlur={() => setIsModalOpen(false)}
+              onFocus={() => setIsModalOpen(true)}
+              onMouseEnter={() => setIsModalOpen(true)}
+              onMouseLeave={() => setIsModalOpen(false)}
+              onMouseOut={() => setIsModalOpen(false)}
+              onMouseOver={() => setIsModalOpen(true)}
+              percentage={percentMatch}
+            />
+            {isModalOpen && (
+              <CandidateMatchModal
+                matchCriteria={sortedCriteria}
+                percentMatch={percentMatch}
+              />
+            )}
+          </CircleGroup>
         </ImageGroup>
         <CandidateCardUserInfo>
           <NameWrapper>{name}</NameWrapper>
@@ -131,6 +156,7 @@ CandidateCard.propTypes = {
   isSaved: T.bool.isRequired,
   lastPosition: T.string,
   location: T.string.isRequired,
+  matchCriteria: T.object.isRequired,
   name: T.string.isRequired,
   percentMatch: T.number.isRequired,
   preferredLanguages: T.array.isRequired,
