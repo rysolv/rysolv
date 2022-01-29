@@ -26,10 +26,10 @@ import {
 } from './styledComponents';
 import { KeywordTag } from '../styledComponents';
 
-const JobsList = ({ handleNav, jobs, setSearchTerm }) => {
+const JobsList = ({ handleNav, handleSelectKeyword, jobs }) => {
   const handleKeywordClick = (e, keyword) => {
     e.stopPropagation();
-    setSearchTerm(keyword);
+    handleSelectKeyword(keyword);
   };
 
   return (
@@ -113,8 +113,8 @@ const JobsList = ({ handleNav, jobs, setSearchTerm }) => {
 
 JobsList.propTypes = {
   handleNav: T.func.isRequired,
+  handleSelectKeyword: T.func.isRequired,
   jobs: T.array.isRequired,
-  setSearchTerm: T.func.isRequired,
 };
 
 export default JobsList;

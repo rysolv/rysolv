@@ -52,8 +52,8 @@ const JobsBoard = ({ dispatchChangeFilter, filter, handleNav, jobs }) => {
         FallbackComponent={NoJobsList}
         propsToPassDown={{
           handleNav,
+          handleSelectKeyword,
           jobs,
-          setSearchTerm,
         }}
         shouldRender={!!jobs.length}
       />
