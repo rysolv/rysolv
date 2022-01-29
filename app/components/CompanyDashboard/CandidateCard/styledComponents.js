@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { IconButton, LanguageWrapper } from 'components/base_ui';
+import { Circle, IconButton, LanguageWrapper } from 'components/base_ui';
 import {
   blueColor,
   candidateGreyColor,
@@ -69,6 +69,10 @@ export const CandidateCardUserInfo = styled.div`
   text-align: center;
 `;
 
+export const CircleGroup = styled.div`
+  position: relative;
+`;
+
 export const Data = styled.div`
   color: ${blueColor};
   font-size: ${defaultFontSize};
@@ -103,6 +107,12 @@ export const ProfilePicWrapper = styled.img`
   height: 5rem;
   margin-right: 0.8rem;
   width: 5rem;
+`;
+
+export const StyledCircle = styled(Circle)`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const StyledIconButton = styled(({ isSaved, ...restProps }) => (

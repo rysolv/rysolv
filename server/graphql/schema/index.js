@@ -435,6 +435,7 @@ module.exports = buildSchema(`
     lastName: String
     lastPosition: String
     location: String
+    matchCriteria: Object
     matches: Int
     modifiedDate: Object
     notifications: Boolean

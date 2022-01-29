@@ -25,6 +25,7 @@ const getPositionCandidates = async (
         isSaved,
         lastName,
         location,
+        matchCriteria,
         paymentMethod,
         percentMatch,
         positionLanguages,
@@ -51,6 +52,7 @@ const getPositionCandidates = async (
             ? `${lastName.charAt(0).toUpperCase()}.`
             : lastName,
           location,
+          matchCriteria,
           percentMatch,
           profilePic: shouldBlur ? profilePicBlur : profilePic,
           salary: target_salary,

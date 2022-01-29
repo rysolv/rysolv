@@ -78,6 +78,13 @@ export const formatPercentage = value => `${(value * 100).toFixed(0)}%`;
 export const formatWordString = string =>
   string.charAt(0).toUpperCase() + string.slice(1);
 
+export const generateColor = percentage => {
+  if (percentage < 50) return '#e93e43';
+  if (percentage >= 50 && percentage < 70) return '#f5a942';
+  if (percentage >= 70 && percentage < 90) return '#8ec63f';
+  return '#4ebc7a';
+};
+
 export const generatePostedDate = date => {
   const createdDate = moment(date).utc();
   const currDate = moment().utc();

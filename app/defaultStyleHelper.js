@@ -34,6 +34,7 @@ export const verifyColor = 'rgb(8, 178, 110)';
 
 // Redesign Colors
 export const blueColor = '#163486';
+export const blueFillColor = '#cad4ea';
 export const blueGrayColor = '#4A62A0';
 export const darkBlueColor = '#153486';
 export const grayColor = '#c4c4c4';

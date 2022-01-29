@@ -348,6 +348,7 @@ export function* fetchPositionCandidatesSaga({ payload }) {
         lastName
         lastPosition
         location
+        matchCriteria
         percentMatch
         profilePic
         salary
