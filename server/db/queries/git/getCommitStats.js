@@ -25,12 +25,12 @@ const getCommitStats = async ({ userId }) => {
       AND gc.commit_date > now() - '12 months'::interval
     )
     SELECT
-        ARRAY_AGG(week) AS weeks,
-        ARRAY_AGG(commits) AS commits,
-        SUM(commits) AS "totalCommits",
-        (SELECT count FROM repo_stats) AS "contributedTo",
-        (SELECT average_lines FROM repo_stats) AS "averageLines"
-      FROM commit_stats
+      ARRAY_AGG(week) AS weeks,
+      ARRAY_AGG(commits) AS commits,
+      SUM(commits) AS "totalCommits",
+      (SELECT count FROM repo_stats) AS "contributedTo",
+      (SELECT average_lines FROM repo_stats) AS "averageLines"
+    FROM commit_stats
   `;
   const { rows } = await singleQuery({ queryText, values: [userId] });
   const [oneRow] = rows;
