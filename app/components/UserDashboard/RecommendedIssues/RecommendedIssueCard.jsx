@@ -1,8 +1,8 @@
 import React from 'react';
 import T from 'prop-types';
-import moment from 'moment';
 
 import { LanguageWrapper } from 'components/base_ui';
+import { generatePostedDate } from 'utils/globalHelpers';
 
 import {
   IssueCardContainer,
@@ -23,7 +23,7 @@ const RecommendedIssueCard = ({
   <IssueCardContainer>
     <IssueCardHeader>
       <StyledLink to={`/repos/detail/${repoId}`}>{repoName}</StyledLink>
-      {moment.utc(createdDate).fromNow()}
+      {generatePostedDate(createdDate)}
     </IssueCardHeader>
     <IssueName>{name}</IssueName>
     <div>

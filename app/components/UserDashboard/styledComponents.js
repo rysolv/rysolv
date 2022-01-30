@@ -112,7 +112,6 @@ export const UserDashboardContainer = styled.div`
 export const UserDashboardContent = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100% - 8.3rem);
 `;
 
 export const UserDashboardHeader = styled.div`

@@ -11,6 +11,7 @@ const getOneCompany = require('./getOneCompany');
 const getOnePosition = require('./getOnePosition');
 const getPositionCandidates = require('./getPositionCandidates');
 const getPositions = require('./getPositions');
+const getRecommendedPositions = require('./getRecommendedPositions');
 const insertUserCompany = require('./insertUserCompany');
 const matchCandidates = require('./matchCandidates');
 const postContractAccepted = require('./postContractAccepted');
@@ -33,6 +34,7 @@ module.exports = {
   getOnePosition,
   getPositionCandidates,
   getPositions,
+  getRecommendedPositions,
   insertUserCompany,
   matchCandidates,
   postContractAccepted,

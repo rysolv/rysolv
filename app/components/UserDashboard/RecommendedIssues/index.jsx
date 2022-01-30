@@ -23,9 +23,9 @@ const RecommendedIssues = ({ dispatchOpenModal, handleNav, issues }) => {
   );
 
   return (
-    <RecommendedIssuesContainer>
+    <RecommendedIssuesContainer hasMinHeight={issues.length < 3}>
       <RecommendedIssuesHeader>
-        Solve issues, improve your skills
+        Solve issues, improve your profile
       </RecommendedIssuesHeader>
       <ConditionalRender
         Component={() => RecommendedIssueComponent}

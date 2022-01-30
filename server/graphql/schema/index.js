@@ -433,6 +433,7 @@ module.exports = buildSchema(`
     isGithubVerified: Boolean
     isSaved: Boolean
     issues: [Object]
+    jobs: [Object]
     languages: [String]
     lastName: String
     lastPosition: String
