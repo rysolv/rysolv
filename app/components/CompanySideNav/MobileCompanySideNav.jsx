@@ -8,10 +8,13 @@ import iconDictionary from 'utils/iconDictionary';
 
 import CompanyProfile from './CompanyProfile';
 import {
+  BottomFade,
+  ButtonGroup,
   ButtonTextWrapper,
   CompanySideNavContainer,
   CompanySideNavHeader,
   CreatePositionButton,
+  DashedLine,
   LocationText,
   PositionButton,
   PositionTitle,
@@ -41,51 +44,60 @@ const MobileCompanySideNav = ({
         shouldRender={!isEmpty(company)}
       />
       <CompanySideNavContainer isExpanded={isExpanded}>
-        <CompanySideNavHeader>
-          Positions
-          <StyledIconButton
-            disableRipple
-            icon={isExpanded ? ExpandLessIcon : ExpandMoreIcon}
-            onClick={() => setIsExpanded(!isExpanded)}
-            tooltipProps={{
-              disableFocusListener: true,
-              disableHoverListener: true,
-              disableTouchListener: true,
-            }}
-          />
-        </CompanySideNavHeader>
+        <CompanySideNavHeader>Positions</CompanySideNavHeader>
         <CreatePositionButton onClick={handleCreatePosition}>
           {AddCircleOutlineIcon} Create position
         </CreatePositionButton>
-        <ConditionalRender
-          Component={
-            <div>
-              {positions.map(
-                ({ id, isRemote = 'Yes', location, title }, index) => (
-                  <PositionButton
-                    key={`${title}-${index}`}
-                    isSelected={id === selectedPosition}
-                    onClick={() => handleSelectPosition({ id })}
-                  >
-                    {JobIcon}
-                    <ButtonTextWrapper>
-                      <PositionTitle>{title}</PositionTitle>
-                      <br />
-                      <LocationText>
-                        {location}&nbsp;
-                        <ConditionalRender
-                          Component={<span>(Remote)</span>}
-                          shouldRender={isRemote === 'Yes'}
-                        />
-                      </LocationText>
-                    </ButtonTextWrapper>
-                  </PositionButton>
-                ),
-              )}
-            </div>
-          }
-          shouldRender={isExpanded}
-        />
+        <ButtonGroup>
+          {positions.map(({ id, isRemote = 'Yes', location, title }, index) => (
+            <ConditionalRender
+              key={`${title}-${index}`}
+              Component={
+                <PositionButton
+                  isSelected={id === selectedPosition}
+                  onClick={() => handleSelectPosition({ id })}
+                >
+                  {JobIcon}
+                  <ButtonTextWrapper>
+                    <PositionTitle>{title}</PositionTitle>
+                    <br />
+                    <LocationText>
+                      {location}&nbsp;
+                      <ConditionalRender
+                        Component={<span>(Remote)</span>}
+                        shouldRender={isRemote === 'Yes'}
+                      />
+                    </LocationText>
+                  </ButtonTextWrapper>
+                </PositionButton>
+              }
+              shouldRender={isExpanded || index < 2}
+            />
+          ))}
+          <ConditionalRender
+            Component={<BottomFade />}
+            shouldRender={!isExpanded && positions.length > 1}
+          />
+          <ConditionalRender
+            Component={
+              <div>
+                <StyledIconButton
+                  disableRipple
+                  icon={isExpanded ? ExpandLessIcon : ExpandMoreIcon}
+                  isExpanded={isExpanded}
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  tooltipProps={{
+                    disableFocusListener: true,
+                    disableHoverListener: true,
+                    disableTouchListener: true,
+                  }}
+                />
+                <DashedLine isExpanded={isExpanded} />
+              </div>
+            }
+            shouldRender={positions.length > 1}
+          />
+        </ButtonGroup>
       </CompanySideNavContainer>
     </div>
   );

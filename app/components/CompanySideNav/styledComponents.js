@@ -1,3 +1,4 @@
+import React from 'react';
 import styled, { css } from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -5,6 +6,7 @@ import { IconButton as BaseIconButton } from 'components/base_ui';
 import {
   blueColor,
   candidateGreyColor,
+  grayColor,
   lightBlueColor,
   whiteColor,
 } from 'defaultStyleHelper';
@@ -17,6 +19,22 @@ const baseLogoStyle = css`
   margin-right: 0.8rem;
   object-fit: cover;
   width: 7.5rem;
+`;
+
+export const BottomFade = styled.div`
+  background: linear-gradient(
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 90%
+  );
+  bottom: 0;
+  height: 10rem;
+  left: 0;
+  position: absolute;
+  width: 100%;
+`;
+
+export const ButtonGroup = styled.div`
+  position: relative;
 `;
 
 export const ButtonTextWrapper = styled.div`
@@ -40,6 +58,7 @@ export const CompanySideNavContainer = styled.div`
 
   @media (max-width: 769px) {
     height: auto;
+    overflow-y: visible;
   }
 `;
 
@@ -71,6 +90,17 @@ export const CreatePositionButton = styled.button`
     font-size: 2rem;
     margin-right: 0.8rem;
   }
+`;
+
+export const DashedLine = styled.div`
+  border-bottom-width: 0;
+  border-color: #e1e2e3;
+  border-style: dashed;
+  border-top-width: 0.2rem;
+  bottom: ${({ isExpanded }) => (isExpanded ? 0 : '1.1rem')};
+  position: absolute;
+  width: 100%;
+  z-index: 0;
 `;
 
 export const LocationText = styled.div`
@@ -164,13 +194,22 @@ export const StyledEditButton = styled(IconButton)`
   }
 `;
 
-export const StyledIconButton = styled(BaseIconButton)`
+export const StyledIconButton = styled(({ isExpanded, ...restProps }) => (
+  <BaseIconButton {...restProps} />
+))`
+  background: ${whiteColor};
+  bottom: ${({ isExpanded }) => (isExpanded ? '-1.5rem' : '-0.5rem')};
+  box-shadow: 0 0.1em 0.4rem ${grayColor};
+  left: 47%;
+  position: absolute;
+  z-index: 1;
+
   &:hover {
-    background: transparent;
+    background: ${whiteColor};
   }
 
   svg {
-    color: ${blueColor};
+    color: ${lightBlueColor};
     height: 3.2rem;
     width: 3.2rem;
   }

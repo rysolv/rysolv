@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { grayColor, whiteColor } from 'defaultStyleHelper';
+import { whiteColor } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptop } = mediaQueriesByDevice;
@@ -11,9 +11,8 @@ export const VerticalDivider = styled.div`
   width: 0.1rem;
 
   @media (max-width: 769px) {
-    background: ${grayColor};
     height: 0.1rem;
-    margin: 4rem 0;
+    margin: 4rem 0 2rem;
     width: 100%;
   }
 `;

@@ -31,6 +31,12 @@ export const StyledTabs = styled(Tabs)`
     height: 0.3rem;
   }
 
+  svg {
+    color: ${blueColor};
+    height: 3.2rem;
+    width: 3.2rem;
+  }
+
   @media (max-width: 769px) {
     margin-right: 0;
   }
