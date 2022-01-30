@@ -10,6 +10,7 @@ import {
 } from 'defaultStyleHelper';
 
 const baseLogoStyle = css`
+  background: ${candidateGreyColor};
   border-radius: 50%;
   border: 0.2rem solid ${candidateGreyColor};
   height: 7.5rem;
@@ -86,14 +87,17 @@ export const Logo = styled.img`
 export const LogoWrapper = styled.div`
   ${baseLogoStyle}
   align-items: center;
-  align-self: center;
-  background: ${candidateGreyColor};
+  color: ${whiteColor};
   display: flex;
-  font-size: 4.6rem;
   justify-content: center;
 
   &:hover {
     cursor: pointer;
+  }
+
+  svg {
+    height: 4.6rem;
+    width: 4.6rem;
   }
 `;
 
@@ -109,7 +113,7 @@ export const NameWrapper = styled.div`
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 3.45rem;
-  width: calc(100% - ${({ hasImage }) => (hasImage ? '8rem' : '2rem')});
+  width: calc(100% - 8rem);
 `;
 
 export const PositionButton = styled.button`

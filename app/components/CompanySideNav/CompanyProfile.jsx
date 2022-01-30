@@ -14,6 +14,7 @@ import {
   StyledEditButton,
 } from './styledComponents';
 
+const AddIcon = iconDictionary('add');
 const EditIcon = iconDictionary('edit');
 
 const CompanyProfile = ({ handleNav, logo, name }) => {
@@ -27,12 +28,12 @@ const CompanyProfile = ({ handleNav, logo, name }) => {
           <LogoWrapper
             onClick={() => handleNav(`/company/dashboard/edit-company`)}
           >
-            +
+            {AddIcon}
           </LogoWrapper>
         }
         shouldRender={hasImage}
       />
-      <NameWrapper hasImage={hasImage}>
+      <NameWrapper>
         <NameText>{name}</NameText>
         <StyledEditButton
           disableRipple
