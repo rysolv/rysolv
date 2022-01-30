@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
 import CandidateMatchModal from 'components/CandidateMatchModal';
 import iconDictionary from 'utils/iconDictionary';
 
@@ -31,6 +32,7 @@ const SaveIcon = iconDictionary('bookmarkBorder');
 const UnsaveIcon = iconDictionary('bookmark');
 
 const CandidateCard = ({
+  deviceView,
   dispatchOpenModal,
   dispatchSaveCandidate,
   handleNav,
@@ -64,6 +66,13 @@ const CandidateCard = ({
     }
   };
 
+  const isMobileOrTablet =
+    deviceView === 'tablet' ||
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
+
   const sortedCriteria = Object.entries(matchCriteria)
     .sort(([, a], [, b]) => b - a)
     .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
@@ -88,6 +97,7 @@ const CandidateCard = ({
           <ProfilePicWrapper src={profilePic} />
           <CircleGroup>
             <StyledCircle
+              isMobileOrTablet={isMobileOrTablet}
               onBlur={() => setIsModalOpen(false)}
               onFocus={() => setIsModalOpen(true)}
               onMouseEnter={() => setIsModalOpen(true)}
@@ -96,12 +106,15 @@ const CandidateCard = ({
               onMouseOver={() => setIsModalOpen(true)}
               percentage={percentMatch}
             />
-            {isModalOpen && (
-              <CandidateMatchModal
-                matchCriteria={sortedCriteria}
-                percentMatch={percentMatch}
-              />
-            )}
+            <ConditionalRender
+              Component={
+                <CandidateMatchModal
+                  matchCriteria={sortedCriteria}
+                  percentMatch={percentMatch}
+                />
+              }
+              shouldRender={!isMobileOrTablet && isModalOpen}
+            />
           </CircleGroup>
         </ImageGroup>
         <CandidateCardUserInfo>
@@ -148,6 +161,7 @@ const CandidateCard = ({
 CandidateCard.defaultProps = { lastPosition: '' };
 
 CandidateCard.propTypes = {
+  deviceView: T.string.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
   handleNav: T.func.isRequired,

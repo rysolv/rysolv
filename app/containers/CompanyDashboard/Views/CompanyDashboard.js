@@ -9,6 +9,7 @@ import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
 import CompanyDashboardView from 'components/CompanyDashboard';
 import ScheduleInterviewModal from 'components/ScheduleInterviewModal';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -33,6 +34,7 @@ import {
 const CompanyDashboard = ({
   candidateCount,
   candidates,
+  deviceView,
   dispatchChangeFilter,
   dispatchChangeInput,
   dispatchClearAlerts,
@@ -84,6 +86,7 @@ const CompanyDashboard = ({
         propsToPassDown={{
           candidateCount,
           candidates,
+          deviceView,
           dispatchChangeFilter,
           dispatchOpenModal,
           dispatchSaveCandidate,
@@ -117,6 +120,7 @@ const CompanyDashboard = ({
 CompanyDashboard.propTypes = {
   candidateCount: T.object.isRequired,
   candidates: T.array.isRequired,
+  deviceView: T.string.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
@@ -162,6 +166,10 @@ const mapStateToProps = createStructuredSelector({
     'shouldRefetchCandidates',
   ),
   tableData: makeSelectCompanyDashboard('tableData'),
+  /**
+   * Reducer: ViewSizes
+   */
+  deviceView: makeSelectViewSize('deviceView'),
 });
 
 const mapDispatchToProps = dispatch => ({
