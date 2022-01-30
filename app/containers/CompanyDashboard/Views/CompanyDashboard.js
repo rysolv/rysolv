@@ -15,6 +15,7 @@ import injectSaga from 'utils/injectSaga';
 import {
   changeFilter,
   closeModalState,
+  fetchCandidateCount,
   fetchPositionCandidates,
   notifyCandidate,
   openModalState,
@@ -30,11 +31,13 @@ import {
 } from '../selectors';
 
 const CompanyDashboard = ({
+  candidateCount,
   candidates,
   dispatchChangeFilter,
   dispatchChangeInput,
   dispatchClearAlerts,
   dispatchCloseModal,
+  dispatchFetchCandidateCount,
   dispatchFetchPositionCandidates,
   dispatchNotifyCandidate,
   dispatchOpenModal,
@@ -54,6 +57,10 @@ const CompanyDashboard = ({
   shouldRefetchCandidates,
   tableData,
 }) => {
+  useEffect(() => {
+    dispatchFetchCandidateCount({ positionId: selectedPosition });
+  }, []);
+
   useEffect(() => dispatchClearAlerts, []);
 
   useEffect(() => {
@@ -75,6 +82,7 @@ const CompanyDashboard = ({
         isRequiredData={false}
         loading={fetchPositionCandidatesLoading}
         propsToPassDown={{
+          candidateCount,
           candidates,
           dispatchChangeFilter,
           dispatchOpenModal,
@@ -107,11 +115,13 @@ const CompanyDashboard = ({
 };
 
 CompanyDashboard.propTypes = {
+  candidateCount: T.object.isRequired,
   candidates: T.array.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
+  dispatchFetchCandidateCount: T.func.isRequired,
   dispatchFetchPositionCandidates: T.func.isRequired,
   dispatchNotifyCandidate: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
@@ -136,6 +146,7 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : CompanyDashboard
    */
+  candidateCount: makeSelectCompanyDashboard('candidateCount'),
   candidates: makeSelectCompanyDashboardCandidates(),
   fetchPositionCandidatesLoading: makeSelectCompanyDashboardLoading(
     'fetchPositionCandidates',
@@ -159,6 +170,8 @@ const mapDispatchToProps = dispatch => ({
    */
   dispatchChangeFilter: payload => dispatch(changeFilter(payload)),
   dispatchCloseModal: () => dispatch(closeModalState()),
+  dispatchFetchCandidateCount: payload =>
+    dispatch(fetchCandidateCount(payload)),
   dispatchFetchPositionCandidates: payload =>
     dispatch(fetchPositionCandidates(payload)),
   dispatchNotifyCandidate: payload => dispatch(notifyCandidate(payload)),

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 
 import { IconButton as BaseIconButton } from 'components/base_ui';
@@ -8,6 +8,15 @@ import {
   lightBlueColor,
   whiteColor,
 } from 'defaultStyleHelper';
+
+const baseLogoStyle = css`
+  border-radius: 50%;
+  border: 0.2rem solid ${candidateGreyColor};
+  height: 7.5rem;
+  margin-right: 0.8rem;
+  object-fit: cover;
+  width: 7.5rem;
+`;
 
 export const ButtonTextWrapper = styled.div`
   overflow: hidden;
@@ -71,12 +80,21 @@ export const LocationText = styled.div`
 `;
 
 export const Logo = styled.img`
-  border-radius: 50%;
-  border: 0.2rem solid ${candidateGreyColor};
-  height: 7.5rem;
-  margin-right: 0.8rem;
-  object-fit: cover;
-  width: 7.5rem;
+  ${baseLogoStyle}
+`;
+
+export const LogoWrapper = styled.div`
+  ${baseLogoStyle}
+  align-items: center;
+  align-self: center;
+  background: ${candidateGreyColor};
+  display: flex;
+  font-size: 4.6rem;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const NameText = styled.div`

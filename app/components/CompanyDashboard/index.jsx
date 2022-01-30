@@ -8,6 +8,7 @@ import ExistingDashboard from './ExistingDashboard';
 import InitialDashboard from './InitialDashboard';
 
 const CompanyDashboard = ({
+  candidateCount,
   candidates,
   dispatchChangeFilter,
   dispatchOpenModal,
@@ -31,6 +32,7 @@ const CompanyDashboard = ({
       Component={DashboardToRender}
       FallbackComponent={InitialDashboard}
       propsToPassDown={{
+        candidateCount,
         candidates,
         dispatchChangeFilter,
         dispatchOpenModal,
@@ -47,6 +49,7 @@ const CompanyDashboard = ({
 };
 
 CompanyDashboard.propTypes = {
+  candidateCount: T.object.isRequired,
   candidates: T.array.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,

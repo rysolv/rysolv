@@ -2,20 +2,28 @@ import styled from 'styled-components';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 
-import { blueColor, grayColor } from 'defaultStyleHelper';
+import { blueColor, whiteColor } from 'defaultStyleHelper';
 
 export const StyledTab = styled(Tab)`
+  background: ${whiteColor};
+  border-top-left-radius: 0.7rem;
+  border-top-right-radius: 0.7rem;
   color: ${blueColor};
   font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.936rem;
+  min-width: auto;
+  padding: 0 2rem;
+  text-transform: capitalize;
 
   &.selected {
-    color: ${blueColor};
-    font-weight: 700;
+    background: ${blueColor};
+    color: ${whiteColor};
   }
 `;
 
 export const StyledTabs = styled(Tabs)`
-  border-bottom: 0.1rem solid ${grayColor};
+  border-bottom: 0.2rem solid ${blueColor};
   margin: 0;
 
   .indicator {

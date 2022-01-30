@@ -32,6 +32,11 @@ export const EDIT_POSITION_FAILURE =
 export const EDIT_POSITION_SUCCESS =
   'app/CompanyDashboard/EDIT_POSITION_SUCCESS';
 
+export const FETCH_CANDIDATE_COUNT =
+  'app/CompanyDashboard/FETCH_CANDIDATE_COUNT';
+export const FETCH_CANDIDATE_COUNT_RESPONSE =
+  'app/CompanyDashboard/FETCH_CANDIDATE_COUNT_RESPONSE';
+
 export const FETCH_COMPANY = 'app/CompanyDashboard/FETCH_COMPANY';
 export const FETCH_COMPANY_FAILURE =
   'app/CompanyDashboard/FETCH_COMPANY_FAILURE';

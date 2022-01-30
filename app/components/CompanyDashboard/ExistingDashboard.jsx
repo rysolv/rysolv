@@ -22,6 +22,7 @@ const EditIcon = iconDictionary('edit');
 const PublicIcon = iconDictionary('public');
 
 const ExistingDashboard = ({
+  candidateCount,
   candidates,
   dispatchChangeFilter,
   dispatchOpenModal,
@@ -76,6 +77,7 @@ const ExistingDashboard = ({
         </PublicPositionButton>
       </CompanyDashboardHeader>
       <CompanyDashboardTabs
+        candidateCount={candidateCount}
         dispatchChangeFilter={dispatchChangeFilter}
         filter={filter}
       />
@@ -89,6 +91,7 @@ const ExistingDashboard = ({
 };
 
 ExistingDashboard.propTypes = {
+  candidateCount: T.object.isRequired,
   candidates: T.array.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
