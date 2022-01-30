@@ -31,7 +31,11 @@ const RecommendedIssueCard = ({
         <LanguageWrapper key={`language-${language}`} language={language} />
       ))}
     </div>
-    <SolveIssueButton label="Solve" onClick={() => window.open(githubLink)} />
+    <SolveIssueButton
+      disableRipple
+      label="Solve"
+      onClick={() => window.open(githubLink)}
+    />
   </IssueCardContainer>
 );
 

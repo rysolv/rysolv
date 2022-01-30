@@ -21,6 +21,7 @@ import {
   SkillsContainer,
   StyledIconButton,
   StyledPrimaryButton,
+  StyledSecondaryButton,
   UserDashboardSideNavContainer,
 } from './styledComponents';
 
@@ -130,7 +131,7 @@ const UserDashboardSideNav = ({
               shouldRender={!!stackoverflowLink}
             />
           </IconButtonWrapper>
-          <StyledPrimaryButton
+          <StyledSecondaryButton
             $customTopMargin={
               !!githubLink || !!personalLink || !!stackoverflowLink
                 ? '2.4rem'
@@ -154,7 +155,7 @@ const UserDashboardSideNav = ({
                 <LanguageWrapper key={skill} language={skill} />
               ))}
             </div>
-            <StyledPrimaryButton
+            <StyledSecondaryButton
               $customTopMargin={!isEmpty(skills) ? '2.5rem' : '3rem'}
               label={skillsButtonLabel}
               onClick={() => dispatchOpenModal({ modalState: 'updateSkills' })}

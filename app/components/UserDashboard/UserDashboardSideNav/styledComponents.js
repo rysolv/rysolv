@@ -156,6 +156,21 @@ export const StyledPrimaryButton = styled(
   }
 `;
 
+export const StyledSecondaryButton = styled(
+  ({ $customTopMargin, ...restProps }) => <PrimaryButton {...restProps} />,
+)`
+  ${baseButtonStyle};
+  background-color: ${whiteColor};
+  border: 0.2rem solid ${darkBlueColor};
+  color: ${darkBlueColor};
+  margin-top: ${({ $customTopMargin }) => $customTopMargin || '3rem'};
+
+  &:hover {
+    background-color: ${whiteColor};
+    color: ${darkBlueColor};
+  }
+`;
+
 export const UserDashboardSideNavContainer = styled.div`
   align-items: center;
   display: flex;

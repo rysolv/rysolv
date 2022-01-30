@@ -129,11 +129,19 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
 `;
 
 export const SolveIssueButton = styled(StyledPrimaryButton)`
+  background: transparent;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
   bottom: 0;
+  color: ${darkBlueColor};
   position: absolute;
   right: 0;
+
+  &:hover {
+    background: transparent;
+    box-shadow: none;
+    color: ${darkBlueColor};
+  }
 `;
 
 export const StyledSubParagraph = styled.p`
