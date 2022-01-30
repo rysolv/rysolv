@@ -113,7 +113,7 @@ export const ProfilePicWrapper = styled.img`
 export const StyledCircle = styled(Circle)`
   &:hover {
     cursor: ${({ isMobileOrTablet }) =>
-    isMobileOrTablet ? 'auto' : 'pointer'};
+    isMobileOrTablet ? 'default' : 'pointer'};
   }
 `;
 
