@@ -46,7 +46,7 @@ const UserProfile = ({ data, handleNav }) => {
   const {
     about,
     chartData,
-    desiredRole,
+    desiredRole = [],
     firstName,
     githubId,
     githubLink,
@@ -106,9 +106,10 @@ const UserProfile = ({ data, handleNav }) => {
               </LocationWrapper>
 
               <RoleContainer>
-                {desiredRole.map(role => (
-                  <LanguageWrapper key={role} language={role} />
-                ))}
+                {desiredRole &&
+                  desiredRole.map(role => (
+                    <LanguageWrapper key={role} language={role} />
+                  ))}
               </RoleContainer>
             </Fragment>
           }

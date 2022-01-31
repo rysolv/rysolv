@@ -19,7 +19,7 @@ const CognitoFallback = ({ isSignedIn }) => (
       No commit data available
       {isSignedIn && (
         <StyledSubParagraph>
-          <LinkWrapper to="/settings">Connect a Github account</LinkWrapper>{' '}
+          <LinkWrapper to="/settings">Connect a Github account</LinkWrapper>
           complete your profile.
         </StyledSubParagraph>
       )}
@@ -32,7 +32,7 @@ const LoadingFallback = ({ isSignedIn }) => (
     <IconWrapper src="https://rysolv.s3.us-east-2.amazonaws.com/SuccessUser.png" />
     <StyledParagraph>Crunching the numbers</StyledParagraph>
     <StyledSubParagraph>
-      We are crunching the numbers and building out elaborate charts.
+      We are crunching the numbers and building some fancy charts.
     </StyledSubParagraph>
     {isSignedIn && (
       <StyledSubParagraph>

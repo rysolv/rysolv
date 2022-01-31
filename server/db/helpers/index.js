@@ -7,7 +7,7 @@ const formatParameters = ({ newObject, tableParameters }) => {
   const substitution = [];
 
   const values = tableParameters.reduce((acc, key) => {
-    if (newObject[key] !== undefined) {
+    if (newObject[key] !== undefined && newObject[key] !== 'null') {
       parameters.push(key);
       substitution.push(`$${acc.length + 1}`);
       acc.push(newObject[key]);
