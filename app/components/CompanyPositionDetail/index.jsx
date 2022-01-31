@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import DOMPurify from 'dompurify';
+import isEmpty from 'lodash/isEmpty';
 import marked from 'marked';
 
 import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
@@ -53,6 +54,7 @@ const CompanyPositionDetail = ({
     type,
   } = position;
   const { formattedAddress: positionFormattedAddress } = location || {};
+  const formattedInterviewProcess = interviewProcess || [];
 
   const html = marked(description);
   const cleanHtml = DOMPurify.sanitize(html);
@@ -161,21 +163,26 @@ const CompanyPositionDetail = ({
           ))}
         </ContentContainer>
       </PositionDetailContent>
-      <PositionDetailContent>
-        <ContentLabelWrapper>
-          <ContentLabel>Interview process</ContentLabel>
-        </ContentLabelWrapper>
-        <HorizontalDivider />
-        <ContentContainer>
-          <StyledStepper alternativeLabel>
-            {interviewProcess.map(label => (
-              <StyledStep key={label}>
-                <StyledStepLabel>{label}</StyledStepLabel>
-              </StyledStep>
-            ))}
-          </StyledStepper>
-        </ContentContainer>
-      </PositionDetailContent>
+      <ConditionalRender
+        Component={
+          <PositionDetailContent>
+            <ContentLabelWrapper>
+              <ContentLabel>Interview process</ContentLabel>
+            </ContentLabelWrapper>
+            <HorizontalDivider />
+            <ContentContainer>
+              <StyledStepper alternativeLabel>
+                {formattedInterviewProcess.map(label => (
+                  <StyledStep key={label}>
+                    <StyledStepLabel>{label}</StyledStepLabel>
+                  </StyledStep>
+                ))}
+              </StyledStepper>
+            </ContentContainer>
+          </PositionDetailContent>
+        }
+        shouldRender={!isEmpty(formattedInterviewProcess)}
+      />
       <PositionDetailContent>
         <ContentLabelWrapper>
           <ContentLabel>Position description</ContentLabel>

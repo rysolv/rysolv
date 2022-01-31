@@ -17,16 +17,18 @@ import {
 const DeleteIcon = iconDictionary('close');
 
 const StepperInputOption = ({ handleChangeInput, onBlur, value }) => {
+  const formattedValue = value || [''];
+
   const handleChangeStep = (newValue, index) => {
-    const tempArray = [...value];
+    const tempArray = [...formattedValue];
     tempArray[index] = newValue;
     handleChangeInput(tempArray);
   };
 
   const handleDeleteStep = index => {
-    if (value.length > 1) {
-      const firstArr = value.slice(0, index);
-      const secondArr = value.slice(index + 1);
+    if (formattedValue.length > 1) {
+      const firstArr = formattedValue.slice(0, index);
+      const secondArr = formattedValue.slice(index + 1);
       const tempArray = [...firstArr, ...secondArr];
       handleChangeInput(tempArray);
     }
@@ -35,13 +37,13 @@ const StepperInputOption = ({ handleChangeInput, onBlur, value }) => {
   return (
     <div>
       <StyledStepper alternativeLabel>
-        {value.map(label => (
+        {formattedValue.map(label => (
           <StyledStep key={label}>
             <StyledStepLabel>{label}</StyledStepLabel>
           </StyledStep>
         ))}
       </StyledStepper>
-      {value.map((arrayValue, index) => (
+      {formattedValue.map((arrayValue, index) => (
         <InputWrapper key={`${arrayValue}-${index}`}>
           <Input
             autoFocus="autoFocus"
@@ -61,7 +63,7 @@ const StepperInputOption = ({ handleChangeInput, onBlur, value }) => {
       ))}
       <StyledButton
         disableRipple
-        onClick={() => handleChangeInput([...value, ''])}
+        onClick={() => handleChangeInput([...formattedValue, ''])}
       >
         Add step
       </StyledButton>
