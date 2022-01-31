@@ -4,6 +4,12 @@ import T from 'prop-types';
 import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
+import {
+  CognitoFallback,
+  LoadingFallback,
+  PullRequestFallback,
+  RepoFallback,
+} from './FallbackComponents';
 import CommitChart from './CommitChart';
 import LanguageChart from './LanguageChart';
 import PullRequestCard from './PullRequestCard';
@@ -15,7 +21,6 @@ import {
   AboutContainer,
   ContentColumn,
   DetailCharts,
-  FallBackCard,
   IconLink,
   LocationIconWrapper,
   LocationName,
@@ -43,6 +48,7 @@ const UserProfile = ({ data, handleNav }) => {
     chartData,
     desiredRole,
     firstName,
+    githubId,
     githubLink,
     hiringStatus,
     isSignedIn,
@@ -61,12 +67,21 @@ const UserProfile = ({ data, handleNav }) => {
     languageByCommits,
     pullRequestStats,
     repoStats,
-  } = chartData;
+  } = chartData || {};
+
+  let CommitFallback = <Fragment />;
+
+  if (githubId && !chartData) {
+    CommitFallback = <LoadingFallback isSignedIn={isSignedIn} />;
+  }
+  if (!githubId) {
+    CommitFallback = <CognitoFallback isSignedIn={isSignedIn} />;
+  }
 
   const surveyFallback = isSignedIn ? (
     <StyledPrimaryButton
       label="Complete Survey"
-      onClick={() => handleNav('/dashboard/update')}
+      onClick={() => handleNav('/jobs')}
     />
   ) : (
     <Fragment />
@@ -95,31 +110,40 @@ const UserProfile = ({ data, handleNav }) => {
                   <LanguageWrapper key={role} language={role} />
                 ))}
               </RoleContainer>
-
-              <SocialLinkWrapper>
-                {githubLink && (
-                  <IconLink href={githubLink} target="_blank">
-                    {GithubIcon}
-                  </IconLink>
-                )}
-                {personalLink && (
-                  <IconLink href={personalLink} target="_blank">
-                    {PersonalIcon}
-                  </IconLink>
-                )}
-                {stackoverflowLink && (
-                  <IconLink href={stackoverflowLink} target="_blank">
-                    {StackoverflowIcon}
-                  </IconLink>
-                )}
-              </SocialLinkWrapper>
-
-              <StyledHeader>Top Skills</StyledHeader>
-              <SkillsWrapper skills={skills} />
             </Fragment>
           }
           FallbackComponent={surveyFallback}
           shouldRender={hiringStatus && hiringStatus !== 'undeclared'}
+        />
+
+        {/* Social links (should always render) */}
+        <SocialLinkWrapper>
+          {githubLink && (
+            <IconLink href={githubLink} target="_blank">
+              {GithubIcon}
+            </IconLink>
+          )}
+          {personalLink && (
+            <IconLink href={personalLink} target="_blank">
+              {PersonalIcon}
+            </IconLink>
+          )}
+          {stackoverflowLink && (
+            <IconLink href={stackoverflowLink} target="_blank">
+              {StackoverflowIcon}
+            </IconLink>
+          )}
+        </SocialLinkWrapper>
+
+        {/* Only render if skills exist */}
+        <ConditionalRender
+          Component={
+            <Fragment>
+              <StyledHeader>Top Skills</StyledHeader>
+              <SkillsWrapper skills={skills} />
+            </Fragment>
+          }
+          shouldRender={skills && !!skills.length}
         />
       </ProfileColumn>
 
@@ -132,39 +156,48 @@ const UserProfile = ({ data, handleNav }) => {
           />
         </ProfileSection>
 
-        {/* Commit chart */}
-        <ProfileSection>
-          <CommitChart commits={commits} />
-        </ProfileSection>
+        {/* Git Charts */}
+        <ConditionalRender
+          Component={
+            <Fragment>
+              {/* Commit chart */}
+              <ProfileSection>
+                <CommitChart commits={commits} />
+              </ProfileSection>
 
-        <ProfileSection>
-          <DetailCharts>
-            <SummaryChart githubStats={githubStats} />
-            <LanguageChart languages={languageByCommits} />
-          </DetailCharts>
-        </ProfileSection>
+              <ProfileSection>
+                <DetailCharts>
+                  <SummaryChart githubStats={githubStats} />
+                  <LanguageChart languages={languageByCommits} />
+                </DetailCharts>
+              </ProfileSection>
 
-        {/* Top repos */}
-        <ProfileSection>
-          <StyledHeader>Top Repos</StyledHeader>
-          <ConditionalRender
-            Component={<RepoCard repoStats={repoStats} />}
-            FallbackComponent={<FallBackCard>No repos found.</FallBackCard>}
-            shouldRender={!!repoStats.length}
-          />
-        </ProfileSection>
+              {/* Top repos */}
+              <ProfileSection>
+                <StyledHeader>Top Repos</StyledHeader>
+                <ConditionalRender
+                  Component={<RepoCard repoStats={repoStats} />}
+                  FallbackComponent={<RepoFallback />}
+                  shouldRender={repoStats && !!repoStats.length}
+                />
+              </ProfileSection>
 
-        {/* Contribution List */}
-        <ProfileSection>
-          <StyledHeader>Recent Contributions</StyledHeader>
-          <ConditionalRender
-            Component={<PullRequestCard pullRequestStats={pullRequestStats} />}
-            FallbackComponent={
-              <FallBackCard>No pull requests found.</FallBackCard>
-            }
-            shouldRender={!!pullRequestStats.length}
-          />
-        </ProfileSection>
+              {/* Contribution List */}
+              <ProfileSection>
+                <StyledHeader>Recent Contributions</StyledHeader>
+                <ConditionalRender
+                  Component={
+                    <PullRequestCard pullRequestStats={pullRequestStats} />
+                  }
+                  FallbackComponent={<PullRequestFallback />}
+                  shouldRender={pullRequestStats && !!pullRequestStats.length}
+                />
+              </ProfileSection>
+            </Fragment>
+          }
+          FallbackComponent={CommitFallback}
+          shouldRender={!!chartData}
+        />
       </ContentColumn>
     </UserProfileContainer>
   );

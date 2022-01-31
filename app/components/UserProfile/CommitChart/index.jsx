@@ -44,7 +44,6 @@ const CommitChart = ({ commits }) => {
     <ChartContainer>
       <TitleRow>
         <div>Total Commits</div>
-        <div>Last 12 months</div>
       </TitleRow>
       <StyledCanvas id="commit-chart" />
     </ChartContainer>

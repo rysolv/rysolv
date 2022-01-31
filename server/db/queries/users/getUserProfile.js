@@ -3,79 +3,63 @@ const { singleQuery } = require('../../baseQueries');
 // Get user profile by user_id
 const getUserProfile = async ({ username }) => {
   const queryText = `
-  WITH user_data AS (
+  WITH user_id AS (
+    SELECT id FROM users WHERE username = $1
+  ),
+  user_data AS (
     SELECT
-      l.formatted_address,
-      q.question_key,
-      u.first_name,
-      u.github_link,
-      u.id,
-      u.last_name,
-      u.personal_link,
-      u.profile_pic,
-      u.stackoverflow_link,
-      up.chart_data::jsonb,
-      (
-        SELECT jsonb_agg(jsonb_build_object('level', pts.level, 'name', t.name) ORDER BY pts.level DESC)
-      	FROM users u
-		    JOIN position_tech_stack pts on pts.user_id = u.id
-    	  JOIN technologies t ON pts.technology_id = t.id
-		    WHERE u.username = $1
-      ) as skills,
-      CASE
-        WHEN q.question_key = 'desired_role' THEN qr.response_key
-      END AS desired_role,
-      CASE
-        WHEN q.question_key != 'desired_role' THEN qr.response_key
-      END AS question_responses
+    JSONB_BUILD_OBJECT (
+        'firstName', u.first_name,
+        'githubId', u.github_id,
+        'githubLink', u.github_link,
+        'id', u.id,
+        'lastName', u.last_name,
+        'location', l.formatted_address,
+        'personalLink', u.personal_link,
+        'profilePic', u.profile_pic,
+        'stackoverflowLink', u.stackoverflow_link
+    ) AS "userData"
     FROM users u
-    JOIN user_profiles up ON up.user_id = u.id
-    JOIN position_tech_stack pts ON pts.user_id = u.id
-    JOIN technologies t ON t.id = pts.technology_id
-    JOIN locations l ON l.user_id = u.id
-    JOIN user_question_responses uqr ON uqr.user_id = u.id
+    LEFT JOIN locations l ON l.user_id = u.id
+    WHERE u.id = (SELECT id FROM user_id)
+  ),
+  profile_data AS (
+    SELECT up.chart_data::jsonb AS "chartData"
+    FROM user_profiles up
+    WHERE up.user_id = (SELECT id FROM user_id)
+  ),
+  skills AS (
+    SELECT
+    JSONB_AGG(
+      JSONB_BUILD_OBJECT('level', pts.level, 'name', t.name)
+      ORDER BY pts.level DESC
+    ) AS "skills"
+    FROM position_tech_stack pts
+    JOIN technologies t ON pts.technology_id = t.id
+    WHERE pts.user_id = (SELECT id FROM user_id)
+  ),
+  survey_data AS (
+    SELECT jsonb_object_agg(q.question_key, qr.response_key) AS "questionResponses"
+    FROM user_question_responses uqr
     JOIN question_responses qr ON qr.id = uqr.response_id
     JOIN questions q ON q.id = uqr.question_id
-    WHERE u.username = $1
-    GROUP BY
-      l.formatted_address,
-      q.question_key,
-      qr.response_key,
-      skills,
-      u.first_name,
-      u.github_link,
-      u.id,
-      u.last_name,
-      u.personal_link,
-      u.profile_pic,
-      u.stackoverflow_link,
-      up.chart_data::jsonb
-    )
-    SELECT
-      ARRAY_AGG(DISTINCT ud.desired_role) FILTER (WHERE ud.desired_role IS NOT NULL) AS "desiredRole",
-      JSON_OBJECT_AGG(ud.question_key, ud.question_responses)FILTER (WHERE ud.question_responses IS NOT NULL)::JSONB AS "questionResponses",
-      ud.chart_data AS "chartData",
-      ud.first_name AS "firstName",
-      ud.formatted_address AS "location",
-      ud.github_link AS "githubLink",
-      ud.id,
-      ud.last_name AS "lastName",
-      ud.personal_link AS "personalLink",
-      ud.profile_pic AS "profilePic",
-      ud.skills,
-      ud.stackoverflow_link AS "stackoverflowLink"
-    FROM user_data ud
-    GROUP BY
-      ud.chart_data,
-      ud.first_name,
-      ud.formatted_address,
-      ud.github_link,
-      ud.id,
-      ud.last_name,
-      ud.personal_link,
-      ud.profile_pic,
-      ud.skills,
-      ud.stackoverflow_link
+    WHERE uqr.user_id = (SELECT id FROM user_id)
+    AND q.question_key != 'desired_role'
+  ),
+  desired_role AS (
+    SELECT array_agg(qr.value) AS "desiredRole"
+    FROM user_question_responses uqr
+    JOIN question_responses qr ON qr.id = uqr.response_id
+    JOIN questions q ON q.id = uqr.question_id
+    WHERE uqr.user_id = (SELECT id FROM user_id)
+    AND q.question_key = 'desired_role'
+  )
+  SELECT
+    (SELECT * FROM user_data),
+    (SELECT * FROM profile_data),
+    (SELECT * FROM skills),
+    (SELECT * FROM survey_data),
+    (SELECT * FROM desired_role)
   `;
   const { rows } = await singleQuery({ queryText, values: [username] });
   const [oneRow] = rows;

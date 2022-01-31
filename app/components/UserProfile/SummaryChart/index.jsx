@@ -59,7 +59,7 @@ const SummaryChart = ({ githubStats }) => {
       <SummaryRow>
         <LabelWrapper>
           <IconWrapper>{averageCommitIcon}</IconWrapper>
-          Average Commit
+          Lines per Commit
         </LabelWrapper>
         <Total>{averageCommit}</Total>
       </SummaryRow>

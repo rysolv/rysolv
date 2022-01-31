@@ -5,14 +5,12 @@ const getCommitStats = async ({ userId }) => {
   const queryText = `
     WITH commit_stats AS (
       SELECT
-        to_char(date_trunc('week', commit_date), 'Mon-dd') AS week,
+        to_char(date_trunc('month', commit_date), 'Mon, YY') AS week,
         COUNT(gc.commit_hash)::int AS commits
       FROM git_commits gc
       WHERE gc.user_id = $1
-      AND commit_date > now() - '12 months'::interval
       GROUP BY week
       ORDER BY MIN(commit_date) ASC
-      LIMIT 52
     ),
     repo_stats AS (
       SELECT
@@ -22,7 +20,6 @@ const getCommitStats = async ({ userId }) => {
       JOIN git_files gf ON gf.commit_id = gc.id
       JOIN git_repos gr ON gr.id = gc.repo_id
       WHERE gc.user_id = $1
-      AND gc.commit_date > now() - '12 months'::interval
     )
     SELECT
       ARRAY_AGG(week) AS weeks,

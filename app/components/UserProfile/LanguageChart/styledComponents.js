@@ -21,7 +21,9 @@ export const LanguageRow = styled.div`
   justify-content: space-between;
 `;
 
-export const Percentage = styled.div``;
+export const Percentage = styled.div`
+  white-space: nowrap;
+`;
 
 export const TitleRow = styled.div`
   align-items: center;

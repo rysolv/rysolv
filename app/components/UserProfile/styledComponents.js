@@ -55,11 +55,6 @@ export const DetailCharts = styled.div`
   }
 `;
 
-export const FallBackCard = styled.div`
-  background: ${candidateGreyColor};
-  padding: 1.6rem;
-`;
-
 export const IconLink = styled.a`
   margin: 0 1rem;
 

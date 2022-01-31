@@ -15,6 +15,7 @@ export function* fetchUserProfileSaga({ payload }) {
           chartData
           desiredRole
           firstName
+          githubId
           githubLink
           hiringStatus
           hiringStatus

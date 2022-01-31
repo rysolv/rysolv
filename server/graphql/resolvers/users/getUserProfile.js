@@ -5,28 +5,38 @@ const { userProfileError } = require('./constants');
 
 const getUserProfile = async ({ username }, { userId }) => {
   try {
-    const { questionResponses, ...restProps } = await getUserProfileQuery({
+    const {
+      chartData,
+      desiredRole,
+      questionResponses,
+      skills,
+      userData,
+    } = await getUserProfileQuery({
       username,
     });
 
     // Create user profile object
     const userProfile = {
+      ...userData,
+      chartData,
+      desiredRole,
+      hiringStatus: 'undeclared',
+      skills,
       username,
-      ...restProps,
     };
 
     // Add title and about to user profile
-    const { about, title, is_active } = questionResponses;
-    userProfile.about = about || null;
-    userProfile.title = title || null;
+    if (questionResponses) {
+      const { about, is_active, title } = questionResponses;
+      userProfile.about = about || null;
+      userProfile.title = title || null;
 
-    // Set hiring status
-    if (is_active && is_active === 'yes_is_active') {
-      userProfile.hiringStatus = 'active';
-    } else if (is_active === 'no_is_active') {
-      userProfile.hiringStatus = 'inactive';
-    } else {
-      userProfile.hiringStatus = 'undeclared';
+      // Set hiring status
+      if (is_active === 'yes_is_active') {
+        userProfile.hiringStatus = 'active';
+      } else if (is_active === 'no_is_active') {
+        userProfile.hiringStatus = 'inactive';
+      }
     }
 
     if (userId && userId === userProfile.id) {

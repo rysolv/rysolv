@@ -1,6 +1,6 @@
 const { singleQuery } = require('../../baseQueries');
 
-// Get commits per language for the last 12 months
+// Get commits per language
 const getTopLanguages = async ({ userId }) => {
   const queryText = `
     SELECT
@@ -10,7 +10,6 @@ const getTopLanguages = async ({ userId }) => {
     JOIN git_commits gc ON gf.commit_id = gc.id
     WHERE
       gc.user_id = $1
-      AND gc.commit_date > now() - '12 months'::interval
       AND language IS NOT NULL
     GROUP BY gf.language
     ORDER BY commits desc

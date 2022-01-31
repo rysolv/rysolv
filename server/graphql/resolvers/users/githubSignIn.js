@@ -93,7 +93,7 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       let blurUrl;
       let imageUrl;
 
-      if (!avatar_url) {
+      if (avatar_url) {
         // Upload avatar
         const { uploadUrl } = await uploadImage(avatar_url);
 
