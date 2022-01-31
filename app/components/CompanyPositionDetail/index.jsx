@@ -22,6 +22,9 @@ import {
   PositionDetailContent,
   PositionDetailHeader,
   StyledPrimaryButton,
+  StyledStep,
+  StyledStepLabel,
+  StyledStepper,
   Value,
 } from './styledComponents';
 
@@ -40,6 +43,7 @@ const CompanyPositionDetail = ({
     description,
     experience,
     hasApplied,
+    interviewProcess,
     location,
     role,
     salary,
@@ -93,6 +97,21 @@ const CompanyPositionDetail = ({
         />
       </PositionDetailHeader>
       <PositionDetailContent $isFirst>
+        <ContentLabelWrapper>
+          <ContentLabel>Interview process</ContentLabel>
+        </ContentLabelWrapper>
+        <HorizontalDivider />
+        <ContentContainer>
+          <StyledStepper alternativeLabel>
+            {interviewProcess.map(label => (
+              <StyledStep key={label}>
+                <StyledStepLabel>{label}</StyledStepLabel>
+              </StyledStep>
+            ))}
+          </StyledStepper>
+        </ContentContainer>
+      </PositionDetailContent>
+      <PositionDetailContent>
         <ContentLabelWrapper>
           <ContentLabel>Company</ContentLabel>
         </ContentLabelWrapper>

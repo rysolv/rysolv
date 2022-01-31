@@ -26,7 +26,13 @@ const onePosition = async ({ positionId }, { userId }) => {
     };
     const formattedPosition = Object.keys(position).reduce(
       (acc, positionItem) => {
-        if (positionItem === 'is_active') acc.isActive = position[positionItem];
+        if (positionItem === 'interview_process') {
+          acc.interviewProcess = position[positionItem]
+            .replace(/[{}]/g, '')
+            .replace(/["]/g, '')
+            .split(',');
+        } else if (positionItem === 'is_active')
+          acc.isActive = position[positionItem];
         else if (positionItem === 'post_to_job_board')
           acc.postToJobBoard = position[positionItem];
         else if (positionItem === 'skills') {

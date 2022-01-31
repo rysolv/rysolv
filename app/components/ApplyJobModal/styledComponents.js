@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
 import { PrimaryAsyncButton } from 'components/base_ui';
+import Markdown from 'components/Markdown';
 import {
   blueColor,
   candidateGreyColor,
@@ -62,6 +63,14 @@ export const SecondaryButton = styled(Button)`
 
   &:hover {
     background-color: transparent;
+  }
+`;
+
+export const StyledMarkdown = styled(Markdown)`
+  .CodeMirror,
+  .CodeMirror-scroll {
+    max-height: 20rem;
+    min-height: 20rem;
   }
 `;
 

@@ -266,6 +266,7 @@ module.exports = buildSchema(`
     experience: String
     hasApplied: Boolean
     id: ID
+    interviewProcess: [String]
     isActive: String
     location: Object
     positionData: Object

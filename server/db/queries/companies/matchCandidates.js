@@ -4,7 +4,7 @@ const matchCandidates = async ({ candidates, positionId }) => {
   const deleteQuery = `
     DELETE FROM candidate_positions
     WHERE position_id = $1
-    AND saved IS false;
+    AND saved_date IS NULL;
   `;
 
   const insertQuery = `

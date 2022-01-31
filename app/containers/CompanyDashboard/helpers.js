@@ -27,6 +27,9 @@ export const optionDictionary = {
   experience: {
     option: 'autocomplete',
   },
+  interview_process: {
+    option: 'stepperInput',
+  },
   is_active: {
     option: 'toggle',
   },
@@ -72,6 +75,7 @@ export const optionDictionary = {
 };
 
 const validationPropsByField = {
+  interviewProcess: { type: 'interviewProcessInput' },
   title: { type: 'stringInput' },
 };
 

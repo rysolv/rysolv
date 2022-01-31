@@ -61,6 +61,9 @@ export function* createPositionSaga({ payload }) {
           case 'description': {
             return JSON.stringify(value);
           }
+          case 'interview_process': {
+            return JSON.stringify(value);
+          }
           case 'location': {
             return `{
               country: "${value.country}",
@@ -390,7 +393,6 @@ export function* fetchPositionCandidatesSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     yield put(fetchPositionCandidatesSuccess({ candidates }));
   } catch (error) {
-    console.log('error', error);
     yield put(fetchPositionCandidatesFailure({ error }));
   }
 }
@@ -404,6 +406,7 @@ export function* fetchPositionSaga({ payload }) {
         ... on Position {
           description
           experience
+          interviewProcess
           isActive
           location
           postToJobBoard

@@ -80,6 +80,7 @@ export const initialState = {
     companyPosition: {
       description: '',
       experience: '',
+      interviewProcess: [''],
       isActive: 'Yes',
       location: {},
       postToJobBoard: 'Yes',
@@ -103,6 +104,7 @@ export const initialState = {
     companyPosition: {
       description: '',
       experience: '',
+      interviewProcess: '',
       location: '',
       role: '',
       salary: '',
