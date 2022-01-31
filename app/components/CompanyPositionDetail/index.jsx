@@ -98,21 +98,6 @@ const CompanyPositionDetail = ({
       </PositionDetailHeader>
       <PositionDetailContent $isFirst>
         <ContentLabelWrapper>
-          <ContentLabel>Interview process</ContentLabel>
-        </ContentLabelWrapper>
-        <HorizontalDivider />
-        <ContentContainer>
-          <StyledStepper alternativeLabel>
-            {interviewProcess.map(label => (
-              <StyledStep key={label}>
-                <StyledStepLabel>{label}</StyledStepLabel>
-              </StyledStep>
-            ))}
-          </StyledStepper>
-        </ContentContainer>
-      </PositionDetailContent>
-      <PositionDetailContent>
-        <ContentLabelWrapper>
           <ContentLabel>Company</ContentLabel>
         </ContentLabelWrapper>
         <HorizontalDivider />
@@ -174,6 +159,21 @@ const CompanyPositionDetail = ({
           {skills.map(({ skill }) => (
             <LanguageWrapper key={`skill-${skill}`} language={skill} />
           ))}
+        </ContentContainer>
+      </PositionDetailContent>
+      <PositionDetailContent>
+        <ContentLabelWrapper>
+          <ContentLabel>Interview process</ContentLabel>
+        </ContentLabelWrapper>
+        <HorizontalDivider />
+        <ContentContainer>
+          <StyledStepper alternativeLabel>
+            {interviewProcess.map(label => (
+              <StyledStep key={label}>
+                <StyledStepLabel>{label}</StyledStepLabel>
+              </StyledStep>
+            ))}
+          </StyledStepper>
         </ContentContainer>
       </PositionDetailContent>
       <PositionDetailContent>
