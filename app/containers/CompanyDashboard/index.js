@@ -19,9 +19,7 @@ const CompanyDashboard = ({ activeUser }) => {
   return <CompanyDashboardView />;
 };
 
-CompanyDashboard.propTypes = {
-  activeUser: T.object.isRequired,
-};
+CompanyDashboard.propTypes = { activeUser: T.object.isRequired };
 
 const mapStateToProps = createStructuredSelector({
   /**

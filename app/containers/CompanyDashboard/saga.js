@@ -14,6 +14,7 @@ import {
   editCompanySuccess,
   editPositionFailure,
   editPositionSuccess,
+  fetchCandidateCountResponse,
   fetchCompanyFailure,
   fetchCompanyPositions,
   fetchCompanyPositionsFailure,
@@ -39,6 +40,7 @@ import {
   DELETE_POSITION,
   EDIT_COMPANY,
   EDIT_POSITION,
+  FETCH_CANDIDATE_COUNT,
   FETCH_COMPANY_POSITIONS,
   FETCH_COMPANY,
   FETCH_POSITION_CANDIDATES,
@@ -57,6 +59,9 @@ export function* createPositionSaga({ payload }) {
       const generateFormattedValue = () => {
         switch (questionKey) {
           case 'description': {
+            return JSON.stringify(value);
+          }
+          case 'interview_process': {
             return JSON.stringify(value);
           }
           case 'location': {
@@ -272,6 +277,28 @@ export function* editPositionSaga({ payload }) {
   }
 }
 
+export function* fetchCandidateCountSaga({ payload }) {
+  const { positionId } = payload;
+  const query = `
+    query {
+      getCandidateCount(positionId: "${positionId}") {
+        candidateCount
+      }
+    }
+  `;
+  try {
+    const graphql = JSON.stringify({ query });
+    const {
+      data: {
+        getCandidateCount: { candidateCount },
+      },
+    } = yield call(post, '/graphql', graphql);
+    yield put(fetchCandidateCountResponse({ candidateCount }));
+  } catch (error) {
+    yield put(fetchCandidateCountResponse({ candidateCount: {} }));
+  }
+}
+
 export function* fetchCompanyPositionsSaga({ payload }) {
   const { companyId } = payload;
   const query = `
@@ -342,6 +369,7 @@ export function* fetchPositionCandidatesSaga({ payload }) {
     query {
       getPositionCandidates(positionId: "${positionId}", step: "${step}") {
         firstName
+        hasApplied
         id
         isSaved
         languages
@@ -378,6 +406,7 @@ export function* fetchPositionSaga({ payload }) {
         ... on Position {
           description
           experience
+          interviewProcess
           isActive
           location
           postToJobBoard
@@ -560,6 +589,7 @@ export default function* watcherSaga() {
   yield takeLatest(DELETE_POSITION, deletePositionSaga);
   yield takeLatest(EDIT_COMPANY, editCompanySaga);
   yield takeLatest(EDIT_POSITION, editPositionSaga);
+  yield takeLatest(FETCH_CANDIDATE_COUNT, fetchCandidateCountSaga);
   yield takeLatest(FETCH_COMPANY_POSITIONS, fetchCompanyPositionsSaga);
   yield takeLatest(FETCH_COMPANY, fetchCompanySaga);
   yield takeLatest(FETCH_POSITION_CANDIDATES, fetchPositionCandidatesSaga);

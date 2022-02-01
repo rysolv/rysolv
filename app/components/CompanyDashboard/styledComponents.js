@@ -2,7 +2,12 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 
-import { darkBlueColor, lightBlueColor, textColor } from 'defaultStyleHelper';
+import {
+  blueColor,
+  darkBlueColor,
+  lightBlueColor,
+  textColor,
+} from 'defaultStyleHelper';
 
 export const CandidateCardGroup = styled.div`
   align-items: start;
@@ -21,11 +26,11 @@ export const CompanyDashboardHeader = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 1rem 0;
+  padding: 1rem 0 4rem;
 `;
 
 export const CompanyDashboardTitle = styled.div`
-  color: ${textColor};
+  color: ${blueColor};
   display: flex;
   font-size: 3.2rem;
   font-weight: 500;
@@ -85,7 +90,7 @@ export const StyledIconButton = styled(IconButton)`
   }
 
   svg {
-    color: ${textColor};
+    color: ${blueColor};
     height: 2.4rem;
     width: 2.4rem;
   }

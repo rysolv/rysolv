@@ -17,6 +17,8 @@ import {
   EDIT_POSITION_FAILURE,
   EDIT_POSITION_SUCCESS,
   EDIT_POSITION,
+  FETCH_CANDIDATE_COUNT_RESPONSE,
+  FETCH_CANDIDATE_COUNT,
   FETCH_COMPANY_FAILURE,
   FETCH_COMPANY_POSITIONS_FAILURE,
   FETCH_COMPANY_POSITIONS_SUCCESS,
@@ -158,6 +160,20 @@ export function editPosition(payload) {
   return {
     payload,
     type: EDIT_POSITION,
+  };
+}
+
+export function fetchCandidateCountResponse(payload) {
+  return {
+    payload,
+    type: FETCH_CANDIDATE_COUNT_RESPONSE,
+  };
+}
+
+export function fetchCandidateCount(payload) {
+  return {
+    payload,
+    type: FETCH_CANDIDATE_COUNT,
   };
 }
 

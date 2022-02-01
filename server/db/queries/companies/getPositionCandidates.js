@@ -31,6 +31,7 @@ const getPositionCandidates = async ({ positionId, step }) => {
       LIMIT 1
     )
     SELECT
+      (SELECT CASE WHEN cp.applied_date IS NOT NULL THEN true ELSE false END AS "hasApplied"),
       (SELECT CASE WHEN cp.saved_date IS NOT NULL THEN true ELSE false END AS "isSaved"),
       cp.match_criteria AS "matchCriteria",
       cp.percent_match AS "percentMatch",
@@ -65,6 +66,7 @@ const getPositionCandidates = async ({ positionId, step }) => {
     WHERE cp.position_id = (SELECT position_id FROM position)
     ${filter}
     GROUP BY
+      cp.applied_date,
       cp.match_criteria,
       cp.percent_match,
       cp.saved_date,

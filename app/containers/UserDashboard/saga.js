@@ -158,6 +158,7 @@ export function* fetchUserDashboardSaga() {
             id
             isGithubVerified
             issues
+            jobs
             lastName
             matches
             notifications

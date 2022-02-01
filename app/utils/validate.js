@@ -42,6 +42,15 @@ const validateGithubLink = value => {
   return false;
 };
 
+const validateInterviewProcess = values => {
+  const blankSteps = values.filter(value => value === '');
+
+  if (!isEmpty(blankSteps)) {
+    return `Must enter valid step`;
+  }
+  return false;
+};
+
 export const validateIssueUrl = value => {
   const url = value.split('/');
   const issueNumber = url[url.length - 1];
@@ -215,6 +224,7 @@ export const validationDictionary = {
   emailInput: validateEmail,
   fundInput: validateFundValue,
   githubLinkInput: validateGithubLink,
+  interviewProcessInput: validateInterviewProcess,
   linkInput: validateLink,
   passwordInput: validatePassword,
   payoutUrlInput: validatePayoutUrl,

@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -402,8 +403,9 @@ export const StyledPrimaryButton = styled(({ isSelected, ...restProps }) => (
   }
 
   &:hover {
-    background-color: ${darkBlueColor};
-    color: ${whiteColor};
+    background-color: ${({ isSelected }) =>
+      isSelected ? darkBlueColor : whiteColor};
+    color: ${({ isSelected }) => (isSelected ? whiteColor : darkBlueColor)};
   }
 `;
 

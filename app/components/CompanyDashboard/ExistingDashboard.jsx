@@ -22,7 +22,9 @@ const EditIcon = iconDictionary('edit');
 const PublicIcon = iconDictionary('public');
 
 const ExistingDashboard = ({
+  candidateCount,
   candidates,
+  deviceView,
   dispatchChangeFilter,
   dispatchOpenModal,
   dispatchSaveCandidate,
@@ -38,6 +40,7 @@ const ExistingDashboard = ({
         <CandidateCardGroup>
           {candidates.map((candidate, index) => (
             <CandidateCard
+              deviceView={deviceView}
               dispatchOpenModal={dispatchOpenModal}
               dispatchSaveCandidate={dispatchSaveCandidate}
               handleNav={handleNav}
@@ -76,6 +79,7 @@ const ExistingDashboard = ({
         </PublicPositionButton>
       </CompanyDashboardHeader>
       <CompanyDashboardTabs
+        candidateCount={candidateCount}
         dispatchChangeFilter={dispatchChangeFilter}
         filter={filter}
       />
@@ -89,7 +93,9 @@ const ExistingDashboard = ({
 };
 
 ExistingDashboard.propTypes = {
+  candidateCount: T.object.isRequired,
   candidates: T.array.isRequired,
+  deviceView: T.string.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,

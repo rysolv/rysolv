@@ -1,11 +1,16 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Stepper from '@material-ui/core/Stepper';
 
 import { PrimaryButton } from 'components/base_ui';
 import {
   blueColor,
   candidateGreyColor,
   darkBlueColor,
+  defaultFontFamily,
+  defaultFontSize,
   lightBlueColor,
   textColor,
   whiteColor,
@@ -191,6 +196,54 @@ export const StyledPrimaryButton = styled(({ isCompany, ...restProps }) => (
   ${mobile} {
     margin: 2rem 0 0;
     width: 100%;
+  }
+`;
+
+export const StyledStep = styled(Step)`
+  .MuiStepIcon-active {
+    color: ${lightBlueColor};
+    height: 2.4rem;
+    width: 2.4rem;
+  }
+
+  .MuiStepIcon-root {
+    color: ${lightBlueColor};
+    height: 2.4rem;
+    width: 2.4rem;
+  }
+
+  .MuiStepIcon-text {
+    font-family: ${defaultFontFamily};
+    font-size: ${defaultFontSize};
+  }
+`;
+
+export const StyledStepLabel = styled(StepLabel)`
+  .MuiStepLabel-active {
+    color: ${textColor};
+    font-family: ${defaultFontFamily};
+    font-size: ${defaultFontSize};
+    font-weight: 400;
+    line-height: 1.936rem;
+  }
+
+  .MuiStepLabel-label {
+    color: ${textColor};
+    font-family: ${defaultFontFamily};
+    font-size: ${defaultFontSize};
+    line-height: 1.936rem;
+  }
+`;
+
+export const StyledStepper = styled(Stepper)`
+  justify-content: center;
+  padding: 1.6rem 0 0;
+
+  .MuiStepConnector-lineHorizontal {
+    border-bottom-width: 0;
+    border-color: #e1e2e3;
+    border-style: dashed;
+    border-top-width: 0.2rem;
   }
 `;
 

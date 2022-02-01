@@ -65,6 +65,7 @@ export function* fetchPositionDetailSaga({ payload }) {
           experience
           hasApplied
           id
+          interviewProcess
           isActive
           location
           role

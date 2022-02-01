@@ -6,6 +6,7 @@ import { ConditionalRender } from 'components/base_ui';
 import Notification from './Notification';
 import UserDashboardSideNav from './UserDashboardSideNav';
 import RecommendedIssues from './RecommendedIssues';
+import RecommendedJobs from './RecommendedJobs';
 import {
   LeftContainer,
   UserDashboardContainer,
@@ -25,6 +26,7 @@ const UserDashboard = ({
     firstName,
     hiringStatus,
     issues,
+    jobs,
     matches,
     surveyComplete,
     unreadMessages,
@@ -78,6 +80,7 @@ const UserDashboard = ({
                 />
               </UserDashboardContent>
             </div>
+            <RecommendedJobs handleNav={handleNav} jobs={jobs} />
             <RecommendedIssues
               dispatchOpenModal={dispatchOpenModal}
               handleNav={handleNav}
@@ -97,6 +100,7 @@ const UserDashboard = ({
                     (hiringStatus !== 'active' || !!unreadMessages)
                   }
                 />
+                <RecommendedJobs handleNav={handleNav} jobs={jobs} />
                 <RecommendedIssues
                   dispatchOpenModal={dispatchOpenModal}
                   handleNav={handleNav}

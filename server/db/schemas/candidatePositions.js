@@ -6,7 +6,8 @@ const alterCandidatePositionsTable = `
   ADD COLUMN percent_match FLOAT,
   ADD COLUMN position_id UUID REFERENCES company_positions(id),
   ADD COLUMN saved_date TIMESTAMP DEFAULT NULL,
-  ADD COLUMN user_id UUID REFERENCES users(id);
+  ADD COLUMN user_id UUID REFERENCES users(id),
+  ADD COLUMN viewed_date TIMESTAMP DEFAULT NULL;
 `;
 
 const createCandidatePositionsTable = `

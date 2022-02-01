@@ -32,10 +32,10 @@ export const ModalContainer = styled.div`
   background: ${whiteColor};
   border-radius: 0.7rem;
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
+  left: 6rem;
   padding: 2rem;
   position: absolute;
-  right: -10rem;
-  top: 6rem;
+  top: -4rem;
   width: 27.5rem;
 `;
 

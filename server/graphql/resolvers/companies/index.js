@@ -1,3 +1,4 @@
+const getCandidateCount = require('./getCandidateCount');
 const getCompanyPositions = require('./getCompanyPositions');
 const getContract = require('./getContract');
 const getPlaidToken = require('./getPlaidToken');
@@ -13,6 +14,7 @@ const transformPositionResponse = require('./transformPositionResponse');
 const updatePaymentMethod = require('./updatePaymentMethod');
 
 module.exports = {
+  getCandidateCount,
   getCompanyPositions,
   getContract,
   getPlaidToken,

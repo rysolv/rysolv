@@ -3,6 +3,7 @@ const { CustomError, errorLogger } = require('../../../helpers');
 const { matchLanguages } = require('../../../helpers');
 const {
   getPositionCandidates: getPositionCandidatesQuery,
+  setCandidateViewedDate,
 } = require('../../../db');
 
 // Get all candidates for a position
@@ -21,6 +22,7 @@ const getPositionCandidates = async (
       const {
         contractKey,
         firstName,
+        hasApplied,
         id,
         isSaved,
         lastName,
@@ -45,6 +47,7 @@ const getPositionCandidates = async (
           firstName: shouldBlur
             ? `${firstName.charAt(0).toUpperCase()}.`
             : firstName,
+          hasApplied,
           id,
           isSaved,
           languages: matchLanguages({ userLanguages, positionLanguages }),
@@ -63,6 +66,8 @@ const getPositionCandidates = async (
       }
       return acc;
     }, []);
+
+    await setCandidateViewedDate({ positionId, step });
 
     return result;
   } catch (error) {

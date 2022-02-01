@@ -257,6 +257,7 @@ module.exports = buildSchema(`
   }
 
   type Position {
+    candidateCount: Object
     companyId: ID
     companyLogo: String
     companyName: String
@@ -265,6 +266,7 @@ module.exports = buildSchema(`
     experience: String
     hasApplied: Boolean
     id: ID
+    interviewProcess: [String]
     isActive: String
     location: Object
     positionData: Object
@@ -425,12 +427,14 @@ module.exports = buildSchema(`
     githubId: String
     githubLink: String
     githubUsername: String
+    hasApplied: Boolean
     hiringStatus: String
     id: ID!
     isActive: String
     isGithubVerified: Boolean
     isSaved: Boolean
     issues: [Object]
+    jobs: [Object]
     languages: [String]
     lastName: String
     lastPosition: String
@@ -551,6 +555,7 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
+    getCandidateCount(positionId: ID!): Position!
     getCompanyPositions(companyId: ID!): CompanyPositionsArray
     getContract(plan: String!): ContractResult!
     getFilterOptions: FilterResult!

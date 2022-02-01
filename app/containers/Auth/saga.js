@@ -117,6 +117,7 @@ export function* githubSignInSaga({ payload }) {
           pullRequests
           rep
           repos
+          unreadMessages
           upvotes
           username
           watching
@@ -330,6 +331,7 @@ export function* signInSaga({ payload }) {
           pullRequests
           rep
           repos
+          unreadMessages
           upvotes
           username
           watching

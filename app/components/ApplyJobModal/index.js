@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import T from 'prop-types';
 
 import { ErrorSuccessBanner } from 'components/base_ui';
-import Markdown from 'components/Markdown';
 
 import {
   ButtonGroup,
@@ -12,6 +11,7 @@ import {
   ModalHeader,
   ModalSubheader,
   SecondaryButton,
+  StyledMarkdown,
   StyledPrimaryAsyncButton,
 } from './styledComponents';
 
@@ -44,7 +44,7 @@ const ApplyJobModal = ({
         </ModalSubheader>
         <div>
           <MarkdownHeader>Message</MarkdownHeader>
-          <Markdown
+          <StyledMarkdown
             body={form.body}
             handleInput={value =>
               dispatchChangeInput({

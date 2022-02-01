@@ -5,6 +5,7 @@ const {
   getFilteredIssues,
   getQuestionAnswerByKey,
   getRecommendedIssues,
+  getRecommendedPositions,
   getSurveyStatus,
   getUserSettings: getUserSettingsQuery,
 } = require('../../../db');
@@ -20,6 +21,10 @@ const getUserDashboard = async (_, { authError, userId }) => {
     // Get recommended issues
     const issues = await getRecommendedIssues({ userId });
     user.issues = issues || [];
+
+    // Get recommended jobs
+    const jobs = await getRecommendedPositions();
+    user.jobs = jobs || [];
 
     // Get hiring status
     const responseKey = await getQuestionAnswerByKey({
