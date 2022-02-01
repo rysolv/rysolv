@@ -8,10 +8,10 @@ export const FETCH_JOBS_BOARD_SUCCESS =
 
 // Keyword List
 export const commonKeywords = [
-  'Go',
-  'Java',
-  'JavaScript',
   'Python',
+  'JavaScript',
   'React',
+  'Go',
   'Rust',
+  'Java',
 ];

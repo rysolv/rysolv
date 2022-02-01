@@ -59,7 +59,6 @@ const CompanyPositionDetail = ({
   const html = marked(description);
   const cleanHtml = DOMPurify.sanitize(html);
 
-  const disabled = isCompany || hasApplied;
   const userLabel = hasApplied ? 'Applied' : 'Apply';
   const buttonLabel = isCompany ? 'Unavailable on company accounts' : userLabel;
 
@@ -91,11 +90,15 @@ const CompanyPositionDetail = ({
             {positionFormattedAddress}, {timezone} &#9679; Remote
           </LocationWrapper>
         </div>
-        <StyledPrimaryButton
-          disabled={disabled}
-          isCompany={isCompany}
-          label={buttonLabel}
-          onClick={() => dispatchOpenModal({ modalState })}
+        <ConditionalRender
+          Component={
+            <StyledPrimaryButton
+              disabled={hasApplied}
+              label={buttonLabel}
+              onClick={() => dispatchOpenModal({ modalState })}
+            />
+          }
+          shouldRender={!isCompany}
         />
       </PositionDetailHeader>
       <PositionDetailContent $isFirst>

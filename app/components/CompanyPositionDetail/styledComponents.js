@@ -179,14 +179,13 @@ export const PositionDetailHeader = styled.div`
   }
 `;
 
-export const StyledPrimaryButton = styled(({ isCompany, ...restProps }) => (
+export const StyledPrimaryButton = styled(({ ...restProps }) => (
   <PrimaryButton {...restProps} />
 ))`
   ${baseButtonStyle}
   background-color: ${darkBlueColor};
   color: ${whiteColor};
   margin-bottom: 1rem;
-  width: ${({ isCompany }) => (isCompany ? 'auto' : '10rem')};
 
   &:hover {
     background-color: ${darkBlueColor};

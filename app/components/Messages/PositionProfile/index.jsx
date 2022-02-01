@@ -76,7 +76,7 @@ const PositionCard = ({ handleNav, position }) => {
         </CandidateCardRows>
       </CandidateCardContent>
       <CandidateCardButton onClick={handleClick}>
-        {PositionIcon} Position Detail
+        {PositionIcon} Position detail
       </CandidateCardButton>
     </CandidateCardContainer>
   );
