@@ -83,7 +83,7 @@ const UserRoutes = () => (
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/pricing" component={PublicPricing} />
     <Route exact path="/privacy-policy" component={PublicPrivacyPolicy} />
-    <Route exact path="/profile/:user" component={PublicUserProfile} />
+    <Route exact path="/users/:user" component={PublicUserProfile} />
     <Route exact path="/repos" component={PublicOverview} />
     <Route exact path="/repos/add" component={PrivateReposAdd} />
     <Route exact path="/repos/detail/:id" component={PublicReposDetail} />

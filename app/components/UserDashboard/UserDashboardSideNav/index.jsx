@@ -73,7 +73,7 @@ const UserDashboardSideNav = ({
   return (
     <UserDashboardSideNavContainer>
       <ProfilePicture src={profilePic} />
-      <StyledProfileLink to={`/profile/${username}`}>
+      <StyledProfileLink to={`/users/${username}`}>
         {PublicIcon}&nbsp;View public profile
       </StyledProfileLink>
       <div>
@@ -91,7 +91,7 @@ const UserDashboardSideNav = ({
             />
           </ActiveWrapper>
           <ActiveText>
-            Let companies on the Rysolv platform know that you’re actively
+            Let companies on the Rysolv platform know that you&apos;re actively
             looking for a job right now.
           </ActiveText>
           <StyledPrimaryButton

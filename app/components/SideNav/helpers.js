@@ -14,10 +14,10 @@ export const excludedPath = [
   'pricing',
   'pricing',
   'privacy-policy',
-  'profile',
   'signin',
   'signup',
   'terms-of-service',
+  'users',
 ];
 
 export const getInitialValue = {

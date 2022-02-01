@@ -162,7 +162,7 @@ const IssueDetail = ({
   );
 
   const primaryUser = {
-    route: `/profile/${username}`,
+    route: `/users/${username}`,
     username,
   };
 

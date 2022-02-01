@@ -27,11 +27,11 @@ const AwardedUserView = ({ awardedUser, isUserAccepted, rep }) => {
       <ImageLinkWrapper
         alt={username}
         image={profilePic}
-        route={`/profile/${username}`}
+        route={`/users/${username}`}
         size="8rem"
       />
       <LinkWrapper>
-        <StyledInternalLink to={`/profile/${username}`}>
+        <StyledInternalLink to={`/users/${username}`}>
           {username}
         </StyledInternalLink>
       </LinkWrapper>

@@ -41,9 +41,7 @@ const UserCard = ({ data, deviceView }) => {
                 <StyledSquare>
                   <StyledSettingWrapper>
                     <MemberWrapper>
-                      <NameLink to={`/profile/${username}`}>
-                        {username}
-                      </NameLink>
+                      <NameLink to={`/users/${username}`}>{username}</NameLink>
                     </MemberWrapper>
                   </StyledSettingWrapper>
                   <ContentWrapper>
@@ -51,7 +49,7 @@ const UserCard = ({ data, deviceView }) => {
                       <ImageLinkWrapper
                         alt="Profile Image"
                         image={profilePic}
-                        route={`/profile/${username}`}
+                        route={`/users/${username}`}
                         size={isMobileS ? '4.75rem' : '7.5rem'}
                       />
                       <IconWrapper>

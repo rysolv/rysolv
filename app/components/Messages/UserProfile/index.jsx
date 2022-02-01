@@ -38,7 +38,7 @@ const CandidateCard = ({ handleNav, user }) => {
   const UserIcon = iconDictionary('people');
 
   const handleClick = () => {
-    handleNav(`/profile/${username}`);
+    handleNav(`/users/${username}`);
   };
 
   return (

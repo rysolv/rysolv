@@ -48,7 +48,7 @@ const Comments = ({ comments }) => {
             const user = {
               alt: username,
               image: profilePic,
-              route: isGithubComment ? githubUrl : `/profile/${username}`,
+              route: isGithubComment ? githubUrl : `/users/${username}`,
               username,
             };
             const CommentCardComponent = () => (

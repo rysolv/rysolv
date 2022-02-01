@@ -47,13 +47,13 @@ export class RecentActivityView extends React.PureComponent {
                       alt={usernameToRender}
                       disabled={disabled}
                       image={profilePicToRender}
-                      route={`/profile/${username}`}
+                      route={`/users/${username}`}
                     />
                   </ProfileImageWrapper>
                   <FundContent>
                     <StyledWordLink
                       disabled={disabled}
-                      to={`/profile/${username}`}
+                      to={`/users/${username}`}
                     >
                       {usernameToRender}
                     </StyledWordLink>

@@ -42,7 +42,7 @@ const NewComment = ({
         <ImageLinkWrapper
           alt={username}
           image={profilePic}
-          route={`/profile/${username}`}
+          route={`/users/${username}`}
         />
       </ProfileImageContainer>
       <NewCommentContainer onKeyDown={e => handleKeydown(e)}>

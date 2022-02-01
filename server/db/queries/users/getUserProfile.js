@@ -5,6 +5,7 @@ const getUserProfile = async ({ username }) => {
   const queryText = `
   WITH user_id AS (
     SELECT id FROM users WHERE username = $1
+    LIMIT 1
   ),
   user_data AS (
     SELECT
