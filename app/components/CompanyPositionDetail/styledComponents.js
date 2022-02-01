@@ -1,12 +1,35 @@
+import React from 'react';
 import styled, { css } from 'styled-components';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Stepper from '@material-ui/core/Stepper';
 
+import { PrimaryButton } from 'components/base_ui';
 import {
   blueColor,
   candidateGreyColor,
+  darkBlueColor,
+  defaultFontFamily,
+  defaultFontSize,
   lightBlueColor,
   textColor,
   whiteColor,
 } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { mobile } = mediaQueriesByDevice;
+
+const baseButtonStyle = css`
+  align-items: center;
+  border-radius: 0.8rem;
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  margin: 0;
+  text-transform: initial;
+`;
 
 const baseLabelStyle = css`
   color: ${blueColor};
@@ -63,6 +86,12 @@ export const Description = styled.div`
 export const HeaderWrapper = styled.div`
   align-items: center;
   display: flex;
+  margin-bottom: 1rem;
+  margin-right: 1.6rem;
+
+  ${mobile} {
+    margin-right: 0;
+  }
 `;
 
 export const HorizontalDivider = styled.div`
@@ -134,11 +163,87 @@ export const PositionDetailContent = styled.div`
 `;
 
 export const PositionDetailHeader = styled.div`
+  align-items: center;
   color: ${blueColor};
+  display: flex;
+  flex-wrap: wrap;
   font-size: 3.2rem;
   font-weight: 700;
+  justify-content: space-between;
   line-height: 3.36rem;
-  padding: 2rem 0;
+  padding: 2rem 0 1rem;
+
+  ${mobile} {
+    align-items: normal;
+    flex-direction: column;
+  }
+`;
+
+export const StyledPrimaryButton = styled(({ ...restProps }) => (
+  <PrimaryButton {...restProps} />
+))`
+  ${baseButtonStyle}
+  background-color: ${darkBlueColor};
+  color: ${whiteColor};
+  margin-bottom: 1rem;
+
+  &:hover {
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
+  }
+
+  ${mobile} {
+    margin: 2rem 0 0;
+    width: 100%;
+  }
+`;
+
+export const StyledStep = styled(Step)`
+  .MuiStepIcon-active {
+    color: ${lightBlueColor};
+    height: 2.4rem;
+    width: 2.4rem;
+  }
+
+  .MuiStepIcon-root {
+    color: ${lightBlueColor};
+    height: 2.4rem;
+    width: 2.4rem;
+  }
+
+  .MuiStepIcon-text {
+    font-family: ${defaultFontFamily};
+    font-size: ${defaultFontSize};
+  }
+`;
+
+export const StyledStepLabel = styled(StepLabel)`
+  .MuiStepLabel-active {
+    color: ${textColor};
+    font-family: ${defaultFontFamily};
+    font-size: ${defaultFontSize};
+    font-weight: 400;
+    line-height: 1.936rem;
+  }
+
+  .MuiStepLabel-label {
+    color: ${textColor};
+    font-family: ${defaultFontFamily};
+    font-size: ${defaultFontSize};
+    line-height: 1.936rem;
+  }
+`;
+
+export const StyledStepper = styled(Stepper)`
+  justify-content: center;
+  padding: 1.6rem 0 0;
+
+  .MuiStepConnector-lineHorizontal {
+    border-bottom-width: 0;
+    border-color: #e1e2e3;
+    border-style: dashed;
+    border-top-width: 0.2rem;
+  }
 `;
 
 export const Value = styled.div`

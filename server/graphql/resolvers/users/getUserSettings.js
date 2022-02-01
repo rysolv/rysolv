@@ -44,6 +44,7 @@ const getUserSettings = async (_, { authError, userId }) => {
         isQuestionnaireComplete: Object.keys(companyProps).some(
           prop => !!companyProps[prop],
         ),
+        isPaidSubscription: contract !== 'startup' && !!paymentMethod,
         paymentConfirmed: !!paymentMethod,
         paymentMethod,
       };

@@ -9,12 +9,14 @@ import AsyncRender from 'components/AsyncRender';
 import { ModalDialog } from 'components/base_ui';
 import CompanyDashboardView from 'components/CompanyDashboard';
 import ScheduleInterviewModal from 'components/ScheduleInterviewModal';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import {
   changeFilter,
   closeModalState,
+  fetchCandidateCount,
   fetchPositionCandidates,
   notifyCandidate,
   openModalState,
@@ -30,11 +32,14 @@ import {
 } from '../selectors';
 
 const CompanyDashboard = ({
+  candidateCount,
   candidates,
+  deviceView,
   dispatchChangeFilter,
   dispatchChangeInput,
   dispatchClearAlerts,
   dispatchCloseModal,
+  dispatchFetchCandidateCount,
   dispatchFetchPositionCandidates,
   dispatchNotifyCandidate,
   dispatchOpenModal,
@@ -54,6 +59,10 @@ const CompanyDashboard = ({
   shouldRefetchCandidates,
   tableData,
 }) => {
+  useEffect(() => {
+    dispatchFetchCandidateCount({ positionId: selectedPosition });
+  }, []);
+
   useEffect(() => dispatchClearAlerts, []);
 
   useEffect(() => {
@@ -61,7 +70,7 @@ const CompanyDashboard = ({
       const { step } = filter;
       dispatchFetchPositionCandidates({
         positionId: selectedPosition,
-        saved: step === 'saved',
+        step,
       });
     }
   }, [selectedPosition, filter]);
@@ -75,7 +84,9 @@ const CompanyDashboard = ({
         isRequiredData={false}
         loading={fetchPositionCandidatesLoading}
         propsToPassDown={{
+          candidateCount,
           candidates,
+          deviceView,
           dispatchChangeFilter,
           dispatchOpenModal,
           dispatchSaveCandidate,
@@ -107,11 +118,14 @@ const CompanyDashboard = ({
 };
 
 CompanyDashboard.propTypes = {
+  candidateCount: T.object.isRequired,
   candidates: T.array.isRequired,
+  deviceView: T.string.isRequired,
   dispatchChangeFilter: T.func.isRequired,
   dispatchChangeInput: T.func.isRequired,
   dispatchClearAlerts: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
+  dispatchFetchCandidateCount: T.func.isRequired,
   dispatchFetchPositionCandidates: T.func.isRequired,
   dispatchNotifyCandidate: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
@@ -136,6 +150,7 @@ const mapStateToProps = createStructuredSelector({
   /*
    * Reducer : CompanyDashboard
    */
+  candidateCount: makeSelectCompanyDashboard('candidateCount'),
   candidates: makeSelectCompanyDashboardCandidates(),
   fetchPositionCandidatesLoading: makeSelectCompanyDashboardLoading(
     'fetchPositionCandidates',
@@ -151,6 +166,10 @@ const mapStateToProps = createStructuredSelector({
     'shouldRefetchCandidates',
   ),
   tableData: makeSelectCompanyDashboard('tableData'),
+  /**
+   * Reducer: ViewSizes
+   */
+  deviceView: makeSelectViewSize('deviceView'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -159,6 +178,8 @@ const mapDispatchToProps = dispatch => ({
    */
   dispatchChangeFilter: payload => dispatch(changeFilter(payload)),
   dispatchCloseModal: () => dispatch(closeModalState()),
+  dispatchFetchCandidateCount: payload =>
+    dispatch(fetchCandidateCount(payload)),
   dispatchFetchPositionCandidates: payload =>
     dispatch(fetchPositionCandidates(payload)),
   dispatchNotifyCandidate: payload => dispatch(notifyCandidate(payload)),

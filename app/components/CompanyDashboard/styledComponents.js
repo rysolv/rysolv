@@ -2,7 +2,12 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 
-import { darkBlueColor, lightBlueColor, textColor } from 'defaultStyleHelper';
+import {
+  blueColor,
+  darkBlueColor,
+  lightBlueColor,
+  textColor,
+} from 'defaultStyleHelper';
 
 export const CandidateCardGroup = styled.div`
   align-items: start;
@@ -17,13 +22,21 @@ export const CompanyDashboardContainer = styled.div`
   width: 100%;
 `;
 
+export const CompanyDashboardHeader = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1rem 0 4rem;
+`;
+
 export const CompanyDashboardTitle = styled.div`
-  color: ${textColor};
+  color: ${blueColor};
   display: flex;
   font-size: 3.2rem;
   font-weight: 500;
   line-height: 3.36rem;
-  padding: 2rem 2rem 1rem;
+  padding-right: 1.6rem;
+  padding-top: 1rem;
 `;
 
 export const IconWrapper = styled.img`
@@ -46,6 +59,26 @@ export const LinkWrapper = styled(Link)`
   }
 `;
 
+export const PublicPositionButton = styled.button`
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: ${lightBlueColor};
+  display: flex;
+  font-size: 1.6rem;
+  padding: 1rem 0 0;
+  white-space: nowrap;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  svg {
+    font-size: 2rem;
+    margin-right: 0.8rem;
+  }
+`;
+
 export const StyledIconButton = styled(IconButton)`
   align-self: center;
   display: flex;
@@ -57,7 +90,7 @@ export const StyledIconButton = styled(IconButton)`
   }
 
   svg {
-    color: ${textColor};
+    color: ${blueColor};
     height: 2.4rem;
     width: 2.4rem;
   }

@@ -1,10 +1,11 @@
 /* eslint-disable no-shadow, react/no-array-index-key */
-import React from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
+import CandidateMatchModal from 'components/CandidateMatchModal';
 import iconDictionary from 'utils/iconDictionary';
 
-import { Circle } from 'components/base_ui';
 import {
   CandidateCardButton,
   CandidateCardContainer,
@@ -13,12 +14,14 @@ import {
   CandidateCardRow,
   CandidateCardRows,
   CandidateCardUserInfo,
+  CircleGroup,
   Data,
   Divider,
   ImageGroup,
   NameWrapper,
   PositionWrapper,
   ProfilePicWrapper,
+  StyledCircle,
   StyledIconButton,
   StyledLanguageWrapper,
   Title,
@@ -29,6 +32,7 @@ const SaveIcon = iconDictionary('bookmarkBorder');
 const UnsaveIcon = iconDictionary('bookmark');
 
 const CandidateCard = ({
+  deviceView,
   dispatchOpenModal,
   dispatchSaveCandidate,
   handleNav,
@@ -37,6 +41,7 @@ const CandidateCard = ({
   isSaved,
   lastPosition,
   location,
+  matchCriteria,
   name,
   percentMatch,
   preferredLanguages,
@@ -47,6 +52,8 @@ const CandidateCard = ({
   type,
   yearsOfExperience,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const ButtonText = threadId ? `View Messages` : `Connect`;
   const CardIcon = isSaved ? UnsaveIcon : SaveIcon;
   const CardLabel = isSaved ? 'Unshortlist' : 'Shortlist';
@@ -58,6 +65,17 @@ const CandidateCard = ({
       dispatchOpenModal({ tableData });
     }
   };
+
+  const isMobileOrTablet =
+    deviceView === 'tablet' ||
+    deviceView === 'mobile' ||
+    deviceView === 'mobileS' ||
+    deviceView === 'mobileXS' ||
+    deviceView === 'mobileXXS';
+
+  const sortedCriteria = Object.entries(matchCriteria)
+    .sort(([, a], [, b]) => b - a)
+    .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
 
   const tableData = { positionId: selectedPosition, userId: id };
 
@@ -77,7 +95,27 @@ const CandidateCard = ({
       <CandidateCardContent>
         <ImageGroup>
           <ProfilePicWrapper src={profilePic} />
-          <Circle percentage={percentMatch} />
+          <CircleGroup>
+            <StyledCircle
+              isMobileOrTablet={isMobileOrTablet}
+              onBlur={() => setIsModalOpen(false)}
+              onFocus={() => setIsModalOpen(true)}
+              onMouseEnter={() => setIsModalOpen(true)}
+              onMouseLeave={() => setIsModalOpen(false)}
+              onMouseOut={() => setIsModalOpen(false)}
+              onMouseOver={() => setIsModalOpen(true)}
+              percentage={percentMatch}
+            />
+            <ConditionalRender
+              Component={
+                <CandidateMatchModal
+                  matchCriteria={sortedCriteria}
+                  percentMatch={percentMatch}
+                />
+              }
+              shouldRender={!isMobileOrTablet && isModalOpen}
+            />
+          </CircleGroup>
         </ImageGroup>
         <CandidateCardUserInfo>
           <NameWrapper>{name}</NameWrapper>
@@ -123,6 +161,7 @@ const CandidateCard = ({
 CandidateCard.defaultProps = { lastPosition: '' };
 
 CandidateCard.propTypes = {
+  deviceView: T.string.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchSaveCandidate: T.func.isRequired,
   handleNav: T.func.isRequired,
@@ -131,6 +170,7 @@ CandidateCard.propTypes = {
   isSaved: T.bool.isRequired,
   lastPosition: T.string,
   location: T.string.isRequired,
+  matchCriteria: T.object.isRequired,
   name: T.string.isRequired,
   percentMatch: T.number.isRequired,
   preferredLanguages: T.array.isRequired,

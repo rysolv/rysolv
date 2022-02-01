@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import T from 'prop-types';
 
 import { ErrorSuccessBanner } from 'components/base_ui';
-import Markdown from 'components/Markdown';
 
 import {
   ButtonGroup,
@@ -13,6 +12,7 @@ import {
   ModalHeader,
   ModalSubheader,
   SecondaryButton,
+  StyledMarkdown,
   StyledPrimaryButton,
 } from './styledComponents';
 
@@ -46,7 +46,7 @@ const ScheduleInterviewModal = ({
   return (
     <ModalContainer>
       <ModalContent>
-        <ModalHeader>Notify Candidate</ModalHeader>
+        <ModalHeader>Notify candidate</ModalHeader>
         <ErrorSuccessBanner
           bottomMarginRequired="1rem"
           error={error}
@@ -59,7 +59,7 @@ const ScheduleInterviewModal = ({
         </ModalSubheader>
         <div>
           <MarkdownHeader>Message</MarkdownHeader>
-          <Markdown
+          <StyledMarkdown
             body={scheduleInterview.body}
             handleInput={value =>
               dispatchChangeInput({

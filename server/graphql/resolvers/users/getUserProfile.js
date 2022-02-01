@@ -1,35 +1,57 @@
-const { CustomError, errorLogger } = require('../../../helpers');
-const { getUserByUsername, getQuestionAnswerByKey } = require('../../../db');
-const { oneUserError } = require('./constants');
+/* eslint-disable camelcase */
+const { errorLogger } = require('../../../helpers');
+const { getUserProfile: getUserProfileQuery } = require('../../../db');
+const { userProfileError } = require('./constants');
 
-const getUserProfile = async ({ username }) => {
+const getUserProfile = async ({ username }, { userId }) => {
   try {
-    const user = await getUserByUsername({ username });
-    if (!user) throw new CustomError(`Not found`);
-
-    // Get hiring status
-    const responseKey = await getQuestionAnswerByKey({
-      userId: user.id,
-      questionKey: 'is_active',
+    const {
+      chartData,
+      desiredRole,
+      questionResponses,
+      skills,
+      userData,
+    } = await getUserProfileQuery({
+      username,
     });
-    if (responseKey && responseKey === 'yes_is_active') {
-      user.hiringStatus = 'active';
-    } else if (responseKey === 'no_is_active') {
-      user.hiringStatus = 'inactive';
-    } else {
-      user.hiringStatus = 'undeclared';
+
+    // Create user profile object
+    const userProfile = {
+      ...userData,
+      chartData,
+      desiredRole,
+      hiringStatus: 'undeclared',
+      skills,
+      username,
+    };
+
+    // Add title and about to user profile
+    if (questionResponses) {
+      const { about, is_active, title } = questionResponses;
+      userProfile.about = about || null;
+      userProfile.title = title || null;
+
+      // Set hiring status
+      if (is_active === 'yes_is_active') {
+        userProfile.hiringStatus = 'active';
+      } else if (is_active === 'no_is_active') {
+        userProfile.hiringStatus = 'inactive';
+      }
+    }
+
+    if (userId && userId === userProfile.id) {
+      userProfile.isSignedIn = true;
     }
 
     return {
       __typename: 'User',
-      ...user,
+      ...userProfile,
     };
   } catch (error) {
-    const { alert } = error;
     errorLogger(error);
     return {
       __typename: 'Error',
-      message: alert || oneUserError,
+      message: userProfileError,
     };
   }
 };

@@ -9,8 +9,9 @@ const {
 const {
   deleteRepoMembers,
   deleteUserCompanies,
-  deleteUserTechStack,
   deleteUserPullRequests,
+  deleteUserResponse,
+  deleteUserTechStack,
   getUserSettings,
   removeAttempting,
   removeWatching,
@@ -58,8 +59,9 @@ const deleteUser = async (_, { authError, email, provider, userId }) => {
 
     await deleteRepoMembers({ userId });
     await deleteUserCompanies({ userId });
-    await deleteUserTechStack({ userId });
     await deleteUserPullRequests({ userId });
+    await deleteUserResponse({ userId });
+    await deleteUserTechStack({ userId });
     await removeAttempting({ userId });
     await removeWatching({ userId });
     await transformUser({ data, userId });

@@ -53,8 +53,9 @@ const MobileHeader = ({
               <NavLink
                 label="Dashboard"
                 path={isCompany ? '/company/dashboard' : '/dashboard'}
-                shouldRemoveSecond
+                shouldRemoveThird
               />
+              <NavLink label="Jobs" path="/jobs" shouldRemoveSecond />
               <NavLink label="Messages" path="/messages" />
               {!!unreadMessages && (
                 <UnreadMessages>{unreadMessages}</UnreadMessages>

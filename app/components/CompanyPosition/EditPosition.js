@@ -29,6 +29,7 @@ const EditPosition = ({
   handleEditPosition,
   handleNav,
   handleValidateInput,
+  isPaidSubscription,
 }) => {
   const hasErrors = Object.keys(companyPositionFormErrors).some(
     input => !!companyPositionFormErrors[input],
@@ -57,42 +58,49 @@ const EditPosition = ({
       <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
       {companyPositionQuestions.map(
         ({ description, id, options, optionType, question, ...restProps }) => {
-          const OptionToRender = optionDictionary[optionType];
+          if (!(id === 'postToJobBoard' && !isPaidSubscription)) {
+            const OptionToRender = optionDictionary[optionType];
 
-          const handleChangeInput = (value, inputField) => {
-            dispatchChangeInput({
-              field: inputField || id,
-              form: 'companyPosition',
-              value,
-            });
-          };
+            const handleChangeInput = (value, inputField) => {
+              dispatchChangeInput({
+                field: inputField || id,
+                form: 'companyPosition',
+                value,
+              });
+            };
 
-          const multiple = id === 'role';
+            const multiple = id === 'role';
 
-          return (
-            <OptionWrapper $isAbsolute={id === 'isActive'} key={`option-${id}`}>
-              <OptionLabel>{question}</OptionLabel>
-              <OptionDescription>{description}</OptionDescription>
-              <OptionToRender
-                dispatchChangeInput={dispatchChangeInput}
-                dispatchDeleteSkill={dispatchDeleteSkill}
-                handleChangeInput={handleChangeInput}
-                id={id}
-                multiple={multiple}
-                onBlur={() =>
-                  handleValidateInput({
-                    field: id,
-                    values: companyPositionForm,
-                  })
-                }
-                options={options}
-                tableProps={tableProps}
-                value={companyPositionForm[id]}
-                {...restProps}
-              />
-              <OptionError>{companyPositionFormErrors[id]}</OptionError>
-            </OptionWrapper>
-          );
+            return (
+              <OptionWrapper
+                $isAbsolute={id === 'isActive'}
+                $isFlex={id === 'postToJobBoard'}
+                key={`option-${id}`}
+              >
+                <OptionLabel>{question}</OptionLabel>
+                <OptionDescription>{description}</OptionDescription>
+                <OptionToRender
+                  dispatchChangeInput={dispatchChangeInput}
+                  dispatchDeleteSkill={dispatchDeleteSkill}
+                  handleChangeInput={handleChangeInput}
+                  id={id}
+                  multiple={multiple}
+                  onBlur={() =>
+                    handleValidateInput({
+                      field: id,
+                      values: companyPositionForm,
+                    })
+                  }
+                  options={options}
+                  tableProps={tableProps}
+                  value={companyPositionForm[id]}
+                  {...restProps}
+                />
+                <OptionError>{companyPositionFormErrors[id]}</OptionError>
+              </OptionWrapper>
+            );
+          }
+          return null;
         },
       )}
       <ButtonWrapper>
@@ -124,6 +132,7 @@ EditPosition.propTypes = {
   handleEditPosition: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
+  isPaidSubscription: T.bool.isRequired,
 };
 
 export default EditPosition;

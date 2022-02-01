@@ -24,6 +24,8 @@ import {
   EDIT_POSITION_FAILURE,
   EDIT_POSITION_SUCCESS,
   EDIT_POSITION,
+  FETCH_CANDIDATE_COUNT_RESPONSE,
+  FETCH_CANDIDATE_COUNT,
   FETCH_COMPANY_FAILURE,
   FETCH_COMPANY_POSITIONS_FAILURE,
   FETCH_COMPANY_POSITIONS_SUCCESS,
@@ -57,6 +59,7 @@ import {
 export const initialState = {
   alerts: { error: false, success: false },
   candidates: [],
+  candidateCount: {},
   company: {},
   error: false,
   filter: {
@@ -77,8 +80,10 @@ export const initialState = {
     companyPosition: {
       description: '',
       experience: '',
+      interviewProcess: [''],
       isActive: 'Yes',
       location: {},
+      postToJobBoard: 'Yes',
       role: [],
       salary: '',
       skills: [],
@@ -99,6 +104,7 @@ export const initialState = {
     companyPosition: {
       description: '',
       experience: '',
+      interviewProcess: '',
       location: '',
       role: '',
       salary: '',
@@ -115,6 +121,7 @@ export const initialState = {
     deletePosition: false,
     editCompany: false,
     editPosition: false,
+    fetchCandidateCount: false,
     fetchCompany: false,
     fetchCompanyPositions: true,
     fetchPosition: false,
@@ -262,6 +269,16 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     case EDIT_POSITION: {
       draft.alerts = initialState.alerts;
       draft.loading.editPosition = true;
+      break;
+    }
+    case FETCH_CANDIDATE_COUNT_RESPONSE: {
+      const { candidateCount } = payload;
+      draft.loading.fetchCandidateCount = false;
+      draft.candidateCount = candidateCount;
+      break;
+    }
+    case FETCH_CANDIDATE_COUNT: {
+      draft.loading.fetchCandidateCount = true;
       break;
     }
     case FETCH_COMPANY_FAILURE: {
@@ -418,9 +435,16 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
     }
     case SAVE_CANDIDATE_SUCCESS: {
       const { candidateId } = payload;
+      let isSaved = false;
       draft.candidates.map((el, i) => {
-        if (el.id === candidateId) draft.candidates[i].isSaved = !el.isSaved;
+        if (el.id === candidateId) {
+          isSaved = !el.isSaved;
+          draft.candidates[i].isSaved = !el.isSaved;
+        }
       });
+      draft.candidateCount.saved = isSaved
+        ? draft.candidateCount.saved + 1
+        : draft.candidateCount.saved - 1;
       draft.loading.saveCandidate = false;
       break;
     }

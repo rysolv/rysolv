@@ -97,7 +97,7 @@ const makeSelectCompanyDashboardResponseArray = () =>
           ] = companyPositionQuestions.filter(
             ({ questionKey: key }) => input === snakeToCamel(key),
           );
-          if (Array.isArray(values)) {
+          if (Array.isArray(values) && questionKey !== 'interview_process') {
             values.forEach(async value => {
               const filter = responses.filter(
                 response =>
@@ -113,9 +113,13 @@ const makeSelectCompanyDashboardResponseArray = () =>
               });
             });
           }
-          if (!Array.isArray(values) && values) {
+          if (
+            (!Array.isArray(values) || questionKey === 'interview_process') &&
+            values
+          ) {
             const filter = responses.filter(
               response =>
+                response.responseKey === 'interview_process' ||
                 response.responseKey === 'location' ||
                 response.responseKey === 'position_description' ||
                 response.responseKey === 'title' ||

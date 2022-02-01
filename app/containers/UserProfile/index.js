@@ -3,6 +3,7 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { push } from 'connected-react-router';
 
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import AsyncRender from 'components/AsyncRender';
@@ -18,12 +19,14 @@ import {
   makeSelectUserProfile,
   makeSelectUserProfileParams,
 } from './selectors';
+import { ViewContainer } from './styledComponents';
 
 const UserProfile = ({
   activeUser,
   deviceView,
   dispatchFetchUserProfile,
   error,
+  handleNav,
   isSignedIn,
   loading,
   params,
@@ -35,18 +38,20 @@ const UserProfile = ({
   }, []);
 
   useEffect(() => {
-    document.title = user.username;
+    if (user.username) document.title = user.username;
   }, [user]);
 
   return (
-    <AsyncRender
-      asyncData={user}
-      component={UserProfileComponent}
-      error={error}
-      isRequiredData
-      loading={loading}
-      propsToPassDown={{ activeUser, deviceView, isSignedIn }}
-    />
+    <ViewContainer>
+      <AsyncRender
+        asyncData={user}
+        component={UserProfileComponent}
+        error={error}
+        isRequiredData
+        loading={loading}
+        propsToPassDown={{ activeUser, deviceView, handleNav, isSignedIn }}
+      />
+    </ViewContainer>
   );
 };
 
@@ -55,6 +60,7 @@ UserProfile.propTypes = {
   deviceView: T.string.isRequired,
   dispatchFetchUserProfile: T.func.isRequired,
   error: T.string,
+  handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
   loading: T.bool.isRequired,
   params: T.string.isRequired,
@@ -86,6 +92,10 @@ function mapDispatchToProps(dispatch) {
      * Reducer : User Profile
      */
     dispatchFetchUserProfile: payload => dispatch(fetchUserProfile(payload)),
+    /**
+     * Reducer : Router
+     */
+    handleNav: route => dispatch(push(route)),
   };
 }
 

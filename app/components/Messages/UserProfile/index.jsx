@@ -2,7 +2,10 @@
 import React from 'react';
 import T from 'prop-types';
 
+import iconDictionary from 'utils/iconDictionary';
+
 import {
+  CandidateCardButton,
   CandidateCardContent,
   CandidateCardDataCell,
   CandidateCardRow,
@@ -19,7 +22,7 @@ import {
 } from '../styledComponents';
 import { StyledCandidateCardContainer } from './styledComponents';
 
-const CandidateCard = ({ user }) => {
+const CandidateCard = ({ handleNav, user }) => {
   const {
     experience,
     lastPosition,
@@ -29,7 +32,14 @@ const CandidateCard = ({ user }) => {
     profilePic,
     target_salary: salary,
     type,
+    username,
   } = user;
+
+  const UserIcon = iconDictionary('people');
+
+  const handleClick = () => {
+    handleNav(`/users/${username}`);
+  };
 
   return (
     <StyledCandidateCardContainer>
@@ -71,10 +81,16 @@ const CandidateCard = ({ user }) => {
           </CandidateCardRow>
         </CandidateCardRows>
       </CandidateCardContent>
+      <CandidateCardButton onClick={handleClick}>
+        {UserIcon} Candidate profile
+      </CandidateCardButton>
     </StyledCandidateCardContainer>
   );
 };
 
-CandidateCard.propTypes = { user: T.object.isRequired };
+CandidateCard.propTypes = {
+  handleNav: T.func.isRequired,
+  user: T.object.isRequired,
+};
 
 export default CandidateCard;

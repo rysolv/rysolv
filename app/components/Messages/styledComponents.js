@@ -12,6 +12,30 @@ import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptop } = mediaQueriesByDevice;
 
+export const CandidateCardButton = styled.button`
+  align-items: center;
+  background: ${candidateGreyColor};
+  border-bottom-left-radius: 0.8rem;
+  border-bottom-right-radius: 0.8rem;
+  border: none;
+  color: ${blueColor};
+  display: flex;
+  font-size: 1.6rem;
+  height: 5.175rem;
+  justify-content: center;
+  padding: 1rem;
+  width: 100%;
+
+  &:hover {
+    background-color: ${candidateGreyColor};
+    cursor: pointer;
+  }
+
+  svg {
+    margin-right: 0.4rem;
+  }
+`;
+
 export const CandidateCardContainer = styled.div`
   border-radius: 0.7rem;
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
@@ -24,10 +48,6 @@ export const CandidateCardContainer = styled.div`
 export const CandidateCardContent = styled.div`
   flex-grow: 1;
   padding: 2rem;
-
-  &:hover {
-    cursor: ${({ isPosition }) => (isPosition ? 'pointer' : 'auto')};
-  }
 `;
 
 export const CandidateCardDataCell = styled.div`

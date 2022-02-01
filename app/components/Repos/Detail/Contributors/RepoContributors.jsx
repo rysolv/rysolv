@@ -21,14 +21,14 @@ const RepoContributors = ({ contributors, handleNav }) => (
               <ImageLinkWrapper
                 alt={username}
                 image={profilePic}
-                route={`/profile/${username}`}
+                route={`/users/${username}`}
                 size="4.8rem"
               />
             </ContributorImageWrapper>
             <ContributorDetails>
               <span>
                 <ContributorName
-                  onClick={() => handleNav(`/profile/${username}`)}
+                  onClick={() => handleNav(`/users/${username}`)}
                 >
                   {firstName} {lastName}
                 </ContributorName>{' '}

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 
 import { PrimaryButton } from 'components/base_ui';
@@ -153,6 +154,32 @@ export const StyledPrimaryButton = styled(
   &:hover {
     background-color: ${darkBlueColor};
     color: ${whiteColor};
+  }
+`;
+
+export const StyledProfileLink = styled(Link)`
+  color: ${lightBlueColor};
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+  margin-top: 1.6rem;
+
+  &:hover {
+    color: ${lightBlueColor};
+  }
+`;
+
+export const StyledSecondaryButton = styled(
+  ({ $customTopMargin, ...restProps }) => <PrimaryButton {...restProps} />,
+)`
+  ${baseButtonStyle};
+  background-color: ${whiteColor};
+  border: 0.2rem solid ${darkBlueColor};
+  color: ${darkBlueColor};
+  margin-top: ${({ $customTopMargin }) => $customTopMargin || '3rem'};
+
+  &:hover {
+    background-color: ${whiteColor};
+    color: ${darkBlueColor};
   }
 `;
 

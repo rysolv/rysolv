@@ -24,7 +24,7 @@ const ACH = ({
 ACH.propTypes = {
   dispatchSetModalAlerts: T.func.isRequired,
   dispatchUpdatePaymentMethod: T.func.isRequired,
-  plaidToken: T.string.isRequired,
+  plaidToken: T.string,
 };
 
 export default ACH;

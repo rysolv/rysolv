@@ -40,6 +40,7 @@ const DesktopLandingHeader = ({
           label="Dashboard"
           path={isCompany ? '/company/dashboard' : '/dashboard'}
         />
+        <InternalLink label="Jobs" path="/jobs" />
         <MessageWrapper>
           <MessageLink label="Messages" path="/messages" />
           {!!unreadMessages && (
@@ -52,6 +53,7 @@ const DesktopLandingHeader = ({
     navLinks = (
       <Fragment>
         <InternalLink label="Hire engineers" path="/pricing" />
+        <InternalLink label="Jobs" path="/jobs" />
       </Fragment>
     );
   }

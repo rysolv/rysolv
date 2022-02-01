@@ -1,7 +1,9 @@
 const { singleQuery } = require('../../baseQueries');
 
-const getPositionCandidates = async ({ positionId, saved }) => {
-  const filter = saved ? 'AND cp.saved = true' : '';
+const getPositionCandidates = async ({ positionId, step }) => {
+  let filter = '';
+  if (step === 'applied') filter = 'AND cp.applied_date IS NOT NULL';
+  if (step === 'saved') filter = 'AND cp.saved_date IS NOT NULL';
 
   const queryText = `
     WITH position AS (
@@ -29,8 +31,10 @@ const getPositionCandidates = async ({ positionId, saved }) => {
       LIMIT 1
     )
     SELECT
+      (SELECT CASE WHEN cp.applied_date IS NOT NULL THEN true ELSE false END AS "hasApplied"),
+      (SELECT CASE WHEN cp.saved_date IS NOT NULL THEN true ELSE false END AS "isSaved"),
+      cp.match_criteria AS "matchCriteria",
       cp.percent_match AS "percentMatch",
-      cp.saved as "isSaved",
       l.formatted_address AS "location",
       m.thread_id AS "threadId",
       p.position_id,
@@ -62,8 +66,10 @@ const getPositionCandidates = async ({ positionId, saved }) => {
     WHERE cp.position_id = (SELECT position_id FROM position)
     ${filter}
     GROUP BY
+      cp.applied_date,
+      cp.match_criteria,
       cp.percent_match,
-      cp.saved,
+      cp.saved_date,
       l.formatted_address,
       m.thread_id,
       p.position_id,

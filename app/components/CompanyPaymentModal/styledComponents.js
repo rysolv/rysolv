@@ -76,8 +76,8 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   margin-right: 1rem;
 
   &:hover {
-    background-color: ${darkBlueColor};
-    color: ${whiteColor};
+    background-color: ${whiteColor};
+    color: ${darkBlueColor};
   }
 `;
 

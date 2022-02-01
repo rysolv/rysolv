@@ -5,6 +5,7 @@ const checkExistingGithubAccount = require('./checkExistingGithubAccount');
 const checkGithubIdMatch = require('./checkGithubIdMatch');
 const createUser = require('./createUser');
 const deleteUserResponse = require('./deleteUserResponse');
+const getGitUser = require('./getGitUser');
 const getOneUser = require('./getOneUser');
 const getOneUserLite = require('./getOneUserLite');
 const getOneUserSignUp = require('./getOneUserSignUp');
@@ -12,6 +13,7 @@ const getUserAttemptList = require('./getUserAttemptList');
 const getUserBounties = require('./getUserBounties');
 const getUserByUsername = require('./getUserByUsername');
 const getUserCompany = require('./getUserCompany');
+const getUserProfile = require('./getUserProfile');
 const getUserPullRequestDetail = require('./getUserPullRequestDetail');
 const getUserResponse = require('./getUserResponse');
 const getUsers = require('./getUsers');
@@ -21,6 +23,7 @@ const insertGitUser = require('./insertGitUser');
 const insertUserEmail = require('./insertUserEmail');
 const searchUsers = require('./searchUsers');
 const transformUser = require('./transformUser');
+const updateUserProfile = require('./updateUserProfile');
 
 module.exports = {
   assignOwnerToRepo,
@@ -30,6 +33,7 @@ module.exports = {
   checkGithubIdMatch,
   createUser,
   deleteUserResponse,
+  getGitUser,
   getOneUser,
   getOneUserLite,
   getOneUserSignUp,
@@ -37,6 +41,7 @@ module.exports = {
   getUserBounties,
   getUserByUsername,
   getUserCompany,
+  getUserProfile,
   getUserPullRequestDetail,
   getUserResponse,
   getUsers,
@@ -46,4 +51,5 @@ module.exports = {
   insertUserEmail,
   searchUsers,
   transformUser,
+  updateUserProfile,
 };

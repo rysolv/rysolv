@@ -12,12 +12,19 @@ export function* fetchUserProfileSaga({ payload }) {
       getUserProfile(username: "${username}") {
         __typename
         ...on User {
+          chartData
+          desiredRole
           firstName
+          githubId
           githubLink
           hiringStatus
+          hiringStatus
+          isSignedIn
           lastName
+          location
           personalLink
           profilePic
+          skills
           stackoverflowLink
           username
         }
@@ -37,7 +44,7 @@ export function* fetchUserProfileSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(fetchUserProfileSuccess({ user: restProps }));
   } catch (error) {
-    yield put(fetchUserProfileFailure({ error: { message: error } }));
+    yield put(fetchUserProfileFailure({ error }));
   }
 }
 

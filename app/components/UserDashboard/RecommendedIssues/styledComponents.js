@@ -33,7 +33,7 @@ export const IconWrapper = styled.img`
 export const IssueCardContainer = styled.div`
   border-radius: 0.7rem;
   box-shadow: 0 0.1rem 0.4rem ${grayColor};
-  color: ${blueColor};
+  color: ${textColor};
   display: flex;
   flex-direction: column;
   margin-top: 3rem;
@@ -43,7 +43,7 @@ export const IssueCardContainer = styled.div`
 `;
 
 export const IssueCardHeader = styled.div`
-  color: #a9acae;
+  color: ${textColor};
   display: flex;
   font-size: 1.6rem;
   justify-content: space-between;
@@ -73,7 +73,7 @@ export const NoRecommendedIssuesContainer = styled.div`
 export const RecommendedIssuesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
+  min-height: ${({ hasMinHeight }) => (hasMinHeight ? '50rem' : 'auto')};
 `;
 
 export const RecommendedIssuesHeader = styled.div`
@@ -129,11 +129,19 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
 `;
 
 export const SolveIssueButton = styled(StyledPrimaryButton)`
+  background: transparent;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
   bottom: 0;
+  color: ${darkBlueColor};
   position: absolute;
   right: 0;
+
+  &:hover {
+    background: transparent;
+    box-shadow: none;
+    color: ${darkBlueColor};
+  }
 `;
 
 export const StyledSubParagraph = styled.p`

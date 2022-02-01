@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
+import { updateActiveUser } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
@@ -118,6 +119,7 @@ export function* setReadReceiptSaga({ payload }) {
     if (__typename === 'Error') throw message;
 
     yield put(setReadReceiptSuccess({ threadId }));
+    yield put(updateActiveUser({ threadId }));
   } catch (error) {
     yield put(setReadReceiptFailure({ error: { message: error } }));
   }

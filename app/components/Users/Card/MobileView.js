@@ -38,7 +38,7 @@ const MobileUserCard = ({ data, deviceView }) => {
                   <ImageLinkWrapper
                     alt="Profile Image"
                     image={profilePic}
-                    route={`/profile/${username}`}
+                    route={`/users/${username}`}
                     size={isMobileS ? '6.5rem' : '7.5rem'}
                   />
                   <IconWrapper>
@@ -50,7 +50,7 @@ const MobileUserCard = ({ data, deviceView }) => {
               <TextContainer>
                 <StyledSettingWrapper>
                   <MemberWrapper isMobileS>
-                    <NameLink to={`/profile/${username}`}>{username}</NameLink>
+                    <NameLink to={`/users/${username}`}>{username}</NameLink>
                   </MemberWrapper>
                 </StyledSettingWrapper>
                 <IssuesWrapper isMobileS>
