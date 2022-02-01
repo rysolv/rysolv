@@ -65,7 +65,7 @@ const StepperInputOption = ({ handleChangeInput, onBlur, value }) => {
         disableRipple
         onClick={() => handleChangeInput([...formattedValue, ''])}
       >
-        Add step
+        Add interview step
       </StyledButton>
     </div>
   );

@@ -226,12 +226,14 @@ export const StyledStepLabel = styled(StepLabel)`
   .MuiStepLabel-active {
     color: ${textColor};
     font-family: ${defaultFontFamily};
+    font-size: 1.2rem;
     font-weight: 400;
   }
 
   .MuiStepLabel-label {
     color: ${textColor};
     font-family: ${defaultFontFamily};
+    font-size: 1.2rem;
   }
 `;
 
