@@ -1,7 +1,7 @@
 /* eslint-disable camelcase, no-console, no-unused-vars */
 const Jimp = require('jimp');
-const { uploadImage } = require('../server/middlewares/imageUpload');
 const { connect } = require('./connect');
+const { uploadImage } = require('../server/middlewares/imageUpload');
 
 // Connect to DB
 const env = process.argv[2];
@@ -15,14 +15,17 @@ const { singleQuery } = connect(env);
 async function blur_images() {
   const t1 = Date.now();
 
-  const getUsersQuery = `SELECT id, profile_pic FROM users WHERE profile_pic_blur IS NULL`;
+  const getUsersQuery = `
+    SELECT id, profile_pic FROM users
+    WHERE created_date > now() - '3 week'::interval
+  `;
   const { rows: users } = await singleQuery({
     queryText: getUsersQuery,
   });
 
   console.log(users.length);
   await Promise.all(
-    users.map(async ({ id, profile_pic }) => {
+    users.map(async ({ id, profile_pic }, i) => {
       // Upload blurred image
       const image = await Jimp.read(profile_pic);
       image.blur(15);
@@ -30,14 +33,12 @@ async function blur_images() {
       console.log('BASE 64: ', base64.length);
 
       const { uploadUrl } = await uploadImage(base64);
-      console.log('Upload URL: ', uploadUrl);
-
-      const saveUrlQuery = `UPDATE users SET profile_pic_blur = $1 WHERE id = $2`;
 
       await singleQuery({
-        queryText: saveUrlQuery,
+        queryText: `UPDATE users SET profile_pic_blur = $1 WHERE id = $2`,
         values: [uploadUrl, id],
       });
+      console.log(`Updated user ${id} (${i + 1}/${users.length})`);
     }),
   );
 

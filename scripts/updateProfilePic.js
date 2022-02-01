@@ -26,7 +26,9 @@ async function updateProfilePic() {
   const getUsersQuery = `
     SELECT github_username AS "githubUsername", id FROM users
     WHERE github_username IS NOT NULL
+    AND created_date > now() - '3 week'::interval
   `;
+
   const updateUserQuery = `
     UPDATE users SET profile_pic = $1
     WHERE id = $2
