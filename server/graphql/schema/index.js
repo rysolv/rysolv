@@ -423,6 +423,7 @@ module.exports = buildSchema(`
     email: String!
     emailVerified: Boolean
     experience: String
+    chartData: Object
     firstName: String
     githubId: String
     githubLink: String
@@ -433,6 +434,7 @@ module.exports = buildSchema(`
     isActive: String
     isGithubVerified: Boolean
     isSaved: Boolean
+    isSignedIn: Boolean
     issues: [Object]
     jobs: [Object]
     languages: [String]
@@ -657,8 +659,9 @@ module.exports = buildSchema(`
     transformUserResponse(responseArray: [Object]): EventResponse!
     transformUserSkills(skillsArray: [Object]): EventResponse!
 
-    upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
     updatePaymentMethod(provider: String, token: String, metadata: Object ): PaymentResult!
+    updateUserProfile(userId: ID): EventResponse!
+    upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
 
     verifyUserAccount(code: String!): VerificationResult!
     verifyUserEmail(code: String!, email: String!, userId: ID!): EventResponse!

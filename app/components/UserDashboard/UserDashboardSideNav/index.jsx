@@ -21,12 +21,14 @@ import {
   SkillsContainer,
   StyledIconButton,
   StyledPrimaryButton,
+  StyledProfileLink,
   StyledSecondaryButton,
   UserDashboardSideNavContainer,
 } from './styledComponents';
 
 const GithubIcon = iconDictionary('github');
 const PersonalIcon = iconDictionary('link');
+const PublicIcon = iconDictionary('public');
 const StackoverflowIcon = iconDictionary('stackoverflow');
 
 const UserDashboardSideNav = ({
@@ -43,7 +45,9 @@ const UserDashboardSideNav = ({
     skills,
     stackoverflowLink,
     surveyComplete,
+    username,
   } = user;
+
   const activeButtonLabel = surveyComplete
     ? 'Edit application'
     : 'Start application';
@@ -69,6 +73,9 @@ const UserDashboardSideNav = ({
   return (
     <UserDashboardSideNavContainer>
       <ProfilePicture src={profilePic} />
+      <StyledProfileLink to={`/profile/${username}`}>
+        {PublicIcon}&nbsp;View public profile
+      </StyledProfileLink>
       <div>
         <ActionWrapper>
           <ActiveWrapper>

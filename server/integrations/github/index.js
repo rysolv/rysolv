@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, no-await-in-loop, no-restricted-syntax */
 const fetch = require('node-fetch');
 
 const { authenticate } = require('./auth');
@@ -295,6 +295,33 @@ const getUserGithubPullRequests = async ({ owner, repo }) => {
   return pullRequestList;
 };
 
+const getUserStats = async ({ username, userToken }) => {
+  // Authenticate with user token
+  const { GITHUB } = await authenticate({ userToken });
+  const { data: repos } = await GITHUB.repos.listForAuthenticatedUser({
+    sort: 'updated',
+    type: 'all',
+  });
+
+  // Fetch user Organizations
+  const { data: orgData } = await GITHUB.orgs.listForUser({ username });
+
+  for (const org of orgData) {
+    const { data: repoData } = await GITHUB.repos.listForOrg({
+      org: org.login,
+    });
+    repos.push(...repoData);
+  }
+
+  // Get all pull requests by user
+  const { data: pullRequests } = await GITHUB.search.issuesAndPullRequests({
+    q: `author:${username} type:pr is:pull-request sort:interactions`,
+  });
+
+  const { items, total_count: pullRequestCount } = pullRequests;
+  return { pullRequests: items, pullRequestCount, repos };
+};
+
 const getUserGithubRepos = async ({ username }) => {
   const { GITHUB } = await authenticate();
 
@@ -399,5 +426,6 @@ module.exports = {
   getUserGithubIssues,
   getUserGithubPullRequests,
   getUserGithubRepos,
+  getUserStats,
   requestGithubUser,
 };

@@ -31,6 +31,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Facebook from '@material-ui/icons/Facebook';
 import Flare from '@material-ui/icons/Flare';
+import FunctionsIcon from '@material-ui/icons/Functions';
 import Gift from '@material-ui/icons/Redeem';
 import GitHub from '@material-ui/icons/GitHub';
 import Help from '@material-ui/icons/Help';
@@ -38,9 +39,11 @@ import Info from '@material-ui/icons/Info';
 import Language from '@material-ui/icons/Language';
 import Link from '@material-ui/icons/Link';
 import LocalAtm from '@material-ui/icons/LocalAtm';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
 import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import NavigateNext from '@material-ui/icons/NavigateNext';
+import PeopleIcon from '@material-ui/icons/People';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Public from '@material-ui/icons/Public';
 import Publish from '@material-ui/icons/Publish';
@@ -127,10 +130,12 @@ export default (name, size, style) => {
     javascript: Javascript,
     language: Language,
     link: Link,
+    location: LocationOnIcon,
     monocle: Monocle,
     navigateBefore: NavigateBefore,
     navigateNext: NavigateNext,
     paypal: Paypal,
+    people: PeopleIcon,
     photoCamera: PhotoCamera,
     public: Public,
     pullRequest: PullRequest,
@@ -142,6 +147,7 @@ export default (name, size, style) => {
     ruby: Ruby,
     search: Search,
     settings: Settings,
+    sigma: FunctionsIcon,
     siteLogo: SiteLogo,
     siteWordmark: SiteWordmark,
     stackoverflow: Stackoverflow,

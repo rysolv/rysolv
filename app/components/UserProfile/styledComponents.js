@@ -1,37 +1,169 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 
-import { darkBlueColor, lightBlueColor, textColor } from 'defaultStyleHelper';
+import {
+  candidateGreyColor,
+  darkBlueColor,
+  defaultFontSize,
+  textColor,
+  whiteColor,
+} from 'defaultStyleHelper';
 
-export const IconWrapper = styled.img`
-  align-self: center;
-  height: 9.219rem;
-  width: 9.189rem;
+import { PrimaryButton } from 'components/base_ui';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { laptop, tablet } = mediaQueriesByDevice;
+
+export const AboutContainer = styled.div`
+  background: #f5f5f5;
+  border-radius: 0.5rem;
+  font-family: monospace;
+  margin-bottom: 3rem;
+  min-height: 10rem;
+  padding: 3rem;
+  width: 100%;
 `;
 
-export const LinkWrapper = styled(Link)`
-  color: ${lightBlueColor};
-  text-decoration: underline;
+const baseButtonStyle = css`
+  align-items: center;
+  border-radius: 0.8rem;
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  text-transform: initial;
+`;
 
-  &:hover {
-    color: ${lightBlueColor};
+export const ContentColumn = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 5rem;
+  width: 70%;
+
+  ${tablet} {
+    padding: 3rem 0;
+    width: 100%;
   }
 `;
 
-export const StyledParagraph = styled.p`
+export const DetailCharts = styled.div`
+  display: flex;
+
+  ${laptop} {
+    flex-direction: column;
+  }
+`;
+
+export const IconLink = styled.a`
+  margin: 0 1rem;
+
+  svg {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const LocationIconWrapper = styled.div`
+  svg {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+`;
+
+export const LocationWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  margin-bottom: 2rem;
+`;
+export const LocationName = styled.div``;
+
+export const ProfileColumn = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 0 2rem;
+  width: 30%;
+
+  ${tablet} {
+    padding: 0;
+    width: 100%;
+  }
+`;
+
+export const ProfilePic = styled.img`
+  border-radius: 50%;
+  border: 0.2rem solid ${candidateGreyColor};
+  height: 25rem;
+  width: 25rem;
+
+  ${laptop} {
+    height: 20rem;
+    width: 20rem;
+  }
+
+  ${tablet} {
+    height: 15rem;
+    width: 15rem;
+  }
+`;
+
+export const ProfileSection = styled.section`
+  width: 100%;
+`;
+
+export const RoleContainer = styled.div`
+  text-align: center;
+`;
+
+export const SocialLinkWrapper = styled.div`
+  display: flex;
+  margin: 1rem 0;
+`;
+
+export const StyledHeader = styled.h3`
+  color: ${darkBlueColor};
+  font-size: 2.2rem;
+  font-weight: 700;
+  width: 100%;
+`;
+
+export const StyledName = styled.h1`
   color: ${darkBlueColor};
   font-size: 3.2rem;
   font-weight: 700;
-  margin-bottom: 0.8rem;
+  margin: 2rem 0 0;
+  text-align: center;
 `;
 
-export const StyledSubParagraph = styled.p`
-  color: ${textColor};
+export const StyledPrimaryButton = styled(PrimaryButton)`
+  ${baseButtonStyle};
+  background-color: ${darkBlueColor};
+  color: ${whiteColor};
+
+  &:hover {
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
+  }
+`;
+
+export const StyledSubtitle = styled.h2`
   font-size: 1.6rem;
+  font-weight: 400;
+  margin: 1rem 0;
+  text-align: center;
 `;
 
 export const UserProfileContainer = styled.div`
-  align-self: center;
-  text-align: center;
+  color: ${textColor};
+  display: flex;
+  font-size: ${defaultFontSize};
   width: 100%;
+
+  ${tablet} {
+    flex-direction: column;
+  }
 `;
