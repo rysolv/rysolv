@@ -13,8 +13,6 @@ import SideNav from 'components/SideNav';
 import SigninModal from 'components/SigninModal';
 import VerifyAccountModal from 'components/VerifyAccountModal';
 import WatchList from 'components/WatchList';
-import makeSelectViewSize from 'containers/ViewSize/selectors';
-import { makeSelectAuth } from 'containers/Auth/selectors';
 import {
   clearAlerts,
   fetchActiveUser,
@@ -22,10 +20,14 @@ import {
   signIn,
   signOut,
 } from 'containers/Auth/actions';
+import authReducer from 'containers/Auth/reducer';
+import authSaga from 'containers/Auth/saga';
+import { makeSelectAuth } from 'containers/Auth/selectors';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 import { closeIssue, deletePullRequest } from 'containers/Issues/actions';
 import PaymentsPortal from 'containers/Payments';
 import { resetState } from 'containers/Signin/actions';
-import { getCookie, setCookie } from 'utils/globalHelpers';
+import { getCookie } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
@@ -51,10 +53,6 @@ class Main extends React.PureComponent {
     const signedIn = getCookie('signedIn');
     if (signedIn) {
       dispatchFetchActiveUser();
-    } else if (!getCookie('returnUser')) {
-      setCookie('returnUser', true, {
-        expires: 'Sun, 19 Jan 2038 00:00:01 GMT;',
-      });
     } else {
       dispatchFetchActiveUserFailure();
     }
@@ -103,13 +101,16 @@ class Main extends React.PureComponent {
     const isLandingOrRecruitmentPage =
       basePathname === 'company' ||
       basePathname === 'dashboard' ||
+      basePathname === 'jobs' ||
       basePathname === 'messages' ||
       basePathname === 'positions' ||
       basePathname === 'profile' ||
       pathname === '/' ||
+      pathname === '/apply' ||
       pathname === '/contact-us' ||
+      pathname === '/faq' ||
+      pathname === '/how-to' ||
       pathname === '/how-we-score-code' ||
-      pathname === '/jobs' ||
       pathname === '/password-reset' ||
       pathname === '/pricing' ||
       pathname === '/privacy-policy' ||
@@ -119,10 +120,10 @@ class Main extends React.PureComponent {
     const isPaymentModal = modal === 'fundIssue';
     const hasBlueBackground =
       pathname === '/' ||
+      pathname === '/apply' ||
       pathname === '/company/signup' ||
       pathname === '/contact-us' ||
       pathname === '/how-we-score-code' ||
-      pathname === '/jobs' ||
       pathname === '/password-reset' ||
       pathname === '/signin' ||
       pathname === '/signup';
@@ -317,11 +318,15 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
+const withAuthReducer = injectReducer({ key: 'auth', reducer: authReducer });
+const withAuthSaga = injectSaga({ key: 'auth', saga: authSaga });
 const withReducer = injectReducer({ key: 'main', reducer });
 const withSaga = injectSaga({ key: 'main', saga });
 
 export default withRouter(
   compose(
+    withAuthReducer,
+    withAuthSaga,
     withReducer,
     withSaga,
     withConnect,

@@ -10,17 +10,25 @@ export const HeaderWrapper = styled.div`
   font-size: 2rem;
   font-weight: 700;
   height: 4rem;
-  left: 3rem;
+  margin-bottom: 0.5rem;
   overflow: hidden;
-  position: absolute;
-  right: 3rem;
   text-overflow: ellipsis;
   top: 0;
   white-space: nowrap;
 `;
 
+export const LinkWraper = styled.div`
+  align-items: center;
+  display: flex;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export const StyledIconButton = styled(IconButton)`
-  padding-left: 0;
+  margin-right: 1.2rem;
+  padding: 0;
 
   &:hover {
     background: transparent;

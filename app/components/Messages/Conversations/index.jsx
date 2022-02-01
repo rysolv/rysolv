@@ -24,7 +24,6 @@ const Conversation = ({ activeConversation, conversations, handleNav }) => (
           isSelected={activeConversation === i}
           key={createdDate}
           onClick={() => handleNav(`/messages/${threadId}`)}
-          unread={unread}
         >
           <MessageHeader>
             <Recipient>

@@ -8,10 +8,11 @@ import {
   hoverLinkColor,
   landingButtonGreen,
   textColor,
+  whiteColor,
 } from 'defaultStyleHelper';
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
-const { mobile } = mediaQueriesByDevice;
+const { mobile, laptop } = mediaQueriesByDevice;
 
 export const AnswerWrapper = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ export const FaqHeader = styled.div`
   color: ${textColor};
   display: flex;
   font-size: ${headerFontSize};
-  margin: 5rem 0 2rem 0;
+  margin: 2rem 0;
   width: 100%;
 
   ${mobile} {
@@ -92,16 +93,6 @@ export const StyledBaseExpansionPanel = styled(BaseExpansionPanel)`
   }
 `;
 
-export const StyledFaqContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-
-  ${mobile} {
-    margin: 0 1rem;
-  }
-`;
-
 export const StyledQuestionContainer = styled.div`
   background: white;
   color: ${textColor};
@@ -118,4 +109,16 @@ export const TopQuestionIntro = styled.div`
   letter-spacing: 0.05rem;
   line-height: 1.5;
   margin: 1.5rem;
+`;
+
+export const ViewContainer = styled.div`
+  background: ${whiteColor};
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 12rem 5.6rem;
+  width: 100%;
+
+  ${laptop} {
+    padding: 5rem 3rem 5.6rem;
+  }
 `;

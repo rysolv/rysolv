@@ -1,35 +1,76 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { buttonGrey, defaultFontSize, textColor } from 'defaultStyleHelper';
+import {
+  blueColor,
+  darkBlueColor,
+  textColor,
+  whiteColor,
+} from 'defaultStyleHelper';
 import { PrimaryButton } from 'components/base_ui';
 
-export const ButtonGroup = styled.div`
-  text-align: center;
+const baseButtonStyle = css`
+  align-items: center;
+  border-radius: 0.8rem;
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.8rem;
+  line-height: 1.936rem;
+  margin: 0;
+  text-transform: initial;
+  width: 10rem;
 `;
 
-export const SigninContainer = styled.div`
+export const ButtonWrapper = styled.div`
+  display: flex;
+`;
+
+export const ModalContainer = styled.div`
   padding: 2rem;
-`;
+  width: 50rem;
 
-export const StyledBodyMessage = styled.div`
-  color: ${textColor};
-  font-size: ${defaultFontSize};
-  padding: 2rem 0;
-  text-align: justify;
+  @media (max-width: 560px) {
+    width: auto;
+  }
 `;
 
 export const StyledPrimaryButton = styled(PrimaryButton)`
-  background-color: ${buttonGrey};
+  ${baseButtonStyle};
+  background-color: ${darkBlueColor};
+  color: ${whiteColor};
+  margin-left: 1rem;
 
   &:hover {
-    background-color: ${buttonGrey};
+    background-color: ${darkBlueColor};
+    color: ${whiteColor};
+  }
+`;
+
+export const StyledSecondaryButton = styled(PrimaryButton)`
+  ${baseButtonStyle};
+  background-color: ${whiteColor};
+  border: 0.2rem solid ${darkBlueColor};
+  color: ${darkBlueColor};
+  margin-right: 1rem;
+
+  &:hover {
+    background-color: ${whiteColor};
+    color: ${darkBlueColor};
   }
 `;
 
 export const StyledTitle = styled.h3`
+  color: ${blueColor};
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 3.36rem;
+  margin: 0;
+  padding: 2rem 0 1rem;
+`;
+
+export const TextWrapper = styled.div`
   color: ${textColor};
-  font-size: 2rem;
-  font-weight: 500;
-  margin: 1rem 0;
-  text-align: center;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  padding: 0.6rem 0 3.4rem;
 `;

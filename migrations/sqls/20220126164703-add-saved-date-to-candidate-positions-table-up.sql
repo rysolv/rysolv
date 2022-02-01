@@ -1,0 +1,1 @@
+ALTER TABLE candidate_positions ADD COLUMN IF NOT EXISTS saved_date TIMESTAMP DEFAULT NULL

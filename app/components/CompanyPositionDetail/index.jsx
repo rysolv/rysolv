@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 import DOMPurify from 'dompurify';
+import isEmpty from 'lodash/isEmpty';
 import marked from 'marked';
 
 import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
@@ -21,15 +22,29 @@ import {
   PositionDetailContainer,
   PositionDetailContent,
   PositionDetailHeader,
+  StyledPrimaryButton,
+  StyledStep,
+  StyledStepLabel,
+  StyledStepper,
   Value,
 } from './styledComponents';
 
-const CompanyPositionDetail = ({ company, position }) => {
+const CompanyPositionDetail = ({
+  company,
+  dispatchOpenModal,
+  isCompany,
+  isSignedIn,
+  position,
+  surveyComplete,
+}) => {
+  const [modalState, setModalState] = useState('');
   const { logo, name, size, website } = company;
   const { formattedAddress } = company.location || {};
   const {
     description,
     experience,
+    hasApplied,
+    interviewProcess,
     location,
     role,
     salary,
@@ -39,30 +54,49 @@ const CompanyPositionDetail = ({ company, position }) => {
     type,
   } = position;
   const { formattedAddress: positionFormattedAddress } = location || {};
+  const formattedInterviewProcess = interviewProcess || [];
 
   const html = marked(description);
   const cleanHtml = DOMPurify.sanitize(html);
 
+  const disabled = isCompany || hasApplied;
+  const userLabel = hasApplied ? 'Applied' : 'Apply';
+  const buttonLabel = isCompany ? 'Unavailable on company accounts' : userLabel;
+
+  useEffect(() => {
+    if (isSignedIn && surveyComplete) setModalState('apply');
+    if (isSignedIn && !surveyComplete) setModalState('incomplete');
+    if (!isSignedIn) setModalState('signin');
+  }, []);
+
   return (
     <PositionDetailContainer>
       <PositionDetailHeader>
-        <HeaderWrapper>
-          <ConditionalRender
-            Component={<Logo src={logo} />}
-            shouldRender={!!logo}
-          />
-          <NameWrapper>
-            <div>
-              {name} - {title}
-            </div>
-            <LocationWrapper shouldRemove>
-              {positionFormattedAddress}, {timezone} &#9679; Remote
-            </LocationWrapper>
-          </NameWrapper>
-        </HeaderWrapper>
-        <LocationWrapper>
-          {positionFormattedAddress}, {timezone} &#9679; Remote
-        </LocationWrapper>
+        <div>
+          <HeaderWrapper>
+            <ConditionalRender
+              Component={<Logo src={logo} />}
+              shouldRender={!!logo}
+            />
+            <NameWrapper>
+              <div>
+                {name} - {title}
+              </div>
+              <LocationWrapper shouldRemove>
+                {positionFormattedAddress}, {timezone} &#9679; Remote
+              </LocationWrapper>
+            </NameWrapper>
+          </HeaderWrapper>
+          <LocationWrapper>
+            {positionFormattedAddress}, {timezone} &#9679; Remote
+          </LocationWrapper>
+        </div>
+        <StyledPrimaryButton
+          disabled={disabled}
+          isCompany={isCompany}
+          label={buttonLabel}
+          onClick={() => dispatchOpenModal({ modalState })}
+        />
       </PositionDetailHeader>
       <PositionDetailContent $isFirst>
         <ContentLabelWrapper>
@@ -129,6 +163,26 @@ const CompanyPositionDetail = ({ company, position }) => {
           ))}
         </ContentContainer>
       </PositionDetailContent>
+      <ConditionalRender
+        Component={
+          <PositionDetailContent>
+            <ContentLabelWrapper>
+              <ContentLabel>Interview process</ContentLabel>
+            </ContentLabelWrapper>
+            <HorizontalDivider />
+            <ContentContainer>
+              <StyledStepper alternativeLabel>
+                {formattedInterviewProcess.map(label => (
+                  <StyledStep key={label}>
+                    <StyledStepLabel>{label}</StyledStepLabel>
+                  </StyledStep>
+                ))}
+              </StyledStepper>
+            </ContentContainer>
+          </PositionDetailContent>
+        }
+        shouldRender={!isEmpty(formattedInterviewProcess)}
+      />
       <PositionDetailContent>
         <ContentLabelWrapper>
           <ContentLabel>Position description</ContentLabel>
@@ -144,7 +198,11 @@ const CompanyPositionDetail = ({ company, position }) => {
 
 CompanyPositionDetail.propTypes = {
   company: T.object.isRequired,
+  dispatchOpenModal: T.func.isRequired,
+  isCompany: T.bool.isRequired,
+  isSignedIn: T.bool.isRequired,
   position: T.object.isRequired,
+  surveyComplete: T.bool.isRequired,
 };
 
 export default CompanyPositionDetail;

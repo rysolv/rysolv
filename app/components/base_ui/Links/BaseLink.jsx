@@ -5,7 +5,14 @@ import StyledLink from './styledComponents';
 
 const BaseLink = React.forwardRef(
   (
-    { label, path, shouldRemoveFirst, shouldRemoveSecond, ...restProps },
+    {
+      label,
+      path,
+      shouldRemoveFirst,
+      shouldRemoveSecond,
+      shouldRemoveThird,
+      ...restProps
+    },
     ref,
   ) => (
     <StyledLink classes={{ root: 'link' }} ref={ref} to={path} {...restProps}>
@@ -14,13 +21,18 @@ const BaseLink = React.forwardRef(
   ),
 );
 
-BaseLink.defaultProps = { shouldRemoveFirst: false, shouldRemoveSecond: false };
+BaseLink.defaultProps = {
+  shouldRemoveFirst: false,
+  shouldRemoveSecond: false,
+  shouldRemoveThird: false,
+};
 
 BaseLink.propTypes = {
   label: T.string,
   path: T.string,
   shouldRemoveFirst: T.bool,
   shouldRemoveSecond: T.bool,
+  shouldRemoveThird: T.bool,
 };
 
 export default BaseLink;

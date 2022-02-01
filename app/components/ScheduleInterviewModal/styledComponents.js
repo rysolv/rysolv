@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
 import { PrimaryButton } from 'components/base_ui';
+import Markdown from 'components/Markdown';
 import {
   blueColor,
   candidateGreyColor,
@@ -21,10 +22,10 @@ export const ButtonGroup = styled.div`
 export const InputError = styled.div``;
 
 export const MarkdownHeader = styled.div`
-  font-size: 1.6rem;
   color: ${textColor};
-  margin-bottom: 0.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
+  margin-bottom: 0.4rem;
 `;
 
 export const ModalContainer = styled.div`
@@ -49,6 +50,7 @@ export const ModalHeader = styled.div`
 export const ModalSubheader = styled.div`
   color: ${textColor};
   font-size: 1.6rem;
+  line-height: 2.4rem;
   padding: 0.8rem 0 1.6rem;
 `;
 
@@ -63,6 +65,14 @@ export const SecondaryButton = styled(Button)`
 
   &:hover {
     background-color: transparent;
+  }
+`;
+
+export const StyledMarkdown = styled(Markdown)`
+  .CodeMirror,
+  .CodeMirror-scroll {
+    max-height: 20rem;
+    min-height: 20rem;
   }
 `;
 

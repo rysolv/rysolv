@@ -37,7 +37,7 @@ const DesktopCompanySideNav = ({
     <CompanySideNavContainer>
       <CompanySideNavHeader>Positions</CompanySideNavHeader>
       <CreatePositionButton onClick={handleCreatePosition}>
-        {AddCircleOutlineIcon} Create Position
+        {AddCircleOutlineIcon} Create position
       </CreatePositionButton>
       <div>
         {positions.map(({ id, isRemote = 'Yes', location, title }, index) => (

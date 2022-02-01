@@ -1,13 +1,41 @@
-import styled from 'styled-components';
+import React from 'react';
+import styled, { css } from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 
 import { IconButton as BaseIconButton } from 'components/base_ui';
 import {
   blueColor,
   candidateGreyColor,
+  grayColor,
   lightBlueColor,
   whiteColor,
 } from 'defaultStyleHelper';
+
+const baseLogoStyle = css`
+  background: ${candidateGreyColor};
+  border-radius: 50%;
+  border: 0.2rem solid ${candidateGreyColor};
+  height: 7.5rem;
+  margin-right: 0.8rem;
+  object-fit: cover;
+  width: 7.5rem;
+`;
+
+export const BottomFade = styled.div`
+  background: linear-gradient(
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 90%
+  );
+  bottom: 0;
+  height: 10rem;
+  left: 0;
+  position: absolute;
+  width: 100%;
+`;
+
+export const ButtonGroup = styled.div`
+  position: relative;
+`;
 
 export const ButtonTextWrapper = styled.div`
   overflow: hidden;
@@ -30,6 +58,7 @@ export const CompanySideNavContainer = styled.div`
 
   @media (max-width: 769px) {
     height: auto;
+    overflow-y: visible;
   }
 `;
 
@@ -63,6 +92,17 @@ export const CreatePositionButton = styled.button`
   }
 `;
 
+export const DashedLine = styled.div`
+  border-bottom-width: 0;
+  border-color: #e1e2e3;
+  border-style: dashed;
+  border-top-width: 0.2rem;
+  bottom: ${({ isExpanded }) => (isExpanded ? 0 : '1.1rem')};
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+`;
+
 export const LocationText = styled.div`
   font-size: 1.4rem;
   font-weight: 400;
@@ -71,12 +111,24 @@ export const LocationText = styled.div`
 `;
 
 export const Logo = styled.img`
-  border-radius: 50%;
-  border: 0.2rem solid ${candidateGreyColor};
-  height: 7.5rem;
-  margin-right: 0.8rem;
-  object-fit: cover;
-  width: 7.5rem;
+  ${baseLogoStyle}
+`;
+
+export const LogoWrapper = styled.div`
+  ${baseLogoStyle}
+  align-items: center;
+  color: ${whiteColor};
+  display: flex;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  svg {
+    height: 4.6rem;
+    width: 4.6rem;
+  }
 `;
 
 export const NameText = styled.div`
@@ -91,7 +143,7 @@ export const NameWrapper = styled.div`
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 3.45rem;
-  width: calc(100% - ${({ hasImage }) => (hasImage ? '8rem' : '2rem')});
+  width: calc(100% - 8rem);
 `;
 
 export const PositionButton = styled.button`
@@ -100,7 +152,6 @@ export const PositionButton = styled.button`
   border: none;
   color: ${({ isSelected }) => (isSelected ? whiteColor : blueColor)};
   display: flex;
-  font-family: monospace;
   font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: -0.025rem;
@@ -118,6 +169,7 @@ export const PositionButton = styled.button`
   svg {
     font-size: 1.6rem;
     margin-right: 0.8rem;
+    margin-top: 0.2rem;
   }
 `;
 
@@ -142,13 +194,22 @@ export const StyledEditButton = styled(IconButton)`
   }
 `;
 
-export const StyledIconButton = styled(BaseIconButton)`
+export const StyledIconButton = styled(({ isExpanded, ...restProps }) => (
+  <BaseIconButton {...restProps} />
+))`
+  background: ${whiteColor};
+  bottom: ${({ isExpanded }) => (isExpanded ? '-1.5rem' : '-0.5rem')};
+  box-shadow: 0 0.1em 0.4rem ${grayColor};
+  left: 47%;
+  position: absolute;
+  z-index: 1;
+
   &:hover {
-    background: transparent;
+    background: ${whiteColor};
   }
 
   svg {
-    color: ${blueColor};
+    color: ${lightBlueColor};
     height: 3.2rem;
     width: 3.2rem;
   }

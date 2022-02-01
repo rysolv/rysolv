@@ -1,7 +1,5 @@
 const { singleQuery } = require('../../baseQueries');
 
-// @TODO: Location
-// This doesn't need to be a left join
 const getOneCompany = async ({ companyId }) => {
   const queryText = `
     SELECT

@@ -8,11 +8,13 @@ import iconDictionary from 'utils/iconDictionary';
 import {
   CompanyProfileContainer,
   Logo,
+  LogoWrapper,
   NameText,
   NameWrapper,
   StyledEditButton,
 } from './styledComponents';
 
+const AddIcon = iconDictionary('add');
 const EditIcon = iconDictionary('edit');
 
 const CompanyProfile = ({ handleNav, logo, name }) => {
@@ -22,9 +24,16 @@ const CompanyProfile = ({ handleNav, logo, name }) => {
     <CompanyProfileContainer>
       <ConditionalRender
         Component={<Logo src={logo} />}
+        FallbackComponent={
+          <LogoWrapper
+            onClick={() => handleNav(`/company/dashboard/edit-company`)}
+          >
+            {AddIcon}
+          </LogoWrapper>
+        }
         shouldRender={hasImage}
       />
-      <NameWrapper hasImage={hasImage}>
+      <NameWrapper>
         <NameText>{name}</NameText>
         <StyledEditButton
           disableRipple

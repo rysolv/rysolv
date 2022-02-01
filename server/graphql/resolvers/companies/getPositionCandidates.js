@@ -3,28 +3,31 @@ const { CustomError, errorLogger } = require('../../../helpers');
 const { matchLanguages } = require('../../../helpers');
 const {
   getPositionCandidates: getPositionCandidatesQuery,
+  setCandidateViewedDate,
 } = require('../../../db');
 
 // Get all candidates for a position
 // If saved==true, only select the shortlisted candidates
 const getPositionCandidates = async (
-  { positionId, saved },
+  { positionId, step },
   { authError, userId },
 ) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    const candidates = await getPositionCandidatesQuery({ positionId, saved });
+    const candidates = await getPositionCandidatesQuery({ positionId, step });
 
     // Format Candidates object
     const result = candidates.reduce((acc, el) => {
       const {
         contractKey,
         firstName,
+        hasApplied,
         id,
         isSaved,
         lastName,
         location,
+        matchCriteria,
         paymentMethod,
         percentMatch,
         positionLanguages,
@@ -44,6 +47,7 @@ const getPositionCandidates = async (
           firstName: shouldBlur
             ? `${firstName.charAt(0).toUpperCase()}.`
             : firstName,
+          hasApplied,
           id,
           isSaved,
           languages: matchLanguages({ userLanguages, positionLanguages }),
@@ -51,6 +55,7 @@ const getPositionCandidates = async (
             ? `${lastName.charAt(0).toUpperCase()}.`
             : lastName,
           location,
+          matchCriteria,
           percentMatch,
           profilePic: shouldBlur ? profilePicBlur : profilePic,
           salary: target_salary,
@@ -61,6 +66,8 @@ const getPositionCandidates = async (
       }
       return acc;
     }, []);
+
+    await setCandidateViewedDate({ positionId, step });
 
     return result;
   } catch (error) {

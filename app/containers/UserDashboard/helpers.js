@@ -1,7 +1,5 @@
 import { validate } from 'utils/validate';
 
-// @TODO: Locations
-// remove is_remote
 export const optionDictionary = {
   desired_role: {
     option: 'autocomplete',

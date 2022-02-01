@@ -45,7 +45,7 @@ import NavigateBefore from '@material-ui/icons/NavigateBefore';
 import NavigateNext from '@material-ui/icons/NavigateNext';
 import PeopleIcon from '@material-ui/icons/People';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import PublicIcon from '@material-ui/icons/Public';
+import Public from '@material-ui/icons/Public';
 import Publish from '@material-ui/icons/Publish';
 import PullRequest from '@material-ui/icons/AccountTree';
 import Remove from '@material-ui/icons/Remove';
@@ -137,7 +137,7 @@ export default (name, size, style) => {
     paypal: Paypal,
     people: PeopleIcon,
     photoCamera: PhotoCamera,
-    public: PublicIcon,
+    public: Public,
     pullRequest: PullRequest,
     python: Python,
     reactIcon: ReactIcon,

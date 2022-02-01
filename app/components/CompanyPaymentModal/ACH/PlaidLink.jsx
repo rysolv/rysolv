@@ -45,7 +45,7 @@ const PlaidLink = ({
 PlaidLink.propTypes = {
   dispatchSetModalAlerts: T.func.isRequired,
   dispatchUpdatePaymentMethod: T.func.isRequired,
-  plaidToken: T.string.isRequired,
+  plaidToken: T.string,
 };
 
 export default PlaidLink;

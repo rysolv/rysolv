@@ -72,8 +72,9 @@ const MobileLandingHeader = ({
             <InternalLink
               label="Dashboard"
               path={isCompany ? '/company/dashboard' : '/dashboard'}
-              shouldRemoveSecond
+              shouldRemoveThird
             />
+            <InternalLink label="Jobs" path="/jobs" shouldRemoveSecond />
             <MessageWrapper>
               <MessageLink
                 label="Messages"
@@ -114,6 +115,7 @@ const MobileLandingHeader = ({
         <StyledLoginLink label="Log in" path="/signin" />
         <HorizontalDivider />
         <MenuInternalLink label="Hire engineers" path="/pricing" />
+        <MenuInternalLink label="Jobs" path="/jobs" />
       </MenuComponent>
     </MobileHeaderContainer>
   );

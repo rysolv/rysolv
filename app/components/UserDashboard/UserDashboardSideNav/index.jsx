@@ -22,6 +22,7 @@ import {
   StyledIconButton,
   StyledPrimaryButton,
   StyledProfileLink,
+  StyledSecondaryButton,
   UserDashboardSideNavContainer,
 } from './styledComponents';
 
@@ -50,14 +51,14 @@ const UserDashboardSideNav = ({
   const activeButtonLabel = surveyComplete
     ? 'Edit application'
     : 'Start application';
-  const activeButtonPath = surveyComplete ? '/dashboard/update' : '/jobs';
+  const activeButtonPath = surveyComplete ? '/dashboard/update' : '/apply';
 
   const handleChangeInput = val => {
     if (surveyComplete) {
       const newHiringStatus = val ? 'active' : 'inactive';
       dispatchSetHiringStatus({ hiringStatus: newHiringStatus });
     } else {
-      handleNav('/jobs');
+      handleNav('/apply');
     }
   };
 
@@ -137,7 +138,7 @@ const UserDashboardSideNav = ({
               shouldRender={!!stackoverflowLink}
             />
           </IconButtonWrapper>
-          <StyledPrimaryButton
+          <StyledSecondaryButton
             $customTopMargin={
               !!githubLink || !!personalLink || !!stackoverflowLink
                 ? '2.4rem'
@@ -161,7 +162,7 @@ const UserDashboardSideNav = ({
                 <LanguageWrapper key={skill} language={skill} />
               ))}
             </div>
-            <StyledPrimaryButton
+            <StyledSecondaryButton
               $customTopMargin={!isEmpty(skills) ? '2.5rem' : '3rem'}
               label={skillsButtonLabel}
               onClick={() => dispatchOpenModal({ modalState: 'updateSkills' })}

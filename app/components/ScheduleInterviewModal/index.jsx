@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import T from 'prop-types';
 
 import { ErrorSuccessBanner } from 'components/base_ui';
-import Markdown from 'components/Markdown';
 
 import {
   ButtonGroup,
@@ -13,6 +12,7 @@ import {
   ModalHeader,
   ModalSubheader,
   SecondaryButton,
+  StyledMarkdown,
   StyledPrimaryButton,
 } from './styledComponents';
 
@@ -23,6 +23,7 @@ const ScheduleInterviewModal = ({
   dispatchResetFormState,
   form: { scheduleInterview },
   formErrors: { scheduleInterview: scheduleInterviewErrors },
+  handleClose,
   messageAlerts: { error, success },
   tableData: { positionId, userId },
 }) => {
@@ -37,10 +38,15 @@ const ScheduleInterviewModal = ({
     }
   }, [error, success]);
 
+  const handleCancel = () => {
+    dispatchResetFormState({ category: 'scheduleInterview' });
+    handleClose();
+  };
+
   return (
     <ModalContainer>
       <ModalContent>
-        <ModalHeader>Notify Candidate</ModalHeader>
+        <ModalHeader>Notify candidate</ModalHeader>
         <ErrorSuccessBanner
           bottomMarginRequired="1rem"
           error={error}
@@ -53,7 +59,7 @@ const ScheduleInterviewModal = ({
         </ModalSubheader>
         <div>
           <MarkdownHeader>Message</MarkdownHeader>
-          <Markdown
+          <StyledMarkdown
             body={scheduleInterview.body}
             handleInput={value =>
               dispatchChangeInput({
@@ -67,12 +73,7 @@ const ScheduleInterviewModal = ({
         </div>
       </ModalContent>
       <ButtonGroup>
-        <SecondaryButton
-          disableRipple
-          onClick={() =>
-            dispatchResetFormState({ category: 'scheduleInterview' })
-          }
-        >
+        <SecondaryButton disableRipple onClick={handleCancel}>
           Cancel
         </SecondaryButton>
         <StyledPrimaryButton
@@ -98,6 +99,7 @@ ScheduleInterviewModal.propTypes = {
   dispatchResetFormState: T.func.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
+  handleClose: T.func.isRequired,
   messageAlerts: T.object.isRequired,
   tableData: T.object.isRequired,
 };

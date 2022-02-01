@@ -206,10 +206,12 @@ const authReducer = produce((draft, { payload, type }) => {
         isContractAccepted,
         isGithubVerified,
         isQuestionnaireComplete,
+        paymentMethod,
         profilePic,
         pullRequestId,
         removeUpvote,
         rep,
+        threadId,
         watching,
       } = payload;
       if (addUpvote && rep) {
@@ -231,6 +233,10 @@ const authReducer = produce((draft, { payload, type }) => {
       if (isQuestionnaireComplete) {
         draft.activeUser.company.isQuestionnaireComplete = isQuestionnaireComplete;
       }
+      if (paymentMethod) {
+        draft.activeUser.company.paymentConfirmed = !!paymentMethod;
+        draft.activeUser.company.paymentMethod = paymentMethod;
+      }
       if (profilePic) {
         draft.activeUser.profilePic = profilePic;
       }
@@ -240,6 +246,9 @@ const authReducer = produce((draft, { payload, type }) => {
       if (removeUpvote && rep) {
         remove(draft.activeUser.upvotes, id => id === removeUpvote);
         draft.activeUser.rep = rep;
+      }
+      if (threadId) {
+        draft.activeUser.unreadMessages -= 1;
       }
       if (watching) {
         draft.activeUser.watching = watching;

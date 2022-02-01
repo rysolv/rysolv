@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { resetUserState } from 'containers/Main/actions';
-import { changeView } from 'containers/Jobs/actions';
+import { changeView } from 'containers/JobApplication/actions';
 import { incrementResetStep, incrementStep } from 'containers/Signin/actions';
 import { post } from 'utils/request';
 
@@ -117,6 +117,7 @@ export function* githubSignInSaga({ payload }) {
           pullRequests
           rep
           repos
+          unreadMessages
           upvotes
           username
           watching
@@ -153,7 +154,7 @@ export function* githubSignInSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
     const routeDictionary = {
-      jobs: '/jobs?question=1',
+      jobs: '/apply?question=1',
       signin: '/dashboard',
       signup: '/dashboard',
     };
@@ -174,7 +175,7 @@ export function* githubSignInSaga({ payload }) {
         ? githubSignInError
         : githubSignUpError;
     const routeDictionary = {
-      jobs: '/jobs',
+      jobs: '/apply',
       signin: '/signin',
       signup: '/signup',
     };
@@ -330,6 +331,7 @@ export function* signInSaga({ payload }) {
           pullRequests
           rep
           repos
+          unreadMessages
           upvotes
           username
           watching

@@ -1,8 +1,11 @@
 export const excludedPath = [
   '',
+  'apply',
   'company',
   'contact-us',
   'dashboard',
+  'faq',
+  'how-to',
   'how-we-score-code',
   'jobs',
   'messages',

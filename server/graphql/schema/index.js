@@ -233,7 +233,7 @@ module.exports = buildSchema(`
     body: String!
     positionId: ID!
     threadId: ID
-    toUserId: ID!
+    toUserId: ID
   }
 
   type MessageResponse {
@@ -253,15 +253,24 @@ module.exports = buildSchema(`
     balance: Float
     fundedAmount: Float
     message: String
+    paymentMethod: String
   }
 
   type Position {
+    candidateCount: Object
     companyId: ID
+    companyLogo: String
+    companyName: String
+    createdDate: Object
     description: String
     experience: String
+    hasApplied: Boolean
     id: ID
+    interviewProcess: [String]
     isActive: String
     location: Object
+    positionData: Object
+    postToJobBoard: String
     role: [String]
     salary: String
     skills: [Object]
@@ -419,6 +428,7 @@ module.exports = buildSchema(`
     githubId: String
     githubLink: String
     githubUsername: String
+    hasApplied: Boolean
     hiringStatus: String
     id: ID!
     isActive: String
@@ -426,10 +436,12 @@ module.exports = buildSchema(`
     isSaved: Boolean
     isSignedIn: Boolean
     issues: [Object]
+    jobs: [Object]
     languages: [String]
     lastName: String
     lastPosition: String
     location: String
+    matchCriteria: Object
     matches: Int
     modifiedDate: Object
     notifications: Boolean
@@ -545,6 +557,7 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
+    getCandidateCount(positionId: ID!): Position!
     getCompanyPositions(companyId: ID!): CompanyPositionsArray
     getContract(plan: String!): ContractResult!
     getFilterOptions: FilterResult!
@@ -555,7 +568,8 @@ module.exports = buildSchema(`
     getIssueWatchList(issueId: ID!): [WatchList]!
     getMessages: ConversationResult!
     getPlaidToken: EventResponse!
-    getPositionCandidates(positionId: ID!, saved: Boolean): [User]
+    getPositionCandidates(positionId: ID!, step: String): [User]
+    getPositions: [Position]!
     getPullRequestList(issueId: ID): [PullRequestList]!
     getQuestions(category: String!): QuestionResult
     getRepoActivity(repoId: ID): [Activity]!
@@ -645,7 +659,7 @@ module.exports = buildSchema(`
     transformUserResponse(responseArray: [Object]): EventResponse!
     transformUserSkills(skillsArray: [Object]): EventResponse!
 
-    updatePaymentMethod(provider: String, token: String, metadata: Object ): EventResponse!
+    updatePaymentMethod(provider: String, token: String, metadata: Object ): PaymentResult!
     updateUserProfile(userId: ID): EventResponse!
     upvoteIssue(issueId: ID, upvote: Boolean): UpvoteResult!
 
