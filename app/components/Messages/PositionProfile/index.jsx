@@ -2,7 +2,10 @@
 import React from 'react';
 import T from 'prop-types';
 
+import iconDictionary from 'utils/iconDictionary';
+
 import {
+  CandidateCardButton,
   CandidateCardContainer,
   CandidateCardContent,
   CandidateCardDataCell,
@@ -17,6 +20,8 @@ import {
   Title,
 } from '../styledComponents';
 
+const PositionIcon = iconDictionary('workOutline');
+
 const PositionCard = ({ handleNav, position }) => {
   const {
     description,
@@ -29,12 +34,13 @@ const PositionCard = ({ handleNav, position }) => {
     type,
   } = position;
 
+  const handleClick = () => {
+    handleNav(`/jobs/${positionId}`);
+  };
+
   return (
     <CandidateCardContainer>
-      <CandidateCardContent
-        isPosition
-        onClick={() => handleNav(`/jobs/${positionId}`)}
-      >
+      <CandidateCardContent>
         <CandidateCardUserInfo>
           <NameWrapper>{title}</NameWrapper>
           <PositionWrapper>{description}</PositionWrapper>
@@ -69,6 +75,9 @@ const PositionCard = ({ handleNav, position }) => {
           </CandidateCardRow>
         </CandidateCardRows>
       </CandidateCardContent>
+      <CandidateCardButton onClick={handleClick}>
+        {PositionIcon} Position Detail
+      </CandidateCardButton>
     </CandidateCardContainer>
   );
 };
