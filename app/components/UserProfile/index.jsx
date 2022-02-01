@@ -81,7 +81,7 @@ const UserProfile = ({ data, handleNav }) => {
   const surveyFallback = isSignedIn ? (
     <StyledPrimaryButton
       label="Complete Survey"
-      onClick={() => handleNav('/jobs')}
+      onClick={() => handleNav('/apply')}
     />
   ) : (
     <Fragment />
