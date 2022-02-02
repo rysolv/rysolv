@@ -5,12 +5,7 @@ const getOneUser = async ({ userId }) => {
   const queryText = `
   WITH skills AS (
     SELECT
-      COALESCE(
-        jsonb_agg(
-          json_build_object('id', pts.id, 'level', pts.level, 'name', t.name) ORDER BY pts.level DESC
-        ),
-        '{}'
-      ) AS skills
+    COALESCE(array_agg(t.name ORDER BY pts.level DESC), '{}') AS skills
     FROM position_tech_stack pts
     JOIN technologies t ON pts.technology_id = t.id
     WHERE pts.user_id = $1
