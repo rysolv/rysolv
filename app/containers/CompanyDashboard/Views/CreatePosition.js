@@ -44,7 +44,7 @@ const CreatePosition = ({
   positions,
   responseArray,
 }) => {
-  const { company: { companyId, isPaidSubscription } = {} } = activeUser;
+  const { company: { companyId } = {} } = activeUser;
   const { companyPosition: companyPositionForm } = form;
 
   useEffect(() => {
@@ -102,7 +102,6 @@ const CreatePosition = ({
         handleCreatePosition,
         handleNav,
         handleValidateInput,
-        isPaidSubscription,
         positions,
       }}
     />
