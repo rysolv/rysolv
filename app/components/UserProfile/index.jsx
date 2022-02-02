@@ -80,7 +80,7 @@ const UserProfile = ({ data, handleNav }) => {
 
   const surveyFallback = isSignedIn ? (
     <StyledPrimaryButton
-      label="Complete Survey"
+      label="Complete survey"
       onClick={() => handleNav('/apply')}
     />
   ) : (

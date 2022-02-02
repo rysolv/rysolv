@@ -30,7 +30,7 @@ const JobsBoard = ({ dispatchChangeFilter, filter, handleNav, jobs }) => {
     <JobsBoardContainer>
       <JobsBoardHeader>Jobs</JobsBoardHeader>
       <JobsBoardSubText>
-        Apply to hundreds of jobs with one profile.
+        Apply to hundreds of jobs with just one profile.
       </JobsBoardSubText>
       <SearchInput
         handleChangeFilter={handleChangeFilter}
