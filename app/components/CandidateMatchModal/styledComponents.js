@@ -37,6 +37,7 @@ export const ModalContainer = styled.div`
   position: absolute;
   top: -4rem;
   width: 27.5rem;
+  z-index: 10;
 `;
 
 export const ModalHeader = styled.div`

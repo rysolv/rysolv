@@ -24,7 +24,17 @@ const getUserDashboard = async (_, { authError, userId }) => {
 
     // Get recommended jobs
     const jobs = await getRecommendedPositions();
-    user.jobs = jobs || [];
+    const filteredPositions = jobs.reduce((acc, position) => {
+      const { positionData } = position;
+      if (
+        positionData.post_to_job_board &&
+        positionData.post_to_job_board === 'Yes'
+      ) {
+        acc.push(position);
+      }
+      return acc;
+    }, []);
+    user.jobs = filteredPositions || [];
 
     // Get hiring status
     const responseKey = await getQuestionAnswerByKey({
