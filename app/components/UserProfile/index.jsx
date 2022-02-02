@@ -169,7 +169,10 @@ const UserProfile = ({ data, handleNav }) => {
               <ProfileSection>
                 <DetailCharts>
                   <SummaryChart githubStats={githubStats} />
-                  <LanguageChart languages={languageByCommits} />
+                  <LanguageChart
+                    githubStats={githubStats}
+                    languages={languageByCommits}
+                  />
                 </DetailCharts>
               </ProfileSection>
 
