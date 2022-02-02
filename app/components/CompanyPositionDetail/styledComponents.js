@@ -140,7 +140,7 @@ export const LocationWrapper = styled.div`
 
 export const Logo = styled.img`
   border-radius: 50%;
-  border: 0.2rem solid ${candidateGreyColor};
+  border: 0.2rem solid ${whiteColor};
   height: 7.5rem;
   margin-right: 0.8rem;
   object-fit: cover;

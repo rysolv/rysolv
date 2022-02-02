@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 
 import {
-  candidateGreyColor,
   darkBlueColor,
   defaultFontSize,
   textColor,
@@ -96,7 +95,7 @@ export const ProfileColumn = styled.div`
 
 export const ProfilePic = styled.img`
   border-radius: 50%;
-  border: 0.2rem solid ${candidateGreyColor};
+  border: 0.2rem solid ${whiteColor};
   height: 25rem;
   width: 25rem;
 

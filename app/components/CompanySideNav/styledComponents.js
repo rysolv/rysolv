@@ -12,9 +12,8 @@ import {
 } from 'defaultStyleHelper';
 
 const baseLogoStyle = css`
-  background: ${candidateGreyColor};
   border-radius: 50%;
-  border: 0.2rem solid ${candidateGreyColor};
+  border: 0.2rem solid ${whiteColor};
   height: 7.5rem;
   margin-right: 0.8rem;
   object-fit: cover;
@@ -117,6 +116,8 @@ export const Logo = styled.img`
 export const LogoWrapper = styled.div`
   ${baseLogoStyle}
   align-items: center;
+  background: ${candidateGreyColor};
+  border: 0.2rem solid ${candidateGreyColor};
   color: ${whiteColor};
   display: flex;
   justify-content: center;

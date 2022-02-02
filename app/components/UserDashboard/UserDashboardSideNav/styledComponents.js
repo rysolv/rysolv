@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 
 import { PrimaryButton } from 'components/base_ui';
@@ -113,9 +112,29 @@ export const LinkWrapper = styled.div`
 
 export const ProfilePicture = styled.img`
   border-radius: 50%;
-  border: 0.2rem solid ${candidateGreyColor};
+  border: 0.2rem solid ${whiteColor};
   height: 25rem;
   width: 25rem;
+`;
+
+export const PublicProfileButton = styled.button`
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: ${lightBlueColor};
+  display: flex;
+  font-size: 1.6rem;
+  padding: 1rem 0 0;
+  white-space: nowrap;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  svg {
+    font-size: 2rem;
+    margin-right: 0.8rem;
+  }
 `;
 
 export const SkillsContainer = styled.div`
@@ -154,17 +173,6 @@ export const StyledPrimaryButton = styled(
   &:hover {
     background-color: ${darkBlueColor};
     color: ${whiteColor};
-  }
-`;
-
-export const StyledProfileLink = styled(Link)`
-  color: ${lightBlueColor};
-  font-size: 1.6rem;
-  line-height: 1.6rem;
-  margin-top: 1.6rem;
-
-  &:hover {
-    color: ${lightBlueColor};
   }
 `;
 
