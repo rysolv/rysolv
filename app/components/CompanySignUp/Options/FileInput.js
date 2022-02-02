@@ -21,7 +21,7 @@ const FileInputOption = ({ handleChangeInput, value }) => {
 
   return (
     <FileInputContainer>
-      <PreviewDisplay src={value} />
+      <PreviewDisplay $hasInput={!!value} src={value} />
       <StyledBaseFileInput
         $hasInput={!!value}
         accept="image/png, image/jpeg"

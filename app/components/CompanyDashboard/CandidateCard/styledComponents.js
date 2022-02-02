@@ -9,6 +9,7 @@ import {
   defaultFontSize,
   grayColor,
   textColor,
+  whiteColor,
 } from 'defaultStyleHelper';
 
 export const CandidateCardButton = styled.button`
@@ -104,7 +105,7 @@ export const PositionWrapper = styled.div`
 
 export const ProfilePicWrapper = styled.img`
   border-radius: 50%;
-  border: 0.2rem solid ${candidateGreyColor};
+  border: 0.2rem solid ${whiteColor};
   height: 5rem;
   margin-right: 0.8rem;
   width: 5rem;

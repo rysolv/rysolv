@@ -6,6 +6,7 @@ import {
   FETCH_JOBS_BOARD_FAILURE,
   FETCH_JOBS_BOARD_SUCCESS,
   FETCH_JOBS_BOARD,
+  RESET_FILTER,
 } from './constants';
 
 export const initialState = {
@@ -38,6 +39,10 @@ const jobsBoardReducer = produce((draft, { payload, type }) => {
     case FETCH_JOBS_BOARD: {
       draft.error = initialState.error;
       draft.loading.fetchJobsBoard = true;
+      break;
+    }
+    case RESET_FILTER: {
+      draft.filter = initialState.filter;
       break;
     }
   }

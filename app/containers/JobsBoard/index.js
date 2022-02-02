@@ -12,7 +12,7 @@ import { getParameterByName } from 'utils/globalHelpers';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
-import { changeFilter, fetchJobsBoard } from './actions';
+import { changeFilter, fetchJobsBoard, resetFilter } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import {
@@ -23,8 +23,9 @@ import {
 import { ViewContainer } from './styledComponents';
 
 const JobsBoard = ({
-  dispatchFetchJobsBoard,
   dispatchChangeFilter,
+  dispatchFetchJobsBoard,
+  dispatchResetFilter,
   error,
   fetchJobsBoardLoading,
   filter,
@@ -47,7 +48,13 @@ const JobsBoard = ({
         error={error}
         isRequiredData={false}
         loading={fetchJobsBoardLoading}
-        propsToPassDown={{ dispatchChangeFilter, filter, handleNav, jobs }}
+        propsToPassDown={{
+          dispatchChangeFilter,
+          dispatchResetFilter,
+          filter,
+          handleNav,
+          jobs,
+        }}
       />
     </ViewContainer>
   );
@@ -56,6 +63,7 @@ const JobsBoard = ({
 JobsBoard.propTypes = {
   dispatchChangeFilter: T.func.isRequired,
   dispatchFetchJobsBoard: T.func.isRequired,
+  dispatchResetFilter: T.func.isRequired,
   error: T.bool.isRequired,
   fetchJobsBoardLoading: T.bool.isRequired,
   filter: T.string.isRequired,
@@ -79,6 +87,7 @@ const mapDispatchToProps = dispatch => ({
    */
   dispatchChangeFilter: payload => dispatch(changeFilter(payload)),
   dispatchFetchJobsBoard: () => dispatch(fetchJobsBoard()),
+  dispatchResetFilter: () => dispatch(resetFilter()),
   /**
    * Reducer : Router
    */

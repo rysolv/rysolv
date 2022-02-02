@@ -1,4 +1,3 @@
-import React from 'react';
 import styled, { css } from 'styled-components';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -141,7 +140,7 @@ export const LocationWrapper = styled.div`
 
 export const Logo = styled.img`
   border-radius: 50%;
-  border: 0.2rem solid ${candidateGreyColor};
+  border: 0.2rem solid ${whiteColor};
   height: 7.5rem;
   margin-right: 0.8rem;
   object-fit: cover;
@@ -179,13 +178,12 @@ export const PositionDetailHeader = styled.div`
   }
 `;
 
-export const StyledPrimaryButton = styled(({ ...restProps }) => (
-  <PrimaryButton {...restProps} />
-))`
+export const StyledPrimaryButton = styled(PrimaryButton)`
   ${baseButtonStyle}
   background-color: ${darkBlueColor};
   color: ${whiteColor};
   margin-bottom: 1rem;
+  width: 10rem;
 
   &:hover {
     background-color: ${darkBlueColor};

@@ -18,10 +18,10 @@ import {
   LinkText,
   LinkWrapper,
   ProfilePicture,
+  PublicProfileButton,
   SkillsContainer,
   StyledIconButton,
   StyledPrimaryButton,
-  StyledProfileLink,
   StyledSecondaryButton,
   UserDashboardSideNavContainer,
 } from './styledComponents';
@@ -73,9 +73,9 @@ const UserDashboardSideNav = ({
   return (
     <UserDashboardSideNavContainer>
       <ProfilePicture src={profilePic} />
-      <StyledProfileLink to={`/users/${username}`}>
-        {PublicIcon}&nbsp;View public profile
-      </StyledProfileLink>
+      <PublicProfileButton onClick={() => handleNav(`/users/${username}`)}>
+        {PublicIcon} View public profile
+      </PublicProfileButton>
       <div>
         <ActionWrapper>
           <ActiveWrapper>

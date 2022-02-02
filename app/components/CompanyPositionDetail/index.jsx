@@ -59,8 +59,7 @@ const CompanyPositionDetail = ({
   const html = marked(description);
   const cleanHtml = DOMPurify.sanitize(html);
 
-  const userLabel = hasApplied ? 'Applied' : 'Apply';
-  const buttonLabel = isCompany ? 'Unavailable on company accounts' : userLabel;
+  const buttonLabel = hasApplied ? 'Applied' : 'Apply';
 
   useEffect(() => {
     if (isSignedIn && surveyComplete) setModalState('apply');

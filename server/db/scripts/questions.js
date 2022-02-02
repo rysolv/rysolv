@@ -159,7 +159,7 @@ const questions = [
     required: true,
     response_limit: 1,
     subtext:
-      'Describe your typical interview process (ex: Screening call, Take home assignment, Final interview).',
+      'Describe your typical interview process (i.e. screening call, take home assignment, final interview).',
   },
   // is_active
   {

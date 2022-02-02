@@ -30,9 +30,8 @@ const baseInputStyle = css`
 
 const baseLogoStyle = css`
   align-self: center;
-  background: ${candidateGreyColor};
   border-radius: 0.7rem;
-  border: 0.2rem solid ${candidateGreyColor};
+  border: 0.2rem solid ${whiteColor};
   height: 7.5rem;
   margin-right: 1.6rem;
   object-fit: cover;
@@ -124,6 +123,8 @@ export const JobLogo = styled.img`
 export const JobLogoWrapper = styled.div`
   ${baseLogoStyle};
   align-items: center;
+  background: ${candidateGreyColor};
+  border: 0.2rem solid ${candidateGreyColor};
   display: flex;
   font-size: 4.6rem;
   justify-content: center;

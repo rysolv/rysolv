@@ -46,7 +46,7 @@ const EditPosition = ({
   responseArray,
   selectedPosition,
 }) => {
-  const { company: { companyId, isPaidSubscription } = {} } = activeUser;
+  const { company: { companyId } = {} } = activeUser;
   const { companyPosition: companyPositionForm } = form;
 
   useEffect(() => {
@@ -106,7 +106,6 @@ const EditPosition = ({
         handleEditPosition,
         handleNav,
         handleValidateInput,
-        isPaidSubscription,
       }}
     />
   );

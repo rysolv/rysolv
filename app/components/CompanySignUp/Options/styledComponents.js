@@ -106,7 +106,8 @@ export const Input = styled.input`
 `;
 
 export const PreviewDisplay = styled.img`
-  background: ${candidateGreyColor};
+  background: ${({ $hasInput }) =>
+    $hasInput ? 'transparent' : candidateGreyColor};
   border-radius: 50%;
   height: 12.5rem;
   width: 12.5rem;
@@ -114,7 +115,8 @@ export const PreviewDisplay = styled.img`
 
 export const StyledBaseFileInput = styled(BaseFileInput)`
   background: transparent;
-  border-color: ${candidateGreyColor};
+  border-color: ${({ $hasInput }) =>
+    $hasInput ? whiteColor : candidateGreyColor};
   height: 12.5rem;
   left: 0;
   position: absolute;

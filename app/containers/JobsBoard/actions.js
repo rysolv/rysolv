@@ -3,6 +3,7 @@ import {
   FETCH_JOBS_BOARD_FAILURE,
   FETCH_JOBS_BOARD_SUCCESS,
   FETCH_JOBS_BOARD,
+  RESET_FILTER,
 } from './constants';
 
 export function changeFilter(payload) {
@@ -28,4 +29,8 @@ export function fetchJobsBoard(payload) {
     payload,
     type: FETCH_JOBS_BOARD,
   };
+}
+
+export function resetFilter() {
+  return { type: RESET_FILTER };
 }

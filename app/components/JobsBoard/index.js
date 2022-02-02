@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
@@ -7,6 +7,7 @@ import { commonKeywords } from 'containers/JobsBoard/constants';
 import SearchInput from './SearchInput';
 import { JobsList, NoJobsList } from './JobsList';
 import {
+  ClearButton,
   CommonKeywordsWrapper,
   JobsBoardContainer,
   JobsBoardHeader,
@@ -14,8 +15,16 @@ import {
   KeywordTag,
 } from './styledComponents';
 
-const JobsBoard = ({ dispatchChangeFilter, filter, handleNav, jobs }) => {
+const JobsBoard = ({
+  dispatchChangeFilter,
+  dispatchResetFilter,
+  filter,
+  handleNav,
+  jobs,
+}) => {
   const [searchTerm, setSearchTerm] = useState(filter);
+
+  useEffect(() => setSearchTerm(filter), [filter]);
 
   const handleChangeFilter = () => {
     dispatchChangeFilter({ filter: searchTerm });
@@ -30,7 +39,7 @@ const JobsBoard = ({ dispatchChangeFilter, filter, handleNav, jobs }) => {
     <JobsBoardContainer>
       <JobsBoardHeader>Jobs</JobsBoardHeader>
       <JobsBoardSubText>
-        Apply to hundreds of jobs with one profile.
+        Apply to hundreds of jobs with just one profile.
       </JobsBoardSubText>
       <SearchInput
         handleChangeFilter={handleChangeFilter}
@@ -46,6 +55,7 @@ const JobsBoard = ({ dispatchChangeFilter, filter, handleNav, jobs }) => {
             {keyword}
           </KeywordTag>
         ))}
+        <ClearButton onClick={dispatchResetFilter}>Clear</ClearButton>
       </CommonKeywordsWrapper>
       <ConditionalRender
         Component={JobsList}
@@ -63,6 +73,7 @@ const JobsBoard = ({ dispatchChangeFilter, filter, handleNav, jobs }) => {
 
 JobsBoard.propTypes = {
   dispatchChangeFilter: T.func.isRequired,
+  dispatchResetFilter: T.func.isRequired,
   filter: T.string.isRequired,
   handleNav: T.func.isRequired,
   jobs: T.array.isRequired,

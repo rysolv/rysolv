@@ -23,7 +23,6 @@ const CreatePosition = ({
   dispatchChangeInput,
   dispatchChangeSkillLevel,
   dispatchClearAlerts,
-  isPaidSubscription,
   dispatchDeleteSkill,
   dispatchSelectPosition,
   form: { companyPosition: companyPositionForm },
@@ -65,10 +64,7 @@ const CreatePosition = ({
       <StyledErrorSuccessBanner error={error} onClose={dispatchClearAlerts} />
       {companyPositionQuestions.map(
         ({ description, id, options, optionType, question, ...restProps }) => {
-          if (
-            id !== 'isActive' &&
-            !(id === 'postToJobBoard' && !isPaidSubscription)
-          ) {
+          if (id !== 'isActive') {
             const OptionToRender = optionDictionary[optionType];
 
             const handleChangeInput = (value, inputField) => {
@@ -139,7 +135,6 @@ CreatePosition.propTypes = {
   handleCreatePosition: T.func.isRequired,
   handleNav: T.func.isRequired,
   handleValidateInput: T.func.isRequired,
-  isPaidSubscription: T.bool.isRequired,
   positions: T.array.isRequired,
 };
 
