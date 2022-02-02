@@ -10,9 +10,11 @@ import {
   TitleRow,
 } from './styledComponents';
 
-const LanguageChart = ({ languages }) => {
+const LanguageChart = ({ githubStats, languages }) => {
+  const { commits: totalCommits } = githubStats;
+
   const graph = languages.map(({ commits, language }) => {
-    const width = (commits / 2500) * 100;
+    const width = (commits / totalCommits) * 100;
     return (
       <LanguageRow key={language}>
         <LanguageBar width={width}>{language}</LanguageBar>
@@ -33,6 +35,7 @@ const LanguageChart = ({ languages }) => {
 };
 
 LanguageChart.propTypes = {
+  githubStats: T.object,
   languages: T.array,
 };
 
