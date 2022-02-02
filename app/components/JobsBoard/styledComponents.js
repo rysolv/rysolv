@@ -4,8 +4,9 @@ import { PrimaryAsyncButton } from 'components/base_ui';
 import {
   blueColor,
   blueGrayColor,
-  darkBlueColor,
   candidateGreyColor,
+  darkBlueColor,
+  lightBlueColor,
   lightGreyColor,
   textColor,
   whiteColor,
@@ -41,7 +42,24 @@ const baseInputStyle = css`
   width: 100%;
 `;
 
+export const ClearButton = styled.button`
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: ${lightBlueColor};
+  display: flex;
+  font-size: 1.6rem;
+  margin-left: 0.2em
+  padding: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export const CommonKeywordsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   margin: 1.6rem 0 3.2rem -0.4rem;
 `;
 
