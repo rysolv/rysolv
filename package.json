@@ -1,7 +1,7 @@
 {
   "name": "rysolv",
   "version": "0.0.1",
-  "description": "Where engineers come to grow.",
+  "description": "Find jobs that match your skills.",
   "repository": {
     "type": "git",
     "url": "git://github.com/rysolv/rysolv.git"
