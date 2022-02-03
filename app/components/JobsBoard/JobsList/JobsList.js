@@ -6,6 +6,7 @@ import { generatePostedDate } from 'utils/globalHelpers';
 
 import {
   BottomContentWrapper,
+  CardTitleWrapper,
   ContentWrapper,
   HorizontalDivider,
   JobCard,
@@ -65,12 +66,14 @@ const JobsList = ({ handleNav, handleSelectKeyword, jobs }) => {
                 <JobContent>
                   <ContentWrapper>
                     <TopContentWrapper>
-                      <JobTitle>{title}</JobTitle>
-                      &nbsp;
-                      <JobCompanyWrapper>
-                        <TextWrapper>at</TextWrapper>&nbsp;
-                        <JobCompany>{companyName}</JobCompany>
-                      </JobCompanyWrapper>
+                      <CardTitleWrapper>
+                        <JobTitle>{title}</JobTitle>&nbsp;
+                        <JobCompanyWrapper>
+                          <TextWrapper>at</TextWrapper>&nbsp;
+                          <JobCompany>{companyName}</JobCompany>
+                        </JobCompanyWrapper>
+                      </CardTitleWrapper>
+                      <PostedDate>{generatePostedDate(createdDate)}</PostedDate>
                     </TopContentWrapper>
                     <MiddleContentWrapper>
                       <JobSalary>
@@ -99,7 +102,6 @@ const JobsList = ({ handleNav, handleSelectKeyword, jobs }) => {
                       </KeywordWrapper>
                     </BottomContentWrapper>
                   </ContentWrapper>
-                  <PostedDate>{generatePostedDate(createdDate)}</PostedDate>
                 </JobContent>
               </JobCard>
               <HorizontalDivider isLast={jobs.length - 1 === index} />

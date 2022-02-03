@@ -42,6 +42,12 @@ export const BottomContentWrapper = styled.div`
   display: flex;
 `;
 
+export const CardTitleWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -175,10 +181,8 @@ export const NoJobsListContainer = styled.div`
 `;
 
 export const PostedDate = styled.div`
-  padding: 1.6rem 2.4rem;
-  position: absolute;
-  right: 0;
-  top: 0;
+  height: 100%;
+  white-space: nowrap;
 `;
 
 export const StyledParagraph = styled.p`
@@ -195,6 +199,7 @@ export const TextWrapper = styled.div`
 export const TopContentWrapper = styled.div`
   align-items: center;
   display: flex;
-  flex-flow: wrap;
+  flex-wrap: nowrap;
+  justify-content: space-between;
   margin-left: 0.4rem;
 `;
