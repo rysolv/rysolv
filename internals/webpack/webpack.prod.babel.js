@@ -122,7 +122,7 @@ module.exports = require('./webpack.base.babel')({
     new WebpackPwaManifest({
       name: 'Rysolv',
       short_name: 'Rysolv',
-      description: 'Where engineers come to grow.',
+      description: 'Find jobs that match your skills.',
       background_color: '#fafafa',
       theme_color: '#b1624d',
       inject: true,
