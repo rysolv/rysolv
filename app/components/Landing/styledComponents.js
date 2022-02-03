@@ -156,12 +156,21 @@ export const ButtonGroup = styled.div`
 export const CandidateCardContainer = styled.div`
   display: flex;
   margin: 12.2rem 0 0;
+
+  @media (max-width: 1200px) {
+    margin-top: 34.5rem;
+  }
+  @media (max-width: 1030px) {
+    flex-direction: column-reverse;
+    margin-top: 12.2rem;
+  }
 `;
 
 export const CandidateCardImage = styled.img`
-  height: 40rem;
-  width: auto
+  align-self: center;
   background-color: white;
+  height: 40rem;
+  width: auto;
 `;
 
 export const CandidateHeader = styled.div`
@@ -170,20 +179,34 @@ export const CandidateHeader = styled.div`
   font-weight: 700;
   line-height: 3.873rem;
   margin: 2rem 0 0 7rem;
+
+  @media (max-width: 1030px) {
+    margin: 2rem 0 1rem;
+  }
 `;
 
 export const CandidateMatchImage = styled.img`
   height: 15rem;
-  width: auto;
   margin: 1rem 0 0 -3rem;
+  width: auto;
+
+  @media (max-width: 1030px) {
+    display: none;
+  }
 `;
 
 export const CandidateSubtext = styled.div`
   color: ${whiteColor};
   font-size: 2.4rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 3.873rem;
   margin: 2rem 0 0 7rem;
+
+  @media (max-width: 1030px) {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin: 1rem 0;
+  }
 `;
 
 export const Contributor = styled.div`
@@ -311,7 +334,8 @@ export const HeaderImageRightIcon = styled.div`
   @media (max-width: 395px) {
     svg {
       height: 33.3rem;
-      left: 1rem;
+      left: 8rem;
+      top: 36rem;
     }
   }
 
@@ -375,7 +399,7 @@ export const LandingCardContainer = styled.div`
 
   @media (max-width: 1030px) {
     height: 110rem;
-    margin-top: 62.5rem;
+    margin-top: 34.5rem;
   }
 
   @media (max-width: 600px) {
@@ -384,7 +408,7 @@ export const LandingCardContainer = styled.div`
 
   @media (max-width: 450px) {
     height: 76rem;
-    margin-top: 54.5rem;
+    margin-top: 28.6rem;
   }
 `;
 
