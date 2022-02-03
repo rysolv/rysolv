@@ -5,6 +5,7 @@ import { generatePostedDate } from 'utils/globalHelpers';
 
 import {
   BottomContentWrapper,
+  CardTitleWrapper,
   ContentWrapper,
   JobCardContainer,
   JobCompany,
@@ -44,12 +45,14 @@ const RecommendedJobCard = ({
       <JobContent>
         <ContentWrapper>
           <TopContentWrapper>
-            <JobTitle>{title}</JobTitle>
-            &nbsp;
-            <JobCompanyWrapper>
-              <TextWrapper>at</TextWrapper>&nbsp;
-              <JobCompany>{companyName}</JobCompany>
-            </JobCompanyWrapper>
+            <CardTitleWrapper>
+              <JobTitle>{title}</JobTitle>&nbsp;
+              <JobCompanyWrapper>
+                <TextWrapper>at</TextWrapper>&nbsp;
+                <JobCompany>{companyName}</JobCompany>
+              </JobCompanyWrapper>
+            </CardTitleWrapper>
+            <PostedDate>{generatePostedDate(createdDate)}</PostedDate>
           </TopContentWrapper>
           <MiddleContentWrapper>
             <JobSalary>
@@ -78,7 +81,6 @@ const RecommendedJobCard = ({
             </KeywordWrapper>
           </BottomContentWrapper>
         </ContentWrapper>
-        <PostedDate>{generatePostedDate(createdDate)}</PostedDate>
       </JobContent>
     </JobCardContainer>
   );
