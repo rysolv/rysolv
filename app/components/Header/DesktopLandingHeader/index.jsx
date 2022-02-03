@@ -52,7 +52,7 @@ const DesktopLandingHeader = ({
   } else {
     navLinks = (
       <Fragment>
-        <InternalLink label="Hire engineers" path="/pricing" />
+        <InternalLink label="Hire engineers" path="/signup?type=company" />
         <InternalLink label="Jobs" path="/jobs" />
       </Fragment>
     );

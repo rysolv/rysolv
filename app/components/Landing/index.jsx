@@ -58,18 +58,18 @@ const Landing = ({ handleNav }) => (
       <div>
         <LandingWrapper>
           <LandingContainerText>
-            Where <span>engineers</span>
+            Find jobs that
             <br />
-            come to grow.
+            match your skills
           </LandingContainerText>
           <ButtonGroup>
             <StyledSecondaryButton
               label="Get started"
-              onClick={() => handleNav('/signup')}
+              onClick={() => handleNav('/apply')}
             />
             <StyledPrimaryButton
               label="Hire engineers"
-              onClick={() => handleNav('/pricing')}
+              onClick={() => handleNav('/signup?type=company')}
             />
           </ButtonGroup>
         </LandingWrapper>
@@ -135,7 +135,7 @@ const Landing = ({ handleNav }) => (
             src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureCandidateMatchCard.png"
           />
           <div>
-            <CandidateHeader>Get matched with top companies</CandidateHeader>
+            <CandidateHeader>Get matched with top companies.</CandidateHeader>
             <CandidateSubtext>
               Once your profile is complete, you&apos;ll start being matched
               with companies.
@@ -148,7 +148,7 @@ const Landing = ({ handleNav }) => (
           <ActionHeader>Get started on your journey</ActionHeader>
           <ActionCardWrapper>
             <ActionCard hasNoMargin>
-              <ActionCardTitle>Create your developer profile</ActionCardTitle>
+              <ActionCardTitle>Create your developer profile.</ActionCardTitle>
               <StyledLink to="/apply">Create Profile {NextIcon}</StyledLink>
             </ActionCard>
             <ActionCard>
@@ -156,7 +156,7 @@ const Landing = ({ handleNav }) => (
               <StyledLink to="/apply">Sign up {NextIcon}</StyledLink>
             </ActionCard>
             <ActionCard>
-              <ActionCardTitle>Land the perfect job</ActionCardTitle>
+              <ActionCardTitle>Land the perfect job.</ActionCardTitle>
               <StyledLink to="/jobs">Browse jobs {NextIcon}</StyledLink>
             </ActionCard>
           </ActionCardWrapper>
