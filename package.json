@@ -111,7 +111,7 @@
     "marked": "0.8.2",
     "minimist": "1.2.5",
     "moment": "2.24.0",
-    "node-fetch": "2.6.1",
+    "node-fetch": "2.6.7",
     "pg": "8.3.2",
     "plaid": "9.9.0",
     "prop-types": "15.7.2",
