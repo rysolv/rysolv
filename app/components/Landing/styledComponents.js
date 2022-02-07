@@ -39,7 +39,7 @@ export const ActionCard = styled.div`
 
   @media (max-width: 900px) {
     height: 28.5rem;
-    margin: ${({ isLast }) => isLast ? '0 auto' : '0 auto 1.6rem'};
+    margin: ${({ isLast }) => (isLast ? '0 auto' : '0 auto 1.6rem')};
     width: 28.5rem;
   }
 
@@ -249,7 +249,8 @@ export const Contributor = styled.div`
   }
 
   @media (max-width: 440px) {
-    display: ${({ removeFirst, removeSecond }) => removeFirst || removeSecond ? 'none' : 'flex'};
+    display: ${({ removeFirst, removeSecond }) =>
+    removeFirst || removeSecond ? 'none' : 'flex'};
   }
 `;
 
@@ -683,8 +684,7 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
 
   &:hover {
     background: ${whiteColor};
-  }
-
+  
   @media (max-width: 992px) {
     font-size: 1.376rem;
   }

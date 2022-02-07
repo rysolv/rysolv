@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
@@ -82,7 +81,8 @@ const Landing = ({ handleNav }) => (
                   developer profile.
                 </LandingCardLargeText>
                 <LandingCardSmallText>
-                  We analyze your coding history, and match you with companies looking for your skills.
+                  We analyze your coding history, and match you with companies
+                  looking for your skills.
                 </LandingCardSmallText>
               </TextWrapper>
             </LandingCard>
@@ -122,7 +122,8 @@ const Landing = ({ handleNav }) => (
               Get matched with top companies.
             </LandingCardLargeText>
             <LandingCardSmallText>
-              Once your profile is complete, you&apos;ll be matched with companies!
+              Once your profile is complete, you&apos;ll be matched with
+              companies!
             </LandingCardSmallText>
           </CandidateDescription>
           <CandidateImageGroup>
