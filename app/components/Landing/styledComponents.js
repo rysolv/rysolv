@@ -684,6 +684,7 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
 
   &:hover {
     background: ${whiteColor};
+  }
   
   @media (max-width: 992px) {
     font-size: 1.376rem;
