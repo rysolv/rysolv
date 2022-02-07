@@ -7,7 +7,6 @@ import {
   AcceptButton,
   ButtonGroup,
   StyledBodyMessage,
-  StyledLink,
   StyledSecondaryButton,
   StyledTitle,
 } from './styledComponents';
@@ -51,8 +50,7 @@ const AcceptBountyModal = ({
       />
       <StyledBodyMessage>
         A minimum of 10% of all bounties is contributed to the project
-        maintainers. <StyledLink to="/how-to#bounties">Click here</StyledLink>{' '}
-        to see how bounties are paid out.
+        maintainers.
       </StyledBodyMessage>
       <ButtonGroup>
         <StyledSecondaryButton label="Cancel" onClick={handleClose} />
