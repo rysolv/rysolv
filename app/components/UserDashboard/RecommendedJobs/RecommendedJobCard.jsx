@@ -46,10 +46,10 @@ const RecommendedJobCard = ({
         <ContentWrapper>
           <TopContentWrapper>
             <CardTitleWrapper>
-              <JobTitle>{title}</JobTitle>&nbsp;
+              <JobTitle>{title.toLowerCase()}</JobTitle>&nbsp;
               <JobCompanyWrapper>
                 <TextWrapper>at</TextWrapper>&nbsp;
-                <JobCompany>{companyName}</JobCompany>
+                <JobCompany>{companyName.toLowerCase()}</JobCompany>
               </JobCompanyWrapper>
             </CardTitleWrapper>
             <PostedDate>{generatePostedDate(createdDate)}</PostedDate>
