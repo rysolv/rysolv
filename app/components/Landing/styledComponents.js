@@ -114,27 +114,51 @@ export const BackgroundHollowCircleTopIcon = styled.div`
 
 export const BackgroundSolidCircleIcon = styled.div`
   svg {
+    height: 80rem;
     left: 50%;
     position: absolute;
-    top: 95.7rem;
+    top: -13rem;
     transform: translateX(-50%);
+    z-index: 0;
   }
 
-  @media (max-width: 1200px) {
+  @media (max-width: 933px) {
     svg {
-      top: 208.9rem;
-    }
-  }
-
-  @media (max-width: 1030px) {
-    svg {
-      top: 220.9rem;
+      top: -11rem;
     }
   }
 
   @media (max-width: 860px) {
     svg {
-      display: none;
+      height: 75rem;
+      top: -7rem;
+    }
+  }
+
+  @media (max-width: 780px) {
+    svg {
+      height: 72rem;
+      top: -6rem;
+    }
+  }
+
+  @media (max-width: 740px) {
+    svg {
+      height: 70rem;
+      top: -7rem;
+    }
+  }
+
+  @media (max-width: 495px) {
+    svg {
+      top: -9rem;
+    }
+  }
+
+  @media (max-width: 495px) {
+    svg {
+      height: 63rem;
+      top: -6rem;
     }
   }
 `;
@@ -159,6 +183,7 @@ export const CandidateContainer = styled.div`
   flex-direction: column;
   margin: 21.9rem auto 0;
   max-width: 140rem;
+  position: relative;
 
   @media (max-width: 1200px) {
     margin-top: 46.9rem;
@@ -167,15 +192,26 @@ export const CandidateContainer = styled.div`
   @media (max-width: 1030px) {
     margin-top: 24.4rem;
   }
+
+  @media (max-width: 475px) {
+    margin-top: 30.4rem;
+  }
 `;
 
 export const CandidateDescription = styled.div`
   padding: 0 8.2rem 6.4rem;
   text-align: center;
   width: 100%;
+  z-index: 1;
 
   @media (max-width: 740px) {
     padding: 0 3.5rem 3.7rem;
+    width: 45.7rem;
+  }
+
+  @media (max-width: 457px) {
+    padding: 0 0 3.7rem;
+    width: 100%;
   }
 `;
 
@@ -203,19 +239,23 @@ export const CandidateImage = styled.div`
     width: 36rem;
   }
 
-  @media (max-width: 495px) {
+  @media (max-width: 475px) {
     width: 24rem;
   }
 `;
 
 export const CandidateImageGroup = styled.div`
   align-items: center;
-  background: ${whiteColor};
   border-radius: 0.7rem;
   display: flex;
   justify-content: center;
   padding: 2rem;
   width: 100%;
+  z-index: 1;
+
+  @media (max-width: 345px) {
+    padding: 0;
+  }
 `;
 
 export const Contributor = styled.div`
