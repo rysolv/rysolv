@@ -12,12 +12,7 @@ import { makeSelectAuth } from 'containers/Auth/selectors';
 
 import { HomePageContainer } from './styledComponents';
 
-const HomePage = ({
-  activeUser,
-
-  handleNav,
-  isSignedIn,
-}) => {
+const HomePage = ({ activeUser, handleNav, isSignedIn }) => {
   useEffect(() => {
     document.title = 'Rysolv';
   }, []);

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { Fragment } from 'react';
 import T from 'prop-types';
 
@@ -13,14 +12,12 @@ import {
   ActionHeader,
   BackgroundHollowCircleBottomIcon,
   BackgroundHollowCircleTopIcon,
-  BackgroundSolidCircleIcon,
   BottomRowContributors,
   ButtonGroup,
-  CandidateCardContainer,
-  CandidateCardImage,
-  CandidateHeader,
-  CandidateMatchImage,
-  CandidateSubtext,
+  CandidateContainer,
+  CandidateDescription,
+  CandidateImage,
+  CandidateImageGroup,
   Contributor,
   ContributorsContainer,
   ContributorsHeader,
@@ -35,19 +32,20 @@ import {
   LandingCardSmallText,
   LandingContainer,
   LandingContainerText,
+  LandingWrapper,
   PrimaryLandingCard,
+  StyledCandidateImage,
+  StyledCandidateMatchImage,
   StyledCommentImage,
-  StyledProfileImage,
   StyledLink,
   StyledPrimaryButton,
+  StyledProfileImage,
   StyledSecondaryButton,
   TextWrapper,
   TopRowContributors,
-  LandingWrapper,
 } from './styledComponents';
 
 const BackgroundHollowCircle = iconDictionary('backgroundHollowCircle');
-const BackgroundSolidCircle = iconDictionary('backgroundSolidCircle');
 const HeaderImageLeft = iconDictionary('headerImageLeft');
 const HeaderImageRight = iconDictionary('headerImageRight');
 const NextIcon = iconDictionary('navigateNext');
@@ -58,13 +56,13 @@ const Landing = ({ handleNav }) => (
       <div>
         <LandingWrapper>
           <LandingContainerText>
-            Find jobs that
+            Find <span>jobs</span> that
             <br />
-            match your skills
+            match your skills.
           </LandingContainerText>
           <ButtonGroup>
             <StyledSecondaryButton
-              label="Get started"
+              label="Find jobs"
               onClick={() => handleNav('/apply')}
             />
             <StyledPrimaryButton
@@ -74,7 +72,6 @@ const Landing = ({ handleNav }) => (
           </ButtonGroup>
         </LandingWrapper>
         <LandingCardContainer>
-          {/* Developer Profile Card */}
           <LandingCardGroup>
             <LandingCard>
               <TextWrapper>
@@ -91,18 +88,16 @@ const Landing = ({ handleNav }) => (
             </LandingCard>
             <PrimaryLandingCard>
               <StyledCommentImage
-                alt="Profile Image"
+                alt="profile_image"
                 loading="lazy"
                 src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureProfileImage.png"
               />
             </PrimaryLandingCard>
           </LandingCardGroup>
-
-          {/* Jobs Card */}
           <LandingCardGroup>
             <PrimaryLandingCard isFloatingLeft>
               <StyledProfileImage
-                alt="Job card"
+                alt="job_image"
                 loading="lazy"
                 src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureJobImage.png"
               />
@@ -115,54 +110,54 @@ const Landing = ({ handleNav }) => (
                   opportunities.
                 </LandingCardLargeText>
                 <LandingCardSmallText>
-                  Apply to as many jobs as you want with one profile.
+                  Apply to as many jobs as you want with just one profile.
                 </LandingCardSmallText>
               </TextWrapper>
             </LandingCard>
           </LandingCardGroup>
         </LandingCardContainer>
-
-        {/* Candidate Card */}
-        <CandidateCardContainer>
-          <CandidateCardImage
-            alt="Candidate Card"
-            loading="lazy"
-            src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureCandidateCard.png"
-          />
-          <CandidateMatchImage
-            alt="Candidate match"
-            loading="lazy"
-            src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureCandidateMatchCard.png"
-          />
-          <div>
-            <CandidateHeader>Get matched with top companies.</CandidateHeader>
-            <CandidateSubtext>
-              Once your profile is complete, you&apos;ll start being matched
-              with companies.
-            </CandidateSubtext>
-          </div>
-        </CandidateCardContainer>
-
-        {/* Steps Container */}
+        <CandidateContainer>
+          <CandidateDescription>
+            <LandingCardLargeText>
+              Get matched with top companies.
+            </LandingCardLargeText>
+            <LandingCardSmallText>
+              Once your profile is complete, you&apos;ll be matched with
+              companies!
+            </LandingCardSmallText>
+          </CandidateDescription>
+          <CandidateImageGroup>
+            <CandidateImage>
+              <StyledCandidateImage
+                alt="candidate_image"
+                loading="lazy"
+                src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureCandidateCard.png"
+              />
+              <StyledCandidateMatchImage
+                alt="candidate_match_image"
+                loading="lazy"
+                src="https://rysolv.s3.us-east-2.amazonaws.com/FeatureCandidateMatchCard.png"
+              />
+            </CandidateImage>
+          </CandidateImageGroup>
+        </CandidateContainer>
         <ActionContainer>
-          <ActionHeader>Get started on your journey</ActionHeader>
+          <ActionHeader>Get started on your journey.</ActionHeader>
           <ActionCardWrapper>
             <ActionCard hasNoMargin>
               <ActionCardTitle>Create your developer profile.</ActionCardTitle>
-              <StyledLink to="/apply">Create Profile {NextIcon}</StyledLink>
+              <StyledLink to="/apply">Create profile {NextIcon}</StyledLink>
             </ActionCard>
             <ActionCard>
               <ActionCardTitle>Get matched with top companies.</ActionCardTitle>
               <StyledLink to="/apply">Sign up {NextIcon}</StyledLink>
             </ActionCard>
-            <ActionCard>
+            <ActionCard isLast>
               <ActionCardTitle>Land the perfect job.</ActionCardTitle>
               <StyledLink to="/jobs">Browse jobs {NextIcon}</StyledLink>
             </ActionCard>
           </ActionCardWrapper>
         </ActionContainer>
-
-        {/* Company logos */}
         <ConditionalRender
           Component={
             <ContributorsContainer>
@@ -188,10 +183,10 @@ const Landing = ({ handleNav }) => (
               </ContributorsWrapper>
               <ContributorsLinkWrapper>
                 <StyledLink to="/apply" width="14.3rem">
-                  Create Profile {NextIcon}
+                  Create profile {NextIcon}
                 </StyledLink>
                 <StyledLink margin="8.2rem" to="/jobs" width="14.3rem">
-                  Find Jobs {NextIcon}
+                  Find jobs {NextIcon}
                 </StyledLink>
               </ContributorsLinkWrapper>
             </ContributorsContainer>
@@ -208,9 +203,6 @@ const Landing = ({ handleNav }) => (
     <BackgroundHollowCircleBottomIcon>
       {BackgroundHollowCircle}
     </BackgroundHollowCircleBottomIcon>
-    <BackgroundSolidCircleIcon>
-      {BackgroundSolidCircle}
-    </BackgroundSolidCircleIcon>
   </Fragment>
 );
 

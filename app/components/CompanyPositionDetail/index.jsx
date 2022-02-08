@@ -18,6 +18,7 @@ import {
   LabelValueWrapper,
   LocationWrapper,
   Logo,
+  Name,
   NameWrapper,
   PositionDetailContainer,
   PositionDetailContent,
@@ -77,9 +78,9 @@ const CompanyPositionDetail = ({
               shouldRender={!!logo}
             />
             <NameWrapper>
-              <div>
-                {name} - {title}
-              </div>
+              <Name>
+                {name.toLowerCase()} - {title.toLowerCase()}
+              </Name>
               <LocationWrapper shouldRemove>
                 {positionFormattedAddress}, {timezone} &#9679; Remote
               </LocationWrapper>
