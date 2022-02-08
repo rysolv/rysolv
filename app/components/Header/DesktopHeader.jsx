@@ -49,11 +49,11 @@ const DesktopHeader = ({
             <HeaderSearchBar handleNav={handleNav} />
           </LogoWrapper>
           <ButtonsWrapper>
+            <NavLink label="Jobs" path="/jobs" />
             <NavLink
               label="Dashboard"
               path={isCompany ? '/company/dashboard' : '/dashboard'}
             />
-            <NavLink label="Jobs" path="/jobs" />
             <AboutDropdown handleNav={handleNav} />
             <UserActivityDropdown handleNav={handleNav} />
 

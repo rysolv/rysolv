@@ -69,12 +69,12 @@ const MobileLandingHeader = ({
       <ButtonWrapper>
         {isSignedIn ? (
           <Fragment>
+            <InternalLink label="Jobs" path="/jobs" shouldRemoveSecond />
             <InternalLink
               label="Dashboard"
               path={isCompany ? '/company/dashboard' : '/dashboard'}
               shouldRemoveThird
             />
-            <InternalLink label="Jobs" path="/jobs" shouldRemoveSecond />
             <MessageWrapper>
               <MessageLink
                 label="Messages"
@@ -114,8 +114,8 @@ const MobileLandingHeader = ({
       >
         <StyledLoginLink label="Log in" path="/signin" />
         <HorizontalDivider />
-        <MenuInternalLink label="Hire engineers" path="/signup?type=company" />
         <MenuInternalLink label="Jobs" path="/jobs" />
+        <MenuInternalLink label="Hire engineers" path="/signup?type=company" />
       </MenuComponent>
     </MobileHeaderContainer>
   );

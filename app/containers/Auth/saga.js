@@ -110,13 +110,13 @@ export function* githubSignInSaga({ payload }) {
           firstName
           id
           isGithubVerified
-          surveyComplete
           issues
           lastName
           profilePic
           pullRequests
           rep
           repos
+          surveyComplete
           unreadMessages
           upvotes
           username
@@ -149,7 +149,7 @@ export function* githubSignInSaga({ payload }) {
     const graphql = JSON.stringify({ query });
     const {
       data: {
-        githubSignIn: { __typename, surveyComplete, message, ...restProps },
+        githubSignIn: { __typename, message, ...restProps },
       },
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
@@ -159,6 +159,7 @@ export function* githubSignInSaga({ payload }) {
       signup: '/dashboard',
     };
     const route = routeDictionary[origin];
+    const { surveyComplete } = restProps;
     if (origin === 'jobs') {
       if (surveyComplete) {
         yield put(changeView({ view: 2 }));
@@ -331,6 +332,7 @@ export function* signInSaga({ payload }) {
           pullRequests
           rep
           repos
+          surveyComplete
           unreadMessages
           upvotes
           username

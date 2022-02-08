@@ -36,11 +36,11 @@ const DesktopLandingHeader = ({
   if (isSignedIn) {
     navLinks = (
       <Fragment>
+        <InternalLink label="Jobs" path="/jobs" />
         <InternalLink
           label="Dashboard"
           path={isCompany ? '/company/dashboard' : '/dashboard'}
         />
-        <InternalLink label="Jobs" path="/jobs" />
         <MessageWrapper>
           <MessageLink label="Messages" path="/messages" />
           {!!unreadMessages && (
