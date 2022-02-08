@@ -12,6 +12,7 @@ import {
   ActionHeader,
   BackgroundHollowCircleBottomIcon,
   BackgroundHollowCircleTopIcon,
+  BackgroundSolidCircleIcon,
   BottomRowContributors,
   ButtonGroup,
   CandidateContainer,
@@ -46,6 +47,7 @@ import {
 } from './styledComponents';
 
 const BackgroundHollowCircle = iconDictionary('backgroundHollowCircle');
+const BackgroundSolidCircle = iconDictionary('backgroundSolidCircle');
 const HeaderImageLeft = iconDictionary('headerImageLeft');
 const HeaderImageRight = iconDictionary('headerImageRight');
 const NextIcon = iconDictionary('navigateNext');
@@ -140,6 +142,9 @@ const Landing = ({ handleNav }) => (
               />
             </CandidateImage>
           </CandidateImageGroup>
+          <BackgroundSolidCircleIcon>
+            {BackgroundSolidCircle}
+          </BackgroundSolidCircleIcon>
         </CandidateContainer>
         <ActionContainer>
           <ActionHeader>Get started on your journey.</ActionHeader>
