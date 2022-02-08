@@ -9,7 +9,6 @@ import CompanySettings from 'containers/CompanySettings/Loadable';
 import CompanySignUp from 'containers/CompanySignUp/Loadable';
 import ContactUs from 'containers/ContactUs/Loadable';
 import Faq from 'components/Faq';
-import HowTo from 'components/HowTo';
 import IssuesDetail from 'containers/Issues/Detail';
 import JobApplication from 'containers/JobApplication/Loadable';
 import JobsBoard from 'containers/JobsBoard/Loadable';
@@ -45,7 +44,6 @@ const PublicCompanyPositionDetail = withAuth(
 );
 const PublicContactUs = withAuth(publicConfig, ContactUs);
 const PublicFaq = withAuth(publicConfig, Faq);
-const PublicHowTo = withAuth(publicConfig, HowTo);
 const PublicIssuesDetail = withAuth(publicConfig, IssuesDetail);
 const PublicJobApplication = withAuth(publicConfig, JobApplication);
 const PublicJobsBoard = withAuth(publicConfig, JobsBoard);
@@ -71,7 +69,6 @@ const CompanyRoutes = () => (
     <Route exact path="/company/signup" component={PrivateCompanySignUp} />
     <Route exact path="/contact-us" component={PublicContactUs} />
     <Route exact path="/faq" component={PublicFaq} />
-    <Route exact path="/how-to" component={PublicHowTo} />
     <Route exact path="/how-we-score-code" component={PublicCodeScoring} />
     <Route exact path="/issues" component={PublicOverview} />
     <Route exact path="/issues/detail/:id" component={PublicIssuesDetail} />

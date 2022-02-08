@@ -147,6 +147,10 @@ export const Logo = styled.img`
   width: 7.5rem;
 `;
 
+export const Name = styled.div`
+  text-transform: capitalize;
+`;
+
 export const NameWrapper = styled.div``;
 
 export const PositionDetailContainer = styled.div`

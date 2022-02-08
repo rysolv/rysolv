@@ -11,6 +11,7 @@ const {
   createUserTechStack,
   getOneIssue,
   getOneRepo,
+  getSurveyStatus,
   getUserAttemptList,
   getUserPullRequestDetail,
   getUserSettings: getUserSettingsQuery,
@@ -152,6 +153,9 @@ const githubSignIn = async ({ code, origin }, { res }) => {
 
       await assignOwnerToRepo({ githubId: github_id, userId: id });
 
+      // Get hiring survey status
+      result.surveyComplete = await getSurveyStatus({ userId });
+
       // Async call to initiate git_analytics
       analyzeUser({ userId: id });
 
@@ -232,6 +236,9 @@ const githubSignIn = async ({ code, origin }, { res }) => {
         }),
       );
 
+      // Get hiring survey status
+      const surveyComplete = await getSurveyStatus({ userId });
+
       // Pull user watching detail
       const watchingListResult = await getUserWatchList({ userId });
 
@@ -241,6 +248,7 @@ const githubSignIn = async ({ code, origin }, { res }) => {
       result.issues = issuesListResult;
       result.rejectedPullRequests = rejectedPullRequests;
       result.repos = reposListResult;
+      result.surveyComplete = surveyComplete;
       result.watching = watchingListResult;
 
       const token = generateToken({

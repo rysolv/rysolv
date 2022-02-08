@@ -33,8 +33,8 @@ const UserDropDownMenu = ({ anchorEl, handleClose, handleSignout }) => (
     onClose={handleClose}
     open={Boolean(anchorEl)}
   >
-    <MenuInternalLink label="Dashboard" path="/dashboard" shouldRemoveThird />
     <MenuInternalLink label="Jobs" path="/jobs" shouldRemoveSecond />
+    <MenuInternalLink label="Dashboard" path="/dashboard" shouldRemoveThird />
     <MenuInternalLink label="Messages" path="/messages" shouldRemoveFirst />
     <MenuInternalLink label="Account &amp; Settings" path="/settings" />
     <HorizontalDivider />

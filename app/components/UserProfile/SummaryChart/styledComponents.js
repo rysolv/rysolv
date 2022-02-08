@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 import { darkBlueColor } from 'defaultStyleHelper';
+import { mediaQueriesByDevice } from 'utils/breakpoints';
+
+const { laptop } = mediaQueriesByDevice;
 
 export const IconWrapper = styled.div`
   width: 2.5rem;
@@ -20,6 +23,10 @@ export const SummaryContainer = styled.div`
   margin-top: 2.4rem;
   padding-right: 4rem;
   width: 100%;
+
+  ${laptop} {
+    padding: 0;
+  }
 `;
 
 export const SummaryRow = styled.div`

@@ -94,6 +94,7 @@ export const JobCompany = styled.div`
   color: ${blueColor};
   font-size: 2rem;
   font-weight: 700;
+  text-transform: capitalize;
 `;
 
 export const JobCompanyWrapper = styled.div`
@@ -155,6 +156,7 @@ export const JobTitle = styled.div`
   color: ${blueColor};
   font-size: 2rem;
   font-weight: 700;
+  text-transform: capitalize;
 `;
 
 export const KeywordWrapper = styled.div`

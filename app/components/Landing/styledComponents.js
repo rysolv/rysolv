@@ -39,7 +39,7 @@ export const ActionCard = styled.div`
 
   @media (max-width: 900px) {
     height: 28.5rem;
-    margin: 0 auto 1.6rem;
+    margin: ${({ isLast }) => (isLast ? '0 auto' : '0 auto 1.6rem')};
     width: 28.5rem;
   }
 
@@ -70,7 +70,7 @@ export const ActionCardWrapper = styled.div`
 export const ActionContainer = styled.div`
   color: ${whiteColor};
   display: flex;
-  margin: 12.2rem 0;
+  margin: 24.4rem auto 5.6rem;
 
   @media (max-width: 1275px) {
     flex-direction: column;
@@ -114,27 +114,51 @@ export const BackgroundHollowCircleTopIcon = styled.div`
 
 export const BackgroundSolidCircleIcon = styled.div`
   svg {
+    height: 80rem;
     left: 50%;
     position: absolute;
-    top: 95.7rem;
+    top: -13rem;
     transform: translateX(-50%);
+    z-index: 0;
   }
 
-  @media (max-width: 1200px) {
+  @media (max-width: 933px) {
     svg {
-      top: 208.9rem;
-    }
-  }
-
-  @media (max-width: 1030px) {
-    svg {
-      top: 220.9rem;
+      top: -11rem;
     }
   }
 
   @media (max-width: 860px) {
     svg {
-      display: none;
+      height: 75rem;
+      top: -7rem;
+    }
+  }
+
+  @media (max-width: 780px) {
+    svg {
+      height: 72rem;
+      top: -6rem;
+    }
+  }
+
+  @media (max-width: 740px) {
+    svg {
+      height: 70rem;
+      top: -7rem;
+    }
+  }
+
+  @media (max-width: 495px) {
+    svg {
+      top: -9rem;
+    }
+  }
+
+  @media (max-width: 495px) {
+    svg {
+      height: 63rem;
+      top: -6rem;
     }
   }
 `;
@@ -153,59 +177,84 @@ export const ButtonGroup = styled.div`
   }
 `;
 
-export const CandidateCardContainer = styled.div`
+export const CandidateContainer = styled.div`
+  align-items: center;
   display: flex;
-  margin: 12.2rem 0 0;
+  flex-direction: column;
+  margin: 21.9rem auto 0;
+  max-width: 140rem;
+  position: relative;
 
   @media (max-width: 1200px) {
-    margin-top: 34.5rem;
+    margin-top: 46.9rem;
   }
-  @media (max-width: 1030px) {
-    flex-direction: column-reverse;
-    margin-top: 12.2rem;
-  }
-`;
-
-export const CandidateCardImage = styled.img`
-  align-self: center;
-  background-color: white;
-  height: 40rem;
-  width: auto;
-`;
-
-export const CandidateHeader = styled.div`
-  color: ${whiteColor};
-  font-size: 3.2rem;
-  font-weight: 700;
-  line-height: 3.873rem;
-  margin: 2rem 0 0 7rem;
 
   @media (max-width: 1030px) {
-    margin: 2rem 0 1rem;
+    margin-top: 24.4rem;
+  }
+
+  @media (max-width: 475px) {
+    margin-top: 30.4rem;
   }
 `;
 
-export const CandidateMatchImage = styled.img`
-  height: 15rem;
-  margin: 1rem 0 0 -3rem;
-  width: auto;
+export const CandidateDescription = styled.div`
+  padding: 0 8.2rem 6.4rem;
+  text-align: center;
+  width: 100%;
+  z-index: 1;
 
-  @media (max-width: 1030px) {
-    display: none;
+  @media (max-width: 740px) {
+    padding: 0 3.5rem 3.7rem;
+    width: 45.7rem;
+  }
+
+  @media (max-width: 457px) {
+    padding: 0 0 3.7rem;
+    width: 100%;
   }
 `;
 
-export const CandidateSubtext = styled.div`
-  color: ${whiteColor};
-  font-size: 2.4rem;
-  font-weight: 500;
-  line-height: 3.873rem;
-  margin: 2rem 0 0 7rem;
+export const CandidateImage = styled.div`
+  position: relative;
+  width: 46rem;
 
-  @media (max-width: 1030px) {
-    font-size: 1.8rem;
-    font-weight: 400;
-    margin: 1rem 0;
+  @media (max-width: 755px) {
+    width: 42rem;
+  }
+
+  @media (max-width: 700px) {
+    width: 46rem;
+  }
+
+  @media (max-width: 575px) {
+    width: 42rem;
+  }
+
+  @media (max-width: 535px) {
+    width: 38rem;
+  }
+
+  @media (max-width: 495px) {
+    width: 36rem;
+  }
+
+  @media (max-width: 475px) {
+    width: 24rem;
+  }
+`;
+
+export const CandidateImageGroup = styled.div`
+  align-items: center;
+  border-radius: 0.7rem;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  width: 100%;
+  z-index: 1;
+
+  @media (max-width: 345px) {
+    padding: 0;
   }
 `;
 
@@ -334,8 +383,7 @@ export const HeaderImageRightIcon = styled.div`
   @media (max-width: 395px) {
     svg {
       height: 33.3rem;
-      left: 8rem;
-      top: 36rem;
+      left: 1rem;
     }
   }
 
@@ -394,12 +442,12 @@ export const LandingCard = styled.div`
 export const LandingCardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 34.5rem;
+  margin-top: 38.5rem;
   place-items: center;
 
   @media (max-width: 1030px) {
     height: 110rem;
-    margin-top: 34.5rem;
+    margin-top: 62.5rem;
   }
 
   @media (max-width: 600px) {
@@ -408,7 +456,7 @@ export const LandingCardContainer = styled.div`
 
   @media (max-width: 450px) {
     height: 76rem;
-    margin-top: 28.6rem;
+    margin-top: 54.5rem;
   }
 `;
 
@@ -537,6 +585,50 @@ export const PrimaryLandingCard = styled.div`
   }
 `;
 
+export const StyledCandidateImage = styled.img`
+  width: 24rem;
+
+  @media (max-width: 535px) {
+    width: 22rem;
+  }
+
+  @media (max-width: 495px) {
+    width: 20rem;
+  }
+
+  @media (max-width: 475px) {
+    width: 24rem;
+  }
+`;
+
+export const StyledCandidateMatchImage = styled.img`
+  height: auto;
+  position: absolute;
+  right: 0rem;
+  top: -1rem;
+  width: 24rem;
+
+  @media (max-width: 755px) {
+    width: 20rem;
+  }
+
+  @media (max-width: 700px) {
+    width: 24rem;
+  }
+
+  @media (max-width: 575px) {
+    width: 20rem;
+  }
+
+  @media (max-width: 535px) {
+    width: 18rem;
+  }
+
+  @media (max-width: 475px) {
+    display: none;
+  }
+`;
+
 export const StyledCommentImage = styled.img`
   height: auto;
   width: 49.5rem;
@@ -600,7 +692,6 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
 
   @media (max-width: 460px) {
     margin: 2.4rem 0 0;
-    width: 19.7rem;
   }
 `;
 
@@ -629,12 +720,12 @@ export const StyledSecondaryButton = styled(SecondaryButton)`
   height: 4.8rem;
   margin: 0;
   text-transform: none;
-  width: 19.7rem;
+  width: 16.3rem;
 
   &:hover {
     background: ${whiteColor};
   }
-
+  
   @media (max-width: 992px) {
     font-size: 1.376rem;
   }

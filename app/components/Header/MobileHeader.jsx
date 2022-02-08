@@ -50,12 +50,12 @@ const MobileHeader = ({
               />
             </LogoWrapper>
             <ButtonsWrapper>
+              <NavLink label="Jobs" path="/jobs" shouldRemoveSecond />
               <NavLink
                 label="Dashboard"
                 path={isCompany ? '/company/dashboard' : '/dashboard'}
                 shouldRemoveThird
               />
-              <NavLink label="Jobs" path="/jobs" shouldRemoveSecond />
               <NavLink label="Messages" path="/messages" />
               {!!unreadMessages && (
                 <UnreadMessages>{unreadMessages}</UnreadMessages>
