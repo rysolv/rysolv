@@ -13,6 +13,7 @@ export function* fetchUserProfileSaga({ payload }) {
         __typename
         ...on User {
           chartData
+          company
           desiredRole
           firstName
           githubId
