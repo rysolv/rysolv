@@ -5,12 +5,13 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { push } from 'connected-react-router';
 
-import { makeSelectAuth } from 'containers/Auth/selectors';
 import AsyncRender from 'components/AsyncRender';
+import NotFoundPage from 'components/NotFoundPage';
+import UserProfileComponent from 'components/UserProfile';
+import { makeSelectAuth } from 'containers/Auth/selectors';
+import makeSelectViewSize from 'containers/ViewSize/selectors';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
-import makeSelectViewSize from 'containers/ViewSize/selectors';
-import UserProfileComponent from 'components/UserProfile';
 
 import { fetchUserProfile } from './actions';
 import reducer from './reducer';
@@ -41,11 +42,13 @@ const UserProfile = ({
     if (user.username) document.title = user.username;
   }, [user]);
 
+  const ViewToRender = user.company ? NotFoundPage : UserProfileComponent;
+
   return (
     <ViewContainer>
       <AsyncRender
         asyncData={user}
-        component={UserProfileComponent}
+        component={ViewToRender}
         error={error}
         isRequiredData
         loading={loading}

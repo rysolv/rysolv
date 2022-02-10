@@ -10,6 +10,7 @@ const getUserProfile = async ({ username }) => {
   user_data AS (
     SELECT
     JSONB_BUILD_OBJECT (
+        'company', CASE WHEN uc.company_id IS NOT NULL THEN true ELSE false END,
         'firstName', u.first_name,
         'githubId', u.github_id,
         'githubLink', u.github_link,
@@ -22,6 +23,7 @@ const getUserProfile = async ({ username }) => {
     ) AS "userData"
     FROM users u
     LEFT JOIN locations l ON l.user_id = u.id
+    LEFT JOIN user_companies uc ON uc.user_id = u.id
     WHERE u.id = (SELECT id FROM user_id)
   ),
   profile_data AS (
