@@ -7,6 +7,7 @@ const {
   assignOwnerToRepo,
   checkDuplicateGithubId,
   checkDuplicateUserEmail,
+  checkDuplicateUsername,
   createUser,
   createUserTechStack,
   getOneIssue,
@@ -86,6 +87,8 @@ const githubSignIn = async ({ code, origin }, { res }) => {
     const provider = 'github';
 
     if (!isDuplicateGithubId && !userId) {
+      if (github_username)
+        await checkDuplicateUsername({ username: github_username });
       if (email) await checkDuplicateUserEmail({ email });
 
       const date = new Date();
