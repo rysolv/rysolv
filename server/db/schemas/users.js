@@ -23,7 +23,8 @@ const alterUsersTable = `
   ADD COLUMN upvotes UUID [] DEFAULT '{}',
   ADD COLUMN user_type VARCHAR(7) DEFAULT 'full',
   ADD COLUMN username VARCHAR(40),
-  ADD CONSTRAINT chkBalance CHECK (balance >= 0)
+  ADD CONSTRAINT chkBalance CHECK (balance >= 0),
+  ADD CONSTRAINT unique_username UNIQUE (username)
 `;
 
 const createUsersTable = `
