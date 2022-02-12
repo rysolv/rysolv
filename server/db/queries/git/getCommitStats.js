@@ -5,12 +5,19 @@ const getCommitStats = async ({ userId }) => {
   const queryText = `
     WITH commit_stats AS (
       SELECT
-        to_char(date_trunc('month', commit_date), 'Mon, YY') AS week,
-        COUNT(gc.commit_hash)::int AS commits
-      FROM git_commits gc
-      WHERE gc.user_id = $1
-      GROUP BY week
-      ORDER BY MIN(commit_date) ASC
+        t1.year_week week,
+        t2.commit_count AS commits
+      FROM (
+        SELECT week, to_char(date_trunc('month', week), 'Mon, YY') AS year_week
+        FROM generate_series((now() - interval '1 year')::DATE, now():: DATE, '1 week'::interval) AS week
+      ) t1
+      LEFT OUTER JOIN (
+        SELECT to_char(date_trunc('month', commit_date), 'Mon, YY') AS year_week,
+        COUNT(commit_hash) AS commit_count
+        FROM git_commits
+        WHERE user_id = $1
+        GROUP BY year_week
+      ) t2 ON t1.year_week = t2.year_week
     ),
     repo_stats AS (
       SELECT
@@ -31,6 +38,8 @@ const getCommitStats = async ({ userId }) => {
   `;
   const { rows } = await singleQuery({ queryText, values: [userId] });
   const [oneRow] = rows;
+
+  console.log(oneRow);
   return oneRow;
 };
 
