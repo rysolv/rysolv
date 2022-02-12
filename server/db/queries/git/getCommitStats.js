@@ -38,8 +38,6 @@ const getCommitStats = async ({ userId }) => {
   `;
   const { rows } = await singleQuery({ queryText, values: [userId] });
   const [oneRow] = rows;
-
-  console.log(oneRow);
   return oneRow;
 };
 
