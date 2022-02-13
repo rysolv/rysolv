@@ -49,7 +49,7 @@ const JobsList = ({ handleNav, handleSelectKeyword, jobs }) => {
           },
           index,
         ) => {
-          const firstLetterOfTitle = title.charAt(0);
+          const firstLetterOfCompany = companyName.charAt(0);
           const formattedSkills = skills.map(({ name }) => name);
           const keywordArray = [...role, ...formattedSkills];
 
@@ -59,7 +59,7 @@ const JobsList = ({ handleNav, handleSelectKeyword, jobs }) => {
                 <ConditionalRender
                   Component={<JobLogo src={companyLogo} />}
                   FallbackComponent={
-                    <JobLogoWrapper>{firstLetterOfTitle}</JobLogoWrapper>
+                    <JobLogoWrapper>{firstLetterOfCompany}</JobLogoWrapper>
                   }
                   shouldRender={!!companyLogo}
                 />

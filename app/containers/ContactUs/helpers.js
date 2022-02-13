@@ -1,7 +1,7 @@
 import { validate } from 'utils/validate';
 
 const validationPropsByField = {
-  body: { type: 'stringInput' },
+  body: { maxLength: 500, type: 'stringInput' },
   email: { type: 'emailInput' },
   name: { type: 'stringInput' },
 };

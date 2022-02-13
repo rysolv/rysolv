@@ -9,7 +9,9 @@ const getUsers = async () => {
       ARRAY_REMOVE(ARRAY_AGG(DISTINCT(attempting.issue_id)), NULL) AS attempting
     FROM users
       LEFT JOIN attempting ON attempting.user_id = users.id
-    WHERE is_deleted = false AND email_verified = true AND user_type = 'full'
+    WHERE is_deleted = false
+    AND email_verified = true AND user_type = 'full'
+    AND NOT EXISTS (SELECT * FROM user_companies uc WHERE uc.user_id = users.id)
     GROUP BY ${groupValues}`;
   const { rows } = await singleQuery({ queryText });
   return rows;
