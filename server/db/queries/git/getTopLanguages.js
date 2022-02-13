@@ -4,7 +4,7 @@ const { singleQuery } = require('../../baseQueries');
 const getTopLanguages = async ({ userId }) => {
   const queryText = `
     SELECT
-      COUNT(gc.commit_hash) AS commits,
+      COUNT(DISTINCT gc.id) AS commits,
       gf.language
     FROM git_files gf
     JOIN git_commits gc ON gf.commit_id = gc.id
