@@ -76,6 +76,18 @@ const Signup = ({
               onClick={() => handleNav('/signup?type=company')}
             />
           </ButtonGroup>
+          <ConditionalRender
+            Component={
+              <Fragment>
+                <StyledGithubButton type="signup" />
+                <DividerWrapper>
+                  <Divider />
+                  <WordDivider>or</WordDivider>
+                </DividerWrapper>
+              </Fragment>
+            }
+            shouldRender={selected === 'developer'}
+          />
           <UpdatedTextInput
             autoComplete="nickname"
             error={username.error}
@@ -160,18 +172,6 @@ const Signup = ({
             label="Sign up"
             loading={loading}
             onClick={() => handleSignUp({ selected })}
-          />
-          <ConditionalRender
-            Component={
-              <Fragment>
-                <DividerWrapper>
-                  <Divider />
-                  <WordDivider>or</WordDivider>
-                </DividerWrapper>
-                <StyledGithubButton type="signup" />
-              </Fragment>
-            }
-            shouldRender={selected === 'developer'}
           />
         </InputFormContent>
         <SubText>

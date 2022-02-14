@@ -195,7 +195,7 @@ export const StyledParagraph = styled.p`
 `;
 
 export const TextWrapper = styled.div`
-  padding: 0.4rem 0.2rem 0;
+  padding: 0.3rem 0.2rem 0;
 `;
 
 export const TopContentWrapper = styled.div`

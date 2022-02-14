@@ -12,7 +12,7 @@ const CompanyDashboardTabs = ({
   <StyledTabs
     classes={{ indicator: 'indicator' }}
     textColor="primary"
-    value={dashboardTabsDictionary[step] || 1}
+    value={dashboardTabsDictionary[step]}
     variant="scrollable"
   >
     <StyledTab
