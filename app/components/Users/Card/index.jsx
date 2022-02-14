@@ -49,6 +49,7 @@ const UserCard = ({ data, deviceView }) => {
                       <ImageLinkWrapper
                         alt="Profile Image"
                         image={profilePic}
+                        loading="lazy"
                         route={`/users/${username}`}
                         size={isMobileS ? '4.75rem' : '7.5rem'}
                       />

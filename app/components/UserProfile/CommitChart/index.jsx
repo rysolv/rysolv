@@ -35,6 +35,7 @@ const CommitChart = ({ commits }) => {
         scales: {
           y: {
             beginAtZero: true,
+            suggestedMax: 10,
           },
         },
       },
