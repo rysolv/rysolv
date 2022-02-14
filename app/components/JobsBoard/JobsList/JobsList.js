@@ -67,9 +67,9 @@ const JobsList = ({ handleNav, handleSelectKeyword, jobs }) => {
                   <ContentWrapper>
                     <TopContentWrapper>
                       <CardTitleWrapper>
-                        <JobTitle>{title.toLowerCase()}</JobTitle>&nbsp;
+                        <JobTitle>{title.toLowerCase()}&nbsp;</JobTitle>
                         <JobCompanyWrapper>
-                          <TextWrapper>at</TextWrapper>&nbsp;
+                          <TextWrapper>at&nbsp;</TextWrapper>
                           <JobCompany>{companyName.toLowerCase()}</JobCompany>
                         </JobCompanyWrapper>
                       </CardTitleWrapper>

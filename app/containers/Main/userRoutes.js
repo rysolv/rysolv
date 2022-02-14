@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Redirect, Route } from 'react-router-dom';
 
 import withAuth from 'containers/Auth';
 import CodeScoring from 'containers/CodeScoring/Loadable';
@@ -67,7 +67,7 @@ const UserRoutes = () => (
     <Route exact path="/contact-us" component={PublicContactUs} />
     <Route exact path="/dashboard/:view?" component={PrivateUserDashboard} />
     <Route exact path="/faq" component={PublicFaq} />
-    <Route exact path="/how-we-score-code" component={PublicCodeScoring} />
+    <Route exact path="/how-to" component={() => <Redirect to="/" />} />
     <Route exact path="/how-we-score-code" component={PublicCodeScoring} />
     <Route exact path="/issues" component={PublicOverview} />
     <Route exact path="/issues/add" component={PrivateIssuesAdd} />

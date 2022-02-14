@@ -65,7 +65,7 @@ export const initialState = {
   filter: {
     location: '',
     salary: 0,
-    step: '',
+    step: 'all',
     type: '',
   },
   form: {

@@ -46,6 +46,11 @@ const Signin = ({
               onClose={handleClearAuthAlerts}
             />
           )}
+          <StyledGithubButton type="signin" />
+          <DividerWrapper>
+            <Divider />
+            <WordDivider>or</WordDivider>
+          </DividerWrapper>
           <UpdatedTextInput
             autoComplete="email"
             error={email.error}
@@ -81,11 +86,6 @@ const Signin = ({
             loading={loading}
             onClick={handleSignIn}
           />
-          <DividerWrapper>
-            <Divider />
-            <WordDivider>or</WordDivider>
-          </DividerWrapper>
-          <StyledGithubButton type="signin" />
         </InputFormContent>
         <StyledLink to="/password-reset">Forgot your password?</StyledLink>
         <SubText>
