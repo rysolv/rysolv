@@ -109,7 +109,7 @@ const CompanyPositionDetail = ({
         <ContentContainer hasBackground>
           <LabelValueWrapper hasMarginBottom width="100%">
             <Label>About the company</Label>
-            <Value>{company.description}</Value>
+            <Value allowWrap>{company.description}</Value>
           </LabelValueWrapper>
           <LabelValueGroup>
             <LabelValueWrapper>
