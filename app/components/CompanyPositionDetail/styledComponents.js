@@ -147,7 +147,10 @@ export const Logo = styled.img`
   width: 7.5rem;
 `;
 
-export const Name = styled.div`
+export const Name = styled.h1`
+  font-size: 3.2rem;
+  margin: 0;
+  padding: 0;
   text-transform: capitalize;
 `;
 
