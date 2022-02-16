@@ -31,7 +31,7 @@ const ApplyJobModal = ({
   return (
     <ModalContainer>
       <ModalContent>
-        <ModalHeader>Notify company</ModalHeader>
+        <ModalHeader>Tell us about yourself</ModalHeader>
         <ErrorSuccessBanner
           bottomMarginRequired="1rem"
           error={error}
@@ -40,7 +40,8 @@ const ApplyJobModal = ({
           topMarginRequired="1rem"
         />
         <ModalSubheader>
-          The company will receive your application and message from you.
+          Give a brief overview of your qualifications, and why the position
+          interests you.
         </ModalSubheader>
         <div>
           <MarkdownHeader>Message</MarkdownHeader>
