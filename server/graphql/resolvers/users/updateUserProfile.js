@@ -19,13 +19,13 @@ const updateUserProfile = async ({ userId }) => {
       userId,
     });
 
-    // Get weekly commits
+    // Get monthly commits
     const {
       averageLines,
       commits,
       contributedTo,
       totalCommits,
-      weeks,
+      months,
     } = await getCommitStats({ userId });
 
     // Get top languages
@@ -33,7 +33,7 @@ const updateUserProfile = async ({ userId }) => {
 
     // Create ChartData Object
     const chartData = {
-      commits: { labels: weeks, data: commits },
+      commits: { labels: months, data: commits },
       languageByCommits,
     };
 

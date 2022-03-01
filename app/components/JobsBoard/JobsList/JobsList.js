@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
-import { generatePostedDate } from 'utils/globalHelpers';
+import { formatDollarAmount, generatePostedDate } from 'utils/globalHelpers';
 
 import {
   BottomContentWrapper,
@@ -52,6 +52,7 @@ const JobsList = ({ handleNav, handleSelectKeyword, jobs }) => {
           const firstLetterOfCompany = companyName.charAt(0);
           const formattedSkills = skills.map(({ name }) => name);
           const keywordArray = [...role, ...formattedSkills];
+          const salaryNumber = parseInt(salary.replace(/\$|,/g, ''), 10);
 
           return (
             <Fragment key={`job-${id}`}>
@@ -80,7 +81,9 @@ const JobsList = ({ handleNav, handleSelectKeyword, jobs }) => {
                         <span aria-label="money-icon" role="img">
                           &#128176;
                         </span>
-                        {salary}
+                        {formatDollarAmount(salaryNumber - 15000, true)}
+                        &nbsp;-&nbsp;
+                        {formatDollarAmount(salaryNumber, true)}
                       </JobSalary>
                       <JobLocation>
                         <span aria-label="world-icon" role="img">
