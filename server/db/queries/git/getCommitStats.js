@@ -5,19 +5,19 @@ const getCommitStats = async ({ userId }) => {
   const queryText = `
     WITH commit_stats AS (
       SELECT
-        t1.year_week week,
+        t1.year_month AS month,
         t2.commit_count AS commits
       FROM (
-        SELECT week, to_char(date_trunc('month', week), 'Mon, YY') AS year_week
-        FROM generate_series((now() - interval '1 year')::DATE, now():: DATE, '1 week'::interval) AS week
+        SELECT month, to_char(date_trunc('week', month), 'mm-dd-yy') AS year_month
+        FROM generate_series((now() - interval '1 year')::DATE, now():: DATE, '1 week'::interval) AS month
       ) t1
       LEFT OUTER JOIN (
-        SELECT to_char(date_trunc('month', commit_date), 'Mon, YY') AS year_week,
+        SELECT to_char(date_trunc('week', commit_date), 'mm-dd-yy') AS year_month,
         COUNT(commit_hash) AS commit_count
         FROM git_commits
         WHERE user_id = $1
-        GROUP BY year_week
-      ) t2 ON t1.year_week = t2.year_week
+        GROUP BY year_month
+      ) t2 ON t1.year_month = t2.year_month
     ),
     repo_stats AS (
       SELECT
@@ -29,7 +29,7 @@ const getCommitStats = async ({ userId }) => {
       WHERE gc.user_id = $1
     )
     SELECT
-      ARRAY_AGG(week) AS weeks,
+      ARRAY_AGG(month) AS months,
       ARRAY_AGG(commits) AS commits,
       SUM(commits) AS "totalCommits",
       (SELECT count FROM repo_stats) AS "contributedTo",
