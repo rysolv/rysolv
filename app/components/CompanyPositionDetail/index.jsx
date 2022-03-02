@@ -5,6 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import marked from 'marked';
 
 import { ConditionalRender, LanguageWrapper } from 'components/base_ui';
+import { formatDollarAmount } from 'utils/globalHelpers';
 
 import {
   ContentContainer,
@@ -61,6 +62,7 @@ const CompanyPositionDetail = ({
   const cleanHtml = DOMPurify.sanitize(html);
 
   const buttonLabel = hasApplied ? 'Applied' : 'Apply';
+  const salaryNumber = parseInt(salary.replace(/\$|,/g, ''), 10);
 
   useEffect(() => {
     if (isSignedIn && surveyComplete) setModalState('apply');
@@ -146,7 +148,11 @@ const CompanyPositionDetail = ({
             </LabelValueWrapper>
             <LabelValueWrapper width="48%">
               <Label>Salary</Label>
-              <Value>{salary}</Value>
+              <Value>
+                {formatDollarAmount(salaryNumber - 15000, true)}
+                &nbsp;-&nbsp;
+                {formatDollarAmount(salaryNumber, true)}
+              </Value>
             </LabelValueWrapper>
             <LabelValueWrapper width="48%">
               <Label>Type</Label>
