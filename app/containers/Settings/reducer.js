@@ -3,6 +3,8 @@ import produce from 'immer';
 import isEmpty from 'lodash/isEmpty';
 import remove from 'lodash/remove';
 
+import { RESET_USER_STATE } from 'containers/Main/constants';
+
 import {
   ACCEPT_BOUNTY_FAILURE,
   ACCEPT_BOUNTY_SUCCESS,
@@ -301,6 +303,9 @@ const settingsReducer = produce((draft, { payload, type }) => {
       break;
     }
     case RESET_STATE: {
+      return initialState;
+    }
+    case RESET_USER_STATE: {
       return initialState;
     }
     case SAVE_CHANGE_FAILURE: {

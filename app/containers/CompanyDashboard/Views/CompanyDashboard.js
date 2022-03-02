@@ -59,15 +59,12 @@ const CompanyDashboard = ({
   shouldRefetchCandidates,
   tableData,
 }) => {
-  useEffect(() => {
-    dispatchFetchCandidateCount({ positionId: selectedPosition });
-  }, []);
-
   useEffect(() => dispatchClearAlerts, []);
 
   useEffect(() => {
     if (selectedPosition && shouldRefetchCandidates) {
       const { step } = filter;
+      dispatchFetchCandidateCount({ positionId: selectedPosition });
       dispatchFetchPositionCandidates({
         positionId: selectedPosition,
         step,

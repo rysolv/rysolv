@@ -8,6 +8,8 @@ const matchCandidatesError = `Something went wrong when matching candidates for 
 
 const matchCandidatesSuccess = `You have successfully matched with candidates for this position.`;
 
+const noPositionIdError = `There is currently no position.`;
+
 const oneCompanyError = `Something went wrong when getting your company.`;
 
 const onePositionError = `Something went wrong when getting this position.`;
@@ -38,6 +40,7 @@ module.exports = {
   getContractError,
   matchCandidatesError,
   matchCandidatesSuccess,
+  noPositionIdError,
   oneCompanyError,
   onePositionError,
   postContractAcceptedError,

@@ -173,7 +173,7 @@ export function* submitContractAcceptedSaga({ payload }) {
         isQuestionnaireComplete: true,
       }),
     );
-    yield put(push('/company/dashboard'));
+    yield put(push('/company/dashboard/add-position'));
   } catch (error) {
     yield put(submitContractAcceptedFailure({ error: { message: error } }));
   }

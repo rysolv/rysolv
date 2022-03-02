@@ -1,9 +1,12 @@
 const { CustomError, errorLogger } = require('../../../helpers');
 const { getCandidateCount: getCandidateCountQuery } = require('../../../db');
+const { noPositionIdError } = require('./constants');
 
 const getCandidateCount = async ({ positionId }, { authError, userId }) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
+
+    if (!positionId) throw new CustomError(noPositionIdError);
 
     const candidates = await getCandidateCountQuery({ positionId });
 
@@ -17,7 +20,7 @@ const getCandidateCount = async ({ positionId }, { authError, userId }) => {
     return { candidateCount };
   } catch (error) {
     errorLogger(error);
-    return {};
+    return { candidateCount: {} };
   }
 };
 

@@ -557,7 +557,7 @@ module.exports = buildSchema(`
   union WithdrawalResult = Withdrawal | Error
 
   type RootQuery {
-    getCandidateCount(positionId: ID!): Position!
+    getCandidateCount(positionId: ID): Position!
     getCompanyPositions(companyId: ID!): CompanyPositionsArray
     getContract(plan: String!): ContractResult!
     getFilterOptions: FilterResult!
