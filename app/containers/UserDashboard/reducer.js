@@ -3,6 +3,7 @@ import produce from 'immer';
 import isEmpty from 'lodash/isEmpty';
 import remove from 'lodash/remove';
 
+import { RESET_USER_STATE } from 'containers/Main/constants';
 import { converDataUrlToBlob } from 'utils/globalHelpers';
 
 import {
@@ -244,6 +245,9 @@ const userDashboardReducer = produce((draft, { payload, type }) => {
       draft.form.profile.stackoverflowLink = draft.user.stackoverflowLink;
       draft.formErrors = initialState.formErrors;
       break;
+    }
+    case RESET_USER_STATE: {
+      return initialState;
     }
     case SET_HIRING_STATUS_FAILURE: {
       const { error } = payload;

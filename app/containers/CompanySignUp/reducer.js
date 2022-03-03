@@ -1,6 +1,8 @@
 /* eslint-disable consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
+import { RESET_USER_STATE } from 'containers/Main/constants';
+
 import {
   CHANGE_INPUT,
   CHANGE_VIEW,
@@ -117,6 +119,9 @@ const companySignUpReducer = produce((draft, { payload, type }) => {
       break;
     }
     case RESET_STATE: {
+      return initialState;
+    }
+    case RESET_USER_STATE: {
       return initialState;
     }
     case SUBMIT_COMPANY_RESPONSE_FAILURE: {

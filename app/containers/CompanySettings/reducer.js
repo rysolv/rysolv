@@ -1,6 +1,8 @@
 /* eslint-disable consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
+import { RESET_USER_STATE } from 'containers/Main/constants';
+
 import {
   CHANGE_INPUT,
   CLEAR_ALERTS,
@@ -163,6 +165,9 @@ const companySettingsReducer = produce((draft, { payload, type }) => {
     case RESET_MODAL_STATE: {
       draft.modalAlerts = initialState.modalAlerts;
       break;
+    }
+    case RESET_USER_STATE: {
+      return initialState;
     }
     case SET_MODAL_ALERTS: {
       const { error } = payload;

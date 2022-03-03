@@ -1,6 +1,8 @@
 /* eslint-disable consistent-return, default-case, no-param-reassign */
 import produce from 'immer';
 
+import { RESET_USER_STATE } from 'containers/Main/constants';
+
 import {
   FETCH_MESSAGES_FAILURE,
   FETCH_MESSAGES_SUCCESS,
@@ -43,6 +45,9 @@ const messagesReducer = produce((draft, { payload, type }) => {
       draft.error.main = false;
       draft.loading.main = true;
       break;
+    }
+    case RESET_USER_STATE: {
+      return initialState;
     }
     case SEND_MESSAGE_FAILURE: {
       draft.error.message = true;

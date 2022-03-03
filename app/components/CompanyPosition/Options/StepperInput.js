@@ -46,7 +46,6 @@ const StepperInputOption = ({ handleChangeInput, onBlur, value }) => {
       {formattedValue.map((arrayValue, index) => (
         <InputWrapper key={`${arrayValue}-${index}`}>
           <Input
-            autoFocus="autoFocus"
             height="4.9rem"
             onBlur={onBlur}
             onChange={e => handleChangeStep(e.target.value, index)}
