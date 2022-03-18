@@ -1,6 +1,7 @@
 const { CustomError, errorLogger } = require('../../../helpers');
 const { getMessages: getMessagesQuery } = require('../../../db');
 const { getMessagesError } = require('./constants');
+const { matchLanguages } = require('../../../helpers');
 
 const getMessages = async (_, { authError, userId }) => {
   try {
@@ -23,7 +24,7 @@ const getMessages = async (_, { authError, userId }) => {
 
     const conversations = await Promise.all(
       result.map(async el => {
-        const { candidate, messages } = el;
+        const { candidate, messages, position } = el;
         let con = { ...el, unread: false };
         messages.forEach(({ userId: fromUserId, readDate }) => {
           if (readDate === null && fromUserId !== userId) {
@@ -31,7 +32,12 @@ const getMessages = async (_, { authError, userId }) => {
           }
         });
         if (candidate) {
-          const { type } = candidate;
+          const { preferredLanguages, type } = candidate;
+          const { preferredLanguages: positionPreferredLanguages } = position;
+          candidate.preferredLanguages = matchLanguages({
+            positionLanguages: positionPreferredLanguages,
+            userLanguages: preferredLanguages,
+          });
           candidate.type = type.length > 1 ? type.join(', ') : type[0];
         }
         return con;
