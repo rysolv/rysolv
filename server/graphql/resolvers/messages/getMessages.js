@@ -33,7 +33,7 @@ const getMessages = async (_, { authError, userId }) => {
         });
         if (candidate) {
           const { preferredLanguages, type } = candidate;
-          const { preferredLanguages: positionPreferredLanguages } = position;
+          const { positionPreferredLanguages } = position;
           candidate.preferredLanguages = matchLanguages({
             positionLanguages: positionPreferredLanguages,
             userLanguages: preferredLanguages,
