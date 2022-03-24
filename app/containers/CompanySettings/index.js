@@ -3,6 +3,7 @@ import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { push } from 'connected-react-router';
 import { withRouter } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
@@ -66,6 +67,7 @@ const CompanySettings = ({
   error,
   form,
   formErrors,
+  handleNav,
   isModalOpen,
   loading,
   modal,
@@ -181,6 +183,7 @@ const CompanySettings = ({
           form,
           formErrors,
           handleEditUser,
+          handleNav,
           handleSelectPlan,
           handleValidateInput,
           paymentConfirmed,
@@ -212,6 +215,7 @@ CompanySettings.propTypes = {
   error: T.oneOfType([T.bool, T.string]),
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
+  handleNav: T.func.isRequired,
   isModalOpen: T.bool.isRequired,
   loading: T.bool.isRequired,
   modal: T.string.isRequired,
@@ -262,6 +266,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(submitContractAccepted(payload)),
   dispatchUpdatePaymentMethod: payload =>
     dispatch(updatePaymentMethod(payload)),
+  /*
+   * Reducer : Router
+   */
+  handleNav: route => dispatch(push(route)),
 });
 
 const withConnect = connect(
