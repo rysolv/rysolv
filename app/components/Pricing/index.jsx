@@ -8,7 +8,7 @@ import {
   PricingSubText,
 } from './styledComponents';
 
-const Pricing = ({ handleSelectPlan }) => (
+const Pricing = ({ handleNav, handleSelectPlan }) => (
   <PricingContainer>
     <PricingHeader>Pricing plans</PricingHeader>
     <PricingSubText>
@@ -17,11 +17,15 @@ const Pricing = ({ handleSelectPlan }) => (
     <PricingGrid
       buttonText="Get started"
       focus
+      handleNav={handleNav}
       handleSelectPlan={handleSelectPlan}
     />
   </PricingContainer>
 );
 
-Pricing.propTypes = { handleSelectPlan: T.func.isRequired };
+Pricing.propTypes = {
+  handleNav: T.func.isRequired,
+  handleSelectPlan: T.func.isRequired,
+};
 
 export default Pricing;

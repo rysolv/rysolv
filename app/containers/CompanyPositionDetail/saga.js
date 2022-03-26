@@ -97,9 +97,24 @@ export function* fetchPositionDetailSaga({ payload }) {
 }
 
 export function* notifyCompanySaga({ payload }) {
-  const { body, positionId } = payload;
+  const { body, form, positionId } = payload;
+  const transformUserQuery = form
+    ? `transformUser(userInput: {
+      firstName: "${form.firstName}",
+      lastName: "${form.lastName}",
+     }) {
+      __typename
+      ... on Success {
+        message
+      }
+      ... on Error {
+        message
+      }
+    }`
+    : ``;
   const query = `
     mutation{
+      ${transformUserQuery}
       createMessage(messageInput: {
         body: ${JSON.stringify(body)},
         positionId: "${positionId}",
