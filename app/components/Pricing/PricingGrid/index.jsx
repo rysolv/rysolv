@@ -25,6 +25,7 @@ const PricingGrid = ({
   buttonText,
   currentPlan,
   focus,
+  handleNav,
   handleSelectPlan,
   isSettingRoute,
 }) => (
@@ -156,14 +157,13 @@ const PricingGrid = ({
         </div>
         <div>
           <StyledCostWrapper>
-            <StyledCost isSettingRoute={isSettingRoute}>$4,950</StyledCost>
-            <StyledInterval>/ month</StyledInterval>
+            <StyledCost isSettingRoute={isSettingRoute}>Contact us</StyledCost>
           </StyledCostWrapper>
           <StyledPrimaryButton
             disabled={currentPlan === 'enterprise'}
             isSettingRoute={isSettingRoute}
             label={currentPlan === 'enterprise' ? 'Current' : buttonText}
-            onClick={() => handleSelectPlan({ plan: 'enterprise' })}
+            onClick={() => handleNav('/contact-us')}
           />
         </div>
       </PricingBody>
@@ -177,6 +177,7 @@ PricingGrid.propTypes = {
   buttonText: T.string.isRequired,
   currentPlan: T.string,
   focus: T.bool,
+  handleNav: T.func.isRequired,
   handleSelectPlan: T.func.isRequired,
   isSettingRoute: T.bool,
 };

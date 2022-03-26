@@ -21,10 +21,12 @@ import {
   clearAlerts,
   closeModalState,
   fetchPositionDetail,
+  inputError,
   notifyCompany,
   openModalState,
   resetFormState,
 } from './actions';
+import { validateOneField } from './helpers';
 import reducer from './reducer';
 import saga from './saga';
 import {
@@ -41,6 +43,7 @@ const CompanyPositionDetail = ({
   dispatchClearAlerts,
   dispatchCloseModal,
   dispatchFetchPositionDetail,
+  dispatchInputError,
   dispatchNotifyCompany,
   dispatchOpenModal,
   dispatchResetFormState,
@@ -48,6 +51,7 @@ const CompanyPositionDetail = ({
   fetchCompanyLoading,
   fetchPositionDetailLoading,
   form,
+  formErrors,
   handleNav,
   isModalOpen,
   isSignedIn,
@@ -57,7 +61,7 @@ const CompanyPositionDetail = ({
   position,
   positionId,
 }) => {
-  const { surveyComplete } = activeUser;
+  const { firstName, lastName, surveyComplete } = activeUser;
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Position Detail';
@@ -65,6 +69,15 @@ const CompanyPositionDetail = ({
   }, []);
 
   const isCompany = !!activeUser.company;
+
+  const handleValidateInput = ({ field, values }) => {
+    const validationError = validateOneField({ field, values }) || '';
+    dispatchInputError({
+      errors: {
+        [field]: validationError,
+      },
+    });
+  };
 
   const modalPropsDictionary = {
     apply: {
@@ -76,7 +89,11 @@ const CompanyPositionDetail = ({
         dispatchNotifyCompany,
         dispatchResetFormState,
         form,
+        formErrors,
         handleClose: dispatchCloseModal,
+        handleValidateInput,
+        hasFirstName: !!firstName,
+        hasLastName: !!lastName,
         messageAlerts,
         notifyCompanyLoading,
         positionId,
@@ -131,6 +148,7 @@ CompanyPositionDetail.propTypes = {
   dispatchClearAlerts: T.func.isRequired,
   dispatchCloseModal: T.func.isRequired,
   dispatchFetchPositionDetail: T.func.isRequired,
+  dispatchInputError: T.func.isRequired,
   dispatchNotifyCompany: T.func.isRequired,
   dispatchOpenModal: T.func.isRequired,
   dispatchResetFormState: T.func.isRequired,
@@ -138,6 +156,7 @@ CompanyPositionDetail.propTypes = {
   fetchCompanyLoading: T.bool.isRequired,
   fetchPositionDetailLoading: T.bool.isRequired,
   form: T.object.isRequired,
+  formErrors: T.object.isRequired,
   handleNav: T.func.isRequired,
   isModalOpen: T.bool.isRequired,
   isSignedIn: T.bool.isRequired,
@@ -164,6 +183,7 @@ const mapStateToProps = createStructuredSelector({
     'fetchPositionDetail',
   ),
   form: makeSelectCompanyPositionDetail('form'),
+  formErrors: makeSelectCompanyPositionDetail('formErrors'),
   isModalOpen: makeSelectCompanyPositionDetail('isModalOpen'),
   messageAlerts: makeSelectCompanyPositionDetail('messageAlerts'),
   modal: makeSelectCompanyPositionDetail('modal'),
@@ -181,6 +201,7 @@ const mapDispatchToProps = dispatch => ({
   dispatchCloseModal: () => dispatch(closeModalState()),
   dispatchFetchPositionDetail: payload =>
     dispatch(fetchPositionDetail(payload)),
+  dispatchInputError: payload => dispatch(inputError(payload)),
   dispatchNotifyCompany: payload => dispatch(notifyCompany(payload)),
   dispatchOpenModal: payload => dispatch(openModalState(payload)),
   dispatchResetFormState: () => dispatch(resetFormState()),

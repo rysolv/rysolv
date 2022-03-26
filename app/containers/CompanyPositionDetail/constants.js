@@ -17,6 +17,8 @@ export const FETCH_POSITION_DETAIL_FAILURE =
 export const FETCH_POSITION_DETAIL_SUCCESS =
   'app/CompanyPositionDetail/FETCH_POSITION_DETAIL_SUCCESS';
 
+export const INPUT_ERROR = 'app/CompanyPositionDetail/INPUT_ERROR';
+
 export const NOTIFY_COMPANY = 'app/CompanyPositionDetail/NOTIFY_COMPANY';
 export const NOTIFY_COMPANY_FAILURE =
   'app/CompanyPositionDetail/NOTIFY_COMPANY_FAILURE';

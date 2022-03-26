@@ -32,6 +32,26 @@ export const BodyWrapper = styled.div`
   }
 `;
 
+export const Date = styled.div`
+  color: ${textColor};
+  font-size: 1.6rem;
+  margin: 1rem 1.6rem;
+  white-space: nowrap;
+`;
+
+export const DateDivider = styled.div`
+  background: ${candidateGreyColor};
+  height: 0.2rem;
+  width: 50%;
+`;
+
+export const DateRow = styled.div`
+  align-items: center;
+  display: flex;
+  margin-bottom: 0.5rem;
+  padding: 0;
+`;
+
 export const MessageCard = styled.div`
   align-items: center;
   color: ${textColor};

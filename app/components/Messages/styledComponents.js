@@ -33,7 +33,8 @@ export const CandidateCardButton = styled.button`
   }
 
   svg {
-    margin-right: 0.4rem;
+    font-size: 2rem;
+    margin-right: 0.8rem;
   }
 `;
 
