@@ -495,6 +495,7 @@ module.exports = buildSchema(`
     receiveWeeklyEmails: Boolean
     rep: Int
     repos: [String]
+    resume: String
     stackoverflowLink: String
     upvotes: [ID]
     username: String

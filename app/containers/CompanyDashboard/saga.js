@@ -380,6 +380,7 @@ export function* fetchPositionCandidatesSaga({ payload }) {
         matchCriteria
         percentMatch
         profilePic
+        resume
         salary
         threadId
         type
