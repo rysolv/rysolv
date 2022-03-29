@@ -144,7 +144,7 @@ export function* githubSignInSaga({ payload }) {
     }
   `;
   const query =
-    origin === 'jobs' || origin === 'signin' ? signInQuery : signUpQuery;
+    origin === 'apply' || origin === 'signin' ? signInQuery : signUpQuery;
   try {
     const graphql = JSON.stringify({ query });
     const {
@@ -154,13 +154,13 @@ export function* githubSignInSaga({ payload }) {
     } = yield call(post, '/graphql', graphql);
     if (__typename === 'Error') throw new Error(message);
     const routeDictionary = {
-      jobs: '/apply?question=1',
+      apply: '/apply?question=1',
       signin: '/dashboard',
       signup: '/dashboard',
     };
     const route = routeDictionary[origin];
     const { surveyComplete } = restProps;
-    if (origin === 'jobs') {
+    if (origin === 'apply') {
       if (surveyComplete) {
         yield put(changeView({ view: 2 }));
       } else {
@@ -172,11 +172,11 @@ export function* githubSignInSaga({ payload }) {
   } catch (error) {
     const { message } = error;
     const githubError =
-      origin === 'jobs' || origin === 'signin'
+      origin === 'apply' || origin === 'signin'
         ? githubSignInError
         : githubSignUpError;
     const routeDictionary = {
-      jobs: '/apply',
+      apply: '/apply',
       signin: '/signin',
       signup: '/signup',
     };

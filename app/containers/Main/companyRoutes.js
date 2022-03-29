@@ -64,6 +64,7 @@ const CompanyRoutes = () => (
   <Switch>
     <Route exact path="/" component={PublicMain} />
     <Route exact path="/apply" component={PublicJobApplication} />
+    <Route exact path="/apply/:positionId" component={PublicCompanyPositionDetail} />
     <Route exact path="/company/dashboard/:view?" component={PrivateCompanyDashboard} />
     <Route exact path="/company/settings/:view?" component={PrivateCompanySettings} />
     <Route exact path="/company/signup" component={PrivateCompanySignUp} />
@@ -75,7 +76,6 @@ const CompanyRoutes = () => (
     <Route exact path="/issues/detail/:id" component={PublicIssuesDetail} />
     <Route exact path="/issues/search/:searchValue" component={PublicOverview} />
     <Route exact path="/jobs" component={PublicJobsBoard} />
-    <Route exact path="/jobs/:positionId" component={PublicCompanyPositionDetail} />
     <Route exact path="/messages/:threadId?" component={PrivateMessages} />
     <Route exact path="/password-reset" component={PublicSignIn} />
     <Route exact path="/pricing" component={PublicPricing} />
