@@ -211,6 +211,7 @@ const authReducer = produce((draft, { payload, type }) => {
         pullRequestId,
         removeUpvote,
         rep,
+        surveyComplete,
         threadId,
         watching,
       } = payload;
@@ -246,6 +247,9 @@ const authReducer = produce((draft, { payload, type }) => {
       if (removeUpvote && rep) {
         remove(draft.activeUser.upvotes, id => id === removeUpvote);
         draft.activeUser.rep = rep;
+      }
+      if (surveyComplete) {
+        draft.activeUser.surveyComplete = surveyComplete;
       }
       if (threadId) {
         draft.activeUser.unreadMessages -= 1;

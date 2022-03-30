@@ -21,7 +21,7 @@ import {
 export const initialState = {
   error: null,
   loading: {
-    fetchQuestions: false,
+    fetchQuestions: true,
     submitUserResponse: false,
   },
   form: {

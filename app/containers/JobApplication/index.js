@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import { push } from 'connected-react-router';
 import { Redirect } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
+import { ConditionalRender } from 'components/base_ui';
 import { CreateJobApplication } from 'components/JobApplication';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { getQuestion, useDidUpdateEffect } from 'utils/globalHelpers';
@@ -55,12 +56,10 @@ const JobApplication = ({
   responseArray,
   view,
 }) => {
-  const [isRequiredData, setIsRequiredData] = useState(false);
   useEffect(() => {
     if (isGithubVerified && isSignedIn) {
       if (!surveyComplete) {
         dispatchFetchQuestions({ category: 'hiring' });
-        setIsRequiredData(true);
       }
     } else {
       dispatchChangeView({ view: 0 });
@@ -110,35 +109,49 @@ const JobApplication = ({
 
   return (
     <ViewContainer>
-      <AsyncRender
-        asyncData={questions}
-        component={CreateJobApplication}
-        error={error}
-        isRequiredData={isRequiredData}
-        loading={fetchQuestionsLoading}
-        propsToPassDown={{
-          dispatchChangeInput,
-          dispatchChangeSkillLevel,
-          dispatchChangeView,
-          dispatchDeleteSkill,
-          dispatchInputError,
-          error,
-          form,
-          formErrors,
-          handleCancel,
-          handleNav,
-          handleStart,
-          handleSubmit,
-          handleUpdateFiles,
-          isCompany,
-          isGithubVerified,
-          isSignedIn,
-          path,
-          step,
-          steps: questions.length,
-          view,
-          ...questionProps,
-        }}
+      <ConditionalRender
+        Component={
+          <AsyncRender
+            asyncData={questions}
+            component={CreateJobApplication}
+            error={error}
+            isRequiredData
+            loading={fetchQuestionsLoading}
+            propsToPassDown={{
+              dispatchChangeInput,
+              dispatchChangeSkillLevel,
+              dispatchChangeView,
+              dispatchDeleteSkill,
+              dispatchInputError,
+              error,
+              form,
+              formErrors,
+              handleCancel,
+              handleNav,
+              handleStart,
+              handleSubmit,
+              handleUpdateFiles,
+              isCompany,
+              isGithubVerified,
+              isSignedIn,
+              path,
+              step,
+              steps: questions.length,
+              view,
+              ...questionProps,
+            }}
+          />
+        }
+        FallbackComponent={
+          <CreateJobApplication
+            handleStart={handleStart}
+            isCompany={isCompany}
+            isGithubVerified={isGithubVerified}
+            isSignedIn={isSignedIn}
+            view={view}
+          />
+        }
+        shouldRender={view === 1}
       />
     </ViewContainer>
   );
