@@ -14,6 +14,12 @@ const makeSelectJobApplication = prop =>
     substate => substate[prop],
   );
 
+const makeSelectJobApplicationLoading = prop =>
+  createSelector(
+    makeSelectJobApplication('loading'),
+    loading => loading[prop],
+  );
+
 const makeSelectJobApplicationQuestions = () =>
   createSelector(
     makeSelectJobApplication('form'),
@@ -113,6 +119,7 @@ const makeSelectJobApplicationResponseArray = () =>
 export default selectJobApplicationDomain;
 export {
   makeSelectJobApplication,
+  makeSelectJobApplicationLoading,
   makeSelectJobApplicationQuestions,
   makeSelectJobApplicationResponseArray,
 };

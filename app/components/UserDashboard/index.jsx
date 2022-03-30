@@ -66,7 +66,14 @@ const UserDashboard = ({
         Component={
           <Fragment>
             <div>
-              <UserDashboardHeader>Welcome, {firstName}!</UserDashboardHeader>
+              <UserDashboardHeader>
+                Welcome
+                <ConditionalRender
+                  Component={<Fragment>, {firstName}</Fragment>}
+                  shouldRender={!!firstName}
+                />
+                !
+              </UserDashboardHeader>
               <UserDashboardContent>
                 <ConditionalRender
                   Component={NotificationComponentToRender}
@@ -91,7 +98,14 @@ const UserDashboard = ({
         FallbackComponent={
           <Fragment>
             <LeftContainer>
-              <UserDashboardHeader>Welcome, {firstName}!</UserDashboardHeader>
+              <UserDashboardHeader>
+                Welcome
+                <ConditionalRender
+                  Component={<Fragment>, {firstName}</Fragment>}
+                  shouldRender={!!firstName}
+                />
+                !
+              </UserDashboardHeader>
               <UserDashboardContent>
                 <ConditionalRender
                   Component={NotificationComponentToRender}

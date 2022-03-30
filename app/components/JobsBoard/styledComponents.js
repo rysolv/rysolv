@@ -1,9 +1,8 @@
 import styled, { css } from 'styled-components';
 
-import { PrimaryAsyncButton } from 'components/base_ui';
+import { LanguageWrapper, PrimaryAsyncButton } from 'components/base_ui';
 import {
   blueColor,
-  blueGrayColor,
   candidateGreyColor,
   darkBlueColor,
   lightBlueColor,
@@ -49,7 +48,7 @@ export const ClearButton = styled.button`
   color: ${lightBlueColor};
   display: flex;
   font-size: 1.6rem;
-  margin-left: 0.2em
+  margin-left: 0.2em;
   padding: 0;
 
   &:hover {
@@ -86,24 +85,13 @@ export const JobsBoardSubText = styled.div`
   padding-bottom: 3.2rem;
 `;
 
-export const KeywordTag = styled.div`
-  background: ${blueGrayColor};
-  border-radius: 1.2rem;
-  border: 0.2rem solid ${whiteColor};
-  color: ${whiteColor};
+export const KeywordTag = styled(LanguageWrapper)`
   display: inline-block;
-  font-size: 1.2rem;
-  font-weight: 800;
-  height: fit-content;
-  justify-content: center;
-  line-height: 1;
   margin: 0.2em;
-  padding: 0.7rem;
-  text-transform: uppercase;
-  width: auto;
 
   &:hover {
     cursor: pointer;
+    filter: brightness(0.95);
   }
 `;
 

@@ -24,12 +24,13 @@ const Footer = () => (
     <FooterContainer>
       <InternalLinkWrapper>
         <LinkColumn>
+          <InternalLink label="Apply to jobs" path="/apply" />
           <InternalLink label="Contact us" path="/contact-us" />
           <InternalLink label="FAQ" path="/faq" />
-          <InternalLink label="Privacy policy" path="/privacy-policy" />
         </LinkColumn>
         <LinkColumn>
           <InternalLink label="Pricing" path="/pricing" />
+          <InternalLink label="Privacy policy" path="/privacy-policy" />
           <InternalLink label="Terms and conditions" path="/terms-of-service" />
         </LinkColumn>
       </InternalLinkWrapper>
