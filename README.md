@@ -4,7 +4,7 @@ Rysolv is a crowdfunding platform designed to accelerate work on open source pro
 
 ## Development
 
-rysolv is built on a React front end with a Node/Express/GraphQL API and a PostgreSQL database.
+Keeping track of everything here: https://github.com/rysolv/rysolv/projects/1
 
 ## Running
 
