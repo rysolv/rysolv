@@ -14,7 +14,7 @@ const ConfirmationView = () => (
       Success! Let&#39;s match you with companies.
     </StyledParagraph>
     <p>
-      We have received your responses, and you should start hearing from
+      We have received your responses and you should start hearing from
       companies soon! In the meantime, check out your&nbsp;
       <LinkWrapper to="/dashboard">dashboard</LinkWrapper> for recommended jobs
       and tips to build your profile. Or head over to&nbsp;
