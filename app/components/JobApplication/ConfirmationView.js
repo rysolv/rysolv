@@ -14,9 +14,9 @@ const ConfirmationView = () => (
       Success! Let&#39;s match you with companies.
     </StyledParagraph>
     <p>
-      We look forward to talking with you soon. In the meantime, continue
-      growing your profile by resolving{' '}
-      <LinkWrapper to="/issues">issues</LinkWrapper>. See how we{' '}
+      We have received your responses and look forward to talking with you soon.
+      In the meantime, continue growing your profile by resolving&nbsp;
+      <LinkWrapper to="/issues">issues</LinkWrapper>. See how we&nbsp;
       <LinkWrapper to="/how-we-score-code">score candidates</LinkWrapper>.
     </p>
   </ViewContainer>

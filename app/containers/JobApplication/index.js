@@ -28,6 +28,7 @@ import reducer from './reducer';
 import saga from './saga';
 import {
   makeSelectJobApplication,
+  makeSelectJobApplicationLoading,
   makeSelectJobApplicationQuestions,
   makeSelectJobApplicationResponseArray,
 } from './selectors';
@@ -44,28 +45,25 @@ const JobApplication = ({
   dispatchResetState,
   dispatchSubmitUserResponse,
   error,
+  fetchQuestionsLoading,
   form,
   formErrors,
   handleNav,
   isSignedIn,
-  loading,
   match: { path },
   questions,
   responseArray,
   view,
 }) => {
-  const [isRequiredData, setIsRequiredData] = useState(true);
+  const [isRequiredData, setIsRequiredData] = useState(false);
   useEffect(() => {
     if (isGithubVerified && isSignedIn) {
       if (!surveyComplete) {
         dispatchFetchQuestions({ category: 'hiring' });
-      } else {
-        handleNav('/dashboard');
-        setIsRequiredData(false);
+        setIsRequiredData(true);
       }
     } else {
       dispatchChangeView({ view: 0 });
-      setIsRequiredData(false);
     }
     return dispatchResetState;
   }, []);
@@ -82,7 +80,8 @@ const JobApplication = ({
     handleNav(`${path}`);
   };
   const handleStart = () => {
-    dispatchChangeView({ view: 1 });
+    const viewToRender = surveyComplete ? 2 : 1;
+    dispatchChangeView({ view: viewToRender });
     handleNav(`${path}?question=1`);
   };
   const handleSubmit = () => {
@@ -116,7 +115,7 @@ const JobApplication = ({
         component={CreateJobApplication}
         error={error}
         isRequiredData={isRequiredData}
-        loading={loading}
+        loading={fetchQuestionsLoading}
         propsToPassDown={{
           dispatchChangeInput,
           dispatchChangeSkillLevel,
@@ -134,7 +133,6 @@ const JobApplication = ({
           isCompany,
           isGithubVerified,
           isSignedIn,
-          loading,
           path,
           step,
           steps: questions.length,
@@ -157,11 +155,11 @@ JobApplication.propTypes = {
   dispatchResetState: T.func.isRequired,
   dispatchSubmitUserResponse: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
+  fetchQuestionsLoading: T.bool.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
-  loading: T.bool.isRequired,
   match: T.object.isRequired,
   questions: T.array.isRequired,
   responseArray: T.array.isRequired,
@@ -178,9 +176,9 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : JobApplication
    */
   error: makeSelectJobApplication('error'),
+  fetchQuestionsLoading: makeSelectJobApplicationLoading('fetchQuestions'),
   form: makeSelectJobApplication('form'),
   formErrors: makeSelectJobApplication('formErrors'),
-  loading: makeSelectJobApplication('loading'),
   questions: makeSelectJobApplicationQuestions(),
   responseArray: makeSelectJobApplicationResponseArray(),
   view: makeSelectJobApplication('view'),
