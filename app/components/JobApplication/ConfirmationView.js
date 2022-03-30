@@ -14,10 +14,11 @@ const ConfirmationView = () => (
       Success! Let&#39;s match you with companies.
     </StyledParagraph>
     <p>
-      We have received your responses and look forward to talking with you soon.
-      In the meantime, continue growing your profile by resolving&nbsp;
-      <LinkWrapper to="/issues">issues</LinkWrapper>. See how we&nbsp;
-      <LinkWrapper to="/how-we-score-code">score candidates</LinkWrapper>.
+      We have received your responses and you should start hearing from
+      companies soon! In the meantime, check out your{' '}
+      <LinkWrapper to="/dashboard">Dashboard</LinkWrapper> for recommended jobs,
+      and tips to build your profile. Or head over to{' '}
+      <LinkWrapper to="/jobs">jobs</LinkWrapper> to start applying.
     </p>
   </ViewContainer>
 );
