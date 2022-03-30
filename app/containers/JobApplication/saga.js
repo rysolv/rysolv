@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
+import { updateActiveUser } from 'containers/Auth/actions';
 import { post } from 'utils/request';
 
 import {
@@ -118,6 +119,7 @@ export function* submitUserResponseSaga({ payload }) {
     if (__typename === 'Error') throw message;
     yield put(push('/dashboard'));
     yield put(submitUserResponseSuccess());
+    yield put(updateActiveUser({ surveyComplete: true }));
   } catch (error) {
     yield put(push('/apply'));
     yield put(submitUserResponseFailure({ error }));

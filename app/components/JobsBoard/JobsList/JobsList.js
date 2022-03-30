@@ -97,10 +97,9 @@ const JobsList = ({ handleNav, handleSelectKeyword, jobs }) => {
                         {keywordArray.map(keyword => (
                           <KeywordTag
                             key={keyword}
+                            language={keyword}
                             onClick={e => handleKeywordClick(e, keyword)}
-                          >
-                            {keyword}
-                          </KeywordTag>
+                          />
                         ))}
                       </KeywordWrapper>
                     </BottomContentWrapper>

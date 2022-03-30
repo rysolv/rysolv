@@ -50,10 +50,9 @@ const JobsBoard = ({
         {commonKeywords.map(keyword => (
           <KeywordTag
             key={keyword}
+            language={keyword}
             onClick={() => handleSelectKeyword(keyword)}
-          >
-            {keyword}
-          </KeywordTag>
+          />
         ))}
         <ClearButton onClick={dispatchResetFilter}>Clear</ClearButton>
       </CommonKeywordsWrapper>

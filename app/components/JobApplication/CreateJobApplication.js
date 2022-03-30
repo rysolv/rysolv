@@ -6,9 +6,12 @@ import viewDictionary from './viewDictionary';
 
 const CreateJobApplication = ({ view, ...restProps }) => {
   useEffect(() => {
-    window.scrollTo(0, 0);
     document.title = 'Start Job Application';
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [view]);
 
   const ViewToRender = viewDictionary[view];
 
