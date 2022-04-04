@@ -35,7 +35,7 @@ const githubSignIn = async ({ code, origin }, { res }) => {
   try {
     const isProduction = process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
     const githubProps = {
-      jobs: {
+      apply: {
         dev: {
           client_id: process.env.GITHUB_JOBS_CLIENT_ID_DEV,
           client_secret: process.env.GITHUB_JOBS_SECRET_DEV,
@@ -274,7 +274,7 @@ const githubSignIn = async ({ code, origin }, { res }) => {
     const { alert } = error;
     errorLogger(error);
     const errorMessageToReturn =
-      origin === 'jobs' || origin === 'signin'
+      origin === 'apply' || origin === 'signin'
         ? githubSignInError
         : githubSignUpError;
     return {

@@ -8,6 +8,7 @@ import {
   FETCH_POSITION_DETAIL_FAILURE,
   FETCH_POSITION_DETAIL_SUCCESS,
   FETCH_POSITION_DETAIL,
+  INPUT_ERROR,
   NOTIFY_COMPANY_FAILURE,
   NOTIFY_COMPANY_SUCCESS,
   NOTIFY_COMPANY,
@@ -63,6 +64,13 @@ export function fetchPositionDetail(payload) {
   return {
     payload,
     type: FETCH_POSITION_DETAIL,
+  };
+}
+
+export function inputError(payload) {
+  return {
+    payload,
+    type: INPUT_ERROR,
   };
 }
 

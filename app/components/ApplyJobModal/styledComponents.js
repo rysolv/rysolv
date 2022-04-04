@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from '@material-ui/core/Button';
 
 import { PrimaryAsyncButton } from 'components/base_ui';
@@ -8,9 +8,38 @@ import {
   candidateGreyColor,
   darkBlueColor,
   defaultFontFamily,
+  defaultFontSize,
+  errorRed,
   textColor,
   whiteColor,
 } from 'defaultStyleHelper';
+
+const baseInputStyle = css`
+  background: ${candidateGreyColor};
+  border-radius: 0.7rem;
+  border: none;
+  color: ${textColor};
+  font-size: 1.6rem;
+  font-weight: 400;
+  height: ${({ height, multiple }) => (multiple ? 'auto' : height)};
+  line-height: 1.936rem;
+  min-height: ${({ height, multiple }) => (multiple ? height : 'auto')};
+  outline: none;
+  overflow: hidden;
+  padding: 1.6rem 2.4rem;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+  width: 100%;
+`;
+
+const baseOptionTextStyle = css`
+  font-weight: 400;
+  line-height: 1.936rem;
+`;
+
+export const AdditionalInfoWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 export const ButtonGroup = styled.div`
   background: ${candidateGreyColor};
@@ -19,11 +48,8 @@ export const ButtonGroup = styled.div`
   padding: 1rem 2rem;
 `;
 
-export const MarkdownHeader = styled.div`
-  color: ${textColor};
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 0.4rem;
+export const Input = styled.input`
+  ${baseInputStyle};
 `;
 
 export const ModalContainer = styled.div`
@@ -50,6 +76,31 @@ export const ModalSubheader = styled.div`
   font-size: 1.6rem;
   line-height: 2.4rem;
   padding: 0.8rem 0 1.6rem;
+`;
+
+export const OptionError = styled.div`
+  color: ${errorRed};
+  font-size: ${defaultFontSize};
+  height: 2.4rem;
+  padding: 0.5rem 0;
+`;
+
+export const OptionLabel = styled.div`
+  ${baseOptionTextStyle};
+  color: ${textColor};
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+`;
+
+export const OptionWrapper = styled.div`
+  align-items: center;
+  display: ${({ $isAbsolute, $isFlex }) =>
+    $isAbsolute || $isFlex ? 'flex' : 'block'};
+  margin-top: 1rem;
+  position: ${({ $isAbsolute }) => ($isAbsolute ? 'absolute' : 'relative')};
+  right: 0;
+  top: ${({ $isAbsolute }) => ($isAbsolute ? '1rem' : '0')};
+  width: ${({ shouldDecreaseWidth }) => (shouldDecreaseWidth ? '48%' : '100%')};
 `;
 
 export const SecondaryButton = styled(Button)`

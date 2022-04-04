@@ -20,6 +20,7 @@ import {
 const CompanyPayments = ({
   currentPlan,
   dispatchOpenModal,
+  handleNav,
   handleSelectPlan,
   paymentConfirmed,
   paymentMethod,
@@ -72,6 +73,7 @@ const CompanyPayments = ({
         <PricingGrid
           buttonText="Upgrade"
           currentPlan={currentPlan}
+          handleNav={handleNav}
           handleSelectPlan={handleSelectPlan}
           isSettingRoute
         />
@@ -83,6 +85,7 @@ const CompanyPayments = ({
 CompanyPayments.propTypes = {
   currentPlan: T.string.isRequired,
   dispatchOpenModal: T.func.isRequired,
+  handleNav: T.func.isRequired,
   handleSelectPlan: T.func.isRequired,
   paymentConfirmed: T.bool.isRequired,
   paymentMethod: T.string,

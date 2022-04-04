@@ -20,7 +20,10 @@ import {
 
 export const initialState = {
   error: null,
-  loading: true,
+  loading: {
+    fetchQuestions: true,
+    submitUserResponse: false,
+  },
   form: {
     desiredRole: [],
     experience: [],
@@ -78,7 +81,6 @@ const jobApplicationReducer = produce((draft, { payload, type }) => {
     }
     case CHANGE_VIEW: {
       const { view } = payload;
-      draft.loading = false;
       draft.view = view;
       break;
     }
@@ -90,18 +92,18 @@ const jobApplicationReducer = produce((draft, { payload, type }) => {
     case FETCH_QUESTIONS_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading = false;
+      draft.loading.fetchQuestions = false;
       break;
     }
     case FETCH_QUESTIONS_SUCCESS: {
       const { questions } = payload;
-      draft.loading = false;
+      draft.loading.fetchQuestions = false;
       draft.questions = questions;
       break;
     }
     case FETCH_QUESTIONS: {
       draft.error = null;
-      draft.loading = true;
+      draft.loading.fetchQuestions = true;
       break;
     }
     case INPUT_ERROR: {
@@ -118,16 +120,16 @@ const jobApplicationReducer = produce((draft, { payload, type }) => {
     case SUBMIT_USER_RESPONSE_FAILURE: {
       const { error } = payload;
       draft.error = error;
-      draft.loading = false;
+      draft.loading.submitUserResponse = false;
       break;
     }
     case SUBMIT_USER_RESPONSE_SUCCESS: {
-      draft.loading = false;
+      draft.loading.submitUserResponse = false;
       break;
     }
     case SUBMIT_USER_RESPONSE: {
       draft.error = null;
-      draft.loading = true;
+      draft.loading.submitUserResponse = true;
       break;
     }
   }

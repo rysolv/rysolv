@@ -18,6 +18,8 @@ const getMessages = async ({ userId }) => {
             ||
             json_build_object('positionId', m.position_id)::jsonb
             ||
+            json_build_object('positionPreferredLanguages', JSON_AGG(DISTINCT JSONB_BUILD_OBJECT('name', t.name, 'level',pts.level))::jsonb)::jsonb
+            ||
             json_build_object('preferredLanguages', ARRAY_AGG(DISTINCT(t.name)))::jsonb
             ||
             json_build_object('location', l.formatted_address)::jsonb
@@ -60,7 +62,7 @@ const getMessages = async ({ userId }) => {
           'name', candidate_user.first_name || ' ' || candidate_user.last_name,
           'profilePic', candidate_user.profile_pic,
           'userId', candidate_user.id,
-          'preferredLanguages', ARRAY_AGG(DISTINCT(t.name)),
+          'preferredLanguages', JSON_AGG(DISTINCT JSONB_BUILD_OBJECT('name', t.name, 'level',pts.level))::jsonb,
           'location', candidate_location.formatted_address
         )
         ||

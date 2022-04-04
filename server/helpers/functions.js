@@ -75,7 +75,7 @@ const isUrl = string => {
   return url.protocol === 'http:' || url.protocol === 'https:';
 };
 
-const matchLanguages = ({ userLanguages, positionLanguages }) => {
+const matchLanguages = ({ positionLanguages, userLanguages }) => {
   // Takes two arrays ex: [{name: 'JavaScript', level: 3}, {name: ruby...}]
   // Returns an array of up to 3 languages. Prioritize matching position
   // languages, followed by user skill level.
