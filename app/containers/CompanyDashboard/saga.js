@@ -384,6 +384,7 @@ export function* fetchPositionCandidatesSaga({ payload }) {
         salary
         threadId
         type
+        username
         yearsOfExperience
       }
     }

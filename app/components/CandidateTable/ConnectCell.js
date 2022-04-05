@@ -6,13 +6,13 @@ import { StyledPrimaryButton, StyledTableCell } from './styledComponents';
 const ConnectCell = ({
   dispatchOpenModal,
   handleNav,
+  id,
   selectedPosition,
-  userId,
   threadId,
 }) => {
   const ButtonText = threadId ? `View Messages` : `Connect`;
 
-  const tableData = { positionId: selectedPosition, userId };
+  const tableData = { positionId: selectedPosition, userId: id };
 
   const handleClick = () => {
     if (threadId) {
@@ -34,7 +34,7 @@ ConnectCell.propTypes = {
   handleNav: T.func.isRequired,
   selectedPosition: T.string.isRequired,
   threadId: T.string,
-  userId: T.string.isRequired,
+  id: T.string.isRequired,
 };
 
 export default ConnectCell;

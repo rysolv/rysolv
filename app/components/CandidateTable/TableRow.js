@@ -1,9 +1,14 @@
 /* eslint-disable camelcase, react/no-array-index-key */
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import T from 'prop-types';
 
+import iconDictionary from 'utils/iconDictionary';
+
 import { cellDictionary } from './constants';
-import { StyledTableRow } from './styledComponents';
+import { StyledIconButton, StyledTableRow } from './styledComponents';
+
+const SaveIcon = iconDictionary('bookmarkBorder');
+const UnsaveIcon = iconDictionary('bookmark');
 
 const TableRow = ({
   candidate,
@@ -12,25 +17,49 @@ const TableRow = ({
   dispatchSaveCandidate,
   handleNav,
   selectedPosition,
-}) => (
-  <StyledTableRow>
-    {Object.keys(cellDictionary).map((header, index) => {
-      const TableCellToRender = cellDictionary[header];
+}) => {
+  const ref = useRef(null);
+  const [hideLanguages, setHideLanguages] = useState(true);
+  const CardIcon = candidate.isSaved ? UnsaveIcon : SaveIcon;
+  const CardLabel = candidate.isSaved ? 'Unshortlist' : 'Shortlist';
 
-      return (
-        <TableCellToRender
-          key={`table-data-${header}-${index}`}
-          deviceView={deviceView}
-          dispatchOpenModal={dispatchOpenModal}
-          dispatchSaveCandidate={dispatchSaveCandidate}
-          handleNav={handleNav}
-          selectedPosition={selectedPosition}
-          {...candidate}
-        />
-      );
-    })}
-  </StyledTableRow>
-);
+  useEffect(() => {
+    const width = ref.current ? ref.current.offsetWidth : 0;
+    setHideLanguages(width < 600);
+  }, [ref.current]);
+
+  return (
+    <StyledTableRow ref={ref}>
+      <StyledIconButton
+        icon={CardIcon}
+        isSaved={candidate.isSaved}
+        label={CardLabel}
+        onClick={() =>
+          dispatchSaveCandidate({
+            candidateId: candidate.id,
+            positionId: selectedPosition,
+          })
+        }
+      />
+      {Object.keys(cellDictionary).map((header, index) => {
+        const TableCellToRender = cellDictionary[header];
+
+        if (header === 'languages' && hideLanguages) return null;
+        return (
+          <TableCellToRender
+            key={`table-data-${header}-${index}`}
+            deviceView={deviceView}
+            dispatchOpenModal={dispatchOpenModal}
+            dispatchSaveCandidate={dispatchSaveCandidate}
+            handleNav={handleNav}
+            selectedPosition={selectedPosition}
+            {...candidate}
+          />
+        );
+      })}
+    </StyledTableRow>
+  );
+};
 
 TableRow.propTypes = {
   candidate: T.object.isRequired,

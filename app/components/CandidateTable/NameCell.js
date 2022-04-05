@@ -1,32 +1,42 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import T from 'prop-types';
 
+import { ConditionalRender } from 'components/base_ui';
 import iconDictionary from 'utils/iconDictionary';
 
 import {
-  NameBottomSection,
   CandidateRowButton,
-  NameWrapper,
-  ProfilePicWrapper,
+  CandidateRowLink,
+  Name,
+  NameBottomSection,
+  NameTopSection,
+  ProfilePic,
   StyledTableCell,
 } from './styledComponents';
 
 const PeopleIcon = iconDictionary('people');
 
-const NameCell = ({ handleNav, name, profilePic, username }) => (
+const NameCell = ({ handleNav, name, profilePic, resume, username }) => (
   <StyledTableCell>
-    <div>
-      <ProfilePicWrapper src={profilePic} />
-      <NameWrapper>{name}</NameWrapper>
-    </div>
+    <NameTopSection>
+      <ProfilePic src={profilePic} />
+      <Name>{name}</Name>
+    </NameTopSection>
     <NameBottomSection>
       <CandidateRowButton onClick={() => handleNav(`/users/${username}`)}>
         {PeopleIcon} View candidate
       </CandidateRowButton>
-      <span>/</span>
-      <CandidateRowButton onClick={() => handleNav(`/users/${username}`)}>
-        resume
-      </CandidateRowButton>
+      <ConditionalRender
+        Component={
+          <Fragment>
+            <span>/</span>
+            <CandidateRowLink href={resume} target="_blank">
+              resume
+            </CandidateRowLink>
+          </Fragment>
+        }
+        shouldRender={!!resume}
+      />
     </NameBottomSection>
   </StyledTableCell>
 );
@@ -35,6 +45,7 @@ NameCell.propTypes = {
   handleNav: T.func.isRequired,
   name: T.string.isRequired,
   profilePic: T.string.isRequired,
+  resume: T.string,
   username: T.string.isRequired,
 };
 

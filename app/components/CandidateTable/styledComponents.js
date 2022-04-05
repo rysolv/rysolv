@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import React from 'react';
 import styled, { css } from 'styled-components';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,12 +8,15 @@ import TableRow from '@material-ui/core/TableRow';
 import {
   BaseInput,
   Circle,
+  IconButton,
   LanguageWrapper,
   PrimaryButton,
 } from 'components/base_ui';
 import {
+  blueColor, 
   darkBlueColor,
   defaultFontSize,
+  grayColor,
   headerColor,
   lightBlueColor,
   whiteColor,
@@ -26,7 +30,7 @@ const baseButtonStyle = css`
   font-weight: 700;
   height: 4.8rem;
   line-height: 1.936rem;
-  margin: 0;
+  margin: auto;
   text-transform: initial;
   width: auto;
 `;
@@ -35,11 +39,17 @@ export const NameBottomSection = styled.div`
   align-items: center;
   display: flex;
   margin-top: 0.6rem;
+  white-space: nowrap;
 
   span {
     font-size: 1.6rem;
     margin: 0 0.6rem;
   }
+`;
+
+export const NameTopSection = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const CandidateRowButton = styled.button`
@@ -62,15 +72,38 @@ svg {
 }
 `;
 
+export const CandidateRowLink = styled.a`
+align-items: center;
+background: transparent;
+border: none;
+color: ${lightBlueColor};
+display: flex;
+font-size: 1.6rem;
+padding: 0;
+white-space: nowrap;
+
+&:hover {
+  color: ${lightBlueColor};
+  cursor: pointer;
+}
+
+svg {
+  font-size: 2rem;
+  margin-right: 0.8rem;
+}
+`;
+
 export const CircleGroup = styled.div`
   position: relative;
 `;
 
-export const NameWrapper = styled.div`
+export const Name = styled.div`
   font-size: 2.5rem;
+  line-height: 3.36rem;
+  white-space: nowrap;
 `;
 
-export const ProfilePicWrapper = styled.img`
+export const ProfilePic = styled.img`
   border-radius: 50%;
   border: 0.2rem solid ${whiteColor};
   height: 5rem;
@@ -95,7 +128,6 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
   ${baseButtonStyle};
   background-color: ${darkBlueColor};
   color: ${whiteColor};
-  margin-left: 1rem;
 
   &:hover {
     background-color: ${darkBlueColor};
@@ -106,7 +138,7 @@ export const StyledPrimaryButton = styled(PrimaryButton)`
 export const StyledTableBody = styled(TableBody)`
   tr:first-of-type {
     td {
-      margin-top: 1rem;
+      padding: 3.2rem 0;
     }
   }
 `;
@@ -119,7 +151,9 @@ export const StyledTableCell = styled(TableCell)`
   vertical-align: middle;
 `;
 
-export const StyledTableRow = styled(TableRow)``;
+export const StyledTableRow = styled(TableRow)`
+  position: relative;
+`;
 
 export const TableHeaderCell = styled(StyledTableCell)`
   color: white;
@@ -135,4 +169,18 @@ export const TableHeaderRow = styled(TableRow)`
 export const TableInputContainer = styled.div`
   align-items: center;
   display: flex;
+`;
+
+export const StyledIconButton = styled(({ isSaved, ...restProps }) => (
+  <IconButton {...restProps} />
+))`
+  margin: 0.4rem;
+  position: absolute;
+  right: 0;
+
+  svg {
+    color: ${({ isSaved }) => (isSaved ? blueColor : grayColor)};
+    height: 2.5rem;
+    width: 2.5rem;
+  }
 `;
