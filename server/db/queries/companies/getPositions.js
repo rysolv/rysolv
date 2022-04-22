@@ -7,10 +7,10 @@ const getPositions = async () => {
         c.company_name,
         c.logo,
         cp.company_id,
-        cp.created_date,
         cp.id,
         l.formatted_address,
         q.question_key,
+        MAX(uqr.created_date) AS created_date,
         JSONB_BUILD_OBJECT(
           'name', t.name,
           'level', pts.level
@@ -31,7 +31,6 @@ const getPositions = async () => {
         c.company_name,
         c.logo,
         cp.company_id,
-        cp.created_date,
         cp.id,
         l.formatted_address,
         pts.level,
@@ -42,7 +41,7 @@ const getPositions = async () => {
     SELECT
       ap.company_id  AS "companyId",
       ap.company_name AS "companyName",
-      ap.created_date  AS "createdDate",
+      ap.created_date AS "createdDate",
       ap.formatted_address AS location,
       ap.id,
       ap.logo AS "companyLogo",
