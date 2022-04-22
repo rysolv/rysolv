@@ -100,10 +100,13 @@ export function* notifyCompanySaga({ payload }) {
   const { body, positionId } = payload;
   const query = `
     mutation{
-      createMessage(messageInput: {
-        body: ${JSON.stringify(body)},
-        positionId: "${positionId}",
-      }) {
+      createMessage(
+        messageInput: {
+          body: ${JSON.stringify(body)},
+          positionId: "${positionId}",
+        },
+        source: "apply"
+      ) {
         __typename
         ... on MessageResponse {
           body

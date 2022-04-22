@@ -615,7 +615,7 @@ module.exports = buildSchema(`
 
     createComment(commentInput: CommentInput): CommentResult!
     createIssue(issueInput: IssueInput): IssueResult!
-    createMessage(messageInput: MessageInput): MessageResult!
+    createMessage(messageInput: MessageInput, source: String!): MessageResult!
     createPaypalPayment(amount: Float!, email: String, issueId: ID): PaymentResult!
     createPullRequest(pullRequestInput: PullRequestInput!): EventResponse!
     createRepo(repoInput: RepoInput): RepoResult!
