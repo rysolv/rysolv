@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import T from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import { push } from 'connected-react-router';
 import { Redirect } from 'react-router-dom';
 
 import AsyncRender from 'components/AsyncRender';
+import { ConditionalRender } from 'components/base_ui';
 import { CreateJobApplication } from 'components/JobApplication';
 import { makeSelectAuth } from 'containers/Auth/selectors';
 import { getQuestion, useDidUpdateEffect } from 'utils/globalHelpers';
@@ -28,6 +29,7 @@ import reducer from './reducer';
 import saga from './saga';
 import {
   makeSelectJobApplication,
+  makeSelectJobApplicationLoading,
   makeSelectJobApplicationQuestions,
   makeSelectJobApplicationResponseArray,
 } from './selectors';
@@ -44,28 +46,23 @@ const JobApplication = ({
   dispatchResetState,
   dispatchSubmitUserResponse,
   error,
+  fetchQuestionsLoading,
   form,
   formErrors,
   handleNav,
   isSignedIn,
-  loading,
   match: { path },
   questions,
   responseArray,
   view,
 }) => {
-  const [isRequiredData, setIsRequiredData] = useState(true);
   useEffect(() => {
     if (isGithubVerified && isSignedIn) {
       if (!surveyComplete) {
         dispatchFetchQuestions({ category: 'hiring' });
-      } else {
-        handleNav('/dashboard');
-        setIsRequiredData(false);
       }
     } else {
       dispatchChangeView({ view: 0 });
-      setIsRequiredData(false);
     }
     return dispatchResetState;
   }, []);
@@ -82,7 +79,8 @@ const JobApplication = ({
     handleNav(`${path}`);
   };
   const handleStart = () => {
-    dispatchChangeView({ view: 1 });
+    const viewToRender = surveyComplete ? 2 : 1;
+    dispatchChangeView({ view: viewToRender });
     handleNav(`${path}?question=1`);
   };
   const handleSubmit = () => {
@@ -111,36 +109,49 @@ const JobApplication = ({
 
   return (
     <ViewContainer>
-      <AsyncRender
-        asyncData={questions}
-        component={CreateJobApplication}
-        error={error}
-        isRequiredData={isRequiredData}
-        loading={loading}
-        propsToPassDown={{
-          dispatchChangeInput,
-          dispatchChangeSkillLevel,
-          dispatchChangeView,
-          dispatchDeleteSkill,
-          dispatchInputError,
-          error,
-          form,
-          formErrors,
-          handleCancel,
-          handleNav,
-          handleStart,
-          handleSubmit,
-          handleUpdateFiles,
-          isCompany,
-          isGithubVerified,
-          isSignedIn,
-          loading,
-          path,
-          step,
-          steps: questions.length,
-          view,
-          ...questionProps,
-        }}
+      <ConditionalRender
+        Component={
+          <AsyncRender
+            asyncData={questions}
+            component={CreateJobApplication}
+            error={error}
+            isRequiredData
+            loading={fetchQuestionsLoading}
+            propsToPassDown={{
+              dispatchChangeInput,
+              dispatchChangeSkillLevel,
+              dispatchChangeView,
+              dispatchDeleteSkill,
+              dispatchInputError,
+              error,
+              form,
+              formErrors,
+              handleCancel,
+              handleNav,
+              handleStart,
+              handleSubmit,
+              handleUpdateFiles,
+              isCompany,
+              isGithubVerified,
+              isSignedIn,
+              path,
+              step,
+              steps: questions.length,
+              view,
+              ...questionProps,
+            }}
+          />
+        }
+        FallbackComponent={
+          <CreateJobApplication
+            handleStart={handleStart}
+            isCompany={isCompany}
+            isGithubVerified={isGithubVerified}
+            isSignedIn={isSignedIn}
+            view={view}
+          />
+        }
+        shouldRender={view === 1}
       />
     </ViewContainer>
   );
@@ -157,11 +168,11 @@ JobApplication.propTypes = {
   dispatchResetState: T.func.isRequired,
   dispatchSubmitUserResponse: T.func.isRequired,
   error: T.oneOfType([T.object, T.string]),
+  fetchQuestionsLoading: T.bool.isRequired,
   form: T.object.isRequired,
   formErrors: T.object.isRequired,
   handleNav: T.func.isRequired,
   isSignedIn: T.bool.isRequired,
-  loading: T.bool.isRequired,
   match: T.object.isRequired,
   questions: T.array.isRequired,
   responseArray: T.array.isRequired,
@@ -178,9 +189,9 @@ const mapStateToProps = createStructuredSelector({
    * Reducer : JobApplication
    */
   error: makeSelectJobApplication('error'),
+  fetchQuestionsLoading: makeSelectJobApplicationLoading('fetchQuestions'),
   form: makeSelectJobApplication('form'),
   formErrors: makeSelectJobApplication('formErrors'),
-  loading: makeSelectJobApplication('loading'),
   questions: makeSelectJobApplicationQuestions(),
   responseArray: makeSelectJobApplicationResponseArray(),
   view: makeSelectJobApplication('view'),

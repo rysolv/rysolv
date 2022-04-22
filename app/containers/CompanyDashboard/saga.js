@@ -1,4 +1,4 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { call, delay, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -271,6 +271,7 @@ export function* editPositionSaga({ payload }) {
     yield put(editPositionSuccess());
     yield put(fetchCompanyPositions({ companyId }));
     yield put(matchCandidates({ positionId }));
+    yield delay(500);
     yield put(push('/company/dashboard'));
   } catch (error) {
     yield put(editPositionFailure({ error: { message: error } }));

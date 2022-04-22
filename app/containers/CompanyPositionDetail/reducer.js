@@ -11,6 +11,7 @@ import {
   FETCH_POSITION_DETAIL_FAILURE,
   FETCH_POSITION_DETAIL_SUCCESS,
   FETCH_POSITION_DETAIL,
+  INPUT_ERROR,
   NOTIFY_COMPANY_FAILURE,
   NOTIFY_COMPANY_SUCCESS,
   NOTIFY_COMPANY,
@@ -23,9 +24,13 @@ export const initialState = {
   error: false,
   form: {
     body: '',
+    firstName: '',
+    lastName: '',
   },
   formErrors: {
     body: '',
+    firstName: '',
+    lastName: '',
   },
   isModalOpen: false,
   loading: {
@@ -84,6 +89,14 @@ const companyPositionDetailReducer = produce((draft, { payload, type }) => {
     case FETCH_POSITION_DETAIL: {
       draft.error = initialState.error;
       draft.loading.fetchPositionDetail = true;
+      break;
+    }
+    case INPUT_ERROR: {
+      const { errors } = payload;
+      const fields = Object.keys(errors);
+      fields.forEach(field => {
+        draft.formErrors[field] = errors[field] || '';
+      });
       break;
     }
     case NOTIFY_COMPANY_FAILURE: {

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useState } from 'react';
 import T from 'prop-types';
 
 import iconDictionary from 'utils/iconDictionary';
@@ -17,6 +17,8 @@ import {
 const DeleteIcon = iconDictionary('close');
 
 const StepperInputOption = ({ handleChangeInput, onBlur, value }) => {
+  const [shouldAutoFocus, setShouldAutoFocus] = useState(false);
+
   const formattedValue = value || [''];
 
   const handleChangeStep = (newValue, index) => {
@@ -46,10 +48,11 @@ const StepperInputOption = ({ handleChangeInput, onBlur, value }) => {
       {formattedValue.map((arrayValue, index) => (
         <InputWrapper key={`${arrayValue}-${index}`}>
           <Input
-            autoFocus="autoFocus"
+            autoFocus={shouldAutoFocus}
             height="4.9rem"
             onBlur={onBlur}
             onChange={e => handleChangeStep(e.target.value, index)}
+            onFocus={() => setShouldAutoFocus(true)}
             type="text"
             value={arrayValue}
           />

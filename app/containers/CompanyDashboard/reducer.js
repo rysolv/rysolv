@@ -3,6 +3,7 @@ import produce from 'immer';
 import isEmpty from 'lodash/isEmpty';
 import remove from 'lodash/remove';
 
+import { RESET_USER_STATE } from 'containers/Main/constants';
 import { snakeToCamel } from 'utils/globalHelpers';
 
 import {
@@ -80,7 +81,7 @@ export const initialState = {
     companyPosition: {
       description: '',
       experience: '',
-      interviewProcess: [''],
+      interviewProcess: ['Intro call', 'Technical interview', 'Hired'],
       isActive: 'Yes',
       location: {},
       postToJobBoard: 'Yes',
@@ -426,6 +427,9 @@ const companyDashboardReducer = produce((draft, { payload, type }) => {
       draft.form[category] = initialState.form[category];
       draft.formErrors[category] = initialState.formErrors[category];
       break;
+    }
+    case RESET_USER_STATE: {
+      return initialState;
     }
     case SAVE_CANDIDATE_FAILURE: {
       const { error } = payload;

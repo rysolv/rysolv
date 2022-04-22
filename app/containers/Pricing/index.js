@@ -21,7 +21,7 @@ const Pricing = ({ handleNav }) => {
 
   return (
     <ViewContainer>
-      <PricingView handleSelectPlan={handleSelectPlan} />
+      <PricingView handleNav={handleNav} handleSelectPlan={handleSelectPlan} />
     </ViewContainer>
   );
 };
