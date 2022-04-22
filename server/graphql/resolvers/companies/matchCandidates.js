@@ -66,7 +66,6 @@ const matchCandidatesToPosition = async (
 
     const matchedCandidates = candidates.map(candidate => {
       const match = matchCandidate({ candidate, position });
-      console.log(match);
       return match;
     });
 
