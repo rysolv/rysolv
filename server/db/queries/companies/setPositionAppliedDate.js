@@ -1,5 +1,4 @@
 const { singleQuery } = require('../../baseQueries');
-
 const setPositionAppliedDate = async ({ candidateId, positionId }) => {
   const queryText = `
     UPDATE candidate_positions
