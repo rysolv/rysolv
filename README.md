@@ -1,3 +1,5 @@
+<img style="height: 100px; width:100px;" src="./assets/rysolv_logo.png">
+
 # Rysolv
 
 **Rysolv** ([rysolv.com](http://rysolv.com/)) is the analytics based hiring platform for software engineers.
