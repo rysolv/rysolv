@@ -2,11 +2,10 @@
 
 # Rysolv
 
-Rysolv ([rysolv.com](http://rysolv.com/)) is an analytics based hiring platform for software engineers?
+**Rysolv** ([rysolv.com](http://rysolv.com/)) is the analytics based hiring platform for software engineers.
 
-- Transparent:
--
-- the end
+- **Code focused**: We use Git analytics to turn your contributions into a resume.
+- **Transparent**: Know the salary and interview process before you apply.
 
 ## Contributing
 
