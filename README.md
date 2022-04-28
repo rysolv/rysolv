@@ -1,5 +1,3 @@
-![profile](./assets/profile_tyler.png)
-
 # Rysolv
 
 **Rysolv** ([rysolv.com](http://rysolv.com/)) is the analytics based hiring platform for software engineers.
@@ -12,13 +10,17 @@
 
   ![profile](./assets/john_doe_example.png)
 
-- **Transparent**: All jobs have to disclose Know the salary and interview process before you apply.
+- **Transparent**: Always know the salary and interview process before you apply.
 
   ![profile](./assets/interview_steps.png)
 
 - **Open Source**:
   - [AGPL-3.0 License](https://github.com/rysolv/rysolv/blob/master/LICENSE)
   - Built for engineers by engineers. If you want to change how people get hired, open a pull request!
+
+## Documentation
+
+Getting Started: [/docs/README.md](/docs/README.md)
 
 ## Contributing
 
@@ -29,10 +31,6 @@
 - [Discord](https://discord.gg/kqt8RcVggN): Talk about code, algorithm meetups, and silly hackathons.
 
 - Also check out the [rysolv/hackathon](https://github.com/rysolv/hackathon) repo for upcoming events.
-
-## Documentation
-
-Getting Started: [/docs/README.md](/docs/README.md)
 
 ## License
 
