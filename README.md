@@ -5,73 +5,35 @@
 **Rysolv** ([rysolv.com](http://rysolv.com/)) is the analytics based hiring platform for software engineers.
 
 - **Code focused**: We use Git analytics to turn your contributions into a resume.
-- **Transparent**: Know the salary and interview process before you apply.
+
+  - Generate insights on your git history
+  - Showcase your contributions
+  - Find employers looking for your exact skills
+
+  ![profile](./assets/john_doe_example.png)
+
+- **Transparent**: All jobs have to disclose Know the salary and interview process before you apply.
+
+  ![profile](./assets/interview_steps.png)
+
+- **Open Source**:
+  - [AGPL-3.0 License](https://github.com/rysolv/rysolv/blob/master/LICENSE)
+  - Built for engineers by engineers. If you want to change how people get hired, open a pull request!
 
 ## Contributing
 
-- [GitHub Projects](https://github.com/rysolv/rysolv/projects/1): Our current development pipeline
+- Check out [GitHub Projects](https://github.com/rysolv/rysolv/projects/1) for our current development pipeline
 
 ## Community
 
-- [Discord](https://discord.gg/kqt8RcVggN): Talk about code, algorithm meetups, and silly hackathons
+- [Discord](https://discord.gg/kqt8RcVggN): Talk about code, algorithm meetups, and silly hackathons.
+
+- Also check out the [rysolv/hackathon](https://github.com/rysolv/hackathon) repo for upcoming events.
 
 ## Documentation
 
-## Running
+Getting Started: [/docs/README.md](/docs/README.md)
 
-- `npm i` to install dependencies
-- `npm run seed` to seed the database
-- `npm start` to start the server.
-
-<br>
-
-## Server
-
-rysolv uses a graphql API located at `localhost:3000/graphql`
-
-First follow the instructions in [/server/README.md](/server/README.md)
-
-<br>
-
-## Migrations
-
-To create a new database migration, run `db-migrate create my-migration-name`
-
-This will create three new files in the `/migrations` folder.
-
-- my-migration-name-up.sql
-- my-migration-name-down.sql
-- my-migration-name.js
-
-Then populate each of the sql files with the appropriate query
-
-- For `up` migrations, add a query to update the db
-- For `down` migrations, add the inverse of that query
-
-Then run `db-migrate up` or `db-migrate down` to cycle forward or backwards through the migrations.
-
-To migrate a specific database environment run `db-migrate up -e [local/dev/prod]`
-
-## NPM Scripts
-
-### Reseed database from schema
-
-`npm run seed:local`
-
-or
-
-`npm run seed:dev`
-
-This should only be used on local, or when dev gets really out of sync.
-
-The script will first run `db-migrate reset` to roll back the migrations table.
-
-### Generate hiring questions
-
-One time script to generate questions & respones for hiring.
-
-`npm run generateQuestions:[local/dev/prod]`
-
-### License
+## License
 
 - [AGPL-3.0](https://github.com/rysolv/rysolv/blob/master/LICENSE)
