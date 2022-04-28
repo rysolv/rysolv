@@ -1,10 +1,22 @@
-# The official repo of rysolv.com
+![profile](./assets/profile_tyler.png)
 
-Rysolv is a crowdfunding platform designed to accelerate work on open source projects. Users sponsor outstanding issues or feature requests in open source projects. Developers earn bounties by resolving them.
+# Rysolv
 
-## Development
+Rysolv ([rysolv.com](http://rysolv.com/)) is an analytics based hiring platform for software engineers?
 
-Keeping track of everything here: https://github.com/rysolv/rysolv/projects/1
+- Transparent:
+-
+- the end
+
+## Contributing
+
+- [GitHub Projects](https://github.com/rysolv/rysolv/projects/1): Our current development pipeline
+
+## Community
+
+- [Discord](https://discord.gg/kqt8RcVggN): Talk about code, algorithm meetups, and silly hackathons
+
+## Documentation
 
 ## Running
 
@@ -60,3 +72,7 @@ The script will first run `db-migrate reset` to roll back the migrations table.
 One time script to generate questions & respones for hiring.
 
 `npm run generateQuestions:[local/dev/prod]`
+
+### License
+
+- [AGPL-3.0](https://github.com/rysolv/rysolv/blob/master/LICENSE)
