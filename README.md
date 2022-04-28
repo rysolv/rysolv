@@ -1,4 +1,6 @@
-<img style="height: 100px; width:100px;" src="./assets/rysolv_logo.png">
+<p align="center">
+  <img style="height: 125px; width:auto;" src="./assets/rysolv_wordmark.png">
+</p>
 
 # Rysolv
 
