@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-const { CustomError, errorLogger } = require('../../../helpers');
+const { errorLogger } = require('../../../helpers');
 const {
   getAllCandidates,
   getOnePosition,
@@ -13,24 +13,10 @@ const { matchCandidate } = require('../helpers');
  * -- get question/answers for all active users
  * -- get question/answers for position
  * -- insert matching users into candidate_positions table
- *
- * Matching Criteria:
- * -- location & timezone                    Required
- * -- experience                             Required
- * -- position type (fulltime / contractor)  Required
- * -- languages                              40%
- * -- frameworks                             20%
- * -- roles (front-end, backend, etc.)       20%
- * -- salary                                 20%
  */
 
-const matchCandidatesToPosition = async (
-  { positionId },
-  { authError, userId },
-) => {
+const matchCandidatesToPosition = async ({ positionId }) => {
   try {
-    if (authError || !userId) throw new CustomError(authError);
-
     const t1 = new Date();
 
     // Get position details
