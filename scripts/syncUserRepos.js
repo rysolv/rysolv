@@ -9,7 +9,7 @@ const { singleQuery } = connect(env);
  * Describe what this script does
  */
 
-async function sample() {
+async function syncUserRepos() {
   const t1 = Date.now();
   let count = 0;
   const getUsersQuery = `
@@ -46,4 +46,4 @@ async function sample() {
   process.exit();
 }
 
-sample();
+syncUserRepos();
