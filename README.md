@@ -1,5 +1,5 @@
 <p align="center">
-  <img style="height: 100px; margin-top: 20px; width: auto;" src="./assets/rysolv_wordmark.png">
+  <img style="height: 100px; width: auto;" src="./assets/rysolv_wordmark.png">
 </p>
 
 # Rysolv
