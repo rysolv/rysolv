@@ -86,10 +86,15 @@ export const generateColor = percentage => {
 };
 
 export const generatePostedDate = date => {
-  const createdDate = moment(date).utc();
-  const currDate = moment().utc();
-  const diff = currDate.diff(createdDate, 'days');
-  return `${diff}d`;
+  const createdDate = moment(date);
+  const currDate = moment();
+  const minDiff = currDate.diff(createdDate, 'minutes');
+
+  // Return short date (ex: 30m, 2d, 6mo)
+  if (minDiff < 60) return `${minDiff}m`;
+  if (minDiff / 60 < 24) return `${Math.floor(minDiff / 30)}h`;
+  if (minDiff / 60 / 24 < 30) return `${Math.floor(minDiff / 60 / 24)}d`;
+  return `${Math.floor(minDiff / 60 / 24 / 30)}mo`;
 };
 
 export const getBase64 = file =>
