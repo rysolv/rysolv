@@ -55,12 +55,15 @@ export function* sendMessageSaga({ payload }) {
   const { body, positionId, candidateId, threadId } = payload;
   const query = `
     mutation{
-      createMessage(messageInput: {
-        body: ${JSON.stringify(body)}
-        positionId: "${positionId}"
-        threadId: "${threadId}"
-        toUserId: "${candidateId}"
-      }) {
+      createMessage(
+        messageInput: {
+          body: ${JSON.stringify(body)}
+          positionId: "${positionId}"
+          threadId: "${threadId}"
+          toUserId: "${candidateId}"
+        },
+        source: "messenger"
+      ) {
         __typename
         ... on MessageResponse {
           body

@@ -1,32 +1,22 @@
 /* eslint-disable no-unused-expressions */
-const { CustomError, errorLogger } = require('../../../helpers');
+const { errorLogger } = require('../../../helpers');
 const {
   getAllCandidates,
   getOnePosition,
   matchCandidates: matchCandidatesQuery,
 } = require('../../../db');
 const { matchCandidatesError, matchCandidatesSuccess } = require('./constants');
+const { matchCandidate } = require('../helpers');
 
 /**
  * Match Candidates to Positions:
  * -- get question/answers for all active users
  * -- get question/answers for position
  * -- insert matching users into candidate_positions table
- *
- * Matching Criteria:
- * -- location & timezone                    Required
- * -- experience                             Required
- * -- position type (fulltime / contractor)  Required
- * -- languages                              40%
- * -- frameworks                             20%
- * -- roles (front-end, backend, etc.)       20%
- * -- salary                                 20%
  */
 
-const matchCandidates = async ({ positionId }, { authError, userId }) => {
+const matchCandidatesToPosition = async ({ positionId }) => {
   try {
-    if (authError || !userId) throw new CustomError(authError);
-
     const t1 = new Date();
 
     // Get position details
@@ -46,157 +36,27 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
       type: reqType,
     } = positionKeys;
 
-    // Get Candidate details
-    const allCandidates = await getAllCandidates();
+    const position = {
+      experience: reqExperience,
+      location: reqLocation,
+      positionKeys,
+      roleKeys: reqRoles,
+      salary: reqSalary,
+      skills: reqLanguages,
+      timezone: reqTimezone,
+      type: reqType,
+    };
 
-    const candidates = allCandidates.map(
-      ({
-        id,
-        userLanguages,
-        userLocation,
-        userResponses,
-        userRoles,
-        userType,
-      }) => {
-        const {
-          experience: userExperience,
-          target_salary: userSalary,
-          timezone: userTimezone,
-        } = userResponses;
+    // Get all candidates
+    const candidates = await getAllCandidates();
 
-        // Adjust ratios to prioritize different criteria
-        // Everything should add to 1.00
-        const matchCriteria = {
-          experience: false,
-          frameworks: 0.2,
-          languages: 0.4,
-          location: false,
-          roles: 0.2,
-          salary: 0.2,
-          type: false,
-        };
-
-        const candidateMatch = {};
-
-        // ******************************* Check Location ************************************
-        // Matching: location & timezone
-        const { utcOffset: reqUtcOffset } = reqLocation;
-
-        const { utcOffset: userUtcOffset } = userLocation;
-
-        // User is within position's time preference
-        let userLocationMatch = false;
-
-        // Position is within the user's time preference
-        let reqLocationMatch = false;
-
-        const userTimezoneNum = Number(userTimezone);
-        const reqTimezoneNum = Number(reqTimezone);
-        const userTimezoneDifference = Math.abs(
-          (userUtcOffset - reqUtcOffset) / 60,
-        );
-
-        if (userTimezoneNum >= userTimezoneDifference) {
-          userLocationMatch = true;
-        }
-        if (reqTimezoneNum >= userTimezoneDifference) {
-          reqLocationMatch = true;
-        }
-
-        if (userLocationMatch && reqLocationMatch) {
-          candidateMatch.location = true;
-        }
-
-        // ******************************* Check Experience **********************************
-        // Matching: senior_experience, '1 - 2 years', etc.
-        // Return: true/false
-        const expDictionary = {
-          junior_experience: 0,
-          midlevel_experience: 1,
-          senior_experience: 2,
-        };
-        if (userExperience >= expDictionary[reqExperience]) {
-          candidateMatch.experience = true;
-        }
-
-        // ******************************* Check Languages ***********************************
-        // Matching: language, framworks
-        // If the language matches, give 0.5pts, if the skill matches/exceeds give 1.0pt
-        let frameworkCount = 0;
-        let frameworkMatch = 0;
-        let languageCount = 0;
-        let languageMatch = 0;
-
-        reqLanguages.forEach(rl => {
-          if (rl.framework) frameworkCount++;
-          if (rl.language) languageCount++;
-
-          userLanguages.forEach(ul => {
-            if (ul.shortName === rl.shortName) {
-              const language = !!rl.language;
-              if (ul.level >= rl.level) {
-                language ? languageMatch++ : frameworkMatch++;
-              } else {
-                language ? (languageMatch += 0.5) : (frameworkMatch += 0.5);
-              }
-            }
-          });
-        });
-
-        candidateMatch.frameworks =
-          matchCriteria.frameworks * (frameworkMatch / frameworkCount) || 0;
-
-        candidateMatch.languages =
-          matchCriteria.languages * (languageMatch / languageCount) || 0;
-
-        // ******************************* Check Roles ***************************************
-        // Matching: front_end, back_end, ios, etc.
-        // Result: (# matching roles / reqRoles) * matchCriteria.roles
-        const matchingRoles = reqRoles.map(el =>
-          userRoles.includes(el) ? 1 : 0,
-        );
-        const matchSum = matchingRoles.reduce((a, b) => a + b, 0);
-        candidateMatch.roles =
-          matchCriteria.roles * (matchSum / reqRoles.length);
-
-        // ******************************* Check Position Type *******************************
-        // Matching: userType:['full_time', 'contractor'], reqType: 'full_time'
-        // Result: true/false
-        if (userType.includes(reqType)) {
-          candidateMatch.type = true;
-        }
-
-        // ******************************* Check Salary **************************************
-        // userSal <= reqSal = 100%
-        // (userSal - $25k) <= reqSal = 50%
-        const salaryMatch = +userSalary <= +reqSalary;
-        const salaryClose = +userSalary - 25 <= +reqSalary;
-
-        if (salaryMatch) candidateMatch.salary = matchCriteria.salary * 1;
-        else if (salaryClose)
-          candidateMatch.salary = matchCriteria.salary * 0.5;
-        else candidateMatch.salary = 0;
-
-        // Sum numerical categories
-        const total =
-          candidateMatch.frameworks +
-          candidateMatch.languages +
-          candidateMatch.roles +
-          candidateMatch.salary;
-
-        const percentMatch = Math.ceil(total * 100);
-
-        candidateMatch.frameworks /= matchCriteria.frameworks;
-        candidateMatch.languages /= matchCriteria.languages;
-        candidateMatch.roles /= matchCriteria.roles;
-        candidateMatch.salary /= matchCriteria.salary;
-
-        return { id, matchCriteria: candidateMatch, percentMatch };
-      },
-    );
+    const matchedCandidates = candidates.map(candidate => {
+      const match = matchCandidate({ candidate, position });
+      return match;
+    });
 
     if (candidates.length) {
-      await matchCandidatesQuery({ candidates, positionId });
+      await matchCandidatesQuery({ candidates: matchedCandidates, positionId });
     }
 
     // Allow time for the animation
@@ -222,4 +82,4 @@ const matchCandidates = async ({ positionId }, { authError, userId }) => {
   }
 };
 
-module.exports = matchCandidates;
+module.exports = matchCandidatesToPosition;

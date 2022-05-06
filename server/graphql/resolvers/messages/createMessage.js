@@ -8,16 +8,25 @@ const {
 const { createMessageError } = require('./constants');
 const { CustomError, errorLogger, sendEmail } = require('../../../helpers');
 
-const createMessage = async ({ messageInput }, { authError, userId }) => {
+const createMessage = async (
+  { messageInput, source },
+  { authError, userId },
+) => {
   try {
     if (authError || !userId) throw new CustomError(authError);
 
-    if (!messageInput.toUserId && messageInput.positionId) {
+    if (
+      source === 'apply' &&
+      !messageInput.toUserId &&
+      messageInput.positionId
+    ) {
       const { userId: toUserId } = await getCompanyContact({
         positionId: messageInput.positionId,
       });
       // eslint-disable-next-line no-param-reassign
       messageInput.toUserId = toUserId;
+
+      // Run matching on users
       await setPositionAppliedDate({
         candidateId: userId,
         positionId: messageInput.positionId,
@@ -37,7 +46,7 @@ const createMessage = async ({ messageInput }, { authError, userId }) => {
 
     // Send Email notifitations (async)
     sendEmail({
-      body: { userId: messageInput.toUserId },
+      body: { source, userId: messageInput.toUserId },
       path: '/s/messages/new',
     });
 

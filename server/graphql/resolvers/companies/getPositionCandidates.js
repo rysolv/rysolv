@@ -20,7 +20,8 @@ const getPositionCandidates = async (
     // Format Candidates object
     const result = candidates.reduce((acc, el) => {
       const {
-        contractKey,
+        // contractKey,
+        // paymentMethod,
         firstName,
         hasApplied,
         id,
@@ -28,7 +29,6 @@ const getPositionCandidates = async (
         lastName,
         location,
         matchCriteria,
-        paymentMethod,
         percentMatch,
         positionLanguages,
         profilePic,
@@ -39,7 +39,12 @@ const getPositionCandidates = async (
         username,
         userQuestions,
       } = el;
-      const shouldBlur = contractKey === 'startup' || !paymentMethod;
+
+      // TODO:
+      // Temporarily removed the shouldBlur. This is just to prevent scraping candidates.
+      // It will probably be added back later, but for now it's not a concern.
+      // const shouldBlur = contractKey === 'startup' || !paymentMethod;
+      const shouldBlur = false;
 
       const { target_salary, experience, is_active, resume } = userQuestions;
 
