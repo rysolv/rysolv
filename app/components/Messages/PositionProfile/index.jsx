@@ -4,6 +4,8 @@ import T from 'prop-types';
 
 import iconDictionary from 'utils/iconDictionary';
 
+import {useNavigate} from "react-router-dom"
+
 import {
   CandidateCardButton,
   CandidateCardContainer,
@@ -23,6 +25,7 @@ import {
 const PositionIcon = iconDictionary('workOutline');
 
 const PositionCard = ({ handleNav, position }) => {
+  const navigate = useNavigate();
   const {
     description,
     location,
@@ -35,7 +38,7 @@ const PositionCard = ({ handleNav, position }) => {
   } = position;
 
   const handleClick = () => {
-    handleNav(`/jobs/${positionId}`);
+    navigate(`/jobs/${positionId}`);
   };
 
   return (

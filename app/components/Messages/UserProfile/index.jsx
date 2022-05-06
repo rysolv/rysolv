@@ -3,6 +3,7 @@ import React from 'react';
 import T from 'prop-types';
 
 import iconDictionary from 'utils/iconDictionary';
+import {useNavigate} from "react-router-dom"
 
 import {
   CandidateCardButton,
@@ -23,6 +24,7 @@ import {
 import { StyledCandidateCardContainer } from './styledComponents';
 
 const CandidateCard = ({ handleNav, user }) => {
+  const navigate = useNavigate();
   const {
     experience,
     lastPosition,
@@ -38,7 +40,7 @@ const CandidateCard = ({ handleNav, user }) => {
   const UserIcon = iconDictionary('people');
 
   const handleClick = () => {
-    handleNav(`/users/${username}`);
+    navigate(`/users/${username}`);
   };
 
   return (
