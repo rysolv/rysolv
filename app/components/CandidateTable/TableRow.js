@@ -5,7 +5,11 @@ import T from 'prop-types';
 import iconDictionary from 'utils/iconDictionary';
 
 import { cellDictionary } from './constants';
-import { StyledIconButton, StyledTableRow } from './styledComponents';
+import {
+  StyledIconButton,
+  StyledTableCell,
+  StyledTableRow,
+} from './styledComponents';
 
 const SaveIcon = iconDictionary('bookmarkBorder');
 const UnsaveIcon = iconDictionary('bookmark');
@@ -30,17 +34,19 @@ const TableRow = ({
 
   return (
     <StyledTableRow ref={ref}>
-      <StyledIconButton
-        icon={CardIcon}
-        isSaved={candidate.isSaved}
-        label={CardLabel}
-        onClick={() =>
-          dispatchSaveCandidate({
-            candidateId: candidate.id,
-            positionId: selectedPosition,
-          })
-        }
-      />
+      <StyledTableCell>
+        <StyledIconButton
+          icon={CardIcon}
+          isSaved={candidate.isSaved}
+          label={CardLabel}
+          onClick={() =>
+            dispatchSaveCandidate({
+              candidateId: candidate.id,
+              positionId: selectedPosition,
+            })
+          }
+        />
+      </StyledTableCell>
       {Object.keys(cellDictionary).map((header, index) => {
         const TableCellToRender = cellDictionary[header];
 

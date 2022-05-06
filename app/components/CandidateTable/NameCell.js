@@ -24,7 +24,7 @@ const NameCell = ({ handleNav, name, profilePic, resume, username }) => (
     </NameTopSection>
     <NameBottomSection>
       <CandidateRowButton onClick={() => handleNav(`/users/${username}`)}>
-        {PeopleIcon} View candidate
+        {PeopleIcon} Profile
       </CandidateRowButton>
       <ConditionalRender
         Component={
