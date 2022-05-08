@@ -20,3 +20,5 @@ npm-debug.log
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+styledComponents.js

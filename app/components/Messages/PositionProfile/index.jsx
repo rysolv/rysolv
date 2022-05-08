@@ -2,9 +2,9 @@
 import React from 'react';
 import T from 'prop-types';
 
+
 import iconDictionary from 'utils/iconDictionary';
 
-import {useNavigate} from "react-router-dom"
 
 import {
   CandidateCardButton,
@@ -20,12 +20,13 @@ import {
   PositionWrapper,
   StyledLanguageWrapper,
   Title,
+  NameLink
 } from '../styledComponents';
 
 const PositionIcon = iconDictionary('workOutline');
 
 const PositionCard = ({ handleNav, position }) => {
-  const navigate = useNavigate();
+  
   const {
     description,
     location,
@@ -37,9 +38,9 @@ const PositionCard = ({ handleNav, position }) => {
     type,
   } = position;
 
-  const handleClick = () => {
-    navigate(`/jobs/${positionId}`);
-  };
+  // const handleClick = () => {
+  //   navigate(`/jobs/${positionId}`);
+  // };
 
   return (
     <CandidateCardContainer>
@@ -78,8 +79,9 @@ const PositionCard = ({ handleNav, position }) => {
           </CandidateCardRow>
         </CandidateCardRows>
       </CandidateCardContent>
-      <CandidateCardButton onClick={handleClick}>
-        {PositionIcon} Position detail
+      <CandidateCardButton>
+        {PositionIcon}{' '}
+        <NameLink to={`/jobs/${positionId}`}>Position detail</NameLink>
       </CandidateCardButton>
     </CandidateCardContainer>
   );
