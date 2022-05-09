@@ -1,4 +1,7 @@
+
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 
 import { LanguageWrapper } from 'components/base_ui';
 import {
@@ -8,7 +11,12 @@ import {
   grayColor,
   textColor,
   whiteColor,
+  subheaderFontSize,
+  hoverLinkColor,
+
 } from 'defaultStyleHelper';
+
+
 import { mediaQueriesByDevice } from 'utils/breakpoints';
 
 const { laptop } = mediaQueriesByDevice;
@@ -145,4 +153,11 @@ export const Title = styled.div`
   font-size: ${defaultFontSize};
   margin-bottom: 0.4rem;
   text-transform: uppercase;
+`;
+
+export const NameLink = styled(Link)`
+  font-size: ${subheaderFontSize};
+  &:hover {
+    color: ${hoverLinkColor};
+  }
 `;

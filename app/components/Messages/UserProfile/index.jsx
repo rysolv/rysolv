@@ -4,6 +4,7 @@ import T from 'prop-types';
 
 import iconDictionary from 'utils/iconDictionary';
 
+
 import {
   CandidateCardButton,
   CandidateCardContent,
@@ -19,10 +20,12 @@ import {
   ProfilePicWrapper,
   StyledLanguageWrapper,
   Title,
+  NameLink
 } from '../styledComponents';
 import { StyledCandidateCardContainer } from './styledComponents';
 
 const CandidateCard = ({ handleNav, user }) => {
+  
   const {
     experience,
     lastPosition,
@@ -37,9 +40,9 @@ const CandidateCard = ({ handleNav, user }) => {
 
   const UserIcon = iconDictionary('people');
 
-  const handleClick = () => {
-    handleNav(`/users/${username}`);
-  };
+  // const handleClick = () => {
+  //   navigate(`/users/${username}`);
+  // };
 
   return (
     <StyledCandidateCardContainer>
@@ -81,8 +84,9 @@ const CandidateCard = ({ handleNav, user }) => {
           </CandidateCardRow>
         </CandidateCardRows>
       </CandidateCardContent>
-      <CandidateCardButton onClick={handleClick}>
-        {UserIcon} Candidate profile
+      <CandidateCardButton>
+        {UserIcon}{' '}
+        <NameLink to={`/users/${username}`}>Candidate profile</NameLink>
       </CandidateCardButton>
     </StyledCandidateCardContainer>
   );
