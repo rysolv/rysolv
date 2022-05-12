@@ -7,6 +7,7 @@ const production = process.env.NODE_ENV === 'production';
 const baseUrl = production ? 'https://rysolv.com' : `http://localhost:3000`;
 const defaultImage =
   'https://rysolv.s3.us-east-2.amazonaws.com/rysolv_social_image.png';
+const themeColor = '#163486';
 
 const HelmetComponent = ({ title, location, description }) => {
   const url = baseUrl + location;
@@ -18,6 +19,7 @@ const HelmetComponent = ({ title, location, description }) => {
         <meta charSet="utf-8" />
         <meta name="description" content={description} />
         <meta name="language" content="english" />
+        <meta name="theme-color" content={themeColor} />
         <meta name="title" content={title} />
         <title>{title}</title>
 
