@@ -34,7 +34,18 @@ const signIn = async ({ password, username }, { res }) => {
     });
 
     const result = await getUserSettingsQuery({ userId });
-    const { issues, repos } = result;
+    let issues = [];
+    let repos = [];
+
+    // cannot destructure here as result can sometimes be undefined
+    if (result?.issues) {
+      // eslint-disable-next-line prefer-destructuring
+      issues = result.issues;
+    }
+    if (result?.repos) {
+      // eslint-disable-next-line prefer-destructuring
+      repos = result.repos;
+    }
 
     const userCompany = await getUserCompany({ userId });
 
