@@ -44,6 +44,7 @@ const getPositionCandidates = async ({ positionId, step }) => {
       u.last_name AS "lastName",
       u.profile_pic AS "profilePic",
       u.profile_pic_blur AS "profilePicBlur",
+      u.username,
       (SELECT c.payment_method AS "paymentMethod" FROM company c),
       (SELECT c.contract_key AS "contractKey" FROM company c),
       ARRAY_AGG(DISTINCT qr.value) FILTER (WHERE q.question_key = 'type') AS type,
@@ -77,8 +78,9 @@ const getPositionCandidates = async ({ positionId, step }) => {
       u.first_name,
       u.id,
       u.last_name,
+      u.profile_pic_blur,
       u.profile_pic,
-      u.profile_pic_blur
+      u.username
     ORDER BY cp.percent_match DESC;
   `;
 

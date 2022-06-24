@@ -3,14 +3,13 @@ import React from 'react';
 import T from 'prop-types';
 
 import { ConditionalRender } from 'components/base_ui';
+import CandidateTable from 'components/CandidateTable';
 import iconDictionary from 'utils/iconDictionary';
 
-import CandidateCard from './CandidateCard';
 import CandidatesLoading from './CandidatesLoading';
 import CompanyDashboardTabs from './CompanyDashboardTabs';
 import EmptyCandidateDashboard from './EmptyCandidateDashboard';
 import {
-  CandidateCardGroup,
   CompanyDashboardContainer,
   CompanyDashboardHeader,
   CompanyDashboardTitle,
@@ -37,20 +36,14 @@ const ExistingDashboard = ({
   const CandidateCards = (
     <ConditionalRender
       Component={
-        <CandidateCardGroup>
-          {candidates.map((candidate, index) => (
-            <CandidateCard
-              deviceView={deviceView}
-              dispatchOpenModal={dispatchOpenModal}
-              dispatchSaveCandidate={dispatchSaveCandidate}
-              handleNav={handleNav}
-              isLast={candidates.length - 1 === index}
-              key={`candidate-${index}`}
-              selectedPosition={selectedPosition}
-              {...candidate}
-            />
-          ))}
-        </CandidateCardGroup>
+        <CandidateTable
+          deviceView={deviceView}
+          dispatchOpenModal={dispatchOpenModal}
+          dispatchSaveCandidate={dispatchSaveCandidate}
+          handleNav={handleNav}
+          selectedPosition={selectedPosition}
+          candidates={candidates}
+        />
       }
       FallbackComponent={EmptyCandidateDashboard}
       shouldRender={!!candidates.length}

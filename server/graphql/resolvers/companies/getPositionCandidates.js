@@ -36,6 +36,7 @@ const getPositionCandidates = async (
         threadId,
         type,
         userLanguages,
+        username,
         userQuestions,
       } = el;
 
@@ -45,7 +46,7 @@ const getPositionCandidates = async (
       // const shouldBlur = contractKey === 'startup' || !paymentMethod;
       const shouldBlur = false;
 
-      const { target_salary, experience, is_active } = userQuestions;
+      const { target_salary, experience, is_active, resume } = userQuestions;
 
       if (is_active === 'Yes') {
         acc.push({
@@ -63,9 +64,11 @@ const getPositionCandidates = async (
           matchCriteria,
           percentMatch,
           profilePic: shouldBlur ? profilePicBlur : profilePic,
+          resume,
           salary: target_salary,
           threadId,
           type: type.length > 1 ? type.join(', ') : type[0],
+          username,
           yearsOfExperience: experience,
         });
       }
