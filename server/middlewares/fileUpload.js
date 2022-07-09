@@ -17,12 +17,15 @@ const uploadFile = async ({ file, fileExtension }) => {
   const fileSize = parseInt(file.replace(/=/g, '').length * 0.75, 10);
   if (fileSize >= 1000000) throw new CustomError(`Images must be under 1MB.`);
 
-  const { Location } = await uploadFileS3({
-    file: base64Data,
-    fileExtension,
-    type,
-  });
-  return { uploadUrl: Location };
+  if (process.env.AWS_ACCESS_KEY && process.env.AWS_SECRET) {
+    const { Location } = await uploadFileS3({
+      file: base64Data,
+      fileExtension,
+      type,
+    });
+    return { uploadUrl: Location };
+  }
+  return { uploadUrl: 'https://i.redd.it/scqsx52g8jo31.jpg' };
 };
 
 module.exports = { retrieveFile, uploadFile };
