@@ -30,11 +30,14 @@ const uploadImage = async image => {
   const type = image.split(';')[0].split('/')[1];
   if (fileSize >= 1000000) throw new CustomError(`Images must be under 1MB.`);
 
-  const { Location } = await uploadFileS3({
-    file: base64Data,
-    type: `image/${type}`,
-  });
-  return { uploadUrl: Location };
+  if (process.env.AWS_ACCESS_KEY && process.env.AWS_SECRET) {
+    const { Location } = await uploadFileS3({
+      file: base64Data,
+      type: `image/${type}`,
+    });
+    return { uploadUrl: Location };
+  }
+  return { uploadUrl: 'https://i.redd.it/scqsx52g8jo31.jpg' };
 };
 
 module.exports = { uploadImage };
