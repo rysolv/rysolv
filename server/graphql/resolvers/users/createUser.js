@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const {
   checkDuplicateUserEmail,
+  checkDuplicateUsername,
   createCompany,
   createUser: createUserQuery,
   insertUserCompany,
@@ -16,6 +17,7 @@ const createUser = async ({
   userInput: { email, firstName, isCompany, lastName, password, username },
 }) => {
   try {
+    await checkDuplicateUsername({ username });
     await checkDuplicateUserEmail({ email });
 
     // Register user with AWS
